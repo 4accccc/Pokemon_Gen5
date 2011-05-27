@@ -140,7 +140,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 レポートに　しっかり　かきのこした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -152,7 +152,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 レポートに　しっかり　書き残した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

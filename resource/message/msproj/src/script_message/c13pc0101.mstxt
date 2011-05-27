@@ -123,7 +123,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きみは　ジムバッジを
-[Digit:1digit Idx="0"]コ　もっているんだ？▼
+[Digit:1digit Idx="0" ]コ　もっているんだ？▼
 ほう！　だったら　ショップで　かえる
 どうぐも　いろいろ　ふえているよな！　</Text>
 			<TextModifiedBy
@@ -137,7 +137,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きみは　ジムバッジを
-[Digit:1digit Idx="0"]コ　持っているんだ？▼
+[Digit:1digit Idx="0" ]コ　持っているんだ？▼
 ほう！　だったら　ショップで　買える
 道具も　いろいろ　増えているよな！　</Text>
 			<TextModifiedBy

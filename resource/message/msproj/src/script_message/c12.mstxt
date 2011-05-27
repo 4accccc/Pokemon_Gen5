@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さーん▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]さーん▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -17,7 +17,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さーん▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]さーん▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -66,7 +66,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『どこ　いくの？▼
+			<Text>[Name:TrainerName Idx="1" ]『どこ　いくの？▼
 ……　……　……
 ……　……　……▼
 ポケモンずかん！？▼
@@ -83,7 +83,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『どこ　行くの？▼
+			<Text>[Name:TrainerName Idx="1" ]『どこ　行くの？▼
 ……　……　……
 ……　……　……▼
 ポケモン図鑑！？▼
@@ -192,7 +192,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-じゃーねー　[Name:TrainerName Idx="0"]さん▼</Text>
+じゃーねー　[Name:TrainerName Idx="0" ]さん▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -204,7 +204,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-じゃーねー　[Name:TrainerName Idx="0"]さん▼</Text>
+じゃーねー　[Name:TrainerName Idx="0" ]さん▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -309,7 +309,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『どうする？
+			<Text>[Name:TrainerName Idx="1" ]『どうする？
 たかだいも　チェックしておくか</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -321,7 +321,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『どうする？
+			<Text>[Name:TrainerName Idx="1" ]『どうする？
 高台も　チェックしておくか</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -368,7 +368,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『それにしてもさ▼
+			<Text>[Name:TrainerName Idx="1" ]『それにしてもさ▼
 ポケモンを　もらえるなんて
 オマエ　すごい　ラッキーだよな</Text>
 			<TextModifiedBy
@@ -381,7 +381,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『それにしてもさ▼
+			<Text>[Name:TrainerName Idx="1" ]『それにしてもさ▼
 ポケモンを　もらえるなんて
 オマエ　すごい　ラッキーだよな</Text>
 			<TextModifiedBy
@@ -427,7 +427,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『で　どうするんだよ？
+			<Text>[Name:TrainerName Idx="1" ]『で　どうするんだよ？
 ポケモンと　いっしょに　たびするのか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -439,7 +439,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『で　どうするんだよ？
+			<Text>[Name:TrainerName Idx="1" ]『で　どうするんだよ？
 ポケモンと　一緒に　旅するのか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -484,7 +484,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『……いいから
+			<Text>[Name:TrainerName Idx="1" ]『……いいから
 ベルって　ひと　さがそう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -496,7 +496,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『……いいから
+			<Text>[Name:TrainerName Idx="1" ]『……いいから
 ベルって　人　探そう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -542,7 +542,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『オレさ
+			<Text>[Name:TrainerName Idx="1" ]『オレさ
 さっきまで　ポケセンに　いたけれど▽
 それっぽい　ひとは　いなかったよ▼</Text>
 			<TextModifiedBy
@@ -555,7 +555,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『オレさ
+			<Text>[Name:TrainerName Idx="1" ]『オレさ
 さっきまで　ポケセンに　いたけれど▽
 それっぽい　人は　いなかったよ▼</Text>
 			<TextModifiedBy
@@ -603,7 +603,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『トレーナーズスクールは
+			<Text>[Name:TrainerName Idx="1" ]『トレーナーズスクールは
 いま　こうじちゅう▼
 ポケモンジムの　ぶぶんが　できるまで
 だれも　はいれない　はずだよ▼</Text>
@@ -617,7 +617,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『トレーナーズスクールは
+			<Text>[Name:TrainerName Idx="1" ]『トレーナーズスクールは
 今　工事中▼
 ポケモンジムが　併設されるまで
 だれも　はいれない　はずだよ▼</Text>
@@ -666,7 +666,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『その　ベルって　ひと
+			<Text>[Name:TrainerName Idx="1" ]『その　ベルって　ひと
 この　まちに　いるんだろ？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -678,7 +678,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『その　ベルって　人
+			<Text>[Name:TrainerName Idx="1" ]『その　ベルって　人
 この街に　いるんだろ？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -725,7 +725,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『あのさ……▼
+			<Text>[Name:TrainerName Idx="1" ]『あのさ……▼
 オマエの　いえに　いないのは
 いちばん　よく　わかってるだろ？▼</Text>
 			<TextModifiedBy
@@ -738,7 +738,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『あのさ……▼
+			<Text>[Name:TrainerName Idx="1" ]『あのさ……▼
 オマエの　家に　いないのは
 一番　よく　わかってるだろ？▼</Text>
 			<TextModifiedBy
@@ -786,7 +786,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『オレの　いえに　いたら
+			<Text>[Name:TrainerName Idx="1" ]『オレの　いえに　いたら
 いもうとが　おしえてくれるさ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -798,7 +798,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『オレの　家に　いたら
+			<Text>[Name:TrainerName Idx="1" ]『オレの　家に　いたら
 妹が　教えてくれるさ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -845,7 +845,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『ベルって　ひとが
+			<Text>[Name:TrainerName Idx="1" ]『ベルって　ひとが
 どんな　ひとだか　しらないけれど▽
 たにんの　いえで　くつろぐのか？▼</Text>
 			<TextModifiedBy
@@ -858,7 +858,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『ベルって　人が
+			<Text>[Name:TrainerName Idx="1" ]『ベルって　人が
 どんな　人だか　知らないけれど▽
 他人の　家で　くつろぐのか？▼</Text>
 			<TextModifiedBy
@@ -906,7 +906,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『なあ▼
+			<Text>[Name:TrainerName Idx="1" ]『なあ▼
 オマエが　きめれば　いいけれど
 みはらしだいを　みてみないか？</Text>
 			<TextModifiedBy
@@ -919,7 +919,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『なあ▼
+			<Text>[Name:TrainerName Idx="1" ]『なあ▼
 オマエが　決めれば　いいけれど
 見晴台を　みてみないか？</Text>
 			<TextModifiedBy
@@ -967,7 +967,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『あそこ……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あそこ……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -978,7 +978,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『あそこ……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あそこ……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1023,7 +1023,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『あの　ひとが
+			<Text>[Name:TrainerName Idx="1" ]『あの　ひとが
 ベルって　ひとか　たしかめないのか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1035,7 +1035,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『あの人が
+			<Text>[Name:TrainerName Idx="1" ]『あの人が
 ベルって　人か　確かめないのか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1080,7 +1080,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『あのひとが
+			<Text>[Name:TrainerName Idx="1" ]『あのひとが
 ベルって　ひとか　たしかめないのか？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1092,7 +1092,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『あの人が
+			<Text>[Name:TrainerName Idx="1" ]『あの人が
 ベルって　人か　確かめないのか？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1258,7 +1258,7 @@ GIRL2</Text>
 			<Text>あっ　あたしは　ベル！
 アララギはかせの　じょしゅ　です▼
 でね　ひとを　さがしているんだけど
-[Name:TrainerName Idx="0"]　って　ひと　しらない？</Text>
+[Name:TrainerName Idx="0" ]　って　ひと　しらない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1272,7 +1272,7 @@ GIRL2</Text>
 			<Text>あっ　あたしは　ベル！
 アララギ博士の　助手です▼
 でね　人を　探しているんだけど
-[Name:TrainerName Idx="0"]　って　人　知らない？</Text>
+[Name:TrainerName Idx="0" ]　って　人　知らない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1320,8 +1320,8 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『……なに　いってるんだよ
-こいつが　[Name:TrainerName Idx="0"]　です</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なに　いってるんだよ
+こいつが　[Name:TrainerName Idx="0" ]　です</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1332,8 +1332,8 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『……なに　いってるんだよ
-こいつが　[Name:TrainerName Idx="0"]　です</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なに　いってるんだよ
+こいつが　[Name:TrainerName Idx="0" ]　です</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1505,7 +1505,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ほのおタイプの　ポケモン
-「[System:Color name="1"][Name:PokemonName Idx="1"][/System:Color]」が　はいっている▼
+「[System:Color name="1" ][Name:PokemonName Idx="1" ][/System:Color]」が　はいっている▼
 この　ポケモンを　えらびますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1518,7 +1518,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほのおタイプの　ポケモン
-「[System:Color name="1"][Name:PokemonName Idx="1"][/System:Color]」が　はいっている▼
+「[System:Color name="1" ][Name:PokemonName Idx="1" ][/System:Color]」が　はいっている▼
 この　ポケモンを　選びますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1566,7 +1566,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>くさタイプの　ポケモン
-「[System:Color name="1"][Name:PokemonName Idx="1"][/System:Color]」が　はいっている▼
+「[System:Color name="1" ][Name:PokemonName Idx="1" ][/System:Color]」が　はいっている▼
 この　ポケモンを　えらびますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1579,7 +1579,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>くさタイプの　ポケモン
-「[System:Color name="1"][Name:PokemonName Idx="1"][/System:Color]」が　はいっている▼
+「[System:Color name="1" ][Name:PokemonName Idx="1" ][/System:Color]」が　はいっている▼
 この　ポケモンを　選びますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1627,7 +1627,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>みずタイプの　ポケモン
-「[System:Color name="1"][Name:PokemonName Idx="1"][/System:Color]」が　はいっている▼
+「[System:Color name="1" ][Name:PokemonName Idx="1" ][/System:Color]」が　はいっている▼
 この　ポケモンを　えらびますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1640,7 +1640,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みずタイプの　ポケモン
-「[System:Color name="1"][Name:PokemonName Idx="1"][/System:Color]」が　はいっている▼
+「[System:Color name="1" ][Name:PokemonName Idx="1" ][/System:Color]」が　はいっている▼
 この　ポケモンを　選びますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1688,7 +1688,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]みずタイプの　ポケモン
-[Ctrl1:xcenter ]「[Name:PokemonName Idx="1"]」</Text>
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1700,7 +1700,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]みずタイプの　ポケモン
-[Ctrl1:xcenter ]「[Name:PokemonName Idx="1"]」</Text>
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1737,7 +1737,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ほのおタイプの　ポケモン
-[Ctrl1:xcenter ]「[Name:PokemonName Idx="1"]」</Text>
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1749,7 +1749,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ほのおタイプの　ポケモン
-[Ctrl1:xcenter ]「[Name:PokemonName Idx="1"]」</Text>
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1786,7 +1786,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]くさタイプの　ポケモン
-[Ctrl1:xcenter ]「[Name:PokemonName Idx="1"]」</Text>
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1798,7 +1798,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]くさタイプの　ポケモン
-[Ctrl1:xcenter ]「[Name:PokemonName Idx="1"]」</Text>
+[Ctrl1:xcenter ]「[Name:PokemonName Idx="1" ]」</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2069,8 +2069,8 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonName Idx="1"]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="1" ]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2081,8 +2081,8 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonName Idx="1"]を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="1" ]を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2127,7 +2127,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『わあ！　[Name:PokemonName Idx="2"]って
+			<Text>ベル『わあ！　[Name:PokemonName Idx="2" ]って
 あなたに　ぴったりだと　おもう！▼
 ところで　えらんだ　ポケモンに
 ニックネームを　つける？</Text>
@@ -2141,7 +2141,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『わあ！　[Name:PokemonName Idx="2"]って
+			<Text>ベル『わあ！　[Name:PokemonName Idx="2" ]って
 あなたに　ぴったりだと　思う！▼
 ところで　選んだ　ポケモンに
 ニックネームを　つける？</Text>
@@ -2250,7 +2250,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:PokemonNickname Idx="0"]！
+			<Text>ベル『[Name:PokemonNickname Idx="0" ]！
 すっごく　いい　なまえ　だよねえ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2262,7 +2262,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:PokemonNickname Idx="0"]！
+			<Text>ベル『[Name:PokemonNickname Idx="0" ]！
 すっごく　いい　名前　だよねえ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2309,7 +2309,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『そいつが
+			<Text>[Name:TrainerName Idx="1" ]『そいつが
 オマエの　はじめての　パートナーか▽
 たいせつに　しろよ▼</Text>
 			<TextModifiedBy
@@ -2322,7 +2322,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『そいつが
+			<Text>[Name:TrainerName Idx="1" ]『そいつが
 オマエの　はじめての　パートナーか▽
 大切に　しろよ▼</Text>
 			<TextModifiedBy
@@ -2425,8 +2425,8 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]ポケモンずかん[/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]ポケモンずかん[/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2437,8 +2437,8 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]ポケモン図鑑[/System:Color]を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]ポケモン図鑑[/System:Color]を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2551,7 +2551,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『……それ　あまってたら
+			<Text>[Name:TrainerName Idx="1" ]『……それ　あまってたら
 オレにも　もらえませんか？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2563,7 +2563,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『……それ　あまってたら
+			<Text>[Name:TrainerName Idx="1" ]『……それ　あまってたら
 オレにも　もらえませんか？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2734,7 +2734,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『オマエの　ポケモンが
+			<Text>[Name:TrainerName Idx="1" ]『オマエの　ポケモンが
 どんな　ポケモンか　しりたい▼
 なに　かんたんさ
 ポケモンしょうぶ　してくれよ！▼</Text>
@@ -2748,7 +2748,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『オマエの　ポケモンが
+			<Text>[Name:TrainerName Idx="1" ]『オマエの　ポケモンが
 どんな　ポケモンか　知りたい▼
 なに　簡単なことさ
 ポケモン勝負　してくれよ！▼</Text>
@@ -2799,7 +2799,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『……まけたか▼
+			<Text>[Name:TrainerName Idx="1" ]『……まけたか▼
 オレじしんが　もっともっと
 トレーナーとして　きたえないとな▼
 じゃ　オレ　さきにいくから！▼</Text>
@@ -2813,7 +2813,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『……負けたか▼
+			<Text>[Name:TrainerName Idx="1" ]『……負けたか▼
 オレ自身が　もっともっと
 トレーナーとして　鍛えないとな▼
 じゃ　オレ　先に行くから！▼</Text>
@@ -2863,7 +2863,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『……かてたけど
+			<Text>[Name:TrainerName Idx="1" ]『……かてたけど
 オレじしん　もっともっと▽
 トレーナーとして　きたえないとな▼
 じゃ　オレ　さきにいくから！▼</Text>
@@ -2877,7 +2877,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『……勝てたけど
+			<Text>[Name:TrainerName Idx="1" ]『……勝てたけど
 オレ自身が　もっともっと▽
 トレーナーとして　鍛えないとな▼
 じゃ　オレ　先に行くから！▼</Text>
@@ -3112,9 +3112,9 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『よっ！　[Name:TrainerName Idx="0"]
+			<Text>ママ『よっ！　[Name:TrainerName Idx="0" ]
 ベルちゃんと　であえたみたいね▼
-あら？　[Name:PokemonName Idx="2"]を　えらんだんだ
+あら？　[Name:PokemonName Idx="2" ]を　えらんだんだ
 フフ　なんだか　いいかんじ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3126,9 +3126,9 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『よっ！　[Name:TrainerName Idx="0"]
+			<Text>ママ『よっ！　[Name:TrainerName Idx="0" ]
 ベルちゃんと　出会えたみたいね▼
-あら？　[Name:PokemonName Idx="2"]を　選んだんだ
+あら？　[Name:PokemonName Idx="2" ]を　選んだんだ
 フフ　なんだか　いい感じ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3224,8 +3224,8 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]ランニングシューズ[/System:Color]を　もらった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]ランニングシューズ[/System:Color]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -3236,8 +3236,8 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]ランニングシューズ[/System:Color]を　もらった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]ランニングシューズ[/System:Color]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -3280,7 +3280,7 @@ GIRL2</Text>
  はやく　はしれるように　なります！▼
  ランニングシューズを　はいて
  おもいっきり　はしりまくろう！」▼
-これで　あなたと　[Name:PokemonName Idx="2"]
+これで　あなたと　[Name:PokemonName Idx="2" ]
 どこまでも　かけぬけられるわね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3299,7 +3299,7 @@ GIRL2</Text>
  速く　走れるように　なります！▼
  ランニングシューズを　履いて
  おもいっきり　走りまくろう！」▼
-これで　あなたと　[Name:PokemonName Idx="2"]
+これで　あなたと　[Name:PokemonName Idx="2" ]
 どこまでも　駆けぬけられるわね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3338,7 +3338,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]のいもうと『あの……
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『あの……
 あたしからは　コレを▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3350,7 +3350,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]のいもうと『あの……
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『あの……
 あたしからは　コレを▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3396,8 +3396,8 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]タウンマップ[/System:Color]を　もらった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]タウンマップ[/System:Color]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -3408,8 +3408,8 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]タウンマップ[/System:Color]を　もらった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]タウンマップ[/System:Color]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -3502,7 +3502,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]のいもうと『１つは
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『１つは
 おにいちゃんに　わたしてほしいの▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3514,7 +3514,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]のいもうと『１つは
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『１つは
 おにいちゃんに　わたしてほしいの▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3679,7 +3679,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ママ『いってらっしゃい！▼
-[Name:PokemonName Idx="2"]と　いっしょに
+[Name:PokemonName Idx="2" ]と　いっしょに
 いろんな　ポケモン　いろんな　ひとを▽
 その　めで　みてらっしゃい！</Text>
 			<TextModifiedBy
@@ -3693,7 +3693,7 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ママ『いってらっしゃい！▼
-[Name:PokemonName Idx="2"]と　一緒に
+[Name:PokemonName Idx="2" ]と　一緒に
 いろんな　ポケモン　いろんな　人を▽
 その　眼で　みてらっしゃい！</Text>
 			<TextModifiedBy
@@ -3734,7 +3734,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]のいもうと『がんばってね！</Text>
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『がんばってね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -3745,7 +3745,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]のいもうと『がんばってね！</Text>
+			<Text>[Name:TrainerName Idx="1" ]のいもうと『がんばってね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -5089,7 +5089,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　いえ</Text>
+			<Text>[Name:TrainerName Idx="0" ]の　いえ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -5100,7 +5100,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の家</Text>
+			<Text>[Name:TrainerName Idx="0" ]の家</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />

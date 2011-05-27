@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　[Name:TrainerName Idx="0"]さん！
-[Name:PokemonName Idx="1"]とは　なかよくね！▼
+			<Text>あっ　[Name:TrainerName Idx="0" ]さん！
+[Name:PokemonName Idx="1" ]とは　なかよくね！▼
 じぶんの　ポケモンを　まもれるのは
 トレーナーしか　いないから</Text>
 			<TextModifiedBy
@@ -20,8 +20,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　[Name:TrainerName Idx="0"]さん！
-[Name:PokemonName Idx="1"]とは　なかよくね！▼
+			<Text>あっ　[Name:TrainerName Idx="0" ]さん！
+[Name:PokemonName Idx="1" ]とは　なかよくね！▼
 じぶんの　ポケモンを　まもれるのは
 トレーナーしか　いないから</Text>
 			<TextModifiedBy

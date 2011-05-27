@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ついに　[Name:TrainerName Idx="0"]さんも
+			<Text>ついに　[Name:TrainerName Idx="0" ]さんも
 ここまで　きたのですね……▼
 ……それでは　さいこう　きゅうきょくの
 めいよを　たたえるべく▼
@@ -23,7 +23,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ついに　[Name:TrainerName Idx="0"]さんも
+			<Text>ついに　[Name:TrainerName Idx="0" ]さんも
 ここまで　来たのですね……▼
 ……それでは　最高　究極の
 名誉を　称えるべく▼
@@ -66,7 +66,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは　メダルかくとく　[Digit:3digits Idx="0"]まい
+			<Text>それでは　メダルかくとく　[Digit:3digits Idx="0" ]まい
 めざして　ファイトッ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,7 +78,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは　メダル獲得　[Digit:3digits Idx="0"]枚
+			<Text>それでは　メダル獲得　[Digit:3digits Idx="0" ]枚
 目指して　ファイトッ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -165,7 +165,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place Idx="0"]に　ある
+			<Text>[Name:Place Idx="0" ]に　ある
 メダルラリーじむきょくで▼
 ひょうしょうしきを　おこないますので
 ぜひとも　おこしください！</Text>
@@ -179,7 +179,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place Idx="0"]に　ある
+			<Text>[Name:Place Idx="0" ]に　ある
 メダルラリー事務局で▼
 表彰式を　行いますので
 ぜひとも　お越しください！</Text>
@@ -219,13 +219,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハッ！　[Name:TrainerName Idx="0"]さん！
+			<Text>ハッ！　[Name:TrainerName Idx="0" ]さん！
 すばらしい！　すばらしいですよ！▼
 なんと　あなたは　ただいまをもって
 メダルラリーじむきょくが　せっていした▼
 チェックポイントを　ぶじクリアし
 みごと　ゴールイン！　なさいました！▼
-つきましては　[Name:Place Idx="1"]にある
+つきましては　[Name:Place Idx="1" ]にある
 メダルラリーじむきょくで▼
 ひょうしょうしきを　おこないますので
 ぜひとも　おこしください！</Text>
@@ -239,13 +239,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハッ！　[Name:TrainerName Idx="0"]さん！
+			<Text>ハッ！　[Name:TrainerName Idx="0" ]さん！
 素晴らしい！　素晴らしいですよ！▼
 なんと　あなたは　ただ今をもって
 メダルラリー事務局が　設定した▼
 チェックポイントを　無事クリアし
 見事　ゴールイン！　なさいました！▼
-つきましては　[Name:Place Idx="1"]にある
+つきましては　[Name:Place Idx="1" ]にある
 メダルラリー事務局で▼
 表彰式を　行いますので
 ぜひとも　お越しください！</Text>
@@ -286,7 +286,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふむう……　[Name:TrainerName Idx="0"]さん！▼
+			<Text>ふむう……　[Name:TrainerName Idx="0" ]さん！▼
 さらに　メダルを　あつめてもらうため
 ヒントメダルを　さしあげましょう！▼</Text>
 			<TextModifiedBy
@@ -299,7 +299,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふむう……　[Name:TrainerName Idx="0"]さん！▼
+			<Text>ふむう……　[Name:TrainerName Idx="0" ]さん！▼
 さらに　メダルを　集めてもらうため
 ヒントメダルを　さしあげましょう！▼</Text>
 			<TextModifiedBy
@@ -396,7 +396,7 @@
 			Language="JPN">
 			<Text>えーと……　わたしから　おわたしする
 ヒントメダルは　もう　ありませんね▼
-それでは　メダルかくとく　[Digit:3digits Idx="0"]まい
+それでは　メダルかくとく　[Digit:3digits Idx="0" ]まい
 めざして　ファイトッ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -410,7 +410,7 @@
 			Language="JPN_KANJI">
 			<Text>えーと……　わたしから　お渡しする
 ヒントメダルは　もう　ありませんね▼
-それでは　メダル獲得　[Digit:3digits Idx="0"]枚
+それでは　メダル獲得　[Digit:3digits Idx="0" ]枚
 目指して　ファイトッ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -516,8 +516,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]ヒントメダル[/System:Color]を　[Digit:3digits Idx="1"]コ　もらった！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]ヒントメダル[/System:Color]を　[Digit:3digits Idx="1" ]コ　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -528,8 +528,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]ヒントメダル[/System:Color]を　[Digit:3digits Idx="1"]コ　もらった！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]ヒントメダル[/System:Color]を　[Digit:3digits Idx="1" ]コ　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -832,7 +832,7 @@ No627「メダルボックス」</Comment>
 			Language="JPN">
 			<Text>わお！　たくさん
 メダルを　あつめましたね！▼
-そんな　[Name:TrainerName Idx="0"]さんの
+そんな　[Name:TrainerName Idx="0" ]さんの
 メダルボックスを　リニューアルです！▼
 えい！　やあ！▼</Text>
 			<TextModifiedBy
@@ -847,7 +847,7 @@ No627「メダルボックス」</Comment>
 			Language="JPN_KANJI">
 			<Text>わお！　たくさん
 メダルを　集めましたね！▼
-そんな　[Name:TrainerName Idx="0"]さんの
+そんな　[Name:TrainerName Idx="0" ]さんの
 メダルボックスを　リニューアルです！▼
 えい！　やあ！▼</Text>
 			<TextModifiedBy
@@ -978,8 +978,8 @@ No627「メダルボックス」</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　メダルボックスが
-[System:Color name="2"][Name:MedalistRank Idx="1"][/System:Color]ランクに▽
+			<Text>[Name:TrainerName Idx="0" ]の　メダルボックスが
+[System:Color name="2" ][Name:MedalistRank Idx="1" ][/System:Color]ランクに▽
 リニューアルされた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -991,8 +991,8 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　メダルボックスが
-[System:Color name="2"][Name:MedalistRank Idx="1"][/System:Color]ランクに▽
+			<Text>[Name:TrainerName Idx="0" ]の　メダルボックスが
+[System:Color name="2" ][Name:MedalistRank Idx="1" ][/System:Color]ランクに▽
 リニューアルされた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1023,7 +1023,7 @@ No627「メダルボックス」</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん　まってましたよ！
+			<Text>[Name:TrainerName Idx="0" ]さん　まってましたよ！
 ぜっこうちょう　ですね！▽
 では　あたらしい　メダルを　どうぞ！▼</Text>
 			<TextModifiedBy
@@ -1036,7 +1036,7 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん　待ってましたよ！
+			<Text>[Name:TrainerName Idx="0" ]さん　待ってましたよ！
 絶好調ですね！▽
 では　新しい　メダルを　どうぞ！▼</Text>
 			<TextModifiedBy
@@ -1125,8 +1125,8 @@ No627「メダルボックス」</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-メダル　[System:Color name="2"]「[Name:Medal Idx="1"]」[/System:Color]を▽
+			<Text>[Name:TrainerName Idx="0" ]は
+メダル　[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
 てにいれた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1138,8 +1138,8 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-メダル　[System:Color name="2"]「[Name:Medal Idx="1"]」[/System:Color]を▽
+			<Text>[Name:TrainerName Idx="0" ]は
+メダル　[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
 手に入れた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2950,7 +2950,7 @@ No627「メダルボックス」</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『[Name:TrainerName Idx="0"]！▼
+			<Text>アデク『[Name:TrainerName Idx="0" ]！▼
 ヒオウギに　できた
 あたらしい　ポケモンジム　だがな▼
 ジムリーダーが　とうちゃくしたと
@@ -2967,7 +2967,7 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『[Name:TrainerName Idx="0"]！▼
+			<Text>アデク『[Name:TrainerName Idx="0" ]！▼
 ヒオウギに　できた
 新しい　ポケモンジム　だがな▼
 ジムリーダーが　到着したと

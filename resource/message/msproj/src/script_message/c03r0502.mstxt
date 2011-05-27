@@ -9,7 +9,7 @@
 			<Text>ワタシの　なまえは　ミスターロック▼
 どんなものでも　あけてしまう
 まかふしぎな　ピエロでございます…▼
-あなたの　おなまえは　[Name:TrainerName Idx="0"]さん
+あなたの　おなまえは　[Name:TrainerName Idx="0" ]さん
 また　おあいすることに　なるでしょう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,7 +24,7 @@
 			<Text>ワタシの　名前は　ミスターロック▼
 どんなものでも　開けてしまう
 まかふしぎな　ピエロでございます…▼
-あなたの　お名前は　[Name:TrainerName Idx="0"]さん
+あなたの　お名前は　[Name:TrainerName Idx="0" ]さん
 また　お会いすることに　なるでしょう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

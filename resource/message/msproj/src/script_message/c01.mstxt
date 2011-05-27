@@ -153,8 +153,8 @@
 それで　きみ……
 さいしょに　えらんだ[Ctrl2:LineFeed ]
 ポケモンは　なんですか？[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0"]か……　なるほど
-[Name:Type Idx="1"]タイプが　にがて　なんですね[Ctrl2:PageClear ]
+[Name:PokemonName Idx="0" ]か……　なるほど
+[Name:Type Idx="1" ]タイプが　にがて　なんですね[Ctrl2:PageClear ]
 きちんと　たいさく　しておいたほうが
 いいと　おもいますよ[Ctrl2:PageClear ]
 それでは　なかで　まっていますね[Ctrl2:PageClear ]</Text>
@@ -175,8 +175,8 @@
 それで　きみ……
 最初に　選んだ[Ctrl2:LineFeed ]
 ポケモンは　なんですか？[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0"]か……　なるほど
-[Name:Type Idx="1"]タイプが　苦手なんですね[Ctrl2:PageClear ]
+[Name:PokemonName Idx="0" ]か……　なるほど
+[Name:Type Idx="1" ]タイプが　苦手なんですね[Ctrl2:PageClear ]
 きちんと　対策しておいたほうが
 いいと　思いますよ[Ctrl2:PageClear ]
 それでは　中で　待っていますね[Ctrl2:PageClear ]</Text>
@@ -235,8 +235,8 @@
 それで　きみ……
 さいしょに　えらんだ[Ctrl2:LineFeed ]
 ポケモンは　なんですか？[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0"]か……　なるほど
-[Name:Type Idx="1"]タイプが　にがて　なんですね[Ctrl2:PageClear ]
+[Name:PokemonName Idx="0" ]か……　なるほど
+[Name:Type Idx="1" ]タイプが　にがて　なんですね[Ctrl2:PageClear ]
 きちんと　たいさく　しておいたほうが
 いいと　おもいますよ[Ctrl2:PageClear ]
 たとえば　ゆめのあとちで
@@ -259,8 +259,8 @@
 それで　きみ……
 最初に　選んだ[Ctrl2:LineFeed ]
 ポケモンは　なんですか？[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0"]か……　なるほど
-[Name:Type Idx="1"]タイプが　苦手なんですね[Ctrl2:PageClear ]
+[Name:PokemonName Idx="0" ]か……　なるほど
+[Name:Type Idx="1" ]タイプが　苦手なんですね[Ctrl2:PageClear ]
 きちんと　対策しておいたほうが
 いいと　思いますよ[Ctrl2:PageClear ]
 たとえば　夢の跡地で

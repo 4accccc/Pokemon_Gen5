@@ -162,7 +162,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 どうぐ　を　うけとった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -174,7 +174,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 道具を　受け取った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -213,9 +213,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……「[Name:Item Idx="0"]」が
+			<Text>……「[Name:Item Idx="0" ]」が
 バッグに　いっぱいの　ようですね▼
-「[Name:Item Idx="0"]」を　へらしたら
+「[Name:Item Idx="0" ]」を　へらしたら
 のこりの　カケラを　わたしましょう▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -227,9 +227,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……「[Name:Item Idx="0"]」が
+			<Text>……「[Name:Item Idx="0" ]」が
 バッグに　一杯の　ようですね▼
-「[Name:Item Idx="0"]」を　減らしたら
+「[Name:Item Idx="0" ]」を　減らしたら
 残りの　カケラを　わたしましょう▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -268,7 +268,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text> ×　[Digit:1digit Idx="0"]</Text>
+			<Text> ×　[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -279,7 +279,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text> ×　[Digit:1digit Idx="0"]</Text>
+			<Text> ×　[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />

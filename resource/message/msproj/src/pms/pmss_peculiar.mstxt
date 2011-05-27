@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめまして！
-[Name:PMS Idx="0"]　です！</Text>
+[Name:PMS Idx="0" ]　です！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -19,7 +19,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はじめまして！
-[Name:PMS Idx="0"]　です！</Text>
+[Name:PMS Idx="0" ]　です！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -41,8 +41,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　が　だいすきな
-[Name:PMS Idx="1"]　トレーナー　です</Text>
+			<Text>[Name:PMS Idx="0" ]　が　だいすきな
+[Name:PMS Idx="1" ]　トレーナー　です</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -53,8 +53,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　が　だいすきな
-[Name:PMS Idx="1"]　トレーナー　です</Text>
+			<Text>[Name:PMS Idx="0" ]　が　だいすきな
+[Name:PMS Idx="1" ]　トレーナー　です</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -76,7 +76,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんど　[Name:PMS Idx="0"]　しようね
+			<Text>こんど　[Name:PMS Idx="0" ]　しようね
 これからも　よろしく！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,7 +88,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんど　[Name:PMS Idx="0"]　しようね
+			<Text>こんど　[Name:PMS Idx="0" ]　しようね
 これからも　よろしく！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -111,7 +111,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　だいすき！
+			<Text>[Name:PMS Idx="0" ]　だいすき！
 ホント　さいこう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -123,7 +123,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　だいすき！
+			<Text>[Name:PMS Idx="0" ]　だいすき！
 ホント　さいこう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,7 +146,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっぱり　[Name:PMS Idx="0"]　な
+			<Text>やっぱり　[Name:PMS Idx="0" ]　な
 ところが　いいよね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -158,7 +158,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっぱり　[Name:PMS Idx="0"]　な
+			<Text>やっぱり　[Name:PMS Idx="0" ]　な
 ところが　いいよね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -182,7 +182,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きみの　すきな
-[Name:PMS Idx="0"]　は　なーに？</Text>
+[Name:PMS Idx="0" ]　は　なーに？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -194,7 +194,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きみの　すきな
-[Name:PMS Idx="0"]　は　なーに？</Text>
+[Name:PMS Idx="0" ]　は　なーに？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -217,7 +217,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どうも！
-[Name:PMS Idx="0"]　って　しってる？</Text>
+[Name:PMS Idx="0" ]　って　しってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -229,7 +229,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうも！
-[Name:PMS Idx="0"]　って　しってる？</Text>
+[Name:PMS Idx="0" ]　って　しってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -251,8 +251,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とっても　[Name:PMS Idx="0"]　で
-[Name:PMS Idx="1"]　だよ！</Text>
+			<Text>とっても　[Name:PMS Idx="0" ]　で
+[Name:PMS Idx="1" ]　だよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -263,8 +263,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とっても　[Name:PMS Idx="0"]　で
-[Name:PMS Idx="1"]　だよ！</Text>
+			<Text>とっても　[Name:PMS Idx="0" ]　で
+[Name:PMS Idx="1" ]　だよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -287,7 +287,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんど　いっしょに
-[Name:PMS Idx="0"]　しようよ！</Text>
+[Name:PMS Idx="0" ]　しようよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -299,7 +299,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんど　いっしょに
-[Name:PMS Idx="0"]　しようよ！</Text>
+[Name:PMS Idx="0" ]　しようよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -321,7 +321,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　してくれて
+			<Text>[Name:PMS Idx="0" ]　してくれて
 ありがとう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -333,7 +333,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　してくれて
+			<Text>[Name:PMS Idx="0" ]　してくれて
 ありがとう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -356,7 +356,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　で
+			<Text>[Name:PMS Idx="0" ]　で
 とっても　よかったです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -368,7 +368,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　で
+			<Text>[Name:PMS Idx="0" ]　で
 とっても　よかったです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -391,7 +391,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは　[Name:PMS Idx="0"]　って
+			<Text>きみは　[Name:PMS Idx="0" ]　って
 どうおもう？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -403,7 +403,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは　[Name:PMS Idx="0"]　って
+			<Text>きみは　[Name:PMS Idx="0" ]　って
 どうおもう？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -426,7 +426,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれは　[Name:PMS Idx="0"]　だと
+			<Text>あれは　[Name:PMS Idx="0" ]　だと
 おもうんだよねー</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -438,7 +438,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれは　[Name:PMS Idx="0"]　だと
+			<Text>あれは　[Name:PMS Idx="0" ]　だと
 おもうんだよねー</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -462,7 +462,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きになるよねー
-うーん　[Name:PMS Idx="0"]　……</Text>
+うーん　[Name:PMS Idx="0" ]　……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -474,7 +474,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きになるよねー
-うーん　[Name:PMS Idx="0"]　……</Text>
+うーん　[Name:PMS Idx="0" ]　……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -496,7 +496,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　って
+			<Text>[Name:PMS Idx="0" ]　って
 しってますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -508,7 +508,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　って
+			<Text>[Name:PMS Idx="0" ]　って
 しってますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -531,8 +531,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんと　この　[Name:PMS Idx="0"]
-[Name:PMS Idx="1"]　なんです！</Text>
+			<Text>なんと　この　[Name:PMS Idx="0" ]
+[Name:PMS Idx="1" ]　なんです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -543,8 +543,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんと　この　[Name:PMS Idx="0"]
-[Name:PMS Idx="1"]　なんです！</Text>
+			<Text>なんと　この　[Name:PMS Idx="0" ]
+[Name:PMS Idx="1" ]　なんです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -567,7 +567,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぜひ　おためしあれ！
-[Name:PMS Idx="0"]　オススメです！</Text>
+[Name:PMS Idx="0" ]　オススメです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -579,7 +579,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぜひ　おためしあれ！
-[Name:PMS Idx="0"]　オススメです！</Text>
+[Name:PMS Idx="0" ]　オススメです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -601,7 +601,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　してくれて
+			<Text>[Name:PMS Idx="0" ]　してくれて
 ありがとう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -613,7 +613,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　してくれて
+			<Text>[Name:PMS Idx="0" ]　してくれて
 ありがとう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -636,8 +636,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　は
-[Name:PMS Idx="1"]　だよねー</Text>
+			<Text>[Name:PMS Idx="0" ]　は
+[Name:PMS Idx="1" ]　だよねー</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -648,8 +648,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　は
-[Name:PMS Idx="1"]　だよねー</Text>
+			<Text>[Name:PMS Idx="0" ]　は
+[Name:PMS Idx="1" ]　だよねー</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -671,7 +671,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だから　[Name:PMS Idx="0"]　です
+			<Text>だから　[Name:PMS Idx="0" ]　です
 よろしく！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -683,7 +683,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だから　[Name:PMS Idx="0"]　です
+			<Text>だから　[Name:PMS Idx="0" ]　です
 よろしく！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -706,8 +706,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　[Name:PMS Idx="0"]　しようね！
-[Name:PMS Idx="1"]</Text>
+			<Text>また　[Name:PMS Idx="0" ]　しようね！
+[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -718,8 +718,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　[Name:PMS Idx="0"]　しようね！
-[Name:PMS Idx="1"]</Text>
+			<Text>また　[Name:PMS Idx="0" ]　しようね！
+[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />

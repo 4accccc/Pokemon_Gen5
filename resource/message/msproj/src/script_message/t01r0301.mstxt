@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 きいたよ　はかせから
 ポケモンを　もらうんだって[Ctrl2:PageClear ]
 って　もう　もらったのか！
@@ -28,7 +28,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>チェレンのパパ『おお！　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 聞いたよ！　博士から
 ポケモンを　もらうんだって[Ctrl2:PageClear ]
 って　もう　もらったのか！
@@ -200,7 +200,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 はかせに　たのまれて
 ずかんを　かんせい　させるんですって！[Ctrl2:PageClear ]
 だいじょうぶ！　なにがあっても
@@ -216,7 +216,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>チェレンのママ『あら　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 博士に　頼まれて
 図鑑を　完成させるんですって！[Ctrl2:PageClear ]
 大丈夫！　なにがあっても

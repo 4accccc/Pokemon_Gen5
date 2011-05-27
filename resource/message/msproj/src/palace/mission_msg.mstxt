@@ -838,7 +838,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -850,7 +850,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -887,7 +887,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -899,7 +899,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -976,7 +976,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]が　ミッションたっせい！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]が　ミッションたっせい！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -987,7 +987,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]が　ミッション達成！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]が　ミッション達成！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -1056,7 +1056,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルダマを　[Digit:2digits Idx="0"]こ　てにいれた！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>デルダマを　[Digit:2digits Idx="0" ]こ　てにいれた！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -1067,7 +1067,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルダマを　[Digit:2digits Idx="0"]個　手に入れた！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>デルダマを　[Digit:2digits Idx="0" ]個　手に入れた！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -1226,10 +1226,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どうやら　ハイリンクから
-[Name:TrainerName Idx="0"]が▽
+[Name:TrainerName Idx="0" ]が▽
 たすけに　きてくれたようだ▼
 ……おや？▼
-たすけにきた　[Name:TrainerName Idx="0"]が
+たすけにきた　[Name:TrainerName Idx="0" ]が
 どうぐを　おいていった▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1242,10 +1242,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうやら　ハイリンクから
-[Name:TrainerName Idx="0"]が▽
+[Name:TrainerName Idx="0" ]が▽
 助けに　来てくれたようだ▼
 ……おや？▼
-助けに来た　[Name:TrainerName Idx="0"]が
+助けに来た　[Name:TrainerName Idx="0" ]が
 道具を　置いていった▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2023,7 +2023,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ミッション　たっせい！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>[Ctrl1:xcenter ]ミッション　たっせい！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2034,7 +2034,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ミッション　達成！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>[Ctrl1:xcenter ]ミッション　達成！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2070,7 +2070,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ミッション　しっぱい……[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>[Ctrl1:xcenter ]ミッション　しっぱい……[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2081,7 +2081,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ミッション　失敗……[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>[Ctrl1:xcenter ]ミッション　失敗……[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2117,7 +2117,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルダマを　[Digit:2digits Idx="0"]こ　てにいれた！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>デルダマを　[Digit:2digits Idx="0" ]こ　てにいれた！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2128,7 +2128,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルダマを　[Digit:2digits Idx="0"]個　手に入れた！[Ctrl2:WaitOne frame="90"]</Text>
+			<Text>デルダマを　[Digit:2digits Idx="0" ]個　手に入れた！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2165,7 +2165,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しあわせが　あつまり　ハイリンクの
-◇ブラックＬｖが　[Digit:3digits Idx="0"]あがった！[Ctrl2:WaitOne frame="90"]</Text>
+◇ブラックＬｖが　[Digit:3digits Idx="0" ]あがった！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2177,7 +2177,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>幸せが　集まり　ハイリンクの
-◇ブラックＬｖが　[Digit:3digits Idx="0"]上がった！[Ctrl2:WaitOne frame="90"]</Text>
+◇ブラックＬｖが　[Digit:3digits Idx="0" ]上がった！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2214,7 +2214,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しあわせが　あつまり　ハイリンクの
-◆ホワイトＬｖが　[Digit:3digits Idx="0"]あがった！[Ctrl2:WaitOne frame="90"]</Text>
+◆ホワイトＬｖが　[Digit:3digits Idx="0" ]あがった！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2226,7 +2226,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>幸せが　集まり　ハイリンクの
-◆ホワイトＬｖが　[Digit:3digits Idx="0"]上がった！[Ctrl2:WaitOne frame="90"]</Text>
+◆ホワイトＬｖが　[Digit:3digits Idx="0" ]上がった！[Ctrl2:WaitOne frame="90" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2684,14 +2684,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『へへ！
+			<Text>[Name:TrainerName Idx="0" ]『へへ！
 つかまえた！▼
 それにしても　こんなところに
 ポケモンがいるなんて　めずらしいなぁ▽
 ……あれ？▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　つかった！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　つかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2702,14 +2702,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『へへ！
+			<Text>[Name:TrainerName Idx="0" ]『へへ！
 つかまえた！▼
 それにしても　こんなところに
 ポケモンがいるなんて　珍しいなぁ▽
 ……あれ？▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　使った！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　使った！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2751,14 +2751,14 @@ m＝トレーナー男子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『よーし！
+			<Text>[Name:TrainerName Idx="0" ]『よーし！
 つかまえたー！▼
 それにしても　こんなところに
 ポケモンがいるなんて　めずらしいなぁ▽
 ……あれ？▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　つかった！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　つかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -2769,14 +2769,14 @@ m＝トレーナー男子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『よーし！
+			<Text>[Name:TrainerName Idx="0" ]『よーし！
 つかまえたー！▼
 それにしても　こんなところに
 ポケモンがいるなんて　珍しいなぁ▽
 ……あれ？▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　使った！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　使った！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -3216,7 +3216,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『ん　なんだい？
+			<Text>[Name:TrainerName Idx="0" ]『ん　なんだい？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3228,7 +3228,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『ん　なんだい？
+			<Text>[Name:TrainerName Idx="0" ]『ん　なんだい？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3269,7 +3269,7 @@ m＝トレーナー男子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『わー！　めずらしい！▼
+			<Text>[Name:TrainerName Idx="0" ]『わー！　めずらしい！▼
 どうしたのかな？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
@@ -3282,7 +3282,7 @@ m＝トレーナー男子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『わー！　珍しい！▼
+			<Text>[Name:TrainerName Idx="0" ]『わー！　珍しい！▼
 どうしたのかな？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
@@ -3718,7 +3718,7 @@ w=トレーナー女子（相手が）
 			Language="JPN">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　たすかるよ！▼</Text>
@@ -3734,7 +3734,7 @@ w=トレーナー女子（相手が）
 			Language="JPN_KANJI">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　助かるよ！▼</Text>
@@ -3777,7 +3777,7 @@ m＝トレーナー男子（相手が）
 			Language="JPN">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　たすかるよ！▼</Text>
@@ -3793,7 +3793,7 @@ m＝トレーナー男子（相手が）
 			Language="JPN_KANJI">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　助かるよ！▼</Text>
@@ -4238,7 +4238,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『ん　なんだい？
+			<Text>[Name:TrainerName Idx="0" ]『ん　なんだい？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4250,7 +4250,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『ん　なんだい？
+			<Text>[Name:TrainerName Idx="0" ]『ん　なんだい？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4291,7 +4291,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『わー！　めずらしい！▼
+			<Text>[Name:TrainerName Idx="0" ]『わー！　めずらしい！▼
 どうしたのかな？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
@@ -4304,7 +4304,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『わー！　珍しい！▼
+			<Text>[Name:TrainerName Idx="0" ]『わー！　珍しい！▼
 どうしたのかな？
 かまって　ほしいのかな？</Text>
 			<TextModifiedBy
@@ -4740,7 +4740,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いけ！
+			<Text>[Name:TrainerName Idx="0" ]『いけ！
 そこだ！　がんばれ！▼
 ……　……　……どうやら
 たいせんちゅうの　ようだ</Text>
@@ -4754,7 +4754,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『いけ！
+			<Text>[Name:TrainerName Idx="0" ]『いけ！
 そこだ！　がんばれ！▼
 ……　……　……どうやら
 対戦中の　ようだ</Text>
@@ -4797,7 +4797,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いけ！
+			<Text>[Name:TrainerName Idx="0" ]『いけ！
 そこよ！　がんばれ！▼
 ……　……　……どうやら
 たいせんちゅうの　ようだ</Text>
@@ -4811,7 +4811,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『いけ！
+			<Text>[Name:TrainerName Idx="0" ]『いけ！
 そこよ！　がんばれ！▼
 ……　……　……どうやら
 対戦中の　ようだ</Text>
@@ -5262,7 +5262,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……▽
 とりこみちゅうの　ようだ</Text>
 			<TextModifiedBy
@@ -5275,7 +5275,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……▽
 取り込み中の　ようだ</Text>
 			<TextModifiedBy
@@ -5316,7 +5316,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……▽
 とりこみちゅうの　ようだ</Text>
 			<TextModifiedBy
@@ -5329,7 +5329,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……▽
 取り込み中の　ようだ</Text>
 			<TextModifiedBy
@@ -5529,7 +5529,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5541,7 +5541,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5582,7 +5582,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5594,7 +5594,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5796,7 +5796,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5808,7 +5808,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5848,7 +5848,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5860,7 +5860,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6294,7 +6294,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……　……は！▼
 い　いま
 ぼく　ねてたね……▼
@@ -6312,7 +6312,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……　……は！▼
 い　いま
 ぼく　寝てたね……▼
@@ -6358,7 +6358,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……　……は！▼
 い　いま
 わたし　ねてたわ……▼
@@ -6376,7 +6376,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『……
+			<Text>[Name:TrainerName Idx="0" ]『……
 ……　……　……は！▼
 い　いま
 わたし　寝てたわ……▼
@@ -6426,8 +6426,8 @@ w=トレーナー女子（相手が）
 ……おや？
 やってきた　ポケモンが▽
 とつぜん　ひかりだした！▼
-[Name:TrainerName Idx="0"]は　ポケモンから
-[Name:PMS Idx="2"]を　もらった！▼</Text>
+[Name:TrainerName Idx="0" ]は　ポケモンから
+[Name:PMS Idx="2" ]を　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6442,8 +6442,8 @@ w=トレーナー女子（相手が）
 ……おや？
 やってきた　ポケモンが▽
 突然　光りだした！▼
-[Name:TrainerName Idx="0"]は　ポケモンから
-[Name:PMS Idx="2"]を　もらった！▼</Text>
+[Name:TrainerName Idx="0" ]は　ポケモンから
+[Name:PMS Idx="2" ]を　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6489,8 +6489,8 @@ w=トレーナー女子（相手が）
 ……おや？
 やってきた　ポケモンが▽
 とつぜん　ひかりだした！▼
-[Name:TrainerName Idx="0"]は　ポケモンから
-[Name:PMS Idx="2"]を　もらった！▼</Text>
+[Name:TrainerName Idx="0" ]は　ポケモンから
+[Name:PMS Idx="2" ]を　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6505,8 +6505,8 @@ w=トレーナー女子（相手が）
 ……おや？
 やってきた　ポケモンが▽
 突然　光りだした！▼
-[Name:TrainerName Idx="0"]は　ポケモンから
-[Name:PMS Idx="2"]を　もらった！▼</Text>
+[Name:TrainerName Idx="0" ]は　ポケモンから
+[Name:PMS Idx="2" ]を　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6552,8 +6552,8 @@ w=トレーナー女子（相手が）
 ……おや？
 やってきた　ポケモンが▽
 とつぜん　ひかりだした！▼
-[Name:TrainerName Idx="0"]は　ポケモンから
-[Name:PMS Idx="2"]を　もらった！▼</Text>
+[Name:TrainerName Idx="0" ]は　ポケモンから
+[Name:PMS Idx="2" ]を　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6568,8 +6568,8 @@ w=トレーナー女子（相手が）
 ……おや？
 やってきた　ポケモンが▽
 突然　光りだした！▼
-[Name:TrainerName Idx="0"]は　ポケモンから
-[Name:PMS Idx="2"]を　もらった！▼</Text>
+[Name:TrainerName Idx="0" ]は　ポケモンから
+[Name:PMS Idx="2" ]を　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6611,7 +6611,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 ぼうけんの　たすけに
@@ -6619,7 +6619,7 @@ w=トレーナー女子（相手が）
 ハイリンク　から
 これを　もって　きたんだ▽
 うけとってよ！▼
-……[Name:TrainerName Idx="0"]が
+……[Name:TrainerName Idx="0" ]が
 とつぜん　ひかりだした！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6631,7 +6631,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ！▼
 冒険の　助けに
@@ -6639,7 +6639,7 @@ w=トレーナー女子（相手が）
 ハイリンク　から　
 これを　持って来たんだ▽
 受け取ってよ！▼
-……[Name:TrainerName Idx="0"]が
+……[Name:TrainerName Idx="0" ]が
 突然　光りだした！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6682,7 +6682,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 ぼうけんの　たすけに
@@ -6690,7 +6690,7 @@ w=トレーナー女子（相手が）
 ハイリンク　から
 これを　もって　きたよ▽
 うけとって！▼
-……[Name:TrainerName Idx="0"]が
+……[Name:TrainerName Idx="0" ]が
 とつぜん　ひかりだした！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6702,7 +6702,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 冒険の　助けに
@@ -6710,7 +6710,7 @@ w=トレーナー女子（相手が）
 ハイリンク　から
 これを　持って来たよ▽
 受け取って！▼
-……[Name:TrainerName Idx="0"]が
+……[Name:TrainerName Idx="0" ]が
 突然　光りだした！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6904,7 +6904,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ポケモンや　みんなの　おかげで
 たびも　じゅんちょうだぜ！▼
@@ -6920,7 +6920,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ポケモンや　皆の　おかげで
 旅も　順調だぜ！▼
@@ -6969,9 +6969,9 @@ w=トレーナー女子（相手が）
 			Language="JPN">
 			<Text>ありがとう！
 たすかるよ！▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　つかった！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　つかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -6984,9 +6984,9 @@ w=トレーナー女子（相手が）
 			Language="JPN_KANJI">
 			<Text>ありがとう！
 助かるよ！▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　使った！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　使った！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -7022,7 +7022,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 あなたも　たびのとちゅう？▼
 ポケモンや　みんなの　おかげで
 わたしの　たびは　じゅんちょうよ！▼
@@ -7038,7 +7038,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 あなたも　旅の途中？▼
 ポケモンや　皆の　おかげで
 私の　旅は　順調よ！▼
@@ -7087,9 +7087,9 @@ w=トレーナー女子（相手が）
 			Language="JPN">
 			<Text>ありがとう！
 たすかるよ！▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　つかった！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　つかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -7102,9 +7102,9 @@ w=トレーナー女子（相手が）
 			Language="JPN_KANJI">
 			<Text>ありがとう！
 助かるよ！▼
-[Name:TrainerName Idx="1"]は　ハイルツリーから
-もらった　[Name:PMS Idx="2"]を▽
-[Name:TrainerName Idx="0"]に　使った！▼</Text>
+[Name:TrainerName Idx="1" ]は　ハイルツリーから
+もらった　[Name:PMS Idx="2" ]を▽
+[Name:TrainerName Idx="0" ]に　使った！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -7305,7 +7305,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『あ！
+			<Text>[Name:TrainerName Idx="0" ]『あ！
 こんにちは！▼
 ハイリンクから　あなたに
 あいにきたよ！▼
@@ -7324,7 +7324,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『あ！
+			<Text>[Name:TrainerName Idx="0" ]『あ！
 こんにちは！▼
 ハイリンクから　あなたに
 会いに来たよ！▼
@@ -7371,7 +7371,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『あ！
+			<Text>[Name:TrainerName Idx="0" ]『あ！
 こんにちは！▼
 ハイリンクから　あなたに
 あいにきたよ！▼
@@ -7390,7 +7390,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『あ！
+			<Text>[Name:TrainerName Idx="0" ]『あ！
 こんにちは！▼
 ハイリンクから　あなたに
 会いに来たよ！▼
@@ -7587,7 +7587,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▽
 きみも　たびの　とちゅうかな？▼
 はなしたいことが　あったら
@@ -7602,7 +7602,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▽
 君も　旅の　途中かな？▼
 話したいことが　あったら
@@ -7646,7 +7646,7 @@ w=トレーナー女子（相手が）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▽
 あなたも　たびの　とちゅう？▼
 はなしたいことが　あったら
@@ -7661,7 +7661,7 @@ w=トレーナー女子（相手が）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▽
 あなたも　旅の　途中？▼
 話したいことが　あったら
@@ -7852,7 +7852,7 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『このパワーが　すこしでも
+			<Text>[Name:TrainerName Idx="0" ]『このパワーが　すこしでも
 たびのやくにたてば　うれしいよ！▽
 じゃあ　また！</Text>
 			<TextModifiedBy
@@ -7865,7 +7865,7 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『このパワーが　少しでも
+			<Text>[Name:TrainerName Idx="0" ]『このパワーが　少しでも
 旅のやくにたてば　うれしいよ！▽
 じゃあ　また！</Text>
 			<TextModifiedBy
@@ -7905,7 +7905,7 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『このパワーが　すこしでも
+			<Text>[Name:TrainerName Idx="0" ]『このパワーが　すこしでも
 たびのやくにたてば　うれしいな！▽
 じゃあ　また！</Text>
 			<TextModifiedBy
@@ -7918,7 +7918,7 @@ mis_m02_01_1のあとのセリフ、相手側にでるメッセージ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『このパワーが　少しでも
+			<Text>[Name:TrainerName Idx="0" ]『このパワーが　少しでも
 旅のやくにたてば　うれしいな！▽
 じゃあ　また！</Text>
 			<TextModifiedBy
@@ -8110,7 +8110,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　たすかるよ！▼</Text>
@@ -8126,7 +8126,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN_KANJI">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　助かるよ！▼</Text>
@@ -8171,7 +8171,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　たすかるよ！▼</Text>
@@ -8187,7 +8187,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN_KANJI">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]『わー！
+[Name:TrainerName Idx="0" ]『わー！
 こっこれは　すごいパワーだ！▼
 ありがとう！
 すごく　助かるよ！▼</Text>
@@ -8389,7 +8389,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8401,7 +8401,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8440,7 +8440,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8452,7 +8452,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8641,7 +8641,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8653,7 +8653,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8694,7 +8694,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8706,7 +8706,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8897,13 +8897,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 ……いきなり　だけど
 たいせん　しないか？▼
 たいりょくも　かいふくさせて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 てもち　２ひきで　たたかおうぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8915,13 +8915,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 ……いきなり　だけど
 対戦　しないか？▼
 体力も　回復させて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 手持ち　２匹で　戦おうぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8962,13 +8962,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 ……いきなり　だけど
 たいせん　しない？▼
 たいりょくも　かいふくさせて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 てもち　２ひきで　たたかいましょう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8980,13 +8980,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 ……いきなり　だけど
 対戦しない？▼
 体力も　回復させて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 手持ち　２匹で　戦いましょう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9179,10 +9179,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-てもち　２ひき　レベル　[Digit:3digits Idx="1"]フラットで▽
+てもち　２ひき　レベル　[Digit:3digits Idx="1" ]フラットで▽
 たいせん　したいの？　ちょっとまってて！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9194,10 +9194,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-手持ち　２匹で　レベル　[Digit:3digits Idx="1"]フラットで▽
+手持ち　２匹で　レベル　[Digit:3digits Idx="1" ]フラットで▽
 対戦　したいの？　ちょっと待ってて！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9239,10 +9239,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-てもち　２ひき　レベル　[Digit:3digits Idx="1"]フラットで▽
+てもち　２ひき　レベル　[Digit:3digits Idx="1" ]フラットで▽
 たいせん　したいの？　ちょっとまっててね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9254,10 +9254,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-手持ち　２匹　レベル　[Digit:3digits Idx="1"]フラットで▽
+手持ち　２匹　レベル　[Digit:3digits Idx="1" ]フラットで▽
 対戦　したいの？　ちょっと待っててね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9449,13 +9449,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 ……いきなり　だけど
 たいせん　しないか？▼
 たいりょくも　かいふくさせて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 てもち　２ひきで　たたかおうぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9467,13 +9467,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 ……いきなり　だけど
 対戦　しないか？▼
 体力も　回復させて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 手持ち　２匹で　戦おうぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9514,13 +9514,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 ……いきなり　だけど
 たいせん　しない？▼
 たいりょくも　かいふくさせて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 てもち　２ひきで　たたかいましょう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9532,13 +9532,13 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 ……いきなり　だけど
 対戦しない？▼
 体力も　回復させて
-レベル　[Digit:3digits Idx="1"]フラット▽
+レベル　[Digit:3digits Idx="1" ]フラット▽
 手持ち　２匹で　戦いましょう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9731,10 +9731,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-てもち　２ひき　レベル　[Digit:3digits Idx="1"]フラットで▽
+てもち　２ひき　レベル　[Digit:3digits Idx="1" ]フラットで▽
 たいせん　したいの？　ちょっとまってて！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9746,10 +9746,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-手持ち　２匹で　レベル　[Digit:3digits Idx="1"]フラットで▽
+手持ち　２匹で　レベル　[Digit:3digits Idx="1" ]フラットで▽
 対戦　したいの？　ちょっと待ってて！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9792,10 +9792,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-てもち　２ひき　レベル　[Digit:3digits Idx="1"]フラットで▽
+てもち　２ひき　レベル　[Digit:3digits Idx="1" ]フラットで▽
 たいせん　したいの？　ちょっとまっててね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9807,10 +9807,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ん？
-手持ち　２匹　レベル　[Digit:3digits Idx="1"]フラットで▽
+手持ち　２匹　レベル　[Digit:3digits Idx="1" ]フラットで▽
 対戦　したいの？　ちょっと待っててね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11547,7 +11547,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11559,7 +11559,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11601,7 +11601,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11613,7 +11613,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11804,7 +11804,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11816,7 +11816,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11857,7 +11857,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11869,7 +11869,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12310,12 +12310,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いけっ　そこだ！
+			<Text>[Name:TrainerName Idx="0" ]『いけっ　そこだ！
 がんばれ！　……▼
 お！　ありがたい！
 たすけてくれるのか！？▼
 「せんとう　ＨＰかいふくパワー」を
-[Name:TrainerName Idx="0"]の　ポケモンに　つかった！▼</Text>
+[Name:TrainerName Idx="0" ]の　ポケモンに　つかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -12326,12 +12326,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『いけっ　そこだ！
+			<Text>[Name:TrainerName Idx="0" ]『いけっ　そこだ！
 がんばれ！　……▼
 お！　ありがたい！
 助けてくれるのか！？▼
 「せんとう　ＨＰかいふくパワー」を
-[Name:TrainerName Idx="0"]の　ポケモンに　使った！▼</Text>
+[Name:TrainerName Idx="0" ]の　ポケモンに　使った！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -12371,12 +12371,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いけっ　そこよ！
+			<Text>[Name:TrainerName Idx="0" ]『いけっ　そこよ！
 がんばって！　……▼
 わ！　ありがとう！
 たすけてくれるの！？▼
 「せんとう　ＨＰかいふくパワー」を
-[Name:TrainerName Idx="0"]の　ポケモンに　つかった！▼</Text>
+[Name:TrainerName Idx="0" ]の　ポケモンに　つかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -12387,12 +12387,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『いけっ　そこよ！
+			<Text>[Name:TrainerName Idx="0" ]『いけっ　そこよ！
 がんばって！　……▼
 わ！　ありがとう！
 助けてくれるの！？▼
 「せんとう　ＨＰかいふくパワー」を
-[Name:TrainerName Idx="0"]の　ポケモンに　使った！▼</Text>
+[Name:TrainerName Idx="0" ]の　ポケモンに　使った！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -12834,9 +12834,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]の　ポケモンは
+[Name:TrainerName Idx="0" ]の　ポケモンは
 たいりょくが　かいふくした！▼
-[Name:TrainerName Idx="0"]『おお！
+[Name:TrainerName Idx="0" ]『おお！
 ありがとうな　たすかったぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12850,9 +12850,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN_KANJI">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]の　ポケモンは
+[Name:TrainerName Idx="0" ]の　ポケモンは
 体力が　回復した！▼
-[Name:TrainerName Idx="0"]『おお！
+[Name:TrainerName Idx="0" ]『おお！
 ありがとうな　助かったぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12895,9 +12895,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]の　ポケモンは
+[Name:TrainerName Idx="0" ]の　ポケモンは
 たいりょくが　かいふくした！▼
-[Name:TrainerName Idx="0"]『やった！
+[Name:TrainerName Idx="0" ]『やった！
 ありがとうね　たすかったよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12911,9 +12911,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			Language="JPN_KANJI">
 			<Text>……　……　……
 ……　……　……！！▼
-[Name:TrainerName Idx="0"]の　ポケモンは
+[Name:TrainerName Idx="0" ]の　ポケモンは
 体力が　回復した！▼
-[Name:TrainerName Idx="0"]『やった！
+[Name:TrainerName Idx="0" ]『やった！
 ありがとうね　助かったよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13103,7 +13103,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 もし　あぶなくなったら
@@ -13121,7 +13121,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 もし　危なくなったら
@@ -13168,7 +13168,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 もし　あぶなくなったら
@@ -13186,7 +13186,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 もし　危なくなったら
@@ -13383,7 +13383,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 ちかくに　いてくれると
 なんだか　たのもしいぜ！▼
@@ -13401,7 +13401,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 こんにちは！▼
 近くに　いてくれると
 なんだか　たのもしいぜ！▼
@@ -13448,7 +13448,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 こんにちは！▼
 ちかくに　いてくれると
 なんだが　ほっとするね！▼
@@ -13466,7 +13466,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 こんにちは！▼
 近くに　いてくれると
 なんだが　ほっとするね！▼
@@ -13663,7 +13663,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 もし　あぶなくなったら
@@ -13680,7 +13680,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 もし　危なくなったら
@@ -13726,7 +13726,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 もし　あぶなくなったら
@@ -13743,7 +13743,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 もし　危なくなったら
@@ -13939,7 +13939,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『あ！
+			<Text>[Name:TrainerName Idx="0" ]『あ！
 こんにちは！▼
 ちかくに　いてくれると
 なんだか　たのもしいぜ！</Text>
@@ -13953,7 +13953,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『あ！
+			<Text>[Name:TrainerName Idx="0" ]『あ！
 こんにちは！▼
 近くに　いてくれると
 なんだか　たのもしいぜ！</Text>
@@ -13996,7 +13996,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 こんにちは！▼
 ちかくに　いてくれると
 なんだが　ほっとするね！</Text>
@@ -14010,7 +14010,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 こんにちは！▼
 近くに　いてくれると
 なんだが　ほっとするね！</Text>
@@ -14203,7 +14203,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14215,7 +14215,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14256,7 +14256,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14268,7 +14268,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14459,7 +14459,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14471,7 +14471,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14512,7 +14512,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14524,7 +14524,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14724,7 +14724,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 みつかっちゃった！▽
 に　にげろ！</Text>
 			<TextModifiedBy
@@ -14737,7 +14737,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 みつかっちゃった！▽
 に　逃げろ！</Text>
 			<TextModifiedBy
@@ -14779,7 +14779,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 みつかっちゃった！▽
 に　にげろ！</Text>
 			<TextModifiedBy
@@ -14792,7 +14792,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 みつかっちゃった！▽
 に　逃げろ！</Text>
 			<TextModifiedBy
@@ -15005,7 +15005,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『ん？
+			<Text>[Name:TrainerName Idx="0" ]『ん？
 こんなところに　ポケモンが！▽
 めずらしいなぁ！▽
 なんか　さがしてるの？</Text>
@@ -15019,7 +15019,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『ん？
+			<Text>[Name:TrainerName Idx="0" ]『ん？
 こんなところに　ポケモンが！▽
 珍しいなぁ！▽
 なんか　探してるの？</Text>
@@ -15062,7 +15062,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『わ？
+			<Text>[Name:TrainerName Idx="0" ]『わ？
 こんなところに　ポケモン！▽
 めずらしいなぁ！▽
 なんか　さがしてるのかな？</Text>
@@ -15076,7 +15076,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『わ？
+			<Text>[Name:TrainerName Idx="0" ]『わ？
 こんなところに　ポケモン！▽
 珍しいなぁ！▽
 なんか　探してるのかな？</Text>
@@ -15290,7 +15290,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 つかまっちゃった！▽
 に　にげろ！</Text>
 			<TextModifiedBy
@@ -15303,7 +15303,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 つかまっちゃった！▽
 に　逃げろ！</Text>
 			<TextModifiedBy
@@ -15345,7 +15345,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 つかまっちゃった！▽
 に　にげろ！</Text>
 			<TextModifiedBy
@@ -15358,7 +15358,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『うわあ！
+			<Text>[Name:TrainerName Idx="0" ]『うわあ！
 つかまっちゃった！▽
 に　逃げろ！</Text>
 			<TextModifiedBy
@@ -15559,7 +15559,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『あはは！
+			<Text>[Name:TrainerName Idx="0" ]『あはは！
 つかまえちゃったぜ！▽
 あ！　にげないでよ！</Text>
 			<TextModifiedBy
@@ -15572,7 +15572,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『あはは！
+			<Text>[Name:TrainerName Idx="0" ]『あはは！
 つかまえちゃったぜ！▽
 あ！　逃げないでよ！</Text>
 			<TextModifiedBy
@@ -15614,7 +15614,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 つかまえちゃった！▽
 あ！　にげないで！</Text>
 			<TextModifiedBy
@@ -15627,7 +15627,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 つかまえちゃった！▽
 あ！　逃げないで！</Text>
 			<TextModifiedBy
@@ -15922,8 +15922,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>もくてきちに　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-もってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+もってきた　[Name:Item Idx="1" ]を▽
 みつけたひとが　びっくりするように▽
 メモと　いっしょに　かくした！</Text>
 			<TextModifiedBy
@@ -15939,8 +15939,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>目的地に　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-持ってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+持ってきた　[Name:Item Idx="1" ]を▽
 見つけた人が　びっくりするように▽
 メモと　一緒に　隠した！</Text>
 			<TextModifiedBy
@@ -15986,8 +15986,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>もくてきちに　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-もってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+もってきた　[Name:Item Idx="1" ]を▽
 みつけたひとが　びっくりするように▽
 メモと　いっしょに　かくした！</Text>
 			<TextModifiedBy
@@ -16003,8 +16003,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>目的地に　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-持ってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+持ってきた　[Name:Item Idx="1" ]を▽
 見つけた人が　びっくりするように▽
 メモと　一緒に　隠した！</Text>
 			<TextModifiedBy
@@ -16050,8 +16050,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>もくてきちに　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-もってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+もってきた　[Name:Item Idx="1" ]を▽
 みつけたひとが　びっくりするように▽
 メモと　いっしょに　かくした！</Text>
 			<TextModifiedBy
@@ -16067,8 +16067,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>目的地に　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-持ってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+持ってきた　[Name:Item Idx="1" ]を▽
 見つけた人が　びっくりするように▽
 メモと　一緒に　隠した！</Text>
 			<TextModifiedBy
@@ -16114,8 +16114,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>もくてきちに　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-もってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+もってきた　[Name:Item Idx="1" ]を▽
 みつけたひとが　びっくりするように▽
 メモと　いっしょに　かくした！</Text>
 			<TextModifiedBy
@@ -16131,8 +16131,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>目的地に　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-持ってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+持ってきた　[Name:Item Idx="1" ]を▽
 見つけた人が　びっくりするように▽
 メモと　一緒に　隠した！</Text>
 			<TextModifiedBy
@@ -16178,8 +16178,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>もくてきちに　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-もってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+もってきた　[Name:Item Idx="1" ]を▽
 みつけたひとが　びっくりするように▽
 メモと　いっしょに　かくした！</Text>
 			<TextModifiedBy
@@ -16195,8 +16195,8 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 			<Text>目的地に　たどりついた！▼
 ……　……　……
 ……ガサガサッ！▼
-[Name:TrainerName Idx="0"]は
-持ってきた　[Name:Item Idx="1"]を▽
+[Name:TrainerName Idx="0" ]は
+持ってきた　[Name:Item Idx="1" ]を▽
 見つけた人が　びっくりするように▽
 メモと　一緒に　隠した！</Text>
 			<TextModifiedBy
@@ -16389,14 +16389,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 さて！　とつぜんですが
 たびのとちゅうの　ブレイクタイム！▼
 ……ただいま　ですね
 フレンドリィショップ　キャンペーンで▽
-[Name:Item Idx="1"]を！▽
+[Name:Item Idx="1" ]を！▽
 なんと！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16408,14 +16408,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 さて！　突然ですが
 旅の途中の　ブレイクタイム！▼
 ……ただいま　ですね
 フレンドリィショップ　キャンペーンで▽
-[Name:Item Idx="1"]を！▽
+[Name:Item Idx="1" ]を！▽
 なんと！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16460,12 +16460,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくべつかかく　[Digit:5digits Idx="2"]円で！
+			<Text>とくべつかかく　[Digit:5digits Idx="2" ]円で！
 はんばい　しております！▼
 こんな　チャンス
 めったに　ありません！▼
-[Name:Item Idx="1"]を
-[Digit:5digits Idx="2"]円で　いかがでしょうか？</Text>
+[Name:Item Idx="1" ]を
+[Digit:5digits Idx="2" ]円で　いかがでしょうか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -16476,12 +16476,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特別価格　[Digit:5digits Idx="2"]円で！
+			<Text>特別価格　[Digit:5digits Idx="2" ]円で！
 販売　しております！▼
 こんな　チャンス
 めったに　ありません！▼
-[Name:Item Idx="1"]を
-[Digit:5digits Idx="2"]円で　いかがでしょうか？</Text>
+[Name:Item Idx="1" ]を
+[Digit:5digits Idx="2" ]円で　いかがでしょうか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -16525,14 +16525,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 さて！　とつぜんですが
 たびのとちゅうの　ブレイクタイム！▼
 いま　フレンドリィショップ
 キャンペーンを　やってて　ですね▽
-[Name:Item Idx="1"]を！▽
+[Name:Item Idx="1" ]を！▽
 なんとー！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16544,14 +16544,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！
 突然で　びっくりした？▽
 ハイリンクから　会いに来たよ▼
 さて！　突然ですが
 旅の途中の　ブレイクタイム！▼
 いま　フレンドリィショップ
 キャンペーンを　やってて　ですね▽
-[Name:Item Idx="1"]を！▽
+[Name:Item Idx="1" ]を！▽
 なんとー！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16596,12 +16596,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくべつかかく　[Digit:5digits Idx="2"]円で！
+			<Text>とくべつかかく　[Digit:5digits Idx="2" ]円で！
 はんばい　しております！▼
 こんな　チャンス
 めったに　ありませんよ！▼
-[Name:Item Idx="1"]を
-[Digit:5digits Idx="2"]円で　いかがでしょうか？</Text>
+[Name:Item Idx="1" ]を
+[Digit:5digits Idx="2" ]円で　いかがでしょうか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -16612,12 +16612,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特別価格　[Digit:5digits Idx="2"]円で！
+			<Text>特別価格　[Digit:5digits Idx="2" ]円で！
 販売　しております！▼
 こんな　チャンス
 めったに　ありませんよ！▼
-[Name:Item Idx="1"]を
-[Digit:5digits Idx="2"]円で　いかがでしょうか？</Text>
+[Name:Item Idx="1" ]を
+[Digit:5digits Idx="2" ]円で　いかがでしょうか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:08" />
@@ -16811,9 +16811,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！▼
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！▼
 え！？　なに？
-[Name:Item Idx="1"]を　[Digit:5digits Idx="2"]円で▽
+[Name:Item Idx="1" ]を　[Digit:5digits Idx="2" ]円で▽
 うってくれるの？▼
 どうしようかな？
 うーん……</Text>
@@ -16827,9 +16827,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！▼
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！▼
 え！？　なに？
-[Name:Item Idx="1"]を　[Digit:5digits Idx="2"]円で▽
+[Name:Item Idx="1" ]を　[Digit:5digits Idx="2" ]円で▽
 売ってくれるの？▼
 どうしようかな？
 うーん……</Text>
@@ -16874,9 +16874,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！▼
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！▼
 え！？　なに？
-[Name:Item Idx="1"]を　[Digit:5digits Idx="2"]円で▽
+[Name:Item Idx="1" ]を　[Digit:5digits Idx="2" ]円で▽
 うってくれるの？▼
 どうしよう？
 うーん……</Text>
@@ -16890,9 +16890,9 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『こんにちは！▼
+			<Text>[Name:TrainerName Idx="0" ]『こんにちは！▼
 え！？　なに？
-[Name:Item Idx="1"]を　[Digit:5digits Idx="2"]円で▽
+[Name:Item Idx="1" ]を　[Digit:5digits Idx="2" ]円で▽
 売ってくれるの？▼
 どうしよう？
 うーん……</Text>
@@ -17088,8 +17088,8 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとうございます！　では
-[Name:Item Idx="1"]を　おわたしします！▼
-[Name:TrainerName Idx="3"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　おわたしします！▼
+[Name:TrainerName Idx="3" ]は　[Name:Item Idx="1" ]を
 てにいれた！▼
 それではまた　たびのどこかで
 おあいしましょう！</Text>
@@ -17104,8 +17104,8 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありがとうございます！　では
-[Name:Item Idx="1"]を　おわたしします！▼
-[Name:TrainerName Idx="3"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　おわたしします！▼
+[Name:TrainerName Idx="3" ]は　[Name:Item Idx="1" ]を
 手に入れた！▼
 それではまた　旅のどこかで
 お会いしましょう！</Text>
@@ -17150,8 +17150,8 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとうございます！　では
-[Name:Item Idx="1"]を　おわたしします！▼
-[Name:TrainerName Idx="3"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　おわたしします！▼
+[Name:TrainerName Idx="3" ]は　[Name:Item Idx="1" ]を
 てにいれた！▼
 それではまた　たびのどこかで
 おあいしましょう！</Text>
@@ -17166,8 +17166,8 @@ mis_m06_01から、買ったとき、ターゲット側にでるメッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありがとうございます！　では
-[Name:Item Idx="1"]を　おわたしします！▼
-[Name:TrainerName Idx="3"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　おわたしします！▼
+[Name:TrainerName Idx="3" ]は　[Name:Item Idx="1" ]を
 手に入れた！▼
 それではまた　旅のどこかで
 お会いしましょう！</Text>
@@ -17363,10 +17363,10 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>きめた！
-[Name:Item Idx="1"]を　１つください！▼
-[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　１つください！▼
+[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
 てにいれた！▼
-[Name:TrainerName Idx="0"]『おおー！
+[Name:TrainerName Idx="0" ]『おおー！
 なんだか　とくしちゃったぜ！▽
 ありがとうな！</Text>
 			<TextModifiedBy
@@ -17380,10 +17380,10 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きめた！
-[Name:Item Idx="1"]を　１つください！▼
-[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　１つください！▼
+[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
 手に入れた！▼
-[Name:TrainerName Idx="0"]『おおー！
+[Name:TrainerName Idx="0" ]『おおー！
 なんだか　得しちゃったぜ！▽
 ありがとうな！</Text>
 			<TextModifiedBy
@@ -17428,10 +17428,10 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>よーし！
-[Name:Item Idx="1"]を　１つください！▼
-[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　１つください！▼
+[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
 てにいれた！▼
-[Name:TrainerName Idx="0"]『やったー！
+[Name:TrainerName Idx="0" ]『やったー！
 なんだか　とくしちゃった　きぶん！▽
 ありがとうね！</Text>
 			<TextModifiedBy
@@ -17445,10 +17445,10 @@ mis_m06_01から、買ったとき、ミッション側にでるメッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よーし！
-[Name:Item Idx="1"]を　１つください！▼
-[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
+[Name:Item Idx="1" ]を　１つください！▼
+[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
 手に入れた！▼
-[Name:TrainerName Idx="0"]『やったー！
+[Name:TrainerName Idx="0" ]『やったー！
 なんだか　得しちゃった　きぶん！▽
 ありがとうね！</Text>
 			<TextModifiedBy
@@ -19258,7 +19258,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19270,7 +19270,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19309,7 +19309,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19321,7 +19321,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19510,7 +19510,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19522,7 +19522,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『やあ！
+			<Text>[Name:TrainerName Idx="0" ]『やあ！
 がんばってるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19565,7 +19565,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19577,7 +19577,7 @@ mis_m06_01から、道具がいっぱい時、ミッション側にでるメッ�
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『えへへ！
+			<Text>[Name:TrainerName Idx="0" ]『えへへ！
 がんばってる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

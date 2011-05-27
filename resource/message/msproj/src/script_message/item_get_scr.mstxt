@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -18,8 +18,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -49,8 +49,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -61,8 +61,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -93,8 +93,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -105,8 +105,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -144,8 +144,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
-「[Name:Move Idx="2"]」を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]
+「[Name:Move Idx="2" ]」を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -156,8 +156,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
-「[Name:Move Idx="2"]」を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]
+「[Name:Move Idx="2" ]」を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -189,8 +189,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -201,8 +201,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -233,8 +233,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -245,8 +245,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -277,8 +277,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
-「[Name:Move Idx="2"]」を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]
+「[Name:Move Idx="2" ]」を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -289,8 +289,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]
-「[Name:Move Idx="2"]」を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]
+「[Name:Move Idx="2" ]」を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -322,7 +322,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざんねん！　[Name:Item Idx="0"]は
+			<Text>ざんねん！　[Name:Item Idx="0" ]は
 いっぱいで　これいじょう　もてない！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -334,7 +334,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残念！　[Name:Item Idx="0"]は
+			<Text>残念！　[Name:Item Idx="0" ]は
 一杯で　これ以上　持てない！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -365,7 +365,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざんねん！　[Name:Item Idx="0"]は
+			<Text>ざんねん！　[Name:Item Idx="0" ]は
 いっぱいで　これいじょう　もてない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -377,7 +377,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残念！　[Name:Item Idx="0"]は
+			<Text>残念！　[Name:Item Idx="0" ]は
 一杯で　これ以上　持てない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -408,7 +408,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　てにいれた！[Ctrl2:PageClear ]
+			<Text>[Name:Item Idx="0" ]を　てにいれた！[Ctrl2:PageClear ]
 ざんねん！
 バッグが　いっぱいだ……</Text>
 			<TextModifiedBy
@@ -421,7 +421,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　手に入れた！[Ctrl2:PageClear ]
+			<Text>[Name:Item Idx="0" ]を　手に入れた！[Ctrl2:PageClear ]
 残念！
 バッグが　一杯だ……</Text>
 			<TextModifiedBy
@@ -460,8 +460,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
-[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を[System:Color name="2" ]
+[Name:Pocket Idx="2" ][/System:Color]ポケットに　しまった[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -472,8 +472,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
-[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を[System:Color name="2" ]
+[Name:Pocket Idx="2" ][/System:Color]ポケットに　しまった[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -505,8 +505,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
-[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を[System:Color name="2" ]
+[Name:Pocket Idx="2" ][/System:Color]ポケットに　しまった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -517,8 +517,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を[System:Color name="2"]
-[Name:Pocket Idx="2"][/System:Color]ポケットに　しまった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を[System:Color name="2" ]
+[Name:Pocket Idx="2" ][/System:Color]ポケットに　しまった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -550,7 +550,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Accessary Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Accessary Idx="1" ]を
 アクセサリーいれに　しまった[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -562,7 +562,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Accessary Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Accessary Idx="1" ]を
 アクセサリーいれに　しまった[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -602,9 +602,9 @@
 			Language="JPN">
 			<Text>……おや？　みつけた　どうぐに　
 メモが　ついている▼
-[Name:TrainerName Idx="3"]『この　どうぐを
+[Name:TrainerName Idx="3" ]『この　どうぐを
 ぼうけんの　やくに　たててください！▼
-……どうやら　[Name:TrainerName Idx="3"]が
+……どうやら　[Name:TrainerName Idx="3" ]が
 かくして　いったようだ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -618,9 +618,9 @@
 			Language="JPN_KANJI">
 			<Text>……おや？　見つけた　道具に
 メモが　ついている▼
-[Name:TrainerName Idx="3"]『この　道具を
+[Name:TrainerName Idx="3" ]『この　道具を
 冒険の　役に立ててください！▼
-……どうやら　[Name:TrainerName Idx="3"]が
+……どうやら　[Name:TrainerName Idx="3" ]が
 隠して　いったようだ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -653,7 +653,7 @@
 			Language="JPN">
 			<Text>ざんねん！
 バッグが　いっぱい　だ！▼
-[Name:TrainerName Idx="0"]は
+[Name:TrainerName Idx="0" ]は
 かくされた　どうぐを　あきらめた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -667,7 +667,7 @@
 			Language="JPN_KANJI">
 			<Text>残念！
 バッグが　一杯だ！▼
-[Name:TrainerName Idx="0"]は
+[Name:TrainerName Idx="0" ]は
 隠された　道具を　あきらめた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -698,8 +698,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　[Digit:3digits Idx="2"]こ▽
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　[Digit:3digits Idx="2" ]こ▽
 てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -711,8 +711,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　[Digit:3digits Idx="2"]個▽
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　[Digit:3digits Idx="2" ]個▽
 手にいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -745,9 +745,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざんねん！　[Name:Item Idx="1"]を
+			<Text>ざんねん！　[Name:Item Idx="1" ]を
 これいじょう　もてない！▽
-[Name:Item Idx="1"]を　あきらめた</Text>
+[Name:Item Idx="1" ]を　あきらめた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -758,9 +758,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残念！　[Name:Item Idx="1"]を
+			<Text>残念！　[Name:Item Idx="1" ]を
 これ以上　持てない！▽
-[Name:Item Idx="1"]を　あきらめた</Text>
+[Name:Item Idx="1" ]を　あきらめた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -792,8 +792,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　さがしていた
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　さがしていた
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -804,8 +804,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　さがしていた
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　みつけた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　さがしていた
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　みつけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />

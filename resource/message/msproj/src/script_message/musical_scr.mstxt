@@ -230,9 +230,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
+			<Text>[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
 かんげきの　あまり
 ことばが　でてこないです……</Text>
 			<TextModifiedBy
@@ -245,9 +245,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
+			<Text>[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
 感激のあまり
 言葉が　でてこないです……</Text>
 			<TextModifiedBy
@@ -298,7 +298,7 @@
 			Language="JPN">
 			<Text>ポケモン　まぶしいほど
 かがやいていました！▼
-[Name:TrainerName Idx="0"]さんの　センス
+[Name:TrainerName Idx="0" ]さんの　センス
 あたしも　まねして　いきたいです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -312,7 +312,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモン　まぶしいほど
 輝いていました！▼
-[Name:TrainerName Idx="0"]さんの　センス
+[Name:TrainerName Idx="0" ]さんの　センス
 あたしも　真似していきたいです！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -361,7 +361,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>また　みにきますね
-[Name:TrainerName Idx="0"]さん▼
+[Name:TrainerName Idx="0" ]さん▼
 だって　じんせい　かわるほど
 すばらしかったんですもの</Text>
 			<TextModifiedBy
@@ -375,7 +375,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>また　観に来ますね
-[Name:TrainerName Idx="0"]さん▼
+[Name:TrainerName Idx="0" ]さん▼
 だって　人生観　変わるほど
 すばらしかったんですもの</Text>
 			<TextModifiedBy
@@ -424,7 +424,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん！　さっきの
+			<Text>[Name:TrainerName Idx="0" ]さん！　さっきの
 ミュージカル　さいこう　でした！▼
 なんだか　げんきが　わいてくるんです
 これからも　がんばってください！</Text>
@@ -438,7 +438,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん！　さっきの
+			<Text>[Name:TrainerName Idx="0" ]さん！　さっきの
 ミュージカル　最高でした！▼
 なんだか　元気が　わいてくるんです
 これからも　がんばってください！</Text>
@@ -551,9 +551,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん！
+			<Text>[Name:TrainerName Idx="0" ]さん！
 ほんじつも　おつかれさまっす！▼
-[Name:TrainerName Idx="0"]さんの　ぶたい
+[Name:TrainerName Idx="0" ]さんの　ぶたい
 なんど　みても　かんどうするっす！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -565,9 +565,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん！
+			<Text>[Name:TrainerName Idx="0" ]さん！
 本日も　お疲れさまっす！▼
-[Name:TrainerName Idx="0"]さんの　舞台
+[Name:TrainerName Idx="0" ]さんの　舞台
 何度みても　感動するっす！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -616,7 +616,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしの　しょくばでは
-[Name:TrainerName Idx="0"]さんの　えいきょうで▽
+[Name:TrainerName Idx="0" ]さんの　えいきょうで▽
 ミュージカルが　ブーム　なんです！▼
 これからも　ステキな
 ドレスアップ　してくださいね！</Text>
@@ -631,7 +631,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>私の　職場では
-[Name:TrainerName Idx="0"]さんの　影響で▽
+[Name:TrainerName Idx="0" ]さんの　影響で▽
 ミュージカルが　ブーム　なんです！▼
 これからも　ステキな
 ドレスアップ　してくださいね！</Text>
@@ -683,7 +683,7 @@
 			Language="JPN">
 			<Text>オレは　いま　もうれつに
 かんどう　してるぜ！▼
-[Name:TrainerName Idx="0"]さんの
+[Name:TrainerName Idx="0" ]さんの
 ぶたいに　であえて　よかった！▽
 おおげさじゃ　ねえよ！</Text>
 			<TextModifiedBy
@@ -698,7 +698,7 @@
 			Language="JPN_KANJI">
 			<Text>オレは　いま　猛烈に
 感動　してるぜ！▼
-[Name:TrainerName Idx="0"]さんの
+[Name:TrainerName Idx="0" ]さんの
 舞台に　出会えて　よかった！▽
 おおげさじゃ　ねえよ！</Text>
 			<TextModifiedBy
@@ -810,7 +810,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんの　ぶたいは
+			<Text>[Name:TrainerName Idx="0" ]さんの　ぶたいは
 とても　げいじゅつてき　ですな！▼
 げいじゅつかの　わたくしが
 いうのだから　まちがいありませんよ！</Text>
@@ -824,7 +824,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんの　舞台は
+			<Text>[Name:TrainerName Idx="0" ]さんの　舞台は
 とても　芸術的　ですな！▼
 芸術家の　わたくしが
 いうのだから　間違いありませんよ！</Text>
@@ -874,9 +874,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
+			<Text>[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
 かんげきの　あまり
 ことばが　でてこないです……▼
 これ　オレの　きもちです
@@ -891,9 +891,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
-[Name:TrainerName Idx="0"]さん！▼
+			<Text>[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
+[Name:TrainerName Idx="0" ]さん！▼
 感激のあまり
 言葉が　でてこないです……▼
 これ　オレの　気持ちです
@@ -946,7 +946,7 @@
 			Language="JPN">
 			<Text>ポケモン　まぶしいほど
 かがやいていました！▼
-[Name:TrainerName Idx="0"]さんの　センス
+[Name:TrainerName Idx="0" ]さんの　センス
 あたしも　まねして　いきたいです！▼
 もし　よろしければ
 このグッズ　つかってください！▼</Text>
@@ -962,7 +962,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモン　まぶしいほど
 輝いていました！▼
-[Name:TrainerName Idx="0"]さんの　センス
+[Name:TrainerName Idx="0" ]さんの　センス
 あたしも　真似していきたいです！▼
 もし　よろしければ
 このグッズ　つかってください！▼</Text>
@@ -1013,7 +1013,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>また　みにきますね
-[Name:TrainerName Idx="0"]さん▼
+[Name:TrainerName Idx="0" ]さん▼
 だって　じんせい　かわるほど
 すばらしかったんですもの▼
 この　グッズ……
@@ -1029,7 +1029,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>また　観に来ますね
-[Name:TrainerName Idx="0"]さん▼
+[Name:TrainerName Idx="0" ]さん▼
 だって　人生観　変わるほど
 すばらしかったんですもの▼
 この　グッズ……
@@ -1080,7 +1080,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん！　さっきの
+			<Text>[Name:TrainerName Idx="0" ]さん！　さっきの
 ミュージカル　さいこう　でした！▼
 なんだか　げんきが　わいてくるんです
 これからも　がんばってください！▼
@@ -1096,7 +1096,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん！　さっきの
+			<Text>[Name:TrainerName Idx="0" ]さん！　さっきの
 ミュージカル　最高でした！▼
 なんだか　元気が　わいてくるんです
 これからも　がんばってください！▼
@@ -1215,9 +1215,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん！
+			<Text>[Name:TrainerName Idx="0" ]さん！
 ほんじつも　おつかれさまっす！▼
-[Name:TrainerName Idx="0"]さんの　ぶたい
+[Name:TrainerName Idx="0" ]さんの　ぶたい
 なんど　みても　かんどうするっす！▼
 こ　これ！
 よければ　つかって　くださいっす！▼</Text>
@@ -1231,9 +1231,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん！
+			<Text>[Name:TrainerName Idx="0" ]さん！
 本日も　お疲れさまっす！▼
-[Name:TrainerName Idx="0"]さんの　舞台
+[Name:TrainerName Idx="0" ]さんの　舞台
 何度みても　感動するっす！▼
 こ　これ！
 よければ　使って　くださいっす！▼</Text>
@@ -1284,7 +1284,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしの　しょくばでは
-[Name:TrainerName Idx="0"]さんの　えいきょうで▽
+[Name:TrainerName Idx="0" ]さんの　えいきょうで▽
 ミュージカルが　ブーム　なんです！▼
 これからも　ステキな
 ドレスアップ　してくださいね！▼
@@ -1301,7 +1301,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>私の　職場では
-[Name:TrainerName Idx="0"]さんの　影響で▽
+[Name:TrainerName Idx="0" ]さんの　影響で▽
 ミュージカルが　ブーム　なんです！▼
 これからも　ステキな
 ドレスアップ　してくださいね！▼
@@ -1355,7 +1355,7 @@
 			Language="JPN">
 			<Text>オレは　いま　もうれつに
 かんどう　してるぜ！▼
-[Name:TrainerName Idx="0"]さんの
+[Name:TrainerName Idx="0" ]さんの
 ぶたいに　であえて　よかった！▽
 おおげさじゃ　ねえよ！▼
 こんなものしか　ねえけどよ
@@ -1372,7 +1372,7 @@
 			Language="JPN_KANJI">
 			<Text>オレは　いま　猛烈に
 感動　してるぜ！▼
-[Name:TrainerName Idx="0"]さんの
+[Name:TrainerName Idx="0" ]さんの
 舞台に　出会えて　よかった！▽
 おおげさじゃ　ねえよ！▼
 こんなものしか　ねえけどよ
@@ -1490,7 +1490,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんの　ぶたいは
+			<Text>[Name:TrainerName Idx="0" ]さんの　ぶたいは
 とても　げいじゅつてき　ですな！▼
 げいじゅつかの　わたくしが
 いうのだから　まちがいありませんよ！▼
@@ -1506,7 +1506,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんの　舞台は
+			<Text>[Name:TrainerName Idx="0" ]さんの　舞台は
 とても　芸術的　ですな！▼
 芸術家の　わたくしが
 いうのだから　間違いありませんよ！▼
@@ -1605,7 +1605,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"][Name:MusicalGoods Idx="1"][/System:Color]を　もらった！</Text>
+			<Text>[System:Color name="2" ][Name:MusicalGoods Idx="1" ][/System:Color]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1616,7 +1616,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"][Name:MusicalGoods Idx="1"][/System:Color]を　もらった！</Text>
+			<Text>[System:Color name="2" ][Name:MusicalGoods Idx="1" ][/System:Color]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1661,9 +1661,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:MusicalGoods Idx="1"]を▽
-[System:Color name="2"]グッズケース[/System:Color]の　なかに　しまった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:MusicalGoods Idx="1" ]を▽
+[System:Color name="2" ]グッズケース[/System:Color]の　なかに　しまった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1674,9 +1674,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:MusicalGoods Idx="1"]を▽
-[System:Color name="2"]グッズケース[/System:Color]の　なかに　しまった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:MusicalGoods Idx="1" ]を▽
+[System:Color name="2" ]グッズケース[/System:Color]の　なかに　しまった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1721,9 +1721,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:MusicalGoods Idx="1"]を▽
-[System:Color name="2"]グッズケース[/System:Color]の　なかに　しまった！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:MusicalGoods Idx="1" ]を▽
+[System:Color name="2" ]グッズケース[/System:Color]の　なかに　しまった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1734,9 +1734,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:MusicalGoods Idx="1"]を▽
-[System:Color name="2"]グッズケース[/System:Color]の　なかに　しまった！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:MusicalGoods Idx="1" ]を▽
+[System:Color name="2" ]グッズケース[/System:Color]の　なかに　しまった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1921,7 +1921,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:MusicalProgram Idx="0"]</Text>
+			<Text>[Name:MusicalProgram Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1932,7 +1932,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:MusicalProgram Idx="0"]</Text>
+			<Text>[Name:MusicalProgram Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -2890,7 +2890,7 @@ msg_musical_recept_06を
 		<LanguageCell
 			Language="JPN">
 			<Text>おまたせいたしました
-それでは　こちらへ　どうぞ！[Ctrl2:WaitOne frame="60"]</Text>
+それでは　こちらへ　どうぞ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -2902,7 +2902,7 @@ msg_musical_recept_06を
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お待たせいたしました
-それでは　こちらへ　どうぞ！[Ctrl2:WaitOne frame="60"]</Text>
+それでは　こちらへ　どうぞ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />

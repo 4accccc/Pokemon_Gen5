@@ -317,7 +317,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]　ストップ！▼
+			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！▼
 トライバッジを　もつもの　どうし
 どちらが　つよいか　たしかめるよ▼</Text>
 			<TextModifiedBy
@@ -330,7 +330,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]　ストップ！▼
+			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！▼
 トライバッジを　持つ者　同士
 どちらが　強いか　確かめるよ▼</Text>
 			<TextModifiedBy
@@ -1142,7 +1142,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 ポケモンを　とりもどすよ[Ctrl2:PageClear ]
 ベル！　きみは
 その　おんなのこの　そばにいてよ[Ctrl2:PageClear ]</Text>
@@ -1156,7 +1156,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 ポケモンを　取り戻すよ[Ctrl2:PageClear ]
 ベル！　きみは
 その　女の子の　そばにいてよ[Ctrl2:PageClear ]</Text>
@@ -1206,7 +1206,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『おねがい……　[Name:TrainerName Idx="0"]▼
+			<Text>ベル『おねがい……　[Name:TrainerName Idx="0" ]▼
 プラズマだんに　うばわれた
 ポケモンを　とりかえしてあげて！</Text>
 			<TextModifiedBy
@@ -1219,7 +1219,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『お願い……　[Name:TrainerName Idx="0"]▼
+			<Text>ベル『お願い……　[Name:TrainerName Idx="0" ]▼
 プラズマ団に　奪われた
 ポケモンを　取り返してあげて！</Text>
 			<TextModifiedBy
@@ -1268,7 +1268,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『おねがい……　[Name:TrainerName Idx="0"]▼
+			<Text>ベル『おねがい……　[Name:TrainerName Idx="0" ]▼
 プラズマだんに　うばわれた
 ポケモンを　とりかえしてあげて！▼</Text>
 			<TextModifiedBy
@@ -1281,7 +1281,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『お願い……　[Name:TrainerName Idx="0"]▼
+			<Text>ベル『お願い……　[Name:TrainerName Idx="0" ]▼
 プラズマ団に　奪われた
 ポケモンを　取り返してあげて！▼</Text>
 			<TextModifiedBy
@@ -1391,7 +1391,7 @@
 			Language="JPN">
 			<Text>チェレン『……あいつら
 この　なかに　はいっていったよ▼
-で　[Name:TrainerName Idx="0"]
+で　[Name:TrainerName Idx="0" ]
 ポケモンの　たいりょく　とか▽
 じゅんびは　ばっちり　だよね？</Text>
 			<TextModifiedBy
@@ -1406,7 +1406,7 @@
 			Language="JPN_KANJI">
 			<Text>チェレン『……あいつら
 この　中に　入っていったよ▼
-で　[Name:TrainerName Idx="0"]
+で　[Name:TrainerName Idx="0" ]
 ポケモンの　体力とか▽
 準備は　万端だよね？</Text>
 			<TextModifiedBy
@@ -1645,7 +1645,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 ポケモンの　たいりょく　とか▽
 じゅんびは　ばっちり　だよね？</Text>
 			<TextModifiedBy
@@ -1658,7 +1658,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 ポケモンの　体力とか▽
 準備は　万端だよね？</Text>
 			<TextModifiedBy
@@ -1706,11 +1706,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName Idx="0"]
+			<Text>ベル『[Name:TrainerName Idx="0" ]
 ほんとうに　ありがとうね！[Ctrl2:PageClear ]
 ふたりで　ポケモンを
 とりかえして　くれたんだよね[Ctrl2:PageClear ]
-ほんと　[Name:TrainerName Idx="0"]たちと
+ほんと　[Name:TrainerName Idx="0" ]たちと
 ともだちで　よかった！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1722,11 +1722,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName Idx="0"]
+			<Text>ベル『[Name:TrainerName Idx="0" ]
 ほんとうに　ありがとうね！[Ctrl2:PageClear ]
 ２人で　ポケモンを
 取り返して　くれたんだよね[Ctrl2:PageClear ]
-ほんと　[Name:TrainerName Idx="0"]たちと
+ほんと　[Name:TrainerName Idx="0" ]たちと
 友達で　よかった！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1908,7 +1908,7 @@
 じゃ　あたし
 このこを　おくっていくから[Ctrl2:PageClear ]
 じゃあね
-[Name:TrainerName Idx="0"]　バイバーイ！！[Ctrl2:PageClear ]</Text>
+[Name:TrainerName Idx="0" ]　バイバーイ！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -1925,7 +1925,7 @@
 じゃあ　あたし
 この子を　送っていくから[Ctrl2:PageClear ]
 じゃあね
-[Name:TrainerName Idx="0"]　バイバーイ！！[Ctrl2:PageClear ]</Text>
+[Name:TrainerName Idx="0" ]　バイバーイ！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -1973,7 +1973,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]　ストップ！[Ctrl2:PageClear ]</Text>
+			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -1984,7 +1984,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]　ストップ！[Ctrl2:PageClear ]</Text>
+			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -2155,7 +2155,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おーい　[Name:TrainerName Idx="0"]くん！
+			<Text>おーい　[Name:TrainerName Idx="0" ]くん！
 ちょっと　きてくれ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2167,7 +2167,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おーい　[Name:TrainerName Idx="0"]くん！
+			<Text>おーい　[Name:TrainerName Idx="0" ]くん！
 ちょっと　きてくれ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2213,7 +2213,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おーい　[Name:TrainerName Idx="0"]ちゃん！
+			<Text>おーい　[Name:TrainerName Idx="0" ]ちゃん！
 ちょっと　きてくれ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2225,7 +2225,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おーい　[Name:TrainerName Idx="0"]ちゃん！
+			<Text>おーい　[Name:TrainerName Idx="0" ]ちゃん！
 ちょっと　きてくれ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

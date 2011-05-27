@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！▼
+			<Text>[Name:TrainerName Idx="0" ]！▼
 ママです
 そっちは　どう？▼
 ポケモンと　なかよくなって
@@ -25,7 +25,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！▼
+			<Text>[Name:TrainerName Idx="0" ]！▼
 ママです
 そっちは　どう？▼
 ポケモンと　仲良くなって

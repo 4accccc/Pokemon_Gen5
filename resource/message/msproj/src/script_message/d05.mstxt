@@ -1892,7 +1892,7 @@
 			Language="JPN">
 			<Text>この　ポケモンが
 めざめるパワーを　おぼえたら▽
-タイプは　「[Name:Type Idx="0"]」！</Text>
+タイプは　「[Name:Type Idx="0" ]」！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-25T03:24:37" />
@@ -1905,7 +1905,7 @@
 			Language="JPN_KANJI">
 			<Text>この　ポケモンが
 めざめるパワーを　覚えたら▽
-タイプは　「[Name:Type Idx="0"]」！</Text>
+タイプは　「[Name:Type Idx="0" ]」！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-25T03:24:37" />
@@ -1947,7 +1947,7 @@
 			Language="JPN">
 			<Text>この　ポケモンが
 つかう　めざめるパワーの▽
-タイプは　「[Name:Type Idx="0"]」！</Text>
+タイプは　「[Name:Type Idx="0" ]」！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-25T03:24:37" />
@@ -1960,7 +1960,7 @@
 			Language="JPN_KANJI">
 			<Text>この　ポケモンが
 使う　めざめるパワーの▽
-タイプは　「[Name:Type Idx="0"]」！</Text>
+タイプは　「[Name:Type Idx="0" ]」！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-25T03:24:37" />

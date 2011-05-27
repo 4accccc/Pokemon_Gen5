@@ -7347,7 +7347,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リーグリボン[Digit:2digits Idx="0"]</Text>
+			<Text>リーグリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7358,7 +7358,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リーグリボン[Digit:2digits Idx="0"]</Text>
+			<Text>リーグリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7380,7 +7380,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コンテストリボン[Digit:2digits Idx="0"]</Text>
+			<Text>コンテストリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7391,7 +7391,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コンテストリボン[Digit:2digits Idx="0"]</Text>
+			<Text>コンテストリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7413,7 +7413,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タワーリボン[Digit:2digits Idx="0"]</Text>
+			<Text>タワーリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7424,7 +7424,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タワーリボン[Digit:2digits Idx="0"]</Text>
+			<Text>タワーリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7446,7 +7446,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メモリーリボン[Digit:2digits Idx="0"]</Text>
+			<Text>メモリーリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7457,7 +7457,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メモリーリボン[Digit:2digits Idx="0"]</Text>
+			<Text>メモリーリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7479,7 +7479,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレゼントリボン[Digit:2digits Idx="0"]</Text>
+			<Text>プレゼントリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7490,7 +7490,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレゼントリボン[Digit:2digits Idx="0"]</Text>
+			<Text>プレゼントリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />

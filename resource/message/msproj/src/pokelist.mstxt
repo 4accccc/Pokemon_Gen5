@@ -87,7 +87,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>L[Digit:3digits Idx="0"]</Text>
+			<Text>L[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -98,7 +98,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>L[Digit:3digits Idx="0"]</Text>
+			<Text>L[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -130,7 +130,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -141,7 +141,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -172,7 +172,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -183,7 +183,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -214,7 +214,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -225,7 +225,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -809,7 +809,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]を
+			<Text>[Name:PokemonNickname Idx="0" ]を
 どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -821,7 +821,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]を
+			<Text>[Name:PokemonNickname Idx="0" ]を
 どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1403,11 +1403,11 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　あたらしく
-[Name:Move Idx="1"]を　おぼえたい……[Ctrl2:PageClear ]
-しかし　[Name:PokemonNickname Idx="0"]は　わざを　４つ
+			<Text>[Name:PokemonNickname Idx="0" ]は　あたらしく
+[Name:Move Idx="1" ]を　おぼえたい……[Ctrl2:PageClear ]
+しかし　[Name:PokemonNickname Idx="0" ]は　わざを　４つ
 おぼえるので　せいいっぱいだ！[Ctrl2:PageClear ]
-[Name:Move Idx="1"]の　かわりに
+[Name:Move Idx="1" ]の　かわりに
 ほかの　わざを　わすれさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1419,11 +1419,11 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　新しく
-[Name:Move Idx="1"]を　覚えたい……[Ctrl2:PageClear ]
-しかし　[Name:PokemonNickname Idx="0"]は　技を　４つ
+			<Text>[Name:PokemonNickname Idx="0" ]は　新しく
+[Name:Move Idx="1" ]を　覚えたい……[Ctrl2:PageClear ]
+しかし　[Name:PokemonNickname Idx="0" ]は　技を　４つ
 覚えるので　せいいっぱいだ！[Ctrl2:PageClear ]
-[Name:Move Idx="1"]の　代わりに
+[Name:Move Idx="1" ]の　代わりに
 他の　技を　忘れさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1539,7 +1539,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは……　[Name:Move Idx="1"]を
+			<Text>それでは……　[Name:Move Idx="1" ]を
 おぼえるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1551,7 +1551,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは……　[Name:Move Idx="1"]を
+			<Text>それでは……　[Name:Move Idx="1" ]を
 覚えるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1664,7 +1664,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]を
 おぼえずに　おわった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1676,7 +1676,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]を
 覚えずに　おわった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1750,8 +1750,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１[Ctrl2:WaitOne frame="20"]　２の[Ctrl2:WaitOne frame="20"]　…[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]　ポカン！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackOne arg="6"][Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]　…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackOne arg="6" ][Ctrl2:PageClear ]
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
 つかいかたを　きれいにわすれた！[Ctrl2:PageClear ]
 そして……！</Text>
 			<TextModifiedBy
@@ -1764,8 +1764,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１[Ctrl2:WaitOne frame="20"]　２の[Ctrl2:WaitOne frame="20"]　…[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]　ポカン！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackOne arg="6"][Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]　…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackOne arg="6" ][Ctrl2:PageClear ]
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
 使い方を　きれいに忘れた！[Ctrl2:PageClear ]
 そして……！</Text>
 			<TextModifiedBy
@@ -1800,8 +1800,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　あたらしく
-[Name:Move Idx="1"]を　おぼえた！[Ctrl2:CallBackOne arg="2"][Ctrl2:CallBackOne arg="5"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　あたらしく
+[Name:Move Idx="1" ]を　おぼえた！[Ctrl2:CallBackOne arg="2" ][Ctrl2:CallBackOne arg="5" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1812,8 +1812,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　新しく
-[Name:Move Idx="1"]を　覚えた！[Ctrl2:CallBackOne arg="2"][Ctrl2:CallBackOne arg="5"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　新しく
+[Name:Move Idx="1" ]を　覚えた！[Ctrl2:CallBackOne arg="2" ][Ctrl2:CallBackOne arg="5" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1845,9 +1845,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]と　[Name:Move Idx="1"]は
+			<Text>[Name:PokemonNickname Idx="0" ]と　[Name:Move Idx="1" ]は
 あいしょうが　わるかった！[Ctrl2:PageClear ]
-[Name:Move Idx="1"]は　おぼえられない！</Text>
+[Name:Move Idx="1" ]は　おぼえられない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1858,9 +1858,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]と　[Name:Move Idx="1"]は
+			<Text>[Name:PokemonNickname Idx="0" ]と　[Name:Move Idx="1" ]は
 相性が　悪かった！[Ctrl2:PageClear ]
-[Name:Move Idx="1"]は　覚えられない！</Text>
+[Name:Move Idx="1" ]は　覚えられない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1892,8 +1892,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　すでに
-[Name:Move Idx="1"]を　おぼえています</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　すでに
+[Name:Move Idx="1" ]を　おぼえています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1904,8 +1904,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　すでに
-[Name:Move Idx="1"]を　覚えています</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　すでに
+[Name:Move Idx="1" ]を　覚えています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1937,8 +1937,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の　たいりょくが
-[Digit:3digits Idx="1"]　かいふくした！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]の　たいりょくが
+[Digit:3digits Idx="1" ]　かいふくした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1949,8 +1949,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の　体力が
-[Digit:3digits Idx="1"]　回復した！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]の　体力が
+[Digit:3digits Idx="1" ]　回復した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1981,7 +1981,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の　どくは
+			<Text>[Name:PokemonNickname Idx="0" ]の　どくは
 きれい　さっぱり　なくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1993,7 +1993,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の　どくは
+			<Text>[Name:PokemonNickname Idx="0" ]の　どくは
 きれい　さっぱり　なくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2025,7 +2025,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 からだの　しびれが　とれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2037,7 +2037,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 体の　しびれが　とれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2069,7 +2069,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 やけどが　なおった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2081,7 +2081,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 やけどが　なおった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2113,7 +2113,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 からだの　こおりが　とけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2125,7 +2125,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 体の　こおりが　とけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2199,7 +2199,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 げんきを　とりもどした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2211,7 +2211,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 げんきを　とりもどした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2243,7 +2243,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 けんこうに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2255,7 +2255,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 けんこうに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2287,7 +2287,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]の
+			<Text>[Name:Move Idx="0" ]の
 パワーポイントが　ふえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2299,7 +2299,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]の
+			<Text>[Name:Move Idx="0" ]の
 パワーポイントが　増えた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2332,7 +2332,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 こんらんが　とけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2344,7 +2344,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 こんらんが　とけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2376,7 +2376,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 メロメロが　とけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2388,7 +2388,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
+			<Text>[Name:PokemonNickname Idx="0" ]の
 メロメロが　とけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2420,7 +2420,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Status Idx="1"]の
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Status Idx="1" ]の
 きそポイントが　あがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2432,7 +2432,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Status Idx="1"]の
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Status Idx="1" ]の
 基礎ポイントが　あがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2551,8 +2551,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　すでに
-[Name:Item Idx="1"]を　もっています[Ctrl2:PageClear ]
+			<Text>[Name:PokemonNickname Idx="0" ]は　すでに
+[Name:Item Idx="1" ]を　もっています[Ctrl2:PageClear ]
 もっている　どうぐを
 とりかえますか？</Text>
 			<TextModifiedBy
@@ -2565,8 +2565,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　すでに
-[Name:Item Idx="1"]を　持っています[Ctrl2:PageClear ]
+			<Text>[Name:PokemonNickname Idx="0" ]は　すでに
+[Name:Item Idx="1" ]を　持っています[Ctrl2:PageClear ]
 持っている　道具を
 取り替えますか？</Text>
 			<TextModifiedBy
@@ -2682,7 +2682,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　どうぐを
+			<Text>[Name:PokemonNickname Idx="0" ]は　どうぐを
 なにも　もっていません！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2694,7 +2694,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　道具を
+			<Text>[Name:PokemonNickname Idx="0" ]は　道具を
 なにも　持っていません！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2725,8 +2725,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]から
-[Name:Item Idx="1"]を　あずかりました！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]から
+[Name:Item Idx="1" ]を　あずかりました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2737,8 +2737,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]から
-[Name:Item Idx="1"]を　預かりました！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]から
+[Name:Item Idx="1" ]を　預かりました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2814,8 +2814,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="1"]を　あずかり
-[Name:Item Idx="2"]を　もたせました！</Text>
+			<Text>[Name:Item Idx="1" ]を　あずかり
+[Name:Item Idx="2" ]を　もたせました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2826,8 +2826,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="1"]を　預かり
-[Name:Item Idx="2"]を　持たせました！</Text>
+			<Text>[Name:Item Idx="1" ]を　預かり
+[Name:Item Idx="2" ]を　持たせました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3102,7 +3102,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 めを　さました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3114,7 +3114,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 目を　覚ました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3147,7 +3147,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ここを　だっしゅつ　して
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3159,7 +3159,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここを　脱出して
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3273,7 +3273,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>テレポートして
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3285,7 +3285,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>テレポートして
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3851,9 +3851,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 ちょっと　なついた！[Ctrl2:PageClear ]
-[Name:Status Idx="1"]の
+[Name:Status Idx="1" ]の
 きそポイントが　さがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3865,9 +3865,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 ちょっと　なついた！[Ctrl2:PageClear ]
-[Name:Status Idx="1"]の
+[Name:Status Idx="1" ]の
 きそポイントが　さがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3899,9 +3899,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 さいこうに　なついていてる！[Ctrl2:PageClear ]
-[Name:Status Idx="1"]の
+[Name:Status Idx="1" ]の
 きそポイントが　さがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3913,9 +3913,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 最高に　なついていてる！[Ctrl2:PageClear ]
-[Name:Status Idx="1"]の
+[Name:Status Idx="1" ]の
 基礎ポイントが　さがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3948,9 +3948,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 ちょっと　なついた！[Ctrl2:PageClear ]
-[Name:Status Idx="1"]の
+[Name:Status Idx="1" ]の
 きそポイントは　もうさがらない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3962,9 +3962,9 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 ちょっと　なついた！[Ctrl2:PageClear ]
-[Name:Status Idx="1"]の
+[Name:Status Idx="1" ]の
 基礎ポイントは　もうさがらない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3997,8 +3997,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]に
-[Name:Item Idx="1"]を　もたせた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]に
+[Name:Item Idx="1" ]を　もたせた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4009,8 +4009,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]に
-[Name:Item Idx="1"]を　持たせた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]に
+[Name:Item Idx="1" ]を　持たせた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4041,10 +4041,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
-[Name:Item Idx="1"]と[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="2"]の
-[Name:Item Idx="3"]を　いれかえた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]の
+[Name:Item Idx="1" ]と[Ctrl2:PageClear ]
+[Name:PokemonNickname Idx="2" ]の
+[Name:Item Idx="3" ]を　いれかえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4055,10 +4055,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
-[Name:Item Idx="1"]と[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="2"]の
-[Name:Item Idx="3"]を　入れ替えた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]の
+[Name:Item Idx="1" ]と[Ctrl2:PageClear ]
+[Name:PokemonNickname Idx="2" ]の
+[Name:Item Idx="3" ]を　入れ替えた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4754,7 +4754,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ここを　だっしゅつして
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4766,7 +4766,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここを　脱出して
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4900,7 +4900,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>さいごに　やすんだ
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4912,7 +4912,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>最後に　休んだ
-[Name:Place Idx="0"]に　もどる？</Text>
+[Name:Place Idx="0" ]に　もどる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5544,7 +5544,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5555,7 +5555,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5586,7 +5586,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5597,7 +5597,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5635,7 +5635,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5646,7 +5646,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5684,7 +5684,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5695,7 +5695,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5815,7 +5815,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5826,7 +5826,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5857,7 +5857,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5868,7 +5868,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5906,7 +5906,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5917,7 +5917,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5955,7 +5955,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5966,7 +5966,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6748,7 +6748,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　レベルの　ごうけいが
-[Digit:3digits Idx="0"]を　こえています</Text>
+[Digit:3digits Idx="0" ]を　こえています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6760,7 +6760,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　レベルの　合計が
-[Digit:3digits Idx="0"]を　超えています</Text>
+[Digit:3digits Idx="0" ]を　超えています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7161,7 +7161,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7172,7 +7172,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7201,8 +7201,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
-レベル[Digit:3digits Idx="1"]　に　あがった！[Ctrl2:CallBackOne arg="2"][Ctrl2:CallBackOne arg="5"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は
+レベル[Digit:3digits Idx="1" ]　に　あがった！[Ctrl2:CallBackOne arg="2" ][Ctrl2:CallBackOne arg="5" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7213,8 +7213,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
-レベル[Digit:3digits Idx="1"]　に　あがった！[Ctrl2:CallBackOne arg="2"][Ctrl2:CallBackOne arg="5"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は
+レベル[Digit:3digits Idx="1" ]　に　あがった！[Ctrl2:CallBackOne arg="2" ][Ctrl2:CallBackOne arg="5" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7243,8 +7243,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
-[Name:Move Idx="1"]を　おぼえた！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackOne arg="5"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は
+[Name:Move Idx="1" ]を　おぼえた！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackOne arg="5" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7255,8 +7255,8 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
-[Name:Move Idx="1"]を　覚えた！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackOne arg="5"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は
+[Name:Move Idx="1" ]を　覚えた！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackOne arg="5" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7286,7 +7286,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ふたりで　いるときは
-[Name:Move Idx="0"]は　つかえません！</Text>
+[Name:Move Idx="0" ]は　つかえません！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7298,7 +7298,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>二人で　いる時は
-[Name:Move Idx="0"]は　使えません！</Text>
+[Name:Move Idx="0" ]は　使えません！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7374,7 +7374,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="1"]</Text>
+			<Text>[Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7385,7 +7385,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="1"]</Text>
+			<Text>[Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7557,7 +7557,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]は
+			<Text>[Name:PokemonName Idx="0" ]は
 べつの　すがたに　へんかした</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7569,7 +7569,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]は
+			<Text>[Name:PokemonName Idx="0" ]は
 別の姿に　変化した</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7600,7 +7600,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Item Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Item Idx="1" ]を
 もつことが　できない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7612,7 +7612,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Item Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Item Idx="1" ]を
 持つことが　できない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7644,7 +7644,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ばしょでは
-[Name:Item Idx="0"]を　もたせられません</Text>
+[Name:Item Idx="0" ]を　もたせられません</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7656,7 +7656,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この場所では
-[Name:Item Idx="0"]を　持たせられません</Text>
+[Name:Item Idx="0" ]を　持たせられません</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7686,7 +7686,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　たいきちゅう</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　たいきちゅう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7697,7 +7697,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　待機中</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　待機中</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7891,7 +7891,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]：[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]：[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7902,7 +7902,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]：[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]：[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7932,7 +7932,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7943,7 +7943,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8101,7 +8101,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]が　なくなりました</Text>
+			<Text>[Name:Item Idx="0" ]が　なくなりました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8112,7 +8112,7 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]が　無くなりました</Text>
+			<Text>[Name:Item Idx="0" ]が　無くなりました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />

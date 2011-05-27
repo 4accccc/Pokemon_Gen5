@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]に
+			<Text>[Name:PokemonNickname Idx="0" ]に
 どのわざを　おぼえさせる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,7 +18,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]に
+			<Text>[Name:PokemonNickname Idx="0" ]に
 どの技を　覚えさせる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,7 +58,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="1"]　を
+			<Text>[Name:Move Idx="1" ]　を
 おぼえさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70,7 +70,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="1"]　を
+			<Text>[Name:Move Idx="1" ]　を
 覚えさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -113,7 +113,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]に　わざを
+			<Text>[Name:PokemonNickname Idx="0" ]に　わざを
 おぼえさせるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -125,7 +125,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]に　技を
+			<Text>[Name:PokemonNickname Idx="0" ]に　技を
 覚えさせるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -166,8 +166,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　あたらしく
-[Name:Move Idx="1"]を　おぼえた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　あたらしく
+[Name:Move Idx="1" ]を　おぼえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -178,8 +178,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　新しく
-[Name:Move Idx="1"]を　覚えた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　新しく
+[Name:Move Idx="1" ]を　覚えた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -218,11 +218,11 @@ msg_waza_oboe_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　あたらしく
-[Name:Move Idx="1"]を　おぼえたい……▼
-しかし　[Name:PokemonNickname Idx="0"]は　わざを　４つ
+			<Text>[Name:PokemonNickname Idx="0" ]は　あたらしく
+[Name:Move Idx="1" ]を　おぼえたい……▼
+しかし　[Name:PokemonNickname Idx="0" ]は　わざを　４つ
 おぼえるので　せいいっぱいだ！▼
-[Name:Move Idx="1"]の　かわりに
+[Name:Move Idx="1" ]の　かわりに
 ほかの　わざを　わすれさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -234,11 +234,11 @@ msg_waza_oboe_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　新しく
-[Name:Move Idx="1"]を　覚えたい……▼
-しかし　[Name:PokemonNickname Idx="0"]は　技を　４つ
+			<Text>[Name:PokemonNickname Idx="0" ]は　新しく
+[Name:Move Idx="1" ]を　覚えたい……▼
+しかし　[Name:PokemonNickname Idx="0" ]は　技を　４つ
 覚えるので　せいいっぱいだ！▼
-[Name:Move Idx="1"]の　代わりに
+[Name:Move Idx="1" ]の　代わりに
 他の　技を　忘れさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -278,8 +278,8 @@ msg_waza_oboe_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１[Ctrl2:WaitOne frame="20"]　２の[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]　ポカン！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackOne arg="5"][Ctrl2:WaitReset ]▼
-[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackOne arg="5" ][Ctrl2:WaitReset ]▼
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
 つかいかたを　きれいにわすれた！▼
 そして……！▼</Text>
 			<TextModifiedBy
@@ -292,8 +292,8 @@ msg_waza_oboe_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１[Ctrl2:WaitOne frame="20"]　２の[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]　ポカン！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackOne arg="5"][Ctrl2:WaitReset ]▼
-[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackOne arg="5" ][Ctrl2:WaitReset ]▼
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
 使い方を　きれいに忘れた！▼
 そして……！▼</Text>
 			<TextModifiedBy
@@ -331,8 +331,8 @@ msg_waza_oboe_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　あたらしく
-[Name:Move Idx="1"]を　おぼえた！▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　あたらしく
+[Name:Move Idx="1" ]を　おぼえた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -343,8 +343,8 @@ msg_waza_oboe_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　新しく
-[Name:Move Idx="1"]を　覚えた！▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　新しく
+[Name:Move Idx="1" ]を　覚えた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -380,7 +380,7 @@ msg_waza_oboe_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは……　[Name:Move Idx="1"]を
+			<Text>それでは……　[Name:Move Idx="1" ]を
 おぼえるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -392,7 +392,7 @@ msg_waza_oboe_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは……　[Name:Move Idx="1"]を
+			<Text>それでは……　[Name:Move Idx="1" ]を
 覚えるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -432,7 +432,7 @@ msg_waza_oboe_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]を
 おぼえずに　おわった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -444,7 +444,7 @@ msg_waza_oboe_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]を
 覚えずに　おわった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -484,7 +484,7 @@ msg_waza_oboe_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="2"]は　おれいに
+			<Text>[Name:TrainerName Idx="2" ]は　おれいに
 ハートのウロコを　１まい　あげた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -496,7 +496,7 @@ msg_waza_oboe_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="2"]は　お礼に
+			<Text>[Name:TrainerName Idx="2" ]は　お礼に
 ハートのウロコを　１枚　あげた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -534,7 +534,7 @@ msg_waza_oboe_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]を
+			<Text>[Name:Move Idx="0" ]を
 わすれさせて　よろしいですね？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -546,7 +546,7 @@ msg_waza_oboe_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]を
+			<Text>[Name:Move Idx="0" ]を
 忘れさせて　よろしいですね？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -576,7 +576,7 @@ msg_waza_oboe_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]に
+			<Text>[Name:PokemonNickname Idx="0" ]に
 どのわざを　おもいださせる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -588,7 +588,7 @@ msg_waza_oboe_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]に
+			<Text>[Name:PokemonNickname Idx="0" ]に
 どの技を　思い出させる？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -628,7 +628,7 @@ msg_waza_oboe_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="1"]　を
+			<Text>[Name:Move Idx="1" ]　を
 おもいだしますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -640,7 +640,7 @@ msg_waza_oboe_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="1"]　を
+			<Text>[Name:Move Idx="1" ]　を
 思い出しますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -683,7 +683,7 @@ msg_waza_oboe_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]に　わざを
+			<Text>[Name:PokemonNickname Idx="0" ]に　わざを
 おもいださせるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -695,7 +695,7 @@ msg_waza_oboe_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]に　技を
+			<Text>[Name:PokemonNickname Idx="0" ]に　技を
 思い出させるのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -736,8 +736,8 @@ msg_waza_oboe_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　わすれていた
-[Name:Move Idx="1"]を　おもいだした！[Ctrl2:CallBackOne arg="4"][Ctrl2:CallBackOne arg="5"][Ctrl2:CallBackReset ]▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　わすれていた
+[Name:Move Idx="1" ]を　おもいだした！[Ctrl2:CallBackOne arg="4" ][Ctrl2:CallBackOne arg="5" ][Ctrl2:CallBackReset ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -748,8 +748,8 @@ msg_waza_oboe_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　忘れていた
-[Name:Move Idx="1"]を　思い出した！[Ctrl2:CallBackOne arg="4"][Ctrl2:CallBackOne arg="5"][Ctrl2:CallBackReset ]▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　忘れていた
+[Name:Move Idx="1" ]を　思い出した！[Ctrl2:CallBackOne arg="4" ][Ctrl2:CallBackOne arg="5" ][Ctrl2:CallBackReset ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -788,11 +788,11 @@ msg_waza_omoi_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
-[Name:Move Idx="1"]を　おもいだしたい…▼
-しかし　[Name:PokemonNickname Idx="0"]は　わざを　４つ
+			<Text>[Name:PokemonNickname Idx="0" ]は
+[Name:Move Idx="1" ]を　おもいだしたい…▼
+しかし　[Name:PokemonNickname Idx="0" ]は　わざを　４つ
 おぼえるので　せいいっぱいだ！▼
-[Name:Move Idx="1"]の　かわりに
+[Name:Move Idx="1" ]の　かわりに
 ほかの　わざを　わすれさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -804,11 +804,11 @@ msg_waza_omoi_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
-[Name:Move Idx="1"]を　思い出したい…▼
-しかし　[Name:PokemonNickname Idx="0"]は　技を　４つ
+			<Text>[Name:PokemonNickname Idx="0" ]は
+[Name:Move Idx="1" ]を　思い出したい…▼
+しかし　[Name:PokemonNickname Idx="0" ]は　技を　４つ
 覚えるので　せいいっぱいだ！▼
-[Name:Move Idx="1"]の　代わりに
+[Name:Move Idx="1" ]の　代わりに
 他の　技を　忘れさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -848,8 +848,8 @@ msg_waza_omoi_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１[Ctrl2:WaitOne frame="20"]　２の[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]　ポカン！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackCont arg="2"][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
-[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackCont arg="2" ][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
 つかいかたを　きれいにわすれた！▼
 そして……！▼</Text>
 			<TextModifiedBy
@@ -862,8 +862,8 @@ msg_waza_omoi_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１[Ctrl2:WaitOne frame="20"]　２の[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]…[Ctrl2:WaitOne frame="20"]　ポカン！[Ctrl2:CallBackOne arg="3"][Ctrl2:CallBackCont arg="2"][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
-[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackCont arg="2" ][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
 使い方を　きれいに忘れた！▼
 そして……！▼</Text>
 			<TextModifiedBy
@@ -902,8 +902,8 @@ msg_waza_omoi_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　わすれていた
-[Name:Move Idx="1"]を　おもいだした！[Ctrl2:CallBackOne arg="4"][Ctrl2:CallBackOne arg="5"][Ctrl2:CallBackReset ]▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　わすれていた
+[Name:Move Idx="1" ]を　おもいだした！[Ctrl2:CallBackOne arg="4" ][Ctrl2:CallBackOne arg="5" ][Ctrl2:CallBackReset ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -914,8 +914,8 @@ msg_waza_omoi_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　忘れていた
-[Name:Move Idx="1"]を　思い出した！[Ctrl2:CallBackOne arg="4"][Ctrl2:CallBackOne arg="5"][Ctrl2:CallBackReset ]▼</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　忘れていた
+[Name:Move Idx="1" ]を　思い出した！[Ctrl2:CallBackOne arg="4" ][Ctrl2:CallBackOne arg="5" ][Ctrl2:CallBackReset ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -952,7 +952,7 @@ msg_waza_omoi_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは……　[Name:Move Idx="1"]を
+			<Text>それでは……　[Name:Move Idx="1" ]を
 おもいだすのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -964,7 +964,7 @@ msg_waza_omoi_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは……　[Name:Move Idx="1"]を
+			<Text>それでは……　[Name:Move Idx="1" ]を
 思い出すのを　あきらめますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1004,7 +1004,7 @@ msg_waza_omoi_10へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]を
 おもいださずに　おわった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1016,7 +1016,7 @@ msg_waza_omoi_10へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　[Name:Move Idx="1"]を
+			<Text>[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]を
 思い出さずに　終わった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1056,7 +1056,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　おれいに
+			<Text>[Name:TrainerName Idx="0" ]は　おれいに
 ハートのウロコを　１まい　あげた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1068,7 +1068,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　お礼に
+			<Text>[Name:TrainerName Idx="0" ]は　お礼に
 ハートのウロコを　１枚　あげた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1106,7 +1106,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]を
+			<Text>[Name:Move Idx="0" ]を
 わすれさせて　よろしいですね？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1118,7 +1118,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]を
+			<Text>[Name:Move Idx="0" ]を
 忘れさせて　よろしいですね？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1477,7 +1477,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1488,7 +1488,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1524,7 +1524,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1535,7 +1535,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1571,7 +1571,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]／[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]／[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1582,7 +1582,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]／[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]／[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1846,7 +1846,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1857,7 +1857,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1893,7 +1893,7 @@ msg_waza_omoi_01へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｌｖ．[Digit:3digits Idx="0"]</Text>
+			<Text>Ｌｖ．[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1904,7 +1904,7 @@ msg_waza_omoi_01へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｌｖ．[Digit:3digits Idx="0"]</Text>
+			<Text>Ｌｖ．[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />

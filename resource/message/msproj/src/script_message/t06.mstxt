@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『そうだ！　[Name:TrainerName Idx="0"]
+			<Text>アデク『そうだ！　[Name:TrainerName Idx="0" ]
 おまえさんの　ポケモンは　げんきか？▼
 トレーナーの　おまえさんのため
 がんばってくれるのは　ポケモンだ▽
@@ -21,7 +21,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『そうだ！　[Name:TrainerName Idx="0"]
+			<Text>アデク『そうだ！　[Name:TrainerName Idx="0" ]
 おまえさんの　ポケモンは　元気か？▼
 トレーナーの　おまえさんのため
 がんばってくれるのは　ポケモンだ▽
@@ -323,7 +323,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おまえさんの　ともだち　だが
-[Name:PokemonName Idx="0"]を　つれているだろう▼
+[Name:PokemonName Idx="0" ]を　つれているだろう▼
 その　しょうねん　だが
 さきほど　２０ばんどうろで▽
 ポケモンを　きたえておったな……▼
@@ -340,7 +340,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまえさんの　友達だが
-[Name:PokemonName Idx="0"]を　連れているだろう▼
+[Name:PokemonName Idx="0" ]を　連れているだろう▼
 その　少年なら
 さきほど　２０番道路で▽
 ポケモンを　鍛えておったな……▼
@@ -594,7 +594,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『[Name:TrainerName Idx="0"]！▼
+			<Text>アデク『[Name:TrainerName Idx="0" ]！▼
 ヒオウギに　できた
 あたらしい　ポケモンジム　だがな▼
 ジムリーダーが　とうちゃくしたと
@@ -611,7 +611,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『[Name:TrainerName Idx="0"]！▼
+			<Text>アデク『[Name:TrainerName Idx="0" ]！▼
 ヒオウギに　できた
 新しい　ポケモンジム　だがな▼
 ジムリーダーが　到着したと

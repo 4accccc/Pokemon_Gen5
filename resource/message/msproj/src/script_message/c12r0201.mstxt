@@ -114,8 +114,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]くん▼
-もし　[Name:TrainerName Idx="1"]が　たびさきで
+			<Text>[Name:TrainerName Idx="0" ]くん▼
+もし　[Name:TrainerName Idx="1" ]が　たびさきで
 みちに……　いえ　じんせいに▽
 まよったりしたら　たすけてあげてね</Text>
 			<TextModifiedBy
@@ -128,8 +128,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]くん▼
-もし　[Name:TrainerName Idx="1"]が　旅先で
+			<Text>[Name:TrainerName Idx="0" ]くん▼
+もし　[Name:TrainerName Idx="1" ]が　旅先で
 道に……　いえ　人生に▽
 迷ったりしたら　助けてあげてね</Text>
 			<TextModifiedBy
@@ -177,8 +177,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん▼
-もし　[Name:TrainerName Idx="1"]が　たびさきで
+			<Text>[Name:TrainerName Idx="0" ]さん▼
+もし　[Name:TrainerName Idx="1" ]が　たびさきで
 みちに……　いえ　じんせいに▽
 まよったりしたら　たすけてあげてね</Text>
 			<TextModifiedBy
@@ -191,8 +191,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん▼
-もし　[Name:TrainerName Idx="1"]が　旅先で
+			<Text>[Name:TrainerName Idx="0" ]さん▼
+もし　[Name:TrainerName Idx="1" ]が　旅先で
 道に……　いえ　人生に▽
 迷ったりしたら　助けてあげてね</Text>
 			<TextModifiedBy

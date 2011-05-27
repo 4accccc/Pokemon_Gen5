@@ -201,7 +201,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクは……　ダレにも
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクは……　ダレにも
 みえない　ものが　みたいんだ▼
 ボールの　なかの
 ポケモンたちの　りそう▼
@@ -209,7 +209,7 @@
 ありかたの　しんじつ▼
 そして　ポケモンが
 かんぜんと　なった　みらい……▼
-キミも　みたいだろう？[Ctrl2:CtrlSpeed mode="0"]</Text>
+キミも　みたいだろう？[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -220,7 +220,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクは……　ダレにも
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクは……　ダレにも
 みえない　ものが　みたいんだ▼
 ボールの　中の
 ポケモンたちの　理想▼
@@ -228,7 +228,7 @@
 在り方の　真実▼
 そして　ポケモンが
 完全となった　未来……▼
-キミも　みたいだろう？[Ctrl2:CtrlSpeed mode="0"]</Text>
+キミも　みたいだろう？[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -276,11 +276,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]そうかい▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そうかい▼
 では　ボクと
 ボクの　トモダチで▽
 みらいを　みることが　できるか▽
-キミで　たしかめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミで　たしかめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -291,11 +291,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]そうかい▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そうかい▼
 では　ボクと
 ボクの　トモダチで▽
 未来を　みることが　できるか▽
-キミで　確かめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミで　確かめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -340,12 +340,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ふうん
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ふうん
 きたいはずれ　だな▼
 それよりも　ボクと
 ボクの　トモダチで▽
 みらいを　みることが　できるか▽
-キミで　たしかめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミで　たしかめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -356,12 +356,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ふうん
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ふうん
 期待はずれ　だな▼
 それよりも　ボクと
 ボクの　トモダチで▽
 未来を　みることが　できるか▽
-キミで　確かめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミで　確かめさせて　もらうよ[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -406,12 +406,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]いまの　ボクの　トモダチとでは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]いまの　ボクの　トモダチとでは
 ポケモンを　すくいだせない……▼
 せかいを　かえるための
 すうしきは　とけない……▼
 ボクには　ちからが　ひつようだ……
-だれもが　なっとくする　ちから……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+だれもが　なっとくする　ちから……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -422,12 +422,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]今の　ボクの　トモダチとでは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]今の　ボクの　トモダチとでは
 すべての　ポケモンを　救いだせない……▼
 世界を　変えるための
 数式は　解けない……▼
 ボクには　力が　必要だ……
-だれもが　納得する　力……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+だれもが　納得する　力……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -788,7 +788,7 @@ C02ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！▼
+			<Text>[Name:TrainerName Idx="0" ]！▼
 こいつさ　こうみえても
 ヒウンジムの　ジムリーダーで▽
 アーティって　いうんだよ！▼</Text>
@@ -802,7 +802,7 @@ C02ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！▼
+			<Text>[Name:TrainerName Idx="0" ]！▼
 こいつさ　こうみえても
 ヒウンジムの　ジムリーダーで▽
 アーティって　いうんだよ！▼</Text>
@@ -973,7 +973,7 @@ C02ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『ねえねえ　[Name:TrainerName Idx="0"]
+			<Text>ベル『ねえねえ　[Name:TrainerName Idx="0" ]
 みんな　あつまって　どうしたの？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -985,7 +985,7 @@ C02ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『ねえねえ　[Name:TrainerName Idx="0"]
+			<Text>ベル『ねえねえ　[Name:TrainerName Idx="0" ]
 みんな　集まって　どうしたの？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1033,7 +1033,7 @@ C02ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]
 なにか　もんだい　でも？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1045,7 +1045,7 @@ C02ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]
 なにか　問題でも？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1232,7 +1232,7 @@ C02ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>で　アーティと　[Name:TrainerName Idx="0"]は
+			<Text>で　アーティと　[Name:TrainerName Idx="0" ]は
 ヤグルマのもりを　さがしておくれよ！▼
 いい？　アーティ
 アンタが　あんない　してやんな▼
@@ -1247,7 +1247,7 @@ C02ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で　アーティと　[Name:TrainerName Idx="0"]は
+			<Text>で　アーティと　[Name:TrainerName Idx="0" ]は
 ヤグルマの森を　探しておくれよ！▼
 いい？　アーティ
 アンタが　案内してやんな▼
@@ -1302,7 +1302,7 @@ C02ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティ『さてさて……
-きみ……　[Name:TrainerName Idx="0"]くんだっけ？　▼
+きみ……　[Name:TrainerName Idx="0" ]くんだっけ？　▼
 じゃあ　いこうか
 ドロボウたいじ　とやらにさ▼</Text>
 			<TextModifiedBy
@@ -1316,7 +1316,7 @@ C02ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーティ『さてさて……
-きみ……　[Name:TrainerName Idx="0"]くんだっけ？　▼
+きみ……　[Name:TrainerName Idx="0" ]くんだっけ？　▼
 じゃあ　行こうか
 ドロボウ退治　とやらにさ▼</Text>
 			<TextModifiedBy
@@ -1367,7 +1367,7 @@ C03ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティ『さてさて……
-きみ……　[Name:TrainerName Idx="0"]さんだっけ？▼
+きみ……　[Name:TrainerName Idx="0" ]さんだっけ？▼
 じゃあ　いこうか
 ドロボウたいじ　とやらにさ▼</Text>
 			<TextModifiedBy
@@ -1381,7 +1381,7 @@ C03ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーティ『さてさて……
-きみ……　[Name:TrainerName Idx="0"]さんだっけ？▼
+きみ……　[Name:TrainerName Idx="0" ]さんだっけ？▼
 じゃあ　行こうか
 ドロボウ退治　とやらにさ▼</Text>
 			<TextModifiedBy
@@ -1432,7 +1432,7 @@ C03ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あっ　[Name:TrainerName Idx="0"]
+			<Text>ベル『あっ　[Name:TrainerName Idx="0" ]
 これを　もっていってよ！▼
 マコモさんから　あずかってたの
 ダウジングマシン！▼</Text>
@@ -1446,7 +1446,7 @@ C03ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あっ　[Name:TrainerName Idx="0"]
+			<Text>ベル『あっ　[Name:TrainerName Idx="0" ]
 これを　持って行ってよ！▼
 マコモさんから　預かってたの
 ダウジングマシン！▼</Text>
@@ -2178,7 +2178,7 @@ C02ジムリーダー</Text>
 			Language="JPN">
 			<Text>アララギ『……アデクさんから
 はなしは　きいたわ▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 たいへんな　ことに▽
 まきこまれちゃったのね……▼</Text>
 			<TextModifiedBy
@@ -2193,7 +2193,7 @@ C02ジムリーダー</Text>
 			Language="JPN_KANJI">
 			<Text>アララギ『……アデクさんから
 話は　うかがったわ▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 大変な　ことに▽
 巻き込まれちゃったのね……▼</Text>
 			<TextModifiedBy
@@ -2800,7 +2800,7 @@ C02ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃあ
-[Name:TrainerName Idx="0"]　これを……▼</Text>
+[Name:TrainerName Idx="0" ]　これを……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -2812,7 +2812,7 @@ C02ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>じゃあ
-[Name:TrainerName Idx="0"]　これを……▼</Text>
+[Name:TrainerName Idx="0" ]　これを……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -2862,7 +2862,7 @@ C02ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>アデク『ちょっと　まつんだ
-[Name:TrainerName Idx="0"]！▼</Text>
+[Name:TrainerName Idx="0" ]！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -2874,7 +2874,7 @@ C02ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アデク『ちょっと　待つんだ
-[Name:TrainerName Idx="0"]！▼</Text>
+[Name:TrainerName Idx="0" ]！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -3322,7 +3322,7 @@ C02ジムリーダー</Text>
 いざ　というときに▼
 あたしらと　ポケモンたちの
 りそうの　みらいを　まもるんだね▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 だいじに　しておくれよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3339,7 +3339,7 @@ C02ジムリーダー</Text>
 いざ　というときに▼
 あたしらと　ポケモンたちの
 理想の　未来を　守るんだね▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 大事に　しておくれよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3394,7 +3394,7 @@ C02ジムリーダー</Text>
 いざ　というときに▼
 あたしらと　ポケモンたちの
 しんじつの　みらいを　まもるんだね▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 だいじに　しておくれよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3411,7 +3411,7 @@ C02ジムリーダー</Text>
 いざ　というときに▼
 あたしらと　ポケモンたちの
 真実の　未来を　守るんだね▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 大事に　しておくれよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3812,7 +3812,7 @@ C02ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！
+			<Text>[Name:TrainerName Idx="0" ]！
 ソウリュウシティに　むかうぞ▼
 あの　まちの　ジムリーダーは
 ドラゴンポケモンの　つかいて▽
@@ -3829,7 +3829,7 @@ C02ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！
+			<Text>[Name:TrainerName Idx="0" ]！
 ソウリュウシティに　向かうぞ▼
 あの街の　ジムリーダーは
 ドラゴンポケモンの　使い手▽
@@ -4007,7 +4007,7 @@ C02ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギパパ『[Name:TrainerName Idx="0"]よ▼
+			<Text>アララギパパ『[Name:TrainerName Idx="0" ]よ▼
 おまえさんの　すぐ　となりには
 いつも　ポケモンが　いること▽
 わすれるんじゃ　ないよ▼</Text>
@@ -4021,7 +4021,7 @@ C02ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギパパ『[Name:TrainerName Idx="0"]よ▼
+			<Text>アララギパパ『[Name:TrainerName Idx="0" ]よ▼
 おまえさんの　すぐ　隣には
 いつも　ポケモンが　いること▽
 忘れるんじゃ　ないよ▼</Text>
@@ -4262,7 +4262,7 @@ C02ジムリーダー</Text>
 			<Text>ベル『……なんだか
 たいへんそう　ってことしか▽
 わからなかったんだけどお▼
-……[Name:TrainerName Idx="0"]
+……[Name:TrainerName Idx="0" ]
 ソウリュウシティは　わかる？▼
 セッカシティから
 シリンダーブリッジを　わたった▽
@@ -4283,7 +4283,7 @@ C02ジムリーダー</Text>
 			<Text>ベル『……なんだか
 大変そう　ってことしか▽
 わからなかったんだけどお▼
-……[Name:TrainerName Idx="0"]
+……[Name:TrainerName Idx="0" ]
 ソウリュウシティは　わかる？▼
 セッカシティから
 シリンダーブリッジを　渡った▽
@@ -4338,7 +4338,7 @@ C02ジムリーダー</Text>
 			<Text>ベル『……なんだか
 たいへんそう　ってことしか▽
 わからなかったんだけどお▼
-……[Name:TrainerName Idx="0"]
+……[Name:TrainerName Idx="0" ]
 ソウリュウシティは　わかる？▼
 セッカシティから
 シリンダーブリッジを　わたった▽
@@ -4359,7 +4359,7 @@ C02ジムリーダー</Text>
 			<Text>ベル『……なんだか
 大変そう　ってことしか▽
 わからなかったんだけどお▼
-……[Name:TrainerName Idx="0"]
+……[Name:TrainerName Idx="0" ]
 ソウリュウシティは　わかる？▼
 セッカシティから
 シリンダーブリッジを　渡った▽

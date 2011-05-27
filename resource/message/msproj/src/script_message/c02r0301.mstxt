@@ -7,9 +7,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ねえねえ　あなた
-[Name:PokemonName Idx="0"]　って　ポケモン　もってる？▼
-よかったら　あたしの　[Name:PokemonName Idx="1"]と
-あなたの　[Name:PokemonName Idx="0"]　こうかん　しよ？</Text>
+[Name:PokemonName Idx="0" ]　って　ポケモン　もってる？▼
+よかったら　あたしの　[Name:PokemonName Idx="1" ]と
+あなたの　[Name:PokemonName Idx="0" ]　こうかん　しよ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -21,9 +21,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ねえねえ　あなた
-[Name:PokemonName Idx="0"]　って　ポケモン　もってる？▼
-よかったら　あたしの　[Name:PokemonName Idx="1"]と
-あなたの　[Name:PokemonName Idx="0"]　交換しよ？</Text>
+[Name:PokemonName Idx="0" ]　って　ポケモン　もってる？▼
+よかったら　あたしの　[Name:PokemonName Idx="1" ]と
+あなたの　[Name:PokemonName Idx="0" ]　交換しよ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -132,9 +132,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うふふ！　あたしの
-[Name:PokemonName Idx="1"]　だいじにしてね！▼
+[Name:PokemonName Idx="1" ]　だいじにしてね！▼
 あたしも　もらった
-[Name:PokemonName Idx="0"]　だいじに　するから！</Text>
+[Name:PokemonName Idx="0" ]　だいじに　するから！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -146,9 +146,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うふふ！　あたしの
-[Name:PokemonName Idx="1"]　大事にしてね！▼
+[Name:PokemonName Idx="1" ]　大事にしてね！▼
 あたしも　もらった
-[Name:PokemonName Idx="0"]　大事にするから！</Text>
+[Name:PokemonName Idx="0" ]　大事にするから！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -195,7 +195,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしが　こうかん　してほしいのは
-[Name:PokemonName Idx="0"]　なんだけど……</Text>
+[Name:PokemonName Idx="0" ]　なんだけど……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -207,7 +207,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしが　交換してほしいのは
-[Name:PokemonName Idx="0"]　なんだけど……</Text>
+[Name:PokemonName Idx="0" ]　なんだけど……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -372,7 +372,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたに　こうかん　してもらった
-[Name:PokemonNickname Idx="0"]　だけど▽
+[Name:PokemonNickname Idx="0" ]　だけど▽
 すっごく　そだって　つよくなったの！▽
 よかったら　しょうぶ　してみない？</Text>
 			<TextModifiedBy
@@ -386,7 +386,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたに　交換してもらった
-[Name:PokemonNickname Idx="0"]　だけど▽
+[Name:PokemonNickname Idx="0" ]　だけど▽
 すっごく　育って　強くなったの！▽
 よかったら　勝負してみない？</Text>
 			<TextModifiedBy
@@ -497,7 +497,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]が　どれだけ
+			<Text>[Name:PokemonNickname Idx="0" ]が　どれだけ
 そだったか　みてほしいんだけど……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -509,7 +509,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]が　どれだけ
+			<Text>[Name:PokemonNickname Idx="0" ]が　どれだけ
 育ったか　みてほしいんだけど……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -621,7 +621,7 @@
 			Language="JPN">
 			<Text>まあ　すてきな　トレーナーさん
 どんな　ポケモンと　いっしょなの？▼
-あら　あなたの　[Name:PokemonName Idx="0"]……▼</Text>
+あら　あなたの　[Name:PokemonName Idx="0" ]……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -634,7 +634,7 @@
 			Language="JPN_KANJI">
 			<Text>まあ　すてきな　トレーナーさん
 どんな　ポケモンと　いっしょなの？▼
-あら　あなたの　[Name:PokemonName Idx="0"]……▼</Text>
+あら　あなたの　[Name:PokemonName Idx="0" ]……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />

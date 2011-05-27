@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -17,7 +17,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -39,7 +39,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -50,7 +50,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -171,7 +171,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:BoxName Idx="0"]</Text>
+			<Text>[Name:BoxName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -182,7 +182,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:BoxName Idx="0"]</Text>
+			<Text>[Name:BoxName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1171,7 +1171,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1182,7 +1182,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4158,7 +4158,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Ability Idx="0"]</Text>
+			<Text>[Name:Ability Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4169,7 +4169,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Ability Idx="0"]</Text>
+			<Text>[Name:Ability Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4205,7 +4205,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Nature Idx="0"]</Text>
+			<Text>[Name:Nature Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4216,7 +4216,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Nature Idx="0"]</Text>
+			<Text>[Name:Nature Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4252,7 +4252,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]</Text>
+			<Text>[Name:Item Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4263,7 +4263,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]</Text>
+			<Text>[Name:Item Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4440,7 +4440,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4451,7 +4451,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4487,7 +4487,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -4498,7 +4498,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -5094,9 +5094,9 @@
 			Language="JPN">
 			<Text>ポケモンを　えらんでください。
 
-なまえ：[Name:PokemonName Idx="0"]
-タイプ１：[Name:Type Idx="1"]
-タイプ２：[Name:Type Idx="2"]</Text>
+なまえ：[Name:PokemonName Idx="0" ]
+タイプ１：[Name:Type Idx="1" ]
+タイプ２：[Name:Type Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -5109,9 +5109,9 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンを　選んでください。
 
-なまえ：[Name:PokemonName Idx="0"]
-タイプ１：[Name:Type Idx="1"]
-タイプ２：[Name:Type Idx="2"]</Text>
+なまえ：[Name:PokemonName Idx="0" ]
+タイプ１：[Name:Type Idx="1" ]
+タイプ２：[Name:Type Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -5155,7 +5155,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]がんばりや
+せいかく：[System:Color name="1" ]がんばりや
 [/System:Color]バランスよく　せいちょう　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5169,7 +5169,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]がんばりや
+せいかく：[System:Color name="1" ]がんばりや
 [/System:Color]バランスよく　成長　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5209,7 +5209,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]さみしがり
+せいかく：[System:Color name="1" ]さみしがり
 [/System:Color]ごうげきが　せいちょう　しやすい。
 ぼうぎょが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5224,7 +5224,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]さみしがり
+せいかく：[System:Color name="1" ]さみしがり
 [/System:Color]ごうげきが　成長　しやすい。
 ぼうぎょが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5265,7 +5265,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]ゆうかん
+せいかく：[System:Color name="1" ]ゆうかん
 [/System:Color]ごうげきが　せいちょう　しやすい。
 すばやさが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5280,7 +5280,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]ゆうかん
+せいかく：[System:Color name="1" ]ゆうかん
 [/System:Color]ごうげきが　成長　しやすい。
 すばやさが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5321,7 +5321,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]いじっぱり
+せいかく：[System:Color name="1" ]いじっぱり
 [/System:Color]ごうげきが　せいちょう　しやすい。
 とくこうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5336,7 +5336,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]いじっぱり
+せいかく：[System:Color name="1" ]いじっぱり
 [/System:Color]ごうげきが　成長　しやすい。
 とくこうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5377,7 +5377,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]やんちゃ
+せいかく：[System:Color name="1" ]やんちゃ
 [/System:Color]ごうげきが　せいちょう　しやすい。
 とくぼうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5392,7 +5392,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]やんちゃ
+せいかく：[System:Color name="1" ]やんちゃ
 [/System:Color]ごうげきが　成長　しやすい。
 とくぼうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5433,7 +5433,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]ずぶとい
+せいかく：[System:Color name="1" ]ずぶとい
 [/System:Color]ぼうぎょが　せいちょう　しやすい。
 こうげきが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5448,7 +5448,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]ずぶとい
+せいかく：[System:Color name="1" ]ずぶとい
 [/System:Color]ぼうぎょが　成長　しやすい。
 こうげきが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5489,7 +5489,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]すなお
+せいかく：[System:Color name="1" ]すなお
 [/System:Color]バランスよく　せいちょう　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5503,7 +5503,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]すなお
+せいかく：[System:Color name="1" ]すなお
 [/System:Color]バランスよく　成長　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5543,7 +5543,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]のんき
+せいかく：[System:Color name="1" ]のんき
 [/System:Color]ぼうぎょが　せいちょう　しやすい。
 すばやさが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5558,7 +5558,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]のんき
+せいかく：[System:Color name="1" ]のんき
 [/System:Color]ぼうぎょが　成長　しやすい。
 すばやさが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5599,7 +5599,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]わんぱく
+せいかく：[System:Color name="1" ]わんぱく
 [/System:Color]ぼうぎょが　せいちょう　しやすい。
 とくこうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5614,7 +5614,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]わんぱく
+せいかく：[System:Color name="1" ]わんぱく
 [/System:Color]ぼうぎょが　成長　しやすい。
 とくこうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5655,7 +5655,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]のうてんき
+せいかく：[System:Color name="1" ]のうてんき
 [/System:Color]ぼうぎょが　せいちょう　しやすい。
 とくぼうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5670,7 +5670,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]のうてんき
+せいかく：[System:Color name="1" ]のうてんき
 [/System:Color]ぼうぎょが　成長　しやすい。
 とくぼうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5711,7 +5711,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]おくびょう
+せいかく：[System:Color name="1" ]おくびょう
 [/System:Color]すばやさが　せいちょう　しやすい。
 こうげきが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5726,7 +5726,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]おくびょう
+せいかく：[System:Color name="1" ]おくびょう
 [/System:Color]すばやさが　成長　しやすい。
 こうげきが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5767,7 +5767,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]せっかち
+せいかく：[System:Color name="1" ]せっかち
 [/System:Color]すばやさが　せいちょう　しやすい。
 ぼうぎょが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5782,7 +5782,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]せっかち
+せいかく：[System:Color name="1" ]せっかち
 [/System:Color]すばやさが　成長　しやすい。
 ぼうぎょが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5823,7 +5823,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]まじめ
+せいかく：[System:Color name="1" ]まじめ
 [/System:Color]バランスよく　せいちょう　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5837,7 +5837,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]まじめ
+せいかく：[System:Color name="1" ]まじめ
 [/System:Color]バランスよく　成長　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5877,7 +5877,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]ようき
+せいかく：[System:Color name="1" ]ようき
 [/System:Color]すばやさが　せいちょう　しやすい。
 とくこうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5892,7 +5892,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]ようき
+せいかく：[System:Color name="1" ]ようき
 [/System:Color]すばやさが　成長　しやすい。
 とくこうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5933,7 +5933,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]むじゃき
+せいかく：[System:Color name="1" ]むじゃき
 [/System:Color]すばやさが　せいちょう　しやすい。
 とくぼうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -5948,7 +5948,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]むじゃき
+せいかく：[System:Color name="1" ]むじゃき
 [/System:Color]すばやさが　成長　しやすい。
 とくぼうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -5989,7 +5989,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]ひかえめ
+せいかく：[System:Color name="1" ]ひかえめ
 [/System:Color]とくこうが　せいちょう　しやすい。
 こうげきが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6004,7 +6004,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]ひかえめ
+せいかく：[System:Color name="1" ]ひかえめ
 [/System:Color]とくこうが　成長　しやすい。
 こうげきが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6045,7 +6045,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]おっとり
+せいかく：[System:Color name="1" ]おっとり
 [/System:Color]とくこうが　せいちょう　しやすい。
 ぼうぎょが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6060,7 +6060,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]おっとり
+せいかく：[System:Color name="1" ]おっとり
 [/System:Color]とくこうが　成長　しやすい。
 ぼうぎょが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6101,7 +6101,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]れいせい
+せいかく：[System:Color name="1" ]れいせい
 [/System:Color]とくこうが　せいちょう　しやすい。
 すばやさが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6116,7 +6116,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]れいせい
+せいかく：[System:Color name="1" ]れいせい
 [/System:Color]とくこうが　成長　しやすい。
 すばやさが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6157,7 +6157,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]てれや
+せいかく：[System:Color name="1" ]てれや
 [/System:Color]バランスよく　せいちょう　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6171,7 +6171,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]てれや
+せいかく：[System:Color name="1" ]てれや
 [/System:Color]バランスよく　成長　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6211,7 +6211,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]うっかりや
+せいかく：[System:Color name="1" ]うっかりや
 [/System:Color]とくこうが　せいちょう　しやすい。
 とくぼうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6226,7 +6226,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]うっかりや
+せいかく：[System:Color name="1" ]うっかりや
 [/System:Color]とくこうが　成長　しやすい。
 とくぼうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6267,7 +6267,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]おだやか
+せいかく：[System:Color name="1" ]おだやか
 [/System:Color]とくぼうが　せいちょう　しやすい。
 こうげきが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6282,7 +6282,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]おだやか
+せいかく：[System:Color name="1" ]おだやか
 [/System:Color]とくぼうが　成長　しやすい。
 こうげきが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6323,7 +6323,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]おとなしい
+せいかく：[System:Color name="1" ]おとなしい
 [/System:Color]とくぼうが　せいちょう　しやすい。
 ぼうぎょが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6338,7 +6338,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]おとなしい
+せいかく：[System:Color name="1" ]おとなしい
 [/System:Color]とくぼうが　成長　しやすい。
 ぼうぎょが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6379,7 +6379,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]なまいき
+せいかく：[System:Color name="1" ]なまいき
 [/System:Color]とくぼうが　せいちょう　しやすい。
 すばやさが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6394,7 +6394,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]なまいき
+せいかく：[System:Color name="1" ]なまいき
 [/System:Color]とくぼうが　成長　しやすい。
 すばやさが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6435,7 +6435,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]しんちょう
+せいかく：[System:Color name="1" ]しんちょう
 [/System:Color]とくぼうが　せいちょう　しやすい。
 とくこうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
@@ -6450,7 +6450,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]しんちょう
+せいかく：[System:Color name="1" ]しんちょう
 [/System:Color]とくぼうが　成長　しやすい。
 とくこうが　成長　しにくい。</Text>
 			<TextModifiedBy
@@ -6491,7 +6491,7 @@
 			Language="JPN">
 			<Text>ポケモンの　せいかくを　えらんでください。
 
-せいかく：[System:Color name="1"]きまぐれ
+せいかく：[System:Color name="1" ]きまぐれ
 [/System:Color]バランスよく　せいちょう　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6505,7 +6505,7 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンの　せいかくを　選んでください。
 
-せいかく：[System:Color name="1"]きまぐれ
+せいかく：[System:Color name="1" ]きまぐれ
 [/System:Color]バランスよく　成長　しやすい。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6594,7 +6594,7 @@
 			Language="JPN">
 			<Text>とくせいを　えらんでください。
 
-[System:Color name="1"][Name:Ability Idx="0"][/System:Color]:
+[System:Color name="1" ][Name:Ability Idx="0" ][/System:Color]:
 </Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6608,7 +6608,7 @@
 			Language="JPN_KANJI">
 			<Text>とくせいを　選んでください。
 
-[System:Color name="1"][Name:Ability Idx="0"][/System:Color]:
+[System:Color name="1" ][Name:Ability Idx="0" ][/System:Color]:
 </Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

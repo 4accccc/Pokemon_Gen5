@@ -73,7 +73,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ　[Name:TrainerName Idx="0"]▼
+			<Text>やあ　[Name:TrainerName Idx="0" ]▼
 ジムリーダーを
 さがしに　きたのかい？</Text>
 			<TextModifiedBy
@@ -86,7 +86,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ　[Name:TrainerName Idx="0"]▼
+			<Text>やあ　[Name:TrainerName Idx="0" ]▼
 ジムリーダーを
 探しに　来たのかい？</Text>
 			<TextModifiedBy
@@ -264,7 +264,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ところでさ　[Name:TrainerName Idx="0"]
+			<Text>ところでさ　[Name:TrainerName Idx="0" ]
 ぼくと　しょうぶ　してくれないか▼
 しょうぶのとき　どれだけ
 どうぐが　だいじか　ためしたいんだ</Text>
@@ -278,7 +278,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ところでさ　[Name:TrainerName Idx="0"]
+			<Text>ところでさ　[Name:TrainerName Idx="0" ]
 ぼくと　勝負してくれないか▼
 勝負のとき　どれだけ
 道具が　重要か　試したいんだ</Text>
@@ -329,7 +329,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 ぼくと　しょうぶ　してくれないか▼
 しょうぶのとき　どれだけ
 どうぐが　だいじか　ためしたいんだ</Text>
@@ -343,7 +343,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 ぼくと　勝負してくれないか▼
 勝負のとき　どれだけ
 道具が　重要か　試したいんだ</Text>
@@ -526,7 +526,7 @@
 			Language="JPN">
 			<Text>チェレン『やはり　どうぐを
 つかいこなすのは　だいじ　だね▼
-そうだ　[Name:TrainerName Idx="0"]
+そうだ　[Name:TrainerName Idx="0" ]
 この　きのみを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -540,7 +540,7 @@
 			Language="JPN_KANJI">
 			<Text>チェレン『やはり　道具を
 使いこなすのは　大事だね▼
-そうだ　[Name:TrainerName Idx="0"]
+そうだ　[Name:TrainerName Idx="0" ]
 この　きのみを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

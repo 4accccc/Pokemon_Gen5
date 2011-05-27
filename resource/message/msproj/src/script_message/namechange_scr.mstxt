@@ -117,7 +117,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーむ
-[Name:PokemonNickname Idx="0"]か……▼
+[Name:PokemonNickname Idx="0" ]か……▼
 なかなか　きみらしい
 いい　ニックネームを　つけたね▼
 でもねー
@@ -134,7 +134,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーむ
-[Name:PokemonNickname Idx="0"]か……▼
+[Name:PokemonNickname Idx="0" ]か……▼
 なかなか　きみらしい
 いい　ニックネームを　つけたね▼
 でもねー
@@ -232,7 +232,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よし！　これから
-この　ポケモンは　[Name:PokemonNickname Idx="0"]だ！▼
+この　ポケモンは　[Name:PokemonNickname Idx="0" ]だ！▼
 まえより　いい　なまえ　じゃないか
 よかったな！</Text>
 			<TextModifiedBy
@@ -246,7 +246,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よし！　これから
-この　ポケモンは　[Name:PokemonNickname Idx="0"]だ！▼
+この　ポケモンは　[Name:PokemonNickname Idx="0" ]だ！▼
 前より　いい　名前じゃないか
 よかったな！</Text>
 			<TextModifiedBy
@@ -335,7 +335,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よし　これから
-この　ポケモンは　[Name:PokemonNickname Idx="0"]だ！▼
+この　ポケモンは　[Name:PokemonNickname Idx="0" ]だ！▼
 まえと　おなじように　みえるが
 こっちの　ほうが　ナイス　だぞ！▽
 よかったな！</Text>
@@ -350,7 +350,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よし　これから
-この　ポケモンは　[Name:PokemonNickname Idx="0"]だ！▼
+この　ポケモンは　[Name:PokemonNickname Idx="0" ]だ！▼
 前と　同じように　みえるが
 こっちの　ほうが　ナイス　だぞ！▽
 よかったな！</Text>
@@ -391,10 +391,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーむ
-[Name:PokemonNickname Idx="0"]か！▼
+[Name:PokemonNickname Idx="0" ]か！▼
 これは　けちの　つけようもない
 すばらしい　ニックネームだ！▼
-これからも　[Name:PokemonNickname Idx="0"]を
+これからも　[Name:PokemonNickname Idx="0" ]を
 かわいがって　あげなさいよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -407,10 +407,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーむ
-[Name:PokemonNickname Idx="0"]か！▼
+[Name:PokemonNickname Idx="0" ]か！▼
 これは　けちの　つけようもない
 すばらしい　ニックネームだ！▼
-これからも　[Name:PokemonNickname Idx="0"]を
+これからも　[Name:PokemonNickname Idx="0" ]を
 可愛がって　あげなさいよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

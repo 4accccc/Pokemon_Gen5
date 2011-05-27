@@ -70,7 +70,7 @@
 			Language="JPN">
 			<Text>どれどれ……▼
 イッシュちほうで　みつけた
-ポケモンの　かずは　[Digit:3digits Idx="0"]　ね</Text>
+ポケモンの　かずは　[Digit:3digits Idx="0" ]　ね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -83,7 +83,7 @@
 			Language="JPN_KANJI">
 			<Text>どれどれ……▼
 イッシュ地方で　みつけた
-ポケモンの　数は　[Digit:3digits Idx="0"]　ね</Text>
+ポケモンの　数は　[Digit:3digits Idx="0" ]　ね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -134,7 +134,7 @@
 			Language="JPN">
 			<Text>どれどれ……▼
 イッシュちほうで　つかまえた
-ポケモンの　かずは　[Digit:3digits Idx="0"]　ね</Text>
+ポケモンの　かずは　[Digit:3digits Idx="0" ]　ね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -147,7 +147,7 @@
 			Language="JPN_KANJI">
 			<Text>どれどれ……▼
 イッシュ地方で　捕まえた
-ポケモンの　数は　[Digit:3digits Idx="0"]　ね</Text>
+ポケモンの　数は　[Digit:3digits Idx="0" ]　ね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1952,7 +1952,7 @@
 			Language="JPN">
 			<Text>なるほど！▼
 つかまえた　ポケモンの　かずは
-[Digit:3digits Idx="0"]　か……</Text>
+[Digit:3digits Idx="0" ]　か……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1965,7 +1965,7 @@
 			Language="JPN_KANJI">
 			<Text>なるほど！▼
 捕まえた　ポケモンの　数は
-[Digit:3digits Idx="0"]　か……</Text>
+[Digit:3digits Idx="0" ]　か……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />

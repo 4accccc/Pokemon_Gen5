@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]▼
+			<Text>[Name:TrainerName Idx="0" ]▼
 ママです
 そっちは　どう？▼
 へえ　７ばんどうろ　なの！？
@@ -32,7 +32,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]▼
+			<Text>[Name:TrainerName Idx="0" ]▼
 ママです
 そっちは　どう？▼
 へえ　７番道路なの！？

@@ -277,7 +277,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]　のきろく</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]　のきろく</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -288,7 +288,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]　の記録</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]　の記録</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -350,7 +350,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:4digits Idx="0"]</Text>
+			<Text>[Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -361,7 +361,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="0"]</Text>
+			<Text>[Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -416,7 +416,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0"]－[Digit:5digits Idx="1"]－[Digit:5digits Idx="2"]</Text>
+			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0" ]－[Digit:5digits Idx="1" ]－[Digit:5digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -427,7 +427,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0"]－[Digit:5digits Idx="1"]－[Digit:5digits Idx="2"]</Text>
+			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0" ]－[Digit:5digits Idx="1" ]－[Digit:5digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -449,7 +449,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0"]－[Digit:5digits Idx="1"]－[Digit:5digits Idx="2"]★</Text>
+			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0" ]－[Digit:5digits Idx="1" ]－[Digit:5digits Idx="2" ]★</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -460,7 +460,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0"]－[Digit:5digits Idx="1"]－[Digit:5digits Idx="2"]★</Text>
+			<Text>[Ctrl1:xcenter ]ビデオナンバー：[Digit:2digits Idx="0" ]－[Digit:5digits Idx="1" ]－[Digit:5digits Idx="2" ]★</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -482,7 +482,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]　の　プロフィール</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]　の　プロフィール</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -493,7 +493,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]　の　プロフィール</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]　の　プロフィール</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -548,7 +548,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Digit:2digits Idx="0"]がつうまれ</Text>
+			<Text>[Ctrl1:xcenter ][Digit:2digits Idx="0" ]がつうまれ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -559,7 +559,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Digit:2digits Idx="0"]月生まれ</Text>
+			<Text>[Ctrl1:xcenter ][Digit:2digits Idx="0" ]月生まれ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -800,7 +800,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Location Idx="0"]</Text>
+			<Text>[Name:Location Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -811,7 +811,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Location Idx="0"]</Text>
+			<Text>[Name:Location Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -833,7 +833,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Area Idx="0"]</Text>
+			<Text>[Name:Area Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -844,7 +844,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Area Idx="0"]</Text>
+			<Text>[Name:Area Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -866,7 +866,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]　[Name:PMS Idx="1"]</Text>
+			<Text>[Name:PMS Idx="0" ]　[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -877,7 +877,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]　[Name:PMS Idx="1"]</Text>
+			<Text>[Name:PMS Idx="0" ]　[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -899,7 +899,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　のきろく</Text>
+			<Text>[Name:TrainerName Idx="0" ]　のきろく</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -910,7 +910,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　の記録</Text>
+			<Text>[Name:TrainerName Idx="0" ]　の記録</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1031,7 +1031,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　のきろくをけす</Text>
+			<Text>[Name:TrainerName Idx="0" ]　のきろくをけす</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1042,7 +1042,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　の記録を消す</Text>
+			<Text>[Name:TrainerName Idx="0" ]　の記録を消す</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1540,8 +1540,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　の　しゃしん
-[Name:PMS Idx="1"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]　の　しゃしん
+[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1552,8 +1552,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　の　写真
-[Name:PMS Idx="1"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]　の　写真
+[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1575,8 +1575,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
-[Name:PMS Idx="1"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]
+[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1587,8 +1587,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
-[Name:PMS Idx="1"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]
+[Name:PMS Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2653,7 +2653,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]：[Name:TrainerType Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="1" ]：[Name:TrainerType Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2664,7 +2664,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]：[Name:TrainerType Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="1" ]：[Name:TrainerType Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2686,7 +2686,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]：[Digit:2digits Idx="0"]がつうまれ</Text>
+			<Text>[Name:TrainerName Idx="1" ]：[Digit:2digits Idx="0" ]がつうまれ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2697,7 +2697,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]：[Digit:2digits Idx="0"]月生まれ</Text>
+			<Text>[Name:TrainerName Idx="1" ]：[Digit:2digits Idx="0" ]月生まれ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2719,7 +2719,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]：[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="1" ]：[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2730,7 +2730,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]：[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="1" ]：[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2752,7 +2752,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"] [Name:TrainerType Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ] [Name:TrainerType Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2763,7 +2763,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"] [Name:TrainerType Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ] [Name:TrainerType Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2792,7 +2792,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]：[Digit:2digits Idx="1"]がつ</Text>
+			<Text>[Digit:2digits Idx="0" ]：[Digit:2digits Idx="1" ]がつ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2803,7 +2803,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]：[Digit:2digits Idx="1"]月</Text>
+			<Text>[Digit:2digits Idx="0" ]：[Digit:2digits Idx="1" ]月</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2825,7 +2825,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]：[Name:PokemonName Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]：[Name:PokemonName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -2836,7 +2836,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]：[Name:PokemonName Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]：[Name:PokemonName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -3245,7 +3245,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の きろくを
+			<Text>[Name:TrainerName Idx="0" ]の きろくを
 どこに　ほぞんしますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3257,7 +3257,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の 記録を
+			<Text>[Name:TrainerName Idx="0" ]の 記録を
 どこに　保存しますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3313,7 +3313,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　バトルビデオを
+			<Text>[Name:TrainerName Idx="0" ]の　バトルビデオを
 けしても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3325,7 +3325,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　バトルビデオを
+			<Text>[Name:TrainerName Idx="0" ]の　バトルビデオを
 消しても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4249,7 +4249,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4260,7 +4260,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4349,7 +4349,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>すんでいるばしょ
-[Name:Location Idx="0"]</Text>
+[Name:Location Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4361,7 +4361,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>住んでいる場所
-[Name:Location Idx="0"]</Text>
+[Name:Location Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4746,7 +4746,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"][Digit:4digits Idx="0"]</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4757,7 +4757,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="0"]</Text>
+			<Text>[Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4779,7 +4779,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"][Digit:4digits Idx="0"]</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4790,7 +4790,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="0"]</Text>
+			<Text>[Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4812,7 +4812,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]れんしょう</Text>
+			<Text>[Ctrl1:xright value="0" ]れんしょう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -4823,7 +4823,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]連勝</Text>
+			<Text>[Ctrl1:xright value="0" ]連勝</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5043,7 +5043,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]　の　レーティング</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]　の　レーティング</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5054,7 +5054,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0"]　の　レーティング</Text>
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="0" ]　の　レーティング</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5142,7 +5142,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]Win</Text>
+			<Text>[Ctrl1:xright value="0" ]Win</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5153,7 +5153,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]Win</Text>
+			<Text>[Ctrl1:xright value="0" ]Win</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5175,7 +5175,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]Lose</Text>
+			<Text>[Ctrl1:xright value="0" ]Lose</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5186,7 +5186,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]Lose</Text>
+			<Text>[Ctrl1:xright value="0" ]Lose</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5208,7 +5208,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]シングル：</Text>
+			<Text>[Ctrl1:xright value="0" ]シングル：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5219,7 +5219,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]シングル：</Text>
+			<Text>[Ctrl1:xright value="0" ]シングル：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5241,7 +5241,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]ダブル：</Text>
+			<Text>[Ctrl1:xright value="0" ]ダブル：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5252,7 +5252,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]ダブル：</Text>
+			<Text>[Ctrl1:xright value="0" ]ダブル：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5274,7 +5274,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]トリプル：</Text>
+			<Text>[Ctrl1:xright value="0" ]トリプル：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5285,7 +5285,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]トリプル：</Text>
+			<Text>[Ctrl1:xright value="0" ]トリプル：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5307,7 +5307,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]ローテーション：</Text>
+			<Text>[Ctrl1:xright value="0" ]ローテーション：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5318,7 +5318,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]ローテーション：</Text>
+			<Text>[Ctrl1:xright value="0" ]ローテーション：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5340,7 +5340,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]シューター：</Text>
+			<Text>[Ctrl1:xright value="0" ]シューター：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5351,7 +5351,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]シューター：</Text>
+			<Text>[Ctrl1:xright value="0" ]シューター：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5373,7 +5373,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"][Digit:4digits Idx="0"]</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5384,7 +5384,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"][Digit:4digits Idx="0"]</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:4digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5406,7 +5406,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"][Digit:5digits Idx="0"]</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5417,7 +5417,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"][Digit:5digits Idx="0"]</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5439,7 +5439,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"]Rating</Text>
+			<Text>[Ctrl1:xright value="0" ]Rating</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -5450,7 +5450,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"]Rating</Text>
+			<Text>[Ctrl1:xright value="0" ]Rating</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -12494,7 +12494,7 @@ SVL取得エラー</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　バトルビデオを
+			<Text>[Name:TrainerName Idx="0" ]の　バトルビデオを
 けしても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12506,7 +12506,7 @@ SVL取得エラー</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　バトルビデオを
+			<Text>[Name:TrainerName Idx="0" ]の　バトルビデオを
 消しても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12976,7 +12976,7 @@ SVL取得エラー</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルビデオを　おくりました
-ビデオナンバー：[Digit:2digits Idx="0"]－[Digit:5digits Idx="1"]－[Digit:5digits Idx="2"]
+ビデオナンバー：[Digit:2digits Idx="0" ]－[Digit:5digits Idx="1" ]－[Digit:5digits Idx="2" ]
 </Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12989,7 +12989,7 @@ SVL取得エラー</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バトルビデオを　送りました
-ビデオナンバー：[Digit:2digits Idx="0"]－[Digit:5digits Idx="1"]－[Digit:5digits Idx="2"]
+ビデオナンバー：[Digit:2digits Idx="0" ]－[Digit:5digits Idx="1" ]－[Digit:5digits Idx="2" ]
 </Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

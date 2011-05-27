@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おはよう　ございます
-[Name:TrainerName Idx="0"]さん　ですね▼
+[Name:TrainerName Idx="0" ]さん　ですね▼
 ふしぎな　おくりものを
 おあずかり　しています▼
 こちらを　どうぞ！▼</Text>
@@ -22,7 +22,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おはよう　ございます
-[Name:TrainerName Idx="0"]さん　ですね▼
+[Name:TrainerName Idx="0" ]さん　ですね▼
 ふしぎな　おくりものを
 お預かりしています▼
 こちらを　どうぞ！▼</Text>
@@ -63,7 +63,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんにちは
-[Name:TrainerName Idx="0"]さん　ですね▼
+[Name:TrainerName Idx="0" ]さん　ですね▼
 ふしぎな　おくりものを
 おあずかり　しています▼
 こちらを　どうぞ！▼</Text>
@@ -78,7 +78,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんにちは
-[Name:TrainerName Idx="0"]さん　ですね▼
+[Name:TrainerName Idx="0" ]さん　ですね▼
 ふしぎな　おくりものを
 お預かりしています▼
 こちらを　どうぞ！▼</Text>
@@ -119,7 +119,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんばんは
-[Name:TrainerName Idx="0"]さん　ですね▼
+[Name:TrainerName Idx="0" ]さん　ですね▼
 ふしぎな　おくりものを
 おあずかり　しています▼
 こちらを　どうぞ！▼</Text>
@@ -134,7 +134,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんばんは
-[Name:TrainerName Idx="0"]さん　ですね▼
+[Name:TrainerName Idx="0" ]さん　ですね▼
 ふしぎな　おくりものを
 お預かりしています▼
 こちらを　どうぞ！▼</Text>
@@ -277,8 +277,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonName Idx="1"]を　うけとった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="1" ]を　うけとった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -289,8 +289,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonName Idx="1"]を　受け取った！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="1" ]を　受け取った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -376,8 +376,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -388,8 +388,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"][Name:Item Idx="1"][/System:Color]を　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ][Name:Item Idx="1" ][/System:Color]を　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -427,7 +427,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]が　いっぱいで
+			<Text>[Name:Item Idx="0" ]が　いっぱいで
 わたすことが　できません</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -439,7 +439,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]が　一杯で
+			<Text>[Name:Item Idx="0" ]が　一杯で
 渡すことが　できません</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -478,8 +478,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:GPower Idx="1"]を　おぼえた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:GPower Idx="1" ]を　おぼえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -490,8 +490,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:GPower Idx="1"]を　覚えた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:GPower Idx="1" ]を　覚えた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -529,8 +529,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　すでに
-[Name:GPower Idx="1"]を　おぼえている！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　すでに
+[Name:GPower Idx="1" ]を　おぼえている！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -541,8 +541,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　すでに
-[Name:GPower Idx="1"]を　覚えている！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　すでに
+[Name:GPower Idx="1" ]を　覚えている！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -587,7 +587,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ポケモンのタマゴを　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -599,7 +599,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ポケモンのタマゴを　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

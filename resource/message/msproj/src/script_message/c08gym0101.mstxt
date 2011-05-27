@@ -142,7 +142,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　アイリスから
+			<Text>[Name:TrainerName Idx="0" ]は　アイリスから
 レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -154,7 +154,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　アイリスから
+			<Text>[Name:TrainerName Idx="0" ]は　アイリスから
 レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -673,7 +673,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　シャガから
+			<Text>[Name:TrainerName Idx="0" ]は　シャガから
 レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -685,7 +685,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　シャガから
+			<Text>[Name:TrainerName Idx="0" ]は　シャガから
 レジェンドバッジを　もらった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1403,7 +1403,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アイリス
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1417,7 +1417,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アイリス
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1464,7 +1464,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アイリス
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -1480,7 +1480,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アイリス
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -1588,7 +1588,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　シャガ
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1602,7 +1602,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　シャガ
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1649,7 +1649,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　シャガ
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -1665,7 +1665,7 @@
 			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　シャガ
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy

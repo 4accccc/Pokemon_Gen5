@@ -578,7 +578,7 @@
 			<Text>ハンサム『ありがとう▼
 これで　ゲーチスを　のぞき
 のこる　しちけんじんは▽
-あと　[Digit:1digit Idx="0"]にんか……▼
+あと　[Digit:1digit Idx="0" ]にんか……▼
 かれらが　なにを　かんがえ
 のぞんでいたか　しりたいものだ……▽
 では　また　あおう！▼</Text>
@@ -595,7 +595,7 @@
 			<Text>ハンサム『ありがとう！▼
 これで　ゲーチスを除き
 残る　七賢人は▽
-あと　[Digit:1digit Idx="0"]人か……▼
+あと　[Digit:1digit Idx="0" ]人か……▼
 彼らが　なにを　考え
 望んでいたか　知りたいものだ……▽
 では　また　会おう！▼</Text>
@@ -645,7 +645,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンサム『ありがとう！▼
-さて　[Name:TrainerName Idx="0"]……
+さて　[Name:TrainerName Idx="0" ]……
 きみに　つたえることが　ある▼
 ここより　はるか　とおいところで
 Ｎらしき　じんぶつが▽
@@ -665,7 +665,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハンサム『ありがとう！▼
-さて　[Name:TrainerName Idx="0"]……
+さて　[Name:TrainerName Idx="0" ]……
 きみに　伝えることが　ある▼
 ここより　はるか　遠方で
 Ｎらしき　人物が▽

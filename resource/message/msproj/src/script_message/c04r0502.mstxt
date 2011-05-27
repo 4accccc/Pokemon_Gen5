@@ -112,7 +112,7 @@
 			Language="JPN">
 			<Text>あら……？▼
 おやまあ！▼
-あなたの　[Name:PokemonName Idx="0"]さん　たら
+あなたの　[Name:PokemonName Idx="0" ]さん　たら
 あなたのことが　おすきみたいですね！▽
 うれしいから　これを　さしあげます▼</Text>
 			<TextModifiedBy
@@ -127,7 +127,7 @@
 			Language="JPN_KANJI">
 			<Text>あら……？▼
 おやまあ！▼
-あなたの　[Name:PokemonName Idx="0"]さん　たら
+あなたの　[Name:PokemonName Idx="0" ]さん　たら
 あなたのことが　お好きみたいですね！▽
 うれしいから　これを　差しあげます▼</Text>
 			<TextModifiedBy
@@ -240,7 +240,7 @@
 			Language="JPN">
 			<Text>あら……？▼
 おやまあ！▼
-あなたの　[Name:PokemonName Idx="0"]さん　たら
+あなたの　[Name:PokemonName Idx="0" ]さん　たら
 あなたのこと……▽
 ふつう　だと　おもってるのね▼
 あなたを　もっと　すきになれば
@@ -257,7 +257,7 @@
 			Language="JPN_KANJI">
 			<Text>あら……？▼
 おやまあ！▼
-あなたの　[Name:PokemonName Idx="0"]さん　たら
+あなたの　[Name:PokemonName Idx="0" ]さん　たら
 あなたのこと……▽
 普通　だと　思ってるのね▼
 あなたを　もっと　好きになれば

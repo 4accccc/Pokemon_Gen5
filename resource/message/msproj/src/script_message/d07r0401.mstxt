@@ -398,7 +398,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]……
+			<Text>[Name:TrainerName Idx="0" ]……
 ぼくは　もうすこし　ここにいる▼
 ちょっと　かんがえたいんだ▼
 チャンピオンに　いわれたこと……▼
@@ -416,7 +416,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]……
+			<Text>[Name:TrainerName Idx="0" ]……
 ぼくは　もうすこし　ここにいる▼
 ちょっと　考えたいんだ▼
 チャンピオンに　いわれたこと……▼
@@ -469,7 +469,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]……
+			<Text>[Name:TrainerName Idx="0" ]……
 ぼくは　もうすこし　ここにいる▼
 ちょっと　かんがえたいんだ▼
 チャンピオンに　いわれたこと……▼
@@ -487,7 +487,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]……
+			<Text>[Name:TrainerName Idx="0" ]……
 ぼくは　もうすこし　ここにいる▼
 ちょっと　考えたいんだ▼
 チャンピオンに　いわれたこと……▼

@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『おう！　[Name:TrainerName Idx="0"]くん
-[Name:PokemonName Idx="1"]の　ようすは　どうかね？[Ctrl2:PageClear ]</Text>
+			<Text>アララギ『おう！　[Name:TrainerName Idx="0" ]くん
+[Name:PokemonName Idx="1" ]の　ようすは　どうかね？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -18,8 +18,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『おう！　[Name:TrainerName Idx="0"]くん
-[Name:PokemonName Idx="1"]の　様子は　どうかね？[Ctrl2:PageClear ]</Text>
+			<Text>アララギ『おう！　[Name:TrainerName Idx="0" ]くん
+[Name:PokemonName Idx="1" ]の　様子は　どうかね？[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -69,7 +69,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おお！　この　[Name:PokemonName Idx="1"]
+			<Text>おお！　この　[Name:PokemonName Idx="1" ]
 おまえさんに　なついているんだな[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -81,7 +81,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお！　この　[Name:PokemonName Idx="1"]
+			<Text>おお！　この　[Name:PokemonName Idx="1" ]
 おまえさんに　なついているんだな[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -130,7 +130,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なるほど　おまえさん
-[Name:PokemonName Idx="1"]を　きびしく　そだてるのか[Ctrl2:PageClear ]</Text>
+[Name:PokemonName Idx="1" ]を　きびしく　そだてるのか[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -142,7 +142,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なるほど　おまえさん
-[Name:PokemonName Idx="1"]を　厳しく　育てるのか[Ctrl2:PageClear ]</Text>
+[Name:PokemonName Idx="1" ]を　厳しく　育てるのか[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -655,7 +655,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]▼
 ベルと　はなしていたけれど
 カノコタウンを　たびだってから▽
 ぼくは……　なにが　かわった？▼
@@ -676,7 +676,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]▼
 ベルと　話していたけれど
 カノコタウンを　旅だってから▽
 ぼくは……　なにが　変わった？▼
@@ -736,7 +736,7 @@
 			Language="JPN">
 			<Text>ベル『はいはい　チェレンたら……
 ３にん　そろったのに　ね！▼
-[Name:TrainerName Idx="0"]！　あたしはね
+[Name:TrainerName Idx="0" ]！　あたしはね
 こんどは　だいすきクラブに　いってね▼
 あたしの　やりたいこと
 あたしに　できそうなこと　さがすの！▼</Text>
@@ -752,7 +752,7 @@
 			Language="JPN_KANJI">
 			<Text>ベル『はいはい　チェレンたら……
 ３人　そろったのに　ね！▼
-[Name:TrainerName Idx="0"]！　あたしはね
+[Name:TrainerName Idx="0" ]！　あたしはね
 今度は　だいすきクラブに　行ってね▼
 あたしの　やりたいこと
 あたしに　できそうなこと　探すの！▼</Text>
@@ -1047,7 +1047,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……[Name:TrainerName Idx="0"]だけに
+			<Text>……[Name:TrainerName Idx="0" ]だけに
 つたえるつもりだったが　まあいい▼
 ゲーチスさま　からの　でんごんだ
 リュウラセンのとうに　こい▼</Text>
@@ -1061,7 +1061,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……[Name:TrainerName Idx="0"]だけに
+			<Text>……[Name:TrainerName Idx="0" ]だけに
 伝えるつもりだったが　まあいい▼
 ゲーチスさま　からの　伝言だ
 リュウラセンの塔に　来い▼</Text>

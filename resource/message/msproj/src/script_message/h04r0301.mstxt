@@ -239,7 +239,7 @@
 			<Text>さっそく　チーム　ツリーズの
 テーマを　はっぴょう　するぜ！▼
 ほんじつ　つりたい　ポケモンは
-[Name:PokemonName Idx="0"]　だ！▽
+[Name:PokemonName Idx="0" ]　だ！▽
 つったら　オレに　みせてくれよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -254,7 +254,7 @@
 			<Text>さっそく　チーム　ツリーズの
 テーマを　発表するぜ！▼
 本日　釣りたい　ポケモンは
-[Name:PokemonName Idx="0"]　だ！▽
+[Name:PokemonName Idx="0" ]　だ！▽
 釣ったら　オレに　みせてくれよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -295,7 +295,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほんじつの　テーマの　ポケモンは
-[Name:PokemonName Idx="0"]　だ！▽
+[Name:PokemonName Idx="0" ]　だ！▽
 それとも　もう　つってきたとか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -308,7 +308,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>本日の　テーマの　ポケモンは
-[Name:PokemonName Idx="0"]　だ！▽
+[Name:PokemonName Idx="0" ]　だ！▽
 それとも　もう　釣ってきたとか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -401,7 +401,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オー！　こいつは　みごとな
-[Name:PokemonName Idx="0"]　じゃないか！！▼
+[Name:PokemonName Idx="0" ]　じゃないか！！▼
 さすが　チーム　ツリーズ
 メンバー　だい２ごう　だな！▼
 よーし
@@ -417,7 +417,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オー！　こいつは　見事な
-[Name:PokemonName Idx="0"]　じゃないか！！▼
+[Name:PokemonName Idx="0" ]　じゃないか！！▼
 さすが　チーム　ツリーズ
 メンバー　第２号だな！▼
 よーし
@@ -463,7 +463,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オー！　こいつは　みごとな
-[Name:PokemonName Idx="0"]　じゃないか！！▼
+[Name:PokemonName Idx="0" ]　じゃないか！！▼
 だけど　ざんねんなことに
 ほんじつ　つった　ポケモンじゃない▼
 オレが　みたいのは
@@ -479,7 +479,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オー！　こいつは　見事な
-[Name:PokemonName Idx="0"]　じゃないか！！▼
+[Name:PokemonName Idx="0" ]　じゃないか！！▼
 だけど　残念なことに
 本日　釣った　ポケモンじゃない▼
 オレが　みたいのは
@@ -521,7 +521,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オー！　こいつは　みごとな
-[Name:PokemonName Idx="0"]　じゃないか！！▼
+[Name:PokemonName Idx="0" ]　じゃないか！！▼
 だけどよ　オレが　テーマにえらんだ
 ポケモンじゃあ　ないよな</Text>
 			<TextModifiedBy
@@ -535,7 +535,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オー！　こいつは　見事な
-[Name:PokemonName Idx="0"]　じゃないか！！▼
+[Name:PokemonName Idx="0" ]　じゃないか！！▼
 だけどよ　オレが　テーマに選んだ
 ポケモンじゃあ　ないよな</Text>
 			<TextModifiedBy
@@ -575,7 +575,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほんじつ　つりたい　ポケモンは
-[Name:PokemonName Idx="0"]　だ！▽
+[Name:PokemonName Idx="0" ]　だ！▽
 たのむぜ！　メンバー　だい２ごう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -588,7 +588,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>本日　釣りたい　ポケモンは
-[Name:PokemonName Idx="0"]　だ！▽
+[Name:PokemonName Idx="0" ]　だ！▽
 たのむぜ！　メンバー　第２号！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

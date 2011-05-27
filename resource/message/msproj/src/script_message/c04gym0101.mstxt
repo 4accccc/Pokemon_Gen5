@@ -136,7 +136,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　カミツレから
+			<Text>[Name:TrainerName Idx="0" ]は　カミツレから
 ボルトバッジを　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -148,7 +148,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　カミツレから
+			<Text>[Name:TrainerName Idx="0" ]は　カミツレから
 ボルトバッジを　もらった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1330,7 +1330,7 @@ princess_03</Text>
 			<Text>ライモン　ポケモンジム▼
 ジムリーダー　カミツレ
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -1344,7 +1344,7 @@ princess_03</Text>
 			<Text>ライモン　ポケモンジム▼
 ジムリーダー　カミツレ
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -1391,7 +1391,7 @@ princess_03</Text>
 			<Text>ライモン　ポケモンジム▼
 ジムリーダー　カミツレ
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -1407,7 +1407,7 @@ princess_03</Text>
 			<Text>ライモン　ポケモンジム▼
 ジムリーダー　カミツレ
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -1453,7 +1453,7 @@ princess_03</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！！</Text>
+			<Text>[Name:TrainerName Idx="0" ]！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -1464,7 +1464,7 @@ princess_03</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！！</Text>
+			<Text>[Name:TrainerName Idx="0" ]！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -1674,7 +1674,7 @@ princess_03</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さーん！</Text>
+			<Text>[Name:TrainerName Idx="0" ]さーん！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -1685,7 +1685,7 @@ princess_03</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さーん！</Text>
+			<Text>[Name:TrainerName Idx="0" ]さーん！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />

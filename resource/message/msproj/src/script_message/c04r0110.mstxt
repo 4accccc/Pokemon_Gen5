@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ただいま　[Digit:4digits Idx="0"]れんしょう！[Ctrl2:PageClear ]
-つぎは　[Digit:1digit Idx="1"]りょうめと　なります
+			<Text>ただいま　[Digit:4digits Idx="0" ]れんしょう！[Ctrl2:PageClear ]
+つぎは　[Digit:1digit Idx="1" ]りょうめと　なります
 たいせんを　つづけますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,8 +19,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ただいま　[Digit:4digits Idx="0"]連勝！[Ctrl2:PageClear ]
-次は　[Digit:1digit Idx="1"]両目と　なります
+			<Text>ただいま　[Digit:4digits Idx="0" ]連勝！[Ctrl2:PageClear ]
+次は　[Digit:1digit Idx="1" ]両目と　なります
 対戦を　続けますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -543,7 +543,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　たたかいが
+			<Text>[Name:TrainerName Idx="0" ]の　たたかいが
 きろく　されました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -555,7 +555,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　戦いが
+			<Text>[Name:TrainerName Idx="0" ]の　戦いが
 記録されました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

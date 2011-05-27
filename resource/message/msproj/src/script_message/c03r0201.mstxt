@@ -447,7 +447,7 @@
 			<Text>ミーも　アーティさんほどでは　ないが
 ちょいと　えを　たしなんでいてね▼
 そうですねー！　きょうは　タイプが
-[Name:Type Idx="0"]の　ポケモンを　かきたーい！▼
+[Name:Type Idx="0" ]の　ポケモンを　かきたーい！▼
 きみ　どんな　ポケモンを
 つれているか　みせてくれない？</Text>
 			<TextModifiedBy
@@ -463,7 +463,7 @@
 			<Text>ミーも　アーティさんほどでは　ないが
 ちょいと　絵を　たしなんでいてね▼
 そうですねー！　今日は　タイプが
-[Name:Type Idx="0"]の　ポケモンを　描きたーい！▼
+[Name:Type Idx="0" ]の　ポケモンを　描きたーい！▼
 きみ　どんな　ポケモンを
 連れているか　みせてくれない？</Text>
 			<TextModifiedBy
@@ -512,7 +512,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイプが　[Name:Type Idx="0"]の
+			<Text>タイプが　[Name:Type Idx="0" ]の
 ポケモンを　みせてくださーい！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -524,7 +524,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイプが　[Name:Type Idx="0"]の
+			<Text>タイプが　[Name:Type Idx="0" ]の
 ポケモンを　みせてくださーい！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -907,7 +907,7 @@ No153「ナナシのみ」</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１コ！
+			<Text>[Name:Item Idx="0" ]を　１コ！
 はい　たしかにー！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -919,7 +919,7 @@ No153「ナナシのみ」</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１コ！
+			<Text>[Name:Item Idx="0" ]を　１コ！
 はい　たしかにー！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1081,7 +1081,7 @@ No153「ナナシのみ」</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Type Idx="0"]タイプの　ポケモンを
+			<Text>[Name:Type Idx="0" ]タイプの　ポケモンを
 つかまえていたら　みせてほしいなー！▽
 ちょっとしたモノ　あげるからねー</Text>
 			<TextModifiedBy
@@ -1094,7 +1094,7 @@ No153「ナナシのみ」</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Type Idx="0"]タイプの　ポケモンを
+			<Text>[Name:Type Idx="0" ]タイプの　ポケモンを
 捕まえていたら　みせてほしいなー！▽
 ちょっとしたモノ　あげるからねー</Text>
 			<TextModifiedBy
@@ -1144,7 +1144,7 @@ No153「ナナシのみ」</Comment>
 			<Text>きみが　えらんだ　ポケモン
 ミーの　リクエストと　ちがうよー！▼
 ミーが　かきたいのは　タイプが
-[Name:Type Idx="0"]の　ポケモンよ！</Text>
+[Name:Type Idx="0" ]の　ポケモンよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -1158,7 +1158,7 @@ No153「ナナシのみ」</Comment>
 			<Text>きみが　選んだ　ポケモン
 ミーの　リクエストと　ちがうよー！▼
 ミーが　描きたいのは　タイプが
-[Name:Type Idx="0"]の　ポケモンよ！</Text>
+[Name:Type Idx="0" ]の　ポケモンよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />

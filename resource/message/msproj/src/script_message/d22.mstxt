@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっき　[Name:TrainerName Idx="1"]って　ヤツに
+			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモンしょうぶを　いどまれたよ！▼
 きみも　じゅんび　しておかないと
 ぼくみたいに　いどまれちゃうかもよ？▼
-[Name:TrainerName Idx="1"]？
+[Name:TrainerName Idx="1" ]？
 ああ　ぼくじょうに　いったけど</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,11 +22,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっき　[Name:TrainerName Idx="1"]って　ヤツに
+			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモンしょうぶを　いどまれたよ！▼
 きみも　じゅんび　しておかないと
 ぼくみたいに　いどまれちゃうかもよ？▼
-[Name:TrainerName Idx="1"]？
+[Name:TrainerName Idx="1" ]？
 ああ　ぼくじょうに　いったけど</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,11 +74,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっき　[Name:TrainerName Idx="1"]って　ヤツに
+			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモンしょうぶを　いどまれたよ！▼
 きみも　じゅんび　しておかないと
 ぼくみたいに　いどまれちゃうかもよ？▼
-[Name:TrainerName Idx="1"]？
+[Name:TrainerName Idx="1" ]？
 ああ　ぼくじょうに　いったけど▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,11 +90,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっき　[Name:TrainerName Idx="1"]って　ヤツに
+			<Text>さっき　[Name:TrainerName Idx="1" ]って　ヤツに
 ポケモンしょうぶを　いどまれたよ！▼
 きみも　じゅんび　しておかないと
 ぼくみたいに　いどまれちゃうかもよ？▼
-[Name:TrainerName Idx="1"]？
+[Name:TrainerName Idx="1" ]？
 ああ　ぼくじょうに　いったけど▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

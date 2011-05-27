@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -17,7 +17,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -127,7 +127,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｌｖ．[Digit:3digits Idx="0"]</Text>
+			<Text>Ｌｖ．[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -138,7 +138,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｌｖ．[Digit:3digits Idx="0"]</Text>
+			<Text>Ｌｖ．[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -216,7 +216,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]</Text>
+			<Text>[Name:Item Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -227,7 +227,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]</Text>
+			<Text>[Name:Item Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -377,7 +377,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -388,7 +388,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -458,7 +458,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -469,7 +469,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -579,7 +579,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -590,7 +590,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -660,7 +660,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="0"]</Text>
+			<Text>[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -671,7 +671,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="0"]</Text>
+			<Text>[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -741,7 +741,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:7digits Idx="0"]</Text>
+			<Text>[Digit:7digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -752,7 +752,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:7digits Idx="0"]</Text>
+			<Text>[Digit:7digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -862,7 +862,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:6digits Idx="0"]</Text>
+			<Text>[Digit:6digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -873,7 +873,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:6digits Idx="0"]</Text>
+			<Text>[Digit:6digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -983,7 +983,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]がんばりや[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]がんばりや[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -994,7 +994,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]がんばりや[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]がんばりや[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1030,7 +1030,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]さみしがり[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]さみしがり[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1041,7 +1041,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]さみしがり[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]さみしがり[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1077,7 +1077,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ゆうかん[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]ゆうかん[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1088,7 +1088,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ゆうかん[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]ゆうかん[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1124,7 +1124,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]いじっぱり[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]いじっぱり[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1135,7 +1135,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]いじっぱり[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]いじっぱり[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1171,7 +1171,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]やんちゃ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]やんちゃ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1182,7 +1182,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]やんちゃ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]やんちゃ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1218,7 +1218,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ずぶとい[/System:Color]　せいかく。</Text>
+			<Text>[System:Color name="2" ]ずぶとい[/System:Color]　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1229,7 +1229,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ずぶとい[/System:Color]　せいかく。</Text>
+			<Text>[System:Color name="2" ]ずぶとい[/System:Color]　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1265,7 +1265,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]すなお[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]すなお[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1276,7 +1276,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]すなお[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]すなお[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1312,7 +1312,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]のんき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]のんき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1323,7 +1323,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]のんき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]のんき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1359,7 +1359,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]わんぱく[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]わんぱく[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1370,7 +1370,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]わんぱく[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]わんぱく[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1406,7 +1406,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]のうてんき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]のうてんき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1417,7 +1417,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]のうてんき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]のうてんき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1453,7 +1453,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]おくびょう[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]おくびょう[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1464,7 +1464,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]おくびょう[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]おくびょう[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1500,7 +1500,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]せっかち[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]せっかち[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1511,7 +1511,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]せっかち[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]せっかち[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1547,7 +1547,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]まじめ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]まじめ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1558,7 +1558,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]まじめ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]まじめ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1594,7 +1594,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ようき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]ようき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1605,7 +1605,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ようき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]ようき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1641,7 +1641,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]むじゃき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]むじゃき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1652,7 +1652,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]むじゃき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]むじゃき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1688,7 +1688,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ひかえめ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]ひかえめ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1699,7 +1699,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ひかえめ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]ひかえめ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1735,7 +1735,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]おっとり[/System:Color]した　せいかく。</Text>
+			<Text>[System:Color name="2" ]おっとり[/System:Color]した　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1746,7 +1746,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]おっとり[/System:Color]した　せいかく。</Text>
+			<Text>[System:Color name="2" ]おっとり[/System:Color]した　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1782,7 +1782,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]れいせい[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]れいせい[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1793,7 +1793,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]れいせい[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]れいせい[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1829,7 +1829,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]てれや[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]てれや[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1840,7 +1840,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]てれや[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]てれや[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1876,7 +1876,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]うっかりや[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]うっかりや[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1887,7 +1887,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]うっかりや[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]うっかりや[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1923,7 +1923,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]おだやか[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]おだやか[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1934,7 +1934,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]おだやか[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]おだやか[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1970,7 +1970,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]おとなしい[/System:Color]　せいかく。</Text>
+			<Text>[System:Color name="2" ]おとなしい[/System:Color]　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -1981,7 +1981,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]おとなしい[/System:Color]　せいかく。</Text>
+			<Text>[System:Color name="2" ]おとなしい[/System:Color]　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2017,7 +2017,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]なまいき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]なまいき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2028,7 +2028,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]なまいき[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]なまいき[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2064,7 +2064,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]しんちょう[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]しんちょう[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2075,7 +2075,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]しんちょう[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]しんちょう[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2111,7 +2111,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]きまぐれ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]きまぐれ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2122,7 +2122,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]きまぐれ[/System:Color]な　せいかく。</Text>
+			<Text>[System:Color name="2" ]きまぐれ[/System:Color]な　せいかく。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -2158,9 +2158,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 であった。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2172,9 +2172,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 であった。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2217,9 +2217,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 であった　ようだ。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2231,9 +2231,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 であった　ようだ。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2276,9 +2276,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 やってきた。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2290,9 +2290,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 やってきた。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2335,11 +2335,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　であった。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2351,11 +2351,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　であった。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2402,11 +2402,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえり　であったようだ。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2418,11 +2418,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえり　であったようだ。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2469,11 +2469,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 もらった　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　であった。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2485,11 +2485,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 もらった　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　であった。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2536,11 +2536,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 もらった　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえり　であったようだ。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2552,11 +2552,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 もらった　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえり　であったようだ。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2603,9 +2603,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -2618,9 +2618,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -2664,9 +2664,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -2679,9 +2679,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
-Ｌｖ．[Digit:3digits Idx="3"]のときに
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
+Ｌｖ．[Digit:3digits Idx="3" ]のときに
 うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -2725,11 +2725,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -2742,11 +2742,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -2794,11 +2794,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -2811,11 +2811,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -2863,11 +2863,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 やってきた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -2880,11 +2880,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 やってきた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -2933,11 +2933,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -2950,11 +2950,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -3002,11 +3002,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -3019,11 +3019,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした。</Text>
 			<TextModifiedBy
@@ -3071,11 +3071,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -3088,11 +3088,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　タマゴが
-２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]で
+２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]で
 かえって　うんめいてきな
 であいをした　ようだ。</Text>
 			<TextModifiedBy
@@ -3140,9 +3140,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-Ｌｖ．[Digit:3digits Idx="3"]のとき
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+Ｌｖ．[Digit:3digits Idx="3" ]のとき
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]から
 やってきた。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3154,9 +3154,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]ねん[Digit:2digits Idx="1"]がつ[Digit:2digits Idx="2"]にち
-Ｌｖ．[Digit:3digits Idx="3"]のとき
-[System:Color name="2"][Name:Place Idx="4"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="0" ]ねん[Digit:2digits Idx="1" ]がつ[Digit:2digits Idx="2" ]にち
+Ｌｖ．[Digit:3digits Idx="3" ]のとき
+[System:Color name="2" ][Name:Place Idx="4" ][/System:Color]から
 やってきた。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3199,7 +3199,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]からい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]からい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3210,7 +3210,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]からい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]からい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3247,7 +3247,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]しぶい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]しぶい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3258,7 +3258,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]しぶい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]しぶい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3295,7 +3295,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]あまい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]あまい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3306,7 +3306,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]あまい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]あまい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3343,7 +3343,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]にがい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]にがい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3354,7 +3354,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]にがい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]にがい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3391,7 +3391,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]すっぱい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]すっぱい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -3402,7 +3402,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]すっぱい[/System:Color]ものが　すき。</Text>
+			<Text>[System:Color name="2" ]すっぱい[/System:Color]ものが　すき。</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -4957,8 +4957,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 もらった　ふしぎな
 ポケモンの　タマゴ。
 </Text>
@@ -4972,8 +4972,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 もらった　ふしぎな
 ポケモンの　タマゴ。
 </Text>
@@ -5023,8 +5023,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　ふしぎな
 ポケモンの　タマゴ。
 </Text>
@@ -5038,8 +5038,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　ふしぎな
 ポケモンの　タマゴ。
 </Text>
@@ -5090,8 +5090,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="1"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="1" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　とっても
 ふしぎな　ふしぎな
 ポケモンの　タマゴ。
@@ -5106,8 +5106,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="1"][Name:Place Idx="8"][/System:Color]で
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="1" ][Name:Place Idx="8" ][/System:Color]で
 てにいれた　とっても
 ふしぎな　ふしぎな
 ポケモンの　タマゴ。
@@ -5158,8 +5158,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 やってきた　とっても
 ふしぎな　ふしぎな
 ポケモンの　タマゴ。
@@ -5174,8 +5174,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="5"]ねん[Digit:2digits Idx="6"]がつ[Digit:2digits Idx="7"]にち
-[System:Color name="2"][Name:Place Idx="8"][/System:Color]から
+			<Text>２０[Digit:2digits Idx="5" ]ねん[Digit:2digits Idx="6" ]がつ[Digit:2digits Idx="7" ]にち
+[System:Color name="2" ][Name:Place Idx="8" ][/System:Color]から
 やってきた　とっても
 ふしぎな　ふしぎな
 ポケモンの　タマゴ。
@@ -5805,7 +5805,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5816,7 +5816,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5846,7 +5846,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5857,7 +5857,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5887,7 +5887,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5898,7 +5898,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5928,7 +5928,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5939,7 +5939,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5969,7 +5969,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -5980,7 +5980,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6010,7 +6010,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6021,7 +6021,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6051,7 +6051,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6062,7 +6062,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6092,7 +6092,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Ability Idx="0"]</Text>
+			<Text>[Name:Ability Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6103,7 +6103,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Ability Idx="0"]</Text>
+			<Text>[Name:Ability Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6307,7 +6307,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6318,7 +6318,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6348,7 +6348,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6359,7 +6359,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6389,7 +6389,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6400,7 +6400,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6430,7 +6430,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6441,7 +6441,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6471,7 +6471,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6482,7 +6482,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6552,7 +6552,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6563,7 +6563,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6593,7 +6593,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6604,7 +6604,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6641,7 +6641,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6652,7 +6652,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6689,7 +6689,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6700,7 +6700,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6737,7 +6737,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6748,7 +6748,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6785,7 +6785,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6796,7 +6796,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6819,7 +6819,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6830,7 +6830,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6860,7 +6860,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6871,7 +6871,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6901,7 +6901,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6912,7 +6912,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6942,7 +6942,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -6953,7 +6953,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7143,7 +7143,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7154,7 +7154,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7184,7 +7184,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7195,7 +7195,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7851,7 +7851,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]からい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]からい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7862,7 +7862,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]からい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]からい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7899,7 +7899,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]しぶい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]しぶい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7910,7 +7910,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]しぶい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]しぶい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7947,7 +7947,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]あまい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]あまい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7958,7 +7958,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]あまい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]あまい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -7995,7 +7995,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]にがい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]にがい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8006,7 +8006,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]にがい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]にがい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8043,7 +8043,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]すっぱい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]すっぱい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8054,7 +8054,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]すっぱい[/System:Color]のがすき</Text>
+			<Text>[System:Color name="2" ]すっぱい[/System:Color]のがすき</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8669,7 +8669,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]こ</Text>
+			<Text>[Digit:3digits Idx="0" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8680,7 +8680,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]こ</Text>
+			<Text>[Digit:3digits Idx="0" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8718,7 +8718,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8729,7 +8729,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8816,7 +8816,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -8827,7 +8827,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -9220,7 +9220,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イベントリボン[Digit:2digits Idx="0"]</Text>
+			<Text>イベントリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
@@ -9231,7 +9231,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イベントリボン[Digit:2digits Idx="0"]</Text>
+			<Text>イベントリボン[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />

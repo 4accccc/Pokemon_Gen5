@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]！▼</Text>
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
@@ -17,7 +17,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]！▼</Text>
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
@@ -396,7 +396,7 @@
 			<Text>チェレン『また　なにか
 メンドーなことを　おしつけられるかと▽
 おもわず　みがまえたよ▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 じゃ　ぼくは　さきに　いくから▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -411,7 +411,7 @@
 			<Text>チェレン『また　なにか
 メンドーなことを　おしつけられるかと▽
 思わず　身構えたよ▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 じゃ　ぼくは　先に　行くから▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

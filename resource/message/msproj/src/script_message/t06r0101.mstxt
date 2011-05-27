@@ -178,7 +178,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>というわけで　[Name:TrainerName Idx="0"]！
+			<Text>というわけで　[Name:TrainerName Idx="0" ]！
 かれらの　あいてを　してくれい！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -190,7 +190,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>というわけで　[Name:TrainerName Idx="0"]！
+			<Text>というわけで　[Name:TrainerName Idx="0" ]！
 彼らの　相手を　してくれい！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -406,7 +406,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『そのまえに　[Name:TrainerName Idx="0"]の
+			<Text>アデク『そのまえに　[Name:TrainerName Idx="0" ]の
 ポケモンを　げんきに　しないとな▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -418,7 +418,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『その前に　[Name:TrainerName Idx="0"]の
+			<Text>アデク『その前に　[Name:TrainerName Idx="0" ]の
 ポケモンを　元気に　しないとな▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -585,7 +585,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうだ　[Name:TrainerName Idx="0"]▼
+			<Text>どうだ　[Name:TrainerName Idx="0" ]▼
 ふたりめの　おんなのこは
 ポケモンに　きのみを　もたせておった▼
 そうすると　たたかいの　さなか
@@ -601,7 +601,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうだ　[Name:TrainerName Idx="0"]▼
+			<Text>どうだ　[Name:TrainerName Idx="0" ]▼
 二人目の　おんなのこは
 ポケモンに　きのみを　持たせおった▼
 そうすると　戦いの　さなか

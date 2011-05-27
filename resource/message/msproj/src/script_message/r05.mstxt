@@ -1891,7 +1891,7 @@
 			<Text>トレーナーさん！　あたしが
 あつめた　きのみを　かわない？▼
 きょう　もっているのは
-[Name:Item Idx="0"]が　５コ　よ！▽
+[Name:Item Idx="0" ]が　５コ　よ！▽
 ねっ　ほしいでしょ？　かうでしょ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1906,7 +1906,7 @@
 			<Text>トレーナーさん！　あたしが
 集めた　きのみを　買わない？▼
 今日　持っているのは
-[Name:Item Idx="0"]が　５コ　よ！▽
+[Name:Item Idx="0" ]が　５コ　よ！▽
 ねっ　ほしいでしょ？　買うでしょ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2024,7 +2024,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]　５コで　２００円！
+			<Text>[Name:Item Idx="0" ]　５コで　２００円！
 あなた　かいものじょうず　よね！！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2036,7 +2036,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]　５コで　２００円！
+			<Text>[Name:Item Idx="0" ]　５コで　２００円！
 あなた　買い物上手　よね！！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2255,7 +2255,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしが　もっている　きのみは
-[Name:Item Idx="0"]　５コが　よ！▽
+[Name:Item Idx="0" ]　５コが　よ！▽
 ねっ　ほしいでしょ？　かうでしょ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2268,7 +2268,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしが　持っている　きのみは
-[Name:Item Idx="0"]　５コが　よ！▽
+[Name:Item Idx="0" ]　５コが　よ！▽
 ねっ　ほしいでしょ？　買うでしょ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

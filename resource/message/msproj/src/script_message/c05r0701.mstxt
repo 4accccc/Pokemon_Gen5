@@ -264,9 +264,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「[Name:Move Idx="0"]」という　わざを
+			<Text>「[Name:Move Idx="0" ]」という　わざを
 おぼえた　ポケモンが　みたいわ！▼
-「[Name:Move Idx="0"]」という　わざ　よ
+「[Name:Move Idx="0" ]」という　わざ　よ
 ほんじつちゅうに　よろしくね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -278,9 +278,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「[Name:Move Idx="0"]」という　技を
+			<Text>「[Name:Move Idx="0" ]」という　技を
 おぼえた　ポケモンが　みたいわ！▼
-「[Name:Move Idx="0"]」という　技よ
+「[Name:Move Idx="0" ]」という　技よ
 本日中に　よろしくね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -327,13 +327,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「[Name:Move Idx="0"]」という　わざを
+			<Text>「[Name:Move Idx="0" ]」という　わざを
 おぼえた　ポケモンが　みたいわ！▼
-「[Name:Move Idx="0"]」という　わざ　よ
+「[Name:Move Idx="0" ]」という　わざ　よ
 ほんじつちゅうに　よろしくね▼
 って　まあ　まあ　まあ！
-あなたの　[Name:PokemonName Idx="1"]▽
-「[Name:Move Idx="0"]」が　つかえるのね！▼
+あなたの　[Name:PokemonName Idx="1" ]▽
+「[Name:Move Idx="0" ]」が　つかえるのね！▼
 わざわざ　おぼえさせたの？
 ステキ！▼
 これは　ほんの　きもち
@@ -348,13 +348,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「[Name:Move Idx="0"]」という　技を
+			<Text>「[Name:Move Idx="0" ]」という　技を
 おぼえた　ポケモンが　みたいわ！▼
-「[Name:Move Idx="0"]」という　技よ
+「[Name:Move Idx="0" ]」という　技よ
 本日中に　よろしくね▼
 って　まあ　まあ　まあ！
-まあ　あなたの　[Name:PokemonName Idx="1"]▽
-「[Name:Move Idx="0"]」が　使えるのね！▼
+まあ　あなたの　[Name:PokemonName Idx="1" ]▽
+「[Name:Move Idx="0" ]」が　使えるのね！▼
 わざわざ　覚えさせたの？
 ステキ！▼
 これは　ほんの　気持ち
@@ -469,7 +469,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたくしが　みたいのは
-「[Name:Move Idx="0"]」を　おぼえた▽
+「[Name:Move Idx="0" ]」を　おぼえた▽
 ポケモン！　よろしくね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -482,7 +482,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたくしが　みたいのは
-「[Name:Move Idx="0"]」を　覚えた▽
+「[Name:Move Idx="0" ]」を　覚えた▽
 ポケモン！　よろしくね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -530,8 +530,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まあ　あなたの　[Name:PokemonName Idx="1"]
-「[Name:Move Idx="0"]」が　つかえるのね！▼
+			<Text>まあ　あなたの　[Name:PokemonName Idx="1" ]
+「[Name:Move Idx="0" ]」が　つかえるのね！▼
 わざわざ　おぼえさせたの？
 ステキ！▼
 これは　ほんの　きもち
@@ -546,8 +546,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まあ　あなたの　[Name:PokemonName Idx="1"]
-「[Name:Move Idx="0"]」が　使えるのね！▼
+			<Text>まあ　あなたの　[Name:PokemonName Idx="1" ]
+「[Name:Move Idx="0" ]」が　使えるのね！▼
 わざわざ　覚えさせたの？
 ステキ！▼
 これは　ほんの　気持ち
@@ -602,7 +602,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「[Name:Move Idx="0"]」って　わざ
+			<Text>「[Name:Move Idx="0" ]」って　わざ
 じっさいに　つかうと▽
 どんな　かんじ　なのかしら？▼
 もちろん　あなたなら
@@ -617,7 +617,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「[Name:Move Idx="0"]」って　技
+			<Text>「[Name:Move Idx="0" ]」って　技
 実際に　使うと▽
 どんな　感じ　なのかしら？▼
 もちろん　あなたなら

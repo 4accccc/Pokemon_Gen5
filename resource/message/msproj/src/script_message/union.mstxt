@@ -661,7 +661,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたって　[Name:TrainerType Idx="0"]に
+			<Text>あなたって　[Name:TrainerType Idx="0" ]に
 みまちがえられた ことないですか？[Ctrl2:PageClear ]
 なんとなく　そんな
 ふんいきが　するんですよねー[Ctrl2:PageClear ]</Text>
@@ -675,7 +675,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたって　[Name:TrainerType Idx="0"]に
+			<Text>あなたって　[Name:TrainerType Idx="0" ]に
 みまちがえられた ことないですか？[Ctrl2:PageClear ]
 なんとなく　そんな
 ふんいきが　するんですよねー[Ctrl2:PageClear ]</Text>
@@ -772,7 +772,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめまして！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　は
+[Name:PMS Idx="0" ]　は
 いいですよねー[Ctrl2:LineFeed ]
 わたしも　だいすき　なんです！[Ctrl2:PageClear ]
 はじめて　あったひとには
@@ -791,7 +791,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はじめまして！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　は
+[Name:PMS Idx="0" ]　は
 いいですよねー[Ctrl2:LineFeed ]
 わたしも　だいすき　なんです！[Ctrl2:PageClear ]
 はじめて　あったひとには
@@ -835,7 +835,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へー　[Name:PMS Idx="0"]　トレーナー
+			<Text>へー　[Name:PMS Idx="0" ]　トレーナー
 なんですか！？[Ctrl2:LineFeed ]
 すごい　ですねー[Ctrl2:PageClear ]
 でも　ごめんなさい！
@@ -852,7 +852,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へー　[Name:PMS Idx="0"]　トレーナー
+			<Text>へー　[Name:PMS Idx="0" ]　トレーナー
 なんですか！？[Ctrl2:LineFeed ]
 すごい　ですねー[Ctrl2:PageClear ]
 でも　ごめんなさい！
@@ -896,7 +896,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！
-わたし　[Name:PMS Idx="0"]　ほしいです！[Ctrl2:LineFeed ]
+わたし　[Name:PMS Idx="0" ]　ほしいです！[Ctrl2:LineFeed ]
 わたしのと　こうかん　してください[Ctrl2:PageClear ]
 ……[Ctrl2:PageClear ]
 あ　いまの　うそです[Ctrl2:PageClear ]
@@ -913,7 +913,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あ！
-わたし　[Name:PMS Idx="0"]　ほしいです！[Ctrl2:LineFeed ]
+わたし　[Name:PMS Idx="0" ]　ほしいです！[Ctrl2:LineFeed ]
 わたしのと　こうかん　してください[Ctrl2:PageClear ]
 ……[Ctrl2:PageClear ]
 あ　いまの　うそです[Ctrl2:PageClear ]
@@ -955,7 +955,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]が　ほしいのは
+			<Text>[Name:PMS Idx="0" ]が　ほしいのは
 わかりますが[Ctrl2:PageClear ]
 こうかんを　するときは
 むりを　いっちゃ　だめですよ！[Ctrl2:PageClear ]
@@ -971,7 +971,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]が　ほしいのは
+			<Text>[Name:PMS Idx="0" ]が　ほしいのは
 わかりますが[Ctrl2:PageClear ]
 こうかんを　するときは
 むりを　いっちゃ　だめですよ！[Ctrl2:PageClear ]
@@ -1075,7 +1075,7 @@
 			Language="JPN">
 			<Text>わたし　おえかきは
 うまいんですよ！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　だったら
+[Name:PMS Idx="0" ]　だったら
 まかせて　ください！[Ctrl2:LineFeed ]
 だれにも　まけませんよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1090,7 +1090,7 @@
 			Language="JPN_KANJI">
 			<Text>わたし　おえかきは
 うまいんですよ！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　だったら
+[Name:PMS Idx="0" ]　だったら
 まかせて　ください！[Ctrl2:LineFeed ]
 だれにも　まけませんよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1244,12 +1244,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-[Name:PMS Idx="0"]　したいです！[Ctrl2:PageClear ]
+[Name:PMS Idx="0" ]　したいです！[Ctrl2:PageClear ]
 ……したい　ですけど
 ここを　うごけないので[Ctrl2:LineFeed ]
 やっぱり　できません[Ctrl2:PageClear ]
 はぁ
-[Name:PMS Idx="0"]　したいなぁ[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]　したいなぁ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1261,12 +1261,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-[Name:PMS Idx="0"]　したいです！[Ctrl2:PageClear ]
+[Name:PMS Idx="0" ]　したいです！[Ctrl2:PageClear ]
 ……したい　ですけど
 ここを　うごけないので[Ctrl2:LineFeed ]
 やっぱり　できません[Ctrl2:PageClear ]
 はぁ
-[Name:PMS Idx="0"]　したいなぁ[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]　したいなぁ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1304,7 +1304,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-わたしも　[Name:PMS Idx="0"]します！[Ctrl2:PageClear ]
+わたしも　[Name:PMS Idx="0" ]します！[Ctrl2:PageClear ]
 でも　ここで　みんなに　せつめいを
 しないと　いけないんです……[Ctrl2:PageClear ]
 なので　みんなと　あそんで
@@ -1320,7 +1320,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-わたしも　[Name:PMS Idx="0"]します！[Ctrl2:PageClear ]
+わたしも　[Name:PMS Idx="0" ]します！[Ctrl2:PageClear ]
 でも　ここで　みんなに　せつめいを
 しないと　いけないんです……[Ctrl2:PageClear ]
 なので　みんなと　あそんで
@@ -1361,7 +1361,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]を
+			<Text>[Name:PMS Idx="0" ]を
 さそわれて　しまった！[Ctrl2:PageClear ]
 ……　あ！
 でも　わたしは　ここで　せつめいを[Ctrl2:LineFeed ]
@@ -1378,7 +1378,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]を
+			<Text>[Name:PMS Idx="0" ]を
 さそわれて　しまった！[Ctrl2:PageClear ]
 ……　あ！
 でも　わたしは　ここで　せつめいを[Ctrl2:LineFeed ]
@@ -1424,7 +1424,7 @@
 			<Text>そうです！[Ctrl2:PageClear ]
 ときには　つよきで　ともだちを
 さそうのも　いいですよ！[Ctrl2:PageClear ]
-でも　[Name:PMS Idx="0"]が　したくて
+でも　[Name:PMS Idx="0" ]が　したくて
 わがままに　ならないようにね！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1439,7 +1439,7 @@
 			<Text>そうです！[Ctrl2:PageClear ]
 ときには　つよきで　ともだちを
 さそうのも　いいですよ！[Ctrl2:PageClear ]
-でも　[Name:PMS Idx="0"]が　したくて
+でも　[Name:PMS Idx="0" ]が　したくて
 わがままに　ならないようにね！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1538,7 +1538,7 @@
 あなたも　あいての　いやがることを
 むりに　さそっては　ダメですよ[Ctrl2:PageClear ]
 ちなみに　わたしは
-[Name:PMS Idx="0"]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1554,7 +1554,7 @@
 あなたも　あいての　いやがることを
 むりに　さそっては　ダメですよ[Ctrl2:PageClear ]
 ちなみに　わたしは
-[Name:PMS Idx="0"]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1770,7 +1770,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]こうかん
+			<Text>[Name:PMS Idx="0" ]こうかん
 したいですよ　ねえ！[Ctrl2:LineFeed ]
 わたしも　したいですもん[Ctrl2:PageClear ]
 でも　わたしに　はなしかけても
@@ -1785,7 +1785,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]こうかん
+			<Text>[Name:PMS Idx="0" ]こうかん
 したいですよ　ねえ！[Ctrl2:LineFeed ]
 わたしも　したいですもん[Ctrl2:PageClear ]
 でも　わたしに　はなしかけても
@@ -1827,11 +1827,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]たいせんを
+			<Text>[Name:PMS Idx="0" ]たいせんを
 するんだったら[Ctrl2:PageClear ]
 じぶんから　はなしかけるぐらい
 つよきで　いかないと！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　たいせんを
+[Name:PMS Idx="0" ]　たいせんを
 するまえに　まけちゃい　ますよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1843,11 +1843,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]対戦を
+			<Text>[Name:PMS Idx="0" ]対戦を
 するんだったら[Ctrl2:PageClear ]
 じぶんから　はなしかけるぐらい
 つよきで　いかないと！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　対戦を
+[Name:PMS Idx="0" ]　対戦を
 する前に　まけちゃい　ますよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

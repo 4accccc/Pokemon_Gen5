@@ -127,7 +127,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あっ　[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>ベル『あっ　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 ……だいじょうぶ　だよ[Ctrl2:PageClear ]
 ……だいじょうぶ！[Ctrl2:PageClear ]
 あたし　けんきゅうじょの　まえで
@@ -142,7 +142,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あっ　[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>ベル『あっ　[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 ……大丈夫だよ[Ctrl2:PageClear ]
 ……大丈夫！[Ctrl2:PageClear ]
 それじゃ　あたし

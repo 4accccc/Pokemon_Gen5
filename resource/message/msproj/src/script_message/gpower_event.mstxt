@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　デルパワー
-「[Name:PMS Idx="2"]」をつかった！[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　デルパワー
+「[Name:PMS Idx="2" ]」をつかった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -18,8 +18,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　デルパワー
-「[Name:PMS Idx="2"]」を使った！[Ctrl2:PageClear ]</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　デルパワー
+「[Name:PMS Idx="2" ]」を使った！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -52,7 +52,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「[Name:PMS Idx="2"]」の
+			<Text>「[Name:PMS Idx="2" ]」の
 こうかが　きれた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64,7 +64,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「[Name:PMS Idx="2"]」の
+			<Text>「[Name:PMS Idx="2" ]」の
 効果が　切れた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98,7 +98,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「[Name:PMS Idx="2"]」の
+			<Text>「[Name:PMS Idx="2" ]」の
 こうかが　きれた[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -110,7 +110,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「[Name:PMS Idx="2"]」の
+			<Text>「[Name:PMS Idx="2" ]」の
 効果が　切れた[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -192,7 +192,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]せっていしているデルパワー[/System:Color]</Text>
+			<Text>[System:Color name="2" ]せっていしているデルパワー[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -203,7 +203,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]設定しているデルパワー[/System:Color]</Text>
+			<Text>[System:Color name="2" ]設定しているデルパワー[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -239,7 +239,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]はつどうちゅうのデルパワー[/System:Color]</Text>
+			<Text>[System:Color name="2" ]はつどうちゅうのデルパワー[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -250,7 +250,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]発動中のデルパワー[/System:Color]</Text>
+			<Text>[System:Color name="2" ]発動中のデルパワー[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -279,7 +279,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]</Text>
+			<Text>[Name:PMS Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -290,7 +290,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]</Text>
+			<Text>[Name:PMS Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -327,7 +327,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"][Ctrl1:xright value="0"][Digit:2digits Idx="1"]：[Digit:2digits Idx="2"]</Text>
+			<Text>[Name:PMS Idx="0" ][Ctrl1:xright value="0" ][Digit:2digits Idx="1" ]：[Digit:2digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -338,7 +338,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"][Ctrl1:xright value="0"][Digit:2digits Idx="1"]：[Digit:2digits Idx="2"]</Text>
+			<Text>[Name:PMS Idx="0" ][Ctrl1:xright value="0" ][Digit:2digits Idx="1" ]：[Digit:2digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -376,7 +376,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　ポケモンに
+			<Text>[Name:TrainerName Idx="0" ]は　ポケモンに
 そうぐうしやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -388,7 +388,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　ポケモンに
+			<Text>[Name:TrainerName Idx="0" ]は　ポケモンに
 遭遇しやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -418,7 +418,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　ポケモンに
+			<Text>[Name:TrainerName Idx="0" ]は　ポケモンに
 そうぐうしづらくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -430,7 +430,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　ポケモンに
+			<Text>[Name:TrainerName Idx="0" ]は　ポケモンに
 遭遇しづらくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -502,7 +502,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 なつきやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -514,7 +514,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 なつきやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -586,7 +586,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　[Name:PokemonNickname Idx="1"]は
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]は
 たいりょくが　かいふくした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -598,7 +598,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　[Name:PokemonNickname Idx="1"]は
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]は
 体力が　回復した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -628,7 +628,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　[Name:PokemonNickname Idx="1"]は
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]は
 ＰＰが　かいふくした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -640,7 +640,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　[Name:PokemonNickname Idx="1"]は
+			<Text>[Name:TrainerName Idx="0" ]の　[Name:PokemonNickname Idx="1" ]は
 ＰＰが　回復した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -670,7 +670,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 けいけんちを　もらいやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -682,7 +682,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 経験値を　もらいやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -712,7 +712,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 けいけんちを　もらいづらくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -724,7 +724,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 経験値を　もらいづらくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -754,7 +754,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　おこづかいを
+			<Text>[Name:TrainerName Idx="0" ]は　おこづかいを
 もらいやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -766,7 +766,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　おこづかいを
+			<Text>[Name:TrainerName Idx="0" ]は　おこづかいを
 もらいやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -796,7 +796,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　ポケモンを
+			<Text>[Name:TrainerName Idx="0" ]は　ポケモンを
 つかまえやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -808,7 +808,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　ポケモンを
+			<Text>[Name:TrainerName Idx="0" ]は　ポケモンを
 捕まえやすくなった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -838,7 +838,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 みんな　げんきに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -850,7 +850,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンは
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンは
 みんな　元気に　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

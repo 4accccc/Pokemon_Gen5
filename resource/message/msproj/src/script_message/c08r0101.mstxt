@@ -971,7 +971,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>では　アイリスや▼
-ポケモンジムにて　[Name:TrainerName Idx="0"]の
+ポケモンジムにて　[Name:TrainerName Idx="0" ]の
 あいてを　してあげなさい▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -984,7 +984,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>では　アイリスや▼
-ポケモンジムにて　[Name:TrainerName Idx="0"]の
+ポケモンジムにて　[Name:TrainerName Idx="0" ]の
 相手を　してあげなさい▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1089,7 +1089,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>では　[Name:TrainerName Idx="0"]▼
+			<Text>では　[Name:TrainerName Idx="0" ]▼
 ポケモンジムにて
 きみの　ちょうせんを　まつ！▼</Text>
 			<TextModifiedBy
@@ -1102,7 +1102,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>では　[Name:TrainerName Idx="0"]▼
+			<Text>では　[Name:TrainerName Idx="0" ]▼
 ポケモンジムにて
 君の　挑戦を　待つ！▼</Text>
 			<TextModifiedBy

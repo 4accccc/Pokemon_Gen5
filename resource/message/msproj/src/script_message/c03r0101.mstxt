@@ -100,8 +100,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:4digits Idx="0"], [Digit:4digits Idx="1"], [Digit:4digits Idx="2"], [Digit:4digits Idx="3"]
-[Digit:4digits Idx="4"]</Text>
+			<Text>[Digit:4digits Idx="0" ], [Digit:4digits Idx="1" ], [Digit:4digits Idx="2" ], [Digit:4digits Idx="3" ]
+[Digit:4digits Idx="4" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -112,8 +112,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="0"], [Digit:4digits Idx="1"], [Digit:4digits Idx="2"], [Digit:4digits Idx="3"]
-[Digit:4digits Idx="4"]</Text>
+			<Text>[Digit:4digits Idx="0" ], [Digit:4digits Idx="1" ], [Digit:4digits Idx="2" ], [Digit:4digits Idx="3" ]
+[Digit:4digits Idx="4" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -149,7 +149,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]</Text>
+			<Text>[Name:Answer Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -160,7 +160,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]</Text>
+			<Text>[Name:Answer Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -362,7 +362,7 @@ assistantm_01_02へ続く</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 ちょうさたいいんに　にんめいされた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -374,7 +374,7 @@ assistantm_01_02へ続く</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 調査隊員に　任命された！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -426,7 +426,7 @@ assistantm_01_03へ続く
 じょうほうを　あつめてくれる▼
 もちろん　ちょうさに　たいして
 ほうしゅうも　よういしている▼
-[Name:TrainerName Idx="1"]たいいん！　キミの
+[Name:TrainerName Idx="1" ]たいいん！　キミの
 かつやくを　きたいしているぞ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -447,7 +447,7 @@ assistantm_01_03へ続く
 レーダーが　情報を　集めてくれる▼
 もちろん　調査に　たいして
 報酬も　用意している▼
-[Name:TrainerName Idx="1"]隊員！
+[Name:TrainerName Idx="1" ]隊員！
 キミの　活躍を　期待しているぞ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -488,7 +488,7 @@ assistantm_01_06へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よくきたな　[Name:TrainerName Idx="1"]たいいん
+			<Text>よくきたな　[Name:TrainerName Idx="1" ]たいいん
 げんきに　ちょうさを　しているか？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -500,7 +500,7 @@ assistantm_01_06へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よく来たな　[Name:TrainerName Idx="1"]隊員
+			<Text>よく来たな　[Name:TrainerName Idx="1" ]隊員
 元気に　調査を　しているか？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4849,7 +4849,7 @@ assistantm_01_15へ続く
 			<Text>……ん？▼
 すでに　こんなに　おおくのひとと　
 すれちがっているなんて！▼
-さすがは　[Name:TrainerName Idx="1"]たいいんだ▼
+さすがは　[Name:TrainerName Idx="1" ]たいいんだ▼
 これなら　いまの　データで　
 じゅうぶんだ▼
 このまま　ちょうさないようを
@@ -4867,7 +4867,7 @@ assistantm_01_15へ続く
 			<Text>……ん？▼
 すでに　こんなに　多くの人と
 すれ違っているなんて！▼
-さすがは　[Name:TrainerName Idx="1"]隊員だ
+さすがは　[Name:TrainerName Idx="1" ]隊員だ
 これなら　今の　データで　十分だ▼
 このまま　調査内容を
 わたしに　報告してくれ！▼</Text>
@@ -6782,7 +6782,7 @@ assistantm_01_23○へ続く
 			<Text>……ん？▼
 すでに　このちょうさに　ひつような
 データを　しらべているじゃないか！▼
-さすがは　[Name:TrainerName Idx="1"]たいいんだ▼
+さすがは　[Name:TrainerName Idx="1" ]たいいんだ▼
 このまま　ちょうさないようを
 わたしに　ほうこくしてくれ！▼</Text>
 			<TextModifiedBy
@@ -6798,7 +6798,7 @@ assistantm_01_23○へ続く
 			<Text>……ん？▼
 すでに　この調査に　必要な　データを
 調べているじゃないか！▼
-さすがは　[Name:TrainerName Idx="1"]隊員だ▼
+さすがは　[Name:TrainerName Idx="1" ]隊員だ▼
 このまま　調査内容を
 わたしに　報告してくれ！▼</Text>
 			<TextModifiedBy
@@ -6912,7 +6912,7 @@ assistantm_01_23○へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ブラックと　ホワイト▽
 おおいのは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -6926,7 +6926,7 @@ assistantm_01_23○へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ブラックと　ホワイト▽
 多いのは？』の▽
 調査依頼を　受けた！▼</Text>
@@ -6979,7 +6979,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『えらんだ　さいしょの▽
 ポケモンは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -6993,7 +6993,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『選んだ　最初の　ポケモンは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7045,7 +7045,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　おおい▽
 プレイじかんは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -7059,7 +7059,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　多い　プレイ時間は？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7111,7 +7111,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『おとこと　おんな　おおいのは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7124,7 +7124,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『男と　女　多いのは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7176,7 +7176,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　おおい　しごとは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7189,7 +7189,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　多い　仕事は？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7241,7 +7241,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　おおい　しゅみは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7254,7 +7254,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　多い　趣味は？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7306,7 +7306,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『たいせんと　こうかん▽
 にんきなのは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -7320,7 +7320,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『対戦と　交換　人気なのは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7372,7 +7372,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『すきな　ポケモンは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7385,7 +7385,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『好きな　ポケモンは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7437,7 +7437,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『すきな　ポケモンの▽
 タイプは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -7451,7 +7451,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『好きな　ポケモンの▽
 タイプは？』の▽
 調査依頼を　受けた！▼</Text>
@@ -7504,7 +7504,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『とかいと　いなか▽
 すみたいのは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -7518,7 +7518,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『都会と　田舎　住みたいのは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7570,7 +7570,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『だいじに　しているものに▽
 ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -7584,7 +7584,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『大事に　しているものに▽
 ついて』の▽
 調査依頼を　受けた！▼</Text>
@@ -7637,7 +7637,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ひとの　みりょくに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7650,7 +7650,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『人の　魅力に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7702,7 +7702,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『きせつに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7715,7 +7715,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『季節に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7767,7 +7767,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『げいじゅつに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7780,7 +7780,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『芸術に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7832,7 +7832,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　すきな　おんがくは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7845,7 +7845,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　好きな　音楽は？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7897,7 +7897,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『えいぞうに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -7910,7 +7910,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『映像に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -7962,7 +7962,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　すきな　がっこうの▽
 じかんは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -7976,7 +7976,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　好きな　学校の　時間は？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -8028,7 +8028,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『べんきょうに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -8041,7 +8041,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『勉強に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -8093,7 +8093,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　にんきの▽
 スポーツは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -8107,7 +8107,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　人気の　スポーツは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -8159,7 +8159,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『きゅうじつに　ついて』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -8172,7 +8172,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『休日に　ついて』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -8224,7 +8224,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　なりたいものは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
 			<TextModifiedBy
@@ -8237,7 +8237,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　なりたいものは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -8289,7 +8289,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『いちばん　にんきの▽
 ジムリーダーは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -8303,7 +8303,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『１番　人気の▽
 ジムリーダーは？』の▽
 調査依頼を　受けた！▼</Text>
@@ -8356,7 +8356,7 @@ assistantm_01_17へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ポケモンの▽
 おもしろい　ところは？』の▽
 ちょうさ　いらいを　うけた！▼</Text>
@@ -8370,7 +8370,7 @@ assistantm_01_17へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ポケモンの　面白い　ところは？』の▽
 調査依頼を　受けた！▼</Text>
 			<TextModifiedBy
@@ -8669,7 +8669,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ブラックと　ホワイト
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -8688,7 +8688,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ブラックと　ホワイト
 多いのは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -8748,7 +8748,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『えらんだ
 さいしょの　ポケモンは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -8767,7 +8767,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『選んだ
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -8827,7 +8827,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　おおい
 プレイじかんは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -8846,7 +8846,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　多い
 プレイ時間は？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -8906,7 +8906,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『おとこと　おんな
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -8924,7 +8924,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『男と　女　多いのは？』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -8984,7 +8984,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　おおい
 しごとは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9002,7 +9002,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9062,7 +9062,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　おおい
 しゅみは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9080,7 +9080,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9140,7 +9140,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『たいせんと　こうかん
 にんきなのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9159,7 +9159,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『対戦と　交換
 人気なのは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9218,7 +9218,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『すきな　ポケモンは？』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9236,7 +9236,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『好きな　ポケモンは？』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9296,7 +9296,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『すきな　ポケモンの
 タイプは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9315,7 +9315,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『好きな　ポケモンの
 タイプは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9375,7 +9375,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『とかいと　いなか
 すみたいのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9394,7 +9394,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『都会と　田舎
 住みたいのは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9454,7 +9454,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『だいじに　しているものに
 ついて』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9473,7 +9473,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『大事に　しているものに
 ついて』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9533,7 +9533,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ひとの　みりょくに
 ついて』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9551,7 +9551,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『人の　魅力に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9610,7 +9610,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『きせつに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9628,7 +9628,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『季節に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9687,7 +9687,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『げいじゅつに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9705,7 +9705,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『芸術に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9765,7 +9765,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　すきな
 おんがくは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9783,7 +9783,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9842,7 +9842,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『えいぞうに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9860,7 +9860,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『映像に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9920,7 +9920,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　すきな
 がっこうの　じかんは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -9939,7 +9939,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　好きな
 学校の　時間は？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -9998,7 +9998,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『べんきょうに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -10016,7 +10016,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『勉強に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -10076,7 +10076,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　にんきの
 スポーツは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -10095,7 +10095,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　人気の
 スポーツは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -10154,7 +10154,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『きゅうじつに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -10172,7 +10172,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『休日に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -10232,7 +10232,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　なりたい
 ものは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -10250,7 +10250,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -10310,7 +10310,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　にんきの
 ジムリーダーは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -10329,7 +10329,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　人気の
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -10389,7 +10389,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ポケモンの
 おもしろい　ところは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:2digits Idx="2"]じかんは
+あと　[Digit:2digits Idx="2" ]じかんは
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -10408,7 +10408,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ポケモンの
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:2digits Idx="2"]時間は
+あと　[Digit:2digits Idx="2" ]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12244,7 +12244,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ブラックと　ホワイト
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12263,7 +12263,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ブラックと　ホワイト
 多いのは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12323,7 +12323,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『えらんだ
 さいしょの　ポケモンは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12342,7 +12342,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『選んだ
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12402,7 +12402,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　おおい
 プレイじかんは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12421,7 +12421,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　多い　
 プレイ時間は？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12481,7 +12481,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『おとこと　おんな
 おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12499,7 +12499,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『男と　女　多いのは？』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12559,7 +12559,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　おおい
 しごとは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12577,7 +12577,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12637,7 +12637,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　おおい
 しゅみは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12655,7 +12655,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12715,7 +12715,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『たいせんと　こうかん
 にんきなのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12734,7 +12734,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『対戦と　交換
 人気なのは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12793,7 +12793,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『すきな　ポケモンは？』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12811,7 +12811,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『好きな　ポケモンは？』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12871,7 +12871,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『すきな　ポケモンの
 タイプは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12890,7 +12890,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『好きな　ポケモンの
 タイプは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -12950,7 +12950,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『とかいと　いなか
 すみたいのは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -12969,7 +12969,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『都会と　田舎
 住みたいのは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13029,7 +13029,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『だいじに　しているものに
 ついて』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13048,7 +13048,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『大事に　しているものに
 ついて』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13108,7 +13108,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ひとの　みりょくに
 ついて』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13126,7 +13126,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『人の　魅力に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13185,7 +13185,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『きせつに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13203,7 +13203,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『季節に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13262,7 +13262,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『げいじゅつに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13280,7 +13280,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『芸術に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13340,7 +13340,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　すきな
 おんがくは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13358,7 +13358,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13417,7 +13417,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『えいぞうに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13435,7 +13435,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『映像に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13495,7 +13495,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　すきな
 がっこうの　じかんは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13514,7 +13514,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　好きな
 学校の　時間は？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13573,7 +13573,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『べんきょうに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13591,7 +13591,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『勉強に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13651,7 +13651,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　にんきの
 スポーツは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13670,7 +13670,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　人気の
 スポーツは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13729,7 +13729,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>まだ　『きゅうじつに　ついて』の
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13747,7 +13747,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『休日に　ついて』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13807,7 +13807,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　なりたい
 ものは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13825,7 +13825,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13885,7 +13885,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『いちばん　にんきの
 ジムリーダーは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13904,7 +13904,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『１番　人気の
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -13964,7 +13964,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ポケモンの
 おもしろい　ところは？』の▽
 ちょうさが　おわっていないぞ▼
-あと　[Digit:3digits Idx="1"]にんの
+あと　[Digit:3digits Idx="1" ]にんの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
@@ -13983,7 +13983,7 @@ assistantm_01_17へ続く
 			<Text>まだ　『ポケモンの
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
-あと　[Digit:3digits Idx="1"]人の
+あと　[Digit:3digits Idx="1" ]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
@@ -15553,7 +15553,7 @@ assistantm_01_17へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 ブラックと　ホワイトでは
-『[Name:Answer Idx="0"]』が　おおいようだな▼
+『[Name:Answer Idx="0" ]』が　おおいようだな▼
 さんこうになった▼
 どちらで　あそんでも　たのしそうだな
 ますます　まよって　しまいそうだ▼</Text>
@@ -15569,7 +15569,7 @@ assistantm_01_17へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 ブラックと　ホワイトでは
-『[Name:Answer Idx="0"]』が　多いようだな▼
+『[Name:Answer Idx="0" ]』が　多いようだな▼
 参考になった▼
 どちらで　遊んでも　楽しそうだな
 ますます　迷って　しまいそうだ▼</Text>
@@ -15625,7 +15625,7 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 いちばん　えらばれた
 さいしょの　ポケモンは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いがいな　けっかだな
 これだから　ちょうさは　おもしろい▼</Text>
 			<TextModifiedBy
@@ -15640,7 +15640,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　選ばれた　最初の　ポケモンは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 意外な　結果だな
 これだから　調査は　おもしろい！▼</Text>
 			<TextModifiedBy
@@ -15695,7 +15695,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　おおい　プレイじかんは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 おおくの　じかん　たのしんで
 くれているのは　よろこばしいことだな▼</Text>
 			<TextModifiedBy
@@ -15710,7 +15710,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　多い　プレイ時間は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 多くの　時間　楽しんで
 くれているのは　喜ばしいことだな▼</Text>
 			<TextModifiedBy
@@ -15764,7 +15764,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 おとこと　おんなでは
-『[Name:Answer Idx="0"]』が　おおいようだな▼
+『[Name:Answer Idx="0" ]』が　おおいようだな▼
 ポケモンは　だれでも　たのしめる！
 みんなが　たのしんで　ほしいな▼</Text>
 			<TextModifiedBy
@@ -15779,7 +15779,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 男と　女では
-『[Name:Answer Idx="0"]』が　多いようだな▼
+『[Name:Answer Idx="0" ]』が　多いようだな▼
 ポケモンは　だれでも　楽しめる！
 みんなが　楽しんで　欲しいな▼</Text>
 			<TextModifiedBy
@@ -15833,7 +15833,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　おおい　しごとは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いろいろな　ひとが
 あそんでくれて　いるようだな▼
 すばらしいこと　じゃないか！▼</Text>
@@ -15849,7 +15849,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　多い　仕事は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いろいろな　人が
 遊んでくれて　いるようだな▼
 素晴らしいこと　じゃないか！▼</Text>
@@ -15904,7 +15904,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　おおい　しゅみは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いろいろな　ことを
 たのしむのは　いいことだ▼
 じぶんの　せかいが　ひろがるからな▼</Text>
@@ -15920,7 +15920,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　多い　趣味は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いろいろな　ことを　
 楽しむのは　いいことだ▼
 自分の　世界が　広がるからな▼</Text>
@@ -15975,7 +15975,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 たいせんと　こうかんでは
-『[Name:Answer Idx="0"]』が　おおいようだな▼
+『[Name:Answer Idx="0" ]』が　おおいようだな▼
 さんこうになった▼
 いろいろな　あそびが　たのしめる
 それが　ポケモンの　みりょくだな▼</Text>
@@ -15991,7 +15991,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 対戦と　交換では
-『[Name:Answer Idx="0"]』が　多いようだな▼
+『[Name:Answer Idx="0" ]』が　多いようだな▼
 参考になった▼
 いろいろな　遊びが　楽しめる
 それが　ポケモンの　魅力だな▼</Text>
@@ -16046,7 +16046,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　にんきが　あるのは
-『[Name:Answer Idx="0"]』ポケモンの　ようだな▼
+『[Name:Answer Idx="0" ]』ポケモンの　ようだな▼
 いろいろな　ポケモンが　いるからな▼
 たくさんの　ポケモンと
 であいたいものだ▼</Text>
@@ -16062,7 +16062,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　人気が　あるのは
-『[Name:Answer Idx="0"]』ポケモンの　ようだな▼
+『[Name:Answer Idx="0" ]』ポケモンの　ようだな▼
 いろいろな　ポケモンが　いるからな▼
 たくさんの　ポケモンと
 出会いたいものだ▼</Text>
@@ -16118,7 +16118,7 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 いちばん　にんきのある
 ポケモンの　タイプは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 ポケモンにも　いろいろ　いるな▼
 たいせんに　やくだつ
 じょうほうに　なるだろう▼</Text>
@@ -16135,7 +16135,7 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 １番　人気のある　
 ポケモンの　タイプは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 ポケモンにも　いろいろいるな
 対戦に　役立つ情報に　なるだろう▼</Text>
 			<TextModifiedBy
@@ -16189,7 +16189,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 とかいと　いなかでは
-『[Name:Answer Idx="0"]』が　おおいようだな▼
+『[Name:Answer Idx="0" ]』が　おおいようだな▼
 すめば　みやこと　いうからな
 どちらがいいかを　きめるのは▽
 むずかしいな▼</Text>
@@ -16205,7 +16205,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 都会と　田舎では
-『[Name:Answer Idx="0"]』が　多いようだな▼
+『[Name:Answer Idx="0" ]』が　多いようだな▼
 住めば　都と　いうからな
 どちらがいいかを　決めるのは▽
 難しいな▼</Text>
@@ -16260,9 +16260,9 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 じかんと　おかねでは
-『[Name:Answer Idx="0"]』が　おおいようだな▼
+『[Name:Answer Idx="0" ]』が　おおいようだな▼
 いちばん　だいじに　おもっているのは
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 さんこうになった▼
 じぶんにとって　なにが　だいじか▼
 それを　みうしなわないように
@@ -16279,9 +16279,9 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 時間と　お金では
-『[Name:Answer Idx="0"]』が　多いようだな▼
+『[Name:Answer Idx="0" ]』が　多いようだな▼
 １番　大事に　思っているのは
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 参考になった▼
 自分にとって　何が　大事か▼
 それを　見失わないように
@@ -16340,12 +16340,12 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 あたまが　いいと　うんどうが　できるでは
-『[Name:Answer Idx="0"]』が　おおいようだな▼
+『[Name:Answer Idx="0" ]』が　おおいようだな▼
 がいけんと　なかみ　では
-『[Name:Answer Idx="1"]』が　おおいようだな▼
+『[Name:Answer Idx="1" ]』が　おおいようだな▼
 いちばん　にんきのある
 にんげんの　タイプは▽
-『[Name:Answer Idx="2"]』の　ようだな▼
+『[Name:Answer Idx="2" ]』の　ようだな▼
 さんこうになった▼
 ひとの　みりょくには　いろいろある▼
 わたしの　みりょくに
@@ -16362,11 +16362,11 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 頭が　いいと　運動が　できるでは
-『[Name:Answer Idx="0"]』が　多いようだな▼
+『[Name:Answer Idx="0" ]』が　多いようだな▼
 外見と　中身　では
-『[Name:Answer Idx="1"]』が　多いようだな▼
+『[Name:Answer Idx="1" ]』が　多いようだな▼
 １番　人気のある　人間の　タイプは
-『[Name:Answer Idx="2"]』の　ようだな▼
+『[Name:Answer Idx="2" ]』の　ようだな▼
 参考になった▼
 人の　魅力には　いろいろある▼
 わたしの　魅力に
@@ -16428,9 +16428,9 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　すきな　きせつは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いちばん　すきな　たべものは
-『[Name:Answer Idx="1"]』たべものの　ようだな▼
+『[Name:Answer Idx="1" ]』たべものの　ようだな▼
 さんこうになったよ▼
 きせつごとに　おいしいものも　かわる
 あじが　わかる　おとなに　なりたまえ▼</Text>
@@ -16446,9 +16446,9 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　好きな　季節は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 １番　好きな　食べ物は
-『[Name:Answer Idx="1"]』食べ物の　ようだな▼
+『[Name:Answer Idx="1" ]』食べ物の　ようだな▼
 参考になったよ▼
 季節ごとに　美味しい物も　変わる
 味が　わかる　大人に　なりたまえ▼</Text>
@@ -16506,9 +16506,9 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　すきな　いろは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いちばん　すきな　おんがくは
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 はやっているものが
 よいとは　かぎらない▼
 じぶんの　すきなものを
@@ -16525,9 +16525,9 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　好きな　色は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 １番　好きな　音楽は
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 流行っているものが
 よいとは　限らない▼
 自分の　好きなものを
@@ -16586,7 +16586,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　すきな　おんがくは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 ゆっくり　おんがくを　きくのもいいな▼
 わたしも　ちょうさを
 さんこうに　してみるか▼</Text>
@@ -16602,7 +16602,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　好きな　音楽は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 ゆっくり　音楽を　聞くのもいいな▼
 わたしも　調査を　
 参考に　してみるか▼</Text>
@@ -16657,9 +16657,9 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　すきな　ＴＶばんぐみは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いちばん　すきな　えいがは
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 さんこうになった▼
 これで　わだいに
 こまらないで　すみそうだ▼
@@ -16676,9 +16676,9 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　好きな　ＴＶ番組は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 １番　好きな　映画は
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 参考になった▼
 これで　話題に
 困らないで　すみそうだ▼
@@ -16738,7 +16738,7 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 いちばん　すきな
 がっこうの　じかんは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 がっこうか……　なつかしいな▼
 むかしは　がっこうに　いるだけでも
 たのしかったものだ▼</Text>
@@ -16754,7 +16754,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　好きな　学校の　時間は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 学校か……　懐かしいな▼
 昔は　学校に　いるだけでも
 楽しかったものだ▼</Text>
@@ -16809,9 +16809,9 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　すきな　べんきょうは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いちばん　にがてな　べんきょうは
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 いい　おとなに　なるには
 あそびと　べんきょう▽
 どちらも　がんばらないとな▼</Text>
@@ -16827,9 +16827,9 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　好きな　勉強は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 １番　苦手な　勉強は
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 いい　大人に　なるには　遊びと　勉強
 どちらも　がんばらないとな▼</Text>
 			<TextModifiedBy
@@ -16886,7 +16886,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　にんきのある　スポーツは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 からだを　うごかすことも
 だいじだからな▼
 けんこうが　いちばんだ▼</Text>
@@ -16902,7 +16902,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　人気のある　スポーツは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 体を　動かすことも　大事だからな
 健康が　１番だ▼</Text>
 			<TextModifiedBy
@@ -16957,9 +16957,9 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 いちばん　にんきのある
 きゅうじつの　すごしかたは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 いちばん　にんきのある　あそびばは
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 さんこうになった▼
 これで　しゅうまつは
 たのしいデートが　できそうだ▼
@@ -16977,9 +16977,9 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　人気のある　休日の　過ごし方は
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 １番　人気のある　遊び場は
-『[Name:Answer Idx="1"]』の　ようだな▼
+『[Name:Answer Idx="1" ]』の　ようだな▼
 参考になった▼
 これで　週末は
 楽しいデートが　できそうだ▼
@@ -17039,7 +17039,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　なりたいものは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 なにかに　あこがれるのも
 わるくないが▼
 まずは　じぶんに
@@ -17056,7 +17056,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　なりたいものは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 何かに　あこがれるのも　悪くないが
 まずは　自分に　自信をもつことだな▼</Text>
 			<TextModifiedBy
@@ -17110,7 +17110,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>ふむふむ……　なるほど……▼
 いちばん　にんきのある　ジムリーダーは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 ジムリーダーは　こどもたちの
 あこがれだからな▼
 どのリーダーも
@@ -17127,7 +17127,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>ふむふむ……　なるほど……▼
 １番　人気のある　ジムリーダーは
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 ジムリーダーは　子供たちの
 あこがれだからな▼
 どのリーダーも　魅力的だと　思うぞ▼</Text>
@@ -17183,7 +17183,7 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 いちばんだと　おもう　ポケモンの
 おもしろい　ところは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 さんこうになった▼
 ポケモンには　たのしみかたが
 たくさん　あるな▼
@@ -17202,7 +17202,7 @@ assistantm_01_25へ続く
 			<Text>ふむふむ……　なるほど……▼
 １番だと　思う
 ポケモンの　面白い　ところは▽
-『[Name:Answer Idx="0"]』の　ようだな▼
+『[Name:Answer Idx="0" ]』の　ようだな▼
 参考になった▼
 ポケモンには　楽しみ方が
 たくさん　あるな▼
@@ -17258,7 +17258,7 @@ assistantm_01_25へ続く
 			Language="JPN">
 			<Text>すばらしい　ちょうさだ！▼
 さすがは　わたしが　みこんだ
-[Name:TrainerName Idx="1"]たいいんだ▼
+[Name:TrainerName Idx="1" ]たいいんだ▼
 これは　ちょうさの　ほうしゅうだ
 うけとってくれ▼</Text>
 			<TextModifiedBy
@@ -17273,7 +17273,7 @@ assistantm_01_25へ続く
 			Language="JPN_KANJI">
 			<Text>素晴らしい　調査だ！▼
 さすがは　わたしが　見込んだ
-[Name:TrainerName Idx="1"]隊員だ▼
+[Name:TrainerName Idx="1" ]隊員だ▼
 これは　調査の　報酬だ
 受け取ってくれ▼</Text>
 			<TextModifiedBy
@@ -17586,7 +17586,7 @@ assistantm_01_27dへ続く</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『Ｂランクたいいん』に▽
 にんめい　された！▼</Text>
 			<TextModifiedBy
@@ -17599,7 +17599,7 @@ assistantm_01_27dへ続く</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『Ｂランク隊員』に　任命された！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17650,7 +17650,7 @@ assistantm_01_29へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『Ａランクたいいん』に▽
 にんめい　された！▼</Text>
 			<TextModifiedBy
@@ -17663,7 +17663,7 @@ assistantm_01_29へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『Ａランク隊員』に　任命された！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17714,7 +17714,7 @@ assistantm_01_29へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『Ｓランクたいいん』に▽
 にんめい　された！▼</Text>
 			<TextModifiedBy
@@ -17727,7 +17727,7 @@ assistantm_01_29へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『Ｓランク隊員』に　任命された！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17778,7 +17778,7 @@ ssistantm_01_29へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ＳＳランクたいいん』に▽
 にんめい　された！▼</Text>
 			<TextModifiedBy
@@ -17791,7 +17791,7 @@ ssistantm_01_29へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 『ＳＳランク隊員』に　任命された！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17842,7 +17842,7 @@ ssistantm_01_29へ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あと　[Digit:2digits Idx="1"]かい
+			<Text>あと　[Digit:2digits Idx="1" ]かい
 いらいを　たっせいすれば▽
 『Ｂランクたいいん』だ▽
 がんばりたまえ▼</Text>
@@ -17856,7 +17856,7 @@ ssistantm_01_29へ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あと　[Digit:2digits Idx="1"]回　依頼を　達成すれば
+			<Text>あと　[Digit:2digits Idx="1" ]回　依頼を　達成すれば
 『Ｂランク隊員』だ　がんばりたまえ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17907,7 +17907,7 @@ assistantm_01_29へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あと　[Digit:2digits Idx="1"]かい
+			<Text>あと　[Digit:2digits Idx="1" ]かい
 いらいを　たっせいすれば▽
 『Ａランクたいいん』だ▽
 がんばりたまえ▼</Text>
@@ -17921,7 +17921,7 @@ assistantm_01_29へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あと　[Digit:2digits Idx="1"]回　依頼を　達成すれば
+			<Text>あと　[Digit:2digits Idx="1" ]回　依頼を　達成すれば
 『Ａランク隊員』だ　がんばりたまえ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17972,7 +17972,7 @@ assistantm_01_29へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あと　[Digit:2digits Idx="1"]かい
+			<Text>あと　[Digit:2digits Idx="1" ]かい
 いらいを　たっせいすれば▽
 『Ｓランクたいいん』だ▽
 がんばりたまえ▼</Text>
@@ -17986,7 +17986,7 @@ assistantm_01_29へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あと　[Digit:2digits Idx="1"]回　依頼を　達成すれば
+			<Text>あと　[Digit:2digits Idx="1" ]回　依頼を　達成すれば
 『Ｓランク隊員』だ　がんばりたまえ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18037,7 +18037,7 @@ assistantm_01_29へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あと　[Digit:2digits Idx="1"]かい
+			<Text>あと　[Digit:2digits Idx="1" ]かい
 いらいを　たっせいすれば▽
 『ＳＳランクたいいん』だ▽
 がんばりたまえ▼</Text>
@@ -18051,7 +18051,7 @@ assistantm_01_29へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あと　[Digit:2digits Idx="1"]回　依頼を　達成すれば
+			<Text>あと　[Digit:2digits Idx="1" ]回　依頼を　達成すれば
 『ＳＳランク隊員』だ　がんばりたまえ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18104,7 +18104,7 @@ assistantm_01_29へ続く
 			Language="JPN">
 			<Text>つぎの　ちょうさも
 きたい　しているぞ！▽
-[Name:TrainerName Idx="1"]たいいん！</Text>
+[Name:TrainerName Idx="1" ]たいいん！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -18116,7 +18116,7 @@ assistantm_01_29へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>次の　調査も　期待しているぞ！
-[Name:TrainerName Idx="1"]隊員！</Text>
+[Name:TrainerName Idx="1" ]隊員！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -18166,7 +18166,7 @@ assistantm_01_29へ続く
 			Language="JPN">
 			<Text>……これで　すべての
 ちょうさいらいが　しゅうりょうした▼
-[Name:TrainerName Idx="1"]たいいん　よくやった！▼
+[Name:TrainerName Idx="1" ]たいいん　よくやった！▼
 わたしは　もうれつに
 かんどうしている！▼
 これは　わたしのきもちだ
@@ -18183,7 +18183,7 @@ assistantm_01_29へ続く
 			Language="JPN_KANJI">
 			<Text>……これで　すべての
 調査依頼が　終了した▼
-[Name:TrainerName Idx="1"]隊員　よくやった！▼
+[Name:TrainerName Idx="1" ]隊員　よくやった！▼
 わたしは　猛烈に　感動している！▼
 これは　わたしの気持ちだ
 受け取ってくれ▼</Text>
@@ -18415,7 +18415,7 @@ assistantm_01_31へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おつかれさま　[Name:TrainerName Idx="1"]たいいん
+			<Text>おつかれさま　[Name:TrainerName Idx="1" ]たいいん
 ちゃんと　ちょうさしてる？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18427,7 +18427,7 @@ assistantm_01_31へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おつかれさま　[Name:TrainerName Idx="1"]隊員
+			<Text>おつかれさま　[Name:TrainerName Idx="1" ]隊員
 ちゃんと　調査してる？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22605,7 +22605,7 @@ woman2_18へ続く</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>これで　のこりの　アンケートは……
-あと　[Digit:1digit Idx="1"]こね▼</Text>
+あと　[Digit:1digit Idx="1" ]こね▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -22617,7 +22617,7 @@ woman2_18へ続く</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これで　残りの　アンケートは……
-あと　[Digit:1digit Idx="1"]個ね▼</Text>
+あと　[Digit:1digit Idx="1" ]個ね▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -23218,7 +23218,7 @@ girl4_03へ続く</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 おとした　モンスターボールを▽
 うけとった▼</Text>
 			<TextModifiedBy
@@ -23231,7 +23231,7 @@ girl4_03へ続く</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]は
+			<Text>[Name:TrainerName Idx="1" ]は
 落とした　モンスターボールを▽
 受け取った▼</Text>
 			<TextModifiedBy
@@ -23623,7 +23623,7 @@ girl4_04へ続く
 			Language="JPN">
 			<Text>たいいんランクって　しってる？▼
 あ　Ｂランクの
-[Name:TrainerName Idx="1"]たいいん▼
+[Name:TrainerName Idx="1" ]たいいん▼
 Ｂランクまで　アップしたんだ
 がんばってるみたいだね▼
 ランクが　あがったら
@@ -23641,7 +23641,7 @@ girl4_04へ続く
 			Language="JPN_KANJI">
 			<Text>隊員ランクって　知ってる？▼
 あ　Ｂランクの
-[Name:TrainerName Idx="1"]隊員▼
+[Name:TrainerName Idx="1" ]隊員▼
 Ｂランクまで　アップしたんだ
 がんばってるみたいだね▼
 ランクが　上がったら
@@ -23689,7 +23689,7 @@ girl4_04へ続く
 			Language="JPN">
 			<Text>たいいんランクって　しってる？▼
 あ　Ａランクの
-[Name:TrainerName Idx="1"]たいいん▼
+[Name:TrainerName Idx="1" ]たいいん▼
 もうＡランクたいいん　なんだね
 すごいな……▽
 オレも　がんばって▽
@@ -23709,7 +23709,7 @@ girl4_04へ続く
 			Language="JPN_KANJI">
 			<Text>隊員ランクって　知ってる？▼
 あ　Ａランクの
-[Name:TrainerName Idx="1"]隊員▼
+[Name:TrainerName Idx="1" ]隊員▼
 もうＡランク隊員なんだね
 すごいな……▽
 オレも　がんばって　調査しないと！▼
@@ -23757,7 +23757,7 @@ girl4_04へ続く
 			Language="JPN">
 			<Text>たいいんランクって　しってる？▼
 ……って　Ｓランクの
-[Name:TrainerName Idx="1"]たいいん！▼
+[Name:TrainerName Idx="1" ]たいいん！▼
 あとすこしで　さいこうの
 ＳＳランクたいいん　ですね！▼
 オレ　おうえんしています！
@@ -23774,7 +23774,7 @@ girl4_04へ続く
 			Language="JPN_KANJI">
 			<Text>隊員ランクって　知ってる？▼
 ……って　Ｓランクの
-[Name:TrainerName Idx="1"]隊員！▼
+[Name:TrainerName Idx="1" ]隊員！▼
 あと少しで　最高の
 ＳＳランク隊員ですね！▼
 オレ　応援しています！
@@ -23821,7 +23821,7 @@ girl4_04へ続く
 			Language="JPN">
 			<Text>たいいんランクって　しってる？▼
 ……って　ＳＳランクの
-[Name:TrainerName Idx="1"]たいいん！▼
+[Name:TrainerName Idx="1" ]たいいん！▼
 しつれいしました！▼
 オレも　すこしでも　ランクが
 あがるように　がんばります！</Text>
@@ -23837,7 +23837,7 @@ girl4_04へ続く
 			Language="JPN_KANJI">
 			<Text>隊員ランクって　知ってる？▼
 ……って　ＳＳランクの
-[Name:TrainerName Idx="1"]隊員！▼
+[Name:TrainerName Idx="1" ]隊員！▼
 失礼しました！▼
 オレも　少しでも　ランクが
 上がるように　がんばります！</Text>
@@ -24118,7 +24118,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさまです！
-[Name:TrainerName Idx="1"]たいいん！▼
+[Name:TrainerName Idx="1" ]たいいん！▼
 たいいんも　ふえて
 にぎやかに　なりましたね▼
 これなら　ちょうさデータも
@@ -24134,7 +24134,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おつかれさまです！
-[Name:TrainerName Idx="1"]隊員！▼
+[Name:TrainerName Idx="1" ]隊員！▼
 隊員も　増えて
 にぎやかに　なりましたね▼
 これなら　調査データも
@@ -24361,7 +24361,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさまです！
-[Name:TrainerName Idx="1"]たいいん▼
+[Name:TrainerName Idx="1" ]たいいん▼
 あっ　というまに
 トップたいいん　ですね▼
 わたしも　みならって
@@ -24377,7 +24377,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おつかれです！
-[Name:TrainerName Idx="1"]隊員▼
+[Name:TrainerName Idx="1" ]隊員▼
 あっ　という間に
 トップ隊員ですね▼
 わたしも　見習って
@@ -24595,7 +24595,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>こんにちは！
-[Name:TrainerName Idx="1"]たいいん！▼
+[Name:TrainerName Idx="1" ]たいいん！▼
 わたしも　しんまいたいいんに
 ちょうさの　やりかたを▽
 おしえるように　なったんですよ</Text>
@@ -24610,7 +24610,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんにちは！
-[Name:TrainerName Idx="1"]隊員！▼
+[Name:TrainerName Idx="1" ]隊員！▼
 わたしも　新米隊員に
 調査の　やりかたを▽
 教えるように　なったんですよ</Text>
@@ -24656,7 +24656,7 @@ girl4_04へ続く
 			Language="JPN">
 			<Text>いま　にんきがある
 えいがって　なんだろう？▼
-[Name:TrainerName Idx="1"]たいいんは
+[Name:TrainerName Idx="1" ]たいいんは
 しってますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24670,7 +24670,7 @@ girl4_04へ続く
 			Language="JPN_KANJI">
 			<Text>今　人気がある
 映画って　なんだろう？▼
-[Name:TrainerName Idx="1"]隊員は
+[Name:TrainerName Idx="1" ]隊員は
 知ってますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24714,7 +24714,7 @@ girl4_04へ続く
 			Language="JPN">
 			<Text>いま　にんきがある
 たべものって　なんだろう？▼
-[Name:TrainerName Idx="1"]たいいんは
+[Name:TrainerName Idx="1" ]たいいんは
 しってますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24728,7 +24728,7 @@ girl4_04へ続く
 			Language="JPN_KANJI">
 			<Text>今　人気がある
 食べ物って　なんだろう？▼
-[Name:TrainerName Idx="1"]隊員は
+[Name:TrainerName Idx="1" ]隊員は
 知ってますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24771,7 +24771,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>いま　にんきが……
-あ　[Name:TrainerName Idx="1"]たいいん▼
+あ　[Name:TrainerName Idx="1" ]たいいん▼
 やっぱり　じぶんで
 しらべないと　ダメですよね……▼
 う～ん　めんどうなんだもんな……</Text>
@@ -24786,7 +24786,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今　人気が……
-あ　[Name:TrainerName Idx="1"]隊員▼
+あ　[Name:TrainerName Idx="1" ]隊員▼
 やっぱり　自分で
 調べないと　ダメですよね……▼
 う～ん　面倒なんだもんな……</Text>
@@ -24887,7 +24887,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN">
 			<Text>どうも！　おつかれさまです
-[Name:TrainerName Idx="1"]たいいん▼
+[Name:TrainerName Idx="1" ]たいいん▼
 たいちょうの　いらいは
 ぜんぶ　たっせい　しましたか？▼
 いらいを　ぜんぶ　たっせいすると
@@ -24903,7 +24903,7 @@ girl4_04へ続く
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうも！　おつかれさまです
-[Name:TrainerName Idx="1"]隊員▼
+[Name:TrainerName Idx="1" ]隊員▼
 隊長の　依頼は
 全部　達成しましたか？▼
 依頼を　全部　達成すると
@@ -24948,10 +24948,10 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ　[Name:TrainerName Idx="1"]たいいん！
+			<Text>あ　[Name:TrainerName Idx="1" ]たいいん！
 おあいできて　こうえいです！▼
 どうしよう～
-[Name:TrainerName Idx="1"]たいいんに▽
+[Name:TrainerName Idx="1" ]たいいんに▽
 はなしかけられちゃった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24963,10 +24963,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ　[Name:TrainerName Idx="1"]隊員！
+			<Text>あ　[Name:TrainerName Idx="1" ]隊員！
 お会いできて　光栄です！▼
 どうしよう～
-[Name:TrainerName Idx="1"]隊員に▽
+[Name:TrainerName Idx="1" ]隊員に▽
 話しかけられちゃった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25068,10 +25068,10 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 たいいんランク　Ｃランクたいいん
-すれちがい　にんずう　[Digit:5digits Idx="1"]にん
-おれい　かいすう　　　　[Digit:5digits Idx="2"]かい</Text>
+すれちがい　にんずう　[Digit:5digits Idx="1" ]にん
+おれい　かいすう　　　　[Digit:5digits Idx="2" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25082,10 +25082,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 隊員ランク　Ｃランク隊員
-すれ違い　人数　[Digit:5digits Idx="1"]人
-お礼　回数　　　　[Digit:5digits Idx="2"]回</Text>
+すれ違い　人数　[Digit:5digits Idx="1" ]人
+お礼　回数　　　　[Digit:5digits Idx="2" ]回</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25136,10 +25136,10 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 たいいんランク　Ｂランクたいいん
-すれちがい　にんずう　[Digit:5digits Idx="1"]にん
-おれい　かいすう　　　　[Digit:5digits Idx="2"]かい</Text>
+すれちがい　にんずう　[Digit:5digits Idx="1" ]にん
+おれい　かいすう　　　　[Digit:5digits Idx="2" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25150,10 +25150,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 隊員ランク　Ｂランク隊員
-すれ違い　人数　[Digit:5digits Idx="1"]人
-お礼　回数　　　　[Digit:5digits Idx="2"]回</Text>
+すれ違い　人数　[Digit:5digits Idx="1" ]人
+お礼　回数　　　　[Digit:5digits Idx="2" ]回</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25204,10 +25204,10 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 たいいんランク　Ａランクたいいん
-すれちがい　にんずう　[Digit:5digits Idx="1"]にん
-おれい　かいすう　　　　[Digit:5digits Idx="2"]かい</Text>
+すれちがい　にんずう　[Digit:5digits Idx="1" ]にん
+おれい　かいすう　　　　[Digit:5digits Idx="2" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25218,10 +25218,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 隊員ランク　Ａランク隊員
-すれ違い　人数　[Digit:5digits Idx="1"]人
-お礼　回数　　　　[Digit:5digits Idx="2"]回</Text>
+すれ違い　人数　[Digit:5digits Idx="1" ]人
+お礼　回数　　　　[Digit:5digits Idx="2" ]回</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25272,10 +25272,10 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 たいいんランク　Ｓランクたいいん
-すれちがい　にんずう　[Digit:5digits Idx="1"]にん
-おれい　かいすう　　　　[Digit:5digits Idx="2"]かい</Text>
+すれちがい　にんずう　[Digit:5digits Idx="1" ]にん
+おれい　かいすう　　　　[Digit:5digits Idx="2" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25286,10 +25286,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 隊員ランク　Ｓランク隊員
-すれ違い　人数　[Digit:5digits Idx="1"]人
-お礼　回数　　　　[Digit:5digits Idx="2"]回</Text>
+すれ違い　人数　[Digit:5digits Idx="1" ]人
+お礼　回数　　　　[Digit:5digits Idx="2" ]回</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25340,10 +25340,10 @@ girl4_04へ続く
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 たいいんランク　ＳＳランクたいいん
-すれちがい　にんずう　[Digit:5digits Idx="1"]にん
-おれい　かいすう　　　　[Digit:5digits Idx="2"]かい</Text>
+すれちがい　にんずう　[Digit:5digits Idx="1" ]にん
+おれい　かいすう　　　　[Digit:5digits Idx="2" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -25354,10 +25354,10 @@ girl4_04へ続く
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]
+			<Text>[Name:TrainerName Idx="0" ]
 隊員ランク　ＳＳランク隊員
-すれ違い　人数　[Digit:5digits Idx="1"]人
-お礼　回数　　　　[Digit:5digits Idx="2"]回</Text>
+すれ違い　人数　[Digit:5digits Idx="1" ]人
+お礼　回数　　　　[Digit:5digits Idx="2" ]回</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />

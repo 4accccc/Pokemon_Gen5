@@ -189,9 +189,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:MusicalGoods Idx="0"]を　もらった！▼
-[Name:TrainerName Idx="1"]は
-[Name:MusicalGoods Idx="0"]を▽
+			<Text>[Name:MusicalGoods Idx="0" ]を　もらった！▼
+[Name:TrainerName Idx="1" ]は
+[Name:MusicalGoods Idx="0" ]を▽
 グッズケースの　なかに　しまった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -203,9 +203,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:MusicalGoods Idx="0"]を　もらった！▼
-[Name:TrainerName Idx="1"]は
-[Name:MusicalGoods Idx="0"]を▽
+			<Text>[Name:MusicalGoods Idx="0" ]を　もらった！▼
+[Name:TrainerName Idx="1" ]は
+[Name:MusicalGoods Idx="0" ]を▽
 グッズケースの　なかに　しまった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

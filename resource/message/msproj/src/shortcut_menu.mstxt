@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]じてんしゃ[/System:Color]</Text>
+			<Text>[System:Color name="2" ]じてんしゃ[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -17,7 +17,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]じてんしゃ[/System:Color]</Text>
+			<Text>[System:Color name="2" ]じてんしゃ[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -39,7 +39,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]タウンマップ[/System:Color]</Text>
+			<Text>[System:Color name="2" ]タウンマップ[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -50,7 +50,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]タウンマップ[/System:Color]</Text>
+			<Text>[System:Color name="2" ]タウンマップ[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -72,7 +72,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]バトルレコーダー[/System:Color]</Text>
+			<Text>[System:Color name="2" ]バトルレコーダー[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -83,7 +83,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]バトルレコーダー[/System:Color]</Text>
+			<Text>[System:Color name="2" ]バトルレコーダー[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -105,7 +105,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ともだちてちょう[/System:Color]</Text>
+			<Text>[System:Color name="2" ]ともだちてちょう[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -116,7 +116,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ともだちてちょう[/System:Color]</Text>
+			<Text>[System:Color name="2" ]ともだちてちょう[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -138,7 +138,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]すごいつりざお[/System:Color]</Text>
+			<Text>[System:Color name="2" ]すごいつりざお[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -149,7 +149,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]すごいつりざお[/System:Color]</Text>
+			<Text>[System:Color name="2" ]すごいつりざお[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -171,7 +171,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ダウジングマシン[/System:Color]</Text>
+			<Text>[System:Color name="2" ]ダウジングマシン[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -182,7 +182,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ダウジングマシン[/System:Color]</Text>
+			<Text>[System:Color name="2" ]ダウジングマシン[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -204,7 +204,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]グラシデアのはな[/System:Color]</Text>
+			<Text>[System:Color name="2" ]グラシデアのはな[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -215,7 +215,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]グラシデアのはな[/System:Color]</Text>
+			<Text>[System:Color name="2" ]グラシデアのはな[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -288,7 +288,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]いでんしのくさび[/System:Color]</Text>
+			<Text>[System:Color name="2" ]いでんしのくさび[/System:Color]</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
 				Time="2011-05-25T02:09:33" />
@@ -317,7 +317,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンじょうほう[System:Color name="1"]＞[/System:Color]ステータス</Text>
+			<Text>ポケモンじょうほう[System:Color name="1" ]＞[/System:Color]ステータス</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -328,7 +328,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン情報[System:Color name="1"]＞[/System:Color]ステータス</Text>
+			<Text>ポケモン情報[System:Color name="1" ]＞[/System:Color]ステータス</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -350,7 +350,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンじょうほう[System:Color name="1"]＞[/System:Color]のうりょく</Text>
+			<Text>ポケモンじょうほう[System:Color name="1" ]＞[/System:Color]のうりょく</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -361,7 +361,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン情報[System:Color name="1"]＞[/System:Color]能力</Text>
+			<Text>ポケモン情報[System:Color name="1" ]＞[/System:Color]能力</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -383,7 +383,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンじょうほう[System:Color name="1"]＞[/System:Color]きねんリボン</Text>
+			<Text>ポケモンじょうほう[System:Color name="1" ]＞[/System:Color]きねんリボン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -394,7 +394,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン情報[System:Color name="1"]＞[/System:Color]記念リボン</Text>
+			<Text>ポケモン情報[System:Color name="1" ]＞[/System:Color]記念リボン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -416,7 +416,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]どうぐ</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]どうぐ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -427,7 +427,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]道具</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]道具</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -449,7 +449,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]かいふく</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]かいふく</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -460,7 +460,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]回復</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]回復</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -482,7 +482,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]わざマシン</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]わざマシン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -493,7 +493,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]わざマシン</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]わざマシン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -515,7 +515,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]きのみ</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]きのみ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -526,7 +526,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]きのみ</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]きのみ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -548,7 +548,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]たいせつなもの</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]たいせつなもの</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -559,7 +559,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]大切なもの</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]大切なもの</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -581,7 +581,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]フリースペース</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]フリースペース</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -592,7 +592,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バッグ[System:Color name="1"]＞[/System:Color]フリースペース</Text>
+			<Text>バッグ[System:Color name="1" ]＞[/System:Color]フリースペース</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -628,7 +628,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかん[System:Color name="1"]＞[/System:Color]リスト</Text>
+			<Text>ずかん[System:Color name="1" ]＞[/System:Color]リスト</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -639,7 +639,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑[System:Color name="1"]＞[/System:Color]リスト</Text>
+			<Text>図鑑[System:Color name="1" ]＞[/System:Color]リスト</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -661,7 +661,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかん[System:Color name="1"]＞[/System:Color]けんさく</Text>
+			<Text>ずかん[System:Color name="1" ]＞[/System:Color]けんさく</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -672,7 +672,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑[System:Color name="1"]＞[/System:Color]検索</Text>
+			<Text>図鑑[System:Color name="1" ]＞[/System:Color]検索</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -694,7 +694,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかん[System:Color name="1"]＞[/System:Color]せつめい</Text>
+			<Text>ずかん[System:Color name="1" ]＞[/System:Color]せつめい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -705,7 +705,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑[System:Color name="1"]＞[/System:Color]説明</Text>
+			<Text>図鑑[System:Color name="1" ]＞[/System:Color]説明</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -727,7 +727,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかん[System:Color name="1"]＞[/System:Color]ぶんぷ</Text>
+			<Text>ずかん[System:Color name="1" ]＞[/System:Color]ぶんぷ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -738,7 +738,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑[System:Color name="1"]＞[/System:Color]分布</Text>
+			<Text>図鑑[System:Color name="1" ]＞[/System:Color]分布</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -760,7 +760,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかん[System:Color name="1"]＞[/System:Color]なきごえ　</Text>
+			<Text>ずかん[System:Color name="1" ]＞[/System:Color]なきごえ　</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -771,7 +771,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑[System:Color name="1"]＞[/System:Color]鳴き声</Text>
+			<Text>図鑑[System:Color name="1" ]＞[/System:Color]鳴き声</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -793,7 +793,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ずかん[System:Color name="1"]＞[/System:Color]すがた</Text>
+			<Text>ずかん[System:Color name="1" ]＞[/System:Color]すがた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -804,7 +804,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>図鑑[System:Color name="1"]＞[/System:Color]姿</Text>
+			<Text>図鑑[System:Color name="1" ]＞[/System:Color]姿</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -826,7 +826,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーカード[System:Color name="1"]＞[/System:Color]ぜんめん</Text>
+			<Text>トレーナーカード[System:Color name="1" ]＞[/System:Color]ぜんめん</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -837,7 +837,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーカード[System:Color name="1"]＞[/System:Color]前面</Text>
+			<Text>トレーナーカード[System:Color name="1" ]＞[/System:Color]前面</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -859,7 +859,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーカード[System:Color name="1"]＞[/System:Color]うらめん</Text>
+			<Text>トレーナーカード[System:Color name="1" ]＞[/System:Color]うらめん</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -870,7 +870,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーカード[System:Color name="1"]＞[/System:Color]裏面</Text>
+			<Text>トレーナーカード[System:Color name="1" ]＞[/System:Color]裏面</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -892,7 +892,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーカード[System:Color name="1"]＞[/System:Color]ジムバッジ</Text>
+			<Text>トレーナーカード[System:Color name="1" ]＞[/System:Color]ジムバッジ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -903,7 +903,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーカード[System:Color name="1"]＞[/System:Color]ジムバッジ</Text>
+			<Text>トレーナーカード[System:Color name="1" ]＞[/System:Color]ジムバッジ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -958,7 +958,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]ライブキャスター[/System:Color]</Text>
+			<Text>[System:Color name="2" ]ライブキャスター[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -969,7 +969,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]ライブキャスター[/System:Color]</Text>
+			<Text>[System:Color name="2" ]ライブキャスター[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -991,7 +991,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2"]メダルボックス[/System:Color]</Text>
+			<Text>[System:Color name="2" ]メダルボックス[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />
@@ -1002,7 +1002,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2"]メダルボックス[/System:Color]</Text>
+			<Text>[System:Color name="2" ]メダルボックス[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:24" />

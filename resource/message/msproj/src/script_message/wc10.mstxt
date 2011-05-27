@@ -414,7 +414,7 @@
 			Language="JPN">
 			<Text>シュウサク『あっ　こんにちは！
 しぜんの　めぐみが　きもちいいね！▼
-[Name:TrainerName Idx="0"]がいた　ブラックシティから
+[Name:TrainerName Idx="0" ]がいた　ブラックシティから
 やってきた　シュウサクです　よろしく！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -428,7 +428,7 @@
 			Language="JPN_KANJI">
 			<Text>シュウサク『あっ　こんにちは！
 自然の　恵みが　気持ちいいね！▼
-[Name:TrainerName Idx="0"]がいた　ブラックシティから
+[Name:TrainerName Idx="0" ]がいた　ブラックシティから
 やってきた　シュウサクです　よろしく！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -629,7 +629,7 @@
 			<Text>ヒロコ『あら　こんにちは！▼
 おいしい　くうきに　のどかな　じかん
 ここのまちは　すごく　ステキですね▼
-[Name:TrainerName Idx="0"]さんが　いた
+[Name:TrainerName Idx="0" ]さんが　いた
 ブラックシティから　きた　ヒロコです▽
 どうも　よろしくね▼</Text>
 			<TextModifiedBy
@@ -645,7 +645,7 @@
 			<Text>ヒロコ『あら　こんにちは！▼
 おいしい　空気に　のどかな　時間
 ここの街は　すごく　ステキですね▼
-[Name:TrainerName Idx="0"]さんが　いた
+[Name:TrainerName Idx="0" ]さんが　いた
 ブラックシティから　来た　ヒロコです▽
 どうも　よろしくね▼</Text>
 			<TextModifiedBy
@@ -848,7 +848,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タクロウ『ウッス　[Name:TrainerName Idx="0"]とは
+			<Text>タクロウ『ウッス　[Name:TrainerName Idx="0" ]とは
 ブラックシティで　よく　やりあった▽
 タクロウだ！　よろしく　たのむな！▼
 ここは　オレみたいな
@@ -864,7 +864,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タクロウ『ウッス　[Name:TrainerName Idx="0"]とは
+			<Text>タクロウ『ウッス　[Name:TrainerName Idx="0" ]とは
 ブラックシティで　よく　やりあった▽
 タクロウだ！　よろしく　たのむな！▼
 ここは　オレみたいな
@@ -1069,7 +1069,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>サトコ『まいどさんです！
-[Name:TrainerName Idx="0"]の　ともだちの　サトコです▼
+[Name:TrainerName Idx="0" ]の　ともだちの　サトコです▼
 ブラックシティに　いたときは
 ちょっこし　だいたん　やってんよ▼</Text>
 			<TextModifiedBy
@@ -1083,7 +1083,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サトコ『まいどさんです！
-[Name:TrainerName Idx="0"]の　友達の　サトコです▼
+[Name:TrainerName Idx="0" ]の　友達の　サトコです▼
 ブラックシティに　いたときは
 ちょっこし　大胆　やってんよ▼</Text>
 			<TextModifiedBy
@@ -1308,7 +1308,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マサオ『[Name:TrainerName Idx="0"]が　いた
+			<Text>マサオ『[Name:TrainerName Idx="0" ]が　いた
 ブラックシティから　きた▽
 マサオだよ！　よろしく！▼
 いやー　こんなところも　あるんだねー
@@ -1324,7 +1324,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マサオ『[Name:TrainerName Idx="0"]が　いた
+			<Text>マサオ『[Name:TrainerName Idx="0" ]が　いた
 ブラックシティから　来た▽
 マサオだよ！　よろしく！▼
 いやー　こんなところも　あるんだねー
@@ -1526,7 +1526,7 @@
 			Language="JPN">
 			<Text>ミキ『こんにちはぁー　アタシ
 ミキって　いうの　よろしくねー▼
-[Name:TrainerName Idx="0"]と
+[Name:TrainerName Idx="0" ]と
 ブラックシティで　たたかったわ！▽
 すごく　つよかったの！▼</Text>
 			<TextModifiedBy
@@ -1541,7 +1541,7 @@
 			Language="JPN_KANJI">
 			<Text>ミキ『こんにちはぁー　アタシ
 ミキって　いうの　よろしくねー▼
-[Name:TrainerName Idx="0"]と
+[Name:TrainerName Idx="0" ]と
 ブラックシティで　戦ったわ！▽
 すごく　強くなったの！▼</Text>
 			<TextModifiedBy
@@ -1742,7 +1742,7 @@
 			Language="JPN">
 			<Text>タクマ『やあ！　こんにちは
 くうきが　すんでて　すばらしいね！▼
-[Name:TrainerName Idx="0"]のいた　ブラックシティから
+[Name:TrainerName Idx="0" ]のいた　ブラックシティから
 やってきた　タクマだよ　よろしく！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1756,7 +1756,7 @@
 			Language="JPN_KANJI">
 			<Text>タクマ『やあ！　こんにちは
 空気が　澄んでて　すばらしいね！▼
-[Name:TrainerName Idx="0"]のいた　ブラックシティから
+[Name:TrainerName Idx="0" ]のいた　ブラックシティから
 やってきた　タクマだよ　よろしく！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1962,7 +1962,7 @@
 			Language="JPN">
 			<Text>カレン『ブラックシティから
 ぜんりょく　ダッシュで　きちゃった！▼
-[Name:TrainerName Idx="0"]の　たたかいかたに
+[Name:TrainerName Idx="0" ]の　たたかいかたに
 かんしん　しちゃって▽
 わたしも　まだまだって　おもったわ！▼</Text>
 			<TextModifiedBy
@@ -1977,7 +1977,7 @@
 			Language="JPN_KANJI">
 			<Text>カレン『ブラックシティから
 全力ダッシュで　来ちゃった！▼
-[Name:TrainerName Idx="0"]の　戦い方に
+[Name:TrainerName Idx="0" ]の　戦い方に
 感心しちゃって▽
 わたしも　まだまだって　思ったわ！▼</Text>
 			<TextModifiedBy
@@ -2178,7 +2178,7 @@
 			Language="JPN">
 			<Text>トモタカ『どうも　どうも！　トモタカです
 ブラックシティから　まいりました▽
-[Name:TrainerName Idx="0"]さんの　しりあい　です▼
+[Name:TrainerName Idx="0" ]さんの　しりあい　です▼
 あのかたは　じつに　じょうねつてきな
 ポケモンしょうぶを　されますね！▼</Text>
 			<TextModifiedBy
@@ -2193,7 +2193,7 @@
 			Language="JPN_KANJI">
 			<Text>トモタカ『どうも　どうも！　トモタカです
 ブラックシティから　まいりました▽
-[Name:TrainerName Idx="0"]さんの　知り合いです▼
+[Name:TrainerName Idx="0" ]さんの　知り合いです▼
 あの方は　実に　情熱的な
 ポケモン勝負を　されますね！▼</Text>
 			<TextModifiedBy
@@ -2393,7 +2393,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ジュンイチ『やあ　ごきげんよう▼
-ブラックシティでは　[Name:TrainerName Idx="0"]の
+ブラックシティでは　[Name:TrainerName Idx="0" ]の
 れんしゅう　あいてを　してあげたけど▼
 まあまあ　つよかったかな
 ぼく　ほどでは　ないけどね▼</Text>
@@ -2408,7 +2408,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジュンイチ『やあ　ごきげんよう▼
-ブラックシティでは　[Name:TrainerName Idx="0"]の
+ブラックシティでは　[Name:TrainerName Idx="0" ]の
 練習相手を　してあげたけど▼
 まあまあ　強かったかな
 ぼく　ほどでは　ないけどね▼</Text>
@@ -2607,7 +2607,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カズホ『さんそが　こいわ！
-[Name:TrainerName Idx="0"]に　きいた　とおりね！▼
+[Name:TrainerName Idx="0" ]に　きいた　とおりね！▼
 ここなら　
 いい　ろんぶんが　かけちゃうわ！▼</Text>
 			<TextModifiedBy
@@ -2621,7 +2621,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カズホ『酸素が　濃いわ！
-[Name:TrainerName Idx="0"]に　きいた　とおりね！▼
+[Name:TrainerName Idx="0" ]に　きいた　とおりね！▼
 ここなら　
 いい　論文が　書けちゃうわ！▼</Text>
 			<TextModifiedBy
@@ -2814,7 +2814,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レナ『[Name:TrainerName Idx="0"]……？
+			<Text>レナ『[Name:TrainerName Idx="0" ]……？
 ごめんなさい　しりあいと　にてた……▼
 ブラックシティで　あった　ひとなの
 ポケモンしょうぶを　したの……▼</Text>
@@ -2828,7 +2828,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レナ『[Name:TrainerName Idx="0"]……？
+			<Text>レナ『[Name:TrainerName Idx="0" ]……？
 ごめんなさい　知り合いと　似てた……▼
 ブラックシティで　会った　人なの
 ポケモン勝負を　したの……▼</Text>
@@ -3029,7 +3029,7 @@
 			<Text>カルロス『おー！　こんにちは
 ここは　みどころが　たくさんだねー！▼
 まえに　いった　ブラックシティも
-[Name:TrainerName Idx="0"]って　トレーナーが▽
+[Name:TrainerName Idx="0" ]って　トレーナーが▽
 すごく　つよくて　おもしろかったけど▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3044,7 +3044,7 @@
 			<Text>カルロス『おー！　こんにちは
 ここは　見所が　たくさんだねー！▼
 前に　行った　ブラックシティも
-[Name:TrainerName Idx="0"]って　トレーナーが▽
+[Name:TrainerName Idx="0" ]って　トレーナーが▽
 すごく　強くて　おもしろかったけど▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3242,7 +3242,7 @@
 			Language="JPN">
 			<Text>ヒロミ『ここが　ホワイトフォレストかぁ
 ブラックシティと　ぜんぜん　ちがうね▼
-ねぇねぇ　[Name:TrainerName Idx="0"]って　トレーナー
+ねぇねぇ　[Name:TrainerName Idx="0" ]って　トレーナー
 しってる？　すごく　つよいのよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3256,7 +3256,7 @@
 			Language="JPN_KANJI">
 			<Text>ヒロミ『ここが　ホワイトフォレストかぁ
 ブラックシティと　ぜんぜん　違うね▼
-ねぇねぇ　[Name:TrainerName Idx="0"]って　トレーナー
+ねぇねぇ　[Name:TrainerName Idx="0" ]って　トレーナー
 知ってる？　すごく　強いのよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3452,7 +3452,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ツネカズ『[Name:TrainerName Idx="0"]！？▼
+			<Text>ツネカズ『[Name:TrainerName Idx="0" ]！？▼
 ……おっと
 べつの　ひとかね▼
 ポケモンしょうぶで　まけたのが
@@ -3468,7 +3468,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ツネカズ『[Name:TrainerName Idx="0"]！？▼
+			<Text>ツネカズ『[Name:TrainerName Idx="0" ]！？▼
 ……おっと
 別の　人かね▼
 ポケモン勝負で　負けたのが
@@ -3672,7 +3672,7 @@
 			Language="JPN">
 			<Text>シオリ『ごきげんよう
 ブラックシティに　いぜん　いたけど▼
-[Name:TrainerName Idx="0"]は　とても　つよかったわ！
+[Name:TrainerName Idx="0" ]は　とても　つよかったわ！
 ステキだったわよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3686,7 +3686,7 @@
 			Language="JPN_KANJI">
 			<Text>シオリ『ごきげんよう
 ブラックシティに　以前いたけど▼
-[Name:TrainerName Idx="0"]は　とても強かったわ！
+[Name:TrainerName Idx="0" ]は　とても強かったわ！
 ステキだったわよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3884,8 +3884,8 @@
 			Language="JPN">
 			<Text>ヒトシ『このまえ　まで
 ブラックシティに　いたんだよ▽
-[Name:TrainerName Idx="0"]と　たたかったりも　してさ▼
-[Name:TrainerName Idx="0"]も　ホワイトフォレスト
+[Name:TrainerName Idx="0" ]と　たたかったりも　してさ▼
+[Name:TrainerName Idx="0" ]も　ホワイトフォレスト
 いがいと　きにいるんじゃ　ないかな▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3899,8 +3899,8 @@
 			Language="JPN_KANJI">
 			<Text>ヒトシ『このまえ　まで
 ブラックシティに　いたんだよ▽
-[Name:TrainerName Idx="0"]と　戦ったりも　してさ▼
-[Name:TrainerName Idx="0"]も　ホワイトフォレスト
+[Name:TrainerName Idx="0" ]と　戦ったりも　してさ▼
+[Name:TrainerName Idx="0" ]も　ホワイトフォレスト
 意外と　気にいるんじゃ　ないかな▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4103,7 +4103,7 @@
 			<Text>ガクト『しぜんは　いいなぁ！▼
 でも　たまに
 ブラックシティのこと　おもいだすよ▼
-[Name:TrainerName Idx="0"]との　たたかいは
+[Name:TrainerName Idx="0" ]との　たたかいは
 わしの　たいせつな　おもいでだ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4118,7 +4118,7 @@
 			<Text>ガクト『自然は　いいなぁ！▼
 でも　たまに
 ブラックシティのこと　思い出すよ▼
-[Name:TrainerName Idx="0"]との　勝負は
+[Name:TrainerName Idx="0" ]との　勝負は
 わしの　大切な　思い出だ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4318,7 +4318,7 @@
 ここち　いいわね▼
 さいきんまで
 ブラックシティに　いたのだけれど▼
-[Name:TrainerName Idx="0"]の　こうりつてき　な
+[Name:TrainerName Idx="0" ]の　こうりつてき　な
 たたかいかたは　なかなか　だったわ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4334,7 +4334,7 @@
 心地　いいわね▼
 最近まで
 ブラックシティに　いたのだけれど▼
-[Name:TrainerName Idx="0"]の　効率的な
+[Name:TrainerName Idx="0" ]の　効率的な
 戦い方は　なかなか　だったわ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4531,7 +4531,7 @@
 			<Text>ミホ『ホワイトフォレストの
 ポケモンって　チョーかわいいよね！▼
 でも　まえに　ブラックシティで　あった
-[Name:TrainerName Idx="0"]も　かわいかったなー▼</Text>
+[Name:TrainerName Idx="0" ]も　かわいかったなー▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -4545,7 +4545,7 @@
 			<Text>ミホ『ホワイトフォレストの
 ポケモンって　チョーかわいいよね！▼
 でも　前に　ブラックシティで　会った
-[Name:TrainerName Idx="0"]も　かわいかったなー▼</Text>
+[Name:TrainerName Idx="0" ]も　かわいかったなー▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -4743,7 +4743,7 @@
 			<Text>トシノブ『ホワイトフォレストは
 みんな　じぶんに　すなお　だよね▼
 まえに　ブラックシティで　あった
-[Name:TrainerName Idx="0"]も▼
+[Name:TrainerName Idx="0" ]も▼
 あんがい　ホワイトフォレストの　こと
 きにいるんじゃ　ないかな？▼</Text>
 			<TextModifiedBy
@@ -4759,7 +4759,7 @@
 			<Text>トシノブ『ホワイトフォレストは
 みんな　自分に　素直だよね▼
 前に　ブラックシティで　会った
-[Name:TrainerName Idx="0"]も▼
+[Name:TrainerName Idx="0" ]も▼
 案外　ホワイトフォレストの　こと
 気にいるんじゃ　ないかな？▼</Text>
 			<TextModifiedBy
@@ -4954,7 +4954,7 @@
 ひとも　ポケモンも　すなおに▽
 むきあえるから　たのしいな▼
 まえに　ブラックシティで
-[Name:TrainerName Idx="0"]と　たたかって▽
+[Name:TrainerName Idx="0" ]と　たたかって▽
 きもちを　ぶつけあったことが　ある！▽
 あのときも　たのしかったな▼</Text>
 			<TextModifiedBy
@@ -4971,7 +4971,7 @@
 人も　ポケモンも　素直に▽
 向き合えるから　楽しいな▼
 前に　ブラックシティで
-[Name:TrainerName Idx="0"]と　戦って▽
+[Name:TrainerName Idx="0" ]と　戦って▽
 気持ちを　ぶつけあったことが　ある！▽
 あのときも　楽しかったな▼</Text>
 			<TextModifiedBy
@@ -5173,7 +5173,7 @@
 			<Text>エリザ『しぜんと　ふれあう
 せいかつも　みたされるね▼
 でも　まえに
-ブラックシティで　[Name:TrainerName Idx="0"]と▼
+ブラックシティで　[Name:TrainerName Idx="0" ]と▼
 ポケモンしょうぶした　あのときも
 なんだか　みたされたな▼</Text>
 			<TextModifiedBy
@@ -5189,7 +5189,7 @@
 			<Text>エリザ『自然と　触れ合う
 生活も　満たされるね▼
 でも　前に
-ブラックシティで　[Name:TrainerName Idx="0"]と▼
+ブラックシティで　[Name:TrainerName Idx="0" ]と▼
 ポケモン勝負した　あのときも
 なんだか　満たされたな▼</Text>
 			<TextModifiedBy
@@ -5386,7 +5386,7 @@
 			Language="JPN">
 			<Text>ヒロノリ『ここで　オレの
 サクセスストーリーが　はじまるっス▼
-ブラックシティじゃ　[Name:TrainerName Idx="0"]って
+ブラックシティじゃ　[Name:TrainerName Idx="0" ]って
 ライバルが　いたっスけど▼
 ここには　いないっスからね！
 バリバリ　かせいじゃうっスよー！▼</Text>
@@ -5402,7 +5402,7 @@
 			Language="JPN_KANJI">
 			<Text>ヒロノリ『ここで　オレの
 サクセスストーリーが　はじまるっス▼
-ブラックシティじゃ　[Name:TrainerName Idx="0"]って
+ブラックシティじゃ　[Name:TrainerName Idx="0" ]って
 ライバルが　いたっスけど▼
 ここには　いないっスからね！
 バリバリ　かせいじゃうっスよー！▼</Text>
@@ -5611,7 +5611,7 @@
 トレーナーとして
 せいちょうを　かんじるよ▼
 まえに　ブラックシティで　あった
-[Name:TrainerName Idx="0"]は▽
+[Name:TrainerName Idx="0" ]は▽
 いまごろ　どうしてるかな▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5628,7 +5628,7 @@
 トレーナーとして
 成長を　感じるよ▼
 前に　ブラックシティで　会った
-[Name:TrainerName Idx="0"]は▽
+[Name:TrainerName Idx="0" ]は▽
 今ごろ　どうしてるかな▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5834,7 +5834,7 @@
 さまざまな　こたえの
 そんざいを　かんじる……▼
 まえに　ブラックシティで
-であった　[Name:TrainerName Idx="0"]▼
+であった　[Name:TrainerName Idx="0" ]▼
 あの　かんがえにも
 また　ひとつの　こたえを　かんじた▼</Text>
 			<TextModifiedBy
@@ -5852,7 +5852,7 @@
 様々な　答えの
 存在を　感じる……▼
 以前　ブラックシティで
-出会った　[Name:TrainerName Idx="0"]▼
+出会った　[Name:TrainerName Idx="0" ]▼
 あの　考えにも
 また　一つの　答えを　感じた▼</Text>
 			<TextModifiedBy
@@ -6057,7 +6057,7 @@
 いちにち　いちにちを　いきることで▽
 せいちょうを　かんじるわ▼
 まえに　ブラックシティで
-[Name:TrainerName Idx="0"]と　たたかったとき▼
+[Name:TrainerName Idx="0" ]と　たたかったとき▼
 わたし　せいちょう　してないって
 おもったの▼</Text>
 			<TextModifiedBy
@@ -6074,7 +6074,7 @@
 一日　一日を　生きることで▽
 成長を　感じるわ▼
 前に　ブラックシティで
-[Name:TrainerName Idx="0"]と　戦ったとき▼
+[Name:TrainerName Idx="0" ]と　戦ったとき▼
 私　成長　してないって
 思ったの▼</Text>
 			<TextModifiedBy
@@ -6279,7 +6279,7 @@
 おちついてる　オレだけど▼
 いぜんは　ブラックシティに
 いったことも　あるんだ▼
-[Name:TrainerName Idx="0"]との
+[Name:TrainerName Idx="0" ]との
 ポケモンしょうぶは　たのしかったな！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6295,7 +6295,7 @@
 落ち着いている　オレだけど▼
 以前は　ブラックシティに
 行ったことも　あるんだ▼
-[Name:TrainerName Idx="0"]との
+[Name:TrainerName Idx="0" ]との
 ポケモン勝負は　楽しかったな！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6496,7 +6496,7 @@
 			<Text>エミ『いまは　ゆったり
 たびをしてる　わたしだけど▼
 いぜんは　ブラックシティで
-[Name:TrainerName Idx="0"]に　かつことを▽
+[Name:TrainerName Idx="0" ]に　かつことを▽
 もくてきに　していた……▽
 そんなときも　あったの▼</Text>
 			<TextModifiedBy
@@ -6512,7 +6512,7 @@
 			<Text>エミ『いまは　ゆったり
 旅をしてる　わたしだけど▼
 以前は　ブラックシティで
-[Name:TrainerName Idx="0"]に　勝つことを▽
+[Name:TrainerName Idx="0" ]に　勝つことを▽
 目的に　していた……▽
 そんなときも　あったの▼</Text>
 			<TextModifiedBy
@@ -6710,7 +6710,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グレース『いぜん　ブラックシティで
-であった　[Name:TrainerName Idx="0"]との▽
+であった　[Name:TrainerName Idx="0" ]との▽
 ポケモンしょうぶ　も▼
 しぜんに　おとらぬ
 うつくしさが　あったわ！▼</Text>
@@ -6725,7 +6725,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グレース『以前　ブラックシティで
-出会った　[Name:TrainerName Idx="0"]との▽
+出会った　[Name:TrainerName Idx="0" ]との▽
 ポケモン勝負　も▼
 自然に　劣らぬ
 美しさが　あったわ！▼</Text>

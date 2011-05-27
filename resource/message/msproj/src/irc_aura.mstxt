@@ -41,7 +41,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんとの
+			<Text>[Name:TrainerName Idx="0" ]さんとの
 シンクロを　チェックしています……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53,7 +53,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんとの
+			<Text>[Name:TrainerName Idx="0" ]さんとの
 シンクロを　チェックしています……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

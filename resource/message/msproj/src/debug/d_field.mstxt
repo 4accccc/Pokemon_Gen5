@@ -2522,7 +2522,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="1"]</Text>
+			<Text>[Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2533,7 +2533,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="1"]</Text>
+			<Text>[Name:Item Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2555,7 +2555,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>×[Digit:3digits Idx="2"]</Text>
+			<Text>×[Digit:3digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2566,7 +2566,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>×[Digit:3digits Idx="2"]</Text>
+			<Text>×[Digit:3digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2588,7 +2588,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2599,7 +2599,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2621,7 +2621,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ばしょID[Digit:2digits Idx="2"]</Text>
+			<Text>ばしょID[Digit:2digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -2632,7 +2632,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>場所ID[Digit:2digits Idx="2"]</Text>
+			<Text>場所ID[Digit:2digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -3282,14 +3282,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>bmodel
-res(0x[Digit:8digits Idx="1"])
+res(0x[Digit:8digits Idx="1" ])
 
 fldmmdl
-res(0x[Digit:8digits Idx="3"])
+res(0x[Digit:8digits Idx="3" ])
 
 heapID Field
-free size (0x[Digit:8digits Idx="4"])
-allocable (0x[Digit:8digits Idx="5"])</Text>
+free size (0x[Digit:8digits Idx="4" ])
+allocable (0x[Digit:8digits Idx="5" ])</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -3301,14 +3301,14 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>bmodel
-res(0x[Digit:8digits Idx="1"])
+res(0x[Digit:8digits Idx="1" ])
 
 fldmmdl
-res(0x[Digit:8digits Idx="3"])
+res(0x[Digit:8digits Idx="3" ])
 
 heapID Field
-free size (0x[Digit:8digits Idx="4"])
-allocable (0x[Digit:8digits Idx="5"])</Text>
+free size (0x[Digit:8digits Idx="4" ])
+allocable (0x[Digit:8digits Idx="5" ])</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -7785,8 +7785,8 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="0"]戦目へ移動します
-([Digit:5digits Idx="1"]周　[Digit:1digit Idx="2"]両目）</Text>
+			<Text>[Digit:5digits Idx="0" ]戦目へ移動します
+([Digit:5digits Idx="1" ]周　[Digit:1digit Idx="2" ]両目）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -7797,8 +7797,8 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="0"]戦目へ移動します
-([Digit:5digits Idx="1"]周　[Digit:1digit Idx="2"]両目）</Text>
+			<Text>[Digit:5digits Idx="0" ]戦目へ移動します
+([Digit:5digits Idx="1" ]周　[Digit:1digit Idx="2" ]両目）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -9175,7 +9175,7 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここから：[Digit:3digits Idx="0"]　[Name:PokemonName Idx="1"]</Text>
+			<Text>ここから：[Digit:3digits Idx="0" ]　[Name:PokemonName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -9186,7 +9186,7 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここから：[Digit:3digits Idx="0"]　[Name:PokemonName Idx="1"]</Text>
+			<Text>ここから：[Digit:3digits Idx="0" ]　[Name:PokemonName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -9208,7 +9208,7 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここまで：[Digit:3digits Idx="0"]　[Name:PokemonName Idx="1"]</Text>
+			<Text>ここまで：[Digit:3digits Idx="0" ]　[Name:PokemonName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -9219,7 +9219,7 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここまで：[Digit:3digits Idx="0"]　[Name:PokemonName Idx="1"]</Text>
+			<Text>ここまで：[Digit:3digits Idx="0" ]　[Name:PokemonName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -9475,12 +9475,12 @@ allocable (0x[Digit:8digits Idx="5"])</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>prog area heap
-free size (0x[Digit:8digits Idx="0"])
-allocable (0x[Digit:8digits Idx="1"])
+free size (0x[Digit:8digits Idx="0" ])
+allocable (0x[Digit:8digits Idx="1" ])
 
 subscreen heap
-free size (0x[Digit:8digits Idx="2"])
-allocable (0x[Digit:8digits Idx="3"])</Text>
+free size (0x[Digit:8digits Idx="2" ])
+allocable (0x[Digit:8digits Idx="3" ])</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -9492,12 +9492,12 @@ allocable (0x[Digit:8digits Idx="3"])</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>prog area heap
-free size (0x[Digit:8digits Idx="0"])
-allocable (0x[Digit:8digits Idx="1"])
+free size (0x[Digit:8digits Idx="0" ])
+allocable (0x[Digit:8digits Idx="1" ])
 
 subscreen heap
-free size (0x[Digit:8digits Idx="2"])
-allocable (0x[Digit:8digits Idx="3"])</Text>
+free size (0x[Digit:8digits Idx="2" ])
+allocable (0x[Digit:8digits Idx="3" ])</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -10494,8 +10494,8 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キープＬ[Digit:3digits Idx="0"]　キープＳ[Digit:3digits Idx="1"]
-フリーＬ[Digit:3digits Idx="2"]　フリーＳ[Digit:3digits Idx="3"]</Text>
+			<Text>キープＬ[Digit:3digits Idx="0" ]　キープＳ[Digit:3digits Idx="1" ]
+フリーＬ[Digit:3digits Idx="2" ]　フリーＳ[Digit:3digits Idx="3" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -10506,8 +10506,8 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キープＬ[Digit:3digits Idx="0"]　キープＳ[Digit:3digits Idx="1"]
-フリーＬ[Digit:3digits Idx="2"]　フリーＳ[Digit:3digits Idx="3"]</Text>
+			<Text>キープＬ[Digit:3digits Idx="0" ]　キープＳ[Digit:3digits Idx="1" ]
+フリーＬ[Digit:3digits Idx="2" ]　フリーＳ[Digit:3digits Idx="3" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -11601,7 +11601,7 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>追加ポケモン数入力 [Digit:3digits Idx="0"]
+			<Text>追加ポケモン数入力 [Digit:3digits Idx="0" ]
 上下±1・左右±10</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11613,7 +11613,7 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>追加ポケモン数入力 [Digit:3digits Idx="0"]
+			<Text>追加ポケモン数入力 [Digit:3digits Idx="0" ]
 上下±1・左右±10</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11669,7 +11669,7 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>戦うトレーナーを選択：[Digit:3digits Idx="0"]</Text>
+			<Text>戦うトレーナーを選択：[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -11680,7 +11680,7 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦うトレーナーを選択：[Digit:3digits Idx="0"]</Text>
+			<Text>戦うトレーナーを選択：[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -11703,7 +11703,7 @@ LR→補完"</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>戦うトレーナーを選択
-１人目：[Digit:3digits Idx="0"]　２人目：[Digit:3digits Idx="1"]</Text>
+１人目：[Digit:3digits Idx="0" ]　２人目：[Digit:3digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -11715,7 +11715,7 @@ LR→補完"</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>戦うトレーナーを選択
-１人目：[Digit:3digits Idx="0"]　２人目：[Digit:3digits Idx="1"]</Text>
+１人目：[Digit:3digits Idx="0" ]　２人目：[Digit:3digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -11803,8 +11803,8 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="0"]週目になります
-([Digit:5digits Idx="1"]連勝）</Text>
+			<Text>[Digit:5digits Idx="0" ]週目になります
+([Digit:5digits Idx="1" ]連勝）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -11815,8 +11815,8 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="0"]週目になります
-([Digit:5digits Idx="1"]連勝）</Text>
+			<Text>[Digit:5digits Idx="0" ]週目になります
+([Digit:5digits Idx="1" ]連勝）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />

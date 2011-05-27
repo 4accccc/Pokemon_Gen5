@@ -416,7 +416,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>ママ『[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 ポケモンしょうぶ　って
 ものすごーく　にぎやか　なのね！▼
 したまで　ポケモンの
@@ -431,7 +431,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0"][Ctrl2:PageClear ]
+			<Text>ママ『[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]
 ポケモン勝負って
 ものすごーく　にぎやか　なのね！▼
 下まで　ポケモンの
@@ -861,7 +861,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0"]
+			<Text>ママ『[Name:TrainerName Idx="0" ]
 ポケモンは　げんき　なの？[Ctrl2:PageClear ]
 ちょっと　やすんでいきなさいな[Ctrl2:PageClear ]
 いい　トレーナーは
@@ -876,7 +876,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0"]
+			<Text>ママ『[Name:TrainerName Idx="0" ]
 ポケモンは　元気なの？[Ctrl2:PageClear ]
 ちょっと　休んでいきなさいな[Ctrl2:PageClear ]
 いい　トレーナーは
@@ -922,7 +922,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ママ『うん　ばっちり！▼
-[Name:TrainerName Idx="0"]も　ポケモンも
+[Name:TrainerName Idx="0" ]も　ポケモンも
 げんき　ハツラツって　かんじ！▼
 さあ　たびを　つづけなさいな</Text>
 			<TextModifiedBy
@@ -936,7 +936,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ママ『うん　ばっちり！▼
-[Name:TrainerName Idx="0"]も　ポケモンも
+[Name:TrainerName Idx="0" ]も　ポケモンも
 元気ハツラツって　感じ！▼
 さあ　旅を　続けなさいな</Text>
 			<TextModifiedBy
@@ -976,7 +976,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0"]
+			<Text>ママ『[Name:TrainerName Idx="0" ]
 ポケモンには　やさしくしてる？▼
 あなたの　ために　ポケモンは
 がんばって　くれるんだもん！▼
@@ -992,7 +992,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0"]
+			<Text>ママ『[Name:TrainerName Idx="0" ]
 ポケモンには　優しくしてる？▼
 あなたの　ために　ポケモンは
 がんばって　くれるんだもん！▼
@@ -1197,7 +1197,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0"]！
+			<Text>ママ『[Name:TrainerName Idx="0" ]！
 おかえりなさい▼
 たいへん　だったみたいね
 すこし　やすんで　いきなさいよ▼
@@ -1213,7 +1213,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0"]！
+			<Text>ママ『[Name:TrainerName Idx="0" ]！
 おかえりなさい▼
 大変だったみたいね
 すこし　休んで　いきなさいよ▼
@@ -1352,7 +1352,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ママ？『おかえりなさい
-[Name:TrainerName Idx="0"]▼
+[Name:TrainerName Idx="0" ]▼
 なんだか　すごいこと　ばかりで
 いろいろ　たいへん　だったみたいね▼</Text>
 			<TextModifiedBy
@@ -1366,7 +1366,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ママ？『おかえりなさい
-[Name:TrainerName Idx="0"]▼
+[Name:TrainerName Idx="0" ]▼
 なんだか　すごいこと　ばかりで
 いろいろ　大変だったみたいね▼</Text>
 			<TextModifiedBy
@@ -2208,7 +2208,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンサム『なるほど▼
-さすが　[Name:TrainerName Idx="0"]の　おかあさん
+さすが　[Name:TrainerName Idx="0" ]の　おかあさん
 いい　しつもん　ですな▼
 おこたえ　しましょう！▼
 まったく　かんけい　ありません▼</Text>
@@ -2223,7 +2223,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハンサム『なるほど▼
-さすが　[Name:TrainerName Idx="0"]の　おかあさん
+さすが　[Name:TrainerName Idx="0" ]の　おかあさん
 いい　質問ですな▼
 お答え　しましょう！▼
 まったく　関係ありません▼</Text>
@@ -2425,7 +2425,7 @@
 ポケモンが　くいついたら
 「！」と　でるから　そのときに▽
 すばやく　つりざおを　ひくのだ！▼
-では　[Name:TrainerName Idx="0"]！
+では　[Name:TrainerName Idx="0" ]！
 よろしく　たのんだよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2445,7 +2445,7 @@
 ポケモンが　くいついたら
 「！」と　でるから　そのときに▽
 すばやく　つりざおを　引くのだ！▼
-では　[Name:TrainerName Idx="0"]！
+では　[Name:TrainerName Idx="0" ]！
 よろしく　頼んだよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

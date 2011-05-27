@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハーイ！▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 ちょっと　つきあってくれない？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,7 +20,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハーイ！▼
-[Name:TrainerName Idx="0"]
+[Name:TrainerName Idx="0" ]
 ちょっと　つきあってくれない？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

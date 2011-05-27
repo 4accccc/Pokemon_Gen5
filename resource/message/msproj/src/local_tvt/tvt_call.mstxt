@@ -1050,7 +1050,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 すごく　なかが　わるいんだね[Ctrl2:PageClear ]
 いっしょにいるのが　つらそうだよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1063,7 +1063,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 すごく　仲が　悪いんだね[Ctrl2:PageClear ]
 一緒にいるのが　辛そうだよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1087,7 +1087,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 なかが　わるいんだね[Ctrl2:PageClear ]
 なんか　いやそうな　かおしてるよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1100,7 +1100,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 仲が　悪いんだね[Ctrl2:PageClear ]
 なんか　嫌そうな　顔してるよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1124,7 +1124,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 まだまだ　これからって　かんじだね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1136,7 +1136,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 まだまだ　これからって　感じだね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1159,7 +1159,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 すこし　なかよく　なってきたね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1171,7 +1171,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 少し　仲良く　なってきたね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1194,7 +1194,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 なかよし　なんだね[Ctrl2:PageClear ]
 なんだか　うれしそうだよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1207,7 +1207,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 仲良し　なんだね[Ctrl2:PageClear ]
 なんだか　嬉しそうだよ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1231,7 +1231,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 けっこう　なかよし　なんだね[Ctrl2:PageClear ]
 いっしょに　いるのが　たのしいみたい[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1244,7 +1244,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 結構　仲良し　なんだね[Ctrl2:PageClear ]
 一緒に　いるのが　楽しいみたい[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1268,7 +1268,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 とっても　なかよし　なんだね[Ctrl2:PageClear ]
 みてると　なんだか　やけちゃうなぁ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1281,7 +1281,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:PokemonNickname Idx="1"]って……
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:PokemonNickname Idx="1" ]って……
 とっても　仲良し　なんだね[Ctrl2:PageClear ]
 見てると　なんだか　やけちゃうなぁ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1345,7 +1345,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の[Name:PokemonNickname Idx="1"]……
+			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
 まだまだ　がんばれるって　かんじだね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1357,7 +1357,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の[Name:PokemonNickname Idx="1"]……
+			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
 まだまだ　頑張れるって　感じだね[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1380,7 +1380,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の[Name:PokemonNickname Idx="1"]……
+			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
 ものすごく　がんばったね！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1392,7 +1392,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の[Name:PokemonNickname Idx="1"]……
+			<Text>[Name:TrainerName Idx="0" ]の[Name:PokemonNickname Idx="1" ]……
 ものすごく　頑張ったね！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1415,7 +1415,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくに　[Name:Status Idx="0"]は
+			<Text>とくに　[Name:Status Idx="0" ]は
 ほんとうに　がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1427,7 +1427,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくに　[Name:Status Idx="0"]は
+			<Text>とくに　[Name:Status Idx="0" ]は
 本当に　頑張ったと　思うよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1450,7 +1450,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくに　[Name:Status Idx="0"]と　[Name:Status Idx="1"]は
+			<Text>とくに　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
 ほんとうに　がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1462,7 +1462,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくに　[Name:Status Idx="0"]と　[Name:Status Idx="1"]は
+			<Text>とくに　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
 本当に　頑張ったと　思うよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1683,7 +1683,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でも　[Name:Status Idx="0"]は
+			<Text>でも　[Name:Status Idx="0" ]は
 がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1695,7 +1695,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でも　[Name:Status Idx="0"]は
+			<Text>でも　[Name:Status Idx="0" ]は
 頑張ったと　思うよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1718,7 +1718,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でも　[Name:Status Idx="0"]と　[Name:Status Idx="1"]は
+			<Text>でも　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
 がんばったと　おもうよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1730,7 +1730,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>でも　[Name:Status Idx="0"]と　[Name:Status Idx="1"]は
+			<Text>でも　[Name:Status Idx="0" ]と　[Name:Status Idx="1" ]は
 頑張ったと　思うよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1819,7 +1819,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place Idx="0"]</Text>
+			<Text>[Name:Place Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1830,7 +1830,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place Idx="0"]</Text>
+			<Text>[Name:Place Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2973,7 +2973,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>へぇ…
-[Name:Answer Idx="0"]が　しゅみ　なんだ…[Ctrl2:PageClear ]</Text>
+[Name:Answer Idx="0" ]が　しゅみ　なんだ…[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2984,7 +2984,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　しゅみ　なんだ！１[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　しゅみ　なんだ！１[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3068,7 +3068,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>へぇ…
-[Name:Answer Idx="0"]が　とくぎ　なんだ…[Ctrl2:PageClear ]</Text>
+[Name:Answer Idx="0" ]が　とくぎ　なんだ…[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3079,7 +3079,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　とくぎ　なんだ！２[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　とくぎ　なんだ！２[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3162,7 +3162,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきないろ　なんだ！３[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3174,7 +3174,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきないろ　なんだ！３[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3258,7 +3258,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなスポーツ　なんだ！４[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3270,7 +3270,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなスポーツ　なんだ！４[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3354,7 +3354,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなたべもの　なんだ！５[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3366,7 +3366,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなたべもの　なんだ！５[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3450,7 +3450,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が　にがて　なんだ！６[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　にがて　なんだ！６[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3461,7 +3461,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　にがて　なんだ！６[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　にがて　なんだ！６[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3544,7 +3544,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなばしょ　なんだ！７[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3556,7 +3556,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなばしょ　なんだ！７[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3640,7 +3640,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が　
+			<Text>[Name:Answer Idx="0" ]が　
 すきなポケモン　なんだ！８[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3652,7 +3652,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　
+			<Text>[Name:Answer Idx="0" ]が　
 すきなポケモン　なんだ！８[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6221,7 +6221,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はぁ…
-[Name:Answer Idx="0"]が　しゅみ　なんですか…[Ctrl2:PageClear ]</Text>
+[Name:Answer Idx="0" ]が　しゅみ　なんですか…[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -6232,7 +6232,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　しゅみ　なんですね！１[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　しゅみ　なんですね！１[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -6316,7 +6316,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はぁ…
-[Name:Answer Idx="0"]が　とくぎ　なんですか…[Ctrl2:PageClear ]</Text>
+[Name:Answer Idx="0" ]が　とくぎ　なんですか…[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -6327,7 +6327,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　とくぎ　なんですね！２[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　とくぎ　なんですね！２[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -6410,7 +6410,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきないろ　なんですね！３[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6422,7 +6422,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきないろ　なんですね！３[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6506,7 +6506,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなスポーツ　なんですね！４[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6518,7 +6518,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなスポーツ　なんですね！４[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6602,7 +6602,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなたべもの　なんですね！５[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6614,7 +6614,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなたべもの　なんですね！５[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6698,7 +6698,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が　にがて　なんですね！６[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　にがて　なんですね！６[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -6709,7 +6709,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　にがて　なんですね！６[Ctrl2:PageClear ]</Text>
+			<Text>[Name:Answer Idx="0" ]が　にがて　なんですね！６[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -6792,7 +6792,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなばしょ　なんですね！７[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6804,7 +6804,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が
+			<Text>[Name:Answer Idx="0" ]が
 すきなばしょ　なんですね！７[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6888,7 +6888,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Answer Idx="0"]が　
+			<Text>[Name:Answer Idx="0" ]が　
 すきなポケモン　なんですね！８[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6900,7 +6900,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Answer Idx="0"]が　
+			<Text>[Name:Answer Idx="0" ]が　
 すきなポケモン　なんですね！８[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

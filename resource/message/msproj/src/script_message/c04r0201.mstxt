@@ -1292,10 +1292,10 @@
 			<Text>おつかれっ！　きみの
 ポケモンの　かつやく　みてたよ！▼
 ぜんたいてきに
-とても　[Name:MusicalResult Idx="0"]！▼
-アクセントで　[Name:MusicalResult Idx="1"]な　グッズを
+とても　[Name:MusicalResult Idx="0" ]！▼
+アクセントで　[Name:MusicalResult Idx="1" ]な　グッズを
 つけていて　よかったと　おもうな！▼
-[Name:MusicalResult Idx="2"]さは　ひかえめ　だったね▼
+[Name:MusicalResult Idx="2" ]さは　ひかえめ　だったね▼
 よし！　ぼくも　まけないよ！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1310,10 +1310,10 @@
 			<Text>おつかれっ！　きみの
 ポケモンの　活躍　みてたよ！▼
 全体的に
-とても　[Name:MusicalResult Idx="0"]！▼
-アクセントで　[Name:MusicalResult Idx="1"]な　グッズを
+とても　[Name:MusicalResult Idx="0" ]！▼
+アクセントで　[Name:MusicalResult Idx="1" ]な　グッズを
 つけていて　よかったと　おもうな！▼
-[Name:MusicalResult Idx="2"]さは　ひかえめ　だったね▼
+[Name:MusicalResult Idx="2" ]さは　ひかえめ　だったね▼
 よし！　ぼくも　負けないよ！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

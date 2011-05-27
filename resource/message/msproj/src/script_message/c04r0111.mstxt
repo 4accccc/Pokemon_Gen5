@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　バトルポイントを
-[Digit:2digits Idx="1"]ＢＰ　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　バトルポイントを
+[Digit:2digits Idx="1" ]ＢＰ　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -18,8 +18,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　バトルポイントを
-[Digit:2digits Idx="1"]ＢＰ　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　バトルポイントを
+[Digit:2digits Idx="1" ]ＢＰ　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -219,7 +219,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
 スーパーシングルトレインに　チャレンジ▽
 する　けんりを　かくとく　しました！▼</Text>
 			<TextModifiedBy
@@ -232,7 +232,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
 スーパーシングルトレインに　チャレンジ▽
 する　権利を　獲得しました！▼</Text>
 			<TextModifiedBy
@@ -263,7 +263,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
 スーパーダブルトレインに　チャレンジ▽
 する　けんりを　かくとく　しました！▼</Text>
 			<TextModifiedBy
@@ -276,7 +276,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
 スーパーダブルトレインに　チャレンジ▽
 する　権利を　獲得しました！▼</Text>
 			<TextModifiedBy
@@ -307,7 +307,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
 スーパーマルチトレインに　チャレンジ▽
 する　けんりを　かくとく　しました！▼</Text>
 			<TextModifiedBy
@@ -320,7 +320,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
 スーパーマルチトレインに　チャレンジ▽
 する　権利を　獲得しました！▼</Text>
 			<TextModifiedBy
@@ -869,8 +869,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
-ランク[Digit:2digits Idx="1"]に　なりました！▼</Text>
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
+ランク[Digit:2digits Idx="1" ]に　なりました！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
@@ -881,8 +881,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　[Name:TrainerName Idx="0"]さまは
-ランク[Digit:2digits Idx="1"]に　なりました！▼</Text>
+			<Text>そして　[Name:TrainerName Idx="0" ]さまは
+ランク[Digit:2digits Idx="1" ]に　なりました！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />

@@ -385,7 +385,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 タマゴを　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -397,7 +397,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 タマゴを　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -442,7 +442,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てにいれた　[Name:PokemonName Idx="1"]に
+			<Text>てにいれた　[Name:PokemonName Idx="1" ]に
 ニックネームを　つけますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -454,7 +454,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てにいれた　[Name:PokemonName Idx="1"]に
+			<Text>てにいれた　[Name:PokemonName Idx="1" ]に
 ニックネームを　つけますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

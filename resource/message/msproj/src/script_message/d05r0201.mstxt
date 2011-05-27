@@ -253,7 +253,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]！
+			<Text>チェレン『[Name:TrainerName Idx="0" ]！
 はんぶんずつ　かたづけよう！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -265,7 +265,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]！
+			<Text>チェレン『[Name:TrainerName Idx="0" ]！
 半分ずつ　片付けよう！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -311,7 +311,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]は
+			<Text>チェレン『[Name:TrainerName Idx="0" ]は
 そっちの　プラズマだんを　たのむ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -323,7 +323,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]は
+			<Text>チェレン『[Name:TrainerName Idx="0" ]は
 そっちの　プラズマ団を　頼む！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1756,7 +1756,7 @@
 ポケモンが　いなくなることと▽
 おなじ　じゃないか……▽
 まったく　メンドーな　れんちゅうだな▼
-[Name:TrainerName Idx="0"]……
+[Name:TrainerName Idx="0" ]……
 さむいから　そとに　でるよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1776,7 +1776,7 @@
 ポケモンが　いなくなることと▽
 同じじゃ　ないか……▽
 まったく　メンドーな　連中だな▼
-[Name:TrainerName Idx="0"]……
+[Name:TrainerName Idx="0" ]……
 寒いから　外に　でるよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2357,7 +2357,7 @@
 			<Text>ハンサム『ありがとう▼
 これで　ゲーチスを　のぞき
 のこる　しちけんじんは▽
-あと　[Digit:1digit Idx="0"]にんか……▼
+あと　[Digit:1digit Idx="0" ]にんか……▼
 かれらが　なにを　かんがえ
 のぞんでいたか　しりたいものだ……▽
 では　また　あおう！▼</Text>
@@ -2374,7 +2374,7 @@
 			<Text>ハンサム『ありがとう！▼
 これで　ゲーチスを除き
 残る　七賢人は▽
-あと　[Digit:1digit Idx="0"]人か……▼
+あと　[Digit:1digit Idx="0" ]人か……▼
 彼らが　なにを　考え
 望んでいたか　知りたいものだ……▽
 では　また　会おう！▼</Text>
@@ -2424,7 +2424,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハンサム『ありがとう！▼
-さて　[Name:TrainerName Idx="0"]……
+さて　[Name:TrainerName Idx="0" ]……
 きみに　つたえることが　ある▼
 ここより　はるか　とおいところで
 Ｎらしき　じんぶつが▽
@@ -2444,7 +2444,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハンサム『ありがとう！▼
-さて　[Name:TrainerName Idx="0"]……
+さて　[Name:TrainerName Idx="0" ]……
 きみに　伝えることが　ある▼
 ここより　はるか　遠方で
 Ｎらしき　人物が▽

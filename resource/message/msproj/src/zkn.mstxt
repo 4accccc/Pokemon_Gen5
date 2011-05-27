@@ -408,7 +408,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -419,7 +419,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -676,7 +676,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みつかったかず　[Digit:3digits Idx="0"]</Text>
+			<Text>みつかったかず　[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -687,7 +687,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見つかった数　[Digit:3digits Idx="0"]</Text>
+			<Text>見つかった数　[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -1757,7 +1757,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]．[Digit:1digit Idx="1"]</Text>
+			<Text>[Digit:3digits Idx="0" ]．[Digit:1digit Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -1768,7 +1768,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]．[Digit:1digit Idx="1"]</Text>
+			<Text>[Digit:3digits Idx="0" ]．[Digit:1digit Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -5901,7 +5901,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place Idx="0"]</Text>
+			<Text>[Name:Place Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -5912,7 +5912,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place Idx="0"]</Text>
+			<Text>[Name:Place Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7109,7 +7109,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]のすがた</Text>
+			<Text>[Name:PokemonName Idx="0" ]のすがた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7120,7 +7120,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]のすがた</Text>
+			<Text>[Name:PokemonName Idx="0" ]のすがた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7487,7 +7487,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]：</Text>
+			<Text>[Name:PokemonName Idx="0" ]：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7498,7 +7498,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]：</Text>
+			<Text>[Name:PokemonName Idx="0" ]：</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7567,7 +7567,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]を　みくらべる</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　みくらべる</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7578,7 +7578,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]を　見比べる</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　見比べる</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7821,7 +7821,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つかまえた　[Name:PokemonName Idx="0"]に
+			<Text>つかまえた　[Name:PokemonName Idx="0" ]に
 ニックネームを　つけますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7833,7 +7833,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>捕まえた　[Name:PokemonName Idx="0"]に
+			<Text>捕まえた　[Name:PokemonName Idx="0" ]に
 ニックネームを　つけますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7875,7 +7875,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つかまえた　[Name:PokemonName Idx="0"]には
+			<Text>つかまえた　[Name:PokemonName Idx="0" ]には
 べつに　おやが　いるみたい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7887,7 +7887,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>捕まえた　[Name:PokemonName Idx="0"]には
+			<Text>捕まえた　[Name:PokemonName Idx="0" ]には
 別に　親が　いるみたい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7929,8 +7929,8 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　だれかの　パソコンの
-[Name:BoxName Idx="1"]に　てんそうされた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　だれかの　パソコンの
+[Name:BoxName Idx="1" ]に　てんそうされた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7941,8 +7941,8 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　だれかの　パソコンの
-[Name:BoxName Idx="1"]に　転送された！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　だれかの　パソコンの
+[Name:BoxName Idx="1" ]に　転送された！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7980,8 +7980,8 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　ショウロの　パソコンの
-[Name:BoxName Idx="1"]に　てんそうされた！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　ショウロの　パソコンの
+[Name:BoxName Idx="1" ]に　てんそうされた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -7992,8 +7992,8 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　ショウロの　パソコンの
-[Name:BoxName Idx="1"]に　転送された！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]は　ショウロの　パソコンの
+[Name:BoxName Idx="1" ]に　転送された！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8266,7 +8266,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:1digit Idx="0"]'[Digit:2digits Idx="1"]"</Text>
+			<Text>[Digit:1digit Idx="0" ]'[Digit:2digits Idx="1" ]"</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8277,7 +8277,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:1digit Idx="0"]'[Digit:2digits Idx="1"]"</Text>
+			<Text>[Digit:1digit Idx="0" ]'[Digit:2digits Idx="1" ]"</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8393,7 +8393,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8404,7 +8404,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8440,7 +8440,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8451,7 +8451,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8527,7 +8527,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]の　ぶんぷ</Text>
+			<Text>[Name:PokemonName Idx="0" ]の　ぶんぷ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />
@@ -8538,7 +8538,7 @@ ZKN_POKEGET_NICKNAME_NPOKEは
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]の　分布</Text>
+			<Text>[Name:PokemonName Idx="0" ]の　分布</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:26" />

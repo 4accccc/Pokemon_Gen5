@@ -524,8 +524,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　[Name:TrainerName Idx="0"]さまは
-[Digit:4digits Idx="1"]れんしょうちゅう　です▼</Text>
+			<Text>げんざい　[Name:TrainerName Idx="0" ]さまは
+[Digit:4digits Idx="1" ]れんしょうちゅう　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -536,8 +536,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>現在　[Name:TrainerName Idx="0"]さまは
-[Digit:4digits Idx="1"]連勝中　です▼</Text>
+			<Text>現在　[Name:TrainerName Idx="0" ]さまは
+[Digit:4digits Idx="1" ]連勝中　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -1409,9 +1409,9 @@
 			Language="JPN">
 			<Text>おきゃくさま！▼
 さんかできる　ポケモンが
-[Digit:1digit Idx="0"]ひき　いません▼
+[Digit:1digit Idx="0" ]ひき　いません▼
 さんかするには　しゅるいが　ちがう
-ポケモンを　[Digit:1digit Idx="0"]ひき　よういし▽
+ポケモンを　[Digit:1digit Idx="0" ]ひき　よういし▽
 ちがう　どうぐに　してください</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1425,9 +1425,9 @@
 			Language="JPN_KANJI">
 			<Text>お客さま！▼
 参加できる　ポケモンが
-[Digit:1digit Idx="0"]匹　いません▼
+[Digit:1digit Idx="0" ]匹　いません▼
 参加するには　種類が　違う
-ポケモンを　[Digit:1digit Idx="0"]匹　用意し▽
+ポケモンを　[Digit:1digit Idx="0" ]匹　用意し▽
 違う　道具に　してください</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2515,8 +2515,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さまの　げんざいの　ランクは
-[Digit:2digits Idx="1"]　です▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]さまの　げんざいの　ランクは
+[Digit:2digits Idx="1" ]　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -2527,8 +2527,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さまの　現在の　ランクは
-[Digit:2digits Idx="1"]　です▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]さまの　現在の　ランクは
+[Digit:2digits Idx="1" ]　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -2661,7 +2661,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ランク[Digit:2digits Idx="0"]　トレインナンバー[Digit:3digits Idx="1"]の
+			<Text>ランク[Digit:2digits Idx="0" ]　トレインナンバー[Digit:3digits Idx="1" ]の
 れきだいの　きろくを　うけとりました▼
 おもてに　せっちされた
 せいせきモニターで▽
@@ -2676,7 +2676,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ランク[Digit:2digits Idx="0"]　トレインナンバー[Digit:3digits Idx="1"]の
+			<Text>ランク[Digit:2digits Idx="0" ]　トレインナンバー[Digit:3digits Idx="1" ]の
 歴代の　記録を　受け取りました▼
 表に　設置された
 成績モニターで　ご確認ください▼</Text>
@@ -2762,7 +2762,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おともだちと　おなじ
-[Name:PokemonName Idx="0"]を　えらんで　います！▼
+[Name:PokemonName Idx="0" ]を　えらんで　います！▼
 おともだちと　そうだん　してから
 また　おこし　ください▼</Text>
 			<TextModifiedBy
@@ -2776,7 +2776,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お友達と　同じ
-[Name:PokemonName Idx="0"]を　選んでいます！▼
+[Name:PokemonName Idx="0" ]を　選んでいます！▼
 お友達と　相談してから
 また　お越しください▼</Text>
 			<TextModifiedBy
@@ -2807,8 +2807,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おともだちと　おなじ　[Name:PokemonName Idx="0"]や
-[Name:PokemonName Idx="1"]を　えらんで　います！▼
+			<Text>おともだちと　おなじ　[Name:PokemonName Idx="0" ]や
+[Name:PokemonName Idx="1" ]を　えらんで　います！▼
 おともだちと　そうだん　してから
 また　おこし　ください▼</Text>
 			<TextModifiedBy
@@ -2821,8 +2821,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お友達と　同じ　[Name:PokemonName Idx="0"]や
-[Name:PokemonName Idx="1"]を　選んでいます！▼
+			<Text>お友達と　同じ　[Name:PokemonName Idx="0" ]や
+[Name:PokemonName Idx="1" ]を　選んでいます！▼
 お友達と　相談してから
 また　お越しください▼</Text>
 			<TextModifiedBy
@@ -3004,7 +3004,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　[Name:TrainerName Idx="0"]ちゃん！
+			<Text>こんにちは！　[Name:TrainerName Idx="0" ]ちゃん！
 また　あったね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3016,7 +3016,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　[Name:TrainerName Idx="0"]ちゃん！
+			<Text>こんにちは！　[Name:TrainerName Idx="0" ]ちゃん！
 また　会ったね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3055,7 +3055,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　[Name:TrainerName Idx="0"]くん！
+			<Text>こんにちは！　[Name:TrainerName Idx="0" ]くん！
 また　あったわね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3067,7 +3067,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　[Name:TrainerName Idx="0"]くん！
+			<Text>こんにちは！　[Name:TrainerName Idx="0" ]くん！
 また　会ったわね！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3903,7 +3903,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ざんねんながら　こんかい　ランクが
-[Digit:2digits Idx="0"]に　さがって　しまいました……▼</Text>
+[Digit:2digits Idx="0" ]に　さがって　しまいました……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -3915,7 +3915,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>残念ながら　今回　ランクが
-[Digit:2digits Idx="0"]に　さがって　しまいました……▼</Text>
+[Digit:2digits Idx="0" ]に　さがって　しまいました……▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -4730,9 +4730,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　[Name:TrainerName Idx="0"]さまは
+			<Text>げんざい　[Name:TrainerName Idx="0" ]さまは
 トレーナーとマルチ　が▽
-[Digit:4digits Idx="1"]れんしょうちゅう　です▼</Text>
+[Digit:4digits Idx="1" ]れんしょうちゅう　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -4743,9 +4743,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>現在　[Name:TrainerName Idx="0"]さまは
+			<Text>現在　[Name:TrainerName Idx="0" ]さまは
 トレーナーとマルチ　が▽
-[Digit:4digits Idx="1"]連勝中です▼</Text>
+[Digit:4digits Idx="1" ]連勝中です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -4774,9 +4774,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　[Name:TrainerName Idx="0"]さまは
+			<Text>げんざい　[Name:TrainerName Idx="0" ]さまは
 ともだちとマルチ　が▽
-[Digit:4digits Idx="1"]れんしょうちゅう　です▼</Text>
+[Digit:4digits Idx="1" ]れんしょうちゅう　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -4787,9 +4787,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>現在　[Name:TrainerName Idx="0"]さまは
+			<Text>現在　[Name:TrainerName Idx="0" ]さまは
 友達とマルチ　が▽
-[Digit:4digits Idx="1"]連勝中です▼</Text>
+[Digit:4digits Idx="1" ]連勝中です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -4818,11 +4818,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げんざい　[Name:TrainerName Idx="0"]さまは
+			<Text>げんざい　[Name:TrainerName Idx="0" ]さまは
 トレーナーとマルチ　が▽
-[Digit:4digits Idx="1"]れんしょうちゅう　です▼
+[Digit:4digits Idx="1" ]れんしょうちゅう　です▼
 ともだちとマルチ　が
-[Digit:4digits Idx="2"]れんしょうちゅう　です▼</Text>
+[Digit:4digits Idx="2" ]れんしょうちゅう　です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
@@ -4833,11 +4833,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>現在　[Name:TrainerName Idx="0"]さまは
+			<Text>現在　[Name:TrainerName Idx="0" ]さまは
 トレーナーとマルチ　が▽
-[Digit:4digits Idx="1"]連勝中です▼
+[Digit:4digits Idx="1" ]連勝中です▼
 友達とマルチ　が
-[Digit:4digits Idx="2"]連勝中です▼</Text>
+[Digit:4digits Idx="2" ]連勝中です▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />

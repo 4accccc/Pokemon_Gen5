@@ -857,7 +857,7 @@
 			Language="JPN">
 			<Text>この　いちばん　えがおが　まぶしい
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　もってまーす！
+[Name:Item Idx="0" ]を　もってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -871,7 +871,7 @@
 			Language="JPN_KANJI">
 			<Text>この　一番　笑顔が　まぶしい
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　持ってまーす！
+[Name:Item Idx="0" ]を　持ってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -920,7 +920,7 @@
 			Language="JPN">
 			<Text>この　いちばん　えくぼが　キュートな
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　もってまーす！
+[Name:Item Idx="0" ]を　もってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -934,7 +934,7 @@
 			Language="JPN_KANJI">
 			<Text>この　一番　えくぼが　キュートな
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　持ってまーす！
+[Name:Item Idx="0" ]を　持ってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -983,7 +983,7 @@
 			Language="JPN">
 			<Text>この　いちばん　オシャレな　マユゲの
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　もってまーす！
+[Name:Item Idx="0" ]を　もってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -997,7 +997,7 @@
 			Language="JPN_KANJI">
 			<Text>この　一番　オシャレな　マユゲの
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　持ってまーす！
+[Name:Item Idx="0" ]を　持ってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1046,7 +1046,7 @@
 			Language="JPN">
 			<Text>この　いちばん　おなかが　おおきい
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　もってまーす！
+[Name:Item Idx="0" ]を　もってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1060,7 +1060,7 @@
 			Language="JPN_KANJI">
 			<Text>この　一番　お腹が　大きい
 ミネズミちゃん　でーす！▼
-[Name:Item Idx="0"]を　持ってまーす！
+[Name:Item Idx="0" ]を　持ってまーす！
 では　スタートッ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1165,7 +1165,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その　ミネズミちゃんが
-[Name:Item Idx="0"]を　もっているのね？</Text>
+[Name:Item Idx="0" ]を　もっているのね？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1177,7 +1177,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　ミネズミちゃんが
-[Name:Item Idx="0"]を　持っているのね？</Text>
+[Name:Item Idx="0" ]を　持っているのね？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -1231,7 +1231,7 @@
 ………………▽
 ……………………▽
 おおあたりー！▼
-けいひんの　[Name:Item Idx="0"]は
+けいひんの　[Name:Item Idx="0" ]は
 ミネズミちゃんから　もらえまーす！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1249,7 +1249,7 @@
 ………………▽
 ……………………▽
 大当たりー！▼
-景品の　[Name:Item Idx="0"]は
+景品の　[Name:Item Idx="0" ]は
 ミネズミちゃんから　もらえまーす！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1673,7 +1673,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　コイキングを
+			<Text>[Name:TrainerName Idx="0" ]は　コイキングを
 ５００円も　だして　かった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1685,7 +1685,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　コイキングを
+			<Text>[Name:TrainerName Idx="0" ]は　コイキングを
 ５００円も　だして　買った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

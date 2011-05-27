@@ -461,7 +461,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ライブキャスターを　つなげた▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -473,7 +473,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ライブキャスターを　つなげた▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -643,7 +643,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『プラズマだん　ふっかつ？▼
+			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　ふっかつ？▼
 ポケモンを　すくう　といいつつ
 ただの　ポケモンどろぼう　だった▽
 おまえらだ！　どうせ　ここでも▽
@@ -658,7 +658,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『プラズマ団　復活？▼
+			<Text>[Name:TrainerName Idx="1" ]『プラズマ団　復活？▼
 ポケモンを　救う　といいつつ
 ただの　ポケモンどろぼう　だった▽
 おまえらだ！　どうせ　ここでも▽
@@ -893,7 +893,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『ボコボコに　されるのは
+			<Text>[Name:TrainerName Idx="1" ]『ボコボコに　されるのは
 オマエたち　だけどな！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -905,7 +905,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『ボコボコに　されるのは
+			<Text>[Name:TrainerName Idx="1" ]『ボコボコに　されるのは
 オマエたち　だけどな！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -952,7 +952,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『[Name:TrainerName Idx="0"]！
+			<Text>ホミカ『[Name:TrainerName Idx="0" ]！
 あんたも　おてつだい！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -964,7 +964,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『[Name:TrainerName Idx="0"]！
+			<Text>ホミカ『[Name:TrainerName Idx="0" ]！
 あんたも　おてつだい！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1012,7 +1012,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『それぞれ
+			<Text>[Name:TrainerName Idx="1" ]『それぞれ
 ひとりずつ　あいて　するぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1024,7 +1024,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『それぞれ
+			<Text>[Name:TrainerName Idx="1" ]『それぞれ
 ひとりずつ　相手するぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1314,7 +1314,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『あいつら！　にげるための
+			<Text>[Name:TrainerName Idx="1" ]『あいつら！　にげるための
 ふねを　ようい　してたのか▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1326,7 +1326,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『あいつら！
+			<Text>[Name:TrainerName Idx="1" ]『あいつら！
 逃走用の　船を　用意してたのか▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1503,7 +1503,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『それ……
+			<Text>[Name:TrainerName Idx="1" ]『それ……
 ひでんマシン　だな▼
 しかも　なかみは　いあいぎり！
 それを　おぼえた　ポケモンは▼
@@ -1521,7 +1521,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『それ……
+			<Text>[Name:TrainerName Idx="1" ]『それ……
 ひでんマシン　だな▼
 しかも　中は　いあいぎり！
 いあいぎりを　覚えた　ポケモンは▼

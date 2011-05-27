@@ -1547,7 +1547,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『[Name:TrainerName Idx="0"]の　おかげで
+			<Text>アララギ『[Name:TrainerName Idx="0" ]の　おかげで
 あくじを　はたらいた　れんちゅうは[Ctrl2:LineFeed ]
 ごそっと　とらえられたわよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1560,7 +1560,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『[Name:TrainerName Idx="0"]の　おかげで
+			<Text>アララギ『[Name:TrainerName Idx="0" ]の　おかげで
 悪事を　働いた　連中は[Ctrl2:LineFeed ]
 ごそっと　捕らえられたわよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -1625,7 +1625,7 @@
 たすけようとしたに　ちがいないわ▼
 へやに　とじこめるって　やりかたは
 まちがっていたけど　ね▼
-ビクティニは　[Name:TrainerName Idx="0"]の　おかげで
+ビクティニは　[Name:TrainerName Idx="0" ]の　おかげで
 プラズマだんの　あくじに▽
 りようされることもなく▽
 あたらしい　うんめいを　てにいれた▼
@@ -1659,7 +1659,7 @@
 助けようとしたに　ちがいないわ▼
 部屋に　閉じこめるって　やりかたは
 間違っていたけど　ね▼
-ビクティニは　[Name:TrainerName Idx="0"]の　おかげで
+ビクティニは　[Name:TrainerName Idx="0" ]の　おかげで
 プラズマ団の　悪事に▽
 利用されることもなく▽
 新しい　運命を　手に入れた▼

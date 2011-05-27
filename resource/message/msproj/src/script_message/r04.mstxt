@@ -772,7 +772,7 @@
 なまえを　きいていませんでしたね▼
 ……　……　……
 ……　……　……▼
-[Name:TrainerName Idx="0"]さん　ですか
+[Name:TrainerName Idx="0" ]さん　ですか
 その　なまえ　おぼえておきます！▼
 さて　ヒウンシティでの
 やくそくどおり　ポケモンしょうぶを▼
@@ -792,7 +792,7 @@
 名前を　きいていませんでしたね▼
 ……　……　……
 ……　……　……▼
-[Name:TrainerName Idx="0"]さん　ですか
+[Name:TrainerName Idx="0" ]さん　ですか
 その名前　おぼえておきます！▼
 さて　ヒウンシティでの
 約束どおり　ポケモン勝負を▼
@@ -836,7 +836,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレンは
-[Name:TrainerName Idx="0"]の　ポケモンを▽
+[Name:TrainerName Idx="0" ]の　ポケモンを▽
 かいふく　してくれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -849,7 +849,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレンは
-[Name:TrainerName Idx="0"]の　ポケモンを▽
+[Name:TrainerName Idx="0" ]の　ポケモンを▽
 回復してくれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -881,7 +881,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは　[Name:TrainerName Idx="0"]さん
+			<Text>それでは　[Name:TrainerName Idx="0" ]さん
 ぜんりょくで　いきます！▼
 あっ　ごあんしんを▼
 さきほどのように　そうちで
@@ -898,7 +898,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは　[Name:TrainerName Idx="0"]さん
+			<Text>それでは　[Name:TrainerName Idx="0" ]さん
 全力で　いきます！▼
 あっ　ご安心を▼
 さきほどのように　装置で
@@ -1021,7 +1021,7 @@
 かいわ　できれば　いいのですがね！▼
 ……そのような　にんげんが
 せかいに　いる　わけが　ない！▼
-それでは　[Name:TrainerName Idx="0"]
+それでは　[Name:TrainerName Idx="0" ]
 また　あいましょう▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1039,7 +1039,7 @@
 会話できれば　いいのですがね！▼
 ……そのような　人間が
 世界に　いる　わけが　ない！▼
-それでは　[Name:TrainerName Idx="0"]
+それでは　[Name:TrainerName Idx="0" ]
 また　会いましょう▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

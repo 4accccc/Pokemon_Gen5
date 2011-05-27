@@ -634,7 +634,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>の　[Digit:1digit Idx="0"]かしょ　ですね！▼
+			<Text>の　[Digit:1digit Idx="0" ]かしょ　ですね！▼
 では　めぐって　めぐって
 ライモンラリー！　レッツ　ゴー！</Text>
 			<TextModifiedBy
@@ -647,7 +647,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>の　[Digit:1digit Idx="0"]カ所　ですね！▼
+			<Text>の　[Digit:1digit Idx="0" ]カ所　ですね！▼
 では　巡って　巡って
 ライモンラリー！　レッツ　ゴー！</Text>
 			<TextModifiedBy

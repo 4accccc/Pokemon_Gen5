@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『ハーイ！
-[Name:TrainerName Idx="0"]！！▼
+[Name:TrainerName Idx="0" ]！！▼
 ポケモンと　ともに　みちをゆく！
 これが　トレーナーの　よろこびだよね▼
 ということで！　トレーナーにとって
@@ -24,7 +24,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『ハーイ！
-[Name:TrainerName Idx="0"]！！▼
+[Name:TrainerName Idx="0" ]！！▼
 ポケモンと　ともに　道を行く！
 これが　トレーナーの　喜びだよね▼
 ということで！　トレーナーにとって
@@ -494,7 +494,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 こっちに　きなよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -506,7 +506,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 こっちに　来なよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1430,8 +1430,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『[Ctrl2:CtrlSpeed mode="1"]キミの　ポケモン▼
-いま　はなしていたよね……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>？？？『[Ctrl2:CtrlSpeed mode="1" ]キミの　ポケモン▼
+いま　はなしていたよね……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1442,8 +1442,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『[Ctrl2:CtrlSpeed mode="1"]キミの　ポケモン▼
-今　話していたよね……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>？？？『[Ctrl2:CtrlSpeed mode="1" ]キミの　ポケモン▼
+今　話していたよね……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1552,11 +1552,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『[Ctrl2:CtrlSpeed mode="1"]ああ　はなしているよ▼
+			<Text>？？？『[Ctrl2:CtrlSpeed mode="1" ]ああ　はなしているよ▼
 そうか
 キミたちにも　きこえないのか……▽
 かわいそうに……▼
-ボクの　なまえは　Ｎ（エヌ）[Ctrl2:CtrlSpeed mode="1"]▼</Text>
+ボクの　なまえは　Ｎ（エヌ）[Ctrl2:CtrlSpeed mode="1" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1567,11 +1567,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『[Ctrl2:CtrlSpeed mode="1"]ああ　話しているよ▼
+			<Text>？？？『[Ctrl2:CtrlSpeed mode="1" ]ああ　話しているよ▼
 そうか
 キミたちにも　聞こえないのか……▽
 かわいそうに▼
-ボクの　名前は　Ｎ（エヌ）[Ctrl2:CtrlSpeed mode="1"]▼</Text>
+ボクの　名前は　Ｎ（エヌ）[Ctrl2:CtrlSpeed mode="1" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1616,7 +1616,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『……ぼくは　チェレン
-こちらは　[Name:TrainerName Idx="0"]▼
+こちらは　[Name:TrainerName Idx="0" ]▼
 たのまれて　ポケモンずかんを
 かんせい　させるための▽
 たびに　でたところ▼
@@ -1633,7 +1633,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『……ぼくは　チェレン
-こちらは　[Name:TrainerName Idx="0"]▼
+こちらは　[Name:TrainerName Idx="0" ]▼
 頼まれて　ポケモン図鑑を
 完成させるための▽
 旅に　でたところ▼
@@ -1682,13 +1682,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ポケモンずかん　ね……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ポケモンずかん　ね……▼
 そのために　かずおおくの　ポケモンを
 モンスターボールに　とじこめるんだ▼
 ボクも　トレーナーだが
 いつも　ぎもんに　おもう▼
 ポケモンは
-それで　シアワセなのか　って[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+それで　シアワセなのか　って[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1699,13 +1699,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ポケモン図鑑ね……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ポケモン図鑑ね……▼
 そのために　幾多の　ポケモンを
 モンスターボールに　閉じ込めるんだ▼
 ボクも　トレーナーだが
 いつも　疑問で　しかたない▼
 ポケモンは
-それで　シアワセなのか　って[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+それで　シアワセなのか　って[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1750,9 +1750,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]そうだね　[Name:TrainerName Idx="0"]だったか▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そうだね　[Name:TrainerName Idx="0" ]だったか▼
 キミの　ポケモンの　こえを
-もっと　きかせてもらおう！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+もっと　きかせてもらおう！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1763,9 +1763,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]そうだね　[Name:TrainerName Idx="0"]だったか▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]そうだね　[Name:TrainerName Idx="0" ]だったか▼
 キミの　ポケモンの　声を
-もっと　聴かせてもらおう！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+もっと　聴かせてもらおう！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1810,13 +1810,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]モンスターボールに
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]モンスターボールに
 とじこめられている　かぎり……▼
 ポケモンは　かんぜんな
 そんざいには　なれない▼
 ボクは　ポケモンという
 トモダチの　ため▽
-せかいを　かえねば　ならない[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+せかいを　かえねば　ならない[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -1827,13 +1827,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]モンスターボールに
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]モンスターボールに
 閉じ込められている　かぎり……▼
 ポケモンは　完全な
 存在には　なれない▼
 ボクは　ポケモンという
 トモダチの　ため▽
-世界を　変えねば　ならない[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+世界を　変えねば　ならない[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />

@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="2"]Ｆ　[Name:Location Idx="0"]
+			<Text>[Digit:3digits Idx="2" ]Ｆ　[Name:Location Idx="0" ]
 の　フロアですよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,7 +18,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="2"]Ｆ　[Name:Location Idx="0"]
+			<Text>[Digit:3digits Idx="2" ]Ｆ　[Name:Location Idx="0" ]
 の　フロアですよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56,7 +56,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="2"]Ｆ　[Name:Location Idx="0"]
+			<Text>[Digit:3digits Idx="2" ]Ｆ　[Name:Location Idx="0" ]
 の　フロアです▼
 おきゃくさんは　もう　かえられましたよ</Text>
 			<TextModifiedBy
@@ -69,7 +69,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="2"]Ｆ　[Name:Location Idx="0"]
+			<Text>[Digit:3digits Idx="2" ]Ｆ　[Name:Location Idx="0" ]
 の　フロアです▼
 お客さんは　もう　帰られましたよ</Text>
 			<TextModifiedBy
@@ -108,13 +108,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『やあ　[Name:TrainerName Idx="3"]！
+			<Text>？？？『やあ　[Name:TrainerName Idx="3" ]！
 ぼくのこと　おぼえてる？▼
-[Name:Location Idx="0"] の
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]だよ！▼
-[Name:PokemonNickname Idx="9"]は　げんき？
-きみが　くれた　[Name:PokemonNickname Idx="5"]は▽
+[Name:Location Idx="0" ] の
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]だよ！▼
+[Name:PokemonNickname Idx="9" ]は　げんき？
+きみが　くれた　[Name:PokemonNickname Idx="5" ]は▽
 とっても　げんきだよ▼
 よかったら　また
 ポケモン　こうかん　しようよ！</Text>
@@ -128,13 +128,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『やあ　[Name:TrainerName Idx="3"]！
+			<Text>？？？『やあ　[Name:TrainerName Idx="3" ]！
 僕のこと　覚えてる？▼
-[Name:Location Idx="0"] の
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]だよ！▼
-[Name:PokemonNickname Idx="9"]は　元気？
-君が　くれた　[Name:PokemonNickname Idx="5"]は▽
+[Name:Location Idx="0" ] の
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]だよ！▼
+[Name:PokemonNickname Idx="9" ]は　元気？
+君が　くれた　[Name:PokemonNickname Idx="5" ]は▽
 とっても　元気だよ▼
 よかったら　また　
 ポケモン　交換しようよ！</Text>
@@ -182,11 +182,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼくは
-しゅみとして　[Name:Hobby Idx="10"]　するのが▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼくは
+しゅみとして　[Name:Hobby Idx="10" ]　するのが▽
 すきなんだけど▽
 きみは　なにを　するのが　すき？▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとと
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモンを　こうかん　したよ▼
 こうかんを　すると
 せかいと　つながっている▽
@@ -201,11 +201,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『僕は
-趣味として　[Name:Hobby Idx="10"]　するのが▽
+			<Text>[Name:TrainerName Idx="7" ]『僕は
+趣味として　[Name:Hobby Idx="10" ]　するのが▽
 好きなんだけど▽
 君は　何をするのが　好き？▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人と
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモンを　交換したよ▼
 交換を　すると
 世界と　つながっている▽
@@ -253,15 +253,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]！▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとと
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]！▼
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモンを　こうかん　したよ！▼
 いろんな　とこと　こうかんしてみると
 せかいじゅうで　しゅみが▽
 ちがうことが　わかるね▼
 ……ん？　ぼくの　しゅみ？▼
-[Name:Hobby Idx="10"]　だよ！▼
-[Name:Area Idx="1"]に
+[Name:Hobby Idx="10" ]　だよ！▼
+[Name:Area Idx="1" ]に
 いつか　きてみてよ▽
 きっと　たのしいからさ！</Text>
 			<TextModifiedBy
@@ -274,15 +274,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]！▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人と
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]！▼
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモンを　交換したよ！▼
 いろんな　とこと　交換してみると
 世界中で　趣味が▽
 違うことが　わかるね▼
 ……ん？　僕の　趣味？
-[Name:Hobby Idx="10"]　だよ！▼
-[Name:Area Idx="1"]に
+[Name:Hobby Idx="10" ]　だよ！▼
+[Name:Area Idx="1" ]に
 いつか　きてみてよ▽
 きっと　楽しいからさ！</Text>
 			<TextModifiedBy
@@ -328,18 +328,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]▼
 きみは　なんかしょの　ひとと
 ポケモンを　こうかん　した？▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　したよ▼
 いつか　じっさいに
 いろんな　ところに　いってみたいなぁ▼
 よかったら　きみも　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみてよね▽
 そして　いっしょに▽
-[Name:Hobby Idx="10"]　しようよ！</Text>
+[Name:Hobby Idx="10" ]　しようよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -350,17 +350,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]▼
 君は　何ヶ所の　人と
 ポケモンを　交換した？▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人達と
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換したよ▼
 いつか　実際に
 いろんな所に　行ってみたいなぁ▼
 よかったら　君も　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみてよね▽
-そして　一緒に　[Name:Hobby Idx="10"]　しようよ！</Text>
+そして　一緒に　[Name:Hobby Idx="10" ]　しようよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -403,15 +403,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きいてくれよ　[Name:TrainerName Idx="3"]！▼
-ぼく　さいきん　[Name:Hobby Idx="10"]　するのに
+			<Text>[Name:TrainerName Idx="7" ]『きいてくれよ　[Name:TrainerName Idx="3" ]！▼
+ぼく　さいきん　[Name:Hobby Idx="10" ]　するのに
 はまっているんだ▼
-でね　ぼく　[Digit:3digits Idx="8"]かしょの　ひとと
+でね　ぼく　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモン　こうかん　したんだけど▽
-[Name:Hobby Idx="10"]ずきの　ひとって▽
+[Name:Hobby Idx="10" ]ずきの　ひとって▽
 けっこう　いるみたいなんだよね！▼
-[Name:TrainerName Idx="3"]が　いつか　ぼくのすむ
-[Name:Area Idx="1"]に▽
+[Name:TrainerName Idx="3" ]が　いつか　ぼくのすむ
+[Name:Area Idx="1" ]に▽
 くることが　あったら▽
 いっしょに　あそぼうよ！　きっとだよ！</Text>
 			<TextModifiedBy
@@ -424,15 +424,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『聞いてくれよ　[Name:TrainerName Idx="3"]！▼
-僕　最近　[Name:Hobby Idx="10"]　するのに
+			<Text>[Name:TrainerName Idx="7" ]『聞いてくれよ　[Name:TrainerName Idx="3" ]！▼
+僕　最近　[Name:Hobby Idx="10" ]　するのに
 はまっているんだ▼
-でね　僕　[Digit:3digits Idx="8"]ヶ所の　人と
+でね　僕　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモン　交換したんだけど▽
-[Name:Hobby Idx="10"]好きの　人って▽
+[Name:Hobby Idx="10" ]好きの　人って▽
 結構　いるみたいなんだよね！▼
-[Name:TrainerName Idx="3"]が　いつか　僕の住む
-[Name:Area Idx="1"]に▽
+[Name:TrainerName Idx="3" ]が　いつか　僕の住む
+[Name:Area Idx="1" ]に▽
 くることが　あったら▽
 一緒に　遊ぼうよ！　きっとだよ！</Text>
 			<TextModifiedBy
@@ -477,17 +477,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『むかし　[Name:PokemonNickname Idx="9"]が
-[Name:Area Idx="1"]に▽
+			<Text>[Name:TrainerName Idx="7" ]『むかし　[Name:PokemonNickname Idx="9" ]が
+[Name:Area Idx="1" ]に▽
 いたときは　よく　いっしょに▽
-[Name:Hobby Idx="10"]　していたんだ▼
-[Name:TrainerName Idx="3"]も　よかったら
-いっしょに　[Name:Hobby Idx="10"]　してあげてよ▽
+[Name:Hobby Idx="10" ]　していたんだ▼
+[Name:TrainerName Idx="3" ]も　よかったら
+いっしょに　[Name:Hobby Idx="10" ]　してあげてよ▽
 きっと　よろこぶからさ！▼
 ……ところで　きみは
 いろんな　ところの　ひとと▽
 ポケモン　こうかん　してる？▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとと
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとと
 こうかん　したよ▽
 よかったら　また　こうかん　しようね</Text>
 			<TextModifiedBy
@@ -500,17 +500,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『昔　[Name:PokemonNickname Idx="9"]が
-[Name:Area Idx="1"]に▽
+			<Text>[Name:TrainerName Idx="7" ]『昔　[Name:PokemonNickname Idx="9" ]が
+[Name:Area Idx="1" ]に▽
 いた時は　よく　一緒に▽
-[Name:Hobby Idx="10"]　していたんだ▼
-[Name:TrainerName Idx="3"]も　よかったら
-一緒に　[Name:Hobby Idx="10"]　してあげてよ▽
+[Name:Hobby Idx="10" ]　していたんだ▼
+[Name:TrainerName Idx="3" ]も　よかったら
+一緒に　[Name:Hobby Idx="10" ]　してあげてよ▽
 きっと　喜ぶからさ！▼
 ……ところで　君は
 いろんな所の　人と▽
 ポケモン　交換してる？▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人と
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人と
 交換したよ▽
 よかったら　また　交換しようね</Text>
 			<TextModifiedBy
@@ -555,18 +555,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『あ　[Name:TrainerName Idx="3"]？▼
-[Name:TrainerName Idx="3"]よね？▼
+			<Text>？？？『あ　[Name:TrainerName Idx="3" ]？▼
+[Name:TrainerName Idx="3" ]よね？▼
 ひさしぶり！▼
-[Name:Location Idx="0"]の
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]よ　おぼえてる？▼
-この　あいだは　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]の
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]よ　おぼえてる？▼
+この　あいだは　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう！▽
 とっても　げんきに　してるわよ▼
 わたしが　あげた
-[Name:PokemonNickname Idx="9"]は　げんき？▼
-って　きっと　[Name:TrainerName Idx="3"]と
+[Name:PokemonNickname Idx="9" ]は　げんき？▼
+って　きっと　[Name:TrainerName Idx="3" ]と
 いっしょなら　しんぱいむようね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -578,18 +578,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『あ　[Name:TrainerName Idx="3"]？▼
-[Name:TrainerName Idx="3"]よね？▼
+			<Text>？？？『あ　[Name:TrainerName Idx="3" ]？▼
+[Name:TrainerName Idx="3" ]よね？▼
 久しぶり！▼
-[Name:Location Idx="0"]の
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]よ　覚えてる？▼
-この間は　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]の
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]よ　覚えてる？▼
+この間は　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう！▽
 とっても　元気に　してるわよ▼
 私が　あげた
-[Name:PokemonNickname Idx="9"]は　元気？▼
-って　きっと　[Name:TrainerName Idx="3"]と
+[Name:PokemonNickname Idx="9" ]は　元気？▼
+って　きっと　[Name:TrainerName Idx="3" ]と
 一緒なら　心配無用ね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -626,11 +626,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わたし
-いまのところ　[Digit:3digits Idx="8"]かしょの▽
+			<Text>[Name:TrainerName Idx="7" ]『わたし
+いまのところ　[Digit:3digits Idx="8" ]かしょの▽
 ひとたちと　こうかん　してるんだけど▼
 すむ　ばしょが　ちがっても
-おなじ　[Name:Hobby Idx="10"]ずきって▽
+おなじ　[Name:Hobby Idx="10" ]ずきって▽
 いるみたいなのよね▼
 ふふっ
 うみの　むこうがわの　ひとと▽
@@ -646,11 +646,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『私
-今のところ　[Digit:3digits Idx="8"]ヶ所の▽
+			<Text>[Name:TrainerName Idx="7" ]『私
+今のところ　[Digit:3digits Idx="8" ]ヶ所の▽
 人達と　交換してるんだけど▼
 住む　場所が　違っても
-同じ　[Name:Hobby Idx="10"]好きって▽
+同じ　[Name:Hobby Idx="10" ]好きって▽
 いるみたいなのよね▼
 ふふっ
 海の　むこう側の　人と▽
@@ -691,13 +691,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねえ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねえ　[Name:TrainerName Idx="3" ]は
 わたしが　すんでいる▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことは　ある？▼
-もし　[Name:TrainerName Idx="3"]が
+もし　[Name:TrainerName Idx="3" ]が
 くることが　あったら▽
-いっしょに　[Name:Hobby Idx="10"]▽
+いっしょに　[Name:Hobby Idx="10" ]▽
 たのしみましょうよ！▽
 きっと　たのしいわ！</Text>
 			<TextModifiedBy
@@ -710,13 +710,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねえ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねえ　[Name:TrainerName Idx="3" ]は
 私が　住んでいる▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことは　ある？▼
-もし　[Name:TrainerName Idx="3"]が
+もし　[Name:TrainerName Idx="3" ]が
 くることが　あったら▽
-一緒に　[Name:Hobby Idx="10"]▽
+一緒に　[Name:Hobby Idx="10" ]▽
 楽しみましょうよ！▽
 きっと　楽しいわ！</Text>
 			<TextModifiedBy
@@ -754,17 +754,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]は
 いろんな　ばしょの　ひとと▽
 ポケモン　こうかん　した？▼
-わたし　[Digit:3digits Idx="8"]かしょの　ひとと
+わたし　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモン　こうかんしたんだけど▽
 わたしと　おなじ▽
-[Name:Hobby Idx="10"]ずきも　いたんだよ！▼
+[Name:Hobby Idx="10" ]ずきも　いたんだよ！▼
 くにとか　ちがっても
 しゅみが　いっしょって▽
 なんか　うれしかったな▼
-[Name:TrainerName Idx="3"]も　おなじ　しゅみの
+[Name:TrainerName Idx="3" ]も　おなじ　しゅみの
 ひとと　であえると　いいね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -776,17 +776,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]は
 いろんな　場所の　人と▽
 ポケモン　交換した？▼
-私　[Digit:3digits Idx="8"]ヶ所の　人と
+私　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモン　交換したんだけど▽
 私と　同じ▽
-[Name:Hobby Idx="10"]好きも　いたんだよ！▼
+[Name:Hobby Idx="10" ]好きも　いたんだよ！▼
 国とか　違っても
 趣味が　一緒って▽
 なんか　うれしかったな▼
-[Name:TrainerName Idx="3"]も　同じ　趣味の
+[Name:TrainerName Idx="3" ]も　同じ　趣味の
 人と　出会えると　いいね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -823,13 +823,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]の
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]の
 しゅみは　なに？▼
-わたしは　[Name:Hobby Idx="10"]　するのが
+わたしは　[Name:Hobby Idx="10" ]　するのが
 すきなんだけど▼
 せかいじゅうの　ひとたちは
 なにを　するのが　すきなのかな？▼
-わたしは　[Digit:3digits Idx="8"]かしょの　ひとと
+わたしは　[Digit:3digits Idx="8" ]かしょの　ひとと
 こうかん　したんだけど▼
 もっともっと　こうかん　して
 いろんなひとの　しゅみを　しりたいな</Text>
@@ -843,13 +843,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]の
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]の
 趣味は　なに？▼
-私は　[Name:Hobby Idx="10"]　するのが
+私は　[Name:Hobby Idx="10" ]　するのが
 好きなんだけど▼
 世界中の　人達は
 何を　するのが　好きなのかな？▼
-私は　[Digit:3digits Idx="8"]ヶ所の　人と
+私は　[Digit:3digits Idx="8" ]ヶ所の　人と
 交換したんだけど▼
 もっともっと　交換して
 いろんな人の　趣味を　知りたいな</Text>
@@ -888,13 +888,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わたしの　しゅみ？
-[Name:Hobby Idx="10"]だよ▼
-わたし　[Digit:3digits Idx="8"]かしょの　ひとと
+			<Text>[Name:TrainerName Idx="7" ]『わたしの　しゅみ？
+[Name:Hobby Idx="10" ]だよ▼
+わたし　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモン　こうかんしたんだけど▼
 けっこう　しゅみって
 ひとによって　ちがうみたい▼
-[Name:TrainerName Idx="3"]は
+[Name:TrainerName Idx="3" ]は
 いろんな　ばしょの　ひとと▽
 ポケモン　こうかん　した？▼
 しゅみって　すむところに　よって
@@ -909,13 +909,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『私の　趣味？
-[Name:Hobby Idx="10"]だよ▼
-私　[Digit:3digits Idx="8"]ヶ所の　人と
+			<Text>[Name:TrainerName Idx="7" ]『私の　趣味？
+[Name:Hobby Idx="10" ]だよ▼
+私　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモン　交換したんだけど▼
 結構　趣味って
 人によって　違うみたい▼
-[Name:TrainerName Idx="3"]は
+[Name:TrainerName Idx="3" ]は
 いろんな　場所の　人と▽
 ポケモン　交換した？▼
 趣味って　住むところに　よって
@@ -955,14 +955,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『よお　[Name:TrainerName Idx="3"]！
+			<Text>？？？『よお　[Name:TrainerName Idx="3" ]！
 オレの　こと　おぼえてるよな！▼
-[Name:TrainerName Idx="7"]だよ▼
+[Name:TrainerName Idx="7" ]だよ▼
 ホラ
-[Name:Location Idx="0"]の▽
-[Name:Area Idx="1"]▽
-から　きた　[Name:TrainerName Idx="7"]！▼
-こないだは　[Name:PokemonNickname Idx="5"]　サンキューな
+[Name:Location Idx="0" ]の▽
+[Name:Area Idx="1" ]▽
+から　きた　[Name:TrainerName Idx="7" ]！▼
+こないだは　[Name:PokemonNickname Idx="5" ]　サンキューな
 すっげー　きにいってる！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -974,14 +974,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『よお　[Name:TrainerName Idx="3"]！
+			<Text>？？？『よお　[Name:TrainerName Idx="3" ]！
 オレの　こと　覚えてるよな！▼
-[Name:TrainerName Idx="7"]だよ▼
+[Name:TrainerName Idx="7" ]だよ▼
 ホラ
-[Name:Location Idx="0"]の▽
-[Name:Area Idx="1"]▽
-から　きた　[Name:TrainerName Idx="7"]！▼
-こないだは　[Name:PokemonNickname Idx="5"]　サンキューな
+[Name:Location Idx="0" ]の▽
+[Name:Area Idx="1" ]▽
+から　きた　[Name:TrainerName Idx="7" ]！▼
+こないだは　[Name:PokemonNickname Idx="5" ]　サンキューな
 すっげー　気に入ってる！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1025,13 +1025,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『よぉ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『よぉ　[Name:TrainerName Idx="3" ]！▼
 おまえ　いろんな　ばしょの　やつらと
 ポケモン　こうかん　してる？▼
-オレは　もう　[Digit:3digits Idx="8"]かしょの
+オレは　もう　[Digit:3digits Idx="8" ]かしょの
 やつらと　こうかん　したぜ！▼
 なかには　オレと　おなじ
-[Name:Hobby Idx="10"]ずきの　やつも　いたよ▼
+[Name:Hobby Idx="10" ]ずきの　やつも　いたよ▼
 べつの　ばしょで　そだったのに
 しゅみが　おなじって▽
 なんか　すげーよな！</Text>
@@ -1045,13 +1045,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『よぉ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『よぉ　[Name:TrainerName Idx="3" ]！▼
 おまえ　いろんな　場所の　やつらと
 ポケモン　交換してる？▼
-オレは　もう　[Digit:3digits Idx="8"]ヶ所の
+オレは　もう　[Digit:3digits Idx="8" ]ヶ所の
 やつらと　交換したぜ！▼
 中には　オレと　同じ
-[Name:Hobby Idx="10"]好きの　やつも　いたよ▼
+[Name:Hobby Idx="10" ]好きの　やつも　いたよ▼
 別の場所で　育ったのに
 趣味が　同じって▽
 なんか　すげーよな！</Text>
@@ -1098,13 +1098,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『オレの　しゅみ？
-[Name:Hobby Idx="10"]　だけど？▼
+			<Text>[Name:TrainerName Idx="7" ]『オレの　しゅみ？
+[Name:Hobby Idx="10" ]　だけど？▼
 オレの　すむ
-[Name:Area Idx="1"]と▽
+[Name:Area Idx="1" ]と▽
 おまえの　すんでるとこで▽
 しゅみって　ちがったり　すんのかな？▼
-オレ　いまんとこ　[Digit:3digits Idx="8"]かしょの
+オレ　いまんとこ　[Digit:3digits Idx="8" ]かしょの
 やつらと　こうかん　してんだけど▽
 もっともっと　こうかんして▽
 いろんな　ひとの▽
@@ -1119,13 +1119,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『オレの　趣味？
-[Name:Hobby Idx="10"]　だけど？▼
+			<Text>[Name:TrainerName Idx="7" ]『オレの　趣味？
+[Name:Hobby Idx="10" ]　だけど？▼
 オレの　住む
-[Name:Area Idx="1"]と▽
+[Name:Area Idx="1" ]と▽
 おまえの　住んでるとこで▽
 趣味って　違ったり　すんのかな？▼
-オレ　今んとこ　[Digit:3digits Idx="8"]ヶ所の
+オレ　今んとこ　[Digit:3digits Idx="8" ]ヶ所の
 やつらと　交換してんだけど▽
 もっともっと　交換して▽
 いろんな　人の　趣味　聞いてみるわ！</Text>
@@ -1172,17 +1172,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『うっす　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『うっす　[Name:TrainerName Idx="3" ]！▼
 オレさ　オレさ
-[Digit:3digits Idx="8"]かしょの　やつらと▽
+[Digit:3digits Idx="8" ]かしょの　やつらと▽
 ポケモン　こうかん　したんだぜ！▽
 いやー　こうかんは　たのしいな！▼
 せかいには　いろんな　しゅみの
 やつが　いるよな……　って　しってた？▼
 え？　オレ？
-オレは　もちろん　[Name:Hobby Idx="10"]　だ！▼
+オレは　もちろん　[Name:Hobby Idx="10" ]　だ！▼
 ま　なには　ともあれ
-オレの　[Name:PokemonNickname Idx="9"]　のこと▽
+オレの　[Name:PokemonNickname Idx="9" ]　のこと▽
 つよくしてくれよな！　たのんだぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1194,17 +1194,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『うっす　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『うっす　[Name:TrainerName Idx="3" ]！▼
 オレさ　オレさ
-[Digit:3digits Idx="8"]ヶ所の　やつらと▽
+[Digit:3digits Idx="8" ]ヶ所の　やつらと▽
 ポケモン　交換したんだぜ！▽
 いやー　交換は　楽しいな！▼
 世界には　いろんな　趣味の
 やつが　いるよな……　って　知ってた？▼
 え？　オレ？
-オレは　もちろん　[Name:Hobby Idx="10"]　だ！▼
+オレは　もちろん　[Name:Hobby Idx="10" ]　だ！▼
 ま　なには　ともあれ
-オレの　[Name:PokemonNickname Idx="9"]　のこと▽
+オレの　[Name:PokemonNickname Idx="9" ]　のこと▽
 強くしてくれよな！　頼んだぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1249,18 +1249,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『おまえ　なんかしょの
+			<Text>[Name:TrainerName Idx="7" ]『おまえ　なんかしょの
 やつらと　ポケモン　こうかんした？▽
-オレ　[Digit:3digits Idx="8"]かしょと　こうかんしたぜ！▼
+オレ　[Digit:3digits Idx="8" ]かしょと　こうかんしたぜ！▼
 なかでも　おまえの　くれた
-[Name:PokemonNickname Idx="5"]は▽
+[Name:PokemonNickname Idx="5" ]は▽
 そうとう　きにいってんだ！▽
 ほんと　サンキューな！▼
-オレ　たまに　[Name:PokemonNickname Idx="9"]と
-[Name:Hobby Idx="10"]　してたんだけど▼
+オレ　たまに　[Name:PokemonNickname Idx="9" ]と
+[Name:Hobby Idx="10" ]　してたんだけど▼
 おまえも　ひまなときには
-[Name:PokemonNickname Idx="9"]と▽
-[Name:Hobby Idx="10"]　してやってくれよな！</Text>
+[Name:PokemonNickname Idx="9" ]と▽
+[Name:Hobby Idx="10" ]　してやってくれよな！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1271,18 +1271,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『おまえ　何ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『おまえ　何ヶ所の
 やつらと　ポケモン　交換した？▽
-オレ　[Digit:3digits Idx="8"]ヶ所と　交換したぜ！▼
+オレ　[Digit:3digits Idx="8" ]ヶ所と　交換したぜ！▼
 中でも　おまえの　くれた
-[Name:PokemonNickname Idx="5"]は▽
+[Name:PokemonNickname Idx="5" ]は▽
 相当　気に入ってんだ！▽
 ほんと　サンキューな！▼
-オレ　たまに　[Name:PokemonNickname Idx="9"]と
-[Name:Hobby Idx="10"]　してたんだけど▼
+オレ　たまに　[Name:PokemonNickname Idx="9" ]と
+[Name:Hobby Idx="10" ]　してたんだけど▼
 おまえも　暇な時には
-[Name:PokemonNickname Idx="9"]と▽
-[Name:Hobby Idx="10"]　してやってくれよな！</Text>
+[Name:PokemonNickname Idx="9" ]と▽
+[Name:Hobby Idx="10" ]　してやってくれよな！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1326,20 +1326,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『オレさ！
-[Digit:3digits Idx="8"]かしょの　やつらと▽
+			<Text>[Name:TrainerName Idx="7" ]『オレさ！
+[Digit:3digits Idx="8" ]かしょの　やつらと▽
 ポケモン　こうかん　したんだけど▼
 いろんな　ばしょの　やつらと
 かかわってると▽
 じっさいに　とおくに▽
 いってみたく　なるんだよなー！▼
-なぁ　[Name:TrainerName Idx="3"]は
+なぁ　[Name:TrainerName Idx="3" ]は
 オレの　すんでる▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことって　あるか？▼
 すっげー　いいとこだから
 いつか　きてみろよ！▽
-[Name:Hobby Idx="10"]すんの　たのしいぜ！</Text>
+[Name:Hobby Idx="10" ]すんの　たのしいぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1350,20 +1350,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『オレさ！
-[Digit:3digits Idx="8"]ヶ所の　やつらと▽
+			<Text>[Name:TrainerName Idx="7" ]『オレさ！
+[Digit:3digits Idx="8" ]ヶ所の　やつらと▽
 ポケモン　交換したんだけど▼
 いろんな　場所の　やつらと
 関わってると▽
 実際に　遠くに▽
 行ってみたく　なるんだよなー！▼
-なぁ　[Name:TrainerName Idx="3"]は
+なぁ　[Name:TrainerName Idx="3" ]は
 オレの　住んでる▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことって　あるか？▼
 すっげー　いいとこだから
 いつか　きてみろよ！▽
-[Name:Hobby Idx="10"]すんの　楽しいぜ！</Text>
+[Name:Hobby Idx="10" ]すんの　楽しいぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -1407,13 +1407,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『うっす　[Name:TrainerName Idx="3"]！
+			<Text>？？？『うっす　[Name:TrainerName Idx="3" ]！
 わたしのこと　おぼえてる？▼
-わたし　わたし！　[Name:TrainerName Idx="7"]！
-[Name:Area Idx="1"]の！▼
-こないだ　[Name:PokemonNickname Idx="5"]と　[Name:PokemonNickname Idx="9"]
+わたし　わたし！　[Name:TrainerName Idx="7" ]！
+[Name:Area Idx="1" ]の！▼
+こないだ　[Name:PokemonNickname Idx="5" ]と　[Name:PokemonNickname Idx="9" ]
 こうかん　したよね！　ありがとう！▼
-[Name:PokemonNickname Idx="5"]　のこと
+[Name:PokemonNickname Idx="5" ]　のこと
 すっごく　きにいってるよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1425,13 +1425,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『うっす　[Name:TrainerName Idx="3"]！
+			<Text>？？？『うっす　[Name:TrainerName Idx="3" ]！
 私のこと　覚えてる？▼
-私　私！　[Name:TrainerName Idx="7"]！
-[Name:Area Idx="1"]の！▼
-こないだ　[Name:PokemonNickname Idx="5"]と　[Name:PokemonNickname Idx="9"]
+私　私！　[Name:TrainerName Idx="7" ]！
+[Name:Area Idx="1" ]の！▼
+こないだ　[Name:PokemonNickname Idx="5" ]と　[Name:PokemonNickname Idx="9" ]
 交換したよね！　ありがとう！▼
-[Name:PokemonNickname Idx="5"]　のこと
+[Name:PokemonNickname Idx="5" ]　のこと
 すっごく　気に入ってるよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1468,16 +1468,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]は
 なんかしょ　くらいの　ひとたちと▽
 こうかんした？▼
 へっへー　わたしは　なんとね！
-[Digit:3digits Idx="8"]かしょよ！▼
+[Digit:3digits Idx="8" ]かしょよ！▼
 わたしと　おなじで
-しゅみが　[Name:Hobby Idx="10"]の　ひとが▽
+しゅみが　[Name:Hobby Idx="10" ]の　ひとが▽
 けっこう　いて　おもしろかった！▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Area Idx="1"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Area Idx="1" ]に▽
 きてみなよ！▽
 ぜったいに　たのしいからさ！</Text>
 			<TextModifiedBy
@@ -1490,15 +1490,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]は
 何ヶ所くらいの　人達と　交換した？▼
 へっへー　私は　なんとね！
-[Digit:3digits Idx="8"]ヶ所よ！▼
+[Digit:3digits Idx="8" ]ヶ所よ！▼
 私と　同じで
-趣味が　[Name:Hobby Idx="10"]の　人が▽
+趣味が　[Name:Hobby Idx="10" ]の　人が▽
 結構　いて　面白かった！▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Area Idx="1"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Area Idx="1" ]に▽
 きてみなよ！▽
 絶対に　楽しいからさ！</Text>
 			<TextModifiedBy
@@ -1536,15 +1536,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きいてよ　きいてよ！▼
-わたしさ　[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『きいてよ　きいてよ！▼
+わたしさ　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したんだ！▼
 とおくはなれた　ばしょにいる　ひとと
 こうかんするって▽
 すっごく　ふしぎな　きぶんだったよ！▼
-……ところで　[Name:TrainerName Idx="3"]の
+……ところで　[Name:TrainerName Idx="3" ]の
 しゅみって　なに？▼
-わたしは　[Name:Hobby Idx="10"]だよ！▼
+わたしは　[Name:Hobby Idx="10" ]だよ！▼
 もっともっと　こうかんして
 せかいじゅうの　ひとの▽
 しゅみを　きいてみたいなー！</Text>
@@ -1558,15 +1558,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『聞いてよ　聞いてよ！▼
-私さ　[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『聞いてよ　聞いてよ！▼
+私さ　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したんだ！▼
 遠く離れた　場所にいる　人と
 交換するって▽
 すっごく　不思議な　気分だったよ！▼
-……ところで　[Name:TrainerName Idx="3"]の
+……ところで　[Name:TrainerName Idx="3" ]の
 趣味って　なに？▼
-私は　[Name:Hobby Idx="10"]だよ！▼
+私は　[Name:Hobby Idx="10" ]だよ！▼
 もっともっと　交換して
 世界中の　人の▽
 趣味を　聞いてみたいなー！</Text>
@@ -1605,17 +1605,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やっほ　[Name:TrainerName Idx="3"]！▼
-わたしね　[Digit:3digits Idx="8"]かしょの
+			<Text>[Name:TrainerName Idx="7" ]『やっほ　[Name:TrainerName Idx="3" ]！▼
+わたしね　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　したの！▼
 いろんな　しゅみの　ひとが　いて
 すっごく　しげきてき！▼
 ん？　わたしの　しゅみ？
-[Name:Hobby Idx="10"]よ！▼
+[Name:Hobby Idx="10" ]よ！▼
 へへっ　わたしらしい　でしょ！▼
-[Name:TrainerName Idx="3"]さ
+[Name:TrainerName Idx="3" ]さ
 いつか　じかんが　できたら▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみてよ！▼
 すっごく　いいとこだから
 ぜったい　きにいると　おもう！</Text>
@@ -1629,17 +1629,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やっほ　[Name:TrainerName Idx="3"]！▼
-私ね　[Digit:3digits Idx="8"]ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『やっほ　[Name:TrainerName Idx="3" ]！▼
+私ね　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換したの！▼
 いろんな　趣味の　人が　いて
 すっごく　刺激的！▼
 ん？　私の　趣味？
-[Name:Hobby Idx="10"]よ！▼
+[Name:Hobby Idx="10" ]よ！▼
 へへっ　私らしい　でしょ！▼
-[Name:TrainerName Idx="3"]さ
+[Name:TrainerName Idx="3" ]さ
 いつか　時間が　できたら▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみてよ！▼
 すっごく　いいとこだから
 絶対　気に入ると　思う！</Text>
@@ -1678,20 +1678,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わたしね！▼
-[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『わたしね！▼
+[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　したんだけど▽
 みんな　しゅみって▽
 けっこう　ちがうんだねー！▼
-わたしの　しゅみは　[Name:Hobby Idx="10"]
+わたしの　しゅみは　[Name:Hobby Idx="10" ]
 なんだけど▼
 おなじ　しゅみの　ひとが
 せかいの　うらがわにも　いるなんて▽
 なぁんか　ワックワク　しちゃう！▼
 わたし　いつか　じっさいに
 いろんな　とこに　いくんだ！▼
-ねぇ　[Name:TrainerName Idx="3"]もさ
-[Name:Area Idx="1"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]もさ
+[Name:Area Idx="1" ]に▽
 いつか　きてみなよ！▽
 すっごく　いいところ　だからさ！</Text>
 			<TextModifiedBy
@@ -1704,20 +1704,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『私ね！▼
-[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『私ね！▼
+[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換したんだけど▽
 みんな　趣味って▽
 結構　違うんだねー！▼
-私の　趣味は　[Name:Hobby Idx="10"]
+私の　趣味は　[Name:Hobby Idx="10" ]
 なんだけど▼
 同じ　趣味の　人が
 世界の　裏側にも　いるなんて▽
 なぁんか　ワックワク　しちゃう！▼
 私　いつか　実際に
 いろんな　所に　行くんだ！▼
-ねぇ　[Name:TrainerName Idx="3"]もさ
-[Name:Area Idx="1"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]もさ
+[Name:Area Idx="1" ]に▽
 いつか　きてみなよ！▽
 すっごく　いいところ　だからさ！</Text>
 			<TextModifiedBy
@@ -1755,15 +1755,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『おっ
-[Name:TrainerName Idx="3"]じゃん　げんき？▼
-わたしさ　[Name:Hobby Idx="10"]ずきの　ひとなんて
+			<Text>[Name:TrainerName Idx="7" ]『おっ
+[Name:TrainerName Idx="3" ]じゃん　げんき？▼
+わたしさ　[Name:Hobby Idx="10" ]ずきの　ひとなんて
 そんなに　いないと　おもってたけど▼
-[Digit:3digits Idx="8"]かしょの　トレーナーと
+[Digit:3digits Idx="8" ]かしょの　トレーナーと
 こうかん　してみたら▽
 おなじ　しゅみのひとが▽
 けっこう　いたわ▼
-[Name:Area Idx="1"]じゃ
+[Name:Area Idx="1" ]じゃ
 そんなに　いなかったのになぁ▼
 うーん　やっぱり　せかいって
 ちょっと　ちがうみたい！</Text>
@@ -1777,14 +1777,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『おっ
-[Name:TrainerName Idx="3"]じゃん　元気？▼
-私さ　[Name:Hobby Idx="10"]好きの　人なんて
+			<Text>[Name:TrainerName Idx="7" ]『おっ
+[Name:TrainerName Idx="3" ]じゃん　元気？▼
+私さ　[Name:Hobby Idx="10" ]好きの　人なんて
 そんなに　いないと　思ってたけど▼
-[Digit:3digits Idx="8"]ヶ所の　トレーナーと
+[Digit:3digits Idx="8" ]ヶ所の　トレーナーと
 交換してみたら▽
 同じ　趣味の人が　結構いたわ▼
-[Name:Area Idx="1"]じゃ
+[Name:Area Idx="1" ]じゃ
 そんなに　いなかったのになぁ▼
 うーん　やっぱり　世界って
 ちょっと　違うみたい！</Text>
@@ -1824,18 +1824,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『ききっ　キミっ！！
-[Name:TrainerName Idx="3"]じゃないか？！▼
+[Name:TrainerName Idx="3" ]じゃないか？！▼
 おおっ！　こんなところで
 であうなんて　なんたる　ミラクル？！▼
 ……え　ボク？　おぼえてない？
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]だよ！▼
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]だよ！▼
 ホラホラッ！　このあいだ
-キミの　[Name:PokemonNickname Idx="5"]と▽
-ボクの　[Name:PokemonNickname Idx="9"]を▽
+キミの　[Name:PokemonNickname Idx="5" ]と▽
+ボクの　[Name:PokemonNickname Idx="9" ]を▽
 こうかん　しただろう！▼
 いやはやッ！
-[Name:PokemonNickname Idx="5"]は　じつによい！▼
+[Name:PokemonNickname Idx="5" ]は　じつによい！▼
 ここで　さいかいしたのも
 なにかの　えんに　ちがいない！▼
 ボクたち　ぜひまた
@@ -1851,18 +1851,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『ききっ　キミっ！！
-[Name:TrainerName Idx="3"]じゃないか？！▼
+[Name:TrainerName Idx="3" ]じゃないか？！▼
 おおっ！　こんなところで
 出会うなんて　なんたる　ミラクル？！▼
 ……え　ボク？　覚えてない？
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]だよ！▼
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]だよ！▼
 ホラホラッ！　このあいだ
-キミの　[Name:PokemonNickname Idx="5"]と▽
-ボクの　[Name:PokemonNickname Idx="9"]を▽
+キミの　[Name:PokemonNickname Idx="5" ]と▽
+ボクの　[Name:PokemonNickname Idx="9" ]を▽
 交換しただろう！▼
 いやはやッ！
-[Name:PokemonNickname Idx="5"]は　実によい！▼
+[Name:PokemonNickname Idx="5" ]は　実によい！▼
 ここで　再会したのも
 なにかの　縁に　違いない！▼
 ボクたち　ぜひまた
@@ -1909,16 +1909,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『キミは
+			<Text>[Name:TrainerName Idx="7" ]『キミは
 なんかしょの　ひとたちと▽
 こうかん　したんだい？▼
-ボクは　なんとなんと　[Digit:3digits Idx="8"]かしょ！
+ボクは　なんとなんと　[Digit:3digits Idx="8" ]かしょ！
 ……ん？　ボクのしゅみ？▼
-[Name:Hobby Idx="10"]だよ　[Name:Hobby Idx="10"]！
+[Name:Hobby Idx="10" ]だよ　[Name:Hobby Idx="10" ]！
 たのしくて　たまらないね！▼
 ……なにはともあれ▼
 キミが　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 くることが　あったら▽
 ボクたち　ぜひ　あおうでは　ないか！▽
 ムハハ！　それじゃっ　アデュー！</Text>
@@ -1932,16 +1932,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『キミは
+			<Text>[Name:TrainerName Idx="7" ]『キミは
 何ヶ所の　人達と▽
 交換したんだい？▼
-ボクは　なんとなんと　[Digit:3digits Idx="8"]ヶ所！
+ボクは　なんとなんと　[Digit:3digits Idx="8" ]ヶ所！
 ……ん？　ボクの趣味？▼
-[Name:Hobby Idx="10"]だよ　[Name:Hobby Idx="10"]！
+[Name:Hobby Idx="10" ]だよ　[Name:Hobby Idx="10" ]！
 楽しくて　たまらないね！▼
 ……なにはともあれ▼
 キミが　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 くることが　あったら▽
 ボクたち　ぜひ　会おうではないか！▽
 ムハハ！　それじゃっ　アデュー！</Text>
@@ -1987,16 +1987,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『せかいは　ひろいッ！
+			<Text>[Name:TrainerName Idx="7" ]『せかいは　ひろいッ！
 とっても　ひろいッ！▼
 なのに　うみを　こえても
-ボクと　おなじ　[Name:Hobby Idx="10"]ずきの▽
+ボクと　おなじ　[Name:Hobby Idx="10" ]ずきの▽
 ひとが　いるって　ミラクルでは？！▼
-ボクは　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ボクは　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　してきたけど▼
 もっと　もっと　こうかんして
-[Name:Hobby Idx="10"]ずきや▽
-[Name:PokemonNickname Idx="5"]ずきの　ひとと▽
+[Name:Hobby Idx="10" ]ずきや▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひとと▽
 たくさん　しりあうんだ！▼
 ボクたちも　ぜひ　また
 こうかん　しようではないか！</Text>
@@ -2010,16 +2010,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『世界は　広いッ！
+			<Text>[Name:TrainerName Idx="7" ]『世界は　広いッ！
 とっても　広いッ！▼
 なのに　海を越えても
-ボクと　同じ　[Name:Hobby Idx="10"]好きの▽
+ボクと　同じ　[Name:Hobby Idx="10" ]好きの▽
 人が　いるって　ミラクルでは？！▼
-ボクは　[Digit:3digits Idx="8"]ヶ所の　人達と
+ボクは　[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換してきたけど▼
 もっと　もっと　交換して
-[Name:Hobby Idx="10"]好きや▽
-[Name:PokemonNickname Idx="5"]好きの人と▽
+[Name:Hobby Idx="10" ]好きや▽
+[Name:PokemonNickname Idx="5" ]好きの人と▽
 たくさん　知り合うんだ！▼
 ボクたちも　ぜひ　また
 交換しようではないか！</Text>
@@ -2065,15 +2065,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『キミ
-[Name:Hobby Idx="10"]ずきかい？！▼
-ボク　[Name:Hobby Idx="10"]ずき　なのだよ！▼
-[Name:Area Idx="1"]に
+			<Text>[Name:TrainerName Idx="7" ]『キミ
+[Name:Hobby Idx="10" ]ずきかい？！▼
+ボク　[Name:Hobby Idx="10" ]ずき　なのだよ！▼
+[Name:Area Idx="1" ]に
 おなじ　しゅみの　ひとは▽
 たくさん　いたが▼
 まさか　ちがう　ばしょでも
-[Name:Hobby Idx="10"]ずきが　いるとはね！▼
-[Digit:3digits Idx="8"]かしょの　ひとたちと
+[Name:Hobby Idx="10" ]ずきが　いるとはね！▼
+[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかんしただけで　これだから▼
 もっと　こうかん　したら
 もっと　おなじ　しゅみの▽
@@ -2089,15 +2089,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『キミ
-[Name:Hobby Idx="10"]好きかい？！▼
-ボク　[Name:Hobby Idx="10"]好き　なのだよ！▼
-[Name:Area Idx="1"]に
+			<Text>[Name:TrainerName Idx="7" ]『キミ
+[Name:Hobby Idx="10" ]好きかい？！▼
+ボク　[Name:Hobby Idx="10" ]好き　なのだよ！▼
+[Name:Area Idx="1" ]に
 同じ　趣味の　人は▽
 たくさん　いたが▼
 まさか　違う　場所でも
-[Name:Hobby Idx="10"]好きが　いるとはね！▼
-[Digit:3digits Idx="8"]ヶ所の　人達と
+[Name:Hobby Idx="10" ]好きが　いるとはね！▼
+[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換しただけで　これだから▼
 もっと　交換したら
 もっと　同じ　趣味の▽
@@ -2145,21 +2145,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『キミに　もらった
-[Name:PokemonNickname Idx="5"]さ！▼
+			<Text>[Name:TrainerName Idx="7" ]『キミに　もらった
+[Name:PokemonNickname Idx="5" ]さ！▼
 ……　……
 ……　……▼
 いい！▼
 すっごく　いいよ！
 センキュウッ！▼
-ボク　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ボク　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモンを　こうかん　してきたが▽
-[Name:PokemonNickname Idx="5"]は　かくべつだ！▼
-[Name:TrainerName Idx="3"]！　いつか
-[Name:Area Idx="1"]で▽
-いっしょに　[Name:Hobby Idx="10"]▽
+[Name:PokemonNickname Idx="5" ]は　かくべつだ！▼
+[Name:TrainerName Idx="3" ]！　いつか
+[Name:Area Idx="1" ]で▽
+いっしょに　[Name:Hobby Idx="10" ]▽
 たのしもうでは　ないか！▼
-それでは　[Name:TrainerName Idx="3"]！
+それでは　[Name:TrainerName Idx="3" ]！
 また　あうひまで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2171,21 +2171,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『キミに　もらった
-[Name:PokemonNickname Idx="5"]さ！▼
+			<Text>[Name:TrainerName Idx="7" ]『キミに　もらった
+[Name:PokemonNickname Idx="5" ]さ！▼
 ……　……
 ……　……▼
 いい！▼
 すっごく　いいよ！
 センキュウッ！▼
-ボク　[Digit:3digits Idx="8"]ヶ所の　人達と
+ボク　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモンを　交換してきたが▽
-[Name:PokemonNickname Idx="5"]は　格別だ！▼
-[Name:TrainerName Idx="3"]！　いつか
-[Name:Area Idx="1"]で▽
-一緒に　[Name:Hobby Idx="10"]▽
+[Name:PokemonNickname Idx="5" ]は　格別だ！▼
+[Name:TrainerName Idx="3" ]！　いつか
+[Name:Area Idx="1" ]で▽
+一緒に　[Name:Hobby Idx="10" ]▽
 楽しもうでは　ないか！▼
-それでは　[Name:TrainerName Idx="3"]！
+それでは　[Name:TrainerName Idx="3" ]！
 また　会う日まで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2229,14 +2229,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きいてくれないか
-[Name:TrainerName Idx="3"]！▼
-ボクは　[Digit:3digits Idx="8"]かしょに　いる
+			<Text>[Name:TrainerName Idx="7" ]『きいてくれないか
+[Name:TrainerName Idx="3" ]！▼
+ボクは　[Digit:3digits Idx="8" ]かしょに　いる
 すばらしい　トレーナーたちと▽
 ポケモンを　こうかん　したんだが▼
 なかには　ボクと　おなじ
-[Name:Hobby Idx="10"]ずきの　ひとや▽
-[Name:PokemonNickname Idx="5"]ずきの　ひとが　いたんだ！▼
+[Name:Hobby Idx="10" ]ずきの　ひとや▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひとが　いたんだ！▼
 すむ　ばしょが　ちがうのに
 すきなものが　おなじ！▼
 そだった　ばしょが　ちがうのに
@@ -2245,7 +2245,7 @@
 ああーっ！
 せかいは　ミラクル！▽
 キミとの　であいも　ミラクルだったよ！▽
-また　こうかん　しようぞ　[Name:TrainerName Idx="3"]！</Text>
+また　こうかん　しようぞ　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2256,14 +2256,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『聞いてくれないか
-[Name:TrainerName Idx="3"]！▼
-ボクは　[Digit:3digits Idx="8"]ヶ所に　いる
+			<Text>[Name:TrainerName Idx="7" ]『聞いてくれないか
+[Name:TrainerName Idx="3" ]！▼
+ボクは　[Digit:3digits Idx="8" ]ヶ所に　いる
 素晴らしい　トレーナー達と▽
 ポケモンを　交換したんだが▼
 中には　ボクと　同じ
-[Name:Hobby Idx="10"]好きの　人や▽
-[Name:PokemonNickname Idx="5"]好きの　人が　いたんだ！▼
+[Name:Hobby Idx="10" ]好きの　人や▽
+[Name:PokemonNickname Idx="5" ]好きの　人が　いたんだ！▼
 住む　場所が　違うのに
 好きなものが　同じ！▼
 育った　場所が　違うのに
@@ -2272,7 +2272,7 @@
 ああーっ！
 世界は　ミラクル！▽
 キミとの　出会いも　ミラクルだったよ！▽
-また　交換しようぞ　[Name:TrainerName Idx="3"]！</Text>
+また　交換しようぞ　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2316,16 +2316,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『あっ！　おぼえてるよ
-キミ　[Name:TrainerName Idx="3"]でしょー！▼
+キミ　[Name:TrainerName Idx="3" ]でしょー！▼
 あたしの　こと　おぼえてるかな？
-[Name:Area Idx="1"]の▽
-[Name:TrainerName Idx="7"]だよ　へへー！▼
-こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Area Idx="1" ]の▽
+[Name:TrainerName Idx="7" ]だよ　へへー！▼
+こないだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうねー！▼
-[Name:PokemonNickname Idx="9"]は　げんきに　やってる？
-[Name:TrainerName Idx="3"]との　ポケモンこうかん▽
+[Name:PokemonNickname Idx="9" ]は　げんきに　やってる？
+[Name:TrainerName Idx="3" ]との　ポケモンこうかん▽
 すっごく　しげきてき　だった！▼
-[Name:TrainerName Idx="3"]と　またあえて　うれしいよ
+[Name:TrainerName Idx="3" ]と　またあえて　うれしいよ
 また　こうかん　しよう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2338,16 +2338,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『あっ！　覚えてるよ
-キミ　[Name:TrainerName Idx="3"]でしょー！▼
+キミ　[Name:TrainerName Idx="3" ]でしょー！▼
 あたしの　こと　覚えてるかな？
-[Name:Area Idx="1"]の▽
-[Name:TrainerName Idx="7"]だよ　へへー！▼
-こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Area Idx="1" ]の▽
+[Name:TrainerName Idx="7" ]だよ　へへー！▼
+こないだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうねー！▼
-[Name:PokemonNickname Idx="9"]は　元気に　やってる？
-[Name:TrainerName Idx="3"]との　ポケモン交換▽
+[Name:PokemonNickname Idx="9" ]は　元気に　やってる？
+[Name:TrainerName Idx="3" ]との　ポケモン交換▽
 すっごく　刺激的だった！▼
-[Name:TrainerName Idx="3"]と　また会えて　うれしいよ
+[Name:TrainerName Idx="3" ]と　また会えて　うれしいよ
 また　交換しよう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2384,22 +2384,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『お！
-[Name:TrainerName Idx="3"]だ　[Name:TrainerName Idx="3"]だ▼
+			<Text>[Name:TrainerName Idx="7" ]『お！
+[Name:TrainerName Idx="3" ]だ　[Name:TrainerName Idx="3" ]だ▼
 へへー　あたしねー
-[Digit:3digits Idx="8"]かしょに　いる　ひとたちと▽
+[Digit:3digits Idx="8" ]かしょに　いる　ひとたちと▽
 こうかん　したんだよ！▼
 すごい？　えらい？　へへ
 でね！　でねっ！▼
 こうかんした　ひとの　なかに
-あたしと　おなじ　[Name:Hobby Idx="10"]ずきの▽
+あたしと　おなじ　[Name:Hobby Idx="10" ]ずきの▽
 ひとが　いたんだよ！▼
-[Name:TrainerName Idx="3"]の　すむ　ところでは
-[Name:Hobby Idx="10"]ずきは▽
+[Name:TrainerName Idx="3" ]の　すむ　ところでは
+[Name:Hobby Idx="10" ]ずきは▽
 どれくらい　いるのかな？▼
-[Name:Area Idx="1"]じゃ
+[Name:Area Idx="1" ]じゃ
 けっこう　いたかなー▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]！
+それじゃあ　またね　[Name:TrainerName Idx="3" ]！
 また　こうかんする　そのひまで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2411,22 +2411,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『お！
-[Name:TrainerName Idx="3"]だ　[Name:TrainerName Idx="3"]だ▼
+			<Text>[Name:TrainerName Idx="7" ]『お！
+[Name:TrainerName Idx="3" ]だ　[Name:TrainerName Idx="3" ]だ▼
 へへー　あたしねー
-[Digit:3digits Idx="8"]ヶ所に　いる　人達と▽
+[Digit:3digits Idx="8" ]ヶ所に　いる　人達と▽
 交換したんだよ！▼
 すごい？　えらい？　へへ
 でね！　でねっ！▼
 交換した　人の中に
-あたしと　同じ　[Name:Hobby Idx="10"]好きの▽
+あたしと　同じ　[Name:Hobby Idx="10" ]好きの▽
 人が　いたんだよ！▼
-[Name:TrainerName Idx="3"]の　住む　ところでは
-[Name:Hobby Idx="10"]好きは▽
+[Name:TrainerName Idx="3" ]の　住む　ところでは
+[Name:Hobby Idx="10" ]好きは▽
 どれくらい　いるのかな？▼
-[Name:Area Idx="1"]じゃ
+[Name:Area Idx="1" ]じゃ
 結構　いたかなー▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]！
+それじゃあ　またね　[Name:TrainerName Idx="3" ]！
 また　交換する　その日まで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2463,16 +2463,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『へへっ
-あたし　[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+			<Text>[Name:TrainerName Idx="7" ]『へへっ
+あたし　[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 こうかん　したんだ！▼
-ねぇねぇ　[Name:TrainerName Idx="3"]の
+ねぇねぇ　[Name:TrainerName Idx="3" ]の
 しゅみって　なに？▼
-あたしは　[Name:Hobby Idx="10"]だよー
+あたしは　[Name:Hobby Idx="10" ]だよー
 へへ　いがいでしょー？▼
-ねぇねぇ！　[Name:TrainerName Idx="3"]はさ！
+ねぇねぇ！　[Name:TrainerName Idx="3" ]はさ！
 あたしの　すんでる▼
-[Name:Area Idx="1"]に
+[Name:Area Idx="1" ]に
 きたことって　ある？▼
 すっごく　いいとこだから
 いちど　きてみてよねー！</Text>
@@ -2486,16 +2486,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『へへっ
-あたし　[Digit:3digits Idx="8"]ヶ所の　人達と▽
+			<Text>[Name:TrainerName Idx="7" ]『へへっ
+あたし　[Digit:3digits Idx="8" ]ヶ所の　人達と▽
 交換したんだ！▼
-ねぇねぇ　[Name:TrainerName Idx="3"]の
+ねぇねぇ　[Name:TrainerName Idx="3" ]の
 趣味って　なに？▼
-あたしは　[Name:Hobby Idx="10"]だよー
+あたしは　[Name:Hobby Idx="10" ]だよー
 へへ　意外でしょー？▼
-ねぇねぇ！　[Name:TrainerName Idx="3"]はさ！
+ねぇねぇ！　[Name:TrainerName Idx="3" ]はさ！
 あたしの　住んでる▼
-[Name:Area Idx="1"]に
+[Name:Area Idx="1" ]に
 きたことって　ある？▼
 すっごく　いいとこだから
 一度　きてみてよねー！</Text>
@@ -2534,23 +2534,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ハーイ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『ハーイ　[Name:TrainerName Idx="3" ]！▼
 キミは　なんかしょ　くらいの
 ひとたちと　こうかん　した？▼
-あたしは　[Digit:3digits Idx="8"]かしょ！▼
-[Name:Area Idx="1"]から
+あたしは　[Digit:3digits Idx="8" ]かしょ！▼
+[Name:Area Idx="1" ]から
 いっぽも　でなくても▼
 ほかの　ばしょに　いる　ひとと
 つながれちゃうなんて▽
 かがくの　ちからって　すっごいね！▼
-ところで　[Name:TrainerName Idx="3"]の
+ところで　[Name:TrainerName Idx="3" ]の
 しゅみって　なんなのかな？▼
 あたしね
-[Name:Hobby Idx="10"]　なんだ！　へへー▼
+[Name:Hobby Idx="10" ]　なんだ！　へへー▼
 しゅみも　せかいじゅうの　ひとたちと
 たのしめるように　なるといいなー！▽
 あー　なんか　ワクワクしてきたっ！▽
-また　こうかん　しようね　[Name:TrainerName Idx="3"]！</Text>
+また　こうかん　しようね　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2561,23 +2561,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ハーイ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『ハーイ　[Name:TrainerName Idx="3" ]！▼
 キミは　何ヶ所　くらいの
 人達と　交換した？▼
-あたしは　[Digit:3digits Idx="8"]ヶ所！▼
-[Name:Area Idx="1"]から
+あたしは　[Digit:3digits Idx="8" ]ヶ所！▼
+[Name:Area Idx="1" ]から
 一歩も　出なくても▼
 他の　場所にいる　人と
 つながれちゃうなんて▽
 科学の　力って　すっごいね！▼
-ところで　[Name:TrainerName Idx="3"]の
+ところで　[Name:TrainerName Idx="3" ]の
 趣味って　なんなのかな？▼
 あたしね
-[Name:Hobby Idx="10"]　なんだ！　へへー▼
+[Name:Hobby Idx="10" ]　なんだ！　へへー▼
 趣味も　世界中の　人達と
 楽しめるように　なるといいなー！▽
 あー　なんか　ワクワクしてきたっ！▽
-また　交換しようね　[Name:TrainerName Idx="3"]！</Text>
+また　交換しようね　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -2613,13 +2613,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あたしね　[Digit:3digits Idx="8"]かしょの
+			<Text>[Name:TrainerName Idx="7" ]『あたしね　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　してみて▽
 おもったことが　あるの！▼
 ひとって　ちがって　あたりまえね！▼
 すきなものが　ちがえば
 しゅみだって　ちがう▼
-みんなが　みんな　[Name:Hobby Idx="10"]ずき
+みんなが　みんな　[Name:Hobby Idx="10" ]ずき
 というわけじゃ　ないのよね▼
 でも　だからこそ
 たのしいと　おもうの▼
@@ -2627,7 +2627,7 @@
 しげきを　うけると▼
 なんだか　じぶんの　せかいが
 ひろがった　みたいじゃない？▼
-[Name:Area Idx="1"]から
+[Name:Area Idx="1" ]から
 そとに　でてみるのも▽
 きっと　わるくないわね！</Text>
 			<TextModifiedBy
@@ -2640,13 +2640,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あたしね　[Digit:3digits Idx="8"]ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『あたしね　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換してみて▽
 思ったことが　あるの！▼
 人って　違って　当たり前ね！▼
 好きなものが　違えば
 趣味だって　違う▼
-みんなが　みんな　[Name:Hobby Idx="10"]好き
+みんなが　みんな　[Name:Hobby Idx="10" ]好き
 というわけじゃ　ないのよね▼
 でも　だからこそ
 楽しいと　思うの▼
@@ -2654,7 +2654,7 @@
 刺激を　うけると▼
 なんだか　自分の　世界が
 広がった　みたいじゃない？▼
-[Name:Area Idx="1"]から
+[Name:Area Idx="1" ]から
 外に　でてみるのも▽
 きっと　悪くないわね！</Text>
 			<TextModifiedBy
@@ -2692,20 +2692,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]は　あたしの　すんでる▼
-[Name:Area Idx="1"]に
+			<Text>[Name:TrainerName Idx="7" ]『ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]は　あたしの　すんでる▼
+[Name:Area Idx="1" ]に
 きたことは　あるのかな？▼
-[Name:Hobby Idx="10"]　たのしめるし
+[Name:Hobby Idx="10" ]　たのしめるし
 なっかなか　いいとこだよ！▼
 でも　あたしね▼
-[Digit:3digits Idx="8"]かしょの　ひとたちと
+[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　してみて　おもったんだ！▼
 きっと　ほかの　ばしょにも
 おなじくらい　いいとこが　あるね！▼
 そう　かんがえると
 すっっごく　ワクワクしてこない？▼
-それじゃあね　[Name:TrainerName Idx="3"]！
+それじゃあね　[Name:TrainerName Idx="3" ]！
 また　こうかん　しようね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2717,20 +2717,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]は　あたしの　住んでる▼
-[Name:Area Idx="1"]に
+			<Text>[Name:TrainerName Idx="7" ]『ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]は　あたしの　住んでる▼
+[Name:Area Idx="1" ]に
 きたことは　あるのかな？▼
-[Name:Hobby Idx="10"]　楽しめるし
+[Name:Hobby Idx="10" ]　楽しめるし
 なっかなか　いいとこだよ！▼
 でも　あたしね▼
-[Digit:3digits Idx="8"]ヶ所の　人達と
+[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換してみて　思ったんだ！▼
 きっと　他の　場所にも
 同じくらい　いいとこが　あるね！▼
 そう　考えると
 すっっごく　ワクワクしてこない？▼
-それじゃあね　[Name:TrainerName Idx="3"]！
+それじゃあね　[Name:TrainerName Idx="3" ]！
 また　交換しようね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2768,15 +2768,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『き　きみさぁ　あれでしょ
-[Name:TrainerName Idx="3"]でしょ▽
+[Name:TrainerName Idx="3" ]でしょ▽
 ……おぼえてるよ　きみのこと▼
 え？　ぼ　ぼく……？
-[Name:Area Idx="1"]の▽
-[Name:TrainerName Idx="7"]だよ▼
-こ　こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Area Idx="1" ]の▽
+[Name:TrainerName Idx="7" ]だよ▼
+こ　こないだは　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう……▽
 きみの　ポケモン　……いいね▼
-……ぼくの　あげた　[Name:PokemonNickname Idx="9"]も
+……ぼくの　あげた　[Name:PokemonNickname Idx="9" ]も
 なかなか　いいだろう？▼
 こんなとこで　また　あうとはね
 ……まぁ　うれしいよ　……ぐふっ</Text>
@@ -2791,15 +2791,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『き　きみさぁ　あれでしょ
-[Name:TrainerName Idx="3"]でしょ▽
+[Name:TrainerName Idx="3" ]でしょ▽
 ……覚えてるよ　きみのこと▼
 え？　ぼ　ぼく……？
-[Name:Area Idx="1"]の▽
-[Name:TrainerName Idx="7"]だよ▼
-こ　こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Area Idx="1" ]の▽
+[Name:TrainerName Idx="7" ]だよ▼
+こ　こないだは　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう……▽
 きみの　ポケモン　……いいね▼
-……ぼくの　あげた　[Name:PokemonNickname Idx="9"]も
+……ぼくの　あげた　[Name:PokemonNickname Idx="9" ]も
 なかなか　いいだろう？▼
 こんなとこで　また　会うとはね
 ……まぁ　うれしいよ　……ぐふっ</Text>
@@ -2845,15 +2845,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぐふふ▼
-ぼくねぇ　[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『ぐふふ▼
+ぼくねぇ　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したんだよ▼
 みんな　しゅみが　それぞれ　ちがって
 じつに　きょうみぶかい……▼
 え？　ぼくのしゅみ？▼
-[Name:Hobby Idx="10"]　だよ　ぐふっ▼
+[Name:Hobby Idx="10" ]　だよ　ぐふっ▼
 きみ　ぼくの　こきょうの
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたくなったら　きてみてよ▼
 きっと　きみにとって
 おもしろい　たびになるよ　ぐふふ……</Text>
@@ -2867,15 +2867,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぐふふ▼
-ぼくねぇ　[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『ぐふふ▼
+ぼくねぇ　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したんだよ▼
 みんな　趣味が　それぞれ　違って
 実に　興味深い……▼
 え？　ぼくの　趣味？▼
-[Name:Hobby Idx="10"]　だよ　ぐふっ▼
+[Name:Hobby Idx="10" ]　だよ　ぐふっ▼
 きみ　ぼくの　故郷の
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたくなったら　きてみてよ▼
 きっと　きみにとって
 おもしろい　旅になるよ　ぐふふ……</Text>
@@ -2921,12 +2921,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく
-しゅみが　[Name:Hobby Idx="10"]　なんだけど▼
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく
+しゅみが　[Name:Hobby Idx="10" ]　なんだけど▼
 きみが　こうかん　したひとの　なかで
-しゅみが　[Name:Hobby Idx="10"]の▽
+しゅみが　[Name:Hobby Idx="10" ]の▽
 ひとは　いた……？▼
-ぼく　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ぼく　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　したんだけど▽
 みんな　しゅみ　ちがうんだよね……▼
 すむ　ところが　ちがうと
@@ -2945,12 +2945,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく　趣味が
-[Name:Hobby Idx="10"]　なんだけど▼
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく　趣味が
+[Name:Hobby Idx="10" ]　なんだけど▼
 きみが　交換した人の　中で
-趣味が　[Name:Hobby Idx="10"]の▽
+趣味が　[Name:Hobby Idx="10" ]の▽
 人は　いた……？▼
-ぼく　[Digit:3digits Idx="8"]ヶ所の　人達と
+ぼく　[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換したんだけれど▽
 みんな　趣味　違うんだよね……▼
 住む所が　違うと
@@ -3001,15 +3001,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼっ　ぼくの
-しゅみは　[Name:Hobby Idx="10"]　だけど……▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼっ　ぼくの
+しゅみは　[Name:Hobby Idx="10" ]　だけど……▽
 きみは　どう……？▼
 ……ふぅ▼
 じ　じつは　ひとと　かいわ　するのは
 あまり　とくいじゃ　ないんだ……▼
-でも　そんな　ぼくでも　[Digit:3digits Idx="8"]かしょの
+でも　そんな　ぼくでも　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　できた……▼
-そうして　きみの　[Name:PokemonNickname Idx="5"]
+そうして　きみの　[Name:PokemonNickname Idx="5" ]
 てにいれたんだ……　ぐふ▼
 も　もっともっと
 こうかん　してみようかな……▼
@@ -3025,15 +3025,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼっ　ぼくの
-趣味は　[Name:Hobby Idx="10"]　だけど……▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼっ　ぼくの
+趣味は　[Name:Hobby Idx="10" ]　だけど……▽
 きみは　どう……？▼
 ……ふぅ▼
 じ　実は　人と　会話するのは
 あまり　得意じゃ　ないんだ……▼
-でも　そんな　ぼくでも　[Digit:3digits Idx="8"]ヶ所の
+でも　そんな　ぼくでも　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換できた……▼
-そうして　きみの　[Name:PokemonNickname Idx="5"]
+そうして　きみの　[Name:PokemonNickname Idx="5" ]
 手に入れたんだ……　ぐふ▼
 も　もっともっと
 交換してみようかな……▼
@@ -3081,17 +3081,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく……
-[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく……
+[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 こうかんしたんだ▼
 そしたら　ぼくと　おなじで
-しゅみが　[Name:Hobby Idx="10"]の▽
+しゅみが　[Name:Hobby Idx="10" ]の▽
 ひとが　いたんだ……▼
 ちきゅうの　うらがわにも
 おなじ　しゅみのひとは▽
 いるもんだね……▼
 ところで　きみは　ぼくの　すむ
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことって　あるかい……？▼
 たのしいとこだから
 きてみても　いいかもよ　……ぐふっ</Text>
@@ -3105,15 +3105,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく……
-[Digit:3digits Idx="8"]ヶ所の　人達と　交換したんだ▼
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく……
+[Digit:3digits Idx="8" ]ヶ所の　人達と　交換したんだ▼
 そしたら　ぼくと　同じで
-趣味が　[Name:Hobby Idx="10"]の▽
+趣味が　[Name:Hobby Idx="10" ]の▽
 人が　いたんだ……▼
 地球の　裏側にも
 同じ　趣味の人は　いるもんだね……▼
 ところで　きみは　ぼくの住む
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことって　あるかい……？▼
 楽しいとこだから
 きてみても　いいかもよ　……ぐふっ</Text>
@@ -3159,15 +3159,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きき　きみ
+			<Text>[Name:TrainerName Idx="7" ]『きき　きみ
 なんかしょくらいの　ひとたちと▽
 ポケモン　こうかん　した？▽
-ぼ　ぼくは　[Digit:3digits Idx="8"]かしょ……▼
+ぼ　ぼくは　[Digit:3digits Idx="8" ]かしょ……▼
 あ　あのさ
 ……きみって　ぼくのすんでる▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことって　ある……？▼
-[Name:Hobby Idx="10"]とか　すきな　ひとが
+[Name:Hobby Idx="10" ]とか　すきな　ひとが
 い　いてさ▼
 あ　もちろん　ぼくも
 すきなんだけど……▼
@@ -3183,15 +3183,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『きき　きみ
+			<Text>[Name:TrainerName Idx="7" ]『きき　きみ
 何ヶ所くらいの　人達と▽
 ポケモン　交換した？▽
-ぼ　ぼくは　[Digit:3digits Idx="8"]ヶ所……▼
+ぼ　ぼくは　[Digit:3digits Idx="8" ]ヶ所……▼
 あ　あのさ
 ……きみって　ぼくの住んでる▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことって　ある……？▼
-[Name:Hobby Idx="10"]とか　好きな　人が
+[Name:Hobby Idx="10" ]とか　好きな　人が
 い　いてさ▼
 あ　もちろん　ぼくも
 好きなんだけど……▼
@@ -3240,16 +3240,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『あ……　あなた……
-[Name:TrainerName Idx="3"]じゃない……？▼
+[Name:TrainerName Idx="3" ]じゃない……？▼
 わたしよ　わたし
-[Name:Location Idx="0"]の▽
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]よ▽
+[Name:Location Idx="0" ]の▽
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]よ▽
 ……おぼえてるかしら？　ウフフ▽
 また　あえるなんて　うれしいわ▼
-このあいだは　[Name:PokemonNickname Idx="5"]を
+このあいだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうね▼
-わたしの　あげた　[Name:PokemonNickname Idx="9"]は
+わたしの　あげた　[Name:PokemonNickname Idx="9" ]は
 げんきに　やってるかしら……？▼
 ここで　あったのも　なにかの　えんね
 これからも　よろしくね　……ウフフ</Text>
@@ -3264,16 +3264,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『あ……　あなた……
-[Name:TrainerName Idx="3"]じゃない……？▼
+[Name:TrainerName Idx="3" ]じゃない……？▼
 私よ　私
-[Name:Location Idx="0"]の▽
-[Name:Area Idx="1"]から▽
-きた　[Name:TrainerName Idx="7"]よ▽
+[Name:Location Idx="0" ]の▽
+[Name:Area Idx="1" ]から▽
+きた　[Name:TrainerName Idx="7" ]よ▽
 ……覚えてるかしら？　ウフフ▽
 また　会えるなんて　うれしいわ▼
-このあいだは　[Name:PokemonNickname Idx="5"]を
+このあいだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうね▼
-私の　あげた　[Name:PokemonNickname Idx="9"]は
+私の　あげた　[Name:PokemonNickname Idx="9" ]は
 元気に　やってるかしら……？▼
 ここで　会ったのも　何かの　縁ね
 これからも　よろしくね　……ウフフ</Text>
@@ -3314,15 +3314,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ね　ねぇ　あなた
+			<Text>[Name:TrainerName Idx="7" ]『ね　ねぇ　あなた
 なんかしょの　ひとたちと▽
 ポケモン　こうかん　した……？▼
-わたし　[Digit:3digits Idx="8"]かしょと　したわ▼
+わたし　[Digit:3digits Idx="8" ]かしょと　したわ▼
 しらない　ひとと　こうかんするの
 ちょっと　こわい……▽
 ……こわいけど　ドキドキするわ▼
 だって　たまに　わたしと　おなじで
-しゅみが　[Name:Hobby Idx="10"]の▽
+しゅみが　[Name:Hobby Idx="10" ]の▽
 ひとが　いるんですもの　……ウフフ▼
 ちょっと　こうかんするの
 たのしくなって　きちゃったじゃない……</Text>
@@ -3336,15 +3336,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ね　ねぇ　あなた
+			<Text>[Name:TrainerName Idx="7" ]『ね　ねぇ　あなた
 何ヶ所の　人達と▽
 ポケモン　交換した……？▼
-私　[Digit:3digits Idx="8"]ヶ所と　したわ▼
+私　[Digit:3digits Idx="8" ]ヶ所と　したわ▼
 知らない人と　交換するの
 ちょっと　こわい……▽
 ……こわいけど　ドキドキするわ▼
 だって　たまに　私と同じで
-趣味が　[Name:Hobby Idx="10"]の▽
+趣味が　[Name:Hobby Idx="10" ]の▽
 人が　いるんですもの　……ウフフ▼
 ちょっと　交換するの
 楽しくなって　きちゃったじゃない……</Text>
@@ -3383,17 +3383,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あ　あの……
-[Name:PokemonNickname Idx="9"]は　げんき……？▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　あの……
+[Name:PokemonNickname Idx="9" ]は　げんき……？▼
 いや　あの
 げんきなら　それで　いいの……▼
-あなたから　もらった　[Name:PokemonNickname Idx="5"]は
+あなたから　もらった　[Name:PokemonNickname Idx="5" ]は
 げんきよ……▽
 とっても……ええ▼
 あなた　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみない……？▼
-[Name:Hobby Idx="10"]
+[Name:Hobby Idx="10" ]
 たのしめるし　いいところよ▽
 ……▽
 ……きっとよ　ウフフ</Text>
@@ -3407,17 +3407,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あ　あの……
-[Name:PokemonNickname Idx="9"]は　元気……？▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　あの……
+[Name:PokemonNickname Idx="9" ]は　元気……？▼
 いや　あの
 元気なら　それで　いいの……▼
-あなたから　もらった　[Name:PokemonNickname Idx="5"]は
+あなたから　もらった　[Name:PokemonNickname Idx="5" ]は
 元気よ……▽
 とっても……ええ▼
 あなた　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみない……？▼
-[Name:Hobby Idx="10"]
+[Name:Hobby Idx="10" ]
 楽しめるし　いい所よ▽
 ……▽
 ……きっとよ　ウフフ</Text>
@@ -3456,18 +3456,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ　ねぇ　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ　ねぇ　[Name:TrainerName Idx="3" ]
 あなたの　しゅみって　なぁに？▼
-わたし　[Name:Hobby Idx="10"]　なのよ
+わたし　[Name:Hobby Idx="10" ]　なのよ
 ……いがい　でしょう？▼
-[Name:TrainerName Idx="3"]は　なんかしょの
+[Name:TrainerName Idx="3" ]は　なんかしょの
 ひとたちと　こうかん　したのかしら？▼
 わたしはねぇ　ウフフ……▼
-[Digit:3digits Idx="8"]かしょよ▼
+[Digit:3digits Idx="8" ]かしょよ▼
 もっともっと　こうかんして
-[Name:PokemonNickname Idx="5"]ずきの　ひと▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひと▽
 さがしちゃうんだから……　ウフフフ▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]
+それじゃあ　またね　[Name:TrainerName Idx="3" ]
 いつか　また　こうかん　しましょ……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3479,18 +3479,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ　ねぇ　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ　ねぇ　[Name:TrainerName Idx="3" ]
 あなたの　趣味って　なぁに？▼
-私　[Name:Hobby Idx="10"]　なのよ
+私　[Name:Hobby Idx="10" ]　なのよ
 ……意外　でしょう？▼
-[Name:TrainerName Idx="3"]は　何ヶ所の
+[Name:TrainerName Idx="3" ]は　何ヶ所の
 人達と　交換したのかしら？▼
 私はねぇ　ウフフ……▼
-[Digit:3digits Idx="8"]ヶ所よ▼
+[Digit:3digits Idx="8" ]ヶ所よ▼
 もっともっと　交換して
-[Name:PokemonNickname Idx="5"]好きの　人▽
+[Name:PokemonNickname Idx="5" ]好きの　人▽
 探しちゃうんだから……　ウフフフ▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]
+それじゃあ　またね　[Name:TrainerName Idx="3" ]
 いつか　また　交換しましょ……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3527,19 +3527,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あなた
-[Name:Area Idx="1"]には▽
+			<Text>[Name:TrainerName Idx="7" ]『あなた
+[Name:Area Idx="1" ]には▽
 きたこと　あるのかしら……？▼
 すごく　いいとこ　なのよね
 ぜひ　きて　ほしいわ……▼
-わたし　[Digit:3digits Idx="8"]かしょの　ひとたちと
+わたし　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したのよ▽
 がんばった　でしょう……？▼
 こうかん　した　トレーナーの
 しゅみを　しることが　できるのよ……▽
 なんだか　たのしいじゃない……▼
 ……わたし？
-わたしは　[Name:Hobby Idx="10"]よ▽
+わたしは　[Name:Hobby Idx="10" ]よ▽
 ……いがい　かしら　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3551,19 +3551,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あなた
-[Name:Area Idx="1"]には▽
+			<Text>[Name:TrainerName Idx="7" ]『あなた
+[Name:Area Idx="1" ]には▽
 きたこと　あるのかしら……？▼
 すごく　いいとこ　なのよね
 ぜひ　きてほしいわ……▼
-私　[Digit:3digits Idx="8"]ヶ所の　人達と
+私　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したのよ▽
 がんばった　でしょう……？▼
 交換した　トレーナーの
 趣味を　知ることが　できるのよ……▽
 なんだか　楽しいじゃない……▼
 ……私？
-私は　[Name:Hobby Idx="10"]よ▽
+私は　[Name:Hobby Idx="10" ]よ▽
 ……意外かしら　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3600,24 +3600,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ
 あなた　なんかしょの　ひとたちと▽
 ポケモン　こうかん　したのかしら？▼
-わたしは　いま　[Digit:3digits Idx="8"]かしょよ……
+わたしは　いま　[Digit:3digits Idx="8" ]かしょよ……
 でも　もっともっと▽
 こうかん　するわ……▼
 だって　いつか
-[Name:Hobby Idx="10"]ずきで　さらに▽
-[Name:PokemonNickname Idx="5"]ずきの　ひとに▽
+[Name:Hobby Idx="10" ]ずきで　さらに▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひとに▽
 あえるかも　しれないじゃない▽
 ……うんめい　かんじちゃうわ　ウフフ▼
 そしたら　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてもらうの……▽
 すごく　いいとこなのよね……　フフ▼
 ……あら　ごめんなさい
 また　もうそうが　ノンストップね▼
-……[Name:TrainerName Idx="3"]も　また
+……[Name:TrainerName Idx="3" ]も　また
 こうかん　しましょ……　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3629,23 +3629,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ
 あなた　何ヶ所の　人達と▽
 ポケモン　交換したのかしら？▼
-私は　いま　[Digit:3digits Idx="8"]ヶ所よ……
+私は　いま　[Digit:3digits Idx="8" ]ヶ所よ……
 でも　もっともっと　交換するわ……▼
 だって　いつか
-[Name:Hobby Idx="10"]好きで　さらに▽
-[Name:PokemonNickname Idx="5"]好きの　人に▽
+[Name:Hobby Idx="10" ]好きで　さらに▽
+[Name:PokemonNickname Idx="5" ]好きの　人に▽
 会えるかも　しれないじゃない▽
 ……運命　感じちゃうわ　ウフフ▼
 そしたら　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてもらうの……▽
 すごく　いいとこなのよね……　フフ▼
 ……あら　ごめんなさい
 また　妄想が　ノンストップね▼
-……[Name:TrainerName Idx="3"]も　また
+……[Name:TrainerName Idx="3" ]も　また
 交換しましょ……　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3683,12 +3683,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『あ▼
-きみさ　[Name:TrainerName Idx="3"]だよね？
-ぼく　[Name:TrainerName Idx="7"]だよ▼
+きみさ　[Name:TrainerName Idx="3" ]だよね？
+ぼく　[Name:TrainerName Idx="7" ]だよ▼
 ホラ　おぼえてるかな？
-[Name:Area Idx="1"]の！▼
-こないだ　きみの[Name:PokemonNickname Idx="5"]と
-ぼくの　[Name:PokemonNickname Idx="9"]で▽
+[Name:Area Idx="1" ]の！▼
+こないだ　きみの[Name:PokemonNickname Idx="5" ]と
+ぼくの　[Name:PokemonNickname Idx="9" ]で▽
 こうかん　したよねぇ▼
 また　あえるなんて　うれしいなぁ
 よかったら　ゆっくり▽
@@ -3704,12 +3704,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『あ▼
-きみさ　[Name:TrainerName Idx="3"]だよね？
-ぼく　[Name:TrainerName Idx="7"]だよ▼
+きみさ　[Name:TrainerName Idx="3" ]だよね？
+ぼく　[Name:TrainerName Idx="7" ]だよ▼
 ホラ　覚えてるかな？
-[Name:Area Idx="1"]の！▼
-こないだ　きみの[Name:PokemonNickname Idx="5"]と
-ぼくの　[Name:PokemonNickname Idx="9"]で▽
+[Name:Area Idx="1" ]の！▼
+こないだ　きみの[Name:PokemonNickname Idx="5" ]と
+ぼくの　[Name:PokemonNickname Idx="9" ]で▽
 交換したよねぇ▼
 また　会えるなんて　うれしいなぁ
 よかったら　ゆっくり▽
@@ -3756,16 +3756,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-さいきん　ぼく　[Name:Hobby Idx="10"]　たのしむのに
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+さいきん　ぼく　[Name:Hobby Idx="10" ]　たのしむのに
 はまっててねぇ▼
 すごく　たのしいからさぁ
 きみが　いつか▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたら　いっしょに　あそぼうよ▼
 ところで　きみ　なんかしょと
 ポケモン　こうかん　した？▼
-ぼく　[Digit:3digits Idx="8"]かしょ　なんだよねぇ▼
+ぼく　[Digit:3digits Idx="8" ]かしょ　なんだよねぇ▼
 いやぁ　もーっと　いろんなとこと
 こうかん　してみたいなぁ</Text>
 			<TextModifiedBy
@@ -3778,16 +3778,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-さいきん　ぼく　[Name:Hobby Idx="10"]　楽しむのに
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+さいきん　ぼく　[Name:Hobby Idx="10" ]　楽しむのに
 はまっててねぇ▼
 すごく　楽しいからさぁ
 きみが　いつか▽
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたら　一緒に　遊ぼうよ▼
 ところで　きみ　何ヶ所と
 ポケモン　交換した？▼
-ぼく　[Digit:3digits Idx="8"]ヶ所　なんだよねぇ▼
+ぼく　[Digit:3digits Idx="8" ]ヶ所　なんだよねぇ▼
 いやぁ　もーっと　いろんな所と
 交換してみたいなぁ</Text>
 			<TextModifiedBy
@@ -3832,20 +3832,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-ぼくさぁ　[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+ぼくさぁ　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したんだけど▼
 いやぁ　みんな　しゅみって
 それぞれなんだねぇ▼
 え？　ぼくの　しゅみ？
-うーん　[Name:Hobby Idx="10"]　かなぁ▽
+うーん　[Name:Hobby Idx="10" ]　かなぁ▽
 なかなか　たのしいんだよねぇ▼
 きみの　まわりでは
-[Name:Hobby Idx="10"]ずきの　ひとって　いる？▼
+[Name:Hobby Idx="10" ]ずきの　ひとって　いる？▼
 ぼくの　すむ
-[Name:Area Idx="1"]では▽
+[Name:Area Idx="1" ]では▽
 うーん　まぁ　それなりに　いるかなぁ▼
-なには　ともあれ　[Name:TrainerName Idx="3"]
+なには　ともあれ　[Name:TrainerName Idx="3" ]
 よかったら　また　こうかん　しようよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3857,20 +3857,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-ぼくさぁ　[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+ぼくさぁ　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したんだけど▼
 いやぁ　みんな　趣味って
 それぞれなんだねぇ▼
 え？　ぼくの　趣味？
-うーん　[Name:Hobby Idx="10"]　かなぁ▽
+うーん　[Name:Hobby Idx="10" ]　かなぁ▽
 なかなか　楽しいんだよねぇ▼
 きみの　まわりでは
-[Name:Hobby Idx="10"]好きの　人って　いる？▼
+[Name:Hobby Idx="10" ]好きの　人って　いる？▼
 ぼくの　住む
-[Name:Area Idx="1"]では▽
+[Name:Area Idx="1" ]では▽
 うーん　まぁ　それなりに　いるかなぁ▼
-なには　ともあれ　[Name:TrainerName Idx="3"]
+なには　ともあれ　[Name:TrainerName Idx="3" ]
 よかったら　また　交換しようよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3914,20 +3914,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]▼
 きみ　なんかしょの　ひとたちと
 ポケモン　こうかん　した？▼
-ぼくね　[Digit:3digits Idx="8"]かしょの　ひとと
+ぼくね　[Digit:3digits Idx="8" ]かしょの　ひとと
 こうかん　したんだけどね▽
 なかには　いるんだよねぇ▼
 ぼくと　おなじ
-[Name:Hobby Idx="10"]ずきの　ひと！▼
+[Name:Hobby Idx="10" ]ずきの　ひと！▼
 なぁんか　いろんな　ばしょの　ひとと
 こうかん　していると▼
 うみの　むこうがわって　そんなに
 とおくない　きがしてくるよね▼
 きみも　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみてよー▽
 けっこう　いいとこだからさ</Text>
 			<TextModifiedBy
@@ -3940,20 +3940,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]▼
 きみ　何ヶ所の　人達と
 ポケモン　交換した？▼
-ぼくね　[Digit:3digits Idx="8"]ヶ所の　人と
+ぼくね　[Digit:3digits Idx="8" ]ヶ所の　人と
 交換したんだけどね▽
 中には　いるんだよねぇ▼
 ぼくと　同じ
-[Name:Hobby Idx="10"]好きの　人！▼
+[Name:Hobby Idx="10" ]好きの　人！▼
 なぁんか　いろんな　場所の　人と
 交換していると▼
 海の　むこう側って　そんなに
 遠くない　気がしてくるよね▼
 きみも　いつか
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きてみてよー▽
 結構　いいとこだからさ</Text>
 			<TextModifiedBy
@@ -3998,18 +3998,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『お　[Name:TrainerName Idx="3"]～
+			<Text>[Name:TrainerName Idx="7" ]『お　[Name:TrainerName Idx="3" ]～
 また　あったねぇ▽
 ちょうしは　どう？▼
-ぼくはねぇ　[Digit:3digits Idx="8"]かしょの
+ぼくはねぇ　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　ポケモン　こうかんしたよ▼
 へへ　なかなか　たのしい　もんだよ
 あいての　しゅみとか　しれるしね▼
 え　ぼく？▼
-ぼくは　[Name:Hobby Idx="10"]
+ぼくは　[Name:Hobby Idx="10" ]
 たのしむのが　すきかなぁ▼
 ところでさ　きみは
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことは　ある？▼
 なかなか　いいとこだから
 いつか　おいでよ</Text>
@@ -4023,18 +4023,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『お　[Name:TrainerName Idx="3"]～
+			<Text>[Name:TrainerName Idx="7" ]『お　[Name:TrainerName Idx="3" ]～
 また　会ったねぇ▽
 調子は　どう？▼
-ぼくはねぇ　[Digit:3digits Idx="8"]ヶ所の
+ぼくはねぇ　[Digit:3digits Idx="8" ]ヶ所の
 人達と　ポケモン　交換したよ▼
 へへ　なかなか　楽しい　もんだよ
 相手の　趣味とか　知れるしね▼
 え　ぼく？▼
-ぼくは　[Name:Hobby Idx="10"]
+ぼくは　[Name:Hobby Idx="10" ]
 楽しむのが　好きかなぁ▼
 ところでさ　きみは
-[Name:Area Idx="1"]に▽
+[Name:Area Idx="1" ]に▽
 きたことは　ある？▼
 なかなか　いいとこだから
 いつか　おいでよ</Text>
@@ -4080,22 +4080,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼくさぁ
-[Name:Hobby Idx="10"]　たのしんでると▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼくさぁ
+[Name:Hobby Idx="10" ]　たのしんでると▽
 じかんを　わすれちゃうんだよねぇ▼
 ……でも　しゅみって　きっと
 そういうものだよね？▼
 きみは　なんかしょの　ひとたちと
 こうかん　した？▽
-ぼくはね　いま　[Digit:3digits Idx="8"]かしょ　なんだ▼
+ぼくはね　いま　[Digit:3digits Idx="8" ]かしょ　なんだ▼
 こうかんしてると　しゅみと　いっしょで
 じかんを　わすれるんだよねぇ▼
 おかげで　いっつも
 ちこく　しちゃうんだよねぇ▼
 ……まぁでも　きっと　たのしいことって
 そういう　ものだよね？▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Area Idx="1"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Area Idx="1" ]に▽
 きてみてよ▼
 じかんを　わすれるほど
 たのしい　ところ　だからさ</Text>
@@ -4109,21 +4109,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼくさぁ
-[Name:Hobby Idx="10"]　楽しんでると▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼくさぁ
+[Name:Hobby Idx="10" ]　楽しんでると▽
 時間を　忘れちゃうんだよねぇ▼
 ……でも　趣味って　きっと
 そういうものだよね？▼
 きみは　何ヶ所の　人達と　交換した？
-ぼくはね　今　[Digit:3digits Idx="8"]ヶ所　なんだ▼
+ぼくはね　今　[Digit:3digits Idx="8" ]ヶ所　なんだ▼
 交換してると　趣味と　一緒で
 時間を　忘れるんだよねぇ▼
 おかげで
 いっつも　遅刻しちゃうんだよねぇ▼
 ……まぁでも　きっと　楽しいことって
 そういうものだよね？▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Area Idx="1"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Area Idx="1" ]に▽
 きてみてよ▼
 時間を　忘れるほど
 楽しい　ところ　だからさ</Text>
@@ -4169,14 +4169,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『また　あったねぇ　[Name:TrainerName Idx="3"]
+			<Text>？？？『また　あったねぇ　[Name:TrainerName Idx="3" ]
 あたしの　こと　おぼえてる？▼
-[Name:Location Idx="0"]の
-[Name:Area Idx="1"]▽
-から　きた　[Name:TrainerName Idx="7"]だよ▼
+[Name:Location Idx="0" ]の
+[Name:Area Idx="1" ]▽
+から　きた　[Name:TrainerName Idx="7" ]だよ▼
 ほらほらぁ　こないだ
-きみの　[Name:PokemonNickname Idx="5"]と▽
-あたしの　[Name:PokemonNickname Idx="9"]▽
+きみの　[Name:PokemonNickname Idx="5" ]と▽
+あたしの　[Name:PokemonNickname Idx="9" ]▽
 こうかん　したよね▼
 わぁ　こんなところで　あえるなんて
 なんか　うれしいなぁ</Text>
@@ -4190,14 +4190,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『また　会ったねぇ　[Name:TrainerName Idx="3"]
+			<Text>？？？『また　会ったねぇ　[Name:TrainerName Idx="3" ]
 あたしの　こと　覚えてる？▼
-[Name:Location Idx="0"]の
-[Name:Area Idx="1"]▽
-から　きた　[Name:TrainerName Idx="7"]だよ▼
+[Name:Location Idx="0" ]の
+[Name:Area Idx="1" ]▽
+から　きた　[Name:TrainerName Idx="7" ]だよ▼
 ほらほらぁ　こないだ
-きみの　[Name:PokemonNickname Idx="5"]と▽
-あたしの　[Name:PokemonNickname Idx="9"]▽
+きみの　[Name:PokemonNickname Idx="5" ]と▽
+あたしの　[Name:PokemonNickname Idx="9" ]▽
 交換したよね▼
 わぁ　こんなところで　会えるなんて
 なんか　うれしいなぁ</Text>
@@ -4236,16 +4236,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
-あたしねー　[Digit:3digits Idx="8"]かしょの
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
+あたしねー　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　したの▼
 ちがう　ばしょに　すむ　ひとでも
-あたしと　おんなじ　[Name:Hobby Idx="10"]が▽
+あたしと　おんなじ　[Name:Hobby Idx="10" ]が▽
 しゅみの　ひとが▽
 たーくさん　いたのよ▼
-ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]も　よかったら　いつか▽
-[Name:Area Idx="1"]に▽
+ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]も　よかったら　いつか▽
+[Name:Area Idx="1" ]に▽
 あそびに　おいでよー　ふふ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4257,15 +4257,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
-あたしねー　[Digit:3digits Idx="8"]ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
+あたしねー　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換したの▼
 違う場所に　住む人でも
-あたしと　おんなじ　[Name:Hobby Idx="10"]が▽
+あたしと　おんなじ　[Name:Hobby Idx="10" ]が▽
 趣味の　人が　たーくさん　いたのよ▼
-ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]も　よかったら　いつか▽
-[Name:Area Idx="1"]に▽
+ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]も　よかったら　いつか▽
+[Name:Area Idx="1" ]に▽
 遊びに　おいでよー　ふふ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4302,17 +4302,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わあ　[Name:TrainerName Idx="3"]だぁ
+			<Text>[Name:TrainerName Idx="7" ]『わあ　[Name:TrainerName Idx="3" ]だぁ
 ねぇねぇ　きいて　きいて▼
-あたしね　[Digit:3digits Idx="8"]かしょの　ひとたちと
+あたしね　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したの▼
-[Name:PokemonNickname Idx="5"]が　すきな　ひとが
+[Name:PokemonNickname Idx="5" ]が　すきな　ひとが
 ほかにも　いてね▽
 ちょっと　うれしくなっちゃった▼
-……ねぇ　[Name:TrainerName Idx="3"]
-[Name:Area Idx="1"]に▽
+……ねぇ　[Name:TrainerName Idx="3" ]
+[Name:Area Idx="1" ]に▽
 くることが　あったら▽
-いっしょに　[Name:Hobby Idx="10"]　たのしもうね▽
+いっしょに　[Name:Hobby Idx="10" ]　たのしもうね▽
 きっと　たのしいよー！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4324,17 +4324,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『わあ　[Name:TrainerName Idx="3"]だぁ
+			<Text>[Name:TrainerName Idx="7" ]『わあ　[Name:TrainerName Idx="3" ]だぁ
 ねぇねぇ　聞いて　聞いて▼
-あたしね　[Digit:3digits Idx="8"]ヶ所の　人達と
+あたしね　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したの▼
-[Name:PokemonNickname Idx="5"]が　好きな　人が
+[Name:PokemonNickname Idx="5" ]が　好きな　人が
 他にも　いてね▽
 ちょっと　うれしくなっちゃった▼
-……ねぇ　[Name:TrainerName Idx="3"]
-[Name:Area Idx="1"]に▽
+……ねぇ　[Name:TrainerName Idx="3" ]
+[Name:Area Idx="1" ]に▽
 くることが　あったら▽
-一緒に　[Name:Hobby Idx="10"]　楽しもうね▽
+一緒に　[Name:Hobby Idx="10" ]　楽しもうね▽
 きっと　楽しいよー！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4371,23 +4371,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『……▼
+			<Text>[Name:TrainerName Idx="7" ]『……▼
 ……▼
 えっ　なに？
 ごめん　ボーっと　してた▼
 あたしの　しゅみ？
 んーとねぇ▽
-……[Name:Hobby Idx="10"]かなぁ？▽
-[Name:TrainerName Idx="3"]は？▼
+……[Name:Hobby Idx="10" ]かなぁ？▽
+[Name:TrainerName Idx="3" ]は？▼
 しゅみと　いえばねー
-あたし　[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+あたし　[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 ポケモン　こうかん　したんだけど▼
 やっと　おなじ　しゅみの　ひとに
 あえたのー！▽
 えへへ▽
 なんか　そういうのって　うれしいよね▽
 また　こうかん　したく　なっちゃった▼
-[Name:TrainerName Idx="3"]も　よかったら
+[Name:TrainerName Idx="3" ]も　よかったら
 また　こうかん　してね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4399,23 +4399,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『……▼
+			<Text>[Name:TrainerName Idx="7" ]『……▼
 ……▼
 えっ　なに？
 ごめん　ボーっと　してた▼
 あたしの　趣味？
 んーとねぇ▽
-……[Name:Hobby Idx="10"]かなぁ？▽
-[Name:TrainerName Idx="3"]は？▼
+……[Name:Hobby Idx="10" ]かなぁ？▽
+[Name:TrainerName Idx="3" ]は？▼
 趣味と　言えばねー
-あたし　[Digit:3digits Idx="8"]ヶ所の　人達と▽
+あたし　[Digit:3digits Idx="8" ]ヶ所の　人達と▽
 ポケモン　交換したんだけど▼
 やっと　同じ　趣味の　人に
 会えたのー！▽
 えへへ▽
 なんか　そういうのって　うれしいよね▽
 また　交換したく　なっちゃった▼
-[Name:TrainerName Idx="3"]も　よかったら
+[Name:TrainerName Idx="3" ]も　よかったら
 また　交換してね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4452,24 +4452,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あら　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『あら　[Name:TrainerName Idx="3" ]
 こんにちは▼
 ここに　いるってことは
-[Name:TrainerName Idx="3"]も　とおくの　ひとと▽
+[Name:TrainerName Idx="3" ]も　とおくの　ひとと▽
 ポケモンを　こうかん　したのかな？▼
 ふふ
 じぶんの　ポケモンも　かわいいけど▽
 ひとからもらった　ポケモンにも　また▽
 とくべつな　かわいさが　あるよねえ▼
-あたしね　[Digit:3digits Idx="8"]かしょの　ひとたちと
+あたしね　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモンを　こうかん　したんだけれど▼
 もっと　たくさんの　ひとと
 こうかん　したくなって　きたわ▼
 だって　あたしと　おなじ
-[Name:Hobby Idx="10"]ずきの　ひとが　いるのよ▼
+[Name:Hobby Idx="10" ]ずきの　ひとが　いるのよ▼
 トレーナーと　はなすのが
 たのしくなってきちゃった▼
-ねぇ　[Name:TrainerName Idx="3"]▼
+ねぇ　[Name:TrainerName Idx="3" ]▼
 また　こうかん　しましょうね
 きっとよ</Text>
 			<TextModifiedBy
@@ -4482,24 +4482,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あら　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『あら　[Name:TrainerName Idx="3" ]
 こんにちは▼
 ここに　いるってことは
-[Name:TrainerName Idx="3"]も　遠くの　人と▽
+[Name:TrainerName Idx="3" ]も　遠くの　人と▽
 ポケモンを　交換したのかな？▼
 ふふ
 自分の　ポケモンも　可愛いけど▽
 人からもらった　ポケモンにも　また▽
 特別な　可愛さが　あるよねえ▼
-あたしね　[Digit:3digits Idx="8"]ヶ所の　人達と
+あたしね　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモンを　交換したんだけれど▼
 もっと　たくさんの　人と
 交換したくなって　きたわ▼
 だって　あたしと　同じ
-[Name:Hobby Idx="10"]好きの　人が　いるのよ▼
+[Name:Hobby Idx="10" ]好きの　人が　いるのよ▼
 トレーナーと　話すのが
 楽しくなってきちゃった▼
-ねぇ　[Name:TrainerName Idx="3"]▼
+ねぇ　[Name:TrainerName Idx="3" ]▼
 また　交換しましょうね
 きっとよ</Text>
 			<TextModifiedBy
@@ -4537,18 +4537,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
 あのね　あのね　あたしね
-[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 ポケモン　こうかん　したんだよー▽
 がんばったでしょ　へへ！▽
 でも　まだまだ　こうかん　しちゃうよ！▼
 ん？　あたしの　しゅみ？
 えーとね▽
 うーん……▼
-[Name:Hobby Idx="10"]かな！　たのしいよ！▼
-ねぇ　[Name:TrainerName Idx="3"]
-[Name:PokemonNickname Idx="9"]のこと　よろしくね▼
+[Name:Hobby Idx="10" ]かな！　たのしいよ！▼
+ねぇ　[Name:TrainerName Idx="3" ]
+[Name:PokemonNickname Idx="9" ]のこと　よろしくね▼
 すごく　いいこ　だから
 たくさん　かわいがって　あげてね</Text>
 			<TextModifiedBy
@@ -4561,18 +4561,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
 あのね　あのね　あたしね
-[Digit:3digits Idx="8"]ヶ所の　人達と▽
+[Digit:3digits Idx="8" ]ヶ所の　人達と▽
 ポケモン　交換したんだよー▽
 頑張ったでしょ　へへ！▽
 でも　まだまだ　交換しちゃうよ！▼
 ん？　あたしの　趣味？
 えーとね▽
 うーん……▼
-[Name:Hobby Idx="10"]かな！　楽しいよ！▼
-ねぇ　[Name:TrainerName Idx="3"]
-[Name:PokemonNickname Idx="9"]のこと　よろしくね▼
+[Name:Hobby Idx="10" ]かな！　楽しいよ！▼
+ねぇ　[Name:TrainerName Idx="3" ]
+[Name:PokemonNickname Idx="9" ]のこと　よろしくね▼
 すごく　いい子　だから
 たくさん　可愛がって　あげてね</Text>
 			<TextModifiedBy
@@ -4826,12 +4826,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『やあ　[Name:TrainerName Idx="3"]！
+			<Text>？？？『やあ　[Name:TrainerName Idx="3" ]！
 ぼくのこと　おぼえてる？▼
-[Name:Location Idx="0"] から
-きた　[Name:TrainerName Idx="7"]だよ！▼
-[Name:PokemonNickname Idx="9"]は　げんき？
-きみが　くれた　[Name:PokemonNickname Idx="5"]は▽
+[Name:Location Idx="0" ] から
+きた　[Name:TrainerName Idx="7" ]だよ！▼
+[Name:PokemonNickname Idx="9" ]は　げんき？
+きみが　くれた　[Name:PokemonNickname Idx="5" ]は▽
 とっても　げんき　だよ▼
 よかったら　また
 ポケモン　こうかん　しようよ！</Text>
@@ -4845,12 +4845,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『やあ　[Name:TrainerName Idx="3"]！
+			<Text>？？？『やあ　[Name:TrainerName Idx="3" ]！
 僕のこと　覚えてる？▼
-[Name:Location Idx="0"] から
-きた　[Name:TrainerName Idx="7"]だよ！▼
-[Name:PokemonNickname Idx="9"]は　元気？
-君が　くれた　[Name:PokemonNickname Idx="5"]は▽
+[Name:Location Idx="0" ] から
+きた　[Name:TrainerName Idx="7" ]だよ！▼
+[Name:PokemonNickname Idx="9" ]は　元気？
+君が　くれた　[Name:PokemonNickname Idx="5" ]は▽
 とっても　元気だよ▼
 よかったら　また　
 ポケモン　交換しようよ！</Text>
@@ -4898,11 +4898,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼくは
-しゅみとして　[Name:Hobby Idx="10"]　するのが▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼくは
+しゅみとして　[Name:Hobby Idx="10" ]　するのが▽
 すきなんだけど▽
 きみは　なにを　するのが　すき？▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモンを　こうかん　したよ▼
 こうかんを　すると
 せかいと　つながっている▽
@@ -4917,11 +4917,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『僕は
-趣味として　[Name:Hobby Idx="10"]　するのが▽
+			<Text>[Name:TrainerName Idx="7" ]『僕は
+趣味として　[Name:Hobby Idx="10" ]　するのが▽
 好きなんだけど▽
 君は　何をするのが　好き？▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人達と
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモンを　交換したよ▼
 交換を　すると
 世界と　つながっている▽
@@ -4969,15 +4969,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]！▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとと
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]！▼
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモンを　こうかん　したよ！▼
 いろんな　とこと　こうかんしてみると
 せかいじゅうで　しゅみが▽
 ちがうことが　わかるね▼
 ……ん？　ぼくの　しゅみ？
-[Name:Hobby Idx="10"]　だよ！▼
-[Name:Location Idx="0"]に
+[Name:Hobby Idx="10" ]　だよ！▼
+[Name:Location Idx="0" ]に
 いつか　きてみてよ▽
 きっと　たのしいからさ！</Text>
 			<TextModifiedBy
@@ -4990,15 +4990,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]！▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人と
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]！▼
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモンを　交換したよ！▼
 いろんな　とこと　交換してみると
 世界中で　趣味が▽
 違うことが　わかるね▼
 ……ん？　僕の　趣味？
-[Name:Hobby Idx="10"]　だよ！▼
-[Name:Location Idx="0"]に
+[Name:Hobby Idx="10" ]　だよ！▼
+[Name:Location Idx="0" ]に
 いつか　きてみてよ▽
 きっと　楽しいからさ！</Text>
 			<TextModifiedBy
@@ -5044,18 +5044,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]▼
 きみは　なんかしょの　ひとと
 ポケモンを　こうかん　した？▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　したよ▼
 いつか　じっさいに
 いろんな　ところに　いってみたいなぁ▼
 よかったら　きみも　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみてよね▽
 そして　いっしょに▽
-[Name:Hobby Idx="10"]　しようよ！</Text>
+[Name:Hobby Idx="10" ]　しようよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -5066,17 +5066,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やあ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『やあ　[Name:TrainerName Idx="3" ]▼
 君は　何ヶ所の　人と
 ポケモンを　交換した？▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人達と
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換したよ▼
 いつか　実際に
 いろんな所に　行ってみたいなぁ▼
 よかったら　君も　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみてよね▽
-そして　一緒に　[Name:Hobby Idx="10"]　しようよ！</Text>
+そして　一緒に　[Name:Hobby Idx="10" ]　しようよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -5120,15 +5120,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きいてくれよ　[Name:TrainerName Idx="3"]！▼
-ぼく　さいきん　[Name:Hobby Idx="10"]　するのに
+			<Text>[Name:TrainerName Idx="7" ]『きいてくれよ　[Name:TrainerName Idx="3" ]！▼
+ぼく　さいきん　[Name:Hobby Idx="10" ]　するのに
 はまっているんだ▼
-でね　ぼく　[Digit:3digits Idx="8"]かしょの　ひとと
+でね　ぼく　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモン　こうかん　したんだけど▽
-[Name:Hobby Idx="10"]ずきの　ひとって▽
+[Name:Hobby Idx="10" ]ずきの　ひとって▽
 けっこう　いるみたいなんだよね！▼
-[Name:TrainerName Idx="3"]が　いつか　ぼくのすむ
-[Name:Location Idx="0"]に▽
+[Name:TrainerName Idx="3" ]が　いつか　ぼくのすむ
+[Name:Location Idx="0" ]に▽
 くることが　あったら▽
 いっしょに　あそぼうよ！　きっとだよ！</Text>
 			<TextModifiedBy
@@ -5141,15 +5141,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『聞いてくれよ　[Name:TrainerName Idx="3"]！▼
-僕　最近　[Name:Hobby Idx="10"]　するのに
+			<Text>[Name:TrainerName Idx="7" ]『聞いてくれよ　[Name:TrainerName Idx="3" ]！▼
+僕　最近　[Name:Hobby Idx="10" ]　するのに
 はまっているんだ▼
-でね　僕　[Digit:3digits Idx="8"]ヶ所の　人と
+でね　僕　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモン　交換したんだけど▽
-[Name:Hobby Idx="10"]好きの　人って▽
+[Name:Hobby Idx="10" ]好きの　人って▽
 結構　いるみたいなんだよね！▼
-[Name:TrainerName Idx="3"]が　いつか　僕の住む
-[Name:Location Idx="0"]に▽
+[Name:TrainerName Idx="3" ]が　いつか　僕の住む
+[Name:Location Idx="0" ]に▽
 くることが　あったら▽
 一緒に　遊ぼうよ！　きっとだよ！</Text>
 			<TextModifiedBy
@@ -5195,17 +5195,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『むかし　[Name:PokemonNickname Idx="9"]が
-[Name:Location Idx="0"]に▽
+			<Text>[Name:TrainerName Idx="7" ]『むかし　[Name:PokemonNickname Idx="9" ]が
+[Name:Location Idx="0" ]に▽
 いたときは　よく　いっしょに▽
-[Name:Hobby Idx="10"]　していたんだ▼
-[Name:TrainerName Idx="3"]も　よかったら
-いっしょに　[Name:Hobby Idx="10"]　してあげてよ▽
+[Name:Hobby Idx="10" ]　していたんだ▼
+[Name:TrainerName Idx="3" ]も　よかったら
+いっしょに　[Name:Hobby Idx="10" ]　してあげてよ▽
 きっと　よろこぶからさ！▼
 ……ところで　きみは
 いろんな　ところの　ひとと▽
 ポケモン　こうかん　してる？▼
-ぼくは　[Digit:3digits Idx="8"]かしょの　ひとと
+ぼくは　[Digit:3digits Idx="8" ]かしょの　ひとと
 こうかん　したよ▽
 よかったら　また　こうかん　しようね</Text>
 			<TextModifiedBy
@@ -5218,17 +5218,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『昔　[Name:PokemonNickname Idx="9"]が
-[Name:Location Idx="0"]に▽
+			<Text>[Name:TrainerName Idx="7" ]『昔　[Name:PokemonNickname Idx="9" ]が
+[Name:Location Idx="0" ]に▽
 いた時は　よく　一緒に▽
-[Name:Hobby Idx="10"]　していたんだ▼
-[Name:TrainerName Idx="3"]も　よかったら
-一緒に　[Name:Hobby Idx="10"]　してあげてよ▽
+[Name:Hobby Idx="10" ]　していたんだ▼
+[Name:TrainerName Idx="3" ]も　よかったら
+一緒に　[Name:Hobby Idx="10" ]　してあげてよ▽
 きっと　喜ぶからさ！▼
 ……ところで　君は
 いろんな所の　人と▽
 ポケモン　交換してる？▼
-僕は　[Digit:3digits Idx="8"]ヶ所の　人と
+僕は　[Digit:3digits Idx="8" ]ヶ所の　人と
 交換したよ▽
 よかったら　また　交換しようね</Text>
 			<TextModifiedBy
@@ -5274,17 +5274,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『あ　[Name:TrainerName Idx="3"]？▼
-[Name:TrainerName Idx="3"]よね？▼
+			<Text>？？？『あ　[Name:TrainerName Idx="3" ]？▼
+[Name:TrainerName Idx="3" ]よね？▼
 ひさしぶり！▼
-[Name:Location Idx="0"]から
-きた　[Name:TrainerName Idx="7"]よ　おぼえてる？▼
-このあいだは　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]から
+きた　[Name:TrainerName Idx="7" ]よ　おぼえてる？▼
+このあいだは　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう！▽
 とっても　げんきに　してるわよ▼
 わたしが　あげた
-[Name:PokemonNickname Idx="9"]は　げんき？▼
-って　きっと　[Name:TrainerName Idx="3"]と
+[Name:PokemonNickname Idx="9" ]は　げんき？▼
+って　きっと　[Name:TrainerName Idx="3" ]と
 いっしょなら　しんぱいは　むようね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5296,17 +5296,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『あ　[Name:TrainerName Idx="3"]？▼
-[Name:TrainerName Idx="3"]よね？▼
+			<Text>？？？『あ　[Name:TrainerName Idx="3" ]？▼
+[Name:TrainerName Idx="3" ]よね？▼
 久しぶり！▼
-[Name:Location Idx="0"]から
-きた　[Name:TrainerName Idx="7"]よ　覚えてる？▼
-この間は　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]から
+きた　[Name:TrainerName Idx="7" ]よ　覚えてる？▼
+この間は　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう！▽
 とっても　元気に　してるわよ▼
 私が　あげた
-[Name:PokemonNickname Idx="9"]は　元気？▼
-って　きっと　[Name:TrainerName Idx="3"]と
+[Name:PokemonNickname Idx="9" ]は　元気？▼
+って　きっと　[Name:TrainerName Idx="3" ]と
 一緒なら　心配は　無用ね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5344,11 +5344,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わたし
-いまのところ　[Digit:3digits Idx="8"]かしょの▽
+			<Text>[Name:TrainerName Idx="7" ]『わたし
+いまのところ　[Digit:3digits Idx="8" ]かしょの▽
 ひとたちと　こうかん　してるんだけど▼
 すむ　ばしょが　ちがっても
-おなじ　[Name:Hobby Idx="10"]ずきって▽
+おなじ　[Name:Hobby Idx="10" ]ずきって▽
 いるみたいなのよね▼
 ふふっ
 うみの　むこうがわの　ひとと▽
@@ -5364,11 +5364,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『私
-今のところ　[Digit:3digits Idx="8"]ヶ所の▽
+			<Text>[Name:TrainerName Idx="7" ]『私
+今のところ　[Digit:3digits Idx="8" ]ヶ所の▽
 人達と　交換してるんだけど▼
 住む　場所が　違っても
-同じ　[Name:Hobby Idx="10"]好きって▽
+同じ　[Name:Hobby Idx="10" ]好きって▽
 いるみたいなのよね▼
 ふふっ
 海の　むこう側の　人と▽
@@ -5410,13 +5410,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねえ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねえ　[Name:TrainerName Idx="3" ]は
 わたしが　すんでいる▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことは　ある？▼
-もし　[Name:TrainerName Idx="3"]が
+もし　[Name:TrainerName Idx="3" ]が
 くることが　あったら▽
-いっしょに　[Name:Hobby Idx="10"]▽
+いっしょに　[Name:Hobby Idx="10" ]▽
 たのしみましょうよ！▽
 きっと　たのしいわ！</Text>
 			<TextModifiedBy
@@ -5429,13 +5429,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねえ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねえ　[Name:TrainerName Idx="3" ]は
 私が　住んでいる▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことは　ある？▼
-もし　[Name:TrainerName Idx="3"]が
+もし　[Name:TrainerName Idx="3" ]が
 くることが　あったら▽
-一緒に　[Name:Hobby Idx="10"]▽
+一緒に　[Name:Hobby Idx="10" ]▽
 楽しみましょうよ！▽
 きっと　楽しいわ！</Text>
 			<TextModifiedBy
@@ -5474,17 +5474,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]は
 いろんな　ばしょの　ひとと▽
 ポケモン　こうかん　した？▼
-わたし　[Digit:3digits Idx="8"]かしょの　ひとと
+わたし　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモン　こうかん　したんだけど▽
 わたしと　おなじ▽
-[Name:Hobby Idx="10"]ずきも　いたんだよ！▼
+[Name:Hobby Idx="10" ]ずきも　いたんだよ！▼
 くにとか　ちがっても
 しゅみが　いっしょって▽
 なんか　うれしかったな▼
-[Name:TrainerName Idx="3"]も　おなじ
+[Name:TrainerName Idx="3" ]も　おなじ
 しゅみのひとと　であえると　いいね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5496,17 +5496,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]は
 いろんな　場所の　人と▽
 ポケモン　交換した？▼
-私　[Digit:3digits Idx="8"]ヶ所の　人と
+私　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモン　交換したんだけど▽
 私と　同じ▽
-[Name:Hobby Idx="10"]好きも　いたんだよ！▼
+[Name:Hobby Idx="10" ]好きも　いたんだよ！▼
 国とか　違っても
 趣味が　一緒って▽
 なんか　うれしかったな▼
-[Name:TrainerName Idx="3"]も　同じ
+[Name:TrainerName Idx="3" ]も　同じ
 趣味の人と　出会えると　いいね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5544,13 +5544,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]の
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]の
 しゅみは　なに？▼
-わたしは　[Name:Hobby Idx="10"]　するのが
+わたしは　[Name:Hobby Idx="10" ]　するのが
 すきなんだけど▼
 せかいじゅうの　ひとたちは
 なにを　するのが　すきなのかな？▼
-わたしは　[Digit:3digits Idx="8"]かしょの　ひとと
+わたしは　[Digit:3digits Idx="8" ]かしょの　ひとと
 こうかん　したんだけど▽
 もっともっと　こうかん　して▽
 いろんなひとの　しゅみを　しりたいな</Text>
@@ -5564,13 +5564,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]の
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]の
 趣味は　なに？▼
-私は　[Name:Hobby Idx="10"]　するのが
+私は　[Name:Hobby Idx="10" ]　するのが
 好きなんだけど▼
 世界中の　人達は
 何を　するのが　好きなのかな？▼
-私は　[Digit:3digits Idx="8"]ヶ所の　人と
+私は　[Digit:3digits Idx="8" ]ヶ所の　人と
 交換したんだけど▽
 もっともっと　交換して▽
 いろんな人の　趣味を　知りたいな</Text>
@@ -5610,13 +5610,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わたしの　しゅみ？
-[Name:Hobby Idx="10"]だよ▼
-わたし　[Digit:3digits Idx="8"]かしょの　ひとと
+			<Text>[Name:TrainerName Idx="7" ]『わたしの　しゅみ？
+[Name:Hobby Idx="10" ]だよ▼
+わたし　[Digit:3digits Idx="8" ]かしょの　ひとと
 ポケモン　こうかん　したんだけど▼
 けっこう　しゅみって
 ひとによって　ちがうみたい▼
-[Name:TrainerName Idx="3"]は
+[Name:TrainerName Idx="3" ]は
 いろんな　ばしょの　ひとと▽
 ポケモン　こうかん　した？▼
 しゅみって　すむところに　よって
@@ -5631,13 +5631,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『私の　趣味？
-[Name:Hobby Idx="10"]だよ▼
-私　[Digit:3digits Idx="8"]ヶ所の　人と
+			<Text>[Name:TrainerName Idx="7" ]『私の　趣味？
+[Name:Hobby Idx="10" ]だよ▼
+私　[Digit:3digits Idx="8" ]ヶ所の　人と
 ポケモン　交換したんだけど▼
 結構　趣味って
 人によって　違うみたい▼
-[Name:TrainerName Idx="3"]は
+[Name:TrainerName Idx="3" ]は
 いろんな　場所の　人と▽
 ポケモン　交換した？▼
 趣味って　住むところに　よって
@@ -5678,13 +5678,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『よお　[Name:TrainerName Idx="3"]！
+			<Text>？？？『よお　[Name:TrainerName Idx="3" ]！
 オレの　こと　おぼえてるよな！▼
-[Name:TrainerName Idx="7"]だよ▼
+[Name:TrainerName Idx="7" ]だよ▼
 ホラ
-[Name:Location Idx="0"]▽
-から　きた　[Name:TrainerName Idx="7"]！▼
-こないだは　[Name:PokemonNickname Idx="5"]　サンキューな
+[Name:Location Idx="0" ]▽
+から　きた　[Name:TrainerName Idx="7" ]！▼
+こないだは　[Name:PokemonNickname Idx="5" ]　サンキューな
 すっげー　きにいってる！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5696,13 +5696,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『よお　[Name:TrainerName Idx="3"]！
+			<Text>？？？『よお　[Name:TrainerName Idx="3" ]！
 オレの　こと　覚えてるよな！▼
-[Name:TrainerName Idx="7"]だよ▼
+[Name:TrainerName Idx="7" ]だよ▼
 ホラ
-[Name:Location Idx="0"]▽
-から　きた　[Name:TrainerName Idx="7"]！▼
-こないだは　[Name:PokemonNickname Idx="5"]　サンキューな
+[Name:Location Idx="0" ]▽
+から　きた　[Name:TrainerName Idx="7" ]！▼
+こないだは　[Name:PokemonNickname Idx="5" ]　サンキューな
 すっげー　気に入ってる！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5747,13 +5747,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『よぉ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『よぉ　[Name:TrainerName Idx="3" ]！▼
 おまえ　いろんな　ばしょの　やつらと
 ポケモン　こうかん　してる？▼
-オレは　もう　[Digit:3digits Idx="8"]かしょの
+オレは　もう　[Digit:3digits Idx="8" ]かしょの
 やつらと　こうかん　したぜ！▼
 なかには　オレと　おなじ
-[Name:Hobby Idx="10"]ずきの　やつも　いたよ▼
+[Name:Hobby Idx="10" ]ずきの　やつも　いたよ▼
 べつの　ばしょで　そだったのに
 しゅみが　おなじって▽
 なんか　すげーよな！</Text>
@@ -5767,13 +5767,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『よぉ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『よぉ　[Name:TrainerName Idx="3" ]！▼
 おまえ　いろんな　場所の　やつらと
 ポケモン　交換してる？▼
-オレは　もう　[Digit:3digits Idx="8"]ヶ所の
+オレは　もう　[Digit:3digits Idx="8" ]ヶ所の
 やつらと　交換したぜ！▼
 中には　オレと　同じ
-[Name:Hobby Idx="10"]好きの　やつも　いたよ▼
+[Name:Hobby Idx="10" ]好きの　やつも　いたよ▼
 別の場所で　育ったのに
 趣味が　同じって▽
 なんか　すげーよな！</Text>
@@ -5820,13 +5820,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『オレの　しゅみ？▼
-[Name:Hobby Idx="10"]　だけど？▼
+			<Text>[Name:TrainerName Idx="7" ]『オレの　しゅみ？▼
+[Name:Hobby Idx="10" ]　だけど？▼
 オレの　すむ
-[Name:Location Idx="0"]と▽
+[Name:Location Idx="0" ]と▽
 おまえの　すんでるとこで▽
 しゅみって　ちがったり　すんのかな？▼
-オレ　いまんとこ　[Digit:3digits Idx="8"]かしょの
+オレ　いまんとこ　[Digit:3digits Idx="8" ]かしょの
 やつらと　こうかん　してんだけど▽
 もっともっと　こうかんして▽
 いろんな　ひとの　しゅみ▽
@@ -5841,13 +5841,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『オレの　趣味？▼
-[Name:Hobby Idx="10"]　だけど？▼
+			<Text>[Name:TrainerName Idx="7" ]『オレの　趣味？▼
+[Name:Hobby Idx="10" ]　だけど？▼
 オレの　住む
-[Name:Location Idx="0"]と▽
+[Name:Location Idx="0" ]と▽
 おまえの　住んでるとこで▽
 趣味って　違ったり　すんのかな？▼
-オレ　今んとこ　[Digit:3digits Idx="8"]ヶ所の
+オレ　今んとこ　[Digit:3digits Idx="8" ]ヶ所の
 やつらと　交換してんだけど▽
 もっともっと　交換して▽
 いろんな　人の　趣味　聞いてみるわ！</Text>
@@ -5894,17 +5894,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『うっす　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『うっす　[Name:TrainerName Idx="3" ]！▼
 オレさ　オレさ
-[Digit:3digits Idx="8"]かしょの　やつらと▽
+[Digit:3digits Idx="8" ]かしょの　やつらと▽
 ポケモン　こうかん　したんだぜ！▽
 いやー　こうかんは　たのしいな！▼
 せかいには　いろんな　しゅみの
 やつが　いるよな……　って　しってた？▼
 え？　オレ？
-オレは　もちろん　[Name:Hobby Idx="10"]　だ！▼
+オレは　もちろん　[Name:Hobby Idx="10" ]　だ！▼
 ま　なには　ともあれ
-オレの　[Name:PokemonNickname Idx="9"]　のこと▽
+オレの　[Name:PokemonNickname Idx="9" ]　のこと▽
 つよくしてくれよな！　たのんだぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5916,17 +5916,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『うっす　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『うっす　[Name:TrainerName Idx="3" ]！▼
 オレさ　オレさ
-[Digit:3digits Idx="8"]ヶ所の　やつらと▽
+[Digit:3digits Idx="8" ]ヶ所の　やつらと▽
 ポケモン　交換したんだぜ！▽
 いやー　交換は　楽しいな！▼
 世界には　いろんな　趣味の
 やつが　いるよな……　って　知ってた？▼
 え？　オレ？
-オレは　もちろん　[Name:Hobby Idx="10"]　だ！▼
+オレは　もちろん　[Name:Hobby Idx="10" ]　だ！▼
 ま　なには　ともあれ
-オレの　[Name:PokemonNickname Idx="9"]　のこと▽
+オレの　[Name:PokemonNickname Idx="9" ]　のこと▽
 強くしてくれよな！　頼んだぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5971,19 +5971,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『おまえ
+			<Text>[Name:TrainerName Idx="7" ]『おまえ
 なんかしょの　やつらと▽
 ポケモン　こうかんした？▽
-オレ　[Digit:3digits Idx="8"]かしょと　こうかんしたぜ！▼
+オレ　[Digit:3digits Idx="8" ]かしょと　こうかんしたぜ！▼
 なかでも　おまえの　くれた
-[Name:PokemonNickname Idx="5"]は▽
+[Name:PokemonNickname Idx="5" ]は▽
 そうとう　きにいってんだ！▽
 ほんと　サンキューな！▼
-オレ　たまに　[Name:PokemonNickname Idx="9"]と
-[Name:Hobby Idx="10"]　してたんだけど▼
+オレ　たまに　[Name:PokemonNickname Idx="9" ]と
+[Name:Hobby Idx="10" ]　してたんだけど▼
 おまえも　ひまなときには
-[Name:PokemonNickname Idx="9"]と▽
-[Name:Hobby Idx="10"]　してやってくれよな！</Text>
+[Name:PokemonNickname Idx="9" ]と▽
+[Name:Hobby Idx="10" ]　してやってくれよな！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -5994,19 +5994,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『おまえ
+			<Text>[Name:TrainerName Idx="7" ]『おまえ
 何ヶ所の　やつらと▽
 ポケモン　交換した？▽
-オレ　[Digit:3digits Idx="8"]ヶ所と　交換したぜ！▼
+オレ　[Digit:3digits Idx="8" ]ヶ所と　交換したぜ！▼
 中でも　おまえの　くれた
-[Name:PokemonNickname Idx="5"]は▽
+[Name:PokemonNickname Idx="5" ]は▽
 相当　気に入ってんだ！▽
 ほんと　サンキューな！▼
-オレ　たまに　[Name:PokemonNickname Idx="9"]と
-[Name:Hobby Idx="10"]　してたんだけど▼
+オレ　たまに　[Name:PokemonNickname Idx="9" ]と
+[Name:Hobby Idx="10" ]　してたんだけど▼
 おまえも　暇な時には
-[Name:PokemonNickname Idx="9"]と▽
-[Name:Hobby Idx="10"]　してやってくれよな！</Text>
+[Name:PokemonNickname Idx="9" ]と▽
+[Name:Hobby Idx="10" ]　してやってくれよな！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -6050,20 +6050,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『オレさ！▼
-[Digit:3digits Idx="8"]かしょの　やつらと
+			<Text>[Name:TrainerName Idx="7" ]『オレさ！▼
+[Digit:3digits Idx="8" ]かしょの　やつらと
 ポケモン　こうかん　したんだけど▼
 いろんな　ばしょの　やつらと
 かかわってると▽
 じっさいに　とおくに▽
 いってみたく　なるんだよなー！▼
-なぁ　[Name:TrainerName Idx="3"]は
+なぁ　[Name:TrainerName Idx="3" ]は
 オレの　すんでる▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことって　あるか？▼
 すげー　いいとこだから
 いつか　きてみろよ！▽
-[Name:Hobby Idx="10"]すんの　たのしいぜ！</Text>
+[Name:Hobby Idx="10" ]すんの　たのしいぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -6074,20 +6074,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『オレさ！▼
-[Digit:3digits Idx="8"]ヶ所の　やつらと
+			<Text>[Name:TrainerName Idx="7" ]『オレさ！▼
+[Digit:3digits Idx="8" ]ヶ所の　やつらと
 ポケモン　交換したんだけど▼
 いろんな　場所の　やつらと
 関わってると▽
 実際に　遠くに▽
 行ってみたく　なるんだよなー！▼
-なぁ　[Name:TrainerName Idx="3"]は
+なぁ　[Name:TrainerName Idx="3" ]は
 オレの　住んでる▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことって　あるか？▼
 すげー　いいとこだから
 いつか　きてみろよ！▽
-[Name:Hobby Idx="10"]すんの　楽しいぜ！</Text>
+[Name:Hobby Idx="10" ]すんの　楽しいぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -6131,13 +6131,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『うっす　[Name:TrainerName Idx="3"]！
+			<Text>？？？『うっす　[Name:TrainerName Idx="3" ]！
 わたしのこと　おぼえてる？▼
-わたし　わたし！　[Name:TrainerName Idx="7"]！
-[Name:Location Idx="0"]の！▼
-こないだ　[Name:PokemonNickname Idx="5"]と　[Name:PokemonNickname Idx="9"]
+わたし　わたし！　[Name:TrainerName Idx="7" ]！
+[Name:Location Idx="0" ]の！▼
+こないだ　[Name:PokemonNickname Idx="5" ]と　[Name:PokemonNickname Idx="9" ]
 こうかん　したよね！　ありがとう！▼
-[Name:PokemonNickname Idx="5"]　のこと
+[Name:PokemonNickname Idx="5" ]　のこと
 すっごく　きにいってるよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6149,13 +6149,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『うっす　[Name:TrainerName Idx="3"]！
+			<Text>？？？『うっす　[Name:TrainerName Idx="3" ]！
 私のこと　覚えてる？▼
-私　私！　[Name:TrainerName Idx="7"]！
-[Name:Location Idx="0"]の！▼
-こないだ　[Name:PokemonNickname Idx="5"]と　[Name:PokemonNickname Idx="9"]
+私　私！　[Name:TrainerName Idx="7" ]！
+[Name:Location Idx="0" ]の！▼
+こないだ　[Name:PokemonNickname Idx="5" ]と　[Name:PokemonNickname Idx="9" ]
 交換したよね！　ありがとう！▼
-[Name:PokemonNickname Idx="5"]　のこと
+[Name:PokemonNickname Idx="5" ]　のこと
 すっごく　気に入ってるよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6193,16 +6193,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]は
 なんかしょ　くらいの　ひとたちと▽
 こうかんした？▼
 へっへー　わたしは　なんとね！
-[Digit:3digits Idx="8"]かしょよ！▼
+[Digit:3digits Idx="8" ]かしょよ！▼
 わたしと　おなじで
-しゅみが　[Name:Hobby Idx="10"]の　ひとが▽
+しゅみが　[Name:Hobby Idx="10" ]の　ひとが▽
 けっこう　いて　おもしろかった！▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Location Idx="0"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Location Idx="0" ]に▽
 きてみなよ！▽
 ぜったいに　たのしいからさ！</Text>
 			<TextModifiedBy
@@ -6215,16 +6215,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『[Name:TrainerName Idx="3"]は
+			<Text>[Name:TrainerName Idx="7" ]『[Name:TrainerName Idx="3" ]は
 何ヶ所くらいの　人達と▽
 交換した？▼
 へっへー　私は　なんとね！
-[Digit:3digits Idx="8"]ヶ所よ！▼
+[Digit:3digits Idx="8" ]ヶ所よ！▼
 私と　同じで
-趣味が　[Name:Hobby Idx="10"]の　人が▽
+趣味が　[Name:Hobby Idx="10" ]の　人が▽
 結構　いて　面白かった！▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Location Idx="0"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Location Idx="0" ]に▽
 きてみなよ！▽
 絶対に　楽しいからさ！</Text>
 			<TextModifiedBy
@@ -6263,15 +6263,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きいてよ　きいてよ！▼
-わたしさ　[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『きいてよ　きいてよ！▼
+わたしさ　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したんだ！▼
 とおくはなれた　ばしょにいる　ひとと
 こうかん　するって▽
 すっごく　ふしぎな　きぶんだったよ！▼
-……ところで　[Name:TrainerName Idx="3"]の
+……ところで　[Name:TrainerName Idx="3" ]の
 しゅみって　なに？▼
-わたしは　[Name:Hobby Idx="10"]だよ！▼
+わたしは　[Name:Hobby Idx="10" ]だよ！▼
 もっともっと　こうかんして
 せかいじゅうの　ひとの▽
 しゅみを　きいてみたいなー！</Text>
@@ -6285,15 +6285,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『聞いてよ　聞いてよ！▼
-私さ　[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『聞いてよ　聞いてよ！▼
+私さ　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したんだ！▼
 遠く離れた　場所にいる　人と
 交換するって▽
 すっごく　不思議な　気分だったよ！▼
-……ところで　[Name:TrainerName Idx="3"]の
+……ところで　[Name:TrainerName Idx="3" ]の
 趣味って　なに？▼
-私は　[Name:Hobby Idx="10"]だよ！▼
+私は　[Name:Hobby Idx="10" ]だよ！▼
 もっともっと　交換して
 世界中の　人の▽
 趣味を　聞いてみたいなー！</Text>
@@ -6333,17 +6333,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やっほ　[Name:TrainerName Idx="3"]！▼
-わたしね　[Digit:3digits Idx="8"]かしょの
+			<Text>[Name:TrainerName Idx="7" ]『やっほ　[Name:TrainerName Idx="3" ]！▼
+わたしね　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　したの！▼
 いろんな　しゅみの　ひとが　いて
 すっごく　しげきてき！▼
 ん？　わたしの　しゅみ？
-[Name:Hobby Idx="10"]よ！▼
+[Name:Hobby Idx="10" ]よ！▼
 へへっ　わたしらしい　でしょ！▼
-[Name:TrainerName Idx="3"]さ
+[Name:TrainerName Idx="3" ]さ
 いつか　じかんが　できたら▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみてよ！▼
 すっごく　いいとこだから
 ぜったい　きにいると　おもう！</Text>
@@ -6357,17 +6357,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やっほ　[Name:TrainerName Idx="3"]！▼
-私ね　[Digit:3digits Idx="8"]ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『やっほ　[Name:TrainerName Idx="3" ]！▼
+私ね　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換したの！▼
 いろんな　趣味の　人が　いて
 すっごく　刺激的！▼
 ん？　私の　趣味？
-[Name:Hobby Idx="10"]よ！▼
+[Name:Hobby Idx="10" ]よ！▼
 へへっ　私らしい　でしょ！▼
-[Name:TrainerName Idx="3"]さ
+[Name:TrainerName Idx="3" ]さ
 いつか　時間が　できたら▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみてよ！▼
 すっごく　いいとこだから
 絶対　気に入ると　思う！</Text>
@@ -6407,20 +6407,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わたしね！▼
-[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『わたしね！▼
+[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　したんだけど▽
 みんな　しゅみって▽
 けっこう　ちがうんだねー！▼
-わたしの　しゅみは　[Name:Hobby Idx="10"]
+わたしの　しゅみは　[Name:Hobby Idx="10" ]
 なんだけど▼
 おなじ　しゅみの　ひとが
 せかいの　うらがわにも　いるなんて▽
 なぁんか　ワックワク　しちゃう！▼
 わたし　いつか　じっさいに
 いろんな　とこに　いくんだ！▼
-ねぇ　[Name:TrainerName Idx="3"]もさ
-[Name:Location Idx="0"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]もさ
+[Name:Location Idx="0" ]に▽
 いつか　きてみなよ！▽
 すっごく　いいところ　だからさ！</Text>
 			<TextModifiedBy
@@ -6433,20 +6433,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『私ね！▼
-[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『私ね！▼
+[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換したんだけど▽
 みんな　趣味って▽
 結構　違うんだねー！▼
-私の　趣味は　[Name:Hobby Idx="10"]
+私の　趣味は　[Name:Hobby Idx="10" ]
 なんだけど▼
 同じ　趣味の　人が
 世界の　裏側にも　いるなんて▽
 なぁんか　ワックワク　しちゃう！▼
 私　いつか　実際に
 いろんな　所に　行くんだ！▼
-ねぇ　[Name:TrainerName Idx="3"]もさ
-[Name:Location Idx="0"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]もさ
+[Name:Location Idx="0" ]に▽
 いつか　きてみなよ！▽
 すっごく　いいところ　だからさ！</Text>
 			<TextModifiedBy
@@ -6485,15 +6485,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『おっ
-[Name:TrainerName Idx="3"]じゃん　げんき？▼
-わたしさ　[Name:Hobby Idx="10"]ずきの　ひとなんて
+			<Text>[Name:TrainerName Idx="7" ]『おっ
+[Name:TrainerName Idx="3" ]じゃん　げんき？▼
+わたしさ　[Name:Hobby Idx="10" ]ずきの　ひとなんて
 そんなに　いないと　おもってたけど▼
-[Digit:3digits Idx="8"]かしょの　トレーナーと
+[Digit:3digits Idx="8" ]かしょの　トレーナーと
 こうかん　してみたら▽
 おなじ　しゅみのひとが▽
 けっこう　いたわ▼
-[Name:Location Idx="0"]じゃ
+[Name:Location Idx="0" ]じゃ
 そんなに　いなかったのになぁ▼
 うーん　やっぱり　せかいって
 ちょっと　ちがうみたい！</Text>
@@ -6507,14 +6507,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『おっ
-[Name:TrainerName Idx="3"]じゃん　元気？▼
-私さ　[Name:Hobby Idx="10"]好きの　人なんて
+			<Text>[Name:TrainerName Idx="7" ]『おっ
+[Name:TrainerName Idx="3" ]じゃん　元気？▼
+私さ　[Name:Hobby Idx="10" ]好きの　人なんて
 そんなに　いないと　思ってたけど▼
-[Digit:3digits Idx="8"]ヶ所の　トレーナーと
+[Digit:3digits Idx="8" ]ヶ所の　トレーナーと
 交換してみたら▽
 同じ　趣味の人が　結構いたわ▼
-[Name:Location Idx="0"]じゃ
+[Name:Location Idx="0" ]じゃ
 そんなに　いなかったのになぁ▼
 うーん　やっぱり　世界って
 ちょっと　違うみたい！</Text>
@@ -6555,18 +6555,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『ききっ　キミっ！！
-[Name:TrainerName Idx="3"]じゃないか？！▼
+[Name:TrainerName Idx="3" ]じゃないか？！▼
 おおっ！　こんなところで
 であうなんて　なんたる　ミラクル？！▼
 ……え　ボク？　おぼえてない？
-[Name:Location Idx="0"]から▽
-きた　[Name:TrainerName Idx="7"]だよ！▼
+[Name:Location Idx="0" ]から▽
+きた　[Name:TrainerName Idx="7" ]だよ！▼
 ホラホラッ！　このあいだ
-キミの　[Name:PokemonNickname Idx="5"]と▽
-ボクの　[Name:PokemonNickname Idx="9"]を▽
+キミの　[Name:PokemonNickname Idx="5" ]と▽
+ボクの　[Name:PokemonNickname Idx="9" ]を▽
 こうかん　しただろう！▼
 いやはやッ！
-[Name:PokemonNickname Idx="5"]は　じつによい！▼
+[Name:PokemonNickname Idx="5" ]は　じつによい！▼
 ここで　さいかいしたのも
 なにかの　えんに　ちがいない！▼
 ボクたち　ぜひまた
@@ -6582,18 +6582,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『ききっ　キミっ！！
-[Name:TrainerName Idx="3"]じゃないか？！▼
+[Name:TrainerName Idx="3" ]じゃないか？！▼
 おおっ！　こんなところで
 出会うなんて　なんたる　ミラクル？！▼
 ……え　ボク？　覚えてない？
-[Name:Location Idx="0"]から▽
-きた　[Name:TrainerName Idx="7"]だよ！▼
+[Name:Location Idx="0" ]から▽
+きた　[Name:TrainerName Idx="7" ]だよ！▼
 ホラホラッ！　このあいだ
-キミの　[Name:PokemonNickname Idx="5"]と▽
-ボクの　[Name:PokemonNickname Idx="9"]を▽
+キミの　[Name:PokemonNickname Idx="5" ]と▽
+ボクの　[Name:PokemonNickname Idx="9" ]を▽
 交換しただろう！▼
 いやはやッ！
-[Name:PokemonNickname Idx="5"]は　実によい！▼
+[Name:PokemonNickname Idx="5" ]は　実によい！▼
 ここで　再会したのも
 なにかの　縁に　違いない！▼
 ボクたち　ぜひまた
@@ -6641,16 +6641,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『キミは
+			<Text>[Name:TrainerName Idx="7" ]『キミは
 なんかしょの　ひとたちと▽
 こうかん　したんだい？▼
-ボクは　なんとなんと　[Digit:3digits Idx="8"]かしょ！
+ボクは　なんとなんと　[Digit:3digits Idx="8" ]かしょ！
 ……ん？　ボクのしゅみ？▼
-[Name:Hobby Idx="10"]だよ　[Name:Hobby Idx="10"]！
+[Name:Hobby Idx="10" ]だよ　[Name:Hobby Idx="10" ]！
 たのしくて　たまらないね！▼
 ……なにはともあれ▼
 キミが　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 くることが　あったら▽
 ボクたち　ぜひ　あおうでは　ないか！▽
 ムハハ！　それじゃっ　アデュー！</Text>
@@ -6664,15 +6664,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『キミは
+			<Text>[Name:TrainerName Idx="7" ]『キミは
 何ヶ所の　人達と　交換したんだい？▼
-ボクは　なんとなんと　[Digit:3digits Idx="8"]ヶ所！
+ボクは　なんとなんと　[Digit:3digits Idx="8" ]ヶ所！
 ……ん？　ボクの趣味？▼
-[Name:Hobby Idx="10"]だよ　[Name:Hobby Idx="10"]！
+[Name:Hobby Idx="10" ]だよ　[Name:Hobby Idx="10" ]！
 楽しくて　たまらないね！▼
 ……なにはともあれ▼
 キミが　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 くることが　あったら▽
 ボクたち　ぜひ　会おうでは　ないか！▽
 ムハハ！　それじゃっ　アデュー！</Text>
@@ -6719,16 +6719,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『せかいは　ひろいッ！
+			<Text>[Name:TrainerName Idx="7" ]『せかいは　ひろいッ！
 とっても　ひろいッ！▼
 なのに　うみを　こえても
-ボクと　おなじ　[Name:Hobby Idx="10"]ずきの▽
+ボクと　おなじ　[Name:Hobby Idx="10" ]ずきの▽
 ひとが　いるって　ミラクルでは？！▼
-ボクは　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ボクは　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　してきたけど▼
 もっと　もっと　こうかんして
-[Name:Hobby Idx="10"]ずきや▽
-[Name:PokemonNickname Idx="5"]ずきの　ひとと▽
+[Name:Hobby Idx="10" ]ずきや▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひとと▽
 たくさん　しりあうんだ！▼
 ボクたちも　ぜひ　また
 こうかん　しようではないか！</Text>
@@ -6742,16 +6742,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『世界は　広いッ！
+			<Text>[Name:TrainerName Idx="7" ]『世界は　広いッ！
 とっても　広いッ！▼
 なのに　海を越えても
-ボクと　同じ　[Name:Hobby Idx="10"]好きの▽
+ボクと　同じ　[Name:Hobby Idx="10" ]好きの▽
 人が　いるって　ミラクルでは？！▼
-ボクは　[Digit:3digits Idx="8"]ヶ所の　人達と
+ボクは　[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換してきたけど▼
 もっと　もっと　交換して
-[Name:Hobby Idx="10"]好きや▽
-[Name:PokemonNickname Idx="5"]好きの人と▽
+[Name:Hobby Idx="10" ]好きや▽
+[Name:PokemonNickname Idx="5" ]好きの人と▽
 たくさん　知り合うんだ！▼
 ボクたちも　ぜひ　また
 交換しようではないか！</Text>
@@ -6798,15 +6798,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『キミ
-[Name:Hobby Idx="10"]ずきかい？！▼
-ボク　[Name:Hobby Idx="10"]ずき　なのだよ！▼
-[Name:Location Idx="0"]に
+			<Text>[Name:TrainerName Idx="7" ]『キミ
+[Name:Hobby Idx="10" ]ずきかい？！▼
+ボク　[Name:Hobby Idx="10" ]ずき　なのだよ！▼
+[Name:Location Idx="0" ]に
 おなじ　しゅみの　ひとは▽
 たくさん　いたが▼
 まさか　ちがう　ばしょでも
-[Name:Hobby Idx="10"]ずきが　いるなんてね！▼
-[Digit:3digits Idx="8"]かしょの　ひとたちと
+[Name:Hobby Idx="10" ]ずきが　いるなんてね！▼
+[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかんしただけで　これだから▼
 もっと　こうかん　したら
 もっと　おなじ　しゅみの▽
@@ -6822,15 +6822,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『キミ
-[Name:Hobby Idx="10"]好きかい？！▼
-ボク　[Name:Hobby Idx="10"]好き　なのだよ！▼
-[Name:Location Idx="0"]に
+			<Text>[Name:TrainerName Idx="7" ]『キミ
+[Name:Hobby Idx="10" ]好きかい？！▼
+ボク　[Name:Hobby Idx="10" ]好き　なのだよ！▼
+[Name:Location Idx="0" ]に
 同じ　趣味の　人は▽
 たくさん　いたが▼
 まさか　違う　場所でも
-[Name:Hobby Idx="10"]好きが　いるなんてね！▼
-[Digit:3digits Idx="8"]ヶ所の　人達と
+[Name:Hobby Idx="10" ]好きが　いるなんてね！▼
+[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換しただけで　これだから▼
 もっと　交換したら
 もっと　同じ　趣味の▽
@@ -6879,21 +6879,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『キミに　もらった
-[Name:PokemonNickname Idx="5"]さ！▼
+			<Text>[Name:TrainerName Idx="7" ]『キミに　もらった
+[Name:PokemonNickname Idx="5" ]さ！▼
 ……　……
 ……　……▼
 いい！▼
 すっごく　いいよ！
 センキュウッ！▼
-ボク　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ボク　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモンを　こうかん　してきたが▽
-[Name:PokemonNickname Idx="5"]は　かくべつだ！▼
-[Name:TrainerName Idx="3"]！　いつか
-[Name:Location Idx="0"]で▽
-いっしょに　[Name:Hobby Idx="10"]▽
+[Name:PokemonNickname Idx="5" ]は　かくべつだ！▼
+[Name:TrainerName Idx="3" ]！　いつか
+[Name:Location Idx="0" ]で▽
+いっしょに　[Name:Hobby Idx="10" ]▽
 たのしもうでは　ないか！▼
-それでは　[Name:TrainerName Idx="3"]！
+それでは　[Name:TrainerName Idx="3" ]！
 また　あうひまで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6905,21 +6905,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『キミに　もらった
-[Name:PokemonNickname Idx="5"]さ！▼
+			<Text>[Name:TrainerName Idx="7" ]『キミに　もらった
+[Name:PokemonNickname Idx="5" ]さ！▼
 ……　……
 ……　……▼
 いい！▼
 すっごく　いいよ！
 センキュウッ！▼
-ボク　[Digit:3digits Idx="8"]ヶ所の　人達と
+ボク　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモンを　交換してきたが▽
-[Name:PokemonNickname Idx="5"]は　格別だ！▼
-[Name:TrainerName Idx="3"]！　いつか
-[Name:Location Idx="0"]で▽
-一緒に　[Name:Hobby Idx="10"]▽
+[Name:PokemonNickname Idx="5" ]は　格別だ！▼
+[Name:TrainerName Idx="3" ]！　いつか
+[Name:Location Idx="0" ]で▽
+一緒に　[Name:Hobby Idx="10" ]▽
 楽しもうでは　ないか！▼
-それでは　[Name:TrainerName Idx="3"]！
+それでは　[Name:TrainerName Idx="3" ]！
 また　会う日まで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6964,14 +6964,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きいてくれないか
-[Name:TrainerName Idx="3"]！▼
-ボクは　[Digit:3digits Idx="8"]かしょに　いる
+			<Text>[Name:TrainerName Idx="7" ]『きいてくれないか
+[Name:TrainerName Idx="3" ]！▼
+ボクは　[Digit:3digits Idx="8" ]かしょに　いる
 すばらしい　トレーナーたちと▽
 ポケモンを　こうかん　したんだが▼
 なかには　ボクと　おなじ
-[Name:Hobby Idx="10"]ずきの　ひとや▽
-[Name:PokemonNickname Idx="5"]ずきの　ひとが　いたんだ！▼
+[Name:Hobby Idx="10" ]ずきの　ひとや▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひとが　いたんだ！▼
 すむ　ばしょが　ちがうのに
 すきなものが　おなじ！▼
 そだった　ばしょが　ちがうのに
@@ -6980,7 +6980,7 @@
 ああーっ！
 せかいは　ミラクル！▽
 キミとの　であいも　ミラクルだったよ！▽
-また　こうかん　しようぞ　[Name:TrainerName Idx="3"]！</Text>
+また　こうかん　しようぞ　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -6991,14 +6991,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『聞いてくれないか
-[Name:TrainerName Idx="3"]！▼
-ボクは　[Digit:3digits Idx="8"]ヶ所に　いる
+			<Text>[Name:TrainerName Idx="7" ]『聞いてくれないか
+[Name:TrainerName Idx="3" ]！▼
+ボクは　[Digit:3digits Idx="8" ]ヶ所に　いる
 素晴らしい　トレーナー達と▽
 ポケモンを　交換したんだが▼
 中には　ボクと　同じ
-[Name:Hobby Idx="10"]好きの　人や▽
-[Name:PokemonNickname Idx="5"]好きの　人が　いたんだ！▼
+[Name:Hobby Idx="10" ]好きの　人や▽
+[Name:PokemonNickname Idx="5" ]好きの　人が　いたんだ！▼
 住む　場所が　違うのに
 好きなものが　同じ！▼
 育った　場所が　違うのに
@@ -7007,7 +7007,7 @@
 ああーっ！
 世界は　ミラクル！▽
 キミとの　出会いも　ミラクルだったよ！▽
-また　交換しようぞ　[Name:TrainerName Idx="3"]！</Text>
+また　交換しようぞ　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -7052,16 +7052,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『あっ！　おぼえてるよ
-キミ　[Name:TrainerName Idx="3"]でしょー！▼
+キミ　[Name:TrainerName Idx="3" ]でしょー！▼
 あたしの　こと　おぼえてるかな？
-[Name:Location Idx="0"]の▽
-[Name:TrainerName Idx="7"]だよ　へへー！▼
-こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]の▽
+[Name:TrainerName Idx="7" ]だよ　へへー！▼
+こないだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうねー！▼
-[Name:PokemonNickname Idx="9"]は　げんきに　やってる？
-[Name:TrainerName Idx="3"]との　ポケモン　こうかん▽
+[Name:PokemonNickname Idx="9" ]は　げんきに　やってる？
+[Name:TrainerName Idx="3" ]との　ポケモン　こうかん▽
 すっごく　しげきてき　だった！▼
-[Name:TrainerName Idx="3"]と　またあえて　うれしいよ
+[Name:TrainerName Idx="3" ]と　またあえて　うれしいよ
 また　こうかん　しよう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7074,16 +7074,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『あっ！　覚えてるよ
-キミ　[Name:TrainerName Idx="3"]でしょー！▼
+キミ　[Name:TrainerName Idx="3" ]でしょー！▼
 あたしの　こと　覚えてるかな？
-[Name:Location Idx="0"]の▽
-[Name:TrainerName Idx="7"]だよ　へへー！▼
-こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]の▽
+[Name:TrainerName Idx="7" ]だよ　へへー！▼
+こないだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうねー！▼
-[Name:PokemonNickname Idx="9"]は　元気に　やってる？
-[Name:TrainerName Idx="3"]との　ポケモン交換▽
+[Name:PokemonNickname Idx="9" ]は　元気に　やってる？
+[Name:TrainerName Idx="3" ]との　ポケモン交換▽
 すっごく　刺激的だった！▼
-[Name:TrainerName Idx="3"]と　また会えて　うれしいよ
+[Name:TrainerName Idx="3" ]と　また会えて　うれしいよ
 また　交換しよう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7121,22 +7121,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『お！
-[Name:TrainerName Idx="3"]だ　[Name:TrainerName Idx="3"]だ▼
+			<Text>[Name:TrainerName Idx="7" ]『お！
+[Name:TrainerName Idx="3" ]だ　[Name:TrainerName Idx="3" ]だ▼
 へへー　あたしねー
-[Digit:3digits Idx="8"]かしょに　いる　ひとたちと▽
+[Digit:3digits Idx="8" ]かしょに　いる　ひとたちと▽
 こうかん　したんだよ！▼
 すごい？　えらい？　へへ
 でね！　でねっ！▼
 こうかんした　ひとの　なかに
-あたしと　おなじ　[Name:Hobby Idx="10"]ずきの▽
+あたしと　おなじ　[Name:Hobby Idx="10" ]ずきの▽
 ひとが　いたんだよ！▼
-[Name:TrainerName Idx="3"]の　すむ　ところでは
-[Name:Hobby Idx="10"]ずきは▽
+[Name:TrainerName Idx="3" ]の　すむ　ところでは
+[Name:Hobby Idx="10" ]ずきは▽
 どれくらい　いるのかな？▼
-[Name:Location Idx="0"]じゃ
+[Name:Location Idx="0" ]じゃ
 けっこう　いたかなー▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]！
+それじゃあ　またね　[Name:TrainerName Idx="3" ]！
 また　こうかんする　そのひまで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7148,22 +7148,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『お！
-[Name:TrainerName Idx="3"]だ　[Name:TrainerName Idx="3"]だ▼
+			<Text>[Name:TrainerName Idx="7" ]『お！
+[Name:TrainerName Idx="3" ]だ　[Name:TrainerName Idx="3" ]だ▼
 へへー　あたしねー
-[Digit:3digits Idx="8"]ヶ所に　いる　人達と▽
+[Digit:3digits Idx="8" ]ヶ所に　いる　人達と▽
 交換したんだよ！▼
 すごい？　えらい？　へへ
 でね！　でねっ！▼
 交換した　人の中に
-あたしと　同じ　[Name:Hobby Idx="10"]好きの▽
+あたしと　同じ　[Name:Hobby Idx="10" ]好きの▽
 人が　いたんだよ！▼
-[Name:TrainerName Idx="3"]の　住む　ところでは
-[Name:Hobby Idx="10"]好きは▽
+[Name:TrainerName Idx="3" ]の　住む　ところでは
+[Name:Hobby Idx="10" ]好きは▽
 どれくらい　いるのかな？▼
-[Name:Location Idx="0"]じゃ
+[Name:Location Idx="0" ]じゃ
 結構　いたかなー▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]！
+それじゃあ　またね　[Name:TrainerName Idx="3" ]！
 また　交換する　その日まで！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7201,16 +7201,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『へへっ
-あたし　[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+			<Text>[Name:TrainerName Idx="7" ]『へへっ
+あたし　[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 こうかん　したんだ！▼
-ねぇねぇ　[Name:TrainerName Idx="3"]の
+ねぇねぇ　[Name:TrainerName Idx="3" ]の
 しゅみって　なに？▼
-あたしは　[Name:Hobby Idx="10"]だよー
+あたしは　[Name:Hobby Idx="10" ]だよー
 へへ　いがいでしょー？▼
-ねぇねぇ！　[Name:TrainerName Idx="3"]はさ！
+ねぇねぇ！　[Name:TrainerName Idx="3" ]はさ！
 あたしの　すんでる▼
-[Name:Location Idx="0"]に
+[Name:Location Idx="0" ]に
 きたことって　ある？▼
 すっごく　いいとこだから
 いちど　きてみてよねー！</Text>
@@ -7224,16 +7224,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『へへっ
-あたし　[Digit:3digits Idx="8"]ヶ所の　人達と▽
+			<Text>[Name:TrainerName Idx="7" ]『へへっ
+あたし　[Digit:3digits Idx="8" ]ヶ所の　人達と▽
 交換したんだ！▼
-ねぇねぇ　[Name:TrainerName Idx="3"]の
+ねぇねぇ　[Name:TrainerName Idx="3" ]の
 趣味って　なに？▼
-あたしは　[Name:Hobby Idx="10"]だよー
+あたしは　[Name:Hobby Idx="10" ]だよー
 へへ　意外でしょー？▼
-ねぇねぇ！　[Name:TrainerName Idx="3"]はさ！
+ねぇねぇ！　[Name:TrainerName Idx="3" ]はさ！
 あたしの　住んでる▼
-[Name:Location Idx="0"]に
+[Name:Location Idx="0" ]に
 きたことって　ある？▼
 すっごく　いいとこだから
 一度　きてみてよねー！</Text>
@@ -7273,23 +7273,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ハーイ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『ハーイ　[Name:TrainerName Idx="3" ]！▼
 キミは　なんかしょ　くらいの
 ひとたちと　こうかん　した？▼
-あたしは　[Digit:3digits Idx="8"]かしょ！▼
-[Name:Location Idx="0"]から
+あたしは　[Digit:3digits Idx="8" ]かしょ！▼
+[Name:Location Idx="0" ]から
 いっぽも　でなくても▼
 ほかの　ばしょに　いる　ひとと
 つながれちゃうなんて▽
 かがくの　ちからって　すっごいね！▼
-ところで　[Name:TrainerName Idx="3"]の
+ところで　[Name:TrainerName Idx="3" ]の
 しゅみって　なんなのかな？▼
 あたしね
-[Name:Hobby Idx="10"]　なんだ！　へへー▼
+[Name:Hobby Idx="10" ]　なんだ！　へへー▼
 しゅみも　せかいじゅうの　ひとたちと
 たのしめるように　なるといいなー！▽
 あー　なんか　ワクワクしてきたっ！▽
-また　こうかん　しようね　[Name:TrainerName Idx="3"]！</Text>
+また　こうかん　しようね　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -7300,23 +7300,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ハーイ　[Name:TrainerName Idx="3"]！▼
+			<Text>[Name:TrainerName Idx="7" ]『ハーイ　[Name:TrainerName Idx="3" ]！▼
 キミは　何ヶ所　くらいの
 人達と　交換した？▼
-あたしは　[Digit:3digits Idx="8"]ヶ所！▼
-[Name:Location Idx="0"]から
+あたしは　[Digit:3digits Idx="8" ]ヶ所！▼
+[Name:Location Idx="0" ]から
 一歩も　出なくても▼
 他の　場所にいる　人と
 つながれちゃうなんて▽
 科学の　力って　すっごいね！▼
-ところで　[Name:TrainerName Idx="3"]の
+ところで　[Name:TrainerName Idx="3" ]の
 趣味って　なんなのかな？▼
 あたしね
-[Name:Hobby Idx="10"]　なんだ！　へへー▼
+[Name:Hobby Idx="10" ]　なんだ！　へへー▼
 趣味も　世界中の　人達と
 楽しめるように　なるといいなー！▽
 あー　なんか　ワクワクしてきたっ！▽
-また　交換しようね　[Name:TrainerName Idx="3"]！</Text>
+また　交換しようね　[Name:TrainerName Idx="3" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -7353,13 +7353,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あたしね　[Digit:3digits Idx="8"]かしょの
+			<Text>[Name:TrainerName Idx="7" ]『あたしね　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　してみて▽
 おもったことが　あるの！▼
 ひとって　ちがって　あたりまえね！▼
 すきなものが　ちがえば
 しゅみだって　ちがう▼
-みんなが　みんな　[Name:Hobby Idx="10"]ずき
+みんなが　みんな　[Name:Hobby Idx="10" ]ずき
 というわけじゃ　ないのよね▼
 でも　だからこそ
 たのしいと　おもうの▼
@@ -7367,7 +7367,7 @@
 しげきを　うけると▼
 なんだか　じぶんの　せかいが
 ひろがった　みたいじゃない？▼
-[Name:Location Idx="0"]から
+[Name:Location Idx="0" ]から
 そとに　でてみるのも▽
 きっと　わるくないわね！</Text>
 			<TextModifiedBy
@@ -7380,13 +7380,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あたしね　[Digit:3digits Idx="8"]ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『あたしね　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換してみて▽
 思ったことが　あるの！▼
 人って　違って　当たり前ね！▼
 好きなものが　違えば
 趣味だって　違う▼
-みんなが　みんな　[Name:Hobby Idx="10"]好き
+みんなが　みんな　[Name:Hobby Idx="10" ]好き
 というわけじゃ　ないのよね▼
 でも　だからこそ
 楽しいと　思うの▼
@@ -7394,7 +7394,7 @@
 刺激を　うけると▼
 なんだか　自分の　世界が
 広がった　みたいじゃない？▼
-[Name:Location Idx="0"]から
+[Name:Location Idx="0" ]から
 外に　でてみるのも▽
 きっと　悪くないわね！</Text>
 			<TextModifiedBy
@@ -7433,20 +7433,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]は　あたしの　すんでる▼
-[Name:Location Idx="0"]に
+			<Text>[Name:TrainerName Idx="7" ]『ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]は　あたしの　すんでる▼
+[Name:Location Idx="0" ]に
 きたことは　あるのかな？▼
-[Name:Hobby Idx="10"]　たのしめるし
+[Name:Hobby Idx="10" ]　たのしめるし
 なっかなか　いいとこだよ！▼
 でも　あたしね▼
-[Digit:3digits Idx="8"]かしょの　ひとたちと
+[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　してみて　おもったんだ！▼
 きっと　ほかの　ばしょにも
 おなじくらい　いいとこが　あるね！▼
 そう　かんがえると
 すっっごく　ワクワクしてこない？▼
-それじゃあね　[Name:TrainerName Idx="3"]！
+それじゃあね　[Name:TrainerName Idx="3" ]！
 また　こうかん　しようね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7458,20 +7458,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]は　あたしの　住んでる▼
-[Name:Location Idx="0"]に
+			<Text>[Name:TrainerName Idx="7" ]『ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]は　あたしの　住んでる▼
+[Name:Location Idx="0" ]に
 きたことは　あるのかな？▼
-[Name:Hobby Idx="10"]　楽しめるし
+[Name:Hobby Idx="10" ]　楽しめるし
 なっかなか　いいとこだよ！▼
 でも　あたしね▼
-[Digit:3digits Idx="8"]ヶ所の　人達と
+[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換してみて　思ったんだ！▼
 きっと　他の　場所にも
 同じくらい　いいとこが　あるね！▼
 そう　考えると
 すっっごく　ワクワクしてこない？▼
-それじゃあね　[Name:TrainerName Idx="3"]！
+それじゃあね　[Name:TrainerName Idx="3" ]！
 また　交換しようね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7510,15 +7510,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『き　きみさぁ　あれでしょ
-[Name:TrainerName Idx="3"]でしょ▽
+[Name:TrainerName Idx="3" ]でしょ▽
 ……おぼえてるよ　きみのこと▼
 え？　ぼ　ぼく……？
-[Name:Location Idx="0"]の▽
-[Name:TrainerName Idx="7"]だよ▼
-こ　こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]の▽
+[Name:TrainerName Idx="7" ]だよ▼
+こ　こないだは　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう……▽
 きみの　ポケモン　……いいね▼
-……ぼくの　あげた　[Name:PokemonNickname Idx="9"]も
+……ぼくの　あげた　[Name:PokemonNickname Idx="9" ]も
 なかなか　いいだろう？▼
 こんなとこで　また　あうとはね
 ……まぁ　うれしいよ　……ぐふっ</Text>
@@ -7533,15 +7533,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『き　きみさぁ　あれでしょ
-[Name:TrainerName Idx="3"]でしょ▽
+[Name:TrainerName Idx="3" ]でしょ▽
 ……覚えてるよ　きみのこと▼
 え？　ぼ　ぼく……？
-[Name:Location Idx="0"]の▽
-[Name:TrainerName Idx="7"]だよ▼
-こ　こないだは　[Name:PokemonNickname Idx="5"]を
+[Name:Location Idx="0" ]の▽
+[Name:TrainerName Idx="7" ]だよ▼
+こ　こないだは　[Name:PokemonNickname Idx="5" ]を
 どうも　ありがとう……▽
 きみの　ポケモン　……いいね▼
-……ぼくの　あげた　[Name:PokemonNickname Idx="9"]も
+……ぼくの　あげた　[Name:PokemonNickname Idx="9" ]も
 なかなか　いいだろう？▼
 こんなとこで　また　会うとはね
 ……まぁ　うれしいよ　……ぐふっ</Text>
@@ -7588,15 +7588,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぐふふ▼
-ぼくねぇ　[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『ぐふふ▼
+ぼくねぇ　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したんだよ▼
 みんな　しゅみが　それぞれ　ちがって
 じつに　きょうみぶかい……▼
 え？　ぼくのしゅみ？▼
-[Name:Hobby Idx="10"]　だよ　ぐふっ▼
+[Name:Hobby Idx="10" ]　だよ　ぐふっ▼
 きみ　ぼくの　こきょうの
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたくなったら　きてみてよ▼
 きっと　きみにとって
 おもしろい　たびになるよ　ぐふふ……</Text>
@@ -7610,15 +7610,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぐふふ▼
-ぼくねぇ　[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『ぐふふ▼
+ぼくねぇ　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したんだよ▼
 みんな　趣味が　それぞれ　違って
 実に　興味深い……▼
 え？　ぼくの趣味？▼
-[Name:Hobby Idx="10"]　だよ　ぐふっ▼
+[Name:Hobby Idx="10" ]　だよ　ぐふっ▼
 きみ　ぼくの　故郷の
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたくなったら　きてみてよ▼
 きっと　きみにとって
 おもしろい　旅になるよ　ぐふふ……</Text>
@@ -7665,12 +7665,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく
-しゅみが　[Name:Hobby Idx="10"]　なんだけど▼
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく
+しゅみが　[Name:Hobby Idx="10" ]　なんだけど▼
 きみが　こうかん　したひとの　なかで
-しゅみが　[Name:Hobby Idx="10"]の▽
+しゅみが　[Name:Hobby Idx="10" ]の▽
 ひとは　いた……？▼
-ぼく　[Digit:3digits Idx="8"]かしょの　ひとたちと
+ぼく　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 こうかん　したんだけど▽
 みんな　しゅみ　ちがうんだよね……▼
 すむ　ところが　ちがうと
@@ -7689,12 +7689,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく
-趣味が　[Name:Hobby Idx="10"]　なんだけど▼
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく
+趣味が　[Name:Hobby Idx="10" ]　なんだけど▼
 きみが　交換した人の　中で
-趣味が　[Name:Hobby Idx="10"]の▽
+趣味が　[Name:Hobby Idx="10" ]の▽
 人は　いた……？▼
-ぼく　[Digit:3digits Idx="8"]ヶ所の　人達と
+ぼく　[Digit:3digits Idx="8" ]ヶ所の　人達と
 交換したんだけれど▽
 みんな　趣味　違うんだよね……▼
 住む所が　違うと
@@ -7746,15 +7746,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼっ　ぼくの
-しゅみは　[Name:Hobby Idx="10"]　だけど……▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼっ　ぼくの
+しゅみは　[Name:Hobby Idx="10" ]　だけど……▽
 きみは　どう……？▼
 ……ふぅ▼
 じ　じつは　ひとと　かいわ　するのは
 あまり　とくいじゃ　ないんだ……▼
-でも　そんな　ぼくでも　[Digit:3digits Idx="8"]かしょの
+でも　そんな　ぼくでも　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　できた……▼
-そうして　きみの　[Name:PokemonNickname Idx="5"]
+そうして　きみの　[Name:PokemonNickname Idx="5" ]
 てにいれたんだ……　ぐふ▼
 も　もっともっと
 こうかん　してみようかな……▼
@@ -7770,15 +7770,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼっ　ぼくの
-趣味は　[Name:Hobby Idx="10"]　だけど……▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼっ　ぼくの
+趣味は　[Name:Hobby Idx="10" ]　だけど……▽
 きみは　どう……？▼
 ……ふぅ▼
 じ　実は　人と　会話するのは
 あまり　得意じゃ　ないんだ……▼
-でも　そんな　ぼくでも　[Digit:3digits Idx="8"]ヶ所の
+でも　そんな　ぼくでも　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換できた……▼
-そうして　きみの　[Name:PokemonNickname Idx="5"]
+そうして　きみの　[Name:PokemonNickname Idx="5" ]
 手に入れたんだ……　ぐふ▼
 も　もっともっと
 交換してみようかな……▼
@@ -7827,17 +7827,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく……
-[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく……
+[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 こうかんしたんだ▼
 そしたら　ぼくと　おなじで
-しゅみが　[Name:Hobby Idx="10"]の▽
+しゅみが　[Name:Hobby Idx="10" ]の▽
 ひとが　いたんだ……▼
 ちきゅうの　うらがわにも
 おなじ　しゅみのひとは▽
 いるもんだね……▼
 ところで　きみは　ぼくの　すむ
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことって　あるかい……？▼
 たのしいとこだから
 きてみても　いいかもよ　……ぐふっ</Text>
@@ -7851,15 +7851,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼ　ぼく……
-[Digit:3digits Idx="8"]ヶ所の　人達と　交換したんだ▼
+			<Text>[Name:TrainerName Idx="7" ]『ぼ　ぼく……
+[Digit:3digits Idx="8" ]ヶ所の　人達と　交換したんだ▼
 そしたら　ぼくと　同じで
-趣味が　[Name:Hobby Idx="10"]の▽
+趣味が　[Name:Hobby Idx="10" ]の▽
 人が　いたんだ……▼
 地球の　裏側にも
 同じ　趣味の人は　いるもんだね……▼
 ところで　きみは　ぼくの住む
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことって　あるかい……？▼
 楽しいとこだから
 きてみても　いいかもよ　……ぐふっ</Text>
@@ -7906,15 +7906,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『きき　きみ
+			<Text>[Name:TrainerName Idx="7" ]『きき　きみ
 なんかしょくらいの　ひとたちと▽
 ポケモン　こうかん　した？▽
-ぼ　ぼくは　[Digit:3digits Idx="8"]かしょ……▼
+ぼ　ぼくは　[Digit:3digits Idx="8" ]かしょ……▼
 あ　あのさ
 ……きみって　ぼくのすんでる▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことって　ある……？▼
-[Name:Hobby Idx="10"]とか　すきな　ひとが
+[Name:Hobby Idx="10" ]とか　すきな　ひとが
 い　いてさ▼
 あ　もちろん　ぼくも
 すきなんだけど……▼
@@ -7930,15 +7930,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『きき　きみ
+			<Text>[Name:TrainerName Idx="7" ]『きき　きみ
 何ヶ所くらいの　人達と▽
 ポケモン　交換した？▽
-ぼ　ぼくは　[Digit:3digits Idx="8"]ヶ所……▼
+ぼ　ぼくは　[Digit:3digits Idx="8" ]ヶ所……▼
 あ　あのさ
 ……きみって　ぼくの住んでる▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことって　ある……？▼
-[Name:Hobby Idx="10"]とか　好きな　人が
+[Name:Hobby Idx="10" ]とか　好きな　人が
 い　いてさ▼
 あ　もちろん　ぼくも
 好きなんだけど……▼
@@ -7988,15 +7988,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『あ……　あなた……
-[Name:TrainerName Idx="3"]じゃない……？▼
+[Name:TrainerName Idx="3" ]じゃない……？▼
 わたしよ　わたし
-[Name:Location Idx="0"]から▽
-きた　[Name:TrainerName Idx="7"]よ▽
+[Name:Location Idx="0" ]から▽
+きた　[Name:TrainerName Idx="7" ]よ▽
 ……おぼえてるかしら？　ウフフ▽
 また　あえるなんて　うれしいわ▼
-このあいだは　[Name:PokemonNickname Idx="5"]を
+このあいだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうね▼
-わたしの　あげた　[Name:PokemonNickname Idx="9"]は
+わたしの　あげた　[Name:PokemonNickname Idx="9" ]は
 げんきに　やってるかしら……？▼
 ここで　あったのも　なにかの　えんね
 これからも　よろしくね　……ウフフ</Text>
@@ -8011,15 +8011,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『あ……　あなた……
-[Name:TrainerName Idx="3"]じゃない……？▼
+[Name:TrainerName Idx="3" ]じゃない……？▼
 私よ　私
-[Name:Location Idx="0"]から▽
-きた　[Name:TrainerName Idx="7"]よ▽
+[Name:Location Idx="0" ]から▽
+きた　[Name:TrainerName Idx="7" ]よ▽
 ……覚えてるかしら？　ウフフ▽
 また　会えるなんて　うれしいわ▼
-このあいだは　[Name:PokemonNickname Idx="5"]を
+このあいだは　[Name:PokemonNickname Idx="5" ]を
 ありがとうね▼
-私の　あげた　[Name:PokemonNickname Idx="9"]は
+私の　あげた　[Name:PokemonNickname Idx="9" ]は
 元気に　やってるかしら……？▼
 ここで　会ったのも　何かの　縁ね
 これからも　よろしくね　……ウフフ</Text>
@@ -8059,15 +8059,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ね　ねぇ　あなた
+			<Text>[Name:TrainerName Idx="7" ]『ね　ねぇ　あなた
 なんかしょの　ひとたちと▽
 ポケモン　こうかん　した……？▼
-わたし　[Digit:3digits Idx="8"]かしょと　したわ▼
+わたし　[Digit:3digits Idx="8" ]かしょと　したわ▼
 しらない　ひとと　こうかんするの
 ちょっと　こわい……▽
 ……こわいけど　ドキドキするわ▼
 だって　たまに　わたしと　おなじで
-しゅみが　[Name:Hobby Idx="10"]の▽
+しゅみが　[Name:Hobby Idx="10" ]の▽
 ひとが　いるんですもの　……ウフフ▼
 ちょっと　こうかんするの
 たのしくなって　きちゃったじゃない……</Text>
@@ -8081,15 +8081,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ね　ねぇ　あなた
+			<Text>[Name:TrainerName Idx="7" ]『ね　ねぇ　あなた
 何ヶ所の　人達と▽
 ポケモン　交換した……？▼
-私　[Digit:3digits Idx="8"]ヶ所と　したわ▼
+私　[Digit:3digits Idx="8" ]ヶ所と　したわ▼
 知らない人と　交換するの
 ちょっと　こわい……▽
 ……こわいけど　ドキドキするわ▼
 だって　たまに　私と同じで
-趣味が　[Name:Hobby Idx="10"]の▽
+趣味が　[Name:Hobby Idx="10" ]の▽
 人が　いるんですもの　……ウフフ▼
 ちょっと　交換するの
 楽しくなって　きちゃったじゃない……</Text>
@@ -8129,17 +8129,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あ　あの……
-[Name:PokemonNickname Idx="9"]は　げんき……？▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　あの……
+[Name:PokemonNickname Idx="9" ]は　げんき……？▼
 いや　あの
 げんきなら　それで　いいの……▼
-あなたから　もらった　[Name:PokemonNickname Idx="5"]は
+あなたから　もらった　[Name:PokemonNickname Idx="5" ]は
 げんきよ……▽
 とっても……ええ▼
 あなた　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみない……？▼
-[Name:Hobby Idx="10"]
+[Name:Hobby Idx="10" ]
 たのしめるし　いいところよ▽
 ……▽
 ……きっとよ　ウフフ</Text>
@@ -8153,17 +8153,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あ　あの……
-[Name:PokemonNickname Idx="9"]は　元気……？▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　あの……
+[Name:PokemonNickname Idx="9" ]は　元気……？▼
 いや　あの
 元気なら　それで　いいの……▼
-あなたから　もらった　[Name:PokemonNickname Idx="5"]は
+あなたから　もらった　[Name:PokemonNickname Idx="5" ]は
 元気よ……▽
 とっても……ええ▼
 あなた　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみない……？▼
-[Name:Hobby Idx="10"]
+[Name:Hobby Idx="10" ]
 楽しめるし　いい所よ▽
 ……▽
 ……きっとよ　ウフフ</Text>
@@ -8203,18 +8203,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ　ねぇ　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ　ねぇ　[Name:TrainerName Idx="3" ]
 あなたの　しゅみって　なぁに？▼
-わたし　[Name:Hobby Idx="10"]　なのよ
+わたし　[Name:Hobby Idx="10" ]　なのよ
 ……いがい　でしょう？▼
-[Name:TrainerName Idx="3"]は　なんかしょの
+[Name:TrainerName Idx="3" ]は　なんかしょの
 ひとたちと　こうかん　したのかしら？▼
 わたしはねぇ　ウフフ……▼
-[Digit:3digits Idx="8"]かしょよ▼
+[Digit:3digits Idx="8" ]かしょよ▼
 もっともっと　こうかんして
-[Name:PokemonNickname Idx="5"]ずきの　ひと▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひと▽
 さがしちゃうんだから……　ウフフフ▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]
+それじゃあ　またね　[Name:TrainerName Idx="3" ]
 いつか　また　こうかん　しましょ……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8226,18 +8226,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ　ねぇ　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ　ねぇ　[Name:TrainerName Idx="3" ]
 あなたの　趣味って　なぁに？▼
-私　[Name:Hobby Idx="10"]　なのよ
+私　[Name:Hobby Idx="10" ]　なのよ
 ……意外　でしょう？▼
-[Name:TrainerName Idx="3"]は　何ヶ所の
+[Name:TrainerName Idx="3" ]は　何ヶ所の
 人達と　交換したのかしら？▼
 私はねぇ　ウフフ……▼
-[Digit:3digits Idx="8"]ヶ所よ▼
+[Digit:3digits Idx="8" ]ヶ所よ▼
 もっともっと　交換して
-[Name:PokemonNickname Idx="5"]好きの　人▽
+[Name:PokemonNickname Idx="5" ]好きの　人▽
 探しちゃうんだから……　ウフフフ▼
-それじゃあ　またね　[Name:TrainerName Idx="3"]
+それじゃあ　またね　[Name:TrainerName Idx="3" ]
 いつか　また　交換しましょ……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8275,19 +8275,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あなた
-[Name:Location Idx="0"]には▽
+			<Text>[Name:TrainerName Idx="7" ]『あなた
+[Name:Location Idx="0" ]には▽
 きたこと　あるのかしら……？▼
 すごく　いいとこ　なのよね
 ぜひ　きて　ほしいわ……▼
-わたし　[Digit:3digits Idx="8"]かしょの　ひとたちと
+わたし　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したのよ▽
 がんばった　でしょう……？▼
 こうかん　した　トレーナーの
 しゅみを　しることが　できるのよ……▽
 なんだか　たのしいじゃない……▼
 ……わたし？
-わたしは　[Name:Hobby Idx="10"]よ▽
+わたしは　[Name:Hobby Idx="10" ]よ▽
 ……いがい　かしら　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8299,19 +8299,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あなた
-[Name:Location Idx="0"]には▽
+			<Text>[Name:TrainerName Idx="7" ]『あなた
+[Name:Location Idx="0" ]には▽
 きたこと　あるのかしら……？▼
 すごく　いいとこ　なのよね
 ぜひ　きてほしいわ……▼
-私　[Digit:3digits Idx="8"]ヶ所の　人達と
+私　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したのよ▽
 がんばった　でしょう……？▼
 交換した　トレーナーの
 趣味を　知ることが　できるのよ……▽
 なんだか　楽しいじゃない……▼
 ……私？
-私は　[Name:Hobby Idx="10"]よ▽
+私は　[Name:Hobby Idx="10" ]よ▽
 ……意外かしら　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8349,24 +8349,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ
 あなた　なんかしょの　ひとたちと▽
 ポケモン　こうかん　したのかしら？▼
-わたしは　いま　[Digit:3digits Idx="8"]かしょよ……
+わたしは　いま　[Digit:3digits Idx="8" ]かしょよ……
 でも　もっともっと▽
 こうかん　するわ……▼
 だって　いつか
-[Name:Hobby Idx="10"]ずきで　さらに▽
-[Name:PokemonNickname Idx="5"]ずきの　ひとに▽
+[Name:Hobby Idx="10" ]ずきで　さらに▽
+[Name:PokemonNickname Idx="5" ]ずきの　ひとに▽
 あえるかも　しれないじゃない▽
 ……うんめい　かんじちゃうわ　ウフフ▼
 そしたら　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてもらうの……▽
 すごく　いいとこなのよね……　フフ▼
 ……あら　ごめんなさい
 また　もうそうが　ノンストップね▼
-……[Name:TrainerName Idx="3"]も　また
+……[Name:TrainerName Idx="3" ]も　また
 こうかん　しましょ……　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8378,23 +8378,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ウフフ
+			<Text>[Name:TrainerName Idx="7" ]『ウフフ
 あなた　何ヶ所の　人達と▽
 ポケモン　交換したのかしら？▼
-私は　いま　[Digit:3digits Idx="8"]ヶ所よ……
+私は　いま　[Digit:3digits Idx="8" ]ヶ所よ……
 でも　もっともっと　交換するわ……▼
 だって　いつか
-[Name:Hobby Idx="10"]好きで　さらに▽
-[Name:PokemonNickname Idx="5"]好きの　人に▽
+[Name:Hobby Idx="10" ]好きで　さらに▽
+[Name:PokemonNickname Idx="5" ]好きの　人に▽
 会えるかも　しれないじゃない▽
 ……運命　感じちゃうわ　ウフフ▼
 そしたら　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてもらうの……▽
 すごく　いいとこなのよね……　フフ▼
 ……あら　ごめんなさい
 また　妄想が　ノンストップね▼
-……[Name:TrainerName Idx="3"]も　また
+……[Name:TrainerName Idx="3" ]も　また
 交換しましょ……　ウフフ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8443,12 +8443,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『あ▼
-きみさ　[Name:TrainerName Idx="3"]だよね？
-ぼく　[Name:TrainerName Idx="7"]だよ▼
+きみさ　[Name:TrainerName Idx="3" ]だよね？
+ぼく　[Name:TrainerName Idx="7" ]だよ▼
 ホラ　おぼえてるかな？
-[Name:Location Idx="0"]の！▼
-こないだ　きみの[Name:PokemonNickname Idx="5"]と
-ぼくの　[Name:PokemonNickname Idx="9"]で▽
+[Name:Location Idx="0" ]の！▼
+こないだ　きみの[Name:PokemonNickname Idx="5" ]と
+ぼくの　[Name:PokemonNickname Idx="9" ]で▽
 こうかん　したよねぇ▼
 また　あえるなんて　うれしいなぁ
 よかったら　ゆっくり▽
@@ -8464,12 +8464,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『あ▼
-きみさ　[Name:TrainerName Idx="3"]だよね？
-ぼく　[Name:TrainerName Idx="7"]だよ▼
+きみさ　[Name:TrainerName Idx="3" ]だよね？
+ぼく　[Name:TrainerName Idx="7" ]だよ▼
 ホラ　覚えてるかな？
-[Name:Location Idx="0"]の！▼
-こないだ　きみの[Name:PokemonNickname Idx="5"]と
-ぼくの　[Name:PokemonNickname Idx="9"]で▽
+[Name:Location Idx="0" ]の！▼
+こないだ　きみの[Name:PokemonNickname Idx="5" ]と
+ぼくの　[Name:PokemonNickname Idx="9" ]で▽
 交換したよねぇ▼
 また　会えるなんて　うれしいなぁ
 よかったら　ゆっくり▽
@@ -8517,16 +8517,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-さいきん　ぼく　[Name:Hobby Idx="10"]　たのしむのに
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+さいきん　ぼく　[Name:Hobby Idx="10" ]　たのしむのに
 はまっててねぇ▼
 すごく　たのしいからさぁ
 きみが　いつか▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたら　いっしょに　あそぼうよ▼
 ところで　きみ　なんかしょと
 ポケモン　こうかん　した？▼
-ぼく　[Digit:3digits Idx="8"]かしょ　なんだよねぇ▼
+ぼく　[Digit:3digits Idx="8" ]かしょ　なんだよねぇ▼
 いやぁ　もーっと　いろんなとこと
 こうかん　してみたいなぁ</Text>
 			<TextModifiedBy
@@ -8539,16 +8539,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-さいきん　ぼく　[Name:Hobby Idx="10"]　楽しむのに
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+さいきん　ぼく　[Name:Hobby Idx="10" ]　楽しむのに
 はまっててねぇ▼
 すごく　楽しいからさぁ
 きみが　いつか▽
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたら　一緒に　遊ぼうよ▼
 ところで　きみ　何ヶ所と
 ポケモン　交換した？▼
-ぼく　[Digit:3digits Idx="8"]ヶ所　なんだよねぇ▼
+ぼく　[Digit:3digits Idx="8" ]ヶ所　なんだよねぇ▼
 いやぁ　もーっと　いろんな所と
 交換してみたいなぁ</Text>
 			<TextModifiedBy
@@ -8594,20 +8594,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-ぼくさぁ　[Digit:3digits Idx="8"]かしょの　ひとたちと
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+ぼくさぁ　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したんだけど▼
 いやぁ　みんな　しゅみって
 それぞれなんだねぇ▼
 え？　ぼくの　しゅみ？
-うーん　[Name:Hobby Idx="10"]　かなぁ▽
+うーん　[Name:Hobby Idx="10" ]　かなぁ▽
 なかなか　たのしいんだよねぇ▼
 きみの　まわりでは
-[Name:Hobby Idx="10"]ずきの　ひとって　いる？▼
+[Name:Hobby Idx="10" ]ずきの　ひとって　いる？▼
 ぼくの　すむ
-[Name:Location Idx="0"]では▽
+[Name:Location Idx="0" ]では▽
 うーん　まぁ　それなりに　いるかなぁ▼
-なには　ともあれ　[Name:TrainerName Idx="3"]
+なには　ともあれ　[Name:TrainerName Idx="3" ]
 よかったら　また　こうかん　しようよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8619,20 +8619,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『やぁ　[Name:TrainerName Idx="3"]▼
-ぼくさぁ　[Digit:3digits Idx="8"]ヶ所の　人達と
+			<Text>[Name:TrainerName Idx="7" ]『やぁ　[Name:TrainerName Idx="3" ]▼
+ぼくさぁ　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したんだけど▼
 いやぁ　みんな　趣味って
 それぞれなんだねぇ▼
 え？　ぼくの　趣味？
-うーん　[Name:Hobby Idx="10"]　かなぁ▽
+うーん　[Name:Hobby Idx="10" ]　かなぁ▽
 なかなか　楽しいんだよねぇ▼
 きみの　まわりでは
-[Name:Hobby Idx="10"]好きの　人って　いる？▼
+[Name:Hobby Idx="10" ]好きの　人って　いる？▼
 ぼくの　住む
-[Name:Location Idx="0"]では▽
+[Name:Location Idx="0" ]では▽
 うーん　まぁ　それなりに　いるかなぁ▼
-なには　ともあれ　[Name:TrainerName Idx="3"]
+なには　ともあれ　[Name:TrainerName Idx="3" ]
 よかったら　また　交換しようよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8677,20 +8677,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]▼
 きみ　なんかしょの　ひとたちと
 ポケモン　こうかん　した？▼
-ぼくね　[Digit:3digits Idx="8"]かしょの　ひとと
+ぼくね　[Digit:3digits Idx="8" ]かしょの　ひとと
 こうかん　したんだけどね▽
 なかには　いるんだよねぇ▼
 ぼくと　おなじ
-[Name:Hobby Idx="10"]ずきの　ひと！▼
+[Name:Hobby Idx="10" ]ずきの　ひと！▼
 なぁんか　いろんな　ばしょの　ひとと
 こうかん　していると▼
 うみの　むこうがわって　そんなに
 とおくない　きがしてくるよね▼
 きみも　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみてよー▽
 けっこう　いいとこだからさ</Text>
 			<TextModifiedBy
@@ -8703,20 +8703,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ねぇ　[Name:TrainerName Idx="3"]▼
+			<Text>[Name:TrainerName Idx="7" ]『ねぇ　[Name:TrainerName Idx="3" ]▼
 きみ　何ヶ所の　人達と
 ポケモン　交換した？▼
-ぼくね　[Digit:3digits Idx="8"]ヶ所の　人と
+ぼくね　[Digit:3digits Idx="8" ]ヶ所の　人と
 交換したんだけどね▽
 中には　いるんだよねぇ▼
 ぼくと　同じ
-[Name:Hobby Idx="10"]好きの　人！▼
+[Name:Hobby Idx="10" ]好きの　人！▼
 なぁんか　いろんな　場所の　人と
 交換していると▼
 海の　むこう側って　そんなに
 遠くない　気がしてくるよね▼
 きみも　いつか
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きてみてよー▽
 結構　いいとこだからさ</Text>
 			<TextModifiedBy
@@ -8762,18 +8762,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『お　[Name:TrainerName Idx="3"]～
+			<Text>[Name:TrainerName Idx="7" ]『お　[Name:TrainerName Idx="3" ]～
 また　あったねぇ▽
 ちょうしは　どう？▼
-ぼくはねぇ　[Digit:3digits Idx="8"]かしょの
+ぼくはねぇ　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　ポケモン　こうかんしたよ▼
 へへ　なかなか　たのしい　もんだよ
 あいての　しゅみとか　しれるしね▼
 え　ぼく？
-ぼくは　[Name:Hobby Idx="10"]▽
+ぼくは　[Name:Hobby Idx="10" ]▽
 たのしむのが　すきかなぁ▼
 ところでさ　きみは
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことは　ある？▼
 なかなか　いいとこだから
 いつか　おいでよ</Text>
@@ -8787,18 +8787,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『お　[Name:TrainerName Idx="3"]～
+			<Text>[Name:TrainerName Idx="7" ]『お　[Name:TrainerName Idx="3" ]～
 また　会ったねぇ▽
 調子は　どう？▼
-ぼくはねぇ　[Digit:3digits Idx="8"]ヶ所の
+ぼくはねぇ　[Digit:3digits Idx="8" ]ヶ所の
 人達と　ポケモン　交換したよ▼
 へへ　なかなか　楽しい　もんだよ
 相手の　趣味とか　知れるしね▼
 え　ぼく？
-ぼくは　[Name:Hobby Idx="10"]▽
+ぼくは　[Name:Hobby Idx="10" ]▽
 楽しむのが　好きかなぁ▼
 ところでさ　きみは
-[Name:Location Idx="0"]に▽
+[Name:Location Idx="0" ]に▽
 きたことは　ある？▼
 なかなか　いいとこだから
 いつか　おいでよ</Text>
@@ -8845,22 +8845,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『ぼくさぁ
-[Name:Hobby Idx="10"]　たのしんでると▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼくさぁ
+[Name:Hobby Idx="10" ]　たのしんでると▽
 じかんを　わすれちゃうんだよねぇ▼
 ……でも　しゅみって　きっと
 そういうものだよね？▼
 きみは　なんかしょの　ひとたちと
 こうかん　した？▼
-ぼくはね　いま　[Digit:3digits Idx="8"]かしょ　なんだ▼
+ぼくはね　いま　[Digit:3digits Idx="8" ]かしょ　なんだ▼
 こうかんしてると　しゅみと　いっしょで
 じかんを　わすれるんだよねぇ▼
 おかげで　いっつも
 ちこく　しちゃうんだよねぇ▼
 ……まぁでも　きっと　たのしいことって
 そういう　ものだよね？▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Location Idx="0"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Location Idx="0" ]に▽
 きてみてよ▼
 じかんを　わすれるほど
 たのしい　ところ　だからさ</Text>
@@ -8874,21 +8874,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『ぼくさぁ
-[Name:Hobby Idx="10"]　楽しんでると▽
+			<Text>[Name:TrainerName Idx="7" ]『ぼくさぁ
+[Name:Hobby Idx="10" ]　楽しんでると▽
 時間を　忘れちゃうんだよねぇ▼
 ……でも　趣味って　きっと
 そういうものだよね？▼
 きみは　何ヶ所の　人達と　交換した？
-ぼくはね　今　[Digit:3digits Idx="8"]ヶ所　なんだ▼
+ぼくはね　今　[Digit:3digits Idx="8" ]ヶ所　なんだ▼
 交換してると　趣味と　一緒で
 時間を　忘れるんだよねぇ▼
 おかげで
 いっつも　遅刻しちゃうんだよねぇ▼
 ……まぁでも　きっと　楽しいことって
 そういうものだよね？▼
-ねぇ　[Name:TrainerName Idx="3"]　いつか
-[Name:Location Idx="0"]に▽
+ねぇ　[Name:TrainerName Idx="3" ]　いつか
+[Name:Location Idx="0" ]に▽
 きてみてよ▼
 時間を　忘れるほど
 楽しい　ところ　だからさ</Text>
@@ -8935,13 +8935,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『また　あったねぇ　[Name:TrainerName Idx="3"]
+			<Text>？？？『また　あったねぇ　[Name:TrainerName Idx="3" ]
 わたしの　こと　おぼえてる？▼
-[Name:Location Idx="0"]
-から　きた　[Name:TrainerName Idx="7"]だよ▼
+[Name:Location Idx="0" ]
+から　きた　[Name:TrainerName Idx="7" ]だよ▼
 ほらほらぁ　こないだ
-きみの　[Name:PokemonNickname Idx="5"]と▽
-わたしの　[Name:PokemonNickname Idx="9"]▽
+きみの　[Name:PokemonNickname Idx="5" ]と▽
+わたしの　[Name:PokemonNickname Idx="9" ]▽
 こうかん　したよね▼
 わぁ　こんなところで　あえるなんて
 なんか　うれしいなぁ</Text>
@@ -8955,13 +8955,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『また　会ったねぇ　[Name:TrainerName Idx="3"]
+			<Text>？？？『また　会ったねぇ　[Name:TrainerName Idx="3" ]
 わたしの　こと　覚えてる？▼
-[Name:Location Idx="0"]
-から　きた　[Name:TrainerName Idx="7"]だよ▼
+[Name:Location Idx="0" ]
+から　きた　[Name:TrainerName Idx="7" ]だよ▼
 ほらほらぁ　こないだ
-きみの　[Name:PokemonNickname Idx="5"]と▽
-わたしの　[Name:PokemonNickname Idx="9"]▽
+きみの　[Name:PokemonNickname Idx="5" ]と▽
+わたしの　[Name:PokemonNickname Idx="9" ]▽
 交換したよね▼
 わぁ　こんなところで　会えるなんて
 なんか　うれしいなぁ</Text>
@@ -9001,16 +9001,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
-あたしねー　[Digit:3digits Idx="8"]かしょの
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
+あたしねー　[Digit:3digits Idx="8" ]かしょの
 ひとたちと　こうかん　したの▼
 ちがう　ばしょに　すむ　ひとでも
-わたしと　おんなじ　[Name:Hobby Idx="10"]が▽
+わたしと　おんなじ　[Name:Hobby Idx="10" ]が▽
 しゅみの　ひとが▽
 たーくさん　いたのよ▼
-ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]も　よかったら　いつか▽
-[Name:Location Idx="0"]に▽
+ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]も　よかったら　いつか▽
+[Name:Location Idx="0" ]に▽
 あそびに　おいでよー　ふふ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9022,15 +9022,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
-あたしねー　[Digit:3digits Idx="8"]ヶ所の
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
+あたしねー　[Digit:3digits Idx="8" ]ヶ所の
 人達と　交換したの▼
 違う場所に　住む人でも
-わたしと　おんなじ　[Name:Hobby Idx="10"]が▽
+わたしと　おんなじ　[Name:Hobby Idx="10" ]が▽
 趣味の　人が　たーくさん　いたのよ▼
-ねぇねぇ　[Name:TrainerName Idx="3"]
-[Name:TrainerName Idx="3"]も　よかったら　いつか▽
-[Name:Location Idx="0"]に▽
+ねぇねぇ　[Name:TrainerName Idx="3" ]
+[Name:TrainerName Idx="3" ]も　よかったら　いつか▽
+[Name:Location Idx="0" ]に▽
 遊びに　おいでよー　ふふ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9068,17 +9068,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『わあ　[Name:TrainerName Idx="3"]だぁ
+			<Text>[Name:TrainerName Idx="7" ]『わあ　[Name:TrainerName Idx="3" ]だぁ
 ねぇねぇ　きいて　きいて▼
-あたしね　[Digit:3digits Idx="8"]かしょの　ひとたちと
+あたしね　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモン　こうかん　したの▼
-[Name:PokemonNickname Idx="5"]が　すきな　ひとが
+[Name:PokemonNickname Idx="5" ]が　すきな　ひとが
 ほかにも　いてね▽
 ちょっと　うれしくなっちゃった▼
-……ねぇ　[Name:TrainerName Idx="3"]
-[Name:Location Idx="0"]に▽
+……ねぇ　[Name:TrainerName Idx="3" ]
+[Name:Location Idx="0" ]に▽
 くることが　あったら▽
-いっしょに　[Name:Hobby Idx="10"]　たのしもうね▽
+いっしょに　[Name:Hobby Idx="10" ]　たのしもうね▽
 きっと　たのしいよー！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9090,17 +9090,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『わあ　[Name:TrainerName Idx="3"]だぁ
+			<Text>[Name:TrainerName Idx="7" ]『わあ　[Name:TrainerName Idx="3" ]だぁ
 ねぇねぇ　聞いて　聞いて▼
-あたしね　[Digit:3digits Idx="8"]ヶ所の　人達と
+あたしね　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモン　交換したの▼
-[Name:PokemonNickname Idx="5"]が　好きな　人が
+[Name:PokemonNickname Idx="5" ]が　好きな　人が
 他にも　いてね▽
 ちょっと　うれしくなっちゃった▼
-……ねぇ　[Name:TrainerName Idx="3"]
-[Name:Location Idx="0"]に▽
+……ねぇ　[Name:TrainerName Idx="3" ]
+[Name:Location Idx="0" ]に▽
 くることが　あったら▽
-一緒に　[Name:Hobby Idx="10"]　楽しもうね▽
+一緒に　[Name:Hobby Idx="10" ]　楽しもうね▽
 きっと　楽しいよー！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9138,23 +9138,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『……▼
+			<Text>[Name:TrainerName Idx="7" ]『……▼
 ……▼
 えっ　なに？
 ごめん　ボーっと　してた▼
 わたしの　しゅみ？
 んーとねぇ▽
-……[Name:Hobby Idx="10"]かなぁ？▽
-[Name:TrainerName Idx="3"]は？▼
+……[Name:Hobby Idx="10" ]かなぁ？▽
+[Name:TrainerName Idx="3" ]は？▼
 しゅみと　いえばねー
-あたし　[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+あたし　[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 ポケモン　こうかん　したんだけど▼
 やっと　おなじ　しゅみの　ひとに
 あえたのー！▽
 えへへ▽
 なんか　そういうのって　うれしいよね▽
 また　こうかん　したく　なっちゃった▼
-[Name:TrainerName Idx="3"]も　よかったら
+[Name:TrainerName Idx="3" ]も　よかったら
 また　こうかん　してね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9166,23 +9166,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『……▼
+			<Text>[Name:TrainerName Idx="7" ]『……▼
 ……▼
 えっ　なに？
 ごめん　ボーっと　してた▼
 わたしの　趣味？
 んーとねぇ▽
-……[Name:Hobby Idx="10"]かなぁ？▽
-[Name:TrainerName Idx="3"]は？▼
+……[Name:Hobby Idx="10" ]かなぁ？▽
+[Name:TrainerName Idx="3" ]は？▼
 趣味と　言えばねー
-あたし　[Digit:3digits Idx="8"]ヶ所の　人達と▽
+あたし　[Digit:3digits Idx="8" ]ヶ所の　人達と▽
 ポケモン　交換したんだけど▼
 やっと　同じ　趣味の　人に
 会えたのー！▽
 えへへ▽
 なんか　そういうのって　うれしいよね▽
 また　交換したく　なっちゃった▼
-[Name:TrainerName Idx="3"]も　よかったら
+[Name:TrainerName Idx="3" ]も　よかったら
 また　交換してね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9220,24 +9220,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あら　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『あら　[Name:TrainerName Idx="3" ]
 こんにちは▼
 ここに　いるってことは
-[Name:TrainerName Idx="3"]も　とおくの　ひとと▽
+[Name:TrainerName Idx="3" ]も　とおくの　ひとと▽
 ポケモンを　こうかん　したのかな？▼
 ふふ
 じぶんの　ポケモンも　かわいいけど▽
 ひとからもらった　ポケモンにも　また▽
 とくべつな　かわいさが　あるよねえ▼
-わたしね　[Digit:3digits Idx="8"]かしょの　ひとたちと
+わたしね　[Digit:3digits Idx="8" ]かしょの　ひとたちと
 ポケモンを　こうかん　したんだけれど▼
 もっと　たくさんの　ひとと
 こうかん　したくなって　きたわ▼
 だって　わたしと　おなじ
-[Name:Hobby Idx="10"]ずきの　ひとが　いるのよ▼
+[Name:Hobby Idx="10" ]ずきの　ひとが　いるのよ▼
 トレーナーと　はなすのが
 たのしくなってきちゃった▼
-ねぇ　[Name:TrainerName Idx="3"]▼
+ねぇ　[Name:TrainerName Idx="3" ]▼
 また　こうかん　しましょうね
 きっとよ</Text>
 			<TextModifiedBy
@@ -9250,24 +9250,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あら　[Name:TrainerName Idx="3"]
+			<Text>[Name:TrainerName Idx="7" ]『あら　[Name:TrainerName Idx="3" ]
 こんにちは▼
 ここに　いるってことは
-[Name:TrainerName Idx="3"]も　遠くの　人と▽
+[Name:TrainerName Idx="3" ]も　遠くの　人と▽
 ポケモンを　交換したのかな？▼
 ふふ
 自分の　ポケモンも　可愛いけど▽
 人からもらった　ポケモンにも　また▽
 特別な　可愛さが　あるよねえ▼
-わたしね　[Digit:3digits Idx="8"]ヶ所の　人達と
+わたしね　[Digit:3digits Idx="8" ]ヶ所の　人達と
 ポケモンを　交換したんだけれど▼
 もっと　たくさんの　人と
 交換したくなって　きたわ▼
 だって　わたしと　同じ
-[Name:Hobby Idx="10"]好きの　人が　いるのよ▼
+[Name:Hobby Idx="10" ]好きの　人が　いるのよ▼
 トレーナーと　話すのが
 楽しくなってきちゃった▼
-ねぇ　[Name:TrainerName Idx="3"]▼
+ねぇ　[Name:TrainerName Idx="3" ]▼
 また　交換しましょうね
 きっとよ</Text>
 			<TextModifiedBy
@@ -9306,18 +9306,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
 あのね　あのね　わたしね
-[Digit:3digits Idx="8"]かしょの　ひとたちと▽
+[Digit:3digits Idx="8" ]かしょの　ひとたちと▽
 ポケモン　こうかん　したんだよー▽
 がんばったでしょ　へへ！▽
 でも　まだまだ　こうかん　しちゃうよ！▼
 ん？　わたしの　しゅみ？
 えーとね▽
 うーん……▼
-[Name:Hobby Idx="10"]かな！　たのしいよ！▼
-ねぇ　[Name:TrainerName Idx="3"]
-[Name:PokemonNickname Idx="9"]のこと　よろしくね▼
+[Name:Hobby Idx="10" ]かな！　たのしいよ！▼
+ねぇ　[Name:TrainerName Idx="3" ]
+[Name:PokemonNickname Idx="9" ]のこと　よろしくね▼
 すごく　いいこ　だから
 たくさん　かわいがって　あげてね</Text>
 			<TextModifiedBy
@@ -9330,18 +9330,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="7"]『あ　[Name:TrainerName Idx="3"]だぁ▼
+			<Text>[Name:TrainerName Idx="7" ]『あ　[Name:TrainerName Idx="3" ]だぁ▼
 あのね　あのね　わたしね
-[Digit:3digits Idx="8"]ヶ所の　人達と▽
+[Digit:3digits Idx="8" ]ヶ所の　人達と▽
 ポケモン　交換したんだよー▽
 頑張ったでしょ　へへ！▽
 でも　まだまだ　交換しちゃうよ！▼
 ん？　わたしの　趣味？
 えーとね▽
 うーん……▼
-[Name:Hobby Idx="10"]かな！　楽しいよ！▼
-ねぇ　[Name:TrainerName Idx="3"]
-[Name:PokemonNickname Idx="9"]のこと　よろしくね▼
+[Name:Hobby Idx="10" ]かな！　楽しいよ！▼
+ねぇ　[Name:TrainerName Idx="3" ]
+[Name:PokemonNickname Idx="9" ]のこと　よろしくね▼
 すごく　いい子　だから
 たくさん　可愛がって　あげてね</Text>
 			<TextModifiedBy

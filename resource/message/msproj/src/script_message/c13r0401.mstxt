@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『オマエ
+			<Text>[Name:TrainerName Idx="1" ]『オマエ
 ヒウンに　いくんだろ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,7 +18,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『オマエ
+			<Text>[Name:TrainerName Idx="1" ]『オマエ
 ヒウンに　行くんだろ？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

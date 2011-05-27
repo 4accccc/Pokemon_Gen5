@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたと　[Name:TrainerName Idx="0"]さんの
+			<Text>あなたと　[Name:TrainerName Idx="0" ]さんの
 きになる　フィーリングポイントは……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,7 +18,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたと　[Name:TrainerName Idx="0"]さんの
+			<Text>あなたと　[Name:TrainerName Idx="0" ]さんの
 気になる　フィーリングポイントは……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -480,8 +480,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
-[Digit:1digit Idx="2"]コ　[System:Color name="2"]かいふく[/System:Color]ポケットに　しまった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
+[Digit:1digit Idx="2" ]コ　[System:Color name="2" ]かいふく[/System:Color]ポケットに　しまった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />
@@ -492,8 +492,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
-[Digit:1digit Idx="2"]個　[System:Color name="2"]回復[/System:Color]ポケットに　しまった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
+[Digit:1digit Idx="2" ]個　[System:Color name="2" ]回復[/System:Color]ポケットに　しまった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />
@@ -522,8 +522,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
-[Digit:1digit Idx="2"]コ　[System:Color name="2"]かいふく[/System:Color]ポケットに　しまった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
+[Digit:1digit Idx="2" ]コ　[System:Color name="2" ]かいふく[/System:Color]ポケットに　しまった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />
@@ -534,8 +534,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Name:Item Idx="1"]を
-[Digit:1digit Idx="2"]個　[System:Color name="2"]回復[/System:Color]ポケットに　しまった</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Name:Item Idx="1" ]を
+[Digit:1digit Idx="2" ]個　[System:Color name="2" ]回復[/System:Color]ポケットに　しまった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:21" />

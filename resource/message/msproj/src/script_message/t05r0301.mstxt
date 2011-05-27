@@ -312,7 +312,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あらま　[Name:Item Idx="0"]は
+			<Text>あらま　[Name:Item Idx="0" ]は
 それいじょう　もてないみたい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -324,7 +324,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あらま　[Name:Item Idx="0"]は
+			<Text>あらま　[Name:Item Idx="0" ]は
 それ以上　持てないみたい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

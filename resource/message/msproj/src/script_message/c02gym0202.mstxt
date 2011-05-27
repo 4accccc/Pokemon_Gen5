@@ -128,7 +128,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　アロエから
+			<Text>[Name:TrainerName Idx="0" ]は　アロエから
 ベーシックバッジを　もらった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -140,7 +140,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　アロエから
+			<Text>[Name:TrainerName Idx="0" ]は　アロエから
 ベーシックバッジを　もらった！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -483,7 +483,7 @@
 			Language="JPN">
 			<Text>アロエ『なんだって！
 どういうことだい！？[Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]！
+[Name:TrainerName Idx="0" ]！
 アンタも　おいで！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -497,7 +497,7 @@
 			Language="JPN_KANJI">
 			<Text>アロエ『なんだって！
 どういうことだい！？[Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]！
+[Name:TrainerName Idx="0" ]！
 アンタも　おいで！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

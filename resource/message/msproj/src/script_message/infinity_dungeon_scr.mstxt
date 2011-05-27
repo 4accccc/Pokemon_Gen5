@@ -5280,7 +5280,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーが　みつからないの？
-[Digit:3digits Idx="0"]かいに　いたよ！</Text>
+[Digit:3digits Idx="0" ]かいに　いたよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5292,7 +5292,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーが　見つからないの？
-[Digit:3digits Idx="0"]階にいたよ！</Text>
+[Digit:3digits Idx="0" ]階にいたよ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5322,7 +5322,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーが　いないの？
-[Digit:3digits Idx="0"]かいで　みたわよ</Text>
+[Digit:3digits Idx="0" ]かいで　みたわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5334,7 +5334,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーが　いないの？
-[Digit:3digits Idx="0"]階で　見たわよ</Text>
+[Digit:3digits Idx="0" ]階で　見たわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5364,7 +5364,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-[Digit:3digits Idx="0"]かいに　いると　おもうよ</Text>
+[Digit:3digits Idx="0" ]かいに　いると　おもうよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5376,7 +5376,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-[Digit:3digits Idx="0"]階に　いると　思うよ</Text>
+[Digit:3digits Idx="0" ]階に　いると　思うよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5406,7 +5406,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-[Digit:3digits Idx="0"]かいで　みかけたわよ</Text>
+[Digit:3digits Idx="0" ]かいで　みかけたわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5418,7 +5418,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-[Digit:3digits Idx="0"]階で　見かけたわよ</Text>
+[Digit:3digits Idx="0" ]階で　見かけたわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5448,7 +5448,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-それなら　[Digit:3digits Idx="0"]かいに　いたぞ</Text>
+それなら　[Digit:3digits Idx="0" ]かいに　いたぞ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5460,7 +5460,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-それなら　[Digit:3digits Idx="0"]階に　いたぞ</Text>
+それなら　[Digit:3digits Idx="0" ]階に　いたぞ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5490,7 +5490,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナー？
-それなら　[Digit:3digits Idx="0"]階に　いたわよ</Text>
+それなら　[Digit:3digits Idx="0" ]階に　いたわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5502,7 +5502,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナー？
-それなら　[Digit:3digits Idx="0"]階に　いたわよ</Text>
+それなら　[Digit:3digits Idx="0" ]階に　いたわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5532,7 +5532,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーじゃと？
-ああ　[Digit:3digits Idx="0"]かいで　みかけたぞ</Text>
+ああ　[Digit:3digits Idx="0" ]かいで　みかけたぞ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5544,7 +5544,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナーじゃと？
-ああ　[Digit:3digits Idx="0"]階で　見かけたぞ</Text>
+ああ　[Digit:3digits Idx="0" ]階で　見かけたぞ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5574,7 +5574,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボストレーナーですって？　それなら
-[Digit:3digits Idx="0"]かいに　いってごらんなさい</Text>
+[Digit:3digits Idx="0" ]かいに　いってごらんなさい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -5586,7 +5586,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボストレーナですって？　それなら
-[Digit:3digits Idx="0"]階に　行ってごらんなさい</Text>
+[Digit:3digits Idx="0" ]階に　行ってごらんなさい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -6055,7 +6055,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]かい</Text>
+			<Text>[Digit:2digits Idx="0" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -6066,7 +6066,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]かい</Text>
+			<Text>[Digit:2digits Idx="0" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -6196,8 +6196,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！
-それは　[Name:Item Idx="0"]ですね？▼
+			<Text>[Name:TrainerName Idx="0" ]さま！
+それは　[Name:Item Idx="0" ]ですね？▼
 かしこまりました　オーナーに
 ごれんらくいたします▼</Text>
 			<TextModifiedBy
@@ -6210,8 +6210,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！
-それは　[Name:Item Idx="0"]ですね？▼
+			<Text>[Name:TrainerName Idx="0" ]様！
+それは　[Name:Item Idx="0" ]ですね？▼
 かしこまりました　オーナーに
 ご連絡いたします▼</Text>
 			<TextModifiedBy
@@ -6252,7 +6252,7 @@
 			Language="JPN">
 			<Text>……
 オーナーからの　ほうこくです▼
-[Name:TrainerName Idx="0"]さま
+[Name:TrainerName Idx="0" ]さま
 ほんじつから　しんしせつ！▼
 『しろの　まてんろう』が
 かいほう　されました！▼
@@ -6272,7 +6272,7 @@
 			Language="JPN_KANJI">
 			<Text>……
 オーナーからの　報告です▼
-[Name:TrainerName Idx="0"]様
+[Name:TrainerName Idx="0" ]様
 本日から　新施設！▼
 『白の　摩天楼』が
 開放　されました！▼
@@ -6353,11 +6353,11 @@
 			<Text>この　しせつは　トレーナーの　
 みなさまに　たんれんの　ばしょとして▽
 ていきょうされている　しせつです▼
-しせつないには　[Name:TrainerName Idx="0"]さまと　
+しせつないには　[Name:TrainerName Idx="0" ]さまと　
 おなじく　しせつ　ちょうせんちゅうの▽
 トレーナーのかたが　いらっしゃいます▼
 ほかの　トレーナーのかたは
-[Name:TrainerName Idx="0"]さまを　みかけましたら▽
+[Name:TrainerName Idx="0" ]さまを　みかけましたら▽
 たいせんを　いどんできます▼
 たちふさがる　トレーナーを　たおし
 エリアクリアを　めざして　ください▼</Text>
@@ -6374,11 +6374,11 @@
 			<Text>この　施設は　トレーナーの　
 皆様に　鍛錬の　場所として▽
 提供されている　施設です▼
-施設内には　[Name:TrainerName Idx="0"]様と　
+施設内には　[Name:TrainerName Idx="0" ]様と　
 同じく　施設　挑戦中の▽
 トレーナーの方が　いらっしゃいます▼
 他の　トレーナーの方は
-[Name:TrainerName Idx="0"]様を　見かけましたら▽
+[Name:TrainerName Idx="0" ]様を　見かけましたら▽
 対戦を　挑んできます▼
 立ちふさがる　トレーナーを　倒し
 エリアクリアを　目指して　ください▼</Text>
@@ -6679,7 +6679,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリア[Digit:2digits Idx="0"]</Text>
+			<Text>エリア[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -6690,7 +6690,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリア[Digit:2digits Idx="0"]</Text>
+			<Text>エリア[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -6719,10 +6719,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 しつれいですが　おつれの
-[Name:PokemonNickname Idx="0"]では▽
-エリア[Digit:2digits Idx="0"]に　ちょうせんするには
+[Name:PokemonNickname Idx="0" ]では▽
+エリア[Digit:2digits Idx="0" ]に　ちょうせんするには
 しょうしょう　じつりょくが　たりません▼
 もうしわけありませんが
 じつりょくを　つけてから▽
@@ -6737,10 +6737,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
+			<Text>[Name:TrainerName Idx="0" ]様！▼
 失礼ですが　お連れの
-[Name:PokemonNickname Idx="0"]では▽
-エリア[Digit:2digits Idx="0"]に　挑戦するには
+[Name:PokemonNickname Idx="0" ]では▽
+エリア[Digit:2digits Idx="0" ]に　挑戦するには
 少々　実力が　足りません▼
 申し訳ありませんが　実力を
 つけてから　挑戦してください</Text>
@@ -7197,7 +7197,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]かい</Text>
+			<Text>[Digit:2digits Idx="0" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -7208,7 +7208,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]階</Text>
+			<Text>[Digit:2digits Idx="0" ]階</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -7317,8 +7317,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
-エリア[Digit:2digits Idx="1"]の　クリア
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
+エリア[Digit:2digits Idx="1" ]の　クリア
 おめでとうございます！▼
 きねんに　おすきなものを　
 おえらびください！</Text>
@@ -7332,8 +7332,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
-エリア[Digit:2digits Idx="1"]の　クリア
+			<Text>[Name:TrainerName Idx="0" ]様！▼
+エリア[Digit:2digits Idx="1" ]の　クリア
 おめでとうございます！▼
 記念に　お好きなものを　
 お選びください！</Text>
@@ -7373,7 +7373,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あわせて　エリア[Digit:2digits Idx="0"]への
+			<Text>あわせて　エリア[Digit:2digits Idx="0" ]への
 ちょうせんが　かのうと　なりました▼
 ひきつづき　ちょうせんを
 おまちして　おります</Text>
@@ -7387,7 +7387,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あわせて　エリア[Digit:2digits Idx="0"]への
+			<Text>あわせて　エリア[Digit:2digits Idx="0" ]への
 挑戦が　可能と　なりました▼
 引き続き　挑戦を
 おまちして　おります</Text>
@@ -7426,7 +7426,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 エリア5の　クリア
 おめでとうございます！▼
 こちらの　とくべつな
@@ -7441,7 +7441,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
+			<Text>[Name:TrainerName Idx="0" ]様！▼
 エリア5の　クリア
 おめでとうございます！▼
 こちらの　特別な　記念品を
@@ -7481,7 +7481,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さて　[Name:TrainerName Idx="0"]さま▼
+			<Text>さて　[Name:TrainerName Idx="0" ]さま▼
 エリア5までの　ちょうせん
 いかがでしたか？▼
 まだまだ　ものたりない　……
@@ -7498,7 +7498,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さて　[Name:TrainerName Idx="0"]様▼
+			<Text>さて　[Name:TrainerName Idx="0" ]様▼
 エリア5までの　挑戦　いかがでしたか？▼
 まだまだ　物足りない　……
 そんな　感じですね？▼
@@ -7593,7 +7593,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 ……　まさか　すべての　エリアを？▼
 おどろきました　この　しせつで
 はじめての　かいきょですよ！▼
@@ -7611,7 +7611,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
+			<Text>[Name:TrainerName Idx="0" ]様！▼
 ……　まさか　全ての　エリアを？▼
 驚きました　この　施設で
 はじめての　快挙ですよ！▼
@@ -7654,8 +7654,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！
-それは　[Name:Item Idx="0"]ですね？▼
+			<Text>[Name:TrainerName Idx="0" ]さま！
+それは　[Name:Item Idx="0" ]ですね？▼
 かしこまりました　オーナーに
 ごれんらくいたします▼</Text>
 			<TextModifiedBy
@@ -7668,8 +7668,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！
-それは　[Name:Item Idx="0"]ですね？▼
+			<Text>[Name:TrainerName Idx="0" ]様！
+それは　[Name:Item Idx="0" ]ですね？▼
 かしこまりました　オーナーに
 ご連絡いたします▼</Text>
 			<TextModifiedBy
@@ -7710,7 +7710,7 @@
 			Language="JPN">
 			<Text>……
 オーナーからの　ほうこくです▼
-[Name:TrainerName Idx="0"]さま
+[Name:TrainerName Idx="0" ]さま
 ほんじつから　しんしせつ！▼
 『くろの　たいじゅ』が
 かいほう　されました！▼
@@ -7730,7 +7730,7 @@
 			Language="JPN_KANJI">
 			<Text>……
 オーナーからの　報告です▼
-[Name:TrainerName Idx="0"]様
+[Name:TrainerName Idx="0" ]様
 本日から　新施設！▼
 『黒の　大樹』が
 開放　されました！▼
@@ -7811,11 +7811,11 @@
 			<Text>この　しせつは　トレーナーの　
 みなさまに　たんれんの　ばしょとして▽
 ていきょうされている　しせつです▼
-しせつないには　[Name:TrainerName Idx="0"]さまと　
+しせつないには　[Name:TrainerName Idx="0" ]さまと　
 おなじく　しせつ　ちょうせんちゅうの▽
 トレーナーのかたが　いらっしゃいます▼
 ほかの　トレーナーのかたは
-[Name:TrainerName Idx="0"]さまを　みかけましたら▽
+[Name:TrainerName Idx="0" ]さまを　みかけましたら▽
 たいせんを　いどんできます▼
 たちふさがる　トレーナーを　たおし
 エリアクリアを　めざして　ください▼</Text>
@@ -7832,11 +7832,11 @@
 			<Text>この　施設は　トレーナーの　
 皆様に　鍛錬の　場所として▽
 提供されている　施設です▼
-施設内には　[Name:TrainerName Idx="0"]様と　
+施設内には　[Name:TrainerName Idx="0" ]様と　
 同じく　施設　挑戦中の▽
 トレーナーの方が　いらっしゃいます▼
 他の　トレーナーの方は
-[Name:TrainerName Idx="0"]様を　見かけましたら▽
+[Name:TrainerName Idx="0" ]様を　見かけましたら▽
 対戦を　挑んできます▼
 立ちふさがる　トレーナーを　倒し
 エリアクリアを　目指して　ください▼</Text>
@@ -8149,7 +8149,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリア[Digit:2digits Idx="0"]</Text>
+			<Text>エリア[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -8160,7 +8160,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリア[Digit:2digits Idx="0"]</Text>
+			<Text>エリア[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -8189,10 +8189,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 しつれいですが　おつれの
-[Name:PokemonNickname Idx="0"]では▽
-エリア[Digit:2digits Idx="0"]に　ちょうせんするには
+[Name:PokemonNickname Idx="0" ]では▽
+エリア[Digit:2digits Idx="0" ]に　ちょうせんするには
 しょうしょう　じつりょくが　たりません▼
 もうしわけありませんが
 じつりょくを　つけてから▽
@@ -8207,10 +8207,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
+			<Text>[Name:TrainerName Idx="0" ]様！▼
 失礼ですが　お連れの
-[Name:PokemonNickname Idx="0"]では▽
-エリア[Digit:2digits Idx="0"]に　挑戦するには
+[Name:PokemonNickname Idx="0" ]では▽
+エリア[Digit:2digits Idx="0" ]に　挑戦するには
 少々　実力が　足りません▼
 申し訳ありませんが　実力を
 つけてから　挑戦してください▼</Text>
@@ -8667,7 +8667,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]かい</Text>
+			<Text>[Digit:2digits Idx="0" ]かい</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -8678,7 +8678,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]階</Text>
+			<Text>[Digit:2digits Idx="0" ]階</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -8787,8 +8787,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
-エリア[Digit:2digits Idx="0"]の　クリア
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
+エリア[Digit:2digits Idx="0" ]の　クリア
 おめでとうございます！▼
 きねんに　おすきなものを　
 おえらびください！</Text>
@@ -8802,8 +8802,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
-エリア[Digit:2digits Idx="0"]の　クリア
+			<Text>[Name:TrainerName Idx="0" ]様！▼
+エリア[Digit:2digits Idx="0" ]の　クリア
 おめでとうございます！▼
 記念に　お好きなものを　
 お選びください！</Text>
@@ -8843,7 +8843,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あわせて　エリア[Digit:2digits Idx="0"]への
+			<Text>あわせて　エリア[Digit:2digits Idx="0" ]への
 ちょうせんが　かのうと　なりました▼
 ひきつづき　ちょうせんを
 おまちして　おります▼</Text>
@@ -8857,7 +8857,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あわせて　エリア[Digit:2digits Idx="0"]への
+			<Text>あわせて　エリア[Digit:2digits Idx="0" ]への
 挑戦が　可能と　なりました▼
 引き続き　挑戦を
 おまちして　おります▼</Text>
@@ -8896,7 +8896,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 エリア5の　クリア
 おめでとうございます！▼
 こちらの　とくべつな
@@ -8911,7 +8911,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
+			<Text>[Name:TrainerName Idx="0" ]様！▼
 エリア5の　クリア
 おめでとうございます！▼
 こちらの　特別な　記念品を
@@ -8951,7 +8951,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さて　[Name:TrainerName Idx="0"]さま▼
+			<Text>さて　[Name:TrainerName Idx="0" ]さま▼
 エリア5までの　ちょうせん
 いかがでしたか？▼
 まだまだ　ものたりない　……
@@ -8968,7 +8968,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さて　[Name:TrainerName Idx="0"]様▼
+			<Text>さて　[Name:TrainerName Idx="0" ]様▼
 エリア5までの　挑戦　いかがでしたか？▼
 まだまだ　物足りない　……
 そんな　感じですね？▼
@@ -9063,7 +9063,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さま！▼
+			<Text>[Name:TrainerName Idx="0" ]さま！▼
 ……　まさか　すべての　エリアを？▼
 おどろきました　この　しせつで
 はじめての　かいきょですよ！▼
@@ -9081,7 +9081,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]様！▼
+			<Text>[Name:TrainerName Idx="0" ]様！▼
 ……　まさか　全ての　エリアを？▼
 驚きました　この　施設で
 はじめての　快挙ですよ！▼
@@ -10314,7 +10314,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]</Text>
+			<Text>[Name:Item Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
@@ -10325,7 +10325,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]</Text>
+			<Text>[Name:Item Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />

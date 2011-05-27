@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんが　はいってきました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんが　はいってきました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -17,7 +17,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんが　入ってきました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんが　入ってきました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -76,7 +76,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんが　かえりました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんが　かえりました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -87,7 +87,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんが　帰りました</Text>
+			<Text>[Name:TrainerName Idx="0" ]さんが　帰りました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -111,8 +111,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リーダーの　[Name:TrainerName Idx="0"]さんが
-ぬけたので　かいさん　します[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>リーダーの　[Name:TrainerName Idx="0" ]さんが
+ぬけたので　かいさん　します[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -123,8 +123,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リーダーの　[Name:TrainerName Idx="0"]さんが
-抜けたので　解散します[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>リーダーの　[Name:TrainerName Idx="0" ]さんが
+抜けたので　解散します[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -186,7 +186,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>メンバーが　いなくなったので
-かいさん　します[Ctrl2:WaitOne frame="60"]</Text>
+かいさん　します[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -198,7 +198,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メンバーが　いなくなったので
-解散します[Ctrl2:WaitOne frame="60"]</Text>
+解散します[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -289,7 +289,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -300,7 +300,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />

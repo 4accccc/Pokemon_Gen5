@@ -4639,7 +4639,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒント！
-[Name:TrainerName Idx="0"]さんに▽
+[Name:TrainerName Idx="0" ]さんに▽
 かんけい　ありまーす！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4652,7 +4652,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒント！
-[Name:TrainerName Idx="0"]さんに▽
+[Name:TrainerName Idx="0" ]さんに▽
 関係　ありまーす！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

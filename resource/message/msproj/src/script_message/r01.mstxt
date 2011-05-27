@@ -319,8 +319,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]モンスターボール[/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]モンスターボール[/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -331,8 +331,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[System:Color name="2"]モンスターボール[/System:Color]を　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[System:Color name="2" ]モンスターボール[/System:Color]を　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -618,7 +618,7 @@
 			Language="JPN">
 			<Text>ベル『ちょっと　まって！[Ctrl2:PageClear ]
 ねえねえ！
-[Name:TrainerName Idx="0"]　チェレン[Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]　チェレン[Ctrl2:PageClear ]
 あたし　いいこと
 おもいついたんだけど[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -633,7 +633,7 @@
 			Language="JPN_KANJI">
 			<Text>ベル『ちょっと　待って！[Ctrl2:PageClear ]
 ねえねえ！
-[Name:TrainerName Idx="0"]　チェレン[Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]　チェレン[Ctrl2:PageClear ]
 あたし　いいこと
 思いついたんだけど[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -879,7 +879,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ベル『あたしと
-[Name:PokemonName Idx="0"]の　コンビが[Ctrl2:LineFeed ]
+[Name:PokemonName Idx="0" ]の　コンビが[Ctrl2:LineFeed ]
 いちばんに　きまってるもん！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,7 +892,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ベル『あたしと
-[Name:PokemonName Idx="0"]の　コンビが[Ctrl2:LineFeed ]
+[Name:PokemonName Idx="0" ]の　コンビが[Ctrl2:LineFeed ]
 一番に　決まってるもん！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -942,7 +942,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 ベルと　しょうぶ　するんだ？▼
 ぼくも　ベルも　いま　いっしょにいる
 ポケモンは　２ひき　さ</Text>
@@ -956,7 +956,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]
+			<Text>チェレン『[Name:TrainerName Idx="0" ]
 ベルと　勝負するんだ？▼
 ぼくも　ベルも　いま　一緒にいる
 ポケモンは　２匹さ</Text>
@@ -1006,7 +1006,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『どう？　[Name:TrainerName Idx="0"]▼
+			<Text>ベル『どう？　[Name:TrainerName Idx="0" ]▼
 どちらが　たくさんの
 ポケモンを　つれているか　くらべる？</Text>
 			<TextModifiedBy
@@ -1019,7 +1019,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『どう？　[Name:TrainerName Idx="0"]▼
+			<Text>ベル『どう？　[Name:TrainerName Idx="0" ]▼
 どちらが　たくさんの
 ポケモンを　連れているか　くらべる？</Text>
 			<TextModifiedBy
@@ -1132,7 +1132,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Digit:1digit Idx="0"]ひき！？▼
+			<Text>ベル『[Digit:1digit Idx="0" ]ひき！？▼
 すごい！　すごーい！！
 それだけの　ポケモンが　いてくれると▽
 なんだか　ときめいちゃうよね！▼</Text>
@@ -1146,7 +1146,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Digit:1digit Idx="0"]匹！？▼
+			<Text>ベル『[Digit:1digit Idx="0" ]匹！？▼
 すごい！　すごーい！！
 それだけの　ポケモンが　いてくれると▽
 なんだか　ときめいちゃうよね！▼</Text>
@@ -1195,7 +1195,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName Idx="0"]が
+			<Text>ベル『[Name:TrainerName Idx="0" ]が
 いま　つれあるいている▽
 ポケモンの　かずは……▼
 ２ひき　ね！
@@ -1210,7 +1210,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName Idx="0"]が
+			<Text>ベル『[Name:TrainerName Idx="0" ]が
 いま　連れ歩いている▽
 ポケモンの　数は……▼
 ２匹ね！
@@ -1261,9 +1261,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ベル『えええ！
-まだ　[Name:PokemonName Idx="0"]　１ぴきなの！？▼
+まだ　[Name:PokemonName Idx="0" ]　１ぴきなの！？▼
 ……ほかの　ポケモンを　つかまえないと
-[Name:PokemonName Idx="0"]が　さみしくないかなあ？▼</Text>
+[Name:PokemonName Idx="0" ]が　さみしくないかなあ？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -1275,9 +1275,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ベル『えええ！
-まだ　[Name:PokemonName Idx="0"]　１匹なの！？▼
+まだ　[Name:PokemonName Idx="0" ]　１匹なの！？▼
 ……ほかの　ポケモンを　捕まえないと
-[Name:PokemonName Idx="0"]が　さみしくないかなあ？▼</Text>
+[Name:PokemonName Idx="0" ]が　さみしくないかなあ？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -1496,7 +1496,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1508,7 +1508,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

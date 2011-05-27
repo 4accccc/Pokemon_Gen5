@@ -7,9 +7,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ
-『ポケモントレーナー　[Name:TrainerName Idx="0"]！』▼
+『ポケモントレーナー　[Name:TrainerName Idx="0" ]！』▼
 いちねんまえ　かけだしの
-ポケモントレーナー　「[Name:TrainerName Idx="0"]」が▼
+ポケモントレーナー　「[Name:TrainerName Idx="0" ]」が▼
 チャンピオンに　なるために
 たびだった　サクセスストーリーだ！</Text>
 			<TextModifiedBy
@@ -23,9 +23,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ
-『ポケモントレーナー　[Name:TrainerName Idx="0"]！』▼
+『ポケモントレーナー　[Name:TrainerName Idx="0" ]！』▼
 １年前　駆け出しの
-ポケモントレーナー　「[Name:TrainerName Idx="0"]」が▼
+ポケモントレーナー　「[Name:TrainerName Idx="0" ]」が▼
 チャンピオンに　なるために
 旅立った　サクセスストーリーだ！</Text>
 			<TextModifiedBy
@@ -61,13 +61,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい１わ▼
+[Name:TrainerName Idx="0" ]！』　だい１わ▼
 「ニックネームを　つけるのは
 　たいへん　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:6digits Idx="1"]ひきの　ニックネームを▽
+[Digit:6digits Idx="1" ]ひきの　ニックネームを▽
 かんがえることに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -80,13 +80,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第１話▼
+[Name:TrainerName Idx="0" ]！』　第１話▼
 「ニックネームを　つけるのは
 　たいへん　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:6digits Idx="1"]匹の　ニックネームを▽
+[Digit:6digits Idx="1" ]匹の　ニックネームを▽
 考えることに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -122,13 +122,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい２わ▼
+[Name:TrainerName Idx="0" ]！』　だい２わ▼
 「レポート　かくのも
 　いのちがけ　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいの▽
+[Digit:9digits Idx="1" ]かいの▽
 レポートを　かくことに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -141,13 +141,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第２話▼
+[Name:TrainerName Idx="0" ]！』　第２話▼
 「レポート　かくのも
 　いのちがけ　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回の▽
+[Digit:9digits Idx="1" ]回の▽
 レポートを　書くことに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,13 +183,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい３わ▼
+[Name:TrainerName Idx="0" ]！』　だい３わ▼
 「ポケモンセンターで
 　おれも　かいふく　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かい▽
+[Digit:9digits Idx="1" ]かい▽
 ポケモンセンターに　おとずれていた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -202,13 +202,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第３話▼
+[Name:TrainerName Idx="0" ]！』　第３話▼
 「ポケモンセンターで
 　おれも　かいふく　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回▽
+[Digit:9digits Idx="1" ]回▽
 ポケモンセンターに　訪れていた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -244,15 +244,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい４わ▼
+[Name:TrainerName Idx="0" ]！』　だい４わ▼
 「おかいもので
 　かねもち　きぶんだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいの▽
+[Digit:9digits Idx="1" ]かいの▽
 かいもので▼
-[Digit:9digits Idx="2"]円を
+[Digit:9digits Idx="2" ]円を
 つかうのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -265,15 +265,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第４話▼
+[Name:TrainerName Idx="0" ]！』　第４話▼
 「おかいもので
 　かねもち　きぶんだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回の▽
+[Digit:9digits Idx="1" ]回の▽
 買い物で▼
-[Digit:9digits Idx="2"]円を
+[Digit:9digits Idx="2" ]円を
 使うのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -310,13 +310,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい５わ▼
+[Name:TrainerName Idx="0" ]！』　だい５わ▼
 「テレビで
 　さいきょう　きぶんだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいも▽
+[Digit:9digits Idx="1" ]かいも▽
 テレビを　みたのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -329,13 +329,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第５話▼
+[Name:TrainerName Idx="0" ]！』　第５話▼
 「テレビで
 　さいきょう　きぶんだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回も▽
+[Digit:9digits Idx="1" ]回も▽
 テレビを　みたのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -371,13 +371,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい６わ▼
+[Name:TrainerName Idx="0" ]！』　だい６わ▼
 「つかまえられたいのは
 　こっち　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]ひきの▽
+[Digit:9digits Idx="1" ]ひきの▽
 ポケモンを　つかまえるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -390,13 +390,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第６話▼
+[Name:TrainerName Idx="0" ]！』　第６話▼
 「つかまえられたいのは
 　こっち　だぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]匹の▽
+[Digit:9digits Idx="1" ]匹の▽
 ポケモンを　捕まえるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -432,14 +432,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい７わ▼
+[Name:TrainerName Idx="0" ]！』　だい７わ▼
 「たまには　まじめに　たたかうぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]ひきの▽
+[Digit:9digits Idx="1" ]ひきの▽
 ポケモンと　たたかい▼
-[Digit:9digits Idx="2"]にんの
+[Digit:9digits Idx="2" ]にんの
 トレーナーと　たたかうのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -452,14 +452,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第７話▼
+[Name:TrainerName Idx="0" ]！』　第７話▼
 「たまには　まじめに　たたかうぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]匹の▽
+[Digit:9digits Idx="1" ]匹の▽
 ポケモンと　戦い▼
-[Digit:9digits Idx="2"]人の
+[Digit:9digits Idx="2" ]人の
 トレーナーと　勝負するのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -496,12 +496,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい８わ▼
+[Name:TrainerName Idx="0" ]！』　だい８わ▼
 「ついに　おれも　しんかだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]ひきの▽
+[Digit:9digits Idx="1" ]ひきの▽
 ポケモンを　しんか　させるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -514,12 +514,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第８話▼
+[Name:TrainerName Idx="0" ]！』　第８話▼
 「ついに　おれも　しんかだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]匹の▽
+[Digit:9digits Idx="1" ]匹の▽
 ポケモンを　進化させるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -555,15 +555,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい９わ▼
+[Name:TrainerName Idx="0" ]！』　だい９わ▼
 「この　つりざおが
 　ものほしざおの　かわりだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:6digits Idx="1"]ひきの▽
+[Digit:6digits Idx="1" ]ひきの▽
 ポケモンを　つりあげ▼
-[Digit:4digits Idx="2"]ひきの
+[Digit:4digits Idx="2" ]ひきの
 ポケモンを　つりそこねるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -576,15 +576,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第９話▼
+[Name:TrainerName Idx="0" ]！』　第９話▼
 「この　つりざおが
 　ものほしざおの　かわりだぜ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:6digits Idx="1"]匹の▽
+[Digit:6digits Idx="1" ]匹の▽
 ポケモンを　釣りあげ▼
-[Digit:4digits Idx="2"]匹の
+[Digit:4digits Idx="2" ]匹の
 ポケモンを　釣り損ねるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -621,14 +621,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい１０わ▼
+[Name:TrainerName Idx="0" ]！』　だい１０わ▼
 「チャンピオンって！！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かれだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいの▽
+[Digit:9digits Idx="1" ]かいの▽
 たたかいを　くりひろげ！▼
-[Digit:4digits Idx="2"]かいの
+[Digit:4digits Idx="2" ]かいの
 でんどういりを　はたすのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -641,14 +641,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第１０話▼
+[Name:TrainerName Idx="0" ]！』　第１０話▼
 「チャンピオンって！！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回の▽
+[Digit:9digits Idx="1" ]回の▽
 戦いを　繰り広げ！▼
-[Digit:4digits Idx="2"]回の
+[Digit:4digits Idx="2" ]回の
 殿堂入りを　果たすのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -685,9 +685,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ
-『ポケモントレーナー　[Name:TrainerName Idx="0"]！』▼
+『ポケモントレーナー　[Name:TrainerName Idx="0" ]！』▼
 いちねんまえ　かけだしの
-ポケモントレーナー　「[Name:TrainerName Idx="0"]」が▼
+ポケモントレーナー　「[Name:TrainerName Idx="0" ]」が▼
 チャンピオンに　なるために
 たびだった　サクセスストーリーだ！</Text>
 			<TextModifiedBy
@@ -701,9 +701,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ
-『ポケモントレーナー　[Name:TrainerName Idx="0"]！』▼
+『ポケモントレーナー　[Name:TrainerName Idx="0" ]！』▼
 １年前　駆け出しの
-ポケモントレーナー　「[Name:TrainerName Idx="0"]」が▼
+ポケモントレーナー　「[Name:TrainerName Idx="0" ]」が▼
 チャンピオンに　なるために
 旅立った　サクセスストーリーだ！</Text>
 			<TextModifiedBy
@@ -739,13 +739,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい１わ▼
+[Name:TrainerName Idx="0" ]！』　だい１わ▼
 「ニックネームを　つけるのは
 　たいへん　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:6digits Idx="1"]ひきの　ニックネームを▽
+[Digit:6digits Idx="1" ]ひきの　ニックネームを▽
 かんがえることに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -758,13 +758,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第１話▼
+[Name:TrainerName Idx="0" ]！』　第１話▼
 「ニックネームを　つけるのは
 　たいへん　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:6digits Idx="1"]匹の　ニックネームを▽
+[Digit:6digits Idx="1" ]匹の　ニックネームを▽
 考えることに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -800,13 +800,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい２わ▼
+[Name:TrainerName Idx="0" ]！』　だい２わ▼
 「レポート　かくのも
 　いのちがけ　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいの▽
+[Digit:9digits Idx="1" ]かいの▽
 レポートを　かくことに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -819,13 +819,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第２話▼
+[Name:TrainerName Idx="0" ]！』　第２話▼
 「レポート　かくのも
 　いのちがけ　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回の▽
+[Digit:9digits Idx="1" ]回の▽
 レポートを　書くことに　なるのだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -861,13 +861,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい３わ▼
+[Name:TrainerName Idx="0" ]！』　だい３わ▼
 「ポケモンセンターで
 　あたしも　かいふく　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かい▽
+[Digit:9digits Idx="1" ]かい▽
 ポケモンセンターに　おとずれていた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -880,13 +880,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第３話▼
+[Name:TrainerName Idx="0" ]！』　第３話▼
 「ポケモンセンターで
 　あたしも　かいふく　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回▽
+[Digit:9digits Idx="1" ]回▽
 ポケモンセンターに　訪れていた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -922,15 +922,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい４わ▼
+[Name:TrainerName Idx="0" ]！』　だい４わ▼
 「おかいもので
 　かねもち　きぶんだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいの▽
+[Digit:9digits Idx="1" ]かいの▽
 かいもので▼
-[Digit:9digits Idx="2"]円を
+[Digit:9digits Idx="2" ]円を
 つかうのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -943,15 +943,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第４話▼
+[Name:TrainerName Idx="0" ]！』　第４話▼
 「おかいもので
 　かねもち　きぶんだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回の▽
+[Digit:9digits Idx="1" ]回の▽
 買い物で▼
-[Digit:9digits Idx="2"]円を
+[Digit:9digits Idx="2" ]円を
 使うのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -988,13 +988,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい５わ▼
+[Name:TrainerName Idx="0" ]！』　だい５わ▼
 「テレビで
 　さいきょう　きぶんだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいも▽
+[Digit:9digits Idx="1" ]かいも▽
 テレビを　みたのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1007,13 +1007,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第５話▼
+[Name:TrainerName Idx="0" ]！』　第５話▼
 「テレビで
 　さいきょう　きぶんだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回も▽
+[Digit:9digits Idx="1" ]回も▽
 テレビを　みたのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1049,13 +1049,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい６わ▼
+[Name:TrainerName Idx="0" ]！』　だい６わ▼
 「つかまえられたいのは
 　こっち　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]ひきの▽
+[Digit:9digits Idx="1" ]ひきの▽
 ポケモンを　つかまえるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1068,13 +1068,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第６話▼
+[Name:TrainerName Idx="0" ]！』　第６話▼
 「つかまえられたいのは
 　こっち　だわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]匹の▽
+[Digit:9digits Idx="1" ]匹の▽
 ポケモンを　捕まえるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1110,14 +1110,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい７わ▼
+[Name:TrainerName Idx="0" ]！』　だい７わ▼
 「たまには　まじめに　たたかうわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]ひきの▽
+[Digit:9digits Idx="1" ]ひきの▽
 ポケモンと　たたかい▼
-[Digit:9digits Idx="2"]にんの
+[Digit:9digits Idx="2" ]にんの
 トレーナーと　たたかうのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1130,14 +1130,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第７話▼
+[Name:TrainerName Idx="0" ]！』　第７話▼
 「たまには　まじめに　たたかうわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]匹の▽
+[Digit:9digits Idx="1" ]匹の▽
 ポケモンと　戦い▼
-[Digit:9digits Idx="2"]人の
+[Digit:9digits Idx="2" ]人の
 トレーナーと　勝負するのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1174,12 +1174,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい８わ▼
+[Name:TrainerName Idx="0" ]！』　だい８わ▼
 「ついに　あたしも　しんかだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]ひきの▽
+[Digit:9digits Idx="1" ]ひきの▽
 ポケモンを　しんか　させるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1192,12 +1192,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第８話▼
+[Name:TrainerName Idx="0" ]！』　第８話▼
 「ついに　あたしも　しんかだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]匹の▽
+[Digit:9digits Idx="1" ]匹の▽
 ポケモンを　進化させるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1233,15 +1233,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい９わ▼
+[Name:TrainerName Idx="0" ]！』　だい９わ▼
 「この　つりざおが
 　ものほしざおの　かわりだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:6digits Idx="1"]ひきの▽
+[Digit:6digits Idx="1" ]ひきの▽
 ポケモンを　つりあげ▼
-[Digit:4digits Idx="2"]ひきの
+[Digit:4digits Idx="2" ]ひきの
 ポケモンを　つりそこねるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1254,15 +1254,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第９話▼
+[Name:TrainerName Idx="0" ]！』　第９話▼
 「この　つりざおが
 　ものほしざおの　かわりだわ！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:6digits Idx="1"]匹の▽
+[Digit:6digits Idx="1" ]匹の▽
 ポケモンを　釣りあげ▼
-[Digit:4digits Idx="2"]匹の
+[Digit:4digits Idx="2" ]匹の
 ポケモンを　釣り損ねるのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1299,14 +1299,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　だい１０わ▼
+[Name:TrainerName Idx="0" ]！』　だい１０わ▼
 「チャンピオンって！！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　かのじょだったが▼
 その　１ねんご　には
-[Digit:9digits Idx="1"]かいの▽
+[Digit:9digits Idx="1" ]かいの▽
 たたかいを　くりひろげ！▼
-[Digit:4digits Idx="2"]かいの
+[Digit:4digits Idx="2" ]かいの
 でんどういりを　はたすのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1319,14 +1319,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アニメ『ポケモントレーナー
-[Name:TrainerName Idx="0"]！』　第１０話▼
+[Name:TrainerName Idx="0" ]！』　第１０話▼
 「チャンピオンって！！」▼
 ～エピソード　ゴニョゴニョ～
 といっていた　彼女だったが▼
 その　１年後には
-[Digit:9digits Idx="1"]回の▽
+[Digit:9digits Idx="1" ]回の▽
 戦いを　繰り広げ！▼
-[Digit:4digits Idx="2"]回の
+[Digit:4digits Idx="2" ]回の
 殿堂入りを　果たすのだった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1365,11 +1365,11 @@
 			<Text>ザ・ナンバーワン
 「じてんしゃ」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-[Digit:9digits Idx="1"]かいも▽
+[Digit:9digits Idx="1" ]かいも▽
 じてんしゃに　のっているぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 じてんしゃを　こいでいるときに▽
 かんじる　かぜは　さいこうかい！？</Text>
 			<TextModifiedBy
@@ -1385,11 +1385,11 @@
 			<Text>ザ・ナンバーワン
 「じてんしゃ」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-[Digit:9digits Idx="1"]回も▽
+[Digit:9digits Idx="1" ]回も▽
 じてんしゃに　乗っているぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 じてんしゃを　こいでいるときに▽
 感じる　風は　最高かい！？</Text>
 			<TextModifiedBy
@@ -1427,11 +1427,11 @@
 			<Text>ザ・ナンバーワン
 「タマゴ」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 タマゴを▽
-[Digit:6digits Idx="1"]かいも　かえしているぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+[Digit:6digits Idx="1" ]かいも　かえしているぞ！▼
+どうした　[Name:TrainerName Idx="0" ]！
 タマゴから　ポケモンが▽
 でてくる　シーンは　スペクタクルかい！？</Text>
 			<TextModifiedBy
@@ -1447,11 +1447,11 @@
 			<Text>ザ・ナンバーワン
 「タマゴ」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 タマゴを▽
-[Digit:6digits Idx="1"]回も　かえしているぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+[Digit:6digits Idx="1" ]回も　かえしているぞ！▼
+どうした　[Name:TrainerName Idx="0" ]！
 タマゴから　ポケモンが▽
 でてくる　シーンは　スペクタクルかい！？</Text>
 			<TextModifiedBy
@@ -1489,12 +1489,12 @@
 			<Text>ザ・ナンバーワン
 「そだてや」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 そだてやさんに　ポケモンを▼
-[Digit:9digits Idx="1"]ひきも
+[Digit:9digits Idx="1" ]ひきも
 あずけている　ようだぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 そだてやじいさんと　ばあさん▽
 どっちが　きになるんだい！？</Text>
 			<TextModifiedBy
@@ -1510,12 +1510,12 @@
 			<Text>ザ・ナンバーワン
 「育て屋」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 育て屋さんに　ポケモンを▼
-[Digit:9digits Idx="1"]匹も
+[Digit:9digits Idx="1" ]匹も
 預けている　ようだぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 育て屋じいさんと　ばあさん▽
 どっちが　気になるんだい！？</Text>
 			<TextModifiedBy
@@ -1553,11 +1553,11 @@
 			<Text>ザ・ナンバーワン
 「ＧＴＳ」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 ＧＴＳに　あずけた　ポケモンは▽
-[Digit:6digits Idx="1"]ひき　だ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+[Digit:6digits Idx="1" ]ひき　だ！▼
+すごいぞ　[Name:TrainerName Idx="0" ]！
 まさに　グローバル　トレードだ！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1572,11 +1572,11 @@
 			<Text>ザ・ナンバーワン
 「ＧＴＳ」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 ＧＴＳに　預けた　ポケモンは▽
-[Digit:6digits Idx="1"]匹だ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+[Digit:6digits Idx="1" ]匹だ！▼
+すごいぞ　[Name:TrainerName Idx="0" ]！
 まさに　グローバル　トレードだ！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1613,11 +1613,11 @@
 			<Text>ザ・ナンバーワン
 「メールをかいた」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:6digits Idx="1"]かい▽
+いままでに　[Digit:6digits Idx="1" ]かい▽
 メールを　かいているようだ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+すごいぞ　[Name:TrainerName Idx="0" ]！
 メールで　つたえる　きもち……▽
 なんだか　すごいじゃないか！</Text>
 			<TextModifiedBy
@@ -1633,11 +1633,11 @@
 			<Text>ザ・ナンバーワン
 「メールをかいた」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:6digits Idx="1"]回▽
+いままでに　[Digit:6digits Idx="1" ]回▽
 メールを　書いているようだ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+すごいぞ　[Name:TrainerName Idx="0" ]！
 メールで　伝える　気持ち……▽
 なんだか　すごいじゃないか！</Text>
 			<TextModifiedBy
@@ -1675,11 +1675,11 @@
 			<Text>ザ・ナンバーワン
 「プレミアボール」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 プレミアボールを▽
-[Digit:6digits Idx="1"]コも　もらっているぞ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+[Digit:6digits Idx="1" ]コも　もらっているぞ！▼
+すごいぞ　[Name:TrainerName Idx="0" ]！
 なかなか　かいもの　じょうずだな！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1694,11 +1694,11 @@
 			<Text>ザ・ナンバーワン
 「プレミアボール」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 プレミアボールを▽
-[Digit:6digits Idx="1"]コも　もらっているぞ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+[Digit:6digits Idx="1" ]コも　もらっているぞ！▼
+すごいぞ　[Name:TrainerName Idx="0" ]！
 なかなか　買い物上手だな！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1735,11 +1735,11 @@
 			<Text>ザ・ナンバーワン
 「じぶんの　いえ」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-[Digit:4digits Idx="1"]かいも▽
+[Digit:4digits Idx="1" ]かいも▽
 じぶんの　いえで　やすんでいるぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 やっぱり　じぶんの　いえは　いいよな！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1754,11 +1754,11 @@
 			<Text>ザ・ナンバーワン
 「じぶんの　いえ」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-[Digit:4digits Idx="1"]回も▽
+[Digit:4digits Idx="1" ]回も▽
 自分の　家で　休んでいるぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 やっぱり　自分の　家は　いいよな！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1795,11 +1795,11 @@
 			<Text>ザ・ナンバーワン
 「はねる」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 はねるの　わざを▽
-[Digit:4digits Idx="1"]かいも　つかったぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+[Digit:4digits Idx="1" ]かいも　つかったぞ！▼
+どうした　[Name:TrainerName Idx="0" ]！
 はねるは　そんなに　おもしろいかい！？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1814,11 +1814,11 @@
 			<Text>ザ・ナンバーワン
 「はねる」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 はねるの　技を▽
-[Digit:4digits Idx="1"]回も　使ったぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+[Digit:4digits Idx="1" ]回も　使ったぞ！▼
+どうした　[Name:TrainerName Idx="0" ]！
 はねるは　そんなに　おもしろいかい！？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1855,11 +1855,11 @@
 			<Text>ザ・ナンバーワン
 「わるあがき」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 わるあがきの　わざを▽
-[Digit:4digits Idx="1"]かいも　つかったぞ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+[Digit:4digits Idx="1" ]かいも　つかったぞ！▼
+すごいぞ　[Name:TrainerName Idx="0" ]！
 まさに　ネバーギブアップ！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1874,11 +1874,11 @@
 			<Text>ザ・ナンバーワン
 「わるあがき」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 わるあがきの　技を▽
-[Digit:4digits Idx="1"]回も　使ったぞ！▼
-すごいぞ　[Name:TrainerName Idx="0"]！
+[Digit:4digits Idx="1" ]回も　使ったぞ！▼
+すごいぞ　[Name:TrainerName Idx="0" ]！
 まさに　ネバーギブアップ！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1915,11 +1915,11 @@
 			<Text>ザ・ナンバーワン
 「こうかは　なかった」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 あいてに　こうかの　ない　わざを▽
-[Digit:4digits Idx="1"]かいも　つかったぞ！▼
-……しかたないよな　[Name:TrainerName Idx="0"]
+[Digit:4digits Idx="1" ]かいも　つかったぞ！▼
+……しかたないよな　[Name:TrainerName Idx="0" ]
 ポケモンの　タイプは　むずかしいよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1934,11 +1934,11 @@
 			<Text>ザ・ナンバーワン
 「こうかは　なかった」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
 相手に　効果の　ない　技を▽
-[Digit:4digits Idx="1"]回も　使ったぞ！▼
-……しかたないよな　[Name:TrainerName Idx="0"]
+[Digit:4digits Idx="1" ]回も　使ったぞ！▼
+……しかたないよな　[Name:TrainerName Idx="0" ]
 ポケモンの　タイプは　難しいよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1975,11 +1975,11 @@
 			<Text>ザ・ナンバーワン
 「にげられない」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:4digits Idx="1"]かい▽
+いままでに　[Digit:4digits Idx="1" ]かい▽
 にげることに　しっぱい　したぞ！▼
-……しかたないよな　[Name:TrainerName Idx="0"]
+……しかたないよな　[Name:TrainerName Idx="0" ]
 それが　じんせいって　やつだよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1994,11 +1994,11 @@
 			<Text>ザ・ナンバーワン
 「逃げられない」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:4digits Idx="1"]回▽
+いままでに　[Digit:4digits Idx="1" ]回▽
 逃げることに　失敗したぞ！▼
-……しかたないよな　[Name:TrainerName Idx="0"]
+……しかたないよな　[Name:TrainerName Idx="0" ]
 それが　人生って　やつだよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2035,11 +2035,11 @@
 			<Text>ザ・ナンバーワン
 「にげられた」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:4digits Idx="1"]ひきの▽
+いままでに　[Digit:4digits Idx="1" ]ひきの▽
 ポケモンに　にげられたぞ！▼
-……しかたないよな　[Name:TrainerName Idx="0"]
+……しかたないよな　[Name:TrainerName Idx="0" ]
 また　いつか　きっと　あえるさ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2054,11 +2054,11 @@
 			<Text>ザ・ナンバーワン
 「逃げられた」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:4digits Idx="1"]匹の▽
+いままでに　[Digit:4digits Idx="1" ]匹の▽
 ポケモンに　逃げられたぞ！▼
-……しかたないよな　[Name:TrainerName Idx="0"]
+……しかたないよな　[Name:TrainerName Idx="0" ]
 また　いつか　きっと　あえるさ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2095,11 +2095,11 @@
 			<Text>ザ・ナンバーワン
 「ふくげん」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:4digits Idx="1"]コの▽
+いままでに　[Digit:4digits Idx="1" ]コの▽
 カセキを　ふくげんしてもらったぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 たいこの　ロマンを　かんじるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2114,11 +2114,11 @@
 			<Text>ザ・ナンバーワン
 「復元」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！
-いままでに　[Digit:4digits Idx="1"]個の▽
+いままでに　[Digit:4digits Idx="1" ]個の▽
 カセキを　復元してもらったぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 太古の　ロマンを　感じるかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2155,11 +2155,11 @@
 			<Text>ザ・ナンバーワン
 「ぐるぐるこうかん」トレーナー！▼
 こちらの　どくじの　ちょうさによると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！　ぐるぐるこうかんで
-いままでに　[Digit:4digits Idx="1"]かい▽
+いままでに　[Digit:4digits Idx="1" ]かい▽
 タマゴを　こうかん　しているぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 ぐるぐる　ぐるぐる　ぐるぐる　だな！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2174,11 +2174,11 @@
 			<Text>ザ・ナンバーワン
 「ぐるぐる交換」トレーナー！▼
 こちらの　独自の　調査によると
-カノコタウンの　[Name:TrainerName Idx="0"]は▼
+カノコタウンの　[Name:TrainerName Idx="0" ]は▼
 なんと　なんと！　ぐるぐる交換で
-いままでに　[Digit:4digits Idx="1"]回▽
+いままでに　[Digit:4digits Idx="1" ]回▽
 タマゴを　交換しているぞ！▼
-どうした　[Name:TrainerName Idx="0"]！
+どうした　[Name:TrainerName Idx="0" ]！
 ぐるぐる　ぐるぐる　ぐるぐる　だな！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2217,8 +2217,8 @@
 ほんじつ　しょうかい　するのは
 １にちで　たおした▽
 ポケモンの　かずが▼
-さいこう　[Digit:4digits Idx="1"]ひきの
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+さいこう　[Digit:4digits Idx="1" ]ひきの
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 ポケモンを　さがしもとめて　ばかりだね</Text>
 			<TextModifiedBy
@@ -2236,8 +2236,8 @@
 本日　紹介するのは
 １日で　たおした▽
 ポケモンの　数が▼
-最高　[Digit:4digits Idx="1"]匹の
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+最高　[Digit:4digits Idx="1" ]匹の
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 ポケモンを　探し求めて　ばかりだね</Text>
 			<TextModifiedBy
@@ -2277,8 +2277,8 @@
 ほんじつ　しょうかい　するのは
 １にちで　つかまえた▽
 ポケモンの　かずが▼
-さいこう　[Digit:4digits Idx="1"]ひきの
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+さいこう　[Digit:4digits Idx="1" ]ひきの
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 ボールを　なげてばかり　だね</Text>
 			<TextModifiedBy
@@ -2296,8 +2296,8 @@
 本日　紹介するのは
 １日で　捕まえた▽
 ポケモンの　数が▼
-最高　[Digit:4digits Idx="1"]匹の
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+最高　[Digit:4digits Idx="1" ]匹の
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 ボールを　投げてばかり　だね</Text>
 			<TextModifiedBy
@@ -2337,8 +2337,8 @@
 ほんじつ　しょうかい　するのは
 １にちで　しょうりした▽
 トレーナーの　かずが▼
-さいこう　[Digit:4digits Idx="1"]にんの
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+さいこう　[Digit:4digits Idx="1" ]にんの
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 トレーナーとの　しょうぶが▽
 たのしくて　しかたないんだね</Text>
@@ -2357,8 +2357,8 @@
 本日　紹介するのは
 １日で　勝利した▽
 トレーナーの　数が▼
-最高　[Digit:4digits Idx="1"]人の
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+最高　[Digit:4digits Idx="1" ]人の
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 トレーナーとの　勝負が▽
 楽しくて　しかたないんだね</Text>
@@ -2399,8 +2399,8 @@
 ほんじつ　しょうかい　するのは
 １にちで　しんかさせた▽
 ポケモンの　かずが▼
-さいこう　[Digit:4digits Idx="1"]ひきの
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+さいこう　[Digit:4digits Idx="1" ]ひきの
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 しんかの　しゅんかんが　すきなんだね</Text>
 			<TextModifiedBy
@@ -2418,8 +2418,8 @@
 本日　紹介するのは
 １日で　進化させた▽
 ポケモンの　数が▼
-最高　[Digit:4digits Idx="1"]匹の
-トレーナー　[Name:TrainerName Idx="0"]さんだ▼
+最高　[Digit:4digits Idx="1" ]匹の
+トレーナー　[Name:TrainerName Idx="0" ]さんだ▼
 きっと　この　トレーナーは
 進化の　瞬間が　好きなんだね</Text>
 			<TextModifiedBy
@@ -9072,7 +9072,7 @@ SEE YOU AGAIN！　バイバーイ！</Text>
 いやーん！　これで　おたがいの
 このみとか　しれちゃうのねっ！▼
 ちなみに　ジョディの　すきな
-ポケモンは　[Name:PokemonName Idx="3"]よ！▼
+ポケモンは　[Name:PokemonName Idx="3" ]よ！▼
 それじゃ　まったねー！
 HAVE A NICE DAY！　ムチュッ！</Text>
 			<TextModifiedBy
@@ -9099,7 +9099,7 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 いやーん！　これで　お互いの
 好みとか　知れちゃうのねっ！▼
 ちなみに　ジョディの　好きな
-ポケモンは　[Name:PokemonName Idx="3"]よ！▼
+ポケモンは　[Name:PokemonName Idx="3" ]よ！▼
 それじゃ　まったねー！
 HAVE A NICE DAY！　ムチュッ！</Text>
 			<TextModifiedBy
@@ -9153,7 +9153,7 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 『Where did you find that?』▼
 ウェーァ　ディッジュゥ
 ファインド　ザット？▼
-ジョディは　かわいい　[Name:PokemonName Idx="3"]
+ジョディは　かわいい　[Name:PokemonName Idx="3" ]
 つれてる　トレーナーに▽
 あうと　すかさず　きいちゃうっ！▼
 そんなわけで　またいつか
@@ -9180,7 +9180,7 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 『Where did you find that?』▼
 ウェーァ　ディッジュゥ
 ファインド　ザット？▼
-ジョディは　カワイイ　[Name:PokemonName Idx="3"]
+ジョディは　カワイイ　[Name:PokemonName Idx="3" ]
 連れてる　トレーナーに▽
 会うと　すかさず　きいちゃうっ！▼
 そんなわけで　またいつか
@@ -9315,7 +9315,7 @@ SEE　YOU　SOON！</Text>
 アイ　ビケィム　ヨァ　ファン！▼
 かわいかった！▼
 あいくるしかった！▼
-いとしの　[Name:PokemonName Idx="3"]！▼
+いとしの　[Name:PokemonName Idx="3" ]！▼
 あの　にかいてん　ジャンプは
 はんざいねっ！▼
 というわけで　ジョディは
@@ -9343,7 +9343,7 @@ SEE　YOU　SOON！</Text>
 アイ　ビケィム　ヨァ　ファン！▼
 かわいかった！▼
 愛くるしかった！▼
-愛しの　[Name:PokemonName Idx="3"]！▼
+愛しの　[Name:PokemonName Idx="3" ]！▼
 あの　２回転　ジャンプは
 犯罪ねっ！▼
 というわけで　ジョディは
@@ -9481,7 +9481,7 @@ SEE YOU AGAIN－！</Text>
 ヨァ　ポーケモン　ルックス▽
 ディフレント　ってね！▼
 あら　スカウトかしら！　とおもって
-[Name:PokemonName Idx="3"]を　みたら……▽
+[Name:PokemonName Idx="3" ]を　みたら……▽
 ……ビックリ！▼
 ミュージカルの　グッズを
 つけたまま　あるいてたの！▽
@@ -9510,7 +9510,7 @@ OOPS！　これは　めだつわね！▼
 ヨァ　ポーケモン　ルックス▽
 ディフレント　ってね！▼
 あら　スカウトかしら！　と思って
-[Name:PokemonName Idx="3"]を　みたら……▽
+[Name:PokemonName Idx="3" ]を　みたら……▽
 ……ビックリ！▼
 ミュージカルの　グッズを
 つけたまま　歩いてたの！▽
@@ -10255,7 +10255,7 @@ OHHHH！　バッチリ　おめかしした
 『じょうだんだろ！？』▼
 ボクの　まわりには　ショッキングな
 ニュースが　おおくてね▼
-こないだも　まっかな　[Name:PokemonName Idx="3"]を
+こないだも　まっかな　[Name:PokemonName Idx="3" ]を
 みたんだよって　はなしたら▽
 こう　いわれたんだよ！▼
 『You're kidding!』
@@ -10263,7 +10263,7 @@ OHHHH！　バッチリ　おめかしした
 じょうだんだろ！？ってね！
 ほんとだよ！▼
 とても　きげんの　わるい
-[Name:PokemonName Idx="3"]は　いかりで　かおが▽
+[Name:PokemonName Idx="3" ]は　いかりで　かおが▽
 まっかに　なってたのさ！▽
 ……ああ　こわかった！▼
 そんなわけで　きょうは　ここまで！
@@ -10285,7 +10285,7 @@ OHHHH！　バッチリ　おめかしした
 『冗談だろ！？』▼
 ボクの　周りには　ショッキングな
 ニュースが　多くてね▼
-こないだも　真っ赤な　[Name:PokemonName Idx="3"]を
+こないだも　真っ赤な　[Name:PokemonName Idx="3" ]を
 みたんだよって　話したら▽
 こう　いわれたんだよ！▼
 『You're kidding!』
@@ -10293,7 +10293,7 @@ OHHHH！　バッチリ　おめかしした
 冗談だろ！？ってね！
 ほんとだよ！▼
 とても　機嫌の　悪い
-[Name:PokemonName Idx="3"]は　怒りで　顔が▽
+[Name:PokemonName Idx="3" ]は　怒りで　顔が▽
 真っ赤に　なってたのさ！▽
 ……ああ　怖かった！▼
 そんなわけで　今日は　ここまで！

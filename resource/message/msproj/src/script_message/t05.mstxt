@@ -2727,8 +2727,8 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ゆずって
-かわりに　[Name:Item Idx="2"]を　もらった！</Text>
+			<Text>[Name:Item Idx="0" ]を　ゆずって
+かわりに　[Name:Item Idx="2" ]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -2739,8 +2739,8 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　譲って
-代わりに　[Name:Item Idx="2"]を　もらった！</Text>
+			<Text>[Name:Item Idx="0" ]を　譲って
+代わりに　[Name:Item Idx="2" ]を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -2787,10 +2787,10 @@ Wi-Fi</Comment>
 			Language="JPN">
 			<Text>やや……　こまったなあ▼
 たびに　むちゅうで
-[Name:Item Idx="0"]を　きらしてしまった▼
+[Name:Item Idx="0" ]を　きらしてしまった▼
 そうだねえ……
-きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを▽
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを▽
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 こうかん　しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2804,10 +2804,10 @@ Wi-Fi</Comment>
 			Language="JPN_KANJI">
 			<Text>やや……　困ったなあ▼
 旅に　夢中で
-[Name:Item Idx="0"]を　きらしてしまった▼
+[Name:Item Idx="0" ]を　きらしてしまった▼
 そうだねえ……
-きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを▽
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを▽
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 交換しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2856,8 +2856,8 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+			<Text>きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 こうかん　しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2869,8 +2869,8 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+			<Text>きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 交換しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3085,7 +3085,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>……あらら
-[Name:Item Idx="0"]が　たりないよ</Text>
+[Name:Item Idx="0" ]が　たりないよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -3097,7 +3097,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……あらら
-[Name:Item Idx="0"]が　たりないよ</Text>
+[Name:Item Idx="0" ]が　たりないよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -3141,7 +3141,7 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……あらら　[Name:Item Idx="2"]は
+			<Text>……あらら　[Name:Item Idx="2" ]は
 それいじょう　もてないね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3153,7 +3153,7 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……あらら　[Name:Item Idx="2"]は
+			<Text>……あらら　[Name:Item Idx="2" ]は
 それ以上　持てないね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3198,12 +3198,12 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　[Name:Item Idx="0"]コレクター！▼
+			<Text>わたしは　[Name:Item Idx="0" ]コレクター！▼
 そこの　きみ！
 わたしと　ビジネスライクな▽
 どうぐこうかんを　しようじゃないか▼
-きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 こうかん　しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3215,12 +3215,12 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　[Name:Item Idx="0"]コレクター！▼
+			<Text>わたしは　[Name:Item Idx="0" ]コレクター！▼
 そこの　きみ！
 わたしと　ビジネスライクな▽
 道具交換を　しようじゃないか▼
-きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 交換しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3270,8 +3270,8 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+			<Text>きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 こうかん　しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3283,8 +3283,8 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+			<Text>きみの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 交換しないかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3505,7 +3505,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>フフフ
-[Name:Item Idx="0"]が　たりないよ</Text>
+[Name:Item Idx="0" ]が　たりないよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -3517,7 +3517,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フフフ
-[Name:Item Idx="0"]が　たりないよ</Text>
+[Name:Item Idx="0" ]が　たりないよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -3561,7 +3561,7 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフフ　[Name:Item Idx="2"]は
+			<Text>フフフ　[Name:Item Idx="2" ]は
 それいじょう　もてないね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3573,7 +3573,7 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフフ　[Name:Item Idx="2"]は
+			<Text>フフフ　[Name:Item Idx="2" ]は
 それ以上　持てないね</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3621,8 +3621,8 @@ Wi-Fi</Comment>
 			<Text>キミ　その　かおは
 わたしの　おめあての▽
 アレを　もってる　タイプよね▼
-キミの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+キミの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 こうかん　してくれないかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3637,8 +3637,8 @@ Wi-Fi</Comment>
 			<Text>キミ　その顔は
 わたしの　おめあての▽
 アレを　持ってる　タイプよね▼
-キミの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+キミの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 交換して　くれないかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3687,8 +3687,8 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+			<Text>キミの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 こうかん　してくれないかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3700,8 +3700,8 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キミの　[Name:Item Idx="0"]　[Digit:2digits Idx="1"]コを
-[Name:Item Idx="2"]　[Digit:2digits Idx="3"]コと▽
+			<Text>キミの　[Name:Item Idx="0" ]　[Digit:2digits Idx="1" ]コを
+[Name:Item Idx="2" ]　[Digit:2digits Idx="3" ]コと▽
 交換して　くれないかな？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3863,7 +3863,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ウフフ　このツヤ！
-やっぱり　[Name:Item Idx="0"]って　ステキ▼
+やっぱり　[Name:Item Idx="0" ]って　ステキ▼
 わたし　ぐらいになると
 １つ１つ　ツヤの　ちがいが　わかるのよ！</Text>
 			<TextModifiedBy
@@ -3877,7 +3877,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ウフフ　このツヤ！
-やっぱり　[Name:Item Idx="0"]って　ステキ▼
+やっぱり　[Name:Item Idx="0" ]って　ステキ▼
 わたし　ぐらいになると
 １つ１つ　ツヤの　ちがいが　わかるのよ！</Text>
 			<TextModifiedBy
@@ -3924,7 +3924,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>あやん！
-[Name:Item Idx="0"]が　たりないわよ</Text>
+[Name:Item Idx="0" ]が　たりないわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -3936,7 +3936,7 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あやん！
-[Name:Item Idx="0"]が　たりないわよ</Text>
+[Name:Item Idx="0" ]が　たりないわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
@@ -3980,7 +3980,7 @@ Wi-Fi</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あやん！　[Name:Item Idx="2"]は
+			<Text>あやん！　[Name:Item Idx="2" ]は
 それいじょう　もてないわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3992,7 +3992,7 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あやん！　[Name:Item Idx="2"]は
+			<Text>あやん！　[Name:Item Idx="2" ]は
 それ以上　持てないわよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

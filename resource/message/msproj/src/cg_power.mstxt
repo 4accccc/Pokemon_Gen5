@@ -113,7 +113,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="1"]ちゅうい！[/System:Color]
+			<Text>[System:Color name="1" ]ちゅうい！[/System:Color]
 ひこうきや　びょういんなど
 むせんつうしんを　きんしに　している
 ばしょでは　Ｃギアの　でんげんをきって
@@ -128,7 +128,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="1"]注意！[/System:Color]
+			<Text>[System:Color name="1" ]注意！[/System:Color]
 飛行機や　病院など
 無線通信を　禁止にしている
 場所では　Ｃ－ＧＥＡＲの　電源を切って

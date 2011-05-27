@@ -53,7 +53,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:6digits Idx="2"]円</Text>
+			<Text>[Digit:6digits Idx="2" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
@@ -64,7 +64,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:6digits Idx="2"]円</Text>
+			<Text>[Digit:6digits Idx="2" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
@@ -214,7 +214,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Type Idx="0"]は
+			<Text>[Name:Type Idx="0" ]は
 レポートに　しっかり　かきのこした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -226,7 +226,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Type Idx="0"]は
+			<Text>[Name:Type Idx="0" ]は
 レポートに　しっかり　書き残した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -672,7 +672,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おかあさん『[Name:TrainerName Idx="0"]！
+			<Text>おかあさん『[Name:TrainerName Idx="0" ]！
 おかえりなさい[Ctrl2:PageClear ]
 たいへん　だったわね[Ctrl2:PageClear ]
 すこし　やすんで　いったら
@@ -689,7 +689,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おかあさん『[Name:TrainerName Idx="0"]！
+			<Text>おかあさん『[Name:TrainerName Idx="0" ]！
 おかえりなさい[Ctrl2:PageClear ]
 たいへん　だったわね[Ctrl2:PageClear ]
 すこし　やすんで　いったら
@@ -994,7 +994,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギの　ことば……
-[Name:TrainerName Idx="0"]！　こういう　ものには▽
+[Name:TrainerName Idx="0" ]！　こういう　ものには▽
 つかいどきが　あるのよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1007,7 +1007,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギの　ことば……
-[Name:TrainerName Idx="0"]！　こういう　ものには▽
+[Name:TrainerName Idx="0" ]！　こういう　ものには▽
 使いどきが　あるのよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1140,7 +1140,7 @@ bag.gmmの変更も忘れないでください
 		<LanguageCell
 			Language="JPN">
 			<Text>ふたりで　いるときは
-[Name:Item Idx="1"]は　つかえません！</Text>
+[Name:Item Idx="1" ]は　つかえません！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
@@ -1152,7 +1152,7 @@ bag.gmmの変更も忘れないでください
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>二人で　いる時は
-[Name:Item Idx="1"]は　使えません！</Text>
+[Name:Item Idx="1" ]は　使えません！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />

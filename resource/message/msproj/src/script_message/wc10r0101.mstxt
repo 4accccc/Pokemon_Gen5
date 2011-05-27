@@ -76,7 +76,7 @@
 			Language="JPN">
 			<Text>わたしは　この　もりと　ともにいきる
 ポケモンを　しらべておるんだが[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0"]が　このもりに
+[Name:PokemonName Idx="0" ]が　このもりに
 すんでいる　はずなんだ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,7 +90,7 @@
 			Language="JPN_KANJI">
 			<Text>わたしは　この森と　共に生きる
 ポケモンを　調べておるんだが[Ctrl2:PageClear ]
-[Name:PokemonName Idx="0"]が　この森に
+[Name:PokemonName Idx="0" ]が　この森に
 住んでいる　はずなんだ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -128,7 +128,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フォー！
-それは　[Name:PokemonName Idx="0"]！[Ctrl2:PageClear ]
+それは　[Name:PokemonName Idx="0" ]！[Ctrl2:PageClear ]
 この　もりに　すんでたんだ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -141,7 +141,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フォー！
-それは　[Name:PokemonName Idx="0"]！[Ctrl2:PageClear ]
+それは　[Name:PokemonName Idx="0" ]！[Ctrl2:PageClear ]
 この森に　住んでたんだ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -181,7 +181,7 @@
 			<Text>しかも　きょう　つかまえたんだ[Ctrl2:PageClear ]
 ホホー
 そうかそうか　このホワイトフォレストにも[Ctrl2:LineFeed ]
-[Name:PokemonName Idx="0"]が　いるなんてなぁ[Ctrl2:LineFeed ]
+[Name:PokemonName Idx="0" ]が　いるなんてなぁ[Ctrl2:LineFeed ]
 フォッ　フォッ　フォッ[Ctrl2:PageClear ]
 そんな　きみに
 これを　あげちゃおう▼</Text>
@@ -198,7 +198,7 @@
 			<Text>しかも　今日　つかまえたんだ[Ctrl2:PageClear ]
 ホホー
 そうかそうか　このホワイトフォレストにも[Ctrl2:LineFeed ]
-[Name:PokemonName Idx="0"]が　いるなんてなぁ[Ctrl2:LineFeed ]
+[Name:PokemonName Idx="0" ]が　いるなんてなぁ[Ctrl2:LineFeed ]
 フォッ　フォッ　フォッ[Ctrl2:PageClear ]
 そんな　きみに
 これを　あげちゃおう▼</Text>
@@ -398,7 +398,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もし　この　もりで　[Name:PokemonName Idx="0"]を
+			<Text>もし　この　もりで　[Name:PokemonName Idx="0" ]を
 みかけたら　わたしに　みせておくれ[Ctrl2:PageClear ]
 それは　この　もりと　ポケモンが
 いきている　しょうこ　なんだ</Text>
@@ -412,7 +412,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もし　この森で　[Name:PokemonName Idx="0"]を
+			<Text>もし　この森で　[Name:PokemonName Idx="0" ]を
 見かけたら　わたしに　見せておくれ[Ctrl2:PageClear ]
 それは　この森と　ポケモンが
 生きている　証拠なんだ</Text>
@@ -452,8 +452,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しかし　きょう　つかまえた
-[Name:PokemonName Idx="0"]では　ないな[Ctrl2:PageClear ]
-いまでも　[Name:PokemonName Idx="0"]は
+[Name:PokemonName Idx="0" ]では　ないな[Ctrl2:PageClear ]
+いまでも　[Name:PokemonName Idx="0" ]は
 この　もりと　ともに　いきているのか……[Ctrl2:LineFeed ]
 もりも　それを　しりたがっておる</Text>
 			<TextModifiedBy
@@ -467,8 +467,8 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しかし　今日　つかまえた
-[Name:PokemonName Idx="0"]では　ないな[Ctrl2:PageClear ]
-今でも　[Name:PokemonName Idx="0"]は
+[Name:PokemonName Idx="0" ]では　ないな[Ctrl2:PageClear ]
+今でも　[Name:PokemonName Idx="0" ]は
 この森と共に　生きているのか……[Ctrl2:LineFeed ]
 森も　それを　知りたがっておる</Text>
 			<TextModifiedBy

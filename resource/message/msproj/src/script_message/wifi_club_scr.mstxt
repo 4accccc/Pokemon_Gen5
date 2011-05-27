@@ -265,7 +265,7 @@ Wi-Fi P2P接続画面へ</Comment>
 おともだちを　とうろく　していないと▽
 ごりよう　できません▼
 おきゃくさまの　ともだちコードだけ
-うけとりますか？[Digit:1digit Idx="0"]</Text>
+うけとりますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -285,7 +285,7 @@ Wi-Fi P2P接続画面へ</Comment>
 お友達を　登録していないと▽
 ご利用できません▼
 お客さまの　ともだちコードだけ
-受け取りますか？[Digit:1digit Idx="0"]</Text>
+受け取りますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -820,7 +820,7 @@ C-Gear入手前</Comment>
 			<Text>ポケモンセンター　Ｗｉ－Ｆｉひろばへの
 ごあんないは　こちらです！▼
 Ｗｉ－Ｆｉコネクションを
-ごりよう　ですか？[Digit:1digit Idx="0"]</Text>
+ごりよう　ですか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -834,7 +834,7 @@ C-Gear入手前</Comment>
 			<Text>ポケモンセンター　Ｗｉ－Ｆｉひろばへの
 ご案内は　こちらです！▼
 Ｗｉ－Ｆｉコネクションを
-ご利用ですか？[Digit:1digit Idx="0"]</Text>
+ご利用ですか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -878,7 +878,7 @@ C-Gear入手前</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｗｉ－Ｆｉ　せつぞくを
-かいし　しますか？[Digit:1digit Idx="0"]</Text>
+かいし　しますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -890,7 +890,7 @@ C-Gear入手前</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｗｉ－Ｆｉ接続を
-開始しますか？[Digit:1digit Idx="0"]</Text>
+開始しますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1047,7 +1047,7 @@ Wi-Fi P2P接続画面へ</Comment>
 しゅうりょう　までの　あいだ
 たくさん　たのしんで　くださいね！▼
 Ｗｉ－Ｆｉコネクションを
-ごりよう　ですか？[Digit:1digit Idx="0"]</Text>
+ごりよう　ですか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1070,7 +1070,7 @@ Wi-Fi P2P接続画面へ</Comment>
 終了までの　あいだ
 たくさん　たのしんで　くださいね！▼
 Ｗｉ－Ｆｉコネクションを
-ご利用ですか？[Digit:1digit Idx="0"]</Text>
+ご利用ですか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1307,7 +1307,7 @@ Wi-Fi P2P接続画面へ</Comment>
 ポケモンたいせんや
 ポケモンこうかんなどを▽
 たのしむことが　できます▼
-くわしい　せつめいを　ききますか？[Digit:1digit Idx="0"]</Text>
+くわしい　せつめいを　ききますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1324,7 +1324,7 @@ Wi-Fi P2P接続画面へ</Comment>
 ポケモン対戦や
 ポケモン交換などを▽
 たのしむことが　できます▼
-詳しい　説明を　ききますか？[Digit:1digit Idx="0"]</Text>
+詳しい　説明を　ききますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1373,7 +1373,7 @@ Wi-Fi P2P接続画面へ</Comment>
 ともだちてちょうに▽
 とうろく　することも　できます▼
 もういちど
-せつめいを　ききますか？[Digit:1digit Idx="0"]</Text>
+せつめいを　ききますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1393,7 +1393,7 @@ Wi-Fi P2P接続画面へ</Comment>
 ともだちてちょうに▽
 登録することも　できます▼
 もう一度
-説明を　ききますか？[Digit:1digit Idx="0"]</Text>
+説明を　ききますか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1487,7 +1487,7 @@ Wi-Fi P2P接続画面へ</Comment>
 			Language="JPN">
 			<Text>ポケモンセンター　Ｗｉ－Ｆｉクラブへ
 ようこそ！▼
-なにか　おこまりですか？[Digit:1digit Idx="0"]</Text>
+なにか　おこまりですか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1500,7 +1500,7 @@ Wi-Fi P2P接続画面へ</Comment>
 			Language="JPN_KANJI">
 			<Text>ポケモンセンター　Ｗｉ－Ｆｉクラブへ
 ようこそ！▼
-なにか　おこまりですか？[Digit:1digit Idx="0"]</Text>
+なにか　おこまりですか？[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1553,7 +1553,7 @@ Wi-Fi P2P接続画面へ</Comment>
 とうろく　してある　おともだちと▼
 つうしんたいせん　や
 つうしんこうかん　などを▽
-たのしむことが　できます！[Digit:1digit Idx="0"]</Text>
+たのしむことが　できます！[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />
@@ -1574,7 +1574,7 @@ Wi-Fi P2P接続画面へ</Comment>
 登録してある　お友達と▼
 通信対戦　や
 通信交換　などを▽
-たのしむことが　できます！[Digit:1digit Idx="0"]</Text>
+たのしむことが　できます！[Digit:1digit Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:19" />

@@ -584,8 +584,8 @@
 なんにんか　みてきましたが[Ctrl2:PageClear ]
 それより　すごい
 トレーナーカードを　おもちの　かたは[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]さんが　はじめて　です！[Ctrl2:PageClear ]
-さあ　[Name:TrainerName Idx="0"]さんの
+[Name:TrainerName Idx="0" ]さんが　はじめて　です！[Ctrl2:PageClear ]
+さあ　[Name:TrainerName Idx="0" ]さんの
 ポケモンを　やすませて　あげましょう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -605,8 +605,8 @@
 何人か　みてきましたが[Ctrl2:PageClear ]
 それより　すごい
 トレーナーカードを　お持ちの　方は[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]さんが　初めてです！[Ctrl2:PageClear ]
-さあ　[Name:TrainerName Idx="0"]さんの
+[Name:TrainerName Idx="0" ]さんが　初めてです！[Ctrl2:PageClear ]
+さあ　[Name:TrainerName Idx="0" ]さんの
 ポケモンを　休ませてあげましょう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -647,7 +647,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さん　おつかれさまです！
+			<Text>[Name:TrainerName Idx="0" ]さん　おつかれさまです！
 いつもので　よろしい　ですね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -659,7 +659,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さん　おつかれさまです！
+			<Text>[Name:TrainerName Idx="0" ]さん　おつかれさまです！
 いつもので　よろしい　ですね！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1365,7 +1365,7 @@
 するときに　イメージが▽
 つたわりやすくて　べんりですよ▼
 そうですねー▼
-たとえば　[Name:TrainerType Idx="0"]
+たとえば　[Name:TrainerType Idx="0" ]
 など　いかがでしょうか？▼
 わたしから　みた　いんしょう　ですが
 まずは　かたがきを　かえてみましょう▼
@@ -1391,7 +1391,7 @@
 するときに　イメージが▽
 伝わりやすくて　便利ですよ▼
 そうですねー▼
-たとえば　[Name:TrainerType Idx="0"]
+たとえば　[Name:TrainerType Idx="0" ]
 など　いかがでしょうか？▼
 私から　みた　印象ですが
 まずは　肩書きを　変えてみましょう▼
@@ -1546,7 +1546,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1558,7 +1558,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

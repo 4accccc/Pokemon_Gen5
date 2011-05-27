@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おぬし！　ポケモンの
-[Name:PokemonName Idx="0"]は　つかまえたか？▼
+[Name:PokemonName Idx="0" ]は　つかまえたか？▼
 もし　つかまえているなら
-わしの　[Name:PokemonName Idx="1"]と
-おぬしの　[Name:PokemonName Idx="0"]を▽
+わしの　[Name:PokemonName Idx="1" ]と
+おぬしの　[Name:PokemonName Idx="0" ]を▽
 こうかん　しないか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,10 +23,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おぬし！　ポケモンの
-[Name:PokemonName Idx="0"]は　捕まえたか？▼
+[Name:PokemonName Idx="0" ]は　捕まえたか？▼
 もし　捕まえているなら
-わしの　[Name:PokemonName Idx="1"]と
-おぬしの　[Name:PokemonName Idx="0"]を▽
+わしの　[Name:PokemonName Idx="1" ]と
+おぬしの　[Name:PokemonName Idx="0" ]を▽
 交換しないか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -137,7 +137,7 @@
 			Language="JPN">
 			<Text>おお！　おお！　なんとも
 キュートな　ポケモン　だ！▼
-おぬしも　[Name:PokemonName Idx="1"]を
+おぬしも　[Name:PokemonName Idx="1" ]を
 たいせつに　してくれよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,7 +151,7 @@
 			Language="JPN_KANJI">
 			<Text>おお！　おお！　なんとも
 キュートな　ポケモン　だ！▼
-おぬしも　[Name:PokemonName Idx="1"]を
+おぬしも　[Name:PokemonName Idx="1" ]を
 大切に　してくれよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -200,7 +200,7 @@
 			Language="JPN">
 			<Text>おいおい！▼
 わしが　こうかん　してほしいのは
-[Name:PokemonName Idx="0"]だぞ……？</Text>
+[Name:PokemonName Idx="0" ]だぞ……？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
@@ -213,7 +213,7 @@
 			Language="JPN_KANJI">
 			<Text>おいおい！▼
 わしが　交換してほしいのは
-[Name:PokemonName Idx="0"]だぞ……？</Text>
+[Name:PokemonName Idx="0" ]だぞ……？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />

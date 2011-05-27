@@ -46,7 +46,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を
+			<Text>[Name:Item Idx="0" ]を
 いくつ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,7 +58,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を
+			<Text>[Name:Item Idx="0" ]を
 いくつ　お買い上げに　なりますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,8 +88,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]　ですね
-[Digit:2digits Idx="1"]コで　[Digit:7digits Idx="2"]円に　なりますが？</Text>
+			<Text>[Name:Item Idx="0" ]　ですね
+[Digit:2digits Idx="1" ]コで　[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -100,8 +100,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]　ですね
-[Digit:2digits Idx="1"]コで　[Digit:7digits Idx="2"]円に　なりますが？</Text>
+			<Text>[Name:Item Idx="0" ]　ですね
+[Digit:2digits Idx="1" ]コで　[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -131,8 +131,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]　ですね
-[Digit:7digits Idx="2"]円に　なりますが？</Text>
+			<Text>[Name:Item Idx="0" ]　ですね
+[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -143,8 +143,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]　ですね
-[Digit:7digits Idx="2"]円に　なりますが？</Text>
+			<Text>[Name:Item Idx="0" ]　ですね
+[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -175,9 +175,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はい　どうぞ
-まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1"]▼
-[Name:Item Idx="0"]を
-[Name:Pocket Idx="1"]ポケットに　しまった▼</Text>
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+[Name:Item Idx="0" ]を
+[Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -189,9 +189,9 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はい　どうぞ
-まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1"]▼
-[Name:Item Idx="0"]を
-[Name:Pocket Idx="1"]ポケットに　しまった▼</Text>
+まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
+[Name:Item Idx="0" ]を
+[Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -302,7 +302,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="1"]円</Text>
+			<Text>[Digit:5digits Idx="1" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -313,7 +313,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="1"]円</Text>
+			<Text>[Digit:5digits Idx="1" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -452,8 +452,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]　ですね
-[Digit:7digits Idx="2"]円に　なりますが？</Text>
+			<Text>[Name:Item Idx="0" ]　ですね
+[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -464,8 +464,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]　ですね
-[Digit:7digits Idx="2"]円に　なりますが？</Text>
+			<Text>[Name:Item Idx="0" ]　ですね
+[Digit:7digits Idx="2" ]円に　なりますが？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -682,7 +682,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:7digits Idx="0"]円</Text>
+			<Text>[Digit:7digits Idx="0" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -693,7 +693,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:7digits Idx="0"]円</Text>
+			<Text>[Digit:7digits Idx="0" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -722,7 +722,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:4digits Idx="0"]ＢＰ</Text>
+			<Text>[Digit:4digits Idx="0" ]ＢＰ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -733,7 +733,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="0"]ＢＰ</Text>
+			<Text>[Digit:4digits Idx="0" ]ＢＰ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -762,7 +762,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もってるかず　[Digit:3digits Idx="0"]コ</Text>
+			<Text>もってるかず　[Digit:3digits Idx="0" ]コ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -773,7 +773,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もってるかず　[Digit:3digits Idx="0"]コ</Text>
+			<Text>もってるかず　[Digit:3digits Idx="0" ]コ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -802,7 +802,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ｘ[Digit:2digits Idx="0"]</Text>
+			<Text>ｘ[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -813,7 +813,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ｘ[Digit:2digits Idx="0"]</Text>
+			<Text>ｘ[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -842,7 +842,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:7digits Idx="0"]円</Text>
+			<Text>[Digit:7digits Idx="0" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -853,7 +853,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:7digits Idx="0"]円</Text>
+			<Text>[Digit:7digits Idx="0" ]円</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -882,7 +882,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:6digits Idx="0"]ＢＰ</Text>
+			<Text>[Digit:6digits Idx="0" ]ＢＰ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -893,7 +893,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:6digits Idx="0"]ＢＰ</Text>
+			<Text>[Digit:6digits Idx="0" ]ＢＰ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1002,7 +1002,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:1digit Idx="1"]．[Name:TrainerName Idx="0"]</Text>
+			<Text>[Digit:1digit Idx="1" ]．[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1013,7 +1013,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:1digit Idx="1"]．[Name:TrainerName Idx="0"]</Text>
+			<Text>[Digit:1digit Idx="1" ]．[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1044,7 +1044,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:1digit Idx="1"]．[Name:ResortShop Idx="0"]</Text>
+			<Text>[Digit:1digit Idx="1" ]．[Name:ResortShop Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1055,7 +1055,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:1digit Idx="1"]．[Name:ResortShop Idx="0"]</Text>
+			<Text>[Digit:1digit Idx="1" ]．[Name:ResortShop Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1085,9 +1085,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【だい[Digit:2digits Idx="1"]ひしょ】
-[Name:ResortGreet Idx="3"]
-であったひ：　２０[Digit:2digits Idx="4"]／[Digit:2digits Idx="5"]／[Digit:2digits Idx="6"]</Text>
+			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
+[Name:ResortGreet Idx="3" ]
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1098,9 +1098,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【だい[Digit:2digits Idx="1"]ひしょ】
-[Name:ResortGreet Idx="3"]
-であったひ：　２０[Digit:2digits Idx="4"]／[Digit:2digits Idx="5"]／[Digit:2digits Idx="6"]</Text>
+			<Text>【だい[Digit:2digits Idx="1" ]ひしょ】
+[Name:ResortGreet Idx="3" ]
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1335,9 +1335,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1"]　　ＬＶ.[Digit:2digits Idx="2"]】
-[Name:ResortGreet Idx="3"]
-であったひ：　２０[Digit:2digits Idx="4"]／[Digit:2digits Idx="5"]／[Digit:2digits Idx="6"]</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+[Name:ResortGreet Idx="3" ]
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1348,9 +1348,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1"]　　ＬＶ.[Digit:2digits Idx="2"]】
-[Name:ResortGreet Idx="3"]
-であったひ：　２０[Digit:2digits Idx="4"]／[Digit:2digits Idx="5"]／[Digit:2digits Idx="6"]</Text>
+			<Text>【[Name:ResortShop Idx="1" ]　　ＬＶ.[Digit:2digits Idx="2" ]】
+[Name:ResortGreet Idx="3" ]
+であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
@@ -1865,7 +1865,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　ですね
+			<Text>[Name:TrainerName Idx="0" ]　ですね
 こうたい　しても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1877,7 +1877,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　ですね
+			<Text>[Name:TrainerName Idx="0" ]　ですね
 こうたい　しても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1900,9 +1900,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　を
+			<Text>[Name:TrainerName Idx="0" ]　を
 こうたい　しました▼
-[Name:TrainerName Idx="0"]さんは
+[Name:TrainerName Idx="0" ]さんは
 しばらく　コンドミニアムで▽
 ゆっくり　するそうです▼</Text>
 			<TextModifiedBy
@@ -1915,9 +1915,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　を
+			<Text>[Name:TrainerName Idx="0" ]　を
 こうたい　しました▼
-[Name:TrainerName Idx="0"]さんは
+[Name:TrainerName Idx="0" ]さんは
 しばらく　コンドミニアムで▽
 ゆっくり　するそうです▼</Text>
 			<TextModifiedBy
@@ -1941,7 +1941,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　ですね
+			<Text>[Name:TrainerName Idx="0" ]　ですね
 ついか　しても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1953,7 +1953,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　ですね
+			<Text>[Name:TrainerName Idx="0" ]　ですね
 追加　しても　よろしいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1976,7 +1976,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]　を
+			<Text>[Name:TrainerName Idx="0" ]　を
 ついか　しました▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1988,7 +1988,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]　を
+			<Text>[Name:TrainerName Idx="0" ]　を
 追加　しました▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2011,7 +2011,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="0"]』　を
+			<Text>『[Name:ResortShop Idx="0" ]』　を
 しょうかい　しますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2023,7 +2023,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="0"]』　を
+			<Text>『[Name:ResortShop Idx="0" ]』　を
 しょうかい　しますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2046,7 +2046,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="0"]』　を
+			<Text>『[Name:ResortShop Idx="0" ]』　を
 しょうかい　しました▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2058,7 +2058,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="0"]』　を
+			<Text>『[Name:ResortShop Idx="0" ]』　を
 しょうかい　しました▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2081,7 +2081,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:ResortShop Idx="0"]』　を
+			<Text>『[Name:ResortShop Idx="0" ]』　を
 たてかえても　いいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2093,7 +2093,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:ResortShop Idx="0"]』　を
+			<Text>『[Name:ResortShop Idx="0" ]』　を
 たてかえても　いいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2116,7 +2116,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんは
+			<Text>[Name:TrainerName Idx="0" ]さんは
 コンドミニアムへ　いきました▽
 あとで　あいさつへ　いきましょう▼</Text>
 			<TextModifiedBy
@@ -2129,7 +2129,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんは
+			<Text>[Name:TrainerName Idx="0" ]さんは
 コンドミニアムへ　いきました▽
 あとで　あいさつへ　いきましょう▼</Text>
 			<TextModifiedBy
@@ -2195,8 +2195,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と
-[Name:TrainerName Idx="1"]を▽
+			<Text>[Name:TrainerName Idx="0" ]と
+[Name:TrainerName Idx="1" ]を▽
 ならびかえても　よいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2208,8 +2208,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と
-[Name:TrainerName Idx="1"]を▽
+			<Text>[Name:TrainerName Idx="0" ]と
+[Name:TrainerName Idx="1" ]を▽
 並びかえても　よいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

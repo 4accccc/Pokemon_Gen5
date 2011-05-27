@@ -46,7 +46,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だい[Ctrl1:Color Letter="5" Shadow="6" Back="0"][Digit:4digits Idx="0"][Ctrl1:Color Letter="1" Shadow="2" Back="0"]かい　でんどういり</Text>
+			<Text>だい[Ctrl1:Color Letter="5" Shadow="6" Back="0" ][Digit:4digits Idx="0" ][Ctrl1:Color Letter="1" Shadow="2" Back="0" ]かい　でんどういり</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -57,7 +57,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>第[Ctrl1:Color Letter="5" Shadow="6" Back="0"][Digit:4digits Idx="0"][Ctrl1:Color Letter="1" Shadow="2" Back="0"]回　殿堂入り</Text>
+			<Text>第[Ctrl1:Color Letter="5" Shadow="6" Back="0" ][Digit:4digits Idx="0" ][Ctrl1:Color Letter="1" Shadow="2" Back="0" ]回　殿堂入り</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -86,7 +86,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０[Digit:2digits Idx="0"]/[Digit:2digits Idx="1"]/[Digit:2digits Idx="2"]</Text>
+			<Text>２０[Digit:2digits Idx="0" ]/[Digit:2digits Idx="1" ]/[Digit:2digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -97,7 +97,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０[Digit:2digits Idx="0"]/[Digit:2digits Idx="1"]/[Digit:2digits Idx="2"]</Text>
+			<Text>２０[Digit:2digits Idx="0" ]/[Digit:2digits Idx="1" ]/[Digit:2digits Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -166,7 +166,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -177,7 +177,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]</Text>
+			<Text>[Digit:2digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -206,7 +206,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -217,7 +217,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]</Text>
+			<Text>[Name:PokemonName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -327,7 +327,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -338,7 +338,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="0"]</Text>
+			<Text>[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -367,7 +367,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なまえ：[Name:PokemonNickname Idx="0"]</Text>
+			<Text>なまえ：[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -378,7 +378,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>名前：[Name:PokemonNickname Idx="0"]</Text>
+			<Text>名前：[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -407,7 +407,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おや：[Name:TrainerName Idx="0"]</Text>
+			<Text>おや：[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -418,7 +418,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>親：[Name:TrainerName Idx="0"]</Text>
+			<Text>親：[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -480,7 +480,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -491,7 +491,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -521,7 +521,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -532,7 +532,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -562,7 +562,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -573,7 +573,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -603,7 +603,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -614,7 +614,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Move Idx="0"]</Text>
+			<Text>[Name:Move Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />

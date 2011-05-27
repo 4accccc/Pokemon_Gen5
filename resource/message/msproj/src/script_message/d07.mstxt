@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]！▼
+			<Text>チェレン『[Name:TrainerName Idx="0" ]！▼
 ジェットバッジを　もつもの　どうし
 どちらが　つよいか　たしかめる！▼</Text>
 			<TextModifiedBy
@@ -19,7 +19,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]！▼
+			<Text>チェレン『[Name:TrainerName Idx="0" ]！▼
 ジェットバッジを　持つ者　同士
 どちらが　強いか　確かめる！▼</Text>
 			<TextModifiedBy
@@ -597,7 +597,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……[Name:TrainerName Idx="0"]
+			<Text>……[Name:TrainerName Idx="0" ]
 つぎは　ぼくが　かつ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -609,7 +609,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……[Name:TrainerName Idx="0"]
+			<Text>……[Name:TrainerName Idx="0" ]
 次には　ぼくが　勝つ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -658,7 +658,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまえ　[Name:TrainerName Idx="0"]だろ！▼
+			<Text>おまえ　[Name:TrainerName Idx="0" ]だろ！▼
 おどろいたか？
 ヤーコンさまに　きいたんだよ▼
 おっと！　この　ネジやまに
@@ -676,7 +676,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまえ　[Name:TrainerName Idx="0"]だろ！▼
+			<Text>おまえ　[Name:TrainerName Idx="0" ]だろ！▼
 おどろいたか？
 ヤーコンさまに　聞いたんだよ▼
 おっと！　この　ネジ山に

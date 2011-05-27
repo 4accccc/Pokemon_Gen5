@@ -264,7 +264,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さて……▼
-おめでとう！　[Name:TrainerName Idx="0"]▼
+おめでとう！　[Name:TrainerName Idx="0" ]▼
 アナタは　われらが
 おうに　えらばれました▼
 アナタが　このまま
@@ -287,7 +287,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さて……▼
-おめでとう！　[Name:TrainerName Idx="0"]▼
+おめでとう！　[Name:TrainerName Idx="0" ]▼
 アナタは　われらが
 王に　選ばれました▼
 アナタが　このまま

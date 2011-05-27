@@ -205,7 +205,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたの　[Name:PokemonName Idx="0"]は
+			<Text>あなたの　[Name:PokemonName Idx="0" ]は
 おなじ　しゅるいの▽
 ポケモンよりも　つよい……　ようだね！▼
 だが　あなたじしんは　まだ
@@ -220,7 +220,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたの　[Name:PokemonName Idx="0"]は
+			<Text>あなたの　[Name:PokemonName Idx="0" ]は
 同じ　種類の▽
 ポケモンよりも　強い……　ようだね！▼
 だが　あなた自身は　まだ

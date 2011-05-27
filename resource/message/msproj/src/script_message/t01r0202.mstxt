@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 パソコンを　チェックした！[Ctrl2:PageClear ]
 ポケモン　きそちしき[Ctrl2:PageClear ]
 この　せかいでは　ポケモンと
@@ -23,7 +23,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 パソコンを　チェックした！[Ctrl2:PageClear ]
 ポケモン　基礎知識[Ctrl2:PageClear ]
 この世界では　ポケモンと

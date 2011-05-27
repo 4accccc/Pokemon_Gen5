@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モンスターボールに　はいっている
-[Name:PokemonNickname Idx="0"]が[Ctrl2:LineFeed ]
+[Name:PokemonNickname Idx="0" ]が[Ctrl2:LineFeed ]
 でたがっている　ようだ…！[Ctrl2:PageClear ]
 そとに　だして　あげますか？</Text>
 			<TextModifiedBy
@@ -21,7 +21,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モンスターボールに　入っている
-[Name:PokemonNickname Idx="0"]が[Ctrl2:LineFeed ]
+[Name:PokemonNickname Idx="0" ]が[Ctrl2:LineFeed ]
 でたがっている　ようだ…！[Ctrl2:PageClear ]
 外に　だして　あげますか？</Text>
 			<TextModifiedBy
@@ -130,7 +130,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]が
+			<Text>[Name:PokemonNickname Idx="0" ]が
 とびだしてきた！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -142,7 +142,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]が
+			<Text>[Name:PokemonNickname Idx="0" ]が
 飛び出してきた！！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -502,10 +502,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>コバルオン　テラキオン　ビリジオンは
-[Name:PokemonNickname Idx="0"]に[Ctrl2:LineFeed ]
+[Name:PokemonNickname Idx="0" ]に[Ctrl2:LineFeed ]
 あたらしい　わざ　しんぴのつるぎを[Ctrl2:LineFeed ]
 おしえようとしている！[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0"]に　しんぴのつるぎを
+[Name:PokemonNickname Idx="0" ]に　しんぴのつるぎを
 おぼえさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -518,10 +518,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コバルオン　テラキオン　ビリジオンは
-[Name:PokemonNickname Idx="0"]に[Ctrl2:LineFeed ]
+[Name:PokemonNickname Idx="0" ]に[Ctrl2:LineFeed ]
 新しい　技　しんぴのつるぎを[Ctrl2:LineFeed ]
 教えようとしている！[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0"]に　しんぴのつるぎを
+[Name:PokemonNickname Idx="0" ]に　しんぴのつるぎを
 覚えさせますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1192,7 +1192,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　さみしそうに
+			<Text>[Name:PokemonNickname Idx="0" ]は　さみしそうに
 モンスターボールに　もどった…</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1204,7 +1204,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　さみしそうに
+			<Text>[Name:PokemonNickname Idx="0" ]は　さみしそうに
 モンスターボールに　もどった…</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

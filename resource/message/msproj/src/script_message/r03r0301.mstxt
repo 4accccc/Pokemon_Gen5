@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0"]！▼
+			<Text>チェレン『[Name:TrainerName Idx="0" ]！▼
 こいつら　はなしが　つうじない
 メンドーな　れんちゅう　だね▼</Text>
 			<TextModifiedBy
@@ -19,7 +19,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0"]！▼
+			<Text>チェレン『[Name:TrainerName Idx="0" ]！▼
 こいつら　話が　通じない
 メンドーな　連中だね▼</Text>
 			<TextModifiedBy
@@ -195,7 +195,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『さすが　[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『さすが　[Name:TrainerName Idx="0" ]▼
 さあ　あのこから　とりあげた
 ポケモンを　かえしなよ▼</Text>
 			<TextModifiedBy
@@ -208,7 +208,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『さすが　[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『さすが　[Name:TrainerName Idx="0" ]▼
 さあ　あの子から　取り上げた
 ポケモンを　返しなよ▼</Text>
 			<TextModifiedBy
@@ -497,7 +497,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]▼
+			<Text>[Name:TrainerName Idx="0" ]▼
 おさななじみの　コンビネーションで
 かれらに　おもいしらせよう▼</Text>
 			<TextModifiedBy
@@ -510,7 +510,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]▼
+			<Text>[Name:TrainerName Idx="0" ]▼
 幼なじみの　コンビネーションで
 彼らに　思い知らせよう▼</Text>
 			<TextModifiedBy
@@ -991,7 +991,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さてと……　[Name:TrainerName Idx="0"]
+			<Text>さてと……　[Name:TrainerName Idx="0" ]
 ぼくが　ポケモンを　かえしてくるよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1003,7 +1003,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さてと……　[Name:TrainerName Idx="0"]
+			<Text>さてと……　[Name:TrainerName Idx="0" ]
 ぼくが　ポケモンを　返してくるよ▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆめで　であった
-[Name:PokemonNickname Idx="0"]が　あらわれた！</Text>
+[Name:PokemonNickname Idx="0" ]が　あらわれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -19,7 +19,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>夢で　出会った
-[Name:PokemonNickname Idx="0"]が　現れた！</Text>
+[Name:PokemonNickname Idx="0" ]が　現れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -34,7 +34,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいで　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>おいで　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -45,7 +45,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいで　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>おいで　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -61,7 +61,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やったー！
-[Name:PokemonNickname Idx="0"]が　なかまになった！</Text>
+[Name:PokemonNickname Idx="0" ]が　なかまになった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -73,7 +73,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やったー！
-[Name:PokemonNickname Idx="0"]が　仲間になった！</Text>
+[Name:PokemonNickname Idx="0" ]が　仲間になった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -88,7 +88,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　どうする？</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -99,7 +99,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　どうする？</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -114,7 +114,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　たちさった……</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　たちさった……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />
@@ -125,7 +125,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　立ち去った……</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　立ち去った……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:22" />

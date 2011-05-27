@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……さいしょに　いっておくよ
-ボクが　プラズマだんの　おうさま[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……さいしょに　いっておくよ
+ボクが　プラズマだんの　おうさま[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -18,8 +18,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……最初に　いっておくよ
-ボクが　プラズマ団の　王様[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……最初に　いっておくよ
+ボクが　プラズマ団の　王様[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -62,8 +62,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ゲーチスに　たのまれ
-いっしょに　ポケモンを　すくうんだよ[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゲーチスに　たのまれ
+いっしょに　ポケモンを　すくうんだよ[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -74,8 +74,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ゲーチスに　請われ
-一緒に　ポケモンを　救うんだよ[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゲーチスに　請われ
+一緒に　ポケモンを　救うんだよ[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -118,8 +118,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]この　せかいに　どれほどの
-ポケモンが　いるのだろうか……[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この　せかいに　どれほどの
+ポケモンが　いるのだろうか……[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -130,8 +130,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]この世界に　どれほどの
-ポケモンが　いるのだろうか……[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]この世界に　どれほどの
+ポケモンが　いるのだろうか……[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />

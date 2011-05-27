@@ -6,16 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Type Idx="0"]は　たおれた！▼
-[Name:TrainerName Idx="1"]の　てもとには
+			<Text>[Name:Type Idx="0" ]は　たおれた！▼
+[Name:TrainerName Idx="1" ]の　てもとには
 たたかえる　ポケモンが　いない！▼
-[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]
+[Name:TrainerType Idx="2" ]の　[Name:TrainerName Idx="3" ]
 との　しょうぶに　まけた……▼
-[Name:TrainerName Idx="1"]は　しょうきんとして
-[Digit:6digits Idx="4"]円　しはらった▼
+[Name:TrainerName Idx="1" ]は　しょうきんとして
+[Digit:6digits Idx="4" ]円　しはらった▼
 ……　……　……
 ……　……　……▼
-[Name:TrainerName Idx="1"]は
+[Name:TrainerName Idx="1" ]は
 めのまえが　まっくらに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27,16 +27,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Type Idx="0"]は　倒れた！▼
-[Name:TrainerName Idx="1"]の　手元には
+			<Text>[Name:Type Idx="0" ]は　倒れた！▼
+[Name:TrainerName Idx="1" ]の　手元には
 戦える　ポケモンが　いない！▼
-[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]
+[Name:TrainerType Idx="2" ]の　[Name:TrainerName Idx="3" ]
 との　勝負に　負けた……▼
-[Name:TrainerName Idx="1"]は　賞金として
-[Digit:6digits Idx="3"]円　しはらった▼
+[Name:TrainerName Idx="1" ]は　賞金として
+[Digit:6digits Idx="3" ]円　しはらった▼
 ……　……　……
 ……　……　……▼
-[Name:TrainerName Idx="1"]は
+[Name:TrainerName Idx="1" ]は
 目の前が　真っ暗に　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -79,14 +79,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Type Idx="0"]は　たおれた！▼
-[Name:TrainerName Idx="1"]の　てもとには
+			<Text>[Name:Type Idx="0" ]は　たおれた！▼
+[Name:TrainerName Idx="1" ]の　てもとには
 たたかえる　ポケモンが　いない！▼
-[Name:TrainerName Idx="1"]は　あわてて
-[Digit:6digits Idx="3"]円　なくしてしまった……▼
+[Name:TrainerName Idx="1" ]は　あわてて
+[Digit:6digits Idx="3" ]円　なくしてしまった……▼
 ……　……　……
 ……　……　……▼
-[Name:TrainerName Idx="1"]は
+[Name:TrainerName Idx="1" ]は
 めのまえが　まっくらに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98,14 +98,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Type Idx="0"]は　倒れた！▼
-[Name:TrainerName Idx="1"]の　手元には
+			<Text>[Name:Type Idx="0" ]は　倒れた！▼
+[Name:TrainerName Idx="1" ]の　手元には
 戦える　ポケモンが　いない！▼
-[Name:TrainerName Idx="1"]は　慌てて
-[Digit:6digits Idx="3"]円　なくしてしまった……▼
+[Name:TrainerName Idx="1" ]は　慌てて
+[Digit:6digits Idx="3" ]円　なくしてしまった……▼
 ……　……　……
 ……　……　……▼
-[Name:TrainerName Idx="1"]は
+[Name:TrainerName Idx="1" ]は
 目の前が　真っ暗に　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,7 +151,7 @@
 			Language="JPN">
 			<Text>つかれて　うごけなくなった　ひんしの
 ポケモンたちを　かばいながら
-[Name:TrainerName Idx="1"]は　いそいで
+[Name:TrainerName Idx="1" ]は　いそいで
 ポケモンセンターに　もどるのであった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -165,7 +165,7 @@
 			Language="JPN_KANJI">
 			<Text>つかれて　動けなくなった　ひんしの
 ポケモンたちを　かばいながら
-[Name:TrainerName Idx="1"]は　急いで
+[Name:TrainerName Idx="1" ]は　急いで
 ポケモンセンターに　戻るのであった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -206,7 +206,7 @@
 			Language="JPN">
 			<Text>つかれて　うごけなくなった　ひんしの
 ポケモンたちを　かばいながら
-[Name:TrainerName Idx="1"]は　いそいで
+[Name:TrainerName Idx="1" ]は　いそいで
 じたくに　もどるのであった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -220,7 +220,7 @@
 			Language="JPN_KANJI">
 			<Text>つかれて　動けなくなった　ひんしの
 ポケモンたちを　かばいながら
-[Name:TrainerName Idx="1"]は　急いで
+[Name:TrainerName Idx="1" ]は　急いで
 自宅に　戻るのであった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

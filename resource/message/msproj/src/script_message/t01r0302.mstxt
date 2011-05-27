@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Type Idx="0"]はパソコンの
+			<Text>[Name:Type Idx="0" ]はパソコンの
 がめんを　チェックした！▼
 たんけんの　こころえ　その１
 Ｘボタンで　メニューが　ひらく！▼
@@ -23,7 +23,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Type Idx="0"]はパソコンの
+			<Text>[Name:Type Idx="0" ]はパソコンの
 モニタを　チェックした！▼
 探検の　心得　その１
 Ｘボタンで　メニューが　ひらく！▼

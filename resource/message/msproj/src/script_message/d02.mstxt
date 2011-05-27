@@ -251,7 +251,7 @@ C03ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ためしのいわが　ある……[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0"]に
+[Name:PokemonNickname Idx="0" ]に
 こわさせて　みますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -264,7 +264,7 @@ C03ジムリーダー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>試しの岩が　ある……[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0"]に
+[Name:PokemonNickname Idx="0" ]に
 壊させて　みますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -312,7 +312,7 @@ C03ジムリーダー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 ためしのいわを　こわそうとした！▼
 いわの　いちぶが　くだけ
 かけらと　なって　おちた！！▼</Text>
@@ -326,7 +326,7 @@ C03ジムリーダー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 試しの岩を　壊そうとした！▼
 岩の　一部が　砕け
 かけらと　なって　落ちた！！▼</Text>

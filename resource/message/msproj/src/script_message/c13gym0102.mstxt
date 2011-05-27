@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まわりの　おとが　おおきすぎて
-[Name:TrainerName Idx="0"]の　こえが　きこえない！</Text>
+[Name:TrainerName Idx="0" ]の　こえが　きこえない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
@@ -19,7 +19,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>周りの　音が　大きすぎて
-[Name:TrainerName Idx="0"]の　声が　きこえない！</Text>
+[Name:TrainerName Idx="0" ]の　声が　きこえない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />

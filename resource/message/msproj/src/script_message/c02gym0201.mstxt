@@ -449,7 +449,7 @@
 			<Text>シッポウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アロエ
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -463,7 +463,7 @@
 			<Text>シッポウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アロエ
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"]</Text>
+[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
@@ -510,7 +510,7 @@
 			<Text>シッポウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アロエ
 にんてい　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -526,7 +526,7 @@
 			<Text>シッポウ　ポケモンジム[Ctrl2:PageClear ]
 ジムリーダー　アロエ
 認定　トレーナー！[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0"][Ctrl2:LineFeed ]
+[Name:TrainerName Idx="0" ][Ctrl2:LineFeed ]
 チェレン[Ctrl2:LineFeed ]
 ベル</Text>
 			<TextModifiedBy
@@ -3659,7 +3659,7 @@
 さすが　わたしに▽
 いどむだけの　ことはある▽
 さて　３もんめの　もんだいだよ！▼
-[System:Color name="1"]Ｑ，おなべで　ぐつぐつ　あっためて
+[System:Color name="1" ]Ｑ，おなべで　ぐつぐつ　あっためて
 たべると　おいしいもの　なんだ？▼[/System:Color]
 ヒントは　ここより
 いりぐちに　ちかい　ほんだよ！</Text>
@@ -3678,7 +3678,7 @@
 『よく　ここが　わかったね！
 さすが　私に挑むだけの　ことはある▽
 さて　３問目の　問題だよ！▼
-[System:Color name="1"]Ｑ，おなべで　ぐつぐつ　温めて
+[System:Color name="1" ]Ｑ，おなべで　ぐつぐつ　温めて
 食べると　おいしいもの　なんだ？▼[/System:Color]
 ヒントは　ここより
 入り口に　近い　本だよ！</Text>
@@ -3730,7 +3730,7 @@
 『さすがに　もんだいが
 かんたん　だったね▽
 さて　２もんめの　もんだいだよ！▼
-[System:Color name="1"]Ｑ，たいないで　ほのおが　もえあがり
+[System:Color name="1" ]Ｑ，たいないで　ほのおが　もえあがり
 あたまから　けむりをだして　はしる▽[/System:Color]
 さて　このほんは　なんでしょう！？▼
 ヒントは……
@@ -3750,7 +3750,7 @@
 『さすがに　問題が
 簡単だったね▽
 さて　２問目の　問題だよ！▼
-[System:Color name="1"]Ｑ，体内で　炎が　燃えあがり
+[System:Color name="1" ]Ｑ，体内で　炎が　燃えあがり
 頭から　煙を出して　走る▽[/System:Color]
 さて　この本は　なんでしょう！？▼
 ヒントは……
@@ -3873,7 +3873,7 @@
 その　もんだいを　といて
 わたしの　ところまで　これるかな！？▽
 さあ　はじめの　もんだいだ！▼
-[System:Color name="1"]Ｑ，このジムで　はじめてであった
+[System:Color name="1" ]Ｑ，このジムで　はじめてであった
 ポケモンは　なんだったでしょう？▼[/System:Color]
 ヒントは……
 ちゅうおうの　れつの　ほんだな！▽
@@ -3896,7 +3896,7 @@
 その　問題を　解いて
 私の所まで　来れるかな！？▽
 さあ　初めの　問題だ！▼
-[System:Color name="1"]Ｑ，このジムで　初めて出会った
+[System:Color name="1" ]Ｑ，このジムで　初めて出会った
 ポケモンは　何だったでしょう？▼[/System:Color]
 ヒントは……
 中央の　列の　本棚！▽
@@ -3948,7 +3948,7 @@
 『もんだいに　ひっかからないで
 ここまで　これたかい？▽
 さあ　さいごの　もんだいだよ！▼
-[System:Color name="1"]Ｑ，この　ほんだなから……
+[System:Color name="1" ]Ｑ，この　ほんだなから……
 おくに２つ　ひだりに１つ▽
 てまえに２つ　みぎに１つ▽
 おくに１つ……　さて　どこだ？▼[/System:Color]
@@ -3968,7 +3968,7 @@
 『問題に　引っ掛からないで
 ここまで　来れたかい？▽
 さあ　最後の　問題だよ！▼
-[System:Color name="1"]Ｑ，この　本棚から……
+[System:Color name="1" ]Ｑ，この　本棚から……
 奥に２つ　左に１つ　手前に２つ▽
 右に１つ　奥に１つ　さて　どこだ？▼[/System:Color]
 ヒントは……

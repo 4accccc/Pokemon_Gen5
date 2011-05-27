@@ -827,7 +827,7 @@
 ここ　とおるつもりだァ　コラ！？▼
 はなの　きんようびの　ミッドナイトは
 ここは　オイラたち　ばくそうチーム▽
-ブラック[Name:PokemonName Idx="0"]の▽
+ブラック[Name:PokemonName Idx="0" ]の▽
 シマ　なんだよお！▼
 テメーみたいに そだちが　よさげで
 うらやましい　かんじの　チビっこは▽
@@ -846,7 +846,7 @@
 ここ　通るつもりだァ　コラ！？▼
 花の　金曜日の　ミッドナイトは
 ここは　オイラたち　爆走チーム▽
-ブラック[Name:PokemonName Idx="0"]の▽
+ブラック[Name:PokemonName Idx="0" ]の▽
 シマ　なんだよお！▼
 テメーみたいに　育ちが　良さげで
 うらやましい　感じの　ジャリは▽
@@ -905,7 +905,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんだとォ！　この　ダボが！
-ブラック[Name:PokemonName Idx="0"]の▽
+ブラック[Name:PokemonName Idx="0" ]の▽
 オイラ　なめてんじゃねーぞォ！▼
 テメーの　プリティー　ポケモンに
 たっぷり　じっくり　コッテリ▽
@@ -921,7 +921,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>何だとォ！　この　ダボが！
-ブラック[Name:PokemonName Idx="0"]の▽
+ブラック[Name:PokemonName Idx="0" ]の▽
 オイラ　なめてんじゃねーぞォ！▼
 テメーの　プリティー　ポケモンに
 たっぷり　じっくり　コッテリ▽
@@ -1096,7 +1096,7 @@
 			Language="JPN">
 			<Text>テメー　オイラに　かったくらいで
 きもちよく　なってんじゃ　ねーぞ！▼
-ブラック[Name:PokemonName Idx="0"]と　マジで
+ブラック[Name:PokemonName Idx="0" ]と　マジで
 ケンカする　どきょう　あんなら▽
 この　ブリッジの　どっかに　いる▽
 オレたちの　ヘッドと　やってみろやァ！</Text>
@@ -1112,7 +1112,7 @@
 			Language="JPN_KANJI">
 			<Text>テメー　オイラに　勝ったくらいで
 気持良く　なってんじゃ　ねーぞ！▼
-ブラック[Name:PokemonName Idx="0"]と　マジで
+ブラック[Name:PokemonName Idx="0" ]と　マジで
 ケンカする　度胸　あんなら▽
 この　ブリッジの　どっかに　いる▽
 オレたちの　ヘッドと　やってみろやァ！</Text>
@@ -1163,7 +1163,7 @@
 			Language="JPN">
 			<Text>テメー　オイラに　かったくらいで
 きもちよく　なってんじゃ　ねーぞ！▼
-ブラック[Name:PokemonName Idx="0"]と　マジで
+ブラック[Name:PokemonName Idx="0" ]と　マジで
 ケンカする　どきょう　あんなら▽
 この　ブリッジの　どっかに　いる▽
 オレたちの　ヘッドと　やってみろやァ！▼</Text>
@@ -1179,7 +1179,7 @@
 			Language="JPN_KANJI">
 			<Text>テメー　オイラに　勝ったくらいで
 気持良く　なってんじゃ　ねーぞ！▼
-ブラック[Name:PokemonName Idx="0"]と　マジで
+ブラック[Name:PokemonName Idx="0" ]と　マジで
 ケンカする　度胸　あんなら▽
 この　ブリッジの　どっかに　いる▽
 オレたちの　ヘッドと　やってみろやァ！▼</Text>
@@ -1288,12 +1288,12 @@
 			Language="JPN">
 			<Text>なんだ　オマエは……？▼
 ここは……▼
-ブラック[Name:PokemonName Idx="0"]の
+ブラック[Name:PokemonName Idx="0" ]の
 さいごの　らくえん……▼
 きさまの　ような　ガキには
 えんのない　ばしょさ……▼
 それとも　まさか　オマエ……▼
-ブラック[Name:PokemonName Idx="0"]の
+ブラック[Name:PokemonName Idx="0" ]の
 そうちょうである　このオレと▽
 しょうぶでも　するってのか……？</Text>
 			<TextModifiedBy
@@ -1308,12 +1308,12 @@
 			Language="JPN_KANJI">
 			<Text>なんだ　オマエは……？▼
 ここは……▼
-ブラック[Name:PokemonName Idx="0"]の
+ブラック[Name:PokemonName Idx="0" ]の
 最後の　楽園（パラダイス）……▼
 貴様の　ような　ガキには
 縁のない　場所さ……▼
 それとも　まさか　オマエ……▼
-ブラック[Name:PokemonName Idx="0"]の
+ブラック[Name:PokemonName Idx="0" ]の
 総長（ヘッド）である　このオレと▽
 勝負（タイマン）でも▽
 するってのか……？</Text>
@@ -1375,7 +1375,7 @@
 			Language="JPN">
 			<Text>グハハハッ！　じょうとうだっ！
 いせいの　いい　ガキじゃねえかっ！▼
-ブラック[Name:PokemonName Idx="0"]を
+ブラック[Name:PokemonName Idx="0" ]を
 たばねる　そうちょうの　ちから……▽
 オマエに　みせて　やろうっ！▼</Text>
 			<TextModifiedBy
@@ -1390,7 +1390,7 @@
 			Language="JPN_KANJI">
 			<Text>グハハハッ！　上等だっ！
 威勢の　いい　ガキじゃねえかっ！▼
-ブラック[Name:PokemonName Idx="0"]を
+ブラック[Name:PokemonName Idx="0" ]を
 束ねる　総長（ヘッド）の　力……▽
 オマエに　みせて　やろうっ！▼</Text>
 			<TextModifiedBy
@@ -1440,7 +1440,7 @@
 			<Text>そうか……
 だったら　さっさと　きえてくれ……▼
 ここは　いきばのない　オレたち
-ブラック[Name:PokemonName Idx="0"]の▽
+ブラック[Name:PokemonName Idx="0" ]の▽
 ベスト　プレイス……▼
 だれにも　じゃまされたくねえのさ……</Text>
 			<TextModifiedBy
@@ -1456,7 +1456,7 @@
 			<Text>そうか……
 だったら　さっさと　消えてくれ……▼
 ここは　行き場のない　オレたち
-ブラック[Name:PokemonName Idx="0"]の▽
+ブラック[Name:PokemonName Idx="0" ]の▽
 居場所（ベスト　プレイス）……▼
 だれにも　邪魔されたくねえのさ……</Text>
 			<TextModifiedBy
@@ -1508,14 +1508,14 @@
 そのあかしに！▼
 たった　いまから！▼
 オレたちの　チームは
-ブラック[Name:PokemonName Idx="0"]に▽
+ブラック[Name:PokemonName Idx="0" ]に▽
 かいめい　することに　きめたぜっ！▼
 そうだぜ！　タフで　ワイルドな
 オマエの　ポケモンの　なまえを▽
 いただくってわけよ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
-ブラック[Name:PokemonName Idx="0"]！
+ブラック[Name:PokemonName Idx="0" ]！
 グハハハッ！　コイツは　いいぜっ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1532,14 +1532,14 @@
 その証に……▼
 たった　今から！▼
 オレたちの　チームは
-ブラック[Name:PokemonName Idx="0"]に▽
+ブラック[Name:PokemonName Idx="0" ]に▽
 改名することに　決めたぜっ！▼
 そうだぜ！　タフで　ワイルドな
 オマエの　ポケモンの　名前を▽
 頂くってわけよ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
-ブラック[Name:PokemonName Idx="0"]！
+ブラック[Name:PokemonName Idx="0" ]！
 グハハハッ！　コイツは　いいぜっ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1585,7 +1585,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック[Name:PokemonName Idx="0"]！
+			<Text>ブラック[Name:PokemonName Idx="0" ]！
 スピードだけが　おともだちっ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1597,7 +1597,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック[Name:PokemonNickname Idx="0"]！
+			<Text>ブラック[Name:PokemonNickname Idx="0" ]！
 スピードだけが　お友達っ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1647,7 +1647,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック[Name:PokemonName Idx="0"]！
+			<Text>ブラック[Name:PokemonName Idx="0" ]！
 よあけまで　だいばくそう　だぜィ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1659,7 +1659,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック[Name:PokemonName Idx="0"]！
+			<Text>ブラック[Name:PokemonName Idx="0" ]！
 夜明けまで　大爆走　だぜィ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1709,7 +1709,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラック[Name:PokemonName Idx="0"]は
+			<Text>ブラック[Name:PokemonName Idx="0" ]は
 とまらない！　ふりかえらないぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1721,7 +1721,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラック[Name:PokemonName Idx="0"]は
+			<Text>ブラック[Name:PokemonName Idx="0" ]は
 止まらない！　振り返らないぜ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

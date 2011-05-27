@@ -194,7 +194,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　バランスの　とれた
+			<Text>[Name:PokemonNickname Idx="0" ]は　バランスの　とれた
 じょうたいに　へんか　した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -206,7 +206,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　バランスの　とれた
+			<Text>[Name:PokemonNickname Idx="0" ]は　バランスの　とれた
 状態に　変化した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -238,7 +238,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　こうげきが　すぐれた
+			<Text>[Name:PokemonNickname Idx="0" ]は　こうげきが　すぐれた
 じょうたいに　へんか　した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -250,7 +250,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　攻撃が　優れた
+			<Text>[Name:PokemonNickname Idx="0" ]は　攻撃が　優れた
 状態に　変化した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -282,7 +282,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　ぼうぎょが　すぐれた
+			<Text>[Name:PokemonNickname Idx="0" ]は　ぼうぎょが　すぐれた
 じょうたいに　へんか　した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -294,7 +294,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　防御が　優れた
+			<Text>[Name:PokemonNickname Idx="0" ]は　防御が　優れた
 状態に　変化した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -326,7 +326,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　すばやさが　ました
+			<Text>[Name:PokemonNickname Idx="0" ]は　すばやさが　ました
 じょうたいに　へんか　した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -338,7 +338,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　素早さが　増した
+			<Text>[Name:PokemonNickname Idx="0" ]は　素早さが　増した
 状態に　変化した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

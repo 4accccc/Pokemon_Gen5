@@ -6,8 +6,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おう！　[Name:TrainerName Idx="0"]！▼
-きょうも　[Name:TrainerName Idx="1"]に
+			<Text>おう！　[Name:TrainerName Idx="0" ]！▼
+きょうも　[Name:TrainerName Idx="1" ]に
 ポケモンを　じまん　されるのかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,8 +19,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おう！　[Name:TrainerName Idx="0"]！▼
-今日も　[Name:TrainerName Idx="1"]に
+			<Text>おう！　[Name:TrainerName Idx="0" ]！▼
+今日も　[Name:TrainerName Idx="1" ]に
 ポケモンを　自慢されるのかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67,7 +67,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おう！　[Name:TrainerName Idx="0"]！▼
+			<Text>おう！　[Name:TrainerName Idx="0" ]！▼
 おおう！　ポケモンと　いっしょか
 そりゃ　よかったなあ！</Text>
 			<TextModifiedBy
@@ -80,7 +80,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おう！　[Name:TrainerName Idx="0"]！▼
+			<Text>おう！　[Name:TrainerName Idx="0" ]！▼
 おおう！　ポケモンと　一緒か
 そりゃ　よかったなあ！</Text>
 			<TextModifiedBy

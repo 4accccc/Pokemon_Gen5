@@ -46,7 +46,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xright value="0"][Digit:3digits Idx="0"]にん</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:3digits Idx="0" ]にん</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -57,7 +57,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xright value="0"][Digit:3digits Idx="0"]人</Text>
+			<Text>[Ctrl1:xright value="0" ][Digit:3digits Idx="0" ]人</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -87,9 +87,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 つかいますか？
-ひつよう　[Digit:3digits Idx="2"]こ／もってる　[Digit:3digits Idx="3"]こ</Text>
+ひつよう　[Digit:3digits Idx="2" ]こ／もってる　[Digit:3digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -100,9 +100,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 使いますか？
-必要　[Digit:3digits Idx="2"]個／持ってる　[Digit:3digits Idx="3"]個</Text>
+必要　[Digit:3digits Idx="2" ]個／持ってる　[Digit:3digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -133,8 +133,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]さんが　はつどうした
-[Name:Undefined Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]さんが　はつどうした
+[Name:Undefined Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,8 +146,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]さんが　発動した
-[Name:Undefined Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]さんが　発動した
+[Name:Undefined Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -181,7 +181,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とくしゅデルパワー　はつどう！！
-[Name:Undefined Idx="1"]を
+[Name:Undefined Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -194,7 +194,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>特殊デルパワー　発動！！
-[Name:Undefined Idx="1"]を
+[Name:Undefined Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -227,7 +227,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 つかいました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -239,7 +239,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 使いました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -271,7 +271,7 @@
 			Language="JPN">
 			<Text>デルパワーを　つかうには
 デルダマが　たりません
-ひつよう　[Digit:3digits Idx="2"]こ／もってる[Digit:3digits Idx="3"]こ</Text>
+ひつよう　[Digit:3digits Idx="2" ]こ／もってる[Digit:3digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -284,7 +284,7 @@
 			Language="JPN_KANJI">
 			<Text>デルパワーを　使うには
 デルダマが　不足しています
-必要　[Digit:3digits Idx="2"]個／持ってる　[Digit:3digits Idx="3"]個</Text>
+必要　[Digit:3digits Idx="2" ]個／持ってる　[Digit:3digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -314,9 +314,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 つかっています
-のこり　[Digit:2digits Idx="5"]びょう</Text>
+のこり　[Digit:2digits Idx="5" ]びょう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -327,9 +327,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 使っています
-残り　[Digit:2digits Idx="5"]秒</Text>
+残り　[Digit:2digits Idx="5" ]秒</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -359,9 +359,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 つかっています
-のこり　[Digit:3digits Idx="4"]ふん[Digit:2digits Idx="5"]びょう</Text>
+のこり　[Digit:3digits Idx="4" ]ふん[Digit:2digits Idx="5" ]びょう</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -372,9 +372,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1"]を
+			<Text>[Name:Undefined Idx="1" ]を
 使っています
-残り　[Digit:3digits Idx="4"]分[Digit:2digits Idx="5"]秒</Text>
+残り　[Digit:3digits Idx="4" ]分[Digit:2digits Idx="5" ]秒</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -405,7 +405,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『[Name:PMS Idx="0"]』と
+			<Text>『[Name:PMS Idx="0" ]』と
 はつげんしました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -417,7 +417,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『[Name:PMS Idx="0"]』と
+			<Text>『[Name:PMS Idx="0" ]』と
 発言しました！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -489,7 +489,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほうしゅう　[Ctrl1:xright value="8"][Name:Item Idx="3"][Digit:4digits Idx="4"]こ</Text>
+			<Text>ほうしゅう　[Ctrl1:xright value="8" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -500,7 +500,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="0"][Name:Item Idx="3"][Digit:4digits Idx="4"]こ</Text>
+			<Text>ほうしゅう　[Ctrl1:xright value="0" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -588,7 +588,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="0"]</Text>
+			<Text>[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -599,7 +599,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="0"]</Text>
+			<Text>[Digit:5digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -654,7 +654,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0"]:[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]:[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -665,7 +665,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0"]:[Digit:2digits Idx="1"]</Text>
+			<Text>[Digit:2digits Idx="0" ]:[Digit:2digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1018,7 +1018,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place Idx="0"]に　います</Text>
+			<Text>[Name:Place Idx="0" ]に　います</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1029,7 +1029,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place Idx="0"]に　います</Text>
+			<Text>[Name:Place Idx="0" ]に　います</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1065,7 +1065,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]と　せんとうちゅう！</Text>
+			<Text>[Name:PokemonName Idx="0" ]と　せんとうちゅう！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1076,7 +1076,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]と　戦闘中！</Text>
+			<Text>[Name:PokemonName Idx="0" ]と　戦闘中！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1112,7 +1112,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]を　たおした！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　たおした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1123,7 +1123,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]を　倒した！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　倒した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1159,7 +1159,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]を　つかまえた！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　つかまえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1170,7 +1170,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]を　つかまえた！</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　つかまえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1206,7 +1206,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]を　にがした</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　にがした</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1217,7 +1217,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]を　逃がした</Text>
+			<Text>[Name:PokemonName Idx="0" ]を　逃がした</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1347,7 +1347,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　つかった</Text>
+			<Text>[Name:Item Idx="0" ]を　つかった</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1358,7 +1358,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　使った</Text>
+			<Text>[Name:Item Idx="0" ]を　使った</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1488,7 +1488,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　みつけた</Text>
+			<Text>[Name:Item Idx="0" ]を　みつけた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1499,7 +1499,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　見つけた</Text>
+			<Text>[Name:Item Idx="0" ]を　見つけた</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1535,7 +1535,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]</Text>
+			<Text>[Name:PMS Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1546,7 +1546,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]</Text>
+			<Text>[Name:PMS Idx="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1583,7 +1583,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]が　ひんし！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]が　ひんし！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1594,7 +1594,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]が　ひんし！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]が　ひんし！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -1630,8 +1630,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の
-[Name:Move Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]の
+[Name:Move Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1643,8 +1643,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の
-[Name:Move Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]の
+[Name:Move Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1761,7 +1761,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place Idx="0"]と
+			<Text>[Name:Place Idx="0" ]と
 はつげん　しました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1773,7 +1773,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place Idx="0"]と
+			<Text>[Name:Place Idx="0" ]と
 発言しました</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -41,7 +41,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>トレインナンバーを
-いれてください（０１－[Digit:2digits Idx="0"]）</Text>
+いれてください（０１－[Digit:2digits Idx="0" ]）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -53,7 +53,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トレインナンバーを
-入れてください（０１－[Digit:2digits Idx="0"]）</Text>
+入れてください（０１－[Digit:2digits Idx="0" ]）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -76,7 +76,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ランクを　いれてください（０１－[Digit:2digits Idx="0"]）</Text>
+			<Text>ランクを　いれてください（０１－[Digit:2digits Idx="0" ]）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -87,7 +87,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ランクを　入れてください（０１－[Digit:2digits Idx="0"]）</Text>
+			<Text>ランクを　入れてください（０１－[Digit:2digits Idx="0" ]）</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -177,7 +177,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そのトレインナンバーは　ありません
-[Digit:2digits Idx="0"]までの　すうじを　いれてください</Text>
+[Digit:2digits Idx="0" ]までの　すうじを　いれてください</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -189,7 +189,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そのトレインナンバーは　ありません
-[Digit:2digits Idx="0"]までの　数字を　入れてください</Text>
+[Digit:2digits Idx="0" ]までの　数字を　入れてください</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -214,7 +214,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そのランクは　ありません
-[Digit:2digits Idx="0"]までの　すうじを　いれてください</Text>
+[Digit:2digits Idx="0" ]までの　すうじを　いれてください</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -226,7 +226,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そのランクは　ありません
-[Digit:2digits Idx="0"]までの　数字を　入れてください</Text>
+[Digit:2digits Idx="0" ]までの　数字を　入れてください</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />

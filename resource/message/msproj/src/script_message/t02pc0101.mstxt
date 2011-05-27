@@ -123,7 +123,7 @@
 ポケモンの　かいふくが　できること！▽
 しかも　タダ　なの！▼
 トレーナーの　みかた　だよねー！▼
-ほら　[Name:TrainerName Idx="0"]も
+ほら　[Name:TrainerName Idx="0" ]も
 ポケモンの　かいふくを　してみて！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -141,7 +141,7 @@
 ポケモンの　回復が　できること！▽
 しかも　無料なの！▼
 トレーナーの　味方だよねー！▼
-ほら　[Name:TrainerName Idx="0"]も
+ほら　[Name:TrainerName Idx="0" ]も
 ポケモンの　回復を　してみて！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,7 +183,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『ちょっと　[Name:TrainerName Idx="0"]
+			<Text>アララギ『ちょっと　[Name:TrainerName Idx="0" ]
 どこへ　いくのよ！？▼
 ほら！　おねえさんに　はなしかけて
 きみの　ポケモンを　あずけてみて▼</Text>
@@ -197,7 +197,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『ちょっと　[Name:TrainerName Idx="0"]
+			<Text>アララギ『ちょっと　[Name:TrainerName Idx="0" ]
 どこへ　行くのよ！？▼
 ほら！　お姉さんに　話しかけて
 きみの　ポケモンを　預けてみて▼</Text>
@@ -292,7 +292,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName Idx="0"]の
+			<Text>ベル『[Name:TrainerName Idx="0" ]の
 ポケモンを　あずければ　いいんだよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -304,7 +304,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName Idx="0"]の
+			<Text>ベル『[Name:TrainerName Idx="0" ]の
 ポケモンを　預ければ　いいんだよ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

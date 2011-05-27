@@ -57,7 +57,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しゅうまつに　なるとよ
-[Name:Item Idx="0"]を　あつめている▽
+[Name:Item Idx="0" ]を　あつめている▽
 ひとが　くるんじゃよ▼
 なにか　べつの　どうぐと
 こうかん　してくれるそうな▼
@@ -74,7 +74,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>週末に　なるとよ
-[Name:Item Idx="0"]を　集めている▽
+[Name:Item Idx="0" ]を　集めている▽
 人が　来るんじゃよ▼
 なにか　別の　道具と
 交換してくれるそうな▼

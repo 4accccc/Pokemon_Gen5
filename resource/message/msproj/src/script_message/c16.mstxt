@@ -6,9 +6,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『なんというか
+			<Text>[Name:TrainerName Idx="1" ]『なんというか
 いっぷう　かわった　ばしょ　だな▼
-でだ　[Name:TrainerName Idx="0"]
+でだ　[Name:TrainerName Idx="0" ]
 オマエは　ききこみを　してくれよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,9 +20,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『なんというか
+			<Text>[Name:TrainerName Idx="1" ]『なんというか
 一風　変わった　場所だな▼
-でだ　[Name:TrainerName Idx="0"]
+でだ　[Name:TrainerName Idx="0" ]
 オマエは　ききこみを　してくれよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61,7 +61,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『なんだよ？▼
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ？▼
 ききこみ　ってのは　いろんな　ひとに
 はなしを　きいてまわることだよ▼
 だれか　ネオプラズマだんの　こと
@@ -76,7 +76,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『なんだよ？▼
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ？▼
 ききこみ　ってのは　いろんな　人に
 話を　きいてまわることだよ▼
 だれか　ネオプラズマ団の　こと
@@ -118,7 +118,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『どうやら　ここに
+			<Text>[Name:TrainerName Idx="1" ]『どうやら　ここに
 ネオプラズマだんは　いないようだな▼
 というわけでだ
 オレは　ヒウンシティに　もどる▼
@@ -134,7 +134,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『どうやら　ここに
+			<Text>[Name:TrainerName Idx="1" ]『どうやら　ここに
 ネオプラズマ団は　いないようだな▼
 というわけでだ
 オレは　ヒウンシティに　戻る▼

@@ -66,7 +66,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『ここが　ヒウンか……
+			<Text>[Name:TrainerName Idx="1" ]『ここが　ヒウンか……
 きいてたよりも　はるかに　でかいな▼
 フン！　どこに　にげても
 ネオプラズマだんは　さがしだすぜ▼</Text>
@@ -80,7 +80,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『ここが　ヒウンか……
+			<Text>[Name:TrainerName Idx="1" ]『ここが　ヒウンか……
 きいてたよりも　はるかに　でかいな▼
 フン！　どこに　逃げても
 ネオプラズマ団は　探しだすぜ▼</Text>
@@ -128,7 +128,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうだ　[Name:TrainerName Idx="0"]！
+			<Text>そうだ　[Name:TrainerName Idx="0" ]！
 てわけして　さがすからな▼
 おたがいの　ライブキャスターに
 とうろく　しあうぞ▼</Text>
@@ -142,7 +142,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうだ　[Name:TrainerName Idx="0"]！
+			<Text>そうだ　[Name:TrainerName Idx="0" ]！
 手分けして　探すからな▼
 お互いの　ライブキャスターに
 登録しあうぞ▼</Text>

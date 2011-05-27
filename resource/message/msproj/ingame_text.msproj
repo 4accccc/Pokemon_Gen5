@@ -3274,6 +3274,23 @@
 					</WidthCalcInfo>
 				</Default>
 			</Tag>
+			<Tag
+				TagName="MedalCategory"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName />
+				<Comment>
+					<Japanese>メダルのカテゴリ分け
+内容はmedalcategory.mstxtを参照</Japanese>
+				</Comment>
+				<Default>
+					<WidthCalcInfo
+						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
+						<Pixels>65</Pixels>
+						<AffectedMagnification>True</AffectedMagnification>
+					</WidthCalcInfo>
+				</Default>
+			</Tag>
 		</TagGroup>
 		<TagGroup
 			GroupName="Digit">

@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクが　のぞむのは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクが　のぞむのは
 ポケモンだけの　せかい……▼
 ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ほんらいの　ちからを　とりもどす[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -20,10 +20,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクが　望むのは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクが　望むのは
 ポケモンだけの　世界……▼
 ポケモンは　人から　解き放たれ
-本来の　力を　取り戻す[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+本来の　力を　取り戻す[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -68,7 +68,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……さあ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……さあ
 さいごの　たたかいだ▼
 ボクには　かくごが　ある！
 トモダチの　ポケモンたちを▽
@@ -77,7 +77,7 @@
 キミにも　あるんだろう？▼
 あるなら　ボクの　もとにきて
 みせてほしい！▽
-キミの　かくごを！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　かくごを！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -88,7 +88,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……さあ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……さあ
 決着を　つけよう▼
 ボクには　覚悟が　ある！
 トモダチの　ポケモンたちを▽
@@ -97,7 +97,7 @@
 キミにも　あるんだろう？▼
 あるなら　ボクの　元に　来て
 みせてほしい！▽
-キミの　覚悟を！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　覚悟を！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -143,10 +143,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクが　のぞむのは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクが　のぞむのは
 ポケモンだけの　せかい……▼
 ポケモンは　ひとから　ときはなたれ
-ほんらいの　ちからを　とりもどす[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ほんらいの　ちからを　とりもどす[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -157,10 +157,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクが　望むのは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクが　望むのは
 ポケモンだけの　世界……▼
 ポケモンは　人から　解き放たれ
-本来の　力を　とりもどす[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+本来の　力を　とりもどす[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -205,7 +205,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……さあ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……さあ
 さいごの　たたかいだ▼
 ボクには　かくごが　ある！
 トモダチの　ポケモンたちを▽
@@ -214,7 +214,7 @@
 キミにも　あるんだろう？▼
 あるなら　ボクの　もとにきて
 みせてほしい！▽
-キミの　かくごを！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　かくごを！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -225,7 +225,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……さあ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……さあ
 決着を　つけよう▼
 ボクには　覚悟が　ある！
 トモダチの　ポケモンたちを▽
@@ -234,7 +234,7 @@
 キミにも　あるんだろう？▼
 あるなら　ボクの　元に　来て
 みせてほしい！▽
-キミの　覚悟を！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　覚悟を！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -388,7 +388,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクと　たたかうつもりで
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクと　たたかうつもりで
 ここまで　キミは　やってきた……▼
 ……だのに　ゼクロムは
 はんのう　しないんだね▼
@@ -399,7 +399,7 @@
 キミのことを　きにいっていたのに▼
 なんども　たたかう　うちに
 ポケモンを　だいじにする▽
-トレーナーかも　とかんじたのに！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+トレーナーかも　とかんじたのに！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -410,7 +410,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクと　雌雄を　決する　覚悟で
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクと　雌雄を　決する　覚悟で
 ここまで　キミは　やってきた……▼
 ……だのに　ゼクロムは
 反応しないんだね▼
@@ -421,7 +421,7 @@
 キミのことを　気に入っていたのに▼
 幾たびも　勝負を　重ねるうちに
 ポケモンを　大事にする▽
-トレーナーかも　と感じたのに！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+トレーナーかも　と感じたのに！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -468,7 +468,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクと　たたかうつもりで
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクと　たたかうつもりで
 ここまで　キミは　やってきた……▼
 ……だのに　レシラムは
 はんのう　しないんだね▼
@@ -479,7 +479,7 @@
 キミのことを　きにいっていたのに▼
 なんども　たたかう　うちに
 ポケモンを　だいじにする▽
-トレーナーかも　とかんじたのに！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+トレーナーかも　とかんじたのに！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -490,7 +490,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクと　雌雄を　決する　覚悟で
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクと　雌雄を　決する　覚悟で
 ここまで　キミは　やってきた……▼
 ……だのに　レシラムは
 反応しないんだね▼
@@ -501,7 +501,7 @@
 キミのことを　気に入っていたのに▼
 幾たびも　勝負を　重ねるうちに
 ポケモンを　大事にする▽
-トレーナーかも　と感じたのに！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+トレーナーかも　と感じたのに！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -548,10 +548,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……だけど　ボクの
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……だけど　ボクの
 おもいこみ　でしか　なかった！▼
 やはり　トレーナーが　たたかっても
-わかりあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+わかりあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -562,10 +562,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……だけど　ボクの
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……だけど　ボクの
 思い込みでしか　なかった！▼
 やはり　トレーナーが　勝負をしても
-理解しあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+理解しあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -613,11 +613,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミに　できることは　２つ！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
 ポケモンが　ひとから　ときはなたれた▽
-あたらしい　せかいを　みまもるか[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+あたらしい　せかいを　みまもるか[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -628,12 +628,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミに　できることは　２つ！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミに　できることは　２つ！▼
 理想を　求めるため
 ボクに　挑み　玉砕するか▼
 それとも　ここを　立ち去り
 ポケモンが　人から　解き放たれた▽
-新しい　世界を　見守るか[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+新しい　世界を　見守るか[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -678,10 +678,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……だけど　ボクの
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……だけど　ボクの
 おもいこみ　でしか　なかった！▼
 やはり　トレーナーが　たたかっても
-わかりあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+わかりあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -692,10 +692,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……だけど　ボクの
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……だけど　ボクの
 思い込みでしか　なかった！▼
 やはり　トレーナーが　勝負をしても
-理解しあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+理解しあうことなんて　ない！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -743,11 +743,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミに　できることは　２つ！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
 ポケモンが　ひとから　ときはなたれた▽
-あたらしい　せかいを　みまもるか[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+あたらしい　せかいを　みまもるか[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -758,12 +758,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミに　できることは　２つ！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミに　できることは　２つ！▼
 真実を　求めるため
 ボクに　挑み　玉砕するか▼
 それとも　ここを　立ち去り
 ポケモンが　人から　解き放たれた▽
-新しい　世界を　見守るか[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+新しい　世界を　見守るか[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -808,7 +808,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -819,7 +819,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　レシラム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -865,7 +865,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -876,7 +876,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]おいで　ゼクロム！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1044,8 +1044,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]キミの　ダークストーンが……！▼
-いや　ゼクロムが！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミの　ダークストーンが……！▼
+いや　ゼクロムが！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1056,8 +1056,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]キミの　ダークストーンが……！▼
-いや　ゼクロムが！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミの　ダークストーンが……！▼
+いや　ゼクロムが！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1102,8 +1102,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]キミの　ライトストーンが……！▼
-いや　レシラムが！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミの　ライトストーンが……！▼
+いや　レシラムが！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1114,8 +1114,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]キミの　ライトストーンが……！▼
-いや　レシラムが！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミの　ライトストーンが……！▼
+いや　レシラムが！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1288,7 +1288,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]レシラムと　ゼクロムは……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムと　ゼクロムは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
 せいはんたい　にして
@@ -1297,7 +1297,7 @@
 みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
-やはり　キミも[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+やはり　キミも[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1308,7 +1308,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]レシラムと　ゼクロムは……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムと　ゼクロムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
 正反対にして
@@ -1317,7 +1317,7 @@
 認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
-やはり　キミも[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+やはり　キミも[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1364,7 +1364,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ゼクロムと　レシラムは……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムと　レシラムは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
 せいはんたい　にして
@@ -1373,7 +1373,7 @@
 みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
-やはり　キミも[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+やはり　キミも[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1384,7 +1384,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ゼクロムと　レシラムは……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムと　レシラムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
 正反対にして
@@ -1393,7 +1393,7 @@
 認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
-やはり　キミも[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+やはり　キミも[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1440,7 +1440,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]その　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ポケモンが
 なんと　いっているか▽
 おしえてあげるよ▼
 「キミと　たたかいたい
@@ -1450,7 +1450,7 @@
 たしかめる　つもり　なんだね▼
 ボクも　キミのちからを　しりたい……
 さあ！　ゼクロムを　つかまえ▽
-キミの　なかまに　するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　なかまに　するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1461,7 +1461,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]その　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ポケモンが
 なんと　いっているか▽
 教えてあげるよ▼
 「キミと　たたかいたい
@@ -1471,7 +1471,7 @@
 確かめる　つもり　なんだね▼
 ボクも　キミの　力を　知りたい……
 さあ！　ゼクロムを　捕まえ▽
-キミの　仲間に　するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　仲間に　するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1517,7 +1517,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]その　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ポケモンが
 なんと　いっているか▽
 おしえてあげるよ▼
 「キミと　たたかいたい
@@ -1527,7 +1527,7 @@
 たしかめる　つもり　なんだね▼
 ボクも　キミのちからを　しりたい……
 さあ！　レシラムを　つかまえ▽
-キミの　なかまに　するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　なかまに　するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1538,7 +1538,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]その　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]その　ポケモンが
 なんと　いっているか▽
 教えてあげるよ▼
 「キミと　たたかいたい
@@ -1548,7 +1548,7 @@
 確かめる　つもり　なんだね▼
 ボクも　キミの　力を　知りたい……
 さあ！　レシラムを　捕まえ▽
-キミの　仲間に　するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミの　仲間に　するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1723,7 +1723,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゼクロムは　つかまえてみろ！　と
-[Name:TrainerName Idx="0"]を　みつめている……</Text>
+[Name:TrainerName Idx="0" ]を　みつめている……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1735,7 +1735,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゼクロムは　捕まえてみろ！　と
-[Name:TrainerName Idx="0"]を　みつめている……</Text>
+[Name:TrainerName Idx="0" ]を　みつめている……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1783,7 +1783,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レシラムは　つかまえてみろ！　と
-[Name:TrainerName Idx="0"]を　みつめている……</Text>
+[Name:TrainerName Idx="0" ]を　みつめている……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1795,7 +1795,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レシラムは　捕まえてみろ！　と
-[Name:TrainerName Idx="0"]を　みつめている……</Text>
+[Name:TrainerName Idx="0" ]を　みつめている……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1842,11 +1842,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……そうか▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……そうか▼
 りそうを　おいもとめる　えいゆうに
 その　ちからを　かすと　いわれている▽
 ゼクロムが　キミの　ちからを　みとめ▽
-ともに　あゆむことを　きめたか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　あゆむことを　きめたか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1857,11 +1857,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……そうか▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……そうか▼
 理想を　追い求める　英雄に
 その力を　貸すと　いわれている▽
 ゼクロムが　キミの　力を　認め▽
-ともに　歩むことを　決めたか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　歩むことを　決めたか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1907,11 +1907,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……そうか▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……そうか▼
 しんじつを　おいもとめる　えいゆうに
 その　ちからを　かすと　いわれている▽
 レシラムが　キミの　ちからを　みとめ▽
-ともに　あゆむことを　きめたか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　あゆむことを　きめたか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1922,11 +1922,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……そうか▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……そうか▼
 真実を　追い求める　英雄に
 その力を　貸すと　いわれている▽
 レシラムが　キミの　力を　認め▽
-ともに　歩むことを　決めたか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　歩むことを　決めたか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1972,9 +1972,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]さて……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]さて……▼
 キミの　ポケモンが　きずついている
-そんな　あいてに　かっても　むいみだ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+そんな　あいてに　かっても　むいみだ[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -1985,9 +1985,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]さて……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]さて……▼
 キミの　ポケモンが　傷ついている
-そんな相手に　勝っても　無意味だ[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+そんな相手に　勝っても　無意味だ[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2025,7 +2025,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎは　[Name:TrainerName Idx="0"]の　ポケモンを
+			<Text>Ｎは　[Name:TrainerName Idx="0" ]の　ポケモンを
 かいふく　させた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2037,7 +2037,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎは　[Name:TrainerName Idx="0"]の　ポケモンを
+			<Text>Ｎは　[Name:TrainerName Idx="0" ]の　ポケモンを
 回復させた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2077,8 +2077,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクには　みらいが　みえる！▼
-ぜったいに　かつ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクには　みらいが　みえる！▼
+ぜったいに　かつ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2089,8 +2089,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ボクには　未来が　みえる！▼
-絶対に　勝つ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ボクには　未来が　みえる！▼
+絶対に　勝つ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2127,11 +2127,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……　……　……
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……　……　……
 ……　……　……▼
 ……ボクと　レシラムが　やぶれた▼
 キミの　おもい……　りそう……
-それが　ボクたちを　うわまわったか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+それが　ボクたちを　うわまわったか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2142,11 +2142,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……　……　……
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……　……　……
 ……　……　……▼
 ……ボクと　レシラムが　敗れた▼
 キミの　思い……　理想……
-それが　ボクたちを　上回ったか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+それが　ボクたちを　上回ったか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2192,11 +2192,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……　……　……
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……　……　……
 ……　……　……▼
 ……ボクと　ゼクロムが　やぶれた▼
 キミの　おもい……　しんじつ……
-それが　ボクたちを　うわまわったか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+それが　ボクたちを　うわまわったか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2207,11 +2207,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……　……　……
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……　……　……
 ……　……　……▼
 ……ボクと　ゼクロムが　敗れた▼
 キミの　思い……　真実……
-それが　ボクたちを　上回ったか……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+それが　ボクたちを　上回ったか……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2257,14 +2257,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ゼクロムと　レシラム……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムと　レシラム……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
 こんなことも　あるのか▼
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　ただしいと　いうのか？[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2275,14 +2275,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]ゼクロムと　レシラム……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムと　レシラム……▼
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
 同じ時代に　２人の英雄
 理想を　求める　もの▽
 真実を　求める　もの▽
-ともに　正しいと　いうのか？[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　正しいと　いうのか？[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2327,14 +2327,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……わからない▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わからない▼
 ことなる　かんがえを
 ひてい　するのではなく▼
 ことなる　かんがえを
 うけいれることで▽
 せかいは　かがくはんのうを　おこす▼
 これこそが……
-せかいを　かえるための　すうしき……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+せかいを　かえるための　すうしき……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2345,14 +2345,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……わからない▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わからない▼
 異なる　考えを
 否定するのではなく▼
 異なる　考えを
 受け入れることで▽
 世界は　化学反応を　起こす▼
 これこそが……
-世界を　変えるための　数式……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+世界を　変えるための　数式……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2397,14 +2397,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]レシラムと　ゼクロム……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムと　ゼクロム……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
 こんなことも　あるのか▼
 おなじじだいに　ふたりのえいゆう
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
-ともに　ただしいと　いうのか？[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　ただしいと　いうのか？[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2415,14 +2415,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]レシラムと　ゼクロム……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムと　ゼクロム……▼
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
 同じ時代に　２人の英雄
 真実を　求める　もの▽
 理想を　求める　もの▽
-ともに　正しいと　いうのか？[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ともに　正しいと　いうのか？[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2467,14 +2467,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……わからない▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わからない▼
 ことなる　かんがえを
 ひてい　するのではなく▼
 ことなる　かんがえを
 うけいれることで▽
 せかいは　かがくはんのうを　おこす▼
 これこそが……
-せかいを　かえるための　すうしき……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+せかいを　かえるための　すうしき……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2485,14 +2485,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……わからない▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……わからない▼
 異なる　考えを
 否定するのではなく▼
 異なる　考えを
 受け入れることで▽
 世界は　化学反応を　おこす▼
 これこそが……
-世界を　変えるための　数式……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+世界を　変えるための　数式……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -2816,7 +2816,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！　まさか
+			<Text>[Name:TrainerName Idx="0" ]！　まさか
 アナタのような　トレーナーが▽
 でんせつの　ポケモンに　えらばれるとは▽
 かんぜんに　けいさんがい　でしたよ▼</Text>
@@ -2830,7 +2830,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！　まさか
+			<Text>[Name:TrainerName Idx="0" ]！　まさか
 アナタのような　トレーナーが▽
 伝説の　ポケモンに　選ばれるとは▽
 完全に　計算外でしたよ▼</Text>
@@ -3146,7 +3146,7 @@
 さて　かみと　よばれようと
 しょせんは　ポケモン▼
 そいつが　みとめたところで
-[Name:TrainerName Idx="0"]！▽
+[Name:TrainerName Idx="0" ]！▽
 アナタなど　おそるるに　たらん▼
 さあ　かかってきなさい！▼
 ワタクシは　アナタの　ぜつぼうする
@@ -3165,7 +3165,7 @@
 さて　神と　呼ばれようと
 しょせんは　ポケモン▼
 そいつが　認めたところで
-[Name:TrainerName Idx="0"]！▽
+[Name:TrainerName Idx="0" ]！▽
 アナタなど　おそるるに　たらん▼
 さあ　かかってきなさい！▼
 ワタクシは　アナタの　絶望する
@@ -3217,7 +3217,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"][Name:TrainerName Idx="0"]！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName Idx="0" ]！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -3228,7 +3228,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"][Name:TrainerName Idx="0"]！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName Idx="0" ]！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -3275,7 +3275,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"][Name:TrainerName Idx="0"]！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName Idx="0" ]！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -3286,7 +3286,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"][Name:TrainerName Idx="0"]！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName Idx="0" ]！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -3508,8 +3508,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ボクの
-すうしきは　まちがって　いたのか？[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ボクの
+すうしきは　まちがって　いたのか？[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -3520,8 +3520,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ボクの
-数式は　間違って　いたのか？[Ctrl2:CtrlSpeed mode="0"]</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ボクの
+数式は　間違って　いたのか？[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4109,9 +4109,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……だが
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……だが
 ボクに　えいゆうの　しかくは▼
-ない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ない！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4122,9 +4122,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……だが
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……だが
 ボクに　英雄の　資格は▼
-ない！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ない！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4223,10 +4223,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]わかったような　ことを▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]わかったような　ことを▼
 いままで　おたがい
 しんじるもののため　あらそっていた▼
-だのに！　なぜ！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+だのに！　なぜ！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4237,10 +4237,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]わかったような　ことを▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]わかったような　ことを▼
 いままで　お互い
 信じるものの　ため　争っていた▼
-だのに！　なぜ！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+だのに！　なぜ！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4345,8 +4345,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……キミに
-はなしたいことが　ある[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……キミに
+はなしたいことが　ある[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4357,8 +4357,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……キミに
-話したいことが　ある[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……キミに
+話したいことが　ある[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4405,11 +4405,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミと　はじめて　であった
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミと　はじめて　であった
 カラクサタウンでの　ことだ▼
 キミの　ポケモンから
 きこえてきた　こえが▽
-ボクには　しょうげき　だった……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ボクには　しょうげき　だった……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4420,11 +4420,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミと　初めて　出会った
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミと　初めて　出会った
 カラクサタウンでの　ことだ▼
 キミの　ポケモンから
 聞こえてきた　声が▽
-ボクには　衝撃だった……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ボクには　衝撃だった……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4469,9 +4469,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]なぜなら　あの　ポケモンは▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]なぜなら　あの　ポケモンは▼
 キミのことを　スキ　といっていた……▼
-いっしょに　いたいと　いっていたから[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+いっしょに　いたいと　いっていたから[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4482,9 +4482,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]なぜなら　あの　ポケモンは▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]なぜなら　あの　ポケモンは▼
 キミのことを　スキ　といっていた……▼
-一緒にいたい　といっていたから[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+一緒にいたい　といっていたから[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4529,11 +4529,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……ボクには　りかい　できなかった▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……ボクには　りかい　できなかった▼
 せかいに　ひとの　ことを
 すきな　ポケモンが　いるだなんて▼
 それまで　そんな　ポケモンを
-ボクは　しらなかったからね……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ボクは　しらなかったからね……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4544,11 +4544,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]……ボクには　理解できなかった▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……ボクには　理解できなかった▼
 世界に　人の　ことを
 好きな　ポケモンが　いるだなんて▼
 それまで　そんな　ポケモンを
-ボクは　知らなかったからね……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ボクは　知らなかったからね……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4593,7 +4593,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]それからも　たびを　つづけるほどに
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]それからも　たびを　つづけるほどに
 きもちは　ゆらいでいった……▼
 こころを　かよいあわせ　たすけあう
 ポケモンと　ひと　ばかりだったから▼
@@ -4602,7 +4602,7 @@
 なにか　たしかめるため
 キミと　たたかいたい……▽
 おなじ　えいゆうとして　むきあいたい▽
-そう　ねがったが……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+そう　ねがったが……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4613,7 +4613,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]それからも　旅を　続けるほどに
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]それからも　旅を　続けるほどに
 気持ちは　揺らいでいった……▼
 心を　通いあわせ　助けあう
 ポケモンと　人ばかりだったから▼
@@ -4622,7 +4622,7 @@
 なにか　確かめるため
 キミと　闘いたい……▽
 おなじ　英雄として　向き合いたい▽
-そう　願ったが……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+そう　願ったが……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4667,12 +4667,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ポケモンの　ことしか……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンの　ことしか……
 いや　そのポケモンの　ことすら▽
 りかい　していなかった　ボクが……▼
 おおくの　ポケモンと　であい
 なかまに　かこまれていた▽
-キミに　かなうはずがなかった……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミに　かなうはずがなかった……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4683,12 +4683,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]ポケモンの　ことしか……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンの　ことしか……
 いや　そのポケモンの　ことすら▽
 理解していなかった　ボクが……▼
 多くの　ポケモンと　出会い
 仲間に　囲まれていた▽
-キミに　かなうはずがなかった……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミに　かなうはずがなかった……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4733,10 +4733,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……さて　チャンピオンは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……さて　チャンピオンは
 こんな　ボクを　ゆるしてくれたが……▼
 ボクが　どうすべきかは
-ボクじしんが　きめることさ……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ボクじしんが　きめることさ……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4747,10 +4747,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……さて　チャンピオンは
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……さて　チャンピオンは
 こんな　ボクを　許してくれたが……▼
 ボクが　どうすべきかは
-ボク自身が　決めることさ……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ボク自身が　決めることさ……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4794,7 +4794,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]！！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4805,7 +4805,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！！▼</Text>
+			<Text>[Name:TrainerName Idx="0" ]！！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4851,11 +4851,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミは　ゆめがある　といった……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは　ゆめがある　といった……
 その　ゆめ……　かなえろ！▼
 すばらしい　ゆめや　りそうは
 せかいを　かえる　ちからを　くれる！▽
-[Name:TrainerName Idx="0"]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+[Name:TrainerName Idx="0" ]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4866,11 +4866,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミは　夢がある　といった……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは　夢がある　といった……
 その　夢……　かなえろ！▼
 すばらしい　夢や　理想は
 世界を　変える　力をくれる！▽
-[Name:TrainerName Idx="0"]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+[Name:TrainerName Idx="0" ]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4918,10 +4918,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミよ……　ゆめを　もて！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミよ……　ゆめを　もて！▼
 そのために　りそうを　おいもとめろ！
 そして　いつか　かならず▽
-ゆめを　じつげん　するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ゆめを　じつげん　するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4932,10 +4932,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミよ……　夢を　もて！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミよ……　夢を　もて！▼
 そのために　理想を　追い求めろ！
 そして　いつか　必ず▽
-夢を　実現するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+夢を　実現するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4982,11 +4982,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミは　ゆめがある　といった……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは　ゆめがある　といった……
 その　ゆめ……　かなえろ！▼
 すばらしい　ゆめを　じつげんし
 キミの　しんじつと　するんだ！▽
-[Name:TrainerName Idx="0"]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+[Name:TrainerName Idx="0" ]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -4997,11 +4997,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミは　夢がある　といった……
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミは　夢がある　といった……
 その　夢……　かなえろ！▼
 すばらしい　夢を　実現し
 キミの　真実と　するんだ！▽
-[Name:TrainerName Idx="0"]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+[Name:TrainerName Idx="0" ]！　キミなら　できる！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5049,10 +5049,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミよ……　ゆめを　もて！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミよ……　ゆめを　もて！▼
 そのために　しんじる　みちを　いけ！
 そして　いつか　かならず▽
-ゆめを　じつげん　するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+ゆめを　じつげん　するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5063,10 +5063,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]キミよ……　夢を　もて！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミよ……　夢を　もて！▼
 そのために　信じる　道を　行け！
 そして　いつか　必ず▽
-夢を　実現するんだ！！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+夢を　実現するんだ！！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5113,7 +5113,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]それじゃ……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]それじゃ……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5124,7 +5124,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]それじゃ……[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]それじゃ……[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5161,7 +5161,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]サヨナラ……！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]サヨナラ……！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5172,7 +5172,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1"]サヨナラ……！[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]サヨナラ……！[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5579,9 +5579,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]こころして　かかりたまえ▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]こころして　かかりたまえ▼
 ゼクロムは　りそうを　もたない
-にんげんに　キバを　むくらしいから[Ctrl2:CtrlSpeed mode="0"]</Text>
+にんげんに　キバを　むくらしいから[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5592,9 +5592,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]心して　かかりたまえ▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]心して　かかりたまえ▼
 ゼクロムは　理想を　持たない
-人間に　キバを　むくらしいから[Ctrl2:CtrlSpeed mode="0"]</Text>
+人間に　キバを　むくらしいから[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5639,9 +5639,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]こころして　かかりたまえ▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]こころして　かかりたまえ▼
 レシラムは　よき　こころを　もたない
-にんげんを　やきつくすと　いうよ[Ctrl2:CtrlSpeed mode="0"]</Text>
+にんげんを　やきつくすと　いうよ[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -5652,9 +5652,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]心して　かかりたまえ▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]心して　かかりたまえ▼
 レシラムは　善の　心を　持たない
-人間を　焼き尽くすと　いうよ[Ctrl2:CtrlSpeed mode="0"]</Text>
+人間を　焼き尽くすと　いうよ[Ctrl2:CtrlSpeed mode="0" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -6189,13 +6189,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ボクが　キミのことを
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ボクが　キミのことを
 ゲーチスに　はなしたのは▼
 ポケモン　いがいで
 はじめて　トモダチに　なれそうと▽
 かんじていたから　かもしれない……▼
 なのに　こんな　かたちで
-キミたちを　まきこんで　しまった[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミたちを　まきこんで　しまった[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -6206,13 +6206,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1"]……ボクが　キミのことを
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ボクが　キミのことを
 ゲーチスに　話したのは▼
 ポケモン以外で
 はじめて　トモダチに　なれそうと▽
 感じていたから　かもしれない……▼
 なのに　こんな　形で
-キミたちを　巻き込んで　しまった[Ctrl2:CtrlSpeed mode="0"]▼</Text>
+キミたちを　巻き込んで　しまった[Ctrl2:CtrlSpeed mode="0" ]▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
@@ -6255,7 +6255,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="1"]を　ボックスから
+			<Text>[Name:PokemonName Idx="1" ]を　ボックスから
 てもちに　くわえますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6267,7 +6267,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="1"]を　ボックスから
+			<Text>[Name:PokemonName Idx="1" ]を　ボックスから
 手持ちに　くわえますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6308,7 +6308,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="1"]を　てもちに
+			<Text>[Name:PokemonName Idx="1" ]を　てもちに
 くわえなくて　いいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6320,7 +6320,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="1"]を　手持ちに
+			<Text>[Name:PokemonName Idx="1" ]を　手持ちに
 くわえなくて　いいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6413,7 +6413,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その[Name:PokemonNickname Idx="2"]を
+			<Text>その[Name:PokemonNickname Idx="2" ]を
 おくりかえして　いいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6425,7 +6425,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その[Name:PokemonNickname Idx="2"]を
+			<Text>その[Name:PokemonNickname Idx="2" ]を
 送り返して　いいですか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6466,7 +6466,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="1"]を
+			<Text>[Name:PokemonName Idx="1" ]を
 てもちに　くわえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6478,7 +6478,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="1"]を
+			<Text>[Name:PokemonName Idx="1" ]を
 手持ちに　くわえた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

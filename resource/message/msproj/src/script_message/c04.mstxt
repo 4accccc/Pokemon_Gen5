@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『まてよ！
+			<Text>[Name:TrainerName Idx="1" ]『まてよ！
 オマエら　ここで　なに　してた！？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,7 +18,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『待てよ！
+			<Text>[Name:TrainerName Idx="1" ]『待てよ！
 オマエら　ここで　なに　してた！？▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -130,7 +130,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『なにも　していない
+			<Text>[Name:TrainerName Idx="1" ]『なにも　していない
 だけど　プラズマだんは　ゆるさないッ！！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -142,7 +142,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『なにも　していない
+			<Text>[Name:TrainerName Idx="1" ]『なにも　していない
 だけど　プラズマ団は　許さないッ！！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -255,7 +255,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『[Name:TrainerName Idx="0"]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
 そこに　いるんだろ▼
 まきこんで　わるいけどさ
 はんぶんずつ　かたづけようぜ！</Text>
@@ -269,7 +269,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『[Name:TrainerName Idx="0"]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
 そこに　いるんだろ▼
 まきこんで　悪いけどさ
 半分ずつ　かたづけようぜ！</Text>
@@ -319,7 +319,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『[Name:TrainerName Idx="0"]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
 はんぶんずつ　かたづけるぜ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -331,7 +331,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『[Name:TrainerName Idx="0"]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="0" ]！
 半分ずつ　かたづけるぜ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -879,7 +879,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]『オレさ　プラズマだんに
+			<Text>[Name:TrainerName Idx="1" ]『オレさ　プラズマだんに
 ポケモンを　うばわれたんだよ……▼
 まだ　ガキのころ
 おまえが　ひっこしてくる　まえさ▽
@@ -896,7 +896,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]『オレさ　プラズマ団に
+			<Text>[Name:TrainerName Idx="1" ]『オレさ　プラズマ団に
 ポケモンを　奪われたんだよ……▼
 まだ　ガキのころ
 おまえが　引越してくる　前さ▽
@@ -1340,7 +1340,7 @@
 さすが　サブウェイマスター▼
 もっと　きたえて　いつか　ほんきの
 サブウェイマスターと　たたかいたい！▼
-ありがとね　[Name:TrainerName Idx="0"]！
+ありがとね　[Name:TrainerName Idx="0" ]！
 これは　きもちよ！　うけとって！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1356,7 +1356,7 @@
 さすが　サブウェイマスター▼
 もっと　鍛えて　いつか　本気の
 サブウェイマスターと　戦いたい！▼
-ありがとね　[Name:TrainerName Idx="0"]！
+ありがとね　[Name:TrainerName Idx="0" ]！
 これは　気持ちよ！　受け取って！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1409,7 +1409,7 @@
 ともだち　との　しょうぶや▽
 バトルサブウェイでの　しょうぶを▽
 きろく　することが　できるのよ！▼
-[Name:TrainerName Idx="0"]！▼
+[Name:TrainerName Idx="0" ]！▼
 あなたと　いっしょに　たたかうの
 とても　おもしろかったよ！▼
 また　つきあってくれると　うれしいな
@@ -1428,7 +1428,7 @@
 友達との　勝負や▽
 バトルサブウェイでの　勝負を▽
 記録することが　できるのよ！▼
-[Name:TrainerName Idx="0"]！▼
+[Name:TrainerName Idx="0" ]！▼
 あなたと　一緒に　戦うの
 とても　おもしろかったよ！▼
 また　つきあってくれると　うれしいな
@@ -1804,7 +1804,7 @@
 さすが　サブウェイマスター▼
 もっと　きたえて　いつか　ほんきの
 サブウェイマスターに　いどむ！▼
-ありがとう　[Name:TrainerName Idx="0"]！
+ありがとう　[Name:TrainerName Idx="0" ]！
 これは　ぼくの　きもち！　あげる！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1820,7 +1820,7 @@
 さすが　サブウェイマスター▼
 もっと　鍛えて　いつか　本気の
 サブウェイマスターに　挑む！▼
-ありがとう　[Name:TrainerName Idx="0"]！
+ありがとう　[Name:TrainerName Idx="0" ]！
 これは　ぼくの　気持ち！　あげる！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1873,7 +1873,7 @@
 ともだち　との　しょうぶや▽
 バトルサブウェイでの　しょうぶを▽
 きろく　することが　できるんだ！▼
-[Name:TrainerName Idx="0"]！▼
+[Name:TrainerName Idx="0" ]！▼
 きみと　いっしょに　たたかうの
 とても　おもしろかったよ！▼
 また　つきあってくれると　うれしいな
@@ -1892,7 +1892,7 @@
 友達との　勝負や▽
 バトルサブウェイでの　勝負を▽
 記録することが　できるんだ！▼
-[Name:TrainerName Idx="0"]！▼
+[Name:TrainerName Idx="0" ]！▼
 きみと　一緒に　戦うの
 とても　おもしろかったよ！▼
 また　つきあってくれると　うれしいな

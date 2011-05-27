@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]！！▼
-[Name:TrainerName Idx="0"]！！▼
-[Name:TrainerName Idx="0"]！！▼
+			<Text>[Name:TrainerName Idx="0" ]！！▼
+[Name:TrainerName Idx="0" ]！！▼
+[Name:TrainerName Idx="0" ]！！▼
 もしもし
-[Name:TrainerName Idx="0"]！！▼
+[Name:TrainerName Idx="0" ]！！▼
 あっ　つながってる▼
-あのね　[Name:TrainerName Idx="0"]！！▼
+あのね　[Name:TrainerName Idx="0" ]！！▼
 いますぐ　シッポウシティの
 はくぶつかんに　いらっしゃい！▼
 いますぐよ！　いい？
@@ -27,13 +27,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]！！▼
-[Name:TrainerName Idx="0"]！！▼
-[Name:TrainerName Idx="0"]！！▼
+			<Text>[Name:TrainerName Idx="0" ]！！▼
+[Name:TrainerName Idx="0" ]！！▼
+[Name:TrainerName Idx="0" ]！！▼
 もしもし
-[Name:TrainerName Idx="0"]！！▼
+[Name:TrainerName Idx="0" ]！！▼
 あっ　つながってる▼
-あのね　[Name:TrainerName Idx="0"]！！▼
+あのね　[Name:TrainerName Idx="0" ]！！▼
 いますぐ　シッポウシティの
 博物館に　いらっしゃい！▼
 いますぐよ！　いい？

@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『……[Name:TrainerName Idx="0"]か▼
+			<Text>アデク『……[Name:TrainerName Idx="0" ]か▼
 ・ここに居た理由
 ・ポケモンとのきずな
 ・認めこれを託すとするか
@@ -351,7 +351,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 タマゴを　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -363,7 +363,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 タマゴを　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -658,7 +658,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いい　ねいろ……▼
-[Name:TrainerName Idx="0"]くんは
+[Name:TrainerName Idx="0" ]くんは
 やさしくて　つよい　ひと……▽
 そんな　ねいろ……▼</Text>
 			<TextModifiedBy
@@ -672,7 +672,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いい　音色……▼
-[Name:TrainerName Idx="0"]くんは
+[Name:TrainerName Idx="0" ]くんは
 優しくて　強い　人……▽
 そんな　音色……▼</Text>
 			<TextModifiedBy
@@ -722,7 +722,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いい　ねいろ……▼
-[Name:TrainerName Idx="0"]さんは
+[Name:TrainerName Idx="0" ]さんは
 やさしくて　つよい　ひと……▽
 そんな　ねいろ……▼</Text>
 			<TextModifiedBy
@@ -736,7 +736,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いい　音色……▼
-[Name:TrainerName Idx="0"]さんは
+[Name:TrainerName Idx="0" ]さんは
 優しくて　強い　人……▽
 そんな　音色……▼</Text>
 			<TextModifiedBy
@@ -916,7 +916,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 かねを　ならした……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -928,7 +928,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
+			<Text>[Name:TrainerName Idx="0" ]は
 鐘を　鳴らした……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1483,7 +1483,7 @@
 			Language="JPN">
 			<Text>せかいには　もっと　おおくの
 トレーナーや　ポケモンが　いる！▼
-[Name:TrainerName Idx="0"]！　おまえも　できるだけ
+[Name:TrainerName Idx="0" ]！　おまえも　できるだけ
 おおくの　ひとと　あえよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1497,7 +1497,7 @@
 			Language="JPN_KANJI">
 			<Text>世界には　もっと　多くの
 トレーナーや　ポケモンが　いる！▼
-[Name:TrainerName Idx="0"]！　おまえも　できるだけ
+[Name:TrainerName Idx="0" ]！　おまえも　できるだけ
 多くの　人と　会えよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1546,7 +1546,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さて　[Name:TrainerName Idx="0"]
+			<Text>さて　[Name:TrainerName Idx="0" ]
 ポケモンリーグで　まっているぞ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1558,7 +1558,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さて　[Name:TrainerName Idx="0"]
+			<Text>さて　[Name:TrainerName Idx="0" ]
 ポケモンリーグで　待っているぞ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"

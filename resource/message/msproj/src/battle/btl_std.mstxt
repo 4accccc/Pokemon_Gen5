@@ -40,7 +40,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！　やせいの
-[Name:PokemonName Idx="0"]が　とびだしてきた！</Text>
+[Name:PokemonName Idx="0" ]が　とびだしてきた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -52,7 +52,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ！　野生の
-[Name:PokemonName Idx="0"]が　飛びだしてきた！</Text>
+[Name:PokemonName Idx="0" ]が　飛びだしてきた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -88,8 +88,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うわっ！　やせいの　[Name:PokemonName Idx="0"]と
-[Name:PokemonName Idx="1"]が　とびだしてきた！</Text>
+			<Text>うわっ！　やせいの　[Name:PokemonName Idx="0" ]と
+[Name:PokemonName Idx="1" ]が　とびだしてきた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -100,8 +100,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うわっ！　野生の　[Name:PokemonName Idx="0"]と
-[Name:PokemonName Idx="1"]が　飛びだしてきた！</Text>
+			<Text>うわっ！　野生の　[Name:PokemonName Idx="0" ]と
+[Name:PokemonName Idx="1" ]が　飛びだしてきた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -138,7 +138,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！　やせいの
-[Name:PokemonName Idx="0"]が　あらわれた！</Text>
+[Name:PokemonName Idx="0" ]が　あらわれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -150,7 +150,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ！　野生の
-[Name:PokemonName Idx="0"]が　現れた！</Text>
+[Name:PokemonName Idx="0" ]が　現れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -187,7 +187,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！　やせい？の
-[Name:PokemonName Idx="0"]が　あらわれた！</Text>
+[Name:PokemonName Idx="0" ]が　あらわれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -199,7 +199,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ！　野生？の
-[Name:PokemonName Idx="0"]が　現れた！</Text>
+[Name:PokemonName Idx="0" ]が　現れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -237,7 +237,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やせいの
-[Name:PokemonName Idx="0"]が　あらわれた！</Text>
+[Name:PokemonName Idx="0" ]が　あらわれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -249,7 +249,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>野生の
-[Name:PokemonName Idx="0"]が　現れた！</Text>
+[Name:PokemonName Idx="0" ]が　現れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -286,7 +286,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆめで　であった
-[Name:PokemonName Idx="0"]が　あらわれた！</Text>
+[Name:PokemonName Idx="0" ]が　あらわれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -298,7 +298,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>夢で　出会った
-[Name:PokemonName Idx="0"]が　現れた！</Text>
+[Name:PokemonName Idx="0" ]が　現れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -334,7 +334,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]が　あらわれた！</Text>
+			<Text>[Name:PokemonName Idx="0" ]が　あらわれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -345,7 +345,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]が　現れた！</Text>
+			<Text>[Name:PokemonName Idx="0" ]が　現れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -381,7 +381,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]が
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]が
 しょうぶを　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -393,7 +393,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]が
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]が
 勝負を　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -430,7 +430,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が
+			<Text>[Name:TrainerName Idx="0" ]が
 しょうぶを　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -442,7 +442,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が
+			<Text>[Name:TrainerName Idx="0" ]が
 勝負を　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -479,8 +479,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]と
-[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]が▽
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]と
+[Name:TrainerType Idx="2" ]の　[Name:TrainerName Idx="3" ]が▽
 しょうぶを　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -492,8 +492,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]と
-[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]が▽
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]と
+[Name:TrainerType Idx="2" ]の　[Name:TrainerName Idx="3" ]が▽
 勝負を　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -530,7 +530,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]が
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]が
 しょうぶを　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -542,7 +542,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]が
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]が
 勝負を　しかけてきた！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -579,7 +579,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆけっ！　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>ゆけっ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -590,7 +590,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆけっ！　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>ゆけっ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -626,8 +626,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆけっ！　[Name:PokemonNickname Idx="0"]！
-[Name:PokemonNickname Idx="1"]！</Text>
+			<Text>ゆけっ！　[Name:PokemonNickname Idx="0" ]！
+[Name:PokemonNickname Idx="1" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -638,8 +638,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆけっ！　[Name:PokemonNickname Idx="0"]！
-[Name:PokemonNickname Idx="1"]！</Text>
+			<Text>ゆけっ！　[Name:PokemonNickname Idx="0" ]！
+[Name:PokemonNickname Idx="1" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -675,8 +675,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆけっ！　[Name:PokemonNickname Idx="0"]！
-[Name:PokemonNickname Idx="1"]！　[Name:PokemonNickname Idx="2"]！</Text>
+			<Text>ゆけっ！　[Name:PokemonNickname Idx="0" ]！
+[Name:PokemonNickname Idx="1" ]！　[Name:PokemonNickname Idx="2" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -687,8 +687,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆけっ！　[Name:PokemonNickname Idx="0"]！
-[Name:PokemonNickname Idx="1"]！　[Name:PokemonNickname Idx="2"]！</Text>
+			<Text>ゆけっ！　[Name:PokemonNickname Idx="0" ]！
+[Name:PokemonNickname Idx="1" ]！　[Name:PokemonNickname Idx="2" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -724,8 +724,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]を　くりだした！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -736,8 +736,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]を　くりだした！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -773,9 +773,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]と▽
-[Name:PokemonNickname Idx="3"]を　くりだした！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]と▽
+[Name:PokemonNickname Idx="3" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -786,9 +786,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]と▽
-[Name:PokemonNickname Idx="3"]を　くりだした！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]と▽
+[Name:PokemonNickname Idx="3" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -824,9 +824,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]と　[Name:PokemonNickname Idx="3"]と▽
-[Name:PokemonNickname Idx="4"]を　くりだした！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]と　[Name:PokemonNickname Idx="3" ]と▽
+[Name:PokemonNickname Idx="4" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -837,9 +837,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]と　[Name:PokemonNickname Idx="3"]と▽
-[Name:PokemonNickname Idx="4"]を　くりだした！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]と　[Name:PokemonNickname Idx="3" ]と▽
+[Name:PokemonNickname Idx="4" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -875,8 +875,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]を　くりだした！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -887,8 +887,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]を　くりだした！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -924,9 +924,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]と▽
-[Name:PokemonNickname Idx="2"]を　くりだした！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]と▽
+[Name:PokemonNickname Idx="2" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -937,9 +937,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]と▽
-[Name:PokemonNickname Idx="2"]を　くりだした！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]と▽
+[Name:PokemonNickname Idx="2" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -975,9 +975,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]と　[Name:PokemonNickname Idx="2"]と▽
-[Name:PokemonNickname Idx="3"]を　くりだした！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]と　[Name:PokemonNickname Idx="2" ]と▽
+[Name:PokemonNickname Idx="3" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -988,9 +988,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]と　[Name:PokemonNickname Idx="2"]と▽
-[Name:PokemonNickname Idx="3"]を　くりだした！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]と　[Name:PokemonNickname Idx="2" ]と▽
+[Name:PokemonNickname Idx="3" ]を　くりだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1026,8 +1026,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]を　くりだそうとしている▽
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]を　くりだそうとしている▽
 ポケモンを　いれかえますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1039,8 +1039,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]を　くりだそうとしている▽
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]を　くりだそうとしている▽
 ポケモンを　入れ替えますか？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1077,7 +1077,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まかせた！　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>まかせた！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1088,7 +1088,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>任せた！　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>任せた！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1124,7 +1124,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>がんばれ！　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>がんばれ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1135,7 +1135,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頑張れ！　[Name:PokemonNickname Idx="0"]！</Text>
+			<Text>頑張れ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1172,7 +1172,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あとすこしだ！
-がんばれ！　[Name:PokemonNickname Idx="0"]！</Text>
+がんばれ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1184,7 +1184,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あと少しだ！
-頑張れ！　[Name:PokemonNickname Idx="0"]！</Text>
+頑張れ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1221,7 +1221,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あいてが　よわっている！
-チャンスだ！　[Name:PokemonNickname Idx="0"]！</Text>
+チャンスだ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1233,7 +1233,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>相手が　弱っている！
-チャンスだ！　[Name:PokemonNickname Idx="0"]！</Text>
+チャンスだ！　[Name:PokemonNickname Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1269,7 +1269,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]　こうたい！
+			<Text>[Name:PokemonNickname Idx="0" ]　こうたい！
 もどれ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1281,7 +1281,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]　交代！
+			<Text>[Name:PokemonNickname Idx="0" ]　交代！
 戻れ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1318,7 +1318,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]
+			<Text>[Name:PokemonNickname Idx="0" ]
 もどれ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1330,7 +1330,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]
+			<Text>[Name:PokemonNickname Idx="0" ]
 戻れ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1367,7 +1367,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]　よし！
+			<Text>[Name:PokemonNickname Idx="0" ]　よし！
 もどれ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1379,7 +1379,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]　よし！
+			<Text>[Name:PokemonNickname Idx="0" ]　よし！
 戻れ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1416,7 +1416,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]　いいぞ！
+			<Text>[Name:PokemonNickname Idx="0" ]　いいぞ！
 もどれ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1428,7 +1428,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]　いいぞ！
+			<Text>[Name:PokemonNickname Idx="0" ]　いいぞ！
 戻れ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1465,7 +1465,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]　よくやった！
+			<Text>[Name:PokemonNickname Idx="0" ]　よくやった！
 もどれ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1477,7 +1477,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]　よくやった！
+			<Text>[Name:PokemonNickname Idx="0" ]　よくやった！
 戻れ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1514,8 +1514,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]を　ひっこめた！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]を　ひっこめた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1526,8 +1526,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:PokemonNickname Idx="2"]を　引っ込めた！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:PokemonNickname Idx="2" ]を　引っ込めた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1563,8 +1563,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]を　ひっこめた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]を　ひっこめた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1575,8 +1575,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:PokemonNickname Idx="1"]を　引っ込めた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:PokemonNickname Idx="1" ]を　引っ込めた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1612,7 +1612,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:1digit Idx="0"]かい　あたった！</Text>
+			<Text>[Digit:1digit Idx="0" ]かい　あたった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1623,7 +1623,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:1digit Idx="0"]回　当たった！</Text>
+			<Text>[Digit:1digit Idx="0" ]回　当たった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1659,8 +1659,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:Item Idx="1"]を　つかった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:Item Idx="1" ]を　つかった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1671,8 +1671,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:Item Idx="1"]を　使った！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:Item Idx="1" ]を　使った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1708,8 +1708,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:Item Idx="1"]を　つかった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:Item Idx="1" ]を　つかった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1720,8 +1720,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は
-[Name:Item Idx="1"]を　使った！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は
+[Name:Item Idx="1" ]を　使った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1757,8 +1757,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:Item Idx="2"]を　つかった！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:Item Idx="2" ]を　つかった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1769,8 +1769,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]は
-[Name:Item Idx="2"]を　使った！</Text>
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]は
+[Name:Item Idx="2" ]を　使った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1806,8 +1806,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　[Name:PokemonNickname Idx="1"]に
-[Name:Item Idx="2"]を　シュートした！！</Text>
+			<Text>[Name:TrainerName Idx="0" ]が　[Name:PokemonNickname Idx="1" ]に
+[Name:Item Idx="2" ]を　シュートした！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1818,8 +1818,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　[Name:PokemonNickname Idx="1"]に
-[Name:Item Idx="2"]を　シュートした！！　</Text>
+			<Text>[Name:TrainerName Idx="0" ]が　[Name:PokemonNickname Idx="1" ]に
+[Name:Item Idx="2" ]を　シュートした！！　</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -1904,7 +1904,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 ひだりへ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1916,7 +1916,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 左へ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1953,7 +1953,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 ひだりへ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1965,7 +1965,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 左へ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2002,7 +2002,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 みぎへ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2014,7 +2014,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 右へ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2051,7 +2051,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 みぎへ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2063,7 +2063,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　ポケモンが
+			<Text>[Name:TrainerName Idx="0" ]の　ポケモンが
 右へ　ローテーション！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2100,8 +2100,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は
-[Digit:7digits Idx="1"] けいけんちを　もらった！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は
+[Digit:7digits Idx="1" ] けいけんちを　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2112,8 +2112,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は
-[Digit:7digits Idx="1"] 経験値を　もらった！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は
+[Digit:7digits Idx="1" ] 経験値を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2149,8 +2149,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　おおめに
-[Digit:7digits Idx="1"] けいけんちを　もらった！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　おおめに
+[Digit:7digits Idx="1" ] けいけんちを　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2161,8 +2161,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　多めに
-[Digit:7digits Idx="1"] 経験値を　もらった！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　多めに
+[Digit:7digits Idx="1" ] 経験値を　もらった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2198,7 +2198,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]
 との　しょうぶに　かった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2210,7 +2210,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]
 との　勝負に　かった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2247,8 +2247,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]と
-[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]▽
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]と
+[Name:TrainerType Idx="2" ]の　[Name:TrainerName Idx="3" ]▽
 との　しょうぶに　かった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2260,8 +2260,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]と
-[Name:TrainerType Idx="2"]の　[Name:TrainerName Idx="3"]▽
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]と
+[Name:TrainerType Idx="2" ]の　[Name:TrainerName Idx="3" ]▽
 との　勝負に　勝った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2298,7 +2298,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]
 との　しょうぶに　まけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2310,7 +2310,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]
 との　勝負に　負けた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2347,7 +2347,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]
 との　しょうぶは　ひきわけだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2359,7 +2359,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerType Idx="0"]の　[Name:TrainerName Idx="1"]
+			<Text>[Name:TrainerType Idx="0" ]の　[Name:TrainerName Idx="1" ]
 との　勝負は　引き分けだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2396,7 +2396,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]との
+			<Text>[Name:TrainerName Idx="0" ]との
 しょうぶに　かった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2408,7 +2408,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]との
+			<Text>[Name:TrainerName Idx="0" ]との
 勝負に　勝った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2438,7 +2438,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]との
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]との
 しょうぶに　かった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2450,7 +2450,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]との
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]との
 勝負に　勝った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2480,7 +2480,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]との
+			<Text>[Name:TrainerName Idx="0" ]との
 しょうぶに　まけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2492,7 +2492,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]との
+			<Text>[Name:TrainerName Idx="0" ]との
 勝負に　負けた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2522,7 +2522,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]との
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]との
 しょうぶに　まけた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2534,7 +2534,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]との
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]との
 勝負に　負けた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2564,7 +2564,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]との
+			<Text>[Name:TrainerName Idx="0" ]との
 しょうぶは　ひきわけだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2576,7 +2576,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]との
+			<Text>[Name:TrainerName Idx="0" ]との
 勝負は　引き分けだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2606,7 +2606,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]との
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]との
 しょうぶは　ひきわけだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2618,7 +2618,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]と　[Name:TrainerName Idx="1"]との
+			<Text>[Name:TrainerName Idx="0" ]と　[Name:TrainerName Idx="1" ]との
 勝負は　引き分けだ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2648,7 +2648,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　てもとには
+			<Text>[Name:TrainerName Idx="0" ]の　てもとには
 たたかえる　ポケモンが　いない！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2660,7 +2660,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　手元には
+			<Text>[Name:TrainerName Idx="0" ]の　手元には
 戦える　ポケモンが　いない！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2697,8 +2697,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　あわてて
-[Digit:5digits Idx="1"]円　なくしてしまった…</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　あわてて
+[Digit:5digits Idx="1" ]円　なくしてしまった…</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2709,8 +2709,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　あわてて
-[Digit:5digits Idx="1"]円　無くしてしまった…</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　あわてて
+[Digit:5digits Idx="1" ]円　無くしてしまった…</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2739,8 +2739,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　しょうきんとして
-[Digit:5digits Idx="1"]円　しはらった…</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　しょうきんとして
+[Digit:5digits Idx="1" ]円　しはらった…</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2751,8 +2751,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　賞金として
-[Digit:5digits Idx="1"]円　支払った…</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　賞金として
+[Digit:5digits Idx="1" ]円　支払った…</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2782,7 +2782,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>…　…　…　…▼
-[Name:TrainerName Idx="0"]は
+[Name:TrainerName Idx="0" ]は
 めのまえが　まっくらに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2795,7 +2795,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>…　…　…　…▼
-[Name:TrainerName Idx="0"]は
+[Name:TrainerName Idx="0" ]は
 目の前が　まっくらに　なった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2832,8 +2832,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　しょうきんとして
-[Digit:5digits Idx="1"]円　てにいれた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　しょうきんとして
+[Digit:5digits Idx="1" ]円　てにいれた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2844,8 +2844,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　賞金として
-[Digit:5digits Idx="1"]円　手に入れた！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　賞金として
+[Digit:5digits Idx="1" ]円　手に入れた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2881,7 +2881,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　[Digit:5digits Idx="1"]円　ひろった！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Digit:5digits Idx="1" ]円　ひろった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2892,7 +2892,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　[Digit:5digits Idx="1"]円　拾った！</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　[Digit:5digits Idx="1" ]円　拾った！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2928,8 +2928,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は
-レベル[Digit:3digits Idx="1"]　に　あがった！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は
+レベル[Digit:3digits Idx="1" ]　に　あがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -2940,8 +2940,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は
-レベル[Digit:3digits Idx="1"]　に　あがった！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は
+レベル[Digit:3digits Idx="1" ]　に　あがった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3174,7 +3174,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やったー！
-[Name:PokemonName Idx="0"]を　つかまえたぞ！</Text>
+[Name:PokemonName Idx="0" ]を　つかまえたぞ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3186,7 +3186,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やったー！
-[Name:PokemonName Idx="0"]を　捕まえたぞ！</Text>
+[Name:PokemonName Idx="0" ]を　捕まえたぞ！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3222,7 +3222,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName Idx="0"]のデータが　あたらしく
+			<Text>[Name:PokemonName Idx="0" ]のデータが　あたらしく
 ポケモンずかんに　とうろく　されます！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3234,7 +3234,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName Idx="0"]のデータが　新しく
+			<Text>[Name:PokemonName Idx="0" ]のデータが　新しく
 ポケモン図鑑に　登録されます！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3360,7 +3360,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　どうする？</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3371,7 +3371,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　どうする？</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3407,7 +3407,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]は　どうする？</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3418,7 +3418,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]は　どうする？</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　どうする？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3454,7 +3454,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="60"]しかし　うまく　きまらなかった！！</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="60" ]しかし　うまく　きまらなかった！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3465,7 +3465,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="60"]しかし　うまく決まらなかった！！</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="60" ]しかし　うまく決まらなかった！！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -3607,7 +3607,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やせいの　[Name:PokemonNickname Idx="0"]は
+			<Text>やせいの　[Name:PokemonNickname Idx="0" ]は
 にげだした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3619,7 +3619,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>野生の[Name:PokemonNickname Idx="0"]　は
+			<Text>野生の[Name:PokemonNickname Idx="0" ]　は
 逃げ出した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3909,8 +3909,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たすけにきた　[Name:TrainerName Idx="0"]の　おかげで
-[Name:PokemonNickname Idx="1"]の▽
+			<Text>たすけにきた　[Name:TrainerName Idx="0" ]の　おかげで
+[Name:PokemonNickname Idx="1" ]の▽
 たいりょくが　かいふくした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3922,8 +3922,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助けにきた　[Name:TrainerName Idx="0"]の　おかげで
-[Name:PokemonNickname Idx="1"]の▽
+			<Text>助けにきた　[Name:TrainerName Idx="0" ]の　おかげで
+[Name:PokemonNickname Idx="1" ]の▽
 体力が　回復した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4450,8 +4450,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]は
-[Name:Move Idx="1"]の　いりょくを　よわめた！</Text>
+			<Text>[Name:Item Idx="0" ]は
+[Name:Move Idx="1" ]の　いりょくを　よわめた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4462,8 +4462,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]は
-[Name:Move Idx="1"]の　威力を　弱めた！</Text>
+			<Text>[Name:Item Idx="0" ]は
+[Name:Move Idx="1" ]の　威力を　弱めた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4492,8 +4492,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]の　こうかで
-[Name:Move Idx="1"]しか　だせない！</Text>
+			<Text>[Name:Item Idx="0" ]の　こうかで
+[Name:Move Idx="1" ]しか　だせない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4504,8 +4504,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]の　効果で
-[Name:Move Idx="1"]しか　出せない！</Text>
+			<Text>[Name:Item Idx="0" ]の　効果で
+[Name:Move Idx="1" ]しか　出せない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4534,8 +4534,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は
-[Name:Move Idx="1"]しか　だせない！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は
+[Name:Move Idx="1" ]しか　だせない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4546,8 +4546,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は
-[Name:Move Idx="1"]しか　出せない！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は
+[Name:Move Idx="1" ]しか　出せない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4644,8 +4644,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]の
-[Name:Ability Idx="1"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]の
+[Name:Ability Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -4656,8 +4656,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]の
-[Name:Ability Idx="1"]</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]の
+[Name:Ability Idx="1" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -5286,7 +5286,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆびをふったら　[Name:Move Idx="0"]がでた！</Text>
+			<Text>ゆびをふったら　[Name:Move Idx="0" ]がでた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -5297,7 +5297,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>指を振ったら　[Name:Move Idx="0"]　が出た！</Text>
+			<Text>指を振ったら　[Name:Move Idx="0" ]　が出た！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -5327,7 +5327,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しぜんのちからは
-[Name:Move Idx="0"]　になった！</Text>
+[Name:Move Idx="0" ]　になった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -5339,7 +5339,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しぜんのちからは
-[Name:Move Idx="0"]　になった！</Text>
+[Name:Move Idx="0" ]　になった！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7601,7 +7601,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>[Name:Item Idx="0" ]は　[Name:Move Idx="1" ]の
 いりょくを　つよめた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7613,7 +7613,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]は　[Name:Move Idx="1"]の
+			<Text>[Name:Item Idx="0" ]は　[Name:Move Idx="1" ]の
 威力を　強めた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7849,7 +7849,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　いうことを　きかない！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　いうことを　きかない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7860,7 +7860,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　言うことを　聞かない！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　言うことを　聞かない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7889,7 +7889,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　なまけている！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　なまけている！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7900,7 +7900,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　なまけている！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　なまけている！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7929,7 +7929,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　そっぽをむいた！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　そっぽをむいた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7940,7 +7940,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　そっぽをむいた！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　そっぽをむいた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7969,7 +7969,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　しらんぷりした！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　しらんぷりした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -7980,7 +7980,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　しらんぷりした！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　しらんぷりした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -8009,7 +8009,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　めいれいを　むしした！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　めいれいを　むしした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -8020,7 +8020,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　命令を　無視した！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　命令を　無視した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -8049,7 +8049,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　ひるねを　はじめた！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　ひるねを　はじめた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -8060,7 +8060,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　昼寝を　始めた！</Text>
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　昼寝を　始めた！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -8089,7 +8089,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　ねむったまま
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　ねむったまま
 めいれいを　むしした！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8101,7 +8101,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　眠ったまま
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　眠ったまま
 命令を　無視した！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8213,7 +8213,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　フリーフォールで
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　フリーフォールで
 じゆうに　ならない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8225,7 +8225,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname2 Idx="0"]は　フリーフォールで
+			<Text>[Name:PokemonNickname2 Idx="0" ]は　フリーフォールで
 自由に　ならない！</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8296,7 +8296,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>（[Digit:1digit Idx="0"]）のゆびをふる　[Digit:3digits Idx="1"]：[Name:Move Idx="2"]</Text>
+			<Text>（[Digit:1digit Idx="0" ]）のゆびをふる　[Digit:3digits Idx="1" ]：[Name:Move Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />
@@ -8307,7 +8307,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>（[Digit:1digit Idx="0"]）のゆびふる　[Digit:3digits Idx="1"]：[Name:Move Idx="2"]</Text>
+			<Text>（[Digit:1digit Idx="0" ]）のゆびふる　[Digit:3digits Idx="1" ]：[Name:Move Idx="2" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:05" />

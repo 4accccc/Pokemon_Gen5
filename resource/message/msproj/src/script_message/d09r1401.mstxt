@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]▼
 むずかしいね
 じぶんと　むきあうのは▼
 じぶんの　イヤな　ところや
@@ -21,7 +21,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『……[Name:TrainerName Idx="0" ]▼
 難しいね
 自分と　向き合うのは▼
 自分の　イヤな　ところや
@@ -397,7 +397,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『……だってさ▼
-じゃ　[Name:TrainerName Idx="0"]！
+じゃ　[Name:TrainerName Idx="0" ]！
 ポケモンしょうぶ　うけてもらうよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -410,7 +410,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『……だってさ▼
-じゃ　[Name:TrainerName Idx="0"]！
+じゃ　[Name:TrainerName Idx="0" ]！
 ポケモン勝負　受けてもらうよ！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -532,7 +532,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……きたね　[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『……きたね　[Name:TrainerName Idx="0" ]▼
 これまでの　ぼくを　こえるため……▼
 そして　じゅんすいに　つよい
 トレーナーの　きみに　かつため▽
@@ -547,7 +547,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……来たね　[Name:TrainerName Idx="0"]▼
+			<Text>チェレン『……来たね　[Name:TrainerName Idx="0" ]▼
 これまでの　ぼくを　超えるため……▼
 そして　純粋に　強い
 トレーナーの　きみに　勝つため▽

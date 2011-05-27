@@ -308,8 +308,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみの　[Name:PokemonName Idx="0"]の　とくせいは
-[Name:Ability Idx="1"]　だね▼
+			<Text>きみの　[Name:PokemonName Idx="0" ]の　とくせいは
+[Name:Ability Idx="1" ]　だね▼
 えーっと　チェレンせんせい　なら
 どんな　こうかか　おしえてくれるよ！</Text>
 			<TextModifiedBy
@@ -322,8 +322,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみの　[Name:PokemonName Idx="0"]の　とくせいは
-[Name:Ability Idx="1"]　だね▼
+			<Text>きみの　[Name:PokemonName Idx="0" ]の　とくせいは
+[Name:Ability Idx="1" ]　だね▼
 えーっと　チェレン先生　なら
 どんな　効果か　教えてくれるよ！</Text>
 			<TextModifiedBy

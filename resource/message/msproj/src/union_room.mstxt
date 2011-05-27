@@ -293,9 +293,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="2"][Ctrl2:WaitOne frame="15"][Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]が
-はなしかけて　きました[Ctrl2:WaitOne frame="15"]</Text>
+			<Text>[Name:PMS Idx="2" ][Ctrl2:WaitOne frame="15" ][Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]が
+はなしかけて　きました[Ctrl2:WaitOne frame="15" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -306,9 +306,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="2"][Ctrl2:WaitOne frame="15"][Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]が
-話しかけて　きました[Ctrl2:WaitOne frame="15"]</Text>
+			<Text>[Name:PMS Idx="2" ][Ctrl2:WaitOne frame="15" ][Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]が
+話しかけて　きました[Ctrl2:WaitOne frame="15" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -401,8 +401,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の
-へんじを　まっています[Ctrl2:WaitOne frame="15"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の
+へんじを　まっています[Ctrl2:WaitOne frame="15" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -413,8 +413,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の
-返事を　待っています[Ctrl2:WaitOne frame="15"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の
+返事を　待っています[Ctrl2:WaitOne frame="15" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -502,7 +502,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]が　トレーナーカードを
 みせて　きました[Ctrl2:PageClear ]
 こちらも　トレーナーカードを
 みせますか？</Text>
@@ -516,7 +516,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]が　トレーナーカードを
 みせて　きました[Ctrl2:PageClear ]
 こちらも　トレーナーカードを
 みせますか？</Text>
@@ -557,10 +557,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Location Idx="3"]
-[Name:Area Idx="4"][Ctrl2:PageClear ]
-に　すんでいる　[Name:TrainerName Idx="0"]の
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:Location Idx="3" ]
+[Name:Area Idx="4" ][Ctrl2:PageClear ]
+に　すんでいる　[Name:TrainerName Idx="0" ]の
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -571,10 +571,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Location Idx="3"]
-[Name:Area Idx="4"][Ctrl2:PageClear ]
-に　住んでいる　[Name:TrainerName Idx="0"]の
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:Location Idx="3" ]
+[Name:Area Idx="4" ][Ctrl2:PageClear ]
+に　住んでいる　[Name:TrainerName Idx="0" ]の
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -607,9 +607,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Location Idx="3"]
-に　すんでいる　[Name:TrainerName Idx="0"]の[Ctrl2:LineFeed ]
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:Location Idx="3" ]
+に　すんでいる　[Name:TrainerName Idx="0" ]の[Ctrl2:LineFeed ]
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -620,9 +620,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Location Idx="3"]
-に　住んでいる　[Name:TrainerName Idx="0"]の[Ctrl2:LineFeed ]
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:Location Idx="3" ]
+に　住んでいる　[Name:TrainerName Idx="0" ]の[Ctrl2:LineFeed ]
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -655,9 +655,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Area Idx="4"]
-に　すんでいる　[Name:TrainerName Idx="0"]の[Ctrl2:LineFeed ]
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:Area Idx="4" ]
+に　すんでいる　[Name:TrainerName Idx="0" ]の[Ctrl2:LineFeed ]
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -668,9 +668,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Area Idx="4"]
-に　住んでいる　[Name:TrainerName Idx="0"]の[Ctrl2:LineFeed ]
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:Area Idx="4" ]
+に　住んでいる　[Name:TrainerName Idx="0" ]の[Ctrl2:LineFeed ]
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -703,8 +703,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -715,8 +715,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の
-トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>[Name:TrainerName Idx="0" ]の
+トレーナーカードを　みせてもらった[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -824,7 +824,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　おえかき　に
+			<Text>[Name:TrainerName Idx="0" ]が　おえかき　に
 さそってきました[Ctrl2:PageClear ]
 いっしょに　おえかき　しますか？</Text>
 			<TextModifiedBy
@@ -837,7 +837,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　お絵描き　に
+			<Text>[Name:TrainerName Idx="0" ]が　お絵描き　に
 誘ってきました[Ctrl2:PageClear ]
 一緒に　お絵描き　しますか？</Text>
 			<TextModifiedBy
@@ -875,7 +875,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おえかきを　はじめます！[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>おえかきを　はじめます！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -886,7 +886,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お絵描きを　はじめます！[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>お絵描きを　はじめます！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -959,7 +959,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 シングルバトルの　レベル５０ルールで
 たいせん　しますか？</Text>
@@ -973,7 +973,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 シングルバトルの　レベル５０ルールで
 対戦しますか？</Text>
@@ -1021,7 +1021,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 シングルバトルの　せいげんなしで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1035,7 +1035,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 シングルバトルの　制限なしで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1082,7 +1082,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 シングルバトルの　フラットルールで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1096,7 +1096,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 シングルバトルの　フラットルールで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1143,7 +1143,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 ダブルバトルの　レベル５０ルールで
 たいせん　しますか？</Text>
@@ -1157,7 +1157,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 ダブルバトルの　レベル５０ルールで
 対戦しますか？</Text>
@@ -1204,7 +1204,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 ダブルバトルの　せいげんなしで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1218,7 +1218,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 ダブルバトルの　制限なしで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1265,7 +1265,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 ダブルバトルの　フラットルールで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1279,7 +1279,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 ダブルバトルの　フラットルールで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1326,7 +1326,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 トリプルバトルの　レベル５０ルールで
 たいせん　しますか？</Text>
@@ -1340,7 +1340,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 トリプルバトルの　レベル５０ルールで
 対戦しますか？</Text>
@@ -1387,7 +1387,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 トリプルバトルの　せいげんなしで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1401,7 +1401,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 トリプルバトルの　制限なしで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1448,7 +1448,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 トリプルバトルの　フラットルールで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1462,7 +1462,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 トリプルバトルの　フラットルールで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1509,7 +1509,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 ローテーションバトルの
 レベル５０ルールで[Ctrl2:LineFeed ]
@@ -1524,7 +1524,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 ローテーションバトルの
 レベル５０ルールで[Ctrl2:LineFeed ]
@@ -1572,7 +1572,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 ローテーションバトルの
 せいげんなしで[Ctrl2:LineFeed ]
@@ -1587,7 +1587,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 ローテーションバトルの
 制限なしで[Ctrl2:LineFeed ]
@@ -1635,7 +1635,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 ローテーションバトルの
 フラットルールで[Ctrl2:LineFeed ]
@@ -1650,7 +1650,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 ローテーションバトルの
 フラットルールで[Ctrl2:LineFeed ]
@@ -1698,7 +1698,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 マルチバトルの　せいげんなしで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1712,7 +1712,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 マルチバトルの　制限なしで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1759,7 +1759,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　たいせんを
+			<Text>[Name:TrainerName Idx="0" ]が　たいせんを
 もうしこんで　きました[Ctrl2:PageClear ]
 マルチバトルの　フラットルールで
 たいせん　しますか？[Ctrl2:PageClear ]</Text>
@@ -1773,7 +1773,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　対戦を
+			<Text>[Name:TrainerName Idx="0" ]が　対戦を
 申し込んで　きました[Ctrl2:PageClear ]
 マルチバトルの　フラットルールで
 対戦しますか？[Ctrl2:PageClear ]</Text>
@@ -1821,7 +1821,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たいせんを
-かいし　します！[Ctrl2:WaitOne frame="60"]</Text>
+かいし　します！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1832,7 +1832,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦を　開始します！[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>対戦を　開始します！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1921,7 +1921,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　こうかんを
+			<Text>[Name:TrainerName Idx="0" ]が　こうかんを
 もうしこんで　きました[Ctrl2:PageClear ]
 こうかん　しますか？</Text>
 			<TextModifiedBy
@@ -1934,7 +1934,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　交換を
+			<Text>[Name:TrainerName Idx="0" ]が　交換を
 申し込んで　きました[Ctrl2:PageClear ]
 交換しますか？</Text>
 			<TextModifiedBy
@@ -1974,7 +1974,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こうかんを
-かいし　します！[Ctrl2:WaitOne frame="60"]</Text>
+かいし　します！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -1985,7 +1985,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>交換を　開始します！[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>交換を　開始します！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -2102,7 +2102,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　レコードつうしんに
+			<Text>[Name:TrainerName Idx="0" ]が　レコードつうしんに
 さそって　きました[Ctrl2:PageClear ]
 いっしょに　レコードつうしんを
 しますか？</Text>
@@ -2116,7 +2116,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　レコード通信に
+			<Text>[Name:TrainerName Idx="0" ]が　レコード通信に
 誘ってきました[Ctrl2:PageClear ]
 一緒に　レコード通信を　しますか？</Text>
 			<TextModifiedBy
@@ -2261,7 +2261,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]が　ぐるぐるこうかん　に
+			<Text>[Name:TrainerName Idx="0" ]が　ぐるぐるこうかん　に
 さそって　きました[Ctrl2:PageClear ]
 いっしょに　ぐるぐるこうかん　を
 しますか？</Text>
@@ -2275,7 +2275,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]が　ぐるぐる交換に
+			<Text>[Name:TrainerName Idx="0" ]が　ぐるぐる交換に
 誘ってきました[Ctrl2:PageClear ]
 一緒に　ぐるぐる交換を　しますか？</Text>
 			<TextModifiedBy
@@ -2315,7 +2315,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぐるぐるこうかんを
-かいし　します！[Ctrl2:WaitOne frame="60"]</Text>
+かいし　します！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -2326,7 +2326,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぐるぐる交換を　開始します！[Ctrl2:WaitOne frame="60"]</Text>
+			<Text>ぐるぐる交換を　開始します！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -2443,8 +2443,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="2"][Ctrl2:WaitOne frame="15"][Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]　です！
+			<Text>[Name:PMS Idx="2" ][Ctrl2:WaitOne frame="15" ][Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]　です！
 なにか　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2456,8 +2456,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="2"][Ctrl2:WaitOne frame="15"][Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]　です！
+			<Text>[Name:PMS Idx="2" ][Ctrl2:WaitOne frame="15" ][Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]　です！
 なにか　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2501,8 +2501,8 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="2"][Ctrl2:WaitOne frame="15"][Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]　です！
+			<Text>[Name:PMS Idx="2" ][Ctrl2:WaitOne frame="15" ][Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]　です！
 なにか　する？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2514,8 +2514,8 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="2"][Ctrl2:WaitOne frame="15"][Ctrl2:PageClear ]
-[Name:TrainerName Idx="0"]　です！
+			<Text>[Name:PMS Idx="2" ][Ctrl2:WaitOne frame="15" ][Ctrl2:PageClear ]
+[Name:TrainerName Idx="0" ]　です！
 なにか　する？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2825,7 +2825,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]から
+			<Text>[Name:TrainerName Idx="0" ]から
 へんじが　きませんでした……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2837,7 +2837,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]から
+			<Text>[Name:TrainerName Idx="0" ]から
 返事が　きませんでした……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2877,7 +2877,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]から
+			<Text>[Name:TrainerName Idx="0" ]から
 へんじが　きませんでした……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2889,7 +2889,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]から
+			<Text>[Name:TrainerName Idx="0" ]から
 返事が　きませんでした……</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3390,7 +3390,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　またせたね！
-それじゃあ　おえかき　しようか！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　おえかき　しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3402,7 +3402,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　待たせたね！
-それじゃあ　お絵描きしようか！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　お絵描きしようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3434,7 +3434,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　おまたせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3446,7 +3446,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　お待たせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3563,9 +3563,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いま　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『いま　ぼくたち
 おえかき　してたんだ！[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 おえかき　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3577,9 +3577,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『今　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『今　ぼくたち
 お絵描き　してたんだ！[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　一緒に
+そうだ！　[Name:TrainerName Idx="1" ]も　一緒に
 お絵描き　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3619,9 +3619,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いまね　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『いまね　わたしたち
 おえかき　してたんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 おえかき　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3633,9 +3633,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『今ね　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『今ね　わたしたち
 お絵描き　してたんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　一緒に
+そうだ！　[Name:TrainerName Idx="1" ]も　一緒に
 お絵描き　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3861,7 +3861,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>よし！　じゃあ　いっしょに
-おえかき　しようぜ！[Ctrl2:WaitOne frame="60"]</Text>
+おえかき　しようぜ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3873,7 +3873,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よし！　じゃあ　一緒に
-お絵描き　しようぜ！[Ctrl2:WaitOne frame="60"]</Text>
+お絵描き　しようぜ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3904,7 +3904,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>おまたせ！　じゃあ　いっしょに
-おえかき　しましょう！[Ctrl2:WaitOne frame="60"]</Text>
+おえかき　しましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -3916,7 +3916,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまたせ！　じゃあ　一緒に
-お絵描き　しましょう！[Ctrl2:WaitOne frame="60"]</Text>
+お絵描き　しましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -4489,7 +4489,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>またせたね！
-それじゃあ　たいせん　しようか！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　たいせん　しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -4501,7 +4501,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>待たせたね！
-それじゃあ　対戦しようか！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　対戦しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -4540,7 +4540,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>おまたせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -4552,7 +4552,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまたせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -4698,9 +4698,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『これから　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　ぼくたち
 マルチバトル　するんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 マルチバトル　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4712,9 +4712,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『これから　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　ぼくたち
 マルチバトル　するんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　一緒に
+そうだ！　[Name:TrainerName Idx="1" ]も　一緒に
 マルチバトル　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4759,9 +4759,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『これから　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　わたしたち
 マルチバトル　するの[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 マルチバトル　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4773,9 +4773,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『これから　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　わたしたち
 マルチバトル　するの[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　一緒に
+そうだ！　[Name:TrainerName Idx="1" ]も　一緒に
 マルチバトル　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5021,7 +5021,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>またせたね！　それじゃ　いっしょに
-マルチバトル　しようぜ！[Ctrl2:WaitOne frame="60"]</Text>
+マルチバトル　しようぜ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5033,7 +5033,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>待たせたね！　それじゃ　一緒に
-マルチバトル　しようぜ！[Ctrl2:WaitOne frame="60"]</Text>
+マルチバトル　しようぜ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5071,7 +5071,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>おまたせ！　じゃあ　いっしょに
-マルチバトル　しましょう！[Ctrl2:WaitOne frame="60"]</Text>
+マルチバトル　しましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5083,7 +5083,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お待たせ！　じゃあ　一緒に
-マルチバトル　しましょう！[Ctrl2:WaitOne frame="60"]</Text>
+マルチバトル　しましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5823,7 +5823,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>またせたね！
-それじゃあ　こうかん　しようか！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　こうかん　しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5835,7 +5835,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>待たせたね！
-それじゃあ　交換しようか！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　交換しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5867,7 +5867,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>おまたせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -5879,7 +5879,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お待たせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -6665,9 +6665,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『これから　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　ぼくたち
 レコードつうしん　するんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 レコードつうしん　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6679,9 +6679,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『これから　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　ぼくたち
 レコードつうしん　するんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 レコードつうしん　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6728,9 +6728,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いまね　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『いまね　わたしたち
 レコードつうしん　してたんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 レコードつうしん　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6742,9 +6742,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『いまね　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『いまね　わたしたち
 レコードつうしん　してたんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 レコードつうしん　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7572,7 +7572,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>うん　いいよ！
-ぐるぐるこうかん　しようか！[Ctrl2:WaitOne frame="60"]</Text>
+ぐるぐるこうかん　しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -7584,7 +7584,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うん　いいよ！
-ぐるぐる交換しようか！[Ctrl2:WaitOne frame="60"]</Text>
+ぐるぐる交換しようか！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -7616,7 +7616,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　おまたせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -7628,7 +7628,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　お待たせ！
-それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60"]</Text>
+それじゃあ　はじめましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -7833,9 +7833,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『これから　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　ぼくたち
 ぐるぐるこうかん　するんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 ぐるぐるこうかん　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7847,9 +7847,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『これから　ぼくたち
+			<Text>[Name:TrainerName Idx="0" ]『これから　ぼくたち
 ぐるぐる交換　するんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　一緒に
+そうだ！　[Name:TrainerName Idx="1" ]も　一緒に
 ぐるぐる交換　するかい？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7888,9 +7888,9 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]『いまね　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『いまね　わたしたち
 ぐるぐるこうかん　してたんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　いっしょに
+そうだ！　[Name:TrainerName Idx="1" ]も　いっしょに
 ぐるぐるこうかん　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7902,9 +7902,9 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]『いまね　わたしたち
+			<Text>[Name:TrainerName Idx="0" ]『いまね　わたしたち
 ぐるぐる交換　してたんだ[Ctrl2:PageClear ]
-そうだ！　[Name:TrainerName Idx="1"]も　一緒に
+そうだ！　[Name:TrainerName Idx="1" ]も　一緒に
 ぐるぐる交換　しない？</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8132,7 +8132,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>よし！　じゃあ　いっしょに
-ぐるぐるこうかん　しようぜ！[Ctrl2:WaitOne frame="60"]</Text>
+ぐるぐるこうかん　しようぜ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -8144,7 +8144,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よし！　じゃあ　一緒に
-ぐるぐる交換　しようぜ！[Ctrl2:WaitOne frame="60"]</Text>
+ぐるぐる交換　しようぜ！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -8175,7 +8175,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>おまたせ！　じゃあ　いっしょに
-ぐるぐるこうかん　しましょう！[Ctrl2:WaitOne frame="60"]</Text>
+ぐるぐるこうかん　しましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -8187,7 +8187,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまたせ！　じゃあ　一緒に
-ぐるぐる交換　しましょう！[Ctrl2:WaitOne frame="60"]</Text>
+ぐるぐる交換　しましょう！[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -9512,7 +9512,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたって　[Name:TrainerType Idx="0"]に
+			<Text>あなたって　[Name:TrainerType Idx="0" ]に
 みまちがえられた ことないですか？[Ctrl2:PageClear ]
 なんとなく　そんな
 ふんいきが　するんですよねー[Ctrl2:PageClear ]</Text>
@@ -9526,7 +9526,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたって　[Name:TrainerType Idx="0"]に
+			<Text>あなたって　[Name:TrainerType Idx="0" ]に
 みまちがえられた ことないですか？[Ctrl2:PageClear ]
 なんとなく　そんな
 ふんいきが　するんですよねー[Ctrl2:PageClear ]</Text>
@@ -9623,7 +9623,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめまして！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　は
+[Name:PMS Idx="0" ]　は
 いいですよねー[Ctrl2:LineFeed ]
 わたしも　だいすき　なんです！[Ctrl2:PageClear ]
 はじめて　あったひとには
@@ -9642,7 +9642,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はじめまして！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　は
+[Name:PMS Idx="0" ]　は
 いいですよねー[Ctrl2:LineFeed ]
 わたしも　だいすき　なんです！[Ctrl2:PageClear ]
 はじめて　あったひとには
@@ -9686,7 +9686,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へー　[Name:PMS Idx="0"]　トレーナー
+			<Text>へー　[Name:PMS Idx="0" ]　トレーナー
 なんですか！？[Ctrl2:LineFeed ]
 すごい　ですねー[Ctrl2:PageClear ]
 でも　ごめんなさい！
@@ -9703,7 +9703,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へー　[Name:PMS Idx="0"]　トレーナー
+			<Text>へー　[Name:PMS Idx="0" ]　トレーナー
 なんですか！？[Ctrl2:LineFeed ]
 すごい　ですねー[Ctrl2:PageClear ]
 でも　ごめんなさい！
@@ -9747,7 +9747,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！
-わたし　[Name:PMS Idx="0"]　ほしいです！[Ctrl2:LineFeed ]
+わたし　[Name:PMS Idx="0" ]　ほしいです！[Ctrl2:LineFeed ]
 わたしのと　こうかん　してください[Ctrl2:PageClear ]
 ……[Ctrl2:PageClear ]
 あ　いまの　うそです[Ctrl2:PageClear ]
@@ -9764,7 +9764,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あ！
-わたし　[Name:PMS Idx="0"]　ほしいです！[Ctrl2:LineFeed ]
+わたし　[Name:PMS Idx="0" ]　ほしいです！[Ctrl2:LineFeed ]
 わたしのと　こうかん　してください[Ctrl2:PageClear ]
 ……[Ctrl2:PageClear ]
 あ　いまの　うそです[Ctrl2:PageClear ]
@@ -9806,7 +9806,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]が　ほしいのは
+			<Text>[Name:PMS Idx="0" ]が　ほしいのは
 わかりますが[Ctrl2:PageClear ]
 こうかんを　するときは
 むりを　いっちゃ　だめですよ！[Ctrl2:PageClear ]
@@ -9822,7 +9822,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]が　ほしいのは
+			<Text>[Name:PMS Idx="0" ]が　ほしいのは
 わかりますが[Ctrl2:PageClear ]
 こうかんを　するときは
 むりを　いっちゃ　だめですよ！[Ctrl2:PageClear ]
@@ -9926,7 +9926,7 @@ msg_connect_union_08からの分岐メッセージ
 			Language="JPN">
 			<Text>わたし　おえかきは
 うまいんですよ！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　だったら
+[Name:PMS Idx="0" ]　だったら
 まかせて　ください！[Ctrl2:LineFeed ]
 だれにも　まけませんよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -9941,7 +9941,7 @@ msg_connect_union_08からの分岐メッセージ
 			Language="JPN_KANJI">
 			<Text>わたし　おえかきは
 うまいんですよ！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　だったら
+[Name:PMS Idx="0" ]　だったら
 まかせて　ください！[Ctrl2:LineFeed ]
 だれにも　まけませんよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
@@ -10095,12 +10095,12 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-[Name:PMS Idx="0"]　したいです！[Ctrl2:PageClear ]
+[Name:PMS Idx="0" ]　したいです！[Ctrl2:PageClear ]
 ……したい　ですけど
 ここを　うごけないので[Ctrl2:LineFeed ]
 やっぱり　できません[Ctrl2:PageClear ]
 はぁ
-[Name:PMS Idx="0"]　したいなぁ[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]　したいなぁ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -10112,12 +10112,12 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-[Name:PMS Idx="0"]　したいです！[Ctrl2:PageClear ]
+[Name:PMS Idx="0" ]　したいです！[Ctrl2:PageClear ]
 ……したい　ですけど
 ここを　うごけないので[Ctrl2:LineFeed ]
 やっぱり　できません[Ctrl2:PageClear ]
 はぁ
-[Name:PMS Idx="0"]　したいなぁ[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]　したいなぁ[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -10155,7 +10155,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-わたしも　[Name:PMS Idx="0"]します！[Ctrl2:PageClear ]
+わたしも　[Name:PMS Idx="0" ]します！[Ctrl2:PageClear ]
 でも　ここで　みんなに　せつめいを
 しないと　いけないんです……[Ctrl2:PageClear ]
 なので　みんなと　あそんで
@@ -10171,7 +10171,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-わたしも　[Name:PMS Idx="0"]します！[Ctrl2:PageClear ]
+わたしも　[Name:PMS Idx="0" ]します！[Ctrl2:PageClear ]
 でも　ここで　みんなに　せつめいを
 しないと　いけないんです……[Ctrl2:PageClear ]
 なので　みんなと　あそんで
@@ -10212,7 +10212,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]を
+			<Text>[Name:PMS Idx="0" ]を
 さそわれて　しまった！[Ctrl2:PageClear ]
 ……　あ！
 でも　わたしは　ここで　せつめいを[Ctrl2:LineFeed ]
@@ -10229,7 +10229,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]を
+			<Text>[Name:PMS Idx="0" ]を
 さそわれて　しまった！[Ctrl2:PageClear ]
 ……　あ！
 でも　わたしは　ここで　せつめいを[Ctrl2:LineFeed ]
@@ -10275,7 +10275,7 @@ msg_connect_union_08からの分岐メッセージ
 			<Text>そうです！[Ctrl2:PageClear ]
 ときには　つよきで　ともだちを
 さそうのも　いいですよ！[Ctrl2:PageClear ]
-でも　[Name:PMS Idx="0"]が　したくて
+でも　[Name:PMS Idx="0" ]が　したくて
 わがままに　ならないようにね！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10290,7 +10290,7 @@ msg_connect_union_08からの分岐メッセージ
 			<Text>そうです！[Ctrl2:PageClear ]
 ときには　つよきで　ともだちを
 さそうのも　いいですよ！[Ctrl2:PageClear ]
-でも　[Name:PMS Idx="0"]が　したくて
+でも　[Name:PMS Idx="0" ]が　したくて
 わがままに　ならないようにね！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10389,7 +10389,7 @@ msg_connect_union_08からの分岐メッセージ
 あなたも　あいての　いやがることを
 むりに　さそっては　ダメですよ[Ctrl2:PageClear ]
 ちなみに　わたしは
-[Name:PMS Idx="0"]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -10405,7 +10405,7 @@ msg_connect_union_08からの分岐メッセージ
 あなたも　あいての　いやがることを
 むりに　さそっては　ダメですよ[Ctrl2:PageClear ]
 ちなみに　わたしは
-[Name:PMS Idx="0"]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -10621,7 +10621,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]こうかん
+			<Text>[Name:PMS Idx="0" ]こうかん
 したいですよ　ねえ！[Ctrl2:LineFeed ]
 わたしも　したいですもん[Ctrl2:PageClear ]
 でも　わたしに　はなしかけても
@@ -10636,7 +10636,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]こうかん
+			<Text>[Name:PMS Idx="0" ]こうかん
 したいですよ　ねえ！[Ctrl2:LineFeed ]
 わたしも　したいですもん[Ctrl2:PageClear ]
 でも　わたしに　はなしかけても
@@ -10678,11 +10678,11 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0"]たいせんを
+			<Text>[Name:PMS Idx="0" ]たいせんを
 するんだったら[Ctrl2:PageClear ]
 じぶんから　はなしかけるぐらい
 つよきで　いかないと！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　たいせんを
+[Name:PMS Idx="0" ]　たいせんを
 するまえに　まけちゃい　ますよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10694,11 +10694,11 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0"]たいせんを
+			<Text>[Name:PMS Idx="0" ]たいせんを
 するんだったら[Ctrl2:PageClear ]
 じぶんから　はなしかけるぐらい
 つよきで　いかないと！[Ctrl2:PageClear ]
-[Name:PMS Idx="0"]　たいせんを
+[Name:PMS Idx="0" ]　たいせんを
 するまえに　まけちゃい　ますよ！[Ctrl2:PageClear ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11150,7 +11150,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけています</Text>
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -11161,7 +11161,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけています</Text>
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけています</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -11280,7 +11280,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1"]のともだち</Text>
+			<Text>[Name:TrainerName Idx="1" ]のともだち</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -11291,7 +11291,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1"]の友達</Text>
+			<Text>[Name:TrainerName Idx="1" ]の友達</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -11327,7 +11327,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="2"]のともだち</Text>
+			<Text>[Name:TrainerName Idx="2" ]のともだち</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -11338,7 +11338,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="2"]の友達</Text>
+			<Text>[Name:TrainerName Idx="2" ]の友達</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12429,7 +12429,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんけいしき[Ctrl1:xset value="115"]：[System:Color name="2"]シングルバトル[/System:Color]</Text>
+			<Text>たいせんけいしき[Ctrl1:xset value="115" ]：[System:Color name="2" ]シングルバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12440,7 +12440,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦形式[Ctrl1:xset value="115"]：[System:Color name="2"]シングルバトル[/System:Color]</Text>
+			<Text>対戦形式[Ctrl1:xset value="115" ]：[System:Color name="2" ]シングルバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12476,7 +12476,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんけいしき[Ctrl1:xset value="115"]：[System:Color name="2"]ダブルバトル[/System:Color]</Text>
+			<Text>たいせんけいしき[Ctrl1:xset value="115" ]：[System:Color name="2" ]ダブルバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12487,7 +12487,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦形式[Ctrl1:xset value="115"]：[System:Color name="2"]ダブルバトル[/System:Color]</Text>
+			<Text>対戦形式[Ctrl1:xset value="115" ]：[System:Color name="2" ]ダブルバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12523,7 +12523,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんけいしき[Ctrl1:xset value="115"]：[System:Color name="2"]トリプルバトル[/System:Color]</Text>
+			<Text>たいせんけいしき[Ctrl1:xset value="115" ]：[System:Color name="2" ]トリプルバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12534,7 +12534,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦形式[Ctrl1:xset value="115"]：[System:Color name="2"]トリプルバトル[/System:Color]</Text>
+			<Text>対戦形式[Ctrl1:xset value="115" ]：[System:Color name="2" ]トリプルバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12570,7 +12570,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんけいしき[Ctrl1:xset value="115"]：[System:Color name="2"]ローテーションバトル[/System:Color]</Text>
+			<Text>たいせんけいしき[Ctrl1:xset value="115" ]：[System:Color name="2" ]ローテーションバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12581,7 +12581,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦形式[Ctrl1:xset value="115"]：[System:Color name="2"]ローテーションバトル[/System:Color]</Text>
+			<Text>対戦形式[Ctrl1:xset value="115" ]：[System:Color name="2" ]ローテーションバトル[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12617,7 +12617,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんけいしき[Ctrl1:xset value="115"]：マルチバトル</Text>
+			<Text>たいせんけいしき[Ctrl1:xset value="115" ]：マルチバトル</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12628,7 +12628,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦形式[Ctrl1:xset value="115"]：マルチバトル</Text>
+			<Text>対戦形式[Ctrl1:xset value="115" ]：マルチバトル</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12664,7 +12664,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんルール[Ctrl1:xset value="115"]：[System:Color name="2"]せいげんなし[/System:Color]</Text>
+			<Text>たいせんルール[Ctrl1:xset value="115" ]：[System:Color name="2" ]せいげんなし[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12675,7 +12675,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦ルール[Ctrl1:xset value="115"]：[System:Color name="2"]制限なし[/System:Color]</Text>
+			<Text>対戦ルール[Ctrl1:xset value="115" ]：[System:Color name="2" ]制限なし[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12711,7 +12711,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんルール[Ctrl1:xset value="115"]：[System:Color name="2"]フラットルール[/System:Color]</Text>
+			<Text>たいせんルール[Ctrl1:xset value="115" ]：[System:Color name="2" ]フラットルール[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12722,7 +12722,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦ルール[Ctrl1:xset value="115"]：[System:Color name="2"]フラットルール[/System:Color]</Text>
+			<Text>対戦ルール[Ctrl1:xset value="115" ]：[System:Color name="2" ]フラットルール[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12758,7 +12758,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミラクルシューター[Ctrl1:xset value="115"]：[System:Color name="2"]あり[/System:Color]</Text>
+			<Text>ミラクルシューター[Ctrl1:xset value="115" ]：[System:Color name="2" ]あり[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12769,7 +12769,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミラクルシューター[Ctrl1:xset value="115"]：[System:Color name="2"]あり[/System:Color]</Text>
+			<Text>ミラクルシューター[Ctrl1:xset value="115" ]：[System:Color name="2" ]あり[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12805,7 +12805,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミラクルシューター[Ctrl1:xset value="115"]：[System:Color name="2"]なし[/System:Color]</Text>
+			<Text>ミラクルシューター[Ctrl1:xset value="115" ]：[System:Color name="2" ]なし[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -12816,7 +12816,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミラクルシューター[Ctrl1:xset value="115"]：[System:Color name="2"]なし[/System:Color]</Text>
+			<Text>ミラクルシューター[Ctrl1:xset value="115" ]：[System:Color name="2" ]なし[/System:Color]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13576,7 +13576,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　さんかする
-ポケモンを　えらんでください[Ctrl2:WaitOne frame="60"]</Text>
+ポケモンを　えらんでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13588,7 +13588,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　参加する
-ポケモンを　選んでください[Ctrl2:WaitOne frame="60"]</Text>
+ポケモンを　選んでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13625,7 +13625,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　さんかする　ポケモンを
-３ひき　えらんでください[Ctrl2:WaitOne frame="60"]</Text>
+３ひき　えらんでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13637,7 +13637,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　参加する　ポケモンを
-３匹　選んでください[Ctrl2:WaitOne frame="60"]</Text>
+３匹　選んでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13674,7 +13674,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　さんかする　ポケモンを
-４ひき　えらんでください[Ctrl2:WaitOne frame="60"]</Text>
+４ひき　えらんでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13686,7 +13686,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　参加する　ポケモンを
-４匹　選んでください[Ctrl2:WaitOne frame="60"]</Text>
+４匹　選んでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13723,7 +13723,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　さんかする　ポケモンを
-６ひき　えらんでください[Ctrl2:WaitOne frame="60"]</Text>
+６ひき　えらんでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13735,7 +13735,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　参加する　ポケモンを
-６匹　選んでください[Ctrl2:WaitOne frame="60"]</Text>
+６匹　選んでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13772,7 +13772,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　さんかする　ポケモンを
-３ひきまで　えらんでください[Ctrl2:WaitOne frame="60"]</Text>
+３ひきまで　えらんでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -13784,7 +13784,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　参加する　ポケモンを
-３匹まで　選んでください[Ctrl2:WaitOne frame="60"]</Text>
+３匹まで　選んでください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -15918,7 +15918,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN">
 			<Text>たいしゅつ　します
-しばらく　おまちください[Ctrl2:WaitOne frame="60"]</Text>
+しばらく　おまちください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -15930,7 +15930,7 @@ msg_connect_union_08からの分岐メッセージ
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>退出します
-しばらく　お待ちください[Ctrl2:WaitOne frame="60"]</Text>
+しばらく　お待ちください[Ctrl2:WaitOne frame="60" ]</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:25" />
@@ -16383,7 +16383,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ノーマルカードだ！</Text>
 			<TextModifiedBy
@@ -16396,7 +16396,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ノーマルカードだ！</Text>
 			<TextModifiedBy
@@ -16435,7 +16435,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ブロンズカードだ！</Text>
 			<TextModifiedBy
@@ -16448,7 +16448,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ブロンズカードだ！</Text>
 			<TextModifiedBy
@@ -16487,7 +16487,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……カッパーカードだ！</Text>
 			<TextModifiedBy
@@ -16500,7 +16500,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……カッパーカードだ！</Text>
 			<TextModifiedBy
@@ -16539,7 +16539,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……シルバーカードだ！</Text>
 			<TextModifiedBy
@@ -16552,7 +16552,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……シルバーカードだ！</Text>
 			<TextModifiedBy
@@ -16591,7 +16591,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ゴールドカードだ！</Text>
 			<TextModifiedBy
@@ -16604,7 +16604,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ゴールドカードだ！</Text>
 			<TextModifiedBy
@@ -16643,7 +16643,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ホワイトカードだ！</Text>
 			<TextModifiedBy
@@ -16656,7 +16656,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ホワイトカードだ！</Text>
 			<TextModifiedBy
@@ -16695,7 +16695,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ブラックカードだ！</Text>
 			<TextModifiedBy
@@ -16708,7 +16708,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……ブラックカードだ！</Text>
 			<TextModifiedBy
@@ -16747,7 +16747,7 @@ msg_connect_union_08からの分岐メッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……みたこともない　カードだ！</Text>
 			<TextModifiedBy
@@ -16760,7 +16760,7 @@ msg_connect_union_08からの分岐メッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]の　トレーナーカードを
+			<Text>[Name:TrainerName Idx="0" ]の　トレーナーカードを
 みせてもらった！[Ctrl2:PageClear ]
 ……みたこともない　カードだ！</Text>
 			<TextModifiedBy

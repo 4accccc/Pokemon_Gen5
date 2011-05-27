@@ -340,14 +340,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （あいてのＨＰが　かんぜんかいふく　する）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -358,14 +358,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （相手のＨＰが　完全回復　する）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -402,14 +402,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　タマゴが　かえりやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -420,14 +420,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　タマゴが　かえりやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -464,14 +464,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　やすうりが　おこなわれる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -482,14 +482,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　安売りが　行なわれる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -526,14 +526,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　ポケモンがなつきやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -544,14 +544,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　ポケモンがなつきやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -588,14 +588,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　けいけんちが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -606,14 +606,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　経験値が　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -650,14 +650,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　おこづかいが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -668,14 +668,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　おこづかいが　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -712,14 +712,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　ポケモンが　ほかくしやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -730,14 +730,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけられ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけられ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　ポケモンが　ほかくしやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -774,14 +774,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　タマゴが　かえりやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -792,14 +792,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　タマゴが　かえりやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -836,14 +836,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　やすうりが　おこなわれる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -854,14 +854,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　安売りが　行なわれる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -898,14 +898,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　ポケモンが　なつきやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -916,14 +916,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　ポケモンが　なつきやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -960,14 +960,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　けいけんちが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -978,14 +978,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　経験値が　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1022,14 +1022,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　おこづかいが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1040,14 +1040,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　おこづかいが　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1084,14 +1084,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　はなしかけて　もらい
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　はなしかけて　もらい
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　ポケモンが　ほかくしやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1102,14 +1102,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　話しかけて　もらい
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　話しかけて　もらい
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　ポケモンが　ほかくしやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1146,14 +1146,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　ポケモンが　ほかくしやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1164,14 +1164,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　ポケモンが　ほかくしやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1208,14 +1208,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　おこづかいが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1226,14 +1226,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　おこづかいが　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1270,14 +1270,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　けいけんちが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1288,14 +1288,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　経験値が　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1332,14 +1332,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　ポケモンがなつきやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1350,14 +1350,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　ポケモンがなつきやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1394,14 +1394,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　やすうりが　おこなわれる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1412,14 +1412,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　安売りが　行なわれる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1456,14 +1456,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （１じかん　タマゴが　かえりやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1474,14 +1474,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （１時間　タマゴが　かえりやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1518,14 +1518,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （あいてのＨＰが　かんぜんかいふく　する）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1536,14 +1536,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （相手のＨＰが　完全回復　する）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1580,14 +1580,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　ポケモンが　ほかくしやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1598,14 +1598,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　ポケモンが　ほかくしやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1642,14 +1642,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　おこづかいが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1660,14 +1660,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　おこづかいが　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1704,14 +1704,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　けいけんちが　たまりやすい）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1722,14 +1722,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　経験値が　たまりやすい）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1766,14 +1766,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　ポケモンが　なつきやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1784,14 +1784,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　ポケモンが　なつきやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1828,14 +1828,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
-「[Name:GPower Idx="1"]」を　あたえよ！
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
+「[Name:GPower Idx="1" ]」を　あたえよ！
 （３０ふん　やすうりが　おこなわれる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1846,14 +1846,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
-「[Name:GPower Idx="1"]」を　与えよ！
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
+「[Name:GPower Idx="1" ]」を　与えよ！
 （３０分　安売りが　行なわれる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1890,14 +1890,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　じぶんから　はなしかけ
+			<Text>[Name:TrainerName Idx="0" ]に　じぶんから　はなしかけ
 「タマゴふかパワー　Ｓ」を　あたえよ！
 （３０ふん　タマゴが　かえりやすくなる）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1908,14 +1908,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　自分から　話しかけ
+			<Text>[Name:TrainerName Idx="0" ]に　自分から　話しかけ
 「タマゴふかパワー　Ｓ」を　与えよ！
 （３０分　タマゴが　かえりやすくなる）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1952,14 +1952,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -1970,14 +1970,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2013,14 +2013,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2031,14 +2031,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2074,14 +2074,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2092,14 +2092,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2135,14 +2135,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2153,14 +2153,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2196,14 +2196,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2214,14 +2214,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2257,14 +2257,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2275,14 +2275,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2318,14 +2318,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2336,14 +2336,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2379,14 +2379,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　たたかいを　いどめ！
+てもち　２ひき　レベルは　[Digit:3digits Idx="1" ]フラット
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2397,14 +2397,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　戦いを　挑め！
-手持ち　２匹　レベルは　[Digit:3digits Idx="1"]フラット
+			<Text>[Name:TrainerName Idx="0" ]に　戦いを　挑め！
+手持ち　２匹　レベルは　[Digit:3digits Idx="1" ]フラット
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2440,14 +2440,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかってる　[Name:TrainerName Idx="0"]に　はなしかけ
+			<Text>たたかってる　[Name:TrainerName Idx="0" ]に　はなしかけ
 「せんとうＨＰかいふくパワー」をあたえよ
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2458,14 +2458,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦ってる　[Name:TrainerName Idx="0"]に　話しかけ
+			<Text>戦ってる　[Name:TrainerName Idx="0" ]に　話しかけ
 「せんとうＨＰかいふくパワー」を与えよ
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2501,14 +2501,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかってる　[Name:TrainerName Idx="0"]に　はなしかけ
+			<Text>たたかってる　[Name:TrainerName Idx="0" ]に　はなしかけ
 「せんとうＨＰかいふくパワー」をあたえよ
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2519,14 +2519,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦ってる　[Name:TrainerName Idx="0"]に　話しかけ
+			<Text>戦ってる　[Name:TrainerName Idx="0" ]に　話しかけ
 「せんとうＨＰかいふくパワー」を与えよ
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2562,14 +2562,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかってる　[Name:TrainerName Idx="0"]に　はなしかけ
+			<Text>たたかってる　[Name:TrainerName Idx="0" ]に　はなしかけ
 「せんとうＨＰかいふくパワー」をあたえよ
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2580,14 +2580,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦ってる　[Name:TrainerName Idx="0"]に　話しかけ
+			<Text>戦ってる　[Name:TrainerName Idx="0" ]に　話しかけ
 「せんとうＨＰかいふくパワー」を与えよ
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2623,14 +2623,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかってる　[Name:TrainerName Idx="0"]に　はなしかけ
+			<Text>たたかってる　[Name:TrainerName Idx="0" ]に　はなしかけ
 「せんとうＨＰかいふくパワー」をあたえよ
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2641,14 +2641,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦ってる　[Name:TrainerName Idx="0"]に　話しかけ
+			<Text>戦ってる　[Name:TrainerName Idx="0" ]に　話しかけ
 「せんとうＨＰかいふくパワー」を与えよ
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2684,14 +2684,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ライモンシティの
+			<Text>[Name:Item Idx="0" ]を　ライモンシティの
 ベンチとベンチの　あいだに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2702,14 +2702,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　ライモンシティの
+			<Text>[Name:Item Idx="0" ]を　ライモンシティの
 ベンチとベンチの　間に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2745,14 +2745,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ホドモエシティの
+			<Text>[Name:Item Idx="0" ]を　ホドモエシティの
 テントのうらの　いえのまえにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2763,14 +2763,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　ホドモエシティの
+			<Text>[Name:Item Idx="0" ]を　ホドモエシティの
 テントの裏の　家の前に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2806,14 +2806,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　フキヨセシティの　
+			<Text>[Name:Item Idx="0" ]を　フキヨセシティの　
 おくの　ひこうきの　まえにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2824,14 +2824,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　フキヨセシティの　
+			<Text>[Name:Item Idx="0" ]を　フキヨセシティの　
 奥の　飛行機の　前に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2867,14 +2867,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　セッカシティの
+			<Text>[Name:Item Idx="0" ]を　セッカシティの
 みんなが　まわっていた　ばしょにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2885,14 +2885,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　セッカシティの
+			<Text>[Name:Item Idx="0" ]を　セッカシティの
 皆が　回っていた　場所に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2928,14 +2928,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ソウリュウシティの
+			<Text>[Name:Item Idx="0" ]を　ソウリュウシティの
 ワープできない　ゲートのまえにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2946,14 +2946,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　ソウリュウシティの
+			<Text>[Name:Item Idx="0" ]を　ソウリュウシティの
 ワープできない　ゲートの前に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -2989,14 +2989,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　カゴメタウンにある
+			<Text>[Name:Item Idx="0" ]を　カゴメタウンにある
 マンホールの　うえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3007,14 +3007,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　カゴメタウンにある
+			<Text>[Name:Item Idx="0" ]を　カゴメタウンにある
 マンホールの　上に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3050,14 +3050,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　サザナミタウンの
+			<Text>[Name:Item Idx="0" ]を　サザナミタウンの
 ふんすいの　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3068,14 +3068,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　サザナミタウンの
+			<Text>[Name:Item Idx="0" ]を　サザナミタウンの
 噴水の　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3111,14 +3111,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　５ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　５ばんどうろ　の
 ミュージシャンがいた　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3129,14 +3129,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　５番道路　の
+			<Text>[Name:Item Idx="0" ]を　５番道路　の
 ミュージシャンがいた　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3172,14 +3172,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　６ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　６ばんどうろ　の
 たてにながい　はしのまんなかに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3190,14 +3190,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　６番道路　の
+			<Text>[Name:Item Idx="0" ]を　６番道路　の
 縦に長い　橋の真ん中に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3233,14 +3233,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　７ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　７ばんどうろ　の
 タワーオブヘブン　のまえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3251,14 +3251,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　７番道路　の
+			<Text>[Name:Item Idx="0" ]を　７番道路　の
 タワーオブヘブン　の前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3294,14 +3294,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　８ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　８ばんどうろ　の
 どうろかんばんの　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3312,14 +3312,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　８番道路　の
+			<Text>[Name:Item Idx="0" ]を　８番道路　の
 道路看板の　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3355,14 +3355,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　９ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　９ばんどうろ　の
 ゴミばこの　てまえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3373,14 +3373,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　９番道路　の
+			<Text>[Name:Item Idx="0" ]を　９番道路　の
 ゴミ箱の　手前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3416,14 +3416,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１１ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１１ばんどうろ　の
 トレーラーの　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3434,14 +3434,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１１番道路　の
+			<Text>[Name:Item Idx="0" ]を　１１番道路　の
 トレーラーの　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3477,14 +3477,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１２ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１２ばんどうろ　の
 まんなかの　かんばんに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3495,14 +3495,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１２番道路　の
+			<Text>[Name:Item Idx="0" ]を　１２番道路　の
 真ん中の　看板に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3538,14 +3538,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１３ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１３ばんどうろ　の
 くさむらのはえる　しまの　きにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3556,14 +3556,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１３番道路　の
+			<Text>[Name:Item Idx="0" ]を　１３番道路　の
 草むらのはえる　島の木に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3599,14 +3599,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１４ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１４ばんどうろ　の
 すなはまと　りくちの　あいだに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3617,14 +3617,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１４番道路　の
+			<Text>[Name:Item Idx="0" ]を　１４番道路　の
 砂浜と　陸地の　間に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3660,14 +3660,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１５ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１５ばんどうろ　の
 ゴミばこの　てまえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3678,14 +3678,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１５番道路　の
+			<Text>[Name:Item Idx="0" ]を　１５番道路　の
 ゴミ箱の　手前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3721,14 +3721,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１６ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１６ばんどうろ　の
 さくが　きれているところに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3739,14 +3739,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１６番道路　の
+			<Text>[Name:Item Idx="0" ]を　１６番道路　の
 さくが　切れているところに　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3782,14 +3782,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ライモンシティの
+			<Text>[Name:Item Idx="0" ]を　ライモンシティの
 ベンチとベンチの　あいだに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3800,14 +3800,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　ライモンシティの
+			<Text>[Name:Item Idx="0" ]を　ライモンシティの
 ベンチとベンチの　間に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3843,14 +3843,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ホドモエシティの
+			<Text>[Name:Item Idx="0" ]を　ホドモエシティの
 テントのうらの　いえのまえにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3861,14 +3861,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　ホドモエシティの
+			<Text>[Name:Item Idx="0" ]を　ホドモエシティの
 テントの裏の　家の前に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3904,14 +3904,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　フキヨセシティの　
+			<Text>[Name:Item Idx="0" ]を　フキヨセシティの　
 おくの　ひこうきの　まえにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3922,14 +3922,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　フキヨセシティの　
+			<Text>[Name:Item Idx="0" ]を　フキヨセシティの　
 奥の　飛行機の　前に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3965,14 +3965,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　セッカシティの
+			<Text>[Name:Item Idx="0" ]を　セッカシティの
 みんなが　まわっていた　ばしょにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -3983,14 +3983,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　セッカシティの
+			<Text>[Name:Item Idx="0" ]を　セッカシティの
 皆が　回っていた　場所に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4026,14 +4026,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　ソウリュウシティの
+			<Text>[Name:Item Idx="0" ]を　ソウリュウシティの
 ワープできない　ゲートのまえにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4044,14 +4044,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　ソウリュウシティの
+			<Text>[Name:Item Idx="0" ]を　ソウリュウシティの
 ワープできない　ゲートの前に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4087,14 +4087,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　カゴメタウンにある
+			<Text>[Name:Item Idx="0" ]を　カゴメタウンにある
 マンホールの　うえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4105,14 +4105,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　カゴメタウンにある
+			<Text>[Name:Item Idx="0" ]を　カゴメタウンにある
 マンホールの　上に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4148,14 +4148,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　サザナミタウンの
+			<Text>[Name:Item Idx="0" ]を　サザナミタウンの
 ふんすいの　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4166,14 +4166,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　サザナミタウンの
+			<Text>[Name:Item Idx="0" ]を　サザナミタウンの
 噴水の　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4209,14 +4209,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　５ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　５ばんどうろ　の
 ミュージシャンがいた　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4227,14 +4227,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　５番道路　の
+			<Text>[Name:Item Idx="0" ]を　５番道路　の
 ミュージシャンがいた　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4270,14 +4270,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　６ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　６ばんどうろ　の
 たてにながい　はしのまんなかに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4288,14 +4288,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　６番道路　の
+			<Text>[Name:Item Idx="0" ]を　６番道路　の
 縦に長い　橋の真ん中に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4331,14 +4331,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　７ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　７ばんどうろ　の
 タワーオブヘブン　のまえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4349,14 +4349,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　７番道路　の
+			<Text>[Name:Item Idx="0" ]を　７番道路　の
 タワーオブヘブン　の前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4392,14 +4392,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　８ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　８ばんどうろ　の
 どうろかんばんの　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4410,14 +4410,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　８番道路　の
+			<Text>[Name:Item Idx="0" ]を　８番道路　の
 道路看板の　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4453,14 +4453,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　９ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　９ばんどうろ　の
 ゴミばこの　てまえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4471,14 +4471,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　９番道路　の
+			<Text>[Name:Item Idx="0" ]を　９番道路　の
 ゴミ箱の　手前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4514,14 +4514,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１１ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１１ばんどうろ　の
 トレーラーの　まえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4532,14 +4532,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１１番道路　の
+			<Text>[Name:Item Idx="0" ]を　１１番道路　の
 トレーラーの　前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4575,14 +4575,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１２ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１２ばんどうろ　の
 まんなかの　かんばんに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4593,14 +4593,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１２番道路　の
+			<Text>[Name:Item Idx="0" ]を　１２番道路　の
 真ん中の　看板に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4636,14 +4636,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１３ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１３ばんどうろ　の
 くさむらのはえる　しまの　きにかくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4654,14 +4654,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１３番道路　の
+			<Text>[Name:Item Idx="0" ]を　１３番道路　の
 草むらのはえる　島の　木に隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4697,14 +4697,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１４ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１４ばんどうろ　の
 すなはまと　りくちの　あいだに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4715,14 +4715,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１４番道路　の
+			<Text>[Name:Item Idx="0" ]を　１４番道路　の
 砂浜と　陸地の　間に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4758,14 +4758,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１５ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１５ばんどうろ　の
 ゴミばこの　てまえに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4776,14 +4776,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１５番道路　の
+			<Text>[Name:Item Idx="0" ]を　１５番道路　の
 ゴミ箱の　手前に　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4819,14 +4819,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="0"]を　１６ばんどうろ　の
+			<Text>[Name:Item Idx="0" ]を　１６ばんどうろ　の
 さくが　きれているところに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4837,14 +4837,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0"]を　１６番道路　の
+			<Text>[Name:Item Idx="0" ]を　１６番道路　の
 さくが　切れているところに　隠せ！
 （話しかけられると　やり直し！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4880,14 +4880,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0"]に　[Name:Item Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]に　[Name:Item Idx="1" ]を
 おかいどくな　ねだんで　かってもらえ！！
 （ことわられたら　しっぱい！）
 
 
-せいげんじかん　[Digit:3digits Idx="2"]びょう
+せいげんじかん　[Digit:3digits Idx="2" ]びょう
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]こ</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]こ</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />
@@ -4898,14 +4898,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0"]に　[Name:Item Idx="1"]を
+			<Text>[Name:TrainerName Idx="0" ]に　[Name:Item Idx="1" ]を
 お買い得な　値段で　買ってもらえ！！
 （断られたら　失敗！）
 
 
-制限時間　[Digit:3digits Idx="2"]秒
+制限時間　[Digit:3digits Idx="2" ]秒
 
-ごほうび　：　デルダマ　[Digit:2digits Idx="3"]個</Text>
+ごほうび　：　デルダマ　[Digit:2digits Idx="3" ]個</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:07" />

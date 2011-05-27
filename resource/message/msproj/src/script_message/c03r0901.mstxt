@@ -331,7 +331,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 いにしえのうた　を　おもいだした！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -343,7 +343,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 いにしえのうた　を　おもいだした！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -387,7 +387,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 すでに　わざを　４つ　おぼえている！▼
 わざを　わすれさせますか？▼</Text>
 			<TextModifiedBy
@@ -400,7 +400,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は
+			<Text>[Name:PokemonNickname Idx="0" ]は
 すでに　わざを　４つ　おぼえている！▼
 わざを　わすれさせますか？▼</Text>
 			<TextModifiedBy
@@ -450,7 +450,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0"]は　いにしえのうた　を
+			<Text>[Name:PokemonNickname Idx="0" ]は　いにしえのうた　を
 おもいださなかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -462,7 +462,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0"]は　いにしえのうた　を
+			<Text>[Name:PokemonNickname Idx="0" ]は　いにしえのうた　を
 おもいださなかった！▼</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
