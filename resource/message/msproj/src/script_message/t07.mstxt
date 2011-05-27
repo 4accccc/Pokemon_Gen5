@@ -2,15 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t07_hakase2_01w"
+		Label="msg_t07_hakase2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２ねんまえのはなし
-・ゼクロム</Text>
+			<Text>アララギ『さて　あなたを
+ここまで　つれてきた　りゆうを▽
+せつめい　しないとね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:41:56" />
+				Time="2011-05-27T06:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２ねんまえのはなし
-・ゼクロム</Text>
+			<Text>アララギ『さて　あなたを
+ここまで　連れてきた　理由を▽
+説明しないとね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:42:10" />
+				Time="2011-05-27T06:40:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -31,10 +33,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：WHITE
-・t07r0101からでるとイベント発生</Comment>
+・t07r0101からでるとイベントト開始
+・アララギ、下向きのままで
+　一歩ほど離れている？
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:55:01" />
+				Time="2011-05-27T06:15:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -53,39 +58,46 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07_hakase2_02w"
+		Label="msg_t07_hakase2_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-・ソウリュウシティの　シャガさん</Text>
+			<Text>チェレンから　ききました▼
+プラズマだんと　なのる　れんちゅうが
+いまいちど　でんせつの　ポケモンで▽
+イッシュ　しはいを　もくろんでいると▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:18:17" />
+				Time="2011-05-27T06:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:42:00" />
+				Time="2011-05-27T06:16:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-・ソウリュウシティの　シャガさん</Text>
+			<Text>チェレンから　ききました▼
+プラズマ団と　名乗る　連中が
+今一度　伝説の　ポケモンで▽
+イッシュ支配を　目論んでいると▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:18:25" />
+				Time="2011-05-27T06:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:42:10" />
+				Time="2011-05-27T06:40:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：BLACK
-・</Comment>
+			<Comment>♀
+・アララギ、主人公と向き合ってメッセージ表示
+・続けて
+　BLACK2→hakase2_03b
+　WHITE2→hakase2_03w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:42:39" />
+				Time="2011-05-27T06:45:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -93,7 +105,7 @@
 アララギ博士娘</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:44" />
+				Time="2011-05-27T06:14:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -104,38 +116,41 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07_hakase2_01b">
+		Label="msg_t07_hakase2_03b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２ねんまえのはなし
-・レシラム</Text>
+			<Text>そう！　この　イッシュちほうには
+ゼクロムと　レシラム……　でんせつの▽
+ドラゴンポケモンが　２ひき　います▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:14:04" />
+				Time="2011-05-27T06:16:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:30" />
+				Time="2011-05-27T06:16:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２ねんまえのはなし
-・レシラム</Text>
+			<Text>そう！　この　イッシュ地方には
+ゼクロムと　レシラム……　伝説の▽
+ドラゴンポケモンが　２匹　います▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:14:04" />
+				Time="2011-05-27T06:41:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:30" />
+				Time="2011-05-27T06:41:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：WHITE
-・</Comment>
+			<Comment>♀：BLACK2ver
+・続けてhakase2_04b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:16:13" />
+				Time="2011-05-27T06:45:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -143,7 +158,7 @@
 アララギ博士娘</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:44" />
+				Time="2011-05-27T06:14:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -154,38 +169,40 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07_hakase2_02b">
+		Label="msg_t07_hakase2_03w">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-・ソウリュウシティの　シャガさん</Text>
+			<Text>そう！　この　イッシュちほうには
+レシラムと　ゼクロム……　でんせつの▽
+ドラゴンポケモンが　２ひき　います▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:18:29" />
+				Time="2011-05-27T06:16:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:30" />
+				Time="2011-05-27T06:16:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-・ソウリュウシティの　シャガさん</Text>
+			<Text>そう！　この　イッシュ地方には
+レシラムと　ゼクロム……　伝説の▽
+ドラゴンポケモンが　２匹　います▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:18:29" />
+				Time="2011-05-27T06:41:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:30" />
+				Time="2011-05-27T06:41:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：BLACK
-・</Comment>
+			<Comment>♀：WHITE２ver
+・続けてhakase2_04w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:16:09" />
+				Time="2011-05-27T06:45:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -193,7 +210,7 @@
 アララギ博士娘</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:13:44" />
+				Time="2011-05-27T06:16:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -204,29 +221,500 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07_hakase2_02b_00">
+		Label="msg_t07_hakase2_04b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>・ひでんマシンそらをとぶ</Text>
+			<Text>……ただ　２ねんまえ
+ゼクロムと　レシラムの　２ひきは▼
+それぞれ　えいゆうと　みとめる
+トレーナーに　つきしたがった▼
+だから　プラズマだんが　でんせつの
+ドラゴンポケモンを　りようするなんて▽
+できるわけが　ないはず……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:32:35" />
+				Time="2011-05-27T06:42:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:32:29" />
+				Time="2011-05-27T06:16:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>・ひでんマシンそらをとぶ</Text>
+			<Text>……ただ　２年前
+ゼクロムと　レシラムの　２匹は▼
+それぞれ　英雄と　認める
+トレーナーに　付き従いました▼
+だから　プラズマ団が　伝説の
+ドラゴンポケモンを　利用するなんて▽
+できるわけが　ないはず……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:32:39" />
+				Time="2011-05-27T06:42:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T06:32:39" />
+				Time="2011-05-27T06:41:52" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：BLACK2ver
+・アララギ、下向きでメッセージ表示
+・続けてhakase2_05b</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:45:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_04w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ただ　２ねんまえ
+レシラムと　ゼクロムの　２ひきは▼
+それぞれ　えいゆうと　みとめる
+トレーナーに　つきしたがった▼
+だから　プラズマだんが　でんせつの
+ドラゴンポケモンを　りようするなんて▽
+できるわけが　ないはず……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:42:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:16:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ただ　２年前
+レシラムと　ゼクロムの　２匹は▼
+それぞれ　英雄と　認める
+トレーナーに　付き従いました▼
+だから　プラズマ団が　伝説の
+ドラゴンポケモンを　利用するなんて▽
+できるわけが　ないはず……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:42:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:42:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：WHITE２ver
+・アララギ、下向きでメッセージ表示
+・続けてhakase2_05w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:45:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_05b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だけど　ゼクロムたちに　ついて
+わかっていないことは　まだ　おおいわ▼
+そこで　ソウリュウシティの
+ジムリーダー　シャガさんに▽
+くわしい　はなしを　ききたいのね▼
+あの　ひとは　ドラゴンタイプの
+ジムリーダー　だから▼
+で　ようやく　ほんだい！▼
+あなたを　つれてきた　りゆうだけど
+はなしを　きいてほしいの▼
+そして　なにか　あったとき
+ちからを　かしてほしいの！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:49:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:49:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だけど　ゼクロムたちに　ついて
+わかっていないことは　まだ　おおいわ▼
+そこで　ソウリュウシティの
+ジムリーダー　シャガさんに▽
+詳しい　話を　ききたいのね▼
+あの　人は　ドラゴンタイプの
+ジムリーダー　だから▼
+で　ようやく　本題！▼
+あなたを　連れてきた　理由だけど
+話を　きいてほしいの▼
+そして　なにか　あったとき
+力を　貸してほしいの！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:50:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:49:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：BLACK2ver
+・はい/いいえの選択肢表示
+・はい　→hakase2_06
+　いいえ→hakase2_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:47:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_05w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だけど　レシラムたちに　ついて
+わかっていないことは　まだ　おおいわ▼
+そこで　ソウリュウシティの
+ジムリーダー　シャガさんに▽
+くわしい　はなしを　ききたいのね▼
+あの　ひとは　ドラゴンタイプの
+ジムリーダー　だから▼
+で　ようやく　ほんだい！▼
+あなたを　つれてきた　りゆうだけど
+はなしを　きいてほしいの▼
+そして　なにか　あったとき
+ちからを　かしてほしいの！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:49:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:17:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だけど　レシラムたちに　ついて
+わかっていないことは　まだ　おおいわ▼
+そこで　ソウリュウシティの
+ジムリーダー　シャガさんに▽
+詳しい　話を　ききたいのね▼
+あの　人は　ドラゴンタイプの
+ジムリーダー　だから▼
+で　ようやく　本題！▼
+あなたを　連れてきた　理由だけど
+話を　きいてほしいの▼
+そして　なにか　あったとき
+力を　貸してほしいの！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:50:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:48:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：WHITE２ver
+・はい/いいえの選択肢表示
+・はい　→hakase2_06
+　いいえ→hakase2_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:47:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:17:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありがとう！▼
+もっとも　プラズマだんなんか　と
+かかわりあいに　ならないのが▽
+いちばん　いいんだけどね▼
+いずれにせよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:54:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:19:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ありがとう！▼
+もっとも　プラズマ団なんか　と
+係わり合いに　ならないのが▽
+一番　いいんだけどね▼
+いずれにせよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:54:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:50:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・続けてhakase2_08
+　ウインドウを閉じずに</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:56:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうよね
+それが　しぜんの　はんのう　だわ▼
+プラズマだんなんかと　かかわりあいに
+ならないのが　いちばん　よ▼
+でもね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:53:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:19:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうよね
+それが　自然の　反応だわ▼
+プラズマ団なんかと　係わり合いに
+ならないのが　一番よ▼
+でもね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:53:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:50:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+・続けてhakase2_08
+　ウインドウを閉じずに</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:53:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガさんから　ドラゴンポケモンの
+はなしを　きくのは　おもしろいし▼
+なにより　ポケモンずかんの
+ページを　うめるのに　やくだつわよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:53:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガさんから　ドラゴンポケモンの
+話を　きくのは　おもしろいし▼
+なにより　ポケモン図鑑の
+ページを　埋めるのに　役立つわよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:57:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:56:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:51:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_hakase2_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガさんは　ジムリーダーだから
+ポケモンしょうぶで　かたないと▽
+みとめて　はなしてくれないかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:40:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:39:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガさんは　ジムリーダーだから
+ポケモン勝負で　勝たないと▽
+認めて　話してくれないかもね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:51:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:40:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・？？まで繰り返し（条件保留）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:19:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-27T06:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t07_01_01"
