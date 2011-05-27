@@ -180,6 +180,16 @@ EVENT_START		c05gym0101_leader5_01
 
 	    _MAP_FADE_END_CHECK()
 
+
+      // 暗転中にリフトが移動したと思わせる
+	    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+      _TIME_WAIT( 40 )
+	    _SE_STOP()
+	    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+      _TIME_WAIT( 40 )
+	    _SE_STOP()
+	    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+
 	    //スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
 	    _RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_02 )
 
