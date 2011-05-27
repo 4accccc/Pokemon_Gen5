@@ -2,15 +2,14 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="pw_scenario_000_besthit_m"
+		Label="pw_scenario_001_besthit_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちを　はかいするのを　やめろ！
-いいかげんに　めを　さましてっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちを　はかいするのを　やめろ！
-いいかげんに　めを　さましてっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37,14 +35,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_hit_m"
+		Label="pw_scenario_001_hit_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いますぐ　ＵＦＯを　とめるんだっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52,10 +50,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いますぐ　ＵＦＯを　とめるんだっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70,15 +68,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_badhit_m"
+		Label="pw_scenario_001_badhit_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うう……
-なんて　がんじょうな　ボディだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,11 +83,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うう……
-なんて　がんじょうな　ボディだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -105,15 +101,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_nohit_m"
+		Label="pw_scenario_001_nohit_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダメだ……　ぜんぜん　きかない……
-クッ　このままでは　ヒウンが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -121,11 +116,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダメだ……　ぜんぜん　きかない……
-クッ　このままでは　ヒウンが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -140,15 +134,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_assist01_m"
+		Label="pw_scenario_001_assist01_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クールに……　おちつくんだ……
-ここは　ようすを　みるんだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -156,11 +149,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クールに……　おちつくんだ……
-ここは　ようすを　みるんだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -175,15 +167,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_assist02_m"
+		Label="pw_scenario_001_assist02_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>れいせいに……　れいせいに……
-ここは　ようすを　みるんだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -191,11 +182,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>れいせいに……　れいせいに……
-ここは　ようすを　みるんだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -210,15 +200,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_other_m"
+		Label="pw_scenario_001_other_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クッ……　あのＵＦ０を
-とめる　ほうほうは　ないのか……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -226,11 +215,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クッ……　あのＵＦ０を
-とめる　ほうほうは　ないのか……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -245,15 +233,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_exchange_m"
+		Label="pw_scenario_001_exchange_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グズグズしていらない……
-このままでは　ヒウンの　まちが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -261,11 +248,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グズグズしていらない……
-このままでは　ヒウンの　まちが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -280,15 +266,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_besthit_e"
+		Label="pw_scenario_001_besthit_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　かがくりょくの　まえでは
-すべて　むりょく　なのよ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -296,11 +281,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　かがくりょくの　まえでは
-すべて　むりょく　なのよ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -315,15 +299,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_hit_e"
+		Label="pw_scenario_001_hit_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンの　まちと　いっしょに
-あなたも　しずむ　つもり？</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -331,11 +314,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンの　まちと　いっしょに
-あなたも　しずむ　つもり？</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -350,14 +332,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_badhit_e"
+		Label="pw_scenario_001_badhit_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フン……　うんが　いいわね……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -365,10 +347,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フン……　うんが　いいわね……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -383,15 +365,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_nohit_e"
+		Label="pw_scenario_001_nohit_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　いだいな　けんきゅうを
-みとめない　せかい　なんて……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -399,11 +380,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　いだいな　けんきゅうを
-みとめない　せかい　なんて……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -418,15 +398,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_assist01_e"
+		Label="pw_scenario_001_assist01_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　ずのうを　このイッシュに
-みとめさせる……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -434,11 +413,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　ずのうを　このイッシュに
-みとめさせる……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -453,15 +431,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_assist02_e"
+		Label="pw_scenario_001_assist02_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -469,11 +446,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -488,15 +464,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_other_e"
+		Label="pw_scenario_001_other_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -504,11 +479,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　けいさんに　いちミリの
-くるいも　あるはずが　ない</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -523,14 +497,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_exchange_e"
+		Label="pw_scenario_001_exchange_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　じゃまを　しないでっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -538,10 +512,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　じゃまを　しないでっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -556,15 +530,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation01_m"
+		Label="pw_scenario_001_situation01_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クッ……　このままでは……
-ヒウンシティが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -572,11 +545,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クッ……　このままでは……
-ヒウンシティが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -591,15 +563,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation01_e"
+		Label="pw_scenario_001_situation01_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　けんきゅうの
-じゃまするから　こうなるのよ！　</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -607,11 +578,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　けんきゅうの
-じゃまするから　こうなるのよ！　</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -626,15 +596,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation02_m"
+		Label="pw_scenario_001_situation02_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もう　いいだろう！　はかいをやめて
-いますぐ　ＵＦＯを　とめるんだっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -642,11 +611,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう　いいだろう！　はかいをやめて
-いますぐ　ＵＦＯを　とめるんだっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -661,15 +629,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation02_e"
+		Label="pw_scenario_001_situation02_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎの　みかたの　きどりで
-わたしの　じゃまを　しないで！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -677,11 +644,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいぎの　みかたの　きどりで
-わたしの　じゃまを　しないで！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -696,14 +662,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation03_m"
+		Label="pw_scenario_001_situation03_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ！　もう　あきらめるんだ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -711,10 +677,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ！　もう　あきらめるんだ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -729,15 +695,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation03_e"
+		Label="pw_scenario_001_situation03_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そんな……　そんな……
-わたしのゆめが……　けんきゅうが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -745,11 +710,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな……　そんな……
-わたしのゆめが……　けんきゅうが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -764,14 +728,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation04_m"
+		Label="pw_scenario_001_situation04_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クッ……　ヒウンの　まちが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -779,10 +743,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クッ……　ヒウンの　まちが……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -797,15 +761,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation04_e"
+		Label="pw_scenario_001_situation04_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -813,11 +776,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -832,14 +794,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation05_m"
+		Label="pw_scenario_001_situation05_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まて！　にげるのかっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -847,10 +809,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まて！　にげるのかっ！</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -865,15 +827,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation05_e"
+		Label="pw_scenario_001_situation05_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もくてきは　はたしたわ……
-つぎは　どのまちに　しようかしら？</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -881,11 +842,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もくてきは　はたしたわ……
-つぎは　どのまちに　しようかしら？</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -900,14 +860,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation06_m"
+		Label="pw_scenario_001_situation06_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クッ……　もう……　ダメだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -915,10 +875,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クッ……　もう……　ダメだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -933,15 +893,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation06_e"
+		Label="pw_scenario_001_situation06_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -949,11 +908,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃま　するからよ……　　
-ヒウンも　キミも　もうおしまいね……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -968,14 +926,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation07_m"
+		Label="pw_scenario_001_situation07_m"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クッ……　なんてことだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -983,10 +941,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クッ……　なんてことだ……</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1001,15 +959,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_situation07_e"
+		Label="pw_scenario_001_situation07_e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフフ……　せかいじゅうに
-この　ずのうを　みとめさせる……　</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1017,11 +974,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフフ……　せかいじゅうに
-この　ずのうを　みとめさせる……　</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1036,15 +992,17 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum01"
+		Label="pw_scenario_001_tum01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナタ　とっても　べんりだったわ　
-ゆうしゅうで　だまされやすくて……</Text>
+			<Text>ハチクマン『ゆうえんち……
+それは　ひとときの　ゆめ……▽
+すなわち　ひとの　りそう……▼
+……りそうなど　いらぬわ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:49:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1052,16 +1010,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アナタ　とっても　便利だったわ　
-優秀で　ダマされやすくて……</Text>
+			<Text>ハチクマン『ゆうえんち……
+それは　ひとときの　ゆめ……▽
+すなわち　ひとの　りそう……▼
+……りそうなど　いらぬわ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ターン毎メッセージ
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:33:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1071,15 +1039,15 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum02"
+		Label="pw_scenario_001_tum02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ひを　まちのぞんでいた……
-フ　フフ　フフフフッ！！</Text>
+			<Text>ハチクマン『ファファファ！
+おわりだ！　[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T03:09:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1087,16 +1055,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　ひを　まちのぞんでいた……
-フ　フフ　フフフフッ！！</Text>
+			<Text>ハチクマン『ファファファ！
+おわりだ！　[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T03:09:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ターン毎メッセージ
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:33:54" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1106,15 +1082,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum03"
+		Label="pw_scenario_001_evt00_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　ずのうを　みとめなかった
-せかいへ　ふくしゅうが　はじまるの！</Text>
+			<Text>ハチクマン『ゆけ！　わが　ポケモン！
+このゆうえんちで　あばれるのだ！▼
+すべてを　はかい　しつくせ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T03:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1122,16 +1099,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　ずのうを　みとめなかった
-せかいへ　ふくしゅうが　はじまるの！</Text>
+			<Text>ハチクマン『ゆけ！　わが　ポケモン！
+このゆうえんちで　あばれるのだ！▼
+すべてを　はかい　しつくせ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T03:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント００
+
+初回イベント
+
+
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:35:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1141,15 +1132,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum04"
+		Label="pw_scenario_001_evt00_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どう？　わたしのＵＦＯの　ちからは？
-すばらしいでしょう！</Text>
+			<Text>？？？？？『やめるんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T04:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1157,16 +1147,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どう？　わたしのＵＦＯの　ちからは？
-すばらしいでしょう！</Text>
+			<Text>？？？？？『やめるんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T04:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント００
+
+初回イベント
+
+
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:35:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1176,86 +1178,101 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum05"
-		Style="Large">
+		Label="pw_scenario_001_evt00_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>このＵＦＯで　ヒウンを　はかいして
-イッシュに　わたしの　なを　しめす！</Text>
+			<Text>ハチクマン『きさま……　なにものだ！
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T05:14:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T04:54:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このＵＦＯで　ヒウンを　はかいして
-イッシュに　わたしの　なを　しめす！</Text>
+			<Text>ハチクマン『きさま……　なにものだ！
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T05:14:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T04:54:58" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント００
+
+初回イベント
+
+
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:35:51" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum06"
-		Style="Large">
+		Label="pw_scenario_001_evt00_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフ………　すばらしい　ちから……
-まちも　ビルも　もえていく……　</Text>
+			<Text>？？？『しんじつと　りそうの　ししゃ
+[Name:PokemonNickname ]キッド　すいさん！▽
+ハチクマン！
+おまえの　あくぎょう▽
+ゆるすわけには　いかない！▽』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:58:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T04:58:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフ………　すばらしい　ちから……
-まちも　ビルも　もえていく……　</Text>
+			<Text>？？？『しんじつと　りそうの　ししゃ
+[Name:PokemonNickname ]キッド　すいさん！▽
+ハチクマン！
+おまえの　あくぎょう▽
+ゆるすわけには　いかない！▽』</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T04:58:03" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント００
+
+初回イベント
+
+
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:35:49" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum07"
+		Label="pw_scenario_001_evt01_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぶとい　こどもね……▼
-こんなことなら　もっと　まえに
-たおしておけば　よかったわ</Text>
+			<Text>ゆうえんちの　きゃく『わー！
+なんだ！　なんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1263,17 +1280,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しぶとい　こどもね……▼
-こんなことなら　もっと　まえに
-たおしておけば　よかったわ</Text>
+			<Text>ゆうえんちの　きゃく『わー！
+なんだ！　なんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:29:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０１
+
+初回イベント
+
+
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:34:31" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1283,50 +1312,66 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_tum08"
-		Style="Large">
+		Label="pw_scenario_001_evt01_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティも　これで　おしまい……
-サヨナラさせて　もらうかしら？</Text>
+			<Text>ハチクマン『わがはいの　ポケモンを
+たったの　いちげきで……▼
+やるな！　[Name:PokemonNickname ]キッド！▽
+だが　しかし！　だが　しかし！▽
+きゅうきょくの　ポケモン　タイプ　わざで
+きさまを　ひざまづかせる！▽
+さあ！　くらいたい　わざの
+タイプを　さけぶが　いい！▽</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:29:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティも　これで　おしまい……
-サヨナラさせて　もらうかしら？</Text>
+			<Text>ハチクマン『わがはいの　ポケモンを
+たったの　いちげきで……▼
+やるな！　[Name:PokemonNickname ]キッド！▽
+だが　しかし！　だが　しかし！▽
+きゅうきょくの　ポケモン　タイプ　わざで
+きさまを　ひざまづかせる！▽
+さあ！　くらいたい　わざの
+タイプを　さけぶが　いい！▽</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:30:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:29:19" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０１
+
+初回イベント
+
+
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:29:19" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_01"
+		Label="pw_scenario_001_evt01_choice01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まさか　あの　ＵＦＯは……！！
-なぜ　こんなところに……</Text>
+			<Text>[Name:PokemonNickname ]キッド『むし　タイプだっ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1334,16 +1379,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まさか　あの　ＵＦＯは……！！
-なぜ　こんなところに……</Text>
+			<Text>[Name:PokemonNickname ]キッド『むし　タイプだっ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０１
+選択肢返答１
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T05:09:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1353,16 +1406,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_02"
+		Label="pw_scenario_001_evt01_choice02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフフ　ついに　このひが　きた……　
-かんせいした　ＵＦＯの　ちから！▽
-この　ヒウンで　ためしてやる</Text>
+			<Text>[Name:PokemonNickname ]キッド『た…　タイプ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:22:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1370,17 +1421,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフフ　ついに　この日が　きた……　
-かんせいした　ＵＦＯの　力！▽
-この　ヒウンで　試してやる</Text>
+			<Text>[Name:PokemonNickname ]キッド『た…　タイプ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０１
+選択肢返答２
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T11:46:41" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1390,14 +1449,17 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_choice01"
+		Label="pw_scenario_001_evt01_choice01_res01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バカな！　なにを　かんがえてる！</Text>
+			<Text>ハチクマン『いいだろう！▼
+では　わがはいの　ポケモン
+きゅうきょくの　タイプ　わざを▼
+くらうが　よいわーっ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:06:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1405,15 +1467,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バカな！　なにを　かんがえてる！</Text>
+			<Text>ハチクマン『いいだろう！▼
+では　わがはいの　ポケモン
+きゅうきょくの　タイプ　わざを▼
+くらうが　よいわーっ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:07:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０１
+選択肢回答１
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T05:09:29" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1423,14 +1497,18 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_choice02"
+		Label="pw_scenario_001_evt01_choice01_res02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やはり　あなたが……</Text>
+			<Text>ハチクマン『ファー　ファファファ！▼
+タイプも　しらぬとは　おろかなり！
+[Name:PokemonNickname ]キッド！▼
+この　わざを　うけて　その　ちから
+ほねみに　きざみつけるが　よいわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:23:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1438,15 +1516,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やはり　あなたが……</Text>
+			<Text>ハチクマン『ファー　ファファファ！▼
+タイプも　しらぬとは　おろかなり！
+[Name:PokemonNickname ]キッド！▼
+この　わざを　うけて　その　ちから
+ほねみに　きざみつけるが　よいわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T02:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０１
+選択肢回答２
+
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T05:09:37" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1456,14 +1548,20 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_choice03"
+		Label="pw_scenario_001_evt02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あわわ……</Text>
+			<Text>ハチクマン『ファー　ファファファ！
+なにが　ヒーローだ！　こわっぱ！▼
+たった　いちげきで　たおれるなど
+ポケモンが　ないて　おるわ！▼
+ついでに　ゆうえんちが　ひめいを
+あげる　こうけいを　そこで▽
+ながめて　いるが　よいわ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:40:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1471,15 +1569,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あわわ……</Text>
+			<Text>ハチクマン『ファー　ファファファ！
+なにが　ヒーローだ！　こわっぱ！▼
+たった　いちげきで　たおれるなど
+ポケモンが　ないて　おるわ！▼
+ついでに　ゆうえんちが　ひめいを
+あげる　こうけいを　そこで▽
+ながめて　いるが　よいわ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:40:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０２
+
+１ターンで敗北</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:25:12" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1489,15 +1602,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_choice01_res01"
+		Label="pw_scenario_001_evt02_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら？　このわたしを　バカよばわり？　
-なら　キミの　ちからで　とめてみたら？</Text>
+			<Text>[Name:PokemonNickname ]キッド『クッ……
+すまない　[Name:PokemonNickname ]……▼
+こんな　はずじゃ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:42:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1505,16 +1619,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら？　このわたしを　バカ呼ばわり？　
-なら　キミの　力で　止めてみたら？</Text>
+			<Text>[Name:PokemonNickname ]キッド『クッ……
+すまない　[Name:PokemonNickname ]……▼
+こんな　はずじゃ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:42:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０２
+
+１ターンで敗北</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:36:10" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1524,15 +1648,25 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_choice01_res02"
+		Label="pw_scenario_001_evt02_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やっぱり　きがついて　いたの？
-フフッ　あなどれないわね……　</Text>
+			<Text>かいじんハチクマンに　やぶれた
+[Name:PokemonNickname ]キッド……▼
+とくに　かつやくも　ないまま
+たおれた　かれが▽
+なにもの　なのか　しるものが▽
+いるはずも　ない……▼
+ともかく……▼
+ありがとう！
+[Name:PokemonNickname ]キッド！▼
+さらば！
+[Name:PokemonNickname ]キッド！▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1540,16 +1674,35 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やっぱり　気がついて　いたの？
-フフッ　あなどれないわね……　</Text>
+			<Text>かいじんハチクマンに　やぶれた
+[Name:PokemonNickname ]キッド……▼
+とくに　かつやくも　ないまま
+たおれた　かれが▽
+なにもの　なのか　しるものが▽
+いるはずも　ない……▼
+ともかく……▼
+ありがとう！
+[Name:PokemonNickname ]キッド！▼
+さらば！
+[Name:PokemonNickname ]キッド！▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:42:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０２
+
+１ターンで敗北</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:36:10" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1559,796 +1712,752 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt00_choice01_res03"
-		Style="Large">
+		Label="pw_scenario_001_evt03_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　わからないの？
-だまされたのよ　キミは▼
-いままでの　できごとは　すべて
-このＵＦＯを　かんせいさせる▽
-じっけんと　ちょうさ　だったのよ</Text>
+			<Text>ハチクマン『グムムム……▼
+わがはいの　ほこる
+ポケモン　ぐんだんを▽
+いちげきで　しずめるとは……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:15:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　わからないの？
-だまされたのよ　キミは▼
-今までの　出来事は　すべて
-このＵＦＯを　完成させる▽
-実験と　調査だったのよ</Text>
+			<Text>ハチクマン『グムムム……▼
+わがはいの　ほこる
+ポケモン　ぐんだんを▽
+いちげきで　しずめるとは……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:19:35" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:23" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt01_01"
+		Label="pw_scenario_001_evt03_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのポケモンたち……　まさか……
-……あやつられて　いる？</Text>
+			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
+ここは　みんなの　りそうの▽
+つまった　ゆうえんちだ！▼
+おとなしく　たちされ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:46:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:15:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのポケモンたち……　まさか……
-……あやつられて　いる？</Text>
+			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
+ここは　みんなの　りそうの▽
+つまった　ゆうえんちだ！▼
+おとなしく　たちされ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:46:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:19:35" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_scenario_000_evt01_02"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>フフ　わたしの　かがくりょくで
-ポケモンは　おもいのまま……▼
-さあ……　つみもない　ポケモンを
-キミは　たおせるのかしら？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>フフ　わたしの　かがくりょくで
-ポケモンは　おもいのまま……▼
-さあ……　つみもない　ポケモンを
-キミは　たおせるのかしら？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:27" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt01_choice01"
+		Label="pw_scenario_001_evt03_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんな！　めを　さますんだっ！</Text>
+			<Text>ゆうえんちの　きゃく『わー！
+みてみて！　かっこいい！▽
+[Name:PokemonName ]キッド　だって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T11:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:16:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんな！　めを　さますんだっ！</Text>
+			<Text>ゆうえんちの　きゃく『わー！
+みてみて！　かっこいい！▽
+[Name:PokemonName ]キッド　だって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T11:58:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:19:35" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_scenario_000_evt01_choice02"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>クッ！　まとめて　たおしてやる！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>クッ！　まとめて　たおしてやる！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:27" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt01_choice03"
+		Label="pw_scenario_001_evt03_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あやつられて……　いや　これは……</Text>
+			<Text>ハチクマン『グム……　いいだろう……
+きょうの　ところは　きえると　しよう▼
+だが　[Name:PokemonNickname ]キッド……▼
+しんじつ……　りそう……
+きさまの　かざす　ことばは▼
+この　かいじん　ハチクマンが
+にくみ……　のろう　もの……
+つまり　きさまと　わがはいは▽
+けっして　あいいれぬ……▼
+つぎは　こうは　いかぬぞ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T11:56:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あやつられて……　いや　これは……</Text>
+			<Text>ハチクマン『グム……　いいだろう……
+きょうの　ところは　きえると　しよう▼
+だが　[Name:PokemonNickname ]キッド……▼
+しんじつ……　りそう……
+きさまの　かざす　ことばは▼
+この　かいじん　ハチクマンが
+にくみ……　のろう　もの……
+つまり　きさまと　わがはいは▽
+けっして　あいいれぬ……▼
+つぎは　こうは　いかぬぞ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:28:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T11:56:39" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_scenario_000_evt01_choice01_res01"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>フフ　なにを　いっても　ムダよ！
-これで　オシマイに　するわっ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>フフ　何を　言っても　ムダよ！
-これで　オシマイに　するわっ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T11:56:39" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt01_choice01_res02"
+		Label="pw_scenario_001_evt03_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フン　いがいと　つめたいのね……
-ステキよ　そういう　れいせいな　こ</Text>
+			<Text>[Name:PokemonNickname ]キッド『……
+かいじん　ハチクマン……▽
+いったい　なにもの　なんだ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:17:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フン　意外と　冷たいのね……
-素敵よ　そういう　冷静な子</Text>
+			<Text>[Name:PokemonNickname ]キッド『……
+かいじん　ハチクマン……▽
+いったい　なにもの　なんだ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:19:35" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_scenario_000_evt01_choice01_res03"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>なにを　ブツブツ　いってるの！　
-もう　あきらめるのかしら？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>何を　ブツブツ　言ってるの！　
-もう　あきらめるのかしら？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:27" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_01"
+		Label="pw_scenario_001_evt03_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぜ……　きまじめだった　あなたが
-こんな　おそろしい　ことを……</Text>
+			<Text>なぞの　かいじん　ハチクマンを
+こらしめ　ゆうえんちの　ききを▽
+すくった　[Name:PokemonNickname ]キッド！▼
+しかし
+ハチクマンは　ふてきな▽
+ことばを　のこし　きえた……▼
+イッシュの　りそうと　しんじつを
+まもるため！▼
+ゆけゆけ！　[Name:PokemonNickname ]キッド！▼
+たたかえ！　[Name:PokemonNickname ]キッド！
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:19:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:18:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぜ……　きまじめだった　あなたが
-こんな　おそろしい　ことを……</Text>
+			<Text>なぞの　かいじん　ハチクマンを
+こらしめ　ゆうえんちの　ききを▽
+すくった　[Name:PokemonNickname ]キッド！▼
+しかし
+ハチクマンは　ふてきな▽
+ことばを　のこし　きえた……▼
+イッシュの　りそうと　しんじつを
+まもるため！▼
+ゆけゆけ！　[Name:PokemonNickname ]キッド！▼
+たたかえ！　[Name:PokemonNickname ]キッド！
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-24T12:19:35" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_scenario_000_evt03_02"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>キミには　わからないわ……
-てんさいゆえの　こどく……▽
-みとめられない　くるしみなど……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>どうせ　キミには　わからない……
-てんさいゆえの　こどく……▽
-みとめられない　くるしみなど……</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:45:27" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_03"
+		Label="pw_scenario_001_evt04_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……</Text>
+			<Text>ハチクマン『ファー　ファファファ！
+ざんねん　だったな！▽
+[Name:PokemonNickname ]キッド！！▼
+わがはい　きゅうきょくの
+ポケモン　タイプわざを▽
+うけたのが　うんの　つきよ！▼
+さあ　ゆうえんちが　はかいされる
+こうけいを　そこで　ながめておれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:18:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:47:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……</Text>
+			<Text>ハチクマン『ファー　ファファファ！
+ざんねん　だったな！▽
+[Name:PokemonNickname ]キッド！！▼
+わがはい　きゅうきょくの
+ポケモン　タイプわざを▽
+うけたのが　うんの　つきよ！▼
+さあ　ゆうえんちが　はかいされる
+こうけいを　そこで　ながめておれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:21:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:47:47" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="pw_scenario_000_evt03_04"
-		Style="Large">
-		<LanguageCell
+		<CommentCell
 			Language="JPN">
-			<Text>せかいも！
-がっかいも！▽
-だれも！▽
-だれも　わたしを　みとめない！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>せかいも！
-がっかいも！▽
-だれも！▽
-だれも　わたしを　みとめない！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+			<Comment>イベント０４
+
+選択肢１を選んで敗北
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:20:33" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_05"
+		Label="pw_scenario_001_evt04_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……そんなことは　ない</Text>
+			<Text>[Name:PokemonNickname ]キッド『くっ……
+ぼくは　なにか　まちがったのか……？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:49:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……そんなことは　ない</Text>
+			<Text>[Name:PokemonNickname ]キッド『くっ……
+ぼくは　なにか　まちがったのか……？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:56:27" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０４
+
+選択肢１を選んで敗北
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:46:47" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_06"
+		Label="pw_scenario_001_evt04_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……なにを　いっているの？</Text>
+			<Text>ゆうえんちの　きゃく『わー！
+みてみて！　かっこいい！▽
+かいじん　ハチクマン　だって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:27:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:22:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……なにを　いっているの？
-なぐさめの　つもり？</Text>
+			<Text>ゆうえんちの　きゃく『わー！
+みてみて！　かっこいい！▽
+かいじん　ハチクマン　だって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T06:27:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:22:47" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０３
+
+選択肢１を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:54:31" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_07"
-		Style="Large">
+		Label="pw_scenario_001_evt04_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>……あなたは
-ポケモンたちを　コントロールしたと▽
-いいましたね……▽
-それは　まちがいだ……　かれらは……</Text>
+			<Text>なぞのかいじん　ハチクマンの　まえに
+[Name:PokemonNickname ]キッドは▽
+ちから　つきた……▼
+たたかい……▼
+その　いっしゅんの　せんたくが
+かれの　うんめいを　きめた……▼
+ざんねん！
+[Name:PokemonNickname ]キッド！▼
+さらば！
+[Name:PokemonNickname ]キッド！▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:54:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……あなたは
-ポケモンたちを　コントロールしたと▽
-いいましたね……▽
-それは　まちがいだ……　かれらは……</Text>
+			<Text>なぞのかいじん　ハチクマンの　まえに
+[Name:PokemonNickname ]キッドは▽
+ちから　つきた……▼
+たたかい……▼
+その　いっしゅんの　せんたくが
+かれの　うんめいを　きめた……▼
+ざんねん！
+[Name:PokemonNickname ]キッド！▼
+さらば！
+[Name:PokemonNickname ]キッド！▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:54:03" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０４
+
+選択肢１を選んで敗北
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-27T01:54:03" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_08"
+		Label="pw_scenario_001_evt05_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……</Text>
+			<Text>ハチクマン『グムムム……▼
+わざの　タイプも　しらぬ
+むちな　ヒーローに▽
+やぶれるとは……▼
+この　くつじょく……
+いずれ　はらしてやるぞ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:28:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:27:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……</Text>
+			<Text>ハチクマン『グムムム……▼
+わざの　タイプも　しらぬ
+むちな　ヒーローに▽
+やぶれるとは……▼
+この　くつじょく……
+いずれ　はらしてやるぞ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:28:59" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０５
+
+選択肢２を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:51:28" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_09"
+		Label="pw_scenario_001_evt05_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たたかった　わたしには　わかる……▼
-かれらは　あなたに
-あやつられてなど　いなかった……▼
-じぶんの　いしで……
-あなたを　まもるために▽
-たたかって　いたんですよ……</Text>
+			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
+タイプが　なんだって　いうんだ！▽
+ヒーローは　つよく　かっこよく
+まけないと　きまってるんだ！▼
+さあ！
+いますぐ　ここから　たちされ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:29:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たたかった　わたしには　わかる……▼
-かれらは　あなたに
-あやつられてなど　いなかった……▼
-じぶんの　いしで……
-あなたを　まもるために▽
-たたかって　いたんですよ……</Text>
+			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
+タイプが　なんだって　いうんだ！▽
+ヒーローは　つよく　かっこよく
+まけないと　きまってるんだ！▼
+さあ！
+いますぐ　ここから　たちされ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:33:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:33:10" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０５
+
+選択肢２を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:51:30" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_10"
+		Label="pw_scenario_001_evt05_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まさか……</Text>
+			<Text>なぞの　かいじん　ハチクマンを
+こらしめ　ゆうえんちの　ききを▽
+すくった　[Name:PokemonNickname ]キッド！▼
+しかし　かれには　ポケモンの
+タイプを　しらないという▽
+おおきな　じゃくてんが　あった！▼
+イッシュの　りそうと　しんじつを
+まもるため！▼
+まなべ！　
+[Name:PokemonNickname ]キッド！▼
+おぼえて！
+[Name:PokemonNickname ]キッド！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:48:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まさか……</Text>
+			<Text>なぞの　かいじん　ハチクマンを
+こらしめ　ゆうえんちの　ききを▽
+すくった　[Name:PokemonNickname ]キッド！▼
+しかし　かれには　ポケモンの
+タイプを　しらないという▽
+おおきな　じゃくてんが　あった！▼
+イッシュの　りそうと　しんじつを
+まもるため！▼
+まなべ！　
+[Name:PokemonNickname ]キッド！▼
+おぼえて！
+[Name:PokemonNickname ]キッド！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:01:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:51:04" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント０５
+
+選択肢２を選んで勝利
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:51:30" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_11"
+		Label="pw_scenario_001_evt06_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そばにいる　ポケモンの　きもちを
-わすれた　あなたに　せかいが▽
-ひとが　ふりむくはずも　ない……</Text>
+			<Text>ハチクマン『ファー　ファファファ！
+ざんねん　だったな！▽
+[Name:PokemonNickname ]キッド！！▼
+タイプも　しらずして　わがはいに
+いどんだのが　まちがいよっ！▼
+さあ　ゆうえんちが　はかいされる
+こうけいを　そこで　ながめておれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:59:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:53:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そばにいる　ポケモンの　きもちを
-わすれた　あなたに　せかいが▽
-ひとが　ふりむくはずも　ない……</Text>
+			<Text>ハチクマン『ファー　ファファファ！
+ざんねん　だったな！▽
+[Name:PokemonNickname ]キッド！！▼
+タイプも　しらずして　わがはいに
+いどんだのが　まちがいよっ！▼
+さあ　ゆうえんちが　はかいされる
+こうけいを　そこで　ながめておれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:56:23" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント６
+
+選択肢２を選んで敗北
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:57:58" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_12"
-		Style="Large">
+		Label="pw_scenario_001_evt06_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>そんな……</Text>
+			<Text>[Name:PokemonNickname ]キッド『……
+タイプって……　なんだ……？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:56:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:56:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな……</Text>
+			<Text>[Name:PokemonNickname ]キッド『……
+タイプって……　なんだ……？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:57:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:57:05" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント６
+
+選択肢２を選んで敗北
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:58:04" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_000_evt03_13"
+		Label="pw_scenario_001_evt06_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　こくさい　けいさつとして
-ここで　あなたを　たいほ　します▼
-あなたは……
-けんきゅうしゃで　あるまえに▽
-ひとりの　トレーナーとして▽　
-ほんとうに　たいせつなことを▽
-おもいだして　ください……</Text>
+			<Text>かいじんハチクマンの　まえに
+[Name:PokemonNickname ]キッドは▽
+ちから　つきた……▼
+しかし
+ポケモンの　タイプも　しらないまま▽
+たたかった　かれの　ゆうしを▽
+わすれるものは　いないだろう▼
+ありがとう！
+[Name:PokemonNickname ]キッド！▼
+さらば！
+[Name:PokemonNickname ]キッド！▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:13:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:49:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　こくさい　けいさつとして
-ここで　あなたを　たいほ　します▼
-あなたは……
-けんきゅうしゃで　あるまえに▽
-ひとりの　トレーナーとして▽　
-ほんとうに　たいせつなことを▽
-おもいだして　ください……</Text>
+			<Text>かいじんハチクマンの　まえに
+[Name:PokemonNickname ]キッドは▽
+ちから　つきた……▼
+しかし
+ポケモンの　タイプも　しらないまま▽
+たたかった　かれの　ゆうしを▽
+わすれるものは　いないだろう▼
+ありがとう！
+[Name:PokemonNickname ]キッド！▼
+さらば！
+[Name:PokemonNickname ]キッド！▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T09:13:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T08:56:41" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</AttributeCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント６
+
+選択肢２を選んで敗北
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-05-26T10:00:21" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
