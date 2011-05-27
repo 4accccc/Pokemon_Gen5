@@ -16279,7 +16279,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		NARC_camera_scroll_original_R10_bin, // camera_area
+		MATRIX_ID_WB, // camera_area
 		107,   // padding > placeicon
 		659,
 		0,
