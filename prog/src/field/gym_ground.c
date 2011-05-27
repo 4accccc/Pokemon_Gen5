@@ -31,6 +31,9 @@
 // sound
 #include "sound/pm_sndsys.h"
 
+// script
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
 // mine
 #include "gym_ground_sv.h"
 #include "gym_ground_se_def.h"
@@ -547,6 +550,20 @@ GMEVENT * GYM_GROUND_CheckBeltEvent( GAMESYS_WORK *p_gamesys )
   s16 gx, gy, gz;
   u16 dir;
   u8  belt_id;
+
+  // スクリプト関係
+  // WK_SCENE_C05GYM0101_SHORTCUTが1の時は、POSイベントが発生するので、
+  // ベルトコンベアのイベントはしない
+  {
+    GAMEDATA   *gdata = GAMESYSTEM_GetGameData( p_gamesys );
+    EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
+    u16 *wk_shortcut = EVENTWORK_GetEventWorkAdrs( p_evwk, WK_SCENE_C05GYM0101_SHORTCUT );
+
+    if( *wk_shortcut == 1 )
+    {
+      return NULL;
+    }
+  }
 
   // 自機グリッド位置
   FIELD_PLAYER_GetGridPos( cp_player, &gx, &gy, &gz );
@@ -1688,7 +1705,7 @@ static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, cons
   if( yacon == TRUE )
   {
     MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    work->yacon_mmdl = MMDLSYS_SearchGridPos( mmdlsys, 46, 17, TRUE );
+    work->yacon_mmdl = MMDLSYS_SearchGridPos( mmdlsys, 46, 18, TRUE );
     GF_ASSERT_MSG( work->yacon_mmdl, "ヤーコンがみつからない\n");
   }
   else

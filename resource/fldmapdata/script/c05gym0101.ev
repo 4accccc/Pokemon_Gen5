@@ -30,6 +30,7 @@ _EVENT_DATA    ev_bg_c05gym0101_lift_03
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
 _EVENT_DATA    ev_zone_c05gym0101
 _EVENT_DATA    ev_init_c05gym0101
+_EVENT_DATA    ev_pos_c05gym0101_shortcut
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -169,35 +170,11 @@ EVENT_START		c05gym0101_leader5_01
 
 		//========================================//
 
-		//==========エントランスへ移動============//
-		//==========ヤーコンリフト専用============//
-    {
-	    //マップブラックアウト
-	    _MAP_FADE_BLACK_OUT_SLOW()
+    //=====================================
+    //帰り道ショートカットPOSの起動をできるようにする
+		$WK_SCENE_C05GYM0101_SHORTCUT = 1
+    //=====================================
 
-	    //リフトを上昇させる（2 = ヤーコンリフト専用）
-	    _GYM_GROUND_EXIT_LIFT( 2 )
-
-	    _MAP_FADE_END_CHECK()
-
-
-      // 暗転中にリフトが移動したと思わせる
-	    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
-      _TIME_WAIT( 40 )
-	    _SE_STOP()
-	    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
-      _TIME_WAIT( 40 )
-	    _SE_STOP()
-	    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
-
-	    //スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
-	    _RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_02 )
-
-	    //マップチェンジ
-	    _MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 7, 0, 4, DIR_UP )
-    }
-		//========================================//
-		
 	//ジムバッジ入手後
 	ELSE
 		
@@ -415,4 +392,74 @@ EVENT_START	ev_bg_c05gym0101_exitlift_00u
 	_MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 8, 0, 4, DIR_UP )
 
 EVENT_END
+
+/************************************************************/
+/*				帰り道ショートカットPOSイベント				*/
+/************************************************************/
+EVENT_START ev_pos_c05gym0101_shortcut
+{
+
+  // ヤーコン、主人公の前にくる
+  _OBJ_ANIME( C05GYM0101_LEADER5_01, anm_tr_down )
+  _OBJ_ANIME_WAIT()
+
+  // 主人公上向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+  _OBJ_ANIME_WAIT()
+
+  //【仮】
+  // メッセージがないので、仮あて
+  // こいよ、送ってってやる
+  _BALLOONWIN_OBJMSG( msg_c05gym0101_leader_01, C05GYM0101_LEADER5_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+  //==========エントランスへ移動============//
+  //==========ヤーコンリフト専用============//
+  {
+    //マップブラックアウト
+    _MAP_FADE_BLACK_OUT_SLOW()
+
+    //リフトを上昇させる（2 = ヤーコンリフト専用）
+    _GYM_GROUND_EXIT_LIFT( 2 )
+
+    _MAP_FADE_END_CHECK()
+
+    // 暗転中にリフトが移動したと思わせる
+    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+    _TIME_WAIT( 40 )
+    _SE_STOP()
+    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+    _TIME_WAIT( 40 )
+    _SE_STOP()
+    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+
+    //スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
+    _RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_02 )
+
+    //マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 7, 0, 5, DIR_UP )
+  }
+
+  //=====================================
+  //このPOSの起動をさせなくする
+  $WK_SCENE_C05GYM0101_SHORTCUT = 2
+  //=====================================
+
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//	1歩進む
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_tr_down
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------
+//	上向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
 

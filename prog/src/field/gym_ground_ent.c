@@ -281,14 +281,14 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *p_fieldmap)
       GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
       GMEVENT *event;
       {
-        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, TRUE, FALSE);
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, TRUE, TRUE);
         GAMESYSTEM_SetEvent(p_gamesys, event);
       }
     }else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
       GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
       GMEVENT *event;
       {
-        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, FALSE, FALSE);
+        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, FALSE, TRUE);
         GAMESYSTEM_SetEvent(p_gamesys, event);
       }
     }
@@ -329,7 +329,7 @@ GMEVENT *GYM_GROUND_ENT_CreateExitLiftMoveEvt( GAMESYS_WORK *p_gamesys, const BO
   if( yacon == TRUE )
   {
     MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    tmp->yacon_mmdl = MMDLSYS_SearchGridPos( mmdlsys, 7, 3, TRUE );
+    tmp->yacon_mmdl = MMDLSYS_SearchGridPos( mmdlsys, 7, 4, TRUE );
     GF_ASSERT_MSG( tmp->yacon_mmdl, "ヤーコンがみつからない\n");
   }
   else
@@ -539,7 +539,7 @@ void GYM_GROUND_ENT_SetEnterPos( GAMESYS_WORK *p_gamesys, const u16 set )
     VecFx32 pos;
     int gy;
     MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    MMDL *mmdl = MMDLSYS_SearchGridPos( mmdlsys, 7, 3, TRUE );
+    MMDL *mmdl = MMDLSYS_SearchGridPos( mmdlsys, 7, 4, TRUE );
     GF_ASSERT_MSG( mmdl, "ヤーコンがみつからない\n");
 
     //座標更新
