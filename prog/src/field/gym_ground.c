@@ -1110,7 +1110,7 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_FADE_OUT:
     // ホワイトフェードアウト
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
-        WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, p_gym_wk->heapID );
+        WIPE_FADE_WHITE, 10, 4, p_gym_wk->heapID );
     *seq = SEQ_FADE_OUT_WAIT;
     break;
   // フェードアウト待ち
