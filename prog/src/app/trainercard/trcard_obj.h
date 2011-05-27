@@ -76,7 +76,10 @@ enum{
  ANMS_MEDAL_GOLD,
  ANMS_MEDAL_BLACK,
  ANMS_MEDAL_WHITE,
- 
+ ANMS_TOUCH_UP2,
+ ANMS_TOUCH_DOWN2,
+ ANMS_TOUCH_UP_OFF,
+ ANMS_TOUCH_DOWN_OFF,
 };
 
 #define TR_CARD_BADGE_ACT_START (0)
@@ -125,6 +128,8 @@ extern void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk);
 extern void RereaseCellObject(TR_CARD_OBJ_WORK *wk);
 
 extern void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f);
+// ’Ç‰Á
+extern void SetSActDrawStPal( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f, const u8 pnum );
 extern void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f);
 // ’Ç‰Á
 extern void SetSActVisible( TR_CARD_OBJ_WORK *wk, const u8 act_id, const BOOL bflg );

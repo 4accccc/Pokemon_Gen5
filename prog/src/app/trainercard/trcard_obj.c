@@ -243,6 +243,31 @@ void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * サブ画面ボタンアクター　表示状態変更
+ *
+ * @param wk      OBJワーク
+ * @param inBadgeNo バッジナンバー
+ * @param inOalNo   パレット番号
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void SetSActDrawStPal( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f, const u8 pnum )
+{
+  u16	tmp = GFL_CLACT_WK_GetAnmSeq( wk->ClActWorkS[act_id] );
+  
+  GFL_CLACT_WK_SetDrawEnable(wk->ClActWorkS[act_id],draw_f);  
+  // パターンが違うときだけ更新
+  if(tmp != anm_pat){
+    GFL_CLACT_WK_SetAnmSeq( wk->ClActWorkS[act_id],anm_pat);
+    GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[act_id]);
+    // パレットセット
+    GFL_CLACT_WK_SetPlttOffs( wk->ClActWorkS[act_id], pnum, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  }
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * サブ画面ボタンエフェクトアクター　表示状態変更
  *
  * @param wk      OBJワーク

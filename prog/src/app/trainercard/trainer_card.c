@@ -125,6 +125,7 @@ enum{
 enum{
 	FLG_DISP_MEDAL	= ( 1<<0 ),		// メダル表示
 	FLG_PALCHG_ON	= ( 1<<1 ),		// パレットチェンジ
+	FLG_TOUCH_WIN	= ( 1<<2 ),		// ウインドウタッチ中(矢印含む)
 };
 
 // メダルの番号
@@ -141,6 +142,9 @@ enum{
 enum{
 	PCHG_ANIM_ADD		= (0x200),	// パレットチェンジ用
 	PCHG_ANIM_ADD_2		= (0x400),	// パレットチェンジ用
+	//
+	SCROLL_SPD_UP		= 8,
+	SCROLL_SPD_DOWN		= -8,
 };
 
 // 戻るボタン座標
@@ -231,8 +235,15 @@ enum{
 // スコアスクロール領域
 #define TP_SCORE_SCROL_X  (   16 )
 #define TP_SCORE_SCROL_Y  (   16 )
-#define TP_SCORE_SCROL_W  (  224 )
+#define TP_SCORE_SCROL_W  (  224-8 )	// 誘導矢印のため調整
 #define TP_SCORE_SCROL_H  (   64 )
+
+// 誘導矢印領域(少し大きめにしておく)
+#define TP_ARROW_SCROL_X  (  236-4 )
+#define TP_ARROW_SCROL_Y  (   16 )
+#define TP_ARROW_SCROL_Y2 (   72 )
+#define TP_ARROW_SCROL_W  (   16 )
+#define TP_ARROW_SCROL_H  (   16 )
 
 // 落書き領域（簡易版）
 #define TP_PAINTS_X  (   24 )
@@ -374,6 +385,10 @@ static void tc_init_medal( TR_CARD_WORK * wk );
 static void tc_init_chgpal( TR_CARD_WORK *wk );
 static void tc_main_chgpal( TR_CARD_WORK *wk );
 static void tc_set_chgpal(  TR_CARD_WORK *wk, const BOOL bflg );
+//
+static void tc_chg_arrow( TR_CARD_WORK *wk, const s32 mode );
+//
+static s32 tc_chk_touch( TR_CARD_WORK *wk, const s32 mode );
 
 //============================================================================================
 //  グローバル変数
@@ -504,7 +519,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   tc_init_medal( wk );
   // パレットチェンジ用
   tc_init_chgpal( wk );
-
+  //
   wk->vblankFunc = GFUser_VIntr_CreateTCB(VBlankFunc, wk , 1);  // VBlankセット
   wk->vblankTcblSys = GFL_TCBL_Init( wk->heapId , wk->heapId , 3 , 0 );
   //通信アイコンセット
@@ -2176,6 +2191,67 @@ static const GFL_UI_TP_HITTBL sc_Scrol_TpRect[] = {
   {GFL_UI_TP_HIT_END,0,0,0}
 };
 
+// 誘導矢印
+static const GFL_UI_TP_HITTBL sc_arrow_TpRect[] = {
+  { TP_ARROW_SCROL_Y, TP_ARROW_SCROL_Y +TP_ARROW_SCROL_H, TP_ARROW_SCROL_X, TP_ARROW_SCROL_X+TP_ARROW_SCROL_W }, // 上
+  { TP_ARROW_SCROL_Y2,TP_ARROW_SCROL_Y2+TP_ARROW_SCROL_H, TP_ARROW_SCROL_X, TP_ARROW_SCROL_X+TP_ARROW_SCROL_W }, // 下
+  //
+  {GFL_UI_TP_HIT_END,0,0,0}
+};
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  カード裏面：タッチスクロール判定
+ *
+ *  @param  TR_CARD_WORK *wk 
+ *  @param  const s32	(0:Trg、1:Cont)
+ *
+ *  @retval s32			(-1:なし、0:ウインドウ、1:上、2:下)
+ */
+//-----------------------------------------------------------------------------
+static s32 tc_chk_touch( TR_CARD_WORK *wk, const s32 mode )
+{
+	s32	tmp;
+	s32	flg=-1;		// なし
+	//
+	// trg
+	if(mode == 0){
+		// ウインドウをタッチ
+		if( GFL_UI_TP_HitTrg( sc_Scrol_TpRect ) == 0 ){
+			flg = 0;
+		}
+		else{
+			// 誘導矢印を押した
+			tmp = GFL_UI_TP_HitTrg( sc_arrow_TpRect );
+			// 上
+			if(tmp == 0){
+				flg = 1;
+			}else if(tmp == 1){
+				flg = 2;
+			}
+		}
+	}
+	// cont
+	else{
+		// ウインドウをタッチ
+		if( GFL_UI_TP_HitCont( sc_Scrol_TpRect ) == 0 ){
+			flg = 0;
+		}
+		else{
+			// 誘導矢印を押した
+			tmp = GFL_UI_TP_HitCont( sc_arrow_TpRect );
+			// 上
+			if(tmp == 0){
+				flg = 1;
+			}else if(tmp == 1){
+				flg = 2;
+			}
+		}
+	}
+	// 判定
+	return( flg );
+}
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  カード裏面：タッチスクロール終了判定＆処理
@@ -2187,7 +2263,10 @@ static const GFL_UI_TP_HITTBL sc_Scrol_TpRect[] = {
 //-----------------------------------------------------------------------------
 static void tp_scroll_end_check( TR_CARD_WORK *wk )
 {
-  if( wk->is_back && GFL_UI_TP_HitCont( sc_Scrol_TpRect ) != 0 )
+  // タッチ判定を、ウインドウと誘導マークでまとめた
+  s32	flg = tc_chk_touch( wk, 1 );
+  //
+  if( wk->is_back && flg == -1 )
   {
     if(wk->card_list_col==1)
     {
@@ -2195,6 +2274,8 @@ static void tp_scroll_end_check( TR_CARD_WORK *wk )
       wk->card_list_col = 0;
       wk->scroll_se_wait = 0;
       wk->b_touch_scroll = FALSE;
+      // 誘導マーク後処理
+      tc_chg_arrow( wk, 2 );
     }
   }
 }
@@ -2210,23 +2291,66 @@ static void tp_scroll_end_check( TR_CARD_WORK *wk )
 //-----------------------------------------------------------------------------
 static void tp_scroll( TR_CARD_WORK *wk )
 {
+  s32 flg;
   u32 x,y;
+  s32 buf[2];
   
-  if(GFL_UI_TP_HitTrg( sc_Scrol_TpRect )==0){
+  buf[0] = tc_chk_touch( wk, 0 );	// trg
+  buf[1] = tc_chk_touch( wk, 1 );	// cont
+  
+  // Trg判定(ウインドウと誘導マークでまとめた)
+  if( buf[0] != -1 ){
     wk->b_touch_scroll = TRUE;
   }
   
-  if( wk->b_touch_scroll && GFL_UI_TP_HitCont( sc_Scrol_TpRect )==0){
-    if(GFL_UI_TP_GetTrg()){
-      GFL_UI_TP_GetPointTrg( &x, &y );
-      wk->touch_sy    = y;
+  // Cont判定(ウインドウと誘導マークでまとめた)
+  if( wk->b_touch_scroll && (buf[1] != -1)){
+    // ウインドウ(Trg)の場合
+    if(buf[0] == 0){
+      if(GFL_UI_TP_GetTrg()){
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        wk->touch_sy    = y;
+        wk->scrol_start = wk->scrol_point;
+      }
+    }
+    // 誘導マーク(Trg)の場合
+    else{
+      // 誘導マークは変化量ではないので、
+      // なくても大丈夫のはずだが念のため入れておく
+      if(buf[0] == 1){		// 上
+        wk->touch_sy    = TP_SCORE_SCROL_Y;	// 上限
+        wk->scrol_start = wk->scrol_point;
+      }
+      else if(buf[0] == 2){	// 下
+        wk->touch_sy    = (TP_SCORE_SCROL_Y+TP_SCORE_SCROL_H);	// 下限
+        wk->scrol_start = wk->scrol_point;
+      }
+    }
+    //
+    // ウインドウ(Cont)の場合
+    if(buf[1] == 0){
+      if(GFL_UI_TP_GetCont()){
+        GFL_UI_TP_GetPointCont( &x, &y );
+        wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
+//      OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
+      }
+    }
+    // 誘導マーク(Cont)の場合
+    else{
+      // 誘導マークの場合は変化量ではなく、
+      // 一定量を変化させればよいらしい
+      if(buf[1] == 1){			// 上
+        wk->scrol_point += SCROLL_SPD_UP;
+      }
+      else if(buf[1] == 2){		// 下
+        wk->scrol_point += SCROLL_SPD_DOWN;
+      }
+      // 誘導マークの領域からウインドウにずらした際の不具合対応
+      GFL_UI_TP_GetPointCont( &x, &y );
+      wk->touch_sy = y;
       wk->scrol_start = wk->scrol_point;
     }
-    if(GFL_UI_TP_GetCont()){
-      GFL_UI_TP_GetPointCont( &x, &y );
-      wk->scrol_point = wk->scrol_start - (wk->touch_sy-y);
-//      OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
-    }
+    
     // 範囲外チェック
     if(wk->scrol_point<-(wk->score_max-4)*16){
       wk->scrol_point = -(wk->score_max-4)*16;
@@ -2239,6 +2363,28 @@ static void tp_scroll( TR_CARD_WORK *wk )
       wk->card_list_col = 1;
       TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 1 );
       PMSND_PlaySE(SND_TRCARD_SLIDE);
+      //
+      // 誘導マーク処理
+      // ウインドウのスライドと、
+      // 上下アイコンではスクロールが逆
+      // (=>やはり、同じ方向にしておく)
+      if(buf[1] == 0){
+        flg = 0;
+        if(wk->scrol_point < wk->old_scrol_point){
+          flg = 1;
+        }
+      }else if((buf[1] == 1)||(buf[1] == 2)){
+        flg = 0;
+        if(wk->scrol_point < wk->old_scrol_point){
+          flg = 1;
+        }
+      }
+      // 上下どちらかをタッチ
+      tc_chg_arrow( wk, flg );
+    }
+    else{
+      // タッチしても動かず
+      tc_chg_arrow( wk, 3 );
     }
     wk->old_scrol_point=wk->scrol_point;
   }
@@ -3241,6 +3387,8 @@ static void tc_chk_mark_visible( TR_CARD_WORK * wk, const s32 mode )
 		tc_set_visible( wk, ACTS_MARK_10, TRUE );	// 裏用
 		tc_set_visible( wk, ACTS_MARK_11, TRUE );
 		tc_set_visible( wk, ACTS_MARK_MEDAL, FALSE ); // メダル
+		// タッチ処理初期化
+		tc_chg_arrow( wk, 3 );
 		bflg = TRUE;
 	}else{
 		tc_set_visible( wk, ACTS_MARK_00, FALSE );	// 表用
@@ -3356,11 +3504,12 @@ static void tc_main_chgpal( TR_CARD_WORK *wk )
 	// 速度チェック
 	// 通常
 	rate = PCHG_ANIM_ADD;
+#if 0
 	if(wk->card_list_col == 1){
 		// タッチ時、加速
 		rate = PCHG_ANIM_ADD_2;
 	}
-	
+#endif
 	// 加算(0 .. 1.0)にするようだ
 	wk->PCount += rate;
 	if(wk->PCount >= 0x10000){
@@ -3414,4 +3563,78 @@ static void tc_set_chgpal( TR_CARD_WORK *wk, const BOOL bflg )
 		wk->Flag &= ~FLG_PALCHG_ON;
 	}
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	誘導マーク切り替え
+ *
+ * @param	TR_CARD_WORK*	wk
+ * @param	const s32		(0:上、1:下、2:終了時、3:タッチ時(移動せず))
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static const s16 arrow_anim_tbl[] = {
+	ANMS_TOUCH_UP,		 0,	// 上：通常
+	ANMS_TOUCH_UP2, 	 2,	// 上：押し中
+	ANMS_TOUCH_UP_OFF,   0,	// 上：リミット
+	//
+	ANMS_TOUCH_DOWN,	 0,	// 下：通常
+	ANMS_TOUCH_DOWN2,	 2,	// 下：押し中
+	ANMS_TOUCH_DOWN_OFF, 0,	// 下：リミット
+};
+
+static void tc_chg_arrow( TR_CARD_WORK *wk, const s32 mode )
+{
+	s32		buf[2];
+	s32		anum;
+	s32		flg=0;
+	
+	// リミットチェック(下限)
+	if(wk->scrol_point <= -(wk->score_max-4)*16){
+		flg = 1;
+	}
+	// リミット(上限)
+	else if(wk->scrol_point >= 0){
+		flg = 2;
+	}
+	//
+	// 上方向に移動中
+	if(mode == 0){
+		if(flg == 2){
+			anum = 2;
+		}else{
+			anum = 1;
+		}
+		SetSActDrawStPal( &wk->ObjWork, ACTS_MARK_10, arrow_anim_tbl[2*anum], TRUE, arrow_anim_tbl[2*anum+1]);
+	}
+	// 下方向に移動
+	else if(mode == 1){
+		if(flg == 1){
+			anum = 2;
+		}else{
+			anum = 1;
+		}
+		SetSActDrawStPal( &wk->ObjWork, ACTS_MARK_11, arrow_anim_tbl[(3+anum)*2], TRUE, arrow_anim_tbl[(3+anum)*2+1]);
+	}
+	// 終了、タッチしても動かず
+	else if((mode == 2)||(mode == 3)){
+		// 上側判断
+		if(flg == 2){
+			anum = 2;
+		}else{
+			anum = 0;
+		}
+		SetSActDrawStPal( &wk->ObjWork, ACTS_MARK_10, arrow_anim_tbl[2*anum], TRUE, arrow_anim_tbl[2*anum+1]);
+		//
+		// 下側判断
+		if(flg == 1){
+			anum = 2;
+		}else{
+			anum = 0;
+		}
+		SetSActDrawStPal( &wk->ObjWork, ACTS_MARK_11, arrow_anim_tbl[(3+anum)*2], TRUE, arrow_anim_tbl[(3+anum)*2+1]);
+	}
+}
+
 
