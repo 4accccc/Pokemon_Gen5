@@ -9,8 +9,11 @@ ITEM1_LINE  = 1
 ITEM1_HIDE_ROW   = 19 # 隠しアイテムテーブル
 ITEM1_HIDE_LINE  = 4
 
-POKE1_ROW   = 19 # ポケモンテーブル1
+POKE1_ROW   = 19 # ポケモンテーブル1(ホワイト)
 POKE1_LINE  = 7
+
+POKE2_ROW   = 40 # ポケモンテーブル2(ブラック)
+POKE2_LINE  = 7
 
 ITEM_TABLE_CNT      = 4 # アイテムテーブルの長さ
 HIDE_ITEM_TABLE_CNT = 4 # アイテムテーブルの長さ

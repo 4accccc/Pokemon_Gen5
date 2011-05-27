@@ -66,7 +66,8 @@ typedef struct {
 ///	ポケモンアーカイブデータ
 //=====================================
 typedef struct {
-  AT_POKEMON_DATA poke_data[POKEMON_TABLE_CNT];
+  AT_POKEMON_DATA poke_data_w[POKEMON_TABLE_CNT];
+  AT_POKEMON_DATA poke_data_b[POKEMON_TABLE_CNT];
   u16 item_id[NORMAL_ITEM_TABLE_CNT][DATA_TABLE_LEN];
   u16 hide_item_id[HIDE_ITEM_TABLE_CNT][DATA_TABLE_LEN];
 }ANIMAL_TRAIL_ARC_DATA;

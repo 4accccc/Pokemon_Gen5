@@ -81,6 +81,7 @@ static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetItem( MMDLSYS *p_mmdlsys );
 static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,HEAPID heapID );
 static BOOL is_ex_monster( u16 monsno );
+static AT_POKEMON_DATA* GetPokemonData( ANIMAL_TRAIL_ARC_DATA* p_data ,int main_table_index);
 
 
 //----------------------------------------------------------------------------
@@ -121,7 +122,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
   case SCR_ANIMAL_TRAIL_GET_MONSNO:
     {
       GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = &data.poke_data[main_table_index];
+      p_poke = GetPokemonData( &data ,main_table_index );
       (*p_ret_wk) = p_poke->pokemon_id[data_table_index];
     }
     break;
@@ -130,7 +131,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
       u8 lv_range;
       u8 max_lv,min_lv;
       GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = &data.poke_data[main_table_index];
+      p_poke = GetPokemonData( &data ,main_table_index );
       max_lv = p_poke->max_lv[data_table_index];
       min_lv = p_poke->min_lv[data_table_index];
       lv_range = ( max_lv - min_lv);
@@ -144,7 +145,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
   case SCR_ANIMAL_TRAIL_GET_FORMNO:
     {
       GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = &data.poke_data[main_table_index];
+      p_poke = GetPokemonData( &data ,main_table_index );
       (*p_ret_wk) = p_poke->forum[data_table_index];
     }
     break;
@@ -154,7 +155,7 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
       u8 is_female = FALSE;
 
       GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = &data.poke_data[main_table_index];
+      p_poke = GetPokemonData( &data ,main_table_index );
       // メス判定
       if( female_num < p_poke->female_probability[data_table_index]  )
       {
@@ -403,7 +404,7 @@ static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk )
   // アーカイブ読み込み
   GF_ASSERT( main_table_index < ANIMAL_TRAIL_DATA_TABLE_3 );
   GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, p_wk->trail_id );
-  p_poke = &data.poke_data[main_table_index];
+  p_poke = GetPokemonData( &data ,main_table_index );
 
   // メス判定
   if( female_num < p_poke->female_probability[data_table_index]  )
@@ -585,3 +586,24 @@ static GMEVENT_RESULT MapExitEvent( GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バージョンごとのポケモンデータを取得
+ *
+ *	@param	p_data 
+ *	@param	main_table_index
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static AT_POKEMON_DATA* GetPokemonData( ANIMAL_TRAIL_ARC_DATA* p_data ,int main_table_index)
+{
+  if( GET_VERSION() == VERSION_B2 )
+  {
+    return &p_data->poke_data_b[main_table_index];
+  }
+  else
+  {
+    return &p_data->poke_data_w[main_table_index];
+  }
+}

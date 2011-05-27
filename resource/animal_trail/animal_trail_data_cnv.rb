@@ -27,7 +27,7 @@ class ITEM_DATA
 end
 
 class ANIMAL_TRAIL_DATA
-  attr_accessor :pokemon ,:item ,:item_hide ,:probability
+  attr_accessor :pokemon_w ,:pokemon_b ,:item ,:item_hide ,:probability
   def initialize
     @item       = Array.new(ITEM_RANK_CNT)
     ITEM_RANK_CNT.times{|i|
@@ -37,9 +37,13 @@ class ANIMAL_TRAIL_DATA
     HIDE_ITEM_RANK_CNT.times{|i|
       @item_hide[i] = Array.new(HIDE_ITEM_TABLE_CNT)
     }
-    @pokemon    = Array.new(POKE_RANK_CNT)
+    @pokemon_w    = Array.new(POKE_RANK_CNT)
     POKE_RANK_CNT.times{|i|
-      @pokemon[i] = Array.new(POKE_TABLE_CNT)
+      @pokemon_w[i] = Array.new(POKE_TABLE_CNT)
+    }
+    @pokemon_b    = Array.new(POKE_RANK_CNT)
+    POKE_RANK_CNT.times{|i|
+      @pokemon_b[i] = Array.new(POKE_TABLE_CNT)
     }
     @probability = Array.new(TABLE_PROBABILITY-1)
   end
@@ -109,31 +113,58 @@ data_cnt.times{|index|
   # ポケモンテーブル1
   POKE_RANK_CNT.times{|rank|
     POKE_TABLE_CNT.times{|i|
-      animal_trail_data_list[index].pokemon[rank][i] = POKEMON_DATA.new
-      animal_trail_data_list[index].pokemon[rank][i].name   = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+0]
-      animal_trail_data_list[index].pokemon[rank][i].max_lv = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+1]
-      animal_trail_data_list[index].pokemon[rank][i].min_lv = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+2]
-      animal_trail_data_list[index].pokemon[rank][i].female_probability = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+3]
-      animal_trail_data_list[index].pokemon[rank][i].forum = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+4]
+      animal_trail_data_list[index].pokemon_w[rank][i] = POKEMON_DATA.new
+      animal_trail_data_list[index].pokemon_w[rank][i].name   = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+0]
+      animal_trail_data_list[index].pokemon_w[rank][i].max_lv = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+1]
+      animal_trail_data_list[index].pokemon_w[rank][i].min_lv = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+2]
+      animal_trail_data_list[index].pokemon_w[rank][i].female_probability = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+3]
+      animal_trail_data_list[index].pokemon_w[rank][i].forum = data[POKE1_ROW+i+NEXT_TABLE_POS*rank][POKE1_LINE+4]
 
-      max_lv = animal_trail_data_list[index].pokemon[rank][i].max_lv
-      min_lv = animal_trail_data_list[index].pokemon[rank][i].min_lv
+      max_lv = animal_trail_data_list[index].pokemon_w[rank][i].max_lv
+      min_lv = animal_trail_data_list[index].pokemon_w[rank][i].min_lv
       lv_range = max_lv.to_i - min_lv.to_i
 
       if lv_range < 0 then
-        puts animal_trail_data_list[index].pokemon[rank][i].name+" > 最大、最上レベル設定が間違っています"
+        puts animal_trail_data_list[index].pokemon_w[rank][i].name+" > 最大、最上レベル設定が間違っています"
         raise "シート%d:最大レベルと最小レベルが逆転しています"%(index+1)
       end
       if lv_range > 7 then
-        puts animal_trail_data_list[index].pokemon[rank][i].name+" > 最大、最上レベル設定が間違っています"
+        puts animal_trail_data_list[index].pokemon_w[rank][i].name+" > 最大、最上レベル設定が間違っています"
         raise "シート%d:最大Lvと最小Lvの差が7以上になっています"%(index+1)
       end
 
-      if $monsno_hash.include?(animal_trail_data_list[index].pokemon[rank][i].name) == FALSE then
-        puts "???"+animal_trail_data_list[index].pokemon[rank][i].name+"???"
+      if $monsno_hash.include?(animal_trail_data_list[index].pokemon_w[rank][i].name) == FALSE then
+        puts "???"+animal_trail_data_list[index].pokemon_w[rank][i].name+"???"
         raise "シート%d:未登録のモンスター名が使用されています"%(index+1)
       end
-      animal_trail_data_list[index].pokemon[rank][i].id = $monsno_hash[animal_trail_data_list[index].pokemon[rank][i].name]
+      animal_trail_data_list[index].pokemon_w[rank][i].id = $monsno_hash[animal_trail_data_list[index].pokemon_w[rank][i].name]
+    }
+    POKE_TABLE_CNT.times{|i|
+      animal_trail_data_list[index].pokemon_b[rank][i] = POKEMON_DATA.new
+      animal_trail_data_list[index].pokemon_b[rank][i].name   = data[POKE2_ROW+i+NEXT_TABLE_POS*rank][POKE2_LINE+0]
+      animal_trail_data_list[index].pokemon_b[rank][i].max_lv = data[POKE2_ROW+i+NEXT_TABLE_POS*rank][POKE2_LINE+1]
+      animal_trail_data_list[index].pokemon_b[rank][i].min_lv = data[POKE2_ROW+i+NEXT_TABLE_POS*rank][POKE2_LINE+2]
+      animal_trail_data_list[index].pokemon_b[rank][i].female_probability = data[POKE2_ROW+i+NEXT_TABLE_POS*rank][POKE2_LINE+3]
+      animal_trail_data_list[index].pokemon_b[rank][i].forum = data[POKE2_ROW+i+NEXT_TABLE_POS*rank][POKE2_LINE+4]
+
+      max_lv = animal_trail_data_list[index].pokemon_b[rank][i].max_lv
+      min_lv = animal_trail_data_list[index].pokemon_b[rank][i].min_lv
+      lv_range = max_lv.to_i - min_lv.to_i
+
+      if lv_range < 0 then
+        puts animal_trail_data_list[index].pokemon_b[rank][i].name+" > 最大、最上レベル設定が間違っています"
+        raise "シート%d:最大レベルと最小レベルが逆転しています"%(index+1)
+      end
+      if lv_range > 7 then
+        puts animal_trail_data_list[index].pokemon_b[rank][i].name+" > 最大、最上レベル設定が間違っています"
+        raise "シート%d:最大Lvと最小Lvの差が7以上になっています"%(index+1)
+      end
+
+      if $monsno_hash.include?(animal_trail_data_list[index].pokemon_b[rank][i].name) == FALSE then
+        puts "???"+animal_trail_data_list[index].pokemon_b[rank][i].name+"???"
+        raise "シート%d:未登録のモンスター名が使用されています"%(index+1)
+      end
+      animal_trail_data_list[index].pokemon_b[rank][i].id = $monsno_hash[animal_trail_data_list[index].pokemon_b[rank][i].name]
     }
   }
 }
@@ -148,8 +179,27 @@ data_cnt.times{|index|
 
 data_cnt.times{|index|
   data_bin = open( dir_name+"/"+in_data_name+index.to_s+".dat", "wb" )
-  # ポケモン
-  animal_trail_data_list[index].pokemon.each{|pt|
+  # ポケモン(W)
+  animal_trail_data_list[index].pokemon_w.each{|pt|
+    pt.each{|pd|
+      data_bin << [ pd.id.to_i ].pack( "S" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.max_lv.to_i ].pack( "C" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.min_lv.to_i ].pack( "C" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.female_probability.to_i ].pack( "C" )
+    }
+    pt.each{|pd|
+      data_bin << [ pd.forum.to_i ].pack( "C" )
+    }
+    data_bin << [ 0 ].pack( "S" ) # パディング
+  }
+  # ポケモン(B)
+  animal_trail_data_list[index].pokemon_b.each{|pt|
     pt.each{|pd|
       data_bin << [ pd.id.to_i ].pack( "S" )
     }
