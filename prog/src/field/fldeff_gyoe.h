@@ -44,3 +44,5 @@ extern FLDEFF_TASK * FLDEFF_GYOE_SetMMdl( FLDEFF_CTRL *fectrl,
 extern FLDEFF_TASK * FLDEFF_GYOE_SetMMdlNonDepend( FLDEFF_CTRL *fectrl,
     const MMDL *mmdl, FLDEFF_GYOETYPE type, BOOL se_play );
 extern BOOL FLDEFF_GYOE_CheckEnd( FLDEFF_TASK *task );
+
+extern void FLDEFF_GYOE_FogEnableFlg( FLDEFF_CTRL *fectrl, BOOL flag );

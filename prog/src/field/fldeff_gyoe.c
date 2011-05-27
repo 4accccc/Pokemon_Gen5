@@ -523,6 +523,38 @@ static void gyoe_CalcPos( TASKWORK_GYOE *work, VecFx32 * pos )
   
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ギョエにフォグ適用フラグを設定する
+ *
+ *	@param	FLDEFF_CTRL *fectrl
+ *	@param	flag  TRUEでかける
+ */
+//-----------------------------------------------------------------------------
+void FLDEFF_GYOE_FogEnableFlg( FLDEFF_CTRL *fectrl, BOOL flag )
+{
+  int i;
+  FLDEFF_GYOE *gyoe;
+  gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
+
+  if( gyoe == NULL )
+  {
+    GF_ASSERT_MSG(0,"フィールドエフェクトにギョエが登録されてない\n");
+    return;
+  }
+
+  for( i=0; i<FLDEFF_GYOETYPE_MAX; i++ )
+  {
+    NNSG3dResMdl*   mdl;
+    mdl = NNS_G3dRenderObjGetResMdl
+      (GFL_G3D_RENDER_GetRenderObj( gyoe->g3d_rnd[i] ) );
+
+    // fog enable flag設定
+    NNS_G3dMdlSetMdlFogEnableFlagAll( mdl, flag );
+  }
+
+}
+
 //======================================================================
 //  
 //======================================================================
