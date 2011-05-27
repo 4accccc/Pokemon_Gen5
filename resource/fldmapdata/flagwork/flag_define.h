@@ -294,8 +294,8 @@
 #define FE_T06R0201_ITEMGET_01             278 /* 0x0116 サンギタウン：アイテム入手フラグ */
 #define FE_C13R0201_ITEMGET_01             279 /* 0x0117 C12R0201：アイテム入手フラグ */
 #define FE_D11R0101_PAIR_01                280 /* 0x0118 D11R0101：連れ歩き用フラグ（将来的に廃止） */
-		/* not used   281(0x0119) */
-		/* not used   282(0x011a) */
+#define FE_R05_BADRIDER_TALK               281 /* 0x0119 R05：チャールズの会話フラグ */
+#define FE_H02_ITEMGET_01                  282 /* 0x011a H02：リザードン見せイベントのアイテム入手フラグ */
 		/* not used   283(0x011b) */
 		/* not used   284(0x011c) */
 		/* not used   285(0x011d) */
@@ -575,6 +575,7 @@
 #define FV_R04_BIGROCK_01                  657 /* 0x0291 4番道路：イワパレス擬態大きな岩 */
 #define FV_R04_SWBOSS_01                   658 /* 0x0292 4番道路：アクロマ */
 #define FV_C03P17_PILOT_01                 659 /* 0x0293 ヒウンシティ下水道前：パイロット */
+#define FV_R05_STOP                        660 /* 0x0294 5番道路：チャールズ、ストッパー */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
