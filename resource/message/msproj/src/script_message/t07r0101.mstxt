@@ -90,10 +90,10 @@
 			Language="JPN">
 			<Comment>♀
 ・はい選択時
-・発着デモへ</Comment>
+・画面暗転→発着デモへ（暫定）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T04:57:09" />
+				Time="2011-05-27T03:21:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -154,10 +154,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ん？　きみも
-かざんを　しらべるのかい？</Text>
+かざんを　しらべるのかい？▼
+ここの　かざんは　シンオウちほうの
+ハードマウンテンという　かざんと▽
+かざんの　しゅるいが　おなじ　なんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:00:23" />
+				Time="2011-05-27T03:22:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -166,10 +169,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ん？　きみも
-かざんを　しらべるのかい？</Text>
+火山を　調べるのかい？▼
+ここのはね　シンオウ地方の
+ハードマウンテンという　火山と▽
+火山の　種類が　同じなんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:00:26" />
+				Time="2011-05-27T03:23:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

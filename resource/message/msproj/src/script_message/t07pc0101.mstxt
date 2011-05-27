@@ -151,10 +151,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手後</Comment>
+・アイテム入手後
+
+※メッセージ要調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T11:35:05" />
+				Time="2011-05-27T03:59:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
