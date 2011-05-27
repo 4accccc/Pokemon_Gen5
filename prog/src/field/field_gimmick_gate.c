@@ -103,6 +103,8 @@ typedef enum {
   RES_MONITOR_NSBTP_WF,     // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
   RES_MONITOR_NSBTP_BC,     // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
   RES_MONITOR_NSBTP_D03,    // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
+  RES_MONITOR_NSBTP_T06,    // モニター・テクスチャパターン・アニメーション ( モニタ情報T06 )
+  RES_MONITOR_NSBTP_C13,    // モニター・テクスチャパターン・アニメーション ( モニタ情報C13 )
   RES_NUM                   // 総数
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
@@ -136,6 +138,8 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv12_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv13_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv14_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv15_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報T06 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv16_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報C13 )
 };
 
 // アニメインデックス
@@ -160,6 +164,8 @@ typedef enum {
   ANM_MONITOR_BC,           // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   ANM_MONITOR_D03,          // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
   ANM_MONITOR_BROKEN,       // モニター・テクスチャ・アニメーション ( モニタ情報<故障> )
+  ANM_MONITOR_T06,          // モニター・テクスチャ・アニメーション ( モニタ情報T06 )
+  ANM_MONITOR_C13,          // モニター・テクスチャ・アニメーション ( モニタ情報C13 )
   ANM_NUM                   // 総数
 } ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] = 
@@ -185,6 +191,8 @@ static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] =
   { RES_MONITOR_NSBTP_BC, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   { RES_MONITOR_NSBTP_D03, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
   { RES_MONITOR_NSBTP_BROKEN, 0 },// モニター・テクスチャ・アニメーション ( モニタ情報<故障> )
+  { RES_MONITOR_NSBTP_T06, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報T06 )
+  { RES_MONITOR_NSBTP_C13, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C13 )
 };
 static const GFL_G3D_UTIL_ANM anm_table_fast[ ANM_NUM ] = 
 {
@@ -209,6 +217,8 @@ static const GFL_G3D_UTIL_ANM anm_table_fast[ ANM_NUM ] =
   { RES_MONITOR_NSBTP_BC, 0 },     // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   { RES_MONITOR_NSBTP_D03, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
   { RES_MONITOR_NSBTP_BROKEN, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報<故障> )
+  { RES_MONITOR_NSBTP_T06, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報T06 )
+  { RES_MONITOR_NSBTP_C13, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C13 )
 };
 
 // オブジェクトインデックス
@@ -375,6 +385,8 @@ typedef enum {
   MONITOR_ANIME_BC,     // ( モニタ情報BC )
   MONITOR_ANIME_D03,    // ( モニタ情報D03 )
   MONITOR_ANIME_BROKEN, // ( モニタ情報<故障> )
+  MONITOR_ANIME_T06,    // ( モニタ情報T06 )
+  MONITOR_ANIME_C13,    // ( モニタ情報C13 )
   MONITOR_ANIME_NUM,    // 総数
   MONITOR_ANIME_MAX = MONITOR_ANIME_NUM - 1
 } MONITOR_ANIME_INDEX;
@@ -395,6 +407,8 @@ static u16 monitor_anime[ MONITOR_ANIME_NUM ] =
   ANM_MONITOR_BC,     // ( モニタ情報BC )
   ANM_MONITOR_D03,    // ( モニタ情報D03 )
   ANM_MONITOR_BROKEN, // ( モニタ情報<故障> )
+  ANM_MONITOR_T06,    // ( モニタ情報T06 )
+  ANM_MONITOR_C13,    // ( モニタ情報C13 )
 };
 
 
