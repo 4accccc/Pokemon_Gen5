@@ -1450,6 +1450,10 @@ $(DIR_WBTMP)/freezeb13_05.tbl: $(DIR_RES)/freezeb13_05.bin
 	@echo create_bintbl freezeb13_05
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezeb13_05.bin
 
+$(DIR_WBTMP)/map25_06.tbl: $(DIR_RES)/map25_06.bin
+	@echo create_bintbl map25_06
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map25_06.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
@@ -2845,6 +2849,26 @@ $(DIR_WBTMP)/white0301_02_01.tbl: $(DIR_RES)/white0301_02_01.bin
 $(DIR_WBTMP)/white0301_02_02.tbl: $(DIR_RES)/white0301_02_02.bin
 	@echo create_bintbl white0301_02_02
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white0301_02_02.bin
+
+$(DIR_WBTMP)/white2401_00_00.tbl: $(DIR_RES)/white2401_00_00.bin
+	@echo create_bintbl white2401_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2401_00_00.bin
+
+$(DIR_WBTMP)/white2404_00_00.tbl: $(DIR_RES)/white2404_00_00.bin
+	@echo create_bintbl white2404_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2404_00_00.bin
+
+$(DIR_WBTMP)/white2405_00_00.tbl: $(DIR_RES)/white2405_00_00.bin
+	@echo create_bintbl white2405_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2405_00_00.bin
+
+$(DIR_WBTMP)/white2406_00_00.tbl: $(DIR_RES)/white2406_00_00.bin
+	@echo create_bintbl white2406_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/white2406_00_00.bin
+
+$(DIR_WBTMP)/m_dun2406_00_00.tbl: $(DIR_RES)/m_dun2406_00_00.bin
+	@echo create_bintbl m_dun2406_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2406_00_00.bin
 
 $(DIR_WBTMP)/m_ruin01_00_00.tbl: $(DIR_RES)/m_ruin01_00_00.bin
 	@echo create_bintbl m_ruin01_00_00

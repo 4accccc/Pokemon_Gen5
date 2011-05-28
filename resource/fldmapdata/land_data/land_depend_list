@@ -351,6 +351,7 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/freezeb12_05.3dppack \
 	$(DIR_OUTPUT)/freezeb13_04.3dppack \
 	$(DIR_OUTPUT)/freezeb13_05.3dppack \
+	$(DIR_OUTPUT)/map25_06.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \
@@ -681,6 +682,11 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/white0301_02_00.3dppack \
 	$(DIR_OUTPUT)/white0301_02_01.3dppack \
 	$(DIR_OUTPUT)/white0301_02_02.3dppack \
+	$(DIR_OUTPUT)/white2401_00_00.3dppack \
+	$(DIR_OUTPUT)/white2404_00_00.3dppack \
+	$(DIR_OUTPUT)/white2405_00_00.3dppack \
+	$(DIR_OUTPUT)/white2406_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2406_00_00.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \

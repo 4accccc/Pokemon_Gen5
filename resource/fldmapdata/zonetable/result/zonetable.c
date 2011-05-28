@@ -18768,10 +18768,10 @@ static const ZONEDATA ZoneData[] = {
 		4,
 	},
 	{//ZONE_ID_D24R0101 = 552
-		RSC_GRID_NOSCROLL,
+		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN51,
-		MATRIX_ID_DUN2801,
+		AREA_ID_IN65,
+		MATRIX_ID_DUN2401,
 		NARC_script_seq_d24r0101_bin,
 		NARC_script_seq_sp_d24r0101_bin,	//NARC_script_seq_sp_d24r0101_bin,
 		NARC_script_message_d24r0101_dat,
@@ -18781,7 +18781,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0101_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
@@ -18795,7 +18795,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2801, // camera_area
+		MATRIX_ID_DUN2401, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
@@ -18804,8 +18804,8 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D24R0201 = 553
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN51,
-		MATRIX_ID_DUN2802,
+		AREA_ID_IN65,
+		MATRIX_ID_DUN2402,
 		NARC_script_seq_d24r0201_bin,
 		NARC_script_seq_sp_d24r0201_bin,	//NARC_script_seq_sp_d24r0201_bin,
 		NARC_script_message_d24r0201_dat,
@@ -18815,7 +18815,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0201_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
@@ -18829,17 +18829,17 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2802, // camera_area
+		MATRIX_ID_DUN2402, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
 		4,
 	},
 	{//ZONE_ID_D24R0301 = 554
-		RSC_GRID_NOSCROLL,
+		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN51,
-		MATRIX_ID_DUN2803,
+		AREA_ID_IN65,
+		MATRIX_ID_DUN2403,
 		NARC_script_seq_d24r0301_bin,
 		NARC_script_seq_sp_d24r0301_bin,	//NARC_script_seq_sp_d24r0301_bin,
 		NARC_script_message_d24r0301_dat,
@@ -18849,7 +18849,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0301_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
@@ -18863,7 +18863,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2803, // camera_area
+		MATRIX_ID_DUN2403, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
@@ -18872,8 +18872,8 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D24R0401 = 555
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN51,
-		MATRIX_ID_DUN2802,
+		AREA_ID_IN65,
+		MATRIX_ID_DUN2404,
 		NARC_script_seq_d24r0401_bin,
 		NARC_script_seq_sp_d24r0401_bin,	//NARC_script_seq_sp_d24r0401_bin,
 		NARC_script_message_d24r0401_dat,
@@ -18883,7 +18883,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0401_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
@@ -18897,17 +18897,17 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2802, // camera_area
+		MATRIX_ID_DUN2404, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
 		4,
 	},
 	{//ZONE_ID_D24R0501 = 556
-		RSC_GRID_NOSCROLL,
+		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN51,
-		MATRIX_ID_DUN2803,
+		AREA_ID_IN65,
+		MATRIX_ID_DUN2405,
 		NARC_script_seq_d24r0501_bin,
 		NARC_script_seq_sp_d24r0501_bin,	//NARC_script_seq_sp_d24r0501_bin,
 		NARC_script_message_d24r0501_dat,
@@ -18917,7 +18917,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0501_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
@@ -18931,17 +18931,17 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2803, // camera_area
+		MATRIX_ID_DUN2405, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
 		4,
 	},
 	{//ZONE_ID_D24R0601 = 557
-		RSC_GRID_NOSCROLL,
+		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_IN51,
-		MATRIX_ID_DUN2803,
+		AREA_ID_IN65,
+		MATRIX_ID_DUN2406,
 		NARC_script_seq_d24r0601_bin,
 		NARC_script_seq_sp_d24r0601_bin,	//NARC_script_seq_sp_d24r0601_bin,
 		NARC_script_message_d24r0601_dat,
@@ -18951,7 +18951,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0601_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
@@ -18965,14 +18965,14 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2803, // camera_area
+		MATRIX_ID_DUN2406, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
 		4,
 	},
 	{//ZONE_ID_D24R0701 = 558
-		RSC_GRID_NOSCROLL,
+		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
 		AREA_ID_IN51,
 		MATRIX_ID_DUN2803,
@@ -18985,7 +18985,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_T_04,
 		enc_dummy,
 		NARC_eventdata_d24r0701_bin,
-    ZONE_ID_D29R0101,
+    ZONE_ID_D24,
 		MAPNAME_D29,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,

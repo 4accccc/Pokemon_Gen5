@@ -351,6 +351,7 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/freezeb12_05.nsbmd \
 	$(DIR_TEMP)/freezeb13_04.nsbmd \
 	$(DIR_TEMP)/freezeb13_05.nsbmd \
+	$(DIR_TEMP)/map25_06.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -681,6 +682,11 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/white0301_02_00.nsbmd \
 	$(DIR_TEMP)/white0301_02_01.nsbmd \
 	$(DIR_TEMP)/white0301_02_02.nsbmd \
+	$(DIR_TEMP)/white2401_00_00.nsbmd \
+	$(DIR_TEMP)/white2404_00_00.nsbmd \
+	$(DIR_TEMP)/white2405_00_00.nsbmd \
+	$(DIR_TEMP)/white2406_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2406_00_00.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \

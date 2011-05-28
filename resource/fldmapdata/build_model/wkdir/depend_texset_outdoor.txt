@@ -1329,6 +1329,7 @@ DEP_TEXSET_IMD_OUTDOOR031 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/c03_ship_03.imd \
 	$(SRCDIR)/d13_house_01.imd \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
@@ -2270,6 +2271,8 @@ DEP_TEXSET_IMD_OUTDOOR056 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/c03_ship_03.imd \
+	$(SRCDIR)/gate_01_2.imd \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
@@ -2341,6 +2344,7 @@ DEP_TEXSET_IMD_OUTDOOR058 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/c03_ship_03.imd \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
