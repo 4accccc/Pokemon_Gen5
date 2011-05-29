@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-05-24T23:11:20"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-05-29T12:08:45"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-05-24T23:10:56" source="untitled"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-05-29T12:08:07" source="untitled"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1287,14 +1287,14 @@
 		path="C:/home/swan_data3d/field/in08/chip/tex/labo04_yuka_5.tga"
 	>
 		<bitmap size="64">
-			2456 1111 1112 1121 4556 2222 2223 2232
-			3456 1111 1112 1121 3456 1001 0012 0121
-			3456 1111 1112 1121 4556 2222 2223 2232
-			3456 1111 1112 1121 3456 1001 0012 0121
-			3456 1111 1112 1121 4556 2222 2223 2232
-			3456 1111 1112 1121 3456 1001 0012 0121
-			3456 1111 1112 1121 4556 2222 2223 2232
-			3456 1111 1112 1121 3456 1001 0012 0121
+			2444 1111 1112 1121 4444 2222 2223 2232
+			3444 1111 1112 1121 3444 1001 0012 0121
+			3444 1111 1112 1121 4444 2222 2223 2232
+			3444 1111 1112 1121 3444 1001 0012 0121
+			3444 1111 1112 1121 4444 2222 2223 2232
+			3444 1111 1112 1121 3444 1001 0012 0121
+			3444 1111 1112 1121 4444 2222 2223 2232
+			3444 1111 1112 1121 3444 1001 0012 0121
 		</bitmap>
 	</tex_image>
 	<tex_image index="43" name="meka"
@@ -1513,7 +1513,7 @@
 		2a78 3299 36dc 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="42" name="labo04_yuka_5_pl" color_size="8">
-		4210 3def 35ad 318c 2529 2108 1ce7 7fff
+		4210 3def 35ad 318c 2d6b 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="43" name="meka_monitor_pl" color_size="16">
 		2cc2 3d04 48e3 6103 6165 7d63 7d85 7de5
