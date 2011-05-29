@@ -19,10 +19,71 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_c13gym0101
+_EVENT_DATA    ev_init_c13gym0101
 _EVENT_DATA    ev_pos_c13gym0101_guide    // ガイドPOSイベント
 _EVENT_DATA    ev_c13gym0101_danpei_01    // ガイドスクリプトイベント
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+// ローカルワークを使用しています。
+// 
+// LOCALWORK0⇒ドラムISS
+// LOCALWORK1⇒ギターISS
+//------------------------------------------------------------------/
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/*          ZONE_CHANGE_LABEL             */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c13gym0101
+
+  // ISSフラグ制御
+  // LOCALWORK0とLOCALWORK1を
+  // プログラムで参照し、ISSスイッチをOFFにするか決めている
+  // LOCALWORKを1にすると、それに対応したISSスイッチがOFFになる
+  // ※ここを編集するときは、ev_zone_c13gym0102も同じ様に編集する
+
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
+
+	IF $SCWK_TEMP0 == 0 THEN
+    // ジムクリア前
+
+    // ジムトレーナー1
+    IF FLAG_ON(FE_C13GYM_TRBTL1) THEN
+      $LOCALWORK0 = 1
+    ENDIF
+
+    // ジムトレーナー2
+    IF FLAG_ON(FE_C13GYM_TRBTL2) THEN
+      $LOCALWORK1 = 1
+    ENDIF
+
+  ELSE
+    // ジムクリア後
+    // ISSは全てリセット
+		$LOCALWORK0 = 0
+		$LOCALWORK1 = 0
+  ENDIF
+
+  // イベントがらみ
+  // ホミカが消えているときは、ISS全てリセット
+  IF FLAG_ON(FV_C13GYM0102_SWLEADER2) THEN
+		$LOCALWORK0 = 1
+		$LOCALWORK1 = 1
+		$LOCALWORK2 = 1
+  ENDIF
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/*          FIELD_INIT_LABEL              */
+/************************************************************/
+INIT_EVENT_START  ev_init_c13gym0101
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*            ガイドPOSイベント                               */

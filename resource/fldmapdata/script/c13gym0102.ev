@@ -50,6 +50,10 @@ DEFINE_LOCAL  LWK_MSG_ID_NG
 INIT_EVENT_START  ev_zone_c13gym0102
 
   // ISSフラグ制御
+  // LOCALWORK0とLOCALWORK1を
+  // プログラムで参照し、ISSスイッチをOFFにするか決めている
+  // LOCALWORKを1にすると、それに対応したISSスイッチがOFFになる
+  // ※ここを編集するときは、ev_zone_c13gym0101も同じ様に編集する
 
 	//バッジフラグ取得
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
@@ -79,6 +83,15 @@ INIT_EVENT_START  ev_zone_c13gym0102
 		$LOCALWORK0 = 0
 		$LOCALWORK1 = 0
   ENDIF
+
+  // イベントがらみ
+  // ホミカが消えているときは、ISS全てリセット
+  IF FLAG_ON(FV_C13GYM0102_SWLEADER2) THEN
+		$LOCALWORK0 = 1
+		$LOCALWORK1 = 1
+		$LOCALWORK2 = 1
+  ENDIF
+
 
 INIT_EVENT_END
 
@@ -134,6 +147,17 @@ EVENT_START	ev_c13gym0102_swleader2_01
         // ジムリーダー戦イベント
         _CALL		ev_leader2_btl
       ELSE
+        // 話す前にISSをOFFにする
+        {
+          // ISSスイッチOFF
+          _CALL sub_iss_off_vocal
+
+          // スピーカーアニメOFF
+          _GYM_POISON_ANM_STOP(0)
+          _GYM_POISON_ANM_STOP(1)
+          _GYM_POISON_ANM_STOP(2)
+        }
+
         //ゲームクリア前なら
         IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
           //ホミカ『クリアまえメッセージ』
@@ -148,14 +172,6 @@ EVENT_START	ev_c13gym0102_swleader2_01
           _BALLOONWIN_CLOSE()
         ENDIF
       ENDIF
-
-      // ISSスイッチOFF
-      _CALL sub_iss_off_vocal
-
-      // スピーカーアニメOFF
-      _GYM_POISON_ANM_STOP(0)
-      _GYM_POISON_ANM_STOP(1)
-      _GYM_POISON_ANM_STOP(2)
 
     }
   ENDIF
@@ -181,6 +197,17 @@ ev_leader2_btl:
 	ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
+
+  //バトルが終了するとすぐにISSをOFFにする
+  {
+    // ISSスイッチOFF
+    _CALL sub_iss_off_vocal
+
+    // スピーカーアニメOFF
+    _GYM_POISON_ANM_STOP(0)
+    _GYM_POISON_ANM_STOP(1)
+    _GYM_POISON_ANM_STOP(2)
+  }
 		
 	//リーダー：戦闘後メッセージ→続けてバッジ入手へ
 	//ホミカが喋る　
@@ -224,9 +251,8 @@ ev_leader2_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_swleader_04)
 	_BALLOONWIN_CLOSE()
 
-	//わざマシン入手処理　「アクロバット」
-	//【仮】なんの技マシンをもらうか決まってない
-	//_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN62, 1 )
+	//わざマシン入手処理　「ベノムショック」
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN09, 1 )
 
 	//リーダー：わざマシンの解説
 	_BALLOONWIN_TALKOBJ_MSG( msg_c13gym0102_swleader_05 )
@@ -339,15 +365,14 @@ EVENT_START	ev_c13gym0102_guitarw_01
 EVENT_END
 
 // ボーカルISSスイッチOFF
-//【仮】ISSコマンドのスイッチIDは仮
 sub_iss_off_vocal:
 	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
 
 	//演奏している
   IF $SCWK_ANSWER == TRUE THEN
 	  //ISSスイッチをオフに
-	  _ISS_SWITCH_OFF( 1 )
+	  _ISS_SWITCH_OFF( 3 )
 
     // フラグON
     $LOCALWORK2 = 1
@@ -355,15 +380,14 @@ sub_iss_off_vocal:
 _RET
 
 // ドラムISSスイッチOFF
-//【仮】ISSコマンドのスイッチIDは仮
 sub_iss_off_drum:
 	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
 
 	//演奏している
   IF $SCWK_ANSWER == TRUE THEN
 	  //ISSスイッチをオフに
-	  _ISS_SWITCH_OFF( 2 )
+	  _ISS_SWITCH_OFF( 1 )
 
     // アニメポーズOFF
     _GYM_POISON_ISS_OBJ_STOP( C13GYM0102_HEADS_01 )
@@ -374,15 +398,14 @@ sub_iss_off_drum:
 _RET
 
 // ギターISSスイッチOFF
-//【仮】ISSコマンドのスイッチIDは仮
 sub_iss_off_guitar:
 	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
+	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
 
 	//演奏している
   IF $SCWK_ANSWER == TRUE THEN
 	  //ISSスイッチをオフに
-	  _ISS_SWITCH_OFF( 3 )
+	  _ISS_SWITCH_OFF( 2 )
 
     // アニメポーズOFF
     _GYM_POISON_ISS_OBJ_STOP( C13GYM0102_GUITARW_01 )
