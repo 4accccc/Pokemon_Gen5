@@ -35,6 +35,17 @@ typedef struct
 }ISS_SWITCH_RESERVE;
 
 //===============================================================================
+// ■ISS-S予約 音量
+//===============================================================================
+typedef struct
+{
+  BOOL          is_use;
+  u32           bgm;
+  int           volume;
+  u16           fadeFrame;
+}ISS_SWITCH_RESERVE_VOLUME;
+
+//===============================================================================
 // ■ISS-Sシステム
 //===============================================================================
 struct _ISS_SWITCH_SYS
@@ -45,6 +56,7 @@ struct _ISS_SWITCH_SYS
   ISS_SWITCH_SET*  curSwitchSet; // 操作中のスイッチセット
 
   ISS_SWITCH_RESERVE  reserveData[RESERVE_MAX]; //予約情報
+  ISS_SWITCH_RESERVE_VOLUME  reserveVolumeData; //予約情報
 };
 
 
@@ -78,6 +90,13 @@ static void ISS_SWITCH_RESERVE_Set( ISS_SWITCH_RESERVE *wk, SWITCH_INDEX switchI
 static void ISS_SWITCH_RESERVE_Clear( ISS_SWITCH_RESERVE *wk );
 static void ISS_SWITCH_RESERVE_Main( ISS_SWITCH_RESERVE *wk, ISS_SWITCH_SYS* system );
 static BOOL ISS_SWITCH_RESERVE_IsUse( const ISS_SWITCH_RESERVE *wk );
+
+// 予約 音量
+static void ReserveVolumeSet( ISS_SWITCH_SYS* system, int volume, u16 fadeFrame, u16 bgm );
+static void ISS_SWITCH_RESERVE_VOLUME_Set( ISS_SWITCH_RESERVE_VOLUME *wk, int volume, u16 fadeFrame, u16 bgm );
+static void ISS_SWITCH_RESERVE_VOLUME_Main( ISS_SWITCH_RESERVE_VOLUME *wk, ISS_SWITCH_SYS* system );
+static BOOL ISS_SWITCH_RESERVE_VOLUME_IsUse( const ISS_SWITCH_RESERVE_VOLUME *wk );
+static void ISS_SWITCH_RESERVE_VOLUME_Clear( ISS_SWITCH_RESERVE_VOLUME *wk );
 
 //===============================================================================
 // ■public method
@@ -137,6 +156,14 @@ void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* system )
       {
         ISS_SWITCH_RESERVE_Main( wk, system );
       }
+    }
+  }
+  {
+    // 音量の予約
+    ISS_SWITCH_RESERVE_VOLUME *wk = &system->reserveVolumeData;
+    if( ISS_SWITCH_RESERVE_VOLUME_IsUse( wk ) )
+    {
+      ISS_SWITCH_RESERVE_VOLUME_Main( wk, system );
     }
   }
 
@@ -307,6 +334,33 @@ void ISS_SWITCH_SYS_ClearReserve( ISS_SWITCH_SYS* system )
   }
 }
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief 音量の予約する
+ *
+ * @param system
+ * @param volume    音量
+ * @param fadeFrame フェードフレーム数
+ * @param bgm       予約先のBGM番号
+ */
+//-------------------------------------------------------------------------------
+void ISS_SWITCH_SYS_ReserveVolume( ISS_SWITCH_SYS* system, int volume, u16 fadeFrame, u16 bgm )
+{
+  ReserveVolumeSet( system, volume, fadeFrame, bgm );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約設定をクリア 音量
+ *
+ *	@param	ISS_SWITCH_SYS* system 
+ */
+//-----------------------------------------------------------------------------
+void ISS_SWITCH_SYS_ClearReserveVolume( ISS_SWITCH_SYS* system )
+{
+  ISS_SWITCH_RESERVE_VOLUME *wk  = &system->reserveVolumeData;
+  ISS_SWITCH_RESERVE_VOLUME_Clear( wk );
+}
+
 //===============================================================================
 // ■private method
 //===============================================================================
@@ -332,6 +386,7 @@ static void InitializeSystem( ISS_SWITCH_SYS* system )
       ISS_SWITCH_RESERVE_Clear( &system->reserveData[i] );
     }
   }
+  ISS_SWITCH_RESERVE_VOLUME_Clear( &system->reserveVolumeData );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-S: init system\n" );
@@ -881,6 +936,103 @@ static void ISS_SWITCH_RESERVE_Main( ISS_SWITCH_RESERVE *wk, ISS_SWITCH_SYS* sys
  */
 //-----------------------------------------------------------------------------
 static BOOL ISS_SWITCH_RESERVE_IsUse( const ISS_SWITCH_RESERVE *wk )
+{
+  return wk->is_use;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スイッチの予約
+ *	        BOOTしていないときや、BGM変更前のときにON,OFFを事前設定する
+ *
+ *  @param system
+ *	@param  volume      音量
+ *	@param  fadeFrame   フェードフレーム
+ *  @param bgm       予約先のBGM番号
+ */
+//-----------------------------------------------------------------------------
+static void ReserveVolumeSet( ISS_SWITCH_SYS* system, int volume, u16 fadeFrame, u16 bgm )
+{
+
+  ISS_SWITCH_RESERVE_VOLUME *wk = &system->reserveVolumeData;
+  if( ISS_SWITCH_RESERVE_VOLUME_IsUse( wk ) == FALSE )
+  {
+    ISS_SWITCH_RESERVE_VOLUME_Set( wk, volume, fadeFrame, bgm );
+    return;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約設定
+ *
+ *	@param  wk          予約ワーク	
+ *	@param  volume      音量
+ *	@param  fadeFrame   フェードフレーム
+ *  @param  bgm         BGM
+ */
+//-----------------------------------------------------------------------------
+static void ISS_SWITCH_RESERVE_VOLUME_Set( ISS_SWITCH_RESERVE_VOLUME *wk, int volume, u16 fadeFrame, u16 bgm )
+{
+  ISS_SWITCH_RESERVE_VOLUME_Clear( wk );
+  wk->volume    = volume;
+  wk->fadeFrame = fadeFrame;
+  wk->bgm       = bgm;
+  wk->is_use    = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約ワークをクリア
+ *
+ *	@param	ISS_SWITCH_RESERVE_VOLUME *wk 予約
+ */
+//-----------------------------------------------------------------------------
+static void ISS_SWITCH_RESERVE_VOLUME_Clear( ISS_SWITCH_RESERVE_VOLUME *wk )
+{
+  GFL_STD_MemClear( wk, sizeof(ISS_SWITCH_RESERVE_VOLUME) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  予約メイン
+ *
+ *	@param	ISS_SWITCH_RESERVE_VOLUME *wk  予約ワーク
+ *	@param	system                  システムワーク
+ */
+//-----------------------------------------------------------------------------
+static void ISS_SWITCH_RESERVE_VOLUME_Main( ISS_SWITCH_RESERVE_VOLUME *wk, ISS_SWITCH_SYS* system )
+{
+  ISS_SWITCH_SET* set;
+
+  if( wk->is_use == FALSE )
+  {
+    return;
+  }
+
+  set = GetCurrentSwitchSet( system );
+  if( set )
+  {
+    if( wk->bgm == GetCurrentBGM() )
+    {
+      ISS_SWITCH_SET* set = GetCurrentSwitchSet( system );
+      ISS_SWITCH_SET_SetVlolume( set, wk->volume, wk->fadeFrame );
+      ISS_SWITCH_RESERVE_VOLUME_Clear( wk );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  使用フラグを設定
+ *
+ *	@param	const ISS_SWITCH_RESERVE_VOLUME *wk ワーク
+ *
+ *	@return TRUE使用  FALSE不使用
+ */
+//-----------------------------------------------------------------------------
+static BOOL ISS_SWITCH_RESERVE_VOLUME_IsUse( const ISS_SWITCH_RESERVE_VOLUME *wk )
 {
   return wk->is_use;
 }

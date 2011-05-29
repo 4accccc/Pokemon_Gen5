@@ -342,6 +342,8 @@ void ISS_SWITCH_SET_SetVlolume( ISS_SWITCH_SET* set, const int volume, const u16
     return;
   }
 
+  // 初期化
+  set->fadeCount = 0;
   // フェードフレーム数セット
   set->fadeFrame = fadeFrame;
   // 現在の音量との差
