@@ -111,6 +111,24 @@ void * FLDEFF_GYOE_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 	gyoe = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_GYOE) );
 	gyoe->fectrl = fectrl;
 	gyoe_InitResource( gyoe );
+
+  // フォグを無効にする ichiraku 11/05/29
+  // この段階では、ワークが登録されていないので、下記関数が使えない
+  // よって、関数内の処理をそのまま記述する
+  // FLDEFF_GYOE_FogEnableFlg( fectrl, FALSE );
+  {
+    int i;
+    for( i=0; i<FLDEFF_GYOETYPE_MAX; i++ )
+    {
+      NNSG3dResMdl*   mdl;
+      mdl = NNS_G3dRenderObjGetResMdl
+        (GFL_G3D_RENDER_GetRenderObj( gyoe->g3d_rnd[i] ) );
+
+      // fog enable flag設定
+      NNS_G3dMdlSetMdlFogEnableFlagAll( mdl, FALSE );
+    }
+  }
+
 	return( gyoe );
 }
 

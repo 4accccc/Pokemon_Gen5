@@ -15,7 +15,6 @@
 // field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "field_task_player_trans.h" // for FIELD_TASK_TransPlayer
-#include "fldeff_gyoe.h"
 
 // zone
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C05
@@ -341,12 +340,6 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr);
 
 
 //-------------------------------------
-///	視線トレーナーのギョエ設定
-//=====================================
-static void TRAINER_GYOE_Init( FIELDMAP_WORK *p_fieldmap );
-static void TRAINER_GYOE_Exit( FIELDMAP_WORK *p_fieldmap );
-
-//-------------------------------------
 ///	セーブ情報 ギミック外でも破棄されない
 //=====================================
 static void SAVE_SetLiftArrival( GIMMICKWORK* p_gmkwk, const BOOL *arrival );
@@ -407,9 +400,6 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
   // リフト情報初期化
   LIFT_Init( p_wk );
 
-  // 視線トレーナーのギョエ初期化
-  TRAINER_GYOE_Init( p_fieldmap );
-
   ICHI_Printf( "EXP_OBJ確保後 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
 
 #ifdef GYM_GROUND_DEBUG_MENU
@@ -435,9 +425,6 @@ void GYM_GROUND_End(FIELDMAP_WORK *p_fieldmap)
 #ifdef GYM_GROUND_DEBUG_MENU
   DEBUGMENU_Exit();
 #endif // GYM_GROUND_DEBUG_MENU
-
-  // 視線トレーナーのギョエ破棄
-  TRAINER_GYOE_Exit( p_fieldmap );
 
   // セーブデータ保存
   SAVE_SetLiftArrival( p_gmkwk, p_wk->lift_arrival );
@@ -1998,36 +1985,6 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
   //停止にしておく
   anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_UNIT_IDX, obj_idx, anm_idx);
   FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
-}
-
-//=============================================================================
-/**
- *            視線トレーナーのギョエ設定
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief  トレーナー視線のギョエのフォグフラグを無効にする
- *
- *	@param	*p_fieldmap   フィールドワーク
- */
-//-----------------------------------------------------------------------------
-static void TRAINER_GYOE_Init( FIELDMAP_WORK *p_fieldmap )
-{
-  FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( p_fieldmap );
-  FLDEFF_GYOE_FogEnableFlg( fectrl, FALSE );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  トレーナー視線のギョエのフォグフラグを有効にする
- *
- *	@param	*p_fieldmap 
- */
-//-----------------------------------------------------------------------------
-static void TRAINER_GYOE_Exit( FIELDMAP_WORK *p_fieldmap )
-{
-  FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( p_fieldmap );
-  FLDEFF_GYOE_FogEnableFlg( fectrl, TRUE );
 }
 
 //=============================================================================
