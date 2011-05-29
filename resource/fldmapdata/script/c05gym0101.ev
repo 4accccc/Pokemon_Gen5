@@ -343,7 +343,7 @@ _RET
 move_camera_wait:
 {
   _CAMERA_WAIT_MOVE()   // カメラ移動待ち
-  _TIME_WAIT(60)        // 高さMAXでの待機時間
+  _LAST_KEYWAIT()    // 高さMAXでの待機時間
 
   // デフォルトカメラに戻す(リフト別)
   // _CAMERA_DEF_MOVEで戻すとちらつくので、座標を直指定
