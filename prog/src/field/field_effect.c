@@ -132,7 +132,6 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
   fectrl->arcHandle = GFL_ARC_OpenDataHandle( ARCID_FLDEFF, heapID );
 
   { //季節変化用データ取得
-    u16 area_id = ZONEDATA_GetAreaID( FIELDMAP_GetZoneID( fieldMapWork ));
     fectrl->season_id = PMSEASON_GetConsiderCommSeason( FIELDMAP_GetGameSysWork( fieldMapWork ) );
     fectrl->area_inout_switch= AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldMapWork ) );
   }

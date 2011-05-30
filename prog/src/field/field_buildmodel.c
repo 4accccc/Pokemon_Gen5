@@ -509,7 +509,6 @@ void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
 //------------------------------------------------------------------
 void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, u8* gray_scale)
 {	
-	u16 area_id = ZONEDATA_GetAreaID(zoneid);
 	u16 bmlist_index;
   ARCID bmtex_arc_id;
   ARCID mdl_arc_id;
