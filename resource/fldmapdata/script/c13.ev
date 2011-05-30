@@ -631,6 +631,9 @@ _TALK_OBJ_START()
 		_FLAG_RESET(FV_C13R0401_SWRIVAL)
 		_FLAG_RESET(FV_C13R0401_PILOT)
 		
+		//どくジムにホミカ表示
+		_FLAG_RESET(FV_C13GYM0102_SWLEADER2)
+		
 	
 		//========================================/
 	

@@ -106,7 +106,7 @@ INIT_EVENT_START  ev_init_c13gym0102
       // ⇒プログラムで処理
 
       // アニメポーズOFF
-      _GYM_POISON_ISS_OBJ_STOP( C13GYM0102_HEADS_01 )
+      //_GYM_POISON_ISS_OBJ_STOP( C13GYM0102_HEADS_01 )
     ENDIF
 
     IF $LOCALWORK1 == 1 THEN
@@ -140,6 +140,9 @@ EVENT_START	ev_c13gym0102_swleader2_01
     {
       _TALK_OBJ_START()
 
+          // ISSスイッチOFF
+          _CALL sub_iss_off_vocal
+
       //バッジフラグ取得
       _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
       //ジムバッジフラグで分岐
@@ -149,9 +152,6 @@ EVENT_START	ev_c13gym0102_swleader2_01
       ELSE
         // 話す前にISSをOFFにする
         {
-          // ISSスイッチOFF
-          _CALL sub_iss_off_vocal
-
           // スピーカーアニメOFF
           _GYM_POISON_ANM_STOP(0)
           _GYM_POISON_ANM_STOP(1)
@@ -390,7 +390,7 @@ sub_iss_off_drum:
 	  _ISS_SWITCH_OFF( 1 )
 
     // アニメポーズOFF
-    _GYM_POISON_ISS_OBJ_STOP( C13GYM0102_HEADS_01 )
+    //_GYM_POISON_ISS_OBJ_STOP( C13GYM0102_HEADS_01 )
 
     // フラグON
     $LOCALWORK0 = 1
