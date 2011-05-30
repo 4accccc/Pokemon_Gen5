@@ -121,6 +121,9 @@ BOOL POKE_GTS_BanPokeCheck(POKEMON_TRADE_WORK* pWork, POKEMON_PASO_PARAM* ppp)
     if( PokeRegulationCheckLegend(no) ){
       return TRUE;
     }
+    if( PPP_CheckSwanOnlyPoke( ppp )){
+      return TRUE;  //‡‘ÌƒLƒ…ƒŒƒ€‚È‚Ç‚ÍŒğŠ·•s‰Â
+    }
   }
   return FALSE;
 }

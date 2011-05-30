@@ -1957,28 +1957,31 @@ static void _notWazaChangePoke2(POKEMON_TRADE_WORK* pWork)
   }
 }
 
-
-
-//‚Ð‚Å‚ñ‚í‚´ŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½
-static void _notWazaChangePoke(POKEMON_TRADE_WORK* pWork)
+//ŒðŠ·‰Â•s‰ÂŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½
+static void _notChangePokeCore(POKEMON_TRADE_WORK* pWork, int msg, BOOL msg_fast_f)
 {
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_03, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpen(pWork);
+  GFL_MSG_GetString( pWork->pMsgData, msg, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpenCustom(pWork,msg_fast_f,FALSE);
   pWork->oldLine = -1;
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ
   _CHANGE_STATE(pWork,_notWazaChangePoke2);
 }
 
-//“Á•Ê‚Èƒ|ƒPƒ‚ƒ“ŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½
+//‚Ð‚Å‚ñ‚í‚´ŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½
+static void _notWazaChangePoke(POKEMON_TRADE_WORK* pWork)
+{
+  _notChangePokeCore( pWork, POKETRADE_STR2_03_00, FALSE );
+}
+//ƒXƒƒ“V‹K‚Ìƒ|ƒPƒ‚ƒ“ŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½
+static void _notSwanOnlyChangePoke(POKEMON_TRADE_WORK* pWork)
+{
+  _notChangePokeCore( pWork, POKETRADE_STR2_03_01, TRUE );
+}
+
+//“Á•Ê‚Èƒ|ƒPƒ‚ƒ“ŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½(GTS)
 static void _notLegendChangePoke(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_09, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
-//  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_03, pWork->pMessageStrBuf );
-//  POKETRADE_MESSAGE_WindowOpen(pWork);
-  pWork->oldLine = -1;
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ
-  _CHANGE_STATE(pWork,_notWazaChangePoke2);
+  _notChangePokeCore( pWork, gtsnego_info_09, TRUE );
 }
 
 static void _dispSubStateWait2(POKEMON_TRADE_WORK* pWork)
@@ -2165,6 +2168,10 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
         _CHANGE_STATE(pWork, _dispSubStateWait_SendFlg);
+      }
+      else if( PPP_CheckSwanOnlyPoke(ppp) == TRUE ){ //‡‘ÌƒLƒ…ƒŒƒ€‚È‚Ç‚ÍŒðŠ·•s‰Â
+        _CHANGE_STATE(pWork, _notSwanOnlyChangePoke);
+        POKE_GTS_VisibleFaceIcon(pWork,TRUE);
       }
       else if(POKEMONTRADE_IsWazaPokemon(pWork,pWork->underSelectBoxno,pWork->underSelectIndex)){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
         POKE_GTS_VisibleFaceIcon(pWork,TRUE);
@@ -2362,7 +2369,7 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
     msgno = POKETRADE_STR_97;
   }
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_WAZA){
-    msgno = POKETRADE_STR2_03;
+    msgno = POKETRADE_STR2_03_00;
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_MAIL){
     msgno = POKETRADE_STR_97;
@@ -3791,13 +3798,22 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   if( !GFL_UI_TP_GetCont() ){ //—£‚µ‚½  ‚È‚°‚é
     if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
+      POKEMON_PASO_PARAM* ppp = 
+        IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->workBoxno, pWork->workPokeIndex, pWork );
+
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
-      if(POKEMONTRADE_IsWazaPokemon(pWork, pWork->workBoxno, pWork->workPokeIndex)){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
+
+      if( PPP_CheckSwanOnlyPoke(ppp) == TRUE ){ //ƒXƒƒ“V‹K‚ÍŒðŠ·•s‰Â
         pWork->workBoxno = -1;
         pWork->workPokeIndex = -1;
- //       pWork->selectIndex = -1;
- //       pWork->selectBoxno = -1;
+        _CatchPokemonRelease(pWork);
+        _CHANGE_STATE(pWork,_notSwanOnlyChangePoke);
+        return;
+      }
+      else if(POKEMONTRADE_IsWazaPokemon(pWork, pWork->workBoxno, pWork->workPokeIndex)){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
+        pWork->workBoxno = -1;
+        pWork->workPokeIndex = -1;
         _CatchPokemonRelease(pWork);
         _CHANGE_STATE(pWork,_notWazaChangePoke);
         return;

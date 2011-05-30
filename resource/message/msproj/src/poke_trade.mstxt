@@ -3376,7 +3376,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="POKETRADE_STR2_03"
+		Label="POKETRADE_STR2_03_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3404,10 +3404,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>仮メッセージ</Comment>
+			<Comment />
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="iwasawa:W00270"
+				Time="2011-05-30T03:58:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3416,6 +3416,50 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:23" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="POKETRADE_STR2_03_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　ポケモンは
+こうかん　できません</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-30T05:03:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-30T05:03:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　ポケモンは
+交換　できません</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-30T05:04:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-30T05:03:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン追加
+
+スワンで新規に追加されたフォルムのポケモンが
+交換できない旨のメッセージ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-05-30T03:59:42" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="POKETRADE_STR2_04"
