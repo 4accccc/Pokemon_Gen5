@@ -13,6 +13,7 @@
 
 //sys
 #include "pokewood_cutin_script_search.cdat"
+#include "sound\pm_sndsys.h"
 
 //arc
 #include "arc/arc_def.h"
@@ -51,6 +52,8 @@
 #define POKEWOOD_WND_END_POS_X    (128)
 #define POKEWOOD_WND_END_POS_Y    (96)
 
+#define POKEWOOD_SLOWDOWN_VELOCITY (FX32_CONST(50))
+
 //-------------------------------------
 //	等速直線運動動作
 //=====================================
@@ -62,6 +65,20 @@ typedef struct {
 	int sync_now;		//現在のシンク
 	int sync_max;		//シンク最大数
 } PROGVAL_VELOCITY_WORK;
+
+//-------------------------------------
+//	等加速度直線運動	シンク非同期 最大値版
+//=====================================
+typedef struct {
+	VecFx32 now_val;		//現在の値
+	VecFx32 start_val;	//開始の値
+	VecFx32 end_val;		//終了の値
+  VecFx32 vec;
+	fx32 velocity;	//初速度
+	fx32 aclr;			//加速度
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+} PROGVAL_ACLR_WORK;
 
 //-------------------------------------
 ///	引数
@@ -107,6 +124,7 @@ struct _POKEWOOD_CUTIN
   union
   {
     PROGVAL_VELOCITY_WORK   vel;
+    PROGVAL_ACLR_WORK       aclr;
   };
 };
 
@@ -117,7 +135,7 @@ static void Bw_Graphic_Load( POKEWOOD_CUTIN *p_wk, ARCDATID plt, ARCDATID chr, A
 static void Bw_Graphic_UnLoad( POKEWOOD_CUTIN *p_wk );
 static ARCDATID Bw_Binary_GetArcDatId( int senario, int event );
 
-//スクリプトコマンド
+//スクリプトコマンド-----
 static BOOL Bw_Scrcmd_WndMove( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_WndMoveEx( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_WndScale( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
@@ -125,18 +143,33 @@ static BOOL Bw_Scrcmd_WndVisible( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRI
 static BOOL Bw_Scrcmd_ResChange( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_Wait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_Message( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Scrcmd_SePlay( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Scrcmd_SeWait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Scrcmd_SeStop( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 
-//移動命令
+//移動コマンド-----
 static void Bw_Move_Velocity_Init( POKEWOOD_CUTIN *p_wk, const GFL_CLWK *cp_clwk, const PW_SCRIPT_CMD_PARAM *cp_param );
 static void Bw_Move_Velocity_InitEx( POKEWOOD_CUTIN *p_wk, const GFL_CLWK *cp_clwk, const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Move_Velocity_Main( POKEWOOD_CUTIN *p_wk );
 static void Bw_Move_Velocity_GetPos( POKEWOOD_CUTIN *p_wk, GFL_CLACTPOS *p_clpos );
+static void Bw_Move_SlowDown_Init( POKEWOOD_CUTIN *p_wk, const GFL_CLWK *cp_clwk, const PW_SCRIPT_CMD_PARAM *cp_param );
+static void Bw_Move_SlowDown_InitEx( POKEWOOD_CUTIN *p_wk, const GFL_CLWK *cp_clwk, const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Move_SlowDown_Main( POKEWOOD_CUTIN *p_wk );
+static void Bw_Move_SlowDown_GetPos( POKEWOOD_CUTIN *p_wk, GFL_CLACTPOS *p_clpos );
 
+//移動コマンドで使用する移動開始点、終了点の取得
 static void Bw_Move_GetMovePos( int move_dir, const GFL_CLWK *cp_clwk, GFL_POINT *p_start, GFL_POINT *p_end );
 static void Bw_Move_GetMovePosEx( int move_dir, int dst, const GFL_CLWK *cp_clwk, GFL_POINT *p_start, GFL_POINT *p_end );
+
+//移動命令-----
+//等速
 static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int sync );
 static BOOL PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
 static void PROGVAL_VEL_GetPos( const PROGVAL_VELOCITY_WORK* cp_wk, GFL_CLACTPOS *p_pos );
+//加速
+static void PROGVAL_ACLR_Init( PROGVAL_ACLR_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, fx32 velocity, int sync );
+static BOOL PROGVAL_ACLR_Main( PROGVAL_ACLR_WORK* p_wk );
+static void PROGVAL_ACLR_GetPos( const PROGVAL_ACLR_WORK* cp_wk, GFL_CLACTPOS *p_pos );
 
 //-------------------------------------
 ///	データ
@@ -151,6 +184,9 @@ static const PW_SCRIPT_COMMAND Pw_Script_Command[] =
   Bw_Scrcmd_ResChange,    //PW_CUTIN_CMD_RES_CHANGE
   Bw_Scrcmd_Wait,         //PW_CUTIN_CMD_WAIT
   Bw_Scrcmd_Message,      //PW_CUTIN_CMD_MESSAGE
+  Bw_Scrcmd_SePlay,       //PW_CUTIN_CMD_SE_PLAY
+  Bw_Scrcmd_SeWait,       //PW_CUTIN_CMD_SE_WAIT
+  Bw_Scrcmd_SeStop,       //PW_CUTIN_CMD_SE_STOP
 };
 
 //移動コマンド
@@ -168,6 +204,13 @@ static const struct
     Bw_Move_Velocity_InitEx,
     Bw_Move_Velocity_Main,
     Bw_Move_Velocity_GetPos,
+  },
+  //PW_CUTIN_DEF_MOVE_TYPE_SLOWDOWN
+  {
+    Bw_Move_SlowDown_Init,
+    Bw_Move_SlowDown_InitEx,
+    Bw_Move_SlowDown_Main,
+    Bw_Move_SlowDown_GetPos,
   },
 };
 
@@ -275,6 +318,7 @@ void POKEWOOD_CUTIN_Main( POKEWOOD_CUTIN *p_wk )
     {
       int cmd_no;
       cmd_no = PW_CUTIN_BINARY_GetScriptData( p_wk->p_binary, p_wk->script_seq, PW_CUTIN_BINARY_SCR_PARAM_CMD );
+      GF_ASSERT( cmd_no < NELEMS(Pw_Script_Command) );
       p_wk->cmd = Pw_Script_Command[cmd_no];
       PW_CUTIN_Printf( "cutin cmd[%d] ", cmd_no );
     }
@@ -373,6 +417,39 @@ BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event )
 {
   return Bw_Binary_GetArcDatId( cp_senario->senario_no, event ) != POKEWOOD_CUTIN_EVENT_NONE;
 }
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  cnt目のカットインイベントを取得する
+ *
+ *	@param	const POKEWOOD_SENARIO * cp_senario シナリオ
+ *	@param	cnt   カウンタ
+ *
+ *	@return 0xFFFF：イベントなし　　それ以外：イベントがある
+ */
+//-----------------------------------------------------------------------------
+BOOL DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( const POKEWOOD_SENARIO * cp_senario, u16 cnt, u16 *pw_event_no )
+{
+  int i;
+  int ev_cnt = 0;
+
+  for( i = 0; NELEMS(sc_pw_cutin_dat_search); i++ )
+  {
+    if( sc_pw_cutin_dat_search[i].senario == cp_senario->senario_no )
+    {
+      if( ev_cnt == cnt )
+      {
+        *pw_event_no = sc_pw_cutin_dat_search[i].event;
+        return TRUE;
+      }
+      ev_cnt++;
+    }
+  }
+
+  return FALSE;
+}
+#endif
 //----------------------------------------------------------------------------
 /**
  *	@brief　グラフィック読み込み
@@ -704,8 +781,28 @@ static BOOL Bw_Scrcmd_Message( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_
   case SEQ_START_MSG:
     {
       const POKEWOOD_EVENT_DATA *cp_ev = &p_wk->cp_senario->event[ p_wk->event ];
+      int message;
+
+      if( cp_param->param[0] >= EVENT_TALK_TURN_MAX )
+      {
+        if( cp_param->param[1] == PW_CUTIN_DEF_MES_TYPE_PLAYER )
+        {
+          message = cp_ev->reaction[ cp_param->param[0] - EVENT_TALK_TURN_MAX ].my_message;
+        }
+        else
+        {
+          message = cp_ev->reaction[ cp_param->param[0] - EVENT_TALK_TURN_MAX ].enemy_message;
+        }
+      }
+      else
+      {
+        message = cp_ev->talk_msg[ cp_param->param[1] ][ cp_param->param[0] ];
+      }
+
+      GF_ASSERT_MSG( message != 0, "CUTINのメッセージコマンドがメッセージがない箇所を引数にしています! 引数1=%d 引数2=%d\n", cp_param->param[0], cp_param->param[1] );
+
       BTLV_STRPARAM_Setup( &p_wk->str_param, BTL_STRTYPE_POKEWOOD_TURNTALK, 
-                         cp_ev->talk_msg[ cp_param->param[1] ][ cp_param->param[0] ] );
+                          message );
       BTLV_StartMsg( p_wk->p_core, &p_wk->str_param );
       (*p_seq)++;
     }
@@ -719,6 +816,55 @@ static BOOL Bw_Scrcmd_Message( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief　SE再生
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_seq                シーケンス
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param   引数
+ *
+ *	@return TRUE コマンド終了 FALSE　コマンド継続中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Scrcmd_SePlay( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  PMSND_PlaySE( cp_param->param[0] );
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　SE待機
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_seq                シーケンス
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param   引数
+ *
+ *	@return TRUE コマンド終了 FALSE　コマンド継続中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Scrcmd_SeWait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  return !PMSND_CheckPlaySE();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief　SE停止
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_seq                シーケンス
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param   引数
+ *
+ *	@return TRUE コマンド終了 FALSE　コマンド継続中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Scrcmd_SeStop( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  PMSND_StopSE();
+  return TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -780,6 +926,65 @@ static void Bw_Move_Velocity_GetPos( POKEWOOD_CUTIN *p_wk, GFL_CLACTPOS *p_clpos
 {
   PROGVAL_VEL_GetPos( &p_wk->vel, p_clpos );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  減速動作初期化
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk　ワーク
+ *	@param	GFL_CLWK *cp_clwk 動かすCLWK
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param 引数
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Move_SlowDown_Init( POKEWOOD_CUTIN *p_wk, const GFL_CLWK *cp_clwk, const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  GFL_POINT start;
+  GFL_POINT end;
+
+  Bw_Move_GetMovePos( cp_param->param[2], cp_clwk, &start, &end );
+  PROGVAL_ACLR_Init( &p_wk->aclr, &start, &end, POKEWOOD_SLOWDOWN_VELOCITY, cp_param->param[3] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  減速動作初期化 拡張版
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_clwk 動かすCLWK
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param 引数
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Move_SlowDown_InitEx( POKEWOOD_CUTIN *p_wk, const GFL_CLWK *cp_clwk, const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  GFL_POINT start;
+  GFL_POINT end;
+
+  Bw_Move_GetMovePosEx( cp_param->param[2], cp_param->param[4], cp_clwk, &start, &end );
+  PROGVAL_ACLR_Init( &p_wk->aclr, &start, &end, POKEWOOD_SLOWDOWN_VELOCITY, cp_param->param[3] );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  減速動作　メイン
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *
+ *	@return TRUEで終了  FALSEで続行
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Move_SlowDown_Main( POKEWOOD_CUTIN *p_wk )
+{
+  return PROGVAL_ACLR_Main( &p_wk->aclr );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 座標取得
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_clpos  座標
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Move_SlowDown_GetPos( POKEWOOD_CUTIN *p_wk, GFL_CLACTPOS *p_clpos )
+{
+  PROGVAL_ACLR_GetPos( &p_wk->aclr, p_clpos );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -795,8 +1000,8 @@ static void Bw_Move_GetMovePos( int move_dir, const GFL_CLWK *cp_clwk, GFL_POINT
 {
   enum
   {
-    MOVE_WIDTH  = 192,
-    MOVE_HEIGHT = 192,
+    MOVE_WIDTH  = 256,
+    MOVE_HEIGHT = 256,
   };
 
   GFL_CLACTPOS clpos;
@@ -996,6 +1201,95 @@ void PROGVAL_VEL_GetPos( const PROGVAL_VELOCITY_WORK* cp_wk, GFL_CLACTPOS *p_pos
   p_pos->y = cp_wk->now_val.y;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief　等加速運動初期化
+ *
+ *	@param	PROGVAL_ACLR_WORK* p_wk ワーク
+ *	@param	GFL_POINT *cp_start 開始点
+ *	@param	GFL_POINT *cp_end   終了点
+ *	@param	velocity  初速
+ *	@param	sync      かかるシンク
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_ACLR_Init( PROGVAL_ACLR_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, fx32 velocity, int sync )
+{
+	fx32 t_x_t;	// タイムの２乗
+	fx32 vot;	// 初速度＊タイム
+	fx32 dis;
+	fx32 a;
+
+  fx32 num;
+
+  VEC_Set( &p_wk->now_val, FX32_CONST(cp_start->x),FX32_CONST(cp_start->y),0);
+  VEC_Set( &p_wk->start_val, FX32_CONST(cp_start->x),FX32_CONST(cp_start->y),0);
+  VEC_Set( &p_wk->end_val, FX32_CONST(cp_end->x),FX32_CONST(cp_end->y),0);
+
+  dis = VEC_Distance( &p_wk->end_val, &p_wk->start_val );
+
+  VEC_Subtract( &p_wk->end_val, &p_wk->start_val, &p_wk->vec );
+  VEC_Normalize( &p_wk->vec, &p_wk->vec );
+
+	// 加速値を求める
+	// a = 2(x - vot)/(t*t)
+	t_x_t	= (sync * sync) << FX32_SHIFT;
+	vot		= velocity * sync;
+	vot		= (dis - vot) * 2;
+	a		  = FX_Div( vot, t_x_t );
+
+	p_wk->velocity	= velocity;
+	p_wk->aclr		= a;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等加速運動メイン処理（毎フレームよぶこと）
+ *
+ *	@param	PROGVAL_ACLR_WORK* p_wk ワーク
+ *
+ *	@return	TRUEなら処理終了、FALSEなら処理中。
+ */
+//-----------------------------------------------------------------------------
+static BOOL PROGVAL_ACLR_Main( PROGVAL_ACLR_WORK* p_wk )
+{
+	fx32 dis;
+	fx32 t_x_t;
+	fx32 calc_work;
+	fx32 vot;
+
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {
+		p_wk->sync_now++;
+
+		// 等加速度運動
+		// dis = vot + 1/2( a*(t*t) )
+		vot = FX_Mul( p_wk->velocity, p_wk->sync_now << FX32_SHIFT );
+		t_x_t = (p_wk->sync_now * p_wk->sync_now) << FX32_SHIFT;
+		calc_work = FX_Mul( p_wk->aclr, t_x_t );
+		calc_work = calc_work / 2;	// 1/2(a*(t*t))
+		dis = vot + calc_work;		///<移動距離
+
+    VEC_MultAdd( dis, &p_wk->vec, &p_wk->start_val, &p_wk->now_val );
+
+		return FALSE;
+	}else {
+		p_wk->now_val = p_wk->end_val;
+		return TRUE;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 等加速運動座標取得
+ *
+ *	@param	const PROGVAL_ACLR_WORK* cp_wk  ワーク
+ *	@param	*p_pos  座標
+ */
+//-----------------------------------------------------------------------------
+static void PROGVAL_ACLR_GetPos( const PROGVAL_ACLR_WORK* cp_wk, GFL_CLACTPOS *p_pos )
+{
+  p_pos->x = cp_wk->now_val.x >> FX32_SHIFT;
+  p_pos->y = cp_wk->now_val.y >> FX32_SHIFT;
+}
 //=============================================================================
 /**
  *					カットインスクリプトデータ読み込みモジュール

@@ -40,6 +40,10 @@ extern BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 eve
 //本体はbtl_main.cにある
 extern POKEWOOD_CUTIN * BTL_MAIN_GetPokewoodCutin( BTL_MAIN_MODULE *wk );
 
+#ifdef PM_DEBUG
+extern BOOL DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( const POKEWOOD_SENARIO * cp_senario, u16 cnt, u16 *pw_event_no );
+#endif
+
 //=============================================================================
 /**
  *					カットインスクリプトデータ読み込みモジュール

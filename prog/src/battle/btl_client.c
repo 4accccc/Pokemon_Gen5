@@ -1758,15 +1758,27 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   POKEWOOD_WORK    *p_work  = BTL_MAIN_GetPokewoodWork(wk->mainModule);
   POKEWOOD_CUTIN   *p_cutin = BTL_MAIN_GetPokewoodCutin( wk->mainModule );
 
-
   switch(wk->pw_seq){
   // イベントスタート
   case POKEWOOD_EVENT_SEQ_START:
     // このターンにイベントが存在しているかチェック
     wk->pw_event_no = _check_pokewood_event(senario, wk->clientTurnCount);
+
+    //カットインをすぐ見るためのデバッグ処理
+#ifdef PM_DEBUG
+    if( BTL_MAIN_GetDebugFlag( wk->mainModule, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) )
+    {
+      u16 event_no;
+      if( DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( senario, wk->clientTurnCount, &event_no ) )
+      {
+        wk->pw_event_no = event_no;
+      }
+    }
+#endif
+
     if(wk->pw_event_no>=0){
 
-      //TODO 本来は選択肢があたりだったとき
+      //TODO 本来は選択肢があたりだったとき->1に条件文を足す
       if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW 
           && POKEWOOD_CUTIN_IsExits( senario, wk->pw_event_no )
           && 1 )

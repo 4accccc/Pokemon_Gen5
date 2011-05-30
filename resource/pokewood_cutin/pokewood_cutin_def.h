@@ -26,6 +26,15 @@
 //メッセージ
 #define PW_CUTIN_CMD_MESSAGE  (5)
 #define PW_CUTIN_MESSAGE_PARAM_NUM (3)
+//SE再生
+#define PW_CUTIN_CMD_SE_PLAY  (6)
+#define PW_CUTIN_SE_PLAY_PARAM_NUM (1)
+//SE待機
+#define PW_CUTIN_CMD_SE_WAIT  (7)
+#define PW_CUTIN_SE_WAIT_PARAM_NUM (0)
+//SE停止
+#define PW_CUTIN_CMD_SE_STOP  (8)
+#define PW_CUTIN_SE_STOP_PARAM_NUM (0)
 //定義情報
 //移動方向：上から下
 #define PW_CUTIN_DEF_MOVE_DIR_DOWN  (0)
@@ -45,6 +54,8 @@
 #define PW_CUTIN_DEF_MOVE_DIR_RIGHT_DOWN  (7)
 //移動タイプ：等速
 #define PW_CUTIN_DEF_MOVE_TYPE_VELOCITY  (0)
+//移動タイプ：減速
+#define PW_CUTIN_DEF_MOVE_TYPE_SLOWDOWN  (1)
 //メッセージ：自分
 #define PW_CUTIN_DEF_MES_TYPE_PLAYER  (0)
 //メッセージ：相手

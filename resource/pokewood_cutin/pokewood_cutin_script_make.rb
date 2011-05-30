@@ -20,7 +20,8 @@ require "../resonance_resort/data/conv_tool.rb" #ÉÇÉWÉÖÅ[ÉãégÇ¢âÒÇµÇÃÇΩÇﬂÉäÉ]Å[É
 CONVNAME  = ARGV[0]
 NAIXNAME  = ARGV[1]
 SCRNAME   = ARGV[2]
-CDATNAME   = ARGV[3]
+CDATNAME  = ARGV[3]
+SADLNAME  = ARGV[4]
 
 H_ROW_SENARIO     = 1 
 H_ROW_EVENT       = 2 
@@ -43,7 +44,7 @@ begin
 
       #datÇÉRÉìÉoÅ[Ég
       target = file.sub( "\.csv", "" )
-      system( "ruby #{CONVNAME} #{file} #{NAIXNAME} #{target}" ) 
+      system( "ruby #{CONVNAME} #{file} #{NAIXNAME} #{SADLNAME} #{target}" ) 
 
       #cdatçÏê¨ÇÃÇΩÇﬂÇ…
       csv = CsvLoader.new
@@ -53,6 +54,8 @@ begin
 
       senario = csv.get( H_ROW_SENARIO, H_COL_VALUE )
       event   = csv.get( H_ROW_EVENT,   H_COL_VALUE )
+
+      event   = event.to_i - 1
 
       cdat.write( "\t{\n" )
       cdat.write( "\t\t#{senario.to_i},#{event.to_i}\n" )

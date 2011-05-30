@@ -22,6 +22,7 @@ cmdconv 	= pokewood_cutin_script_conv.rb
 arclistmk	= perl ${PROJECT_ROOT}/tools/arc_list_make.pl
 scrmk			= pokewood_cutin_script_make.rb
 cdatname	= pokewood_cutin_script_search
+sadlname 	= ../sound/swan_sound_data.sadl
 
 
 #------------------------------------------------------------------------------
@@ -102,8 +103,8 @@ $(targetname_scr).narc $(targetname_scr).naix: $(scrlist)
 	nnsarc -r -l -n -i $(targetname_scr) -S $(scrlist)
 	$(NAIXCUT) $(targetname_scr).naix
 
-$(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(targetname_gra).naix
-	$(scrmk) $(cmdconv) $(targetname_gra).naix $(scrname) $(cdatname)
+$(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(targetname_gra).naix $(sadlname)
+	$(scrmk) $(cmdconv) $(targetname_gra).naix $(scrname) $(cdatname) $(sadlname)
 	ls $(scrname)*.dat > $(scrlist)
 	$(arclistmk) $(scrlist)
 	rm $(scrtarget)

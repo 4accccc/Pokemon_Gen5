@@ -30,6 +30,10 @@ def checkArgument
     return false
   end
   if ARGV[2] == nil
+    puts "引数3にsadlファイル名を指定してください"
+    return false
+  end
+  if ARGV[3] == nil
     puts "引数３に出力ファイル名を指定してください"
     return false
   end
@@ -39,6 +43,10 @@ def checkArgument
   end
   unless FileTest.exists?(ARGV[1])
     puts "#{ARGV[1]}が見つかりません"
+    return false
+  end
+  unless FileTest.exists?(ARGV[2])
+    puts "#{ARGV[2]}が見つかりません"
     return false
   end
   return true
@@ -128,6 +136,12 @@ def  convertHeader( csv, data, naix )
 
   #データ書き込み    
   data.write_u16( senario )
+  
+  if event == 0 
+    puts "イベント番号は１～です。"
+    exit(1)
+  end
+  event = event.to_i - 1
   data.write_u16( event )
   data.write_u16( wnd_num )
   begin
@@ -164,7 +178,7 @@ SCR_COL_CMD         = 1         #列:コマンド
 SCR_COL_PARAM_START = 2         #列:引数開始
 SCR_COL_PARAM_END   = SCR_COL_PARAM_START+CMD_PARAM_MAX #列:引数開始
 
-def convertScript( csv, data, naix )
+def convertScript( csv, data, naix, sadl )
 
   for row in SCR_ROW_START...csv.row_length-1
 
@@ -211,6 +225,12 @@ def convertScript( csv, data, naix )
               data.write_u16( naix.search( param, cmd ) )
               param = param.sub(/_NCER/,"_NANR")
               next_param = naix.search( param, cmd )
+            rescue HeaderSearchError
+              exit(1)
+            end
+          when "SE名"
+            begin
+              data.write_u16( sadl.search( param.to_s, cmd ) )
             rescue HeaderSearchError
               exit(1)
             end
@@ -262,11 +282,15 @@ begin
   naixdata = HeaderDataArray.new
   naixdata.load( ARGV[1] )
 
+  #sadlデータの作成
+  sadldata = HeaderDataArray.new
+  sadldata.load( ARGV[2] )
+
   #コンバート
   convertHeader( hCsv, data, naixdata )
-  convertScript( scrCsv, data, naixdata )
+  convertScript( scrCsv, data, naixdata, sadldata )
 
   #date書き込み
-  data.genelate( "#{ARGV[2]}.dat" )
+  data.genelate( "#{ARGV[3]}.dat" )
 
 end

@@ -2773,6 +2773,11 @@ static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* 
   if( save->fSkipBtlIn)     { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_SKIP_BTLIN );  }
   if( save->fAICtrl)        { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_AI_CTRL );  }
   if( save->fShooterMode)   { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_SHOOTER_MODE );  }
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
+  {
+    BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_POKEWOOD_CUTIN );
+  }
 }
 /**
  *  デバッグフラグの全オフ

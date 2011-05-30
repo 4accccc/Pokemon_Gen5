@@ -261,6 +261,8 @@ typedef enum {
   BTL_DEBUGFLAG_SKIP_BTLIN,     ///< 入場エフェクトスキップ（非通信時のみ）
   BTL_DEBUGFLAG_AI_CTRL,        ///< AIを起動せずにプレイヤーが操作する
   BTL_DEBUGFLAG_SHOOTER_MODE,   ///< 非通信時もシューターモードでバッグ画面を起動
+  //[SWANから追加]
+  BTL_DEBUGFLAG_POKEWOOD_CUTIN,   ///< ポケウッド上映時カットインをすぐにみる
 
   BTL_DEBUGFLAG_MAX,
 

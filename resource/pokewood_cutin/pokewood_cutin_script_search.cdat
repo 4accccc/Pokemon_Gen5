@@ -3,6 +3,6 @@ static const struct{
 	u16 event;
 } sc_pw_cutin_dat_search[] ={
 	{
-		0,2
+		0,1
 	},
 };
