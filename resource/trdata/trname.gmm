@@ -4821,18 +4821,18 @@
 	</row>
 
 	<row id="swsage2_01">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ＳＡＧＥ２</language>
+		<language name="JPN_KANJI" width="216">ＳＡＧＥ２</language>
 	</row>
 
 	<row id="swsage3_01">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ＳＡＧＥ３</language>
+		<language name="JPN_KANJI" width="216">ＳＡＧＥ３</language>
 	</row>
 
 	<row id="ninja_01">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ＮＩＮＪＡ</language>
+		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
 	</row>
 
 	<flowchart-group-list>
