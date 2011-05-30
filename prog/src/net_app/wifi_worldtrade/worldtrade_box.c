@@ -1354,7 +1354,6 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 {
 	POKEMON_PASO_PARAM *ppp;
 	u32 ret = WorldTrade_SelBoxMain( wk );
-	int error=0;
 	
 //	switch(BmpMenuMain( wk->BmpMenuWork )){
 	switch(ret){
@@ -1373,18 +1372,13 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 		BmpMenuWork_ListDelete( wk->BmpMenuList );
 
 		ppp = WorldTrade_GetPokePtr( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos);
+
 		if( PokeRibbonCheck( ppp ) ){
 			SubSeq_MessagePrint( wk, msg_gtc_01_038, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
-			//warningÇ…Ç»Ç¡ÇƒÇ¢ÇΩÇÃÇ≈èCê≥
-		else if((PokeNewFormCheck(ppp))){
-			error=PokeNewFormCheck(ppp);
-			if(error==1){
-				SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
-			}else{
-				SubSeq_MessagePrint( wk, msg_gtc_new_form_002, 1, 0, 0x0f0f, 1 );
-			}
+		else if(PPP_CheckSwanOnlyPoke(ppp)){
+		  SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
 		else if(PokeNewItemCheck(ppp)){
@@ -1492,8 +1486,6 @@ static int SubSeq_ExchangeSelectList( WORLDTRADE_WORK *wk )
 static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 {
 	POKEMON_PASO_PARAM *ppp;
-	int error=0;
-//	switch(BmpMenuMain( wk->BmpMenuWork )){
 	u32 ret = WorldTrade_SelBoxMain( wk );
 	
 	switch(ret){
@@ -1516,14 +1508,8 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 			SubSeq_MessagePrint( wk, msg_gtc_01_038, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
-			//warningÇ…Ç»Ç¡ÇƒÇ¢ÇΩÇÃÇ≈èCê≥
-		else if((PokeNewFormCheck(ppp))){
-			error=PokeNewFormCheck(ppp);
-			if(error==1){
-				SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
-			}else{
-				SubSeq_MessagePrint( wk, msg_gtc_new_form_002, 1, 0, 0x0f0f, 1 );
-			}
+		else if(PPP_CheckSwanOnlyPoke(ppp)){
+			SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
 		else if(PokeNewItemCheck(ppp)){
