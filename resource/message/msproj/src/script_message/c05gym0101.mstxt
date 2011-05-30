@@ -51,6 +51,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05gym0101_leader_02"
@@ -111,6 +118,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05gym0101_leader_03"
@@ -161,6 +175,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05gym0101_leader_04"
@@ -199,118 +220,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-
 　No405「じならし」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T04:08:29" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER5</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c05gym0101_leader_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ワシには　おまえの　さいのうが
-どれほどのものか　わからんが▼
-いけると　おもうなら　どこまでも▼
-やれると　おもうなら　いつまでも▼
-すきなように　やればいいじゃねえか
-げんかいを　きめるのは　じぶんってことだ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T04:09:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ワシには　おまえの　才能が
-どれほどのものか　わからんが▼
-行けると思うなら　どこまでも▼
-やれると思うなら　いつまでも▼
-好きなように　やればいいじゃねえか
-限界を決めるのは　自分ってことだ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T04:09:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・leader_04表示後
-　d06：電気石の洞窟ストッパー解除まで
-　繰り返し</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER5</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c05gym0101_leader_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T04:09:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T04:09:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T04:09:30" />
+				Time="2011-05-30T08:12:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -328,7 +241,132 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_leader_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワシには　おまえの　さいのうが
+どれほどのものか　わからんが▼
+いけると　おもうなら　どこまでも▼
+やれると　おもうなら　いつまでも▼
+すきなように　やればいいじゃねえか
+げんかいを　きめるのは　じぶんってことだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:12:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワシには　おまえの　才能が
+どれほどのものか　わからんが▼
+行けると思うなら　どこまでも▼
+やれると思うなら　いつまでも▼
+好きなように　やればいいじゃねえか
+限界を決めるのは　自分ってことだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、
+　一度主人公とは別の方向を向き
+・続けてleader_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:14:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER5</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_leader_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……そうだな
+ワシに　ついてこい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:13:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……そうだな
+ワシに　ついてこい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:13:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・リフトで上昇
+・c05gym0201へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:13:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER5</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -372,11 +410,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア後
-※swanでメッセージ修正予定</Comment>
+・クリア後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-05-30T08:14:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
