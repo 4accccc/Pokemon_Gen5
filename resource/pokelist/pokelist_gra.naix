@@ -39,7 +39,12 @@ enum {
 	NARC_pokelist_gra_list_ball_NANR = 25,
 	NARC_pokelist_gra_list_cursor_NANR = 26,
 	NARC_pokelist_gra_demo_girathina_spa = 27,
-	NARC_pokelist_gra_demo_sheimi_spa = 28
+	NARC_pokelist_gra_demo_kyuremu_perge_r_spa = 28,
+	NARC_pokelist_gra_demo_kyuremu_perge_z_spa = 29,
+	NARC_pokelist_gra_demo_kyuremu_union_spa = 30,
+	NARC_pokelist_gra_demo_resiramu_spa = 31,
+	NARC_pokelist_gra_demo_sheimi_spa = 32,
+	NARC_pokelist_gra_demo_zekuromu_spa = 33
 };
 
 /* NARC_POKELIST_GRA_NAIX_ */
