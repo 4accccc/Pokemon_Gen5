@@ -767,6 +767,7 @@ static D06_WORK * d06_getFieldMapD06Work( FIELDMAP_WORK *fieldmap )
 //--------------------------------------------------------------
 static int d06_ZoneID_to_GimmickID( u32 zone_id )
 {
+#if 0
   switch( zone_id ){
   case ZONE_ID_D06R0101:
     return( FLD_GIMMICK_D06R0101 );
@@ -777,4 +778,6 @@ static int d06_ZoneID_to_GimmickID( u32 zone_id )
   }
   GF_ASSERT( 0 );
   return( FLD_GIMMICK_D06R0101 );
+#endif
+  return FLD_GIMMICK_D06;
 }

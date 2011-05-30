@@ -2536,9 +2536,7 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
   }
 
   //D06“d‹C“´ŒA
-  if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0101) ||
-      FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0201) ||
-      FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0301) )
+  if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06) )
   {
     return( D06_GIMMICK_CheckPushEvent(fieldWork,req->player_dir) );
   }

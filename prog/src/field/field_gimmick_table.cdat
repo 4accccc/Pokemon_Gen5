@@ -1,0 +1,256 @@
+
+static const FLD_GMK_TABLE FieldGimmickTable[] = {
+  {
+    NULL,					//0:無し
+    NULL,					//0:無し
+    NULL,					//0:無し
+    NULL,					//0:無し
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_h01),
+    H01_GIMMICK_Setup,
+    H01_GIMMICK_End,
+    H01_GIMMICK_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_elec),
+    GYM_ELEC_Setup,
+    GYM_ELEC_End,
+    GYM_ELEC_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_normal),
+    GYM_NORMAL_Setup,
+    GYM_NORMAL_End,
+    GYM_NORMAL_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_anti),
+    GYM_ANTI_Setup,
+    GYM_ANTI_End,
+    GYM_ANTI_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_fly),
+    GYM_FLY_Setup,
+    GYM_FLY_End,
+    GYM_FLY_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_insect),
+    GYM_INSECT_Setup,
+    GYM_INSECT_End,
+    GYM_INSECT_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_ground),
+    GYM_GROUND_Setup,
+    GYM_GROUND_End,
+    GYM_GROUND_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_ground_ent),
+    GYM_GROUND_ENT_Setup,
+    GYM_GROUND_ENT_End,
+    GYM_GROUND_ENT_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_ice),                         //10
+    GYM_ICE_Setup,
+    GYM_ICE_End,
+    GYM_ICE_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gym_dragon),
+    GYM_DRAGON_Setup,
+    GYM_DRAGON_End,
+    GYM_DRAGON_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_h03),
+    H03_GIMMICK_Setup,
+    H03_GIMMICK_End,
+    H03_GIMMICK_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_gate),  // GATE
+    GATE_GIMMICK_Setup,
+    GATE_GIMMICK_End,
+    GATE_GIMMICK_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
+    D06_GIMMICK_Setup,
+    D06_GIMMICK_End,
+    D06_GIMMICK_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_lfront01),//LEAGUE_FRONT_01_GIMMICK_Setup,
+    LEAGUE_FRONT_01_GIMMICK_Setup,
+    LEAGUE_FRONT_01_GIMMICK_End,
+    LEAGUE_FRONT_01_GIMMICK_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_lfront02),//LEAGUE_FRONT_02_GIMMICK_Setup,    //30
+    LEAGUE_FRONT_02_GIMMICK_Setup,
+    LEAGUE_FRONT_02_GIMMICK_End,
+    LEAGUE_FRONT_02_GIMMICK_Move,
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bgate),
+    FLD_GIMMICK_JetBadgeGate_Setup,  //R10R0701
+    FLD_GIMMICK_JetBadgeGate_End,  //R10R0701
+    FLD_GIMMICK_JetBadgeGate_Move,  //R10R0701
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01002
+    BSUBWAY_GIMMICK_Setup, //C04R0102
+    BSUBWAY_GIMMICK_End, //C04R0102
+    BSUBWAY_GIMMICK_Move, //C04R0102
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01003
+    BSUBWAY_GIMMICK_Setup, //C04R0103
+    BSUBWAY_GIMMICK_End, //C04R0103
+    BSUBWAY_GIMMICK_Move, //C04R0103
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01004
+    BSUBWAY_GIMMICK_Setup, //C04R0104
+    BSUBWAY_GIMMICK_End, //C04R0104
+    BSUBWAY_GIMMICK_Move, //C04R0104
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01005
+    BSUBWAY_GIMMICK_Setup, //C04R0105
+    BSUBWAY_GIMMICK_End, //C04R0105
+    BSUBWAY_GIMMICK_Move, //C04R0105
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01006
+    BSUBWAY_GIMMICK_Setup, //C04R0106
+    BSUBWAY_GIMMICK_End, //C04R0106
+    BSUBWAY_GIMMICK_Move, //C04R0106
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01007
+    BSUBWAY_GIMMICK_Setup, //C04R0107
+    BSUBWAY_GIMMICK_End, //C04R0107
+    BSUBWAY_GIMMICK_Move, //C04R0107
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01008
+    BSUBWAY_GIMMICK_Setup, //C04R0108
+    BSUBWAY_GIMMICK_End, //C04R0108
+    BSUBWAY_GIMMICK_Move, //C04R0108
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01010              //40
+    BSUBWAY_GIMMICK_Setup, //C04R0110
+    BSUBWAY_GIMMICK_End, //C04R0110
+    BSUBWAY_GIMMICK_Move, //C04R0110
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01011
+    BSUBWAY_GIMMICK_Setup, //C04R0111
+    BSUBWAY_GIMMICK_End, //C04R0111
+    BSUBWAY_GIMMICK_Move, //C04R0111
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_r04d03),  // R04 and D03
+    R04D03_GIMMICK_Setup,    //R04 and D03
+    R04D03_GIMMICK_End,    //R04 and D03
+    R04D03_GIMMICK_Move,    //R04 and D03
+  },
+  {
+    FS_OVERLAY_ID(sppoke_gimmick),  // R08R0101
+    SPPOKE_GMK_SetupTrio,    //R08R0101
+    SPPOKE_GMK_EndTrio,     //R08R0101
+    SPPOKE_GMK_MoveTrio,    //R08R0101
+  },
+  {
+    FS_OVERLAY_ID(sppoke_gimmick),  // C03R0401
+    SPPOKE_GMK_SetupZoroa,    //C03R0401
+    SPPOKE_GMK_EndZoroa,    //C03R0401
+    SPPOKE_GMK_MoveZoroa,    //C03R0401
+  },
+  {
+    FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
+    SPPOKE_GMK_SetupMerodhia,    //C03R0901
+    SPPOKE_GMK_EndMerodhia,    //C03R0901
+    SPPOKE_GMK_MoveMerodhia,    //C03R0901
+  },
+  {
+    FS_OVERLAY_ID(palace_gimmick),  //                          //50
+    PALACE_GMK_Setup,    //
+    PALACE_GMK_End,    //
+    PALACE_GMK_Move,    //
+  },
+  {
+    FS_OVERLAY_ID(palace_map_gimmick),  //
+    PALACE_MAP_GMK_Setup,    //パレスゾーンのマップ
+    PALACE_MAP_GMK_End,    //パレスゾーンのマップ
+    PALACE_MAP_GMK_Move,    //パレスゾーンのマップ
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109
+    BSUBWAY_GIMMICK_Setup, //C04R0109
+    BSUBWAY_GIMMICK_End, //C04R0109
+    BSUBWAY_GIMMICK_Move, //C04R0109
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_d12), //D12
+    D12_GIMMICK_Setup,    //D12
+    D12_GIMMICK_End,    //D12
+    D12_GIMMICK_Move,    //D12
+  },
+  {
+    FS_OVERLAY_ID(legend_gimmick), //N01R0502
+    LEGEND_GMK_Setup,     //N01R0502
+    LEGEND_GMK_End,     //N01R0502
+    LEGEND_GMK_Move,     //N01R0502
+  },
+  {
+    FS_OVERLAY_ID(field_gimmick_t01),  // T01 and R01 and T02
+    T01_GIMMICK_Setup,    //T01 and R01 and T02
+    T01_GIMMICK_End,    //T01 and R01 and T02
+    T01_GIMMICK_Move,    //T01 and R01 and T02
+  },
+  {
+    FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
+    RESORT_RECEPTION_Setup, //リゾート迎賓館
+    RESORT_RECEPTION_End, //リゾート迎賓館
+    RESORT_RECEPTION_Move, //リゾート迎賓館
+  },
+  {
+    FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
+    RESORT_FIELD_Setup,     //リゾートフィールド
+    RESORT_FIELD_End, //リゾートフィールド
+    RESORT_FIELD_Move, //リゾートフィールド
+  },
+  {
+    FS_OVERLAY_ID(infinity_dungeon_gimmick),  // 無限ダンジョン
+    INFINITY_DUNGEON_Setup, //無限ダンジョン
+    INFINITY_DUNGEON_End, //無限ダンジョン
+    INFINITY_DUNGEON_Move, // 無限ダンジョン
+  },
+  {
+    FS_OVERLAY_ID(wbt_gimmick),  // WBT
+    WBT_GIMMICK_Setup,      // WBT
+    WBT_GIMMICK_End,      // WBT
+    WBT_GIMMICK_Move,      // WBT
+  },
+  {
+    FS_OVERLAY_ID(resonance_resort_gimmick),  //リゾート
+    RESORT_FIELD_Setup,     //リゾートフィールド
+    RESORT_FIELD_End, //リゾートフィールド
+    RESORT_FIELD_Move, //リゾートフィールド
+  },
+  {
+    FS_OVERLAY_ID(field_gym_poison),                            //60
+    GYM_POISON_Setup,       // 毒ジム
+    GYM_POISON_End,       // 毒ジム
+    GYM_POISON_Move,       // 毒ジム
+  },
+};
+

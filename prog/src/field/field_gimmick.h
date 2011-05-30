@@ -17,11 +17,10 @@ typedef void (*FLD_GMK_MOVE_FUNC)(FIELDMAP_WORK *);
 typedef BOOL (*FLD_GMK_HIT_CHECK)(FIELDMAP_WORK * , const int, const int, const fx32, BOOL* );
 
 typedef struct {
-  u32                 gimmick_id;
+  FSOverlayID         ov_id;
   FLD_GMK_SETUP_FUNC  setup_func;
   FLD_GMK_END_FUNC    end_func;
   FLD_GMK_MOVE_FUNC   move_func;
-  FSOverlayID         ov_id;
 }FLD_GMK_TABLE;
 
 extern void FLDGMK_SetUpFieldGimmick(FIELDMAP_WORK *fieldWork);

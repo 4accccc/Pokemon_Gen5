@@ -65,10 +65,10 @@ loop do
   gmk_id = column[1].to_s
   if gmk_id =~ /^[1-9][0-9]*/ then
     data.ResNum = gmk_id.to_i
-    STDERR.printf("%s : %d\n", zone_name, gmk_id.to_i )
+    #STDERR.printf("%s : %d\n", zone_name, gmk_id.to_i )
   elsif aHash.has_key?( gmk_id ) then
     data.ResNum = aHash[ gmk_id ]
-    STDERR.printf("%s : %s(%d)\n", zone_name, gmk_id, aHash[ gmk_id ] )
+    #STDERR.printf("%s : %s(%d)\n", zone_name, gmk_id, aHash[ gmk_id ] )
   else
     STDERR.printf("'%s'‚Í–¢’è‹`‚ÌƒVƒ“ƒ{ƒ‹‚Å‚·!!\n", gmk_id)
     exit(-1)
