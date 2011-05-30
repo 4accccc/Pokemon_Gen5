@@ -681,10 +681,11 @@ GRIDX=15、GRIDZ=26
 			<Comment>♂
 ・GRIDX=27、GRIDZ=30
 ・振り向かないでメッセージ表示
-・続けてassistantm_02</Comment>
+・続けてassistantm_02
+※マニアについてヒウンあたりで情報メッセージ追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:56:01" />
+				Time="2011-05-30T07:07:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -945,10 +946,11 @@ GRIDX=15、GRIDZ=26
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アイテム入手後</Comment>
+・アイテム入手後
+※これ以降の処理は保留</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:57:11" />
+				Time="2011-05-30T07:07:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
