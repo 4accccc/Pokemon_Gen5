@@ -102,7 +102,7 @@ enum {
   VOLUME_0 = 127,   // 100%
   VOLUME_1 = 78,    // 61%
   VOLUME_2 = 38,    // 30%
-  VOLUME_3 = 0,     // 0%
+  VOLUME_3 = 12,    // 10%
 };
 
 #define VOLUME_FADE_FRAME (30)      // ISSのボリュームフェードフレーム
