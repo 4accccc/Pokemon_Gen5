@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-05-26T12:42:10" source="in35_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-05-28T13:09:09" source="in35_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-05-26T12:42:10" source="in35_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-05-28T13:09:09" source="in35_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1321,22 +1321,22 @@
 		path="C:/home/swan_data3d/field/in35/chip/tex/in35_yuka04.tga"
 	>
 		<bitmap size="128">
-			2267 8882 8888 8888 2267 9992 9999 9999
-			6647 5556 5555 5555 6647 5556 5555 5555
-			6647 5556 5555 5555 6647 6656 6666 6666
-			6647 3456 3333 3333 6647 3656 3333 3333
-			6647 4556 3333 3333 6647 6556 4444 4444
-			6647 5556 5555 5555 6647 5556 5555 5555
-			6647 5556 5555 5555 6647 6656 6666 6666
-			6647 3456 3333 3333 6647 3656 3333 3333
-			6647 4556 3333 3333 6647 6556 4444 4444
-			6647 5556 5555 5555 6647 5556 5555 5555
-			6647 5556 5555 5555 6647 4456 4444 4444
-			6647 3456 3333 3333 4447 3364 3333 3333
-			4447 3364 3333 3333 3337 3343 3333 3333
-			3337 3343 3333 3333 3337 7733 7777 7777
-			7777 1177 1111 1111 7777 1177 1111 1111
-			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			3379 aaa3 aaaa aaaa 3379 bbb3 bbbb bbbb
+			7759 2226 2222 2222 7759 3826 3333 3333
+			7759 3826 3333 3333 7759 7726 7777 7777
+			7759 4726 4444 4444 7759 4726 4444 4444
+			7759 5626 4444 4444 7759 7626 5555 5555
+			7759 2226 2222 2222 7759 3826 3333 3333
+			7759 3826 3333 3333 7759 7726 7777 7777
+			7759 4726 4444 4444 7759 4726 4444 4444
+			7759 5626 4444 4444 7759 7626 5555 5555
+			7759 2226 2222 2222 7759 3826 3333 3333
+			7759 3826 3333 3333 7759 5526 5555 5555
+			7759 4526 4444 4444 5559 4537 4444 4444
+			5559 4437 4444 4444 4449 4454 4444 4444
+			4449 4454 4444 4444 4449 9944 9999 9999
+			9999 1199 1111 1111 9999 1199 1111 1111
+			cccc cccc cccc cccc cccc cccc cccc cccc
 		</bitmap>
 	</tex_image>
 	<tex_image index="34" name="in35_yuka05"
@@ -1482,8 +1482,8 @@
 		7fff 6f7b 6739 5ad6 5294 4631 4210 4210
 	</tex_palette>
 	<tex_palette index="33" name="in35_yuka04_pl" color_size="16">
-		7fff 7bbd 62f5 7379 6f58 6716 6b37 739b
-		369b 52fa 7fff 7fff 7fff 7fff 7fff 7fff
+		7fff 7bbd 5eb2 62f5 7379 6f58 6716 6b37
+		5ef4 739b 369b 52fa 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="34" name="in35_yuka05_pl" color_size="8">
 		7fff 3612 3def 39ce 35ad 318c 2d6b 7fff

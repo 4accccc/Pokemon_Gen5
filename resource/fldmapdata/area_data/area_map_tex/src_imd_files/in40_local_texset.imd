@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-05-27T12:59:37" source="in40_local_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-05-30T20:58:46" source="in40_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-05-27T12:59:37" source="in40_local_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-05-30T20:58:46" source="in40_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -244,29 +244,17 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="11" name="in40_yuka03"
-		width="16" height="32" original_width="16" original_height="32"
+		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in40_yuka03_pl"
 		path="C:/home/swan_data3d/field/in40/chip/tex/in40_yuka03.tga"
 	>
-		<bitmap size="128">
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
-			4667 1533 5511 6642 4667 1533 5511 6642
+		<bitmap size="32">
+			4654 3312 1333 6651 4654 3312 1333 6651
+			4654 3312 1333 6651 4654 3312 1333 6651
+			4654 3312 1333 6651 4654 3312 1333 6651
+			4654 3312 1333 6651 4654 3312 1333 6651
 		</bitmap>
 	</tex_image>
 	<tex_image index="12" name="in40_yuka04"
@@ -284,29 +272,21 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="13" name="in40_yuka05"
-		width="16" height="32" original_width="16" original_height="32"
+		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="in40_yuka05_pl"
 		path="C:/home/swan_data3d/field/in40/chip/tex/in40_yuka05.tga"
 	>
-		<bitmap size="128">
-			5225 4511 1154 1111 5225 4511 1154 1111
-			5225 4511 1154 1111 5335 4511 1154 1111
-			5445 4511 1154 1111 5445 4511 1154 1111
-			5445 4511 1154 1111 5445 3511 1153 1111
-			5445 2511 1152 1111 5445 2511 1152 1111
-			5445 2511 1152 1111 5445 3511 1153 1111
-			5445 4511 1154 1111 5445 4511 1154 1111
-			5445 4511 1154 1111 5335 4511 1154 1111
-			5225 4511 1154 1111 5225 4511 1154 1111
-			5225 4511 1154 1111 5335 4511 1154 1111
-			5445 4511 1154 1111 5445 4511 1154 1111
-			5445 4511 1154 1111 5445 3511 1153 1111
-			5445 2511 1152 1111 5445 2511 1152 1111
-			5445 2511 1152 1111 5445 3511 1153 1111
-			5445 4511 1154 1111 5445 4511 1154 1111
-			5445 4511 1154 1111 5335 4511 1154 1111
+		<bitmap size="64">
+			2222 4442 4444 4444 4442 5552 5555 5555
+			4542 3352 3333 3333 4442 5552 5555 5555
+			2222 4442 4444 4444 5554 3334 3333 3333
+			5354 1134 1111 3111 5354 1134 1111 3111
+			5354 1134 1111 3111 5354 1134 1111 3111
+			5354 1134 1111 3111 5354 1134 1111 3111
+			5354 1134 1111 3111 5354 1134 1111 3111
+			5354 1134 1111 3111 5354 3334 3333 3333
 		</bitmap>
 	</tex_image>
 	<tex_image index="14" name="in40_yuka2"
@@ -375,13 +355,13 @@
 		7fff 3def 39ce 35ad 2d6b 2d6b 2108 7fff
 	</tex_palette>
 	<tex_palette index="11" name="in40_yuka03_pl" color_size="8">
-		7fff 633a 5af8 56d7 4a97 5f19 4255 3a34
+		7fff 5f19 56d7 633a 3a14 4a97 4255 7fff
 	</tex_palette>
 	<tex_palette index="12" name="in40_yuka04_pl" color_size="4">
 		7fff 4a97 4255 4676
 	</tex_palette>
 	<tex_palette index="13" name="in40_yuka05_pl" color_size="8">
-		7fff 42da 2e79 329a 369a 3eba 7fff 7fff
+		7fff 3236 29d3 3215 2df4 3215 7fff 7fff
 	</tex_palette>
 	<tex_palette index="14" name="in40_yuka2_pl" color_size="4">
 		6318 6739 6b5a 6f7b
@@ -1121,10 +1101,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 8.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.500000 0.000000 1.500000"/>
-					<tex st="16.000000 32.000000"/>
+					<tex st="16.000000 8.000000"/>
 					<pos_xy xy="3.500000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="3.500000 0.500000"/>
@@ -1175,10 +1155,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 32.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="4.500000 0.000000 1.500000"/>
-					<tex st="16.000000 32.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="5.500000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xz xz="5.500000 0.500000"/>
