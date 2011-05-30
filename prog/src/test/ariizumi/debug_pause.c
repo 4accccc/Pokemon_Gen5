@@ -47,6 +47,11 @@ void DEBUG_PAUSE_Init( void )
 	
 #if DEBUG_ONLY_FOR_ariizumi_nobuhiko
 	//debPauseWork.isEnable = TRUE;
+#elif defined(DEBUG_ONLY_FOR_nagihashi_toru)
+  if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L|PAD_BUTTON_R) )
+  {
+	  debPauseWork.isEnable = TRUE;
+  }
 #endif
 
 }

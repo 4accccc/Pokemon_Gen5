@@ -146,7 +146,7 @@ static const PW_SCRIPT_COMMAND Pw_Script_Command[] =
 {
   Bw_Scrcmd_WndMove,      //PW_CUTIN_CMD_WND_MOVE 
   Bw_Scrcmd_WndMoveEx,    //PW_CUTIN_CMD_WND_MOVE_EX
-  Bw_Scrcmd_WndScale,     //PW_CUTIN_CMD_WND_SCALE
+  //Bw_Scrcmd_WndScale,     //PW_CUTIN_CMD_WND_SCALE
   Bw_Scrcmd_WndVisible,   //PW_CUTIN_CMD_WND_VISIBLE
   Bw_Scrcmd_ResChange,    //PW_CUTIN_CMD_RES_CHANGE
   Bw_Scrcmd_Wait,         //PW_CUTIN_CMD_WAIT
@@ -591,6 +591,22 @@ static BOOL Bw_Scrcmd_WndMoveEx( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRI
 //-----------------------------------------------------------------------------
 static BOOL Bw_Scrcmd_WndScale( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param )
 {
+  /*
+  enum
+  {
+    SEQ_INIT,
+    SEQ_EXIT,
+  };
+
+  GFL_CLWK *p_clwk = p_wk->p_clwk[cp_param->param[0]];
+
+  switch( *p_seq )
+  {
+  case SEQ_INIT:
+    break;
+  case SEQ_EXIT
+  }
+  */
   return TRUE;
 }
 //----------------------------------------------------------------------------
@@ -779,8 +795,8 @@ static void Bw_Move_GetMovePos( int move_dir, const GFL_CLWK *cp_clwk, GFL_POINT
 {
   enum
   {
-    MOVE_WIDTH = 192,
-    MOVE_HEIGHT = 96,
+    MOVE_WIDTH  = 192,
+    MOVE_HEIGHT = 192,
   };
 
   GFL_CLACTPOS clpos;
@@ -837,15 +853,15 @@ static void Bw_Move_GetMovePos( int move_dir, const GFL_CLWK *cp_clwk, GFL_POINT
   {
     p_start->x = POKEWOOD_WND_END_POS_X;
     p_start->y = POKEWOOD_WND_END_POS_Y;
-    p_end->x   = p_start->x - target.x;
-    p_end->y   = p_start->y - target.y;
+    p_end->x   = p_start->x + target.x;
+    p_end->y   = p_start->y + target.y;
   }
   else
   {
     p_end->x   = POKEWOOD_WND_END_POS_X;
     p_end->y   = POKEWOOD_WND_END_POS_Y;
-    p_start->x = target.x - p_end->x;
-    p_start->y = target.y - p_end->y;
+    p_start->x = p_end->x - target.x;
+    p_start->y =p_end->y - target.y;
   }
 }
 

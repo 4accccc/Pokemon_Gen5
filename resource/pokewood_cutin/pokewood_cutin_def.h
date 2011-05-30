@@ -14,20 +14,17 @@
 //コマ動作２
 #define PW_CUTIN_CMD_WND_MOVE_EX  (1)
 #define PW_CUTIN_WND_MOVE_EX_PARAM_NUM (5)
-//コマ拡大縮小
-#define PW_CUTIN_CMD_WND_SCALE  (2)
-#define PW_CUTIN_WND_SCALE_PARAM_NUM (2)
 //コマ表示
-#define PW_CUTIN_CMD_WND_VISIBLE  (3)
+#define PW_CUTIN_CMD_WND_VISIBLE  (2)
 #define PW_CUTIN_WND_VISIBLE_PARAM_NUM (2)
 //リソースチェンジ
-#define PW_CUTIN_CMD_RES_CHANGE  (4)
+#define PW_CUTIN_CMD_RES_CHANGE  (3)
 #define PW_CUTIN_RES_CHANGE_PARAM_NUM (3)
 //待機
-#define PW_CUTIN_CMD_WAIT  (5)
+#define PW_CUTIN_CMD_WAIT  (4)
 #define PW_CUTIN_WAIT_PARAM_NUM (1)
 //メッセージ
-#define PW_CUTIN_CMD_MESSAGE  (6)
+#define PW_CUTIN_CMD_MESSAGE  (5)
 #define PW_CUTIN_MESSAGE_PARAM_NUM (3)
 //定義情報
 //移動方向：上から下
@@ -48,8 +45,6 @@
 #define PW_CUTIN_DEF_MOVE_DIR_RIGHT_DOWN  (7)
 //移動タイプ：等速
 #define PW_CUTIN_DEF_MOVE_TYPE_VELOCITY  (0)
-//移動タイプ：加速
-#define PW_CUTIN_DEF_MOVE_TYPE_ACCELER  (1)
 //メッセージ：自分
 #define PW_CUTIN_DEF_MES_TYPE_PLAYER  (0)
 //メッセージ：相手
