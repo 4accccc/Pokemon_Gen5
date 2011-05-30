@@ -118,8 +118,6 @@ typedef struct GYM_GROUND_TMP_tag
 
   BOOL            lift_arrival[ LIFT_NUM ]; // リフト到達フラグ
   BOOL            first_lift;   // 最初のリフトに到達したか
-  BOOL            fog_off;      // フォグをOFFにするフラグ
-  BOOL            all_arrival;  // 全リフト到達フラグ
 
   // 出口リフト用
   const VecFx32 *watch;
@@ -388,7 +386,6 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->p_fieldmap= p_fieldmap;
   p_wk->exp_obj   = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->player    = FIELDMAP_GetFieldPlayer( p_fieldmap );
-  p_wk->all_arrival = FALSE;  // 全リフト到達していたら、LIFT_InitでTRUEに変わる
 
   ICHI_Printf( "EXP_OBJ確保前 HeapFreeSize %x \n",GFL_HEAP_GetHeapFreeSize(p_wk->heapID) );
   // EXPOBJセット
@@ -463,23 +460,6 @@ void GYM_GROUND_Move(FIELDMAP_WORK *p_fieldmap)
       p_wk->first_lift = TRUE;
       // リフト到着フラグセット
       LIFT_SetAriivalFlag( p_wk, 30 );
-    }
-  }
-
-  // ギミックのセットアップでフォグをOFFにしても、
-  // その後の処理で、ONにされてしまうため、
-  // ここでフォグをOFFにする
-  if( p_wk->fog_off == TRUE )
-  {
-    FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( p_wk->p_fieldmap );
-    if( FIELD_FOG_GetFlag( fog ) == TRUE )
-    {
-      FIELD_FOG_SetFlag( fog, FALSE );
-    }
-    else
-    {
-      p_wk->fog_off = FALSE;
-      LIFT_AllArrival( p_wk );
     }
   }
 
@@ -954,9 +934,6 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_EXIT,   // イベント終了
     SEQ_JUMP_OUT,// ジャンプOUT
     SEQ_JUMP_OUT_WAIT,// ジャンプOUT
-    SEQ_FADE_OUT, // フェードアウト
-    SEQ_FADE_OUT_WAIT, // フェードアウト待ち
-    SEQ_FADE_IN_WAIT, // フェードイン待ち
   };
 
   switch( *seq ){
@@ -1111,48 +1088,7 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
     // アニメ終了待ち
     if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
     {
-      // 全リフト到着チェック
-      if( p_gym_wk->all_arrival == FALSE &&
-          LIFT_CheckAllAriival( p_gym_wk ) == TRUE )
-      {
-        *seq = SEQ_FADE_OUT;
-      }
-      else
-      {
-        return GMEVENT_RES_FINISH;
-      }
-    }
-    break;
-
-  // フェードアウト
-  case SEQ_FADE_OUT:
-    // ホワイトフェードアウト
-    WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
-        WIPE_FADE_WHITE, 10, 4, p_gym_wk->heapID );
-    *seq = SEQ_FADE_OUT_WAIT;
-    break;
-  // フェードアウト待ち
-  case SEQ_FADE_OUT_WAIT:
-    {
-      if( WIPE_SYS_EndCheck() == TRUE )
-      {
-        // 到着した
-        LIFT_AllArrival( p_gym_wk );
-
-        // ホワイトフェードイン
-        WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
-            WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, p_gym_wk->heapID );
-        *seq = SEQ_FADE_IN_WAIT;
-      }
-    }
-    break;
-  // フェードイン待ち
-  case SEQ_FADE_IN_WAIT:
-    {
-      if( WIPE_SYS_EndCheck() == TRUE )
-      {
-        return GMEVENT_RES_FINISH;
-      }
+      return GMEVENT_RES_FINISH;
     }
     break;
   default:
@@ -1318,11 +1254,6 @@ static void LIFT_Init( GYM_GROUND_TMP *p_wk )
       }
     }
   }
-  
-  // 全リフト到着チェック
-  // フォグをOFF
-  if( LIFT_CheckAllAriival( p_wk ) == TRUE ){ p_wk->fog_off = TRUE; }
-  else                                      { p_wk->fog_off = FALSE; }
 }
 
 //----------------------------------------------------------------------------
@@ -1374,73 +1305,11 @@ static void LIFT_SetAriivalFlag( GYM_GROUND_TMP *p_wk, const u8 lift_id )
   ICHI_Printf("リフトID %dの到着フラグセット\n", lift_id);
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  全てのリフトに到着したかチェック
- *
- *	@param	GYM_GROUND_TMP *p_wk 
- *
- *	@return TRUE 到着した
- */
-//-----------------------------------------------------------------------------
-static BOOL LIFT_CheckAllAriival( GYM_GROUND_TMP *p_wk )
-{
-  u8 i;
-
-  for( i=0; i<LIFT_NUM; i++ )
-  {
-    if( p_wk->lift_arrival[i] == FALSE )
-    {
-      return FALSE;
-    }
-  }
-
-  return TRUE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  全てのリフトに到着した時処理
- *
- *	@param	GYM_GROUND_TMP *p_wk 
- */
-//-----------------------------------------------------------------------------
-static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk )
-{
-
-  // フォグをOFFにする
-  {
-    FIELD_FOG_WORK *fog = FIELDMAP_GetFieldFog( p_wk->p_fieldmap );
-    FIELD_FOG_SetFlag( fog, FALSE );
-  }
-
-  // ライトアップも消す
-  {
-    u8 i;
-    for( i=0; i<LIFT_NUM; i++ )
-    {
-      u16 obj_idx = OBJ_LIFT_LIGHTUP_1 + i;    // OBJインデックス
-
-      // 非表示
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, FALSE );
-    }
-  }
-
-  // フラグを立てる
-  p_wk->all_arrival = TRUE;
-
-  ICHI_Printf("全リフト到着した\n");
-}
-
-
 //=============================================================================
 /**
  *          スクリプトコマンド用
  */
 //=============================================================================
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  昇降リフトイベント作成
