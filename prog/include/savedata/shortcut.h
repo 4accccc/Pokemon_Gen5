@@ -57,8 +57,12 @@ extern BOOL SHORTCUT_GetRegister( const SHORTCUT *cp_wk, SHORTCUT_ID shortcutID 
 //Yボタンメニューで取得、操作する関数
 //----------------------------------------------------------
 extern SHORTCUT_ID SHORTCUT_GetType( const SHORTCUT *cp_wk, u8 idx );
-u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk );
+extern u16 SHORTCUT_GetMax( const SHORTCUT *cp_wk );
 
+//----------------------------------------------------------
+//キュレムの合体/分離時に専用アイテムのメニューをスワップする処理
+//----------------------------------------------------------
+extern void SHORTCUT_SwapRegisterForKyuremuItem( SHORTCUT *p_wk, SHORTCUT_ID shortcutID );
 
 #define SHORTCUT_INSERT_LAST  0xFF
 extern u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx );

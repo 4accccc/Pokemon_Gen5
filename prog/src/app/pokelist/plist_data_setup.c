@@ -26,6 +26,7 @@
 #include "savedata/mail_util.h"
 #include "savedata/regulation.h"
 #include "savedata/randommap_save.h"
+#include "savedata/shortcut.h"
 #include "waza_tool/wazano_def.h"
 
 #include "app/pokelist.h"
@@ -55,6 +56,8 @@ void PLIST_DATA_Init( PLIST_DATA* plist, GAMEDATA* gdata, PL_MODE_TYPE mode, POK
   plist->cfg       = SaveData_GetConfig( save );
   plist->rnd_map   = RANDOMMAP_SAVE_GetRandomMapSave( save );
   plist->zkn       = GAMEDATA_GetZukanSave( gdata );   // はっきんだまギラティナ用
+  plist->shortcut  = SaveData_GetShortCut( save );
+
   plist->season    = GAMEDATA_GetSeasonID( gdata ); 
 
   plist->type      = PL_TYPE_SINGLE;

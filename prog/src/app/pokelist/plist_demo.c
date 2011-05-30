@@ -15,6 +15,7 @@
 #include "system/wipe.h"
 #include "item/item.h"
 #include "sound/pm_wb_voice.h"
+#include "savedata/shortcut.h"
 
 #include "pokelist_gra.naix"
 #include "msg/msg_pokelist.h"
@@ -636,6 +637,7 @@ void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, 
 
   //アイテム変化
   MYITEM_KyuremuItemSwap( (MYITEM_PTR)work->plData->myitem, KYUREMU_ITEM_SWAP_UNION );
+  SHORTCUT_SwapRegisterForKyuremuItem( (SHORTCUT*)work->plData->shortcut, SHORTCUT_ID_IDENSINOKUSABI_U );
 }
 
 //--------------------------------------------------------------------------
@@ -659,6 +661,7 @@ void PLIST_DEMO_ChangeKyuremuNormal( PLIST_WORK *work, POKEMON_PARAM* pp_k )
   
   //アイテム変化
   MYITEM_KyuremuItemSwap( (MYITEM_PTR)work->plData->myitem, KYUREMU_ITEM_SWAP_PERGE );
+  SHORTCUT_SwapRegisterForKyuremuItem( (SHORTCUT*)work->plData->shortcut, SHORTCUT_ID_IDENSINOKUSABI_P );
 }
 
 //--------------------------------------------------------------------------

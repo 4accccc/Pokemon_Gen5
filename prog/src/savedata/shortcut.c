@@ -340,6 +340,46 @@ u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 #endif
 	return insert_idx;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Yボタン登録スワップいでんしのくさび(キュレム合体/分離アイテム)専用
+ *
+ *	@param	SHORTCUT *p_wk	ワーク
+ *	@param	shortcutID 合体実行時はSHORTCUT_ID_IDENSINOKUSABI_U,分離実行時はSHORTCUT_ID_IDENSINOKUSABI_Pを指定
+ *	@param	is_on		TRUEでYボタン登録	FALSEでYボタン登録解除
+ *
+ *	キュレムの合体アイテム「いでんしのくさび」の実体は2種類のアイテムで
+ *	それぞれ、合体用分離用となっている。
+ *	ポケモンリスト内での合体/分離処理の時に、バッグ内のアイテムをスワップさせるので
+ *	それにあわせてYボタン登録リストにもスワップをかける
+ *
+ *	登録がなければ何もしない
+ */
+//-----------------------------------------------------------------------------
+void SHORTCUT_SwapRegisterForKyuremuItem( SHORTCUT *p_wk, SHORTCUT_ID shortcutID )
+{	
+	int i;
+  SHORTCUT_ID new_id;
+
+  if( shortcutID == SHORTCUT_ID_IDENSINOKUSABI_U ){
+    new_id = SHORTCUT_ID_IDENSINOKUSABI_P;
+  }else if( shortcutID == SHORTCUT_ID_IDENSINOKUSABI_P ){
+    new_id = SHORTCUT_ID_IDENSINOKUSABI_U;
+  }else{
+    return;
+  }
+
+  for( i = 0; i < SHORTCUT_ID_MAX; i++ )
+	{
+	  //指定のIDを探す
+		if( p_wk->data[ i ] == shortcutID )
+		{
+      p_wk->data[ i ] = new_id; //スワップ
+		}
+	}
+}
+
 //=============================================================================
 /**
  *		PRIVATE
