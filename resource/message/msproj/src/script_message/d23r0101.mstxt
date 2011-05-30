@@ -2,7 +2,7 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="sg_d23r0101_workman_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -28,17 +28,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+GRIDX=15、GRIDZ=26
+・はい/いいえの選択肢表示
+・はい　→middleman2_02
+　いいえ→middleman2_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:50:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>WORKMAN
+氷の作業員</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:42:23" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -46,6 +51,912 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="sg_d23r0101_workman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:44:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN
+氷の作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="sg_d23r0101_workman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:44:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN
+氷の作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="sg_d23r0101_workman_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択後
+　すべての新人作業員と会話していない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:45:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN
+氷の作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="sg_d23r0101_workman_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択後
+　すべての新人作業員と会話した</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:45:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN
+氷の作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=30、GRIDZ=51
+・workman_02表示前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:50:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2a_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・workman_02表示後
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:49:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2a_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:49:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=26、GRIDZ=31
+・workman_02表示前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:50:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・workman_02表示後
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:49:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2b_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:49:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2c_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=5、GRIDZ=32
+・workman_02表示前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:51:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2c_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・workman_02表示後
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:51:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_workman2c_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:51:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2
+鉱山作業員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうりゅうきについて
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:55:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:51:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>蒸留器について
+・仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:55:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:51:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=27、GRIDZ=30
+・振り向かないでメッセージ表示
+・続けてassistantm_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:43:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・表示後、移動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:52:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:52:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えんとつについて
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:55:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>煙突について
+・仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:55:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=8、GRIDZ=47
+・振り向かないでメッセージ表示
+・続けてassistantm_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:52:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・表示後、移動</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:52:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ガスホルダーについて
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:55:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ガスホルダーについて
+・仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:55:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=24　GRIDZ=40
+・振り向かないでメッセージ表示
+・続けてassistantm_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:52:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:54:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・アイテム入手処理
+　No000「？？？？？」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:57:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:52:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d23r0101_assistantm_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:57:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+研究員</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-05-30T06:56:42" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
