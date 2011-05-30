@@ -948,11 +948,9 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_062">
-		<language name="JPN" width="216">ぼうけんと　ひびの　くらしに
-かんけいした　メダルを　すべて　
+		<language name="JPN" width="216">『ぼうけん』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
-		<language name="JPN_KANJI" width="216">冒険と　日々の　暮らしに
-関係した　メダルを　すべて　
+		<language name="JPN_KANJI" width="216">『冒険』メダルを　すべて　
 集めた　ごほうびの　メダル。</language>
 	</row>
 
@@ -1370,12 +1368,10 @@
 	</row>
 
 	<row id="MDL_EXP_BATTLE_062">
-		<language name="JPN" width="216">せんとうや　たいせんに　かんけいした
-メダルを　すべて　あつめた
-ごほうびの　メダル。</language>
-		<language name="JPN_KANJI" width="216">戦闘や　対戦に　関係した
-メダルを　すべて　集めた
-ごほうびの　メダル。</language>
+		<language name="JPN" width="216">『せんとう』メダルを　すべて
+あつめた　ごほうびの　メダル。</language>
+		<language name="JPN_KANJI" width="216">『戦闘』メダルを　すべて
+集めた　ごほうびの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_001">
@@ -1764,11 +1760,9 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_062">
-		<language name="JPN" width="216">つうしんや　ほかの　あそびに
-かんけいした　メダルを　すべて　
+		<language name="JPN" width="216">『おたのしみ』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
-		<language name="JPN_KANJI" width="216">通信や　他の　遊びに
-関係した　メダルを　すべて　
+		<language name="JPN_KANJI" width="216">『お楽しみ』メダルを　すべて　
 集めた　ごほうびの　メダル。</language>
 	</row>
 
@@ -2150,12 +2144,10 @@
 	</row>
 
 	<row id="MDL_EXP_MISSION_062">
-		<language name="JPN" width="216">むりなんだいを　ときあかし
-ハイレベルな　ちょうせんを　すべて
-こなした　ごほうびの　メダル。</language>
-		<language name="JPN_KANJI" width="216">無理難題を　解き明かし
-ハイレベルな　挑戦を　すべて
-こなした　ごほうびの　メダル。</language>
+		<language name="JPN" width="216">『ちょうせん』メダルを　すべて
+あつめた　ごほうびの　メダル。</language>
+		<language name="JPN_KANJI" width="216">『挑戦』メダルを　すべて　
+集めた　ごほうびの　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_SPECIAL_002">
