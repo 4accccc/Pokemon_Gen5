@@ -567,6 +567,7 @@ static const ATTR_VALUE_SE data_PlaySE_NextValue[] =
   {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14,2,4,PMSEASON_TOTAL},
   {MAPATTR_VALUE_CheckSeasonGround1,SEQ_SE_FLD_11,2,4,PMSEASON_WINTER},
   {MAPATTR_VALUE_CheckSeasonGround2,SEQ_SE_FLD_11,2,4,PMSEASON_WINTER},
+  {MAPATTR_VALUE_CheckAnimalTrail,SEQ_SE_FLD_08,2,4,PMSEASON_TOTAL},
   {NULL,0,0,0,PMSEASON_TOTAL}, //end
 };
 
@@ -1374,7 +1375,8 @@ static BOOL gjikiCycle_CheckAttr( MAPATTR_VALUE val )
   if( MAPATTR_VALUE_CheckLongGrass(val) ||
       MAPATTR_VALUE_CheckOze01(val) ||
       MAPATTR_VALUE_CheckOzeStairs(val) ||
-      MAPATTR_VALUE_CheckSnowNotCycle(val) ){
+      MAPATTR_VALUE_CheckSnowNotCycle(val) ||
+      MAPATTR_VALUE_CheckAnimalTrail(val) ){
     return( TRUE ); //hit
   }
   

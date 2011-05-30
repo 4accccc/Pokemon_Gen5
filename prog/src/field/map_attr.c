@@ -985,7 +985,8 @@ BOOL MAPATTR_VALUE_CheckCycleNotUse( MAPATTR_VALUE val )
   if( MAPATTR_VALUE_CheckLongGrass(val) ||
       MAPATTR_VALUE_CheckOze01(val) ||
       MAPATTR_VALUE_CheckOzeStairs(val) ||
-      MAPATTR_VALUE_CheckSnowNotCycle(val) ){
+      MAPATTR_VALUE_CheckSnowNotCycle(val) ||
+      MAPATTR_VALUE_CheckAnimalTrail(val) ){
     return( TRUE ); //hit
   }
   return( FALSE );
@@ -1013,6 +1014,18 @@ BOOL MAPATTR_VALUE_CheckGrassAllYearLow( const MAPATTR_VALUE val )
 BOOL MAPATTR_VALUE_CheckGrassAllYearHigh( const MAPATTR_VALUE val )
 {
   return ( val == MATTR_E_GRASS_HIGH_02 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー チェック 獣道　エンカウントなし
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckAnimalTrail( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_ANIMAL_TRAIL );
 }
 
 /*
