@@ -426,7 +426,7 @@ _RET
 
 //戦闘呼び出し
 sub_trainer_battle:
-  _TRAINER_BGM_SET( LWK_TR_ID ) //視線曲セット
+  //_TRAINER_BGM_SET( LWK_TR_ID ) //視線曲セット
   _TRAINER_TALK_TYPE_GET( LWK_MSG_ID_START, LWK_MSG_ID_AFTER, LWK_MSG_ID_NG )
   _TRAINER_MSG_SET( LWK_TR_ID, LWK_MSG_ID_START, SCWK_TARGET_OBJID )
   _BALLOONWIN_CLOSE()
@@ -454,6 +454,8 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	//プレイヤーの座標取得
 	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
 
+	_OBJ_POS_CHANGE( C13GYM0102_SUNGLASSES_01, 13, 0, 6, DIR_LEFT )
+
 	//サングラス：プレイヤーに近づいてくる
 	//X座標が３の場合
 	IF $LWK_POSX == 3 THEN
@@ -467,6 +469,9 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	
 	ENDIF
 	
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
 	_OBJ_ANIME_WAIT()
 	
 	//ヘイ　あなた！
@@ -568,17 +573,11 @@ EVENT_END
 //	◆サングラス：イベントアニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sunglasses_come_x3
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,9
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_sunglasses_come_x4
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_sunglasses_leave_x3
