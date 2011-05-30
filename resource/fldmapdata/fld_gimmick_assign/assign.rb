@@ -1,5 +1,6 @@
 $KCODE = "SJIS"
 require 'excel_lib'
+require ENV["PROJECT_ROOT"] + 'tools/enum2hash'
 
 #データクラス
 class DATA
@@ -11,6 +12,9 @@ class DATA
 
 	attr_accessor	:ZoneID,:ResNum,:ObjNum
 end
+
+#field_gimmickのenum定義を読み込み
+aHash = enum2hash( ENV["PROJECT_PROGDIR"] + 'src/field/field_gimmick_def.h' )
 
 
 #ソーンＩＤヘッダーファイルをロードする
@@ -58,7 +62,17 @@ loop do
 
   data = DATA.new
   data.ZoneID = zone_ary.index(zone_name)
-  data.ResNum = column[1].to_i
+  gmk_id = column[1].to_s
+  if gmk_id =~ /^[1-9][0-9]*/ then
+    data.ResNum = gmk_id.to_i
+    STDERR.printf("%s : %d\n", zone_name, gmk_id.to_i )
+  elsif aHash.has_key?( gmk_id ) then
+    data.ResNum = aHash[ gmk_id ]
+    STDERR.printf("%s : %s(%d)\n", zone_name, gmk_id, aHash[ gmk_id ] )
+  else
+    STDERR.printf("'%s'は未定義のシンボルです!!\n", gmk_id)
+    exit(-1)
+  end
   data.ObjNum = column[2].to_i
 
   ary.clear
