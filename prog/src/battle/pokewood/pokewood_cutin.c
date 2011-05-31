@@ -436,7 +436,7 @@ BOOL DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( const POKEWOOD_SENARIO * cp_senario, 
   int i;
   int ev_cnt = 0;
 
-  for( i = 0; NELEMS(sc_pw_cutin_dat_search); i++ )
+  for( i = 0; i < NELEMS(sc_pw_cutin_dat_search); i++ )
   {
     if( sc_pw_cutin_dat_search[i].senario == cp_senario->senario_no )
     {
