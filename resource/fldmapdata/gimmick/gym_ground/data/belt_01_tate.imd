@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-05-31T12:17:26" source="belt_01_tate.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-05-31T16:53:10" source="belt_01_tate.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-05-31T12:17:26" source="belt_01_tate.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-05-31T16:53:10" source="belt_01_tate.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -38,14 +38,14 @@
 		path="C:/home/swan_data3d/gimmick/gym_ground/tex/in27_bc01.tga"
 	>
 		<bitmap size="64">
-			1100 1111 1111 0011 2210 2222 2222 0022
+			0000 0000 0000 0000 2210 2222 2222 0122
 			2210 3333 3333 0122 3210 3333 3333 0123
 			2210 3333 3333 0122 2210 2222 2222 0122
-			1100 1111 1111 0011 1100 1111 1111 0011
-			1100 1111 1111 0011 2210 2222 2222 0122
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 2210 2222 2222 0122
 			2210 3333 3333 0122 3210 3333 3333 0123
 			2210 3333 3333 0122 2210 2222 2222 0122
-			1100 1111 1111 0011 1100 1111 1111 0011
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="in27_bc02"
@@ -94,7 +94,7 @@
 
 <tex_palette_array size="2">
 	<tex_palette index="0" name="in27_bc01_pl" color_size="8">
-		35ad 39d0 3a11 4210 7fff 7fff 7fff 7fff
+		35ad 39d0 3e32 4210 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="in27_bc02_pl" color_size="16">
 		39ef 4252 4a71 4a94 4ed5 52b3 56f4 5717

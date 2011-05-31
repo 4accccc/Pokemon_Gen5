@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-05-31T12:16:03" source="belt_02_tate.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-05-31T16:52:48" source="belt_02_tate.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-05-31T12:16:03" source="belt_02_tate.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-05-31T16:52:48" source="belt_02_tate.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -38,55 +38,55 @@
 		path="C:/home/swan_data3d/gimmick/gym_ground/tex/in27_bc01.tga"
 	>
 		<bitmap size="64">
-			1100 1111 1111 0011 2210 2222 2222 0022
+			0000 0000 0000 0000 2210 2222 2222 0122
 			2210 3333 3333 0122 3210 3333 3333 0123
 			2210 3333 3333 0122 2210 2222 2222 0122
-			1100 1111 1111 0011 1100 1111 1111 0011
-			1100 1111 1111 0011 2210 2222 2222 0122
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 2210 2222 2222 0122
 			2210 3333 3333 0122 3210 3333 3333 0123
 			2210 3333 3333 0122 2210 2222 2222 0122
-			1100 1111 1111 0011 1100 1111 1111 0011
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="in27_bc02"
+	<tex_image index="1" name="in27_bc03"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="in27_bc02_pl"
-		path="C:/home/swan_data3d/gimmick/gym_ground/tex/in27_bc02.tga"
+		palette_name="in27_bc03_pl"
+		path="C:/home/swan_data3d/gimmick/gym_ground/tex/in27_bc03.tga"
 	>
 		<bitmap size="256">
 			1110 1222 1111 1111 9991 8899 4488 1444
-			7773 8889 4448 3444 9993 8899 4488 1444
-			8841 6689 6666 1346 9991 8899 4488 1444
-			8841 6689 6666 1366 8991 6898 6666 1446
-			8841 5689 5665 1365 8991 6898 6666 1466
-			8841 5689 5665 1365 8991 6898 5556 1665
-			8841 6689 6666 1366 8991 6898 2225 2652
-			8841 6689 6666 1566 8991 6898 5525 2652
-			8841 6689 6666 1566 8991 6898 5525 2652
-			8841 6689 6666 1566 8991 6898 2225 2652
-			8841 6689 6666 1566 8771 6898 5556 2665
-			8841 6689 6666 2566 8772 6898 6666 1466
-			8841 6689 6666 2566 7772 6897 6666 1446
-			8841 6689 6666 2566 3332 2233 2222 1111
-			8841 6689 6666 2566 1112 2211 2222 1111
-			8841 6689 6666 2566 1112 2211 2222 1111
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 2566 aaa2 aaaa aaaa aaaa
-			8841 6689 6666 1566 aaa1 aaaa aaaa aaaa
-			8841 6689 6666 1566 aaa1 aaaa aaaa aaaa
-			8841 5689 5665 1565 aaa1 aaaa aaaa aaaa
-			8841 5689 5665 1365 aaa1 aaaa aaaa aaaa
-			8841 6689 6666 1346 aaa1 aaaa aaaa aaaa
-			7771 6689 6666 1344 aaa1 aaaa aaaa aaaa
+			6663 8889 4448 3444 9993 8899 4488 1444
+			8841 7789 7777 1347 9991 8899 4488 1444
+			8841 7789 7777 1377 8991 7898 7777 1447
+			8841 5789 5775 1375 8991 7898 7777 1477
+			8841 5789 5775 1375 8991 7898 5557 1775
+			8841 7789 7777 1377 8991 7898 2225 2752
+			8841 7789 7777 1577 8991 7898 5525 2752
+			8841 7789 7777 1577 8991 7898 5525 2752
+			8841 7789 7777 1577 8991 7898 2225 2752
+			8841 7789 7777 1577 8661 7898 5557 2775
+			8841 7789 7777 2577 8662 7898 7777 1477
+			8841 7789 7777 2577 6662 7896 7777 1447
+			8841 7789 7777 2577 3332 2233 2222 1111
+			8841 7789 7777 2577 1112 2211 2222 1111
+			8841 7789 7777 2577 1112 2211 2222 1111
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 2577 aaa2 aaaa aaaa aaaa
+			8841 7789 7777 1577 aaa1 aaaa aaaa aaaa
+			8841 7789 7777 1577 aaa1 aaaa aaaa aaaa
+			8841 5789 5775 1575 aaa1 aaaa aaaa aaaa
+			8841 5789 5775 1375 aaa1 aaaa aaaa aaaa
+			8841 7789 7777 1347 aaa1 aaaa aaaa aaaa
+			6661 7789 7777 1344 aaa1 aaaa aaaa aaaa
 			3330 5555 3333 1333 aaa1 aaaa aaaa aaaa
 		</bitmap>
 	</tex_image>
@@ -94,11 +94,11 @@
 
 <tex_palette_array size="2">
 	<tex_palette index="0" name="in27_bc01_pl" color_size="8">
-		35ad 39d0 3a11 4210 7fff 7fff 7fff 7fff
+		35ad 39d0 3e32 4210 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="in27_bc02_pl" color_size="16">
-		39ef 4252 4a71 4a94 4ed5 52b3 56f4 5717
-		5b15 6357 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="1" name="in27_bc03_pl" color_size="16">
+		39ae 3df1 45d5 4613 4a35 5217 5277 5a19
+		5e3a 667c 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
