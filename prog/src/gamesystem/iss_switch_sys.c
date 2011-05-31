@@ -21,7 +21,7 @@
 #define PRINT_DEST           (1) // デバッグ情報の出力先
 #define TRACK_NUM           (16) // トラック数
 #define TRACKBIT_ALL    (0xffff) // 全トラック指定
-#define RESERVE_MAX     (3)  //予約数
+#define RESERVE_MAX     (4)  //予約数
 
 //===============================================================================
 // ■ISS-S予約

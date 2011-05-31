@@ -30,6 +30,8 @@ _EVENT_DATA_END
 // 
 // LOCALWORK0⇒ドラムISS
 // LOCALWORK1⇒ギターISS
+// LOCALWORK2⇒ボーカルISS
+// LOCALWORK3⇒ドラム声ISS
 //------------------------------------------------------------------/
 
 /************************************************************/
@@ -44,36 +46,22 @@ INIT_EVENT_START  ev_zone_c13gym0101
   // LOCALWORKを1にすると、それに対応したISSスイッチがOFFになる
   // ※ここを編集するときは、ev_zone_c13gym0102も同じ様に編集する
 
-	//バッジフラグ取得
-	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
-
-	IF $SCWK_TEMP0 == 0 THEN
-    // ジムクリア前
-
-    // ジムトレーナー1
-    IF FLAG_ON(FE_C13GYM_TRBTL1) THEN
-      $LOCALWORK0 = 1
-    ENDIF
-
-    // ジムトレーナー2
-    IF FLAG_ON(FE_C13GYM_TRBTL2) THEN
-      $LOCALWORK1 = 1
-    ENDIF
-
-  ELSE
-    // ジムクリア後
-    // ISSは全てリセット
-		$LOCALWORK0 = 0
-		$LOCALWORK1 = 0
-  ENDIF
-
   // イベントがらみ
   // ホミカが消えているときは、ISS全てリセット
   IF FLAG_ON(FV_C13GYM0102_SWLEADER2) THEN
 		$LOCALWORK0 = 1
 		$LOCALWORK1 = 1
 		$LOCALWORK2 = 1
+		$LOCALWORK3 = 1
+  ELSE
+		$LOCALWORK0 = 1
+		$LOCALWORK1 = 0
+		$LOCALWORK2 = 1
+		$LOCALWORK3 = 1
   ENDIF
+
+  // BGM再生
+  //_BGM_PLAY( SEQ_BGM_POISONE_GYM_01 )
 
 INIT_EVENT_END
 

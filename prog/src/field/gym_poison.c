@@ -305,6 +305,10 @@ void GYM_POISON_Move(FIELDMAP_WORK *p_fieldmap)
       ICHI_Printf("スイッチ3 ON\n");
       ISS_SWITCH_SYS_SwitchOn( p_wk->map_wk.p_iss_switch, 3 );
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+      ICHI_Printf("スイッチ4 ON\n");
+      ISS_SWITCH_SYS_SwitchOn( p_wk->map_wk.p_iss_switch, 4 );
+    }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
       ICHI_Printf("スイッチ1 OFF\n");
       ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 1 );
@@ -316,6 +320,10 @@ void GYM_POISON_Move(FIELDMAP_WORK *p_fieldmap)
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
       ICHI_Printf("スイッチ3 OFF\n");
       ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 3 );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+      ICHI_Printf("スイッチ4 OFF\n");
+      ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 4 );
     }
   }
 #endif
@@ -484,6 +492,7 @@ static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap )
   u16 *local_wk0 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK0 );
   u16 *local_wk1 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK1 );
   u16 *local_wk2 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK2 );
+  u16 *local_wk3 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK3 );
 
   p_wk->p_fieldmap = p_fieldmap;
 
@@ -495,28 +504,30 @@ static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap )
   }
 
   // ISS設定
-#if 1
   {
     // トレーナー戦闘フラグがONの時はISSスイッチをOFFにする
     BOOL  iss_flg1 = (*local_wk0 == 0 ) ? TRUE : FALSE;
     BOOL  iss_flg2 = (*local_wk1 == 0 ) ? TRUE : FALSE;
     BOOL  iss_flg3 = (*local_wk2 == 0 ) ? TRUE : FALSE;
+    BOOL  iss_flg4 = (*local_wk3 == 0 ) ? TRUE : FALSE;
 
     ICHI_Printf("ISS スイッチ1 %d \n", iss_flg1);
     ICHI_Printf("ISS スイッチ2 %d \n", iss_flg2);
     ICHI_Printf("ISS スイッチ3 %d \n", iss_flg3);
+    ICHI_Printf("ISS スイッチ4 %d \n", iss_flg4);
 
     // ISS予約
     // スイッチ3 → ホミカ
     // スイッチ2 → ギター
     // スイッチ1 → ドラム
+    // スイッチ4 → ドラム声
     //
     ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_03, iss_flg3, GYM_POISON_BGM );
     ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_02, iss_flg2, GYM_POISON_BGM );
     ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_01, iss_flg1, GYM_POISON_BGM );
+    ISS_SWITCH_SYS_ReserveSwitch( p_wk->p_iss_switch, SWITCH_04, iss_flg4, GYM_POISON_BGM );
 
   }
-#endif
 
   // スピーカー設定
   // ジムリーダー話したフラグがたっているとアニメOFFにする
@@ -560,7 +571,10 @@ static void MAP_Init( MAP_WORK *p_wk, FIELDMAP_WORK *p_fieldmap )
     // 現在位置のマップ音量データ取得
     volume_idx = MAP_GetVolumeIdx( p_wk );
 
-    ISS_SWITCH_SYS_ReserveVolume( p_wk->p_iss_switch, volume_tbl[ volume_idx ], VOLUME_FADE_FRAME, GYM_POISON_BGM );
+    if( volume_idx != VOLUME_IDX_NULL )
+    {
+      ISS_SWITCH_SYS_ReserveVolume( p_wk->p_iss_switch, volume_tbl[ volume_idx ], VOLUME_FADE_FRAME, GYM_POISON_BGM );
+    }
   }
 
 }
@@ -583,6 +597,12 @@ static BOOL MAP_CheckPos( MAP_WORK *p_wk )
 
   // 現在位置のマップ音量データ取得
   tmp_map_data = MAP_GetVolumeIdx( p_wk );
+
+  // エラーなら音量変化なし
+  if( tmp_map_data == VOLUME_IDX_NULL )
+  {
+    return FALSE;
+  }
 
   // 現在位置のデータと比較
   if( tmp_map_data != p_wk->volume_idx )
