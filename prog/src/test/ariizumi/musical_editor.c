@@ -1416,7 +1416,7 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
           {
             ( moveVal<0 ? tempNo-- : tempNo++ );
             tempNo = (tempNo+MONSNO_MAX+1)%(MONSNO_MAX+1);
-            if( MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( tempNo ) == TRUE )
+            if( MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( tempNo, musPoke->mcssParam.form ) == TRUE )
             {
               break;
             }

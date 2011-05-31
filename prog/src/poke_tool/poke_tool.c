@@ -1108,6 +1108,27 @@ BOOL  POKETOOL_CheckRare( u32 id, u32 rnd )
 
 //==============================================================================
 /**
+ * @brief   モンスターNoとフォルムからスワンの特別なポケモンか判定する
+ * @param[in] monsno   モンスターNO
+ * @param[in] form     フォルムNO
+ *
+ * @retval  FALSE:交換していい
+ * @retval  TRUE:交換してはいけない
+ *
+ * @com スワンで新規追加されたフォルムのポケモンなどは、通信交換で外に出せないので
+ *      それをチェックするための関数
+ */
+//==============================================================================
+BOOL  POKETOOL_CheckSwanOnlyPoke( const u16 monsno, const u8 form )
+{
+  if((monsno == MONSNO_KYUREMU) && (form != 0)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==============================================================================
+/**
  * @brief   POKEMON_PASO_PARAMからスワンの特別なポケモンか判定する
  * @param[in] ppp   ボックスポケモンパラメータ構造体のポインタ
  *
@@ -1120,13 +1141,10 @@ BOOL  POKETOOL_CheckRare( u32 id, u32 rnd )
 //==============================================================================
 BOOL  PPP_CheckSwanOnlyPoke( const POKEMON_PASO_PARAM *ppp )
 {
-  u32 monsno  = PPP_Get( ppp, ID_PARA_monsno,      NULL );
+  u32 monsno  = PPP_Get( ppp, ID_PARA_monsno, NULL );
   u32 form = PPP_Get( ppp, ID_PARA_form_no, NULL );
 
-  if((monsno == MONSNO_KYUREMU) && (form != 0)){
-    return TRUE;
-  }
-  return FALSE;
+  return POKETOOL_CheckSwanOnlyPoke( monsno, form );
 }
 
 //============================================================================================

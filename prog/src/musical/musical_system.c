@@ -111,9 +111,12 @@ GFL_PROC_DATA Musical_ProcData =
 */
 
 //ミュージカルの参加資格があるか調べる
-const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
+const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no, const u8 form )
 {
-  return TRUE;//全部出れる！
+  if( POKETOOL_CheckSwanOnlyPoke( mons_no, form )){
+    return FALSE;
+  }
+  return TRUE;
 }
 
 const BOOL  MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
@@ -123,7 +126,10 @@ const BOOL  MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
   {
     return FALSE;
   }
-  
+  //スワン新規フォルムは参加不可
+  if( PPP_CheckSwanOnlyPoke(PP_GetPPPPointer( pokePara )) == TRUE ){
+    return FALSE;
+  }
   return TRUE;
 }
 
