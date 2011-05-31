@@ -821,6 +821,9 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
   u32 arcdatid_cell;
   u32 arcdatid_anm;
 
+  //gauge_type‚ðÝ’è‚µ‚È‚¢‚ÆSetPos‚Ì’†‚ÅtypeŽQÆ‚µ‚Ä‚µ‚Ü‚¤‚½‚ß
+  bgw->bgcl[ pos ].gauge_type = type;
+
   switch( type ){
   default:
   case BTLV_GAUGE_TYPE_1vs1:
