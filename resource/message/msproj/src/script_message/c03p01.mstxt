@@ -532,1077 +532,657 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_leader3_01"
-		Style="Large">
+		Label="c03p01_sightseeing_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>こちらヒウンシティ
+かんこうあんないじょです▼
+ただいま　ヒウンめいしょめぐり
+イベントを　かいさいしております▼
+よろしければ　あなたも
+ヒウンめいしょめぐりに　イベントに▼
+さんか　してみませんか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>こちらヒウンシティ
+かんこうあんないじょです▼
+ただいま　ヒウンめいしょめぐり
+イベントを　かいさいしております▼
+よろしければ　あなたも
+ヒウンめいしょめぐりに　イベントに▼
+さんか　してみませんか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:47" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>swanで削除</Comment>
+			<Comment>初回話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:53" />
 		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_00"
-		Style="Large">
+		Label="c03p01_sightseeing_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ　トレーナー！▼
-アンタの　じつりょく　みたいんだ！
-ちょいと　しょうぶ　してくれよ！</Text>
+			<Text>ヒウンシティかんこうあんないじょは
+いつでも　ヒウンめいしょめぐりへの▽
+ちょうせんを　おまちしております！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:17:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ　トレーナー！▼
-アンタの　実力　みたいんだ！
-ちょいと　勝負してくれよ！</Text>
+			<Text>ヒウンシティかんこうあんないじょは
+いつでも　ヒウンめいしょめぐりへの▽
+ちょうせんを　おまちしております！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・初回会話
-・はい/いいえの選択肢
-　はい→dancer1_00a
-　いいえ→dancer1_00b</Comment>
+			<Comment>いいえ選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:07" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_00a"
-		Style="Large">
+		Label="c03p01_sightseeing_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーケー！
-おどるように　ファイトだぜ！▼</Text>
+			<Text>わたくしから　ヒウンのめいしょの
+ヒントをさしあげます▼
+ヒントの　さししめす　ばしょには
+ヒウンかんこうあんない　の▽
+スタッフが　まちかまえております▼
+そこで　ポケモンしょうぶに　かったら
+きねんひんを　さしあげます！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーケー！
-踊るように　ファイトだぜ！▼</Text>
+			<Text>わたくしから　ヒウンのめいしょの
+ヒントをさしあげます▼
+ヒントの　さししめす　ばしょには
+ヒウンかんこうあんない　の▽
+スタッフが　まちかまえております▼
+そこで　ポケモンしょうぶに　かったら
+きねんひんを　さしあげます！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・はい選択時
-・メッセージ表示後、戦闘に
-　dancer_04</Comment>
+			<Comment>はい選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:27" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_00b"
-		Style="Large">
+		Label="c03p01_sightseeing_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだよ　なんだよ！
-ノリが　わるいんじゃないの</Text>
+			<Text>ヒウンめいしょ　の
+ヒントをさしあげます▼
+げんざい（主人公名）さんの
+ヒウンめいしょめぐり　は▽
+のこり　（個数）こですね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだよ　なんだよ！
-ノリが　悪いんじゃないの</Text>
+			<Text>ヒウンめいしょ　の
+ヒントをさしあげます▼
+げんざい（主人公名）さんの
+ヒウンめいしょめぐり　は▽
+のこり　（個数）こですね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:39" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時
-・再度会話時はdancer1_00c</Comment>
+			<Comment>二回目以降クリア前話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:18:55" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff80ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_00c"
-		Style="Large">
+		Label="c03p01_sightseeing_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>なあなあ　トレーナー！▼
-アンタの　じつりょく　みたいんだ！
-ちょいと　しょうぶ　してくれよ！</Text>
+			<Text>メニュー名1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なあなあ　トレーナー！▼
-アンタの　実力　みたいんだ！
-ちょいと　勝負してくれよ！</Text>
+			<Text>メニュー名1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:49" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・戦闘前、２回目以降の会話
-・はい/いいえの選択肢
-　はい→dancer1_00a
-　いいえ→dancer1_00b</Comment>
+			<Comment>メニュー名1</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:25" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_01"
-		Style="Large">
+		Label="c03p01_sightseeing_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーケー！
-レッツ　ダンシング！▼</Text>
+			<Text>メニュー名2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーケー！
-レッツ　ダンシング！▼</Text>
+			<Text>メニュー名2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・先頭後、フィールド復帰で自動で表示
-・会話でダンサーイベント開始
-　この会話後、踊るアニメ</Comment>
+			<Comment>メニュー名2</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:26" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_02"
-		Style="Large">
+		Label="c03p01_sightseeing_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうだい！
-バツグンの　ステップだろ▼
-でさ　なかまが　いれば
-もっと　グッとくると　おもわない？▼</Text>
+			<Text>メニュー名3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:19:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうだい！
-バツグンの　ステップだろ▼
-でさ　仲間が　いれば
-もっと　グッとくると　思わない？▼</Text>
+			<Text>メニュー名3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:04" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けてdancer1_03</Comment>
+			<Comment>メニュー名3</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:27" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_03"
-		Style="Large">
+		Label="c03p01_sightseeing_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうだ　キミ！
-ダンサーに　こえ　かけてくれない？▼
-ふたり　さそって　くれれば
-トリオのチームで　ダンスできるっしょ！</Text>
+			<Text>メニュー名4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうだ　キミ！
-ダンサーに　声　かけてくれない？▼
-２人　さそって　くれれば
-トリオのチームで　ダンスできるっしょ！</Text>
+			<Text>メニュー名4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ダンサー探しイベント開始
-・はい/いいえ選択肢
-　はい→dancer1_04
-　いいえ→dancer1_07</Comment>
+			<Comment>メニュー名4</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:29" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_04"
-		Style="Large">
+		Label="c03p01_sightseeing_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレと　おんなじ　かっこう！
-そいつは　ダンサー！！▼</Text>
+			<Text>メニュー名5</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレと　おんなじ　格好！
-そいつは　ダンサー！！▼</Text>
+			<Text>メニュー名5</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ダンサー探しイベント中</Comment>
+			<Comment>メニュー名5</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:30" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_05"
-		Style="Large">
+		Label="c03p01_sightseeing_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>さびれた　ストリートと
-はとばで　ダンスしてる　ヤツが▽
-いるって　ウインドが　トークしてた▼
-あっ　かぜのウワサ　ってこと！▼</Text>
+			<Text>ヒント1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:20:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さびれた　ストリートと
-波止場で　ダンスしてる　ヤツが▽
-いるって　ウインドが　トークしてた▼
-あっ　風のウワサ　ってこと！▼</Text>
+			<Text>ヒント1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:00" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ダンサー探しイベント中
-　再会話時</Comment>
+			<Comment>ヒント1</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:57" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#800080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_06"
-		Style="Large">
+		Label="c03p01_sightseeing_11">
 		<LanguageCell
 			Language="JPN">
-			<Text>こえを　かけてくれて　サンキュー！
-ステップを　たしかめあってるのさ！▼</Text>
+			<Text>ヒント2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>声を　かけてくれて　サンキュー！
-ステップを　確かめ合ってるのさ！▼</Text>
+			<Text>ヒント2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・会話後、メンバーの方を見て
-　ステイウォーク</Comment>
+			<Comment>ヒント2</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:58" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#800080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_07"
-		Style="Large">
+		Label="c03p01_sightseeing_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうかい？　チームくんだら
-すごい　ステップ　みせるのにさ</Text>
+			<Text>ヒント3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうかい？　チーム組んだら
-すごい　ステップ　みせるのにさ</Text>
+			<Text>ヒント3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時
-・再度会話したときはdancer1_03</Comment>
+			<Comment>ヒント3</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:59" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#800080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer2_01"
-		Style="Large">
+		Label="c03p01_sightseeing_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくのダンスに　たりなかった
-なかまが　できたよ！　うれしいよ！</Text>
+			<Text>ヒント4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくのダンスに　足りなかった
-仲間が　できたよ！　うれしいよ！</Text>
+			<Text>ヒント4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・C03P12のダンサー会話後・表示</Comment>
+			<Comment>ヒント4</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:01" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#800080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer3_01"
-		Style="Large">
+		Label="c03p01_sightseeing_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダンサー　おどる！
-まわりが　よろこぶ！▽
-よろこび　ひろがる！▽
-せかいは　ハッピー！</Text>
+			<Text>ヒント5</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダンサー　おどる！
-周りが　喜ぶ！▽
-喜び　広がる！▽
-世界は　ハッピー！</Text>
+			<Text>ヒント5</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・C03P14のダンサー会話後・表示</Comment>
+			<Comment>ヒント5</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:02" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#800080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_08"
-		Style="Large">
+		Label="c03p01_sightseeing_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンキュー！　サイコーの
-チーム　たんじょう　しちゃった！▽
-これは　オレからの　きもち！▼</Text>
+			<Text>イベントクリア後
+評価メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンキュー！　サイコーの
-チーム　誕生しちゃった！▽
-これは　オレからの　気持ち！▼</Text>
+			<Text>イベントクリア後
+評価メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:55" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・全員探した後に話しかけるとこのセリフ
-・アイテム入手処理
-　No223「おまもりこばん」(仮）</Comment>
+			<Comment>イベントクリア後
+評価メッセージ
+（一度だけ）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:21:52" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_dancer1_09"
-		Style="Large">
+		Label="c03p01_sightseeing_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレたち　ダンスで
-メッセージ　つたえる！▼
-うれしいことや　かなしいこと……
-せかいは　こんなにも▽
-かがやいてる　ってことを！▼</Text>
+			<Text>イベントクリア後
+メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレたち　ダンスで
-メッセージ　伝える！▼
-うれしいことや　悲しいこと……
-世界は　こんなにも▽
-輝いてる　ってことを！▼</Text>
+			<Text>イベントクリア後
+メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アイテム入手後自動で表示
-・再度会話はdancer1_09</Comment>
+			<Comment>イベントクリア後
+メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:22:24" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_dancer1_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>オーケー！
-レッツ　ダンシング！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>オーケー！
-レッツ　ダンシング！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、3人で踊れ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>DANCER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_oldman1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひとが　いる　けしき……
-ポケモンが　いる　けしき……▼
-ともに　すばらしいのです
-だから　えを　かくのです▼
-あっ　アトリエは
-モードストリートを▽
-すすんだところに　ありますよ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>人が　いる　景色……
-ポケモンが　いる　景色……▼
-ともに　すばらしいのです
-だから　絵を　描くのです▼
-あっ　アトリエは
-モードストリートを▽
-進んだところに　ありますよ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c03p01_sign_01"

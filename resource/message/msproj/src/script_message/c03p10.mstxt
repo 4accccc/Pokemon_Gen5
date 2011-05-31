@@ -2,6 +2,249 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="c03p10_sightseeing_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>イベント開始前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イベント開始前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント開始前</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p10_sightseeing_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナー戦前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナー戦前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナー戦前</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p10_sightseeing_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナー戦後</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナー戦後</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナー戦後</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p10_sightseeing_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナー戦後
+イベントクリア前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナー戦後
+イベントクリア前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナー戦後
+イベントクリア前</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p10_sightseeing_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリア
+セントラルエリアで評価前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリア
+セントラルエリアで評価前</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クリア
+セントラルエリアで評価前</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p10_sightseeing_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリア
+イベント全終了</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリア
+イベント全終了</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クリア
+イベント全終了</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:08:55" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03p10_sign_01"
 		Style="Large">
 		<LanguageCell

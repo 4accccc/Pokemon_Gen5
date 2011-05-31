@@ -2,204 +2,666 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c03p09_iceline_01"
-		Style="Large">
+		Label="c03p09_waitress_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>いよいよ　たべられる！
-ならんだかいが　あったぜ！▼</Text>
+			<Text>ヒウンシティのおみやげに　さいてき
+ヒウンアイス　でーす！▼
+うちの　おみせ　むかしは
+ちょっとした　ブーム　だったんだけど▼
+さいきんは　おきゃくさん
+あんまり　こないのよね▼
+しょんぼり　してても　しかたがないし
+がんばって　しょうばい　しょうばい！▼
+さてさて　ヒウンアイス
+１こ　１００円　です▽
+なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いよいよ　食べられる！
-並んだかいが　あったぜ！▼</Text>
+			<Text>ヒウンシティのおみやげに　さいてき
+ヒウンアイス　でーす！▼
+うちの　おみせ　むかしは
+ちょっとした　ブーム　だったんだけど▼
+さいきんは　おきゃくさん
+あんまり　こないのよね▼
+しょんぼり　してても　しかたがないし
+がんばって　しょうばい　しょうばい！▼
+さてさて　ヒウンアイス
+１こ　１００円　です▽
+なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:46" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：アイスイベント</Comment>
+			<Comment>初回話しかけ
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>waitress</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:48:28" />
 		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_02"
-		Style="Large">
+		Label="c03p09_waitress_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>これを　あじわいたくて　はるばる
-カラクサタウンから　きちゃいました！▼</Text>
+			<Text>ヒウンシティのおみやげに　さいてき
+ヒウンアイス　でーす！▼
+１こ　１００円　です
+なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:49:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これを　味わいたくて　はるばる
-カラクサタウンから　来ちゃいました！▼</Text>
+			<Text>ヒウンシティのおみやげに　さいてき
+ヒウンアイス　でーす！▼
+１こ　１００円　です
+なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:49:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：アイスイベント</Comment>
+			<Comment>二回目話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:24" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_03"
-		Style="Large">
+		Label="c03p09_waitress_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここのー　スィーツー！
-チョーにんき　なんだよー！！▼</Text>
+			<Text>チャンピオンも　ごあいよう！
+ヒウンシティのおみやげに　さいてき▽
+ヒウンアイス　でーす！▼
+１こ　１００円　です
+なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:49:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここのー　スィーツー！
-チョーにんき　なんだよー！！▼</Text>
+			<Text>チャンピオンも　ごあいよう！
+ヒウンシティのおみやげに　さいてき▽
+ヒウンアイス　でーす！▼
+１こ　１００円　です
+なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:49:39" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：アイスイベント</Comment>
+			<Comment>繁盛イベント後購入前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:25" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_04"
-		Style="Large">
+		Label="c03p09_waitress_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>さすが　わだいの　おみせ！
-こんなに　こんでるなんて　すごい！▼</Text>
+			<Text>ありがとう　ございます！▼
+……あれ　あれれ？
+おかねが　たりないみたいですね▽
+また　きてくださいませ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:50:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さすが　話題の　お店！
-こんなに　こんでるなんて　すごい！▼</Text>
+			<Text>ありがとう　ございます！▼
+……あれ　あれれ？
+おかねが　たりないみたいですね▽
+また　きてくださいませ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:50:03" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：アイスイベント</Comment>
+			<Comment>お金が足りない</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:28" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_05a"
-		Style="Large">
+		Label="c03p09_waitress_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありがとう　ございます！▼
+……あれ　あれれ？
+バッグが　いっぱいみたいですね▽
+また　きてくださいませ▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:51:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ありがとう　ございます！▼
+……あれ　あれれ？
+バッグが　いっぱいみたいですね▽
+また　きてくださいませ▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:51:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:30" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>せっかく　ならんでくれたのに……
+あのう　また　きてくださいね！▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:51:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せっかく　ならんでくれたのに……
+あのう　また　きてくださいね！▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:51:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>買わずにキャンセル
+繁盛時</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:32" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>せっかく　きてくれたのに……
+あのう　また　きてくださいね！▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:51:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せっかく　きてくれたのに……
+あのう　また　きてくださいね！▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:52:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>買わずにキャンセル
+繁盛前</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:34" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>おかいあげ
+ありがとうございました▼
+また　きてくださいね！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:52:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おかいあげ
+ありがとうございました▼
+また　きてくださいね！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:52:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>購入後</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:36" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　おきゃくさんが
+かったぶんで　おわりなんです……▼
+また　きてくださいね！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:53:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　おきゃくさんが
+かったぶんで　おわりなんです……▼
+また　きてくださいね！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:53:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>購入後
+話しかけ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:02:51" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>はわわわわ！▼
+あたらしい　チャンピオンが
+うちの　ヒウンアイスを▼
+あいようしてるって　うわさ　で
+とつぜん　おきゃくさんが　さっとう！▼
+うれしい　ひめいで　キャー！
+にんきばくはつ！　ヒウンアイス▽
+なんこ　おかいあげですか？
+</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:53:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はわわわわ！▼
+あたらしい　チャンピオンが
+うちの　ヒウンアイスを▼
+あいようしてるって　うわさ　で
+とつぜん　おきゃくさんが　さっとう！▼
+うれしい　ひめいで　キャー！
+にんきばくはつ！　ヒウンアイス▽
+なんこ　おかいあげですか？
+</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T02:00:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:53:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>購入後話しかけ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:53:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_business_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん……？　そんなところに
+アイスクリームや　が　あったのか▼
+それって　おいしいの？
+きになるな……</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:55:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:55:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん……？　そんなところに
+アイスクリームや　が　あったのか▼
+それって　おいしいの？
+きになるな……</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:55:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:55:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>初回購入後
+「！」の後メッセージ表示</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:56:36" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_customer_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんしゃに　のって　はるばる
+カナワタウンから　かいに　きたでー</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>でんしゃに　のって　はるばる
+カナワタウンから　かいに　きたでー</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:24" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_customer_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドキドキ！　チャンピオンが
+かってるなんて　イマドキじゃなーい？</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドキドキ！　チャンピオンが
+かってるなんて　イマドキじゃなーい？</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:34" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_customer_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソワソワ……
+はやく　たべたい！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソワソワ……
+はやく　たべたい！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:42" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_customer_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>むすめに　たのまれて
+かいにきたんだが▼
+こんなに　ならんでいるとは…！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むすめに　たのまれて
+かいにきたんだが▼
+こんなに　ならんでいるとは…！</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:57:51" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_customer_05_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは
@@ -207,63 +669,37 @@
 スィーツを　かうことが　できるんだよ▼
 きみも　かうために　ならぶかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うん？　ここでは
-いま　ヒウンシティで　話題の▽
-スィーツを　買うことが　できるんだよ▼
-きみも　買うために　並ぶかい？</Text>
+いま　ヒウンシティで　わだいの▽
+スィーツを　かうことが　できるんだよ▼
+きみも　かうために　ならぶかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:41" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂：アイスイベント
-・火曜日
-・はい/いいえの選択肢
-　はい→iceline_05b
-　いいえ→iceline_05c</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_05b"
-		Style="Large">
+		Label="c03p09_customer_05_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうかー
@@ -271,123 +707,75 @@
 でも　ぜったい　おいしいから
 ならぶ　かちは　ある！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうかー
-結構　並ぶぞー！▼
-でも　絶対　美味しいから
-並ぶ　価値は　ある！▼</Text>
+けっこう　ならぶぞー！▼
+でも　ぜったい　おいしいから
+ならぶ　かちは　ある！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:49" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂：アイスイベント
-・火曜日
-・はい選択時</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_05c"
-		Style="Large">
+		Label="c03p09_customer_05_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうかー　こんでるしな▼
 でも　ここだけの　はなし
-きょうは　すいてるほう　なんだよ▽
-いつもは　もう　うりきれ　なんだ▼</Text>
+チャンピオンも　あいようだってさ！▼
+きっと　おいしいぞ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうかー　こんでるしな▼
-でも　ここだけの話
-今日は　すいてるほう　なんだよ▽
-いつもは　もう　売り切れ　なんだ▼</Text>
+でも　ここだけの　はなし
+チャンピオンも　あいようだってさ！▼
+きっと　おいしいぞ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:58:58" />
 		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂：アイスイベント
-・火曜日
-・いいえ選択時</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_iceline_05d"
-		Style="Large">
+		Label="c03p09_customer_05_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは
@@ -396,659 +784,31 @@
 でも　きょうは　もう
 ぼくで　うりきれ　みたいだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うん？　ここでは
-いま　ヒウンシティで　話題の▽
-スィーツを　買うことが　できるんだよ▼
-でも　今日は　もう
-ぼくで　売り切れ　みたいだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂：アイスイベント
-・火曜日
-・購入済み</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_iceline_05e"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>うん？　ここでは
 いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
 でも　きょうは　もう
-ぼくで　うりきれ　みたいだ……▽
-また　べつのひに　きてごらんよ▼</Text>
+ぼくで　うりきれ　みたいだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:59:11" />
 		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>うん？　ここでは
-いま　ヒウンシティで　話題の▽
-スィーツを　買うことが　できるんだよ▼
-でも　今日は　もう
-ぼくで　売り切れ　みたいだ▽
-また　別の日に　来てごらんよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂：アイスイベント
-・火曜日以外</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヒウンシティめいぶつ
-ヒウンアイスに　なりまーす▼
-１こ　１００円　です
-おかいあげに　なりますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヒウンシティ名物
-ヒウンアイスに　なりまーす▼
-１こ　１００円　です
-お買い上げに　なりますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬以外
-・かう/かわないの選択肢
-　かう→shop_02
-　かう選択、でもお金がない→shop_03
-　かわない→shop_01b</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_01b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ええっ　ほんとうに　かわないんですか？
-そろそろ　うりきれちゃいますよ？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ええっ　本当に買わないんですか？
-そろそろ　売り切れちゃいますよ？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬以外
-・かう/かわないの選択肢
-　かう→shop_02
-　かう選択、でもお金がない→shop_03
-　かわない→shop_05</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ありがとう　ございます！▼
-このキュートな　いろと
-ナイーブな　あじが　いいんです！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ありがとう　ございます！▼
-このキュートな　色と
-ナイーブな　味が　いいんです！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬以外
-・はい選択時
-　メッセージ後、ヒウンアイス追加</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ありがとう　ございます！▼
-……あれ　あれれ？
-おかねが　たりないみたいですね▽
-また　きてくださいませ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ありがとう　ございます！▼
-……あれ　あれれ？
-お金が　たりないみたいですね▽
-また　来てくださいませ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬以外
-・はい選択、でもお金がない</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ありがとう　ございます！▼
-……あれ　あれれ？
-バッグが　いっぱいみたいですね▽
-また　きてくださいませ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ありがとう　ございます！▼
-……あれ　あれれ？
-バッグが　いっぱいみたいですね▽
-また　来てくださいませ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬以外
-・はい選択、でもおバッグがいっぱい</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>せっかく　ならんでくれたのに……
-あのう　また　きてくださいね！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>せっかく　並んでくれたのに……
-あのう　また　来てくださいね！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬以外
-・いいえ選択時</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ここでは　ヒウンシティめいぶつの
-ヒウンアイスを　うっていまーす！▼
-でも　オーナーの　かんがえで
-ふゆは　おやすみ　なんです……▽
-あたたかくなったら　またきてください！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ここでは　ヒウンシティ名物の
-ヒウンアイスを　売っていまーす！▼
-でも　オーナーの　意向で
-冬は　おやすみ　なんです……▽
-暖かくなったら　また来てください！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・冬</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>かう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>買う</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>msg_c03p09_ice_shop_01表示後の選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ice_shop_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>msg_c03p09_ice_shop_01表示後の選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SHOPW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff8000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1113,11 +873,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンめいぶつ　ヒウンアイス
-ふゆは　さむいので　おやすみ</Text>
+			<Text>ヒウンめいぶつ　ヒウンアイス</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:47:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1125,11 +884,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウン名物　ヒウンアイス
-冬は　寒いので　販売しません</Text>
+			<Text>ヒウン名物　ヒウンアイス</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="mizuguchi_mai:W00226"
+				Time="2011-05-31T01:47:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1159,946 +917,6 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman2_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman3_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman4_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman5_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman6_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman7_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman8_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman9_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman10_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman11_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman12_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman13_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman14_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_businessman15_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ol1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ol2_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ol3_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ol4_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p09_ol5_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>削除ラベル</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
