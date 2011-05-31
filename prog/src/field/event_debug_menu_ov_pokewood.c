@@ -316,7 +316,7 @@ static BOOL debugMenuCallProc_PokewoodShowRom( POKEWOOD_FUNC_WORK * wk )
 /**
  *  @brief  デバッグ用ポケウッド上映前アプリ呼び出し
  *
- *  @param  DEBUG_WBT_WORK *p_wk   ワーク
+ *  @param  POKEWOOD_FUNC_WORK *p_wk   ワーク
  *
  *  @return 終了コード
  */

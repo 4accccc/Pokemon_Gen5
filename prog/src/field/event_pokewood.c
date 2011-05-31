@@ -386,6 +386,7 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
   case 0:
     // プレイヤーボリュームをフェードアウト
     FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, prew->musicDefault));
     (*seq)++;
     break;
 
@@ -400,7 +401,7 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
     (*seq)++;
     break;
-
+  // 撮影ならバトルへ、上映なら事前アプリの後バトルへ
   case 3:
     pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
     //侵入システムに戦闘中であることを伝える
@@ -411,20 +412,22 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
       (*seq)=100;
     }
     break;
+  // 事前アプリ
   case 100:
     prew->pkwd_count_param.gamesys = gsys;
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
     (*seq) = 101;
     break;
+  // バトル呼び出し
   case 101:
     // BGM切り替え
     FIELD_SOUND_ChangePlayerVolume( fsnd, MAX_VOLUME, 1 );  
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, prew->musicDefault));
 
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
     (*seq) = 4;
     break;
+  // 撮影時はセーブ
   case 4:
     if ( prew->PokewoodMode == BTL_POKEWOOD_REC )
     { //とりあえず無理やりセーブしてみる
