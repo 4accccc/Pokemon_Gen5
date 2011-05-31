@@ -30,7 +30,6 @@ _EVENT_DATA    ev_bg_c05gym0101_lift_03
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
 _EVENT_DATA    ev_zone_c05gym0101
 _EVENT_DATA    ev_init_c05gym0101
-_EVENT_DATA    ev_pos_c05gym0101_shortcut
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -61,9 +60,9 @@ INIT_EVENT_START  ev_init_c05gym0101
 		//バッジ入手後の処理
 
     // ガイド位置変更
-    _OBJ_POS_CHANGE( C05GYM0101_SUNGLASSES_01, 9, 0, 79, DIR_DOWN )
+    _OBJ_POS_CHANGE( C05GYM0101_SUNGLASSES_01, 9, 0, 84, DIR_DOWN )
     // ヤーコン位置変更
-    _OBJ_POS_CHANGE( C05GYM0101_SWLEADER5_01, 11, 1, 71, DIR_DOWN )
+    _OBJ_POS_CHANGE( C05GYM0101_SWLEADER5_01, 11, 1, 72, DIR_DOWN )
   ENDIF
 
 INIT_EVENT_END
@@ -149,11 +148,9 @@ EVENT_START		ev_c05gym0101_swleader5_01
 		_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_04 , C05GYM0101_SWLEADER5_01 )
 		_BALLOONWIN_CLOSE()
 
-    //わざマシン入手処理　「じならし」
-    _ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN78, 1 )
-		_LAST_KEYWAIT()
+		//わざマシン入手処理　「じならし」
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN78, 1 )
 
-		
 		//============フラグワーク操作=============//
 	
 		//ジムトレーナーの視線無効
@@ -169,15 +166,72 @@ EVENT_START		ev_c05gym0101_swleader5_01
 		_FLAG_SET( SYS_FLAG_ELBOARD_C05GYMWIN )
 
 		//========================================//
+	//ヤーコン：一度、思考する
+	_OBJ_ANIME( C05GYM0101_SWLEADER5_01, anm_staystep_r )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 30 )
 
-    //=====================================
-    //帰り道ショートカットPOSの起動をできるようにする
-		$WK_SCENE_C05GYM0101_SHORTCUT = 1
-    //=====================================
+	_PLAYER_DIR_GET(SCWK_ANSWER)
+	
+	//プレイヤーの方向によってヤーコンの向きを変える
+	SWITCH $SCWK_ANSWER
+	CASE DIR_UP THEN
+		_OBJ_ANIME( C05GYM0101_SWLEADER5_01, anm_staystep_d )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( C05GYM0101_SWLEADER5_01, anm_staystep_l )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+	
+	//ヤーコン：そうだな　ワシに　ついてこい
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_06, C05GYM0101_SWLEADER5_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//ヤーコン一歩前へ出る
+	_OBJ_ANIME( C05GYM0101_SWLEADER5_01, anm_walk_d )
+
+	//プレイヤーの方向によってアニメを変える
+	SWITCH $SCWK_ANSWER
+	CASE DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_u )
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT( 10 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+	CASE DIR_RIGHT THEN
+		_TIME_WAIT( 10 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+	
+  //==========エントランスへ移動============//
+  //==========ヤーコンリフト専用============//
+  {
+    //マップブラックアウト
+    _MAP_FADE_BLACK_OUT_SLOW()
+
+    //リフトを上昇させる（2 = ヤーコンリフト専用）
+    _GYM_GROUND_EXIT_LIFT( 2 )
+
+    _MAP_FADE_END_CHECK()
+
+    // 暗転中にリフトが移動したと思わせる
+    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+    _TIME_WAIT( 40 )
+    _SE_STOP()
+    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+    _TIME_WAIT( 40 )
+    _SE_STOP()
+    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
+
+    //スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
+    _RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_02 )
+
+    //マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 6, 0, 4, DIR_DOWN )
+  }
 
 	//ジムバッジ入手後
 	ELSE
-		
 		//クリア後
 		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 			_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_end_01 , C05GYM0101_SWLEADER5_01 )
@@ -393,73 +447,80 @@ EVENT_START	ev_bg_c05gym0101_exitlift_00u
 
 EVENT_END
 
-/************************************************************/
-/*				帰り道ショートカットPOSイベント				*/
-/************************************************************/
-EVENT_START ev_pos_c05gym0101_shortcut
-{
+//--------------------------------------------------------------------
+//	◆プレイヤー：動く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_u
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_ANM_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_ANM_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
 
-  // ヤーコン、主人公の前にくる
-  _OBJ_ANIME( C05GYM0101_SWLEADER5_01, anm_tr_down )
-  _OBJ_ANIME_WAIT()
 
-  // 主人公上向く
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
-  _OBJ_ANIME_WAIT()
-
-  //【仮】
-  // メッセージがないので、仮あて
-  // こいよ、送ってってやる
-  _BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_01, C05GYM0101_SWLEADER5_01 )
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-
-  //==========エントランスへ移動============//
-  //==========ヤーコンリフト専用============//
-  {
-    //マップブラックアウト
-    _MAP_FADE_BLACK_OUT_SLOW()
-
-    //リフトを上昇させる（2 = ヤーコンリフト専用）
-    _GYM_GROUND_EXIT_LIFT( 2 )
-
-    _MAP_FADE_END_CHECK()
-
-    // 暗転中にリフトが移動したと思わせる
-    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
-    _TIME_WAIT( 40 )
-    _SE_STOP()
-    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
-    _TIME_WAIT( 40 )
-    _SE_STOP()
-    _SE_PLAY( SEQ_SE_FLD_59 )		//リフト移動ＳＥを再生
-
-    //スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
-    _RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_02 )
-
-    //マップチェンジ
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C05GYM0201, 7, 0, 5, DIR_UP )
-  }
-
-  //=====================================
-  //このPOSの起動をさせなくする
-  $WK_SCENE_C05GYM0101_SHORTCUT = 2
-  //=====================================
-
-}
-EVENT_END
-
-//--------------------------------------------------------------
-//	1歩進む
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_tr_down
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
-//--------------------------------------------------------------
-//	上向く
-//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
 _ANIME_LABEL	anm_dir_u
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
 
 

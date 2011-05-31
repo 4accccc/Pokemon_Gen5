@@ -25,7 +25,6 @@ _EVENT_DATA    ev_reserve_c05gym0201_gymback_01
 _EVENT_DATA    ev_reserve_c05gym0201_gymback_02
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
 _EVENT_DATA    ev_c05gym0201_informationw_01
-_EVENT_DATA    ev_c05gym0201_swleader5_01
 _EVENT_DATA_END
 
 //------------------------！注意！------------------------------//
@@ -58,18 +57,42 @@ EVENT_START	ev_reserve_c05gym0201_gymback_02
 
   // ヤーコンの位置変更
   //_OBJ_POS_CHANGE( C05GYM0201_LEADER5_01, 7, 0, 4, DIR_DOWN )
+  _OBJ_ADD_EX( 7, 4, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWLEADER5, MV_DMY )
 
   //リフトと自機の位置をセット( 1 = ヤーコンリフト専用)
   _GYM_GROUND_ENT_SET_ENTER_POS(1)
   //マップブラックイン
 	_MAP_FADE_BLACK_IN_SLOW()
-	//ジムからリフトが戻ってくる演出（引数2 = ヤーコンリフト専用）
-	_GYM_GROUND_ENT_EXIT_LIFT( 2 )
+
   //マップフェード待ち
 	_MAP_FADE_END_CHECK()
 
+	//ジムからリフトが戻ってくる演出（引数2 = ヤーコンリフト専用）
+	_GYM_GROUND_ENT_EXIT_LIFT( 2 )
+
   // ヤーコンリフトフラグON
   $LOCALWORK0 = 1
+	
+	//ヤーコン・プレイヤー：向き合う
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_l )
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	
+	_OBJ_ANIME_WAIT()
+	
+	//いい　ステージには　いい　ダンサーが　たいせつ　なんだ
+	_BALLOONWIN_OBJMSG( msg_c05gym0201_swleader5_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//ヤーコン、画面外に移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader5_leave )
+	_TIME_WAIT( 20 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	
+	_OBJ_ANIME_WAIT()
+	
+	//動作モデル削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
 EVENT_END
 
@@ -141,17 +164,54 @@ EVENT_START		ev_c05gym0201_informationw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_infomationw_01 )
 EVENT_END
 
-/**************************************************************/
-/*    ジムリーダー会話                                  */
-/**************************************************************/
-EVENT_START		ev_c05gym0201_swleader5_01
-/*	_TALK_OBJ_START()
+//--------------------------------------------------------------------
+//	◆ヤーコン：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader5_leave
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
 
-  // 【仮】
-  // メッセージがないので、仮あて
-  _BALLOONWIN_OBJMSG( msg_c03r0501_infomationw_01 , C05GYM0201_LEADER5_01 )
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-  */
-EVENT_END
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
