@@ -47,6 +47,15 @@ typedef struct
 #define PERAP_WAVE_SPD        (32768)   //再生スピード(１倍速)
 #define PERAP_WAVE_SPDRAND    (8192)    //再生スピードのランダム
 extern PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv);
+
+//フォルム違いで鳴き声が違うもの
+typedef struct PMVOICE_FORM_PARAM{
+  u16 monsno;
+  u16 form;
+  u16 wave_idx;
+}PMVOICE_FORM_PARAM;
+
+
 //============================================================================================
 /**
  *
@@ -60,15 +69,25 @@ void PMV_GetVoiceWaveIdx( u32 pokeNo,     // [in]ポケモンナンバー
               u32 pokeFormNo,   // [in]ポケモンフォームナンバー
               u32* waveIdx )    // [out]波形IDX
 {
+  static const PMVOICE_FORM_PARAM DATA_PMVoiceFormTbl[] = {
+    { MONSNO_SHEIMI,  FORMNO_SHEIMI_SKY, WAVE_ARC_PV492_SKY }, //シェイミスカイフォルム
+    { MONSNO_KYUREMU, FORMNO_KYUREMU_WHITE, WAVE_ARC_PV653_WHITE }, //キュレム　レシラム合体フォルム
+    { MONSNO_KYUREMU, FORMNO_KYUREMU_BLACK, WAVE_ARC_PV653_BLACK }, //キュレム　ゼクロム合体フォルム
+  };
+  int i;
+
   if(( pokeNo < MONSNO_HUSIGIDANE)||( pokeNo > MONSNO_END) ){
     //指定範囲外
 //    *waveIdx = PMVOICE_POKE001;
     *waveIdx = MONSNO_ZIBAKOIRU; // 仮で範囲外の泣き声をジバコイルにした 2011.04.28 by mori
     return;
   }
-  if( pokeNo == MONSNO_SHEIMI ){          //シェイミの時のみ、フォルムチェック
-    if( pokeFormNo == FORMNO_SHEIMI_SKY ){  //スカイフォルム
-      *waveIdx = WAVE_ARC_PV492_SKY;
+
+  for( i = 0;i < NELEMS(DATA_PMVoiceFormTbl);i++){
+    const PMVOICE_FORM_PARAM* prm = &DATA_PMVoiceFormTbl[i];
+
+    if( prm->monsno == pokeNo && pokeFormNo == prm->form ){
+      *waveIdx = prm->wave_idx;
       return;
     }
   }
