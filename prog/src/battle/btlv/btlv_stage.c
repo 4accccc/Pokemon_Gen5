@@ -247,23 +247,36 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
     bsw->epfw.pal_fade_count  = 1;
   }
 
-  //Ž©•ª‘¤‚¨–~
-  bsw->stage_status[ BTLV_STAGE_MINE ].trans.x = stage_pos_table[ BTLV_STAGE_MINE ].x;
-  bsw->stage_status[ BTLV_STAGE_MINE ].trans.y = stage_pos_table[ BTLV_STAGE_MINE ].y;
-  bsw->stage_status[ BTLV_STAGE_MINE ].trans.z = stage_pos_table[ BTLV_STAGE_MINE ].z;
-  bsw->stage_status[ BTLV_STAGE_MINE ].scale.x = BTLV_STAGE_DEFAULT_SCALE;
-  bsw->stage_status[ BTLV_STAGE_MINE ].scale.y = BTLV_STAGE_DEFAULT_SCALE;
-  bsw->stage_status[ BTLV_STAGE_MINE ].scale.z = BTLV_STAGE_DEFAULT_SCALE;
-  MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_MINE ].rotate );
+  { //ƒoƒgƒ‹ƒ‹[ƒ‹‚É‚æ‚èA‚¨–~‚Ì‘å‚«‚³‚ð’²®‚·‚é
+    fx32 scale = BTLV_STAGE_DEFAULT_SCALE;
+    if ( rule == BTL_RULE_TRIPLE )
+    {
+      scale = FX_MUL(BTLV_STAGE_DEFAULT_SCALE, FX_F32_TO_FX32(1.5));
+    }
+    else if ( rule == BTL_RULE_DOUBLE )
+    {
+      scale = FX_MUL(BTLV_STAGE_DEFAULT_SCALE, FX_F32_TO_FX32(1.2));
+    }
 
-  //‘ŠŽè‘¤‚¨–~
-  bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.x = stage_pos_table[ BTLV_STAGE_ENEMY ].x;
-  bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.y = stage_pos_table[ BTLV_STAGE_ENEMY ].y;
-  bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.z = stage_pos_table[ BTLV_STAGE_ENEMY ].z;
-  bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.x = BTLV_STAGE_DEFAULT_SCALE;
-  bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.y = BTLV_STAGE_DEFAULT_SCALE;
-  bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.z = BTLV_STAGE_DEFAULT_SCALE;
-  MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_ENEMY ].rotate );
+    //Ž©•ª‘¤‚¨–~
+    bsw->stage_status[ BTLV_STAGE_MINE ].trans.x = stage_pos_table[ BTLV_STAGE_MINE ].x;
+    bsw->stage_status[ BTLV_STAGE_MINE ].trans.y = stage_pos_table[ BTLV_STAGE_MINE ].y;
+    bsw->stage_status[ BTLV_STAGE_MINE ].trans.z = stage_pos_table[ BTLV_STAGE_MINE ].z;
+    bsw->stage_status[ BTLV_STAGE_MINE ].scale.x = scale;
+    bsw->stage_status[ BTLV_STAGE_MINE ].scale.y = scale;
+    bsw->stage_status[ BTLV_STAGE_MINE ].scale.z = scale;
+    MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_MINE ].rotate );
+
+    //‘ŠŽè‘¤‚¨–~
+    bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.x = stage_pos_table[ BTLV_STAGE_ENEMY ].x;
+    bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.y = stage_pos_table[ BTLV_STAGE_ENEMY ].y;
+    bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.z = stage_pos_table[ BTLV_STAGE_ENEMY ].z;
+    bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.x = scale;
+    bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.y = scale;
+    bsw->stage_status[ BTLV_STAGE_ENEMY ].scale.z = scale;
+    MTX_Identity33( &bsw->stage_status[ BTLV_STAGE_ENEMY ].rotate );
+
+  }
 
   if( rule == BTL_RULE_ROTATION )
   { 
