@@ -620,7 +620,7 @@ void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, 
   RANDOMMAP_SAVE_SetKyuremuUnionPokeParam( (RANDOMMAP_SAVE*)work->plData->rnd_map, (const POKEMON_PARAM*)pp_t );
 
   //キュレム専用技変化
-  PLIST_DEMO_KyuremuWazaChange( pp_k, 0, mode );
+  PLIST_DEMO_KyuremuWazaChange( pp_k, 0, mode+1 );
 
   //キュレムフォルムチェンジ
   PP_ChangeFormNo( pp_k, FORMNO_KYUREMU_WHITE+mode );
