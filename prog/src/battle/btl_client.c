@@ -290,6 +290,7 @@ static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* pa
 static BOOL selact_WazaInfoView( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
+static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq );	// add
 static BOOL checkBallTargetHide( BTL_CLIENT* wk );
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
 static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq );
@@ -2522,8 +2523,14 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
           break;
         }
       }
-
-      ClientSubProc_Set( wk, selact_Item );
+      // シナリオ(撮影のみ)
+      if( BTL_MAIN_GetPokewoodMode(wk->mainModule) == BTL_POKEWOOD_REC ){
+        ClientSubProc_Set( wk, selact_Scenario );
+      }
+      // 通常
+      else{
+        ClientSubProc_Set( wk, selact_Item );
+      }
       break;
 
     // 「にげる」or「もどる」
@@ -3126,6 +3133,43 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
   // 制限時間による強制終了待ち後
   case 2:
     if( BTLV_ITEMSELECT_Wait(wk->viewCore) ){
+      ClientSubProc_Set( wk, selact_ForceQuit );
+    }
+    break;
+
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  ポケウッド「シナリオ」画面(要確認)
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_SCENARIOSELECT_Start( wk->viewCore );
+    (*seq)++;
+    break;
+
+  case 1:
+    // 制限時間による強制終了通知(現在未対応)
+    if( CheckSelactForceQuit(wk, NULL) ){
+      BTLV_SCENARIOSELECT_ForceQuit( wk->viewCore );
+      (*seq) = 2;
+      return FALSE;
+    }
+    
+    if( BTLV_SCENARIOSELECT_Wait(wk->viewCore) )
+    {
+		ClientSubProc_Set( wk, selact_Root );
+    }
+    break;
+
+  // 制限時間による強制終了待ち後
+  case 2:
+    if( BTLV_SCENARIOSELECT_Wait(wk->viewCore) ){
       ClientSubProc_Set( wk, selact_ForceQuit );
     }
     break;

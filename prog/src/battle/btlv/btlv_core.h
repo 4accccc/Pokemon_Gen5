@@ -365,7 +365,10 @@ extern u8  BTLV_ITEMSELECT_GetCost( BTLV_CORE* wk );
 extern u8  BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk );
 extern u8 BTLV_ITEMSELECT_GetWazaIdx( BTLV_CORE* wk );
 extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
-
+//
+extern void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk );
+extern BOOL BTLV_SCENARIOSELECT_Wait( BTLV_CORE* wk );
+extern void BTLV_SCENARIOSELECT_ForceQuit( BTLV_CORE* wk );
 
 extern void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir );
 extern BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result );

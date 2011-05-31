@@ -1,0 +1,20 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: b_scenario_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_B_SCENARIO_GRA_NAIX_
+#define NARC_B_SCENARIO_GRA_NAIX_
+
+enum {
+	NARC_b_scenario_gra_pkwd_scenario_NCLR = 0,
+	NARC_b_scenario_gra_pkwd_scenario_NCGR = 1,
+	NARC_b_scenario_gra_pkwd_scenario_NSCR = 2
+};
+
+/* NARC_B_SCENARIO_GRA_NAIX_ */
+#endif

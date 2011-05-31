@@ -26,6 +26,8 @@
 #include "../app/b_bag.h"
 #include "../app/b_plist.h"
 #include "../btl_server_flow.h"
+//
+#include "../app/b_scenario.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
@@ -38,6 +40,7 @@ FS_EXTERN_OVERLAY(battle_view);
 FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);
 FS_EXTERN_OVERLAY(battle_plist);
+FS_EXTERN_OVERLAY(battle_scenario);
 FS_EXTERN_OVERLAY(vram_h);
 FS_EXTERN_OVERLAY(tr_ai);
 
@@ -79,6 +82,8 @@ struct _BTLV_CORE {
   BtlAction             playerAction;
   BBAG_DATA             bagData;
   BPLIST_DATA           plistData;
+  // test
+  BSCENARIO_DATA        scenarioData;
   BTL_POKESELECT_RESULT* pokeselResult;
   BTLV_INPUT_BATTLE_RECORDER_PARAM  recPlayerUI;
   BTLV_ROTATION_WAZASEL_PARAM*      rotationSelParam;
@@ -1558,6 +1563,124 @@ void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk )
     MYITEM_BattleBagLastItemSet( wk->bagData.bagcursor, wk->bagData.ret_item, wk->bagData.ret_page );
   }
 }
+
+//--------------------------------------
+
+//=============================================================================================
+/**
+ * ポケウッドシナリオ画面開始
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
+{
+  if( wk->selectItemSeq == 0 )
+  {
+    wk->scenarioData.end_flg = FALSE;
+    wk->scenarioData.heap 	 = wk->heapID;
+	wk->scenarioData.font	 = wk->largeFontHandle;
+	
+#if 1	// 敵パーティを取得できるようになれば削除でいいはず
+  // ポケモンリストパラメータ初期化
+    SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0, 0 );
+
+  //「さしおさえ」で道具を使用できないポケモンを指定
+    {
+      const BTL_PARTY* party = BTL_CLIENT_GetParty( wk->myClient );
+      const BTL_POKEPARAM* bpp;
+      u32 i, members = BTL_PARTY_GetMemberCount( party );
+
+      for(i=0; i<members; ++i){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        wk->plistData.skill_item_use[ i ] = BPP_CheckSick( bpp, WAZASICK_SASIOSAE );
+      }
+      for( ; i<NELEMS(wk->plistData.skill_item_use); ++i){
+        wk->plistData.skill_item_use[ i ] = 0;  // 0=使用可 / 1=使用不可
+      }
+    }
+#endif
+    wk->selectItemSeq = 1;
+    // (自パーティでテスト)
+    wk->scenarioData.party = wk->plistData.pp;
+  }
+}
+
+//=============================================================================================
+/**
+ * ポケウッドシナリオ画面の強制終了通知（コマンド選択の制限時間切れによる）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCENARIOSELECT_ForceQuit( BTLV_CORE* wk )
+{
+//  wk->scenarioData.time_out_flg = TRUE;
+  wk->plistData.time_out_flg = TRUE;
+}
+
+//=============================================================================================
+/**
+ * ポケウッドシナリオ画面終了待ち(判定はこの前で行われている)
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_SCENARIOSELECT_Wait( BTLV_CORE* wk )
+{
+  enum {
+    SEQ_NULL = 0,
+    SEQ_INIT = 1,
+    SEQ_START_SCENE_SCENARIO,
+    SEQ_WAIT_SCENE_SCENARIO,
+
+    SEQ_START_RECOVER,
+    SEQ_WAIT_RECOVER,
+  };
+
+  switch( wk->selectItemSeq ){
+  case SEQ_INIT:
+    BTLV_SCD_FadeOut( wk->scrnD, TRUE );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
+    wk->selectItemSeq = SEQ_START_SCENE_SCENARIO;
+    break;
+
+  case SEQ_START_SCENE_SCENARIO:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      BTLV_SCD_Cleanup( wk->scrnD );
+      //
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_scenario ) );
+      BattleScenario_TaskAdd( &wk->scenarioData );
+      wk->selectItemSeq = SEQ_WAIT_SCENE_SCENARIO;
+    }
+    break;
+
+  case SEQ_WAIT_SCENE_SCENARIO:
+    // シナリオ表示
+    if( wk->scenarioData.end_flg ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_scenario ) );
+      wk->selectItemSeq = SEQ_START_RECOVER;
+    }
+    break;
+
+  case SEQ_START_RECOVER:
+    BTLV_SCD_FadeIn( wk->scrnD );
+    BTLV_SCD_Setup( wk->scrnD );
+    wk->selectItemSeq = SEQ_WAIT_RECOVER;
+    break;
+
+  case SEQ_WAIT_RECOVER:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
+      wk->selectItemSeq = SEQ_NULL;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 
 //--------------------------------------
 

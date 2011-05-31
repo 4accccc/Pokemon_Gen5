@@ -109,6 +109,7 @@ SUBDIRS	=	wmi \
 			pokeicon \
             b_bag \
             b_plist \
+            b_scenario \
 		  regulation \
 			mictest \
 			pokemon_center \
