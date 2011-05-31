@@ -2914,7 +2914,6 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
                                             GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
         PaletteWorkSet_ArcHandle( ttw->biw->pfd, ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCLR, 
                                   ttw->biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
-        PaletteTransSwitch( ttw->biw->pfd, TRUE );
         GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_pkwd_movie02_NSCR,
                                          GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
         // OBJリソース転送・登録
