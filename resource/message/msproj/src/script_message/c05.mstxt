@@ -1296,10 +1296,11 @@ HAKAIM</Text>
 			<Comment>♂
 ・ジムバッジ取得後
 ・続けてswleader5_01
+　ヤーコンも外にでている
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:22:04" />
+				Time="2011-05-31T05:59:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1328,12 +1329,13 @@ HAKAIM</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヤーコン「おう！　まだいたか▼
-なかなかの　たたかい　だったからな
+			<Text>ヤーコン「なんだ　おまえら
+しりあい　だったのか？▼
+ふたりとも　なかなか　だったからな
 いいところへ　つれて　いってやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:23:53" />
+				Time="2011-05-31T05:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1341,12 +1343,13 @@ HAKAIM</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヤーコン「おう！　まだいたか▼
-なかなかの　戦い　だったからな
+			<Text>ヤーコン「なんだ　おまえら
+しりあい　だったのか？▼
+ふたりとも　なかなか　だったからな
 いいところへ　連れて　いってやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:24:12" />
+				Time="2011-05-31T05:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
