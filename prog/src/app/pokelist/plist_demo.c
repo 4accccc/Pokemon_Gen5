@@ -39,7 +39,8 @@
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
 #define PLIST_DEMO_CHANGE_WAIT_SHEIMI			(38)
 ///パーティクルが出て、この時間だけ経ったらホワイトアウト開始
-#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_WHITEOUT		(65)
+#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_UNION_WHITEOUT		(65)
+#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_PERGE_WHITEOUT		(85)
 #define PLIST_DEMO_KYUREMU_WIPEOUT_DIV    (12)
 #define PLIST_DEMO_KYUREMU_WIPEOUT_SYNC   (1)
 #define PLIST_DEMO_KYUREMU_WIPEIN_DIV    (12)
@@ -73,8 +74,6 @@ void PLIST_DEMO_DemoInit( PLIST_WORK *work )
   GF_ASSERT_MSG(work->demoType!=PDT_NONE,"Plz set demotype!\n");
   
   work->demoCnt = 0;
-  work->demoIsChange = FALSE;
-  work->demoIsPlayVoice = FALSE;
   
   //チラツキを消すため一回非表示
   GFL_BG_SetVisible( PLIST_BG_3D , FALSE ); 
@@ -149,52 +148,6 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
   if(ret){
     work->mainSeq = PSMS_FORM_CHANGE_TERM;
   }
-#if 0
-  if( work->demoIsChange == FALSE )
-  {
-    work->demoCnt++;
-    if( work->demoCnt == 1 )
-    {
-      //チラツキを消すため一回非表示にした面の再表示
-      GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
-
-      //SEの再生
-      if( work->demoType == PDT_GIRATHINA_TO_ORIGIN ||
-          work->demoType == PDT_GIRATHINA_TO_ANOTHER )
-      {
-        PMSND_PlaySystemSE(PLIST_SND_DEMO_GRATHINA);
-      }
-      else
-      if( work->demoType == PDT_SHEIMI_TO_SKY )
-      {
-        PMSND_PlaySystemSE(PLIST_SND_DEMO_SHEIMI);
-      }
-    }
-    if( work->demoCnt > work->demoChangeTimming )
-    {
-      PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
-      work->demoIsChange = TRUE;
-    }
-  }
-  if( GFL_PTC_GetEmitterNum( work->ptcWork ) <= 0 &&
-      PMSND_CheckPlaySE() == FALSE )
-  {
-    if( work->demoIsPlayVoice == FALSE )
-    {
-      const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
-      const u32 formNo = PP_Get( work->selectPokePara , ID_PARA_form_no , NULL );
-      work->demoVoicePlayer = PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
-      work->demoIsPlayVoice = TRUE;
-    }
-    else
-    {
-      if( PMVOICE_CheckPlay( work->demoVoicePlayer ) == FALSE )
-      {
-        work->mainSeq = PSMS_FORM_CHANGE_TERM;
-      }
-    }
-  }
-#endif
   GFL_PTC_CalcAll();
   
   //3D描画  
@@ -208,59 +161,106 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
   //GFL_PTC_Main();
 }
   
+typedef struct PLIST_DEMO_PARTICLE{
+  u8  file;
+  u8  emmit_num;
+}PLIST_DEMO_PARTICLE;
+
+static const PLIST_DEMO_PARTICLE DATA_ParticleResTbl[SPA_POKELIST_PARTICLE_LST_MAX] = {
+  { NARC_pokelist_gra_demo_girathina_spa, DEMO_GIRATHINA_SPAMAX },  //ギラティナ
+  { NARC_pokelist_gra_demo_sheimi_spa,    DEMO_SHEIMI_SPAMAX },     //シェイミ
+  { NARC_pokelist_gra_demo_kyuremu_union_spa,    DEMO_KYUREMU_UNION_SPAMAX },     //キュレム合体
+  { NARC_pokelist_gra_demo_resiramu_spa,         DEMO_RESIRAMU_SPAMAX },          //キュレム合体レシラム
+  { NARC_pokelist_gra_demo_zekuromu_spa,         DEMO_ZEKUROMU_SPAMAX },          //キュレム合体ゼクロム
+  { NARC_pokelist_gra_demo_kyuremu_perge_r_spa,  DEMO_KYUREMU_PERGE_R_SPAMAX },   //キュレム分離レシラム
+  { NARC_pokelist_gra_demo_kyuremu_perge_z_spa,  DEMO_KYUREMU_PERGE_Z_SPAMAX },   //キュレム分離ゼクロム
+};
+
+//--------------------------------------------------------------
+//	エフェクト読み込み
+//--------------------------------------------------------------
+static void PLIST_DEMO_InitEffectCore( PLIST_WORK *work, int wk_idx, int res_id, int plate_id )
+{
+  u8 i;
+  void* effRes;
+  const PLIST_DEMO_PARTICLE* res = &DATA_ParticleResTbl[res_id];
+
+  effRes = GFL_PTC_LoadArcResource( ARCID_POKELIST, res->file, work->heapId );
+  
+  //まずマネージャの作成
+  work->effTempWork[wk_idx] = GFL_NET_Align32Alloc( work->heapId , PLIST_DEMO_EFFECT_WORK_SIZE );
+  work->ptcWork[wk_idx] = GFL_PTC_Create( work->effTempWork[wk_idx],PLIST_DEMO_EFFECT_WORK_SIZE,FALSE,work->heapId);
+  
+	//リソースとマネージャの関連付け
+	GFL_PTC_SetResource( work->ptcWork[wk_idx] , effRes , FALSE , GFUser_VIntr_GetTCBSYS() );
+	
+  //エミッターの作成
+  {
+    GFL_CLACTPOS pos2d;
+    VecFx32 pos;
+    PLIST_PLATE_GetPlatePosition( work , work->plateWork[plate_id] , &pos2d );
+    pos2d.x = pos2d.x-( (PLIST_PLATE_WIDTH /2)*8 ) + PLIST_PLATE_POKE_POS_X;
+    pos2d.y = pos2d.y-( (PLIST_PLATE_HEIGHT/2)*8 ) + PLIST_PLATE_POKE_POS_Y + 12;
+    pos.x = FX32_CONST(pos2d.x)/PLIST_DEMO_SCALE;
+    pos.y = FX32_CONST(pos2d.y)/PLIST_DEMO_SCALE;
+    pos.z = FX32_CONST(64);
+    for( i = 0; i < res->emmit_num; i++ )
+    {
+      GFL_PTC_CreateEmitter( work->ptcWork[wk_idx] , i , &pos );
+    }
+  }
+}
 
 //--------------------------------------------------------------
 //	エフェクトファイルの初期化
 //--------------------------------------------------------------
 static void PLIST_DEMO_InitEffect( PLIST_WORK *work )
 {
-  u8 i;
-  u8 emmitNum = 0;
-  void* effRes;
-  u32 fileIdx = NARC_pokelist_gra_demo_sheimi_spa;
+  int i;
+
+  for(i = 0;i < PLIST_DEMO_PARTICLE_MAX; i++){
+    work->effTempWork[i] = NULL;
+    work->ptcWork[i] = NULL;
+  }
   //リソース読み込み
   switch( work->demoType ){
   case PDT_GIRATHINA_TO_ORIGIN:
   case PDT_GIRATHINA_TO_ANOTHER:
-    fileIdx = NARC_pokelist_gra_demo_girathina_spa;
-    emmitNum = DEMO_GIRATHINA_SPAMAX;
+    PLIST_DEMO_InitEffectCore( work, 0, SPA_DEMO_GIRATHINA, work->pokeCursor );
     work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_GIRATHINA;
+    work->demoSeNo = PLIST_SND_DEMO_GRATHINA;
     break;
   case PDT_SHEIMI_TO_SKY:
-    fileIdx = NARC_pokelist_gra_demo_sheimi_spa;
-    emmitNum = DEMO_SHEIMI_SPAMAX;
+    PLIST_DEMO_InitEffectCore( work, 0, SPA_DEMO_SHEIMI, work->pokeCursor );
     work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_SHEIMI;
+    work->demoSeNo = PLIST_SND_DEMO_SHEIMI;
     break;
   case PDT_KYUREMU_TO_COLOR:
-  case PDT_KYUREMU_TO_NORMAL:
-    fileIdx = NARC_pokelist_gra_demo_girathina_spa;
-    emmitNum = DEMO_GIRATHINA_SPAMAX;
-    work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_KYUREMU_WHITEOUT;
-    break;
-  }
-  effRes = GFL_PTC_LoadArcResource( ARCID_POKELIST , fileIdx , work->heapId );
-  
-  //まずマネージャの作成
-  work->effTempWork = GFL_NET_Align32Alloc( work->heapId , PLIST_DEMO_EFFECT_WORK_SIZE );
-  work->ptcWork = GFL_PTC_Create( work->effTempWork,PLIST_DEMO_EFFECT_WORK_SIZE,FALSE,work->heapId);
-  
-	//リソースとマネージャの関連付け
-	GFL_PTC_SetResource( work->ptcWork , effRes , FALSE , GFUser_VIntr_GetTCBSYS() );
-	
-  //エミッターの作成
-  {
-    GFL_CLACTPOS pos2d;
-    VecFx32 pos;
-    PLIST_PLATE_GetPlatePosition( work , work->plateWork[work->pokeCursor] , &pos2d );
-    pos2d.x = pos2d.x-( (PLIST_PLATE_WIDTH /2)*8 ) + PLIST_PLATE_POKE_POS_X;
-    pos2d.y = pos2d.y-( (PLIST_PLATE_HEIGHT/2)*8 ) + PLIST_PLATE_POKE_POS_Y + 12;
-    pos.x = FX32_CONST(pos2d.x)/PLIST_DEMO_SCALE;
-    pos.y = FX32_CONST(pos2d.y)/PLIST_DEMO_SCALE;
-    pos.z = FX32_CONST(64);
-    for( i=0;i<emmitNum;i++ )
     {
-      GFL_PTC_CreateEmitter( work->ptcWork , i , &pos );
+      int mode = (work->demoParam-KYUREMU_UNION_RESIRAMU);
+      PLIST_DEMO_InitEffectCore( work, 0, SPA_DEMO_KYUREMU_UNION, work->changeTarget );
+      PLIST_DEMO_InitEffectCore( work, 1, SPA_DEMO_RESIRAMU+mode, work->pokeCursor );
+      work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_KYUREMU_UNION_WHITEOUT;
+      if( mode ){
+        work->demoSeNo = PLIST_SND_DEMO_KYUREMU_UNION_Z;
+      }else{
+        work->demoSeNo = PLIST_SND_DEMO_KYUREMU_UNION_R;
+      }
     }
+    break;
+  case PDT_KYUREMU_TO_NORMAL:
+    {
+      const POKEMON_PARAM* pp = RANDOMMAP_SAVE_GetKyuremuUnionPokeParam( (RANDOMMAP_SAVE*)work->plData->rnd_map );
+      int mode = (PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_ZEKUROMU);
+      PLIST_DEMO_InitEffectCore( work, 0, SPA_DEMO_KYUREMU_PERGE_R+mode, work->pokeCursor );
+      work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_KYUREMU_PERGE_WHITEOUT;
+      if( mode ){
+        work->demoSeNo = PLIST_SND_DEMO_KYUREMU_PERGE_Z;
+      }else{
+        work->demoSeNo = PLIST_SND_DEMO_KYUREMU_PERGE_R;
+      }
+    }
+    break;
   }
 }
 
@@ -269,10 +269,16 @@ static void PLIST_DEMO_InitEffect( PLIST_WORK *work )
 //--------------------------------------------------------------
 static void PLIST_DEMO_TermEffect( PLIST_WORK *work )
 {
-  u8 i;
+  int i;
 
-  GFL_PTC_Delete( work->ptcWork );
-  GFL_NET_Align32Free( work->effTempWork );
+  for( i = 0;i < PLIST_DEMO_PARTICLE_MAX; i++ ){
+    if( work->ptcWork[i] != NULL ){
+      GFL_PTC_Delete( work->ptcWork[i] );
+      GFL_NET_Align32Free( work->effTempWork[i] );
+      work->effTempWork[i] = NULL;
+      work->ptcWork[i] = NULL;
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -286,16 +292,7 @@ static BOOL PLIST_DEMO_FormChangeSeq( PLIST_WORK* work )
     GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
 
     //SEの再生
-    if( work->demoType == PDT_GIRATHINA_TO_ORIGIN ||
-        work->demoType == PDT_GIRATHINA_TO_ANOTHER )
-    {
-      PMSND_PlaySystemSE(PLIST_SND_DEMO_GRATHINA);
-    }
-    else
-    if( work->demoType == PDT_SHEIMI_TO_SKY )
-    {
-      PMSND_PlaySystemSE(PLIST_SND_DEMO_SHEIMI);
-    }
+    PMSND_PlaySystemSE( work->demoSeNo );
     work->demoSeq++;
     //break throw
   case 1:
@@ -306,13 +303,12 @@ static BOOL PLIST_DEMO_FormChangeSeq( PLIST_WORK* work )
     }
     break;
   case 2:
-    if( GFL_PTC_GetEmitterNum( work->ptcWork ) <= 0 &&
+    if( GFL_PTC_GetEmitterNum( work->ptcWork[0] ) <= 0 &&
         PMSND_CheckPlaySE() == FALSE )
     {
       const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
       const u32 formNo = PP_Get( work->selectPokePara , ID_PARA_form_no , NULL );
       work->demoVoicePlayer = PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
-      work->demoIsPlayVoice = TRUE;
     
       work->demoSeq++;
     }
@@ -339,7 +335,7 @@ static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
     //チラツキを消すため一回非表示にした面の再表示
     GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
     //SEの再生
-    PMSND_PlaySystemSE(PLIST_SND_DEMO_KYUREMU);
+    PMSND_PlaySystemSE( work->demoSeNo );
     work->demoSeq++;
     //break throw
   case 1:
@@ -347,20 +343,20 @@ static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
     {
       WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
           WIPE_FADE_WHITE , PLIST_DEMO_KYUREMU_WIPEOUT_DIV , PLIST_DEMO_KYUREMU_WIPEOUT_SYNC , work->heapId );
-#if 0
-      PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] ,
-          PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor) , 0 );
-      PLIST_PLATE_ResetParam( work , work->plateWork[work->changeTarget] ,
-          PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget) , 0 );
-#endif
       work->demoSeq++;
     }
     break;
   case 2:
-    if( WIPE_SYS_EndCheck() == FALSE ||
-        GFL_PTC_GetEmitterNum( work->ptcWork ) > 0 ||
-        PMSND_CheckPlaySE() == TRUE ){
-      break;
+    {
+      int i;
+      if( WIPE_SYS_EndCheck() == FALSE || PMSND_CheckPlaySE() == TRUE ){
+        break;
+      }
+      for(i = 0;i < PLIST_DEMO_PARTICLE_MAX; i++ ){
+        if( work->ptcWork[i] != NULL && GFL_PTC_GetEmitterNum( work->ptcWork[i] ) > 0 ){
+          break;
+        }
+      }
     }
     //リスト書き換え
     if( work->demoParam == KYUREMU_UNION_PERGE ){
@@ -421,7 +417,6 @@ static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
       const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
       const u32 formNo = PP_Get( pp , ID_PARA_form_no , NULL );
       work->demoVoicePlayer = PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
-      work->demoIsPlayVoice = TRUE;
     
       work->demoSeq++;
     }

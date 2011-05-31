@@ -212,6 +212,7 @@ typedef enum
 //DEMO用
 #define PLIST_DEMO_EMMITER_MAX (3)
 #define PLIST_DEMO_SCALE (38)
+#define PLIST_DEMO_PARTICLE_MAX (2)
 typedef enum
 {
   PDT_NONE,
@@ -242,8 +243,6 @@ struct _PLIST_WORK
   u8  nextMainSeq;
   u8  subSeq;
   u8  selectState;
-  u8  demoSeq;
-  u8  demoParam;
   BOOL isActiveWindowMask;  //メニュー出たときのWndMaskのON/OFFのVBlank切り替えよう
   BOOL canExit;   //Xボタンが効くか？
   BOOL isSetWazaMode;     //技用のMODE_SELECTか？
@@ -334,13 +333,14 @@ struct _PLIST_WORK
   
   //3D用(フォルムチェンジ演出用
   GFL_G3D_CAMERA    *camera;
-  void*         effTempWork;
-  GFL_PTC_PTR   ptcWork;
+  void*         effTempWork[PLIST_DEMO_PARTICLE_MAX];
+  GFL_PTC_PTR   ptcWork[PLIST_DEMO_PARTICLE_MAX];
   PLIST_DEMO_TYPE demoType;
   u8   demoCnt;
   u8   demoChangeTimming;
-  BOOL demoIsChange;
-  BOOL demoIsPlayVoice;
+  u8   demoSeq;
+  u8   demoParam;
+  u16  demoSeNo;
   u32  demoVoicePlayer;
 
   //通信用

@@ -731,8 +731,8 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     //HPバー非表示
     GFL_CLACT_WK_SetDrawEnable( plateWork->hpBase , FALSE );
   }
-  /*
-  //もしアッパーバージョンで出場チェックが必要なら復活
+  //もしアッパーバージョンで出場チェックが必要なら復活←スワンで必要になったので復活させた
+//#if 0
   else
   if( work->isSetMusicalMode == TRUE )
   {
@@ -749,7 +749,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , strId ,
                     PLIST_PLATE_STR_BTL_ORDER_X , PLIST_PLATE_STR_BTL_ORDER_Y , fontCol );
   }
-  */
+//#endif
   else
   {
     //HP描画
