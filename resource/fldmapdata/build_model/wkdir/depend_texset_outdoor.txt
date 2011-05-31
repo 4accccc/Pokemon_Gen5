@@ -64,7 +64,9 @@ DEP_TEXSET_OUTDOOR =	\
 	texset/outdoor063.nsbtx	\
 	texset/outdoor064.nsbtx	\
 	texset/outdoor065.nsbtx	\
-	texset/outdoor066.nsbtx
+	texset/outdoor066.nsbtx	\
+	texset/outdoor067.nsbtx	\
+	texset/outdoor068.nsbtx
 
 DEP_TEXSET_IMD_OUTDOOR001 = \
 	$(SRCDIR)/pc_01.imd \
@@ -2694,4 +2696,103 @@ DEP_TEXSET_IMD_OUTDOOR066 = \
 
 texset/outdoor066.imd: $(DEP_TEXSET_IMD_OUTDOOR066) texset/tmp/outdoor066.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor066.list
+
+DEP_TEXSET_IMD_OUTDOOR067 = \
+	$(SRCDIR)/pc_01.imd \
+	$(SRCDIR)/gate_01.imd \
+	$(SRCDIR)/rock_01.imd \
+	$(SRCDIR)/fountain_01.imd \
+	$(SRCDIR)/o_chair_01.imd \
+	$(SRCDIR)/o_parasol_01.imd \
+	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/searock_01.imd \
+	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/plant_01.imd \
+	$(SRCDIR)/door_pc.imd \
+	$(SRCDIR)/buill_03.imd \
+	$(SRCDIR)/buill_04.imd \
+	$(SRCDIR)/door01.imd \
+	$(SRCDIR)/c0101.imd \
+	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/c8_buildb_01.imd \
+	$(SRCDIR)/c8_buildb_02.imd \
+	$(SRCDIR)/c8_buildb_03.imd \
+	$(SRCDIR)/c8_buildb_04.imd \
+	$(SRCDIR)/c8_gym_01.imd \
+	$(SRCDIR)/c8_buildb_05.imd \
+	$(SRCDIR)/sign01.imd \
+	$(SRCDIR)/sign02.imd \
+	$(SRCDIR)/sign03.imd \
+	$(SRCDIR)/sign04.imd \
+	$(SRCDIR)/out_vender01.imd \
+	$(SRCDIR)/out_dust01.imd \
+	$(SRCDIR)/c8_gym_02.imd \
+	$(SRCDIR)/outwarp01.imd \
+	$(SRCDIR)/outwarp02.imd \
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/rock_02.imd \
+	$(SRCDIR)/door_normal01.imd \
+	$(SRCDIR)/door_normal02.imd \
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/door_c8_b.imd \
+	$(SRCDIR)/c8_lbuildb_01.imd \
+	$(SRCDIR)/c8_lbuildb_02.imd \
+	$(SRCDIR)/c8_lbuildb_03.imd \
+	$(SRCDIR)/c8_lbuildb_04.imd \
+	$(SRCDIR)/c8_lbuildb_05.imd \
+	$(SRCDIR)/c8_gym_03.imd \
+	$(SRCDIR)/bigicicle_01.imd
+
+texset/outdoor067.imd: $(DEP_TEXSET_IMD_OUTDOOR067) texset/tmp/outdoor067.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor067.list
+
+DEP_TEXSET_IMD_OUTDOOR068 = \
+	$(SRCDIR)/pc_01.imd \
+	$(SRCDIR)/gate_01.imd \
+	$(SRCDIR)/rock_01.imd \
+	$(SRCDIR)/fountain_01.imd \
+	$(SRCDIR)/o_chair_01.imd \
+	$(SRCDIR)/o_parasol_01.imd \
+	$(SRCDIR)/o_table_01.imd \
+	$(SRCDIR)/searock_01.imd \
+	$(SRCDIR)/searock_02.imd \
+	$(SRCDIR)/plant_01.imd \
+	$(SRCDIR)/door_pc.imd \
+	$(SRCDIR)/buill_03.imd \
+	$(SRCDIR)/buill_04.imd \
+	$(SRCDIR)/door01.imd \
+	$(SRCDIR)/c0101.imd \
+	$(SRCDIR)/thouse_01.imd \
+	$(SRCDIR)/cart_01.imd \
+	$(SRCDIR)/c8_buildw_01.imd \
+	$(SRCDIR)/c8_buildw_02.imd \
+	$(SRCDIR)/c8_buildw_03.imd \
+	$(SRCDIR)/c8_buildw_04.imd \
+	$(SRCDIR)/c8_gym_01.imd \
+	$(SRCDIR)/c8_buildw_05.imd \
+	$(SRCDIR)/sign01.imd \
+	$(SRCDIR)/sign02.imd \
+	$(SRCDIR)/sign03.imd \
+	$(SRCDIR)/sign04.imd \
+	$(SRCDIR)/out_vender01.imd \
+	$(SRCDIR)/out_dust01.imd \
+	$(SRCDIR)/outwarp01.imd \
+	$(SRCDIR)/outwarp02.imd \
+	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/rock_02.imd \
+	$(SRCDIR)/door_normal01.imd \
+	$(SRCDIR)/door_normal02.imd \
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/c8_lbuildw_01.imd \
+	$(SRCDIR)/c8_lbuildw_02.imd \
+	$(SRCDIR)/c8_lbuildw_03.imd \
+	$(SRCDIR)/c8_lbuildw_04.imd \
+	$(SRCDIR)/c8_lbuildw_05.imd \
+	$(SRCDIR)/c8_gym_03.imd \
+	$(SRCDIR)/bigicicle_01.imd \
+	$(SRCDIR)/c8_gym_04.imd
+
+texset/outdoor068.imd: $(DEP_TEXSET_IMD_OUTDOOR068) texset/tmp/outdoor068.list
+	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor068.list
 
