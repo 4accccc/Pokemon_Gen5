@@ -441,9 +441,8 @@ BOOL POKEWOOD_CUTIN_IsEnd( const POKEWOOD_CUTIN *cp_wk )
 //-----------------------------------------------------------------------------
 void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event )
 {
-  GF_ASSERT( p_wk->seq == 0 );
-
-  p_wk->seq++;
+  p_wk->seq = 1;
+  p_wk->is_end = FALSE;
   p_wk->cp_senario  = cp_senario;
   p_wk->event       = event;
   p_wk->script_seq  = 0;
