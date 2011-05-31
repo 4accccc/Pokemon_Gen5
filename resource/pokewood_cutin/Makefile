@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= nagihashi_toru mori nakatsui
+include users_def
 
 #------------------------------------------------------------------------------
 #※依存ファイルを書く
@@ -23,14 +23,15 @@ arclistmk	= perl ${PROJECT_ROOT}/tools/arc_list_make.pl
 scrmk			= pokewood_cutin_script_make.rb
 cdatname	= pokewood_cutin_script_search
 sadlname 	= ../sound/swan_sound_data.sadl
-manualname = pokewood_cutin_manual
+graphic_dir = graphic
+targetname_gra = pokewood_cutin_gra
 
+make_graphic = $(graphic_dir)/Makefile
 
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
-targetname_gra = pokewood_cutin_gra
 targetname_scr = pokewood_cutin_scr
 
 #------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ TARGETDIR_H = $(PROJECT_ROOT)/prog/src/battle/pokewood/
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	=
+SUBDIRS	= graphic
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
@@ -79,18 +80,16 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname_gra).narc $(TARGETDIR)/$(targetname_gra).naix $(TARGETDIR)/$(targetname_scr).narc $(TARGETDIR)/$(targetname_scr).naix $(TARGETDIR_H)/$(defname).h $(TARGETDIR_H)/$(cdatname).cdat
+do-build:	subdir $(TARGETDIR)/$(targetname_scr).narc $(TARGETDIR)/$(targetname_scr).naix $(TARGETDIR_H)/$(defname).h $(TARGETDIR_H)/$(cdatname).cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname_gra).narc: $(targetname_gra).narc
-	$(COPY) $(targetname_gra).narc $(TARGETDIR)
-	$(COPY) $(targetname_gra).naix $(TARGETDIR) 
-
 $(TARGETDIR)/$(targetname_scr).narc: $(targetname_scr).narc
 	$(COPY) $(targetname_scr).narc $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname_scr).naix: $(targetname_scr).naix
 	$(COPY) $(targetname_scr).naix $(TARGETDIR) 
 
 $(TARGETDIR_H)/$(defname).h: $(defname).h
@@ -104,16 +103,19 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname_scr).narc $(targetname_scr).naix: $(scrlist)
 	nnsarc -r -l -n -i $(targetname_scr) -S $(scrlist)
 	$(NAIXCUT) $(targetname_scr).naix
+	-rm $(scrname)*.dat
+	-rm $(scrname)*.csv
+	-rm $(defname).csv
+	-rm $(scrlist)
 
-$(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(targetname_gra).naix $(sadlname)
-	$(scrmk) $(cmdconv) $(targetname_gra).naix $(scrname) $(cdatname) $(sadlname)
+$(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(graphic_dir)/$(targetname_gra).naix $(sadlname)
+	$(scrmk) $(cmdconv) $(graphic_dir)/$(targetname_gra).naix $(scrname) $(cdatname) $(sadlname)
 	ls $(scrname)*.dat > $(scrlist)
 	$(arclistmk) $(scrlist)
 	rm $(scrtarget)
 
-$(targetname_gra).narc $(targetname_gra).naix: $(lobjects) $(gobjects) $(eobjects) $(aobjects)
-	nnsarc -r -l -n -i $(targetname_gra) $^
-	$(NAIXCUT) $(targetname_gra).naix
+$(graphic_dir)/$(targetname_gra).narc $(graphic_dir)/$(targetname_gra).naix:
+	$(MAKE) -f $(make_graphic)
 
 $(defname).h $(defname).rb: $(defname).csv
 	$(defconv) $< $(defname)
@@ -121,7 +123,7 @@ $(defname).h $(defname).rb: $(defname).csv
 $(defname).csv $(scrtarget): $(dataname).xls
 	-rm *.txt
 	$(xlsconv) $< -s $(scrname)
-	mv $(scrname)0.csv $(manualname).csv
+	-rm $(scrname)0.csv
 	mv $(scrname)1.csv $(defname).csv
 	echo > $(scrtarget)
 endif
@@ -133,23 +135,12 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
-	rm -f *.NANR
-	rm -f *.NCER
-	rm -f *.NSCR
-	rm -f *.NCGR
-	rm -f *.NCLR
-	rm -f *.narc
-	rm -f *.naix
 	rm -f *.csv
 	rm -f *.txt
 	rm -f *.dat
-	rm -f $(targetname_gra).narc
-	rm -f $(targetname_gra).naix
-	rm -f $(targetname_scr).narc
-	rm -f $(targetname_scr).naix
+	rm -f *.narc
+	rm -f *.naix
 endif
-	rm -f $(TARGETDIR)/$(targetname_gra).narc
-	rm -f $(TARGETDIR)/$(targetname_gra).naix
 	rm -f $(TARGETDIR)/$(targetname_scr).narc
 	rm -f $(TARGETDIR)/$(targetname_scr).naix
 
