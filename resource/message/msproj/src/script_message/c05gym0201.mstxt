@@ -370,10 +370,11 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・ジムバッジ取得後
+・0＝主人公名
 ※swanで変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T05:48:21" />
+				Time="2011-05-31T03:05:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
