@@ -1912,9 +1912,9 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
       u32 disp_id = 0;  // テキスト不明    // ZKN_COMMENT_00_000_000  // ZKN_COMMENT_01_000_000
       if( work->get_flag )
       {
-#if 0  // 今作では、フォルム違いでテキストを変更しないので、
+#if 1  // スワンでは、フォルム違いでテキストを変更するので
         disp_id = 0 + monsno_formno_pos;  // テキスト判明
-#else  // 必ず0番フォルムのテキストを表示することにした。
+#else  // 必ず0番フォルムのテキストを表示する処理をコメントに変更
         disp_id = 0 + work->monsno;
 #endif
       }
@@ -2061,9 +2061,9 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
       u32 disp_id = 0;  // テキスト不明    // ZKN_COMMENT_00_000_000  // ZKN_COMMENT_01_000_000
       if( work->get_flag )
       {
-#if 0  // 今作では、フォルム違いでテキストを変更しないので、
+#if 1  // スワンでは、フォルム違いでテキストを変更するので
         disp_id = 0 + monsno_formno_pos;  // テキスト判明
-#else  // 必ず0番フォルムのテキストを表示することにした。
+#else  // 必ず0番フォルムのテキストを表示する処理をコメントに変更
         disp_id = 0 + work->monsno;
 #endif
       }
