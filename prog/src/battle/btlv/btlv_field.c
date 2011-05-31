@@ -54,6 +54,8 @@ struct _BTLV_FIELD_WORK
   u32                                 :30;
   int                   field_index;
   HEAPID                heapID;
+	GFL_TCB*			        p_vblank;           //背景モデリングデータ差し替えVSYNCタスク用
+
 };
 
 typedef struct
@@ -73,6 +75,8 @@ typedef struct
 //============================================================================================
 
 static void _field_anime_delete( BTLV_FIELD_WORK *bfw );
+static void _field_model_delete( BTLV_FIELD_WORK *bfw );
+static void BTLV_FIELD_VblankFunc( GFL_TCB *tcb, void *work );
 
 static void _debug_dump(BATT_BG_TBL_BG_TABLE *tbl)
 {
@@ -329,6 +333,166 @@ static void _field_anime_delete( BTLV_FIELD_WORK *bfw )
     GFL_HEAP_FreeMemory( bfw->field_anm_resource );
   }
 
+}
+
+//=============================================================================================
+/**
+ * @brief 背景モデリング読み替え
+ *
+ * @param   bfw   
+ * @param   anime   
+ */
+//=============================================================================================
+void BTLV_FIELD_ChangeModel( BTLV_FIELD_WORK *bfw, int no )
+{
+  int index  = bfw->field_index;
+  int offset = field_anime_tbl[no];
+  BOOL  ret;
+  BATT_BG_TBL_BG_TABLE* bbtbt;
+
+  // 背景モデリングリソース全解放
+  _field_model_delete( bfw );
+
+  // 背景テーブル確保
+  bbtbt = GFL_ARC_LoadDataAlloc( ARCID_BATT_BG_TBL, NARC_batt_bg_tbl_batt_bg_bin, GFL_HEAP_LOWID( bfw->heapID ) );
+
+  //IMDデータ読み込み
+  if( bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ offset ] != BATT_BG_TBL_NO_FILE )
+  {
+    bfw->field_resource = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ BATT_BG_TBL_FILE_NSBMD ][ offset ] );
+  }else{
+    GF_ASSERT_MSG(0,"NO NSBMD \n");
+  }
+  // TextureのVRAM領域のみ確保する（転送はVSYNC中に行う）
+//  ret = GFL_G3D_TransVramTexture( bfw->field_resource );
+  ret = GFL_G3D_AllocVramTexture( bfw->field_resource );
+  bfw->p_vblank = GFUser_VIntr_CreateTCB( BTLV_FIELD_VblankFunc, bfw, 10 );
+
+  GF_ASSERT( ret == TRUE );
+
+  bfw->anm_count = 0;
+
+  // 適用させるモデリングアニメを数え上げる
+  {
+    int i;
+
+    OS_Printf("bg index=%d,i=%d,offset=%d No=%d\n", index,0,0,bbtbt[ index ].file[ 0 ][ 0 ]);
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
+    {
+      OS_Printf("bg index=%d,i=%d,offset=%d No=%d\n", index,i,offset,bbtbt[ index ].file[ i ][ offset ]);
+      if( bbtbt[ index ].file[ i ][ offset ] != BATT_BG_TBL_NO_FILE )
+      {
+        bfw->anm_count++;
+      }
+    }
+  }
+
+
+  //RENDER生成
+  bfw->field_render = GFL_G3D_RENDER_Create( bfw->field_resource, 0, bfw->field_resource );
+
+  if( bfw->anm_count )
+  {
+    int i, cnt=0;
+    bfw->field_anm_resource = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
+    bfw->field_anm = GFL_HEAP_AllocMemory( bfw->heapID, 4 * bfw->anm_count );
+    bfw->field_anm_work = GFL_HEAP_AllocClearMemory( bfw->heapID, sizeof( BTLV_FIELD_ANM_WORK ) * bfw->anm_count );
+
+    for( i = BATT_BG_TBL_FILE_NSBCA ; i < BATT_BG_TBL_FILE_NSBMA + 1 ; i++ )
+    {
+      if( bbtbt[ index ].file[ i ][ offset ] != BATT_BG_TBL_NO_FILE )
+      {
+        //ANIME生成
+        bfw->field_anm_resource[ cnt ] = GFL_G3D_CreateResourceArc( ARCID_BATTGRA, bbtbt[ index ].file[ i ][ offset ] );
+        bfw->field_anm[ cnt ] = GFL_G3D_ANIME_Create( bfw->field_render, bfw->field_anm_resource[ cnt ], BTLV_FIELD_ANM_MAX );
+        bfw->field_anm_work[ cnt ].anm_type = BTLV_FIELD_ANM_TYPE_LOOP;
+        cnt++;
+      }
+    }
+    //OBJ生成
+    bfw->field_obj = GFL_G3D_OBJECT_Create( bfw->field_render, bfw->field_anm, bfw->anm_count );
+    //ANIME起動
+    for( i = 0 ; i < bfw->anm_count ; i++ )
+    {
+      GFL_G3D_OBJECT_EnableAnime( bfw->field_obj, i );
+    }
+  }
+  else
+  {
+    bfw->field_obj = GFL_G3D_OBJECT_Create( bfw->field_render, NULL, 0 );
+  }
+
+  bfw->field_status.trans.x = 0;
+  bfw->field_status.trans.y = 0;
+  bfw->field_status.trans.z = 0;
+  bfw->field_status.scale.x = FX32_ONE;
+  bfw->field_status.scale.y = FX32_ONE;
+  bfw->field_status.scale.z = FX32_ONE;
+  MTX_Identity33( &bfw->field_status.rotate );
+
+  //パレットフェード用ワーク生成
+  {
+    NNSG3dResFileHeader*  header = GFL_G3D_GetResourceFileHeader( bfw->field_resource );
+    NNSG3dResTex*         pTex = NNS_G3dGetTex( header );
+    u32                   size = (u32)pTex->plttInfo.sizePltt << 3;
+
+    bfw->epfw.g3DRES     = GFL_HEAP_AllocMemory( bfw->heapID, 4 );
+    bfw->epfw.pData_dst  = GFL_HEAP_AllocMemory( bfw->heapID, 4 );
+
+    bfw->epfw.g3DRES[ 0 ]     = bfw->field_resource;
+    bfw->epfw.pData_dst[ 0 ]  = GFL_HEAP_AllocMemory( bfw->heapID, size );
+    bfw->epfw.pal_fade_flag   = 0;
+    bfw->epfw.pal_fade_count  = 1;
+  }
+
+  // 背景テーブル解放
+  GFL_HEAP_FreeMemory( bbtbt );
+  
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	VBlank期間中にテクスチャ転送を行う
+ *
+ * @param   tcb		
+ * @param   work	BTLV_FIELD_WORK
+ */
+//----------------------------------------------------------------------------------
+static void BTLV_FIELD_VblankFunc( GFL_TCB *tcb, void *work )
+{
+  BTLV_FIELD_WORK *bfw = (BTLV_FIELD_WORK *)work;
+
+  // VBlank期間中にテクスチャ転送を行う
+  GFL_G3D_TransOnlyTexture( bfw->field_resource );
+
+  // 自殺
+  GFL_TCB_DeleteTask( tcb );
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 戦闘背景モデリングデータアニメOBJワークの解放
+ *
+ * @param   bfw   
+ */
+//----------------------------------------------------------------------------------
+static void _field_model_delete( BTLV_FIELD_WORK *bfw )
+{
+
+  // パレットワークの解放
+  GFL_HEAP_FreeMemory( bfw->epfw.pData_dst[ 0 ] );
+  GFL_HEAP_FreeMemory( bfw->epfw.pData_dst );
+  GFL_HEAP_FreeMemory( bfw->epfw.g3DRES );
+
+  // モデリングアニメの解放
+  _field_anime_delete( bfw );
+
+  // renderOBJの解放
+  GFL_G3D_FreeVramTexture( bfw->field_resource );
+  GFL_G3D_RENDER_Delete( bfw->field_render );
+  GFL_G3D_DeleteResource( bfw->field_resource );
 }
 
 //============================================================================================

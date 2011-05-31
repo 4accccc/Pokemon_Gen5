@@ -34,7 +34,7 @@
 #include "debug/debug_hudson.h"
 
 //#define DEBUG_DUMP_TEXVRAM      // デバッグボタンを押すとTEX-VRAMのデバッグプリントが出る
-//#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
 
 //============================================================================================
 /**
@@ -497,7 +497,8 @@ void  BTLV_EFFECT_Main( void )
 
 #ifdef DEBUG_BG_ANIME_CHANGE
   if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_X){
-    BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
+//    BTLV_FIELD_ChangeAnime( bew->bfw, debug_anime );
+    BTLV_FIELD_ChangeModel( bew->bfw, debug_anime );
     if(++debug_anime>2){ debug_anime=0; }
   }
 #endif
@@ -1883,6 +1884,18 @@ void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
 void BTLV_EFFECT_ChangeBgAnime( int bg_anime_no )
 {
   BTLV_FIELD_ChangeAnime( BTLV_EFFECT_GetEffectWork()->bfw, bg_anime_no );
+}
+
+//=============================================================================================
+/**
+ * @brief	戦闘背景モデル切り替え
+ *
+ * @param   bg_no		切り替えるモデリングNO（batt_bg_tblの横を移動）
+ */
+//=============================================================================================
+void BTLV_EFFECT_ChangeBgModel( int bg_no )
+{
+  BTLV_FIELD_ChangeModel( BTLV_EFFECT_GetEffectWork()->bfw, bg_no );
 }
 
 //============================================================================================

@@ -168,6 +168,8 @@ extern u8 BTL_PARTY_GetAliveMemberCountRear( const BTL_PARTY* party, u8 startIdx
 extern int BTL_PARTY_FindMember( const BTL_PARTY* party, const BTL_POKEPARAM* param );
 extern int BTL_PARTY_FindMemberByPokeID( const BTL_PARTY* party, u8 pokeID );
 extern BTL_POKEPARAM* BTL_PARTY_GetAliveTopMember( BTL_PARTY* party );
+extern int BTL_POKECON_GetTurnCount( const BTL_MAIN_MODULE* wk );
+
 //-------------------------
 extern BTL_POKEPARAM* BTL_PARTY_GetMemberData( BTL_PARTY* party, u8 idx );
 extern const BTL_POKEPARAM* BTL_PARTY_GetMemberDataConst( const BTL_PARTY* party, u8 idx );

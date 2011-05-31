@@ -1787,9 +1787,10 @@ static int _input_PokewoodPlay( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* t
   if( rp & PAD_BUTTON_B )
   {
     SePlayCancel( biw );
-    return BTLV_INPUT_BR_SEL_STOP;
+    hit = BTLV_INPUT_BR_SEL_STOP;
   }
   
+  return hit;
 }
 
 
@@ -1803,7 +1804,7 @@ static int _input_PokewoodPlay( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* t
 //============================================================================================
 int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl )
 {
-  int hit, hit_tp;
+  int hit=GFL_UI_TP_HIT_NONE, hit_tp;
 
 #ifdef PM_DEBUG
   debug_timer_edit_check( biw );

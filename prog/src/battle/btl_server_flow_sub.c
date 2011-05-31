@@ -1985,6 +1985,14 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   return SHOOTER_REACTION_ENABLE;
 }
 
+#if 0
+static int _check_only_poke( BTL_PARTY *party, int mons_no )
+{
+  
+}
+
+static int _get_dead_pokenum( BTL_PARTY *party )
+#endif
 
 /*====================================================================================================*/
 /*                                                                                                    */
@@ -2028,10 +2036,33 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
     }
     break;
   case 1:
+    {
+      int i,dead=0;
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      const BTL_POKEPARAM* bpp; 
+      int turncount = BTL_POKECON_GetTurnCount(mainModule);
+      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        if(BPP_IsDead(bpp)){
+          dead++;
+        }
+      }
+      if(turncount==1 && dead==0){
+        lose_flag = 1;
+      }
+      if(turncount==2){
+        if(dead==2){
+          win_flag = 1;
+        }else{
+          lose_flag = 1;
+        }
+      }
+      OS_Printf("turncount=%d, dead=%d\n", turncount,dead);
+    }
     break;
   }
 
-//  OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);
+  OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);
   if(win_flag && lose_flag==0){
     return 1;   // Ÿ‚¿–Ú“I’B¬
   }

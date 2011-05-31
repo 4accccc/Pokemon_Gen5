@@ -473,6 +473,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   // また、メッセージBG面をズラし、ハードウェアマスクをかける
   if(BTL_MAIN_GetPokewoodMode(wk->mainModule)!=BTL_POKEWOOD_SHOW){
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    GX_SetVisibleWnd( GX_WNDMASK_NONE );
   }else{
     // 上画面の上下をマスクする
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |

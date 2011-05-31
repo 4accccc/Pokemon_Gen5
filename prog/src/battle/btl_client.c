@@ -236,7 +236,7 @@ struct _BTL_CLIENT {
   u8          clientTurnCount;      // サーバーから取得できないのでクライアンが自分でターンを数える
   BtlPokePos  myChangePokePos[ BTL_POSIDX_MAX ];
 
-  u8         pw_seq;         // ポケウッドシーケンス管理用
+  u8         pw_seq, pw_next_seq; // ポケウッドシーケンス管理用
   u8         pw_bookmark;    // ポケウッドシナリオ進行しおり
   u8         pw_stage_setup; // ポケウッドイベント進行管理フラグ
   s8         pw_event_no;
@@ -353,7 +353,8 @@ static BOOL SubProc_REC_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BtlResult expandServerResult( BTL_CLIENT* wk );
 static inline BOOL IsEnemyClientDouble( BTL_CLIENT* wk );
-static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx );
+static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx, int flag );
+static inline void BothTrainerGraphicIn( BTL_CLIENT* wk );
 static inline void MsgWinningTrainerStart( BTL_CLIENT* wk );
 static BOOL SubProc_REC_ExitForNPC( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq );
@@ -1563,6 +1564,7 @@ static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq )
   
   case SELECT_ACT_SEQ_POKEWOOD_EVENT:
     if(SubSeq_POKEWOOD_Event_Sequence( wk )){
+      wk->pw_seq=0;
       (*seq)++;
     }
     break;
@@ -1644,8 +1646,11 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
     }
     break;
   case POKEWOOD_SEQ_TRAINER_APPER:
-    TrainerGraphicIn( wk, 1 );
+//    TrainerGraphicIn( wk, 1, TRUE );
+    TrainerGraphicIn( wk, 1, FALSE );
     wk->pw_seq++;
+//    BothTrainerGraphicIn( wk );
+//    wk->pw_seq=POKEWOOD_SEQ_HERO_APPER_WAIT;
     break;
   case POKEWOOD_SEQ_TRAINER_APPER_WAIT:
     if( !BTLV_EFFECT_CheckExecute() ){
@@ -1674,12 +1679,14 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
     }
     break;
   case POKEWOOD_SEQ_TRAINER_OUT:
+//    BTLV_EFFECT_Add( BTLEFF_ENEMY_DISAPPEAR );
     BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
     wk->pw_seq++;
+//    BTLV_EFFECT_Add( BTLEFF_HERO_ENEMY_DISAPPEAR );
+//    wk->pw_seq=POKEWOOD_SEQ_HERO_OUT_WAIT;
     break;
   case POKEWOOD_SEQ_TRAINER_OUT_WAIT:
     if( !BTLV_EFFECT_CheckExecute() ){
-  //    wk->pw_seq=POKEWOOD_SEQ_END;
       wk->pw_seq++;
     }
     break;
@@ -1790,6 +1797,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       {
         wk->pw_bookmark=0;
         wk->pw_stage_setup=0;
+        wk->pw_vfx=-1;
         wk->pw_seq++;
       }
     }else{
@@ -1816,7 +1824,8 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 
   // トレーナー登場
   case POKEWOOD_EVENT_SEQ_TRAINER_APPER:
-    TrainerGraphicIn( wk, 1 );
+//    TrainerGraphicIn( wk, 1, TRUE );
+    TrainerGraphicIn( wk, 1, FALSE );
     wk->pw_seq++;
     break;
   // トレーナー登場待ち
@@ -1877,7 +1886,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     break;
   // トレーナー退場
   case POKEWOOD_EVENT_SEQ_TRAINER_OUT:
-    BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
+    BTLV_EFFECT_Add( BTLEFF_ENEMY_DISAPPEAR );
     wk->pw_seq++;
     break;
   // トレーナー退場待ち
@@ -1983,27 +1992,78 @@ static int _check_pokewood_vfx( POKEWOOD_SENARIO *senario, int turn )
   return -1;
 }
 
+enum{
+  PW_VFX_SEQ_START=0,
+  PW_VFX_SEQ_FADEOUT,
+  PW_VFX_SEQ_BG_CHANGE,
+  PW_VFX_SEQ_FADEIN,
+  PW_VFX_SEQ_END,
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	戦闘背景モデリングデータ切り替えシーケンス
+ *
+ * @param   wk		BTL_CLIENT
+ *
+ * @retval  BOOL	FALSE:実行中 TRUE:終了
+ */
+//----------------------------------------------------------------------------------
 static BOOL SubSeq_POKEWOOD_Vfx_Effect( BTL_CLIENT *wk )
 {
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
 
-  int vfx_turn=-1;
-
-  OS_Printf("vfxチェック\n");
-  // イベントでのVFX指定が無い場合ははターンから取得してくる
-  if(wk->pw_vfx<0){
-    vfx_turn = _check_pokewood_vfx( senario, wk->clientTurnCount );
-    if(vfx_turn>=0){
-      wk->pw_vfx = vfx_turn;
+  switch(wk->pw_seq){
+  case PW_VFX_SEQ_START:
+    // 上映でなければ終了
+    if(BTL_MAIN_GetPokewoodMode(wk->mainModule)!=BTL_POKEWOOD_SHOW){
+      return TRUE;
     }
-  }
 
-  if(wk->pw_vfx>=0){
-    OS_Printf("vfx発動 = %d\n", wk->pw_vfx);
-    BTLV_EFFECT_ChangeBgAnime( wk->pw_vfx );
+    // イベントでのVFX指定が無い場合ははターンから取得してくる
+    {
+      int vfx_turn=-1;
+      OS_Printf("vfxチェック\n");
+      if(wk->pw_vfx<0){
+        vfx_turn = _check_pokewood_vfx( senario, wk->clientTurnCount );
+        if(vfx_turn>=0){
+          wk->pw_vfx = vfx_turn;
+        }
+      }
+    }
+    // VFX発動しているなら次のシーケンスへ
+    if(wk->pw_vfx>0){
+      OS_Printf("vfx発動 = %d\n", wk->pw_vfx);
+//      BTLV_EFFECT_ChangeBgAnime( wk->pw_vfx );
+      BTLV_EFFECT_SetPaletteFade( BTLEFF_PAL_FADE_FIELD, 0, 16, 0, 0 );
+      wk->pw_seq++;
+    }else{
+      return TRUE;
+    }
+    break;
+  case PW_VFX_SEQ_FADEOUT:
+    if(BTLV_EFFECT_CheckExecutePaletteFade( BTLEFF_PAL_FADE_FIELD )==FALSE){
+      BTLV_EFFECT_SetVanishFlag( BTLEFF_PAL_FADE_FIELD, TRUE ); // 背景表示OFF
+      wk->pw_seq++;
+    }
+    break;
+  case PW_VFX_SEQ_BG_CHANGE:
+    BTLV_EFFECT_ChangeBgModel( wk->pw_vfx );
+    BTLV_EFFECT_SetPaletteFade( BTLEFF_PAL_FADE_FIELD, 16, 0, 0, 0 );
+    wk->pw_seq++;
+    break;
+  case PW_VFX_SEQ_FADEIN:
+    BTLV_EFFECT_SetVanishFlag( BTLEFF_PAL_FADE_FIELD, FALSE ); // 背景表示ON
+    if(BTLV_EFFECT_CheckExecutePaletteFade( BTLEFF_PAL_FADE_FIELD )==FALSE){
+      wk->pw_seq++;
+    }
+    break;
+  case PW_VFX_SEQ_END:
     wk->pw_vfx=-1;
+    return TRUE;
+    break;
   }
-  return TRUE;
+  return FALSE;
 }
 
 
@@ -2142,6 +2202,7 @@ static BOOL SubProc_REC_SelectActionSub( BTL_CLIENT* wk, int* seq, BOOL flag )
   // ポケウッドイベント
   case SUBSEQ_REC_S_POKEWOOD_EVENT:
     if(SubSeq_POKEWOOD_Event_Sequence( wk )){
+      wk->pw_seq=0;
       (*seq)=SUBSEQ_REC_S_POKEWOOD_VFX;
     }
     break;
@@ -5784,17 +5845,41 @@ static inline BOOL IsEnemyClientDouble( BTL_CLIENT* wk )
 
   return (clientID_1 != clientID_2);
 }
+//----------------------------------------------------------------------------------
 /**
- *  トレーナー（ゲーム内・サブウェイ共通）グラフィックスライドイン
+ * @brief	トレーナー（ゲーム内・サブウェイ共通）グラフィックスライドイン
+ *
+ * @param   wk		      BTL_CLIENT
+ * @param   client_idx	トレーナーを指定する表示クライアントIDX
+ * @param   flag		    ポケモンを隠すか（TRUE:隠す FALSE:隠さない)
+ *
+ * @retval  inline void		
  */
-static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx )
+//----------------------------------------------------------------------------------
+static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx, int flag )
 {
   u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, client_idx );
   int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
 
   BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-  BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+
+  if(flag){
+    BTLV_EFFECT_Add( BTLEFF_ENEMY_APPEAR );   // ポケモン引っ込めて敵トレーナー登場
+  }else{
+    BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );     // ポケモン残したままトレーナー登場
+  }
 }
+
+static inline void BothTrainerGraphicIn( BTL_CLIENT* wk )
+{
+  u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 1 );
+  int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+  BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+  BTLV_EFFECT_Add( BTLEFF_HERO_ENEMY_APPEAR );     // 両方トレーナー登場
+  
+}
+
 /**
  *  トレーナー（ゲーム内・サブウェイ共通）に勝った時の勝利メッセージプリント開始
  */
@@ -5903,7 +5988,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     {
       // ポケウッド以外の時は通常の終了イベント
       if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE ){
-        TrainerGraphicIn( wk, 0 );
+        TrainerGraphicIn( wk, 0, FALSE );
         (*seq) = SEQ_WIN_WAIT_TR1_IN;
       }else{
         wk->pw_seq = 0;
@@ -5938,7 +6023,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   case SEQ_WIN_WAIT_TR1_OUT:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      TrainerGraphicIn( wk, 1 );
+      TrainerGraphicIn( wk, 1, FALSE );
       (*seq) = SEQ_WIN_WAIT_TR2_IN;
     }
     break;
@@ -6087,7 +6172,7 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
         BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
       }
       if( (result == BTL_RESULT_WIN) || (result == BTL_RESULT_LOSE) ){
-        TrainerGraphicIn( wk, 0 );
+        TrainerGraphicIn( wk, 0, FALSE );
         setupSubwayTrainerMsg( wk, result, 0 );
         (*seq) = SEQ_WAIT_TRAINER_IN;
       }
@@ -6122,7 +6207,7 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
     {
       BtlResult result = expandServerResult( wk );
 
-      TrainerGraphicIn( wk, 1 );
+      TrainerGraphicIn( wk, 1, FALSE );
       setupSubwayTrainerMsg( wk, result, 1 );
       (*seq) = SEQ_WAIT_TRAINER2_IN;
     }

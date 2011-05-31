@@ -141,6 +141,12 @@ enum{
   BTLEFF_N_POKE,                              // Nポケ登場
   BTLEFF_HERO_APPEAR,                         // 手前ポケモンが主人公と入れ替わり
   BTLEFF_HERO_DISAPPEAR,                      // 手前主人公がポケモンと入れ替わり
+  BTLEFF_HERO_ENEMY_APPEAR,                   // ABポケモン隠れる、その後主人公・敵トレーナー同時に出現
+  BTLEFF_HERO_ENEMY_DISAPPEAR,                // 主人公・敵トレーナー同時に退出、その後ABポケモン登場
+  BTLEFF_ENEMY_APPEAR,                        // Bポケモン隠れる、その後敵トレーナー登場
+  BTLEFF_ENEMY_DISAPPEAR,                     // 敵トレーナー退出、その後Bポケモン隠れる
+  BTLEFF_ENEMY_VANISH,                        // 敵トレーナー退出、誰もいなくなる
+  BTLEFF_HERO0_VANISH,                        // 主人公退出、誰もいなくなる
   BTLEFF_STATUS_EFFECT_END,
 };
 
@@ -376,6 +382,7 @@ extern  void              BTLV_EFFECT_ClearOldStatusEffectBuffer( void );
 
 extern void               BTLV_EFFECT_SetTrainerAnimeSpeed( int position, u32 speed );
 extern void               BTLV_EFFECT_ChangeBgAnime( int bg_anime_no );
+extern void               BTLV_EFFECT_ChangeBgModel( int bg_no );
 
 
 #ifdef PM_DEBUG

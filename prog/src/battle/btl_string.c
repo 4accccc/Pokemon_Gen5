@@ -36,7 +36,7 @@
 /*--------------------------------------------------------------------------*/
 
 enum {
-  TMP_STRBUF_SIZE = 256,
+  TMP_STRBUF_SIZE = 300,
   MSG_ARG_MAX = 8,
 };
 
@@ -165,7 +165,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
     NARC_message_yesnomenu_dat,
     NARC_message_tower_trainer_dat,
     NARC_message_wbt_trmsg_dat,
-    NARC_message_pw_senario001_dat,
+    // ポケウッドの分がMSGDATA_MAXから一つ足りません
   };
 
   int i;
@@ -180,9 +180,17 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
   SysWork.wset = WORDSET_Create( heapID );
   SysWork.tmpBuf = GFL_STR_CreateBuffer( TMP_STRBUF_SIZE, heapID );
 
-  for(i=0; i<MSGDATA_MAX; i++)
+  // 指定のメッセージデータを読み込み
+  for(i=0; i<MSGDATA_MAX-1; i++)
   {
     SysWork.msg[i] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgDataID[i], heapID );
+  }
+
+  if(BTL_MAIN_GetPokewoodMode(mainModule)!=BTL_POKEWOOD_NONE){
+    // ポケウッド用メッセージデータはシナリオＮＯで読みかえる
+    SysWork.msg[MSGDATA_MAX-1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                 NARC_message_pw_senario001_dat+BTL_MAIN_GetPokewoodSenarioNo(mainModule), 
+                                 heapID );
   }
 }
 
@@ -201,7 +209,9 @@ void BTL_STR_QuitSystem( void )
 
     for(i=0; i<MSGDATA_MAX; i++)
     {
-      GFL_MSG_Delete( SysWork.msg[i] );
+      if(SysWork.msg[i]!=NULL){
+        GFL_MSG_Delete( SysWork.msg[i] );
+      }
     }
   }
 }

@@ -386,7 +386,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
       // ポケウッドフラグが立っている場合はシナリオデータを読み込む
       if( setup_param->PokewoodMode ){
-        POKEWOOD_Init( wk, 0 );
+        POKEWOOD_Init( wk, setup_param->pokewoodSenario );
       }
       (*seq)++;
     }
@@ -4967,6 +4967,25 @@ const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u3
   GF_ASSERT(clientID < BTL_CLIENT_MAX);
   GF_ASSERT(wk->party[clientID].memberCount!=0);
   return &wk->party[ clientID ];
+}
+
+//=============================================================================================
+/**
+ * @brief	現在の戦闘のターン数を返す
+ *
+ * @param   wk		
+ *
+ * @retval  int		戦闘ターン（クライアントのみの場合はずっと０）
+ */
+//=============================================================================================
+int BTL_POKECON_GetTurnCount( const BTL_MAIN_MODULE* wk )
+{
+  if( wk->server )
+  {
+    BTL_SVFLOW_WORK* svf = BTL_SERVER_GetFlowWork( wk->server );
+    return BTL_SVFTOOL_GetTurnCount( svf );
+  }
+  return 0;
 }
 
 //=============================================================================================
