@@ -18,9 +18,12 @@
 
 #include "field/encount_data_ex_def.h"  //Nポケモン固定パラメータ定義参照
 
-#include "arc/arc_def.h"
 #include "message.naix"
+
+#ifndef MULTI_BOOT_MAKE
+#include "arc/arc_def.h"
 #include "msg/msg_trainermemo.h"
+#endif
 
 //======================================================================
 //	define
@@ -197,6 +200,7 @@ static void POKE_MEMO_SetTrainerMemoNPoke( POKEMON_PASO_PARAM *ppp, const u32 pl
   POKE_MEMO_SetRomVersion( ppp );
  
   //Nが親情報のセット
+#ifndef MULTI_BOOT_MAKE  //通常時処理
   {
     GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trainermemo_dat, heapId );
     STRBUF *name  = GFL_MSG_CreateString( man, trmemo_n_poke_oyaname );
@@ -208,6 +212,7 @@ static void POKE_MEMO_SetTrainerMemoNPoke( POKEMON_PASO_PARAM *ppp, const u32 pl
     GFL_STR_DeleteBuffer( name );
     GFL_MSG_Delete(man);
   }
+#endif
 }
 
 
