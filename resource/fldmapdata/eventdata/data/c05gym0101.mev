@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/31 12:23:53
+#save date:2011/05/31 16:38:48
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -311,7 +311,7 @@ SCRID_BG_C05GYM0101_EXITLIFT_00U
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -1048
+-56 0 -1128
 #event number: 1
 #Bg Event Label
 C05GYM0101_LIFT_00

@@ -71,11 +71,11 @@
 #define LIFT_YACON_X  (46 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE )    // ヤーコンリフト
 #define LIFT_YACON_Z  (18 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // ヤーコンリフト
 #define LIFT_ENT_X    (11 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // エントランスリフト
-#define LIFT_ENT_Z    (82 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // エントランスリフト
+#define LIFT_ENT_Z    (87 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE  )    // エントランスリフト
 
 #define LIFT_NUM      (36)      // リフト数     
 
-#define BELT_ANM_SPD  (0x1200)  // ベルトコンベアのアニメ速度
+#define BELT_ANM_SPD  (0x3700)  // ベルトコンベアのアニメ速度
 
 // 最初のリフトの位置
 // 最初のみ、歩いてライトが光る
