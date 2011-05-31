@@ -266,6 +266,32 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="DBGF_LABEL_PWCUTIN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すぐカットイン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-05-31T08:32:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-05-31T08:32:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text />
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-05-31T08:33:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-05-31T08:32:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DBGF_LABEL_SEASON"
 		Style="Large">
 		<LanguageCell

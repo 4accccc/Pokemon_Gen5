@@ -224,6 +224,7 @@ typedef enum {
   SELITEM_AI9,
 
   SELITEM_POKEWOOD_SENARIO,
+  SELITEM_PWCUTIN_EARLY,
 
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
@@ -344,6 +345,7 @@ enum {
   LAYOUT_LABEL_HOUR_X          = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_MINUTE_X        = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_PWSENARIO_X     = LAYOUT_LABEL_PAGE3_X,
+  LAYOUT_LABEL_PWCUTIN_X      = LAYOUT_LABEL_PAGE3_X,
 
   LAYOUT_LABEL_BACKGROUND_Y    = 8,
   LAYOUT_LABEL_LAND_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
@@ -353,7 +355,7 @@ enum {
   LAYOUT_LABEL_HOUR_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
   LAYOUT_LABEL_MINUTE_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
   LAYOUT_LABEL_PWSENARIO_Y     = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
-
+  LAYOUT_LABEL_PWCUTIN_Y       = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*9,
 
   LAYOUT_LABEL_AI_X   = 160,
   LAYOUT_LABEL_AI_0_Y = 8,
@@ -441,6 +443,7 @@ static const LABEL_LAYOUT LabelLayout_Page3[] = {
   { DBGF_LABEL_HOUR,       LAYOUT_LABEL_HOUR_X,         LAYOUT_LABEL_HOUR_Y       },
   { DBGF_LABEL_MINUTE,     LAYOUT_LABEL_MINUTE_X,       LAYOUT_LABEL_MINUTE_Y     },
   { DBGF_LABEL_PWSENARIO,  LAYOUT_LABEL_PWSENARIO_X,    LAYOUT_LABEL_PWSENARIO_Y  },
+  { DBGF_LABEL_PWCUTIN,    LAYOUT_LABEL_PWCUTIN_X,      LAYOUT_LABEL_PWCUTIN_Y  },
 
   { DBGF_LABEL_AI_0,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_0_Y,  },
   { DBGF_LABEL_AI_1,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_1_Y   },
@@ -546,7 +549,7 @@ static const ITEM_LAYOUT ItemLayout_Page3[] = {
   { SELITEM_FLD_HOUR,    LAYOUT_LABEL_HOUR_X        +50,   LAYOUT_LABEL_HOUR_Y       },
   { SELITEM_FLD_MINUTE,  LAYOUT_LABEL_MINUTE_X      +50,   LAYOUT_LABEL_MINUTE_Y     },
   { SELITEM_POKEWOOD_SENARIO,  LAYOUT_LABEL_PWSENARIO_X+80, LAYOUT_LABEL_PWSENARIO_Y  },
-
+  { SELITEM_PWCUTIN_EARLY,  LAYOUT_LABEL_PWCUTIN_X+80, LAYOUT_LABEL_PWCUTIN_Y  },
   { SELITEM_AI0,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_0_Y   },
   { SELITEM_AI1,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_1_Y   },
   { SELITEM_AI2,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_2_Y   },
@@ -631,7 +634,8 @@ typedef struct {
   u32  commMode : 1;
   u32  msgSpeed : 3;
   u32  recMode  : 2;
-  u32  dummy : 2;
+  u32  fCutin   : 1;
+  u32  dummy : 1;
   u32  backGround      : 5;
   u32  landForm        : 5;
   u32  season          : 2;
@@ -1198,6 +1202,7 @@ static void savework_Init( DEBUG_BTL_SAVEDATA* saveData )
   saveData->btlRule = 0;
   saveData->fAICtrl = 0;
   saveData->fShooterMode = 0;
+  saveData->fCutin = 0;
 
   saveData->backGround = 0;
   saveData->landForm = 0;
@@ -1430,6 +1435,9 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
   case SELITEM_POKEWOOD_SENARIO:
     save->pokewoodSenario = (save->pokewoodSenario+1)%10;
     break;
+  case SELITEM_PWCUTIN_EARLY:
+    save->fCutin ^= 1;
+    break;
 
   case SELITEM_AI0:   save->fAI_0 ^= 1; break;
   case SELITEM_AI1:   save->fAI_1 ^= 1; break;
@@ -1637,6 +1645,7 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
         case SELITEM_AI_CTRL:       printItem_Flag( wk, wk->saveData.fAICtrl, wk->strbuf ); break;
         case SELITEM_SHOOTER_MODE:  printItem_Flag( wk, wk->saveData.fShooterMode, wk->strbuf ); break;
+        case SELITEM_PWCUTIN_EARLY: printItem_Flag( wk, wk->saveData.fCutin, wk->strbuf ); break;
         case SELITEM_TRAINER_TYPE:  printItem_TrainerType( wk, wk->strbuf, wk->strbufSub ); break;
 
         case SELITEM_AI0: printItem_Flag( wk, wk->saveData.fAI_0,    wk->strbuf ); break;
@@ -1901,14 +1910,15 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_LIMIT_GAME_SEC, SELITEM_LIMIT_GAME_MIN,SELITEM_LIMIT_COMMAND, SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_COMMAND,  SELITEM_LIMIT_GAME_SEC,SELITEM_LIMIT_GAME_MIN,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,             Left-Item */
-      { SELITEM_BACKGROUND,     SELITEM_POKEWOOD_SENARIO, SELITEM_LAND,          SELITEM_AI0,            SELITEM_AI0,          },
+      { SELITEM_BACKGROUND,     SELITEM_PWCUTIN_EARLY, SELITEM_LAND,          SELITEM_AI0,            SELITEM_AI0,          },
       { SELITEM_LAND,           SELITEM_BACKGROUND,    SELITEM_SEASON,        SELITEM_AI1,            SELITEM_AI1,          },
       { SELITEM_SEASON,         SELITEM_LAND,          SELITEM_WEATHER,       SELITEM_AI2,            SELITEM_AI2,          },
       { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_ZONEID,        SELITEM_AI3,            SELITEM_AI3,          },
       { SELITEM_ZONEID,         SELITEM_WEATHER,       SELITEM_FLD_HOUR,      SELITEM_AI4,            SELITEM_AI4,          },
       { SELITEM_FLD_HOUR,       SELITEM_ZONEID,        SELITEM_FLD_MINUTE,    SELITEM_AI5,            SELITEM_AI5,          },
       { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_POKEWOOD_SENARIO,    SELITEM_AI6,            SELITEM_AI6,          },
-      { SELITEM_POKEWOOD_SENARIO, SELITEM_FLD_MINUTE,  SELITEM_BACKGROUND,    SELITEM_AI8,            SELITEM_AI8,          },
+      { SELITEM_POKEWOOD_SENARIO, SELITEM_FLD_MINUTE,  SELITEM_PWCUTIN_EARLY,    SELITEM_AI8,            SELITEM_AI8,          },
+      { SELITEM_PWCUTIN_EARLY, SELITEM_POKEWOOD_SENARIO,  SELITEM_BACKGROUND,    SELITEM_AI9,            SELITEM_AI9,          },
 
       { SELITEM_AI0,            SELITEM_AI9,           SELITEM_AI1,           SELITEM_BACKGROUND,     SELITEM_BACKGROUND    },
       { SELITEM_AI1,            SELITEM_AI0,           SELITEM_AI2,           SELITEM_LAND,           SELITEM_LAND,         },
@@ -1919,7 +1929,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_AI6,            SELITEM_AI5,           SELITEM_AI7,           SELITEM_FLD_MINUTE,     SELITEM_FLD_MINUTE,   },
       { SELITEM_AI7,            SELITEM_AI6,           SELITEM_AI8,           SELITEM_NULL,           SELITEM_NULL          },
       { SELITEM_AI8,            SELITEM_AI7,           SELITEM_AI9,           SELITEM_POKEWOOD_SENARIO, SELITEM_POKEWOOD_SENARIO },
-      { SELITEM_AI9,            SELITEM_AI8,           SELITEM_AI0,           SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_AI9,            SELITEM_AI8,           SELITEM_AI0,           SELITEM_PWCUTIN_EARLY,SELITEM_PWCUTIN_EARLY },
 
 
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,            Left-Item */
@@ -2773,11 +2783,7 @@ static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* 
   if( save->fSkipBtlIn)     { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_SKIP_BTLIN );  }
   if( save->fAICtrl)        { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_AI_CTRL );  }
   if( save->fShooterMode)   { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_SHOOTER_MODE );  }
-
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
-  {
-    BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_POKEWOOD_CUTIN );
-  }
+  if( save->fCutin )        { BTL_SETUP_SetDebugFlag( setup, BTL_DEBUGFLAG_POKEWOOD_CUTIN ); }
 }
 /**
  *  デバッグフラグの全オフ
