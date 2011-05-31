@@ -48,33 +48,6 @@ SUBDIRS	= graphic
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-# 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
-esources:=$(wildcard *.nce)
-
-# リソースが吐き出すファイルを自動でつくる
-lobjects = $(subst .ncl,.NCLR,$(lsources))
-gobjects = $(subst .ncg,.NCGR,$(gsources))
-eobjects = $(subst .nce,.NCER,$(esources))
-aobjects = $(subst .nce,.NANR,$(esources))
-
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NCER .nce
-
-.ncl.NCLR:
-	g2dcvtr $< -pcm
-
-.ncg.NCGR:
-	g2dcvtr $< -bg
-
-.nce.NCER:
-	g2dcvtr $< -br
-
-endif
-
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
