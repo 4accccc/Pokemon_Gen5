@@ -5173,6 +5173,10 @@
 		<language name="JPN" width="256">BGM-INSECT-GYM-02</language>
 		<language name="JPN_KANJI" width="256">BGM-INSECT-GYM-02</language>
 	</row>
+	<row id="msg_seq_bgm_poisone_gym_00">
+		<language name="JPN" width="256">BGM-POISONE-GYM-00</language>
+		<language name="JPN_KANJI" width="256">BGM-POISONE-GYM-00</language>
+	</row>
 	<row id="msg_seq_bgm_poisone_gym_01">
 		<language name="JPN" width="256">BGM-POISONE-GYM-01</language>
 		<language name="JPN_KANJI" width="256">BGM-POISONE-GYM-01</language>
@@ -5249,10 +5253,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1201">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1202">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
