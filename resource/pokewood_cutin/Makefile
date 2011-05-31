@@ -78,14 +78,11 @@ $(targetname_scr).narc $(targetname_scr).naix: $(scrlist)
 	$(NAIXCUT) $(targetname_scr).naix
 	-rm $(scrname)*.dat
 	-rm $(scrname)*.csv
-	-rm $(defname).csv
-	-rm $(scrlist)
 
 $(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(graphic_dir)/$(targetname_gra).naix $(sadlname)
 	$(scrmk) $(cmdconv) $(graphic_dir)/$(targetname_gra).naix $(scrname) $(cdatname) $(sadlname)
 	ls $(scrname)*.dat > $(scrlist)
 	$(arclistmk) $(scrlist)
-	rm $(scrtarget)
 
 $(graphic_dir)/$(targetname_gra).narc $(graphic_dir)/$(targetname_gra).naix:
 	$(MAKE) -f $(make_graphic)
