@@ -23,17 +23,20 @@
 //待機
 #define PW_CUTIN_CMD_WAIT  (4)
 #define PW_CUTIN_WAIT_PARAM_NUM (1)
-//メッセージ
-#define PW_CUTIN_CMD_MESSAGE  (5)
-#define PW_CUTIN_MESSAGE_PARAM_NUM (3)
+//メッセージ表示
+#define PW_CUTIN_CMD_MESSAGE_DRAW  (5)
+#define PW_CUTIN_MESSAGE_DRAW_PARAM_NUM (3)
+//メッセージ隠す
+#define PW_CUTIN_CMD_MESSAGE_HIDE  (6)
+#define PW_CUTIN_MESSAGE_HIDE_PARAM_NUM (0)
 //SE再生
-#define PW_CUTIN_CMD_SE_PLAY  (6)
+#define PW_CUTIN_CMD_SE_PLAY  (7)
 #define PW_CUTIN_SE_PLAY_PARAM_NUM (1)
 //SE待機
-#define PW_CUTIN_CMD_SE_WAIT  (7)
+#define PW_CUTIN_CMD_SE_WAIT  (8)
 #define PW_CUTIN_SE_WAIT_PARAM_NUM (0)
 //SE停止
-#define PW_CUTIN_CMD_SE_STOP  (8)
+#define PW_CUTIN_CMD_SE_STOP  (9)
 #define PW_CUTIN_SE_STOP_PARAM_NUM (0)
 //定義情報
 //移動方向：上から下

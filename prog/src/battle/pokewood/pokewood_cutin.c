@@ -142,7 +142,8 @@ static BOOL Bw_Scrcmd_WndScale( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIP
 static BOOL Bw_Scrcmd_WndVisible( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_ResChange( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_Wait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
-static BOOL Bw_Scrcmd_Message( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Scrcmd_MessageDraw( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Scrcmd_MessageHide( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_SePlay( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_SeWait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_SeStop( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
@@ -183,7 +184,8 @@ static const PW_SCRIPT_COMMAND Pw_Script_Command[] =
   Bw_Scrcmd_WndVisible,   //PW_CUTIN_CMD_WND_VISIBLE
   Bw_Scrcmd_ResChange,    //PW_CUTIN_CMD_RES_CHANGE
   Bw_Scrcmd_Wait,         //PW_CUTIN_CMD_WAIT
-  Bw_Scrcmd_Message,      //PW_CUTIN_CMD_MESSAGE
+  Bw_Scrcmd_MessageDraw,  //PW_CUTIN_CMD_MESSAGE_DRAW
+  Bw_Scrcmd_MessageHide,  //PW_CUTIN_CMD_MESSAGE_HIDE
   Bw_Scrcmd_SePlay,       //PW_CUTIN_CMD_SE_PLAY
   Bw_Scrcmd_SeWait,       //PW_CUTIN_CMD_SE_WAIT
   Bw_Scrcmd_SeStop,       //PW_CUTIN_CMD_SE_STOP
@@ -759,7 +761,7 @@ static BOOL Bw_Scrcmd_Wait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief　メッセージ
+ *	@brief　メッセージ表示
  *
  *	@param	POKEWOOD_CUTIN *p_wk  ワーク
  *	@param	*p_seq                シーケンス
@@ -768,7 +770,7 @@ static BOOL Bw_Scrcmd_Wait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD
  *	@return TRUE コマンド終了 FALSE　コマンド継続中
  */
 //-----------------------------------------------------------------------------
-static BOOL Bw_Scrcmd_Message( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
+static BOOL Bw_Scrcmd_MessageDraw( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
 {
   enum
   {
@@ -818,6 +820,41 @@ static BOOL Bw_Scrcmd_Message( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief　メッセージ隠す
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_seq                シーケンス
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param   引数
+ *
+ *	@return TRUE コマンド終了 FALSE　コマンド継続中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Scrcmd_MessageHide( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
+
+  switch( *p_seq )
+  {
+  case SEQ_INIT:
+    BTLV_MsgWinHide_Start( p_wk->p_core );
+    (*p_seq)++;
+    break;
+  case SEQ_MAIN:
+    if( BTLV_MsgWinHide_Wait( p_wk->p_core ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief　SE再生

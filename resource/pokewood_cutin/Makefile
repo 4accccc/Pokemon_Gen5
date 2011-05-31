@@ -23,6 +23,8 @@ arclistmk	= perl ${PROJECT_ROOT}/tools/arc_list_make.pl
 scrmk			= pokewood_cutin_script_make.rb
 cdatname	= pokewood_cutin_script_search
 sadlname 	= ../sound/swan_sound_data.sadl
+manualname = pokewood_cutin_manual
+
 
 
 #------------------------------------------------------------------------------
@@ -119,7 +121,8 @@ $(defname).h $(defname).rb: $(defname).csv
 $(defname).csv $(scrtarget): $(dataname).xls
 	-rm *.txt
 	$(xlsconv) $< -s $(scrname)
-	mv $(scrname)0.csv $(defname).csv
+	mv $(scrname)0.csv $(manualname).csv
+	mv $(scrname)1.csv $(defname).csv
 	echo > $(scrtarget)
 endif
 

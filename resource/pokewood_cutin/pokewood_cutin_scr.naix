@@ -11,7 +11,7 @@
 #define NARC_POKEWOOD_CUTIN_SCR_NAIX_
 
 enum {
-	NARC_pokewood_cutin_scr_pokewood_cutin_scr1_dat = 0
+	NARC_pokewood_cutin_scr_pokewood_cutin_scr2_dat = 0
 };
 
 /* NARC_POKEWOOD_CUTIN_SCR_NAIX_ */
