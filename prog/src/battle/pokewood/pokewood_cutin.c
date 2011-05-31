@@ -54,6 +54,8 @@
 
 #define POKEWOOD_SLOWDOWN_VELOCITY (FX32_CONST(50))
 
+#define POKEWOOD_SHAKE_NORMAL_DISTANCE  (10)
+
 //-------------------------------------
 //	等速直線運動動作
 //=====================================
@@ -87,6 +89,15 @@ typedef struct
 {
   u16 param[POKEWOOD_CUTIN_CMD_PARAM_NUM];
 } PW_SCRIPT_CMD_PARAM;
+
+//-------------------------------------
+///	揺れ用ワーク
+//=====================================
+typedef struct
+{
+  int seq;
+  GFL_POINT pos[2];
+} SHAKE_WORK;
 
 //スクリプトコマンド型
 typedef BOOL (*PW_SCRIPT_COMMAND)( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
@@ -126,6 +137,7 @@ struct _POKEWOOD_CUTIN
     PROGVAL_VELOCITY_WORK   vel;
     PROGVAL_ACLR_WORK       aclr;
   };
+  SHAKE_WORK shake;
 };
 
 //-------------------------------------
@@ -138,8 +150,8 @@ static ARCDATID Bw_Binary_GetArcDatId( int senario, int event );
 //スクリプトコマンド-----
 static BOOL Bw_Scrcmd_WndMove( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_WndMoveEx( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
-static BOOL Bw_Scrcmd_WndScale( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_WndVisible( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
+static BOOL Bw_Scrcmd_WndShake( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_ResChange( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_Wait( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
 static BOOL Bw_Scrcmd_MessageDraw( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param );
@@ -162,7 +174,15 @@ static void Bw_Move_SlowDown_GetPos( POKEWOOD_CUTIN *p_wk, GFL_CLACTPOS *p_clpos
 static void Bw_Move_GetMovePos( int move_dir, const GFL_CLWK *cp_clwk, GFL_POINT *p_start, GFL_POINT *p_end );
 static void Bw_Move_GetMovePosEx( int move_dir, int dst, const GFL_CLWK *cp_clwk, GFL_POINT *p_start, GFL_POINT *p_end );
 
-//移動命令-----
+//シェイク命令-----
+static void Bw_Shake_Normal_InitUD( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk );
+static void Bw_Shake_Normal_InitDU( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk );
+static void Bw_Shake_Normal_InitLR( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk );
+static void Bw_Shake_Normal_InitRL( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk );
+static BOOL Bw_Shake_Normal_Main( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk );
+static void Bw_Shake_Normal_GetPos( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, GFL_CLACTPOS *p_clpos );
+
+//移動モジュール-----
 //等速
 static void PROGVAL_VEL_Init( PROGVAL_VELOCITY_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int sync );
 static BOOL PROGVAL_VEL_Main( PROGVAL_VELOCITY_WORK* p_wk );
@@ -180,8 +200,8 @@ static const PW_SCRIPT_COMMAND Pw_Script_Command[] =
 {
   Bw_Scrcmd_WndMove,      //PW_CUTIN_CMD_WND_MOVE 
   Bw_Scrcmd_WndMoveEx,    //PW_CUTIN_CMD_WND_MOVE_EX
-  //Bw_Scrcmd_WndScale,     //PW_CUTIN_CMD_WND_SCALE
   Bw_Scrcmd_WndVisible,   //PW_CUTIN_CMD_WND_VISIBLE
+  Bw_Scrcmd_WndShake,     //PW_CUTIN_CMD_WND_SHAKE
   Bw_Scrcmd_ResChange,    //PW_CUTIN_CMD_RES_CHANGE
   Bw_Scrcmd_Wait,         //PW_CUTIN_CMD_WAIT
   Bw_Scrcmd_MessageDraw,  //PW_CUTIN_CMD_MESSAGE_DRAW
@@ -215,6 +235,41 @@ static const struct
     Bw_Move_SlowDown_GetPos,
   },
 };
+
+//シェイク用コマンド
+static const struct
+{
+  void (*Init)( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk );
+  BOOL (*Main)( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk );
+  void (*GetPos)( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, GFL_CLACTPOS *p_clpos );
+} Pw_Shake_Command[] =
+{
+  //PW_CUTIN_DEF_SHAKE_TYPE_UD
+  {
+    Bw_Shake_Normal_InitUD,
+    Bw_Shake_Normal_Main,
+    Bw_Shake_Normal_GetPos,
+  },
+  //PW_CUTIN_DEF_SHAKE_TYPE_DU
+  {
+    Bw_Shake_Normal_InitDU,
+    Bw_Shake_Normal_Main,
+    Bw_Shake_Normal_GetPos,
+  },
+  //PW_CUTIN_DEF_SHAKE_TYPE_LR
+  {
+    Bw_Shake_Normal_InitLR,
+    Bw_Shake_Normal_Main,
+    Bw_Shake_Normal_GetPos,
+  },
+  //PW_CUTIN_DEF_SHAKE_TYPE_RL
+  {
+    Bw_Shake_Normal_InitRL,
+    Bw_Shake_Normal_Main,
+    Bw_Shake_Normal_GetPos,
+  },
+};
+
 
 //-------------------------------------
 ///	外部公開関数
@@ -585,6 +640,7 @@ static BOOL Bw_Scrcmd_WndMove( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT
   {
   case SEQ_INIT:  //位置設定
     Pw_Move_Command[ cp_param->param[1] ].Init( p_wk, p_clwk, cp_param );
+    Pw_Move_Command[ cp_param->param[1] ].Main( p_wk );
     Pw_Move_Command[ cp_param->param[1] ].GetPos( p_wk, &clpos );
     GFL_CLACT_WK_SetPos( p_clwk, &clpos, 0 );
     GFL_CLACT_WK_SetAnmSeq( p_clwk, cp_param->param[0] );
@@ -635,6 +691,7 @@ static BOOL Bw_Scrcmd_WndMoveEx( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRI
   {
   case SEQ_INIT:  //位置設定
     Pw_Move_Command[ cp_param->param[1] ].InitEx( p_wk, p_clwk, cp_param );
+    Pw_Move_Command[ cp_param->param[1] ].Main( p_wk );
     Pw_Move_Command[ cp_param->param[1] ].GetPos( p_wk, &clpos );
     GFL_CLACT_WK_SetPos( p_clwk, &clpos, 0 );
     GFL_CLACT_WK_SetAnmSeq( p_clwk, cp_param->param[0] );
@@ -659,37 +716,6 @@ static BOOL Bw_Scrcmd_WndMoveEx( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRI
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  コマ拡大縮小
- *
- *	@param	POKEWOOD_CUTIN *p_wk  ワーク
- *	@param	*p_seq                シーケンス
- *	@param	PW_SCRIPT_CMD_PARAM *cp_param   引数
- *
- *	@return TRUE コマンド終了 FALSE　コマンド継続中
- */
-//-----------------------------------------------------------------------------
-static BOOL Bw_Scrcmd_WndScale( POKEWOOD_CUTIN *p_wk, u16 *p_seq, const PW_SCRIPT_CMD_PARAM *cp_param )
-{
-  /*
-  enum
-  {
-    SEQ_INIT,
-    SEQ_EXIT,
-  };
-
-  GFL_CLWK *p_clwk = p_wk->p_clwk[cp_param->param[0]];
-
-  switch( *p_seq )
-  {
-  case SEQ_INIT:
-    break;
-  case SEQ_EXIT
-  }
-  */
-  return TRUE;
-}
-//----------------------------------------------------------------------------
-/**
  *	@brief　コマ表示
  *
  *	@param	POKEWOOD_CUTIN *p_wk  ワーク
@@ -703,6 +729,58 @@ static BOOL Bw_Scrcmd_WndVisible( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRI
 {
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[ cp_param->param[0] ], cp_param->param[1] );
   return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　コマ表示
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param	*p_seq                シーケンス
+ *	@param	PW_SCRIPT_CMD_PARAM *cp_param   引数
+ *
+ *	@return TRUE コマンド終了 FALSE　コマンド継続中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Scrcmd_WndShake( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCRIPT_CMD_PARAM *cp_param )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+  GFL_CLACTPOS clpos;
+
+  GFL_CLWK *p_clwk = p_wk->p_clwk[cp_param->param[0]];
+
+
+  switch( *p_seq )
+  {
+  case SEQ_INIT:  //位置設定
+    GFL_STD_MemClear( &p_wk->shake, sizeof(SHAKE_WORK) );
+    Pw_Shake_Command[ cp_param->param[1] ].Init( p_wk, &p_wk->shake, p_clwk );
+    Pw_Shake_Command[ cp_param->param[1] ].Main( p_wk, &p_wk->shake );
+    Pw_Shake_Command[ cp_param->param[1] ].GetPos( p_wk, &p_wk->shake, &clpos );
+    GFL_CLACT_WK_SetPos( p_clwk, &clpos, 0 );
+    GFL_CLACT_WK_SetAnmSeq( p_clwk, cp_param->param[0] );
+    GFL_CLACT_WK_SetDrawEnable( p_clwk, TRUE );
+    (*p_seq)++;
+    break;
+
+  case SEQ_MAIN:  //メイン
+    if( Pw_Shake_Command[ cp_param->param[1] ].Main( p_wk, &p_wk->shake ) )
+    {
+      (*p_seq)++;
+    }
+    Pw_Shake_Command[ cp_param->param[1] ].GetPos( p_wk, &p_wk->shake, &clpos );
+    GFL_CLACT_WK_SetPos( p_clwk, &clpos, 0 );
+    break;
+
+  case SEQ_EXIT:
+    return TRUE;
+  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1175,6 +1253,155 @@ static void Bw_Move_GetMovePosEx( int move_dir, int dst, const GFL_CLWK *cp_clwk
   p_end->y = p_start->y + target.y;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常揺れ　UD
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param  SHAKE_WORK 揺れ用ワーク
+ *	@param	*p_clwk 動かすCLWK
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Shake_Normal_InitUD( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk )
+{
+  GFL_CLACTPOS clpos;
+
+  GFL_CLACT_WK_GetPos( cp_clwk, &clpos, 0 );
+
+  p_shake_wk->pos[0].x = clpos.x;
+  p_shake_wk->pos[0].y = clpos.y;
+
+  p_shake_wk->pos[1].x = clpos.x;
+  p_shake_wk->pos[1].y = clpos.y - POKEWOOD_SHAKE_NORMAL_DISTANCE;
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常揺れ　DU
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param  SHAKE_WORK 揺れ用ワーク
+ *	@param	*p_clwk 動かすCLWK
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Shake_Normal_InitDU( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk )
+{
+  GFL_CLACTPOS clpos;
+
+  GFL_CLACT_WK_GetPos( cp_clwk, &clpos, 0 );
+
+  p_shake_wk->pos[0].x = clpos.x;
+  p_shake_wk->pos[0].y = clpos.y;
+
+  p_shake_wk->pos[1].x = clpos.x;
+  p_shake_wk->pos[1].y = clpos.y + POKEWOOD_SHAKE_NORMAL_DISTANCE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常揺れ　LR
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param  SHAKE_WORK 揺れ用ワーク
+ *	@param	*p_clwk 動かすCLWK
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Shake_Normal_InitLR( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk )
+{
+  GFL_CLACTPOS clpos;
+
+  GFL_CLACT_WK_GetPos( cp_clwk, &clpos, 0 );
+
+  p_shake_wk->pos[0].x = clpos.x;
+  p_shake_wk->pos[0].y = clpos.y;
+
+  p_shake_wk->pos[1].x = clpos.x - POKEWOOD_SHAKE_NORMAL_DISTANCE;
+  p_shake_wk->pos[1].y = clpos.y;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常揺れ　RL
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param  SHAKE_WORK 揺れ用ワーク
+ *	@param	*p_clwk 動かすCLWK
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Shake_Normal_InitRL( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, const GFL_CLWK *cp_clwk )
+{
+  GFL_CLACTPOS clpos;
+
+  GFL_CLACT_WK_GetPos( cp_clwk, &clpos, 0 );
+
+  p_shake_wk->pos[0].x = clpos.x;
+  p_shake_wk->pos[0].y = clpos.y;
+
+  p_shake_wk->pos[1].x = clpos.x + POKEWOOD_SHAKE_NORMAL_DISTANCE;
+  p_shake_wk->pos[1].y = clpos.y;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常ゆれ　メイン
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param  SHAKE_WORK 揺れ用ワーク
+ *
+ *	@return TRUEで終了  FALSEで続行
+ */
+//-----------------------------------------------------------------------------
+static BOOL Bw_Shake_Normal_Main( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk )
+{
+  enum
+  {
+    SHAKE_NORMAL_SYNC = 10,
+  };
+
+  enum
+  {
+    SEQ_INIT_00,
+    SEQ_MAIN_00,
+    SEQ_INIT_01,
+    SEQ_MAIN_01,
+  };
+
+  switch( p_shake_wk->seq )
+  {
+  case SEQ_INIT_00:
+    PROGVAL_VEL_Init( &p_wk->vel, &p_shake_wk->pos[0], &p_shake_wk->pos[1], SHAKE_NORMAL_SYNC );
+    p_shake_wk->seq++;
+    break;
+  case SEQ_MAIN_00:
+    if( PROGVAL_VEL_Main( &p_wk->vel ) )
+    {
+      p_shake_wk->seq++;
+    }
+    break;
+  case SEQ_INIT_01:
+    PROGVAL_VEL_Init( &p_wk->vel, &p_shake_wk->pos[1], &p_shake_wk->pos[0], SHAKE_NORMAL_SYNC );
+    p_shake_wk->seq++;
+    break;
+  case SEQ_MAIN_01:
+    if( PROGVAL_VEL_Main( &p_wk->vel ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通常揺れ 位置取得
+ *
+ *	@param	POKEWOOD_CUTIN *p_wk  ワーク
+ *	@param  SHAKE_WORK 揺れ用ワーク
+ *	@param	*p_clpos              CL座標
+ */
+//-----------------------------------------------------------------------------
+static void Bw_Shake_Normal_GetPos( POKEWOOD_CUTIN *p_wk, SHAKE_WORK *p_shake_wk, GFL_CLACTPOS *p_clpos )
+{
+  PROGVAL_VEL_GetPos( &p_wk->vel, p_clpos );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	等速直線運動初期化
