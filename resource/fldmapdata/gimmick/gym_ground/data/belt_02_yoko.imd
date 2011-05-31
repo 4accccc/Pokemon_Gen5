@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-05-18T17:56:41" source="belt_02_yoko.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-05-31T12:15:38" source="belt_02_yoko.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-05-18T17:56:41" source="belt_02_yoko.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-05-31T12:15:38" source="belt_02_yoko.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -38,14 +38,14 @@
 		path="C:/home/swan_data3d/gimmick/gym_ground/tex/in27_bc01.tga"
 	>
 		<bitmap size="64">
-			3210 3333 3333 0123 3210 3333 3333 0123
-			3210 3333 3333 0123 3210 3333 3333 0123
-			3210 3333 3333 0123 2210 3333 3333 0122
-			2210 2222 2222 0122 1100 1111 1111 0011
-			2210 2222 2222 0122 2210 3333 3333 0122
-			3210 3333 3333 0123 3210 3333 3333 0123
-			3210 3333 3333 0123 3210 3333 3333 0123
-			3210 3333 3333 0123 3210 3333 3333 0123
+			1100 1111 1111 0011 2210 2222 2222 0022
+			2210 3333 3333 0122 3210 3333 3333 0123
+			2210 3333 3333 0122 2210 2222 2222 0122
+			1100 1111 1111 0011 1100 1111 1111 0011
+			1100 1111 1111 0011 2210 2222 2222 0122
+			2210 3333 3333 0122 3210 3333 3333 0123
+			2210 3333 3333 0122 2210 2222 2222 0122
+			1100 1111 1111 0011 1100 1111 1111 0011
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="in27_bc02"
