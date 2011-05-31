@@ -1118,6 +1118,16 @@ SCRIPTFILES += \
 	sp_d24r0601.ev \
 	d24r0701.ev \
 	sp_d24r0701.ev \
+	d24r0801.ev \
+	sp_d24r0801.ev \
+	d24r0901.ev \
+	sp_d24r0901.ev \
+	d24r1001.ev \
+	sp_d24r1001.ev \
+	d24r1101.ev \
+	sp_d24r1101.ev \
+	d24r1201.ev \
+	sp_d24r1201.ev \
 	d03r0301.ev \
 	sp_d03r0301.ev \
 	c05r0102.ev \

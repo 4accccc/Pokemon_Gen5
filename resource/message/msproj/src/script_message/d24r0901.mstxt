@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_mapscript_dummy">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-31T12:51:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-31T12:51:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-31T12:51:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-31T12:51:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>？？？</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-31T12:51:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="キャラ指定">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-05-31T12:51:37" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>

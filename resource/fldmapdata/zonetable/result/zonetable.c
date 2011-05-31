@@ -18975,7 +18975,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
 		AREA_ID_IN51,
-		MATRIX_ID_DUN2803,
+		MATRIX_ID_WHITE2401,
 		NARC_script_seq_d24r0701_bin,
 		NARC_script_seq_sp_d24r0701_bin,	//NARC_script_seq_sp_d24r0701_bin,
 		NARC_script_message_d24r0701_dat,
@@ -18999,13 +18999,183 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_DUN2803, // camera_area
+		MATRIX_ID_WHITE2401, // camera_area
 		19,   // padding > placeicon
 		5,
 		0,
 		4,
 	},
-	{//ZONE_ID_D03R0301 = 559
+	{//ZONE_ID_D24R0801 = 559
+		RSC_GRID_DEFAULT,
+		MMLID_NOENTRY,
+		AREA_ID_IN51,
+		MATRIX_ID_WHITE2402,
+		NARC_script_seq_d24r0801_bin,
+		NARC_script_seq_sp_d24r0801_bin,	//NARC_script_seq_sp_d24r0801_bin,
+		NARC_script_message_d24r0801_dat,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		enc_dummy,
+		NARC_eventdata_d24r0801_bin,
+    ZONE_ID_D24,
+		MAPNAME_D29,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		WEATHER_NO_SUNNY,
+    FALSE,
+		0,        // camera id
+		MC_TYPE_ROOM,  // map_chg_type
+		9,
+		FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+    TRUE,
+    FALSE,
+		MATRIX_ID_WHITE2402, // camera_area
+		19,   // padding > placeicon
+		5,
+		0,
+		4,
+	},
+	{//ZONE_ID_D24R0901 = 560
+		RSC_GRID_DEFAULT,
+		MMLID_NOENTRY,
+		AREA_ID_IN51,
+		MATRIX_ID_WHITE2403,
+		NARC_script_seq_d24r0901_bin,
+		NARC_script_seq_sp_d24r0901_bin,	//NARC_script_seq_sp_d24r0901_bin,
+		NARC_script_message_d24r0901_dat,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		enc_dummy,
+		NARC_eventdata_d24r0901_bin,
+    ZONE_ID_D24,
+		MAPNAME_D29,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		WEATHER_NO_SUNNY,
+    FALSE,
+		0,        // camera id
+		MC_TYPE_ROOM,  // map_chg_type
+		9,
+		FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+    TRUE,
+    FALSE,
+		MATRIX_ID_WHITE2403, // camera_area
+		19,   // padding > placeicon
+		5,
+		0,
+		4,
+	},
+	{//ZONE_ID_D24R1001 = 561
+		RSC_GRID_DEFAULT,
+		MMLID_NOENTRY,
+		AREA_ID_IN51,
+		MATRIX_ID_WHITE2404,
+		NARC_script_seq_d24r1001_bin,
+		NARC_script_seq_sp_d24r1001_bin,	//NARC_script_seq_sp_d24r1001_bin,
+		NARC_script_message_d24r1001_dat,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		enc_dummy,
+		NARC_eventdata_d24r1001_bin,
+    ZONE_ID_D24,
+		MAPNAME_D29,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		WEATHER_NO_SUNNY,
+    FALSE,
+		0,        // camera id
+		MC_TYPE_ROOM,  // map_chg_type
+		9,
+		FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+    TRUE,
+    FALSE,
+		MATRIX_ID_WHITE2404, // camera_area
+		19,   // padding > placeicon
+		5,
+		0,
+		4,
+	},
+	{//ZONE_ID_D24R1101 = 562
+		RSC_GRID_DEFAULT,
+		MMLID_NOENTRY,
+		AREA_ID_IN51,
+		MATRIX_ID_WHITE2405,
+		NARC_script_seq_d24r1101_bin,
+		NARC_script_seq_sp_d24r1101_bin,	//NARC_script_seq_sp_d24r1101_bin,
+		NARC_script_message_d24r1101_dat,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		enc_dummy,
+		NARC_eventdata_d24r1101_bin,
+    ZONE_ID_D24,
+		MAPNAME_D29,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		WEATHER_NO_SUNNY,
+    FALSE,
+		0,        // camera id
+		MC_TYPE_ROOM,  // map_chg_type
+		9,
+		FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+    TRUE,
+    FALSE,
+		MATRIX_ID_WHITE2405, // camera_area
+		19,   // padding > placeicon
+		5,
+		0,
+		4,
+	},
+	{//ZONE_ID_D24R1201 = 563
+		RSC_GRID_DEFAULT,
+		MMLID_NOENTRY,
+		AREA_ID_IN51,
+		MATRIX_ID_WHITE2406,
+		NARC_script_seq_d24r1201_bin,
+		NARC_script_seq_sp_d24r1201_bin,	//NARC_script_seq_sp_d24r1201_bin,
+		NARC_script_message_d24r1201_dat,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		SEQ_BGM_T_04,
+		enc_dummy,
+		NARC_eventdata_d24r1201_bin,
+    ZONE_ID_D24,
+		MAPNAME_D29,
+		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
+		WEATHER_NO_SUNNY,
+    FALSE,
+		0,        // camera id
+		MC_TYPE_ROOM,  // map_chg_type
+		9,
+		FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+    TRUE,
+    FALSE,
+		MATRIX_ID_WHITE2406, // camera_area
+		19,   // padding > placeicon
+		5,
+		0,
+		4,
+	},
+	{//ZONE_ID_D03R0301 = 564
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
 		AREA_ID_OUT06,
@@ -19039,7 +19209,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0102 = 560
+	{//ZONE_ID_C05R0102 = 565
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19073,7 +19243,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0103 = 561
+	{//ZONE_ID_C05R0103 = 566
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19107,7 +19277,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0202 = 562
+	{//ZONE_ID_C05R0202 = 567
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19141,7 +19311,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0203 = 563
+	{//ZONE_ID_C05R0203 = 568
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19175,7 +19345,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0302 = 564
+	{//ZONE_ID_C05R0302 = 569
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19209,7 +19379,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0303 = 565
+	{//ZONE_ID_C05R0303 = 570
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19243,7 +19413,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0402 = 566
+	{//ZONE_ID_C05R0402 = 571
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,
@@ -19277,7 +19447,7 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
-	{//ZONE_ID_C05R0403 = 567
+	{//ZONE_ID_C05R0403 = 572
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN48,

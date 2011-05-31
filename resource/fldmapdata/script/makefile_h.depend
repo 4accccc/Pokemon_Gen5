@@ -1839,6 +1839,21 @@ d24r0601_def.h: d24r0601.ev
 d24r0701_def.h: d24r0701.ev
 	$(EV_DEF) d24r0701.ev $(SCR_OFFS_ID_H)
 
+d24r0801_def.h: d24r0801.ev
+	$(EV_DEF) d24r0801.ev $(SCR_OFFS_ID_H)
+
+d24r0901_def.h: d24r0901.ev
+	$(EV_DEF) d24r0901.ev $(SCR_OFFS_ID_H)
+
+d24r1001_def.h: d24r1001.ev
+	$(EV_DEF) d24r1001.ev $(SCR_OFFS_ID_H)
+
+d24r1101_def.h: d24r1101.ev
+	$(EV_DEF) d24r1101.ev $(SCR_OFFS_ID_H)
+
+d24r1201_def.h: d24r1201.ev
+	$(EV_DEF) d24r1201.ev $(SCR_OFFS_ID_H)
+
 d03r0301_def.h: d03r0301.ev
 	$(EV_DEF) d03r0301.ev $(SCR_OFFS_ID_H)
 
