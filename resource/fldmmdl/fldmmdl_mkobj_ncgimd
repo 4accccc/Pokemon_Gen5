@@ -4173,3 +4173,68 @@
 	@echo convert ncg_imd tsure_518_dark
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_518_dark.ncg ./mmdl_res ./mmdl_dmy/t8x8x6.imd 8 8 6
 
+#tsure_519.imd
+./mmdl_res/tsure_519.imd: ./mmdl_nchara/pokemon//tsure_519.ncg ./mmdl_nchara/pokemon//tsure_519.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_519
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_519.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_520.imd
+./mmdl_res/tsure_520.imd: ./mmdl_nchara/pokemon//tsure_520.ncg ./mmdl_nchara/pokemon//tsure_520.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_520
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_520.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_521.imd
+./mmdl_res/tsure_521.imd: ./mmdl_nchara/pokemon//tsure_521.ncg ./mmdl_nchara/pokemon//tsure_521.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_521
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_521.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_522.imd
+./mmdl_res/tsure_522.imd: ./mmdl_nchara/pokemon//tsure_522.ncg ./mmdl_nchara/pokemon//tsure_522.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_522
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_522.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_523.imd
+./mmdl_res/tsure_523.imd: ./mmdl_nchara/pokemon//tsure_523.ncg ./mmdl_nchara/pokemon//tsure_523.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_523
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_523.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_524.imd
+./mmdl_res/tsure_524.imd: ./mmdl_nchara/pokemon//tsure_524.ncg ./mmdl_nchara/pokemon//tsure_524.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_524
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_524.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_525.imd
+./mmdl_res/tsure_525.imd: ./mmdl_nchara/pokemon//tsure_525.ncg ./mmdl_nchara/pokemon//tsure_525.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_525
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_525.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_526.imd
+./mmdl_res/tsure_526.imd: ./mmdl_nchara/pokemon//tsure_526.ncg ./mmdl_nchara/pokemon//tsure_526.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_526
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_526.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_527.imd
+./mmdl_res/tsure_527.imd: ./mmdl_nchara/pokemon//tsure_527.ncg ./mmdl_nchara/pokemon//tsure_527.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_527
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_527.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_528.imd
+./mmdl_res/tsure_528.imd: ./mmdl_nchara/pokemon//tsure_528.ncg ./mmdl_nchara/pokemon//tsure_528.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_528
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_528.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_529.imd
+./mmdl_res/tsure_529.imd: ./mmdl_nchara/pokemon//tsure_529.ncg ./mmdl_nchara/pokemon//tsure_529.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_529
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_529.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_530.imd
+./mmdl_res/tsure_530.imd: ./mmdl_nchara/pokemon//tsure_530.ncg ./mmdl_nchara/pokemon//tsure_530.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_530
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_530.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+
+#tsure_531.imd
+./mmdl_res/tsure_531.imd: ./mmdl_nchara/pokemon//tsure_531.ncg ./mmdl_nchara/pokemon//tsure_531.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_531
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_531.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+

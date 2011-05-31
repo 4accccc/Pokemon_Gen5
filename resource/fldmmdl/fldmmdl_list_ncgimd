@@ -833,4 +833,17 @@ FMMDL_RESLIST_NCGIMD = \
 	tsure_518_phyc.imd \
 	tsure_518_ice.imd \
 	tsure_518_dra.imd \
-	tsure_518_dark.imd
+	tsure_518_dark.imd \
+	tsure_519.imd \
+	tsure_520.imd \
+	tsure_521.imd \
+	tsure_522.imd \
+	tsure_523.imd \
+	tsure_524.imd \
+	tsure_525.imd \
+	tsure_526.imd \
+	tsure_527.imd \
+	tsure_528.imd \
+	tsure_529.imd \
+	tsure_530.imd \
+	tsure_531.imd

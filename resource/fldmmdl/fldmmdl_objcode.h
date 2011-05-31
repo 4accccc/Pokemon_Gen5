@@ -875,25 +875,38 @@
 #define TPOKE_0553 (0x1233) //4659(563,total 862) アルセウス・こおり
 #define TPOKE_0554 (0x1234) //4660(564,total 863) アルセウス・ドラゴン
 #define TPOKE_0555 (0x1235) //4661(565,total 864) アルセウス・あく
-#define OBJCODEEND_TPOKE (0x1236) //4662(total 865) ポケモンコード終端
-#define OBJCODECOUNT_TPOKE (0x236) //566 ポケモンコード数
+#define TPOKE_0567 (0x1236) //4662(566,total 865) ミルホッグ
+#define TPOKE_0568 (0x1237) //4663(567,total 866) ハーデリア
+#define TPOKE_0569 (0x1238) //4664(568,total 867) マメパト
+#define TPOKE_0570 (0x1239) //4665(569,total 868) ゼブライカ
+#define TPOKE_0571 (0x123a) //4666(570,total 869) コロモリ
+#define TPOKE_0572 (0x123b) //4667(571,total 870) ハハコモリ
+#define TPOKE_0573 (0x123c) //4668(572,total 871) ダストダス
+#define TPOKE_0574 (0x123d) //4669(573,total 872) チラーミィ
+#define TPOKE_0575 (0x123e) //4670(574,total 873) クマシュン
+#define TPOKE_0576 (0x123f) //4671(575,total 874) コジョフー
+#define TPOKE_0577 (0x1240) //4672(576,total 875) バッフロン
+#define TPOKE_0578 (0x1241) //4673(577,total 876) ウォーグル
+#define TPOKE_0579 (0x1242) //4674(578,total 877) バルジーナ
+#define OBJCODEEND_TPOKE (0x1243) //4675(total 878) ポケモンコード終端
+#define OBJCODECOUNT_TPOKE (0x243) //579 ポケモンコード数
 
 //モデル
 #define OBJCODESTART_MDL (0x2000)
-#define TESTMODEL (0x2000) //8192(0,total 865) テスト
-#define BLACKMONO (0x2001) //8193(1,total 866) モノリス（黒）
-#define WHITEMONO (0x2002) //8194(2,total 867) モノリス（白）
-#define BIGROCK (0x2003) //8195(3,total 868) かいりきの岩
-#define JUNK (0x2004) //8196(4,total 869) 機械
-#define BIGROCK2 (0x2005) //8197(5,total 870) かいりきの岩２
-#define DRAGONBONE (0x2006) //8198(6,total 871) カイリューの頭骨
-#define TR_GRASS (0x2007) //8199(7,total 872) 盛り草
-#define TR_GROUND (0x2008) //8200(8,total 873) 盛り土
-#define CUBE (0x2009) //8201(9,total 874) キューブ
-#define OBJCODEEND_MDL (0x200a) //8202(total 875) モデルコード終端
+#define TESTMODEL (0x2000) //8192(0,total 878) テスト
+#define BLACKMONO (0x2001) //8193(1,total 879) モノリス（黒）
+#define WHITEMONO (0x2002) //8194(2,total 880) モノリス（白）
+#define BIGROCK (0x2003) //8195(3,total 881) かいりきの岩
+#define JUNK (0x2004) //8196(4,total 882) 機械
+#define BIGROCK2 (0x2005) //8197(5,total 883) かいりきの岩２
+#define DRAGONBONE (0x2006) //8198(6,total 884) カイリューの頭骨
+#define TR_GRASS (0x2007) //8199(7,total 885) 盛り草
+#define TR_GROUND (0x2008) //8200(8,total 886) 盛り土
+#define CUBE (0x2009) //8201(9,total 887) キューブ
+#define OBJCODEEND_MDL (0x200a) //8202(total 888) モデルコード終端
 #define OBJCODECOUNT_MDL (0xa) //10 モデルコード数
 
-#define OBJCODETOTAL (0x36b) //875 コード総数
+#define OBJCODETOTAL (0x378) //888 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
