@@ -683,11 +683,11 @@ static void PLIST_DEMO_KyuremuWazaChange( POKEMON_PARAM* pp, u8 s_idx, u8 d_idx 
       u16 no;
       u16 pt;
 
-      if( DATA_KyuremuWazaChange[i][s_idx] != wazano ){
+      if( DATA_KyuremuWazaChange[j][s_idx] != wazano ){
         continue;
       }
       //ヒットした
-      no = DATA_KyuremuWazaChange[i][d_idx];
+      no = DATA_KyuremuWazaChange[j][d_idx];
       pt = WAZADATA_GetParam( no, WAZAPARAM_BASE_PP );
 
       //新しい技のmaxが現在のポイントよりすくなければmaxにあわせて補正
