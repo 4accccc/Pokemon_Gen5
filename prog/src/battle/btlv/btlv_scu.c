@@ -435,7 +435,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     GFL_BMPWIN_MakeFrameScreen( wk->win, winfrm_charpos, PALIDX_MSGWIN );
   }
 
-  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
+  GFL_BMP_Clear( wk->bmp, _get_msgwin_clear_color( wk, COLIDX_MSGWIN_CLEAR ) );
   GFL_BMPWIN_TransVramCharacter( wk->win );
 
 
