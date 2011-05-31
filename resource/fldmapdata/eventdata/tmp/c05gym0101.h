@@ -15,7 +15,7 @@
 #define C05GYM0101_WORKMAN_04              4
 #define C05GYM0101_WORKMAN_05              5
 #define C05GYM0101_WORKMAN_06              6
-#define C05GYM0101_LEADER5_01              7
+#define C05GYM0101_SWLEADER5_01            7
 #define C05GYM0101_WORKMAN_07              8
 
 #endif //ZONE_C05GYM0101_EVC_H

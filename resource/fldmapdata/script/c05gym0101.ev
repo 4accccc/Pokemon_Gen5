@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    c05gym0101_leader5_01
+_EVENT_DATA    ev_c05gym0101_swleader5_01
 _EVENT_DATA    ev_reserve_c05gym0101_gymstart_01
 _EVENT_DATA    ev_c05gym0101_sunglasses_01
 _EVENT_DATA    ev_bg_c05gym0101_lift_00
@@ -63,7 +63,7 @@ INIT_EVENT_START  ev_init_c05gym0101
     // ガイド位置変更
     _OBJ_POS_CHANGE( C05GYM0101_SUNGLASSES_01, 9, 0, 79, DIR_DOWN )
     // ヤーコン位置変更
-    _OBJ_POS_CHANGE( C05GYM0101_LEADER5_01, 11, 1, 71, DIR_DOWN )
+    _OBJ_POS_CHANGE( C05GYM0101_SWLEADER5_01, 11, 1, 71, DIR_DOWN )
   ENDIF
 
 INIT_EVENT_END
@@ -86,7 +86,7 @@ EVENT_END
 /**************************************************************/
 /*    ジムリーダー会話                                  */
 /**************************************************************/
-EVENT_START		c05gym0101_leader5_01
+EVENT_START		ev_c05gym0101_swleader5_01
 	_TALK_OBJ_START()
 	
 	//ジムバッジ取得チェック
@@ -96,7 +96,7 @@ EVENT_START		c05gym0101_leader5_01
 	IF $SCWK_TEMP0 == 0 THEN
 	
 		//会話
-		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_01,C05GYM0101_LEADER5_01 )
+		_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_01,C05GYM0101_SWLEADER5_01 )
 		_BALLOONWIN_CLOSE()
 	
 		//戦闘処理
@@ -110,7 +110,7 @@ EVENT_START		c05gym0101_leader5_01
 		ENDIF
 		
 		//勝利後会話
-		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_02 , C05GYM0101_LEADER5_01 )
+		_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_02 , C05GYM0101_SWLEADER5_01 )
 		_BALLOONWIN_CLOSE()
 	
     //リーダー戦勝利時の情報登録
@@ -142,11 +142,11 @@ EVENT_START		c05gym0101_leader5_01
 		
 		//ヤーコンからクエイクバッジをもらった
 		_PLAYER_NAME( 0 )
-		_SYSWIN_MSG( msg_c05gym0101_leader_03 , POS_DEFAULT )
+		_SYSWIN_MSG( msg_c05gym0101_swleader5_03 , POS_DEFAULT )
 		_SYSWIN_CLOSE()
 
 		//ヤーコンメッセージ
-		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_04 , C05GYM0101_LEADER5_01 )
+		_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_04 , C05GYM0101_SWLEADER5_01 )
 		_BALLOONWIN_CLOSE()
 
     //わざマシン入手処理　「じならし」
@@ -180,13 +180,13 @@ EVENT_START		c05gym0101_leader5_01
 		
 		//クリア後
 		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-			_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_end_01 , C05GYM0101_LEADER5_01 )
+			_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_end_01 , C05GYM0101_SWLEADER5_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 				
 		//クリア前
 		ELSE
-			_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_05 , C05GYM0101_LEADER5_01 )
+			_BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_05 , C05GYM0101_SWLEADER5_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		ENDIF
@@ -400,7 +400,7 @@ EVENT_START ev_pos_c05gym0101_shortcut
 {
 
   // ヤーコン、主人公の前にくる
-  _OBJ_ANIME( C05GYM0101_LEADER5_01, anm_tr_down )
+  _OBJ_ANIME( C05GYM0101_SWLEADER5_01, anm_tr_down )
   _OBJ_ANIME_WAIT()
 
   // 主人公上向く
@@ -410,7 +410,7 @@ EVENT_START ev_pos_c05gym0101_shortcut
   //【仮】
   // メッセージがないので、仮あて
   // こいよ、送ってってやる
-  _BALLOONWIN_OBJMSG( msg_c05gym0101_leader_01, C05GYM0101_LEADER5_01 )
+  _BALLOONWIN_OBJMSG( msg_c05gym0101_swleader5_01, C05GYM0101_SWLEADER5_01 )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 

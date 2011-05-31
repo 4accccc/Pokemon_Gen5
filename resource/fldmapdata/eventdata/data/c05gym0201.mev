@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/26 15:25:42
+#save date:2011/05/31 12:39:02
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05gym0201.wms
 #SECTION START:OBJ_EVENT
@@ -76,7 +76,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05GYM0201_LEADER5_01
+C05GYM0201_SWLEADER5_01
 #OBJ CODE Number
 SWLEADER5
 #MOVE CODE Number
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05GYM0201_LEADER5_01
+SCRID_C05GYM0201_SWLEADER5_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
