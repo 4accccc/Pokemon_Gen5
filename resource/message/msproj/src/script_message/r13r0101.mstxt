@@ -213,10 +213,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>キャル！　キャルルー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:12:36" />
+				Time="2011-06-01T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -224,10 +224,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>キャル！　キャルルー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:12:36" />
+				Time="2011-06-01T03:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -235,10 +235,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン</Comment>
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:12:42" />
+				Time="2011-06-01T03:42:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
