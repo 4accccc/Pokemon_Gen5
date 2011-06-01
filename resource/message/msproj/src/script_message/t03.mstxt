@@ -95,12 +95,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６５４、GRIDZ=１８７辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:05:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -160,15 +160,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６７０、GRIDZ=１６８辺り
-
-※はい→02
+・はい/いいえの選択肢表示
+　はい→02
 　いいえ→03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:05:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -324,10 +324,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-イベント終了</Comment>
+・イベント終了</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:05:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -381,10 +381,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-イベント終了</Comment>
+・イベント終了</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:05:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -442,12 +442,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６６１、GRIDZ=１８９辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:02:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -498,12 +498,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６７０、GRIDZ=１８７辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:03:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -561,12 +561,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６６５、GRIDZ=１６１辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:03:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -615,15 +615,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６５２、GRIDZ=１７８辺り
-
-※このＯＢＪは立体交差の誘導のため
+　このＯＢＪは立体交差の誘導のため
 　移動させません</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:03:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -681,12 +680,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６６１、GRIDZ=１７７辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:03:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -731,12 +730,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６４１、GRIDZ=１７1辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:03:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -791,12 +790,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※夜になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６６２、GRIDZ=１７0辺り</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:03:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
