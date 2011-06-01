@@ -731,7 +731,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   cardData->TrainerID = MyStatus_GetID( mystatus );
   cardData->Money     = MISC_GetGold( misc );
   cardData->BadgeFlag = 0;
-  cardData->Version   = PM_VERSION;
+  cardData->Version   = GET_VERSION();
 
   //バッヂフラグ取得
   flag = 1;
