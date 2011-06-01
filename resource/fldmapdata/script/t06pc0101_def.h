@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_T06PC0101_SHOP (1)
 #define SCRID_T06PC0101_FIX_SHOP (2)
+#define SCRID_T06PC0101_MAN2_01 (3)
 
 #endif //_T06PC0101_DEF_H_

@@ -14,11 +14,16 @@
 
 #define T06_CHAMPION_01                    0
 #define T06_SUNGLASSES_01                  1
+#define T06_BOY1_01                        2
+#define T06_MIDDLEMAN1_01                  3
+#define T06_OLDMAN1_01                     4
+#define T06_GIRL1_01                       5
 
 #endif //ZONE_T06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_T06_EVB_H
 #define ZONE_T06_EVB_H
 
+#define BG_T06_BOARD_01                   0
 
 #endif //ZONE_T06_EVB_H

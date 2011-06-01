@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_T06R0301 (1)
+#define SCRID_T06R0301_POKE_01 (2)
 
 #endif //_T06R0301_DEF_H_

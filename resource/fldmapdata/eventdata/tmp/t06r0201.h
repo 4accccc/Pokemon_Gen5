@@ -9,6 +9,7 @@
 #ifndef ZONE_T06R0201_EVC_H
 #define ZONE_T06R0201_EVC_H
 
+#define T06R0201_BABYBOY1_01               0
 
 #endif //ZONE_T06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

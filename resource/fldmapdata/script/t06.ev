@@ -27,6 +27,11 @@ _EVENT_DATA    ev_pos_t06_champion_guide_02
 _EVENT_DATA    ev_pos_t06_champion_guide_03
 _EVENT_DATA    ev_pos_t06_champion_guide_04
 _EVENT_DATA    ev_t06_champion_01
+_EVENT_DATA    ev_t06_boy1_01
+_EVENT_DATA    ev_t06_girl1_01
+_EVENT_DATA    ev_t06_oldman1_01
+_EVENT_DATA    ev_t06_middleman1_01
+_EVENT_DATA    ev_bg_t06_board_01
 _EVENT_DATA_END
 
 //ドア変数定義
@@ -415,6 +420,41 @@ _ANIME_LABEL	anm_oyaji_bye
 /**************************************************************/
 EVENT_START   ev_t06_champion_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_champion_08 )
+EVENT_END
+
+/**************************************************************/
+/* BOY1話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06_boy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_boy1_01 )
+EVENT_END
+
+/**************************************************************/
+/* GIRL1話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06_girl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/* OLDMAN1話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* MIDDLEMAN1話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06_middleman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_middleman1_01 )
+EVENT_END
+
+/**************************************************************/
+/* 街看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_t06_board_01
+  _EASY_BGWIN_MSG( msg_t06_sign_01, TYPE_TOWN )
 EVENT_END
 
 //--------------------------------------------------------------------

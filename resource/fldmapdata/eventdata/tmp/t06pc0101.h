@@ -17,6 +17,7 @@
 #define T06PC0101_CONNECT_00               5
 #define T06PC0101_CONNECT_02               6
 #define T06PC0101_CONNECT_01               7
+#define T06PC0101_MAN2_01                  8
 
 #endif //ZONE_T06PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
