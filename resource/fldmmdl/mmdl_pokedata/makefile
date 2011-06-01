@@ -73,7 +73,7 @@ $(targetname).narc: $(CONV_EXCEL) $(OBJCODE_HEADER) $(SYMBOL_HEADER) $(PMVERSION
 	
 
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o tmp.tab -p 2 -s tab $(CONV_EXCEL)
-
+	ruby monsno_check.rb tmp.tab
 	perl conv.pl tpoke.dat tmp.tab $(OBJCODE_HEADER) $(PMVERSION_HEADER) $(SYMBOL_HEADER)
 
 	-ls *.dat > $(LIST_FILE)
