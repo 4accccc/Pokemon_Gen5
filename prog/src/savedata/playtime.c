@@ -104,7 +104,7 @@ void PLAYTIME_CountUp(PLAYTIME * ptime, u32 passed_sec)
 		{
 			hour = ptime->hour + (min / (PLAYTIME_MINUTE_MAX+1));
 			min %= (PLAYTIME_MINUTE_MAX+1);
-			if( hour >= PLAYTIME_HOUR_MAX )
+			if( hour > PLAYTIME_HOUR_MAX )
 			{
 				hour = PLAYTIME_HOUR_MAX;
 				min = PLAYTIME_MINUTE_MAX;
