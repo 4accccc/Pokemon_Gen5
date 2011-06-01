@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたらしい　せんせい　というか
-ジムリーダーなら　スクールの　おくよ！</Text>
+ジムリーダーは　スクールの　おく！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T05:12:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>新しい　先生というか
-ジムリーダーは　スクールの　奥よ！</Text>
+ジムリーダーは　スクールの　奥！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T05:12:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,10 +32,10 @@
 			Language="JPN">
 			<Comment>♀
 ・入り口付近
-・19文字</Comment>
+※メッセージ要調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T05:12:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -322,13 +322,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみの　[Name:PokemonName Idx="0" ]の　とくせいは
+			<Text>きみの　[Name:PokemonName Idx="0" ]の　特性は
 [Name:Ability Idx="1" ]　だね▼
 えーっと　チェレン先生　なら
 どんな　効果か　教えてくれるよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T05:15:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -522,11 +522,10 @@
 			Language="JPN">
 			<Comment>ＢＧメッセージ
 ・どく選択
-・続けてboard_02表示
-※どくの仕様変更</Comment>
+・続けてboard_02表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T05:15:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
