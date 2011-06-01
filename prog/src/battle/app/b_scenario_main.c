@@ -129,6 +129,9 @@ static void bs_main_info( BSCENARIO_WORK * wk );
 static void bs_exit_info( BSCENARIO_WORK * wk );
 static void bs_key_info( BSCENARIO_WORK * wk );
 static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode );
+static void bs_disp_info_obj( BSCENARIO_WORK * wk, const s32 mode );
+static void bs_hide_info_obj( BSCENARIO_WORK * wk );
+
 //
 // 処理
 static BOOL bs_main_loop( BSCENARIO_WORK * wk );
@@ -173,7 +176,9 @@ static const s16 bs_scene_tbl[] = {
 // メッセージ(要修正)
 static const s16 bs_info_tbl[] = {
 	mes_b_plist_01_001,		// 名前
-	mes_b_plist_01_001,		// レベル
+	mes_b_plist_02_502,		// 男性
+	mes_b_plist_02_503,		// 女性
+	mes_b_plist_03_000,		// レベル
 	mes_b_plist_01_001,		// もちもの
 	mes_b_plist_01_001,		// とくせい
 	//
@@ -228,6 +233,16 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	for(i=0;i<BSCENARIO_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 	}
+	for(i=0;i<2;i++){		// pal
+		wk->ResPal[i] = 0xffffffff;
+	}
+	for(i=0;i<2;i++){		// cell
+		wk->ResCell[i] = 0xffffffff;
+	}
+	for(i=0;i<6;i++){		// chr
+		wk->ResChr[i] = 0xffffffff;
+	}
+	wk->EmptyBuffer = 0;
 	
 	// 処理(初期化用)
 	bs_main_seq( wk );
@@ -314,6 +329,9 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 //	  BattleBag_ObjFree( wk );
 //	  BattleBag_BmpFreeAll( wk );
 //	  BBAG_MsgManExit( wk );
+		// obj
+		BsCmn_ExitObj( wk );
+		// bg
 		bs_exit_bg( wk );
 		//
 		GFL_TCBL_Exit( wk->tcbl );
@@ -325,9 +343,11 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 			wk->MsgData[i] = 0;
 		}
 	}
+	// emptyのバッファクリア
+	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
+	//
 	// WORDSET破棄
 	WORDSET_Delete( wk->Wordset );
-	
 	//
 	BsCmn_ExitString( wk );
 	// PRINT_QUE
@@ -425,6 +445,9 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	// WORDSET生成
 	wk->Wordset = WORDSET_Create( wk->dat->heap );
 	//
+	// empty用バッファ取得(必ず破棄すること)
+	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_b_scenario_pos_tblbin, wk->dat->heap );
+	//
 	// 入らなければ、要修正
 	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->dat->heap );
 	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_plist_dat, wk->dat->heap );			// test
@@ -441,6 +464,9 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	// 表示
 	bs_disp_top_string( wk, STR_INIT );
 	//
+	// obj初期化
+	BsCmn_InitObj( wk );
+	
 	// wipe
 	bs_init_wipe( wk );
 	// パレットアニメ用
@@ -635,6 +661,8 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 	// 通信アイコンセット
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
 	//
+	// OBJのパレット(0番目、8本分)
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, 0x20*8 );
 	// OBJのパレット(14番目、1本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
 	PaletteFadeReq( wk->pfd, PF_BIT_SUB_ALL, 0xffff, 0, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
@@ -1148,6 +1176,8 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	BsCmn_InitString( wk, BS_INFO );
 	// 表示
 	bs_disp_info_string( wk, STR_INIT );
+	// 表示
+	bs_disp_info_obj( wk, 0 );
 	//
 	wk->Flag |= FLG_UPDATE;
 	//
@@ -1196,6 +1226,8 @@ static void bs_exit_info( BSCENARIO_WORK * wk )
 {
 	// 終了判定
 	bs_chk_end( wk );
+	// obj非表示
+	bs_hide_info_obj( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1286,6 +1318,8 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 		if(mflg == 1){
 			// メッセージ更新
 			bs_disp_info_string( wk, STR_UPDATE );
+			// OBJ表示
+			bs_disp_info_obj( wk, 1 );
 		}
 	}
 }
@@ -1302,8 +1336,10 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 {
+	s32				tmp;
 	s32				i;
 	s32				buf[2];
+	u32				pcol;
 	POKEMON_PARAM	*pp;
 	STRBUF			*exp;
 	STRBUF			*str;
@@ -1331,9 +1367,25 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	BsCmn_DispString( wk, BS_CVS_INFO_NAME, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( str );
 	//
-	// レベル
+	// 性別
+	tmp = 1;
+	pcol   = PRINTSYS_LSB_Make(6,5,0);
+	buf[0] = PP_GetSex( pp );
+	if(buf[0] == PTL_SEX_FEMALE){
+		tmp  = 2;
+		pcol = PRINTSYS_LSB_Make(4,3,0);
+	}
+	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[tmp] );
+	BsCmn_DispString( wk, BS_CVS_INFO_SEX, 0, 0, str, 0, pcol, 0 );
+	GFL_STR_DeleteBuffer( str );
+	//
+	// レベル(要修正)
+//	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[3] );
+//	BsCmn_DispString( wk, BS_CVS_INFO_LEVEL, 0, 0, str, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+//	GFL_STR_DeleteBuffer( str );
+	//
 	buf[0] = PP_Get( pp, ID_PARA_level, 0 );
-	BsCmn_DispStringNumber( wk, BS_CVS_INFO_LEVEL, 0, 0, buf[0], 3, 0, 0);
+	BsCmn_DispStringNumber( wk, BS_CVS_INFO_LEVEL, 32, 0, buf[0], 3, 0, 0);
 	//
 	// もちもの
 	buf[0] = PP_Get( pp, ID_PARA_item, 0 );
@@ -1368,6 +1420,99 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	//
 	// 破棄
 	GFL_STR_DeleteBuffer( exp );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		obj表示
+ *
+ * @param	BSCENARIO_WORK*	wk	ワーク
+ * @param	const s32			(0:初期化、1:更新)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bs_disp_info_obj( BSCENARIO_WORK * wk, const s32 mode )
+{
+	u32				buf[2];
+	s32				i;
+	POKEMON_PARAM	*pp;
+	
+	// ポケモン情報
+	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->PokePageNum );
+	//
+	//--------
+	// ポケモン
+	//--------
+	for(i=0;i<6;i++){
+		if(i == wk->PokePageNum){
+			buf[0] = PP_Get( pp, ID_PARA_monsno, 0 );			// id
+			buf[1] = PP_GetSex( pp );
+			BsCmn_ChgTypePoke( wk, i, buf[0], buf[1] );
+			BsCmn_ObjVisible( wk, CLWKMODE_POKE, i, TRUE );
+		}else{
+			BsCmn_ObjVisible( wk, CLWKMODE_POKE, i, FALSE );
+		}
+	}
+	
+	//--------
+	// タイプ
+	//--------
+	// type1
+	buf[0] = PP_Get( pp, ID_PARA_type1, 0 );
+	BsCmn_ChgTypeObj( wk, 0, 0, buf[0] );
+	BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, 0, TRUE );
+	// type2
+	buf[1] = PP_Get( pp, ID_PARA_type2, 0 );
+	if(buf[0] != buf[1]){
+		BsCmn_ChgTypeObj( wk, 1, 0, buf[1] );
+		BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, 1, TRUE );
+	}else{
+		BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, 1, FALSE );
+	}
+//	OS_Printf("type :%d,%d\n",buf[0],buf[1]);
+	
+	//--------
+	// タイプ
+	//--------
+	for(i=0;i<4;i++){
+		buf[0] = PP_Get( pp, ID_PARA_waza1+i, 0 );
+		if(buf[0] != 0){
+			// 技のタイプを取得
+			buf[1] = WAZADATA_GetParam( buf[0], WAZAPARAM_TYPE );
+			BsCmn_ChgTypeObj( wk, 2+i, 1, buf[1] );
+			BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, 2+i, TRUE );
+		}else{
+			BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, 2+i, FALSE );
+		}
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		obj全非表示
+ *
+ * @param	BSCENARIO_WORK*	wk	ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bs_hide_info_obj( BSCENARIO_WORK * wk )
+{
+	s32			i;
+	
+	// タイプ
+	for(i=0;i<2;i++){
+		BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, i, FALSE );
+	}
+	// 技タイプ
+	for(i=0;i<4;i++){
+		BsCmn_ObjVisible( wk, CLWKMODE_NORMAL, 2+i, FALSE );
+	}
+	// ポケモン
+	for(i=0;i<6;i++){
+		BsCmn_ObjVisible( wk, CLWKMODE_POKE, i, FALSE );
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------

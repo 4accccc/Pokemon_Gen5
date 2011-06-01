@@ -36,6 +36,7 @@ enum{
 	
 	BS_CVS_INFO_CAST = 0,				// INFO
 	BS_CVS_INFO_NAME,
+	BS_CVS_INFO_SEX,
 	BS_CVS_INFO_LEVEL,
 	BS_CVS_INFO_ITEM,
 	BS_CVS_INFO_SKILL00,
@@ -85,6 +86,14 @@ extern void BsCmn_ClearAllCanvas( BSCENARIO_WORK* wk );
 //
 // タッチペン
 extern s32  BsCmn_ChkTp( BSCENARIO_WORK *wk, const s32 mode );
+
+// obj関連
+extern void BsCmn_InitObj( BSCENARIO_WORK* wk );
+extern void BsCmn_ExitObj( BSCENARIO_WORK* wk );
+extern void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
+extern void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
+//extern void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const u32 id, const s32 sex );
+extern void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex );
 
 
 

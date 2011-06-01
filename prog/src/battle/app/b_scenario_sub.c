@@ -20,19 +20,31 @@
 #include "../btlv/btlv_effect.h"
 
 //#include "ui/print_tool.h"
+#include "pokeicon/pokeicon.h"
 
 #include "b_app_tool.h"
 
 #include "b_scenario.h"
 #include "b_scenario_main.h"
+#include "app/app_menu_common.h"
+
+#include "b_scenario_sub.h"
 
 #include "b_scenario_gra.naix"
+#include "arc/app_menu_common.naix"
 
 //============================================================================================
 //  定数定義
 //============================================================================================
 enum{
 	MES_CLEAR_COLOR = 0,			// クリアカラー
+};
+
+// OBJのフラグ(WBTLIST_OBJ_DATA.dispflag)
+enum{
+	FLG_OBJ_ANIM	= (1<<0),		// アニメあり
+	FLG_OBJ_HFLIP	= (1<<1),		// HFLIP
+	FLG_OBJ_VFLIP	= (1<<2),		// VFLIP
 };
 
 //-----------------------------------------
@@ -77,6 +89,20 @@ typedef struct{
 	u8				height;
 	u8				palnum;			// パレット番号
 }B_SCENARIO_SUB_CANVAS_DATA;
+
+//-----------------------------------------
+// OBJ用の定義
+//------------------------------------------
+typedef struct{
+	u8				anmseq;			// アニメシーケンス(0xff終了コード)
+	u8				softpri;		// OBJ(プライオリティ)
+	u8				bgpri;			// BG(プライオリティ)
+	u8				visible;		// 表示/非表示
+	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
+	u8				dispflag;		// 表示フラグ
+	u8				empty_num;		// empty番号(これから座標を参照)
+	u8				res_cnum;		// ResChrの番号
+}B_SCENARIO_SUB_OBJ_DATA;
 
 //============================================================================================
 //  データ
@@ -134,13 +160,14 @@ static const B_SCENARIO_SUB_CANVAS_DATA bs_canvas_01_tbl[] = {
 // INFO
 static const B_SCENARIO_SUB_CANVAS_DATA bs_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// CAST
-	{ GFL_BG_FRAME1_S,	2,	7,	8,	2,	8,},		// 名前
-	{ GFL_BG_FRAME1_S,	5,	10,	10,	2,	8,},		// レベル
+	{ GFL_BG_FRAME1_S,	1,	6,	8,	2,	8,},		// 名前
+	{ GFL_BG_FRAME1_S,	9,	6,	1,	2,	8,},		// 性別
+	{ GFL_BG_FRAME1_S,	2,	11,	10,	2,	8,},		// レベル
 	{ GFL_BG_FRAME1_S,	2,	14,	10,	4,	8,},		// 持ち物
-	{ GFL_BG_FRAME1_S,	16,	4,	10,	2,	8,},		// 技00
-	{ GFL_BG_FRAME1_S,	16,	7,	10,	2,	8,},		// 技01
-	{ GFL_BG_FRAME1_S,	16,	10,	10,	2,	8,},		// 技02
-	{ GFL_BG_FRAME1_S,	16,	13,	10,	2,	8,},		// 技03
+	{ GFL_BG_FRAME1_S,	16,	4,	12,	2,	8,},		// 技00
+	{ GFL_BG_FRAME1_S,	16,	7,	12,	2,	8,},		// 技01
+	{ GFL_BG_FRAME1_S,	16,	10,	12,	2,	8,},		// 技02
+	{ GFL_BG_FRAME1_S,	16,	13,	12,	2,	8,},		// 技03
 	{ GFL_BG_FRAME1_S,	14,	16,	12,	4,	8,},		// 特性
 	{ GFL_BG_FRAME1_S,	2,	21,	10,	2,	8,},		// 脚本
 
@@ -201,6 +228,56 @@ static const s16 bs_bg_pos_tbl[] = {
 	  0,192,	// 1
 };
 
+//----------------
+// OBJ(type)
+//----------------
+// 情報
+static const s16 bs_obj_00_itbl[] = {
+	0,		// plt res
+	0,		// chr res(未使用)
+	0,		// cel res
+	//
+	6,		// max
+	0,		// mode(0:通常)
+};
+
+// OBJのテーブルデータ
+const B_SCENARIO_SUB_OBJ_DATA bs_obj_00_tbl[] = {
+	{ 0,	0x30,	1,	0,	0,	1,	0,	0,},		// タイプ00
+	{ 0,	0x30,	1,	0,	0,	1,	1,	1,},		// タイプ01
+	{ 0,	0x30,	1,	0,	0,	1,	2,	2,},		// 技タイプ00
+	{ 0,	0x30,	1,	0,	0,	1,	3,	3,},		// 技タイプ01
+	{ 0,	0x30,	1,	0,	0,	1,	4,	4,},		// 技タイプ02
+	{ 0,	0x30,	1,	0,	0,	1,	5,	5,},		// 技タイプ03
+	
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//----------------
+// OBJ(poke)
+//----------------
+// 情報
+static const s16 bs_obj_01_itbl[] = {
+	1,		// plt res
+	1,		// chr res(未使用)
+	1,		// cel res
+	//
+	6,		// max
+	1,		// mode(1:poke)
+};
+
+// OBJのテーブルデータ
+const B_SCENARIO_SUB_OBJ_DATA bs_obj_01_tbl[] = {
+	{ 1,	0x28,	1,	0,	0,	1,	6,	6,},		// ポケモン00
+	{ 1,	0x28,	1,	0,	0,	1,	6,	7,},		// ポケモン01
+	{ 1,	0x28,	1,	0,	0,	1,	6,	8,},		// ポケモン02
+	{ 1,	0x28,	1,	0,	0,	1,	6,	9,},		// ポケモン03
+	{ 1,	0x28,	1,	0,	0,	1,	6, 10,},		// ポケモン04
+	{ 1,	0x28,	1,	0,	0,	1,	6, 11,},		// ポケモン05
+	
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
 //============================================================================================
 //  プロトタイプ宣言
 //============================================================================================
@@ -216,14 +293,26 @@ void BsCmn_DispStringNumber( BSCENARIO_WORK* wk, const s32 mode, const s32 x, co
 void BsCmn_ExitString( BSCENARIO_WORK* wk );
 void BsCmn_ClearCanvas( BSCENARIO_WORK* wk, const s32 mode );
 void BsCmn_ClearAllCanvas( BSCENARIO_WORK* wk );
-
 //
 s32  BsCmn_ChkTp( BSCENARIO_WORK *wk, const s32 mode );
+//
+void BsCmn_InitObj( BSCENARIO_WORK* wk );
+void BsCmn_ExitObj( BSCENARIO_WORK* wk );
+void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
+void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
+void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex );
+
 
 //------------
 // static
 //------------
 static u16  bscmn_putsizeget( const STRBUF * buf, GFL_FONT * font, u32 mode );
+//
+static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B_SCENARIO_SUB_OBJ_DATA *obj_adr, const s16 *info_adr );
+static void bscmn_init_type_obj( BSCENARIO_WORK * wk );
+static void bscmn_init_poke_obj( BSCENARIO_WORK * wk );
+//
+static s16 bscmn_get_empty( BSCENARIO_WORK *wk, const s32 num );
 
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -547,11 +636,137 @@ s32 BsCmn_ChkTp( BSCENARIO_WORK *wk, const s32 mode )
 	return( id );
 }
 
+//----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ/分類アイコンのグラフィックロード
+ *
+ * @param		wk    ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bscmn_init_type_obj( BSCENARIO_WORK * wk )
+{
+	ARCHANDLE	*ah;
+	u32			i;
+	
+	ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
+	// パレット
+	wk->ResPal[BS_RES_TYPE_PAL] = GFL_CLGRP_PLTT_Register( ah, NARC_app_menu_common_p_st_type_NCLR, CLSYS_DRAW_SUB, 0x20*4, wk->dat->heap );
+	// セル・アニメ
+	wk->ResCell[BS_RES_TYPE_CELL] = GFL_CLGRP_CELLANIM_Register( ah,
+												NARC_app_menu_common_p_st_type_32k_NCER,
+												NARC_app_menu_common_p_st_type_32k_NANR,
+												wk->dat->heap );
+	// タイプアイコンキャラ
+	// (技タイプもこれでよいらしい)
+	for(i=0;i<BS_RES_TYPE_CHR_MAX;i++){
+		wk->ResChr[BS_RES_TYPE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah, APP_COMMON_GetPokeTypeCharArcIdx(0), FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+	}
+	//
+	GFL_ARC_CloseDataHandle( ah );
+}
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンアイコンのグラフィックロード
+ *
+ * @param		wk    ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bscmn_init_poke_obj( BSCENARIO_WORK * wk )
+{
+	ARCHANDLE	*ah;
+	u32			i;
+	u32			buf[2];
+	POKEMON_PARAM	*pp;
+	
+	ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(wk->dat->heap) );
+	// パレット(0-3)
+	wk->ResPal[BS_RES_POKE_PAL] = GFL_CLGRP_PLTT_RegisterComp( ah, 
+												POKEICON_GetPalArcIndex(),
+												CLSYS_DRAW_SUB, 0, wk->dat->heap );
+	// セル・アニメ
+	wk->ResCell[BS_RES_POKE_CELL] = GFL_CLGRP_CELLANIM_Register( ah,
+												POKEICON_GetCellSubArcIndex(),
+												POKEICON_GetAnmSubArcIndex(),
+												wk->dat->heap );
+	// キャラ
+	for(i=0;i<6;i++){
+		if(i < wk->PokeMax){
+			// ポケモン情報
+			pp = PokeParty_GetMemberPointer( wk->dat->party, i );
+			// id
+			buf[0] = PP_Get( pp, ID_PARA_monsno, 0 );
+			// sex
+			buf[1] = PP_GetSex( pp );
+			//
+			wk->ResChr[BS_RES_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
+												POKEICON_GetCgxArcIndexByMonsNumber( buf[0], 1, buf[1], FALSE ),
+												FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+		}else{
+			wk->ResChr[BS_RES_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
+												POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0, 0 ),
+												FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+		}
+	}
+	//
+	GFL_ARC_CloseDataHandle( ah );
+}
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプアイコン切り替え(技も同じでよいらしい)
+ *
+ * @param		wk			ワーク
+ * @param		wnum		ワーク番号(reschrと対応)
+ * @param		mode		(0:タイプ、1:技タイプ)
+ * @param		type		タイプ値
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type )
+{
+	NNSG2dCharacterData * dat;
+	void * buf;
+	ARCHANDLE * ah;
+	
+	ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
+	//
+	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( ah, APP_COMMON_GetPokeTypeCharArcIdx(type), FALSE, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
+	//
+	GFL_CLGRP_CGR_Replace( wk->ResChr[wnum], dat );
+	GFL_HEAP_FreeMemory( buf );
+	//
+	GFL_ARC_CloseDataHandle( ah );
+	// パレット変更
+	GFL_CLACT_WK_SetPlttOffs( wk->clwk[wnum], 4+APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+}
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケアイコン切り替え(毎回でなくてもよいはず)
+ *
+ * @param		wk			ワーク
+ * @param		type		タイプ値
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex )
+{
+	// パレット設定
+	u8 pal_num = POKEICON_GetPalNum( id, 0, sex, FALSE );
+	GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke[wnum], pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+	// アニメON
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke[wnum], TRUE );
+}
 
-#if 0		// objの場合
 //-----------------------------------------------------------------------------
 /**
  *	@brief  OBJ初期化(clwk)
@@ -564,7 +779,7 @@ s32 BsCmn_ChkTp( BSCENARIO_WORK *wk, const s32 mode )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const BSCENARIO_OBJ_DATA *obj_adr, const s16 *info_adr )
+static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B_SCENARIO_SUB_OBJ_DATA *obj_adr, const s16 *info_adr )
 {
 	s16						tmp;
 	s16						pos[2];
@@ -582,30 +797,26 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 	GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 	// チェック
 	buf[0] = iadr[0];		// plt
-	buf[1] = iadr[1];		// chr
+	buf[1] = iadr[1];		// chr(未使用)
 	buf[2] = iadr[2];		// cel
 	buf[3] = iadr[3];		// max
-	buf[4] = iadr[4];		// mode(0:通常、1:cmn)
+	buf[4] = iadr[4];		// mode(0:type、1:poke)
 	//
 	// アドレスセット
-	if(buf[4] == CLWKMODE_NORMAL){			// 通常
-		clwk = &wk->wk_obj.clwk[0];
+	if(buf[4] == 0){			// 通常
+		clwk = &wk->clwk[0];
 	}
-	else if(buf[4] == CLWKMODE_CMN){		// cmn
-		clwk = &wk->wk_obj.cmn_clwk[0];
+	else if(buf[4] == 1){		// poke
+		clwk = &wk->clwk_poke[0];
 	}
-//	else{									// up
-//		clwk = &wk->wk_obj.up_clwk[0];
-//	}
-	
 	for(i=0;i<buf[3];i++){
 		// 終了判定
 		if(adr->anmseq == 0xff){
 			break;
 		}
 		tmp = adr->empty_num;
-		pos[0] = td_get_empty(wk, tmp*2);
-		pos[1] = td_get_empty(wk, tmp*2+1);
+		pos[0] = bscmn_get_empty(wk, tmp*2);
+		pos[1] = bscmn_get_empty(wk, tmp*2+1);
 		cldata.pos_x 	= pos[0];
 		cldata.pos_y 	= pos[1];
 		cldata.anmseq 	= adr->anmseq;
@@ -613,12 +824,12 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 		cldata.bgpri	= adr->bgpri;
 		//
 		clwk[i] =   GFL_CLACT_WK_Create( p_clunit, 
-											wk->wk_obj.res[ buf[1] ],			// chr
-											wk->wk_obj.res[ buf[0] ],			// plt
-											wk->wk_obj.res[ buf[2] ],			// cel
+											wk->ResChr[  adr->res_cnum ],	// chr
+											wk->ResPal[  buf[0] ],			// plt
+											wk->ResCell[ buf[2] ],			// cel
 											&cldata,
 											drawtype,
-											wk->heapID );
+											wk->dat->heap );
 		//-------------
 		// 表示/非表示
 		//-------------
@@ -652,31 +863,6 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  OBJ初期化(res)
- *
- *	@param	BSCENARIO_WORK* wk
- *	@param	const s32			drawtype
- *	@param	const s16*			アドレス
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void bscmn_init_obj_res( BSCENARIO_WORK* wk, const s32 drawtype, const s16 *info_adr )
-{
-	ARCHANDLE*	p_handle = GFL_ARC_OpenDataHandle( ARCID_WIN_RECORD_GRA, wk->heapID );
-    GFL_CLUNIT*	p_clunit = wk->clunit;
-	const s16 *adr		 = info_adr;		// アドレスセット
-	//
-	// セルアニメ用の処理
-	wk->wk_obj.res[ adr[0+1] ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, adr[0], drawtype, adr[2], 0, adr[3], wk->heapID );
-	wk->wk_obj.res[ adr[4+1] ] = GFL_CLGRP_CGR_Register(      p_handle, adr[4], FALSE, drawtype, wk->heapID );
-	wk->wk_obj.res[ adr[8+1] ] = GFL_CLGRP_CELLANIM_Register( p_handle, adr[8], adr[12], wk->heapID );
-	//
-	GFL_ARC_CloseDataHandle( p_handle );
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  OBJ初期化まとめ
  *
  *	@param	BSCENARIO_WORK* wk
@@ -684,15 +870,20 @@ static void bscmn_init_obj_res( BSCENARIO_WORK* wk, const s32 drawtype, const s1
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void bscmn_init_obj( BSCENARIO_WORK* wk )
+void BsCmn_InitObj( BSCENARIO_WORK* wk )
 {
-    GFL_CLUNIT*	p_clunit = B_SCENARIO_SUB_GRAPHIC_GetClunit( wk->graphic );
+	// 作成
+	wk->clunit = GFL_CLACT_UNIT_Create( BSCENARIO_CLWK_MAX+BSCENARIO_CLWK_POKE_MAX, 0, GFL_HEAP_LOWID(wk->dat->heap) );
 	//
-	// リソース読み込み(通常)
-	bscmn_init_obj_res( wk, CLSYS_DRAW_MAIN, &td_obj_main_info_tbl[0] );
+	// タイプ
+	bscmn_init_type_obj( wk );
+	// ポケモン
+	bscmn_init_poke_obj( wk );
 	//
-	// CLWK登録(通常)
-	bscmn_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &td_obj_tbl[0], &td_obj_main_itbl[0] );
+	// CLWK登録(type)
+	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_00_tbl[0], &bs_obj_00_itbl[0] );
+	// CLWK登録(poke)
+	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_01_tbl[0], &bs_obj_01_itbl[0] );
 }
 
 //-----------------------------------------------------------------------------
@@ -704,23 +895,95 @@ static void bscmn_init_obj( BSCENARIO_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void bscmn_exit_obj( BSCENARIO_WORK* wk )
+void BsCmn_ExitObj( BSCENARIO_WORK* wk )
 {
 	s32		i;
 	
 	// OBJ後処理
-	for(i=0;i<B_SCENARIO_SUB_OBJ_MAXNUM;i++){
-		GFL_CLACT_WK_Remove( wk->wk_obj.clwk[i] );
+	for(i=0;i<BSCENARIO_CLWK_MAX;i++){
+		GFL_CLACT_WK_Remove( wk->clwk[i] );
 	}
-	//リソース破棄 
-	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_OBJ_PLT] );
-	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_OBJ_CHR] );
-	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_OBJ_CEL] );
+	for(i=0;i<BSCENARIO_CLWK_POKE_MAX;i++){
+		GFL_CLACT_WK_Remove( wk->clwk_poke[i] );
+	}
+	//
+	//リソース破棄
+	for(i=0;i<BS_RES_PAL_MAX;i++){
+		if(wk->ResPal[i] != 0xffffffff){
+			GFL_CLGRP_PLTT_Release( wk->ResPal[i] );
+			wk->ResPal[i] = 0xffffffff;
+		}
+	}
+	for(i=0;i<BS_RES_CHR_MAX;i++){
+		if(wk->ResChr[i] != 0xffffffff){
+			GFL_CLGRP_CGR_Release( wk->ResChr[i] );
+			wk->ResChr[i] = 0xffffffff;
+		}
+	}
+	for(i=0;i<BS_RES_CELL_MAX;i++){
+		if(wk->ResCell[i] != 0xffffffff){
+			GFL_CLGRP_CELLANIM_Release( wk->ResCell[i] );
+			wk->ResCell[i] = 0xffffffff;
+		}
+	}
+	//
+	GFL_CLACT_UNIT_Delete( wk->clunit );
 }
 
-#endif
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJの表示/非表示
+ *
+ *	@param	BSCENARIO_WORK* wk
+ *	@param	const s32			(0:通常、1:ポケモン)
+ *	@param	const s32			objワーク番号
+ *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg )
+{
+	// 表示/非表示
+	if(wmode == CLWKMODE_NORMAL){		// 通常
+		if(wnum >= BSCENARIO_CLWK_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetDrawEnable(  wk->clwk[wnum], bflg );
+	}
+	else{				// poke
+		if(wnum >= BSCENARIO_CLWK_POKE_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetDrawEnable(  wk->clwk_poke[wnum], bflg );
+	}
+}
 
-
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  emptyの取得(static)
+ *
+ *	@param	BSCENARIO_WORK* wk
+ *	@param	const s32			座標index(x,yが2つセットとなっている)
+ *
+ *	@retval s16					座標
+ */
+//-----------------------------------------------------------------------------
+static s16 bscmn_get_empty( BSCENARIO_WORK *wk, const s32 num )
+{
+	s16	*adr;
+	
+	// 念のため
+	if((num < 0)||(num >= BSCENARIO_EMPTY_MAX)){
+		OS_Printf("empty error :%d\n",num);
+		return(0);
+	}
+	
+	adr = wk->EmptyBuffer;
+	return( adr[num] );
+}
 
 
 

@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tsuruta_saya tanaka_ryota tamada
+USERS	= tanaka_ryota tamada yoshida
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -39,7 +39,7 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
-#xlsobjs = $(subst .xls,.tblbin,$(xlsources))
+xlsobjs = $(subst .xls,.tblbin,$(xlsources))
 
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
 
@@ -59,10 +59,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nce.NCER:
 	g2dcvtr $< -br
 
-#.xls.tblbin:
-#	$(XLS2TAB) $< > $*.csv
-#	ruby csv2table.rb $*.csv $*.tblbin
-#	rm $*.csv
+.xls.tblbin:
+	$(XLS2TAB) $< > $*.csv
+	ruby csv2table.rb $*.csv $*.tblbin
+	rm $*.csv
 endif
 
 .PHONY:	do-build clean subdir

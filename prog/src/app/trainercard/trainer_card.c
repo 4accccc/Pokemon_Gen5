@@ -3443,7 +3443,7 @@ static void tc_init_medal( TR_CARD_WORK * wk )
 			// 基本はそのまま
 			num = id;
 		}
-		OS_Printf("medal rank   :%d,%d\n",id,num);
+		OS_Printf("medal rank   :%d,%d,%d\n",id,num,wk->TrCardData->Version);
 		//
 		// シーケンスを切り替える
 		wk->MedalNum = num;
