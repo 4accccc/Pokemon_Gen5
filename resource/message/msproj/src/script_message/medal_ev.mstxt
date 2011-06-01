@@ -40,11 +40,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル獲得数＝MAX-1の時
+			<Comment>♂
+・メダル獲得数＝MAX-1の時
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:53:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -90,11 +91,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>しめのセリフ　最高ランクでない
+			<Comment>♂
+・しめのセリフ　最高ランクでない
 ・0＝メダル獲得目標数</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:53:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -140,10 +142,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>しめのセリフ　最高ランク</Comment>
+			<Comment>♂
+・しめのセリフ　最高ランク</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:53:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -193,11 +196,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>表彰イベントをこなしてない状態で話しかけた時
+			<Comment>♂
+・表彰イベントをこなしてない状態で話しかけた時
 ・0＝メダルラリー事務局のあるマップ名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:53:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -259,12 +263,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>最初の目標メダル数を集めた時
+			<Comment>♂
+・最初の目標メダル数を集めた時
 ・0＝主人公名
 ・1＝メダルラリー事務局のあるマップ名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:53:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -312,10 +317,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・0＝主人公名</Comment>
+			<Comment>♂
+・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -361,11 +367,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ヒント開放MAX時
-・0＝主人公名</Comment>
+			<Comment>♂
+・ヒント開放MAX時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:02:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -422,11 +428,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ヒント開放MAX時かつ最高ランクでない
+			<Comment>♂
+・ヒント開放MAX時かつ最高ランクでない
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -483,11 +490,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ヒント開放MAXかつ最高ランク
+			<Comment>♂
+・ヒント開放MAXかつ最高ランク
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -540,11 +548,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・0＝主人公名
+			<Comment>♂
+・0＝主人公名
 ・1＝もらうヒントメダルの数</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -559,12 +568,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とつぜんですが　はじめまして！▼
+			<Text>とつぜん　ですが　はじめまして！▼
 さあさ　なにもいわず
 これを　うけとってください！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -585,14 +594,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>t06r0101でアデクのイベント終了後
-t06に移動するとイベント発生
-
-アイテム入手処理
-No627「メダルボックス」</Comment>
+			<Comment>♂
+・t06r0101でアデクのイベント終了後
+　t06に移動するとイベント発生
+・アイテム入手処理
+　No627「メダルボックス」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -633,10 +642,10 @@ No627「メダルボックス」</Comment>
 そして　わたしは　人呼んで
 メダルおやじ！▼
 ……ところで　ご存知ですか
-メダルラリー　という　競技会を？</Text>
+メダルラリーという　競技会を？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -644,13 +653,14 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メッセージ表示後
-はい/いいえ選択肢表示
-はい　→msg_mdloyj_intro_03
-いいえ→msg_mdloyj_intro_03（両方同じ）</Comment>
+			<Comment>♂
+・メッセージ表示後
+　はい/いいえ選択肢表示
+　はい　→msg_mdloyj_intro_03
+　いいえ→msg_mdloyj_intro_03（両方同じ）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -674,14 +684,14 @@ No627「メダルボックス」</Comment>
 			Language="JPN">
 			<Text>しっていようが　いよまいが
 せつめい　させていただきますよ！▼
-メダルラリー　とは　トレーナーの
+メダルラリーとは　トレーナーの
 さまざまな　こうどうを▽
 ひょうかする　おせっかいな　イベント▼
 ……というわけで　さんかを　きねんし
 この　メダルを　どうぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -691,14 +701,14 @@ No627「メダルボックス」</Comment>
 			Language="JPN_KANJI">
 			<Text>知っていようが　いよまいが
 説明させて　いただきますよ！▼
-メダルラリー　とは
+メダルラリーとは
 トレーナーの　さまざまな　行動を▽
 評価する　おせっかいな　イベント！▼
 ……というわけで　参加を　記念して
 この　メダルを　どうぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -748,10 +758,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ヒントメダル入手</Comment>
+			<Comment>♂
+・ヒントメダル入手</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -776,11 +787,11 @@ No627「メダルボックス」</Comment>
 			<Text>メダルラリーじむきょく　は
 あらゆることに　チャレンジする▽
 トレーナーを　おうえん　しています！▼
-まあ　なにごとも　けいけんですよ！
+まあ　なにごとも　けいけん　ですよ！
 では！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T03:01:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -803,12 +814,13 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メッセージ表示後、画面下に移動
+			<Comment>♂
+・メッセージ表示後、画面下に移動
 ・画面外に消えると続けて
 　t06.gmmのmsg_t06_champion_10に</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -860,11 +872,12 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダルボックスランクアップ
+			<Comment>♂
+・メダルボックスランクアップ
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -952,11 +965,12 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダルボックスランクアップが
-一気に2段階以上起こる際の、2つ目以降</Comment>
+			<Comment>♂
+・メダルボックスランクアップが
+　一気に2段階以上起こる際の、2つ目以降</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -980,10 +994,10 @@ No627「メダルボックス」</Comment>
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]の　メダルボックスが
 [System:Color name="2" ][Name:MedalistRank Idx="1" ][/System:Color]ランクに▽
-リニューアルされた！</Text>
+リニューアル　された！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -993,10 +1007,10 @@ No627「メダルボックス」</Comment>
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]の　メダルボックスが
 [System:Color name="2" ][Name:MedalistRank Idx="1" ][/System:Color]ランクに▽
-リニューアルされた！</Text>
+リニューアル　された！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1004,11 +1018,12 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・0＝主人公名
+			<Comment>♂
+・0＝主人公名
 ・1＝ランク名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1049,11 +1064,12 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル獲得
+			<Comment>♂
+・メダル獲得
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1099,11 +1115,12 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダルを複数同時に獲得する際の、2つ目以降
+			<Comment>♂
+・メダルを複数同時に獲得する際の、2つ目以降
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1151,11 +1168,12 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・0＝主人公名
+			<Comment>♂
+・0＝主人公名
 ・1＝メダル名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1194,6 +1212,14 @@ No627「メダルボックス」</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:51" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1238,6 +1264,14 @@ No627「メダルボックス」</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:51" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1280,10 +1314,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1327,10 +1362,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1374,10 +1410,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1421,10 +1458,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1468,10 +1506,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1515,10 +1554,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1562,10 +1602,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1609,10 +1650,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・ゴールイン表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・ゴールイン表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1656,10 +1698,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1703,10 +1746,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1750,10 +1794,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1797,10 +1842,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1844,10 +1890,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1891,10 +1938,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1938,10 +1986,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1985,10 +2034,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・フルコンプリート表彰イベント</Comment>
+			<Comment>♂
+・メダル事務局・フルコンプリート表彰イベント</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2032,10 +2082,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2079,10 +2130,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2126,10 +2178,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2173,10 +2226,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2220,10 +2274,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2267,10 +2322,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2314,10 +2370,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2361,10 +2418,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2408,10 +2466,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2455,10 +2514,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2502,10 +2562,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2549,10 +2610,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2596,10 +2658,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2643,10 +2706,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2690,10 +2754,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2737,10 +2802,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2784,10 +2850,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2831,10 +2898,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2878,10 +2946,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2925,10 +2994,11 @@ No627「メダルボックス」</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>メダル事務局・NPC話しかけ</Comment>
+			<Comment>♂
+・メダル事務局・NPC話しかけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:55:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2955,11 +3025,11 @@ No627「メダルボックス」</Comment>
 あたらしい　ポケモンジム　だがな▼
 ジムリーダーが　とうちゃくしたと
 れんらくが　あったぞ！▼
-どれほど　つよくなったか
+おまえが　どれほど　つよくなったか
 ためしてくると　いいだろう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2972,11 +3042,11 @@ No627「メダルボックス」</Comment>
 新しい　ポケモンジム　だがな▼
 ジムリーダーが　到着したと
 連絡が　あったぞ！▼
-どれほど　強くなったか
+おまえが　どれほど　強くなったか
 試してくると　いいだろう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-01T02:50:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
