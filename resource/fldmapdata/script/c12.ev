@@ -1057,7 +1057,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   _OBJ_ANIME_WAIT()
 
   //【仮】連れ歩き開始
-  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_NATURAL, PAIR_TYPE_OPEN, TRID_RIVAL_07, SCRID_C12_RIVAL_PAIR_01 )
+  _PAIR_TRAINER_SET( C12_SWRIVAL_01, PAIR_ID_NATURAL, PAIR_TYPE_CLOSE, TRID_RIVAL_07, SCRID_C12_RIVAL_PAIR_01 )
   
   //========================================//
   //POSイベント無効
@@ -1367,7 +1367,7 @@ EVENT_END
 /* 街看板                                         */
 /**************************************************************/
 EVENT_START   ev_bg_c12_board_01
-  _EASY_BGWIN_MSG( msg_c12_sign1_01, TYPE_POST )
+  _EASY_BGWIN_MSG( msg_c12_sign1_01, TYPE_TOWN )
 EVENT_END
 
 /**************************************************************/
