@@ -1,6 +1,6 @@
 TABLE_ON
-SPR_PATH = "spr"
-SPT_PATH = "spt"
+SPR_PATH = "c:\home\swan\resource\pokelist\particle\spr"
+SPT_PATH = "c:\home\swan\resource\pokelist\particle\spt"
 
 //--------------------------------------------------------------
 //	フォルムチェンジ：ギラティナ
