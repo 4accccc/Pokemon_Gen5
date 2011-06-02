@@ -34,6 +34,7 @@ enum {
 	BOX2BMP_MSGID_POKEFREE_RETURN,		// @0が　もどってきちゃった！
 	BOX2BMP_MSGID_POKEFREE_FEAR,			// しんぱい　だったのかな……
 	BOX2BMP_MSGID_POKEFREE_ONE,				// たたかうポケモンが　いなくなります！
+	BOX2BMP_MSGID_POKEFREE_KYUREMU_UNION,	// 合体キュレムは逃がせません！
 };
 
 // ボックステーマ変更メッセージ表示ID

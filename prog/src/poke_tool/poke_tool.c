@@ -1108,6 +1108,24 @@ BOOL  POKETOOL_CheckRare( u32 id, u32 rnd )
 
 //==============================================================================
 /**
+ * @brief     合体キュレムかどうか判定する
+ * @param[in] monsno   モンスターNO
+ * @param[in] form     フォルムNO
+ *
+ * @retval  TRUE:合体キュレム
+ * @retval  FALSE:合体キュレムじゃない
+ */
+//==============================================================================
+BOOL POKETOOL_CheckKyuremuUnionForm( const u16 monsno, const u8 form )
+{
+  if((monsno == MONSNO_KYUREMU) && (form != 0)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==============================================================================
+/**
  * @brief   モンスターNoとフォルムからスワンの特別なポケモンか判定する
  * @param[in] monsno   モンスターNO
  * @param[in] form     フォルムNO
@@ -1121,8 +1139,8 @@ BOOL  POKETOOL_CheckRare( u32 id, u32 rnd )
 //==============================================================================
 BOOL  POKETOOL_CheckSwanOnlyPoke( const u16 monsno, const u8 form )
 {
-  if((monsno == MONSNO_KYUREMU) && (form != 0)){
-    return TRUE;
+  if( POKETOOL_CheckKyuremuUnionForm( monsno, form )){
+    return TRUE;  //合体キュレムはダメ
   }
   return FALSE;
 }

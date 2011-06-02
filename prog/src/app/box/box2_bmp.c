@@ -1642,7 +1642,11 @@ void BOX2BMP_PokeFreeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
 		break;
 
 	case BOX2BMP_MSGID_POKEFREE_EGG:	// タマゴを　にがすことは　できません！
-		str = msg_boxmes_01_33;
+		str = msg_boxmes_01_33_00;
+		break;
+  
+  case BOX2BMP_MSGID_POKEFREE_KYUREMU_UNION:	// 合体キュレムを　にがすことは　できません！
+		str = msg_boxmes_01_33_01;
 		break;
 
 	case BOX2BMP_MSGID_POKEFREE_RETURN:	// @0が　もどってきちゃった！
@@ -1658,6 +1662,7 @@ void BOX2BMP_PokeFreeMsgPut( BOX2_SYS_WORK * syswk, u32 msgID, u32 winID )
 	case BOX2BMP_MSGID_POKEFREE_ONE:	// たたかうポケモンが　いなくなります！
 		str = msg_boxmes_01_07;
 		break;
+	
 	}
 
 	SysMesPut( syswk, str, winID );

@@ -677,6 +677,7 @@ extern  u8    PP_GetSeikaku( const POKEMON_PARAM *pp );
 extern  u8    PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp );
 extern  BOOL  PP_CheckRare( const POKEMON_PARAM *pp );
 extern  BOOL  PPP_CheckRare( const POKEMON_PASO_PARAM *pp );
+extern  BOOL  POKETOOL_CheckKyuremuUnionForm( const u16 monsno, const u8 form );
 extern  BOOL  POKETOOL_CheckSwanOnlyPoke( const u16 monsno, const u8 form );
 extern  BOOL  PPP_CheckSwanOnlyPoke( const POKEMON_PASO_PARAM *ppp );
 extern  PokeSick PP_GetSick( const POKEMON_PARAM* pp );

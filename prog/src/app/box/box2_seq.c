@@ -7720,10 +7720,20 @@ static int MainSeq_PokeFreeInit( BOX2_SYS_WORK * syswk )
     }
     {
       POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
+      u16 monsno = PPP_Get( ppp, ID_PARA_monsno, NULL );
+      u8 form = PPP_Get( ppp, ID_PARA_form_no, NULL );
+      u16 err_msg_id = 0xFFFF;  //無効コードで初期化
       // タマゴ
       if( PPP_Get( ppp, ID_PARA_tamago_flag, NULL ) != 0 ){
+        err_msg_id = BOX2BMP_MSGID_POKEFREE_EGG;
+      }
+      //合体キュレム
+      else if( POKETOOL_CheckKyuremuUnionForm( monsno, form ) ){
+        err_msg_id = BOX2BMP_MSGID_POKEFREE_KYUREMU_UNION;
+      }
+      if( err_msg_id != 0xFFFF ){
         PMSND_PlaySE( SE_BOX2_WARNING );
-        BOX2BMP_PokeFreeMsgPut( syswk, BOX2BMP_MSGID_POKEFREE_EGG, BOX2BMPWIN_ID_MSG1 );
+        BOX2BMP_PokeFreeMsgPut( syswk, err_msg_id, BOX2BMPWIN_ID_MSG1 );
         syswk->app->menu_rcv_blend = 1;
         syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
         return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
