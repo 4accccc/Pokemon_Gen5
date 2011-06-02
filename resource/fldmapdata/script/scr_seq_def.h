@@ -8871,7 +8871,7 @@
  * @brief  トレーナー連れ歩きセット 
  * @param obj_id    連れ歩きたいOBJのID
  * @param pair_id   連れ歩きたいOBJのペアID( PAIR_ID_XXXX field/pair_sys_def.h)
- * @param pair_type 連れ歩きタイプ( PAIR_TYPE_CLOSE他 field/pair_sys_def.h)
+ * @param pair_type 連れ歩きタイプ( PAIR_TYPE_ONE_ZONE:1ゾーン内のみ,PAIR_TYPE_FREE_ZONE:複数ゾーンを移動 field/pair_sys_def.h)
  * @param tr_id     設定したいトレーナーID
  * @param ev_id     設定したい話しかけイベントID(SCRID_NULLを指定した場合,OBJに関連づいたスクリプトが起動)
  */

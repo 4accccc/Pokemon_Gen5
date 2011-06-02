@@ -53,7 +53,7 @@ VMCMD_RESULT EvCmdPairTrainerParamSet( VMHANDLE * core, void *wk )
   MMDL_ChangeMoveCode( mmdl, MV_PAIR );
   MMDL_ChangeOBJID( mmdl, MMDL_ID_PAIR );
 
-  if( pair_type == PAIR_TYPE_OPEN ){
+  if( pair_type == PAIR_TYPE_FREE_ZONE ){
     MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
   }
   return VMCMD_RESULT_SUSPEND;
@@ -75,7 +75,7 @@ VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk )
     MMDL_SetEventID( mmdl, ev_id );
     MMDL_ChangeMoveCode( mmdl, move_code );
   
-    if( PAIRSYS_GetPairType( gdata ) == PAIR_TYPE_CLOSE ){ //クローズ(マップチェンジ無)タイプはOBJIDを元に戻す
+    if( PAIRSYS_GetPairType( gdata ) == PAIR_TYPE_ONE_ZONE ){ //マップチェンジ無タイプはOBJIDを元に戻す
       MMDL_ChangeOBJID( mmdl, PAIRSYS_GetPairTrainerOriginalObjID(gdata) );
     }
     MMDL_SetStatusBitNotZoneDelete( mmdl, FALSE );

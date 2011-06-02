@@ -71,7 +71,7 @@ BOOL PAIRSYS_CheckPairFlag( GAMEDATA* gdata )
  *
  *  @param  gdata
  *  @param  pair_id   連れ歩きペア識別ID( PAIR_ID_01～ pair_sys_def.h)
- *  @param  pair_type 連れ歩きペアタイプID( PAIR_TYPE_CLOSE～ pair_sys_def.h)
+ *  @param  pair_type 連れ歩きペアタイプID( PAIR_TYPE_ONE_ZONE～ pair_sys_def.h)
  *  @param  obj_id    連れ歩きペアのOBJID
  *  @param  obj_code  連れ歩きペアのOBJコード
  *  @param  event_id  連れ歩きペアのイベントID(関連付けないならSCRID_NULL)
@@ -146,7 +146,7 @@ void PAIRSYS_PairFreeForMapChange( GAMEDATA* gdata )
   PAIR_SYSTEM_WORK* wk = GAMEDATA_GetPairSystemWork( gdata );
   EVENTWORK* ev_wk = GAMEDATA_GetEventWork(gdata);
 
-  if( wk->pair_type == PAIR_TYPE_OPEN ){
+  if( wk->pair_type == PAIR_TYPE_FREE_ZONE ){
     return;
   }
   //フラグ&ワークリセット
@@ -177,7 +177,7 @@ void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata, PAIR_RECOVER_TYPE type )
   if( !EVENTWORK_CheckEventFlag( ev_wk, SYS_FLAG_PAIR ) ){  //連れ歩いていない
     return; 
   }
-  if( wk->pair_type != PAIR_TYPE_OPEN ){
+  if( wk->pair_type != PAIR_TYPE_FREE_ZONE ){
     PAIRSYS_PairFree( gdata );
     return;
   }
@@ -291,8 +291,8 @@ u16 PAIRSYS_GetPairTrainerOriginalObjID( GAMEDATA* gdata )
 /*
  *  @brief  連れ歩きペア タイプ取得
  *
- *  @retval PAIR_TYPE_CLOSE マップチェンジ無し
- *  @retval PAIR_TYPE_OPEN  マップチェンジ有り
+ *  @retval PAIR_TYPE_ONE_ZONE   マップチェンジ無し
+ *  @retval PAIR_TYPE_FREE_ZONE  マップチェンジ有り
  */
 //---------------------------------------------------
 int PAIRSYS_GetPairType( GAMEDATA* gdata )
