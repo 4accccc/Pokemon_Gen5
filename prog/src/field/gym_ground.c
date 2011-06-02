@@ -227,22 +227,18 @@ static const BELT_INFO BeltInfo[BELT_ID_MAX] = {
   { BELT_TYPE_UD,56,39, DIR_UP,  17 },// 11
   { BELT_TYPE_UD,16,41, DIR_DOWN,25 },// 12
   { BELT_TYPE_UD,16,50, DIR_UP,  19 },// 12
-  { BELT_TYPE_UD,26,41, DIR_DOWN,26 },// 13
-  { BELT_TYPE_UD,26,50, DIR_UP,  20 },// 13
-  { BELT_TYPE_UD,56,41, DIR_DOWN,29 },// 14
-  { BELT_TYPE_UD,56,50, DIR_UP,  23 },// 14
-  { BELT_TYPE_UD, 6,52, DIR_DOWN,30 },// 15
-  { BELT_TYPE_UD, 6,61, DIR_UP,  24 },// 15
-  { BELT_TYPE_UD,16,52, DIR_DOWN,31 },// 16
-  { BELT_TYPE_UD,16,61, DIR_UP,  25 },// 16
-  { BELT_TYPE_UD,26,52, DIR_DOWN,32 },// 17
-  { BELT_TYPE_UD,26,61, DIR_UP,  26 },// 17
-  { BELT_TYPE_UD,36,52, DIR_DOWN,33 },// 18
-  { BELT_TYPE_UD,36,61, DIR_UP,  27 },// 18
-  { BELT_TYPE_UD,46,52, DIR_DOWN,34 },// 19
-  { BELT_TYPE_UD,46,61, DIR_UP,  28 },// 19
-  { BELT_TYPE_UD,56,52, DIR_DOWN,35 },// 20
-  { BELT_TYPE_UD,56,61, DIR_UP,  29 },// 20
+  { BELT_TYPE_UD,56,41, DIR_DOWN,29 },// 13
+  { BELT_TYPE_UD,56,50, DIR_UP,  23 },// 13
+  { BELT_TYPE_UD, 6,52, DIR_DOWN,30 },// 14
+  { BELT_TYPE_UD, 6,61, DIR_UP,  24 },// 14
+  { BELT_TYPE_UD,16,52, DIR_DOWN,31 },// 15
+  { BELT_TYPE_UD,16,61, DIR_UP,  25 },// 15
+  { BELT_TYPE_UD,36,52, DIR_DOWN,33 },// 16
+  { BELT_TYPE_UD,36,61, DIR_UP,  27 },// 16
+  { BELT_TYPE_UD,46,52, DIR_DOWN,34 },// 17
+  { BELT_TYPE_UD,46,61, DIR_UP,  28 },// 17
+  { BELT_TYPE_UD,56,52, DIR_DOWN,35 },// 18
+  { BELT_TYPE_UD,56,61, DIR_UP,  29 },// 18
 
   { BELT_TYPE_LR, 8, 7, DIR_RIGHT, 1 },// 1
   { BELT_TYPE_LR,14, 7, DIR_LEFT,  0 },// 1
@@ -256,38 +252,44 @@ static const BELT_INFO BeltInfo[BELT_ID_MAX] = {
   { BELT_TYPE_LR,24,18, DIR_LEFT,  7 },// 5
   { BELT_TYPE_LR,28,18, DIR_RIGHT, 9 },// 6
   { BELT_TYPE_LR,34,18, DIR_LEFT,  8 },// 6
-  { BELT_TYPE_LR, 8,29, DIR_RIGHT,13 },// 7
-  { BELT_TYPE_LR,14,29, DIR_LEFT, 12 },// 7
-  { BELT_TYPE_LR,18,29, DIR_RIGHT,14 },// 8
-  { BELT_TYPE_LR,24,29, DIR_LEFT, 13 },// 8
-  { BELT_TYPE_LR,28,29, DIR_RIGHT,15 },// 9
-  { BELT_TYPE_LR,34,29, DIR_LEFT, 14 },// 9
-  { BELT_TYPE_LR,38,29, DIR_RIGHT,16 },// 10
-  { BELT_TYPE_LR,44,29, DIR_LEFT, 15 },// 10
-  { BELT_TYPE_LR,48,29, DIR_RIGHT,17 },// 11
-  { BELT_TYPE_LR,54,29, DIR_LEFT, 16 },// 11
-  { BELT_TYPE_LR,38,40, DIR_RIGHT,22 },// 12
-  { BELT_TYPE_LR,44,40, DIR_LEFT, 21 },// 12
-  { BELT_TYPE_LR, 8,51, DIR_RIGHT,25 },// 13
-  { BELT_TYPE_LR,14,51, DIR_LEFT, 24 },// 13
-  { BELT_TYPE_LR,48,51, DIR_RIGHT,29 },// 14
-  { BELT_TYPE_LR,54,51, DIR_LEFT, 28 },// 14
-  { BELT_TYPE_LR,38,62, DIR_RIGHT,34 },// 15
-  { BELT_TYPE_LR,44,62, DIR_LEFT, 33 },// 15
-  { BELT_TYPE_LR,48,62, DIR_RIGHT,35 },// 16
-  { BELT_TYPE_LR,54,62, DIR_LEFT, 34 },// 16
+  { BELT_TYPE_LR,18,29, DIR_RIGHT,14 },// 7
+  { BELT_TYPE_LR,24,29, DIR_LEFT, 13 },// 7
+  { BELT_TYPE_LR,28,29, DIR_RIGHT,15 },// 8
+  { BELT_TYPE_LR,34,29, DIR_LEFT, 14 },// 8
+  { BELT_TYPE_LR,38,29, DIR_RIGHT,16 },// 9
+  { BELT_TYPE_LR,44,29, DIR_LEFT, 15 },// 9
+  { BELT_TYPE_LR,48,29, DIR_RIGHT,17 },// 10
+  { BELT_TYPE_LR,54,29, DIR_LEFT, 16 },// 10
+  { BELT_TYPE_LR,38,40, DIR_RIGHT,22 },// 11
+  { BELT_TYPE_LR,44,40, DIR_LEFT, 21 },// 11
+  { BELT_TYPE_LR, 8,51, DIR_RIGHT,25 },// 12
+  { BELT_TYPE_LR,14,51, DIR_LEFT, 24 },// 12
+  { BELT_TYPE_LR,48,51, DIR_RIGHT,29 },// 13
+  { BELT_TYPE_LR,54,51, DIR_LEFT, 28 },// 13
+  { BELT_TYPE_LR,38,62, DIR_RIGHT,34 },// 14
+  { BELT_TYPE_LR,44,62, DIR_LEFT, 33 },// 14
+  { BELT_TYPE_LR,48,62, DIR_RIGHT,35 },// 15
+  { BELT_TYPE_LR,54,62, DIR_LEFT, 34 },// 15
+  // マップ修正で追加
+  { BELT_TYPE_LR,28,51, DIR_RIGHT,27 },// 16
+  { BELT_TYPE_LR,34,51, DIR_LEFT, 26 },// 16
+  { BELT_TYPE_LR,38,51, DIR_RIGHT,28 },// 17
+  { BELT_TYPE_LR,44,51, DIR_LEFT, 27 },// 17
+  { BELT_TYPE_LR,18,62, DIR_RIGHT,32 },// 18
+  { BELT_TYPE_LR,24,62, DIR_LEFT, 31 },// 18
+  { BELT_TYPE_LR,28,62, DIR_RIGHT,33 },// 19
+  { BELT_TYPE_LR,34,62, DIR_LEFT, 32 },// 19
 
   { BELT_TYPE_SP_UD,36,19, DIR_DOWN,21 }, // 1
   { BELT_TYPE_SP_UD,36,39, DIR_UP,   9 }, // 1
   { BELT_TYPE_SP_UD,46,19, DIR_DOWN,22 }, // 2
   { BELT_TYPE_SP_UD,46,39, DIR_UP,  10 }, // 2
+  // マップ修正で追加
+  { BELT_TYPE_SP_UD,26,41, DIR_DOWN,32 }, // 3
+  { BELT_TYPE_SP_UD,26,61, DIR_UP,  20 }, // 3
 
   { BELT_TYPE_SP_LR,18, 7, DIR_RIGHT, 3 }, // 1
   { BELT_TYPE_SP_LR,34, 7, DIR_LEFT,  1 }, // 1
-  { BELT_TYPE_SP_LR,28,51, DIR_RIGHT,28 }, // 2
-  { BELT_TYPE_SP_LR,44,51, DIR_LEFT, 26 }, // 2
-  { BELT_TYPE_SP_LR,18,62, DIR_RIGHT,33 }, // 3
-  { BELT_TYPE_SP_LR,34,62, DIR_LEFT, 31 }, // 3
 };
 #define BELT_ID_NULL    ( 0xFF )      // IDが見つからない
 
@@ -677,8 +679,6 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
       { BELT_UD_16_X, 0,  BELT_UD_16_Z + GRID_HALF_SIZE },
       { BELT_UD_17_X, 0,  BELT_UD_17_Z + GRID_HALF_SIZE },
       { BELT_UD_18_X, 0,  BELT_UD_18_Z + GRID_HALF_SIZE },
-      { BELT_UD_19_X, 0,  BELT_UD_19_Z + GRID_HALF_SIZE },
-      { BELT_UD_20_X, 0,  BELT_UD_20_Z + GRID_HALF_SIZE },
       { BELT_LR_1_X,  0,  BELT_LR_1_Z },
       { BELT_LR_2_X,  0,  BELT_LR_2_Z },
       { BELT_LR_3_X,  0,  BELT_LR_3_Z },
@@ -695,11 +695,13 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
       { BELT_LR_14_X, 0,  BELT_LR_14_Z },
       { BELT_LR_15_X, 0,  BELT_LR_15_Z },
       { BELT_LR_16_X, 0,  BELT_LR_16_Z },
+      { BELT_LR_17_X, 0,  BELT_LR_17_Z },
+      { BELT_LR_18_X, 0,  BELT_LR_18_Z },
+      { BELT_LR_19_X, 0,  BELT_LR_19_Z },
       { BELT_SP_UD_1_X,  0,  BELT_SP_UD_1_Z },
       { BELT_SP_UD_2_X,  0,  BELT_SP_UD_2_Z },
+      { BELT_SP_UD_3_X,  0,  BELT_SP_UD_3_Z },
       { BELT_SP_LR_1_X,  0,  BELT_SP_LR_1_Z },
-      { BELT_SP_LR_2_X,  0,  BELT_SP_LR_2_Z },
-      { BELT_SP_LR_3_X,  0,  BELT_SP_LR_3_Z },
     };
 
     // ベルトコンベアの初期設定
@@ -1951,7 +1953,7 @@ static void SAVE_SetLiftArrival( GIMMICKWORK* p_gmkwk, const BOOL *arrival )
 
   for( i=0; i<LIFT_NUM; i++ )
   {
-    if( i % 8 == 0 ) idx++;
+    if( i % 8 == 0 && i != 0 ) idx++;
 
     // 到達していたら、ビットをたてる
     if( arrival[i] == TRUE )
@@ -1990,7 +1992,7 @@ static void SAVE_GetLiftArrival( GIMMICKWORK* p_gmkwk, BOOL *arrival )
 
   for( i=0; i<LIFT_NUM; i++ )
   {
-    if( i % 8 == 0 ) idx++;
+    if( i % 8 == 0 && i != 0 ) idx++;
 
     if( ex_wk[ idx ] & (1 << (i%8)) ){ arrival[i] = TRUE; }
     else                             { arrival[i] = FALSE; }

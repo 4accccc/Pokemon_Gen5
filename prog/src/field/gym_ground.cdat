@@ -40,22 +40,18 @@
 #define	BELT_UD_11_Z	(34 * FIELD_CONST_GRID_FX32_SIZE )	// 縦11  Z座標
 #define	BELT_UD_12_X	(16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦12  X座標
 #define	BELT_UD_12_Z	(45 * FIELD_CONST_GRID_FX32_SIZE )	// 縦12  Z座標
-#define	BELT_UD_13_X	(26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦13  X座標
+#define	BELT_UD_13_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦13  X座標
 #define	BELT_UD_13_Z	(45 * FIELD_CONST_GRID_FX32_SIZE )	// 縦13  Z座標
-#define	BELT_UD_14_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦14  X座標
-#define	BELT_UD_14_Z	(45 * FIELD_CONST_GRID_FX32_SIZE )	// 縦14  Z座標
-#define	BELT_UD_15_X	( 6 * FIELD_CONST_GRID_FX32_SIZE )	// 縦15  X座標
+#define	BELT_UD_14_X	( 6 * FIELD_CONST_GRID_FX32_SIZE )	// 縦14  X座標
+#define	BELT_UD_14_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦14  Z座標
+#define	BELT_UD_15_X	(16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦15  X座標
 #define	BELT_UD_15_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦15  Z座標
-#define	BELT_UD_16_X	(16 * FIELD_CONST_GRID_FX32_SIZE )	// 縦16  X座標
+#define	BELT_UD_16_X	(36 * FIELD_CONST_GRID_FX32_SIZE )	// 縦16  X座標
 #define	BELT_UD_16_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦16  Z座標
-#define	BELT_UD_17_X	(26 * FIELD_CONST_GRID_FX32_SIZE )	// 縦17  X座標
+#define	BELT_UD_17_X	(46 * FIELD_CONST_GRID_FX32_SIZE )	// 縦17  X座標
 #define	BELT_UD_17_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦17  Z座標
-#define	BELT_UD_18_X	(36 * FIELD_CONST_GRID_FX32_SIZE )	// 縦18  X座標
+#define	BELT_UD_18_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦18  X座標
 #define	BELT_UD_18_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦18  Z座標
-#define	BELT_UD_19_X	(46 * FIELD_CONST_GRID_FX32_SIZE )	// 縦19  X座標
-#define	BELT_UD_19_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦19  Z座標
-#define	BELT_UD_20_X	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦20  X座標
-#define	BELT_UD_20_Z	(56 * FIELD_CONST_GRID_FX32_SIZE )	// 縦20  Z座標
 
 #define	BELT_LR_1_X	  (11 * FIELD_CONST_GRID_FX32_SIZE )	// 横1  X座標
 #define	BELT_LR_1_Z	  ( 7 * FIELD_CONST_GRID_FX32_SIZE )	// 横1  Z座標
@@ -69,38 +65,44 @@
 #define	BELT_LR_5_Z	  (18 * FIELD_CONST_GRID_FX32_SIZE )	// 横5  Z座標
 #define	BELT_LR_6_X	  (31 * FIELD_CONST_GRID_FX32_SIZE )	// 横6  X座標
 #define	BELT_LR_6_Z	  (18 * FIELD_CONST_GRID_FX32_SIZE )	// 横6  Z座標
-#define	BELT_LR_7_X	  (11 * FIELD_CONST_GRID_FX32_SIZE )	// 横7  X座標
+#define	BELT_LR_7_X	  (21 * FIELD_CONST_GRID_FX32_SIZE )	// 横7  X座標
 #define	BELT_LR_7_Z	  (29 * FIELD_CONST_GRID_FX32_SIZE )	// 横7  Z座標
-#define	BELT_LR_8_X	  (21 * FIELD_CONST_GRID_FX32_SIZE )	// 横8  X座標
+#define	BELT_LR_8_X	  (31 * FIELD_CONST_GRID_FX32_SIZE )	// 横8  X座標
 #define	BELT_LR_8_Z	  (29 * FIELD_CONST_GRID_FX32_SIZE )	// 横8  Z座標
-#define	BELT_LR_9_X	  (31 * FIELD_CONST_GRID_FX32_SIZE )	// 横9  X座標
+#define	BELT_LR_9_X	  (41 * FIELD_CONST_GRID_FX32_SIZE )	// 横9  X座標
 #define	BELT_LR_9_Z	  (29 * FIELD_CONST_GRID_FX32_SIZE )	// 横9  Z座標
-#define	BELT_LR_10_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横10  X座標
+#define	BELT_LR_10_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横10  X座標
 #define	BELT_LR_10_Z	(29 * FIELD_CONST_GRID_FX32_SIZE )	// 横10  Z座標
-#define	BELT_LR_11_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横11  X座標
-#define	BELT_LR_11_Z	(29 * FIELD_CONST_GRID_FX32_SIZE )	// 横11  Z座標
-#define	BELT_LR_12_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横12  X座標
-#define	BELT_LR_12_Z	(40 * FIELD_CONST_GRID_FX32_SIZE )	// 横12  Z座標
-#define	BELT_LR_13_X	(11 * FIELD_CONST_GRID_FX32_SIZE )	// 横13  X座標
+#define	BELT_LR_11_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横11  X座標
+#define	BELT_LR_11_Z	(40 * FIELD_CONST_GRID_FX32_SIZE )	// 横11  Z座標
+#define	BELT_LR_12_X	(11 * FIELD_CONST_GRID_FX32_SIZE )	// 横12  X座標
+#define	BELT_LR_12_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横12  Z座標
+#define	BELT_LR_13_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横13  X座標
 #define	BELT_LR_13_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横13  Z座標
-#define	BELT_LR_14_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横14  X座標
-#define	BELT_LR_14_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横14  Z座標
-#define	BELT_LR_15_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横15  X座標
+#define	BELT_LR_14_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横14  X座標
+#define	BELT_LR_14_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横14  Z座標
+#define	BELT_LR_15_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横15  X座標
 #define	BELT_LR_15_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横15  Z座標
-#define	BELT_LR_16_X	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横16  X座標
-#define	BELT_LR_16_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横16  Z座標
+// マップ修正で追加
+#define	BELT_LR_16_X	(31 * FIELD_CONST_GRID_FX32_SIZE )	// 横16  X座標
+#define	BELT_LR_16_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横16  Z座標
+#define	BELT_LR_17_X	(41 * FIELD_CONST_GRID_FX32_SIZE )	// 横17  X座標
+#define	BELT_LR_17_Z	(51 * FIELD_CONST_GRID_FX32_SIZE )	// 横17  Z座標
+#define	BELT_LR_18_X	(21 * FIELD_CONST_GRID_FX32_SIZE )	// 横18  X座標
+#define	BELT_LR_18_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横18  Z座標
+#define	BELT_LR_19_X	(31 * FIELD_CONST_GRID_FX32_SIZE )	// 横19  X座標
+#define	BELT_LR_19_Z	(62 * FIELD_CONST_GRID_FX32_SIZE )	// 横19  Z座標
 
 #define BELT_SP_UD_1_X   (36 * FIELD_CONST_GRID_FX32_SIZE )   // 縦1  X座標
 #define BELT_SP_UD_1_Z   (29 * FIELD_CONST_GRID_FX32_SIZE )   // 縦1  Z座標
 #define BELT_SP_UD_2_X   (46 * FIELD_CONST_GRID_FX32_SIZE )   // 縦2  X座標
 #define BELT_SP_UD_2_Z   (29 * FIELD_CONST_GRID_FX32_SIZE )   // 縦2  Z座標
+// マップ修正で追加
+#define BELT_SP_UD_3_X   (26 * FIELD_CONST_GRID_FX32_SIZE )   // 縦3  X座標
+#define BELT_SP_UD_3_Z   (51 * FIELD_CONST_GRID_FX32_SIZE )   // 縦3  Z座標
 
 #define BELT_SP_LR_1_X   (26 * FIELD_CONST_GRID_FX32_SIZE )   // 横1  X座標
 #define BELT_SP_LR_1_Z   ( 7 * FIELD_CONST_GRID_FX32_SIZE )   // 横1  Z座標
-#define BELT_SP_LR_2_X   (36 * FIELD_CONST_GRID_FX32_SIZE )   // 横2  X座標
-#define BELT_SP_LR_2_Z   (51 * FIELD_CONST_GRID_FX32_SIZE )   // 横2  Z座標
-#define BELT_SP_LR_3_X   (26 * FIELD_CONST_GRID_FX32_SIZE )   // 横3  X座標
-#define BELT_SP_LR_3_Z   (62 * FIELD_CONST_GRID_FX32_SIZE )   // 横3  Z座標
 
 //=============================================================================
 /**
@@ -127,10 +129,10 @@ enum {
 
 // OBJインデックス
 // ※各ベルトコンベアの個数
-//   ベルトコンベア(縦)   ･･･ 20
-//   ベルトコンベア(横)   ･･･ 16
-//   立体交差ベルトコンベア(縦) ･･･ 2
-//   立体交差ベルトコンベア(横) ･･･ 3
+//   ベルトコンベア(縦)   ･･･ 18
+//   ベルトコンベア(横)   ･･･ 19
+//   立体交差ベルトコンベア(縦) ･･･ 3
+//   立体交差ベルトコンベア(横) ･･･ 1
 enum {
   OBJ_BELT_UD_1,    // ベルトコンベア(縦)
   OBJ_BELT_UD_2,
@@ -150,8 +152,6 @@ enum {
   OBJ_BELT_UD_16,
   OBJ_BELT_UD_17,
   OBJ_BELT_UD_18,
-  OBJ_BELT_UD_19,
-  OBJ_BELT_UD_20,
   OBJ_BELT_LR_1,    // ベルトコンベア(横)
   OBJ_BELT_LR_2,
   OBJ_BELT_LR_3,
@@ -168,11 +168,13 @@ enum {
   OBJ_BELT_LR_14,
   OBJ_BELT_LR_15,
   OBJ_BELT_LR_16,
+  OBJ_BELT_LR_17,
+  OBJ_BELT_LR_18,
+  OBJ_BELT_LR_19,
   OBJ_BELT_SP_UD_1, // 立体交差ベルトコンベア(縦)
   OBJ_BELT_SP_UD_2,
+  OBJ_BELT_SP_UD_3,
   OBJ_BELT_SP_LR_1, // 立体交差ベルトコンベア(横)
-  OBJ_BELT_SP_LR_2,
-  OBJ_BELT_SP_LR_3,
 
   OBJ_BELT_NUM,
   
@@ -414,22 +416,6 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_belt,            // アニメテーブル(複数指定のため)
     NELEMS(anm_belt),    // アニメリソース数
   },
-  // OBJ_BELT_UD_19
-  {
-    RESID_BELT_UD_MDL,      // モデルリソースID
-    0,                      // モデルデータID(リソース内部INDEX)
-    RESID_BELT_UD_MDL,      // テクスチャリソースID
-    anm_belt,            // アニメテーブル(複数指定のため)
-    NELEMS(anm_belt),    // アニメリソース数
-  },
-  // OBJ_BELT_UD_20
-  {
-    RESID_BELT_UD_MDL,      // モデルリソースID
-    0,                      // モデルデータID(リソース内部INDEX)
-    RESID_BELT_UD_MDL,      // テクスチャリソースID
-    anm_belt,            // アニメテーブル(複数指定のため)
-    NELEMS(anm_belt),    // アニメリソース数
-  },
 
   // OBJ_BELT_LR_1
   {
@@ -559,6 +545,30 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_belt,            // アニメテーブル(複数指定のため)
     NELEMS(anm_belt),    // アニメリソース数
   },
+  // OBJ_BELT_LR_17
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_18
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
+  // OBJ_BELT_LR_19
+  {
+    RESID_BELT_LR_MDL,      // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_LR_MDL,      // テクスチャリソースID
+    anm_belt,            // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt),    // アニメリソース数
+  },
 
   // OBJ_BELT_SP_UD_1
   {
@@ -576,24 +586,16 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_belt,         // アニメテーブル(複数指定のため)
     NELEMS(anm_belt), // アニメリソース数
   },
+  // OBJ_BELT_SP_UD_3
+  {
+    RESID_BELT_SP_UD_MDL,   // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BELT_SP_UD_MDL,   // テクスチャリソースID
+    anm_belt,         // アニメテーブル(複数指定のため)
+    NELEMS(anm_belt), // アニメリソース数
+  },
 
   // OBJ_BELT_SP_LR_1
-  {
-    RESID_BELT_SP_LR_MDL,   // モデルリソースID
-    0,                      // モデルデータID(リソース内部INDEX)
-    RESID_BELT_SP_LR_MDL,   // テクスチャリソースID
-    anm_belt,         // アニメテーブル(複数指定のため)
-    NELEMS(anm_belt), // アニメリソース数
-  },
-  // OBJ_BELT_SP_LR_2
-  {
-    RESID_BELT_SP_LR_MDL,   // モデルリソースID
-    0,                      // モデルデータID(リソース内部INDEX)
-    RESID_BELT_SP_LR_MDL,   // テクスチャリソースID
-    anm_belt,         // アニメテーブル(複数指定のため)
-    NELEMS(anm_belt), // アニメリソース数
-  },
-  // OBJ_BELT_SP_LR_3
   {
     RESID_BELT_SP_LR_MDL,   // モデルリソースID
     0,                      // モデルデータID(リソース内部INDEX)
