@@ -323,6 +323,7 @@ static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk );
 static GMEVENT* LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int lift_id, const int way );
 static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk );
 static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk );
+static void LIFT_EVENT_SetFogEnableFlag( LIFT_EVENT_WORK *p_wk, const BOOL flag );
 static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk );
 
 // 出口リフト
@@ -1053,9 +1054,6 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
     // イベント終了
   case SEQ_EXIT:
     {
-      // ベルトコンベアアニメ停止
-      BELT_AnmStop( p_gym_wk->exp_obj, p_wk->belt_id );
-
       // リフトID変更
       {
         const u8 lift_id = BeltInfo[ p_wk->belt_id ].lift_id;
@@ -1088,6 +1086,9 @@ static GMEVENT_RESULT BeltEvent( GMEVENT* event, int* seq, void* wk )
     // アニメ終了待ち
     if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
     {
+      // ベルトコンベアアニメ停止
+      BELT_AnmStop( p_gym_wk->exp_obj, p_wk->belt_id );
+
       return GMEVENT_RES_FINISH;
     }
     break;
@@ -1400,13 +1401,19 @@ static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk )
   // 初期化
   case SEQ_INIT:
     {
-      // アニメ再生
+      // 上がるとき
       if( p_wk->way == 0 )
       {
-        int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
-        EXP_OBJ_ANM_CNT_PTR anm;
-        anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
+        // アニメ再生
+        {
+          int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
+          EXP_OBJ_ANM_CNT_PTR anm;
+          anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+          FLD_EXP_OBJ_ChgAnmStopFlg(anm, FALSE);
+        }
+
+        // フォグを設定する
+        //LIFT_EVENT_SetFogEnableFlag( p_wk, FALSE );
       }
 
       *seq = SEQ_INIT_WAIT;
@@ -1443,15 +1450,22 @@ static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk )
   // イベント終了
   case SEQ_EXIT:
     {
-      // アニメ停止
+      // 下がるとき
       if( p_wk->way == 1 )
       {
-        int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
-        EXP_OBJ_ANM_CNT_PTR anm;
-        anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
-        FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, 0 );
-        FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
+        // アニメ停止
+        {
+          int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
+          EXP_OBJ_ANM_CNT_PTR anm;
+          anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0);
+          FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, 0, 0 );
+          FLD_EXP_OBJ_ChgAnmStopFlg(anm, TRUE);
+        }
+
+        // フォグを設定する
+        //LIFT_EVENT_SetFogEnableFlag( p_wk, TRUE );
       }
+
       // SE停止
       {
         SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_GROUND_SE_LIFT_MOVE );
@@ -1487,6 +1501,8 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
   }
 
   // 対象フォグ高さ更新
+#if 1 
+  //変わりにフォグを無効にすることになった
   {
     const int obj_tbl[LIFT_MOVE_NUM] = {
       OBJ_LIFT_LIGHTUP_14,
@@ -1498,6 +1514,7 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
     status->trans.y = p_wk->now_height;
   }
+#endif
 
   //自機の高さを更新
   {
@@ -1507,6 +1524,39 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
     FIELD_PLAYER_SetPos( p_wk->player, &pos );
   }
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リフトと自機のフォグ適用フラグを設定する
+ *
+ *	@param	p_wk  イベントワーク
+ *	@param	flag  TRUEでかける
+ */
+//-----------------------------------------------------------------------------
+static void LIFT_EVENT_SetFogEnableFlag( LIFT_EVENT_WORK *p_wk, const BOOL flag )
+{
+  // リフト
+  {
+    FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+    const int obj_tbl[LIFT_MOVE_NUM] = {
+      OBJ_LIFT_LIGHTUP_14,
+      OBJ_LIFT_LIGHTUP_17,
+      OBJ_LIFT_LIGHTUP_32,
+      OBJ_LIFT_LIGHTUP_35,
+    };
+    int obj_idx = obj_tbl[ p_wk->lift_id ];
+    GFL_G3D_OBJ *p_obj = FLD_EXP_OBJ_GetUnitObj(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
+    NNSG3dResMdl *p_mdl = NNS_G3dRenderObjGetResMdl
+      (GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(p_obj)) );
+    // fog enable flag設定
+    NNS_G3dMdlSetMdlFogEnableFlag( p_mdl, 0, flag );
+  }
+
+  // 自機
+  {
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+  }
 }
 
 //----------------------------------------------------------------------------
