@@ -4781,8 +4781,8 @@
 	</row>
 
 	<row id="artist_05">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ビンセント</language>
+		<language name="JPN_KANJI" width="216">ビンセント</language>
 	</row>
 
 	<row id="badrider_01_08">
@@ -4833,6 +4833,21 @@
 	<row id="ninja_01">
 		<language name="JPN" width="216">ＮＩＮＪＡ</language>
 		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
+	</row>
+
+	<row id="fishing_21">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="backpackerm_22">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="backpackerw_17">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<flowchart-group-list>

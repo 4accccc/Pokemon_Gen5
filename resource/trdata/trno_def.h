@@ -888,7 +888,10 @@
 #define	TRID_SWSAGE2_01   ( 875 ) 
 #define	TRID_SWSAGE3_01   ( 876 ) 
 #define	TRID_NINJA_01   ( 877 ) 
-#define TRID_MAX  ( 878 )
+#define	TRID_FISHING_21   ( 878 ) 
+#define	TRID_BACKPACKERM_22   ( 879 ) 
+#define	TRID_BACKPACKERW_17   ( 880 ) 
+#define TRID_MAX  ( 881 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
