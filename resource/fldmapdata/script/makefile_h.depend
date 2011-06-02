@@ -1881,6 +1881,12 @@ c05r0402_def.h: c05r0402.ev
 c05r0403_def.h: c05r0403.ev
 	$(EV_DEF) c05r0403.ev $(SCR_OFFS_ID_H)
 
+c00r0101_def.h: c00r0101.ev
+	$(EV_DEF) c00r0101.ev $(SCR_OFFS_ID_H)
+
+c00r0201_def.h: c00r0201.ev
+	$(EV_DEF) c00r0201.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
