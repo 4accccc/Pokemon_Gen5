@@ -1,0 +1,5 @@
+#../data/r04w.mev
+../tmp/r04w.bin:../data/r04w.mev ../../script/sp_r04w.bin $(UNIQ_SCRIPTHEADER) ../tmp/r04w.h 
+	@echo ../data/r04w.mev
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r04w.h 
+

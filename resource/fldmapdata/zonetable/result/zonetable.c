@@ -19549,4 +19549,38 @@ static const ZONEDATA ZoneData[] = {
 		0,
 		4,
 	},
+	{//ZONE_ID_R04W = 575
+		RSC_GRID_DEFAULT,
+		MMLID_AREA_OUT06,
+		AREA_ID_OUT06,
+		MATRIX_ID_WB,
+		NARC_script_seq_r04w_bin,
+		NARC_script_seq_sp_r04w_bin,	//NARC_script_seq_sp_r04w_bin,
+		NARC_script_message_r04w_dat,
+		SEQ_BGM_R_C_SP,
+		SEQ_BGM_R_C_SU,
+		SEQ_BGM_R_C_AU,
+		SEQ_BGM_R_C_WI,
+		enc_dummy,
+		NARC_eventdata_r04w_bin,
+    ZONE_ID_R04,
+		MAPNAME_R4,
+		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
+		WEATHER_NO_SUNNY,
+    FALSE,
+		0,        // camera id
+		MC_TYPE_FIELD,  // map_chg_type
+		10,
+		TRUE,
+		TRUE,
+		FALSE,
+		TRUE,
+    TRUE,
+    TRUE,
+		MATRIX_ID_WB, // camera_area
+		39,   // padding > placeicon
+		430,
+		0,
+		595,
+	},
 };
