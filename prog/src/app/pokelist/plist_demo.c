@@ -39,8 +39,8 @@
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
 #define PLIST_DEMO_CHANGE_WAIT_SHEIMI			(38)
 ///パーティクルが出て、この時間だけ経ったらホワイトアウト開始
-#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_UNION_WHITEOUT		(65)
-#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_PERGE_WHITEOUT		(85)
+#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_UNION_WHITEOUT		(110)
+#define PLIST_DEMO_CHANGE_WAIT_KYUREMU_PERGE_WHITEOUT		(130)
 #define PLIST_DEMO_KYUREMU_WIPEOUT_DIV    (12)
 #define PLIST_DEMO_KYUREMU_WIPEOUT_SYNC   (1)
 #define PLIST_DEMO_KYUREMU_WIPEIN_DIV    (12)
@@ -207,6 +207,7 @@ static void PLIST_DEMO_InitEffectCore( PLIST_WORK *work, int wk_idx, int res_id,
     for( i = 0; i < res->emmit_num; i++ )
     {
       GFL_PTC_CreateEmitter( work->ptcWork[wk_idx] , i , &pos );
+      IWASAWA_Printf("#EmmiterCreate %d\n",i);
     }
   }
 }
