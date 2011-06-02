@@ -21,27 +21,31 @@ enum{
 	BS_INFO,							// 情報
 };
 
-//
+// clwkの判別
 enum{
-	CLWKMODE_NORMAL = 0,
-	CLWKMODE_POKE,
+	BS_CLWKMODE_NORMAL = 0,				// 通常(clwk)
+	BS_CLWKMODE_POKE,					// ポケモン(clwk)
+	BS_CLWKMODE_CURSOR,					// カーソル
 };
 
-//
+// 各種最大数
 enum{
 	BSCENARIO_BG_MAXNUM		= 8,		// BG最大
 	BSCENARIO_CANVAS_MAXNUM	= 12,		// canvas最大(場面ごとに切り替え)
 	BSCENARIO_MES_MAX		= 2,		// メッセージ最大
-	BSCENARIO_EMPTY_MAX		= 7*2,		// empty
+	BSCENARIO_EMPTY_MAX		= 27*2,		// empty
+	//
+	BSCENARIO_POKE_MAX		= 6,		// ポケモン最大
 };
 
 // res
 enum{
-	BS_RES_TYPE_PAL		= 0,			// type
+	BS_RES_TYPE_PAL			= 0,		// type
 	BS_RES_POKE_PAL,					// poke
+	BS_RES_CURSOR_PAL,					// cursor
 	BS_RES_PAL_MAX,
 	//
-	BS_RES_TYPE_CHR_00	= 0,			// type
+	BS_RES_TYPE_CHR_00		= 0,		// type
 	BS_RES_TYPE_CHR_01,
 	BS_RES_TYPE_CHR_10,
 	BS_RES_TYPE_CHR_11,
@@ -53,43 +57,76 @@ enum{
 	BS_RES_POKE_CHR_03,
 	BS_RES_POKE_CHR_04,
 	BS_RES_POKE_CHR_05,
+	BS_RES_CURSOR_CHR,					// cursor
 	BS_RES_CHR_MAX,
 	//
-	BS_RES_TYPE_CELL	= 0,			// type
+	BS_RES_TYPE_CELL		= 0,		// type
 	BS_RES_POKE_CELL,					// poke
+	BS_RES_CURSOR_CELL,					// cursor
 	BS_RES_CELL_MAX,
 	//
-	//
+	// type用
 	BS_RES_TYPE_PAL_MAX		= 1,
 	BS_RES_TYPE_CHR_MAX		= 6,
 	BS_RES_TYPE_CELL_MAX	= 1,
 	//
+	// poke用
 	BS_RES_POKE_CHR_MAX		= 6,
 };
 
-// type
+// clwk(type)
 enum{
-	CLWK_TYPE00 = 0,
-	CLWK_TYPE01,
+	BS_CLWK_TYPE00 = 0,
+	BS_CLWK_TYPE01,
 	//
-	CLWK_TYPE10,
-	CLWK_TYPE11,
-	CLWK_TYPE12,
-	CLWK_TYPE13,
+	BS_CLWK_TYPE10,
+	BS_CLWK_TYPE11,
+	BS_CLWK_TYPE12,
+	BS_CLWK_TYPE13,
 	//
 	BSCENARIO_CLWK_MAX,
 };
-// poke
+// clwk(poke)
 enum{
-	CLWK_POKE_00 = 0,
-	CLWK_POKE_01,
-	CLWK_POKE_02,
-	CLWK_POKE_03,
-	CLWK_POKE_04,
-	CLWK_POKE_05,
+	BS_CLWK_POKE_00 = 0,
+	BS_CLWK_POKE_01,
+	BS_CLWK_POKE_02,
+	BS_CLWK_POKE_03,
+	BS_CLWK_POKE_04,
+	BS_CLWK_POKE_05,
 	//
 	BSCENARIO_CLWK_POKE_MAX,
 };
+
+// clwk(cursor)
+enum{
+	BS_CLWK_CURSOR_00 = 0,			// 左上
+	BS_CLWK_CURSOR_01,				// 左下
+	BS_CLWK_CURSOR_02,				// 右上
+	BS_CLWK_CURSOR_03,				// 右下
+	//
+	BSCENARIO_CLWK_CURSOR_MAX,
+};
+
+// clwkの合計
+enum{
+	BS_TOTAL_CLWK_NUM	= (BSCENARIO_CLWK_MAX+BSCENARIO_CLWK_POKE_MAX+BSCENARIO_CLWK_CURSOR_MAX),
+};
+
+// ポケモンの情報(1体)
+// PP_Getを初期化時にまとめて処理するために作成
+// (すべてが)u32でなくてもよいはずが、
+// 返り値を直接セットするため以下のようにした
+typedef struct{
+	u32					id;				// id
+	u32					sex;			// 性別
+	u32					level;			// レベル
+	u32					item;			// もちもの
+	u32					stat;			// 特性
+	u32					poke_type[2];	// タイプ
+	u32					skill[4];		// 技
+	u32					skill_type[4];	// 技対応
+} BSCENARIO_POKE_WORK;
 
 //
 // ワーク
@@ -106,8 +143,9 @@ typedef struct {
 	WORDSET				*Wordset;		///< wordset
 	
 	GFL_CLUNIT*			clunit;								///< obj
-	GFL_CLWK*			clwk[BSCENARIO_CLWK_MAX];			///< CLWK
-	GFL_CLWK*			clwk_poke[BSCENARIO_CLWK_POKE_MAX];	///< CLWK
+	GFL_CLWK*			clwk[BSCENARIO_CLWK_MAX];				///< CLWK(type)
+	GFL_CLWK*			clwk_poke[BSCENARIO_CLWK_POKE_MAX];		///< CLWK(poke)
+	GFL_CLWK*			clwk_cursor[BSCENARIO_CLWK_CURSOR_MAX];	///< CLWK(cursor)
 	//
 	u32					ResPal[ BS_RES_PAL_MAX];
 	u32					ResChr[ BS_RES_CHR_MAX];
@@ -123,14 +161,19 @@ typedef struct {
 	s32					SubMode;		///< サブモード
 	// トップ情報
 	s32					TopNum;			///< 台本番号(0-39)
+	s32					TopCurPos;		///< カーソル位置
 	// シナリオ
 	s32					PageNum;		///< 現在のページ番号(0-9)
 	s32					ScenarioMax;	///< 最大数(20)
+	s32					ScenarioCurPos;	///< カーソル位置
 	// ポケモン情報
 	s32					PokePageNum;	///< ページ数(0-5)
 	s32					PokeMax;		///< 最大数(6)
+	s32					InfoCurPos;		///< カーソル位置
 	//
 	s16					*EmptyBuffer;	///< 座標用のバッファ(必ず破棄すること)
+	//
+	BSCENARIO_POKE_WORK	PokeWork[BSCENARIO_POKE_MAX];	///< ポケモン情報(初期化時にセット)
 } BSCENARIO_WORK;
 
 typedef int (*pBScenarioFunc)(BSCENARIO_WORK*);

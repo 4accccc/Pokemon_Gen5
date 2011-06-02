@@ -32,12 +32,22 @@
 
 #include "b_scenario_gra.naix"
 #include "arc/app_menu_common.naix"
+#include "battle/battgra_wb.naix"
 
 //============================================================================================
 //  定数定義
 //============================================================================================
 enum{
 	MES_CLEAR_COLOR = 0,			// クリアカラー
+};
+
+// パレット(obj)
+enum{
+	BS_OBJ_PAL_POKE		= 0,			// ポケモン(0-2)
+	BS_OBJ_PAL_TYPE		= 4,			// タイプ(4-6)
+	BS_OBJ_PAL_CURSOR	= 7,			// カーソル(7)
+	//
+	BS_CURSOR_OFFSET	= 4,			// カーソルデータ(注意：palの中の4番目を使用)
 };
 
 // OBJのフラグ(WBTLIST_OBJ_DATA.dispflag)
@@ -243,12 +253,12 @@ static const s16 bs_obj_00_itbl[] = {
 
 // OBJのテーブルデータ
 const B_SCENARIO_SUB_OBJ_DATA bs_obj_00_tbl[] = {
-	{ 0,	0x30,	1,	0,	0,	1,	0,	0,},		// タイプ00
-	{ 0,	0x30,	1,	0,	0,	1,	1,	1,},		// タイプ01
-	{ 0,	0x30,	1,	0,	0,	1,	2,	2,},		// 技タイプ00
-	{ 0,	0x30,	1,	0,	0,	1,	3,	3,},		// 技タイプ01
-	{ 0,	0x30,	1,	0,	0,	1,	4,	4,},		// 技タイプ02
-	{ 0,	0x30,	1,	0,	0,	1,	5,	5,},		// 技タイプ03
+	{ 0,	0x30,	1,	0,	0,	1,	0,	BS_RES_TYPE_CHR_00,},		// タイプ00
+	{ 0,	0x30,	1,	0,	0,	1,	1,	BS_RES_TYPE_CHR_01,},		// タイプ01
+	{ 0,	0x30,	1,	0,	0,	1,	2,	BS_RES_TYPE_CHR_10,},		// 技タイプ00
+	{ 0,	0x30,	1,	0,	0,	1,	3,	BS_RES_TYPE_CHR_11,},		// 技タイプ01
+	{ 0,	0x30,	1,	0,	0,	1,	4,	BS_RES_TYPE_CHR_12,},		// 技タイプ02
+	{ 0,	0x30,	1,	0,	0,	1,	5,	BS_RES_TYPE_CHR_13,},		// 技タイプ03
 	
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -268,14 +278,55 @@ static const s16 bs_obj_01_itbl[] = {
 
 // OBJのテーブルデータ
 const B_SCENARIO_SUB_OBJ_DATA bs_obj_01_tbl[] = {
-	{ 1,	0x28,	1,	0,	0,	1,	6,	6,},		// ポケモン00
-	{ 1,	0x28,	1,	0,	0,	1,	6,	7,},		// ポケモン01
-	{ 1,	0x28,	1,	0,	0,	1,	6,	8,},		// ポケモン02
-	{ 1,	0x28,	1,	0,	0,	1,	6,	9,},		// ポケモン03
-	{ 1,	0x28,	1,	0,	0,	1,	6, 10,},		// ポケモン04
-	{ 1,	0x28,	1,	0,	0,	1,	6, 11,},		// ポケモン05
+	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_00,},		// ポケモン00
+	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_01,},		// ポケモン01
+	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_02,},		// ポケモン02
+	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_03,},		// ポケモン03
+	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_04,},		// ポケモン04
+	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_05,},		// ポケモン05
 	
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//----------------
+// OBJ(cursor)
+//----------------
+// 情報
+static const s16 bs_obj_02_itbl[] = {
+	2,		// plt res
+	2,		// chr res(未使用)
+	2,		// cel res
+	//
+	4,		// max
+	2,		// mode(1:poke)
+};
+
+// OBJのテーブルデータ
+const B_SCENARIO_SUB_OBJ_DATA bs_obj_02_tbl[] = {
+	{ 0,	0x28,	1,	0,	0,	1,	0,	BS_RES_CURSOR_CHR,},	// カーソル00
+	{ 1,	0x28,	1,	0,	0,	1,	0,	BS_RES_CURSOR_CHR,},	// カーソル01
+	{ 2,	0x28,	1,	0,	0,	1,	0,	BS_RES_CURSOR_CHR,},	// カーソル02
+	{ 3,	0x28,	1,	0,	0,	1,	0,	BS_RES_CURSOR_CHR,},	// カーソル03
+	
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//----------------
+// OBJ(cursor)座標
+//----------------
+// (左上、左下、右上、右下)の順
+static const s16 bs_cursor_emp_tbl[] = {
+	 7, 8, 9,10,		// 脚本
+	11,12,13,14,		// 共演者
+	15,16,17,18,		// 戻る
+	19,20,21,22,		// 左矢印
+	23,24,25,26,		// 右矢印
+};
+
+static const s16 bs_cursor_all_tbl[] = {
+	0, 1, 2,-1,			// TOP
+	0, 3, 4, 2,			// 脚本
+	0, 3, 4, 2,			// 共演者
 };
 
 //============================================================================================
@@ -301,6 +352,7 @@ void BsCmn_ExitObj( BSCENARIO_WORK* wk );
 void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
 void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
 void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex );
+void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 mode, const s32 num );
 
 
 //------------
@@ -311,8 +363,11 @@ static u16  bscmn_putsizeget( const STRBUF * buf, GFL_FONT * font, u32 mode );
 static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B_SCENARIO_SUB_OBJ_DATA *obj_adr, const s16 *info_adr );
 static void bscmn_init_type_obj( BSCENARIO_WORK * wk );
 static void bscmn_init_poke_obj( BSCENARIO_WORK * wk );
+static void bscmn_init_cursor_obj( BSCENARIO_WORK * wk );
 //
 static s16 bscmn_get_empty( BSCENARIO_WORK *wk, const s32 num );
+//
+static void bscmn_disp_cursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 num );
 
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -653,8 +708,10 @@ static void bscmn_init_type_obj( BSCENARIO_WORK * wk )
 	u32			i;
 	
 	ah = GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON, GFL_HEAP_LOWID(wk->dat->heap) );
-	// パレット
-	wk->ResPal[BS_RES_TYPE_PAL] = GFL_CLGRP_PLTT_Register( ah, NARC_app_menu_common_p_st_type_NCLR, CLSYS_DRAW_SUB, 0x20*4, wk->dat->heap );
+	// パレット(4-6)
+	wk->ResPal[BS_RES_TYPE_PAL] = GFL_CLGRP_PLTT_RegisterEx( ah,
+												NARC_app_menu_common_p_st_type_NCLR,
+												CLSYS_DRAW_SUB, BS_OBJ_PAL_TYPE*0x20, 0, 3, wk->dat->heap );
 	// セル・アニメ
 	wk->ResCell[BS_RES_TYPE_CELL] = GFL_CLGRP_CELLANIM_Register( ah,
 												NARC_app_menu_common_p_st_type_32k_NCER,
@@ -701,9 +758,9 @@ static void bscmn_init_poke_obj( BSCENARIO_WORK * wk )
 			// ポケモン情報
 			pp = PokeParty_GetMemberPointer( wk->dat->party, i );
 			// id
-			buf[0] = PP_Get( pp, ID_PARA_monsno, 0 );
+			buf[0] = wk->PokeWork[i].id;
 			// sex
-			buf[1] = PP_GetSex( pp );
+			buf[1] = wk->PokeWork[i].sex;
 			//
 			wk->ResChr[BS_RES_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
 												POKEICON_GetCgxArcIndexByMonsNumber( buf[0], 1, buf[1], FALSE ),
@@ -714,6 +771,39 @@ static void bscmn_init_poke_obj( BSCENARIO_WORK * wk )
 												FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 		}
 	}
+	//
+	GFL_ARC_CloseDataHandle( ah );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルのグラフィックロード
+ *
+ * @param		wk    ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bscmn_init_cursor_obj( BSCENARIO_WORK * wk )
+{
+	ARCHANDLE	*ah;
+	u32			i;
+	
+	// カーソルデータはパレットの4番目のデータを使用
+	// 転送後にclwkでそのパレットを適用させる必要あり
+	//
+	ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->dat->heap) );
+	// パレット(7)
+	wk->ResPal[BS_RES_CURSOR_PAL] = GFL_CLGRP_PLTT_RegisterEx( ah,
+												NARC_battgra_wb_battle_w_obj_NCLR,
+												CLSYS_DRAW_SUB, BS_OBJ_PAL_CURSOR*0x20, BS_CURSOR_OFFSET, 1, wk->dat->heap );
+	// セル・アニメ
+	wk->ResCell[BS_RES_CURSOR_CELL] = GFL_CLGRP_CELLANIM_Register( ah,
+												NARC_battgra_wb_battle_w_cursor_NCER,
+												NARC_battgra_wb_battle_w_cursor_NANR,
+												wk->dat->heap );
+	// キャラ
+	wk->ResChr[BS_RES_CURSOR_CHR] = GFL_CLGRP_CGR_Register( ah, NARC_battgra_wb_battle_w_cursor_NCGR, FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	//
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -740,7 +830,7 @@ void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, cons
 	//
 	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( ah, APP_COMMON_GetPokeTypeCharArcIdx(type), FALSE, &dat, GFL_HEAP_LOWID(wk->dat->heap) );
 	//
-	GFL_CLGRP_CGR_Replace( wk->ResChr[wnum], dat );
+	GFL_CLGRP_CGR_Replace( wk->ResChr[BS_RES_TYPE_CHR_00+wnum], dat );
 	GFL_HEAP_FreeMemory( buf );
 	//
 	GFL_ARC_CloseDataHandle( ah );
@@ -750,7 +840,7 @@ void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, cons
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケアイコン切り替え(毎回でなくてもよいはず)
+ * @brief		ポケアイコン切り替え(毎回でなくてもよいはず:要調整)
  *
  * @param		wk			ワーク
  * @param		type		タイプ値
@@ -800,14 +890,17 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 	buf[1] = iadr[1];		// chr(未使用)
 	buf[2] = iadr[2];		// cel
 	buf[3] = iadr[3];		// max
-	buf[4] = iadr[4];		// mode(0:type、1:poke)
+	buf[4] = iadr[4];		// mode(0:type、1:poke、2:cursor)
 	//
 	// アドレスセット
-	if(buf[4] == 0){			// 通常
+	if(buf[4] == BS_CLWKMODE_NORMAL){		// 通常
 		clwk = &wk->clwk[0];
 	}
-	else if(buf[4] == 1){		// poke
+	else if(buf[4] == BS_CLWKMODE_POKE){	// poke
 		clwk = &wk->clwk_poke[0];
+	}
+	else if(buf[4] == BS_CLWKMODE_CURSOR){	// cursor
+		clwk = &wk->clwk_cursor[0];
 	}
 	for(i=0;i<buf[3];i++){
 		// 終了判定
@@ -872,18 +965,28 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 //-----------------------------------------------------------------------------
 void BsCmn_InitObj( BSCENARIO_WORK* wk )
 {
+	s32		i;
 	// 作成
-	wk->clunit = GFL_CLACT_UNIT_Create( BSCENARIO_CLWK_MAX+BSCENARIO_CLWK_POKE_MAX, 0, GFL_HEAP_LOWID(wk->dat->heap) );
+	wk->clunit = GFL_CLACT_UNIT_Create( BS_TOTAL_CLWK_NUM, 0, GFL_HEAP_LOWID(wk->dat->heap) );
 	//
 	// タイプ
 	bscmn_init_type_obj( wk );
 	// ポケモン
 	bscmn_init_poke_obj( wk );
+	// カーソル
+	bscmn_init_cursor_obj( wk );
 	//
 	// CLWK登録(type)
 	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_00_tbl[0], &bs_obj_00_itbl[0] );
 	// CLWK登録(poke)
 	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_01_tbl[0], &bs_obj_01_itbl[0] );
+	// CLWK登録(cursor)
+	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_02_tbl[0], &bs_obj_02_itbl[0] );
+	//
+	// cursorはパレット番号を修正する必要がある
+	for(i=0;i<BSCENARIO_CLWK_CURSOR_MAX;i++){
+		GFL_CLACT_WK_SetPlttOffs( wk->clwk_cursor[i], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -905,6 +1008,9 @@ void BsCmn_ExitObj( BSCENARIO_WORK* wk )
 	}
 	for(i=0;i<BSCENARIO_CLWK_POKE_MAX;i++){
 		GFL_CLACT_WK_Remove( wk->clwk_poke[i] );
+	}
+	for(i=0;i<BSCENARIO_CLWK_CURSOR_MAX;i++){
+		GFL_CLACT_WK_Remove( wk->clwk_cursor[i] );
 	}
 	//
 	//リソース破棄
@@ -945,19 +1051,26 @@ void BsCmn_ExitObj( BSCENARIO_WORK* wk )
 void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg )
 {
 	// 表示/非表示
-	if(wmode == CLWKMODE_NORMAL){		// 通常
+	if(wmode == BS_CLWKMODE_NORMAL){			// 通常
 		if(wnum >= BSCENARIO_CLWK_MAX){
 			OS_Printf("obj max error:%d\n",wnum);
 			return;
 		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->clwk[wnum], bflg );
 	}
-	else{				// poke
+	else if(wmode == BS_CLWKMODE_POKE){			// poke
 		if(wnum >= BSCENARIO_CLWK_POKE_MAX){
 			OS_Printf("obj max error:%d\n",wnum);
 			return;
 		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->clwk_poke[wnum], bflg );
+	}
+	else if(wmode == BS_CLWKMODE_CURSOR){		// cursor
+		if(wnum >= BSCENARIO_CLWK_CURSOR_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetDrawEnable(  wk->clwk_cursor[wnum], bflg );
 	}
 }
 
@@ -985,5 +1098,64 @@ static s16 bscmn_get_empty( BSCENARIO_WORK *wk, const s32 num )
 	return( adr[num] );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル表示(static)
+ *
+ *	@param	BSCENARIO_WORK* wk
+ *	@param	const BOOL		(TRUE:表示、FALSE:非表示)
+ *	@param	const s32		(0:脚本、1:共演者、2:戻り、3:左矢印、4:右矢印)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bscmn_disp_cursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 num )
+{
+	s32				empnum;
+	s32				i;
+	GFL_CLACTPOS	pos;
+	
+	// 表示/非表示
+	for(i=0;i<4;i++){
+		BsCmn_ObjVisible( wk, BS_CLWKMODE_CURSOR, i, bflg );
+	}
+	
+	// 表示の場合は座標をセット
+	if(bflg == TRUE){
+		for(i=0;i<4;i++){
+			// emptyを取得
+			empnum = num*4+i;
+			pos.x = bscmn_get_empty(wk, 2*bs_cursor_emp_tbl[empnum]);
+			pos.y = bscmn_get_empty(wk, 2*bs_cursor_emp_tbl[empnum]+1);
+			// セット
+			GFL_CLACT_WK_SetPos( wk->clwk_cursor[i], &pos, CLSYS_DEFREND_SUB );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル表示まとめ
+ *
+ *	@param	BSCENARIO_WORK* wk
+ *	@param	const BOOL		(TRUE:表示、FALSE:非表示)
+ *	@param	const s32		(0:TOP、1:脚本、2:共演者)
+ *	@param	const s32		(カーソル位置)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 mode, const s32 num )
+{
+	s16		tmp;
+	
+	// まとめ
+	tmp = bs_cursor_all_tbl[4*mode+num];
+	if(tmp == -1){
+		return;
+	}
+	// カーソル表示
+	bscmn_disp_cursor( wk, bflg, tmp );
+}
 
 
