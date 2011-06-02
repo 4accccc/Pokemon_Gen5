@@ -2,15 +2,519 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_t03_swrival_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『
+・プラズマ団がいる　かもしれない
+・出口で見張るから探せ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:55:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:55:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:55:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+　GRIDX＝671、GRIDZ＝174～179
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:34:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:55:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・
+・キュレムの話を聞く前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・
+・キュレムの話を聞いた後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:38:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:37:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>はーい！
+[Name:TrainerName ]！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:58:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:58:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はーい！
+[Name:TrainerName ]！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:58:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:58:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:34:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:58:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_oldwoman1_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょいと　そこの　たびびとさんや
+カゴメ　むかし　ばなしでも▽
+きいて　いかんかね？▼
+バーさんの　はなし　じゃから
+ちと　ながくなるがな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょいと　そこの　旅人さんや
+カゴメ昔話　でも▽
+聞いて　いかんかね？▼
+バーさんの　話じゃから
+ちと　長くなるがな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
+・GRIDX=６７０、GRIDZ=１６８辺り
+・はい/いいえの選択肢表示
+　はい→02
+　いいえ→03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>oldwoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_oldwoman1_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　まちの　うらには　ものすごーく
+でっかい　あなが　あいとるんじゃ▼
+そのあなはな　むかし　むかし
+そらから　おおきな　いんせきが▽
+ふってきて　できた　そうじゃ▼
+そして　その　いんせきの　なかには
+よにも　おそろしい　ばけもんが▽
+ひそんで　おったそうな……▼
+ばけもんは　ばんに　なると
+つめたい　かぜと　ともに▽
+ひとざとに　あらわれては▽
+ひとや　ポケモンを　とって▽
+くらうと　いわれとった……▼
+じゃから　むかしの　もんは
+まちを　へいでかこって　ばけもんが▽
+はいって　こられんように　したり▼
+ひが　くれたら　おもてに　でるのを
+きんじて　うちで　すごすことを▽
+まちの　おきてに　したそうじゃ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この町の　裏には　ものすごーく
+でっかい　穴が　開いとるんじゃ▼
+その穴はな　昔々
+空から　大きな　いんせきが▽
+降って来て　出来た　そうじゃ▼
+そして　その　いんせきの　中には
+世にも　恐ろしい　化けもんが▽
+潜んで　おったそうな……▼
+化けもんは　晩に　なると
+冷たい　風と　ともに▽
+人里に　現れては▽
+人や　ポケモンを　取って▽
+食らうと　言われとった……▼
+じゃから　昔の　もんは
+町を　塀で囲って　化けもんが▽
+入って　来られんように　したり▼
+日が　暮れたら　表に　出るのを
+禁じて　家で　過ごすことを▽
+町の　おきてに　したそうじゃ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてmsg_t03_oldwoman1_02_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>oldwoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_oldwoman1_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>……　……　……　……　……
+ま　いまじゃ　こんな　はなしなぞ▽
+だれも　しんじとらん▼
+じゃけどな……▼
+いまでも　カゴメに　すんどる　もんは
+ばんに　なったら　ちゃんと　うちに▽
+かえるから　ふしぎ　じゃろ？▼
+むかしばなしや　ふるい　いいつたえ
+ちゅうもんは　いまの　せいかつに▽
+なにかしらの　えいきょうを▽
+あたえとる　っちゅうことかのう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……　……　……　……　……
+ま　今じゃ　こんな　話なぞ▽
+だれも　信じとらん▼
+じゃけどな……▼
+今でも　カゴメに　住んどる　もんは
+晩に　なったら　ちゃんと　家に▽
+帰るから　不思議　じゃろ？▼
+昔話や　古い　言い伝え
+ちゅうもんは　今の　生活に▽
+何かしらの　影響を▽
+与えとる　っちゅうことかのう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>oldwoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_oldwoman1_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ　そうかいな
+ヒマに　なったら　また　くるとええ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ　そうかいな
+ヒマに　なったら　また　来るとええ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>oldwoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_middlewoman1_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　カゴメタウン▼
+おはようから　おやすみまで
+きそく　ただしく　くらす　まち▼
+たいようを　あびて　すごしていれば
+よるも　ぐっすり　ねむれるわ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　カゴメタウン▼
+おはようから　おやすみまで
+規則正しく　暮らす　町▼
+太陽を　浴びて　過ごしていれば
+夜も　ぐっすり　眠れるわ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
+・GRIDX=６５４、GRIDZ=１８７辺り
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>middlewoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t03_sign1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　カゴメタウン
-カゴメは　あんでできた　さんかくけい</Text>
+カゴメは　あんだ　かごのめ[Ctrl2:LineFeed ]
+まよけの　さんかくけい
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:30:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +523,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　カゴメタウン
-カゴメは　編んでできた　三角形</Text>
+カゴメは　編んだ　かごの目[Ctrl2:LineFeed ]
+魔よけの　三角形
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:30:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -30,10 +536,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>看板分類：タウンマップ</Comment>
+			<Comment>看板分類：タウンマップ
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:30:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,85 +565,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_middlewoman1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ここは　カゴメタウン▼
-おはようから　おやすみまで
-きそく　ただしく　くらす　まちよ▼
-たいようの　ひかりを　いっぱい
-あびて　せいかつすれば▽
-よるも　ぐっすり　ねむれるわ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ここは　カゴメタウン▼
-おはようから　おやすみまで
-規則　正しく　暮らす　町よ▼
-太陽の　光を　いっぱい
-浴びて　生活すれば▽
-夜も　ぐっすり　眠れるわ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・夜になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照
-・GRIDX=６５４、GRIDZ=１８７辺り</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-01T03:05:26" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>middlewoman1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="sg_t03_oldwoman1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょいと　そこの　たびびとさんや
-カゴメ　むかし　ばなしでも▽
-きいて　いかんかね？▼
-バーさんの　はなし　じゃから
-ちと　ながくなるがな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -144,14 +580,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょいと　そこの　旅人さんや
-カゴメ昔話　でも▽
-聞いて　いかんかね？▼
-バーさんの　話じゃから
-ちと　長くなるがな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -159,16 +591,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・夜になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照
-・GRIDX=６７０、GRIDZ=１６８辺り
-・はい/いいえの選択肢表示
-　はい→02
-　いいえ→03</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:05:42" />
+				Time="2011-06-02T03:31:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -184,34 +610,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="sg_t03_oldwoman1_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　まちの　うらには　ものすごーく
-でっかい　あなが　あいとるんじゃ▼
-そのあなはな　むかし　むかし
-そらから　おおきな　いんせきが▽
-ふってきて　できた　そうじゃ▼
-そして　その　いんせきの　なかには
-よにも　おそろしい　ばけもんが▽
-ひそんで　おったそうな……▼
-ばけもんは　ばんに　なると
-つめたい　かぜと　ともに▽
-ひとざとに　あらわれては▽
-ひとや　ポケモンを　とって▽
-くらうと　いわれとった……▼
-じゃから　むかしの　もんは
-まちを　へいでかこって　ばけもんが▽
-はいって　こられんように　したり▼
-ひが　くれたら　おもてに　でるのを
-きんじて　うちで　すごすことを▽
-まちの　おきてに　したそうじゃ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -219,28 +634,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この町の　裏には　ものすごーく
-でっかい　穴が　開いとるんじゃ▼
-その穴はな　昔々
-空から　大きな　いんせきが▽
-降って来て　出来た　そうじゃ▼
-そして　その　いんせきの　中には
-世にも　恐ろしい　化けもんが▽
-潜んで　おったそうな……▼
-化けもんは　晩に　なると
-冷たい　風と　ともに▽
-人里に　現れては▽
-人や　ポケモンを　取って▽
-食らうと　言われとった……▼
-じゃから　昔の　もんは
-町を　塀で囲って　化けもんが▽
-入って　来られんように　したり▼
-日が　暮れたら　表に　出るのを
-禁じて　家で　過ごすことを▽
-町の　おきてに　したそうじゃ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -248,86 +645,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてsg_t03_oldwoman1_02_01</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>oldwoman1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t03_oldwoman1_02_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……　……　……　……　……
-ま　いまじゃ　こんな　はなしなぞ▽
-だれも　しんじとらん▼
-じゃけどな……▼
-いまでも　カゴメに　すんどる　もんは
-ばんに　なったら　ちゃんと　うちに▽
-かえるから　ふしぎ　じゃろ？▼
-むかしばなしや　ふるい　いいつたえ
-ちゅうもんは　いまの　せいかつに▽
-なにかしらの　えいきょうを▽
-あたえとる　っちゅうことかのう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……　……　……　……　……
-ま　今じゃ　こんな　話なぞ▽
-だれも　信じとらん▼
-じゃけどな……▼
-今でも　カゴメに　住んどる　もんは
-晩に　なったら　ちゃんと　家に▽
-帰るから　不思議　じゃろ？▼
-昔話や　古い　言い伝え
-ちゅうもんは　今の　生活に▽
-何かしらの　影響を▽
-与えとる　っちゅうことかのう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:05:47" />
+				Time="2011-06-02T03:31:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -345,7 +666,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -356,11 +677,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ　そうかいな
-ヒマに　なったら　また　くるとええ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -368,11 +688,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ　そうかいな
-ヒマに　なったら　また　来るとええ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -380,11 +699,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・イベント終了</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:05:48" />
+				Time="2011-06-02T03:32:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -402,7 +720,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -469,13 +787,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさきの　どうろには　つりずきには
-たまらん　わんがんが　ひろがっとる▼
-きょうも　あしたも　じまんの
-サオが　ビンビンと　うなるわい！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -483,13 +798,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先の　道路には　釣り好きには
-たまらん　湾岸が　広がっとる▼
-今日も　明日も　自慢の
-サオが　ビンビンと　うなるわい！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T02:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -497,13 +809,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・夜になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照
-・GRIDX=６７０、GRIDZ=１８７辺り</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:03:00" />
+				Time="2011-06-02T02:53:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -521,7 +830,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -618,11 +927,11 @@
 ・夜になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６５２、GRIDZ=１７８辺り
-　このＯＢＪは立体交差の誘導のため
-　移動させません</Comment>
+　この動作モデルは立体交差の誘導のため
+　移動させない</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:03:21" />
+				Time="2011-06-02T02:57:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
