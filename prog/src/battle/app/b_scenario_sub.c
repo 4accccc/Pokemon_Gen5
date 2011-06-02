@@ -173,12 +173,12 @@ static const B_SCENARIO_SUB_CANVAS_DATA bs_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME1_S,	1,	6,	8,	2,	8,},		// ñºëO
 	{ GFL_BG_FRAME1_S,	9,	6,	1,	2,	8,},		// ê´ï 
 	{ GFL_BG_FRAME1_S,	2,	11,	10,	2,	8,},		// ÉåÉxÉã
-	{ GFL_BG_FRAME1_S,	2,	14,	10,	4,	8,},		// éùÇøï®
+	{ GFL_BG_FRAME1_S,	1,	14,	12,	4,	8,},		// éùÇøï®
 	{ GFL_BG_FRAME1_S,	16,	4,	12,	2,	8,},		// ãZ00
 	{ GFL_BG_FRAME1_S,	16,	7,	12,	2,	8,},		// ãZ01
 	{ GFL_BG_FRAME1_S,	16,	10,	12,	2,	8,},		// ãZ02
 	{ GFL_BG_FRAME1_S,	16,	13,	12,	2,	8,},		// ãZ03
-	{ GFL_BG_FRAME1_S,	14,	16,	12,	4,	8,},		// ì¡ê´
+	{ GFL_BG_FRAME1_S,	13,	16,	12,	4,	8,},		// ì¡ê´
 	{ GFL_BG_FRAME1_S,	2,	21,	10,	2,	8,},		// ãrñ{
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code

@@ -1581,7 +1581,7 @@ void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
     wk->scenarioData.heap 	 = wk->heapID;
 	wk->scenarioData.font	 = wk->largeFontHandle;
 	
-#if 1	// 敵パーティを取得できるようになれば削除でいいはず
+#if 0	// 敵パーティを取得できるようになれば削除でいいはず
   // ポケモンリストパラメータ初期化
     SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0, 0 );
 
@@ -1599,10 +1599,13 @@ void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
         wk->plistData.skill_item_use[ i ] = 0;  // 0=使用可 / 1=使用不可
       }
     }
-#endif
-    wk->selectItemSeq = 1;
     // (自パーティでテスト)
     wk->scenarioData.party = wk->plistData.pp;
+#else
+	// 相手側のパーティ情報を取得
+	wk->scenarioData.party = BTL_MAIN_GetClientSrcParty( wk->mainModule, BTL_CLIENT_ENEMY1 );
+#endif
+    wk->selectItemSeq = 1;
   }
 }
 
