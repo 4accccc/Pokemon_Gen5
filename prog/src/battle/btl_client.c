@@ -1963,8 +1963,11 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 
   //カットインスタート
   case POKEWOOD_EVENT_SEQ_CUTIN:
-    POKEWOOD_CUTIN_AttachViewCore( p_cutin, wk->viewCore );
-    POKEWOOD_CUTIN_Start( p_cutin, senario, wk->pw_event_no );
+    {
+      const MYSTATUS*cp_mystatus = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+      POKEWOOD_CUTIN_AttachViewCore( p_cutin, wk->viewCore );
+      POKEWOOD_CUTIN_Start( p_cutin, senario, wk->pw_event_no, MyStatus_GetMySex(cp_mystatus) );
+    }
     wk->pw_seq++;
     break;
 

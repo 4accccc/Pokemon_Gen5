@@ -76,8 +76,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname_scr).narc $(targetname_scr).naix: $(scrlist)
 	nnsarc -r -l -n -i $(targetname_scr) -S $(scrlist)
 	$(NAIXCUT) $(targetname_scr).naix
-	-rm $(scrname)*.dat
-	-rm $(scrname)*.csv
 
 $(scrlist) $(cdatname).cdat: $(scrtarget) $(defname).rb $(graphic_dir)/$(targetname_gra).naix $(sadlname)
 	$(scrmk) $(cmdconv) $(graphic_dir)/$(targetname_gra).naix $(scrname) $(cdatname) $(sadlname)

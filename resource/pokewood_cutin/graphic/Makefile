@@ -47,6 +47,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 .ncg.NCGR:
 	g2dcvtr $< -bg
+	ntrcomp -lex $< -o $*.NCGR
 
 .nce.NCER:
 	g2dcvtr $< -br

@@ -122,17 +122,14 @@ H_ROW_NCL         = 4
 H_ROW_NCG         = 5
 H_ROW_NCE         = 6
 H_COL_START       = 0         #列開始位置
-H_COL_VALUE       = 1         #列:番号
+H_COL_VALUE       = 1         #列:番号1
+H_COL_VALUE2      = 2        #列:番号2
 def  convertHeader( csv, data, naix )
 
   #データ取得
   senario = csv.get( H_ROW_SENARIO, H_COL_VALUE )
   event   = csv.get( H_ROW_EVENT,   H_COL_VALUE )
   wnd_num = csv.get( H_ROW_WND_NUM, H_COL_VALUE )
-  ncl     = csv.get( H_ROW_NCL,     H_COL_VALUE )
-  ncg     = csv.get( H_ROW_NCG,     H_COL_VALUE )
-  nce     = csv.get( H_ROW_NCE,     H_COL_VALUE )
-  nan     = csv.get( H_ROW_NCE,     H_COL_VALUE )
 
   #データ書き込み    
   data.write_u16( senario )
@@ -144,25 +141,33 @@ def  convertHeader( csv, data, naix )
   event = event.to_i - 1
   data.write_u16( event )
   data.write_u16( wnd_num )
-  begin
-    ncl = RESOUSE_PREFIX+ncl.sub(/\.ncl/,"_NCLR")
-    data.write_u16( naix.search( ncl, "#{H_ROW_NCL}行" ) )
-  rescue HeaderSearchError
-    exit(1)
-  end
-  begin
-    ncg = RESOUSE_PREFIX+ncg.sub(/\.ncg/,"_NCGR")
-    data.write_u16( naix.search( ncg, "#{H_ROW_NCG}行" ) )
-  rescue HeaderSearchError
-    exit(1)
-  end
-  begin
-    nce = RESOUSE_PREFIX+nce.sub(/\.nce/,"_NCER")
-    data.write_u16( naix.search( nce, "#{H_ROW_NCE}行" ) )
-    nan = RESOUSE_PREFIX+nan.sub(/\.nce/,"_NANR")
-    data.write_u16( naix.search( nan, "#{H_ROW_NCE}行" ) )
-  rescue HeaderSearchError
-    exit(1)
+
+  for col in H_COL_VALUE...H_COL_VALUE2+1
+    ncl     = csv.get( H_ROW_NCL,     col )
+    ncg     = csv.get( H_ROW_NCG,     col )
+    nce     = csv.get( H_ROW_NCE,     col )
+    nan     = csv.get( H_ROW_NCE,     col )
+
+    begin
+      ncl = RESOUSE_PREFIX+ncl.sub(/\.ncl/,"_NCLR")
+      data.write_u16( naix.search( ncl, "#{H_ROW_NCL}行" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    begin
+      ncg = RESOUSE_PREFIX+ncg.sub(/\.ncg/,"_NCGR")
+      data.write_u16( naix.search( ncg, "#{H_ROW_NCG}行" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
+    begin
+      nce = RESOUSE_PREFIX+nce.sub(/\.nce/,"_NCER")
+      data.write_u16( naix.search( nce, "#{H_ROW_NCE}行" ) )
+      nan = RESOUSE_PREFIX+nan.sub(/\.nce/,"_NANR")
+      data.write_u16( naix.search( nan, "#{H_ROW_NCE}行" ) )
+    rescue HeaderSearchError
+      exit(1)
+    end
   end
 
 end
@@ -178,7 +183,10 @@ SCR_COL_CMD         = 1         #列:コマンド
 SCR_COL_PARAM_START = 2         #列:引数開始
 SCR_COL_PARAM_END   = SCR_COL_PARAM_START+CMD_PARAM_MAX #列:引数開始
 
-def convertScript( csv, data, naix, sadl )
+def convertScript( csv, hCsv, data, naix, sadl )
+
+
+  wnd_num = hCsv.get( H_ROW_WND_NUM, H_COL_VALUE )
 
   for row in SCR_ROW_START...csv.row_length-1
 
@@ -234,6 +242,12 @@ def convertScript( csv, data, naix, sadl )
             rescue HeaderSearchError
               exit(1)
             end
+          when "コマ番号"
+            if param >= wnd_num
+              puts "コマ数が最大値を超えています\n"
+              exit(1)
+            end
+            data.write_u16( param )
           else
             data.write_u16( param )
           end
@@ -288,7 +302,7 @@ begin
 
   #コンバート
   convertHeader( hCsv, data, naixdata )
-  convertScript( scrCsv, data, naixdata, sadldata )
+  convertScript( scrCsv, hCsv, data, naixdata, sadldata )
 
   #date書き込み
   data.genelate( "#{ARGV[3]}.dat" )

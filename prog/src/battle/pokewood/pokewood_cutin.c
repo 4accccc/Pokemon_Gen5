@@ -126,6 +126,7 @@ struct _POKEWOOD_CUTIN
   u16 chr;
   u16 cel;
   u16 is_res_load;
+  u32 player_sex;
 
   void *p_cell_buff;
   NNSG2dCellDataBank *p_cell;
@@ -361,10 +362,25 @@ void POKEWOOD_CUTIN_Main( POKEWOOD_CUTIN *p_wk )
       p_wk->p_binary = PW_CUTIN_BINARY_Init( datID, p_wk->heapID );
 
       {
-        ARCDATID plt  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCL );
-        ARCDATID chr  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCG );
-        ARCDATID cel  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCE );
-        ARCDATID nan  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NAN );
+        ARCDATID plt;
+        ARCDATID chr;
+        ARCDATID cel;
+        ARCDATID nan;
+
+        if( p_wk->player_sex == PTL_SEX_MALE )
+        {
+          plt  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCL_M );
+          chr  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCG_M );
+          cel  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCE_M );
+          nan  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NAN_M );
+        }
+        else
+        {
+          plt  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCL_F );
+          chr  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCG_F );
+          cel  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NCE_F );
+          nan  = PW_CUTIN_BINARY_GetHeaderData( p_wk->p_binary, PW_CUTIN_BINARY_HEADER_PARAM_NAN_F );
+        }
         Bw_Graphic_Load( p_wk, plt, chr, cel, nan );
       }
 
@@ -437,15 +453,17 @@ BOOL POKEWOOD_CUTIN_IsEnd( const POKEWOOD_CUTIN *cp_wk )
  *	@param	POKEWOOD_CUTIN *p_wk ワーク
  *	@param  senario             シナリオデータ
  *	@param  event               イベントナンバー
+ *	@param  sex                 プレイヤーの性別
  */
 //-----------------------------------------------------------------------------
-void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event )
+void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO * cp_senario, u16 event, u32 sex )
 {
   p_wk->seq = 1;
   p_wk->is_end = FALSE;
   p_wk->cp_senario  = cp_senario;
   p_wk->event       = event;
   p_wk->script_seq  = 0;
+  p_wk->player_sex  = sex;
 }
 //----------------------------------------------------------------------------
 /**
@@ -878,7 +896,7 @@ static BOOL Bw_Scrcmd_MessageDraw( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCR
         message = cp_ev->talk_msg[ cp_param->param[1] ][ cp_param->param[0] ];
       }
 
-      GF_ASSERT_MSG( message != 0, "CUTINのメッセージコマンドがメッセージがない箇所を引数にしています! 引数1=%d 引数2=%d\n", cp_param->param[0], cp_param->param[1] );
+      GF_ASSERT_MSG( message != 0xFFFF, "CUTINのメッセージコマンドがメッセージがない箇所を引数にしています! 引数1=%d 引数2=%d\n", cp_param->param[0], cp_param->param[1] );
 
       BTLV_STRPARAM_Setup( &p_wk->str_param, BTL_STRTYPE_POKEWOOD_TURNTALK, 
                           message );
