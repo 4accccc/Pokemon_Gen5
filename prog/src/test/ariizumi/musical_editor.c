@@ -1069,19 +1069,19 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
     if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) &&
         (GFL_UI_KEY_GetTrg() & PAD_BUTTON_R) )
     {
-      ARI_TPrintf("配信データセーブテストを開始します。\n");
+      OS_TPrintf("配信データセーブテストを開始します。\n");
       work->distSaveSeq++;
     }
     break;
   case 1:
     {
       FS_InitFile( &work->arcFile );
-      FS_OpenFileEx( &work->arcFile , "a/1/3/1" , FS_FILEMODE_R );
+      FS_OpenFileEx( &work->arcFile , "a/0/0/3" , FS_FILEMODE_R );
       work->arcSize = FS_GetFileLength( &work->arcFile );
       work->musicalArc = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( work->heapId ) , work->arcSize );
       FS_ReadFile( &work->arcFile , work->musicalArc , work->arcSize );
       FS_CloseFile( &work->arcFile );
-      ARI_TPrintf("アーカイブロード size[%d]\n",work->arcSize);
+      OS_TPrintf("アーカイブロード size[%d]\n",work->arcSize);
       work->distSaveSeq++;
     }
     break;
@@ -1090,7 +1090,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
       //SaveControl_GetPointer() デバッグ使用
       work->distSave = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( work->gameData , work->musicalArc , work->arcSize , GFL_HEAP_LOWID( work->heapId ) );
 
-      ARI_TPrintf("セーブ展開・保存開始\n");
+      OS_TPrintf("セーブ展開・保存開始\n");
       work->distSaveSeq++;
     }
     break;
@@ -1100,21 +1100,21 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
       if( ret == TRUE )
       {
         work->distSaveSeq++;
-        ARI_TPrintf("配信データセーブ完了\n");
+        OS_TPrintf("配信データセーブ完了\n");
       }
     }
     break;
   case 4:
     work->distSaveSeq++;
     //GAMEDATA_Save( work->gameData );
-    //ARI_TPrintf("通常データセーブ完了\n");
+    //OS_TPrintf("通常データセーブ完了\n");
     break;
 
   case 5:
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( work->heapId );
     GFL_HEAP_FreeMemory( work->musicalArc );
     work->distSaveSeq = 0;
-    ARI_TPrintf("開放完了\n");
+    OS_TPrintf("開放完了\n");
     break;
   }
 

@@ -149,6 +149,7 @@ static GFL_PROC_RESULT MusicalViewProc_Term( GFL_PROC * proc, int * seq , void *
 
 FS_EXTERN_OVERLAY(musical);
 FS_EXTERN_OVERLAY(musical_shot);
+FS_EXTERN_OVERLAY(musical_common);
 
 GFL_PROC_DATA MusicalView_ProcData =
 {
@@ -1123,6 +1124,7 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_VIEW, 0x80000 );
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_common));
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_VIEW_LOCAL_WORK), HEAPID_MUSICAL_VIEW );
 
