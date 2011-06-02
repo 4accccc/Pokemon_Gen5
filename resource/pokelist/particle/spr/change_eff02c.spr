@@ -45,7 +45,7 @@
 		pos_z="0"
 		init_vel_pos="0"
 		init_vel_axis="0"
-		base_scl="4096"
+		base_scl="3276"
 		aspect="4096"
 		start_offset="105"
 		rtt_min="0"
