@@ -85,7 +85,7 @@ HEADER_DUMMY_STRING = <<DUMMY_STRING
 #define _ZONEIDSYMBOLUPCASE_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_ZONEIDSYMBOLUPCASE  (1)
+#define SCRID_ZONEIDSYMBOLUPCASE (1)
 
 #endif //_ZONEIDSYMBOLUPCASE_DEF_H_
 DUMMY_STRING
@@ -94,15 +94,17 @@ DUMMY_STRING
 
 def make_dummy(path, sym, content)
   if FileTest.exists?(path) then
-    puts "#{path} exists."
+    #puts "#{path} exists."
   else
-    puts "スクリプトファイル#{path} が見つかりません。"
-    #puts "scripts for #{sym} not found!!"
+    STDERR.puts "スクリプトファイル#{path} が見つかりません。"
+    #STDERR.puts "scripts for #{sym} not found!!"
     File.open(path, "w"){|file|
-      file.puts "#{content.gsub(/ZONEIDSYMBOLUPCASE/,sym.upcase).gsub(/ZONEIDSYMBOL/,sym)}"
+      file.printf( "%s", content.gsub(/ZONEIDSYMBOLUPCASE/,sym.upcase).gsub(/ZONEIDSYMBOL/,sym) )
     }
-    system( "dos2unix -D #{path}" )
-    puts "スクリプトファイル#{path} を生成しました！！！."
+    cmd = "unix2dos -D #{path}".sub(/\\/,"/")
+    puts cmd
+    system( cmd )
+    STDERR.puts "スクリプトファイル#{path} を生成しました！！！."
   end
 end
 
@@ -132,7 +134,7 @@ def_filename = directory + "\\" + symbol + "_def.h"
 
 make_dummy(filename, symbol, SCRIPT_DUMMY_STRING)
 make_dummy(sp_filename, symbol, SP_SCRIPT_DUMMY_STRING)
-make_dummy(def_filename, symbol, HEADER_DUMMY_STRING)
+make_dummy(def_filename, symbol, HEADER_DUMMY_STRING.chomp)
 
 
 

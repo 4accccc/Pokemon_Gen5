@@ -1,13 +1,18 @@
 ###############################################################
 #
+#   ゾーン追加に伴う諸作業を省力化するためのスクリプト
+#
 #   tamada GAMEFREAK inc.
 #   2009.07.15
+#
+#   2011.06.02  gmm --> mstxtへの変更に対応
 #
 ###############################################################
 
 require "fileutils"
 
 SCRMSG_PATH = "../../message/src/script_message/"
+SCRMSTXT_PATH = ENV["PROJECT_RSCDIR"] + 'message/msproj/src/script_message/'
 SCRIPT_PATH = "../script/"
 
 WINDOWS_SVN_FLAG = if `which svn`.chomp =~ /\/cygdrive\/c\/tools\/Subversion/ then
@@ -27,6 +32,7 @@ WINDOWS_SVN_FLAG = if `which svn`.chomp =~ /\/cygdrive\/c\/tools\/Subversion/ th
 #--------------------------------------------------------------
 #--------------------------------------------------------------
 def readIDs( filename )
+  STDERR.puts "reading '#{filename}':"
   zone_ids = Array.new
   File.open(filename){|file|
     file.gets #先頭行読み捨て
@@ -46,6 +52,7 @@ end
 #--------------------------------------------------------------
 #--------------------------------------------------------------
 def makeEvents( zone_ids )
+  STDERR.puts "\nmake events:"
   zone_ids.each{|id|
     command = "ruby ../eventdata/dummydata/make_dummy.rb #{id}"
     system( command )
@@ -54,6 +61,7 @@ end
 
 #--------------------------------------------------------------
 #--------------------------------------------------------------
+=begin
 def makeGMMs( zone_ids )
   zone_ids.each{|id|
     target = SCRMSG_PATH + id + ".gmm"
@@ -64,17 +72,32 @@ def makeGMMs( zone_ids )
     end
   }
 end
-#--------------------------------------------------------------
-#--------------------------------------------------------------
+
 def checkGMMS( zone_ids )
   filepath = SCRMSG_PATH
   ext = ".gmm"
   check_files( zone_ids, filepath, ext)
 end
 
+=end
+
+def makeMstxts( zone_ids )
+  STDERR.puts "\nmake mstxts:"
+  zone_ids.each{|id|
+    target = SCRMSTXT_PATH + id + ".mstxt"
+    unless FileTest.exists?(target) then
+      FileUtils.cp(SCRMSTXT_PATH + '../../dummy.mstxt', target)
+      system ("svn add " + target) if WINDOWS_SVN_FLAG == true
+      puts "#{id}.mstxt がみつからなかったのでダミーを作成しました！"
+    end
+  }
+end
+
+#--------------------------------------------------------------
+#--------------------------------------------------------------
 def check_files( ids, filepath, ext)
 
-  STDERR.puts "#{ext} checking ..."
+  STDERR.puts "#{ext} checking:"
   real_files = Hash.new
 
   files = Dir.glob( filepath + "*#{ext}" ).map{|file|
@@ -103,17 +126,16 @@ end
 #--------------------------------------------------------------
 #--------------------------------------------------------------
 def makeScripts( zone_ids )
+  STDERR.puts "\nmake scripts:"
   zone_ids.each{|id|
     scrfile = SCRIPT_PATH + id + ".ev"
     sp_scrfile = SCRIPT_PATH + "sp_" + id + ".ev"
     command = "ruby ../script/scr_tools/make_dummy_script.rb ../script #{id}"
-    command2 = "unix2dos -D #{scrfile}"
-    command2 = "unix2dos -D #{sp_scrfile}"
-      system (command)
-    unless FileTest.exists?(scrfile) then
+    if FileTest.exists?(scrfile) then
+      printf(".")
+    else
       puts "#{command}"
       system (command)
-      #FileUtils.cp("dummyfiles/dumm
     end
   }
 end
@@ -154,7 +176,8 @@ end
 if ARGV[1] == "true" then
   ids = readIDs( ARGV[0] )
   makeEvents( ids )
-  makeGMMs( ids )
+  makeMstxts( ids )
+  #makeGMMs( ids )
   makeScripts( ids )
   makeScriptsIndex( ids )
 elsif ARGV[1] == "false" then
