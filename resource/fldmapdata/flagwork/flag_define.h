@@ -296,11 +296,11 @@
 #define FE_D11R0101_PAIR_01                280 /* 0x0118 D11R0101：連れ歩き用フラグ（将来的に廃止） */
 #define FE_R05_BADRIDER_TALK               281 /* 0x0119 R05：チャールズの会話フラグ */
 #define FE_H02_ITEMGET_01                  282 /* 0x011a H02：リザードン見せイベントのアイテム入手フラグ */
-		/* not used   283(0x011b) */
-		/* not used   284(0x011c) */
-		/* not used   285(0x011d) */
-		/* not used   286(0x011e) */
-		/* not used   287(0x011f) */
+#define FE_C04_RARRYPOINT_01               283 /* 0x011b C04：ラリーチェックポイントフラグ（ギアステーション） */
+#define FE_C04_RARRYPOINT_02               284 /* 0x011c C04：ラリーチェックポイントフラグ（ミュージカルホール） */
+#define FE_C04_RARRYPOINT_03               285 /* 0x011d C04：ラリーチェックポイントフラグ（ビッグスタジアム */
+#define FE_C04_RARRYPOINT_04               286 /* 0x011e C04：ラリーチェックポイントフラグ（リトルコート） */
+#define FE_C04_RARRYPOINT_05               287 /* 0x011f C04：ラリーチェックポイントフラグ（観覧車） */
 		/* not used   288(0x0120) */
 		/* not used   289(0x0121) */
 		/* not used   290(0x0122) */
