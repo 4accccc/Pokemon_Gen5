@@ -401,14 +401,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04pc0101_00_01"
+		Label="msg_t04pc0101_girl4_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ブルジョワールいっかの　かたがた
+とおい　ちほうに　おひっこし　ですって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T10:33:51" />
+				Time="2011-06-02T08:13:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -416,10 +417,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ブルジョワール一家の　方々
+遠い　地方に　お引越し　ですって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T10:33:51" />
+				Time="2011-06-02T08:13:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -428,12 +430,68 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・swanで追加
 ・別荘について
 ・海底遺跡について
 ・ブルジョワール一家について</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T10:34:16" />
+				Time="2011-06-02T08:11:36" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T08:11:30" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04pc0101_badman_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>うっている　モンスターボールも
+どこかで　つくっている▽
+ひとが　いるから　かえるんだよな▼
+ありがとう！　どこかで　ボールを
+つくっている　オレの　しらない　ひと！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T08:00:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:59:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>売っているモンスターボールも
+どこかで　作っている▽
+人が　いるから　買えるんだよな▼
+ありがとう！　どこかで　ボールを
+作っている　オレの　知らない　人！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T08:00:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:58:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T08:00:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T08:00:24" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
