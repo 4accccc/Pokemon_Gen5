@@ -3698,23 +3698,11 @@ $(DIR_WBTMP)/m_gym0901_00_00.tbl: $(DIR_RES)/m_gym0901_00_00.bin
 	@echo create_bintbl m_gym0901_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_00.bin
 
-$(DIR_WBTMP)/m_gym0901_00_00_ex.tbl: $(DIR_RES)/m_gym0901_00_00_ex.bin
-	@echo create_bintbl m_gym0901_00_00
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_00_ex.bin
-
 $(DIR_WBTMP)/m_gym0901_00_01.tbl: $(DIR_RES)/m_gym0901_00_01.bin
 	@echo create_bintbl m_gym0901_00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_01.bin
 
-$(DIR_WBTMP)/m_gym0901_00_01_ex.tbl: $(DIR_RES)/m_gym0901_00_01_ex.bin
-	@echo create_bintbl m_gym0901_00_01
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_01_ex.bin
-
 $(DIR_WBTMP)/m_gym0901_00_02.tbl: $(DIR_RES)/m_gym0901_00_02.bin
 	@echo create_bintbl m_gym0901_00_02
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_02.bin
-
-$(DIR_WBTMP)/m_gym0901_00_02_ex.tbl: $(DIR_RES)/m_gym0901_00_02_ex.bin
-	@echo create_bintbl m_gym0901_00_02
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_02_ex.bin
 
