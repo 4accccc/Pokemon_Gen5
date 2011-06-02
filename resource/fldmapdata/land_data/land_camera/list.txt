@@ -332,6 +332,8 @@
 "white2404.bin"
 "white2405.bin"
 "white2406.bin"
+"freezew.bin"
+"freezeb.bin"
 "DUN2701.bin"
 "DUN2702.bin"
 "DUN2703.bin"

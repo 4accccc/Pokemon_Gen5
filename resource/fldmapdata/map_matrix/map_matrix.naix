@@ -344,7 +344,9 @@ enum {
 	NARC_map_matrix_white2401_mat_bin = 330,
 	NARC_map_matrix_white2404_mat_bin = 331,
 	NARC_map_matrix_white2405_mat_bin = 332,
-	NARC_map_matrix_white2406_mat_bin = 333
+	NARC_map_matrix_white2406_mat_bin = 333,
+	NARC_map_matrix_freezew_mat_bin = 334,
+	NARC_map_matrix_freezeb_mat_bin = 335
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

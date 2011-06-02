@@ -352,6 +352,14 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/freezeb13_04.nsbmd \
 	$(DIR_TEMP)/freezeb13_05.nsbmd \
 	$(DIR_TEMP)/map25_06.nsbmd \
+	$(DIR_TEMP)/freezew_00_00.nsbmd \
+	$(DIR_TEMP)/freezew_01_00.nsbmd \
+	$(DIR_TEMP)/freezew_00_01.nsbmd \
+	$(DIR_TEMP)/freezew_01_01.nsbmd \
+	$(DIR_TEMP)/freezeb_00_00.nsbmd \
+	$(DIR_TEMP)/freezeb_00_01.nsbmd \
+	$(DIR_TEMP)/freezeb_01_00.nsbmd \
+	$(DIR_TEMP)/freezeb_01_01.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
