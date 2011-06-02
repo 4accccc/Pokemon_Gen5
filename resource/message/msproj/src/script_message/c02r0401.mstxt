@@ -2,16 +2,108 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c02r0401_oldman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおしえしょくにん</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:06:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0401_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:10:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:09:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c02r0401_fighterm1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むせんは　すごい！▼
-こんなに　はなれていても
-ポケモンこうかんが　できるのだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +111,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>無線通信は　すごい！▼
-こんなに　離れていても
-ポケモン交換が　できるのだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,19 +123,17 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-
-※SWANでメッセージ修正予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:04:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM
-格闘家</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -54,18 +142,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c02r0401_fighterm2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いまのいま！　ポケモンに　どうぐを
-もたせて　こうかん　したんだ！▽
-つまり　どうぐの　プレゼントだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,12 +166,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いまのいま！　ポケモンに　道具を
-持たせて　交換したんだ！▽
-つまり　道具の　プレゼントだ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,19 +178,17 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-
-※SWANでメッセージ修正予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:05:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERM
-格闘家</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:07:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -108,6 +197,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c02r0401_boy2_01"
@@ -143,11 +239,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-
-※SWANでメッセージ修正予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:05:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -198,10 +293,10 @@
 ・購入できるのは
 　クリティカットなど
 
-※SWANでメッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:05:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

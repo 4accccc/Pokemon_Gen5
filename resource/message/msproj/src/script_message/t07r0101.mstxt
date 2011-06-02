@@ -149,18 +149,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07r0101_assistantm_01"
+		Label="msg_t07r0101_oldman1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ん？　きみも
-かざんを　しらべるのかい？▼
-ここの　かざんは　シンオウちほうの
-ハードマウンテンという　かざんと▽
-かざんの　しゅるいが　おなじ　なんだ</Text>
+			<Text>かりメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T03:22:35" />
+				Time="2011-06-02T07:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -168,14 +164,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ん？　きみも
-火山を　調べるのかい？▼
-ここのはね　シンオウ地方の
-ハードマウンテンという　火山と▽
-火山の　種類が　同じなんだ</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T03:23:27" />
+				Time="2011-06-02T07:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,19 +175,71 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・仮メッセージ
-・ヒードランの伏線</Comment>
+			<Comment>♂：わざおしえしょくにん</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:02:14" />
+				Time="2011-06-02T07:13:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:56" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ASSISTANTM</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:01:53" />
+				Time="2011-06-02T07:13:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -204,57 +248,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t07r0101_mountain_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>イッシュちほうを　おうだんする
-ひこうきの　ために　できたのが▽
-この　ヤマジタウンさ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-26T04:59:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>イッシュ地方を　横断する
-飛行機便の　ために　できたのが▽
-この　ヤマジタウンさ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-26T04:59:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・仮メッセージ</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-26T05:00:38" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>MOUNTAIN</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-26T05:01:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

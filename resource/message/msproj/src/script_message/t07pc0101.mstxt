@@ -173,4 +173,60 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_t07pc0101_mountain_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　きみも
+かざんを　しらべるのかい？▼
+ここの　かざんは　シンオウちほうの
+ハードマウンテンという　かざんと▽
+かざんの　しゅるいが　おなじ　なんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？　きみも
+火山を　調べるのかい？▼
+ここのはね　シンオウ地方の
+ハードマウンテンという　火山と▽
+火山の　種類が　同じなんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・仮メッセージ
+・ヒードランの伏線</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:13:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T07:14:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
