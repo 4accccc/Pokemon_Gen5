@@ -119,7 +119,8 @@ void FLDSKILL_InitCheckWork(
   MMDL *mmdl;
   FIELD_PLAYER *fld_player;
   MAPATTR fattr,nattr;
-  
+  int dir;
+
   MI_CpuClear8( scwk, sizeof(FLDSKILL_CHECK_WORK) );
   scwk->zone_id = FIELDMAP_GetZoneID( fieldmap );
   scwk->gsys = FIELDMAP_GetGameSysWork( fieldmap );
@@ -148,17 +149,15 @@ void FLDSKILL_InitCheckWork(
     }
   }
   
-  {
-    u16 dir = FIELD_PLAYER_GetDir( fld_player );
+  dir = FIELD_PLAYER_GetDir( fld_player );
     
-    //現在地のアトリビュート
-    nattr = FIELD_PLAYER_GetMapAttr( fld_player );
+  //現在地のアトリビュート
+  nattr = FIELD_PLAYER_GetMapAttr( fld_player );
     
-    //自機前のアトリビュート
-    fattr = FIELD_PLAYER_GetDirMapAttr( fld_player, dir );
-  }
+  //自機前のアトリビュート
+  fattr = FIELD_PLAYER_GetDirMapAttr( fld_player, dir );
   
-  if( FIELD_PLAYER_CheckNaminoriUse(fld_player,nattr,fattr) == TRUE )
+  if( FIELD_PLAYER_CheckNaminoriUse(fld_player,dir) == TRUE )
   {
     scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_NAMINORI );
   }

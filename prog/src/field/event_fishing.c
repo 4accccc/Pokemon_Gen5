@@ -145,6 +145,17 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
   if( !MAPATTR_VALUE_CheckWaterType(MAPATTR_GetAttrValue( gridData.attr ))){
     return FALSE;
   }
+  { //高さ差分チェック
+    fx32  h_diff;
+    VecFx32 n_pos;
+    MMDL_GetVectorPos( mmdl, &n_pos );
+
+    h_diff = n_pos.y-gridData.height;
+    if( (h_diff < 0) || (h_diff>=H_DIFF_COLLISION_FOR_GROUND)){
+      //現在地の高さより目の前の高さが高いか、差分が移動不可の制限値以上なら釣りできない
+      return FALSE;
+    }
+  }
   if( outPos != NULL ){
     outPos->x = t_pos.x;
     outPos->y = gridData.height;

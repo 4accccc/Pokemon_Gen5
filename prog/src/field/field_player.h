@@ -183,6 +183,7 @@ extern GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player );
 
 extern MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player );
 extern MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir );
+extern MAPATTR FIELD_PLAYER_GetDirMapPosData( const FIELD_PLAYER *fld_player, u16 dir, fx32* p_height );
 
 //性別、OBJコード、各フォーム
 extern u16 FIELD_PLAYER_GetDrawFormToOBJCode(
@@ -223,7 +224,7 @@ extern void FIELD_PLAYER_ChangeFormRequest( FIELD_PLAYER *fld_player, PLAYER_DRA
 extern BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player );
 #endif
 extern BOOL FIELD_PLAYER_CheckNaminoriUse(
-    FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
+    FIELD_PLAYER *fld_player, int dir );
 extern BOOL FIELD_PLAYER_CheckTakinoboriUse(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 extern void FIELD_PLAYER_CheckSpecialDrawForm(

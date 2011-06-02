@@ -74,6 +74,12 @@ typedef enum{
   DRAW3DMODE_MAX,
 }DRAW3DMODE;
 
+
+//==========================================
+///高さ判定による移動やイベント起動の制限値(fldmmdl_move.cやfield_event_check.cにあったのをまとめた)
+#define H_DIFF_COLLISION_FOR_GROUND     (FX32_CONST(20)) //地形の高さ差分による移動制限
+#define H_DIFF_COLLISION_FOR_TALK_EVENT (FX32_CONST(16)) //地形の高さ差分による話しかけ制限
+
 //======================================================================
 //	struct
 //======================================================================

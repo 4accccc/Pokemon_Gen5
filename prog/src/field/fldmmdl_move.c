@@ -49,10 +49,6 @@
 #define ATTROFFS_Y_YUKI_DEEP_MOST (NUM_FX32(-16))///<更に深い雪Yオフセット
 #define ATTROFFS_Y_DESERT_DEEP (NUM_FX32(-7)) ///<深い砂漠Yオフセット
 
-///高さ差分による移動制限
-#define HEIGHT_DIFF_COLLISION (FX32_ONE*(20))
-
-
 //======================================================================
 //  struct
 //======================================================================
@@ -1394,7 +1390,7 @@ u32 MMDL_HitCheckMove(
   if( MMDL_GetMapPosHeight(mmdl,&pos,&height) == TRUE ){
     fx32 diff = vec->y - height;
     if( diff < 0 ){ diff = -diff; }
-    if( diff >= HEIGHT_DIFF_COLLISION ){
+    if( diff >= H_DIFF_COLLISION_FOR_GROUND ){
       ret |= MMDL_MOVEHITBIT_HEIGHT;
     }
     

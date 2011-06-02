@@ -154,7 +154,6 @@ extern int DebugAnimalTrailWalkCnt; // 獣道抽選歩数　           宣言元  debug/de
 
 //======================================================================
 //======================================================================
-#define FRONT_TALKOBJ_HEIGHT_DIFF (FX32_CONST(16)) //話しかけ可能なOBJのY値差分
 #define WALK_COUNT_MAX  (9999)                     //歩数カウンタの最大値
 
 //--------------------------------------------------------------
@@ -3190,7 +3189,7 @@ static MMDL * getFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
   }
   
   mmdl = MMDLSYS_SearchGridPosEx(
-      FIELDMAP_GetMMdlSys(fieldMap), gx, gz, MMDL_GetVectorPosY(jiki), FRONT_TALKOBJ_HEIGHT_DIFF, FALSE );
+      FIELDMAP_GetMMdlSys(fieldMap), gx, gz, MMDL_GetVectorPosY(jiki), H_DIFF_COLLISION_FOR_TALK_EVENT, FALSE );
   
   if( mmdl != NULL && MMDL_CheckStatusBitTalk( mmdl ) )
   {
@@ -3301,7 +3300,7 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   }
 
   //波乗りアトリビュート話し掛けチェック
-  if( FIELD_PLAYER_CheckNaminoriUse( req->field_player, nattr, fattr )){
+  if( FIELD_PLAYER_CheckNaminoriUse( req->field_player, req->player_dir )){
     if( checkPokeWazaGroup(req->gamedata,WAZANO_NAMINORI) != 6 ){
       return SCRID_HIDEN_NAMINORI;
     }

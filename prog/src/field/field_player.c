@@ -604,27 +604,8 @@ GAMESYS_WORK * FIELD_PLAYER_GetGameSysWork( FIELD_PLAYER *fld_player )
 //-----------------------------------------------------------------------------
 MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player )
 {
-  MAPATTR attr;
-  
-  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
-  {
-    VecFx32 pos;  
-    FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
-
-    FIELD_PLAYER_GetPos( fld_player, &pos );
-    attr = MAPATTR_GetAttribute( mapper, &pos );
-  }
-  else if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_RAIL )
-  {
-    RAIL_LOCATION location;
-    const MMDL * mmdl = FIELD_PLAYER_GetMMdl( (FIELD_PLAYER*)fld_player );
-    const FLDNOGRID_MAPPER* mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
-
-    MMDL_GetRailLocation( mmdl, &location );
-    attr = FLDNOGRID_MAPPER_GetAttr( mapper, &location );
-  }
-  
-  return( attr );
+  fx32  height;
+  return FIELD_PLAYER_GetDirMapPosData( fld_player, DIR_NOT, &height );
 }
 
 //----------------------------------------------------------------------------
@@ -639,14 +620,20 @@ MAPATTR FIELD_PLAYER_GetMapAttr( const FIELD_PLAYER *fld_player )
 //-----------------------------------------------------------------------------
 MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir )
 {
-  MAPATTR attr;
+  fx32  height;
+  return FIELD_PLAYER_GetDirMapPosData( fld_player, dir, &height );
   
+#if 0
   if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
   {
     VecFx32 pos;  
     FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
 
-    FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
+    if( dir == DIR_NOT ){
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+    }else{
+      FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
+    }
     attr = MAPATTR_GetAttribute( mapper, &pos );
   }
   else if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_RAIL )
@@ -655,13 +642,69 @@ MAPATTR FIELD_PLAYER_GetDirMapAttr( const FIELD_PLAYER *fld_player, u16 dir )
     MMDL * mmdl = FIELD_PLAYER_GetMMdl( fld_player );
     FLDNOGRID_MAPPER* mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
 
-    MMDL_GetRailDirLocation( mmdl, dir, &location );
+    if( dir == DIR_NOT ){
+      MMDL_GetRailLocation( mmdl, &location );
+    }else{
+      MMDL_GetRailDirLocation( mmdl, dir, &location );
+    }
     attr = FLDNOGRID_MAPPER_GetAttr( mapper, &location );
   }
   
   return( attr );
+#endif
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  dir方向のアトリビュートと高さの取得
+ *
+ *	@param	fld_player  FIELD_PLAYER
+ *	@param	dir         方向(DIR_NOTなら現在位置のデータを取得)
+ *
+ *	@return マップアトリビュート(MAPATTR_ERRORが返ったらデータがとれなかった)
+ */
+//-----------------------------------------------------------------------------
+MAPATTR FIELD_PLAYER_GetDirMapPosData( const FIELD_PLAYER *fld_player, u16 dir, fx32* p_height )
+{
+  VecFx32 pos;  
+  
+  *p_height = 0;
+
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID )
+  {
+    FLDMAPPER_GRIDINFODATA gridData;
+    FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fld_player->fieldWork );
+  
+    if( dir == DIR_NOT ){
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+    }else{
+      FIELD_PLAYER_GetDirPos( fld_player, dir, &pos );
+    }
+    if( FLDMAPPER_GetGridData(mapper,&pos,&gridData) == TRUE){
+      *p_height = gridData.height;
+      return gridData.attr;
+    }
+    return MAPATTR_ERROR;
+  }
+  else
+  {
+    RAIL_LOCATION location;
+    MMDL * mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    const FLDNOGRID_MAPPER* cp_mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
+    const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+
+    if( dir == DIR_NOT ){
+      MMDL_GetRailLocation( mmdl, &location );
+    }else{
+      if( MMDL_GetRailDirLocation( mmdl, dir, &location ) == FALSE ){
+        return MAPATTR_ERROR;
+      }
+    }
+    FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &location, &pos );
+    *p_height = pos.y;
+    return FLDNOGRID_MAPPER_GetAttr( cp_mapper, &location );
+  }
+}
 
 //======================================================================
 /// 性別、OBJコード、各フォーム
@@ -1185,8 +1228,11 @@ BOOL FIELD_PLAYER_ChangeFormWait( FIELD_PLAYER *fld_player )
  */
 //--------------------------------------------------------------
 BOOL FIELD_PLAYER_CheckNaminoriUse(
-    FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr )
+    FIELD_PLAYER *fld_player, int dir )
 {
+  MAPATTR nattr,fattr;
+  fx32  n_height, f_height;
+
   PLAYER_MOVE_FORM move_form = FIELD_PLAYER_GetMoveForm( fld_player );
   
   //既に波乗り中、ダイビング中であれば新規起動はできない
@@ -1194,8 +1240,23 @@ BOOL FIELD_PLAYER_CheckNaminoriUse(
       move_form == PLAYER_MOVE_FORM_DIVING ){
     return FALSE;
   }
-  return MAPATTR_CheckNaminoriUse( nattr, fattr );
+  nattr = FIELD_PLAYER_GetDirMapPosData( fld_player, DIR_NOT, &n_height );
+  fattr = FIELD_PLAYER_GetDirMapPosData( fld_player, dir, &f_height );
+  
+  if( MAPATTR_CheckNaminoriUse( nattr, fattr ) == FALSE ){
+    return FALSE; //波乗り可能アトリビュートじゃない
+  }
+  //スワンで追加 高さ差分チェック
+  {
+    fx32  h_diff = n_height-f_height;
+    if( (h_diff < 0) || (h_diff>=H_DIFF_COLLISION_FOR_GROUND)){
+      //現在地の高さより目の前の高さが高いか、差分が移動不可の制限値以上なら波乗りできない
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
+
 //--------------------------------------------------------------
 /**
  * 自機滝登り開始可能かチェック
