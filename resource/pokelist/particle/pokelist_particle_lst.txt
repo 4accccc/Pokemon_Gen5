@@ -24,6 +24,7 @@ demo_kyuremu_union.spa
 	change_eff03a.spr
 	change_eff03b.spr
 	change_eff03c.spr
+	change_eff03d.spr
 
 //--------------------------------------------------------------
 //	フォルムチェンジ：レシラムのキュレム合体時
@@ -49,6 +50,7 @@ demo_kyuremu_perge_r.spa
 	change_eff04b.spr
 	change_eff04c.spr
 	change_eff04d.spr
+	change_eff04e.spr
 	change_eff04f.spr
 
 //--------------------------------------------------------------
@@ -59,5 +61,6 @@ demo_kyuremu_perge_z.spa
 	change_eff05b.spr
 	change_eff05c.spr
 	change_eff05d.spr
+	change_eff05e.spr
 	change_eff05f.spr
 
