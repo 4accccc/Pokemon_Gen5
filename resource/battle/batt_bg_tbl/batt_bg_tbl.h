@@ -10,7 +10,7 @@
 
 #pragma once
 
-#define  ZONE_SPEC_ATTR_MAX  ( 17 )
+#define  ZONE_SPEC_ATTR_MAX  ( 18 )
 #define  BATT_BG_TBL_NO_FILE     ( 0xffff )
 #define  BATT_BG_TBL_FILE_MAX  ( 8 ) //春敵・春自・夏敵・夏自・秋敵・秋自・冬敵・冬自の順
 #define  BATT_FIELD_TBL_MAX    ( 4 ) // IMD・ICA・ITA・IMAの順
@@ -31,6 +31,7 @@ typedef struct
 	u8 season;
 	u8 bg_file[ ZONE_SPEC_ATTR_MAX];
 	u8 stage_file[ ZONE_SPEC_ATTR_MAX ];
+	u8 padding[ 2 ];
 }BATT_BG_TBL_ZONE_SPEC_TABLE;
 
 typedef struct
@@ -70,7 +71,8 @@ typedef enum{
 	BATT_BG_OBONID_22,				//エンカウント草（四季あり）
 	BATT_BG_OBONID_23,				//エンカウント草（四季なし）
 	BATT_BG_OBONID_24,				//アスファルト
-	BATT_BG_OBONID_25,				//ポケウッド撮影
-	BATT_BG_OBONID_26,				//ポケウッド上映
+	BATT_BG_OBONID_25,				//落ち葉
+	BATT_BG_OBONID_26,				//ポケウッド撮影
+	BATT_BG_OBONID_27,				//ポケウッド上映
 }BATT_BG_OBONID;
 

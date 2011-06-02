@@ -48,6 +48,7 @@
 #define MATTR_E_GRASS_HIGH_02     (0x22)		//四季変化なし草むら強
 #define MATTR_E_DESERT_02         (0x23)		//砂漠２（エンカウント）
 #define MATTR_ANIMAL_TRAIL        (0x24)		//獣道用草地(エンカウント無し)
+#define MATTR_OCHIBA_01           (0x25)		//落ち葉
 #define MATTR_ELECTORIC_FLOOR     (0x30)		//ビリビリ床
 #define MATTR_FLOAT_FLOOR         (0x31)		//浮遊石小揺れ
 #define MATTR_ELECTORIC_ROCK      (0x32)		//電気岩

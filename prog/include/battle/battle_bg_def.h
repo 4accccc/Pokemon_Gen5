@@ -65,6 +65,7 @@ typedef enum {
   BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
   BATTLE_BG_ATTR_PALACE,	  ///<	パレス
   BATTLE_BG_ATTR_SAGE,	    ///<	ゲーチス
+  BATTLE_BG_ATTR_OCHIBA,	  ///<	落ち葉
 
   BATTLE_BG_ATTR_MAX,
 }BtlBgAttr;

@@ -732,6 +732,18 @@ BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
 
 //--------------------------------------------------------------
 /**
+ * アトリビュートバリュー　チェック　落ち葉
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckOchiba( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_OCHIBA_01 );
+}
+
+//--------------------------------------------------------------
+/**
  * アトリビュートバリュー　チェック　通常地面
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
