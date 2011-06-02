@@ -1231,10 +1231,10 @@
 		Label="msg_boxmes_01_33_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　フォルムの　キュレムは　にがせません！</Text>
+			<Text>がったいした　キュレムは　にがせません！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-06-01T10:41:52" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T04:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -1242,10 +1242,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　フォルムの　キュレムは　逃がせません！</Text>
+			<Text>合体した　キュレムは　逃がせません！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-06-01T10:42:05" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T04:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
