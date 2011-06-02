@@ -1252,6 +1252,7 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     case BATTLE_BG_ATTR_PALACE:     //パレスでの対戦専用
     case BATTLE_BG_ATTR_SAND:       //砂地
     case BATTLE_BG_ATTR_MARSH:      //浅い湿原
+    case BATTLE_BG_ATTR_OCHIBA:     //落ち葉
       type = POKETYPE_JIMEN;
       break;
 
@@ -2263,6 +2264,7 @@ static u8 common_HimituNoTikara_getParams( BTL_SVFLOW_WORK* flowWk, u8* dstMetho
   case BATTLE_BG_ATTR_GROUND_S2:        //四季あり地面２
   case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
   case BATTLE_BG_ATTR_SAND:           //砂地
+  case BATTLE_BG_ATTR_OCHIBA:         //落ち葉
     method = HIMITSU_METHOD_RANK;
     method_arg = BPP_HIT_RATIO;
     wazaEff = HIMITSU_WAZAEFF_DOROKAKE;
@@ -9189,6 +9191,7 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     case BATTLE_BG_ATTR_GROUND_S2:      //四季あり地面２
     case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
     case BATTLE_BG_ATTR_SAND:           //砂地
+    case BATTLE_BG_ATTR_OCHIBA:         //落ち葉
       waza = WAZANO_ZISIN;
       break;
 

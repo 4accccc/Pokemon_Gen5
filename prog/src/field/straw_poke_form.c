@@ -13,7 +13,7 @@
 
 #include "../../resource/battle/batt_bg_tbl/batt_bg_tbl.h"
 
-#define BATT_BG_OBONID_MAX  (25)
+#define BATT_BG_OBONID_MAX  (26)
 
 const u16 StrawFromTbl[BATT_BG_OBONID_MAX][2] = {
   { BATT_BG_OBONID_00,FORMNO_412_SUNA},		    //地面（四季なし）            砂
@@ -41,6 +41,7 @@ const u16 StrawFromTbl[BATT_BG_OBONID_MAX][2] = {
 	{ BATT_BG_OBONID_22,FORMNO_412_KUSA},				//エンカウント草（四季あり）  草
 	{ BATT_BG_OBONID_23,FORMNO_412_KUSA},				//エンカウント草（四季なし）  草
 	{ BATT_BG_OBONID_24,FORMNO_412_GOMI},				//アスファルト                ゴミ
+	{ BATT_BG_OBONID_25,FORMNO_412_SUNA},				//落ち葉                      砂
 };
 
 //--------------------------------------------------------------
