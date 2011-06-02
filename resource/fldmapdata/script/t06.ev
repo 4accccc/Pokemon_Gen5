@@ -32,6 +32,7 @@ _EVENT_DATA    ev_t06_girl1_01
 _EVENT_DATA    ev_t06_oldman1_01
 _EVENT_DATA    ev_t06_middleman1_01
 _EVENT_DATA    ev_bg_t06_board_01
+_EVENT_DATA    ev_t06_woman2_01
 _EVENT_DATA_END
 
 //ドア変数定義
@@ -455,6 +456,38 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_t06_board_01
   _EASY_BGWIN_MSG( msg_t06_sign_01, TYPE_TOWN )
+EVENT_END
+
+/**************************************************************/
+/* WOMAN2話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06_woman2_01
+
+  _TALK_OBJ_START()
+  //ひらがなよりも漢字が好き？
+  //_BALLOONWIN_OBJMSG_POS( msg_t06_woman2_01, T06_WOMAN2_01, POS_DEFAULT )
+  _BALLOONWIN_TALKOBJ_MSG( msg_t06_woman2_01 )
+
+  {
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  //はい
+   IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_OBJMSG_POS( msg_t06_woman2_02, T06_WOMAN2_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //漢字ひらがな切り替え
+   _CHG_LANGID()
+
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_t06_woman2_03, T06_WOMAN2_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+  }
 EVENT_END
 
 //--------------------------------------------------------------------

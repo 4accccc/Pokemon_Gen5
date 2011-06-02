@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_t06pc0101_shop
 _EVENT_DATA    ev_t06pc0101_fix_shop
 _EVENT_DATA    ev_t06pc0101_man2_01
+_EVENT_DATA    ev_t06pc0101_girl3_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -29,6 +30,46 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_t06pc0101_man2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06pc0101_man2_01 )
+EVENT_END
+
+/**************************************************************/
+/* GIRL3話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06pc0101_girl3_01
+
+  _TALK_OBJ_START()
+  {
+  //手持ちの先頭ポケモンの位置を取得
+  DEFINE_LOCAL LWK_FRONT
+  _GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
+
+  //先頭ポケモンの名前を取得
+  _TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
+  
+  DEFINE_LOCAL LWK_POKESEX
+  //先頭ポケモンの性別を取得
+  _GET_PARTY_POKE_PARAM( LWK_POKESEX, LWK_FRONT, SCR_POKEPARA_SEX )
+
+  //先頭のポケモンが♂
+  IF $LWK_POKESEX == 0 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_t06pc0101_girl3_01, T06PC0101_GIRL3_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //先頭のポケモンが♀
+  ELSIF $LWK_POKESEX == 1 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_t06pc0101_girl3_02, T06PC0101_GIRL3_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //それ以外であったならば
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_t06pc0101_girl3_03, T06PC0101_GIRL3_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+  }
 EVENT_END
 
 //=============================================================

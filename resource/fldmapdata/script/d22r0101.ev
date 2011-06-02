@@ -769,7 +769,7 @@ EVENT_END
 /*  はなしかけ：BREEDERW                         */
 /**************************************************************/
 EVENT_START ev_d22r0101_breederw_01
-
+{
    //迷子イベントクリア後話しかけ（1回のみ）
   IF $WK_SCENE_D22R0101 == 5  && FLAG_OFF(FE_D22R0101_BREEEDERW_01)THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_breederw_06)
@@ -777,40 +777,71 @@ EVENT_START ev_d22r0101_breederw_01
     //クリア後メッセージ表示終了
     _FLAG_SET(FE_D22R0101_BREEEDERW_01)
     //========================================//
-  
-  //【仮】通常話しかけ（体力チェックコマンドがあるか確認）
+
   ELSE
     _TALK_OBJ_START()
-  
-    //入室して２回目以降の話しかけ
-    IF $LOCALWORK1 == 1 THEN
-  
-    _BALLOONWIN_TALKOBJ_MSG( msg_d22r0101_breederw_04 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-  
-   //入室して初回話しかけ
-    ELSE
-     _BALLOONWIN_TALKOBJ_MSG( msg_d22r0101_breederw_05 )
-     _MSGWIN_CLOSE()
 
-      //暗転して手持ちポケモンを回復
-     _BLACK_OUT()
-     _DISP_FADE_END_CHECK()
-     _TEMOTI_POKEMON_KAIFUKU()		//回復処理
-     _ME_PLAY( SEQ_ME_ASA )
-     _ME_WAIT()
-     _BLACK_IN()
-     _DISP_FADE_END_CHECK()
-     
-     //========================================//
-     $LOCALWORK1 = 1
-     //========================================//
-  
+    //体力の満タンではないポケモンのための変数定義
+    DEFINE_LOCAL LWK_PARTY_NUM  //手持ちポケモンの数
+    DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+    DEFINE_LOCAL LWK_RET_HP     //HPチェックの帰り値
+    DEFINE_LOCAL LWK_RET_PP     //PPチェックの帰り値
+    DEFINE_LOCAL LWK_DAME       //HPかPPが満タンではないポケモンの数
+
+    //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+
+    //手持ちのポケモンの中にHPかPPが満タンではないポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのHPを取得
+    _CHECK_TEMOTI_HP( LWK_RET_HP, LWK_COUNT_NUM )
+
+    //指定POSのポケモンのPPを取得
+    _CHECK_TEMOTI_PP( LWK_RET_PP, LWK_COUNT_NUM )
+
+    //チェックしたポケモンのHP（またはPP）が満タンではないのならば
+    IF $LWK_RET_HP == FALSE || $LWK_RET_PP == FALSE THEN
+          //HPかPPが満タンではないポケモンの数に＋１
+          $LWK_DAME += 1
+
     ENDIF
-    
+
+  //カウント
+  $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+    //手持ちにHPかPPが満タンではないポケモンがいた場合
+    IF $LWK_DAME >= 1 THEN
+
+       _BALLOONWIN_TALKOBJ_MSG( msg_d22r0101_breederw_05 )
+       _MSGWIN_CLOSE()
+
+        //暗転して手持ちポケモンを回復
+        _BLACK_OUT()
+        _DISP_FADE_END_CHECK()
+        _TEMOTI_POKEMON_KAIFUKU()		//回復処理
+        _ME_PLAY( SEQ_ME_ASA )
+        _ME_WAIT()
+        _BLACK_IN()
+        _DISP_FADE_END_CHECK()
+
+        //========================================//
+        $LOCALWORK1 = 1
+        //========================================//
+
+    //手持ちのポケモンはHPもPPも満タン
+    ELSE
+      _BALLOONWIN_TALKOBJ_MSG( msg_d22r0101_breederw_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
   ENDIF
-  
+
+}
 EVENT_END
 
 //--------------------------------------------------------------------

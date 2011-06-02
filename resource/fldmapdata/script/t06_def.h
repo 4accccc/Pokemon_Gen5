@@ -18,5 +18,6 @@
 #define SCRID_T06_OLDMAN1_01 (11)
 #define SCRID_T06_MIDDLEMAN1_01 (12)
 #define SCRID_BG_T06_BOARD_01 (13)
+#define SCRID_T06_WOMAN2_01 (14)
 
 #endif //_T06_DEF_H_
