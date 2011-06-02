@@ -302,6 +302,12 @@
 			<Directory
 				Name="pokewood">
 				<ContentItem
+					Name="pw_hint001.mstxt" />
+				<ContentItem
+					Name="pw_hint002.mstxt" />
+				<ContentItem
+					Name="pw_hint003.mstxt" />
+				<ContentItem
 					Name="pw_movietitle.mstxt" />
 				<ContentItem
 					Name="pw_senario001.mstxt" />
