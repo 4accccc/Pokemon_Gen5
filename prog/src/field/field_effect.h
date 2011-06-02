@@ -43,6 +43,7 @@ typedef enum
   FLDEFF_PROCID_HIDE, ///<動作モデル隠れ蓑
   FLDEFF_PROCID_BUBBLE, ///<水泡
   FLDEFF_PROCID_SHOAL, ///<浅瀬
+  FLDEFF_PROCID_OCHIBA, ///<落ち葉
   
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草

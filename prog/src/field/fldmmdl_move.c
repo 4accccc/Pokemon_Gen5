@@ -22,6 +22,7 @@
 #include "fldeff_ripple.h"
 #include "fldeff_splash.h"
 #include "fldeff_d06denki.h"
+#include "fldeff_ochiba.h"
 
 #include "sound/pm_sndsys.h"
 
@@ -100,6 +101,8 @@ static void MMdl_MapAttrGrassProc_2( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrGrassProc_Jump2( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data );
+
+static void MMdl_MapAttrOchibaProc_1( MMDL *mmdl, ATTRDATA *data );
 
 static void MMdl_MapAttrSplashProc_0( MMDL *mmdl, ATTRDATA *data );
 static void MMdl_MapAttrSplashProc_12( MMDL *mmdl, ATTRDATA *data );
@@ -404,6 +407,7 @@ static void MMdl_MapAttrProc_MoveStartSecond( MMDL * mmdl )
     
       MMdl_MapAttrGrassProc_1( mmdl, &data );
       MMdl_MapAttrFootMarkProc_1( mmdl, &data );
+      MMdl_MapAttrOchibaProc_1( mmdl, &data );
       MMdl_MapAttrSplashProc_12( mmdl, &data );
       MMdl_MapAttrShadowProc_01( mmdl, &data );
       MMdl_MapAttrPoolProc_1( mmdl, &data );
@@ -821,6 +825,25 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
     if( type != FOOTMARK_TYPE_MAX ){
       FLDEFF_FOOTMARK_SetMMdl( mmdl, data->fectrl, type );
     }
+  }
+}
+
+//======================================================================
+//  アトリビュート　落ち葉
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * 落ち葉　動作開始 1
+ * @param  mmdl  MMDL *
+ * @param  now    現在のアトリビュート
+ * @param  old    過去のアトリビュート
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void MMdl_MapAttrOchibaProc_1( MMDL *mmdl, ATTRDATA *data )
+{
+  if( MAPATTR_VALUE_CheckOchiba(data->attr_val_old) == TRUE ){
+    FLDEFF_OCHIBA_Set( data->fectrl, mmdl );
   }
 }
 

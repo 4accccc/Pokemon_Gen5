@@ -869,7 +869,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/medal_check.c \
         field/resonance_resort/resort_mapcreate.c \
         field/animal_trail.c \
-        field/scrcmd_animal_trail.c
+        field/scrcmd_animal_trail.c \
+        field/fldeff_ochiba.c
 
 # デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP

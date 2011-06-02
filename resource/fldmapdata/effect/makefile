@@ -1,7 +1,7 @@
 #---------------------------------------------------------------
 #	フィールドエフェクト アーカイブ用Makefile
 #---------------------------------------------------------------
-USERS = kagaya fuchino_hiroki iwasawa obata_toshihiro ibe_mana yoshida lee_hyunjung unno tomoya_takahashi ohkubo_tomohiko
+USERS = kagaya fuchino_hiroki iwasawa obata_toshihiro ibe_mana yoshida lee_hyunjung unno tomoya_takahashi ohkubo_tomohiko ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く

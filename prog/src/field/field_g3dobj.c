@@ -396,6 +396,22 @@ void FLD_G3DOBJ_CTRL_DeleteObject(
 
 //--------------------------------------------------------------
 /**
+ * オブジェインデックスからGFL_G3D_OBJ取得
+ * @param ctrl  FLD_G3DOBJ_CTRL
+ * @param idx 取得するOBJインデックス
+ * @retval GFL_G3D_OBJ
+ */
+//--------------------------------------------------------------
+GFL_G3D_OBJ * FLD_G3DOBJ_CTRL_GetObject(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx )
+{
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
+  return( obj->pObj );
+}
+
+//--------------------------------------------------------------
+/**
  * オブジェインデックスからGFL_G3D_OBJSTATUS取得
  * @param ctrl  FLD_G3DOBJ_CTRL
  * @param idx 取得するOBJインデックス

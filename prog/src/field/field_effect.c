@@ -949,6 +949,7 @@ void FLDEFF_CTRL_SetGrayScaleG3DResource(
 #include "fldeff_btrain.h"
 #include "fldeff_hide.h"
 #include "fldeff_bubble.h"
+#include "fldeff_ochiba.h"
 
 static const FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
@@ -969,6 +970,7 @@ static const FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX
   {FLDEFF_PROCID_HIDE,FLDEFF_HIDE_Init,FLDEFF_HIDE_Delete},
   {FLDEFF_PROCID_BUBBLE,FLDEFF_BUBBLE_Init,FLDEFF_BUBBLE_Delete},
   {FLDEFF_PROCID_SHOAL,FLDEFF_SHOAL_Init,FLDEFF_SHOAL_Delete},
+  {FLDEFF_PROCID_OCHIBA,FLDEFF_OCHIBA_Init,FLDEFF_OCHIBA_Delete},
   
   //ここからエフェクトエンカウント用
   {FLDEFF_PROCID_ENC_SGRASS,FLDEFF_ENCOUNT_SGrassInit,FLDEFF_ENCOUNT_Delete},
@@ -998,6 +1000,7 @@ const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[] =
   FLDEFF_PROCID_SHOAL, //g3dobj
   FLDEFF_PROCID_FISHING_LURE, //g3dobj
   FLDEFF_PROCID_IAIGIRI,
+  FLDEFF_PROCID_OCHIBA,
 
   //ここからエフェクトエンカウント用
   FLDEFF_PROCID_ENC_SGRASS, ///<エフェクトエンカウント用　短い草
