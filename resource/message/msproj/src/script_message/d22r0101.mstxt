@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエも　ぼくじょうで
-ポケモンを　きたえるつもりか？▼
-それなら　オレと　しょうぶしたほうが
-はやく　つよく　なれるだろ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエも　牧場で
+ポケモンを　鍛えるつもりか？▼
+それなら　オレと　勝負したほうが
+はやく　強く　なれるだろ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71,14 +71,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なかなか　やるじゃん▼
+			<Text>[Name:TrainerName Idx="1" ]『なかなか　だな▼
 ポケモンの　ちからを　ひきだせるよう
-ちょっとは　かんがえているみたいだし▼
+ちょっとは　かんがえているし▼
 で　なにしに　きたんだ？▼
 えっ……　タウンマップ！？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:00:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,14 +86,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なかなか　やるじゃん▼
-ポケモンの　ちからを　ひきだせるよう
-ちょっとは　かんがえているみたいだし▼
-で　なにしに　きたんだ？▼
+			<Text>[Name:TrainerName Idx="1" ]『なかなか　だな▼
+ポケモンの　力を　ひきだせるよう
+ちょっとは　考えているし▼
+で　なにしに　来たんだ？▼
 えっ……　タウンマップ！？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -513,10 +513,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　モーモーミルクを　ポケモンに
-のませたら　げんきいっぱい　よ！</Text>
+飲ませたら　元気一杯　よ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -575,14 +575,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『ところで　きみたち
-このあたりで　ぼくの▽
+この辺りで　ぼくの▽
 ヨーテリーを　みなかったー？
-どこへ　いったか　みあたらないんだよ▼
+どこへ　行ったか　みあたらないんだよ▼
 こんなことは　はじめて　だから
-ちょっと　しんぱい　なんだなー▼</Text>
+ちょっと　心配なんだなー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -641,14 +641,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なんだ　ソレ！
-ほんとうに　しんぱい　してるのか？▼
+本当に　心配してるのか？▼
 ポケモンが　いなくなったかも
 しれないってのに！▼
-いい！　オレが　さがすよ！
-[Name:TrainerName Idx="0" ]！　オマエも　てつだえ！！▼</Text>
+いい！　オレが　探すよ！
+[Name:TrainerName Idx="0" ]！　オマエも　手伝え！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -706,12 +706,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーナー『なぜ　かれは　おこったの？▼
-ぼくじょうの　どこかで
-あそんでいるだけだと　おもうけど▼</Text>
+			<Text>オーナー『なぜ　彼は　おこったの？▼
+牧場の　どこかで
+遊んでいるだけだと　思うけど▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:01:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -769,10 +769,10 @@
 			Language="JPN_KANJI">
 			<Text>おくさん『あなたの　ポケモンが
 キズついたら　あたしに　いってね▽
-げんきに　してあげるから！</Text>
+元気に　してあげるから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -810,6 +810,58 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d22r0101_swrival_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヨーテリー
+どこへ　いったんだ……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:15:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:14:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヨーテリー
+どこへ　行ったんだ……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:15:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:14:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・迷子探し中その１
+　GRIDX＝25、GRIDZ＝44を中心に
+　うろうろ、きょろきょろ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:29:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:14:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d22r0101_swrival_07"
 		Style="Large">
 		<LanguageCell
@@ -826,11 +878,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『むこうには　いなかった▼
-もっと　おくに　まよいこんだのか？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『向こうには　いなかった▼
+もっと　奥に　迷いこんだのか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:32:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -839,14 +891,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・迷子探し中その１
+・迷子探し中その２
 ・pos（local 21～23、3）をj踏むと
 　画面下から登場し隣接してメッセージ
 ・メッセージ表示後、上方向に移動
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:20:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -875,11 +927,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まだ　みつからないのかよ
-しんぱい　だな……　ヨーテリー</Text>
+			<Text>しかし　ひろい　ぼくじょうだな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:31:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -887,11 +938,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まだ　みつからないのかよ
-しんぱい　だな……　ヨーテリー</Text>
+			<Text>しかし　広い　牧場だな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -900,11 +950,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・迷子探し中その２
-・pos（local 9、13）できょろきょろ</Comment>
+・迷子探し中その２後
+　GRIDX＝21、GRIDZ＝29を中心に
+　うろうろ、きょろきょろ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:29:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -919,6 +970,57 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_swrival_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まだ　みつからないのかよ
+しんぱい　だな……　ヨーテリー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:18:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:18:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まだ　みつからないのかよ
+心配だな……　ヨーテリー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:32:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:18:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・迷子探し中その３
+　GRIDX＝22、GRIDZ＝22できょろきょろ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:32:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:18:02" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -965,10 +1067,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン</Text>
+			<Text>ポケモン
+ヨーテリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:15:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1053,11 +1156,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　この　あたりを　さがす！
-オマエ　そっちを　さがせよ▼</Text>
+			<Text>オレは　この辺りを　探す！
+オマエ　そっちを　探せよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1111,10 +1214,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエは　あっちを　さがせって！</Text>
+			<Text>オマエは　あっちを　探せって！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:04:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1223,12 +1326,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『みつかったか！！▼
 あー
-ほんきで　よかった！▼
-じゃ　オーナーを　よんでくるから
+本気で　よかった！▼
+じゃ　オーナーを　呼んでくるから
 そいつの　そばに　いてやれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1302,10 +1405,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン</Text>
+			<Text>ポケモン
+ヨーテリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:15:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1336,13 +1440,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『おー！　ヨーテリー！▼
-ひとりで　こんな　おくまで
-きちゃって　なにが　あったんだい？▼
+ひとりで　こんな　奥まで
+来ちゃって　なにが　あったんだい？▼
 なにはともあれ
-きみたち　ありがとう！▼</Text>
+きみたちには　感謝だよー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1399,10 +1503,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『だって　トレーナーは
+ポケモンが　いてくれないと▽
+ただの　ひと　だからさ……▼
+まあ　いいや
+・・・・・・・・・・・・・・・・・・▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:04:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1446,12 +1554,12 @@
 			<Text>オーナー『……ふむう
 かれは　なにか　あったのかなー？▼
 ポケモンと　はなれることを
-いように　おびえている　というか……▼
+とても　ダメだと　おもっているというか……▼
 って　かんがえても　わからないねー
 さあ　わたしたちも　かえろう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:06:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1460,14 +1568,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『……ふむう
-かれは　なにか　あったのかなー？▼
-ポケモンと　はなれることを
-いように　おびえている　というか……▼
-って　かんがえても　わからないねー
-さあ　わたしたちも　かえろう▼</Text>
+彼は　なにか　あったのかなー？▼
+ポケモンと　離れることを
+許さなさすぎる　というか……▼
+って　考えても　わからないねー
+さあ　わたしたちも　帰ろう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:06:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1525,13 +1633,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『……すると　きみは
-ポケモンずかんを　うめるために▽
-ヒオウギを　たびだった　ばかりかー▼
-ポケモンと　いっしょに　いることで
-せかいが　ひろがったんだねー！</Text>
+ポケモン図鑑を　うめるために▽
+ヒオウギを　旅立った　ばかりかー▼
+ポケモンと　一緒に　いることで
+世界が　広がったんだねー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1576,11 +1684,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オーナー『それにしても……▼
-なぜ　ポケモンは　われわれと
-いっしょに　いてくるのかなー？</Text>
+なぜ　ポケモンは　われわれの
+そばに　いてくるのかなー？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:07:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1589,11 +1697,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『それにしても……▼
-なぜ　ポケモンは　われわれと
-いっしょに　いてくるのかなー？</Text>
+なぜ　ポケモンは　われわれの
+そばに　いてくるのかなー？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1648,10 +1756,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オーナー『たしかに　ヨーテリーが
-かってに　いなくなるのは　へんだねー</Text>
+勝手に　いなくなるのは　変だねー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:07:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1831,10 +1939,10 @@
 			Language="JPN_KANJI">
 			<Text>ありがとうね▼
 あなたと　あなたの　ポケモンに
-たすけてもらったわ！</Text>
+助けてもらったわ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-02T06:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
