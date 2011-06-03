@@ -1562,7 +1562,7 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
 #endif
 
   //自機の高さを更新
-#if 0
+#if 1
   {
     VecFx32 pos;
     FIELD_PLAYER_GetPos( p_wk->player, &pos );
@@ -1577,7 +1577,9 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
     fx32 y_offs = FIELDMAP_GetBbdActYOffs( p_wk->p_fieldmap );
 
     // 座標
-    status->trans.y = p_wk->now_height + y_offs;
+    //status->trans.y = p_wk->now_height + y_offs;
+    status->trans.y = p_wk->now_height;
+    status->trans.y -= y_offs;
   }
 
 }
