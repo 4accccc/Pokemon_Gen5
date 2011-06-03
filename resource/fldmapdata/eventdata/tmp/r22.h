@@ -8,6 +8,12 @@
 #ifndef ZONE_R22_EVC_H
 #define ZONE_R22_EVC_H
 
+#define TR_ELITEM_13                       0
+#define TR_BACKPACKERW_16                  1
+#define TR_BREEDERM_06                     2
+#define TR_ELITEW_13                       3
+#define TR_BACKPACKERM_21                  4
+#define TR_MOUNT_15                        5
 
 #endif //ZONE_R22_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r22.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -1,20 +1,206 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2011/06/02 12:49:44
 # linked worldmap file name
-C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r22.wms
+C:\home\swan\resource\fldmapdata\eventdata\data\r22.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+6
+#event number: 0
+#type
+1
+#ID name
+TR_ELITEM_13
+#OBJ CODE Number
+TRAINERM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
 0
+#Event Script Name
+SCRID_TRID_ELITEM_13
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 -80 -72
+#event number: 1
+#type
+1
+#ID name
+TR_BACKPACKERW_16
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RND_DL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERW_16
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 0 72
+#event number: 2
+#type
+1
+#ID name
+TR_BREEDERM_06
+#OBJ CODE Number
+BREEDERM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BREEDERM_06
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 -136
+#event number: 3
+#type
+1
+#ID name
+TR_ELITEW_13
+#OBJ CODE Number
+TRAINERW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEW_13
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 -16 136
+#event number: 4
+#type
+1
+#ID name
+TR_BACKPACKERM_21
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RND_DL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERM_21
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 -32 136
+#event number: 5
+#type
+1
+#ID name
+TR_MOUNT_15
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MOUNT_15
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 -16 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -24,7 +210,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r22.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -34,7 +220,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r22.wms
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
