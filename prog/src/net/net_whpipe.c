@@ -1007,8 +1007,8 @@ void NET_WHPIPE_BeaconSetInfo( void )
       NetBeaconGetSizeFunc func = pInit->beaconGetSizeFunc;
       size = func(pNetWL->pUserWork);
     }
-    if((WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX) <= size){
-      GF_PANIC("size over %d <= %d", (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX), size);
+    if(size > (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)){
+      GF_PANIC("size over %d <= %d", size, (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX));
       return;
     }
     pGF = (_GF_BSS_DATA_INFO*)pNetWL->gameInfoBuff;
