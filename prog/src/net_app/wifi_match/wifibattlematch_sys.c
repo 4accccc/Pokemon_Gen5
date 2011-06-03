@@ -1024,9 +1024,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   }
 
   //バトル設定パラメータ
-  p_param->p_btl_setup_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
-	GFL_STD_MemClear( p_param->p_btl_setup_param, sizeof(BATTLE_SETUP_PARAM) );
-
+  p_param->p_btl_setup_param = BATTLE_PARAM_Create( heapID );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
 	//ランダムバトルのバトル設定
@@ -1351,8 +1349,8 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   }
 
   //破棄
-  BATTLE_PARAM_Release( p_param->p_btl_setup_param );
-	GFL_HEAP_FreeMemory( p_param->p_btl_setup_param );
+  BATTLE_PARAM_Delete( p_param->p_btl_setup_param );
+
 	GFL_HEAP_FreeMemory( p_param->p_demo_param );
 	GFL_HEAP_FreeMemory( p_param );
 

@@ -539,8 +539,7 @@ static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   BATTLE_SETUP_PARAM  *p_param;
   GAMEDATA            *p_gamedata;
 
-  p_param = GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
-  GFL_STD_MemClear( p_param, sizeof(BATTLE_SETUP_PARAM) );
+  p_param = BATTLE_PARAM_Create( heapID );
   p_gamedata  = p_wk->p_param->p_gamedata;
 
   BTL_SETUP_InitForRecordPlay( p_param, p_gamedata, heapID );
@@ -599,7 +598,7 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
   GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
   BTL_SETUP_QuitForRecordPlay( p_param );
-  GFL_HEAP_FreeMemory( p_param );
+  BATTLE_PARAM_Delete( p_param );
 
   SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
 }
