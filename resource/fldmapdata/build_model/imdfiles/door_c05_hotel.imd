@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-06-03T17:19:40" source="door_c05_hotel.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-06-03T18:53:58" source="door_c05_hotel.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-06-03T17:19:40" source="door_c05_hotel.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-06-03T18:53:58" source="door_c05_hotel.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-1.500000 1.000000 4.000000" whd="7.000000 6.250000 0.000000"/>
+<box_test pos_scale="2" xyz="-3.500000 1.000000 0.000000" whd="7.000000 6.250000 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="c5_rb_door"
@@ -48,7 +48,7 @@
 			4666 4444 4444 9964 0000 0000 0000 0000
 			6777 6666 6666 aa76 0000 0000 0000 0000
 			7777 6666 6666 aa76 0000 0000 0000 0000
-			7377 7777 7777 ab37 0000 0000 0000 0000
+			7377 6666 6666 ab36 0000 0000 0000 0000
 			3377 7777 7777 ab37 0000 0000 0000 0000
 			3377 3333 3333 ab13 0000 0000 0000 0000
 			3377 3333 3333 ab13 0000 0000 0000 0000
@@ -97,7 +97,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="9 9 9"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
@@ -116,9 +116,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-7.137939 -5.993896 0.000000"
-		volume_max="6.862061 6.506104 0.000000"
-		volume_r="9.658203"
+		volume_min="-7.000000 -6.250000 0.000000"
+		volume_max="7.000000 6.250000 0.000000"
+		volume_r="9.384277"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -129,21 +129,21 @@
 					<mtx idx="0"/>
 					<tex st="15.937500 32.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xyz xyz="-0.137939 -5.993896 0.000000"/>
+					<pos_s xyz="0.000000 -6.250000 0.000000"/>
 					<tex st="0.062500 32.000000"/>
-					<pos_xy xy="6.862061 -5.993896"/>
+					<pos_xy xy="7.000000 -6.250000"/>
 					<tex st="0.062500 0.000000"/>
-					<pos_xy xy="6.862061 6.506104"/>
+					<pos_xy xy="7.000000 6.250000"/>
 					<tex st="15.937500 0.000000"/>
-					<pos_xy xy="-0.137939 6.506104"/>
+					<pos_xy xy="0.000000 6.250000"/>
 					<tex st="0.062500 32.000000"/>
-					<pos_xy xy="-7.137939 -5.993896"/>
+					<pos_xy xy="-7.000000 -6.250000"/>
 					<tex st="15.937500 32.000000"/>
-					<pos_xy xy="-0.137939 -5.993896"/>
+					<pos_xy xy="0.000000 -6.250000"/>
 					<tex st="15.937500 0.000000"/>
-					<pos_xy xy="-0.137939 6.506104"/>
+					<pos_xy xy="0.000000 6.250000"/>
 					<tex st="0.062500 0.000000"/>
-					<pos_xy xy="-7.137939 6.506104"/>
+					<pos_xy xy="-7.000000 6.250000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -160,14 +160,14 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="8.276123 15.988037 16.000000"
+		translate="0.000000 16.500000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-7.137939 -5.993896 0.000000"
-		volume_max="6.862061 6.506104 0.000000"
-		volume_r="9.658203"
+		volume_min="-7.000000 -6.250000 0.000000"
+		volume_max="7.000000 6.250000 0.000000"
+		volume_r="9.384277"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
