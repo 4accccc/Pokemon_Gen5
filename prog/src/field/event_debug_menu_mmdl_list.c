@@ -27,6 +27,20 @@
 #include "fieldmap.h"
 #include "field_player.h"
 
+#define TEST_MMDLID (250)
+#define OBJCODESTART_TPOKE_SWAN  (TPOKE_0555+1) // アルセウスがBW最後
+//-------------------------------------
+/// メニュータイプ	
+//=====================================
+enum
+{
+  LIST_TYPE_ALL,
+  LIST_TYPE_BILLBOARD,
+  LIST_TYPE_TPOKE_ALL,
+  LIST_TYPE_TPOKE_SWAN,
+};
+
+
 //======================================================================
 //  デバッグメニュー　動作モデル一覧
 //======================================================================
@@ -47,6 +61,11 @@ typedef struct
   u16 obj_code;
   u8 padding[2];
   MMDL *fmmdl;
+  MMDL_GRIDPOS  obj_gpos;
+  fx32          obj_y;
+  u16           obj_code_list[ OBJCODETOTAL ];
+  u8            list_type;
+  u32           list_length;
 }DEBUG_MMDLLIST_EVENT_WORK;
 
 //--------------------------------------------------------------
@@ -57,6 +76,8 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code );
 static void DEBUG_SetMenuWorkMMdlList(
     GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static u16 DEBUG_GetListMax( GAMESYS_WORK* gsys, void* cb_work );
+static u32 GetListMax( u32 list_type );
 
 /// 動作モデルリスト メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
@@ -81,14 +102,33 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
   0,    //表示サイズY キャラ単位
 };
 
+///メニューリスト
+static const DEBUG_MENU_LIST MenuList[] =
+{
+  { DEBUG_FIELD_MMDLLIST_MENU_0 , (void*)DEBUG_FIELD_MMDLLIST_MENU_0 , GFL_OVERLAY_BLANK_ID },  // ぜんぶ
+  { DEBUG_FIELD_MMDLLIST_MENU_1 , (void*)DEBUG_FIELD_MMDLLIST_MENU_1 , GFL_OVERLAY_BLANK_ID },  // ビルボードのみ
+  { DEBUG_FIELD_MMDLLIST_MENU_2 , (void*)DEBUG_FIELD_MMDLLIST_MENU_2 , GFL_OVERLAY_BLANK_ID },  // つれあるき全部
+  { DEBUG_FIELD_MMDLLIST_MENU_3 , (void*)DEBUG_FIELD_MMDLLIST_MENU_3 , GFL_OVERLAY_BLANK_ID },  // つれあるき（イッシュ)
+};
+
+static const DEBUG_MENU_INITIALIZER DebugMMdlListMenuData = {
+  NARC_debug_message_d_field_dat,
+  NELEMS(MenuList),
+  MenuList,
+  &DATA_DebugMenuList_MMdlList,
+  1, 1, 20, 16,
+  NULL,
+  NULL,
+};
+
 static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
   NARC_debug_message_d_field_dat,
-  OBJCODETOTAL,
+  0,
   NULL,
   &DATA_DebugMenuList_MMdlList,
   1, 1, 11, 16,
   DEBUG_SetMenuWorkMMdlList,
-  NULL,
+  DEBUG_GetListMax,
 };
 
 
@@ -129,6 +169,39 @@ GMEVENT * DEBUG_EVENT_DebugMenu_MmdlList( GAMESYS_WORK *gsys, void* wk )
   return event;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  選択されたメニューごとのリスト呼び出し
+ *
+ *	@param	*work
+ *	@param	type    
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugCallMenu( DEBUG_MMDLLIST_EVENT_WORK *work, u32 ret )
+{
+  switch(ret)
+  {
+  case DEBUG_FIELD_MMDLLIST_MENU_0:
+    work->list_type = LIST_TYPE_ALL;
+    break;
+  case DEBUG_FIELD_MMDLLIST_MENU_1:
+    work->list_type = LIST_TYPE_BILLBOARD;
+    break;
+  case DEBUG_FIELD_MMDLLIST_MENU_2:
+    work->list_type = LIST_TYPE_TPOKE_ALL;
+    break;
+  case DEBUG_FIELD_MMDLLIST_MENU_3:
+    work->list_type = LIST_TYPE_TPOKE_SWAN;
+    break;
+  default:
+    work->list_type = LIST_TYPE_ALL;
+    break;
+  };
+  work->menuFunc = DEBUGFLDMENU_InitEx( work->fieldWork, work->heapID , &DebugMMdlListData , work );
+}
+
 //--------------------------------------------------------------
 /**
  * イベント：動作モデル一覧
@@ -142,13 +215,52 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_MMDLLIST_EVENT_WORK *work = wk;
+  MMDL_HEADER head = {
+    TEST_MMDLID,  ///<識別ID
+    0,  ///<表示するOBJコード
+    MV_DMY, ///<動作コード
+    0,  ///<イベントタイプ
+    0,  ///<イベントフラグ
+    0,  ///<イベントID
+    DIR_DOWN,  ///<指定方向
+    0,  ///<指定パラメタ 0
+    0,  ///<指定パラメタ 1
+    0,  ///<指定パラメタ 2
+    4,  ///<X方向移動制限
+    4,  ///<Z方向移動制限
+    0,  ///<グリッドX
+    0,  ///<グリッドZ
+    0,  ///<Y値 fx32型
+  };
 
   switch( (*seq) ){
   case 0:
-    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugMMdlListData );
-    (*seq)++;
+    {
+      work->menuFunc = DEBUGFLDMENU_InitEx( work->fieldWork, work->heapID , &DebugMMdlListMenuData , work );
+      (*seq)++;
+    }
     break;
   case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+
+      // メニュー消去
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      if( ret == FLDMENUFUNC_CANCEL || ret == NONDRAW ){ //キャンセル
+        return( GMEVENT_RES_FINISH );
+      }
+
+      // 新たなメニュー呼び出し
+      DebugCallMenu( work ,ret );
+      (*seq)++;
+    }
+    break;
+  case 2:
     {
       u32 ret;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
@@ -166,34 +278,17 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 
       {
         MMDL *jiki;
-        MMDL_HEADER head = {
-          0,  ///<識別ID
-          0,  ///<表示するOBJコード
-          MV_DMY, ///<動作コード
-          0,  ///<イベントタイプ
-          0,  ///<イベントフラグ
-          0,  ///<イベントID
-          DIR_DOWN,  ///<指定方向
-          0,  ///<指定パラメタ 0
-          0,  ///<指定パラメタ 1
-          0,  ///<指定パラメタ 2
-          4,  ///<X方向移動制限
-          4,  ///<Z方向移動制限
-          0,  ///<グリッドX
-          0,  ///<グリッドZ
-          0,  ///<Y値 fx32型
-        };
-
         jiki = MMDLSYS_SearchOBJID(
           work->fldmmdlsys, MMDL_ID_PLAYER );
         MMDL_SetStatusBitVanish( jiki, TRUE );
 
-        head.id = 250;
+        MMDL_GetGridPos( jiki ,&work->obj_gpos );
+        work->obj_y = MMDL_GetVectorPosY( jiki );
 
         MMDLHEADER_SetGridPos( &head,
-            MMDL_GetGridPosX( jiki ),
-            MMDL_GetGridPosZ( jiki ),
-            MMDL_GetVectorPosY( jiki ) );
+            work->obj_gpos.gx,
+            work->obj_gpos.gz,
+            work->obj_y );
 
         head.obj_code = work->obj_code;
 
@@ -203,24 +298,26 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
 
       (*seq)++;
       break;
-    case 2:
+    case 3:
       {
         MMDL *mmdl = work->fmmdl;
+        int key_trg = GFL_UI_KEY_GetTrg();
         int key_cont = GFL_UI_KEY_GetCont();
         u16 code = MMDL_GetOBJCode( mmdl );
         u16 ac = ACMD_NOT;
-        
+
         if( MMDL_CheckMoveBitAcmd(mmdl) ){
           if( MMDL_CheckEndAcmd(mmdl) == TRUE ){
             MMDL_EndAcmd( mmdl );
           }
         }
         
-        if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
+        if( MMDL_CheckPossibleAcmd(mmdl) == TRUE )
+        {
           if( (key_cont & PAD_BUTTON_B) ){
             MMDL_SetStatusBitVanish( MMDLSYS_SearchOBJID( work->fldmmdlsys, MMDL_ID_PLAYER ), FALSE );
             MMDL_Delete( work->fmmdl );
-            (*seq) = 1;
+            (*seq) = 2;
             return GMEVENT_RES_CONTINUE;
           }
 
@@ -324,12 +421,82 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
             MMDL_SetAcmd( mmdl, ac );
             (*seq)++;
           }
+
+          // ひとつ次のモデルを表示する
+          if( (key_trg & PAD_BUTTON_R) ){
+            u32 pos;
+            // 選択済みのカーソル位置を調べる
+            for( pos = 0; pos < OBJCODETOTAL ; pos++ )
+            {
+              if( work->obj_code_list[pos] == work->obj_code )
+              {
+                break;
+              }
+            }
+            MMDL_EndAcmd( work->fmmdl );
+            MMDL_Delete( work->fmmdl );
+
+            // 新たなOBJを追加しなおす
+            MMDLHEADER_SetGridPos( &head,
+                work->obj_gpos.gx,
+                work->obj_gpos.gz,
+                work->obj_y );
+
+            // 表示オブジェクトコードの変更
+            pos++;
+            if( work->list_length <= pos )
+            {
+              pos = 0;
+            }
+            work->obj_code = work->obj_code_list[pos];
+            head.obj_code = work->obj_code_list[pos];
+            work->fmmdl = MMDLSYS_AddMMdl(
+                work->fldmmdlsys, &head, 0 );
+            return GMEVENT_RES_CONTINUE;
+          }
+
+          // ひとつ前のモデルを表示する
+          if( (key_trg & PAD_BUTTON_L) ){
+            s32 pos;
+            // 選択済みのカーソル位置を調べる
+            for( pos = 0; pos < OBJCODETOTAL ; pos++ )
+            {
+              if( work->obj_code_list[pos] == work->obj_code )
+              {
+                break;
+              }
+            }
+            MMDL_EndAcmd( work->fmmdl );
+            MMDL_Delete( work->fmmdl );
+
+            // 新たなOBJを追加しなおす
+            MMDLHEADER_SetGridPos( &head,
+                work->obj_gpos.gx,
+                work->obj_gpos.gz,
+                work->obj_y );
+
+            // 表示オブジェクトコードの変更
+            if( pos == 0 )
+            {
+              pos = work->list_length-1;
+            }
+            else
+            {
+              pos--;
+            }
+            work->obj_code = work->obj_code_list[pos];
+            head.obj_code = work->obj_code_list[pos];
+            work->fmmdl = MMDLSYS_AddMMdl(
+                work->fldmmdlsys, &head, 0 );
+            return GMEVENT_RES_CONTINUE;
+          }
         }
       }
       break;
-    case 3:
-      if( MMDL_EndAcmd( work->fmmdl )){
-        (*seq) = 2;
+    case 4:
+      if( MMDL_EndAcmd( work->fmmdl ))
+      {
+        (*seq) = 3;
       }
       break;
     }
@@ -365,18 +532,15 @@ static u16 * DEBUG_GetOBJCodeStrBuf( HEAPID heapID, u16 code )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static void sortBmpMenuListData( BMP_MENULIST_DATA * list )
+static void sortBmpMenuListData( BMP_MENULIST_DATA * list ,u32 list_size )
 {
   const STRCODE eom = GFL_STR_GetEOMCode();
-  u32 count, i, j;
+  u32 i, j;
 
-  //list全体の長さを測る
-  for ( count = 0; list[count].str != NULL; count ++ ) { /* */ }
-
-  for ( i = 0; i < count - 1; i ++ )
+  for ( i = 0; i < list_size - 1; i ++ )
   {
     BMP_MENULIST_DATA * list_a = list + i;
-    for ( j = i + 1; j < count; j ++ )
+    for ( j = i + 1; j < list_size; j ++ )
     {
       BMP_MENULIST_DATA * list_b = list + j;
       const STRCODE * str_a = GFL_STR_GetStringCodePointer( (const STRBUF*)list_a->str );
@@ -401,6 +565,22 @@ static void sortBmpMenuListData( BMP_MENULIST_DATA * list )
     }
   }
 }
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void saveObjeCodeList( BMP_MENULIST_DATA * list ,u16 *code_list ,u32 list_size )
+{
+  int i;
+
+  for ( i = 0; i < OBJCODETOTAL; i ++ )
+  {
+    code_list[i] = 0;
+  }
+  for ( i = 0; i < list_size; i ++ )
+  {
+    BMP_MENULIST_DATA * p_list = &list[i];
+    code_list[i] = p_list->param;
+  }
+}
 
 //--------------------------------------------------------------
 /**
@@ -416,34 +596,85 @@ static void DEBUG_SetMenuWorkMMdlList(
   u16 *str;
   int id,max;
   STRBUF *strBuf = GFL_STR_CreateBuffer( DEBUG_OBJCODE_STR_LENGTH, heapID );
+  DEBUG_MMDLLIST_EVENT_WORK *work = cb_work;
+  work->list_length = GetListMax(work->list_type);
 
-  for( id = OBJCODESTART_BBD; id < OBJCODEEND_BBD; id++ ){
-    GFL_STR_ClearBuffer( strBuf );
-    str = DEBUG_GetOBJCodeStrBuf( heapID, id );
-    GFL_STR_SetStringCode( strBuf, str );
-    GFL_HEAP_FreeMemory( str );
-    FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
-  }
-  sortBmpMenuListData( (BMP_MENULIST_DATA *)list );
-
-  for( id = OBJCODESTART_TPOKE; id < OBJCODEEND_TPOKE; id++ ){
-    GFL_STR_ClearBuffer( strBuf );
-    str = DEBUG_GetOBJCodeStrBuf( heapID, id );
-    GFL_STR_SetStringCode( strBuf, str );
-    GFL_HEAP_FreeMemory( str );
-    FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+  if( (work->list_type == LIST_TYPE_ALL) || (work->list_type == LIST_TYPE_BILLBOARD) )
+  {
+    for( id = OBJCODESTART_BBD; id < OBJCODEEND_BBD; id++ ){
+      GFL_STR_ClearBuffer( strBuf );
+      str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+      GFL_STR_SetStringCode( strBuf, str );
+      GFL_HEAP_FreeMemory( str );
+      FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+    }
+    sortBmpMenuListData( (BMP_MENULIST_DATA *)list ,OBJCODEEND_BBD-OBJCODESTART_BBD);
   }
 
-  for( id = OBJCODESTART_MDL; id < OBJCODEEND_MDL; id++ ){
-    GFL_STR_ClearBuffer( strBuf );
-    str = DEBUG_GetOBJCodeStrBuf( heapID, id );
-    GFL_STR_SetStringCode( strBuf, str );
-    GFL_HEAP_FreeMemory( str );
-    FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+  if( work->list_type == LIST_TYPE_TPOKE_SWAN )
+  {
+    for( id = OBJCODESTART_TPOKE_SWAN; id < OBJCODEEND_TPOKE; id++ ){
+      GFL_STR_ClearBuffer( strBuf );
+      str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+      GFL_STR_SetStringCode( strBuf, str );
+      GFL_HEAP_FreeMemory( str );
+      FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+    }
+  }else if( (work->list_type == LIST_TYPE_ALL) || (work->list_type == LIST_TYPE_TPOKE_ALL) )
+  {
+    for( id = OBJCODESTART_TPOKE; id < OBJCODEEND_TPOKE; id++ ){
+      GFL_STR_ClearBuffer( strBuf );
+      str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+      GFL_STR_SetStringCode( strBuf, str );
+      GFL_HEAP_FreeMemory( str );
+      FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+    }
   }
+
+  if( work->list_type == LIST_TYPE_ALL )
+  {
+    for( id = OBJCODESTART_MDL; id < OBJCODEEND_MDL; id++ ){
+      GFL_STR_ClearBuffer( strBuf );
+      str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+      GFL_STR_SetStringCode( strBuf, str );
+      GFL_HEAP_FreeMemory( str );
+      FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+    }
+  }
+
+  saveObjeCodeList( (BMP_MENULIST_DATA *)list ,work->obj_code_list ,work->list_length);
 
   GFL_HEAP_FreeMemory( strBuf );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リストの最大数を返す
+ *
+ *	@param	gsys
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 GetListMax( u32 list_type )
+{
+  u32 list_max[] = 
+  {
+    OBJCODETOTAL,
+    OBJCODEEND_BBD - OBJCODESTART_BBD,
+    OBJCODEEND_TPOKE - OBJCODESTART_TPOKE,
+    OBJCODEEND_TPOKE - OBJCODESTART_TPOKE_SWAN,
+  };
+  return list_max[list_type];
+}
+
+static u16 DEBUG_GetListMax( GAMESYS_WORK* gsys, void* cb_work )
+{
+  DEBUG_MMDLLIST_EVENT_WORK *work = cb_work;
+  return GetListMax(work->list_type);
+}
+
 
 //======================================================================
 //======================================================================
