@@ -177,7 +177,7 @@
 #define WK_SCENE_R04_POKE                16565 /* 0x40b5 R04：イワパレスイベント管理ワーク */
 #define WK_SCENE_R04_SWBOSS              16566 /* 0x40b6 R04：アクロマイベント管理ワーク */
 #define WK_SCENE_C05GYM0101_SHORTCUT     16567 /* 0x40b7 スワン地面ジム：ジム退出ショートカット用ワーク */
-#define WK_SCENE_C04_RARRY               16568 /* 0x40b8 ライモンシティ：ラリー進捗管理ワーク */
+#define WK_SCENE_C04_RALLY               16568 /* 0x40b8 ライモンシティ：ラリー進捗管理ワーク */
 #define WK_SCENE_C05GYM0101_TRBTL_01     16569 /* 0x40b9 じめんジム：１人目の視線トレーナー */
 #define WK_SCENE_C05GYM0101_TRBTL_02     16570 /* 0x40ba じめんジム：２人目の視線トレーナー */
 #define WK_SCENE_C05GYM0101_TRBTL_03     16571 /* 0x40bb じめんジム：３人目の視線トレーナー */
