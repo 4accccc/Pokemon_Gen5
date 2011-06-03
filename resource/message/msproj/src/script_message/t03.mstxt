@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t03_swrival_01">
+		Label="msg_t03_swrival_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『
@@ -54,7 +55,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_swrival_02">
+		Label="msg_t03_swrival_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『</Text>
@@ -102,7 +104,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_swrival_03">
+		Label="msg_t03_swrival_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『</Text>
@@ -150,7 +153,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_hakase2_01">
+		Label="msg_t03_hakase2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
@@ -201,7 +205,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_oldwoman1_01">
+		Label="msg_t03_oldwoman1_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょいと　そこの　たびびとさんや
@@ -261,7 +266,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_oldwoman1_02">
+		Label="msg_t03_oldwoman1_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>この　まちの　うらには　ものすごーく
@@ -337,7 +343,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_oldwoman1_02_01">
+		Label="msg_t03_oldwoman1_02_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>……　……　……　……　……
@@ -404,7 +411,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_oldwoman1_03">
+		Label="msg_t03_oldwoman1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああ　そうかいな
@@ -446,7 +454,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_middlewoman1_01">
+		Label="msg_t03_middlewoman1_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　カゴメタウン▼
@@ -1041,10 +1050,11 @@
 			<Comment>♂
 ・夜になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
-・GRIDX=６４１、GRIDZ=１７1辺り</Comment>
+・GRIDX=６４１、GRIDZ=１７1辺り
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:03:14" />
+				Time="2011-06-03T08:57:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
