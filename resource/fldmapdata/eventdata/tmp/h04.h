@@ -21,6 +21,13 @@
 #define H04_GRASSSOUND_01                  1
 #define H04_GUITAR_01                      2
 #define H04_VOICE_01                       3
+#define TR_BAKER_05                        4
+#define TR_TANPAN_23                       5
+#define TR_MINI_18                         6
+#define TR_ARTIST_05                       7
+#define TR_FISHING_21                      8
+#define TR_BACKPACKERW_17                  9
+#define TR_BACKPACKERM_22                 10
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
