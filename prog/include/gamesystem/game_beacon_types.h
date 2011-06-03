@@ -140,6 +140,10 @@ struct _GAMEBEACON_INFO{
   GAMEBEACON_INFO_DETAILS details;         ///<詳細情報         8
   QUESTIONNAIRE_ANSWER_WORK question_answer;  ///<アンケート回答    10
   u16 dummy;                                ///<上記アンケートが10byteなので2byteパディングが空いていた 使用の際は変数名変えてください
+
+  u32 dummy2;                               ///GAMEBEACON_INFOを領域末尾に含むビーコンのユーザー領域を定義している
+                                            ///GBS_BEACON構造体(include/field/game_beacon_search.h)のサイズは104byteまでOK。
+                                            ///BWでは100byteだったので、swanでGAMEBEACON_INFOのサイズを4byte足しても問題ないハズ
 };
 
 //==================================================================
