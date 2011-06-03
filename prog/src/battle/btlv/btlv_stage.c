@@ -111,9 +111,9 @@ BTLV_STAGE_WORK *BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
 
   // ポケウッドフラグの参照
   if( pokewood==BTL_POKEWOOD_REC ){
-    index = BATT_BG_OBONID_25;
-  }else if( pokewood==BTL_POKEWOOD_SHOW ){
     index = BATT_BG_OBONID_26;
+  }else if( pokewood==BTL_POKEWOOD_SHOW ){
+    index = BATT_BG_OBONID_27;
   }
 
   //リソース読み込み
