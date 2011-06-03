@@ -125,6 +125,14 @@ enum {
   RESID_LIFT_ENT_ITA,       // エントランスリフト
   RESID_LIFT_LIGHTUP_MDL,   // ライトアップ用
   RESID_LIFT_LIGHTUP_ICA,   // ライトアップ用
+
+  // フォグ無効版モデル
+  RESID_OBJ_HERO_BACK_F,    // 主人公 後(女)
+  RESID_OBJ_HERO_BACK_M,    // 主人公 後(男)
+  RESID_OBJ_HERO_FRONT_F,   // 主人公 前(女)
+  RESID_OBJ_HERO_FRONT_M,   // 主人公 前(男)
+  RESID_OBJ_YACON,          // ヤーコン
+
 };
 
 // OBJインデックス
@@ -222,6 +230,13 @@ enum {
 
   OBJ_LIFT_YACON,   // ヤーコンリフト
   OBJ_LIFT_ENT,     // エントランスリフト
+  
+  // フォグ無効版モデル
+  OBJ_HERO_BACK_F,  // 主人公 後(女)
+  OBJ_HERO_BACK_M,  // 主人公 後(男)
+  OBJ_HERO_FRONT_F, // 主人公 前(女)
+  OBJ_HERO_FRONT_M, // 主人公 前(男)
+  OBJ_YACON,        // ヤーコン
 
   OBJ_NUM,
 };
@@ -245,6 +260,14 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_entrance01_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
 	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_lightup01_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 	{ ARCID_GYM_GROUND, NARC_gym_ground_lift_lightup01_nsbca, GFL_G3D_UTIL_RESARC }, //ITA
+
+
+  // フォグ無効版モデル
+	{ ARCID_GYM_GROUND, NARC_gym_ground_swheroine_b_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_swhero_b_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_swheroine_a_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_swhero_a_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+	{ ARCID_GYM_GROUND, NARC_gym_ground_yacon_a_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 };
 
 // ANIME
@@ -941,6 +964,47 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_LIFT_ENT_MDL,     // テクスチャリソースID
     anm_lift_ent,           // アニメテーブル(複数指定のため)
     NELEMS(anm_lift_ent),   // アニメリソース数
+  },
+
+  // OBJ_HERO_BACK_F  // 主人公 後(女)
+  {
+    RESID_OBJ_HERO_BACK_F,  // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_OBJ_HERO_BACK_F,  // テクスチャリソースID
+    NULL,                   // アニメテーブル(複数指定のため)
+    0,                      // アニメリソース数
+  },
+  // OBJ_HERO_BACK_M  // 主人公 後(男)
+  {
+    RESID_OBJ_HERO_BACK_M,  // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_OBJ_HERO_BACK_M,  // テクスチャリソースID
+    NULL,                   // アニメテーブル(複数指定のため)
+    0,                      // アニメリソース数
+  },
+  // OBJ_HERO_FRONT_F // 主人公 前(女)
+  {
+    RESID_OBJ_HERO_FRONT_F, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_OBJ_HERO_FRONT_F, // テクスチャリソースID
+    NULL,                   // アニメテーブル(複数指定のため)
+    0,                      // アニメリソース数
+  },
+  // OBJ_HERO_FRONT_M // 主人公 前(男)
+  {
+    RESID_OBJ_HERO_FRONT_M, // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_OBJ_HERO_FRONT_M, // テクスチャリソースID
+    NULL,                   // アニメテーブル(複数指定のため)
+    0,                      // アニメリソース数
+  },
+  // OBJ_YACON        // ヤーコン
+  {
+    RESID_OBJ_YACON,        // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_OBJ_YACON,        // テクスチャリソースID
+    NULL,                   // アニメテーブル(複数指定のため)
+    0,                      // アニメリソース数
   },
 };
 

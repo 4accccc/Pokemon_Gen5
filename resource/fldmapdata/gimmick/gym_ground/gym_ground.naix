@@ -23,7 +23,12 @@ enum {
 	NARC_gym_ground_lift_work01_nsbmd = 9,
 	NARC_gym_ground_lift_work01_nsbta = 10,
 	NARC_gym_ground_lift_yacon01_nsbmd = 11,
-	NARC_gym_ground_lift_yacon01_nsbta = 12
+	NARC_gym_ground_lift_yacon01_nsbta = 12,
+	NARC_gym_ground_swheroine_b_nsbmd = 13,
+	NARC_gym_ground_swhero_b_nsbmd = 14,
+	NARC_gym_ground_swheroine_a_nsbmd = 15,
+	NARC_gym_ground_swhero_a_nsbmd = 16,
+	NARC_gym_ground_yacon_a_nsbmd = 17
 };
 
 /* NARC_GYM_GROUND_NAIX_ */

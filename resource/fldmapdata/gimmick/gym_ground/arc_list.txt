@@ -11,3 +11,8 @@
 "lift_work01.nsbta"
 "lift_yacon01.nsbmd"
 "lift_yacon01.nsbta"
+"swheroine_b.nsbmd"
+"swhero_b.nsbmd"
+"swheroine_a.nsbmd"
+"swhero_a.nsbmd"
+"yacon_a.nsbmd"

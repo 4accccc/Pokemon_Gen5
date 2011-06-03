@@ -150,6 +150,8 @@ typedef struct {
   fx32            now_height;   // 現在位置
   fx32            dst_height;   // 移動後位置
   fx32            add_val;      // 加算値
+
+  u16             obj_idx;      // 差し替えようのモデル
 } LIFT_EVENT_WORK;
 
 //-------------------------------------
@@ -165,6 +167,7 @@ typedef struct {
 
   int           obj_idx;    // 出口リフト or ヤーコンリフト
   MMDL          *yacon_mmdl;// ヤーコンのMMDL
+  BOOL          is_yacon;   // ヤーコンリフトか
 } EXIT_LIFT_EVENT_WORK;
 
 
@@ -325,7 +328,7 @@ static void LIFT_AllArrival( GYM_GROUND_TMP *p_wk );
 static GMEVENT* LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int lift_id, const int way );
 static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk );
 static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk );
-static void LIFT_EVENT_SetFogEnableFlag( LIFT_EVENT_WORK *p_wk, const BOOL flag );
+static void LIFT_EVENT_SetFogEnable( LIFT_EVENT_WORK *p_wk, const BOOL flag, const u16 obj_idx );
 static BOOL LIFT_EVENT_CheckArrive( LIFT_EVENT_WORK *p_wk );
 
 // 出口リフト
@@ -852,6 +855,28 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
     }
   }
 
+
+  //=====================================
+  // フォグ無効版のモデル設定
+  {
+    for( i=0; i<5; i++ )
+    {
+      u16 obj_idx = OBJ_HERO_BACK_F + i;    // OBJインデックス
+
+      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+
+      // 座標
+      status->trans.x = 0;
+      status->trans.y = 0;
+      status->trans.z = 0;
+
+      // カリングする
+      FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
+      // 非表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
+    }
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1370,6 +1395,22 @@ static GMEVENT* LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int
 #endif
   }
 
+  // OBJ_ID求める
+  {
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+    MYSTATUS* p_mystatus = GAMEDATA_GetMyStatus( p_gdata );
+    int sex = MyStatus_GetMySex( p_mystatus );
+
+    if( sex == PM_MALE )
+    {
+      work->obj_idx = OBJ_HERO_BACK_M;
+    }
+    else
+    {
+      work->obj_idx = OBJ_HERO_BACK_F;
+    }
+  }
+
   return event;
 }
 
@@ -1415,7 +1456,7 @@ static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk )
         }
 
         // フォグを設定する
-        //LIFT_EVENT_SetFogEnableFlag( p_wk, FALSE );
+        LIFT_EVENT_SetFogEnable( p_wk, FALSE, p_wk->obj_idx );
       }
 
       *seq = SEQ_INIT_WAIT;
@@ -1465,7 +1506,7 @@ static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk )
         }
 
         // フォグを設定する
-        //LIFT_EVENT_SetFogEnableFlag( p_wk, TRUE );
+        LIFT_EVENT_SetFogEnable( p_wk, TRUE, p_wk->obj_idx );
       }
 
       // SE停止
@@ -1503,7 +1544,7 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
   }
 
   // 対象フォグ高さ更新
-#if 1 
+#if 0 
   //変わりにフォグを無効にすることになった
   {
     const int obj_tbl[LIFT_MOVE_NUM] = {
@@ -1519,11 +1560,22 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
 #endif
 
   //自機の高さを更新
+#if 0
   {
     VecFx32 pos;
     FIELD_PLAYER_GetPos( p_wk->player, &pos );
     pos.y = p_wk->now_height;
     FIELD_PLAYER_SetPos( p_wk->player, &pos );
+  }
+#endif
+
+  {
+    VecFx32 pos;
+    int obj_idx = p_wk->obj_idx;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+
+    // 座標
+    status->trans.y = p_wk->now_height;
   }
 
 }
@@ -1533,31 +1585,48 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
  *	@brief  リフトと自機のフォグ適用フラグを設定する
  *
  *	@param	p_wk  イベントワーク
- *	@param	flag  TRUEでかける
+ *	@param  flag  TRUEでフォグを有効 
+ *	              FALSEで自機がビルボードからOBJに差し替える
+ *	@param	obj_idx  オブジェID
  */
 //-----------------------------------------------------------------------------
-static void LIFT_EVENT_SetFogEnableFlag( LIFT_EVENT_WORK *p_wk, const BOOL flag )
+static void LIFT_EVENT_SetFogEnable( LIFT_EVENT_WORK *p_wk, const BOOL flag, const u16 obj_idx )
 {
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+
   // リフト
   {
-    FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
-    const int obj_tbl[LIFT_MOVE_NUM] = {
-      OBJ_LIFT_LIGHTUP_14,
-      OBJ_LIFT_LIGHTUP_17,
-      OBJ_LIFT_LIGHTUP_32,
-      OBJ_LIFT_LIGHTUP_35,
-    };
-    int obj_idx = obj_tbl[ p_wk->lift_id ];
+    int obj_idx = OBJ_LIFT_1 + p_wk->lift_id;
     GFL_G3D_OBJ *p_obj = FLD_EXP_OBJ_GetUnitObj(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
     NNSG3dResMdl *p_mdl = NNS_G3dRenderObjGetResMdl
       (GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(p_obj)) );
+
+
     // fog enable flag設定
-    NNS_G3dMdlSetMdlFogEnableFlag( p_mdl, 0, flag );
+    // デフォルト設定→NNS_G3dMdlUseMdlFogEnableFlag( p_mdl );
+    NNS_G3dMdlSetMdlFogEnableFlagAll( p_mdl, flag );
   }
 
-  // 自機
+  // 自機、OBJに差し替え
+  {
+    VecFx32 pos;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+    FIELD_PLAYER_GetPos( p_wk->player, &pos );
+
+    // 座標
+    status->trans.x = pos.x;
+    status->trans.y = pos.y;
+    status->trans.z = pos.z;
+
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, flag );
+  }
+
+  // 自機ビルボードは非表示フラグ設定
   {
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+    BOOL vanish = !flag;
+    MMDL_SetStatusBitVanish( mmdl, vanish );
   }
 }
 
@@ -1615,10 +1684,12 @@ static GMEVENT* EXIT_LIFT_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, cons
     MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
     work->yacon_mmdl = MMDLSYS_SearchGridPos( mmdlsys, 46, 18, TRUE );
     GF_ASSERT_MSG( work->yacon_mmdl, "ヤーコンがみつからない\n");
+    work->is_yacon = TRUE;
   }
   else
   {
     work->yacon_mmdl = NULL;
+    work->is_yacon = FALSE;
   }
 
   //対象リフトの状態を取得
@@ -1682,6 +1753,74 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
     //リフト移動ＳＥ
     if ( !p_wk->exit ) PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE_IN);
     else PMSND_PlaySE(GYM_GROUND_SE_LIFT_MOVE);
+
+    // 自機とヤーコン差し替え
+    if( p_wk->is_yacon == TRUE )
+    {
+      int obj_idx;
+      VecFx32 pos;
+      FIELD_PLAYER *fld_player;
+      GFL_G3D_OBJSTATUS *status;
+
+      fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+      FIELD_PLAYER_GetPos( fld_player, &pos );
+
+      // OBJID求める
+      {
+        GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+        MYSTATUS* p_mystatus = GAMEDATA_GetMyStatus( p_gdata );
+        int sex = MyStatus_GetMySex( p_mystatus );
+
+        if( sex == PM_MALE )
+        {
+          obj_idx = OBJ_HERO_FRONT_M;
+        }
+        else
+        {
+          obj_idx = OBJ_HERO_FRONT_F;
+        }
+      }
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+      // 座標
+      status->trans.x = pos.x;
+      status->trans.y = pos.y;
+      status->trans.z = pos.z;
+
+      // 表示
+      FLD_EXP_OBJ_SetVanish( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, FALSE );
+
+
+      // ヤーコン
+      obj_idx = OBJ_YACON;
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+      MMDL_GetVectorPos( p_wk->yacon_mmdl, &pos );
+      // 座標
+      status->trans.x = pos.x;
+      status->trans.y = pos.y;
+      status->trans.z = pos.z;
+      // 表示
+      FLD_EXP_OBJ_SetVanish( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, FALSE );
+
+      // ビルボードは非表示フラグ設定
+      {
+        MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+        MMDL_SetStatusBitVanish( mmdl, TRUE );
+        MMDL_SetStatusBitVanish( p_wk->yacon_mmdl, TRUE );
+      }
+
+      // ヤーコンリフトフォグ無効
+      {
+        int obj_idx = OBJ_LIFT_YACON;
+        GFL_G3D_OBJ *p_obj = FLD_EXP_OBJ_GetUnitObj(exp_obj, GYM_GROUND_UNIT_IDX, obj_idx);
+        NNSG3dResMdl *p_mdl = NNS_G3dRenderObjGetResMdl
+          (GFL_G3D_RENDER_GetRenderObj(GFL_G3D_OBJECT_GetG3Drnd(p_obj)) );
+
+
+        // fog enable flag設定
+        // デフォルト設定→NNS_G3dMdlUseMdlFogEnableFlag( p_mdl );
+        NNS_G3dMdlSetMdlFogEnableFlagAll( p_mdl, FALSE );
+      }
+    }
     (*seq)++;
     break;
   case 1:
@@ -1708,28 +1847,66 @@ static GMEVENT_RESULT ExitLiftEvent( GMEVENT* event, int* seq, void* wk )
         GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_GROUND_UNIT_IDX, p_wk->obj_idx);
         status->trans.y = p_wk->now_height;
       }
-      //自機の高さを更新
+
+      // エントランスリフトの場合は動作モデルを移動だが、
+      // ヤーコンリフトの場合は、EXOBJを移動させる
+      if( p_wk->is_yacon == FALSE )
       {
-        VecFx32 pos;
-        FIELD_PLAYER *fld_player;
-        fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-        FIELD_PLAYER_GetPos( fld_player, &pos );
-        pos.y = p_wk->now_height;
-        FIELD_PLAYER_SetPos( fld_player, &pos );
+        //自機の高さを更新
+        {
+          VecFx32 pos;
+          FIELD_PLAYER *fld_player;
+          fld_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+          FIELD_PLAYER_GetPos( fld_player, &pos );
+          pos.y = p_wk->now_height;
+          FIELD_PLAYER_SetPos( fld_player, &pos );
+        }
+        // ヤーコンの高さを更新
+        if( p_wk->yacon_mmdl != NULL )
+        {
+          const VecFx32 *mmdl_pos;
+          VecFx32 pos;
+          int gy;
+          //座標更新
+          mmdl_pos = MMDL_GetVectorPosAddress( p_wk->yacon_mmdl );
+          pos = *mmdl_pos;
+          pos.y = p_wk->now_height;
+          gy = SIZE_GRID_FX32( pos.y );
+          MMDL_SetGridPosY( p_wk->yacon_mmdl, gy );
+          MMDL_SetVectorPos( p_wk->yacon_mmdl, &pos );
+        }
       }
-      // ヤーコンの高さを更新
-      if( p_wk->yacon_mmdl != NULL )
+      else
       {
-        const VecFx32 *mmdl_pos;
+        // EXOBJを移動
         VecFx32 pos;
-        int gy;
-        //座標更新
-        mmdl_pos = MMDL_GetVectorPosAddress( p_wk->yacon_mmdl );
-        pos = *mmdl_pos;
-        pos.y = p_wk->now_height;
-        gy = SIZE_GRID_FX32( pos.y );
-        MMDL_SetGridPosY( p_wk->yacon_mmdl, gy );
-        MMDL_SetVectorPos( p_wk->yacon_mmdl, &pos );
+        int obj_idx;
+        GFL_G3D_OBJSTATUS *status;
+
+        // 性別取得
+        {
+          GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+          MYSTATUS* p_mystatus = GAMEDATA_GetMyStatus( p_gdata );
+          int sex = MyStatus_GetMySex( p_mystatus );
+
+          if( sex == PM_MALE )
+          {
+            obj_idx = OBJ_HERO_FRONT_M;
+          }
+          else
+          {
+            obj_idx = OBJ_HERO_FRONT_F;
+          }
+        }
+
+        // 自機座標
+        status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+        status->trans.y = p_wk->now_height;
+
+        // ヤーコン座標
+        obj_idx = OBJ_YACON;
+        status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+        status->trans.y = p_wk->now_height;
       }
     }
     break;
