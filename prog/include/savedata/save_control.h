@@ -46,6 +46,7 @@
 #define FST_EXTRA_WBT_02_BREAK_BIT	  	  (1<<14)		//外部セーブ：WBT2：破壊
 #define FST_EXTRA_3DS_BREAK_BIT	  	      (1<<15)		//外部セーブ：3DS連動：破壊
 #define FST_OUTSIDE_MYSTERY_BREAK_BIT	  	(1<<16)	//管理外セーブ：不思議な贈り物：破壊
+#define FST_OUTSIDE_PERMANENT_BREAK_BIT	  (1<<17)	//管理外セーブ：キー＆コンバート：破壊
 
 //--------------------------------------------------------------
 //  外部セーブ番号
@@ -79,7 +80,6 @@ typedef enum{
 ///セーブデータ管理ワーク型の不定形型
 typedef struct _SAVE_CONTROL_WORK SAVE_CONTROL_WORK;
 
-
 //==============================================================================
 //	外部関数宣言
 //==============================================================================
@@ -107,6 +107,12 @@ extern void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl);
 extern void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *total_size);
 extern BOOL SaveControl_PageFlashLoad(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdataid, BOOL side_a_or_b, void *dst, u32 load_size);
 
+extern void * SaveControl_GetOutsidePermanent( SAVE_CONTROL_WORK *ctrl );
+extern BOOL SaveData_GetOutsidePermanentExistFlag( const SAVE_CONTROL_WORK * sv );
+extern void SaveData_SetOutsidePermanentExistFlag( SAVE_CONTROL_WORK * sv, BOOL is_exist );
+extern BOOL SaveData_GetOutsidePermanentBreakFlag( const SAVE_CONTROL_WORK * sv );
+extern void SaveData_SetOutsidePermanentBreakFlag( SAVE_CONTROL_WORK * sv, BOOL is_break );
+
 //--------------------------------------------------------------
 //  外部セーブ関連
 //--------------------------------------------------------------
@@ -133,6 +139,7 @@ extern void SaveControl_Extra_Erase(
 extern GFL_SAVEDATA * DEBUG_SaveData_PtrGet(void);
 extern GFL_SAVEDATA * DEBUG_SaveDataExtra_PtrGet(SAVE_EXTRA_ID extra_id);
 extern void DEBUG_OutsideSave_Brea(int mirror);
+void DEBUG_OutsidePermanent_Break(void);
 #endif
 
 

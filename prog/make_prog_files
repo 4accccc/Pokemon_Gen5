@@ -68,7 +68,9 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/resonance_resort_sv.c \
 				savedata/infinity_dungeon_save.c \
         savedata/gear_3ds_save.c \
-        savedata/wbt_ex_save.c
+        savedata/wbt_ex_save.c \
+        savedata/outside_permanent.c \
+        savedata/key_system_save.c
 
 
 #通信の常駐
@@ -1356,14 +1358,6 @@ SRCS_OVERLAY_D_LINKFEST = field/event_debug_linkfest.c \
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 
-# 有泉デバッグ
-#===> GROUP_OVERLAY_UNION_INTRUDE
-#===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_DEV_WIFI
-SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c \
-							test/ariizumi/musical_editor.c \
-							test/ariizumi/musical_view.c 
-
 # 田谷デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
@@ -1872,6 +1866,15 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
 		musical/comm/mus_comm_func.c \
 		musical/musical_debug_menu.c 
 
+
+# 有泉デバッグ
+#===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_MUSICAL
+SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c \
+							test/ariizumi/musical_editor.c \
+							test/ariizumi/musical_view.c 
 
 
 #Wifiクラブ対戦用サブプロック

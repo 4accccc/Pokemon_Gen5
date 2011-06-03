@@ -33,10 +33,13 @@ struct _SAVE_CONTROL_WORK{
 	u8 backup_now_save_mode_setup;    ///<TRUE:初回セットアップのフラグバックアップ
 	u8 outside_data_exists;   ///<TRUE:管理外セーブが存在する
 	u8 outside_data_break;    ///<TRUE:管理外セーブ破損
-	u8 padding[3];
+  u8 outside_permanent_exists;  ///<TRUE：管理外永続データが存在する
+  u8 outside_permanent_break;   ///<TRUE：管理外永続データが破損
+	u8 padding[1];
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
 	GFL_SAVEDATA *sv_extra[SAVE_EXTRA_ID_MAX];
+  OUTSIDE_PERMANENT *p_outside; ///<管理外領域の読み込み部分
 };
 
 //==============================================================================
@@ -70,16 +73,23 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   SAVE_EXTRA_ID extra_id;
   BOOL outside_exists = FALSE;
   BOOL outside_break = FALSE;
-  
+  BOOL outside_permanent_exists = FALSE;
+  BOOL outside_permanent_break = FALSE;
+  OUTSIDE_PERMANENT *p_outside; ///<管理外領域の読み込み部分
+
   //内部セーブでヒープを使用しきる前に管理外セーブの存在チェックを行う
   {
     OUTSIDE_SAVE_CONTROL *outsv;
     
     GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
     
-    outsv = OutsideSave_SystemLoad(heap_id);
+    outsv = OutsideSave_SystemLoad( GFL_HEAP_LOWID(heap_id));
     outside_exists = OutsideSave_GetExistFlag(outsv);
     outside_break = OutsideSave_GetBreakFlag(outsv);
+    outside_permanent_exists = OutsideSave_GetPermanentExistFlag(outsv);
+    outside_permanent_break = OutsideSave_GetPermanentBreakFlag(outsv);
+    p_outside = OutsideSave_AllocCopyPermanent(outsv,heap_id);
+
     OutsideSave_SystemUnload(outsv);
     
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
@@ -92,7 +102,10 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	ctrl->data_exists = FALSE;			//データは存在しない
 	ctrl->outside_data_exists = outside_exists;
 	ctrl->outside_data_break = outside_break;
+  ctrl->outside_permanent_exists = outside_permanent_exists;
+  ctrl->outside_permanent_break = outside_permanent_break;
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
+  ctrl->p_outside = p_outside;
 
 #if DEBUG_ONLY_FOR_ohno
   {  //各データのサイズを得る
@@ -123,6 +136,9 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	ctrl->first_status = 0;
 	if(outside_break == TRUE){
     ctrl->first_status |= FST_OUTSIDE_MYSTERY_BREAK_BIT;
+  }
+  if(outside_permanent_break == TRUE ){
+    ctrl->first_status |= FST_OUTSIDE_PERMANENT_BREAK_BIT;
   }
 	switch(load_ret){
 	case LOAD_RESULT_OK:				///<データ正常読み込み
@@ -194,6 +210,7 @@ void SaveControl_SystemExit(void)
 {
   if(SaveControlWork != NULL){
     GFL_SAVEDATA_Delete(SaveControlWork->sv_normal);
+    GFL_HEAP_FreeMemory(SaveControlWork->p_outside);
     GFL_HEAP_FreeMemory(SaveControlWork);
     SaveControlWork = NULL;
   }
@@ -554,6 +571,69 @@ BOOL SaveControl_PageFlashLoad(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdataid, BO
 {
   return GFL_BACKUP_Page_FlashLoad(ctrl->sv_normal, gmdataid, side_a_or_b, dst, load_size);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief 管理外永続データ取得
+ *
+ *	@param	SAVE_CONTROL_WORK *ctrl セーブコントロールワーク
+ *
+ *	@return 管理外永続データ
+ */
+//-----------------------------------------------------------------------------
+void * SaveControl_GetOutsidePermanent( SAVE_CONTROL_WORK *ctrl )
+{
+  return ctrl->p_outside;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  管理外永続データ存在フラグ取得
+ *
+ *	@param	SAVE_CONTROL_WORK * sv セーブワーク
+ *
+ *	@return TRUEで存在  FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+BOOL SaveData_GetOutsidePermanentExistFlag( const SAVE_CONTROL_WORK * sv )
+{
+  return sv->outside_permanent_exists;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　管理外永続データ存在フラグセット
+ *
+ *	@param	SAVE_CONTROL_WORK * sv　セーブワーク
+ *	@param	is_exist TRUEで存在 FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SetOutsidePermanentExistFlag( SAVE_CONTROL_WORK * sv, BOOL is_exist )
+{
+  sv->outside_permanent_exists = is_exist;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  管理外永続データ破壊フラグ取得
+ *
+ *	@param	SAVE_CONTROL_WORK * sv セーブワーク
+ *
+ *	@return TRUEで破壊  FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+BOOL SaveData_GetOutsidePermanentBreakFlag( const SAVE_CONTROL_WORK * sv )
+{
+  return sv->outside_permanent_break;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　管理外永続データ破壊フラグセット
+ *
+ *	@param	SAVE_CONTROL_WORK * sv　セーブワーク
+ *	@param	is_exist TRUEで破壊 FALSEでなし
+ */
+//-----------------------------------------------------------------------------
+void SaveData_SetOutsidePermanentBreakFlag( SAVE_CONTROL_WORK * sv, BOOL is_break )
+{
+  sv->outside_permanent_break = is_break;
+}
 
 //==================================================================
 /**
@@ -830,5 +910,13 @@ void DEBUG_OutsideSave_Brea(int mirror)
     GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY_MIRROR + 12, &break_data, sizeof(break_data));
   }
 }
+
+///管理外永続データを破壊する
+void DEBUG_OutsidePermanent_Break(void)
+{
+  u64 break_data = 0x401a9f4a;
+  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_PERMANENT + 12, &break_data, sizeof(break_data));
+}
+
 #endif
 

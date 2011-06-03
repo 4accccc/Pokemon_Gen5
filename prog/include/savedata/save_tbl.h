@@ -44,6 +44,8 @@
 #define SAVESIZE_EXTRA_3DS                (0x100)
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
 #define SAVESIZE_OUTSIDE_MYSTERY          (0x400)
+///管理外領域で永続使用するセーブサイズ
+#define SAVESIZE_OUTSIDE_PERMANENT        (0x100)
 
 
 //--------------------------------------------------------------
@@ -105,7 +107,9 @@ enum{
   OUTSIDE_MM_MYSTERY = EXTRA_MM_SAVE_END,
   OUTSIDE_MM_MYSTERY_MIRROR = OUTSIDE_MM_MYSTERY + SAVESIZE_OUTSIDE_MYSTERY,
 
-  ALL_SAVE_END = OUTSIDE_MM_MYSTERY_MIRROR + SAVESIZE_OUTSIDE_MYSTERY,
+  OUTSIDE_MM_PERMANENT = OUTSIDE_MM_MYSTERY_MIRROR + SAVESIZE_OUTSIDE_MYSTERY,
+
+  ALL_SAVE_END = OUTSIDE_MM_PERMANENT + SAVESIZE_OUTSIDE_PERMANENT,
 };
 
 //--------------------------------------------------------------

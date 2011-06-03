@@ -80,6 +80,7 @@ static void DebugMenuListDelete(D_MATSU_WORK *wk);
 static void Local_MessagePut(D_MATSU_WORK *wk, int win_index, STRBUF *strbuf, int x, int y);
 static u32 _CheckExtraData(D_MATSU_WORK *wk, int extra_id);
 static u32 _CheckOutsideData(D_MATSU_WORK *wk);
+static u32 _CheckOutsidePermanent(D_MATSU_WORK *wk);
 
 
 //==============================================================================
@@ -102,7 +103,7 @@ static const BMPMENULIST_HEADER DebugSaveBmpMenuHead = {
   NULL,           //void  *icon;    //一列表示ごとのコールバック関数
 //  NULL,           //GFL_BMPWIN *win;
   1,              //u16   count;    //リスト項目数
-  12,             //u16   line;   //表示最大項目数
+  10,             //u16   line;   //表示最大項目数
   0,              //u8    rabel_x;  //ラベル表示Ｘ座標
   16,             //u8    data_x;   //項目表示Ｘ座標
   0,              //u8    cursor_x; //カーソル表示Ｘ座標
@@ -313,18 +314,25 @@ static GFL_PROC_RESULT DebugSaveProcMain( GFL_PROC * proc, int * seq, void * pwk
   case BMPMENU_CANCEL:
     return GFL_PROC_RES_FINISH;
   default:
-    if(bmp_ret < SAVE_EXTRA_ID_MAX){
-      if(save_b == TRUE && bmp_ret != SAVE_EXTRA_ID_REC_MINE && bmp_ret != SAVE_EXTRA_ID_DENDOU){
-        break;
-      }
-      SaveControl_Extra_Load(SaveControl_GetPointer(), bmp_ret, HEAPID_MATSUDA_DEBUG);
-      DEBUG_BACKUP_DataWrite(
-        DEBUG_SaveDataExtra_PtrGet(bmp_ret), 0, &write_data, 0, sizeof(write_data),
-        save_a, save_b, FALSE, FALSE);
-      SaveControl_Extra_Unload(SaveControl_GetPointer(), bmp_ret);
-    }
-    else{
+    switch( bmp_ret )
+    {
+    case SAVE_EXTRA_ID_MAX + 0:
       DEBUG_OutsideSave_Brea(save_b);
+      break;
+    case SAVE_EXTRA_ID_MAX + 1:
+      DEBUG_OutsidePermanent_Break();
+      break;
+    default:
+      if(bmp_ret < SAVE_EXTRA_ID_MAX){
+        if(save_b == TRUE && bmp_ret != SAVE_EXTRA_ID_DENDOU){
+          break;
+        }
+        SaveControl_Extra_Load(SaveControl_GetPointer(), bmp_ret, HEAPID_MATSUDA_DEBUG);
+        DEBUG_BACKUP_DataWrite(
+            DEBUG_SaveDataExtra_PtrGet(bmp_ret), 0, &write_data, 0, sizeof(write_data),
+            save_a, save_b, FALSE, FALSE);
+        SaveControl_Extra_Unload(SaveControl_GetPointer(), bmp_ret);
+      }
     }
     break;
   }
@@ -392,7 +400,7 @@ static void DebugMenuHeadCreate(D_MATSU_WORK *wk, BMPMENULIST_HEADER *bmphead)
   
   *bmphead = DebugSaveBmpMenuHead;
   bmphead->list = wk->list_data;
-  bmphead->count = SAVE_EXTRA_ID_MAX + 1;
+  bmphead->count = SAVE_EXTRA_ID_MAX + 1 + 1;
   bmphead->msgdata = wk->mm;
   bmphead->print_util = wk->drawwin[WIN_MENU].printUtil;
   bmphead->print_que = wk->printQue;
@@ -413,7 +421,7 @@ static void DebugMenuListCreate(D_MATSU_WORK *wk)
   STRBUF *tempbuf, *status, *destsrc;
   BOOL ret_a, ret_b;
   
-  save_tbl_max = SAVE_EXTRA_ID_MAX + 1;
+  save_tbl_max = SAVE_EXTRA_ID_MAX + 1 + 1;
   list_data = BmpMenuWork_ListCreate(save_tbl_max, HEAPID_MATSUDA_DEBUG);
   
   for(i = 0; i < SAVE_EXTRA_ID_MAX; i++){
@@ -441,6 +449,17 @@ static void DebugMenuListCreate(D_MATSU_WORK *wk)
   GFL_STR_DeleteBuffer(status);
   GFL_STR_DeleteBuffer(tempbuf);
 
+  //管理外永続データ
+  destsrc = GFL_STR_CreateBuffer(64, HEAPID_MATSUDA_DEBUG);
+  tempbuf = GFL_MSG_CreateString(wk->mm, DM_MSG_EXSAVE_018);
+  status = GFL_MSG_CreateString(wk->mm, _CheckOutsidePermanent(wk));
+  WORDSET_RegisterWord(wk->wordset, 0, status, 0, TRUE, PM_LANG);
+  WORDSET_ExpandStr(wk->wordset, destsrc, tempbuf);
+  list_data[SAVE_EXTRA_ID_MAX + 1].str = destsrc;
+  list_data[SAVE_EXTRA_ID_MAX + 1].param = SAVE_EXTRA_ID_MAX + 1;
+  GFL_STR_DeleteBuffer(status);
+  GFL_STR_DeleteBuffer(tempbuf);
+
   wk->list_data = list_data;
 }
 
@@ -455,7 +474,7 @@ static void DebugMenuListDelete(D_MATSU_WORK *wk)
 {
   int save_tbl_max, i;
   
-  save_tbl_max = SAVE_EXTRA_ID_MAX + 1;
+  save_tbl_max = SAVE_EXTRA_ID_MAX + 1 + 1;
   for(i = 0; i < save_tbl_max; i++){
     GFL_STR_DeleteBuffer((STRBUF*)(wk->list_data[i].str));
   }
@@ -563,6 +582,34 @@ static u32 _CheckOutsideData(D_MATSU_WORK *wk)
   }
   else{
     return DM_MSG_SAVE002;
+  }
+}
+//--------------------------------------------------------------
+/**
+ * 管理外永続データの状態をチェック
+ *
+ * @param   wk    
+ *
+ * @retval  u32   
+ */
+//--------------------------------------------------------------
+static u32 _CheckOutsidePermanent(D_MATSU_WORK *wk)
+{
+  OUTSIDE_SAVE_CONTROL *outsv;
+  BOOL data_exists;
+  
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+  outsv = OutsideSave_SystemLoad(HEAPID_MATSUDA_DEBUG);
+  data_exists = OutsideSave_GetPermanentBreakFlag(outsv);
+  OutsideSave_SystemUnload(outsv);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+  
+  if(data_exists == FALSE){
+    return DM_MSG_EXSAVE_010;
+  }
+  else
+  {
+    return DM_MSG_SAVE005;
   }
 }
 

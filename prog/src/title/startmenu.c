@@ -407,7 +407,11 @@ static const u32 SaveBreakMessage[][2] =
 	{	// ふしぎなおくりもの（ビクティ）
 		FST_OUTSIDE_MYSTERY_BREAK_BIT,
 		START_MENU_LOAD_WARNING_08
-	}
+	},
+  { // 管理外永続データ（キーシステムとかデータコンバートとか）
+    FST_OUTSIDE_PERMANENT_BREAK_BIT,
+		START_MENU_LOAD_WARNING_08  //TODO メッセージ変更
+  }
 };
 
 

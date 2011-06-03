@@ -38,6 +38,8 @@ struct _INTR_SAVE_CONTROL{
   
   BOOL outside_exists;        ///<管理外セーブ存在フラグの退避バッファ
   BOOL outside_break;         ///<管理外セーブ破損フラグの退避バッファ
+  BOOL outside_permanent_exists;        ///<管理外永続存在フラグの退避バッファ
+  BOOL outside_permanent_break;         ///<管理外永続破損フラグの退避バッファ
 };
 
 
@@ -116,8 +118,12 @@ void IntrSave_Start(INTR_SAVE_CONTROL *isc)
     //管理外セーブに対して何もアクションしないように存在フラグを退避し、無し扱いにしておく
     isc->outside_exists = SaveData_GetOutsideExistFlag(isc->ctrl);
     isc->outside_break = SaveData_GetOutsideBreakFlag(isc->ctrl);
+    isc->outside_permanent_exists = SaveData_GetOutsidePermanentExistFlag(isc->ctrl);
+    isc->outside_permanent_break = SaveData_GetOutsidePermanentBreakFlag(isc->ctrl);
     SaveData_SetOutsideExistFlag(isc->ctrl, FALSE);
     SaveData_SetOutsideBreakFlag(isc->ctrl, FALSE);
+    SaveData_SetOutsidePermanentExistFlag(isc->ctrl, FALSE);
+    SaveData_SetOutsidePermanentBreakFlag(isc->ctrl, FALSE);
   }
   isc->status = INTR_SAVE_STATUS_MAIN;
 }
@@ -155,6 +161,9 @@ SAVE_RESULT IntrSave_Main(INTR_SAVE_CONTROL *isc)
       //セーブが終了したので管理外セーブの存在フラグを復帰
       SaveData_SetOutsideExistFlag(isc->ctrl, isc->outside_exists);
       SaveData_SetOutsideBreakFlag(isc->ctrl, isc->outside_break);
+
+      SaveData_SetOutsidePermanentExistFlag(isc->ctrl, isc->outside_permanent_exists);
+      SaveData_SetOutsidePermanentBreakFlag(isc->ctrl, isc->outside_permanent_break);
     }
     return result;
   

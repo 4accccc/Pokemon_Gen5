@@ -9,6 +9,8 @@
 #pragma once
 
 
+#include "savedata/outside_permanent.h"
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -40,6 +42,13 @@ extern BOOL OutsideSave_GetExistFlag(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern BOOL OutsideSave_GetBreakFlag(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern OUTSIDE_MYSTERY * OutsideSave_GetMysterPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl, SAVE_CONTROL_WORK *normal_ctrl);
+
+
+//OUTSIDE_PERMANENT
+extern BOOL OutsideSave_GetPermanentExistFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl);
+extern BOOL OutsideSave_GetPermanentBreakFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl);
+extern OUTSIDE_PERMANENT * OutsideSave_GetPermanentPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
+extern OUTSIDE_PERMANENT * OutsideSave_AllocCopyPermanent(OUTSIDE_SAVE_CONTROL *outsv_ctrl, HEAPID heapID );
 
 //--------------------------------------------------------------
 //  デバッグ用
