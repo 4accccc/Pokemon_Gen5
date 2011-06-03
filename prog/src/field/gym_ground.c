@@ -874,6 +874,7 @@ static void EXPOBJ_ObjSet( GYM_GROUND_TMP *p_wk )
       FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
       // 非表示
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_GROUND_UNIT_IDX, obj_idx, TRUE );
+
     }
   }
 
@@ -1459,6 +1460,7 @@ static GMEVENT_RESULT LiftEvent( GMEVENT* event, int* seq, void* wk )
         LIFT_EVENT_SetFogEnable( p_wk, FALSE, p_wk->obj_idx );
       }
 
+      
       *seq = SEQ_INIT_WAIT;
     }
     break;
@@ -1570,12 +1572,12 @@ static void LIFT_EVENT_SetPos( LIFT_EVENT_WORK *p_wk )
 #endif
 
   {
-    VecFx32 pos;
     int obj_idx = p_wk->obj_idx;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_GROUND_UNIT_IDX, obj_idx );
+    fx32 y_offs = FIELDMAP_GetBbdActYOffs( p_wk->p_fieldmap );
 
     // 座標
-    status->trans.y = p_wk->now_height;
+    status->trans.y = p_wk->now_height + y_offs;
   }
 
 }
@@ -1604,7 +1606,10 @@ static void LIFT_EVENT_SetFogEnable( LIFT_EVENT_WORK *p_wk, const BOOL flag, con
 
     // fog enable flag設定
     // デフォルト設定→NNS_G3dMdlUseMdlFogEnableFlag( p_mdl );
-    NNS_G3dMdlSetMdlFogEnableFlagAll( p_mdl, flag );
+    NNS_G3dMdlSetMdlFogEnableFlag( p_mdl, 0, flag );
+    NNS_G3dMdlSetMdlFogEnableFlag( p_mdl, 1, flag );
+    NNS_G3dMdlSetMdlFogEnableFlag( p_mdl, 2, flag );
+    NNS_G3dMdlSetMdlFogEnableFlag( p_mdl, 3, flag );
   }
 
   // 自機、OBJに差し替え
