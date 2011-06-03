@@ -36,10 +36,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでc01pc0101に移植</Comment>
+			<Comment>※swanでc01pc0101に移植
+※このラベルを削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:51:43" />
+				Time="2011-06-03T04:45:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -106,10 +107,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでc01pc0101に移植</Comment>
+			<Comment>※swanでc01pc0101に移植
+※このラベルを削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:51:44" />
+				Time="2011-06-03T04:45:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -168,10 +170,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanでc01pc0101に移植</Comment>
+			<Comment>※swanでc01pc0101に移植
+※このラベルを削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T06:51:44" />
+				Time="2011-06-03T04:45:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1802,10 +1805,11 @@
 			Language="JPN">
 			<Comment>♀
 ・未入手バッジを選択
-・続けて18</Comment>
+・続けて18
+※swanで追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:21:13" />
+				Time="2011-06-03T04:46:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

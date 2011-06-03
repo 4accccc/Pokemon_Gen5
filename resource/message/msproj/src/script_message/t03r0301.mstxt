@@ -28,10 +28,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>※swanで削除
+※キーシステム用？</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T02:54:33" />
+				Time="2011-06-03T04:51:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
