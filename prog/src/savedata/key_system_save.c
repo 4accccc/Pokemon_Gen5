@@ -173,7 +173,7 @@ KEY_SYSTEM_DIFFICULT KEY_SYSTEM_SAVE_GetDifficult( const KEY_SYSTEM_SAVE *cp_wk 
     u32 key = cp_wk->diffcult;
     u32 masic_num = key ^ cp_wk->seed;  //xor‚Å•œ†‰»
 
-    if( masic_num == sc_key_magic_num[ i ] )
+    if( masic_num == sc_difficult_magic_num[ i ] )
     {
       return i;
     }
@@ -181,3 +181,26 @@ KEY_SYSTEM_DIFFICULT KEY_SYSTEM_SAVE_GetDifficult( const KEY_SYSTEM_SAVE *cp_wk 
 
   return KEY_SYSTEM_DIFFICULT_NORMAL;
 }
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ƒL[‚ÌÝ’è
+ *
+ *	@param	KEY_SYSTEM_SAVE *p_wk
+ *	@param	type
+ *	@param	is_exits 
+ */
+//-----------------------------------------------------------------------------
+void KEY_SYSTEM_SAVE_SetKeyExits( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type, BOOL is_exits )
+{
+  if( is_exits )
+  {
+    KEY_SYSTEM_SAVE_SetKey( p_wk, type );
+  }
+  else
+  {
+    p_wk->key[ type ] = 0;
+  }
+}
+#endif 

@@ -249,6 +249,19 @@ BOOL DEBUG_MSGWIN_PrintMain( DEBUG_MSGWIN_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  BMPWINメッセージ  書き込みチェック関数
+ *
+ *	@param	const DEBUG_MSGWIN_WORK *cp_wk  ワーク
+ *
+ *	@return TRUE 書き込み終了 FALSE　まだ
+ */
+//-----------------------------------------------------------------------------
+BOOL DEBUG_MSGWIN_IsPrintEnd( const DEBUG_MSGWIN_WORK *cp_wk )
+{
+  return !PRINTSYS_QUE_IsExistTarget(cp_wk->p_que, GFL_BMPWIN_GetBmp(cp_wk->util.win) );
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief  BMPWINメッセージ転送関数
  *
  *  @param  DEBUG_MSGWIN_WORK* p_wk ワーク

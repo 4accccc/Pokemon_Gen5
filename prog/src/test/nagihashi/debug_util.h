@@ -65,6 +65,7 @@ extern void DEBUG_MSGWIN_SetColor( DEBUG_MSGWIN_WORK* p_wk, PRINTSYS_LSB color )
 extern void DEBUG_MSGWIN_SetPos( DEBUG_MSGWIN_WORK* p_wk, s16 x, s16 y, DEBUG_MSGWIN_POS type );
 extern BOOL DEBUG_MSGWIN_PrintMain( DEBUG_MSGWIN_WORK* p_wk );
 extern void DEBUG_MSGWIN_Trans( DEBUG_MSGWIN_WORK* p_wk );
+extern BOOL DEBUG_MSGWIN_IsPrintEnd( const DEBUG_MSGWIN_WORK *cp_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

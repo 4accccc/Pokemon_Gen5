@@ -46,6 +46,7 @@
 #include "net_app/mystery.h"
 #include "debug_snd_strm.h"
 #include "debug_common_net.h"
+#include "debug_outside.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -284,6 +285,7 @@ static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallCommonDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallOutside( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -368,6 +370,7 @@ enum
   LISTDATA_SEQ_PROC_SND_STRM,
   LISTDATA_SEQ_PROC_COMMON_DOWNLOAD,
   LISTDATA_SEQ_PROC_WBT_DOWNLOAD,
+  LISTDATA_SEQ_PROC_OUTSIDE_SAVE,
 
   LISTDATA_SEQ_MAX,
 };
@@ -401,6 +404,7 @@ static const LISTDATA_FUNCTION  sc_list_funciton[LISTDATA_SEQ_MAX]  =
   LISTDATA_CallSndStrm,
   LISTDATA_CallCommonDownload,
   LISTDATA_CallWbtDownload,
+  LISTDATA_CallOutside,
 };
 
 //-------------------------------------
@@ -421,6 +425,9 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   },
   { 
     L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
+  },
+  {
+    L"管理外セーブ", LISTDATA_SEQ_PROC_OUTSIDE_SAVE
   },
 #if 0
   { 
@@ -1500,6 +1507,17 @@ static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
   p_wk->wbt_download_param.p_gamedata = p_wk->p_gamedata;
   DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &WBT_DOWNLOAD_SYS_ProcData, &p_wk->wbt_download_param );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  かんりがいセーブ
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallOutside( DEBUG_NAGI_MAIN_WORK *p_wk )
+{
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_OUTSIDE_ProcData, NULL );
 }
 //=============================================================================
 /**

@@ -82,3 +82,7 @@ extern BOOL KEY_SYSTEM_SAVE_IsExits( const KEY_SYSTEM_SAVE *cp_wk, KEY_SYSTEM_TY
 
 extern void KEY_SYSTEM_SAVE_SetDifficult( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_DIFFICULT diffcult );
 extern KEY_SYSTEM_DIFFICULT KEY_SYSTEM_SAVE_GetDifficult( const KEY_SYSTEM_SAVE *cp_wk );
+
+#ifdef PM_DEBUG
+extern void KEY_SYSTEM_SAVE_SetKeyExits( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type, BOOL is_exits );
+#endif 

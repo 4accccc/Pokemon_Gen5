@@ -122,7 +122,7 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   buf[SAVE_MIRROR_MYSTERY_B] = GFL_HEAP_AllocClearMemory(heap_id, sizeof(OUTSIDE_MYSTERY_SAVEDATA));
   buf[SAVE_MIRROR_MYSTERY_B]->rec.size = sizeof(OUTSIDE_MYSTERY);
   buf[SAVE_PERMANENT] = (OUTSIDE_RECORD_ABSTRUCT *)&outsv_ctrl->permanent_save;
-  buf[SAVE_PERMANENT]->rec.size = OUTSIDE_PERMANENT_GetWorkSize();
+  buf[SAVE_PERMANENT]->rec.size = OUTSIDE_PERMANENT_WORK_SIZE;
   
   for(no = 0; no < SAVE_NUM; no++){
     load_ret[no] = FALSE;
@@ -144,7 +144,7 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
       }
       
       //CRCチェック
-      if(GFL_STD_CrcCalc(&buf[no]->data, buf[no]->rec.size) != buf[no]->rec.crc){
+      if(GFL_STD_CrcCalc(buf[no]->data, buf[no]->rec.size) != buf[no]->rec.crc){
         crc_break[no] = TRUE;
       }
     }
@@ -199,7 +199,8 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   //キーシステムの破壊状況チェック
   if( load_ret[SAVE_PERMANENT] == FALSE )
   {
-    //データなし
+    //データなし。ならば、初期化を行う
+    OUTSIDE_PERMANENT_Init( (OUTSIDE_PERMANENT*)outsv_ctrl->permanent_save.permanent );
   }
   else
   {
@@ -207,6 +208,7 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
     {
       //あったが壊れていた
       outsv_ctrl->permanent_break_flag = TRUE;
+      OUTSIDE_PERMANENT_Init( (OUTSIDE_PERMANENT*)outsv_ctrl->permanent_save.permanent );
     }
     else
     {
@@ -395,14 +397,14 @@ void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl,
 
 //==================================================================
 /**
- * 管理外セーブ全体をクリアする 不思議だけクリア
+ * 管理外セーブ全体をクリアする
  *
  * @param   heap_id		
  */
 //==================================================================
 void OutsideSave_FlashAllErase(HEAPID heap_id)
 {
-  u32 erase_size = SAVESIZE_OUTSIDE_MYSTERY * 2;  //*2=ミラー分込み
+  u32 erase_size = SAVESIZE_OUTSIDE_MYSTERY * 2 + SAVESIZE_OUTSIDE_PERMANENT;  //*2=ミラー分と永続データ
   u8 *erase_buffer = GFL_HEAP_AllocMemory(heap_id, erase_size);
   
   GFL_STD_MemFill32(erase_buffer, 0xffffffff, erase_size);

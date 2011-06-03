@@ -2394,22 +2394,6 @@ SRCS_OVERLAY_NAKAHIRO_DEBUG = test/nakahiro/d_nakahiro.c \
                               test/nakahiro/pokeicon_view.c
 
 
-#	名木橋デバッグ
-#===> SRCS_OVERLAY_DEV_WIFI
-#===> SRCS_OVERLAY_IRC_AURA
-#===> SRCS_OVERLAY_IRC_RHYTHM
-#===> SRCS_OVERLAY_IRC_RESULT
-#===> SRCS_OVERLAY_IRC_RANKING
-#===> SRCS_OVERLAY_COMMON_DOWNLOAD
-SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
-																test/nagihashi/debug_irc_name.c \
-																test/nagihashi/debug_poke2dcheck.c \
-                                test/nagihashi/debug_utilproc.c \
-                                test/nagihashi/debug_util.c \
-                                test/nagihashi/debug_graphic.c \
-                                test/nagihashi/debug_snd_strm.c \
-                                test/nagihashi/debug_common_net.c \
-                                test/nagihashi/wbt_download_sys.c
 
 # 保坂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -2648,6 +2632,26 @@ SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
 #===> SRCS_OVERLAY_INTRO
 #===> SRCS_OVERLAY_MYSTERY
 SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
+
+
+#	名木橋デバッグ
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_IRC_AURA
+#===> SRCS_OVERLAY_IRC_RHYTHM
+#===> SRCS_OVERLAY_IRC_RESULT
+#===> SRCS_OVERLAY_IRC_RANKING
+#===> SRCS_OVERLAY_COMMON_DOWNLOAD
+#===> SRCS_OVERLAY_OUTSIDE_SAVE
+SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
+																test/nagihashi/debug_irc_name.c \
+																test/nagihashi/debug_poke2dcheck.c \
+                                test/nagihashi/debug_utilproc.c \
+                                test/nagihashi/debug_util.c \
+                                test/nagihashi/debug_graphic.c \
+                                test/nagihashi/debug_snd_strm.c \
+                                test/nagihashi/debug_common_net.c \
+                                test/nagihashi/wbt_download_sys.c \
+                                test/nagihashi/debug_outside.c
 
 # 任天堂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
