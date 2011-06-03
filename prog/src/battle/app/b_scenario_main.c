@@ -30,6 +30,7 @@
 
 #include "b_scenario_gra.naix"
 #include "msg/msg_pw_movietitle.h"
+#include "msg/msg_pw_hint001.h"
 #include "msg/msg_b_plist.h"		//
 
 //============================================================================================
@@ -68,6 +69,26 @@ enum{
 enum{
 	STR_INIT			= 0,	// 初期化
 	STR_UPDATE,					// 更新
+};
+
+// 固定文字列
+enum{
+	MES_ID_TOP_01		= 0,	// タイトル名
+	MES_ID_TOP_02,				// あらすじ
+	MES_ID_TOP_03,				// クリア目標
+	MES_ID_ALL_01,				// 脚本
+	MES_ID_ALL_02,				// 共演者
+	MES_ID_INFO_01,				// キャスト
+	MES_ID_INFO_02,				// もちもの
+	MES_ID_INFO_03,				// とくせい
+	//
+	MES_ID_SCENARIO,			// シナリオTOP
+};
+
+// いろいろ
+enum{
+	MES_END_ID 			= pw_movie01_hint_19,	// 終了番号([なし]の記述番号)
+	MES_HINT_MAX		= 20,
 };
 
 //------------
@@ -137,12 +158,13 @@ static void bs_hide_info_obj( BSCENARIO_WORK * wk );
 // 処理
 static BOOL bs_main_loop( BSCENARIO_WORK * wk );
 static void bs_chk_end( BSCENARIO_WORK * wk );
-//
+// ワーク計算
 static void bs_set_pokework( BSCENARIO_WORK * wk );
+// 固定文字列
+static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode );
+// 個数計算
+static void bs_calc_hintnum( BSCENARIO_WORK * wk );
 //
-// test
-static void bs_disp_test_string( BSCENARIO_WORK * wk, const s32 mode );
-
 
 //============================================================================================
 //  データ
@@ -162,18 +184,41 @@ static void (*(bs_functbl[]))(BSCENARIO_WORK *) = {
 	bs_exit_info,			// info(exit)
 };
 
-// メッセージ
-static const s16 bs_mes_tbl[] = {
-	pw_seantitle_001,		// タイトル先頭
-	pw__seanmisson_001,		// ミッションの先頭(たぶん入力ミス)
-	pw__seanhint_001,		// ヒントの先頭(たぶん入力ミス)
-	-1,
+//-------------
+// fixメッセージ
+//--------------
+static const s16 bs_fix_mestbl[] = {
+	pw_topindex_01,			// TOP:TITLE映画の名前
+	pw_topindex_02,			// TOP:PLOTあらすじ
+	pw_topindex_03,			// TOP:GOALクリア目標
+	pw_topbutton_01,		// ALL:脚本
+	pw_topbutton_02,		// ALL:共演者
+	pw_castindex_03,		// INFO:キャスト共演者
+	pw_castindex_04,		// INFO:もちもの
+	pw_castindex_05,		// INFO:とくせい
+	//
+	pw_scriptindex_00,		// タイトル(mesdagaは違い)
 };
 
-// メッセージ
+//--------------
+// TOPメッセージ
+//--------------
+static const s16 bs_mes_tbl[] = {
+	pw_title_00,			// タイトル
+	pw_plot_000,			// プロット
+	pw_goal_00,				// ゴール
+};
+
+//-------------------
+// ヒント関連メッセージ
+//-------------------
 static const s16 bs_scene_tbl[] = {
-	pw_seantitle_001,		// シーンテスト(test)
-	-1,
+	pw_scriptindex_01,		// タイトル(数字の開始)(1-20)
+	//
+	// 以下に追加
+	pw_movie01_hint_00,		// movie01
+	pw_movie01_hint_00,		// movie02
+	pw_movie01_hint_00,		// movie03
 };
 
 // メッセージ(要修正)
@@ -189,6 +234,44 @@ static const s16 bs_info_tbl[] = {
 	mes_b_plist_01_001,		// 技01
 	mes_b_plist_01_001,		// 技02
 	mes_b_plist_01_001,		// 技03
+};
+
+//-------------
+// fixメッセージ
+//-------------
+// TOP
+static const u16 bs_fmes00_tbl[] = {
+	MES_ID_TOP_01,	BS_CVS_TOP_TITLE, 	0, 0,		// タイトル
+	MES_ID_TOP_02,	BS_CVS_TOP_PLOT,  	0, 0,		// PLOT
+	MES_ID_TOP_03,	BS_CVS_TOP_GOAL,  	0, 0,		// GOAL
+	MES_ID_ALL_01,	BS_CVS_TOP_LABEL00, 0, 0,		// 脚本
+	MES_ID_ALL_02,	BS_CVS_TOP_LABEL01, 0, 0,		// 共演者
+	//
+	0xffff, 0, 0, 0,		// end
+};
+// SCENARIO
+static const u16 bs_fmes01_tbl[] = {
+	MES_ID_ALL_02,	BS_CVS_SCENARIO_LABEL00, 0, 0,	// 共演者
+	//
+	MES_ID_SCENARIO,BS_CVS_SCENARIO_SCENARIO, 0, 2,	// シナリオタイトル(mesdata違い)
+	//
+	0xffff, 0, 0, 0,		// end
+};
+// INFO
+static const u16 bs_fmes02_tbl[] = {
+	MES_ID_INFO_01,	BS_CVS_INFO_CAST,	 0, 0,		// タイトル
+	MES_ID_INFO_02,	BS_CVS_INFO_ITEM,	 1, 0,		// もちもの
+	MES_ID_INFO_03,	BS_CVS_INFO_STATUS,	 1, 0,		// とくせい
+	MES_ID_ALL_01,	BS_CVS_INFO_LABEL00, 0, 0,		// 脚本
+	//
+	0xffff, 0, 0, 0,		// end
+};
+
+// まとめ
+static const u16 *bs_fmes_tbl[] = {
+	bs_fmes00_tbl,
+	bs_fmes01_tbl,
+	bs_fmes02_tbl,
 };
 
 //============================================================================================
@@ -227,11 +310,14 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	//
 	wk->SubMode		= STEP_INIT;
 	wk->PageNum		= 0;
-	wk->ScenarioMax	= 19;		// test
+//	wk->ScenarioMax	= 19;		// test
 	wk->PokePageNum	= 0;
-	wk->TopNum		= 0;
+	// 台本番号
+	wk->TopNum		= dat->scenario_num;
 	// ポケモン数
 	wk->PokeMax		= PokeParty_GetPokeCount( wk->dat->party );
+	//
+	OS_Printf("scenario num:%d\n",wk->TopNum);
 	//
 	wk->TopCurPos		= 0;
 	wk->ScenarioCurPos	= 0;
@@ -351,6 +437,11 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 			wk->MsgData[i] = 0;
 		}
 	}
+	// 破棄
+	GFL_HEAP_FreeMemory( wk->ScrBuffer[0] );
+	GFL_HEAP_FreeMemory( wk->ScrBuffer[1] );
+	GFL_HEAP_FreeMemory( wk->ScrBuffer[2] );
+	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	//
@@ -456,15 +547,24 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_b_scenario_pos_tblbin, wk->dat->heap );
 	//
+	// スクロール
+	wk->ScrBuffer[0] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), 4*4*4*2 );		// 左矢印
+	wk->ScrBuffer[1] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), 4*4*4*2 );		// 右矢印
+	wk->ScrBuffer[2] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), 5*5*4*2 );		// 戻る
+	//
 	// 入らなければ、要修正
 	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->dat->heap );
 	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_b_plist_dat, wk->dat->heap );			// test
+	wk->MsgData[2] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_hint001_dat, wk->dat->heap );
 	//
 	// bg設定
 	bs_init_graphics( wk );
 	//
 	// bg初期化
 	BsCmn_InitBg( wk );
+	//
+	// ヒント数を比較
+	bs_calc_hintnum( wk );
 	//
 	// 文字列初期化
 	BsCmn_InitString( wk, BS_TOP );
@@ -483,6 +583,9 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	// パレットアニメ用
 	bs_set_palanim( wk );
 	//
+	// bgスクリーン
+	BsCmn_DispScr( wk, BS_TOP, TRUE );
+	
 	// 初期化終了
 	wk->initFlag = TRUE;
 	//
@@ -592,7 +695,7 @@ static void bs_init_graphics( BSCENARIO_WORK *wk )
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x0800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,
       GX_BG_EXTPLTT_23, 2, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( GFL_BG_FRAME2_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -664,15 +767,19 @@ static void bs_exit_bg( BSCENARIO_WORK *wk )
 //--------------------------------------------------------------------------------------------
 static void bs_set_palanim( BSCENARIO_WORK * wk )
 {
+	// BGのパレット(3本分)
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*3 );
+	// BGのパレット(10番から3本分)
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 10*16, 0x20*3 );
 	// BGのパレット(0-2)
-	PaletteWorkSet_Arc( wk->pfd, ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_pkwd_scenario_NCLR, wk->dat->heap, FADE_SUB_BG, 0x20*3, 0 );
+//	PaletteWorkSet_Arc( wk->pfd, ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_pkwd_scenario_NCLR, wk->dat->heap, FADE_SUB_BG, 0x20*3, 0 );
 	// フォントパレット(8)
 	PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_talkwin_nclr, wk->dat->heap, FADE_SUB_BG, 0x20, 8*16 );
 	//
 	// 通信アイコンセット
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
 	//
-	// OBJのパレット(0番目、9本分)
+	// OBJのパレット(0番目、8本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, 0x20*8 );
 	// OBJのパレット(14番目、1本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
@@ -764,6 +871,9 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 		BsCmn_InitString( wk, BS_TOP );
 		// 表示まとめ
 		bs_disp_top_string( wk, STR_INIT );
+		//
+		// bgスクリーン
+		BsCmn_DispScr( wk, BS_TOP, TRUE );
 		//
 		wk->Flag |= FLG_UPDATE;
 	}
@@ -915,6 +1025,10 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 						mflg = 2;
 					}
 				}
+				else if(flg == 4){		// 戻る
+					nmode = SMODE_END;
+					mflg = 2;
+				}
 			}
 			// 表示 => キーでの決定はしない
 			else{
@@ -924,10 +1038,10 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 			}
 			//
 			// 戻るは特別扱い
-			if(flg == 4){
-				nmode = SMODE_END;
-				mflg = 2;
-			}
+//			if(flg == 4){
+//				nmode = SMODE_END;
+//				mflg = 2;
+//			}
 		}
 		//
 		// タッチペンは関係なく処理
@@ -987,29 +1101,15 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 	
 	// 初期のみでよいはず
 	if(mode == STR_INIT){
-		// (0-2:test)
+		// 固定文字列
+		bs_disp_fix_string( wk, BS_TOP );
+		//
+		// タイトル、あらすじ、クリア目標
 		for(i=0;i<3;i++){
-			BsCmn_DispStringNumber( wk, BS_CVS_TOP_TITLE+i, 0, 0, mode*1000+i, 8, 0, 0);
+			strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[i]+id );
+			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0), 0 );
+			GFL_STR_DeleteBuffer( strbuf );
 		}
-		// (6,7:test)
-		for(i=0;i<2;i++){
-			BsCmn_DispStringNumber( wk, BS_CVS_TOP_LABEL00+i, 0, 0, mode*1000+i, 8, 0, 0);
-		}
-		// 後でまとめること
-		// タイトル
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[0]+id );
-		BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0), 0 );
-		GFL_STR_DeleteBuffer( strbuf );
-		//
-		// あらすじ
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[1]+id );
-		BsCmn_DispString( wk, BS_CVS_TOP_PLOT_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0), 0 );
-		GFL_STR_DeleteBuffer( strbuf );
-		//
-		// クリア目標
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[2]+id );
-		BsCmn_DispString( wk, BS_CVS_TOP_GOAL_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0), 0 );
-		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
 
@@ -1039,6 +1139,8 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 	BsCmn_InitString( wk, BS_SCENARIO );
 	// 表示
 	bs_disp_scenario_string( wk, STR_INIT );
+	// bgスクリーン
+	BsCmn_DispScr( wk, BS_SCENARIO, TRUE );
 	//
 	wk->Flag |= FLG_UPDATE;
 	//
@@ -1216,6 +1318,12 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 						wk->TopCurPos = 0;
 					}
 				}
+				else if(flg == 4){		// 戻る
+					nmode = SMODE_INIT_TOP;
+					mflg = 2;
+					wk->ScenarioCurPos = 0;
+					wk->TopCurPos = 0;
+				}
 			}
 			// 表示 => キーでの決定はしない
 			else{
@@ -1225,12 +1333,12 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 			}
 			//
 			// 戻るは特別扱い
-			if(flg == 4){
-				nmode = SMODE_INIT_TOP;
-				mflg = 2;
-				wk->ScenarioCurPos = 0;
-				wk->TopCurPos = 0;
-			}
+//			if(flg == 4){
+//				nmode = SMODE_INIT_TOP;
+//				mflg = 2;
+//				wk->ScenarioCurPos = 0;
+//				wk->TopCurPos = 0;
+//			}
 		}
 		//
 		// タッチペンは関係なく処理
@@ -1311,6 +1419,8 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 {
 	s32		i;
+	s32		mesid;
+	s32		topid;
 	s32		buf[2];
 	s32		tmp;
 	STRBUF	*strbuf;
@@ -1319,16 +1429,25 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 	if(mode == STR_INIT){
 		// タイトル(シナリオ)
 		BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_SCENARIO, 0, 0, mode*1000, 8, 0, 0);
-		// 共演者
-		BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_LABEL00, 0, 0, mode*1000+1, 8, 0, 0);
+		// fix
+		bs_disp_fix_string( wk, BS_SCENARIO );
 	}
-	//
+	//-------
 	// 更新
+	//-------
+	// 先頭のidをセット(そこから連番のはず)
+	topid = bs_scene_tbl[0];
+	mesid = bs_scene_tbl[1+wk->TopNum];		// 本当はこれ
+	//
 	//-----------
 	// シーン00
 	//-----------
-	BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_SCENE00, 0, 0, 2*wk->PageNum, 8, 0, 0 );
-	strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_scene_tbl[0]+2*wk->PageNum );
+	// 見出し
+	strbuf = GFL_MSG_CreateString( wk->MsgData[2], topid+2*wk->PageNum );
+	BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+	GFL_STR_DeleteBuffer( strbuf );
+	//ヒント
+	strbuf = GFL_MSG_CreateString( wk->MsgData[2], mesid+2*wk->PageNum );
 	BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( strbuf );
 	
@@ -1336,10 +1455,12 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 	// シーン01
 	//-----------
 	if((2*wk->PageNum+1) < wk->ScenarioMax){
-		// シーン01
-		BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_SCENE01, 0, 0, 2*wk->PageNum+1, 8, 0, 0 );
-		// シーン01-mes
-		strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_scene_tbl[0]+2*wk->PageNum+1 );
+		// 見出し
+		strbuf = GFL_MSG_CreateString( wk->MsgData[2], topid+2*wk->PageNum+1 );
+		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		GFL_STR_DeleteBuffer( strbuf );
+		// ヒント
+		strbuf = GFL_MSG_CreateString( wk->MsgData[2], mesid+2*wk->PageNum+1 );
 		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
@@ -1390,6 +1511,8 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	BsCmn_InitString( wk, BS_INFO );
 	// 表示
 	bs_disp_info_string( wk, STR_INIT );
+	// bgスクリーン
+	BsCmn_DispScr( wk, BS_INFO, TRUE );
 	// 表示
 	bs_disp_info_obj( wk, 0 );
 	//
@@ -1566,6 +1689,12 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 						wk->TopCurPos = 0;
 					}
 				}
+				else if(flg == 4){		// 戻る
+					nmode = SMODE_INIT_TOP;
+					mflg = 2;
+					wk->InfoCurPos = 0;
+					wk->TopCurPos = 0;
+				}
 			}
 			// 表示 => キーでの決定はしない
 			else{
@@ -1575,12 +1704,12 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 			}
 			//
 			// 戻るは特別扱い
-			if(flg == 4){
-				nmode = SMODE_INIT_TOP;
-				mflg = 2;
-				wk->InfoCurPos = 0;
-				wk->TopCurPos = 0;
-			}
+//			if(flg == 4){
+//				nmode = SMODE_INIT_TOP;
+//				mflg = 2;
+//				wk->InfoCurPos = 0;
+//				wk->TopCurPos = 0;
+//			}
 		}
 		//
 		// タッチペンは関係なく処理
@@ -1667,11 +1796,10 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	
 	// 初期化
 	if(mode == STR_INIT){
-		// タイトル(キャスト)
-		BsCmn_DispStringNumber( wk, BS_CVS_INFO_CAST, 0, 0, mode*1000, 8, 0, 0);
-		// 脚本
-		BsCmn_DispStringNumber( wk, BS_CVS_INFO_LABEL00, 0, 0, mode*1000, 8, 0, 0);
+		// fix
+		bs_disp_fix_string( wk, BS_INFO );
 	}
+	
 	// 更新
 	//
 	// ポケモン情報
@@ -1713,7 +1841,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[0] );
 	WORDSET_RegisterItemName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
-	BsCmn_DispString( wk, BS_CVS_INFO_ITEM, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+	BsCmn_DispString( wk, BS_CVS_INFO_ITEM01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( str );
 	//
 	// 技
@@ -1736,7 +1864,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[0] );
 	WORDSET_RegisterTokuseiName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
-	BsCmn_DispString( wk, BS_CVS_INFO_STATUS, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+	BsCmn_DispString( wk, BS_CVS_INFO_STATUS01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( str );
 	//
 	// 破棄
@@ -1953,27 +2081,92 @@ static void bs_set_pokework( BSCENARIO_WORK * wk )
 #endif
 }
 
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		文字表示テスト(InitStringで確保したらなにか表示すること)
+ * @brief		fix文字表示
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*	wk
+ * @param	const s32			(0-2)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void bs_disp_test_string( BSCENARIO_WORK * wk, const s32 mode )
+static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode )
 {
+	u16		buf[4];
+	const u16	*adr;
+	u16		col;
 	s32		i;
+	STRBUF	*strbuf;
 	
+	adr = bs_fmes_tbl[mode];
 	for(i=0;i<BSCENARIO_CANVAS_MAXNUM;i++){
-		if(wk->PrintUtil[i].win){
-			BsCmn_DispStringNumber( wk, i, 0, 0, mode*1000+i, 8, 0, 0);
+		// 終了判定
+		if(adr[4*i] == 0xffff){
+			break;
 		}
+		buf[0] = adr[4*i];		// mesid
+		buf[1] = adr[4*i+1];	// id
+		buf[2] = adr[4*i+2];	// col
+		buf[3] = adr[4*i+3];	// num
+		// 表示
+		col = PRINTSYS_LSB_Make(15,2,0);
+		if(buf[2] == 1){
+			col = PRINTSYS_LSB_Make(1,2,0);
+		}
+		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], bs_fix_mestbl[ buf[0] ] );
+		BsCmn_DispString( wk, buf[1], 0, 0, strbuf, 0, col, 0 );
+		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	ページ数の計算
+ *
+ * @param	BSCENARIO_WORK*	wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bs_calc_hintnum( BSCENARIO_WORK * wk )
+{
+	s16		mesid;
+	s32		i,j;
+	BOOL	bflg;
+	STRBUF	*strbuf;		// 元
+	STRBUF	*strbuf2;		// 比較するもの(読み替え)
+	
+	// 先頭のid
+	mesid = bs_scene_tbl[1+wk->TopNum];
+	//
+	// 判定のメッセージを取得
+	strbuf = GFL_MSG_CreateString( wk->MsgData[2], MES_END_ID );
+	//ヒント数をカウント
+	j=0;
+	for(i=0;i<MES_HINT_MAX;i++){
+		strbuf2 = GFL_MSG_CreateString( wk->MsgData[2], mesid+i );
+		// 文字列を比較
+		bflg = GFL_STR_CompareBuffer( strbuf, strbuf2 );
+		// 同じ=>終了と判定
+		if(bflg == TRUE){
+			GFL_STR_DeleteBuffer( strbuf2 );
+			break;
+		}else{
+			GFL_STR_DeleteBuffer( strbuf2 );
+		}
+		j++;
+	}
+	// ここまでで数が出る
+	OS_Printf("hit num :%d\n",j);
+	//
+	wk->ScenarioMax = j;
+	//
+	GFL_STR_DeleteBuffer( strbuf );
+}
+
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 

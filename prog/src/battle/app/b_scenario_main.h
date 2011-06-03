@@ -31,9 +31,9 @@ enum{
 // 各種最大数
 enum{
 	BSCENARIO_BG_MAXNUM		= 8,		// BG最大
-	BSCENARIO_CANVAS_MAXNUM	= 12,		// canvas最大(場面ごとに切り替え)
-	BSCENARIO_MES_MAX		= 2,		// メッセージ最大
-	BSCENARIO_EMPTY_MAX		= 27*2,		// empty
+	BSCENARIO_CANVAS_MAXNUM	= 14,		// canvas最大(場面ごとに切り替え)
+	BSCENARIO_MES_MAX		= 3,		// メッセージ最大
+	BSCENARIO_EMPTY_MAX		= 34*2,		// empty
 	//
 	BSCENARIO_POKE_MAX		= 6,		// ポケモン最大
 };
@@ -172,6 +172,7 @@ typedef struct {
 	s32					InfoCurPos;		///< カーソル位置
 	//
 	s16					*EmptyBuffer;	///< 座標用のバッファ(必ず破棄すること)
+	u16					*ScrBuffer[3];	///< スクリーンバッファ(必ず破棄すること)
 	//
 	BSCENARIO_POKE_WORK	PokeWork[BSCENARIO_POKE_MAX];	///< ポケモン情報(初期化時にセット)
 } BSCENARIO_WORK;

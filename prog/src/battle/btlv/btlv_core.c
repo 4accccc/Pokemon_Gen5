@@ -1604,6 +1604,8 @@ void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
 #else
 	// 相手側のパーティ情報を取得
 	wk->scenarioData.party = BTL_MAIN_GetClientSrcParty( wk->mainModule, BTL_CLIENT_ENEMY1 );
+	// 台本番号をセット
+	wk->scenarioData.scenario_num = BTL_MAIN_GetPokewoodSenarioNo( wk->mainModule );
 #endif
     wk->selectItemSeq = 1;
   }

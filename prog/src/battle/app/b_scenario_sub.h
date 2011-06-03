@@ -39,11 +39,13 @@ enum{
 	BS_CVS_INFO_SEX,
 	BS_CVS_INFO_LEVEL,
 	BS_CVS_INFO_ITEM,
+	BS_CVS_INFO_ITEM01,
 	BS_CVS_INFO_SKILL00,
 	BS_CVS_INFO_SKILL01,
 	BS_CVS_INFO_SKILL02,
 	BS_CVS_INFO_SKILL03,
 	BS_CVS_INFO_STATUS,
+	BS_CVS_INFO_STATUS01,
 	BS_CVS_INFO_LABEL00,
 	BS_CVS_INFO_MAX,		// max
 };
@@ -93,8 +95,8 @@ extern void BsCmn_ExitObj( BSCENARIO_WORK* wk );
 extern void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
 extern void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
 extern void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex );
-//extern void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 num );
 extern void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 mode, const s32 num );
+extern void BsCmn_DispScr( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg );
 
 
 
