@@ -75,6 +75,7 @@ extern FSOverlayID debugmenu_overlayID;
 //======================================================================
 #define D_MENU_CHARSIZE_X (18)    //メニュー横幅
 #define D_MENU_CHARSIZE_Y (16)    //メニュー縦幅
+#define D_MENU_LINE_NUM (9)       //メニューのライン数
 
 //======================================================================
 //  typedef struct
@@ -243,8 +244,8 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #define QuickJumpStart   DEBUG_FIELD_NUMINPUT
 #define QuickJumpSelect  DEBUG_FIELD_RESORT
 #elif defined DEBUG_ONLY_FOR_onoue_masayuki
-#define QuickJumpStart   DEBUG_FIELD_INFINITY
-#define QuickJumpSelect  DEBUG_FIELD_MEDAL_INFO
+#define QuickJumpStart   DEBUG_FIELD_STR13
+#define QuickJumpSelect  DEBUG_FIELD_ANIMAL_TRAIL
 #elif defined DEBUG_ONLY_FOR_nakamura_akira
 #define QuickJumpStart   DEBUG_FIELD_INFINITY
 #define QuickJumpSelect  DEBUG_FIELD_INFINITY
@@ -254,6 +255,10 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
 #define QuickJumpStart   DEBUG_FIELD_MOBICLIP
 #define QuickJumpSelect  DEBUG_FIELD_MOBICLIP
+#elif defined DEBUG_ONLY_FOR_tsuruta_saya
+#define QuickJumpStart   DEBUG_FIELD_STR13
+#define QuickJumpSelect  DEBUG_FIELD_STR13
+
 #endif
 
 //--------------------------------------------------------------
@@ -262,7 +267,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
 {
   1,    //リスト項目数
-  9,    //表示最大項目数
+  D_MENU_LINE_NUM,    //表示最大項目数
   0,    //ラベル表示Ｘ座標
   13,   //項目表示Ｘ座標
   0,    //カーソル表示Ｘ座標
@@ -519,6 +524,30 @@ GFL_MSGDATA * DEBUGFLDMENU_CreateMSGDATA( FIELDMAP_WORK * fieldmap, u32 arcDatID
       GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, arcDatIDMsg, FIELDMAP_GetHeapID( fieldmap ) );
   return( msgData );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  クイックジャンプ後のカーソル位置計算
+ *
+ *	@param	strID       関数位置       
+ *	@param	*cursor_pos カーソル位置格納場所
+ *	@param	*list_pos   リスト位置格納場所
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GetJumpEndCursorPosGet( u32 strID ,u32 *cursor_pos ,u32 *list_pos )
+{
+  u32 idx       = DebugMenu_GetQuickJumpIdx( strID );
+  u32 list_move = (NELEMS(DATA_DebugMenuList)) - idx;
+  u32 list_center = D_MENU_LINE_NUM/2;
+  *cursor_pos   = list_center;
+  *list_pos     = idx-list_center;
+  if( list_move < list_center )
+  {
+    *list_pos = (NELEMS(DATA_DebugMenuList)-D_MENU_LINE_NUM); // 一番上に
+    *cursor_pos = D_MENU_LINE_NUM - list_move;
+  }
+}
 
 //--------------------------------------------------------------
 /**
@@ -547,17 +576,19 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
 #ifdef QuickJumpStart
         if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
         {
-          u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpStart );
+          u32 cursor_pos,list_pos;
+          GetJumpEndCursorPosGet( QuickJumpStart ,&cursor_pos, &list_pos );
           FLDMENUFUNC_DeleteMenu( work->menuFunc );
-          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 4 );
+          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, list_pos, cursor_pos );
         }
 #endif  //QuickJumpStart
 #ifdef QuickJumpSelect
         if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
         {
-          u32 idx = DebugMenu_GetQuickJumpIdx( QuickJumpSelect );
+          u32 cursor_pos,list_pos;
+          GetJumpEndCursorPosGet( QuickJumpSelect ,&cursor_pos, &list_pos );
           FLDMENUFUNC_DeleteMenu( work->menuFunc );
-          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, idx-4, 4 );
+          work->menuFunc  = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID,  &DebugMenuData, list_pos, cursor_pos );
         }
 #endif  //QuickJumpSelect
 
