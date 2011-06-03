@@ -1115,4 +1115,17 @@ void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int senario_no, int msgid )
 
 }
 
-
+//=============================================================================================
+/**
+ * @brief	ポケウッド用WORDSETタグに展開文字列を一括登録
+ *
+ * @param   none		
+ */
+//=============================================================================================
+void BTL_STR_Register_PokewoodWord( void )
+{
+  // TODO:8つを超えたら引数分岐させます
+  
+  // TAG0:手持ちポケモンのニックネームを登録
+  register_PokeNickname( 0, 0 );
+}

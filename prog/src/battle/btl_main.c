@@ -6328,7 +6328,8 @@ static void _print_pokewood_event_data(POKEWOOD_SENARIO *senario, int event)
 {
   int i;
   
-  OS_Printf("EventData:type=%d, start_turn=%d\n", senario->event[event].type, senario->event[1].start_turn);
+  OS_Printf("EventData:type=%d, start_turn=%d, provision=%d\n", senario->event[event].type, 
+            senario->event[event].start_turn, senario->event[event].flag_provision);
   OS_Printf("event_msg=");
   for(i=0;i<EVENT_TALK_TURN_MAX*2;i++){
     OS_Printf("%d,", senario->event[event].talk_msg[0][i]);
@@ -6389,6 +6390,8 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
 
   _print_pokewood_event_data(senario,0);
   _print_pokewood_event_data(senario,1);
+  _print_pokewood_event_data(senario,4);
+  _print_pokewood_event_data(senario,6);
 
   
   OS_Printf("=================================================\n");

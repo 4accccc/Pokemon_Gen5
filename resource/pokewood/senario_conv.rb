@@ -63,16 +63,18 @@ end
 #----------------------------------------------------
 class EVENT_DATA
   def initialize( type )
-    @type         = type
-    @start_turn   = -1
-    @talk_msg     = Array.new( EVENT_TALK_MAX*2 ).fill(-1)
-    @reaction_data = Array.new( EVENT_REACTION_MAX ).fill(-1)
-    @stage_cast    = Array.new(EVENT_TALK_MAX).fill(-1)
+    @type           = type
+    @start_turn     = -1
+    @flag_provision = -1
+    @padding        = -1
+    @talk_msg       = Array.new( EVENT_TALK_MAX*2 ).fill(-1)
+    @reaction_data  = Array.new( EVENT_REACTION_MAX ).fill(-1)
+    @stage_cast     = Array.new(EVENT_TALK_MAX).fill(-1)
     EVENT_REACTION_MAX.times{|i|
       @reaction_data[i] = Array.new( EVENT_REACTION_ARRAY ).fill(-1)
     }
   end
-  attr_accessor :type, :start_turn, :talk_msg, :reaction_data, :stage_cast
+  attr_accessor :type, :start_turn, :talk_msg, :reaction_data, :stage_cast, :flag_provision
 
   def set_event_msg( index, msg )
     @talk_msg[index] = msg2id( msg )
@@ -90,17 +92,18 @@ class EVENT_DATA
   end
 
   #バイナリデータ用に配列に連結
-  # s16(2+14+7+16) = 78
+  # s16(6+14+7+16) = 78
   def pack
     array = Array.new
     array << @type
     array << @start_turn
+    array << @flag_provision
+    array << @padding
     array = array+@talk_msg+@stage_cast
     EVENT_REACTION_MAX.times{|i|
       array = array+@reaction_data[i]
     }
     return array
-#    return array.pack("S!32")
   end
 end
 
@@ -176,6 +179,8 @@ class POKEWOOD_SENARIO
     else
       @event[index].start_turn = data[start][3].to_i
     end
+    
+    @event[index].flag_provision = data[start][5].to_i
     EVENT_TALK_MAX.times{|i|
        @event[index].set_event_msg(               i, data[start+i+2][1] )
        @event[index].set_event_msg(i+EVENT_TALK_MAX, data[start+i+2][3])

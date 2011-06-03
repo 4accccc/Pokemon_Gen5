@@ -15,7 +15,7 @@
 #define ENEMY_POKE_MAX          (  6 )  ///< 敵トレーナーの最大数
 #define SELECT_MSG_NUM          (  9 )  ///< 選択時状況メッセージの最大種類
 #define SITUATION_MSG_NUM       (  6 )  ///< シチュエーションメッセージの最大種類
-#define EVENT_DATA_MAX          (  5 )  ///< イベントデータの最大数
+#define EVENT_DATA_MAX          (  7 )  ///< イベントデータの最大数
 #define POKEWOOD_TALK_MSG_MAX   ( 20 )  ///< ターン毎会話の最大数
 #define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
 
@@ -39,6 +39,8 @@ typedef struct{
 typedef struct {
   s16 type;               ///< イベントタイプ（現在は未使用）
   s16 start_turn;         ///< イベント開始ターン
+  s16 flag_provision;     ///< 分岐条件値（ポケウッド内で保持するワークとの比較に使用する値）
+  s16 padding;            ///< パディング
   s16 talk_msg[2][EVENT_TALK_TURN_MAX];                      ///< メッセージIDが自分７つ、相手７つまで格納。
   s16 stage_cast[EVENT_TALK_TURN_MAX];                       ///< お盆の上にいるのは役者か？ポケモンか？
   POKEWOOD_EVENT_REACTION_DATA reaction[EVENT_REACTION_MAX]; ///< 選択肢対応データが格納される

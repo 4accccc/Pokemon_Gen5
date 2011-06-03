@@ -306,6 +306,8 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   bew->bmw  = BTLV_MCSS_Init( besp->rule, bew->tcb_sys, heapID );
   if(BTL_MAIN_GetPokewoodMode(besp->mainModule)==BTL_POKEWOOD_SHOW){
     BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, FALSE );
+  }else{
+    BTLV_MCSS_SetGlobalShadowEnable( bew->bmw, TRUE );
   }
 
   {
