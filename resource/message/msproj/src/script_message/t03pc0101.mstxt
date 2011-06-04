@@ -1861,12 +1861,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・クリア前
 ・朝になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:09:58" />
+				Time="2011-06-04T06:12:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1889,5 +1890,53 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03pc0101_policeman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キュレムの　おかげで
+よるは　だれも　そとに　でない▽
+だから　へいわ　だったのか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:13:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キュレムの　おかげで
+夜は　だれも　外に　でない▽
+だから　平和だったのか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:13:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後
+・朝になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:12:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POLICEMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:12:10" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

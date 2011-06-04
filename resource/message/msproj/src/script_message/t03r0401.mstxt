@@ -1341,16 +1341,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よるに　なると　おおきな　あなから
-こわーい　おばけが　でてくるから▽
-おうちに　かえって　おとなしく▽
-してないと　ダメなんだって！▼
-でも　それって　きっと
-ポケモン　でしょ？▽
-ぼく　こわくなんかないよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1358,16 +1352,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>夜に　なると　大きな　穴から
-お化けが　でてくるから▽
-お家に　帰って　大人しく▽
-してないと　ダメなんだって！▼
-でも　それって　きっと
-ポケモン　でしょ？▽
-ぼく　怖くなんかないよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-31T07:02:01" />
+				Time="2011-06-04T06:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1375,19 +1363,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:54:17" />
+				Time="2011-06-04T06:00:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BABYBOY2</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:41" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1398,7 +1384,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1409,13 +1395,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさきの　どうろには　つりずきには
-たまらん　わんがんが　ひろがっとる▼
-いそがしいから　よづりは　しないが
-おおものも　いるかもな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1423,13 +1406,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先の　道路には　釣り好きには
-たまらん　湾岸が　広がっとる▼
-忙しいから　夜釣りは　しないが
-大物も　いるかもな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1437,19 +1417,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:54:19" />
+				Time="2011-06-04T06:00:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FISHING</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1460,7 +1438,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1471,15 +1449,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オイラの　バーちゃん
-むかしばなしが　すきでよ▽
-しょっちゅう　なげー　はなしに▽
-つきあわされるんだぜ▼
-たまには　バーちゃん　おいて
-パーッと　あそびに　いきてーよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1487,15 +1460,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オイラの　バーちゃん
-昔話が　好きでよ▽
-しょっちゅう　なげー　話に▽
-付き合わされるんだぜ▼
-たまには　バーちゃん　置いて
-パーッと　遊びに　いきてーよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1503,19 +1471,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:54:23" />
+				Time="2011-06-04T06:00:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BADMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:33" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1526,7 +1492,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1537,13 +1503,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんかん　ここに　ふにんしてから
-なーんも　することが　ないのだ▼
-あまりに　ひますぎて　ほんかんの
-ポリスだましいも　しなびてしまうよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1551,13 +1514,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>本官　ここに　赴任してから
-なーんも　することが　ないのだ▼
-あまりに　暇すぎて　本官の
-ポリス魂も　しなびてしまうよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1565,19 +1525,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:54:24" />
+				Time="2011-06-04T06:00:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>POLICEMAN</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:32" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1588,7 +1546,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1599,12 +1557,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレの　ポケモン　いつも　かってに
-あそびに　いっちまうんだ▼
-まったく　だれに　にたんだかな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1612,12 +1568,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレの　ポケモン　いつも　勝手に
-遊びに　行っちまうんだ▼
-まったく　だれに　似たんだかな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1625,19 +1579,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:54:26" />
+				Time="2011-06-04T06:00:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN2</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:23" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1648,7 +1600,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1659,10 +1611,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グッグン！　グッグン！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1670,10 +1622,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グッグン！　グッグン！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1681,20 +1633,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・あわせて鳴き声再生
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T04:54:28" />
+				Time="2011-06-04T06:00:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>POKE19</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:00:22" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1705,7 +1654,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1717,19 +1666,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しごとが　いそがしくてねえ
-しゅうに　いちど　くらいしか▽
-うちに　かえってないんだ▼
+しゅうに　いちど　かえってこれたら
+おんのじ　なんだよなァ▼
 かみさんには　さびしい
-おもいを　させて　わるいが▽
-まー　デキる　おとこの▽
+おもいを　させて　わるいが▼
+まー　デキる　おとこの
 しゅくめい　って　やつだからなァ▼
-ああ　これ　しゅっちょうさきの
-みやげなんだが　かみさん▽
-いらない　みたいだから▽
-きみに　やるよ▼</Text>
+ああ　これ　みやげ　なんだが
+かみさん　いらない　みたいでよ▽
+きみに　やるから　もらってくれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:05:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1738,19 +1686,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仕事が　忙しくてねえ
-週に　一度　くらいしか▽
-家に　帰ってないんだ▼
+週に　一度　帰ってこれたら
+御の字　なんだよなァ▼
 かみさんには　さびしい
-思いを　させて　悪いが▽
-まー　デキる　男の▽
+思いを　させて　悪いが▼
+まー　デキる　男の
 宿命　って　やつだからなァ▼
-ああ　これ　出張先の
-土産なんだが　かみさん▽
-いらない　みたいだから▽
-きみに　やるよ▼</Text>
+ああ　これ　土産なんだが
+かみさん　いらない　みたいでよ▽
+きみに　やるから　もらってくれ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:07:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1767,10 +1714,11 @@
 　No151「モモンのみ」
 　No165「ブリーのみ」
 　No157「ラムのみ」
-　No154「ヒメリのみ」</Comment>
+　No154「ヒメリのみ」
+※入手アイテムは検討</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:06:32" />
+				Time="2011-06-04T06:09:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1799,12 +1747,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あしたから　また　しゅっちょうさ
-いやあ　オレって　ビジネスマンの▽
-かがみだな　ほんとうに</Text>
+			<Text>あしたから　また　しゅっちょう！
+オレって　スーパービジネスマンだな！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:08:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1812,12 +1759,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>明日から　また　出張さ
-いやあ　オレって　ビジネスマンの▽
-鏡だな　本当に</Text>
+			<Text>明日から　また　出張！
+オレって　スーパービジネスマンだな！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T06:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
