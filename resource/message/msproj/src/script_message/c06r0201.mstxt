@@ -63,10 +63,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>はかせの　ちょうさも
+ひとだんらく　したようね▼
+ということで
+アタシの　ひこうきに　のる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:47" />
+				Time="2011-06-04T07:12:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -74,10 +77,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>博士の　調査も
+ひと段落したようね▼
+ということで
+アタシの　飛行機に　乗る？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:53" />
+				Time="2011-06-04T07:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -115,10 +121,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃいきましょ！</Text>
+			<Text>じゃ　いきましょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:48:34" />
+				Time="2011-06-04T07:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -126,10 +132,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>じゃ　行きましょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:57" />
+				Time="2011-06-04T07:11:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -139,10 +145,10 @@
 			Language="JPN">
 			<Comment>♀
 ・はい選択時
-・発着デモへ（詳細未定）</Comment>
+　続けてhakase2_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:48:24" />
+				Time="2011-06-04T07:17:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -165,10 +171,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゅんびができたらはなしてね</Text>
+			<Text>りょうかい！
+じゅんびが　できたら　はなしてね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:48:13" />
+				Time="2011-06-04T07:07:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -176,10 +183,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>了解！
+準備が　できたら　声をかけてね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:57" />
+				Time="2011-06-04T07:08:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -214,10 +222,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ね　ひこうきに　のる？
+アタシ　はやく　とびたいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:57" />
+				Time="2011-06-04T07:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -225,10 +234,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ね　飛行機に　乗る？
+アタシ　はやく　飛びたいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:21:57" />
+				Time="2011-06-04T07:16:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -266,11 +276,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もくてきは？？？
-ヤマジタウンはつうかてん</Text>
+			<Text>もくてきは　ソウリュウシティ！
+ヤマジタウンを　つうか　します</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-26T05:48:53" />
+				Time="2011-06-04T07:06:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -278,10 +288,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>目的は　ソウリュウシティ！
+ヤマジタウンを　通過して　行きます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:22:07" />
+				Time="2011-06-04T07:06:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -289,10 +300,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・続けてswbell_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:22:10" />
+				Time="2011-06-04T07:20:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -305,6 +317,161 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『はあ　はあ▼
+まって……　ください……
+あたしも　ひこうきに　のりますよお▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:24:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:17:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『はあ　はあ▼
+待って……　ください……
+あたしも　飛行機に　乗りますよお▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:24:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:17:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ベル登場しメッセージ表示
+・続けてhakase2_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:24:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:14:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_hakase2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『あら！？　ベルったら▼
+では　また　わたしの
+ボディガードを　おねがい　ね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:22:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:17:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『あら！？　ベルったら▼
+では　また　わたしの
+ボディガードを　お願い　ね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:24:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:17:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてswleader6_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:22:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:16:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_swleader6_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フウロ『うふふ
+みなさん　おそろい　ですね！▼
+それでは
+ヤマジタウンへ　いきましょう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:24:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:23:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フウロ『うふふ
+みなさん　おそろい　ですね！▼
+それでは
+ヤマジタウンへ　向かいましょう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:24:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:23:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・発着デモへ（詳細未定）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:22:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:22:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -368,7 +535,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06r0201_infomationw_02">
+		Label="msg_c06r0201_infomationw_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>すばやく　たくさん　おとどけ！
@@ -425,7 +593,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06r0201_infomationw_03">
+		Label="msg_c06r0201_infomationw_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わかりました！　それでは
@@ -478,7 +647,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06r0201_infomationw_04">
+		Label="msg_c06r0201_infomationw_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はい！
