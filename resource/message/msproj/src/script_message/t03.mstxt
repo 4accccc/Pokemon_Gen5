@@ -319,10 +319,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『はい▼</Text>
+			<Text>アララギ『はい
+よろしく　おねがい　しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T09:21:17" />
+				Time="2011-06-04T10:57:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -330,10 +331,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『はい▼</Text>
+			<Text>アララギ『はい
+よろしく　おねがい　しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T09:22:32" />
+				Time="2011-06-04T10:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -417,7 +419,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_hakase2_06"
+		Label="msg_t03_hakase2_06b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -425,16 +427,14 @@
 むかしばなし　だったわね▼
 しょうたいふめいの　ポケモンとはいえ
 つたわる　ちからが　つよすぎる▼
-そう　まるで　でんせつの　ポケモン
-
+あたりいったいを　こおらせるなんて
+まるで　でんせつの　ポケモンみたい▼
 ところで　主人公
-レシラムという　ポケモンはしってる？
-
-ところで　主人公
-ゼクロムという　ポケモンはしってる？</Text>
+ゼクロムという　ポケモンの
+はなしは　おぼえている？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:49:24" />
+				Time="2011-06-04T10:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -477,19 +477,72 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_hakase2_07"
+		Label="msg_t03_hakase2_06w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>
-レシラム/ゼクロムも
-ストーンから　ふっかつ　した
-
-いんせきが
-ストーンのたぐい</Text>
+			<Text>アララギ『じつに　おもしろい
+むかしばなし　だったわね▼
+しょうたいふめいの　ポケモンとはいえ
+つたわる　ちからが　つよすぎる▼
+あたりいったいを　こおらせるなんて
+まるで　でんせつの　ポケモンみたい▼
+ところで　主人公
+レシラムという　ポケモンの
+はなしは　おぼえている？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:49:37" />
+				Time="2011-06-04T10:59:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:57:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:57:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:57:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ｔ03ｒ0201でのイベント後
+・建物の外にでるとイベント開始</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:57:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:57:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_07b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -523,19 +576,58 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_hakase2_08"
+		Label="msg_t03_hakase2_08b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>
-レシラム/ゼクロムも
-ストーンから　ふっかつ　した
-
-いんせきが
-ストーンのたぐい</Text>
+			<Text>ゼクロムは　ダークストーンという
+いしから　ふっかつ　したの
+あの　はなしの　いんせきが
+ダークストーンと　おなじ　せいしつの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:49:40" />
+				Time="2011-06-04T11:01:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:33" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_07w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -569,17 +661,63 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t03_hakase2_08w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムは　ライトストーンという
+いしから　ふっかつ　したの
+あの　はなしの　いんせきが
+ライトストーンと　おなじ　せいしつの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:34" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T11:01:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t03_swbel_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『よるに　あわられるのも
+			<Text>ベル『
+
+よるに　あわられるのも
 なにか　りゆうが　あるのかしら？▼
 たとえば　たいようの　ひかりが
 にがて　とかかもお……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:44:55" />
+				Time="2011-06-04T11:00:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -620,16 +758,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_hakase2_09"
+		Label="msg_t03_hakase2_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>
+			<Text>アララギ『
 カゴメという　まちの　なまえも
 かこめ！　という　いみから～</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:47:55" />
+				Time="2011-06-04T11:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
