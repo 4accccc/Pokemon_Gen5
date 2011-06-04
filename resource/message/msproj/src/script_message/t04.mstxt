@@ -2,17 +2,280 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_t04_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『まてよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:27:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:10:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『待てよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:27:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:10:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+・GRIDX=751～574、GRIDZ=299で起動
+・画面下からメッセージ表示
+　その後ライバル登場
+・続けてswrival_02
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:10:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どれだけ　つよくなったか
+あいてして　やるからさ　みせてみろよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:38:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どれだけ　強くなったか
+相手してるからさ　みせてみろよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:38:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ後、ポケモン勝負へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:30:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:27:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……なるほど
+それなりに　きたえているよな▼
+それなら　もし　プラズマだんと
+なにか　あったとしても▽
+ポケモンを　まもれるよな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:36:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……なるほど
+それなりに　鍛えているよな▼
+それなら　もし　プラズマ団と
+なにか　あったとしても▽
+ポケモンを　守れるよな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・フィールドに復帰して
+・続けてswrival_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:27:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まっ　プラズマだんの　あいては
+オレが　するけどな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:36:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まっ　プラズマ団の　相手は
+オレが　するけどな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:39:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・別方向をむいてメッセージ表示
+・続けてswrival_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:27:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>というわけで　[Name:TrainerName ]！▼
+おまえは　ポケモンずかんを
+がんばって　うめてろ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:39:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>というわけで　[Name:TrainerName ]！▼
+おまえは　ポケモン図鑑を
+がんばって　うめてろ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:39:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:28:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、画面上
+　r13r0201に消えて行く
+・画面から消えると、操作可能に
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:27:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t04_boy3_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひまで　ひまで
-しかたないって　かおだろう！▼
-ようし！　この　ボクが
-ポケモンで　あいて　してやろう！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +283,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>暇で　暇で
-仕方ないって　顔だろう！▼
-ようし！　この　ボクが
-ポケモンで　相手してやろう！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,22 +294,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：巨大別荘
-・初回：波際に立っている。
-・この後、「はい／いいえ」を選択
-・「はい」で連戦スタート
-・「いいえ」でmsg_t04_boy3_03</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -60,7 +315,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -71,10 +326,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだよう　ひまじゃないのか……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82,10 +337,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだよう　暇じゃないのか……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93,19 +348,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：巨大別荘
-・msg_t04_boy3_01で「いいえ」を選択</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -116,7 +369,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -127,12 +380,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうしてもって　いうなら
-また　あした▽
-あいて　してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -140,12 +391,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうしてもって　いうなら
-また　明日▽
-相手して　やっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -153,19 +402,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：巨大別荘
-・主人公がまけた場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -176,7 +423,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -187,12 +434,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オマエ　きにいったぞ！▼
-とっておきの　もの　みせてやるから
-うちに　こい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -200,12 +445,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエ　気に入ったぞ！▼
-とっておきの　もの　見せてやるから
-うちに　こい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -213,20 +456,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：巨大別荘
-・初戦闘勝利後
-・この後、豪邸まで主人公を連れ歩く</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:11:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -237,7 +477,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -248,14 +488,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うみ♪　それは　いのちのみなもと♪▼
-うみ♪　それは　たくさんのみず♪▼
-だから　あなたも
-この　わざを　ポケモンに▽
-おぼえさせて　うみに　もぐりなさい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -263,14 +499,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>海♪　それは　生命の源♪▼
-海♪　それは　たくさんの水♪▼
-だから　あなたも
-この技を　ポケモンに▽
-覚えさせて　海に潜りなさい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -278,21 +510,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・季節に関係なく出現
-・アイテム入手処理
-　No604「ダイビング」
-　GRIDX=762、GRIDZ=302</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>GIRL4</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -303,7 +531,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -314,15 +542,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひでんマシンの　なかみは
-ダイビング！▼
-うみで　いろの　こい　ぶぶんを
-ダイビングポイントと　いうんだけど▼
-そこで　ダイビングを　つかえば
-うみのそこへ　もぐって　いけるわ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -330,15 +553,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひでんマシンの　中身は
-ダイビング！▼
-海上で　色の　濃い　部分を
-ダイビングポイントと　いうんだけど▼
-そこで　ダイビングを　使えば
-海底へ　潜っていけるわ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -346,18 +564,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・アイテム入手後</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>GIRL4</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:40:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -368,7 +585,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -379,10 +596,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うみー！！</Text>
+			<Text>サザナミー！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:49:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -390,10 +607,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うみー！！</Text>
+			<Text>サザナミー！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -404,10 +621,11 @@
 			<Comment>♂
 ・夏だけ出現
 　GRIDX=744、GRIDZ=308、下向き
-・ぎざぎざウインドウで</Comment>
+・ぎざぎざウインドウで
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:49:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -429,12 +647,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ　シロナさん……▼
-どうして　あなたは　そんなに
-シロナさん　なんですか……</Text>
+			<Text>ワールドバトルトーナメント……
+シロナさんも　さんか　するのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -442,12 +659,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ　シロナさん……▼
-どうして　あなたは　そんなに
-シロナさん　なんですか……</Text>
+			<Text>ワールドバトルトーナメント……
+シロナさんも　さんか　するのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -456,12 +672,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・夏だけ出現
+・夏だけ出現＋WBTでシロナ登場前
 　GRIDX=734、GRIDZ=307付近近
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T10:39:32" />
+				Time="2011-06-04T01:50:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -479,20 +695,62 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t04_trainerm_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールドバトルトーナメント！
+シロナさんも　さんせん！▽
+これは　おうえん　するしかない！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:51:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:50:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールドバトルトーナメント！
+シロナさんも　参戦！▽
+これは　応援するしかない！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:51:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:50:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・夏だけ出現＋WBTでシロナ登場後
+　GRIDX=734、GRIDZ=307付近近
+※swanでメッセージ修正予定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:50:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:50:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t04_maid_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メイドだって　たまには
-はねやすめを　しないとね……▼
-はっ！　はねやすめの　わざは
-つかうと　ポケモンの　たいりょくが▽
-かいふく　いたしますわ！▼
-ちなみに　ひとの　ばあいは
-ホネやすめ　ですわね……</Text>
+			<Text>ブルジョワールの　かたがたが
+とおくとおくへ　ひっこし　なされ▽
+ここも　しばし　さみしいままですわ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -500,16 +758,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メイドだって　たまには
-はねやすめを　しないとね……▼
-はっ！　はねやすめの　技は
-使うと　ポケモンの　体力が▽
-回復いたしますわ！▼
-ちなみに　人の　場合は
-ホネやすめ　ですわね……</Text>
+			<Text>ブルジョワール一家の　方々が
+はるか　遠方へ　引越しなされ▽
+ここも　しばし　寂しいままですわ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:48:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -628,10 +882,11 @@
 			Language="JPN">
 			<Comment>♀
 ・夏だけ出現
-　GRIDX=711、GRIDZ=306付近を移動している</Comment>
+　GRIDX=749、GRIDZ=306付近を移動
+※swanから座標移動</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:47:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -709,11 +964,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　おおきな　べっそうは
-ブルジョワール　いっかの　もの！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -721,11 +975,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　大きな　別荘は
-ブルジョワール　一家の　もの！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T01:45:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,10 +1044,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>BGメッセージ</Comment>
+			<Comment>BGメッセージ
+※swanで追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:09:57" />
+				Time="2011-06-04T01:44:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -816,10 +1070,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>おつかれの　さぎょういんは
+この　プレハブへ！（かり）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:12:03" />
+				Time="2011-06-04T01:45:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -827,10 +1082,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おつかれの　さぎょういんは
+この　プレハブへ！(仮称）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:12:11" />
+				Time="2011-06-04T01:45:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -839,10 +1095,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・プレハブ小屋用</Comment>
+・プレハブ小屋用
+※swanで追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:11:52" />
+				Time="2011-06-04T01:44:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -864,10 +1121,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>このさき
+かざん（かり）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:12:14" />
+				Time="2011-06-04T01:45:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -875,10 +1133,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>この先
+火山（仮称）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:12:14" />
+				Time="2011-06-04T01:45:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -887,10 +1146,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・火山との接続</Comment>
+・火山との接続
+※swanで追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:11:59" />
+				Time="2011-06-04T01:44:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
