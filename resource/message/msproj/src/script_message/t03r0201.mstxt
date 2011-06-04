@@ -6,14 +6,396 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぐごご……　ぐごごご………▼
-……ん　んんう？
-なんじゃ？　おまえさんは？▼
-バーさんの　はなしでも
-ききに　きたんか……？</Text>
+			<Text>カゴメの　むかしばなしを
+ききたいのは　あんたら　かね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:11:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カゴメの　むかしばなしを
+ききたいのは　あんたら　かね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:11:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・説明イベント：夜のパターン
+・夜以外のパターンはoldwoman1_02から
+　室内に入るとオートで所定の位置に
+・左からアララギ、主人公、ベルと
+　動作モデルがセットされるとメッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:24:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>oldwoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:11:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_hakase2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『はい
+よろしく　おねがい　いたします▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:13:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:11:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『はい
+よろしく　おねがい　いたします▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:11:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてoldwoman1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:13:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:11:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カゴメタウンの　うらには
+そりゃもう　おおきな　あなが　ある▼
+しっとるか
+ジャイアントホール▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:25:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:25:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カゴメタウンの　うらには
+そりゃもう　おおきな　あなが　ある▼
+しっとるか
+ジャイアントホール▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:25:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:25:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・説明イベント：夜以外のパターンはここから
+　室内に入るとオートで所定の位置に
+・左からアララギ、主人公、ベルと
+　動作モデルがセットされるとメッセージ表示
+・続けてswbel_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:24:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:24:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_swbel_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『あのね　さいきん
+ジャイアントホールの　ちかくでも▼
+いっしゅんだけ　マイナス５０どを
+けいそく　したんだって！▼
+って　チェレンが
+おしえて　くれたんだけど▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:25:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:25:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『あのね　さいきん
+ジャイアントホールの　ちかくでも▼
+いっしゅんだけ　マイナス５０どを
+けいそく　したんだって！▼
+って　チェレンが
+おしえて　くれたんだけど▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:25:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:29:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ベルト主人公向き合ってメッセージ表示
+・続けてhakase2_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:28:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_hakase2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『いまは　いけないけれどね
+・理由▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:33:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:29:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『いまは　いけないけれどね
+・理由▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:29:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてoldwoman1_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:28:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むかしむかしの　ことじゃ▼
+ジャイアントホール　とは
+そらから　おおきな　いんせきが▽
+ふってきて　できた　あな　らしいな▼
+その　いんせき　にはな
+おっそろしい　ポケモンが▽
+ひそんで　おったそうな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:15:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:29:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むかしむかしの　ことじゃ▼
+ジャイアントホール　とは
+そらから　おおきな　いんせきが▽
+ふってきて　できた　あな　らしいな▼
+その　いんせき　にはな
+おっそろしい　ポケモンが▽
+ひそんで　おったそうな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:15:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:29:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてhakase2_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:14:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:28:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_hakase2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『……いんせき　ね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:09:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:09:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『……いんせき　ね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:09:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:09:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アララギ、正面を向いたまま
+・続けてoldwoman1_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:26:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:09:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたりが　やみに　つつまれると▼
+ポケモンは　こごえるような
+つめたい　かぜと　ともに　あらわれ▽
+ひとや　ポケモンを　とっては　くらう……▼
+そう　おそれられて　いたんじゃ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:15:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,18 +403,336 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぐごご……　ぐごごご………▼
-……ん　んんう？
-なんじゃ？　おまえさんは？▼
-バーさんの　話でも
-聞きに　来たんか……？</Text>
+			<Text>あたりが　やみに　つつまれると▼
+ポケモンは　こごえるような
+つめたい　かぜと　ともに　あらわれ▽
+ひとや　ポケモンを　とっては　くらう……▼
+そう　おそれられて　いたんじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:15:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてswbel_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:21:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_swbel_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『ポケモンが　ひとを
+た　たべちゃうのお！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:16:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:51:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『ポケモンが　ひとを
+た　たべちゃうのお！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:16:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:51:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ベルに！マーク表示してから
+・続けてoldwoman1_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:21:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:53:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃから　むかしの　もんは
+ポケモンが　はいって　これないように▽
+まちを　へいで　かこったり▼
+ひが　くれたら　そとに　でるのを
+きんじて　うちで　すごすよう▽
+まちの　おきてを　きめたのじゃ……▼
+むかしばなしは
+これで　おしまい　じゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:10:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:50:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃから　むかしの　もんは
+ポケモンが　はいって　これないように▽
+まちを　へいで　かこったり▼
+ひが　くれたら　そとに　でるのを
+きんじて　うちで　すごすよう▽
+まちの　おきてを　きめたのじゃ……▼
+むかしばなしは
+これで　おしまい　じゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:16:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:51:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてhakase2_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:21:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:50:09" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_hakase2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『とても　きょうみぶかい
+おはなし　ありがとう　ございました▼
+こんごの　わたしの　けんきゅうに
+とても　やくだちます▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:29:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:55:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『とても　きょうみぶかい
+おはなし　ありがとう　ございました▼
+こんごの　わたしの　けんきゅうに
+とても　やくだちます▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:29:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:55:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてhakase2_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:21:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:55:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_hakase2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　みんな
+おいとましましょう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:29:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:20:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　みんな
+おいとましましょう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:29:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:20:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公の方を向いてメッセージ表示
+・アララギ、ベルは退場する</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:27:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:16:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むかしばなし　とはいえ
+おっそろしい　ポケモン　じゃな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:27:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:51:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むかしばなし　とはいえ
+おっそろしい　ポケモン　じゃな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:27:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:51:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・oldwoman1_05表示以降
+　t03でのプラズマ団との戦闘を終えるまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:27:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:50:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03r0201_oldwoman1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐごご……
+ぐごごご………▼
+……んう？　なんじゃ？
+おまえさんは？　ワシの▽
+はなしを　きくのか……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:05:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:04:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐごご……
+ぐごごご………▼
+……んう？　なんじゃ？
+おまえさんは？　ワシの▽
+話を　きくのか……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:20:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:04:07" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -44,42 +744,37 @@
 　いいえ→_oldwoman1_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:07:46" />
+				Time="2011-06-04T10:06:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:03:57" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03r0201_oldwoman1_02"
+		Label="msg_t03r0201_oldwoman1_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>んん……　じゃあ　はなしてやろう……▼
-この　カゴメタウンの　うらには……
-でっかい　あなが　あいとるんじゃ▼
-そのあなはな　むかし　むかし……▼
+			<Text>んん……
+じゃあ　きかせてやろう……▼
+カゴメタウンの　うらには……
+そりゃもう　おおきな　あなが　ある▼
+その　あなはな　むかし　むかし……▼
 ふあ……　だめじゃ　ねむい……▼
 そらから　おおきな……▼
 ……が　ふってきて　できた……▼
 そして　その……　なかには
 よにも　おそろしい……▼
 ……　……　よにも……▼
-ぐう……　ぐう……　ぐごご……</Text>
+ぐう……　ぐう……
+ぐごご……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:20:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,20 +782,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>んん……　じゃあ　話してやろう……▼
-この　カゴメタウンの　裏には……
-でっかい　穴が　開いとるんじゃ▼
+			<Text>んん……
+じゃあ　きかせてやろう……▼
+カゴメタウンの　裏には……
+そりゃもう　大きな　穴が　ある▼
 その穴はな　昔々……▼
-ふあ……　だめじゃ　眠いわ……▼
-空から　大きな……
-……が　降って　出来た……▼
+ふあ……　だめじゃ　眠い……▼
+空から　大きな……▼
+……が　降ってきて　できた……▼
 そして　その……　中には
 世にも　恐ろしい……▼
 ……　……　世にも……▼
-ぐう……　ぐう……　ぐごご……</Text>
+ぐう……　ぐう……
+ぐごご……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109,11 +806,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・朝になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照</Comment>
+・はい選択時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:07:59" />
+				Time="2011-06-04T10:03:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -131,7 +827,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03r0201_oldwoman1_03"
+		Label="msg_t03r0201_oldwoman1_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -164,10 +860,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・イベント終了</Comment>
+・いいえ選択時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:08:00" />
+				Time="2011-06-04T10:03:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -190,16 +886,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オイラの　バーちゃん
-むかしばなしが　すきでよ▽
-しょっちゅう　なげー　はなしに▽
+むかしばなしが　すきでよ▼
+しょっちゅう　なげー　はなしに
 つきあわされるんだぜ▼
 よるに　なったら　はなしてる
-とちゅうでも　ねちまうし▽
-ったく　げんき　っていうより▽
+とちゅうでも　ねちまうし▼
+ったく　げんき　っていうより
 フリーダムな　バーちゃんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:17:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -208,16 +904,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オイラの　バーちゃん
-昔話が　好きでよ▽
-しょっちゅう　なげー　話に▽
-付き合わされるんだぜ▼
+昔話が　好きでよ▼
+しょっちゅう　なげー　話に
+つきあわされるんだぜ▼
 夜に　なったら　話してる
-途中でも　寝ちまうし▽
-ったく　元気　っていうより▽
+途中でも　寝ちまうし▼
+ったく　元気　っていうより
 フリーダムな　バーちゃんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T10:19:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
