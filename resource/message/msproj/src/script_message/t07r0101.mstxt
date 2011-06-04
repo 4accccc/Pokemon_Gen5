@@ -153,10 +153,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>わざおしえです
+かりメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:56" />
+				Time="2011-06-04T07:33:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -164,10 +165,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わざ教えです
+仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:56" />
+				Time="2011-06-04T07:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -207,10 +209,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>わざおすすめです
+かりメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:56" />
+				Time="2011-06-04T07:33:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -218,10 +221,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わざおすすめです
+仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:56" />
+				Time="2011-06-04T07:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
