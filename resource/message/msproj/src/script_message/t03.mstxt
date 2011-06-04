@@ -2,166 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t03_swrival_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『
-・プラズマ団がいる　かもしれない
-・出口で見張るから探せ</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T02:55:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T02:55:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T02:55:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・posイベント
-　GRIDX＝671、GRIDZ＝174～179
-・0＝主人公名
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:34:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T02:55:43" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t03_swrival_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:40" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:40" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・
-・キュレムの話を聞く前</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:51" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:21" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t03_swrival_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:56" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:56" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・
-・キュレムの話を聞いた後</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:38:00" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:37:56" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_t03_hakase2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はーい！
+			<Text>アララギ『はーい！
 [Name:TrainerName ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T02:58:14" />
+				Time="2011-06-04T09:19:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -169,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はーい！
+			<Text>アララギ『はーい！
 [Name:TrainerName ]！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T02:58:14" />
+				Time="2011-06-04T09:19:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -213,10 +62,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ベル『あいさつ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:27:55" />
+				Time="2011-06-04T09:25:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -236,10 +85,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-</Comment>
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:28:02" />
+				Time="2011-06-04T09:21:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -254,10 +103,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アララギ『
+</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:28:01" />
+				Time="2011-06-04T09:17:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -277,10 +127,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-</Comment>
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:55:08" />
+				Time="2011-06-04T09:21:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -299,61 +149,455 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_oldwoman1_01"
+		Label="msg_t03_hakase2_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょいと　そこの　たびびとさんや
-カゴメ　むかし　ばなしでも▽
-きいて　いかんかね？▼
-バーさんの　はなし　じゃから
-ちと　ながくなるがな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:12" />
+				Time="2011-06-04T08:13:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:12" />
+				Time="2011-06-04T08:13:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょいと　そこの　旅人さんや
-カゴメ昔話　でも▽
-聞いて　いかんかね？▼
-バーさんの　話じゃから
-ちと　長くなるがな</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:12" />
+				Time="2011-06-04T08:13:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:12" />
+				Time="2011-06-04T08:13:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・夜になるといなくなる
-・消すタイミングはzoneチェンジ＋時間参照
-・GRIDX=６７０、GRIDZ=１６８辺り
-・はい/いいえの選択肢表示
-　はい→02
-　いいえ→03</Comment>
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:12" />
+				Time="2011-06-04T09:21:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:21:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いきましょ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:17:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・まで誘導</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:17:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:13:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_oldwoman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カゴメの　むかしばなしを
+ききたいのは　あんたら　かね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:10:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カゴメの　むかしばなしを
+ききたいのは　あんたら　かね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:10:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・夜以外のパターン
+　夜のパターンはhakase2_00へ
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>oldwoman1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:12" />
+				Time="2011-06-04T08:09:52" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『はい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:21:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:21:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『はい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ後、oldwomanを先頭に
+　アララギ、主人公、ベルの順序で建物内に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:21:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:17:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_hakase2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『ここね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:21:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『ここね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・夜のパターン
+・メッセージ後、oldwomanを先頭に
+　アララギ、主人公、ベルの順序で建物内に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:22:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T09:21:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだ
+オマエも　きたのか▼
+このあたりで　プラズマだんを
+みかけたって　はなしが　あって▽
+こうして　みはっているのさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんだ
+オマエも　きたのか▼
+このあたりで　プラズマだんを
+みかけたって　はなしが　あって▽
+こうして　みはっているのさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+　GRIDX＝671、GRIDZ＝174～179
+・ストッパー
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T08:09:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
