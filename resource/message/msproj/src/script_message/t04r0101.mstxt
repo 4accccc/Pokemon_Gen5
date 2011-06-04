@@ -2,16 +2,65 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_t04r0101_infomationw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このさき　すいちゅうトンネルです
+・かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:53:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:52:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このさき　すいちゅうトンネルです
+・仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:53:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:52:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:53:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW
+受付嬢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:52:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t04r0101_boy3_01e"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいだろ！　ひろいだろ！▼
-ここは　パパの　べっそうで
-じゆうに　つかって　いいんだ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +68,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいだろ！　広いだろ！▼
-ここは　パパの　別荘で
-自由に　使っていいんだ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,20 +79,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・豪邸の中央部分まで歩いてから会話開始。
-・メッセージの後に、コレクション棚の方を向く。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -56,7 +100,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -67,13 +111,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……でも　きてみたら　いがいと
-することなくて　ひまでさ▼
-パパは　あのとおり
-いせきの　どうぐに　むちゅうだし……▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -81,13 +122,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……でも　来てみたら　意外と
-することなくて　暇でさ▼
-パパは　あの通り
-遺跡の　道具に　夢中だし……▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -95,20 +133,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続き。
-・メッセージの後に再び主人公の方に向きなおす</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -119,7 +154,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -130,12 +165,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぁ　オマエ　ひまなんだろう？▼
-あしたも　こいよ！
-ボクが　あいて　してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -143,12 +176,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぁ　オマエ　暇なんだろう？▼
-明日も　こいよ！
-ボクが　相手してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -156,21 +187,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続き。
-・以降、本日中はmsg_t04r0101_boy3_03を
-　表示する</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -181,7 +208,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -192,12 +219,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぁ　オマエ　ひまなんだろう？▼
-あしたも　こいよ！
-ボクが　あいて　してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -205,12 +230,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぁ　オマエ　暇なんだろう？▼
-明日も　こいよ！
-ボクが　相手してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -218,20 +241,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続き。
-・以降、本日中はこのメッセージを表示する。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -242,7 +262,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -253,14 +273,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きたな！▼
-ひまで　ひまで
-しかたないって　かおだろう！▼
-この　ボクが　あいて
-してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -268,14 +284,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きたな！▼
-暇で　暇で
-仕方ないって　顔だろう！▼
-この　ボクが　相手
-してやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -283,22 +295,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・初回以降、息子に話し書ける時。
-・この後にはい／いいえの選択肢。
-　「はい」で連戦スタート。
-　「いいえ」でmsg_t04r0101_boy3_02a</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -309,7 +316,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -320,10 +327,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いざ　じんじょうに　しょうぶっ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -331,10 +338,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いざ　じんじょうに　勝負っ！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -342,19 +349,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・トレーナー戦闘へ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -376,10 +381,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだよう　ひまじゃないのか……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -387,10 +392,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだよう　暇じゃないのか……</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -398,19 +403,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・msg_t04r0101_boy3_02で「いいえ」の場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -421,7 +424,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -432,11 +435,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ううー！
-くやしいー！　なんでだー！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -444,11 +446,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ううー！
-悔しいー！　なんでだー！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -456,20 +457,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・連戦途中であり、戦闘終了後。
-　このあと、席に帰るアニメーション。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -480,7 +478,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -491,11 +489,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オマエ　すごいじゃないか！
-すこしだけ　みとめてやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -503,11 +500,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエ　すごいじゃないか！
-すこしだけ　認めてやっても　いいぞ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -515,19 +511,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・家族全員に勝利したあとのメッセージ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>息子　ドレイク
-じゅくがえり</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -538,7 +532,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -549,10 +543,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　たのしそうね▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -560,10 +554,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　楽しそうね▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -571,456 +565,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・ふきだしのみ。この後にマップ外から登場し、
-　主人公の目の前まで移動する。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ごきげんよう　トレーナーさん▼
-おとうさまの　べっそうで
-たいくつ　してましたの！▽
-あたくしも　まぜてくださる？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ごきげんよう　トレーナーさん▼
-お父様の　別荘で
-退屈してましたの！▽
-あたくしも　まぜてくださる？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・続けて。初回限定。
-・この後戦闘に入る。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_02a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ごきげんよう　トレーナーさん
-きょうは　まけませんわよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ごきげんよう　トレーナーさん
-今日は　負けませんわよ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・初回以降
-・この後戦闘に入る。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_03a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おとうさまの　べっそうでは
-じかんを　もてあましますわ▼
-また　あしたも　いらして　ください
-おあいて　いたしますわ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>お父様の　別荘では
-時間を　持て余しますわ▼
-また　明日も　いらして　ください
-お相手　いたしますわ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・戦闘終了後、主人公が勝利した場合</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おとうさまの　べっそうでは
-じかんを　もてあましますわ▼
-また　あしたも　いらして　ください
-おあいて　いたしますわ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>お父様の　別荘では
-時間を　持て余しますわ▼
-また　明日も　いらして　ください
-お相手　いたしますわ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・本日の連戦終了後、
-　自らはなしかけた時のメッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_04a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>あいかわらず　おつよいわね
-でも　つぎは　どうかしら？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>相変わらず　お強いわね
-でも　次は　どうかしら？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・連戦途中であり、戦闘終了後。
-　このあと、席に帰るアニメーション。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ごきげんよう
-きょうも　きてくださったのね▼
-また　おあいて　ねがいますわ
-そうね……▼
-まずは　おとうとの
-あいてを　おねがいしますわ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ごきげんよう
-今日も　来てくださったのね▼
-また　お相手　願いますわ
-そうね……▼
-まずは　弟の
-相手を　お願いしますわ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・連戦前、能動的に話しかけた場合</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_girl4_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ブルジョワールけ　あげてでも
-かなうことのない　その　おつよさ……▽
-けいふく　いたしますわ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ブルジョワール家　あげてでも
-敵うことのない　その　お強さ……▽
-敬服　いたしますわ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・家族全員勝ち抜いた後、話しかけた場合。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>姉　スーザン
-お嬢様</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_lady_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おやおや
-なにやら　にぎやかですわねぇ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>おやおや
-なにやら　にぎやかですわねぇ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ふきだしのみ。この後にマップ外から登場し、
-　主人公の目の前まで移動する。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1031,7 +586,439 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_02a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_03a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_04a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_lady_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1042,14 +1029,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まごの　おあいて　してくださって
-かんしゃ　しますよ▼
-……どれどれ▼
-まごを　こえる　その　うで
-みせていただこうかしら▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1057,14 +1040,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>孫の　お相手　してくださって
-感謝しますよ▼
-……どれどれ▼
-孫を　こえる　その腕前
-見せていただこうかしら▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1072,21 +1051,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けて。初回限定。
-・この後戦闘に入る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1097,7 +1072,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1108,11 +1083,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホホホ　わたくしに　かつ
-じしんは　おあり？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1120,11 +1094,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホホホ　わたくしに　勝つ
-自信は　おあり？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1132,21 +1105,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・初回以降
-・この後戦闘に入る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1157,7 +1126,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1168,15 +1137,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サザナミタウンは　ゆっくりできて
-きもちのよい　ところですわ▼
-……でも　まごには　いささか
-たいくつなよう▼
-また　あしたも　いらっしゃいな
-まごも　よろこぶでしょう▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1184,15 +1148,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サザナミタウンは　ゆっくりできて
-気持ちのよい　所ですわ▼
-……でも　孫には
-いささか　退屈なよう▼
-また　明日も　いらっしゃいな
-孫も　喜ぶでしょう▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1200,20 +1159,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・戦闘終了後、主人公が勝利した場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1224,7 +1180,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1235,15 +1191,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サザナミタウンは　とても　のんびりできて
-きもちのよい　ところですわ▼
-……でも　まごには　いささか
-たいくつなよう▼
-また　あしたも　いらっしゃいな
-まごも　よろこぶでしょう</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1251,15 +1202,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サザナミタウンは　とても　のんびりできて
-気持ちのよい　所ですわ▼
-……でも　孫には
-いささか　退屈なよう▼
-また　明日も　いらっしゃいな
-孫も　喜ぶでしょう</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1267,21 +1213,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・本日の連戦終了後、
-　自らはなしかけた時のメッセージ</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1292,7 +1234,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1303,11 +1245,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホホホ　ほんとに　おつよいこと！
-たのもしい　くらいですわね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1315,11 +1256,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホホホ　ほんとに　お強いこと！
-頼もしい　くらいですわね！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1327,21 +1267,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・連戦途中であり、戦闘終了後。
-　このあと、席に帰るアニメーション。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1352,7 +1288,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1363,12 +1299,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　いらっしゃい
-まごが　あなたと　しょうぶ　したくて▽
-ウズウズしていますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1376,12 +1310,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　いらっしゃい
-孫が　あなたと　勝負したくて▽
-ウズウズしていますよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1389,20 +1321,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・連戦前、能動的に話しかけた場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1413,7 +1342,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1424,13 +1353,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいきんの　おこさんは
-ポケモンしょうぶが　おつよいのね▼
-ホホホ　まごたちも　あなたのような
-トレーナーに　なれるかしら</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1438,13 +1364,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいきんの　お子さんは
-ポケモン勝負が　お強いのね▼
-ホホホ　孫達も　あなたのような
-トレーナーに　なれるかしら</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1452,20 +1375,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・家族全員勝ち抜いた後、話しかけた場合。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばあちゃん
-クアドナ
-マダム</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1476,7 +1396,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1487,11 +1407,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホッホッホ
-ポケモン　しょうぶとは　なつかしい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1499,11 +1418,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホッホッホ
-ポケモン　勝負とは　なつかしい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1511,457 +1429,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ふきだしのみ。この後にマップ外から登場し、
-　主人公の目の前まで移動する。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ちが　たぎりますな！
-……おあいて　おねがいできますかな？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>血が　たぎりますな！
-……お相手　お願いできますかな？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けて。初回限定。
-・この後戦闘に入る。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_02a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ちが　たぎりますな！
-きょうも　おあいて　ねがいますぞ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>血が　たぎりますな！
-今日も　お相手　願いますぞ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・初回以降
-・この後戦闘に入る。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_03a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ホッホ　いくつに　なっても
-ポケモンしょうぶは　たのしいですな！▼
-たまには　こういった
-しげきも　わるくない！▼
-いつでも　また　きなさい
-こんどは　まけませんぞ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ホッホ　いくつに　なっても
-ポケモン勝負は　楽しいですな！▼
-たまには　こういった
-刺激も　悪くない！▼
-いつでも　また　きなさい
-今度は　負けませんぞ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・戦闘終了後、主人公が勝利した場合</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ホッホ　いくつに　なっても
-ポケモンしょうぶは　たのしいですな！▼
-たまには　こういった
-しげきも　わるくない！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ホッホ　いくつに　なっても
-ポケモン勝負は　楽しいですな！▼
-たまには　こういった
-刺激も　悪くない！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・本日の連戦終了後、
-　自らはなしかけた時のメッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ホッホ　いらっしゃい！
-きみが　くると▽
-しげきがあって　よいですな</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ホッホ　いらっしゃい！
-きみが　くると▽
-刺激があって　よいですな</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・連戦前、能動的に話しかけた場合</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_04a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ホッホ　わかさよ！
-しかし　つぎは　こうはいきませんぞ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ホッホ　若さよ！
-しかし　次は　こうはいきませんぞ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・連戦途中であり、戦闘終了後。
-　このあと、席に帰るアニメーション。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_gentleman_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ホッホ！
-いっか　そろっての　ポケモンしょうぶ！▽
-たのしませて　もらいましたぞ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ホッホ！
-一家　そろっての　ポケモン勝負！▽
-楽しませて　もらいましたぞ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・家族全員勝ち抜いた後、話しかけた場合。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>おじいちゃん
-ジリオン
-ジェントルマン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t04r0101_veteranw_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なにごとかしら？
-ずいぶんと　にぎやかね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なにごとかしら？
-随分と　にぎやかね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ふきだしのみ。この後にマップ外から登場し、
-　主人公の目の前まで移動する。</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1972,7 +1450,439 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_02a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_03a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_04a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_gentleman_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_veteranw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1983,12 +1893,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうや　おつよいのかしら？▼
-ならば　わたくしを
-たおしてごらんなさい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1996,12 +1904,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>坊や　お強いのかしら？▼
-ならば　わたくしを
-倒してごらんなさい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2009,20 +1915,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けて。初回限定。
-・この後戦闘に入る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2033,7 +1936,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2044,11 +1947,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうこそは　まけなくてよ！▼
-さあ　わたくしを　たおしてごらんなさい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2056,11 +1958,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日こそは　負けなくてよ！
-さあ　わたくしを　倒してごらんなさい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2068,20 +1969,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・初回以降
-・この後戦闘に入る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2092,7 +1990,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2103,13 +2001,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これでも　わたくし
-ポケモンには　くわしくてよ▼
-また　いつか
-おあいて　ねがいたいものですわ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2117,13 +2012,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これでも　わたくし
-ポケモンには　詳しくてよ▼
-また　いつか
-お相手　願いたいものですわ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2131,19 +2023,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・戦闘終了後、主人公が勝利した場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2154,7 +2044,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2165,12 +2055,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これでも　わたくし
-ポケモンには　くわしくてよ▼
-また　おあいて　ねがいますわ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2178,12 +2066,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これでも　わたくし
-ポケモンには　詳しくてよ▼
-また　お相手　願いますわ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2191,19 +2077,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・戦闘終了後、主人公が勝利した場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2214,7 +2098,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2225,12 +2109,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ▼
-ブルジョワールけの　しんの　つよさ
-きょうこそ　ごらんに　いれますわ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2238,12 +2120,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ▼
-ブルジョワール家の　真の　強さ
-今日こそ　ご覧に　いれますわ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2251,19 +2131,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・連戦前、能動的に話しかけた場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2274,7 +2152,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2285,10 +2163,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まさか　ここまで　おつよいとは……▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2296,10 +2174,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まさか　ここまで　お強いとは……▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2307,20 +2185,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・連戦途中であり、戦闘終了後。
-　このあと、席に帰るアニメーション。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2331,7 +2206,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2342,13 +2217,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんぱい　ですわ……▼
-この　ブルジョワールけ
-あなたの　こんごを　こころから▽
-おうえん　いたします</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2356,13 +2228,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>完敗ですわ……▼
-この　ブルジョワール家
-あなたの　今後を　心から▽
-応援いたします</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2370,19 +2239,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・家族全員勝ち抜いた後、話しかけた場合。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>母　トリッシュ
-ベテラントレーナー</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2393,7 +2260,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2404,11 +2271,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみたち　それでも
-ブルジョワールけの　にんげん　かい？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2416,11 +2282,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみたち　それでも
-ブルジョワール家の　人間かい？▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2428,20 +2293,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ふきだしのみ。この後にマップ外から登場し、
-　主人公の目の前まで移動する。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2450,19 +2312,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_boy4_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブルジョワールけ
-じきとうしゅ　マイル！▼
-いっかの　めいよは
-この　ボクが　まもろう！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2470,13 +2336,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブルジョワール家
-次期当主　マイル！▼
-一家の　名誉は
-この　ボクが　護ろう！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2484,20 +2347,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けて。初回限定。
-・この後戦闘に入る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2506,19 +2366,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_boy4_02a"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんど　きても　おなじこと！　この
-マイルを　たおすことなど　できない！▼
-ブルジョワールけの　めいよは
-この　ボクが　まもる！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2526,13 +2390,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>何度　来ても　同じこと！　この
-マイルを　倒すことなど　できない！▼
-ブルジョワール家の　名誉は
-この　ボクが　護る！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2540,20 +2401,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・初回以降
-・この後戦闘に入る。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2562,19 +2420,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_boy4_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>また　あしたも　くるがいい▼
-だが　ブルジョワールけの
-なまえに　かけて▽
-ボクは　まけるつもりは　ないよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2582,13 +2444,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　明日も　来るがいい▼
-だが　ブルジョワール家の
-名前に　かけて▽
-ボクは　負けるつもりは　ないよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2596,20 +2455,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・戦闘終了後、主人公が負けて
-　その日のうちに話しかけた時</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2618,18 +2474,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_boy4_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きたな！▼
-かぞくを　たおすことが　できたら
-あいてをして　やろうじゃないか</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2637,12 +2498,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>来たな！▼
-家族を　倒すことが　できたら
-相手をして　やろうじゃないか</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2650,19 +2509,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・連戦前、能動的に話しかけた場合</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2671,22 +2528,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_boy4_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……
-……　……　……▼
-……　……　……
-……　……　……▼
-……フッ▼
-まだ　とうしゅを　なのるには
-はやい……　そういう　ことか</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2694,16 +2552,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……
-……　……　……▼
-……　……　……
-……　……　……▼
-……フッ▼
-まだ　当主を　名乗るには
-早い……　そういう　ことか</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2711,20 +2563,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・家族全員勝ち抜いた後、
-　自分から話しかけた場合。</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2733,26 +2582,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_boy4_03a"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……
-……　……　……▼
-……　……　……
-……　……　……▼
-……フッ▼
-まだ　とうしゅを　なのるには
-はやい……　そういう　ことか▼
-でんとうの　トレーナーいっか
-この　ブルジョワールけに▼
-しょうりしたもの　として
-ほこりに　おもうがいい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2760,20 +2606,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……
-……　……　……▼
-……　……　……
-……　……　……▼
-……フッ▼
-まだ　当主を　名乗るには
-早い……　そういう　ことか▼
-伝統の　トレーナー一家
-この　ブルジョワール家に▼
-勝利した者　として
-誇りに　思うがいい！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2781,20 +2617,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・戦闘終了後、主人公が勝利した場合
-　自動で表示される</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>兄　マイル
-お坊ちゃま</Text>
+			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-04T02:46:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2803,5 +2636,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

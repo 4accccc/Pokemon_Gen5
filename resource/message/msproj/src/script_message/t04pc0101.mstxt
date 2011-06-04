@@ -405,11 +405,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブルジョワールいっかの　かたがた
-とおい　ちほうに　おひっこし　ですって</Text>
+			<Text>サザナミわんの　かいていいせき……
+かべに　きざまれた　メッセージ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T08:13:35" />
+				Time="2011-06-04T02:45:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -417,11 +417,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブルジョワール一家の　方々
-遠い　地方に　お引越し　ですって</Text>
+			<Text>サザナミ湾の　海底遺跡……
+壁に　刻まれた　メッセージ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T08:13:29" />
+				Time="2011-06-04T02:45:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -431,12 +431,10 @@
 			Language="JPN">
 			<Comment>♀
 ・swanで追加
-・別荘について
-・海底遺跡について
-・ブルジョワール一家について</Comment>
+・海底遺跡について</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T08:11:36" />
+				Time="2011-06-04T02:38:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
