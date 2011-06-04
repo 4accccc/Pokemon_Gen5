@@ -33,13 +33,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：WHITE
-・t07r0101からでるとイベントト開始
+・t07r0101からでるとイベント開始
 ・アララギ、下向きのままで
 　一歩ほど離れている？
-・続けて</Comment>
+・ベルもそばで聞いている
+・続けてhakase2_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:15:53" />
+				Time="2011-06-04T07:41:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -261,10 +262,10 @@
 			Language="JPN">
 			<Comment>♀：BLACK2ver
 ・アララギ、下向きでメッセージ表示
-・続けてhakase2_05b</Comment>
+・続けてswbell_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:45:40" />
+				Time="2011-06-04T07:43:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -323,10 +324,10 @@
 			Language="JPN">
 			<Comment>♀：WHITE２ver
 ・アララギ、下向きでメッセージ表示
-・続けてhakase2_05w</Comment>
+・続けてswbell_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:45:42" />
+				Time="2011-06-04T07:43:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -345,11 +346,65 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t07_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『ですよねえ……
+なにを　するつもり　なのかなあ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:43:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『ですよねえ……
+なにを　するつもり　なのかなあ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:43:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:43:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けて
+　BLACK2→hakase2_05b
+　WHITE2→hakase2_05w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:43:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:42:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t07_hakase2_05b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だけど　ゼクロムたちに　ついて
+			<Text>アララギ『そうね　ベル▼
+だけど　ゼクロムたちに　ついて
 わかっていないことは　まだ　おおいわ▼
 そこで　ソウリュウシティの
 ジムリーダー　シャガさんに▽
@@ -363,7 +418,7 @@
 ちからを　かしてほしいの！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:49:59" />
+				Time="2011-06-04T07:44:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,7 +426,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だけど　ゼクロムたちに　ついて
+			<Text>アララギ『そうね　ベル▼
+だけど　ゼクロムたちに　ついて
 わかっていないことは　まだ　おおいわ▼
 そこで　ソウリュウシティの
 ジムリーダー　シャガさんに▽
@@ -385,7 +441,7 @@
 力を　貸してほしいの！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:50:05" />
+				Time="2011-06-04T07:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -422,7 +478,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だけど　レシラムたちに　ついて
+			<Text>アララギ『そうね　ベル▼
+だけど　レシラムたちに　ついて
 わかっていないことは　まだ　おおいわ▼
 そこで　ソウリュウシティの
 ジムリーダー　シャガさんに▽
@@ -436,7 +493,7 @@
 ちからを　かしてほしいの！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:49:53" />
+				Time="2011-06-04T07:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -444,7 +501,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だけど　レシラムたちに　ついて
+			<Text>アララギ『そうね　ベル▼
+だけど　レシラムたちに　ついて
 わかっていないことは　まだ　おおいわ▼
 そこで　ソウリュウシティの
 ジムリーダー　シャガさんに▽
@@ -458,7 +516,7 @@
 力を　貸してほしいの！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:50:10" />
+				Time="2011-06-04T07:44:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -616,10 +674,10 @@
 			<Text>シャガさんから　ドラゴンポケモンの
 はなしを　きくのは　おもしろいし▼
 なにより　ポケモンずかんの
-ページを　うめるのに　やくだつわよ！</Text>
+ページを　うめるのに　やくだつわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:53:15" />
+				Time="2011-06-04T07:44:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -642,10 +700,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・イベント終了</Comment>
+・続けてswbell_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:51:42" />
+				Time="2011-06-04T07:45:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -658,6 +716,58 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『では　あたしは
+かざんの　ちょうさに　いきますねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:57:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:45:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『では　あたしは
+火山の　調査に　いきますねえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:57:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:57:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、ベルは火山へ
+　画面外に消えるとイベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:45:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-04T07:44:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
