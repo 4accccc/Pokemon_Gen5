@@ -576,8 +576,8 @@
 #define FV_R04_SWBOSS_01                   658 /* 0x0292 4番道路：アクロマ */
 #define FV_C03P17_PILOT_01                 659 /* 0x0293 ヒウンシティ下水道前：パイロット */
 #define FV_R05_STOP                        660 /* 0x0294 5番道路：チャールズ、ストッパー */
-#define FV_C04_RIVAL_01                    661 /* 0x0295 ライモンシティ：ライバル */
-#define FV_C04_PLASMAM_01                  662 /* 0x0296 ライモンシティ：プラズマ団 */
+#define FV_C04_SWRIVAL_01                  661 /* 0x0295 ライモンシティ：ライバル */
+#define FV_C04_SWPLASMAM_01                662 /* 0x0296 ライモンシティ：プラズマ団 */
 #define FV_C13GYM0102_SWLEADER2ISS         663 /* 0x0297 C12GYM0102：ホミカISS */
 
 #define FV_AREA_END                        899 /* 0x0383  */
