@@ -9037,6 +9037,14 @@
 		<language name="JPN" width="256">SW-KYUREM-04</language>
 		<language name="JPN_KANJI" width="256">SW-KYUREM-04</language>
 	</row>
+	<row id="msg_seq_se_sw_mizugym_01">
+		<language name="JPN" width="256">SW-MIZUGYM-01</language>
+		<language name="JPN_KANJI" width="256">SW-MIZUGYM-01</language>
+	</row>
+	<row id="msg_seq_se_sw_mizugym_02">
+		<language name="JPN" width="256">SW-MIZUGYM-02</language>
+		<language name="JPN_KANJI" width="256">SW-MIZUGYM-02</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
