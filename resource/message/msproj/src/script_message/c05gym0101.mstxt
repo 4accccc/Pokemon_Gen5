@@ -476,10 +476,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・GRIDX=4 GRIDZ=51
 ・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T04:44:25" />
+				Time="2011-06-06T09:38:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -584,10 +585,11 @@ worker2_29</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・GRIDX=26 GRIDZ=63
 ・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T04:44:27" />
+				Time="2011-06-06T09:38:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -643,6 +645,473 @@ worker2_28</Text>
 				User="matsumiya:W00224"
 				Time="2011-06-06T04:45:22" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2c_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=24 GRIDZ=51
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:38:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_24</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2c_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:33:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_24</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2d_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=6 GRIDZ=41
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:39:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_25</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2d_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:33:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_25</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2e_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>とおくて　ちかい　ものって
+なんのことだか　わかるか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遠くて　近い　ものって
+なんのことだか　わかるか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=56 GRIDZ=17
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:39:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_26</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2e_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>とおくて　ちかい　もの……▼
+ここから　ちかくに　いる
+ヤーコンさんの　ことだな▼
+すまんな……
+ロマンチックな　ことが　いえなくて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遠くて　近い　もの……▼
+ここから　近くに　いる
+ヤーコンさんの　ことだな▼
+すまんな……
+ロマンチックな　ことが　いえなくて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:01:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:33:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_26</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2f_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=26 GRIDZ=6
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:00:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_27</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:35:58" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2f_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:33:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_27</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:36:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2g_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=58 GRIDZ=7
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:58:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_30</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:36:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2g_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:02:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:36:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_30</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T09:36:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05gym0101_glasses_01"
@@ -885,7 +1354,7 @@ worker2_28</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
