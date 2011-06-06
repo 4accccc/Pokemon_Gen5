@@ -117,14 +117,14 @@
 			<Text>アララギ『この　カゴメから
 まっすぐ　すすめば　ソウリュウシティ▼
 だけど　そのまえに　あなたたちにも
-きいてほしい　はなしが　あるの▼</Text>
+きいてほしい　話が　あるの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-04T10:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:32:35" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -169,14 +169,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『どんな　おはなしですかあ？▼</Text>
+			<Text>ベル『どんな　お話ですかあ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-04T10:52:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:52:40" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -479,10 +479,10 @@
 			<Text>アララギ『じつに　おもしろい
 むかしばなし　だったわね▼
 しょうたいふめいの　ポケモンとはいえ
-つたわる　ちからが　つよすぎる▼</Text>
+つたわっている　ちからが　つよすぎる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:48:50" />
+				Time="2011-06-06T10:08:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -490,10 +490,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ『じつに　おもしろい
+昔話だったわね▼
+正体不明の　ポケモンとはいえ
+伝わっている　力が　強すぎる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:35:56" />
+				Time="2011-06-06T10:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -546,10 +549,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ベル『そうですねえ▼
+あたりいったいを　こおらせるなんて
+でんせつの　ドラゴンポケモンに▽
+ひってきする　ちから　ですよねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:49:22" />
+				Time="2011-06-06T10:08:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -600,10 +606,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>そうね　ベル▼
+その昔　いかずちで
+イッシュを　焼き払ったと　される▽
+ゼクロム　みたいだわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:57:53" />
+				Time="2011-06-06T10:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -652,10 +661,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>そうね　ベル▼
+その昔　炎で
+イッシュを　焼きはらったと　される▽
+レシラム　みたいだわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:49:42" />
+				Time="2011-06-06T10:09:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -692,25 +704,27 @@
 			Language="JPN">
 			<Text>ところで　[Name:TrainerName ]▼
 ゼクロムという　ポケモンの
-はなしは　おぼえている？</Text>
+話は　おぼえている？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-06T07:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T11:01:28" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ところで　[Name:TrainerName ]▼
+ゼクロムという　ポケモンの
+話は　おぼえている？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T11:01:33" />
+				Time="2011-06-06T10:09:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T11:01:33" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -746,25 +760,27 @@
 			Language="JPN">
 			<Text>ところで　[Name:TrainerName ]▼
 レシラムという　ポケモンの
-はなしは　おぼえている？</Text>
+話は　おぼえている？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-06T07:54:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T11:01:30" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ところで　[Name:TrainerName ]▼
+レシラムという　ポケモンの
+話は　おぼえている？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T11:01:34" />
+				Time="2011-06-06T10:09:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T11:01:34" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -803,22 +819,24 @@
 ゼクロムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:56:19" />
+				Time="2011-06-06T10:21:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>そう
+ヤマジタウンで　すこし　話したわね▼
+ゼクロムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:21:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -855,22 +873,24 @@
 ゼクロムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:56:52" />
+				Time="2011-06-06T10:21:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あら　[Name:TrainerName ]ったら
+ヤマジタウンで　すこし　話したのに▼
+ゼクロムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:21:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -908,22 +928,24 @@
 レシラムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:57:19" />
+				Time="2011-06-06T10:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>そう
+ヤマジタウンで　すこし　話したわね▼
+レシラムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:21:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -960,22 +982,24 @@
 レシラムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:57:24" />
+				Time="2011-06-06T10:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あら　[Name:TrainerName ]ったら
+ヤマジタウンで　すこし　話したのに▼
+レシラムの　説明▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:55:39" />
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1022,10 +1046,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ベル『博士は　昔話の
+ポケモンと　伝説の　ポケモンが▼
+なにか　関係あると
+お考え　なのですか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:43:13" />
+				Time="2011-06-06T10:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1071,10 +1098,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『いんせき　ね▼</Text>
+			<Text>アララギ『いん石　ね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:01:50" />
+				Time="2011-06-06T10:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1120,10 +1147,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『いんせき……　ですかあ？▼</Text>
+			<Text>ベル『いん石……　ですかあ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:17:33" />
+				Time="2011-06-06T10:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1182,10 +1209,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ゼクロムは　ダークストーン　という
+石から　復活したらしいの▼
+そして　昔話の　いん石が
+石と　同じ　もの　だとしたら……▼
+というのもね　ゼクロムが　いた
+リュウラセンの塔　と▼
+ジャイアントホールの　近く　から
+同じ　時代の　成分が▽
+発見できたのよね▼
+根拠としては　弱いけれども
+偶然として　切り捨てるには▽
+無視できない　要素なのよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:06:24" />
+				Time="2011-06-06T10:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1242,10 +1280,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>レシラムは　ライトストーン　という
+石から　復活したらしいの▼
+そして　昔話の　いん石が
+石と　同じ　もの　だとしたら……▼
+というのもね　レシラムが　いた
+リュウラセンの塔　と▼
+ジャイアントホールの　近く　から
+同じ　時代の　成分が▽
+発見できたのよね▼
+根拠としては　弱いけれども
+偶然として　切り捨てるには▽
+無視できない　要素なのよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:06:24" />
+				Time="2011-06-06T10:24:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1296,10 +1345,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ベル『だとしたら　とても
+強大な　ポケモンの　はずなのに▼
+夜にしか　現われないのも
+なにか　理由が　あるのかなあ？▼
+たとえば　太陽の　光が
+苦手とか……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:06:34" />
+				Time="2011-06-06T10:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1336,12 +1390,14 @@
 			Language="JPN">
 			<Text>そうね……　その　あたりは
 しらべないと　なんとも　いえないわ▼
-……それにしても
-カゴメという　まちの　なまえ▽
-「かこめ」という　いみが　あるのかも▼</Text>
+……そっか
+カゴメという　まちの　なまえ　には▽
+「かこめ」という　いみが　あるのかも▼
+ポケモンから　まちを　まもるため
+へいで　かこんだ　という　エピソード▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T09:28:29" />
+				Time="2011-06-06T10:27:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1349,10 +1405,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>そうね……　その　あたりは
+調べないと　なんとも　いえないわ▼
+……そっか
+カゴメという　町の　名前には▽
+「囲め」という　意味が　あるのかも▼
+ポケモンから　町を　守るため
+塀で　囲んだ　という　エピソード▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:07:03" />
+				Time="2011-06-06T10:27:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1388,13 +1450,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ということで　[Name:TrainerName ]
-そのあたりを　シャガさんに　きいてね！▼
+			<Text>はなしが　ながくなったわね▼
+[Name:TrainerName ]
+そのあたりも　シャガさんに　きいてね！▼
 わたしたちは　フィールドワークです
 ベル　てつだってね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T09:29:14" />
+				Time="2011-06-06T10:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1402,10 +1465,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>はなしが　ながくなったわね▼
+[Name:TrainerName ]
+そのあたりも　シャガさんに　きいてね！▼
+わたしたちは　フィールドワークです
+ベル　手伝ってね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:07:13" />
+				Time="2011-06-06T10:28:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1442,10 +1509,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『もちろんです！▼</Text>
+			<Text>ベル『もちろん　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:09:33" />
+				Time="2011-06-06T10:20:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1453,10 +1520,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ベル『もちろん　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:07:03" />
+				Time="2011-06-06T10:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1491,10 +1558,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたは　ソウリュウへ</Text>
+			<Text>ソウリュウシティの　シャガさん
+とっても　つよいんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:09:33" />
+				Time="2011-06-06T10:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1502,10 +1570,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ソウリュウシティの　シャガさん
+とっても　強いんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:07:03" />
+				Time="2011-06-06T10:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1541,11 +1610,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギはかせえ
-まってくださいよお！▼</Text>
+			<Text>アララギはかせえ！
+まって　くださいよお！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:09:33" />
+				Time="2011-06-06T10:20:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1553,10 +1622,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アララギ博士え！
+待って　くださいよお！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T08:07:03" />
+				Time="2011-06-06T10:20:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1594,42 +1664,43 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
 オマエも　きたのか▼
-このあたりで　プラズマだんを
+プラズマだんをさ　このあたりで
 みかけたって　はなしが　あって▽
-こうして　みはっているのさ</Text>
+こうして　みはっているのさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:30:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
 オマエも　きたのか▼
-このあたりで　プラズマだんを
-みかけたって　はなしが　あって▽
-こうして　みはっているのさ</Text>
+プラズマ団をさ　このあたりで
+みかけたって　話が　あって▽
+こうして　みはっているのさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:30:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
 ・posイベント
 　GRIDX＝671、GRIDZ＝174～179
-・ストッパー
+・下向きで配置
+・続けてswrival_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:44:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1647,6 +1718,62 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t03_sage7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『やれやれ
+おまえらと　でくわすとはな▼
+われわれの　もくてき　なぞ
+りかいも　できぬくせに▽
+あれこれ　かぎまわるで　ない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:49:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:42:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『やれやれ
+おまえらと　でくわすとはな▼
+われわれの　もくてき　なぞ
+りかいも　できぬくせに▽
+あれこれ　かぎまわるで　ない▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:49:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:44:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・r12方面から登場</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:44:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:42:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t03_swrival_02"
 		Style="Large">
 		<LanguageCell
@@ -1654,7 +1781,7 @@
 			<Text>[Name:TrainerName Idx="1" ]『</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:54:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1674,10 +1801,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・振り向き！マーク表示後
+・はい/いいえの選択肢表示
+　はい　→swrival_03
+　いいえ→swrival_04
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:53:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1722,10 +1853,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・はい選択時
+　続けてトレーナー戦闘に
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T10:53:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1733,6 +1866,229 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-04T08:09:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:53:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:45:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:53:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:45:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:53:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:45:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:53:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:52:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:53:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:52:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swrival_04表示後に会話
+・はい/いいえの選択肢表示
+　はい　→swrival_03
+　いいえ→swrival_04
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:53:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:52:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swplazmam1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:44:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:44:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:44:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:44:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:36:23" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_sage7_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:03" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_swrival_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:55:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1893,11 +2249,11 @@
 あたえとる　っちゅうことかのう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
+				Time="2011-06-06T10:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
+				Time="2011-06-06T10:09:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2455,11 +2811,11 @@
 つきあわされるんだぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T03:51:47" />
+				Time="2011-06-06T10:19:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:19:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
