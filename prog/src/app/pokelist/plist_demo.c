@@ -328,6 +328,8 @@ static BOOL PLIST_DEMO_FormChangeSeq( PLIST_WORK* work )
 
 //--------------------------------------------------------------
 //	キュレム　フォルムチェンジデモ
+//	work->changeTarget にはキュレムの位置
+//	合体時のwork->pokeCursorは合体相手、分離時はキュレムの位置
 //--------------------------------------------------------------
 static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
 {
@@ -400,6 +402,9 @@ static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
           work->btlJoinNum++;
         }
       }
+      //選択カーソルはOff
+      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
     }
     work->demoSeq++;
     break;
