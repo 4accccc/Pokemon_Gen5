@@ -578,6 +578,7 @@
 #define FV_R05_STOP                        660 /* 0x0294 5番道路：チャールズ、ストッパー */
 #define FV_C04_RIVAL_01                    661 /* 0x0295 ライモンシティ：ライバル */
 #define FV_C04_PLASMAM_01                  662 /* 0x0296 ライモンシティ：プラズマ団 */
+#define FV_C13GYM0102_SWLEADER2ISS         663 /* 0x0297 C12GYM0102：ホミカISS */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
