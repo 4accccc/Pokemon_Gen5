@@ -397,6 +397,7 @@ _TALK_START_SE_PLAY()
 _PLAYER_NAME(0)
 
 _PLAINWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+_AB_KEYWAIT_MARK()
 _MSGWIN_CLOSE()
 
 _RET
@@ -814,7 +815,7 @@ EVENT_START		ev_c05gym0101_workman2c_01
 		_OBJ_ANIME_WAIT()
 		
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2e_01 )
 		_MSGWIN_CLOSE()
 		
 		//戦闘処理
@@ -829,7 +830,7 @@ EVENT_START		ev_c05gym0101_workman2c_01
 		ENDIF
 	
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2e_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -844,7 +845,7 @@ EVENT_START		ev_c05gym0101_workman2c_01
 	//既に戦っている場合
 	ELSE
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2e_02 )
 	
 	ENDIF
 
@@ -860,7 +861,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_03
 	_OBJ_ANIME_WAIT()
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2C_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2e_01 , C05GYM0101_WORKMAN2C_01 )
 	_MSGWIN_CLOSE()
 	
 	//戦闘処理
@@ -875,7 +876,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_03
 	ENDIF
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2C_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2e_02 , C05GYM0101_WORKMAN2C_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -902,7 +903,7 @@ EVENT_START		ev_c05gym0101_workman2d_01
 		_OBJ_ANIME_WAIT()
 		
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2c_01 )
 		_MSGWIN_CLOSE()
 		
 		//戦闘処理
@@ -917,7 +918,7 @@ EVENT_START		ev_c05gym0101_workman2d_01
 		ENDIF
 	
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2c_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -932,7 +933,7 @@ EVENT_START		ev_c05gym0101_workman2d_01
 	//既に戦っている場合
 	ELSE
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2c_02 )
 	
 	ENDIF
 	
@@ -949,7 +950,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_04
 	_OBJ_ANIME_WAIT()
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2D_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2c_01 , C05GYM0101_WORKMAN2D_01 )
 	_MSGWIN_CLOSE()
 	
 	//戦闘処理
@@ -964,7 +965,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_04
 	ENDIF
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2D_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2c_02 , C05GYM0101_WORKMAN2D_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -992,7 +993,7 @@ EVENT_START		ev_c05gym0101_workman2e_01
 		_OBJ_ANIME_WAIT()
 		
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2d_01 )
 		_MSGWIN_CLOSE()
 		
 		//戦闘処理
@@ -1007,7 +1008,7 @@ EVENT_START		ev_c05gym0101_workman2e_01
 		ENDIF
 	
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2d_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -1022,7 +1023,7 @@ EVENT_START		ev_c05gym0101_workman2e_01
 	//既に戦っている場合
 	ELSE
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2d_02 )
 	
 	ENDIF
 	
@@ -1038,7 +1039,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_05
 	_OBJ_ANIME_WAIT()
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2E_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2d_01 , C05GYM0101_WORKMAN2E_01 )
 	_MSGWIN_CLOSE()
 	
 	//戦闘処理
@@ -1053,7 +1054,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_05
 	ENDIF
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2E_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2d_02 , C05GYM0101_WORKMAN2E_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -1079,7 +1080,7 @@ EVENT_START		ev_c05gym0101_workman2f_01
 		_OBJ_ANIME_WAIT()
 		
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2f_01 )
 		_MSGWIN_CLOSE()
 		
 		//戦闘処理
@@ -1094,7 +1095,7 @@ EVENT_START		ev_c05gym0101_workman2f_01
 		ENDIF
 	
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2f_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -1109,7 +1110,7 @@ EVENT_START		ev_c05gym0101_workman2f_01
 	//既に戦っている場合
 	ELSE
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2f_02 )
 	
 	ENDIF
 EVENT_END
@@ -1124,7 +1125,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_06
 	_OBJ_ANIME_WAIT()
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2F_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2f_01 , C05GYM0101_WORKMAN2F_01 )
 	_MSGWIN_CLOSE()
 	
 	//戦闘処理
@@ -1139,7 +1140,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_06
 	ENDIF
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2F_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2f_02 , C05GYM0101_WORKMAN2F_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -1165,7 +1166,7 @@ EVENT_START		ev_c05gym0101_workman2g_01
 		_OBJ_ANIME_WAIT()
 		
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2g_01 )
 		_MSGWIN_CLOSE()
 		
 		//戦闘処理
@@ -1180,7 +1181,7 @@ EVENT_START		ev_c05gym0101_workman2g_01
 		ENDIF
 	
 		//メッセージ表示
-		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2g_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -1195,7 +1196,7 @@ EVENT_START		ev_c05gym0101_workman2g_01
 	//既に戦っている場合
 	ELSE
 	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2g_02 )
 	
 	ENDIF
 EVENT_END
@@ -1210,7 +1211,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_07
 	_OBJ_ANIME_WAIT()
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2G_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2g_01 , C05GYM0101_WORKMAN2G_01 )
 	_MSGWIN_CLOSE()
 	
 	//戦闘処理
@@ -1225,7 +1226,7 @@ EVENT_START		ev_pos_c05gym0101_trbtl_07
 	ENDIF
 
 	//メッセージ表示
-	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2G_01 )
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2g_02 , C05GYM0101_WORKMAN2G_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
