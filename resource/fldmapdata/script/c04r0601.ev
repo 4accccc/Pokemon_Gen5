@@ -21,8 +21,14 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_c04r0601_board_01
+_EVENT_DATA		ev_pos_c04r0601_rally_01
+_EVENT_DATA		ev_c04r0601_clown_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト*/
@@ -32,3 +38,177 @@ EVENT_START   ev_bg_c04r0601_board_01
 	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 
 EVENT_END
+
+/**************************************************************/
+/* POS：ライモンラリー開始（じてんしゃ入手）                      */
+/**************************************************************/
+EVENT_START   ev_pos_c04r0601_rally_01
+{
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  //アニメ：クラウン接近
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( C04R0601_CLOWN_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+
+  //クラウン：ようこそ！　ライモンシティ！！
+  _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_01, C04R0601_CLOWN_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //じてんしゃ入手処理
+	_ITEM_EVENT_KEYWAIT( ITEM_ZITENSYA, 1 )
+
+	//クラウン：ライモンラリーの　ルールは　かんたん！
+	_BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_02, C04R0601_CLOWN_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //アニメ：クラウン移動
+  _OBJ_ANIME( C04R0601_CLOWN_01, anm_walk_r )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：クラウン方向転換
+  _OBJ_ANIME( C04R0601_CLOWN_01, anm_dir_d )
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //C04のPOSを無効に
+  $WK_SCENE_C04_RALLY = 1
+  //========================================//
+
+}
+EVENT_END
+
+/**************************************************************/
+/* CLOWNはなしかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c04r0601_clown_01
+{
+
+  //ラリーイベント中の場合
+  IF $WK_SCENE_C04_RALLY != 7 THEN
+
+    _TALK_OBJ_START()
+    //クラウン：まだ　おとずれて　いないのは……
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_03, C04R0601_CLOWN_01, POS_DEFAULT )
+
+      //全てのポイントをめぐっていた場合
+      IF $WK_SCENE_C04_RALLY == 6 THEN
+      //クラウン：なんと！　のこり０！
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0601_rally_10 )
+      //記念品受け取り【仮】記念品アイテムは仮です
+      _ITEM_EVENT_KEYWAIT(ITEM_MOOMOOMIRUKU, 1)
+        //========================================//
+        //クリア後メッセージ表示終了
+        $WK_SCENE_C04_RALLY = 7
+        //========================================//
+
+        ELSE
+          //まだ訪れていない場所を数える用変数定義
+          DEFINE_LOCAL LWK_POINT_NUM  //訪れていないポイントの数
+          DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+
+          //訪れていない場所の確認処理（繰り返し処理）
+          WHILE $LWK_COUNT_NUM < 5
+
+            //ギアステーションにおとずれていない
+            IF $LWK_COUNT_NUM == 0 && FLAG_OFF( FE_C04_RALLYPOINT_01 ) THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_04, C04R0601_CLOWN_01, POS_DEFAULT )
+            $LWK_POINT_NUM += 1 //ポイント加算
+
+            //ミュージカルホールにおとずれていない
+            ELSIF $LWK_COUNT_NUM == 1 && FLAG_OFF( FE_C04_RALLYPOINT_02 ) THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_05, C04R0601_CLOWN_01, POS_DEFAULT )
+            $LWK_POINT_NUM += 1 //ポイント加算
+
+            //ビッグスタジアムにおとずれていない
+            ELSIF $LWK_COUNT_NUM == 2 && FLAG_OFF( FE_C04_RALLYPOINT_03 ) THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_06, C04R0601_CLOWN_01, POS_DEFAULT )
+            $LWK_POINT_NUM += 1 //ポイント加算
+
+            //リトルコートにおとずれていない
+            ELSIF $LWK_COUNT_NUM == 3 && FLAG_OFF( FE_C04_RALLYPOINT_04 ) THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_07, C04R0601_CLOWN_01, POS_DEFAULT )
+            $LWK_POINT_NUM += 1 //ポイント加算
+
+            //かんらんしゃにおとずれていない
+            ELSIF $LWK_COUNT_NUM == 4 && FLAG_OFF( FE_C04_RALLYPOINT_05 ) THEN
+            _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_08, C04R0601_CLOWN_01, POS_DEFAULT )
+            $LWK_POINT_NUM += 1 //ポイント加算
+
+          ENDIF
+
+          //カウント
+          $LWK_COUNT_NUM += 1
+
+        ENDWHILE
+
+        //訪れていない場所の数値を指定タグにセット
+        _NUMBER( 0, LWK_POINT_NUM, 1 )
+
+        //クラウン：～の　X箇所　ですね
+        _BALLOONWIN_OBJMSG_POS( msg_c04r0601_rally_09, C04R0601_CLOWN_01, POS_DEFAULT )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+  ELSE
+  //クラウン：ライモンを　あいする
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0601_rally_11 )
+
+  ENDIF
+
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+

@@ -33,6 +33,7 @@
 #define C04R0201_FAN_10                   21
 #define C04R0201_GIRL4_01                 22
 #define C04R0201_POLICEMAN_01             23
+#define C04R0201_CLOWN_01                 24
 
 #endif //ZONE_C04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

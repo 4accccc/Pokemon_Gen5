@@ -10,6 +10,7 @@
 #ifndef ZONE_C04P01_EVC_H
 #define ZONE_C04P01_EVC_H
 
+#define C04P01_CLOWN_01                    0
 
 #endif //ZONE_C04P01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04p01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

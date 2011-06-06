@@ -19,6 +19,7 @@
 #define C04R0301_POLICEMAN_01              5
 #define C04R0301_POLICEMAN_02              6
 #define C04R0301_POLICEMAN_03              7
+#define C04R0301_CLOWN_01                  8
 
 #endif //ZONE_C04R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
