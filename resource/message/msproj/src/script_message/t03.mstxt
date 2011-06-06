@@ -1663,13 +1663,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
-オマエも　きたのか▼
-プラズマだんをさ　このあたりで
+まだ　ソウリュウの　バッジを▽
+てにいれて　いないのか　オマエ？▼
+オレはさ　プラズマだんを　このあたりで
 みかけたって　はなしが　あって▽
 こうして　みはっているのさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:30:51" />
+				Time="2011-06-06T13:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1678,13 +1679,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
-オマエも　きたのか▼
-プラズマ団をさ　このあたりで
+まだ　ソウリュウの　バッジを▽
+手に入れて　いないのか　オマエ？▼
+オレはさ　プラズマ団を　このあたりで
 みかけたって　話が　あって▽
 こうして　みはっているのさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:30:58" />
+				Time="2011-06-06T13:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
