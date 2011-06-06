@@ -1834,7 +1834,14 @@ SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
         musical/stage/sta_act_obj.c \
         musical/stage/sta_act_light.c \
         musical/stage/sta_act_bg.c \
-        musical/stage/sta_act_poke.c
+        musical/stage/sta_act_poke.c \
+        musical/stage/sta_acting.c \
+    musical/stage/sta_act_effect.c \
+		musical/stage/sta_act_audience.c \
+		musical/stage/sta_act_button.c \
+    musical/stage/script/sta_act_script.c \
+    musical/stage/script/script_command.c \
+    musical/stage/script/script_table.c
 
 #ミュージカル汎用
 #ここにあるソースは、
@@ -1855,13 +1862,6 @@ SRCS_OVERLAY_MUSICAL_COMMON = musical/musical_system.c \
 #===> SRCS_OVERLAY_POKE_STATUS
 #===> SRCS_OVERLAY_MUSICAL_COMMON
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
-        musical/stage/sta_acting.c \
-        musical/stage/sta_act_effect.c \
-		musical/stage/sta_act_audience.c \
-		musical/stage/sta_act_button.c \
-        musical/stage/script/sta_act_script.c \
-        musical/stage/script/script_command.c \
-        musical/stage/script/script_table.c \
 		musical/comm/mus_comm_lobby.c \
 		musical/comm/mus_comm_func.c \
 		musical/musical_debug_menu.c 
