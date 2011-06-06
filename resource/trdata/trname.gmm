@@ -3681,8 +3681,8 @@
 	</row>
 
 	<row id="swleader8_01">
-		<language name="JPN" width="216">ゴウソ</language>
-		<language name="JPN_KANJI" width="216">ゴウソ</language>
+		<language name="JPN" width="216">シズイ</language>
+		<language name="JPN_KANJI" width="216">シズイ</language>
 	</row>
 
 	<row id="rgleader1_01">
@@ -4846,6 +4846,36 @@
 	</row>
 
 	<row id="backpackerw_17">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitem_26">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitew_26">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitem_27">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitew_27">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitem_28">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitew_28">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>

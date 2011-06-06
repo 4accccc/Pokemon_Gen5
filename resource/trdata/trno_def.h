@@ -891,7 +891,13 @@
 #define	TRID_FISHING_21   ( 878 ) 
 #define	TRID_BACKPACKERM_22   ( 879 ) 
 #define	TRID_BACKPACKERW_17   ( 880 ) 
-#define TRID_MAX  ( 881 )
+#define	TRID_ELITEM_26   ( 881 ) 
+#define	TRID_ELITEW_26   ( 882 ) 
+#define	TRID_ELITEM_27   ( 883 ) 
+#define	TRID_ELITEW_27   ( 884 ) 
+#define	TRID_ELITEM_28   ( 885 ) 
+#define	TRID_ELITEW_28   ( 886 ) 
+#define TRID_MAX  ( 887 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
