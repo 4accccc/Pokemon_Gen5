@@ -30,6 +30,20 @@ _EVENT_DATA    ev_bg_c05gym0101_lift_03
 _EVENT_DATA    ev_bg_c05gym0101_exitlift_00u
 _EVENT_DATA    ev_zone_c05gym0101
 _EVENT_DATA    ev_init_c05gym0101
+_EVENT_DATA		ev_c05gym0101_workman2a_01
+_EVENT_DATA		ev_c05gym0101_workman2b_01
+_EVENT_DATA		ev_c05gym0101_workman2c_01
+_EVENT_DATA		ev_c05gym0101_workman2d_01
+_EVENT_DATA		ev_c05gym0101_workman2e_01
+_EVENT_DATA		ev_c05gym0101_workman2f_01
+_EVENT_DATA		ev_c05gym0101_workman2g_01
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_01
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_02
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_03
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_04
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_05
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_06
+_EVENT_DATA		ev_pos_c05gym0101_trbtl_07
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -315,6 +329,7 @@ EVENT_END
 /************************************************************/
 EVENT_START ev_bg_c05gym0101_lift_00
   $lift_id = 0                 // リフトのIDを代入
+  _CALL switch_message
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 	_SE_WAIT()
   _CALL move_camera_start
@@ -330,6 +345,7 @@ EVENT_END
 /************************************************************/
 EVENT_START ev_bg_c05gym0101_lift_01
   $lift_id = 1                 // リフトのIDを代入
+   _CALL switch_message
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 	_SE_WAIT()
   _CALL move_camera_start
@@ -345,6 +361,7 @@ EVENT_END
 /************************************************************/
 EVENT_START ev_bg_c05gym0101_lift_02
   $lift_id = 2                 // リフトのIDを代入
+  _CALL switch_message
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 	_SE_WAIT()
   _CALL move_camera_start
@@ -360,6 +377,7 @@ EVENT_END
 /************************************************************/
 EVENT_START ev_bg_c05gym0101_lift_03
   $lift_id = 3                 // リフトのIDを代入
+  _CALL switch_message
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 	_SE_WAIT()
   _CALL move_camera_start
@@ -369,6 +387,19 @@ EVENT_START ev_bg_c05gym0101_lift_03
   _CALL move_camera_end
 	_SE_WAIT()
 EVENT_END
+
+/**************************************************************/
+/*			スイッチメッセージ表示							  */
+/**************************************************************/
+switch_message:
+
+_TALK_START_SE_PLAY()
+_PLAYER_NAME(0)
+
+_PLAINWIN_MSG_DOWN( msg_c05gym0101_swicth_01 )
+_MSGWIN_CLOSE()
+
+_RET
 
 /************************************************************/
 /*				カメラ操作				*/
@@ -477,6 +508,38 @@ _ANIME_LABEL	anm_walk_l
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_walk_d_2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u_2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r_2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_l_2
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_d_3
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u_3
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r_3
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_walk_l_3
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	☆共通処理：方向転換
 //--------------------------------------------------------------------
@@ -522,5 +585,655 @@ _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2A	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2a_01
+	
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_01 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_29 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2a_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_29, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2a_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_01 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2a_02 )
+	
+	ENDIF
+	
 
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_01
+{
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_29 )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤーの座標を見て移動分岐
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	//４グリッド分
+	SWITCH $LWK_POSX
+	CASE 5 THEN
+		_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_dir_r )
+	CASE 6 THEN
+		_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_walk_r )
+	CASE 7 THEN
+		_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_walk_r_2 )
+	CASE 8 THEN
+		_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_walk_r_3 )
+	DEFAULT	//例外処理
+		_OBJ_ANIME( C05GYM0101_WORKMAN2A_01, anm_staystep_u )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2a_01 , C05GYM0101_WORKMAN2A_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_29, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2a_02 , C05GYM0101_WORKMAN2A_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_01 = 1
+	
+	//========================================/
+}
+EVENT_END
+
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2B	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2b_01
+
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_02 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2B_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_28 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2b_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_28, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2b_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_02 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_workman2b_02 )
+	
+	ENDIF
+
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_02
+{
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2B_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_28 )
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤーの座標を見て移動分岐
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+	
+	//１グリッド分
+	SWITCH $LWK_POSZ
+	CASE 61 THEN
+		_OBJ_ANIME( C05GYM0101_WORKMAN2B_01, anm_walk_u )
+	DEFAULT	//例外処理
+		_OBJ_ANIME( C05GYM0101_WORKMAN2B_01, anm_staystep_u )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2b_01 , C05GYM0101_WORKMAN2B_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_28, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_workman2b_02 , C05GYM0101_WORKMAN2B_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_02 = 1
+	
+	//========================================/
+}
+EVENT_END
+
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2C	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2c_01
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_03 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2C_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_26 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_26, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_03 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+	
+	ENDIF
+
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_03
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2C_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_26 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2C_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_26, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2C_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_03 = 1
+	
+	//========================================/
+
+EVENT_END
+
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2D	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2d_01
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_04 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2D_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_27 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_27, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_04 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+	
+	ENDIF
+	
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_04
+
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2D_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_27 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( C05GYM0101_WORKMAN2D_01, anm_walk_r_3 )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2D_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_27, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2D_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_04 = 1
+	
+	//========================================/
+
+EVENT_END
+
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2E	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2e_01
+	
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_05 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2E_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_25 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_25, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_05 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+	
+	ENDIF
+	
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_05
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2E_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_25 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2E_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_25, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2E_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_05 = 1
+	
+	//========================================/
+EVENT_END
+
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2F	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2f_01
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_06 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2F_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_24 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_24, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_06 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+	
+	ENDIF
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_06
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2F_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_24 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2F_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_24, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2F_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_06 = 1
+	
+	//========================================/
+EVENT_END
+
+/**************************************************************/
+/*		C05GYM0101	WORKMAN2G	トレーナー戦				  */
+/**************************************************************/
+EVENT_START		ev_c05gym0101_workman2g_01
+	//まだ戦っていない場合
+	IF $WK_SCENE_C05GYM0101_TRBTL_07 == 0 THEN
+		_TALK_OBJ_START()
+		
+		//視線曲再生・！マーク表示
+		_OBJ_ANIME( C05GYM0101_WORKMAN2G_01, anm_common_gyoe )
+		_TRAINER_BGM_SET( TRID_WORKER2_30 )
+		_OBJ_ANIME_WAIT()
+		
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_MSGWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_WORKER2_30, 0 )
+	
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+	
+		//メッセージ表示
+		_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+		//========================================/
+		
+		//POSイベント終了
+		$WK_SCENE_C05GYM0101_TRBTL_07 = 1
+		
+		//========================================/
+	
+	
+	//既に戦っている場合
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05gym0101_swicth_01 )
+	
+	ENDIF
+EVENT_END
+
+EVENT_START		ev_pos_c05gym0101_trbtl_07
+	//視線曲再生・！マーク表示
+	_OBJ_ANIME( C05GYM0101_WORKMAN2G_01, anm_common_gyoe )
+	_TRAINER_BGM_SET( TRID_WORKER2_30 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( C05GYM0101_WORKMAN2G_01, anm_walk_l_3 )
+	_OBJ_ANIME_WAIT()
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2G_01 )
+	_MSGWIN_CLOSE()
+	
+	//戦闘処理
+	_TRAINER_BTL_SET( TRID_WORKER2_30, 0 )
+
+	//結果チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()
+	ELSE
+		_TRAINER_LOSE()
+	ENDIF
+
+	//メッセージ表示
+	_BALLOONWIN_OBJMSG( msg_c05gym0101_swicth_01 , C05GYM0101_WORKMAN2G_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_C05GYM0101_TRBTL_07 = 1
+	
+	//========================================/
+EVENT_END
 
