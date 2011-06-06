@@ -28,6 +28,7 @@
 #include "../btl_server_flow.h"
 //
 #include "../app/b_scenario.h"
+#include "../app/b_choice.h"
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
@@ -41,6 +42,7 @@ FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);
 FS_EXTERN_OVERLAY(battle_plist);
 FS_EXTERN_OVERLAY(battle_scenario);
+FS_EXTERN_OVERLAY(battle_choice);
 FS_EXTERN_OVERLAY(vram_h);
 FS_EXTERN_OVERLAY(tr_ai);
 
@@ -84,12 +86,14 @@ struct _BTLV_CORE {
   BPLIST_DATA           plistData;
   // test
   BSCENARIO_DATA        scenarioData;
+  BCHOICE_DATA          choiceData;
   BTL_POKESELECT_RESULT* pokeselResult;
   BTLV_INPUT_BATTLE_RECORDER_PARAM  recPlayerUI;
   BTLV_ROTATION_WAZASEL_PARAM*      rotationSelParam;
   u8                    selectItemSeq;
   u8                    fActionPrevButton;
-
+  // test
+  int                   choice_result;
 
   GFL_TCBLSYS*  tcbl;
   BTLV_SCU*     scrnU;
@@ -1666,6 +1670,106 @@ BOOL BTLV_SCENARIOSELECT_Wait( BTLV_CORE* wk )
     // シナリオ表示
     if( wk->scenarioData.end_flg ){
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_scenario ) );
+      wk->selectItemSeq = SEQ_START_RECOVER;
+    }
+    break;
+
+  case SEQ_START_RECOVER:
+    BTLV_SCD_FadeIn( wk->scrnD );
+    BTLV_SCD_Setup( wk->scrnD );
+    wk->selectItemSeq = SEQ_WAIT_RECOVER;
+    break;
+
+  case SEQ_WAIT_RECOVER:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_b_app ) );
+      wk->selectItemSeq = SEQ_NULL;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//--------------------------------------
+
+//=============================================================================================
+/**
+ * ポケウッド選択肢画面開始
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_CHOICE_Start( BTLV_CORE* wk )
+{
+  if( wk->selectItemSeq == 0 )
+  {
+    wk->choiceData.end_flg	= FALSE;
+    wk->choiceData.heap		= wk->heapID;
+	wk->choiceData.font		= wk->largeFontHandle;
+	
+	wk->choiceData.mesnum 	= 3;					// 行数
+	wk->choiceData.result	= &wk->choice_result;	// 結果格納
+//	wk->choiceData.result	= 0;
+	//
+    wk->selectItemSeq = 1;
+  }
+}
+
+//=============================================================================================
+/**
+ * ポケウッド選択肢画面の強制終了通知（コマンド選択の制限時間切れによる）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_CHOICE_ForceQuit( BTLV_CORE* wk )
+{
+//  wk->scenarioData.time_out_flg = TRUE;
+  wk->plistData.time_out_flg = TRUE;
+}
+
+//=============================================================================================
+/**
+ * ポケウッド選択肢画面終了待ち(判定はこの前で行われている)
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_CHOICE_Wait( BTLV_CORE* wk )
+{
+  enum {
+    SEQ_NULL = 0,
+    SEQ_INIT = 1,
+    SEQ_START_CHOICE,
+    SEQ_WAIT_CHOICE,
+
+    SEQ_START_RECOVER,
+    SEQ_WAIT_RECOVER,
+  };
+
+  switch( wk->selectItemSeq ){
+  case SEQ_INIT:
+    BTLV_SCD_FadeOut( wk->scrnD, TRUE );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
+    wk->selectItemSeq = SEQ_START_CHOICE;
+    break;
+
+  case SEQ_START_CHOICE:
+    if( BTLV_SCD_FadeFwd(wk->scrnD) ){
+      BTLV_SCD_Cleanup( wk->scrnD );
+      //
+      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_choice ) );
+      BattleChoice_TaskAdd( &wk->choiceData );
+      wk->selectItemSeq = SEQ_WAIT_CHOICE;
+    }
+    break;
+
+  case SEQ_WAIT_CHOICE:
+    // 選択肢表示
+    if( wk->choiceData.end_flg ){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_choice ) );
       wk->selectItemSeq = SEQ_START_RECOVER;
     }
     break;

@@ -110,6 +110,7 @@ SUBDIRS	=	wmi \
             b_bag \
             b_plist \
             b_scenario \
+            b_choice \
 		  regulation \
 			mictest \
 			pokemon_center \

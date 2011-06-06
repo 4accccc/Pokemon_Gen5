@@ -369,7 +369,11 @@ extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
 extern void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk );
 extern BOOL BTLV_SCENARIOSELECT_Wait( BTLV_CORE* wk );
 extern void BTLV_SCENARIOSELECT_ForceQuit( BTLV_CORE* wk );
-
+//
+extern void BTLV_CHOICE_Start( BTLV_CORE* wk );
+extern BOOL BTLV_CHOICE_Wait( BTLV_CORE* wk );
+extern void BTLV_CHOICE_ForceQuit( BTLV_CORE* wk );
+//
 extern void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir );
 extern BOOL BTLV_UI_SelectRotation_Wait( BTLV_CORE* wk, BtlRotateDir* result );
 extern void BTLV_UI_SelectRotation_ForceQuit( BTLV_CORE* wk );

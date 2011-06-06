@@ -102,6 +102,7 @@ enum{
 	FLG_WAIT_START		= (1<<8),	// 開始
 	FLG_WAIT_END		= (1<<9),	// 終了待ち終了
 	FLG_KEY_INPUT		= (1<<10),	// キー入力選択があった
+	FLG_KEY_INPUT_END	= (1<<11),	// キー入力選択で終了
 };
 
 //============================================================================================
@@ -393,6 +394,7 @@ static void battle_scenario_main( GFL_TCB * tcb, void * work )
 static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 {
 	s32		i;
+	s32		mode;
 	
 	if( wk->initFlag == TRUE ){
 /*
@@ -456,6 +458,13 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 	GFL_FONT_Delete( wk->sfont );
 	
 	wk->dat->end_flg = 1;
+	
+	// キー入力で終了したか
+	mode = GFL_APP_END_TOUCH;
+	if(wk->Flag & FLG_KEY_INPUT_END){
+		mode = GFL_APP_END_KEY;
+	}
+	GFL_UI_SetTouchOrKey( mode );
 	
 	GFL_TCB_DeleteTask( tcb );
 	GFL_HEAP_FreeMemory( wk );
@@ -529,6 +538,8 @@ static void bs_main_seq( BSCENARIO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void bs_init_seq( BSCENARIO_WORK * wk )
 {
+	s32			flg;
+	
 	G2S_BlendNone();
 	GXS_SetMasterBrightness( -16 );
 	
@@ -590,6 +601,12 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	wk->initFlag = TRUE;
 	//
 	wk->Flag |= FLG_UPDATE;
+	//
+	// キー入力で終了して、ここに来たかどうか
+	flg = GFL_UI_CheckTouchOrKey();
+	if(flg == GFL_APP_END_KEY){
+		wk->Flag |= FLG_KEY_INPUT;
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1023,11 +1040,13 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 					else{							// 戻る
 						nmode = SMODE_END;
 						mflg = 2;
+						wk->Flag |= FLG_KEY_INPUT_END;
 					}
 				}
 				else if(flg == 4){		// 戻る
 					nmode = SMODE_END;
 					mflg = 2;
+					wk->Flag |= FLG_KEY_INPUT_END;
 				}
 			}
 			// 表示 => キーでの決定はしない
@@ -1428,7 +1447,7 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 	// 初期化
 	if(mode == STR_INIT){
 		// タイトル(シナリオ)
-		BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_SCENARIO, 0, 0, mode*1000, 8, 0, 0);
+//		BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_SCENARIO, 0, 0, mode*1000, 8, 0, 0);
 		// fix
 		bs_disp_fix_string( wk, BS_SCENARIO );
 	}

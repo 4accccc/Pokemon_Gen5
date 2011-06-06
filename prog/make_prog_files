@@ -2378,6 +2378,10 @@ SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
 SRCS_OVERLAY_BATTLE_SCENARIO = battle/app/b_scenario_main.c \
 			       battle/app/b_scenario_sub.c
 
+# バトル用選択肢
+#===> SRCS_OVERLAY_BATTLE_B_APP
+SRCS_OVERLAY_BATTLE_CHOICE = battle/app/b_choice_main.c
+
 # WIFIバトルマッチングシステム
 #===> SRCS_OVERLAY_BATTLE
 #===> SRCS_OVERLAY_BATTLE_BAG

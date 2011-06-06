@@ -297,6 +297,7 @@ static BOOL selact_WazaInfoView( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq );	// add
+static BOOL selact_Choice( BTL_CLIENT* wk, int* seq );		// add
 static BOOL checkBallTargetHide( BTL_CLIENT* wk );
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
 static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq );
@@ -2632,6 +2633,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
         shooterCost_Save( wk, wk->procPokeIdx, 0 );
         ClientSubProc_Set( wk, selact_Escape );
+//        ClientSubProc_Set( wk, selact_Choice );		// test
       // ２体目以降は「もどる」として処理
       }else{
         BTL_POKEPARAM* bpp;
@@ -3252,6 +3254,43 @@ static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq )
   // 制限時間による強制終了待ち後
   case 2:
     if( BTLV_SCENARIOSELECT_Wait(wk->viewCore) ){
+      ClientSubProc_Set( wk, selact_ForceQuit );
+    }
+    break;
+
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------
+/**
+ *  ポケウッド「選択肢」画面(要確認)
+ */
+//----------------------------------------------------------------------
+static BOOL selact_Choice( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_CHOICE_Start( wk->viewCore );
+    (*seq)++;
+    break;
+
+  case 1:
+    // 制限時間による強制終了通知(現在未対応)
+    if( CheckSelactForceQuit(wk, NULL) ){
+      BTLV_CHOICE_ForceQuit( wk->viewCore );
+      (*seq) = 2;
+      return FALSE;
+    }
+    
+    if( BTLV_CHOICE_Wait(wk->viewCore) )
+    {
+		ClientSubProc_Set( wk, selact_Root );
+    }
+    break;
+
+  // 制限時間による強制終了待ち後
+  case 2:
+    if( BTLV_CHOICE_Wait(wk->viewCore) ){
       ClientSubProc_Set( wk, selact_ForceQuit );
     }
     break;
