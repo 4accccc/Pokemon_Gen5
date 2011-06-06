@@ -597,19 +597,26 @@ static u32 _CheckOutsidePermanent(D_MATSU_WORK *wk)
 {
   OUTSIDE_SAVE_CONTROL *outsv;
   BOOL data_exists;
+  BOOL data_break;
   
   GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
   outsv = OutsideSave_SystemLoad(HEAPID_MATSUDA_DEBUG);
-  data_exists = OutsideSave_GetPermanentBreakFlag(outsv);
+  data_exists = OutsideSave_GetPermanentExistFlag(outsv);
+  data_break  = OutsideSave_GetPermanentBreakFlag(outsv);
   OutsideSave_SystemUnload(outsv);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
-  
+ 
+  if( data_break == TRUE )
+  {
+    return DM_MSG_SAVE005; //エラー
+  }
+
   if(data_exists == FALSE){
-    return DM_MSG_EXSAVE_010;
+    return DM_MSG_EXSAVE_010; //データなし
   }
   else
   {
-    return DM_MSG_SAVE005;
+    return DM_MSG_SAVE002; //正常
   }
 }
 

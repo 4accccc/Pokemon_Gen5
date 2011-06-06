@@ -118,11 +118,8 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   
   outsv_ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(OUTSIDE_SAVE_CONTROL));
   buf[SAVE_MIRROR_MYSTERY_A] = (OUTSIDE_RECORD_ABSTRUCT *)&outsv_ctrl->mystery_save;  //A面はシステムのバッファをそのまま使用
-  buf[SAVE_MIRROR_MYSTERY_A]->rec.size = sizeof(OUTSIDE_MYSTERY);
   buf[SAVE_MIRROR_MYSTERY_B] = GFL_HEAP_AllocClearMemory(heap_id, sizeof(OUTSIDE_MYSTERY_SAVEDATA));
-  buf[SAVE_MIRROR_MYSTERY_B]->rec.size = sizeof(OUTSIDE_MYSTERY);
   buf[SAVE_PERMANENT] = (OUTSIDE_RECORD_ABSTRUCT *)&outsv_ctrl->permanent_save;
-  buf[SAVE_PERMANENT]->rec.size = OUTSIDE_PERMANENT_WORK_SIZE;
   
   for(no = 0; no < SAVE_NUM; no++){
     load_ret[no] = FALSE;
@@ -133,19 +130,23 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   load_ret[SAVE_MIRROR_MYSTERY_B] = GFL_BACKUP_DirectFlashLoad(OUTSIDE_MM_MYSTERY_MIRROR, buf[SAVE_MIRROR_MYSTERY_B], sizeof(OUTSIDE_MYSTERY_SAVEDATA));
   load_ret[SAVE_PERMANENT] = GFL_BACKUP_DirectFlashLoad(OUTSIDE_MM_PERMANENT, buf[SAVE_PERMANENT], sizeof(OUTSIDE_PERMANENT_SAVEDATA));
 
-
+  buf[SAVE_MIRROR_MYSTERY_A]->rec.size = sizeof(OUTSIDE_MYSTERY);
+  buf[SAVE_MIRROR_MYSTERY_B]->rec.size = sizeof(OUTSIDE_MYSTERY);
+  buf[SAVE_PERMANENT]->rec.size = OUTSIDE_PERMANENT_WORK_SIZE;
   
   for(no = 0; no < SAVE_NUM; no++){
     if(load_ret[no] == TRUE){
       //マジックナンバーでデータの存在チェック
       if(buf[no]->rec.magic_number != OUTSIDE_MAGIC_NUMBER){
         load_ret[no] = FALSE;
+        NAGI_Printf( "[%d]のmagic_numberが違う[%d]\n", no, buf[no]->rec.magic_number );
         continue;
       }
       
       //CRCチェック
       if(GFL_STD_CrcCalc(buf[no]->data, buf[no]->rec.size) != buf[no]->rec.crc){
         crc_break[no] = TRUE;
+        NAGI_Printf( "[%d]のcrcが違う[%x]!=[%x]\n", no, GFL_STD_CrcCalc(buf[no]->data, buf[no]->rec.size) , buf[no]->rec.crc );
       }
     }
   }
@@ -197,6 +198,8 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   }
 
   //キーシステムの破壊状況チェック
+  outsv_ctrl->permanent_data_exists = FALSE;
+  outsv_ctrl->permanent_break_flag  = FALSE;
   if( load_ret[SAVE_PERMANENT] == FALSE )
   {
     //データなし。ならば、初期化を行う
@@ -262,11 +265,12 @@ void OutsideSave_SaveAsyncInit(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
   outsv_ctrl->mystery_save.rec.global_count++;
   outsv_ctrl->mystery_save.rec.crc 
     = GFL_STD_CrcCalc(&outsv_ctrl->mystery_save.mystery, sizeof(OUTSIDE_MYSTERY));
-
+  NAGI_Printf( "MYSTERYののcrc[%x]\n", outsv_ctrl->mystery_save.rec.crc );
   outsv_ctrl->permanent_save.rec.magic_number = OUTSIDE_MAGIC_NUMBER;
   outsv_ctrl->permanent_save.rec.global_count++;
   outsv_ctrl->permanent_save.rec.crc 
     = GFL_STD_CrcCalc(&outsv_ctrl->permanent_save.permanent, OUTSIDE_PERMANENT_WORK_SIZE);
+  NAGI_Printf( "PERMANENTののcrc[%x]\n", outsv_ctrl->mystery_save.rec.crc );
 }
 
 //==================================================================

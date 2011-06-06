@@ -157,7 +157,6 @@ enum {
 
 typedef int (*pSTARTMENU_FUNC)(START_MENU_WORK*);
 
-#define	SAVE_BREAK_MESSAGE_MAX		( 8 )		// セーブデータ破損メッセージ数
 
 
 //============================================================================================
@@ -365,8 +364,10 @@ static const GFL_CLWK_DATA PlayerObjData = { PLAYER_OBJ_PX, PLAYER_OBJ_PY, 1, 0,
 static const GFL_CLWK_DATA NewObjData = { NEW_OBJ_PX, 0, 0, 0, 1 };
 static const GFL_CLWK_DATA WiconObjData = { WICON_OBJ_PX, 0, 1, 0, 1 };
 
+#define	SAVE_BREAK_MESSAGE_MAX		( 11 )		// セーブデータ破損メッセージ数
+
 // セーブデータ破損メッセージ表示テーブル
-static const u32 SaveBreakMessage[][2] =
+static const u32 SaveBreakMessage[SAVE_BREAK_MESSAGE_MAX][2] =
 {	// ビット, メッセージ
 	{	// レポートが消えた
 		FST_NORMAL_BREAK_BIT,
@@ -396,24 +397,19 @@ static const u32 SaveBreakMessage[][2] =
 		FST_EXTRA_DENDOU_BREAK_BIT,
 		START_MENU_LOAD_WARNING_07
 	},
-  { //ポケウッド００
-    FST_EXTRA_POKEWOOD_00_BREAK_BIT,
-		START_MENU_LOAD_WARNING_07  //TODO メッセージ変更
+  { //ポケウッド(いずれか１つ以上)
+    FST_EXTRA_POKEWOOD_00_BREAK_BIT|FST_EXTRA_POKEWOOD_01_BREAK_BIT,
+		START_MENU_LOAD_WARNING_09
   },  
-  { //ポケウッド０１
-    FST_EXTRA_POKEWOOD_01_BREAK_BIT,
-		START_MENU_LOAD_WARNING_07  //TODO メッセージ変更
-  },
 	{	// ふしぎなおくりもの（ビクティ）
 		FST_OUTSIDE_MYSTERY_BREAK_BIT,
 		START_MENU_LOAD_WARNING_08
 	},
   { // 管理外永続データ（キーシステムとかデータコンバートとか）
     FST_OUTSIDE_PERMANENT_BREAK_BIT,
-		START_MENU_LOAD_WARNING_08  //TODO メッセージ変更
+		START_MENU_LOAD_WARNING_10
   }
 };
-
 
 
 //--------------------------------------------------------------------------------------------
