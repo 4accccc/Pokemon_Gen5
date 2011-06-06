@@ -241,11 +241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『いまは　いけないけれどね
+			<Text>アララギ『今は　行けないけれどね
 ・理由▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:14:14" />
+				Time="2011-06-06T11:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -296,16 +296,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むかしむかしの　ことじゃ▼
+			<Text>昔々の　ことじゃ▼
 ジャイアントホール　とは
-そらから　おおきな　いんせきが▽
-ふってきて　できた　あな　らしいな▼
-その　いんせき　にはな
+空から　大きな　いん石が▽
+降ってきて　できた　穴らしいな▼
+その　いん石　にはな
 おっそろしい　ポケモンが▽
-ひそんで　おったそうな……▼</Text>
+潜んで　おったそうな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:15:33" />
+				Time="2011-06-06T11:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -350,10 +350,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『……いんせき　ね▼</Text>
+			<Text>アララギ『……いん石　ね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:09:45" />
+				Time="2011-06-06T11:41:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -390,12 +390,13 @@
 			Language="JPN">
 			<Text>あたりが　やみに　つつまれると▼
 ポケモンは　こごえるような
-つめたい　かぜと　ともに　あらわれ▽
+つめたい　かぜと　ともに　あらわれ▼
+あたりを　いてつかせては
 ひとや　ポケモンを　とっては　くらう……▼
 そう　おそれられて　いたんじゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:15:52" />
+				Time="2011-06-06T11:45:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -403,14 +404,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたりが　やみに　つつまれると▼
-ポケモンは　こごえるような
-つめたい　かぜと　ともに　あらわれ▽
-ひとや　ポケモンを　とっては　くらう……▼
-そう　おそれられて　いたんじゃ▼</Text>
+			<Text>あたりが　やみに　包まれると▼
+ポケモンは　凍えるような
+冷たい　風と　ともに　現われ▼
+辺りを　凍てつかせては
+人や　ポケモンを　とっては　食らう……▼
+そう　恐れられて　いたんじゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:15:54" />
+				Time="2011-06-06T11:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -463,11 +465,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『ポケモンが　ひとを
-た　たべちゃうのお！？▼</Text>
+			<Text>ベル『ポケモンが　人を
+た　食べちゃうのお！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:16:08" />
+				Time="2011-06-06T11:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -520,17 +522,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃから　むかしの　もんは
-ポケモンが　はいって　これないように▽
-まちを　へいで　かこったり▼
-ひが　くれたら　そとに　でるのを
-きんじて　うちで　すごすよう▽
-まちの　おきてを　きめたのじゃ……▼
-むかしばなしは
+			<Text>じゃから　昔の　もんは
+ポケモンが　入って　これないように▽
+町を　塀で　囲ったり▼
+日が　暮れたら　外に　でるのを
+禁じて　うちで　過ごすよう▽
+町の　おきてを　決めたのじゃ……▼
+昔話は
 これで　おしまい　じゃ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:16:11" />
+				Time="2011-06-06T11:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -571,13 +573,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『とても　きょうみぶかい
-おはなし　ありがとう　ございました▼
-こんごの　わたしの　けんきゅうに
-とても　やくだちます▼</Text>
+			<Text>アララギ『とても　興味深い
+お話　ありがとう　ございました▼
+今後の　わたしの　研究に
+とても　役立ちます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:29:25" />
+				Time="2011-06-06T11:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -611,11 +613,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それでは　みんな
-おいとましましょう▼</Text>
+			<Text>では　みんな
+おいとま　しましょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:29:31" />
+				Time="2011-06-06T11:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -623,11 +625,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは　みんな
-おいとましましょう▼</Text>
+			<Text>では　みんな
+おいとま　しましょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:29:33" />
+				Time="2011-06-06T11:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -674,11 +676,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>むかしばなし　とはいえ
+			<Text>昔話　とはいえ
 おっそろしい　ポケモン　じゃな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:27:47" />
+				Time="2011-06-06T11:43:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

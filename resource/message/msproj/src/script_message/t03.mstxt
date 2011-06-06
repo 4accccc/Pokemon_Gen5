@@ -1725,11 +1725,11 @@
 			<Text>ヴィオ『やれやれ
 おまえらと　でくわすとはな▼
 われわれの　もくてき　なぞ
-りかいも　できぬくせに▽
+りかい　できぬくせに▽
 あれこれ　かぎまわるで　ない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:49:06" />
+				Time="2011-06-06T10:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1740,11 +1740,11 @@
 			<Text>ヴィオ『やれやれ
 おまえらと　でくわすとはな▼
 われわれの　もくてき　なぞ
-りかいも　できぬくせに▽
+りかい　できぬくせに▽
 あれこれ　かぎまわるで　ない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:49:08" />
+				Time="2011-06-06T10:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1778,10 +1778,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエらの　つごうなんて
+どうでも　いいんだよ▼
+オレは　オレの　うばわれた
+ポケモンを　とりもどすだけさ！▼
+[Name:TrainerName ]！　オマエの　ちからを
+かりるけど　じゅんびは　いいか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:54:55" />
+				Time="2011-06-06T11:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1789,10 +1794,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエらの　つごうなんて
+どうでも　いいんだよ▼
+オレは　オレの　うばわれた
+ポケモンを　とりもどすだけさ！▼
+[Name:TrainerName ]！　オマエの　ちからを
+かりるけど　じゅんびは　いいか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T11:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1805,10 +1815,11 @@
 ・はい/いいえの選択肢表示
 　はい　→swrival_03
 　いいえ→swrival_04
+・0＝主人公名前
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:53:30" />
+				Time="2011-06-06T11:05:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1830,10 +1841,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『よし
+オマエら　まとめて　ぶっつぶす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T11:04:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1841,10 +1853,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『よし
+オマエら　まとめて　ぶっつぶす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-06T11:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1880,10 +1893,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『わかった
+じゅんび　してきな▼
+コイツら　あいてに　しんちょうなのは
+わるいことじゃ　ないからな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:53:10" />
+				Time="2011-06-06T11:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1891,10 +1907,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『わかった
+じゅんび　してきな▼
+コイツら　あいてに　しんちょうなのは
+わるいことじゃ　ないからな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:53:10" />
+				Time="2011-06-06T11:04:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1929,10 +1948,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエの　ちからを
+かりるけど　じゅんびは　いいか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:53:10" />
+				Time="2011-06-06T11:05:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1940,10 +1960,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエの　ちからを
+かりるけど　じゅんびは　いいか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:53:10" />
+				Time="2011-06-06T11:05:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1981,10 +2002,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>したっぱ『ヴィオさまと　ともに
+たたかったのに　なんだ　こいつら！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:44:06" />
+				Time="2011-06-06T11:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1992,15 +2014,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>したっぱ『ヴィオさまと　ともに
+たたかったのに　なんだ　こいつら！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:44:06" />
+				Time="2011-06-06T11:21:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-06T10:44:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後、フィールドに復帰すると
+　自動でメッセージ表示
+・続けてsage7_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:05:42" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
@@ -2015,10 +2048,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ヴィオ『この　トレーナーども
+２ねんまえを　おもいださせます▼
+が　それよりも　アレを　さがさねば！
+やはり　ソウリュウに　あるのかも▼
+おまえたち
+また　あいて　してやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:03" />
+				Time="2011-06-06T11:23:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2026,15 +2064,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ヴィオ『この　トレーナーども
+２ねんまえを　おもいださせます▼
+が　それよりも　アレを　さがさねば！
+やはり　ソウリュウに　あるのかも▼
+おまえたち
+また　あいて　してやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:03" />
+				Time="2011-06-06T11:23:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-06T10:55:03" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswrival_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:05:51" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>七賢人ヴィオ</Text>
@@ -2054,10 +2105,14 @@
 		Label="msg_t03_swrival_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『にげたか……▼
+オレ　こころあたりが　あるから
+そっちを　さがす！▼
+オマエは　ポケモンずかん　だよな
+じゃあな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:09" />
+				Time="2011-06-06T11:24:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2065,10 +2120,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>[Name:TrainerName Idx="1" ]『にげたか……▼
+オレ　こころあたりが　あるから
+そっちを　さがす！▼
+オマエは　ポケモンずかん　だよな
+じゃあな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:09" />
+				Time="2011-06-06T11:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2103,10 +2162,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アンタ　もういちど
+カゴメの　むかしばなしでも▽
+きいて　いかんかね？▼
+バーさんの　はなし　じゃから
+ちと　ながくなるがな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T04:46:48" />
+				Time="2011-06-06T11:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2114,10 +2177,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アンタ　もう一度
+カゴメの　昔話でも▽
+きいて　いかんかね？▼
+バーさんの　話じゃから
+ちと　長くなるがな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T04:46:48" />
+				Time="2011-06-06T11:38:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2126,11 +2193,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・
-・イベント後</Comment>
+・プラズマ団のイベント後
+・夜になるといなくなる
+・消すタイミングはzoneチェンジ＋時間参照
+・GRIDX=670、GRIDZ=168辺り
+・はい/いいえの選択肢表示
+　はい→oldwoman1_02
+　いいえ→oldwoman1_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T03:57:39" />
+				Time="2011-06-06T11:39:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2152,28 +2224,30 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　まちの　うらには　ものすごーく
-でっかい　あなが　あいとるんじゃ▼
-そのあなはな　むかし　むかし
-そらから　おおきな　いんせきが▽
-ふってきて　できた　そうじゃ▼
-そして　その　いんせきの　なかには
-よにも　おそろしい　ばけもんが▽
+			<Text>カゴメタウンの　うらには
+そりゃもう　おおきな　あなが　ある▼
+その　おおきな　あな……
+ジャイアントホールを　つくったのは▼
+むかしむかしに　ふってきた
+おおきな　いんせきと　いわれておる▼
+その　いんせき　にはな
+おっそろしい　ポケモンが▽
 ひそんで　おったそうな……▼
-ばけもんは　ばんに　なると
-つめたい　かぜと　ともに▽
-ひとざとに　あらわれては▽
-ひとや　ポケモンを　とって▽
-くらうと　いわれとった……▼
+あたりが　やみに　つつまれると▼
+ポケモンは　こごえるような
+つめたい　かぜと　ともに　あらわれ▼
+あたりを　いてつかせては
+ひとや　ポケモンを　とっては　くらう……▼
+そう　おそれられて　いたんじゃ▼
 じゃから　むかしの　もんは
-まちを　へいでかこって　ばけもんが▽
-はいって　こられんように　したり▼
-ひが　くれたら　おもてに　でるのを
-きんじて　うちで　すごすことを▽
-まちの　おきてに　したそうじゃ▼</Text>
+ポケモンが　はいって　これないように▽
+まちを　へいで　かこったり▼
+ひが　くれたら　そとに　でるのを
+きんじて　うちで　すごすよう▽
+まちの　おきてを　きめたのじゃ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:47" />
+				Time="2011-06-06T11:46:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2181,28 +2255,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この町の　裏には　ものすごーく
-でっかい　穴が　開いとるんじゃ▼
-その穴はな　昔々
-空から　大きな　いんせきが▽
-降って来て　出来た　そうじゃ▼
-そして　その　いんせきの　中には
-世にも　恐ろしい　化けもんが▽
+			<Text>カゴメタウンの　裏には
+そりゃもう　大きな　穴が　ある▼
+その　大きな　穴……
+ジャイアントホールを　つくったのは▼
+昔々に　降ってきた
+大きな　いん石と　いわれておる▼
+その　いん石　にはな
+おっそろしい　ポケモンが▽
 潜んで　おったそうな……▼
-化けもんは　晩に　なると
-冷たい　風と　ともに▽
-人里に　現れては▽
-人や　ポケモンを　取って▽
-食らうと　言われとった……▼
+辺りが　やみに　包まれると▼
+ポケモンは　凍えるような
+冷たい　風と　ともに　現われ▼
+辺りを　凍てつかせては
+人や　ポケモンを　とっては　食らう……▼
+そう　恐れられて　いたんじゃ▼
 じゃから　昔の　もんは
-町を　塀で囲って　化けもんが▽
-入って　来られんように　したり▼
-日が　暮れたら　表に　出るのを
-禁じて　家で　過ごすことを▽
-町の　おきてに　したそうじゃ▼</Text>
+ポケモンが　入って　これないように▽
+町を　塀で　囲ったり▼
+日が　くれたら　外に　でるのを
+禁じて　うちで　過ごすよう▽
+町の　おきてを　決めたのじゃ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:47" />
+				Time="2011-06-06T11:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2211,10 +2287,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてmsg_t03_oldwoman1_02_01</Comment>
+・続けてoldwoman1_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:51" />
+				Time="2011-06-06T11:39:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2222,74 +2298,6 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-02T03:31:47" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t03_oldwoman1_02_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……　……　……　……　……
-ま　いまじゃ　こんな　はなしなぞ▽
-だれも　しんじとらん▼
-じゃけどな……▼
-いまでも　カゴメに　すんどる　もんは
-ばんに　なったら　ちゃんと　うちに▽
-かえるから　ふしぎ　じゃろ？▼
-むかしばなしや　ふるい　いいつたえ
-ちゅうもんは　いまの　せいかつに▽
-なにかしらの　えいきょうを▽
-あたえとる　っちゅうことかのう</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-06T10:19:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-06T10:09:59" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……　……　……　……　……
-ま　今じゃ　こんな　話なぞ▽
-だれも　信じとらん▼
-じゃけどな……▼
-今でも　カゴメに　住んどる　もんは
-晩に　なったら　ちゃんと　家に▽
-帰るから　不思議　じゃろ？▼
-昔話や　古い　言い伝え
-ちゅうもんは　今の　生活に▽
-何かしらの　影響を▽
-与えとる　っちゅうことかのう</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・イベント終了</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>oldwoman1</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2301,6 +2309,65 @@
 	</TextRow>
 	<TextRow
 		Label="msg_t03_oldwoman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんじるか　どうかは　じゆう　じゃが
+いまでも　カゴメの　にんげんは▽
+くらくなると　いえに　もどりおる▼
+むかしばなしや　ふるい　いいつたえは
+ワシらの　せいかつに　なにかしらの▽
+えいきょうを　あたえとるんじゃな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:52:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T10:09:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>信じるか　どうかは　自由じゃが
+今でも　カゴメの　人間は▽
+暗くなると　家に　戻りおる▼
+昔話や　古い　言い伝えは
+ワシらの　生活に　なにかしらの▽
+影響を　与えとるんじゃな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:52:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・一度、別方向を向いてから
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:50:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>oldwoman1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-02T03:32:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t03_oldwoman1_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -3039,13 +3106,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんかん　ここに　ふにんしてから
-なーんも　することが　ないのだ▼
-よるは　そとに　だれも　いないし
-へいわ　そのもの　だからなー</Text>
+			<Text>よるは　そとに　だれも　いなくて
+へいわ　だった　その　わけが▽
+ポケモンの　おかげとは　ふくざつだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:13:49" />
+				Time="2011-06-06T11:56:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3053,13 +3119,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>本官　ここに　赴任してから
-なーんも　することが　ないのだ▼
-夜は　外に　だれも　いないし
-平和　そのもの　だからなー</Text>
+			<Text>夜は　外に　だれも　いなくて
+平和だった　その　理由が▽
+ポケモンの　おかげとは　複雑だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:13:49" />
+				Time="2011-06-06T11:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3155,11 +3220,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレの　ポケモン　いつも　かってに
-あそびに　いっちまうんだよ</Text>
+			<Text>オレの　ポケモン
+かってに　うごきまわるんだ▽
+トレーナーなんて　いらないのかね？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:54:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3167,11 +3233,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレの　ポケモン　いつも　勝手に
-遊びに　行っちまうんだよ</Text>
+			<Text>オレの　ポケモン
+勝手に　動き回るんだ▽
+トレーナーなんて　いらないのかね？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-06T11:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3182,10 +3249,11 @@
 			<Comment>♂
 ・夜になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
-・GRIDX=６６２、GRIDZ=１７0辺り</Comment>
+・GRIDX=６６２、GRIDZ=１７0辺り
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:03:16" />
+				Time="2011-06-06T11:52:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

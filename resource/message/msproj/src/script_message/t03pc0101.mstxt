@@ -1896,12 +1896,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュレムの　おかげで
-よるは　だれも　そとに　でない▽
-だから　へいわ　だったのか……</Text>
+			<Text>よるは　そとに　だれも　いなくて
+へいわ　だった　その　わけが▽
+ポケモンの　おかげとは　ふくざつだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:13:21" />
+				Time="2011-06-06T11:56:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1909,12 +1909,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュレムの　おかげで
-夜は　だれも　外に　でない▽
-だから　平和だったのか……</Text>
+			<Text>夜は　外に　だれも　いなくて
+平和だった　その　理由が▽
+ポケモンの　おかげとは　複雑だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:13:16" />
+				Time="2011-06-06T11:56:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
