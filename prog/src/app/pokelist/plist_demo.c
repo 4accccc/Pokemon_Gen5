@@ -342,6 +342,9 @@ static BOOL PLIST_DEMO_FormChangeKyuremuSeq( PLIST_WORK* work )
   case 1:
     if( ++work->demoCnt > work->demoChangeTimming )
     {
+      if( work->demoParam != KYUREMU_UNION_PERGE ){ //合体時はホワイトアウト開始と同時にSE
+        PMSND_PlaySystemSE( PLIST_SND_DEMO_KYUREMU_SWITCH );
+      }
       WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
           WIPE_FADE_WHITE , PLIST_DEMO_KYUREMU_WIPEOUT_DIV , PLIST_DEMO_KYUREMU_WIPEOUT_SYNC , work->heapId );
       work->demoSeq++;
