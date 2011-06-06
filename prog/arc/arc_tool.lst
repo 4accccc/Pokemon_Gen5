@@ -337,4 +337,5 @@
   ARCID_ANIMAL_TRAIL "animal_trail_data.narc" #けものみちデータ
   ARCID_POKEWOOD_CUTIN_GRA "pokewood_cutin_gra.narc"  #ポケウッドカットイングラフィックデータ
   ARCID_POKEWOOD_CUTIN_SCR "pokewood_cutin_scr.narc"  #ポケウッドカットインスクリプトデータ
+  ARCID_GYM_WATER "fieldmap/gym_water.narc"  #水ジム
   

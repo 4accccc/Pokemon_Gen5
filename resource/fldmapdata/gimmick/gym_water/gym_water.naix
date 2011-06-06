@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gym_water.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GYM_WATER_NAIX_
+#define NARC_GYM_WATER_NAIX_
+
+enum {
+	NARC_gym_water_hasu01_nsbmd = 0
+};
+
+/* NARC_GYM_WATER_NAIX_ */
+#endif

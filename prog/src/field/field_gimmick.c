@@ -41,6 +41,7 @@
 #include "infinity_dungeon_gimmick.h"
 #include "wbt_gimmick.h"
 #include "gym_poison.h"
+#include "gym_water.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -70,6 +71,7 @@ FS_EXTERN_OVERLAY(resonance_resort_gimmick);
 FS_EXTERN_OVERLAY(infinity_dungeon_gimmick);
 FS_EXTERN_OVERLAY(wbt_gimmick);
 FS_EXTERN_OVERLAY(field_gym_poison);
+FS_EXTERN_OVERLAY(field_gym_water);
 
 
 #include "field_gimmick_table.cdat"

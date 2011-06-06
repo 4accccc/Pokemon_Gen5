@@ -252,5 +252,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_POISON_End,       // 毒ジム
     GYM_POISON_Move,       // 毒ジム
   },
+  {
+    FS_OVERLAY_ID(field_gym_water),
+    GYM_WATER_Setup,       // 水ジム
+    GYM_WATER_End,       // 水ジム
+    GYM_WATER_Move,       // 水ジム
+  },
 };
 
