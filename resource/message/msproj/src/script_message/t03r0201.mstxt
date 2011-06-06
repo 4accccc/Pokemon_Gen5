@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カゴメの　むかしばなしを
-ききたいのは　あんたら　かね▼</Text>
+ききたいのは　アンタら　かね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:14:07" />
+				Time="2011-06-06T08:10:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カゴメの　むかしばなしを
-ききたいのは　あんたら　かね▼</Text>
+			<Text>カゴメの　昔話を
+ききたいのは　アンタら　かね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:14:04" />
+				Time="2011-06-06T08:10:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -62,10 +62,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『はい
-よろしく　おねがい　いたします▼</Text>
+よろしく　おねがい　しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:13:57" />
+				Time="2011-06-06T03:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -74,10 +74,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『はい
-よろしく　おねがい　いたします▼</Text>
+よろしく　お願い　しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:14:01" />
+				Time="2011-06-06T03:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -126,13 +126,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カゴメタウンの　うらには
-そりゃもう　おおきな　あなが　ある▼
-しっとるか
+			<Text>カゴメタウンの　裏には
+そりゃもう　大きな　穴が　ある▼
+知っとるか
 ジャイアントホール▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T09:25:15" />
+				Time="2011-06-06T04:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -186,15 +186,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あのね　さいきん
-ジャイアントホールの　ちかくでも▼
-いっしゅんだけ　マイナス５０どを
-けいそく　したんだって！▼
+			<Text>ベル『あのね　最近
+ジャイアントホールの　近くでも▼
+一瞬だけ　マイナス５０度を
+計測したんだって！▼
 って　チェレンが
-おしえて　くれたんだけど▼</Text>
+教えて　くれたんだけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:25:51" />
+				Time="2011-06-06T03:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
