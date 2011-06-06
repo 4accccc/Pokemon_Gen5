@@ -445,6 +445,206 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c05gym0101_workman2a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたりを　しんじて　ほりつづけ
+かちを　しんじて　たたかう▽
+おれの　ポケモンたちだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:42:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>当たりを　信じて　彫り続け
+勝利を　信じて　戦う▽
+おれの　ポケモンたちだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:42:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_29</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2a_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤーコンさん　すげえ！
+こうせきの　ありかが　わかるんだよ！▼
+いいか？　つまりは
+こうせきが　たくさん　あるところに▽
+ヤーコンさんが　いるって　ことだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤーコンさん　すげえ！
+鉱石の　ありかが　わかるんだよ！▼
+いいか？　つまりは
+鉱石が　たくさん　あるところに▽
+ヤーコンさんが　いるって　ことだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_29</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベルトコンベアに　のって
+であうのは　オレでした！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベルトコンベアに　乗って
+出会うのは　オレでした！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:44:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_28</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05gym0101_workman2b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リフトを　つかったか？▼
+リフトに　のって　うえに　あがれば
+いってない　ばしょが　わかるだろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:42:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:42:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リフトを　使ったか？▼
+リフトに　乗って　上に　あがれば
+行ってない　場所が　わかるだろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:42:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:42:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:43:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>トレーナーＩＤ
+worker2_28</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-06T04:45:22" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05gym0101_glasses_01"
 		Style="Large">
 		<LanguageCell
