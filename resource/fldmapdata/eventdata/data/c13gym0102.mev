@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/30 21:35:59
+#save date:2011/06/06 20:07:40
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c13gym0102.wms
 #SECTION START:OBJ_EVENT
@@ -9,22 +9,22 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c13gym0102.wms
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
 #type
 1
 #ID name
-C13GYM0102_SWLEADER2_01
+C13GYM0102_SWLEADER2ISS_01
 #OBJ CODE Number
-SWLEADER2
+SWLEADER2ISS
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_C13GYM0102_SWLEADER2
+FV_C13GYM0102_SWLEADER2ISS
 #Event Script Name
-SCRID_C13GYM0102_SWLEADER2_01
+SCRID_C13GYM0102_SWLEADER2ISS_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -78,7 +78,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C13GYM0102_GUITARW_01
 #OBJ CODE Number
-GUITAR
+GUITARW
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -134,6 +134,37 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -72 0 24
+#event number: 4
+#type
+1
+#ID name
+C13GYM0102_SWLEADER2_01
+#OBJ CODE Number
+SWLEADER2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C13GYM0102_SWLEADER2
+#Event Script Name
+SCRID_C13GYM0102_SWLEADER2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 16 200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
