@@ -785,17 +785,14 @@ static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
   {
     HEAPID heapID;
     u16 areaID;
-    u16 areaOfsID = 0;
     AREADATA* areaData;
 
     heapID   = FIELDMAP_GetHeapID( work->fieldmap );
     areaID   = ZONEDATA_GetAreaID( work->loc_req.zone_id );
 
-    if( AREADATA_HasSeason(areaID))
-    {
-      areaOfsID = PMSEASON_SPRING;
-    }
-    areaData = AREADATA_Create( heapID, areaID, areaOfsID );
+    //エリアが季節や無限ダンジョンなどで変化するときに、内外判定等は
+    //変わらないはずなので基本のエリア（オフセット＝0）を判定すればよい
+    areaData = AREADATA_Create( heapID, areaID, 0 );
     nextZoneIsOutdoor = ( AREADATA_GetInnerOuterSwitch(areaData) != 0 );
 
     AREADATA_Delete( areaData );

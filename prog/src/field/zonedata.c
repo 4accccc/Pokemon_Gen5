@@ -36,6 +36,8 @@
 
 #include "sound/swan_sound_data.sadl" //SEQ_BGM_C_08_～
 
+#include "arc/fieldmap/area_id.h" //AREA_ID_MAX
+
 //-------------------------------------
 // 内部ワーク
 //-------------------------------------
@@ -61,6 +63,8 @@ typedef struct
   // ゾーンID変更ID
   u8 zone_change_flag[ ZONEDATA_CHANGE_MAX ];
 
+  //　エリア変更登録
+  u8 area_change_flag[ ZONEDATA_CHANGE_AREA_ID_MAX ];
 } ZONE_DATA_HANDLE;
 
 static ZONE_DATA_HANDLE* data_handle = NULL;
@@ -78,6 +82,28 @@ static u16 ZONEDATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_MAX ][ ZONEDATA_CHANGE_ID_TBL
 {
   { ZONE_ID_BC10, ZONE_ID_WC10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
   { ZONE_ID_PLC10, ZONE_ID_PLCW10 },   // ZONEDATA_CHANGE_BC_WF_ID BCをWFに変更する。
+  { ZONE_ID_R04,  ZONE_ID_R04W },     // ZONEDATA_CHANGE_R04_R04W_ID R04をR04Wに変更する。
+};
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+enum {
+  ZONEDATA_CHANGE_AREA_BEFORE = 0,
+  ZONEDATA_CHANGE_AREA_AFTER,
+
+  ZONEDATA_CHANGE_AREA_TBL_NUM,
+};
+//------------------------------------------------------------------
+/**
+ * @brief エリア変更テーブル
+ */
+//------------------------------------------------------------------
+static u16 AREADATA_CHANGE_ID_TBL[ ZONEDATA_CHANGE_AREA_ID_MAX ] [ ZONEDATA_CHANGE_AREA_TBL_NUM ] =
+{
+  { AREA_ID_OUT13,  AREA_ID_OUT67 }, //ZONEDATA_CHANGE_AREA_C08B_ID
+                                     //ソウリュウ→ソウリュウ凍結（ブラック）
+  { AREA_ID_OUT13,  AREA_ID_OUT68 }, //ZONEDATA_CHANGE_AREA_C08W_ID
+                                     //ソウリュウ→ソウリュウ凍結（ホワイト）
 };
 
 //------------------------------------------------------------------
@@ -144,6 +170,7 @@ void ZONEDATA_Open( HEAPID heap_id )
     if( GET_VERSION() == VERSION_W2 ){
       ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, TRUE );
       ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_PLC10_PLCW10_ID, TRUE );
+      ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_R04_R04W_ID, TRUE );
     }
   }
 }
@@ -212,6 +239,23 @@ BOOL ZONEDATA_GetChangeZoneID( ZONEDATA_CHANGE_ID id )
   return data_handle->zone_change_flag[ id ];
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_ID id, BOOL flag )
+{
+  GF_ASSERT( data_handle );
+  GF_ASSERT( id < ZONEDATA_CHANGE_AREA_ID_MAX );
+  data_handle->area_change_flag[ id ] = flag;
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+BOOL ZONEDATA_GetChangeAreaID( ZONEDATA_CHANGE_AREA_ID id )
+{
+  GF_ASSERT( data_handle );
+  GF_ASSERT( id < ZONEDATA_CHANGE_AREA_ID_MAX );
+  return data_handle->area_change_flag[ id ];
+}
 
 //============================================================================================
 //============================================================================================
@@ -344,9 +388,23 @@ static BOOL isTargetZone( u16 zone_id, const u16* tbl, int num )
 //------------------------------------------------------------------
 u16 ZONEDATA_GetAreaID(u16 zone_id)
 {
+  u16 area_id;
   ZONEDATA* zoneData;
   zoneData = loadZoneData( zone_id );
-  return zoneData->area_id;
+  area_id = zoneData->area_id;
+  {
+    int i;
+    for ( i = 0; i < ZONEDATA_CHANGE_AREA_ID_MAX; i ++ )
+    {
+      if ( data_handle->area_change_flag[ i ]
+          && AREADATA_CHANGE_ID_TBL[ i ][ZONEDATA_CHANGE_AREA_BEFORE] == area_id )
+      {
+        area_id = AREADATA_CHANGE_ID_TBL[ i ][ZONEDATA_CHANGE_AREA_AFTER];
+        break;
+      }
+    }
+  }
+  return area_id;
 }
 //------------------------------------------------------------------
 /**

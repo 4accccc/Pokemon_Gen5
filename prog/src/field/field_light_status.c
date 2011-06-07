@@ -96,12 +96,12 @@ void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, 
   {
     u16 area_ofs_id = 0;
 
+    // 季節がない場合、ライトはオフセットを気にせずデフォルトのエリア指定(==0)でOK
     if( AREADATA_HasSeason( ZONEDATA_GetAreaID(zone_id) ) )
     {
       area_ofs_id = season;
     }
 
-    // 無限ダンジョンのエリア情報はライトに反映しない
     {
       AREADATA* p_area = AREADATA_Create( GFL_HEAP_LOWID(heapID), ZONEDATA_GetAreaID(zone_id), area_ofs_id );
 
