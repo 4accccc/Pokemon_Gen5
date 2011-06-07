@@ -141,5 +141,5 @@ extern void BTL_STR_MakeString_LvupInfo_Param( STRBUF* buf, u32 hp, u32 atk, u32
 //----------------------------------------------------------------------
 // ポケウッド用文字列処理
 //----------------------------------------------------------------------
-extern void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int senario_no, int msgid );
+extern void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int msgid );
 extern void BTL_STR_Register_PokewoodWord( void );

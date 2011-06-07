@@ -1102,11 +1102,10 @@ void BTL_STR_MakeString_LvupInfo_Param( STRBUF* dst, u32 hp, u32 atk, u32 def, u
  * @brief	ポケウッド文字列生成
  *
  * @param   dst		
- * @param   senario_no		
  * @param   msgid		
  */
 //=============================================================================================
-void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int senario_no, int msgid )
+void BTL_STR_MakeString_Pokewood_Param( STRBUF *dst, int msgid )
 {
 
   GFL_MSG_GetString( SysWork.msg[MSGSRC_POKEWOOD], msgid, SysWork.tmpBuf );

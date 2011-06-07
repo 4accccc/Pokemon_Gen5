@@ -1705,15 +1705,46 @@ void BTLV_CHOICE_Start( BTLV_CORE* wk )
   {
     wk->choiceData.end_flg	= FALSE;
     wk->choiceData.heap		= wk->heapID;
-	wk->choiceData.font		= wk->largeFontHandle;
-	
-	wk->choiceData.mesnum 	= 3;					// 行数
-	wk->choiceData.result	= &wk->choice_result;	// 結果格納
+    wk->choiceData.font		= wk->largeFontHandle;
+    
+//	wk->choiceData.mesnum 	= 3;					// 行数
+//	wk->choiceData.result	= &wk->choice_result;	// 結果格納
 //	wk->choiceData.result	= 0;
-	//
+//
     wk->selectItemSeq = 1;
   }
 }
+
+//=============================================================================================
+/**
+ * @brief	選択肢呼び出しパラメータセット
+ *
+ * @param   wk		BTLV_CORE
+ * @param   num		選択肢の数
+ * @param   result		結果格納ワークのポインタ
+ */
+//=============================================================================================
+void BTLV_CHOICE_SetParam( BTLV_CORE *wk, int num, int *result )
+{
+  wk->choiceData.mesnum = num;
+  wk->choiceData.result = result;
+}
+
+//=============================================================================================
+/**
+ * @brief	選択肢呼び出しパラメータに文字列セット
+ *
+ * @param   wk		BTLV_CORE
+ * @param   no		文字列格納インデックス
+ * @param   str		STRBUF
+ */
+//=============================================================================================
+void BTLV_CHOICE_SetStrbuf( BTLV_CORE *wk, int no, STRBUF *str )
+{
+  wk->choiceData.mesbuffer[no] = str;
+}
+
+
 
 //=============================================================================================
 /**
@@ -2293,7 +2324,7 @@ static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst )
     BTL_STR_MakeStringSubway( dst, param->args[0], param->args[1] );
     break;
   case BTL_STRTYPE_POKEWOOD_TURNTALK:
-    BTL_STR_MakeString_Pokewood_Param( dst, 0, param->strID );
+    BTL_STR_MakeString_Pokewood_Param( dst, param->strID );
     break;
   default:
     GF_ASSERT(0);

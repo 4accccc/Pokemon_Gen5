@@ -139,11 +139,12 @@ typedef struct{
   u8   bookmark;      ///<  ポケウッドシナリオ進行しおり
   u8   stage_setup;   ///<  ポケウッドイベント進行管理フラグ
   s8   event_no;      ///<  実行中イベントＮＯ
-  s16  choice;        ///<  ポケウッドイベントの選択肢で選択肢した番号
-  s16  vfx;           ///<  背景チェンジ指定用ワーク
+  int  choice;        ///<  ポケウッドイベントの選択肢で選択した番号
+  int  vfx;           ///<  背景チェンジ指定用ワーク
   s8   flagwork[EVENT_DATA_MAX];   ///<  フラグ管理用配列
 
   int  stage_cond;    ///< お盆の上の状態（ポケモン・トレーナー・無人など,pokewood_senario.hに記述）
+  STRBUF *choice_str[EVENT_REACTION_MAX]; ///< 選択肢文字列
 }POKEWOOD_SEQ_WORK;
 
 /*--------------------------------------------------------------------------*/
@@ -1646,9 +1647,9 @@ static void _set_next_seq( POKEWOOD_SEQ_WORK *swork, int next, int nextnext )
 /**
  * @brief	ポケウッドシナリオターン毎会話シーケンス
  *
- * @param   wk		
+ * @param   wk		BTL_CLIENT
  *
- * @retval  BOOL		
+ * @retval  BOOL		TRUE:終了 FALSE:動作中
  */
 //----------------------------------------------------------------------------------
 static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
@@ -1746,6 +1747,17 @@ enum{
   POKEWOOD_EVENT_SEQ_CUTIN_WAIT,
 };
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	
+ *
+ * @param   senario		
+ * @param   seqWork		
+ * @param   turn		
+ *
+ * @retval  int		
+ */
+//----------------------------------------------------------------------------------
 static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn )
 {
   int i;
@@ -1798,14 +1810,49 @@ static int _check_event_stage_condition( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ
   return TRUE;
 }
 
+static void POKEWOOD_StartChoice( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *work )
+{
+  int i,count=0;
+  // 選択肢数を確認
+  for(i=0;i<EVENT_REACTION_MAX;i++){
+    if(senario->event[work->event_no].reaction[i].my_message!=-1){
+      count++;
+    }
+  }
+  
+  GF_ASSERT_MSG(count,"選択肢が０だった\n");
+  
+  // 選択肢呼び出し初期化
+  BTLV_CHOICE_SetParam(  wk->viewCore, count, &work->choice );
+  for(i=0;i<count;i++){
+    work->choice_str[i] = GFL_STR_CreateBuffer( POKEWOOD_CHOICE_STR_MAX, wk->heapID );
+    BTL_STR_MakeString_Pokewood_Param( work->choice_str[i], 
+                                       senario->event[work->event_no].reaction[i].my_message );
+    BTLV_CHOICE_SetStrbuf( wk->viewCore, i, work->choice_str[i] );
+  }
+  ClientSubProc_Set( wk, selact_Choice ); 
+}
+
+static void POKEWOOD_EncChoice( POKEWOOD_SEQ_WORK *work )
+{
+  // 文字列後始末
+  int i;
+  for(i=0;i<EVENT_REACTION_MAX;i++){
+    if(work->choice_str[i]!=NULL){
+      GFL_STR_DeleteBuffer(work->choice_str[i]);
+      work->choice_str[i] = NULL;
+    }
+  }
+}
+
 static const u8 virtual_response[]={ 0,0,0,0,0,0, };
 //----------------------------------------------------------------------------------
 /**
- * @brief	ポケウッドシナリオターン毎会話シーケンス
+ * @brief	ポケウッドシナリオイベント会話シーケンス
  *
- * @param   wk		
+ * @param   wk		BTL_CLIENT
  *
- * @retval  BOOL		
+ * @retval  BOOL		TRUE:終了 FALSE:動作中
  */
 //----------------------------------------------------------------------------------
 static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
@@ -1918,7 +1965,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     if(senario->event[wk->pokewoodSeqWork.event_no].reaction[0].my_message!=-1){
       if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_REC){ 
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CHOICE_WAIT;   
-        ClientSubProc_Set( wk, selact_Choice ); // 撮影時は選択肢画面呼び出し
+        POKEWOOD_StartChoice(wk, senario, &wk->pokewoodSeqWork );  // 撮影時は選択肢画面呼び出し
       }else{
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CHOICE_READ; // 上映時は選択読み込み反映へ
       }
@@ -1929,6 +1976,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 選択肢終了待ち(撮影時のみ）
   case POKEWOOD_EVENT_SEQ_CHOICE_WAIT:
     if( ClientSubProc_Call(wk) ){
+      POKEWOOD_EncChoice( &wk->pokewoodSeqWork );
       wk->pokewoodSeqWork.choice = virtual_response[wk->pokewoodSeqWork.event_no];
       wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
       p_work->enemy_waza[0] = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].select_enemy_waza;
@@ -2800,7 +2848,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
         shooterCost_Save( wk, wk->procPokeIdx, 0 );
         ClientSubProc_Set( wk, selact_Escape );
-//        ClientSubProc_Set( wk, selact_Choice );		// test
       // ２体目以降は「もどる」として処理
       }else{
         BTL_POKEPARAM* bpp;

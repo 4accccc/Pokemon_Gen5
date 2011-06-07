@@ -18,6 +18,7 @@
 #define EVENT_DATA_MAX          (  7 )  ///< イベントデータの最大数
 #define POKEWOOD_TALK_MSG_MAX   ( 20 )  ///< ターン毎会話の最大数
 #define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
+#define POKEWOOD_CHOICE_STR_MAX ( 20*2 )///< 選択肢文字列の最大長
 
 
 // 立ち位置AAとBBの状態(PWS_はPOKEWOOD_STAGEの頭文字)
