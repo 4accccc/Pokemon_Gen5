@@ -3430,7 +3430,7 @@ static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq )
 }
 //----------------------------------------------------------------------
 /**
- *  ポケウッド「選択肢」画面(要確認)
+ *  ポケウッド「選択肢」画面
  */
 //----------------------------------------------------------------------
 static BOOL selact_Choice( BTL_CLIENT* wk, int* seq )
@@ -3442,26 +3442,12 @@ static BOOL selact_Choice( BTL_CLIENT* wk, int* seq )
     break;
 
   case 1:
-    // 制限時間による強制終了通知(現在未対応)
-    if( CheckSelactForceQuit(wk, NULL) ){
-      BTLV_CHOICE_ForceQuit( wk->viewCore );
-      (*seq) = 2;
-      return FALSE;
-    }
-    
+	// 終了待ち
     if( BTLV_CHOICE_Wait(wk->viewCore) )
     {
-		ClientSubProc_Set( wk, selact_Root );
+		return( TRUE );
     }
     break;
-
-  // 制限時間による強制終了待ち後
-  case 2:
-    if( BTLV_CHOICE_Wait(wk->viewCore) ){
-      ClientSubProc_Set( wk, selact_ForceQuit );
-    }
-    break;
-
   }
   return FALSE;
 }
