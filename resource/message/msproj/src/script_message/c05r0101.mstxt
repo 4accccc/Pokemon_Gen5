@@ -96,6 +96,61 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c05r0401_infomationw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは
+ゴージャス　ホドモエ　です▼
+あいにく　まんしつで　ございますが
+のんびりと　なさって　くださいませ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:38:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:17:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは
+ゴージャス　ホドモエ　です▼
+あいにく　まんしつで　ございますが
+のんびりと　なさって　くださいませ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:38:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:17:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝7、GRIDZ＝2
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:17:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:17:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05r0101_woman1_01"
 		Style="Large">
 		<LanguageCell

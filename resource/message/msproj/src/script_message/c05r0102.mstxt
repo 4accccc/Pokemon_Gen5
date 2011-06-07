@@ -162,4 +162,48 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c05r0102_espw_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>じぶんを　たかめるには
+じぶんよりも　すごい　ひとたちの▽
+たたかいを　さんこうに　することね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:30:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:30:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自分を　より　高めるには
+自分よりも　すごい　人たちの▽
+戦いを　参考に　することね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:30:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:28:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ESPW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:28:28" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

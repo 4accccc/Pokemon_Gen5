@@ -2,6 +2,140 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c05r0401_infomationw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いらっしゃいませ
+ホドモエ　オリエンタルホテル　です▼
+あいにく　まんしつで　ございますが
+ごゆるりと　くつろいで　くださいませ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:38:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:16:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いらっしゃいませ
+ホドモエ　オリエンタルホテル　です▼
+あいにく　まんしつで　ございますが
+ごゆるりと　くつろいで　くださいませ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:38:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:17:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝7、GRIDZ＝2
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:08:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:06:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0401_waiter_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたくしの　ひそやかな　たのしみは
+ワールドバトルトーナメント　です</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:22:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:04:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたくしの　ひそやかな　たのしみは
+ワールドバトルトーナメント　です</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:22:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:05:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:05:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITER</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:04:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0401_gentleman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエが　すっかり　さまがわりして
+わし　たまげたの　なんのって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:21:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:21:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエが　すっかり　様変わりして
+わし　たまげたの　なんのって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:22:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:22:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:21:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T03:21:22" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c05r0401_workman_01"
 		Style="Large">
 		<LanguageCell
@@ -54,6 +188,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05r0401_middlewoman_01"
@@ -118,5 +259,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
