@@ -75,6 +75,7 @@
 #include "gym_fly.h"     //for GYM_FLY_CheckEvent
 #include "gym_insect.h"     //for GYM_INSECT_CreateGateInEvent
 #include "gym_ground.h"     //for GYM_GROUND_CheckBeltEvent
+#include "gym_water.h"      //for GYM_WATER_CheckHasuEvent
 #include "field_gimmick_d06.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -2588,6 +2589,10 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
       if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_INSECT) )
       { //íéÉWÉÄ
         return GYM_INSECT_CreateGateInEvent(gsys);
+      }
+      if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_WATER) )
+      { //êÖÉWÉÄ
+        return GYM_WATER_CheckHasuEvent(gsys);
       }
     }
   }

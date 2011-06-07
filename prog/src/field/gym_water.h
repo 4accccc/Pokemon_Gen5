@@ -32,3 +32,6 @@ extern void GYM_WATER_Setup(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_WATER_End(FIELDMAP_WORK *p_fieldmap);
 extern void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap);
 
+// イベントチェック用
+extern GMEVENT * GYM_WATER_CheckHasuEvent( GAMESYS_WORK *p_gamesys );
+
