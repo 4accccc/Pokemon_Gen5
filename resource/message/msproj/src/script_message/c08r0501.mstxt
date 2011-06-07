@@ -117,13 +117,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モグモグ……▼
-なんでも　ソウリュウシティに
+２ねんまえかな？　ソウリュウシティに
 でんせつの　ポケモンを　つれた▽
 おとこが　きてたらしいよ……▼
 モグモゴ　モゴモグ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T03:48:24" />
+				Time="2011-06-07T02:28:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -132,13 +132,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モグモグ……▼
-なんでも　ソウリュウシティに
+２年前かな？　なんでも　ソウリュウシティに
 伝説の　ポケモンを　連れた▽
 男が　来てたらしいよ……▼
 モグモゴ　モゴモグ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T03:48:52" />
+				Time="2011-06-07T02:28:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -147,11 +147,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c08での演説イベント前
-※swanでメッセージ変更</Comment>
+・クリア前
+※swanでメッセージ変更、フラグ変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T03:48:37" />
+				Time="2011-06-07T02:30:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -214,11 +214,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c08での演説イベント後
-※swanでメッセージ変更</Comment>
+・クリア後
+※swanでメッセージ変更、フラグ変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-03T03:48:41" />
+				Time="2011-06-07T02:30:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
