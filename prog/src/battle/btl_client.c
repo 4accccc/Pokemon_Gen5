@@ -1810,6 +1810,15 @@ static int _check_event_stage_condition( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ
   return TRUE;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	下画面選択肢開始
+ *
+ * @param   wk		
+ * @param   senario		
+ * @param   work		
+ */
+//----------------------------------------------------------------------------------
 static void POKEWOOD_StartChoice( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *work )
 {
   int i,count=0;
@@ -1830,9 +1839,17 @@ static void POKEWOOD_StartChoice( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, POK
                                        senario->event[work->event_no].reaction[i].my_message );
     BTLV_CHOICE_SetStrbuf( wk->viewCore, i, work->choice_str[i] );
   }
+  // 選択肢処理開始
   ClientSubProc_Set( wk, selact_Choice ); 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	選択肢用に確保した文字列を解放
+ *
+ * @param   work		
+ */
+//----------------------------------------------------------------------------------
 static void POKEWOOD_EncChoice( POKEWOOD_SEQ_WORK *work )
 {
   // 文字列後始末
@@ -1977,7 +1994,8 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   case POKEWOOD_EVENT_SEQ_CHOICE_WAIT:
     if( ClientSubProc_Call(wk) ){
       POKEWOOD_EncChoice( &wk->pokewoodSeqWork );
-      wk->pokewoodSeqWork.choice = virtual_response[wk->pokewoodSeqWork.event_no];
+      OS_Printf("choice=%d\n", wk->pokewoodSeqWork.choice);
+//      wk->pokewoodSeqWork.choice = virtual_response[wk->pokewoodSeqWork.event_no];
       wk->pokewoodSeqWork.flagwork[0] = wk->pokewoodSeqWork.choice+1;
       p_work->enemy_waza[0] = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].select_enemy_waza;
 
@@ -1998,7 +2016,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 選択肢会話：自分
   case POKEWOOD_EVENT_SEQ_MY_REACTION:
     {
-      int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[virtual_response[wk->pokewoodSeqWork.event_no]].my_message;
+      int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].my_message;
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, reaction_talk );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_TRAINER_REACTION);
@@ -2007,7 +2025,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 選択肢会話：相手
   case POKEWOOD_EVENT_SEQ_TRAINER_REACTION:
     {
-      int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[virtual_response[wk->pokewoodSeqWork.event_no]].enemy_message;
+      int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].enemy_message;
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, reaction_talk );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_TRAINER_OUT);
