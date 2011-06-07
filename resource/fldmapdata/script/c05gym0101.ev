@@ -583,7 +583,7 @@ _ANIME_LABEL	anm_staystep_r
 //	Åôã§í èàóùÅFÉMÉáÉG
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_MARK_GYOE_NO_SE,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
