@@ -34,9 +34,25 @@ typedef enum
 {
   ZONEDATA_CHANGE_BC_WF_ID, // BCをWFに変更する。
   ZONEDATA_CHANGE_PLC10_PLCW10_ID, // PalaceのBCをWFに変更する。
+  ZONEDATA_CHANGE_R04_R04W_ID,    //R04をR04Wに変更する。
 
   ZONEDATA_CHANGE_MAX,
 } ZONEDATA_CHANGE_ID;
+
+//------------------------------------------------------------------
+/**
+ * @brief エリア変更指定ID
+ *
+ * ZONEDATAから取得するエリアIDを変更するためのテーブル指定ID
+ */
+//------------------------------------------------------------------
+typedef enum
+{
+  ZONEDATA_CHANGE_AREA_C08B_ID,   //ソウリュウ通常→凍結（ブラック）
+  ZONEDATA_CHANGE_AREA_C08W_ID,   //ソウリュウ通常→凍結（ホワイト）
+
+  ZONEDATA_CHANGE_AREA_ID_MAX,
+} ZONEDATA_CHANGE_AREA_ID;
 
 //-------------------------------------
 ///	ZONEDATA_GetPlaceIconIdx関数で帰ってくるインデックス
@@ -83,6 +99,12 @@ extern void ZONEDATA_Close( void );
 //------------------------------------------------------------------
 extern void ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_ID id, BOOL flag );
 extern BOOL ZONEDATA_GetChangeZoneID( ZONEDATA_CHANGE_ID id );
+
+//------------------------------------------------------------------
+//  エリア変更設定関連
+//------------------------------------------------------------------
+extern void ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_ID id, BOOL flag );
+extern BOOL ZONEDATA_GetChangeAreaID( ZONEDATA_CHANGE_AREA_ID id );
 
 //============================================================================================
 //============================================================================================
