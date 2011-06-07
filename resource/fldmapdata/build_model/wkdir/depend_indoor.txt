@@ -165,4 +165,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/rrobj05.nsbmd \
 	$(RESDIR)/door_c13gym.nsbmd \
 	$(RESDIR)/c13gym_kabe1.nsbmd \
+	$(RESDIR)/mado_c5hs.nsbmd \
 
