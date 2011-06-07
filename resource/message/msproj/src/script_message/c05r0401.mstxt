@@ -8,11 +8,11 @@
 			Language="JPN">
 			<Text>いらっしゃいませ
 ホドモエ　オリエンタルホテル　です▼
-あいにく　まんしつで　ございますが
+あきべやは　ございませんが
 ごゆるりと　くつろいで　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:38:26" />
+				Time="2011-06-07T05:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,11 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>いらっしゃいませ
 ホドモエ　オリエンタルホテル　です▼
-あいにく　まんしつで　ございますが
+空き部屋は　ございませんが
 ごゆるりと　くつろいで　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:38:31" />
+				Time="2011-06-07T05:53:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66,11 +66,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたくしの　ひそやかな　たのしみは
+			<Text>わたくしの　ひそやかな　楽しみは
 ワールドバトルトーナメント　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:22:30" />
+				Time="2011-06-07T05:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

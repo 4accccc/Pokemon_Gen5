@@ -22,11 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>いらっしゃいませ
 ホテル　リッチホドモエ　です▼
-あいにく　まんしつで　ございますが
+あいにく　満室で　ございますが
 ごゆるりと　くつろいで　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:36:05" />
+				Time="2011-06-07T05:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -57,94 +57,549 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c05r0301_businessman_01"
+		Label="msg_c05r0301_girl4_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしは　こない　ひとを
-ずっと　まちつづけるのです</Text>
+			<Text>わざわざ　きてくださって
+かんしゃ　いたしますわ！▼
+あなたは　トレーナーさん？▼
+……　……　……
+……　……　……▼
+まあ　ポケモンずかん　を！
+それは　ステキ　ですわ！▼
+それでは　わたくしの　おねがい
+きいて　くださる　かしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:45:44" />
+				Time="2011-06-07T05:50:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:45:36" />
+				Time="2011-06-07T05:50:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしは　こない　ひとを
-ずっと　まちつづけるのです</Text>
+			<Text>わざわざ　きてくださって
+感謝いたしますわ！▼
+あなたは　トレーナーさん？▼
+……　……　……
+……　……　……▼
+まあ　ポケモン図鑑　を！
+それは　ステキ　ですわ！▼
+それでは　わたくしの　お願い
+きいて　くださる　かしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:45:47" />
+				Time="2011-06-07T05:50:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:45:47" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・swanで追加
-・仮メッセージ</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-07T03:45:55" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BUSINESSMAN</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-07T03:46:38" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c05r0301_fighterw_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ライモンの　ジムリーダー
-カミツレさんの　かみつスケジュール▽
-さすが　にんきモデル　だよねえ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-07T04:00:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-07T04:00:27" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ライモンの　ジムリーダー
-カミツレさんの　かみつスケジュール▽
-さすが　にんきモデル　だよねえ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-07T04:00:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-07T04:00:54" />
+				Time="2011-06-07T05:50:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・swanで追加
-・仮メッセージ</Comment>
+・初回
+・はい/いいえ
+　はい→girl4_03 or girl4_03a
+　いいえ→girl4_04
+・このメッセージ表示段階で
+　技マシンで覚えられる技の中からランダムで選択</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T04:01:00" />
+				Time="2011-06-07T05:50:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>FIGHTERW</Text>
+			<Text>GIRL4
+お嬢様</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T04:01:20" />
+				Time="2011-06-07T05:50:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　トレーナーさん
+わざわざ　きてくださるなんて！▼
+ほんじつも　わたくしの　おねがい
+きいて　くださる　かしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　トレーナーさん
+わざわざ　来てくださるなんて！▼
+本日も　わたくしの　お願い
+きいて　くださる　かしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・2回目以降
+　クエストを受けていても日が変われば
+　このメッセージから開始
+・このメッセージ表示段階で
+　技マシンで覚えられる技の中からランダムで選択
+・はい/いいえ
+　はい→girl4_03 or girl4_03a
+　いいえ→girl4_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「[Name:Move Idx="0" ]」という　わざを
+おぼえた　ポケモンが　みたいわ！▼
+「[Name:Move Idx="0" ]」という　わざ　よ
+ほんじつちゅうに　よろしくね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「[Name:Move Idx="0" ]」という　技を
+おぼえた　ポケモンが　みたいわ！▼
+「[Name:Move Idx="0" ]」という　技よ
+本日中に　よろしくね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・0＝指定した技名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_03a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「[Name:Move Idx="0" ]」という　わざを
+おぼえた　ポケモンが　みたいわ！▼
+「[Name:Move Idx="0" ]」という　わざ　よ
+ほんじつちゅうに　よろしくね▼
+って　まあ　まあ　まあ！
+あなたの　[Name:PokemonName Idx="1" ]▽
+「[Name:Move Idx="0" ]」が　つかえるのね！▼
+わざわざ　おぼえさせたの？
+ステキ！▼
+これは　ほんの　きもち
+えんりょせずに　うけとって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「[Name:Move Idx="0" ]」という　技を
+おぼえた　ポケモンが　みたいわ！▼
+「[Name:Move Idx="0" ]」という　技よ
+本日中に　よろしくね▼
+って　まあ　まあ　まあ！
+まあ　あなたの　[Name:PokemonName Idx="1" ]▽
+「[Name:Move Idx="0" ]」が　使えるのね！▼
+わざわざ　覚えさせたの？
+ステキ！▼
+これは　ほんの　気持ち
+遠慮せずに　受け取って！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時で条件を満たしているとき
+・アイテム入手処理
+　No093「ハートのウロコ」
+
+・0＝指定した技名
+・1＝指定した技を覚えているポケモン
+　　　複数の場合はリストの上を優先</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　わざわざ
+きてくださったわりに　つれないのね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？　わざわざ
+来てくださったわりに　つれないのね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+・再度会話時はgirl4_02から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたくしが　みたいのは
+「[Name:Move Idx="0" ]」を　おぼえた▽
+ポケモン！　よろしくね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたくしが　みたいのは
+「[Name:Move Idx="0" ]」を　覚えた▽
+ポケモン！　よろしくね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・条件提示後に会話で
+　条件を満たしていない
+・0＝指定した技名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まあ　あなたの　[Name:PokemonName Idx="1" ]
+「[Name:Move Idx="0" ]」が　つかえるのね！▼
+わざわざ　おぼえさせたの？
+ステキ！▼
+これは　ほんの　きもち
+えんりょせずに　うけとって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まあ　あなたの　[Name:PokemonName Idx="1" ]
+「[Name:Move Idx="0" ]」が　使えるのね！▼
+わざわざ　覚えさせたの？
+ステキ！▼
+これは　ほんの　気持ち
+遠慮せずに　受け取って！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・条件提示後に会話で
+　条件を満たしている
+・アイテム入手処理
+　No093「ハートのウロコ」
+・0＝指定した技名
+・1＝指定した技を覚えているポケモン
+　　　複数の場合はリストの上を優先</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_girl4_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>「[Name:Move Idx="0" ]」って　わざ
+じっさいに　つかうと▽
+どんな　かんじ　なのかしら？▼
+もちろん　あなたなら
+ステキに　つかいこなせますわね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>「[Name:Move Idx="0" ]」って　技
+実際に　使うと▽
+どんな　感じ　なのかしら？▼
+もちろん　あなたなら
+ステキに　使いこなせますわね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後、自動で表示
+・日が変わるまで繰り返し
+・0＝指定した技名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0301_gentleman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンは　たくさん　いるだろ？▼
+しゅるいによって　おぼえられる　わざ
+おぼえられない　わざが　ちがうんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンは　たくさん　いるだろ？▼
+種類によって　覚えられる技
+覚えられない技が　違うんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-07T05:50:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05r0301_trainerm_01"
