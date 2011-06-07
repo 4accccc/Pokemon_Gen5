@@ -146,7 +146,7 @@ enum{
   BTLEFF_ENEMY_APPEAR,                        // Bポケモン隠れる、その後敵トレーナー登場
   BTLEFF_ENEMY_DISAPPEAR,                     // 敵トレーナー退出、その後Bポケモン隠れる
   BTLEFF_ENEMY_VANISH,                        // 敵トレーナー退出、誰もいなくなる
-  BTLEFF_HERO0_VANISH,                        // 主人公退出、誰もいなくなる
+  BTLEFF_HERO_VANISH,                         // 主人公退出、誰もいなくなる
   BTLEFF_STATUS_EFFECT_END,
 };
 

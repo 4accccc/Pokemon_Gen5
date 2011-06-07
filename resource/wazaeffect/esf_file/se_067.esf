@@ -7,7 +7,6 @@ c:\home\swan\resource\particle\wazaeffect\w_005.spa
 ポケモンα値	POS_BB	追従	1	10	0	0
 エフェクト終了待ち	すべて
 ポケモンバニッシュ	POS_BB	バニッシュオン
-トレーナーセット	0	POS_BB	0:0:0
 ポケモン拡縮	POS_TR_BB	追従	1	1	0	0	0
 エフェクト終了待ち	すべて
 エフェクト終了

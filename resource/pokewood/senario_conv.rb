@@ -22,6 +22,23 @@ EVENT_LOSETURN_KEYWORD  = "失敗"
 EVENT_LINE_HEIGHT = 14   # イベントデータの行数
 EVENT1_START_LINE = 69	 # イベントデータスタート位置
 
+PWS_A_POKE    = 0  # AAお盆の上にポケモン
+PWS_A_TRAINER = 1  # AAお盆の上にトレーナー
+PWS_A_NONE    = 2  # AAお盆の上に何もない
+
+PWS_B_POKE    = (PWS_A_POKE<<4 )     # BBお盆の上にポケモン
+PWS_B_TRAINER = (PWS_A_TRAINER<<4 )  # BBお盆の上にトレーナー
+PWS_B_NONE    = (PWS_A_NONE<<4 )     # BBお盆の上に何もない
+
+PWS_BOTH_POKE           =(PWS_B_POKE|PWS_A_POKE)       # 0x00 両方ポケモン
+PWS_A_POKEMON_B_TRAINER =(PWS_B_TRAINER|PWS_A_POKE)    # 0x10 敵がトレーナー自分はポケモン
+PWS_A_TRAINER_B_TRAINER =(PWS_B_TRAINER|PWS_A_TRAINER) # 0x11 両方トレーナー
+PWS_A_TRAINER_B_POKEMON =(PWS_B_POKE|PWS_A_TRAINER)    # 0x01 敵がポケモン自分がトレーナー
+PWS_A_TRAINER_B_NONE    =(PWS_B_NONE|PWS_A_TRAINER)    # 0x21 敵側いない自分側トレーナー
+PWS_A_NONE_B_TRAINER    =(PWS_B_TRAINER|PWS_A_NONE)    # 0x12 自分側いない敵側トレーナー
+PWS_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE)       # 0x22 両方いない
+
+
 msgtitle_path   = "..\\..\\prog\\include\\msg\\msg_pw_movietitle.h"
 msgsenario_path = "..\\..\\prog\\include\\msg\\msg_pw_senario0"
 
@@ -32,7 +49,13 @@ $batt_hash     = {"シングル"=>0, "ダブル"=>1}
 $regu_hash     = {"制限なし"=>0, "フラットルール"=>1}
 $itemok_hash   = {"使用可"=>0, "使用不可"=>1}
 $sex_hash      = {"♂"=>0, "♀"=>1, "なし"=>2 }
-$stage_hash    = {"両方役者"=>0, "両方ポケ"=>1,"敵役者"=>2,"自分役者"=>3,"敵退出"=>4,"自分退出"=>6,"無人"=>7}
+$stage_hash    = {"両方役者"=>PWS_A_TRAINER_B_TRAINER, 
+                  "両方ポケ"=>PWS_BOTH_POKE,
+                  "敵役者"=>PWS_A_POKEMON_B_TRAINER,
+                  "自分役者"=>PWS_A_TRAINER_B_POKEMON,
+                  "敵退出"=>PWS_A_TRAINER_B_NONE,
+                  "自分退出"=>PWS_A_NONE_B_TRAINER,
+                  "無人"=>PWS_A_NONE_B_NONE}
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------

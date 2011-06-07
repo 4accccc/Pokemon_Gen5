@@ -20,6 +20,34 @@
 #define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
 
 
+// 立ち位置AAとBBの状態(PWS_はPOKEWOOD_STAGEの頭文字)
+#define PWS_A_POKE    ( 0 ) ///< AAお盆の上にポケモン
+#define PWS_A_TRAINER ( 1 ) ///< AAお盆の上にトレーナー
+#define PWS_A_NONE    ( 2 ) ///< AAお盆の上に何もない
+
+#define PWS_B_POKE    ( PWS_A_POKE<<4 )     ///< BBお盆の上にポケモン
+#define PWS_B_TRAINER ( PWS_A_TRAINER<<4 )  ///< BBお盆の上にトレーナー
+#define PWS_B_NONE    ( PWS_A_NONE<<4 )     ///< BBお盆の上に何もない
+
+
+// シナリオデータから指定されるお盆状態(AAとBBが同時に指定されている）
+enum{
+  PW_STAGE_BOTH_POKE           =(PWS_B_POKE|PWS_A_POKE),       ///< 0x00 両方ポケモン
+  PW_STAGE_A_POKEMON_B_TRAINER =(PWS_B_TRAINER|PWS_A_POKE),    ///< 0x10 敵がトレーナー自分はポケモン
+  PW_STAGE_A_TRAINER_B_TRAINER =(PWS_B_TRAINER|PWS_A_TRAINER), ///< 0x11 両方トレーナー
+
+  PW_STAGE_A_TRAINER_B_POKEMON =(PWS_B_POKE|PWS_A_TRAINER),    ///< 0x01 敵がポケモン自分がトレーナー
+
+  PW_STAGE_A_TRAINER_B_NONE    =(PWS_B_NONE|PWS_A_TRAINER),    ///< 0x21 敵側いない自分側トレーナー
+  PW_STAGE_A_NONE_B_TRAINER    =(PWS_B_TRAINER|PWS_A_NONE),    ///< 0x12 自分側いない敵側トレーナー
+  PW_STAGE_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE),       ///< 0x22 両方いない
+  
+  
+  // いつかポケモンから無人状態も要望されるか？
+  POKEWOOD_STAGE_COND_MAX,
+};
+
+
 // ポケウッド敵トレーナー所持ポケモン情報
 typedef struct {
   s16 monsno; ///< 開発NO
