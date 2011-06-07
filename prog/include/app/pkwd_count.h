@@ -50,12 +50,13 @@ extern const GFL_PROC_DATA PkwdCountProcData;
 
 // PKWD_COUNT
 typedef struct{
-	GAMESYS_WORK		*gamesys;		///<システム
+//	GAMESYS_WORK		*gamesys;		///<システム
 	//
 //	WIN_RECORD_STATUS	status;			///<クリア状態
 //	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)
 	//
 //	const WBTSAVE		*wbtsave;		///<セーブデータ：優勝回数参照用(include/savedata/wbt_save.h)
 //	const MYSTATUS		*my_status;		///<セーブデータ：自分情報（include/savedata/mystatus.h)
+	int					scenario_no;	///< シナリオ番号
 }PKWD_COUNT_PARAM;
 

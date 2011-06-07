@@ -351,7 +351,7 @@ PKWD_COUNT_PARAM * PKWD_COUNT_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
 	PKWD_COUNT_PARAM 	*pkwd_param;
 	
 	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_COUNT_PARAM) );
-	pkwd_param->gamesys	= gsys;
+//	pkwd_param->gamesys	= gsys;
 	// 初期化
 //	pkwd_param->status	  = T_DOWNLOAD_STATUS_VIEW;
 	// 戻り値を返す先のポインタ
