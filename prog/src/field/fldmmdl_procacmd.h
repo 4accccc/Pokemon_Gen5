@@ -154,6 +154,7 @@ extern int (* const DATA_AC_MarkSaisen_Tbl[])( MMDL * );
 extern int (* const DATA_AC_MarkHatena_Tbl[])( MMDL * );
 extern int (* const DATA_AC_MarkOnpu_Tbl[])( MMDL * );
 extern int (* const DATA_AC_MarkTenTen_Tbl[])( MMDL * );
+extern int (* const DATA_AC_MarkGyoeNoSe_Tbl[])( MMDL * );
 
 //--------------------------------------------------------------
 ///	AC_WALK_6FŒn

@@ -613,7 +613,8 @@
 #define AC_ACT2_STOP 0xba ///<演技(特定OBJ専用
 #define AC_ACT2_LOOP 0xbb ///<演技(特定OBJ専用
 #define AC_SHIN_MU_C_FLY 0xbc ///<シンムC 滞空アニメ
-#define ACMD_MAX 0xbd ///<アニメーションコマンド最大数
+#define AC_MARK_GYOE_NO_SE 0xbd ///<!マークを出す・SEなし [rail]
+#define ACMD_MAX 0xbe ///<アニメーションコマンド最大数
 
 #define ACMD_AUTO_END 0xfd  // アニメーションコマンド終了（_OBJ_ANIME_AUTO用）>> update ichiraku 2010/10/14
 #define ACMD_END 0xfe ///<アニメーションコマンド終了

@@ -244,7 +244,7 @@ static void AcStayWalkWorkInit(
 static int AC_StayWalk_1( MMDL * mmdl );
 
 static void AcMarkWorkInit(
-	MMDL * mmdl, int type, int trans );
+	MMDL * mmdl, int type, int trans, int se_play );
 
 static int AC_Mark_1( MMDL * mmdl );
 
@@ -2551,11 +2551,12 @@ static int AC_AnmPauseOFF_0( MMDL * mmdl )
  * @param	mmdl	MMDL *
  * @param	type	マーク種類
  * @param	trans	TRUE=マークグラフィック転送待ち版
+ * @param se_play TRUE=SEを再生する
  * @retval	nothing
  */
 //--------------------------------------------------------------
 static void AcMarkWorkInit(
-    MMDL * mmdl, int type, int trans )
+    MMDL * mmdl, int type, int trans, int se_play )
 {
   AC_MARK_WORK *work;
 
@@ -2566,7 +2567,7 @@ static void AcMarkWorkInit(
     MMDLSYS *mmdlsys =  (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
     FIELDMAP_WORK *fieldMap = MMDLSYS_GetFieldMapWork( mmdlsys );
     FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldMap );
-    work->task_mark = FLDEFF_GYOE_SetMMdl( fectrl, mmdl, type, TRUE );
+    work->task_mark = FLDEFF_GYOE_SetMMdl( fectrl, mmdl, type, se_play );
   }
 
   MMDL_IncAcmdSeq( mmdl );
@@ -2601,7 +2602,20 @@ static int AC_Mark_1( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_MarkGyoe_0( MMDL * mmdl )
 {
-  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE );
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE, TRUE );
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_MARK_GYOE_NO_SE 0
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_MarkGyoeNoSE_0( MMDL * mmdl )
+{
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE, FALSE );
   return( FALSE );
 }
 
@@ -2615,7 +2629,7 @@ static int AC_MarkGyoe_0( MMDL * mmdl )
 static int AC_MarkSaisen_0( MMDL * mmdl )
 {
   //	AcMarkWorkInit( mmdl, FLDEFF_GYOETYOE_SAISEN, FALSE );
-  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE );
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE, TRUE );
   return( FALSE );
 }
 
@@ -2628,7 +2642,7 @@ static int AC_MarkSaisen_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_MarkGyoeTWait_0( MMDL * mmdl )
 {
-  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE );
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_GYOE, FALSE, TRUE );
   return( FALSE );
 }
 
@@ -2641,7 +2655,7 @@ static int AC_MarkGyoeTWait_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_MarkHatena_0( MMDL * mmdl )
 {
-  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_HATE, FALSE );
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_HATE, FALSE, TRUE );
   return( FALSE );
 }
 
@@ -2654,7 +2668,7 @@ static int AC_MarkHatena_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_MarkOnpu_0( MMDL * mmdl )
 {
-  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_ONPU, FALSE );
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_ONPU, FALSE, TRUE );
   return( FALSE );
 }
 
@@ -2667,7 +2681,7 @@ static int AC_MarkOnpu_0( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_MarkTenTen_0( MMDL * mmdl )
 {
-  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_TEN, FALSE );
+  AcMarkWorkInit( mmdl, FLDEFF_GYOETYPE_TEN, FALSE, TRUE );
   return( FALSE );
 }
 
@@ -5680,6 +5694,16 @@ int (* const DATA_AC_AnmPauseOFF_Tbl[])( MMDL * ) =
 int (* const DATA_AC_MarkGyoe_Tbl[])( MMDL * ) =
 {
   AC_MarkGyoe_0,
+  AC_Mark_1,
+  AC_End,
+};
+
+//--------------------------------------------------------------
+/// AC_MARK_GYOE_NO_SE
+//--------------------------------------------------------------
+int (* const DATA_AC_MarkGyoeNoSe_Tbl[])( MMDL * ) =
+{
+  AC_MarkGyoeNoSE_0,
   AC_Mark_1,
   AC_End,
 };
