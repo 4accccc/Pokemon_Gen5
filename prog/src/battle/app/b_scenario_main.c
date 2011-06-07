@@ -230,11 +230,12 @@ static const s16 bs_info_tbl[] = {
 	mes_b_plist_03_000,		// レベル
 	mes_b_plist_01_001,		// もちもの
 	mes_b_plist_01_001,		// とくせい
-	//
 	mes_b_plist_01_001,		// 技00
 	mes_b_plist_01_001,		// 技01
 	mes_b_plist_01_001,		// 技02
 	mes_b_plist_01_001,		// 技03
+	//
+	mes_b_plist_01_702,		// slash
 };
 
 //-------------
@@ -1446,10 +1447,12 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 	
 	// 初期化
 	if(mode == STR_INIT){
-		// タイトル(シナリオ)
-//		BsCmn_DispStringNumber( wk, BS_CVS_SCENARIO_SCENARIO, 0, 0, mode*1000, 8, 0, 0);
 		// fix
 		bs_disp_fix_string( wk, BS_SCENARIO );
+		// slash
+		strbuf = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[10] );
+		BsCmn_DispString( wk, BS_CVS_SCENARIO_SLASH, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 1 );
+		GFL_STR_DeleteBuffer( strbuf );
 	}
 	//-------
 	// 更新
@@ -1857,7 +1860,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	//
 	// もちもの
 	buf[0] = wk->PokeWork[wk->PokePageNum].item;
-	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[0] );
+	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[4] );
 	WORDSET_RegisterItemName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
 	BsCmn_DispString( wk, BS_CVS_INFO_ITEM01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
@@ -1867,7 +1870,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	for(i=0;i<4;i++){
 		buf[0] = wk->PokeWork[wk->PokePageNum].skill[i];
 		if(buf[0] != 0){
-			str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[0] );
+			str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[6+i] );
 			WORDSET_RegisterWazaName( wk->Wordset, 0, buf[0] );
 			WORDSET_ExpandStr( wk->Wordset, exp, str );
 			// 表示
@@ -1880,7 +1883,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 	//
 	// 特性
 	buf[0] = wk->PokeWork[wk->PokePageNum].stat;
-	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[0] );
+	str = GFL_MSG_CreateString( wk->MsgData[1], bs_info_tbl[5] );
 	WORDSET_RegisterTokuseiName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
 	BsCmn_DispString( wk, BS_CVS_INFO_STATUS01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );

@@ -343,6 +343,8 @@ static void bc_set_obj_visible( BCHOICE_WORK *wk, const s32 wmode, const s32 wnu
 static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, const s32 num );
 //
 static s16  bc_get_empty( BCHOICE_WORK *wk, const s32 num );
+//
+static void bc_chk_param( BCHOICE_WORK* wk );
 
 //============================================================================================
 //============================================================================================
@@ -381,6 +383,10 @@ void BattleChoice_TaskAdd( BCHOICE_DATA * dat )
 	}
 	// 変換
 	wk->Mode		= wk->dat->mesnum-2;
+	//
+	// チェック
+//	bc_chk_param( wk );
+	//
 	// 処理(初期化用)
 	bc_main_seq( wk );
 }
@@ -592,7 +598,6 @@ static void bc_init_seq( BCHOICE_WORK * wk )
 	// string
 	bc_init_string( wk, wk->Mode );
 	// テスト表示
-//	bc_test_string( wk );
 	bc_disp_message( wk );
 	// obj
 	bc_init_obj( wk );
@@ -1151,7 +1156,7 @@ static s32 bc_chk_tp( BCHOICE_WORK *wk, const s32 mode )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  テスト表示
+ *	@brief  メッセージ表示
  *
  *	@param	BCHOICE_WORK* wk
  *
@@ -1165,8 +1170,10 @@ static void bc_disp_message( BCHOICE_WORK *wk )
 	// (centerの)座標の指定は注意
 	// キャンバスの座標系の中央に設定すること
 	for(i=0;i<wk->dat->mesnum;i++){
-		bc_disp_string_number( wk, i, 104, 0, i*1000, 8, 2 );		// 中央(104,0)
-//		bc_disp_string( wk, i, 104, 0, wk->dat->mesbuffer[i], 2, PRINTSYS_LSB_Make(1,2,0) );
+		if(wk->dat->mesbuffer[i]){
+			bc_disp_string( wk, i, 104, 0, wk->dat->mesbuffer[i], 2, PRINTSYS_LSB_Make(1,2,0) );
+//			bc_disp_string_number( wk, i, 104, 0, i*1000, 8, 2 );		// 中央(104,0)
+		}
 	}
 }
 
@@ -1440,4 +1447,31 @@ static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, c
 		}
 	}
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パラメータチェック
+ *
+ *	@param	BCHOICE_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bc_chk_param( BCHOICE_WORK* wk )
+{
+	s32		i;
+	
+	// メッセージ数チェック
+	if((wk->dat->mesnum < 2)||(wk->dat->mesnum > 4)){
+		GF_ASSERT_MSG(0, "mesnum = %d\n", wk->dat->mesnum );
+	}
+	//
+	for(i=0;i<wk->dat->mesnum;i++){
+		if(wk->dat->mesbuffer[i] == 0){
+			GF_ASSERT_MSG(0, "mesbuffer[%d] is 0\n", i );
+			break;		// なくてもいいはず
+		}
+	}
+}
+
 

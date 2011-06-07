@@ -232,8 +232,9 @@ static const B_SCENARIO_SUB_CANVAS_DATA bs_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME1_S,	3,	5,	28,	2,	8,},		// SCENE00_MES
 	{ GFL_BG_FRAME1_S,	3,	12,	28,	2,	8,},		// SCENE01_MES
 	{ GFL_BG_FRAME1_S,	2,	21,	10,	2,	8,},		// ЛrЦ{
-	{ GFL_BG_FRAME1_S,	12,	16,	 8,	2,	8,},		// МїНЁ(test)
-	{ GFL_BG_FRAME1_S,	15,	16,	 8,	2,	8,},		// Н≈Се(test)
+	{ GFL_BG_FRAME1_S,	12,	16,	 2,	2,	8,},		// МїНЁ(test)
+	{ GFL_BG_FRAME1_S,	15,	16,	 2,	2,	8,},		// Н≈Се(test)
+	{ GFL_BG_FRAME1_S,	14,	16,	 1,	2,	8,},		// Бu/Бv(test)
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
