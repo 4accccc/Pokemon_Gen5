@@ -17,18 +17,18 @@
 
 // 各種最大数
 enum{
-	BCHOICE_CANVAS_MAXNUM	= 14,		// canvas最大(場面ごとに切り替え)
+	BC_CANVAS_MAXNUM		= 14,		// canvas最大(場面ごとに切り替え)
 	//
-	BCHOICE_CLWK_CURSOR_MAX	= 4,		// clwk最大
+	BC_CLWK_CURSOR_MAX		= 4,		// clwkカーソル最大
 	//
-	BC_TOTAL_CLWK_NUM		= (BCHOICE_CLWK_CURSOR_MAX),		// 最大
+	BC_TOTAL_CLWK_NUM		= (BC_CLWK_CURSOR_MAX),		// 最大
 };
 
 // res
 enum{
-	BC_RES_CURSOR_PAL 				= 0,
-	BC_RES_CURSOR_CHR,
-	BC_RES_CURSOR_CELL,
+	BC_RES_CURSOR_PAL 		= 0,		// pal
+	BC_RES_CURSOR_CHR,					// chr
+	BC_RES_CURSOR_CELL,					// cell
 	//
 	BC_RES_MAX,
 };
@@ -36,20 +36,20 @@ enum{
 //
 // ワーク
 typedef struct {
-	BCHOICE_DATA*		dat;			// 外部参照データ
-	GFL_TCBLSYS*		tcbl;			// TCBL
-	PALETTE_FADE_PTR 	pfd;			// パレットフェードデータ
+	BCHOICE_DATA*		dat;			///< 外部参照データ
+	GFL_TCBLSYS*		tcbl;			///< TCBL
+	PALETTE_FADE_PTR 	pfd;			///< パレットフェードデータ
 	
 //	GFL_FONT			*font;			///< フォント(フォントは大元を使用)
 	PRINT_QUE			*print_que;		///< que
-	PRINT_UTIL			PrintUtil[BCHOICE_CANVAS_MAXNUM];	///< 文字表示用
+	PRINT_UTIL			PrintUtil[BC_CANVAS_MAXNUM];		///< 文字表示用
 	//
 	BOOL				initFlag;		///< 初期化したか（初期化前に外部から終了要求されると止まるので）
 	//
-	GFL_CLUNIT*			clunit;										///< obj
-	GFL_CLWK*			clwk_cursor[BCHOICE_CLWK_CURSOR_MAX];		///< CLWK(cursor)
+	GFL_CLUNIT*			clunit;								///< obj
+	GFL_CLWK*			clwk_cursor[BC_CLWK_CURSOR_MAX];	///< CLWK(cursor)
 	//
-	u32					Res[BC_RES_MAX];
+	u32					Res[BC_RES_MAX]; ///< リソース
 	// 以下、追加
 	s32					Step;			///< ステップ
 	u32					Flag;			///< フラグ

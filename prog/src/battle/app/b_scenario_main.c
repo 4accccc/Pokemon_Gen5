@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file		b_scenario_main.c
- * @brief		戦闘用シナリオ(セリフ)画面
+ * @brief		ポケウッド台本画面
  * @author
  * @date		05.02.10
  */
@@ -21,12 +21,12 @@
 
 #include "b_app_tool.h"
 //
-//#include "ui/print_tool.h"
-
 #include "b_scenario.h"
 #include "b_scenario_main.h"
 
 #include "b_scenario_sub.h"
+
+#include "b_scenario_snd_def.h"
 
 #include "b_scenario_gra.naix"
 #include "msg/msg_pw_movietitle.h"
@@ -49,51 +49,52 @@ enum{
 
 //
 enum{
-	SMODE_INIT			= -2,	// 初期値
-	SMODE_END 			= -1,	// 終了
+	SMODE_INIT			= -2,		// 初期値
+	SMODE_END 			= -1,		// 終了
 	//
-	SMODE_INIT_TOP		= 0,	// トップ
-	SMODE_MAIN_TOP,				// トップ
-	SMODE_EXIT_TOP,				// トップ
-	SMODE_INIT_SCENARIO,		// シナリオ
-	SMODE_MAIN_SCENARIO,		// シナリオ
-	SMODE_EXIT_SCENARIO,		// シナリオ
-	SMODE_INIT_INFO,			// 情報
-	SMODE_MAIN_INFO,			// 情報
-	SMODE_EXIT_INFO,			// 情報
+	SMODE_INIT_TOP		= 0,		// トップ
+	SMODE_MAIN_TOP,					// トップ
+	SMODE_EXIT_TOP,					// トップ
+	SMODE_INIT_SCENARIO,			// シナリオ
+	SMODE_MAIN_SCENARIO,			// シナリオ
+	SMODE_EXIT_SCENARIO,			// シナリオ
+	SMODE_INIT_INFO,				// 情報
+	SMODE_MAIN_INFO,				// 情報
+	SMODE_EXIT_INFO,				// 情報
 	//
-	SMODE_MAX,					// 最大
+	SMODE_MAX,						// 最大
 };
 
 // 
 enum{
-	STR_INIT			= 0,	// 初期化
-	STR_UPDATE,					// 更新
+	STR_INIT			= 0,		// 初期化
+	STR_UPDATE,						// 更新
 };
 
 // 固定文字列
 enum{
-	MES_ID_TOP_01		= 0,	// タイトル名
-	MES_ID_TOP_02,				// あらすじ
-	MES_ID_TOP_03,				// クリア目標
-	MES_ID_ALL_01,				// 脚本
-	MES_ID_ALL_02,				// 共演者
-	MES_ID_INFO_01,				// キャスト
-	MES_ID_INFO_02,				// もちもの
-	MES_ID_INFO_03,				// とくせい
+	MES_ID_TOP_01		= 0,		// タイトル名
+	MES_ID_TOP_02,					// あらすじ
+	MES_ID_TOP_03,					// クリア目標
+	MES_ID_ALL_01,					// 脚本
+	MES_ID_ALL_02,					// 共演者
+	MES_ID_INFO_01,					// キャスト
+	MES_ID_INFO_02,					// もちもの
+	MES_ID_INFO_03,					// とくせい
 	//
-	MES_ID_SCENARIO,			// シナリオTOP
+	MES_ID_SCENARIO,				// シナリオTOP
 };
 
 // いろいろ
 enum{
-	MES_END_ID 			= pw_movie01_hint_19,	// 終了番号([なし]の記述番号)
+	MES_END_ID 			= pw_movie01_hint_19,	// 終了番号([なし]の記述番号)(仮)
 	MES_HINT_MAX		= 20,
 };
 
 //------------
 // フラグ
 //------------
+// BSCENARIO.Flag
 enum{
 	FLG_SET_INIT		= (1<<0),	// 初期化済み
 	FLG_CHG_FONT		= (1<<1),	// フォント切り替え
@@ -269,7 +270,7 @@ static const u16 bs_fmes02_tbl[] = {
 	0xffff, 0, 0, 0,		// end
 };
 
-// まとめ
+// fixメッセージ(まとめ)
 static const u16 *bs_fmes_tbl[] = {
 	bs_fmes00_tbl,
 	bs_fmes01_tbl,
@@ -281,9 +282,9 @@ static const u16 *bs_fmes_tbl[] = {
 //============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		戦闘用シナリオタスク追加
+ * @brief ポケウッド台本タスク追加
  *
- * @param		dat   シナリオデータ
+ * @param BSCENARIO_DATA*		シナリオデータ
  *
  * @return  none
  */
@@ -312,8 +313,8 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	//
 	wk->SubMode		= STEP_INIT;
 	wk->PageNum		= 0;
-//	wk->ScenarioMax	= 19;		// test
 	wk->PokePageNum	= 0;
+	// wk->ScenarioMaxは初期化時(bs_init_seq)に決まる
 	// 台本番号
 	wk->TopNum		= dat->scenario_num;
 	// ポケモン数
@@ -325,7 +326,7 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	wk->ScenarioCurPos	= 0;
 	wk->InfoCurPos		= 0;
 	//
-	for(i=0;i<BSCENARIO_CANVAS_MAXNUM;i++){
+	for(i=0;i<BS_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 	}
 	for(i=0;i<2;i++){		// pal
@@ -345,10 +346,10 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		メインタスク
+ * @brief	メインタスク
  *
- * @param		tcb
- * @param		work
+ * @param	GFL_TCB*			tcb
+ * @param	void*				work
  *
  * @return  none
  */
@@ -384,12 +385,12 @@ static void battle_scenario_main( GFL_TCB * tcb, void * work )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了シーケンス
+ * @brief	終了シーケンス
  *
- * @param		wk    ワーク
+ * @param	GFL_TCB*			tcb
+ * @param	BSCENARIO_WORK*		wk
  *
- * @retval  "TRUE = 終了"
- * @retval  "FALSE = フェード中"
+ * @retval  BOOL				(TRUE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
@@ -434,7 +435,7 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 	}
 	//
 	//メッセージ破棄
-	for(i=0;i<BSCENARIO_MES_MAX;i++){
+	for(i=0;i<BS_MES_MAX;i++){
 		if(wk->MsgData[i]){
 			GFL_MSG_Delete( wk->MsgData[i] );
 			wk->MsgData[i] = 0;
@@ -475,9 +476,9 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		シーケンスまとめ
+ * @brief	シーケンスまとめ
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return
  */
@@ -530,9 +531,9 @@ static void bs_main_seq( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		初期化シーケンス（通常）
+ * @brief	初期化シーケンス
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return
  */
@@ -576,6 +577,7 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	BsCmn_InitBg( wk );
 	//
 	// ヒント数を比較
+	// (内部でScenarioMaxが決まる)
 	bs_calc_hintnum( wk );
 	//
 	// 文字列初期化
@@ -589,7 +591,7 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	//
 	// obj初期化
 	BsCmn_InitObj( wk );
-	
+	//
 	// wipe
 	bs_init_wipe( wk );
 	// パレットアニメ用
@@ -612,11 +614,11 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		画面初期化時の描画待ち(wipe初期化)
+ * @brief	画面初期化時の描画待ち(wipe初期化)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return  移行するシーケンス
+ * @return
  */
 //--------------------------------------------------------------------------------------------
 static void bs_init_wipe( BSCENARIO_WORK * wk )
@@ -630,11 +632,11 @@ static void bs_init_wipe( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		画面初期化時のワイプ待ち
+ * @brief	画面初期化時のワイプ待ち
  *
- * @param wk			ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return BOOL			(TRUE:処理中、FALSE:終了)
+ * @return	BOOL				(TRUE:処理中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bs_is_wipe( BSCENARIO_WORK * wk )
@@ -650,9 +652,9 @@ static BOOL bs_is_wipe( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了フェードセットシーケンス
+ * @brief	終了フェード
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return
  */
@@ -664,11 +666,11 @@ static void bs_set_endfade( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了フェード待ち
+ * @brief	終了フェード待ち
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return		(TRUE:処理中、FALSE:終了)
+ * @return	BOOL				(TRUE:処理中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bs_is_endfade( BSCENARIO_WORK * wk )
@@ -683,11 +685,11 @@ static BOOL bs_is_endfade( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		BG初期化
+ * @brief	BG初期化
  *
- * @param		wk		ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return  none
+ * @return
  */
 //--------------------------------------------------------------------------------------------
 static void bs_init_graphics( BSCENARIO_WORK *wk )
@@ -754,11 +756,11 @@ static void bs_init_graphics( BSCENARIO_WORK *wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		BG解放
+ * @brief	BG解放
  *
- * @param		wk		ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return  none
+ * @return
  */
 //--------------------------------------------------------------------------------------------
 static void bs_exit_bg( BSCENARIO_WORK *wk )
@@ -776,21 +778,21 @@ static void bs_exit_bg( BSCENARIO_WORK *wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		グラフィックデータセット
+ * @brief	パレットアニメ
  *
- * @param		wk		ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return  none
+ * @return
  */
 //--------------------------------------------------------------------------------------------
 static void bs_set_palanim( BSCENARIO_WORK * wk )
 {
+	// ここまでで、パレットの転送は終えておくこと
+	//
 	// BGのパレット(3本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*3 );
 	// BGのパレット(10番から3本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 10*16, 0x20*3 );
-	// BGのパレット(0-2)
-//	PaletteWorkSet_Arc( wk->pfd, ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_pkwd_scenario_NCLR, wk->dat->heap, FADE_SUB_BG, 0x20*3, 0 );
 	// フォントパレット(8)
 	PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_talkwin_nclr, wk->dat->heap, FADE_SUB_BG, 0x20, 8*16 );
 	//
@@ -806,11 +808,11 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		フォント表示待ち
+ * @brief	フォント表示待ち(要修正)
  *
- * @param		wk		ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return  none
+ * @return
  */
 //--------------------------------------------------------------------------------------------
 static void bs_chk_canvas( BSCENARIO_WORK * wk )
@@ -837,9 +839,10 @@ static void bs_chk_canvas( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		フォント表示待ち
+ * @brief	フォント表示待ち
  *
- * @param		wk		ワーク
+ * @param	BSCENARIO_WORK*		wk
+ * @param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
  * @return  none
  */
@@ -864,9 +867,9 @@ static void bs_wait_canvas( BSCENARIO_WORK * wk, const BOOL bflg )
 //-----------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		初期化(top)
+ * @brief	初期化(top)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -889,7 +892,6 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 		BsCmn_InitString( wk, BS_TOP );
 		// 表示まとめ
 		bs_disp_top_string( wk, STR_INIT );
-		//
 		// bgスクリーン
 		BsCmn_DispScr( wk, BS_TOP, TRUE );
 		//
@@ -900,9 +902,9 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(top)
+ * @brief	main(top)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -929,9 +931,9 @@ static void bs_main_top( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		exit(top)
+ * @brief	exit(top)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -946,9 +948,9 @@ static void bs_exit_top( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(top)
+ * @brief	入力(top)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -977,11 +979,11 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 			flg = 2;
 		}
 		// A:決定
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 			flg = 3;
 		}
 		// B:戻る
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 			flg = 4;
 		}
 		if(flg == 0){
@@ -1012,6 +1014,10 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 			// キー入力があった => 表示可能 => 決定等の反映
 			if(wk->Flag & FLG_KEY_INPUT){
 				if(flg == 1){			// 左
+					if(wk->TopCurPos != 0){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BS_CURSOR );
+					}
 					wk->TopCurPos--;
 					if(wk->TopCurPos < 0){
 						wk->TopCurPos = 0;
@@ -1020,6 +1026,10 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 					mflg = 1;
 				}
 				else if(flg == 2){		// 右
+					if(wk->TopCurPos != 2){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BS_CURSOR );
+					}
 					wk->TopCurPos++;
 					if(wk->TopCurPos > 2){
 						wk->TopCurPos = 2;
@@ -1032,22 +1042,30 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 						nmode = SMODE_INIT_SCENARIO;
 						mflg = 2;
 						wk->ScenarioCurPos = 0;
+						// 決定
+						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
 					else if(wk->TopCurPos == 1){	// 共演者
 						nmode = SMODE_INIT_INFO;
 						mflg = 2;
 						wk->ScenarioCurPos = 0;
+						// 決定
+						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
 					else{							// 戻る
 						nmode = SMODE_END;
 						mflg = 2;
 						wk->Flag |= FLG_KEY_INPUT_END;
+						// 戻る
+						PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 					}
 				}
 				else if(flg == 4){		// 戻る
 					nmode = SMODE_END;
 					mflg = 2;
 					wk->Flag |= FLG_KEY_INPUT_END;
+					// 戻る
+					PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 				}
 			}
 			// 表示 => キーでの決定はしない
@@ -1055,13 +1073,9 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 				wk->Flag |= FLG_KEY_INPUT;
 				wk->TopCurPos = 0;
 				mflg = 1;
+				// カーソル
+				PMSND_PlaySE( SND_PKWD_BS_CURSOR );
 			}
-			//
-			// 戻るは特別扱い
-//			if(flg == 4){
-//				nmode = SMODE_END;
-//				mflg = 2;
-//			}
 		}
 		//
 		// タッチペンは関係なく処理
@@ -1073,16 +1087,22 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 			if(flg == 4){			// 戻る
 				nmode = SMODE_END;
 				mflg = 2;
+				// 戻る
+				PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 			}
 			else if(flg == 5){		// 共演者
 				nmode = SMODE_INIT_INFO;
 				mflg = 2;
 				wk->InfoCurPos = 0;
+				// 決定
+				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 			}
 			else if(flg == 6){		// シナリオ
 				nmode = SMODE_INIT_SCENARIO;
 				mflg = 2;
 				wk->ScenarioCurPos = 0;
+				// 決定
+				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 			}
 		}
 	}
@@ -1105,9 +1125,9 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		文字列表示(top)
+ * @brief	文字列表示(top)
  *
- * @param	BSCENARIO_WORK*		ワーク
+ * @param	BSCENARIO_WORK*		wk
  * @param	const s32			(0:初期化、1:更新)
  *
  * @return  none
@@ -1137,9 +1157,9 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 //-------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		初期化(scenario)
+ * @brief	初期化(scenario)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1169,9 +1189,9 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(scenario)
+ * @brief	main(scenario)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1198,9 +1218,9 @@ static void bs_main_scenario( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(scenario)
+ * @brief	exit(scenario)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1215,9 +1235,9 @@ static void bs_exit_scenario( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(top)
+ * @brief	入力(scenario)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1250,11 +1270,11 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 			flg = 2;
 		}
 		// A:決定
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 			flg = 3;
 		}
 		// B:戻る
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 			flg = 4;
 		}
 	}
@@ -1292,6 +1312,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 			// キー入力があった => 表示可能 => 決定等の反映
 			if(wk->Flag & FLG_KEY_INPUT){
 				if(flg == 1){			// 左
+					if(wk->ScenarioCurPos != 0){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BS_CURSOR );
+					}
 					wk->ScenarioCurPos--;
 					if(wk->ScenarioCurPos < 0){
 						wk->ScenarioCurPos = 0;
@@ -1300,6 +1324,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 					mflg = 1;
 				}
 				else if(flg == 2){		// 右
+					if(wk->ScenarioCurPos != 3){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BS_CURSOR );
+					}
 					wk->ScenarioCurPos++;
 					if(wk->ScenarioCurPos > 3){
 						wk->ScenarioCurPos = 3;
@@ -1311,8 +1339,14 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 					if(wk->ScenarioCurPos == 0){		// 脚本
 						nmode = SMODE_INIT_INFO;
 						mflg = 2;
+						// 決定
+						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
 					else if(wk->ScenarioCurPos == 1){	// 左
+						if(wk->PageNum != 0){
+							// (カーソルでも)決定
+							PMSND_PlaySE( SND_PKWD_BS_DECIDE );
+						}
 						wk->PageNum--;
 						if(wk->PageNum <= 0){
 							wk->PageNum = 0;
@@ -1325,6 +1359,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 						tmp = buf[0];
 						tmp += buf[1];		// 端数があれば1ページ追加
 						//
+						if(wk->PageNum != (tmp-1)){
+							// (カーソルでも)決定
+							PMSND_PlaySE( SND_PKWD_BS_DECIDE );
+						}
 						wk->PageNum++;
 						if(wk->PageNum >= (tmp-1)){
 							wk->PageNum = (tmp-1);
@@ -1336,6 +1374,8 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 						mflg = 2;
 						wk->ScenarioCurPos = 0;
 						wk->TopCurPos = 0;
+						// 戻る
+						PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 					}
 				}
 				else if(flg == 4){		// 戻る
@@ -1343,6 +1383,8 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 					mflg = 2;
 					wk->ScenarioCurPos = 0;
 					wk->TopCurPos = 0;
+					// 戻る
+					PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 				}
 			}
 			// 表示 => キーでの決定はしない
@@ -1350,15 +1392,9 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 				wk->Flag |= FLG_KEY_INPUT;
 				wk->ScenarioCurPos = 0;
 				mflg = 1;
+				// カーソル
+				PMSND_PlaySE( SND_PKWD_BS_CURSOR );
 			}
-			//
-			// 戻るは特別扱い
-//			if(flg == 4){
-//				nmode = SMODE_INIT_TOP;
-//				mflg = 2;
-//				wk->ScenarioCurPos = 0;
-//				wk->TopCurPos = 0;
-//			}
 		}
 		//
 		// タッチペンは関係なく処理
@@ -1369,14 +1405,22 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 				wk->Flag &= ~FLG_KEY_INPUT;
 				wk->ScenarioCurPos = 0;
 				wk->TopCurPos = 0;
+				// 戻る
+				PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 			}
 			else if(flg == 5){		// 共演者
 				nmode = SMODE_INIT_INFO;
 				mflg = 2;
 				wk->Flag &= ~FLG_KEY_INPUT;
 				wk->ScenarioCurPos = 0;
+				// 決定
+				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 			}
 			else if(flg == 6){		// 左
+				if(wk->PageNum != 0){
+					// (カーソルでも)決定
+					PMSND_PlaySE( SND_PKWD_BS_DECIDE );
+				}
 				wk->PageNum--;
 				if(wk->PageNum <= 0){
 					wk->PageNum = 0;
@@ -1392,6 +1436,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 				tmp = buf[0];
 				tmp += buf[1];		// 端数があれば1ページ追加
 				//
+				if(wk->PageNum != (tmp-1)){
+					// (カーソルでも)決定
+					PMSND_PlaySE( SND_PKWD_BS_DECIDE );
+				}
 				wk->PageNum++;
 				if(wk->PageNum >= (tmp-1)){
 					wk->PageNum = (tmp-1);
@@ -1428,10 +1476,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		文字列表示(scenario)
+ * @brief	文字列表示(scenario)
  *
- * @param	BSCENARIO_WORK*	ワーク
- * @param	const s32		(0:初期化、1:更新)
+ * @param	BSCENARIO_WORK*		wk
+ * @param	const s32			(0:初期化、1:更新)
  *
  * @return  none
  */
@@ -1511,9 +1559,9 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 //----------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		初期化(info)
+ * @brief	初期化(info)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1545,9 +1593,9 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(top)
+ * @brief	main(info)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1574,9 +1622,9 @@ static void bs_main_info( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(top)
+ * @brief	exit(info)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1593,9 +1641,9 @@ static void bs_exit_info( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		main(top)
+ * @brief	入力(info)
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1628,11 +1676,11 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 			flg = 2;
 		}
 		// A:決定
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 			flg = 3;
 		}
 		// B:戻る
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 			flg = 4;
 		}
 	}
@@ -1670,6 +1718,10 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 			// キー入力があった => 表示可能 => 決定等の反映
 			if(wk->Flag & FLG_KEY_INPUT){
 				if(flg == 1){			// 左
+					if(wk->InfoCurPos != 0){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BS_CURSOR );
+					}
 					wk->InfoCurPos--;
 					if(wk->InfoCurPos < 0){
 						wk->InfoCurPos = 0;
@@ -1678,6 +1730,10 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 					mflg = 1;
 				}
 				else if(flg == 2){		// 右
+					if(wk->InfoCurPos != 3){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BS_CURSOR );
+					}
 					wk->InfoCurPos++;
 					if(wk->InfoCurPos > 3){
 						wk->InfoCurPos = 3;
@@ -1689,8 +1745,13 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 					if(wk->InfoCurPos == 0){		// 脚本
 						nmode = SMODE_INIT_SCENARIO;
 						mflg = 2;
+						// 決定
+						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
 					else if(wk->InfoCurPos == 1){	// 左
+						// (カーソルでも)決定
+						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
+						//
 						wk->PokePageNum--;
 						if(wk->PokePageNum < 0){
 							wk->PokePageNum = (wk->PokeMax-1);
@@ -1698,6 +1759,9 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 						dflg = 1;
 					}
 					else if(wk->InfoCurPos == 2){	// 右
+						// (カーソルでも)決定
+						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
+						//
 						wk->PokePageNum++;
 						if(wk->PokePageNum >= wk->PokeMax){
 							wk->PokePageNum = 0;
@@ -1709,6 +1773,8 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 						mflg = 2;
 						wk->InfoCurPos = 0;
 						wk->TopCurPos = 0;
+						// 戻る
+						PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 					}
 				}
 				else if(flg == 4){		// 戻る
@@ -1716,6 +1782,8 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 					mflg = 2;
 					wk->InfoCurPos = 0;
 					wk->TopCurPos = 0;
+					// 戻る
+					PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 				}
 			}
 			// 表示 => キーでの決定はしない
@@ -1723,15 +1791,9 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 				wk->Flag |= FLG_KEY_INPUT;
 				wk->InfoCurPos = 0;
 				mflg = 1;
+				// カーソル
+				PMSND_PlaySE( SND_PKWD_BS_CURSOR );
 			}
-			//
-			// 戻るは特別扱い
-//			if(flg == 4){
-//				nmode = SMODE_INIT_TOP;
-//				mflg = 2;
-//				wk->InfoCurPos = 0;
-//				wk->TopCurPos = 0;
-//			}
 		}
 		//
 		// タッチペンは関係なく処理
@@ -1742,12 +1804,16 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 				wk->Flag &= ~FLG_KEY_INPUT;
 				wk->InfoCurPos = 0;
 				wk->TopCurPos = 0;
+				// 戻る
+				PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 			}
 			else if(flg == 5){		// 脚本
 				nmode = SMODE_INIT_SCENARIO;
 				mflg = 2;
 				wk->Flag &= ~FLG_KEY_INPUT;
 				wk->InfoCurPos = 0;
+				// 決定
+				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 			}
 			else if(flg == 6){		// 左
 				wk->PokePageNum--;
@@ -1755,6 +1821,8 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 					wk->PokePageNum = (wk->PokeMax-1);
 				}
 				dflg = 1;
+				// (カーソルでも)決定
+				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 				//
 				wk->Flag &= ~FLG_KEY_INPUT;
 				mflg = 1;
@@ -1765,6 +1833,8 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 					wk->PokePageNum = 0;
 				}
 				dflg = 1;
+				// (カーソルでも)決定
+				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 				//
 				wk->Flag &= ~FLG_KEY_INPUT;
 				mflg = 1;
@@ -1798,9 +1868,9 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		文字列表示(info)(要整理)
+ * @brief	文字列表示(info)(要整理)
  *
- * @param	BSCENARIO_WORK*	wk	ワーク
+ * @param	BSCENARIO_WORK*		wk
  * @param	const s32			(0:初期化、1:更新)
  *
  * @return  none
@@ -1895,9 +1965,9 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		obj表示
+ * @brief	obj表示(info)
  *
- * @param	BSCENARIO_WORK*	wk	ワーク
+ * @param	BSCENARIO_WORK*		wk
  * @param	const s32			(0:初期化、1:更新)
  *
  * @return  none
@@ -1915,7 +1985,7 @@ static void bs_disp_info_obj( BSCENARIO_WORK * wk, const s32 mode )
 	//--------
 	// ポケモン
 	//--------
-	for(i=0;i<BSCENARIO_POKE_MAX;i++){
+	for(i=0;i<BS_POKE_MAX;i++){
 		if(i == wk->PokePageNum){
 			BsCmn_ChgTypePoke( wk, i, wk->PokeWork[i].id, wk->PokeWork[i].sex );
 			BsCmn_ObjVisible( wk, BS_CLWKMODE_POKE, i, TRUE );
@@ -1959,9 +2029,9 @@ static void bs_disp_info_obj( BSCENARIO_WORK * wk, const s32 mode )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		obj全非表示
+ * @brief	obj全非表示(info)
  *
- * @param	BSCENARIO_WORK*	wk	ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -1979,7 +2049,7 @@ static void bs_hide_info_obj( BSCENARIO_WORK * wk )
 		BsCmn_ObjVisible( wk, BS_CLWKMODE_NORMAL, 2+i, FALSE );
 	}
 	// ポケモン
-	for(i=0;i<BSCENARIO_POKE_MAX;i++){
+	for(i=0;i<BS_POKE_MAX;i++){
 		BsCmn_ObjVisible( wk, BS_CLWKMODE_POKE, i, FALSE );
 	}
 }
@@ -1989,11 +2059,11 @@ static void bs_hide_info_obj( BSCENARIO_WORK * wk )
 //-----------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		処理まとめ
+ * @brief	処理まとめ
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
- * @return		BOOL		(TRUE:制御中、FALSE:終了)
+ * @return	BOOL				(TRUE:制御中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bs_main_loop( BSCENARIO_WORK * wk )
@@ -2017,9 +2087,9 @@ static BOOL bs_main_loop( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了処理まとめ
+ * @brief	終了処理まとめ
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -2034,9 +2104,9 @@ static void bs_chk_end( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ポケモンパラメータセット
+ * @brief	ポケモンパラメータセット
  *
- * @param		wk    ワーク
+ * @param	BSCENARIO_WORK*		wk
  *
  * @return  none
  */
@@ -2047,7 +2117,7 @@ static void bs_set_pokework( BSCENARIO_WORK * wk )
 	POKEMON_PARAM	*pp;
 	
 	// 初期化(なくてもよいはず)
-	for(i=0;i<BSCENARIO_POKE_MAX;i++){
+	for(i=0;i<BS_POKE_MAX;i++){
 		wk->PokeWork[i].id		= 0;
 		wk->PokeWork[i].sex		= 0;
 		wk->PokeWork[i].level	= 0;
@@ -2090,7 +2160,7 @@ static void bs_set_pokework( BSCENARIO_WORK * wk )
 	}
 #if 0
 	// debug表示
-	for(i=0;i<BSCENARIO_POKE_MAX;i++){
+	for(i=0;i<BS_POKE_MAX;i++){
 		OS_Printf("id, sex, level, item, stat, poke_type[0], poke_type[1] :%d,%d,%d,%d,%d,%d,%d\n",
 			wk->PokeWork[i].id, wk->PokeWork[i].sex, wk->PokeWork[i].level, 
 			wk->PokeWork[i].item, wk->PokeWork[i].stat, wk->PokeWork[i].poke_type[0], wk->PokeWork[i].poke_type[1] );
@@ -2105,10 +2175,10 @@ static void bs_set_pokework( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		fix文字表示
+ * @brief	fix文字表示
  *
- * @param	BSCENARIO_WORK*	wk
- * @param	const s32			(0-2)
+ * @param	BSCENARIO_WORK*		wk
+ * @param	const s32			モード(0-2)
  *
  * @return  none
  */
@@ -2122,7 +2192,7 @@ static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode )
 	STRBUF	*strbuf;
 	
 	adr = bs_fmes_tbl[mode];
-	for(i=0;i<BSCENARIO_CANVAS_MAXNUM;i++){
+	for(i=0;i<BS_CANVAS_MAXNUM;i++){
 		// 終了判定
 		if(adr[4*i] == 0xffff){
 			break;
@@ -2183,6 +2253,7 @@ static void bs_calc_hintnum( BSCENARIO_WORK * wk )
 	OS_Printf("hit num :%d\n",j);
 	//
 	wk->ScenarioMax = j;
+//	wk->ScenarioMax = 13;		// test
 	//
 	GFL_STR_DeleteBuffer( strbuf );
 }

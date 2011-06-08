@@ -9,13 +9,12 @@
 #pragma once
 
 #include "print/printsys.h"
-#include "savedata/myitem_savedata.h"
-//#include "item/shooter_item.h"
 
 
 //============================================================================================
 //  定数定義
 //============================================================================================
+// 選択肢
 enum{
   BCHOICE_MES_00 = 0,
   BCHOICE_MES_01,
@@ -25,18 +24,18 @@ enum{
   BCHOICE_MES_MAX,
 };
 
-// 外部設定データ
+// 選択肢データ(外部設定データ)
 typedef struct {
-  GFL_FONT*   font;			///< 使用フォントハンドル
-  HEAPID      heap;			///< ヒープID
+  GFL_FONT*   font;							///< 使用フォントハンドル
+  HEAPID      heap;							///< ヒープID
   //
-  u8          end_flg;		///< 終了フラグ(1で終了)
+  u8          end_flg;						///< 終了フラグ(1で終了)
   u8          pad;
   //
-  int         mesnum;		///< メッセージ数
+  int         mesnum;						///< メッセージ数
   STRBUF*     mesbuffer[BCHOICE_MES_MAX];	///< メッセージバッファ
   //
-  int*        result;		///< 結果(0-3)
+  int*        result;						///< 選択結果(0-3)
 }BCHOICE_DATA;
 
 //============================================================================================
@@ -47,7 +46,7 @@ typedef struct {
 /**
  * @brief   ポケウッド選択肢タスク追加
  *
- * @param   dat   バッグデータ
+ * @param   dat   選択肢データ
  *
  * @return  none
  */

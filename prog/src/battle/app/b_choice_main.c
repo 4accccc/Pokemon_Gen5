@@ -23,13 +23,14 @@
 #include "b_choice.h"
 #include "b_choice_main.h"
 
+#include "b_choice_snd_def.h"
+
 #include "b_choice_gra.naix"
 #include "battle/battgra_wb.naix"
 
 //============================================================================================
 //  定数定義
 //============================================================================================
-//
 // 遷移(Step)
 enum{
 	STEP_INIT		= 0,
@@ -48,30 +49,33 @@ enum{
 };
 
 //------------
-// フラグ(Flag)
+// フラグ
 //------------
+// 全体のフラグ(BCHOICE.Flag)
 enum{
 	FLG_UPDATE			= (1<<0),	// 更新フラグ
 	FLG_KEY_INPUT		= (1<<1),	// キー入力選択があった
 	FLG_KEY_INPUT_END	= (1<<2),	// キー入力で終了
 };
 
-// OBJのフラグ(BCHOICE_OBJ_DATA.dispflag)
+// OBJのフラグ(BC_OBJ_DATA.dispflag)
 enum{
-	FLG_OBJ_ANIM	= (1<<0),		// アニメあり
-	FLG_OBJ_HFLIP	= (1<<1),		// HFLIP
-	FLG_OBJ_VFLIP	= (1<<2),		// VFLIP
+	FLG_OBJ_ANIM		= (1<<0),	// アニメあり
+	FLG_OBJ_HFLIP		= (1<<1),	// HFLIP
+	FLG_OBJ_VFLIP		= (1<<2),	// VFLIP
 };
 
 //-----------
 // いろいろ
 //-----------
 enum{
-	BCHOICE_BG_MAXNUM		= 8,		// BG最大
+	BC_BG_MAXNUM		= 8,		// BG最大
+	BC_EMPTY_MAXNUM		= 36*2,		// EMPTY最大
 	//
-	BC_OBJ_PAL_CURSOR		= 7,		// カーソル(7)
-	BC_CURSOR_OFFSET		= 4,		// カーソルデータ(注意：palの中の4番目を使用)
-	BCHOICE_EMPTY_MAX		= 36*2,		// empty
+	BC_CURSOR_PAL		= 0,		// カーソルパレット(0番にセット)
+	BC_CURSOR_OFFSET	= 4,		// カーソルデータ(注意：なぜかpalの中の4番目を使用しているらしい)
+	//
+	BC_CENTER_MES_X		= 112,		// 中心の座標(message)
 };
 
 //-----------------------------------------
@@ -82,7 +86,7 @@ typedef struct{
 	u8				arcid;			// id
 	u8				offset;			// オフセット
 	u8				size;			// サイズ(*0x20)
-}B_CHOICE_BGPAL_DATA;
+}BC_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
@@ -92,7 +96,7 @@ typedef struct{
 	u8				arcid;			// id
 	u8				offset;			// オフセット
 	u8				comp;
-}B_CHOICE_BGCHR_DATA;
+}BC_BGCHR_DATA;
 
 //-----------------------------------------
 // BGSCNの定義
@@ -102,7 +106,7 @@ typedef struct{
 	u8				arcid;			// id
 	u8				offset;			// オフセット
 	u8				comp;
-}B_CHOICE_BGSCN_DATA;
+}BC_BGSCN_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
@@ -114,7 +118,7 @@ typedef struct{
 	u8				width;			// サイズ
 	u8				height;
 	u8				palnum;			// パレット番号
-}B_CHOICE_CANVAS_DATA;
+}BC_CANVAS_DATA;
 
 //-----------------------------------------
 // OBJ用の定義
@@ -128,7 +132,7 @@ typedef struct{
 	u8				dispflag;		// 表示フラグ
 	u8				empty_num;		// empty番号(これから座標を参照)
 	u8				res_cnum;		// ResChrの番号(未使用)
-}BCHOICE_OBJ_DATA;
+}BC_OBJ_DATA;
 
 //============================================================================================
 //  データ
@@ -137,12 +141,12 @@ typedef struct{
 // BG関連
 //---------------
 // BGPAL
-static const B_CHOICE_BGPAL_DATA bc_bgpal_00_tbl[] = {
+static const BC_BGPAL_DATA bc_bgpal_00_tbl[] = {
 	{ PALTYPE_SUB_BG,	NARC_b_choice_gra_pkwd_word_NCLR,	0,	4,},		// 下、BG
 	{ 0xff, 0, 0, 0,}, // end code
 };
 // BGCHR
-static const B_CHOICE_BGCHR_DATA bc_bgchr_00_tbl[] = {
+static const BC_BGCHR_DATA bc_bgchr_00_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_b_choice_gra_pkwd_choice_bg2_NCGR,	0,	0,},	// 下、BG
 	{ GFL_BG_FRAME2_S,	NARC_b_choice_gra_pkwd_word_NCGR,	0,	0,},		// 下、BG
 	{ 0xff, 0, 0, 0,}, // end code
@@ -151,27 +155,27 @@ static const B_CHOICE_BGCHR_DATA bc_bgchr_00_tbl[] = {
 // スクリーン
 //------------
 // BGSCN(2択)
-static const B_CHOICE_BGSCN_DATA bc_bgscn_00a_tbl[] = {
+static const BC_BGSCN_DATA bc_bgscn_00a_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_b_choice_gra_pkwd_choice_bg2_NSCR,	0,	0,},	// 下、BG
 	{ GFL_BG_FRAME2_S,	NARC_b_choice_gra_pkwd_words_x2_NSCR,	0,	0,},	// 下、win
 	{ 0xff, 0, 0, 0,}, // end code
 };
 // BGSCN(3択)
-static const B_CHOICE_BGSCN_DATA bc_bgscn_00b_tbl[] = {
+static const BC_BGSCN_DATA bc_bgscn_00b_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_b_choice_gra_pkwd_choice_bg2_NSCR,	0,	0,},	// 下、BG
 	{ GFL_BG_FRAME2_S,	NARC_b_choice_gra_pkwd_words_x3_NSCR,	0,	0,},	// 下、win
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
 // BGSCN(4択)
-static const B_CHOICE_BGSCN_DATA bc_bgscn_00c_tbl[] = {
+static const BC_BGSCN_DATA bc_bgscn_00c_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_b_choice_gra_pkwd_choice_bg2_NSCR,	0,	0,},	// 下、BG
 	{ GFL_BG_FRAME2_S,	NARC_b_choice_gra_pkwd_words_x4_NSCR,	0,	0,},	// 下、win
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
-// まとめ
-static const B_CHOICE_BGSCN_DATA *bc_bgscn_tbl[] = {
+// BGSCN(まとめ)
+static const BC_BGSCN_DATA *bc_bgscn_tbl[] = {
 	bc_bgscn_00a_tbl,
 	bc_bgscn_00b_tbl,
 	bc_bgscn_00c_tbl,
@@ -181,32 +185,32 @@ static const B_CHOICE_BGSCN_DATA *bc_bgscn_tbl[] = {
 // CANVASの設定
 //---------------
 // 2択
-static const B_CHOICE_CANVAS_DATA bc_canvas_00a_tbl[] = {
-	{ GFL_BG_FRAME1_S,	3,	6,	26,	2,	8,},		// 00
-	{ GFL_BG_FRAME1_S,	3, 13,	26,	2,	8,},		// 01
+static const BC_CANVAS_DATA bc_canvas_00a_tbl[] = {
+	{ GFL_BG_FRAME1_S,	2,	6,	28,	2,	8,},		// 00
+	{ GFL_BG_FRAME1_S,	2, 13,	28,	2,	8,},		// 01
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 // 3択
-static const B_CHOICE_CANVAS_DATA bc_canvas_00b_tbl[] = {
-	{ GFL_BG_FRAME1_S,	3,	3,	26,	2,	8,},		// 00
-	{ GFL_BG_FRAME1_S,	3,	9,	26,	2,	8,},		// 01
-	{ GFL_BG_FRAME1_S,	3, 15,	26,	2,	8,},		// 02
+static const BC_CANVAS_DATA bc_canvas_00b_tbl[] = {
+	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	8,},		// 00
+	{ GFL_BG_FRAME1_S,	2,	9,	28,	2,	8,},		// 01
+	{ GFL_BG_FRAME1_S,	2, 15,	28,	2,	8,},		// 02
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 // 4択
-static const B_CHOICE_CANVAS_DATA bc_canvas_00c_tbl[] = {
-	{ GFL_BG_FRAME1_S,	3,	2,	26,	2,	8,},		// 00
-	{ GFL_BG_FRAME1_S,	3,	7,	26,	2,	8,},		// 01
-	{ GFL_BG_FRAME1_S,	3, 12,	26,	2,	8,},		// 02
-	{ GFL_BG_FRAME1_S,	3, 17,	26,	2,	8,},		// 03
+static const BC_CANVAS_DATA bc_canvas_00c_tbl[] = {
+	{ GFL_BG_FRAME1_S,	2,	2,	28,	2,	8,},		// 00
+	{ GFL_BG_FRAME1_S,	2,	7,	28,	2,	8,},		// 01
+	{ GFL_BG_FRAME1_S,	2, 12,	28,	2,	8,},		// 02
+	{ GFL_BG_FRAME1_S,	2, 17,	28,	2,	8,},		// 03
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
-// まとめ
-static const B_CHOICE_CANVAS_DATA *bc_canvas_tbl[] = {
+// CANVAS(まとめ)
+static const BC_CANVAS_DATA *bc_canvas_tbl[] = {
 	bc_canvas_00a_tbl,
 	bc_canvas_00b_tbl,
 	bc_canvas_00c_tbl,
@@ -242,6 +246,7 @@ static const GFL_UI_TP_HITTBL bc_rect_02_tbl[] = {
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
 
+// タッチペン(まとめ)
 static const GFL_UI_TP_HITTBL *bc_rect_tbl[] = {
 	bc_rect_00_tbl,
 	bc_rect_01_tbl,
@@ -252,7 +257,7 @@ static const GFL_UI_TP_HITTBL *bc_rect_tbl[] = {
 // OBJ(cursor)
 //----------------
 // 情報
-static const s16 bc_obj_02_itbl[] = {
+static const s16 bc_obj_00_itbl[] = {
 	0,		// plt res
 	1,		// chr res
 	2,		// cel res
@@ -262,7 +267,7 @@ static const s16 bc_obj_02_itbl[] = {
 };
 
 // OBJのテーブルデータ
-const BCHOICE_OBJ_DATA bc_obj_02_tbl[] = {
+const BC_OBJ_DATA bc_obj_00_tbl[] = {
 	{ 0,	0x30,	1,	0,	0,	1,	0,	0,},	// カーソル00
 	{ 1,	0x30,	1,	0,	0,	1,	0,	0,},	// カーソル01
 	{ 2,	0x30,	1,	0,	0,	1,	0,	0,},	// カーソル02
@@ -275,24 +280,28 @@ const BCHOICE_OBJ_DATA bc_obj_02_tbl[] = {
 // OBJ(cursor)座標
 //----------------
 // (左上、左下、右上、右下)の順
+// 2行
 static const s16 bc_cursor00_emp_tbl[] = {
-	 0, 1, 2, 3,		// 2行(00)
-	 4, 5, 6, 7,		// 2行(01)
+	 0, 1, 2, 3,			// 2行(00)
+	 4, 5, 6, 7,			// 2行(01)
 };
 
+// 3行
 static const s16 bc_cursor01_emp_tbl[] = {
-	 8, 9,10,11,		// 3行(00)
-	12,13,14,15,		// 3行(01)
-	16,17,18,19,		// 3行(02)
+	 8, 9,10,11,			// 3行(00)
+	12,13,14,15,			// 3行(01)
+	16,17,18,19,			// 3行(02)
 };
 
+// 4行
 static const s16 bc_cursor02_emp_tbl[] = {
-	20,21,22,23,		// 4行(00)
-	24,25,26,27,		// 4行(01)
-	28,29,30,31,		// 4行(02)
-	32,33,34,35,		// 4行(03)
+	20,21,22,23,			// 4行(00)
+	24,25,26,27,			// 4行(01)
+	28,29,30,31,			// 4行(02)
+	32,33,34,35,			// 4行(03)
 };
 
+// カーソル座標(まとめ)
 static const s16 *bc_cursor_emp_tbl[] = {
 	bc_cursor00_emp_tbl,	// 2行
 	bc_cursor01_emp_tbl,	// 3行
@@ -307,8 +316,8 @@ static BOOL battle_choice_end(  GFL_TCB* tcb, BCHOICE_WORK * wk );
 
 // まとめ
 static void bc_main_seq( BCHOICE_WORK * wk );
-
 static void bc_init_seq(  BCHOICE_WORK * wk );
+//
 static void bc_init_wipe( BCHOICE_WORK * wk );
 static BOOL bc_is_wipe(   BCHOICE_WORK * wk );
 //
@@ -334,14 +343,15 @@ static s32  bc_chk_tp( BCHOICE_WORK *wk, const s32 mode );
 //
 static void bc_disp_message( BCHOICE_WORK *wk );
 //
+// obj関連
 static void bc_init_obj( BCHOICE_WORK* wk );
 static void bc_exit_obj( BCHOICE_WORK* wk );
 static void bc_init_cursor_obj( BCHOICE_WORK * wk );
-static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BCHOICE_OBJ_DATA *obj_adr, const s16 *info_adr );
-//
+static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BC_OBJ_DATA *obj_adr, const s16 *info_adr );
 static void bc_set_obj_visible( BCHOICE_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
 static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, const s32 num );
 //
+// empty
 static s16  bc_get_empty( BCHOICE_WORK *wk, const s32 num );
 //
 static void bc_chk_param( BCHOICE_WORK* wk );
@@ -350,9 +360,9 @@ static void bc_chk_param( BCHOICE_WORK* wk );
 //============================================================================================
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		戦闘用シナリオタスク追加
+ * @brief	選択肢シナリオタスク追加
  *
- * @param		dat   シナリオデータ
+ * @param	BCHOICE_DATA*			選択肢データ
  *
  * @return  none
  */
@@ -375,15 +385,13 @@ void BattleChoice_TaskAdd( BCHOICE_DATA * dat )
 	// 初期化
 	wk->Step 		= STEP_INIT;
 	wk->Flag		= 0;
+	wk->Mode		= wk->dat->mesnum-2;
 	wk->Result		= -1;
 	wk->Cursor		= 0;
 	//
-	for(i=0;i<BCHOICE_CANVAS_MAXNUM;i++){
+	for(i=0;i<BC_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 	}
-	// 変換
-	wk->Mode		= wk->dat->mesnum-2;
-	//
 	// チェック
 //	bc_chk_param( wk );
 	//
@@ -393,10 +401,10 @@ void BattleChoice_TaskAdd( BCHOICE_DATA * dat )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		メインタスク
+ * @brief	メインタスク
  *
- * @param		tcb
- * @param		work
+ * @param	GFL_TCB*		tcb
+ * @param	void*			work
  *
  * @return  none
  */
@@ -430,12 +438,11 @@ static void battle_choice_main( GFL_TCB * tcb, void * work )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了シーケンス
+ * @brief	終了処理
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
- * @retval  "TRUE = 終了"
- * @retval  "FALSE = フェード中"
+ * @retval	BOOL					(TRUE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL battle_choice_end( GFL_TCB * tcb, BCHOICE_WORK * wk )
@@ -511,9 +518,9 @@ static BOOL battle_choice_end( GFL_TCB * tcb, BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		シーケンスまとめ
+ * @brief	シーケンスmain
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return
  */
@@ -566,9 +573,9 @@ static void bc_main_seq( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		初期化シーケンス（通常）
+ * @brief	初期化シーケンス
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return
  */
@@ -603,7 +610,6 @@ static void bc_init_seq( BCHOICE_WORK * wk )
 	bc_init_obj( wk );
 	// wipe
 	bc_init_wipe( wk );
-	//
 	// パレットアニメ用
 	bc_set_palanim( wk );
 	//
@@ -620,11 +626,11 @@ static void bc_init_seq( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		画面初期化時の描画待ち(wipe初期化)
+ * @brief	画面初期化時の描画待ち(wipe初期化)
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
- * @return  移行するシーケンス
+ * @return
  */
 //--------------------------------------------------------------------------------------------
 static void bc_init_wipe( BCHOICE_WORK * wk )
@@ -638,11 +644,11 @@ static void bc_init_wipe( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		画面初期化時のワイプ待ち
+ * @brief	画面初期化時のワイプ待ち
  *
- * @param wk			ワーク
+ * @param	BCHOICE_WORK*			wk
  *
- * @return BOOL			(TRUE:処理中、FALSE:終了)
+ * @return	BOOL					(TRUE:処理中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bc_is_wipe( BCHOICE_WORK * wk )
@@ -658,9 +664,9 @@ static BOOL bc_is_wipe( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了フェードセットシーケンス
+ * @brief	終了フェード
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return
  */
@@ -672,11 +678,11 @@ static void bc_set_endfade( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		終了フェード待ち
+ * @brief	終了フェード待ち
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
- * @return		(TRUE:処理中、FALSE:終了)
+ * @return	BOOL					(TRUE:処理中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bc_is_endfade( BCHOICE_WORK * wk )
@@ -691,9 +697,9 @@ static BOOL bc_is_endfade( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		BG初期化
+ * @brief	BG初期化
  *
- * @param		wk		ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return  none
  */
@@ -762,9 +768,9 @@ static void bc_init_graphics( BCHOICE_WORK *wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		BG解放
+ * @brief	BG解放
  *
- * @param		wk		ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return  none
  */
@@ -784,9 +790,9 @@ static void bc_exit_bg( BCHOICE_WORK *wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		グラフィックデータセット
+ * @brief	パレットアニメ用データセット
  *
- * @param		wk		ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return  none
  */
@@ -813,11 +819,11 @@ static void bc_set_palanim( BCHOICE_WORK * wk )
 //-----------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		処理まとめ
+ * @brief	処理まとめ
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
- * @return		BOOL		(TRUE:制御中、FALSE:終了)
+ * @return	BOOL					(TRUE:制御中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bc_main_loop( BCHOICE_WORK * wk )
@@ -831,11 +837,11 @@ static BOOL bc_main_loop( BCHOICE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		処理まとめ
+ * @brief	入力処理
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
- * @return		BOOL		(TRUE:制御中、FALSE:終了)
+ * @return	BOOL					(TRUE:制御中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL bc_key_input( BCHOICE_WORK * wk )
@@ -862,7 +868,7 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 			flg = 2;
 		}
 		// 決定
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_A){
+		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 			flg = 3;
 		}
 		// タッチペンの判定
@@ -882,6 +888,10 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 			if(wk->Flag & FLG_KEY_INPUT){
 				// 上
 				if(flg == 1){
+					if(wk->Cursor != 0){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BC_CURSOR );
+					}
 					wk->Cursor--;
 					if(wk->Cursor < 0){
 						wk->Cursor = 0;
@@ -890,6 +900,10 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 				}
 				// 下
 				else if(flg == 2){
+					if(wk->Cursor != (wk->Mode+2-1)){
+						// カーソル
+						PMSND_PlaySE( SND_PKWD_BC_CURSOR );
+					}
 					wk->Cursor++;
 					if(wk->Cursor > (wk->Mode+2-1)){
 						wk->Cursor = wk->Mode+2-1;
@@ -902,6 +916,8 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 					wk->Result = wk->Cursor;
 					wk->Flag |= FLG_KEY_INPUT_END;
 					OS_Printf("(key) result :%d\n",wk->Result);
+					// 決定
+					PMSND_PlaySE( SND_PKWD_BC_DECIDE );
 				}
 			}
 			else{
@@ -914,6 +930,8 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 			bflg = FALSE;
 			wk->Result = id;
 			OS_Printf("(tp) result :%d\n",wk->Result);
+			// 決定
+			PMSND_PlaySE( SND_PKWD_BC_DECIDE );
 		}
 	}
 	//
@@ -929,8 +947,8 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 /**
  *	@brief  BG関連の初期化
  *
- *	@param	BCHOICE_WORKK* wk
- *	@param	const s32		(0-2)
+ *	@param	BCHOICE_WORKK* 			wk
+ *	@param	const s32				(0-2)
  *
  *	@retval
  */
@@ -941,17 +959,17 @@ static void bc_init_bg( BCHOICE_WORK* wk, const s32 mode )
 	s32				tmp;
 	s32				heapID;
 	ARCHANDLE		*handle;
-	const B_CHOICE_BGPAL_DATA	*padr = &bc_bgpal_00_tbl[0];
-	const B_CHOICE_BGCHR_DATA	*cadr = &bc_bgchr_00_tbl[0];
-//	const B_CHOICE_BGSCN_DATA	*sadr = &bc_bgscn_00_tbl[0];
-	const B_CHOICE_BGSCN_DATA	*sadr = bc_bgscn_tbl[mode];		// 切り替え
+	const BC_BGPAL_DATA	*padr = &bc_bgpal_00_tbl[0];
+	const BC_BGCHR_DATA	*cadr = &bc_bgchr_00_tbl[0];
+//	const BC_BGSCN_DATA	*sadr = &bc_bgscn_00_tbl[0];
+	const BC_BGSCN_DATA	*sadr = bc_bgscn_tbl[mode];		// 切り替え
 	
 	heapID = wk->dat->heap;
 	//
 	handle	= GFL_ARC_OpenDataHandle( ARCID_B_CHOICE_GRA, GFL_HEAP_LOWID(heapID) );
 	//
 	// パレット転送
-	for(i=0;i<BCHOICE_BG_MAXNUM;i++){
+	for(i=0;i<BC_BG_MAXNUM;i++){
 		// 終了条件
 		if(padr->type == 0xff){
 			break;
@@ -963,7 +981,7 @@ static void bc_init_bg( BCHOICE_WORK* wk, const s32 mode )
 	}
 	//
 	// キャラ転送
-	for(i=0;i<BCHOICE_BG_MAXNUM;i++){
+	for(i=0;i<BC_BG_MAXNUM;i++){
 		// 終了条件
 		if(cadr->frmnumber == 0xff){
 			break;
@@ -973,7 +991,7 @@ static void bc_init_bg( BCHOICE_WORK* wk, const s32 mode )
 	}
 	
 	// スクリーン転送
-	for(i=0;i<BCHOICE_BG_MAXNUM;i++){
+	for(i=0;i<BC_BG_MAXNUM;i++){
 		// 終了条件
 		if(sadr->frmnumber == 0xff){
 			break;
@@ -989,8 +1007,8 @@ static void bc_init_bg( BCHOICE_WORK* wk, const s32 mode )
 /**
  *	@brief  文字表示準備(Canvasの作成)
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const s32		(0-2)
+ *	@param	BCHOICE_WORK* 			wk
+ *	@param	const s32				(0-2)
  *
  *	@retval
  */
@@ -999,9 +1017,9 @@ static void bc_init_string( BCHOICE_WORK* wk, const s32 mode )
 {
 	s32		i;
 	s32		heapID = wk->dat->heap;
-	const B_CHOICE_CANVAS_DATA *adr = bc_canvas_tbl[mode];
+	const BC_CANVAS_DATA *adr = bc_canvas_tbl[mode];
 	//
-	for(i=0;i<BCHOICE_CANVAS_MAXNUM;i++){
+	for(i=0;i<BC_CANVAS_MAXNUM;i++){
 		// 終了条件
 		if(adr->frmnumber == 0xff){
 			break;
@@ -1020,7 +1038,7 @@ static void bc_init_string( BCHOICE_WORK* wk, const s32 mode )
 /**
  *	@brief  文字列破棄
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK* 			wk
  *
  *	@retval
  */
@@ -1029,7 +1047,7 @@ static void bc_exit_string( BCHOICE_WORK* wk )
 {
 	s32		i;
 	
-	for(i=0;i<BCHOICE_CANVAS_MAXNUM;i++){
+	for(i=0;i<BC_CANVAS_MAXNUM;i++){
 		if(wk->PrintUtil[i].win != 0){
 			GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
 			wk->PrintUtil[i].win = 0;
@@ -1041,13 +1059,13 @@ static void bc_exit_string( BCHOICE_WORK* wk )
 /**
  *	@brief  文字表示
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const s32			Canvasの番号
- *	@param	const s32			表示座標(x)
- *	@param	const s32			表示座標(y)
- *	@param	const STRBUF* 		表示文字列
- *	@param	const u32			表示位置(左(0)、右(1)、中央(2)など)
- *	@param	const PRINTSYS_LSB	カラー
+ *	@param	BCHOICE_WORK* 			wk
+ *	@param	const s32				Canvasの番号
+ *	@param	const s32				表示座標(x)
+ *	@param	const s32				表示座標(y)
+ *	@param	const STRBUF* 			表示文字列
+ *	@param	const u32				表示位置(左(0)、右(1)、中央(2)など)
+ *	@param	const PRINTSYS_LSB		カラー
  *
  *	@retval
  */
@@ -1065,13 +1083,13 @@ static void bc_disp_string( BCHOICE_WORK* wk, const s32 mode, const s32 x, const
 /**
  *	@brief  文字表示
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const s32			Canvasの番号
- *	@param	const s32			表示座標(x)
- *	@param	const s32			表示座標(y)
- *	@param	const s32			値
- *	@param	const s32			桁数
- *	@param	const u32			表示位置(左、右、中央など)
+ *	@param	BCHOICE_WORK* 			wk
+ *	@param	const s32				Canvasの番号
+ *	@param	const s32				表示座標(x)
+ *	@param	const s32				表示座標(y)
+ *	@param	const s32				値
+ *	@param	const s32				桁数
+ *	@param	const u32				表示位置(左、右、中央など)
  *
  *	@retval
  */
@@ -1094,9 +1112,9 @@ static void bc_disp_string_number( BCHOICE_WORK* wk, const s32 mode, const s32 x
  * @brief		文字列表示サイズから各モードの補正値を取得(static)
  *				(ui/printtoolから持ってきた)
  *
- * @param		buf			文字列
- * @param		font		フォント
- * @param		mode		表示モード(0-2)
+ * @param	const STRBUF*	buf		文字列
+ * @param	GFL_FONT*		font	フォント
+ * @param	u32				mode	表示モード(0-2)
  *
  * @return	補正値
  */
@@ -1117,7 +1135,7 @@ static u16 bc_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode )
 /**
  *	@brief  Queの処理
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK*			wk
  *
  *	@retval
  */
@@ -1130,7 +1148,7 @@ static void bc_main_print( BCHOICE_WORK *wk )
 	// Queの処理
 	PRINTSYS_QUE_Main( wk->print_que );
 	//
-	for(i=0;i<BCHOICE_CANVAS_MAXNUM;i++){
+	for(i=0;i<BC_CANVAS_MAXNUM;i++){
 		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
 	}
 }
@@ -1139,10 +1157,10 @@ static void bc_main_print( BCHOICE_WORK *wk )
 /**
  *	@brief  タッチペン処理
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const s32		(0-2)
+ *	@param	BCHOICE_WORK* 			wk
+ *	@param	const s32				(0-2)
  *
- *	@retval
+ *	@retval	s32						(タッチペンのindex番号)
  */
 //-----------------------------------------------------------------------------
 static s32 bc_chk_tp( BCHOICE_WORK *wk, const s32 mode )
@@ -1156,9 +1174,9 @@ static s32 bc_chk_tp( BCHOICE_WORK *wk, const s32 mode )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ表示
+ *	@brief  メッセージ表示(中央設定)
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK*			wk
  *
  *	@retval
  */
@@ -1171,8 +1189,8 @@ static void bc_disp_message( BCHOICE_WORK *wk )
 	// キャンバスの座標系の中央に設定すること
 	for(i=0;i<wk->dat->mesnum;i++){
 		if(wk->dat->mesbuffer[i]){
-			bc_disp_string( wk, i, 104, 0, wk->dat->mesbuffer[i], 2, PRINTSYS_LSB_Make(1,2,0) );
-//			bc_disp_string_number( wk, i, 104, 0, i*1000, 8, 2 );		// 中央(104,0)
+			bc_disp_string( wk, i, BC_CENTER_MES_X, 0, wk->dat->mesbuffer[i], 2, PRINTSYS_LSB_Make(1,2,0) );
+//			bc_disp_string_number( wk, i, 104, 0, i*1000, 8, 2 );		// 中央(112,0)
 		}
 	}
 }
@@ -1183,7 +1201,7 @@ static void bc_disp_message( BCHOICE_WORK *wk )
 /**
  *	@brief  OBJ初期化まとめ
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK* 			wk
  *
  *	@retval
  */
@@ -1191,17 +1209,16 @@ static void bc_disp_message( BCHOICE_WORK *wk )
 static void bc_init_obj( BCHOICE_WORK* wk )
 {
 	s32		i;
+	//
 	// 作成
 	wk->clunit = GFL_CLACT_UNIT_Create( BC_TOTAL_CLWK_NUM, 0, GFL_HEAP_LOWID(wk->dat->heap) );
-	//
 	// カーソル
 	bc_init_cursor_obj( wk );
-	//
 	// CLWK登録(cursor)
-	bc_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bc_obj_02_tbl[0], &bc_obj_02_itbl[0] );
+	bc_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bc_obj_00_tbl[0], &bc_obj_00_itbl[0] );
 	//
 	// cursorはパレット番号を修正する必要がある
-	for(i=0;i<BCHOICE_CLWK_CURSOR_MAX;i++){
+	for(i=0;i<BC_CLWK_CURSOR_MAX;i++){
 		GFL_CLACT_WK_SetPlttOffs( wk->clwk_cursor[i], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
 }
@@ -1210,7 +1227,7 @@ static void bc_init_obj( BCHOICE_WORK* wk )
 /**
  *	@brief  OBJ破棄
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK*			wk
  *
  *	@retval
  */
@@ -1220,7 +1237,7 @@ static void bc_exit_obj( BCHOICE_WORK* wk )
 	s32		i;
 	
 	// OBJ後処理
-	for(i=0;i<BCHOICE_CLWK_CURSOR_MAX;i++){
+	for(i=0;i<BC_CLWK_CURSOR_MAX;i++){
 		GFL_CLACT_WK_Remove( wk->clwk_cursor[i] );
 	}
 	//
@@ -1234,9 +1251,9 @@ static void bc_exit_obj( BCHOICE_WORK* wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		カーソルのグラフィックロード
+ * @brief	カーソルのobjデータセット
  *
- * @param		wk    ワーク
+ * @param	BCHOICE_WORK*			wk
  *
  * @return  none
  */
@@ -1246,15 +1263,13 @@ static void bc_init_cursor_obj( BCHOICE_WORK * wk )
 	ARCHANDLE	*ah;
 	u32			i;
 	
-	// カーソルデータはパレットの4番目のデータを使用
+	// カーソルデータはパレットの4番目のデータを使用=>0番にした後に=>
 	// 転送後にclwkでそのパレットを適用させる必要あり
-	//
 	ah = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->dat->heap) );
-	// パレット(7)
+	// パレット(0)
 	wk->Res[BC_RES_CURSOR_PAL] = GFL_CLGRP_PLTT_RegisterEx( ah,
 												NARC_battgra_wb_battle_w_obj_NCLR,
-//												CLSYS_DRAW_SUB, BC_OBJ_PAL_CURSOR*0x20, BC_CURSOR_OFFSET, 1, wk->dat->heap );
-												CLSYS_DRAW_SUB, 0, BC_CURSOR_OFFSET, 1, wk->dat->heap );
+												CLSYS_DRAW_SUB, BC_CURSOR_PAL*0x20, BC_CURSOR_OFFSET, 1, wk->dat->heap );
 	// セル・アニメ
 	wk->Res[BC_RES_CURSOR_CELL] = GFL_CLGRP_CELLANIM_Register( ah,
 												NARC_battgra_wb_battle_w_cursor_NCER,
@@ -1270,15 +1285,15 @@ static void bc_init_cursor_obj( BCHOICE_WORK * wk )
 /**
  *	@brief  OBJ初期化(clwk)
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK* 			wk
  *	@param	const s32				drawtype
- *	@param	const BCHOICE_OBJ_DATA* アドレス
+ *	@param	const BC_OBJ_DATA*		アドレス
  *	@param	const s16*				アドレス
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BCHOICE_OBJ_DATA *obj_adr, const s16 *info_adr )
+static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BC_OBJ_DATA *obj_adr, const s16 *info_adr )
 {
 	s16						tmp;
 	s16						pos[2];
@@ -1289,7 +1304,7 @@ static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BCHOIC
 	CLWK_FLIP_TYPE			flip;
     GFL_CLUNIT*				p_clunit = wk->clunit;		// セット
 	// アドレスセット
-	const BCHOICE_OBJ_DATA *adr 	= obj_adr;
+	const BC_OBJ_DATA *adr 	= obj_adr;
 	const s16 				*iadr 	= info_adr;
 	GFL_CLWK				**clwk;			// アドレス注意
 	
@@ -1299,18 +1314,11 @@ static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BCHOIC
 	buf[1] = iadr[1];		// chr
 	buf[2] = iadr[2];		// cel
 	buf[3] = iadr[3];		// max
-	buf[4] = iadr[4];		// mode(0:type、1:poke、2:cursor)
+	buf[4] = iadr[4];		// mode(未使用)
 	//
 	// アドレスセット
-//	if(buf[4] == BS_CLWKMODE_NORMAL){		// 通常
-//		clwk = &wk->clwk[0];
-//	}
-//	else if(buf[4] == BS_CLWKMODE_POKE){	// poke
-//		clwk = &wk->clwk_poke[0];
-//	}
-//	else if(buf[4] == BS_CLWKMODE_CURSOR){	// cursor
-		clwk = &wk->clwk_cursor[0];
-//	}
+	clwk = &wk->clwk_cursor[0];
+	//
 	for(i=0;i<buf[3];i++){
 		// 終了判定
 		if(adr->anmseq == 0xff){
@@ -1365,12 +1373,12 @@ static void bc_init_obj_clwk( BCHOICE_WORK* wk, const s32 drawtype, const BCHOIC
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  emptyの取得(static)
+ *	@brief  emptyの取得
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const s32			座標index(x,yが2つセットとなっている)
+ *	@param	BCHOICE_WORK* 			wk
+ *	@param	const s32				座標index(x,yが2つセットとなっている)
  *
- *	@retval s16					座標
+ *	@retval s16						座標
  */
 //-----------------------------------------------------------------------------
 static s16 bc_get_empty( BCHOICE_WORK *wk, const s32 num )
@@ -1378,7 +1386,7 @@ static s16 bc_get_empty( BCHOICE_WORK *wk, const s32 num )
 	s16	*adr;
 	
 	// 念のため
-	if((num < 0)||(num >= BCHOICE_EMPTY_MAX)){
+	if((num < 0)||(num >= BC_EMPTY_MAXNUM)){
 		OS_Printf("empty error :%d\n",num);
 		return(0);
 	}
@@ -1391,18 +1399,18 @@ static s16 bc_get_empty( BCHOICE_WORK *wk, const s32 num )
 /**
  *	@brief  OBJの表示/非表示
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const s32			(0:通常、1:ポケモン)
- *	@param	const s32			objワーク番号
- *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
+ *	@param	BCHOICE_WORK*			wk
+ *	@param	const s32				未使用
+ *	@param	const s32				objワーク番号
+ *	@param	const BOOL				(TRUE:表示、FALSE:非表示)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 static void bc_set_obj_visible( BCHOICE_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg )
 {
-//	else if(wmode == BS_CLWKMODE_CURSOR){		// cursor
-		if(wnum >= BCHOICE_CLWK_CURSOR_MAX){
+//	if(wmode == BS_CLWKMODE_CURSOR){		// cursor
+		if(wnum >= BC_CLWK_CURSOR_MAX){
 			OS_Printf("obj max error:%d\n",wnum);
 			return;
 		}
@@ -1414,10 +1422,10 @@ static void bc_set_obj_visible( BCHOICE_WORK *wk, const s32 wmode, const s32 wnu
 /**
  *	@brief  カーソル表示
  *
- *	@param	BCHOICE_WORK* wk
- *	@param	const BOOL		(TRUE:表示、FALSE:非表示)
- *	@param	const s32		(0-2)
- *	@param	const s32		番号
+ *	@param	BCHOICE_WORK* 			wk
+ *	@param	const BOOL				(TRUE:表示、FALSE:非表示)
+ *	@param	const s32				何行モードか(0-2)
+ *	@param	const s32				何番目に表示するか(0-3)
  *
  *	@retval
  */
@@ -1427,7 +1435,6 @@ static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, c
 	s32				empnum;
 	s32				i;
 	GFL_CLACTPOS	pos;
-	
 	const s16	*adr = bc_cursor_emp_tbl[mode];
 	
 	// 表示/非表示
@@ -1450,9 +1457,9 @@ static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, c
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  パラメータチェック
+ *	@brief  パラメータチェック(準備のみ)
  *
- *	@param	BCHOICE_WORK* wk
+ *	@param	BCHOICE_WORK*			wk
  *
  *	@retval
  */
@@ -1473,5 +1480,4 @@ static void bc_chk_param( BCHOICE_WORK* wk )
 		}
 	}
 }
-
 
