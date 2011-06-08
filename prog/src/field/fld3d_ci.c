@@ -25,7 +25,8 @@
 #include "font/font.naix"
 
 #include "enc_cutin_no.h"
-#include "../../arc/enc_ci_face.naix"
+#include "../../arc/fld3d_ci_tex_data.naix"
+#include "../../arc/fld3d_ci_tex.naix"
 
 #include "fldmmdl.h"  //for MMDLSYS
 #include "fieldmap.h" //for FIELDMAP_～
@@ -78,23 +79,11 @@
     CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | \
     CI_FADE_MASTER_BRIGHT_WHITEOUT_SUB)
 
-// VSカットイン内のテクスチャ名(トレーナー)
-#define TRGRA_TEX_NAME_UP "trsw_lead01"
-#define TRGRA_TEX_NAME_DOWN "trsw_lead02"
-#define TRGRA_PAL_NAME_UP "lead01"
-#define TRGRA_PAL_NAME_DOWN "lead02"
-
 // VSカットイン内のテクスチャ名(主人公)
 #define HEROGRA_TEX_NAME_UP "trsw_hero01"
 #define HEROGRA_TEX_NAME_DOWN "trsw_hero02"
 #define HEROGRA_PAL_NAME_UP "hero01"
 #define HEROGRA_PAL_NAME_DOWN "hero02"
-
-// VSカットイン内のテクスチャ名（WBで使用されていた定義名）
-#define WB_TRGRA_TEX_NAME "trwb_face001"      // トレーナーテクスチャ
-#define WB_TRGRA_PAL_NAME "trwb_face001_pl"   // トレーナーパレット
-#define WB_HERO_TEX_NAME  "trwb_hero_ine"     // トレーナーテクスチャ
-#define WB_HERO_PAL_NAME "trwb_hero_ine_pl"   // トレーナーパレット
 
 // 名前テクスチャ名
 #define NAMEGRA_TEX_NAME_UP "name_up"
@@ -142,12 +131,8 @@ typedef struct POKE_WORK_tag
 typedef struct ENC_WORK_tag
 {
   int MsgIdx;
-  int ChrArc01Idx;
-  int ChrArc02Idx;
-  int PltArcIdx;
-  int PanelType;
   u16 color[2];   // カラー(フォントに使用するカラー)
-  BOOL PlayerTrans;
+  u8 player_trance_type;
 }ENC_WORK;
 
 //-------------------------------------
@@ -171,6 +156,23 @@ typedef struct {
   //int brightness_m; // マスター輝度メイン
   //int brightness_s; // マスター輝度サブ
 } CI_END_VBLANK;
+
+typedef struct {
+  char trans_tex_name[20];  // tex_name
+  char trans_pal_name[20];  // pal_name
+  u8 model_id;              // どのモデルに転送するか
+  u8 ncg_arc_id;            // 転送するNCGが格納されているインデックスID
+  u8 ncl_arc_id;            // 転送するパレットが格納されているインデックスID
+  u8 pal_id;                // 実際に使用するパレットID
+}EX_TEX_DATA;
+
+typedef struct TEXREPLACE_WORK_tag
+{
+  EX_TEX_DATA *p_tex_data;
+  u8 inCutInNo;
+  u8 data_cnt;
+  u8 trans_cnt;
+}TEXREP_WORK;
 
 typedef struct FLD3D_CI_tag
 {
@@ -207,6 +209,7 @@ typedef struct FLD3D_CI_tag
   void *pal_buf;
 
   u8 *Work[32];
+  TEXREP_WORK tex_wk;
   BOOL PtclEnd;
   BOOL MdlAnm1End;
   BOOL MdlAnm2End;
@@ -236,6 +239,13 @@ typedef struct {
   u16 MdlBAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
   u32 Bright;
 }RES_DEF_DAT;
+
+typedef struct TEXREPLACE_DEF_tag
+{
+  u8 data_cnt;
+  u8 player_trance_type; 
+  u8 pad[2];
+}TEXREP_DEF_DATA;
 
 typedef struct {
   GFL_G3D_UTIL_RES *Res;
@@ -312,6 +322,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const int inPltArcID,
                           const u8 palnum );
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work );
 
 static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx ,const u16 fontcol1 , const u16 fontcol2 );
 
@@ -732,6 +743,7 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
 {
   GMEVENT * event;
   const ENC_CUTIN_DAT *dat;
+  TEXREP_DEF_DATA tex_def;
 
   //オーバーレイロード
   GFL_OVERLAY_Load( FS_OVERLAY_ID(enc_cutin_no) ); 
@@ -753,9 +765,18 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
     work->IsWhiteOut = inWhiteFade;
   }
 
-  //コールバックセット
-  if ( dat->TransType != GRA_TRANS_NONE ) ptr->SetupCallBack = EncEffGraTransEvt;
-  else ptr->SetupCallBack = NULL;
+  // 拡張テクスチャ転送情報を取得
+  GFL_ARC_LoadDataOfs( &tex_def,ARCID_FLD3D_CI_TEX_DATA, dat->CutinNo,0,sizeof(TEXREP_DEF_DATA) );
+
+  //コールバックセット(送るデータがない時は登録しない)
+  if ( (tex_def.player_trance_type != PLAYER_TRANS_NONE) || (tex_def.data_cnt != 0) )
+  {
+    ptr->SetupCallBack = EncEffGraTransEvt;
+  }
+  else
+  {
+    ptr->SetupCallBack = NULL;
+  }
   ptr->MainSeqFunc = EncFadeMain;
   //カメラモードセット正射影
   ptr->CameraMode = GFL_G3D_PRJORTH;
@@ -765,14 +786,11 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
     ENC_WORK *wk;
     wk = (ENC_WORK*)ptr->Work;
     wk->MsgIdx = dat->MsgIdx;
-    wk->ChrArc01Idx = dat->ChrArc01Idx;
-    wk->ChrArc02Idx = dat->ChrArc02Idx;
-    wk->PltArcIdx = dat->PltArcIdx;
-    wk->PanelType = dat->PanelType;
     wk->color[0] = dat->fontcolor1;
     wk->color[1] = dat->fontcolor2;
-    if ( dat->TransType == GRA_TRANS_ALL ) wk->PlayerTrans = TRUE;
-    else wk->PlayerTrans = FALSE;
+    wk->player_trance_type = tex_def.player_trance_type;
+
+    ONOUE_Printf("player_trance_type = %u\n",tex_def.player_trance_type);
   }
 
   //オーバーレイアンロード
@@ -927,7 +945,22 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 #endif    
     //リソースロード
     SetupResource(event, ptr, &evt_work->SetupDat, ptr->CutInNo);
-
+    (*seq)++;
+    break;
+  case 5:
+    // 自機のテクスチャ、文字列転送イベント
+    (*seq)++;
+    if (ptr->SetupCallBack != NULL )
+    {
+      GMEVENT * call_event;
+      GAMESYS_WORK * gsys;
+      gsys = GMEVENT_GetGameSysWork(event);
+      call_event = GMEVENT_Create(gsys, event, ptr->SetupCallBack, 0);
+      GMEVENT_CallEvent(event, call_event);
+      break;
+    }
+    // through break
+  case 6:
     // CIフェードセットアップ
     ptr->pFadeSys = CI_FADE_Init( ptr->HeapID );
 
@@ -956,7 +989,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 5:
+  case 7:
     {
       GMEVENT* fade_event;
       if ( IsFlySkyIn(ptr->CutInNo) )
@@ -973,7 +1006,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 6: //ＢＧＭロード完了待ち
+  case 8: //ＢＧＭロード完了待ち
     if ( PMSND_IsLoading() ) break;    //ロード中なら TRUE
 
 #ifdef PM_DEBUG
@@ -988,7 +1021,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     
     (*seq)++;   //次のシーケンスへ
     //not break;
-  case 7:
+  case 9:
     {
       BOOL rc1,rc2,rc3,main_rc;
       rc1 = FALSE;
@@ -1022,7 +1055,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       if ( main_rc ) (*seq)++;
     }
     break;
-  case 8:
+  case 10:
     {
       // フェードを全て終了してからフェードを終了させる。
       ptr->FrameCount++;
@@ -1034,7 +1067,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       }
       break;
     }
-  case 9:
+  case 11:
     //フィールドモード戻し
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
@@ -1078,7 +1111,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
     (*seq)++;
     break;
-  case 10:
+  case 12:
     //バックカラー設定
     {
       FIELD_LIGHT *light = FIELDMAP_GetFieldLight( fieldmap );
@@ -1090,7 +1123,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 11:
+  case 13:
     //タスクが終了していたら次のシーケンスを実行
     if ( ptr->DispEndWork.DispSetEndFlg == FALSE ) break;
 
@@ -1155,7 +1188,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     
     (*seq)++;
     break;
-  case 12:
+  case 14:
     //終了
 #ifdef PM_DEBUG
     GFL_HEAP_DEBUG_EndPrint();
@@ -1372,14 +1405,29 @@ static void SetupResource(GMEVENT* event, FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDa
     if (outDat->Anm2Num != 0) ptr->Anm2Flg = TRUE;
   }
 
-  if (ptr->SetupCallBack != NULL )
+  // テクスチャ差替えイベントの呼び出し
   {
-    GMEVENT * call_event;
-    GAMESYS_WORK * gsys;
-    gsys = GMEVENT_GetGameSysWork(event);
-    call_event = GMEVENT_Create(gsys, event, ptr->SetupCallBack, 0);
-    GMEVENT_CallEvent(event, call_event);
+    TEXREP_DEF_DATA tex_def;
+    GFL_ARC_LoadDataOfs( &tex_def,ARCID_FLD3D_CI_TEX_DATA, inCutInNo,0,sizeof(TEXREP_DEF_DATA) );
+
+    if( tex_def.data_cnt > 0 )
+    {
+      {
+        GMEVENT * call_event;
+        GAMESYS_WORK * gsys;
+        gsys = GMEVENT_GetGameSysWork(event);
+        call_event = GMEVENT_Create(gsys, event, ExTextureTransEvt, 0);
+        GMEVENT_CallEvent(event, call_event);
+      }
+
+      // パラメータの設定
+      {
+        ptr->tex_wk.data_cnt = tex_def.data_cnt;
+        ptr->tex_wk.inCutInNo = inCutInNo;
+      }
+    }
   }
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2230,8 +2278,8 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
   {
     ptr->chr = NULL;
     ptr->plt = NULL;
-    ptr->chr_buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_ENC_CI_FACE, inChrArcID, TRUE, &ptr->chr, heapID );
-    ptr->pal_buf = GFL_ARC_UTIL_LoadPalette( ARCID_ENC_CI_FACE, inPltArcID, &ptr->plt, heapID );
+    ptr->chr_buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_FLD3D_CI_TEX, inChrArcID, TRUE, &ptr->chr, heapID );
+    ptr->pal_buf = GFL_ARC_UTIL_LoadPalette( ARCID_FLD3D_CI_TEX, inPltArcID, &ptr->plt, heapID );
     {
       u8	*src, *dst;
       int x, y;
@@ -2345,70 +2393,52 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
   enc_wk = (ENC_WORK*)ptr->Work;
   switch(*seq){
   case 0:
-    if( enc_wk->PanelType == CI_PANEL_4 )
-    {
-      //相手側の画像データ転送（上）
-      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
-      ReTransToGra( ptr, TRGRA_TEX_NAME_UP , TRGRA_PAL_NAME_UP , enc_wk->ChrArc01Idx, enc_wk->PltArcIdx , 0);
-      (*seq)++;
-    }
-    else
-    {
-      //相手側の画像データ転送（上）
-      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
-      ReTransToGra( ptr, WB_TRGRA_TEX_NAME , WB_TRGRA_PAL_NAME , enc_wk->ChrArc01Idx, enc_wk->PltArcIdx , 0);
-      (*seq) = 2;    //下側は転送しない
-    }
-    break;
-  case 1:
-    GFL_BMP_Delete(ptr->ImgBitmap);
-    GFL_HEAP_FreeMemory( ptr->chr_buf );
-    GFL_HEAP_FreeMemory( ptr->pal_buf );
-    //相手側の画像データ転送(下)
-    ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
-    ReTransToGra( ptr, TRGRA_TEX_NAME_DOWN , TRGRA_PAL_NAME_DOWN , enc_wk->ChrArc02Idx, enc_wk->PltArcIdx, 1);
-    (*seq)++;
-    break;
-  case 2:
-    GFL_BMP_Delete(ptr->ImgBitmap);
-    GFL_HEAP_FreeMemory( ptr->chr_buf );
-    GFL_HEAP_FreeMemory( ptr->pal_buf );
     //相手側の文字データ転送
     SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_UP, NAMEGRA_PAL_NAME_UP, enc_wk->MsgIdx , enc_wk->color[0] , enc_wk->color[1] );
     (*seq)++;
     break;
-  case 3:
-    if ( !enc_wk->PlayerTrans ) (*seq) = 6;    //終了
+  case 1:
+    if ( enc_wk->player_trance_type == PLAYER_TRANS_NONE ) (*seq) = 4;    //終了
     else
     {
       int chr,plt;
       //自分側の画像データ転送(上)
       ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
       
-      if ( MyStatus_GetMySex(mystatus) == PM_MALE){
-        chr = NARC_enc_ci_face_enc_hero_01_LZ_bin;
-        plt = NARC_enc_ci_face_enc_hero_nclr;
+      if( enc_wk->player_trance_type == PLAYER_TRANS_SINGLE_TEX )
+      {
+        // 1枚転送用
+        if ( MyStatus_GetMySex(mystatus) == PM_MALE){
+          chr = NARC_fld3d_ci_tex_enc_hero_LZ_bin;
+          plt = NARC_fld3d_ci_tex_enc_hero_NCLR;
+        }
+        else
+        {
+          chr = NARC_fld3d_ci_tex_enc_heroine_LZ_bin;
+          plt = NARC_fld3d_ci_tex_enc_heroine_NCLR;
+        }
+        (*seq) = 3;
       }
       else
       {
-        chr = NARC_enc_ci_face_enc_heroine_01_LZ_bin;
-        plt = NARC_enc_ci_face_enc_heroine_nclr;
-      }
-
-      // ジム以外はBWと同じテクスチャ名、パレット名で読み込む 
-      if( enc_wk->PanelType == CI_PANEL_4 )
-      {
-        ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt , 0);
+        // 2枚転送用
+        if ( MyStatus_GetMySex(mystatus) == PM_MALE){
+          chr = NARC_fld3d_ci_tex_enc_hero_up_down_0_0_16_16_LZ_bin;
+          plt = NARC_fld3d_ci_tex_enc_hero_up_down_NCLR;
+        }
+        else
+        {
+          chr = NARC_fld3d_ci_tex_enc_heroine_up_down_0_0_16_16_LZ_bin;
+          plt = NARC_fld3d_ci_tex_enc_heroine_up_down_NCLR;
+        }
         (*seq)++;
       }
-      else
-      {
-        ReTransToGra( ptr, WB_HERO_TEX_NAME ,  WB_HERO_PAL_NAME  , chr, plt , 0);
-        (*seq) = 5;
-      }
+        
+      // 転送
+      ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt , 0);
     }
     break;
-  case 4:
+  case 2:
     {
       int chr,plt;
       GFL_BMP_Delete(ptr->ImgBitmap);
@@ -2418,19 +2448,19 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
       //自分側の画像データ転送(下)
       ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
       if ( MyStatus_GetMySex(mystatus) == PM_MALE){
-        chr = NARC_enc_ci_face_enc_hero_02_LZ_bin;
-        plt = NARC_enc_ci_face_enc_hero_nclr;
+        chr = NARC_fld3d_ci_tex_enc_hero_up_down_0_16_16_16_LZ_bin;
+        plt = NARC_fld3d_ci_tex_enc_hero_up_down_NCLR;
       }
       else
       {
-        chr = NARC_enc_ci_face_enc_heroine_02_LZ_bin;
-        plt = NARC_enc_ci_face_enc_heroine_nclr;
+        chr = NARC_fld3d_ci_tex_enc_heroine_up_down_0_16_16_16_LZ_bin;
+        plt = NARC_fld3d_ci_tex_enc_heroine_up_down_NCLR;
       }
       ReTransToGra( ptr, HEROGRA_TEX_NAME_DOWN, HEROGRA_PAL_NAME_DOWN, chr, plt , 1);
       (*seq)++;
     }
     break;
-  case 5:
+  case 3:
     GFL_BMP_Delete(ptr->ImgBitmap);
     GFL_HEAP_FreeMemory( ptr->chr_buf );
     GFL_HEAP_FreeMemory( ptr->pal_buf );
@@ -2438,7 +2468,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
     SetFont2Tex(mystatus, ptr, NAMEGRA_TEX_NAME_DOWN , NAMEGRA_PAL_NAME_DOWN , SPTR_PLAYER , enc_wk->color[0] , enc_wk->color[1] );
     (*seq)++;
     break;
-  case 6:
+  case 4:
     //座標セット
     VEC_Set( &ptr->Status.trans, 0, 0, -(ENC_CUTIN_MDL_Z_OFS*FX32_ONE) );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
@@ -2448,6 +2478,68 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
 
   return GMEVENT_RES_CONTINUE;
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フィールドカットインテクスチャ転送イベント
+ *
+ *	@param	event         イベントポインタ
+ *	@param  seq           シーケンサ
+ *	@param  work          ワークポインタ
+ *	@return GMEVENT_RESULT  イベント結果
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work )
+{
+  FLD3D_CI_PTR ptr;
+  FLD3D_CI_EVENT_WORK *evt_work;
+  TEXREP_WORK *tex_wk;
+  //親イベントからワークポインタを取得
+  {
+    GMEVENT * parent = GMEVENT_GetParentEvent(event);
+    evt_work = GMEVENT_GetEventWork(parent);
+  }
+
+  ptr = evt_work->CiPtr;
+  tex_wk = &ptr->tex_wk;
+
+  // 転送処理
+  switch(*seq){
+  case 0:
+    {
+      // データ数取得
+      ONOUE_Printf("テクスチャデータID:%u\n",tex_wk->inCutInNo);
+      ONOUE_Printf("転送数:%u\n",tex_wk->data_cnt);
+      tex_wk->p_tex_data = GFL_ARC_LoadDataAllocOfs(ARCID_FLD3D_CI_TEX_DATA, tex_wk->inCutInNo,ptr->HeapID,sizeof(TEXREP_DEF_DATA),sizeof(EX_TEX_DATA)*(tex_wk->data_cnt));
+      tex_wk->trans_cnt = 0;
+    }
+    (*seq)++;
+    // through break
+  case 1:
+    {
+      u8 trans_cnt = tex_wk->trans_cnt;
+      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+      ReTransToGra( ptr,
+          tex_wk->p_tex_data[trans_cnt].trans_tex_name , tex_wk->p_tex_data[trans_cnt].trans_pal_name,
+          tex_wk->p_tex_data[trans_cnt].ncg_arc_id, tex_wk->p_tex_data[trans_cnt].ncl_arc_id,
+          tex_wk->p_tex_data[trans_cnt].pal_id);
+      GFL_HEAP_FreeMemory( ptr->chr_buf );
+      GFL_HEAP_FreeMemory( ptr->pal_buf );
+      GFL_BMP_Delete(ptr->ImgBitmap);
+      
+      // データの数だけ転送する
+      tex_wk->trans_cnt++;
+      if( tex_wk->trans_cnt == tex_wk->data_cnt )
+      {
+        // 開放
+        GFL_HEAP_FreeMemory( tex_wk->p_tex_data );
+        return GMEVENT_RES_FINISH;
+      }
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 
 static void* GetTexStartVRAMAdrSub(NNSG3dResTex *inResTex,const NNSG3dResDictTexData* pData)

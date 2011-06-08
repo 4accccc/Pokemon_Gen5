@@ -330,6 +330,8 @@
   ARCID_WIN_RECORD_GRA   "win_record_gra.narc"   #エントリーチェックデータ
   ARCID_OPENING_1 "opening_1.mods"  #オープニング1 デモ
   ARCID_OPENING_2 "opening_2.mods"  #オープニング2 デモ
+  ARCID_FLD3D_CI_TEX "fld3d_ci_tex.narc" #フィールドカットイン用テクスチャデータ
+  ARCID_FLD3D_CI_TEX_DATA "fld3d_ci_tex_data.narc" #フィールドカットイン用テクスチャ転送データ
 
   ARCID_POKEWOOD   "pokewood.narc"   #ポケウッドシナリオデータ
   ARCID_FMISSION_APP "fmission_app.narc" #フェスミッションアプリグラフィックアーカイブ

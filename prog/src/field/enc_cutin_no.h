@@ -44,6 +44,12 @@ typedef enum {
 }GRA_TRANS_TYPE;
 
 typedef enum {
+  PLAYER_TRANS_NONE,      //転送なし
+  PLAYER_TRANS_SINGLE_TEX,//一面転送
+  PLAYER_TRANS_DOUBLE_TEX,//2面転送
+}PLAYER_TRANS_TYPE;
+
+typedef enum {
   CI_PANEL_4, // 4面転送
   CI_PANEL_2, // 2面転送(WBと同じシステム)
   CI_PANEL_MAX,
@@ -52,14 +58,9 @@ typedef enum {
 typedef struct ENC_CUTIN_DAT_tag
 {
   int CutinNo;      //カットインのナンバー
-  int ChrArc01Idx;   //相手側のキャラ転送データアーカイブインデックス
-  int ChrArc02Idx;   //相手側のキャラ転送データアーカイブインデックス
-  int PltArcIdx;    //相手側のパレット転送データアーカイブインデックス
   int MsgIdx;       //相手側の名前データインデックス
-  GRA_TRANS_TYPE TransType;     // 転送データの種類
-  CI_PANEL_TYPE  PanelType;     // 転送するパネルタイプ
-  u16 fontcolor1;     // 文字色
-  u16 fontcolor2;     // 文字影色
+  u16 fontcolor1;   // 文字色
+  u16 fontcolor2;   // 文字影色
 }ENC_CUTIN_DAT;
 
 /**
