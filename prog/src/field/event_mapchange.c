@@ -3287,6 +3287,17 @@ static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys )
   //配置していた動作モデルを削除
   MAPCHG_releaseMMdl( gamedata );
 
+#ifdef  PM_DEBUG
+  //デバッグ時のみ、バージョンを監視してマップ繊維のたびに取得ゾーンを切り替える
+  if ( GET_VERSION() == VERSION_B2 )
+  {
+    ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_R04_R04W_ID, FALSE );
+  }
+  else
+  {
+    ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_R04_R04W_ID, TRUE );
+  }
+#endif
 }
 
 //============================================================================================
