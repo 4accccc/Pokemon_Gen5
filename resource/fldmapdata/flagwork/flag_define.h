@@ -301,7 +301,7 @@
 #define FE_C04_RALLYPOINT_03               285 /* 0x011d C04：ラリーチェックポイントフラグ（ビッグスタジアム */
 #define FE_C04_RALLYPOINT_04               286 /* 0x011e C04：ラリーチェックポイントフラグ（リトルコート） */
 #define FE_C04_RALLYPOINT_05               287 /* 0x011f C04：ラリーチェックポイントフラグ（観覧車） */
-		/* not used   288(0x0120) */
+#define FE_C04_SWHEROINE_01                288 /* 0x0120 C04：バトルサブウェイう誘導イベント */
 		/* not used   289(0x0121) */
 		/* not used   290(0x0122) */
 		/* not used   291(0x0123) */
