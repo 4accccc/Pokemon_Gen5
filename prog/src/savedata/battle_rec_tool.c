@@ -39,6 +39,21 @@
 #include "net_app/gds/gds_profile_local.h"
 #include "battle_rec_local.h"
 #include "net_app/gds/gds_battle_mode.h"
+#include "pokewood_rec_local.h"
+
+#ifdef PM_DEBUG
+#define DEBUG_BATTLE_REC_TOOL_PRINT
+#endif //PM_DEBUG
+
+#ifdef DEBUG_BATTLE_REC_TOOL_PRINT
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_mori)
+#define BATTLE_REC_TOOL_Printf(...) OS_TPrintf(__VA_ARGS__)
+#endif //defined
+#endif //DEBUG_BATTLE_REC_TOOL_PRINT
+
+#ifndef BATTLE_REC_TOOL_Printf
+#define BATTLE_REC_TOOL_Printf(...) /*  */
+#endif //BATTLE_REC_TOOL_Printf
 
 //=============================================================================
 /**
@@ -59,19 +74,29 @@ extern BATTLE_REC_SAVEDATA * brs;
  *          プロトタイプ宣言
 */
 //=============================================================================
-static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
-static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
-static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
-static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
+//汎用
 static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINER_STATUS* recTrainer );
 static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer );
-static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
-static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
-static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
+static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BTLREC_SETUP_SUBSET* setupSubset );
+static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BTLREC_SETUP_SUBSET* setupSubset );
+static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num );
+static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num );
 
+//通常録画
+static void btl_store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static void btl_restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
+static BOOL btl_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
+static BOOL btl_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
+static void Btl_PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
+static void Btl_RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
+
+//ポケウッド用
+static void pokewood_store_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec );
+static void pokewood_restore_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec, HEAPID heapID );
+static BOOL pokewood_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec );
+static BOOL pokewood_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK* rec );
+static void pokewood_PokeParty_to_RecPokeParty( const POKEPARTY *party, POKEWOOD_REC_POKEPARTY *rec_party );
+static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
 
 //=============================================================================================
 /**
@@ -85,12 +110,33 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
 //=============================================================================================
 void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
 {
-  BATTLE_REC_WORK  *rec = &brs->rec;
+  switch( setup->PokewoodMode )
+  {
+  default:
+    GF_ASSERT(0);
+  case BTL_POKEWOOD_NONE:
+    {
+      BATTLE_REC_WORK  *rec = &brs->rec;
 
-  store_Party( setup, rec );
-  store_ClientStatus( setup, rec );
-  store_OperationBuffer( setup, rec );
-  store_SetupSubset( setup, rec );
+      btl_store_Party( setup, rec );
+      store_ClientStatus( setup, rec->clientStatus, BTL_CLIENT_NUM );
+      btl_store_OperationBuffer( setup, rec );
+      store_SetupSubset( setup, &rec->setupSubset );
+    }
+    break;
+
+  case BTL_POKEWOOD_REC:
+  case BTL_POKEWOOD_SHOW:
+    {
+      POKEWOOD_REC_WORK  *rec = POKEWOOD_REC_GetWork();
+
+      pokewood_store_Party( setup, rec );
+      store_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX );
+      pokewood_store_OperationBuffer( setup, rec );
+      store_SetupSubset( setup, &rec->setupSubset );
+    }
+    break;
+  }
 }
 
 //=============================================================================================
@@ -103,22 +149,49 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
  * @param   setup   [out] 復元先
  */
 //=============================================================================================
-void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
+void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE mode, HEAPID heapID )
 {
-  BATTLE_REC_WORK  *rec = &brs->rec;
 
-  TAYA_Printf("*** Rec Info ***\n");
-  TAYA_Printf(" recWorkSize = %d byte\n", sizeof(BATTLE_REC_WORK));
-  TAYA_Printf("   ->setupSubset  = %d byte\n", sizeof(rec->setupSubset) );
-  TAYA_Printf("   ->opBuffer     = %d byte\n", sizeof(rec->opBuffer) );
-  TAYA_Printf("   ->clientStatus = %d byte\n", sizeof(rec->clientStatus) );
-  TAYA_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
+  switch( mode )
+  {
+  default:
+    GF_ASSERT(0);
+  case BTLREC_RESOTRE_MODE_NORMAL:
+    {
+      BATTLE_REC_WORK  *rec = &brs->rec;
 
+	    BATTLE_REC_TOOL_Printf("*** Btl Rec Info ***\n");
+	    BATTLE_REC_TOOL_Printf(" recWorkSize = %d byte\n", sizeof(BATTLE_REC_WORK));
+	    BATTLE_REC_TOOL_Printf("   ->setupSubset  = %d byte\n", sizeof(rec->setupSubset) );
+	    BATTLE_REC_TOOL_Printf("   ->opBuffer     = %d byte\n", sizeof(rec->opBuffer) );
+	    BATTLE_REC_TOOL_Printf("   ->clientStatus = %d byte\n", sizeof(rec->clientStatus) );
+	    BATTLE_REC_TOOL_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
+	
+	    btl_restore_Party( setup, rec, heapID );
+	    restore_ClientStatus( setup, rec->clientStatus, BTL_CLIENT_NUM );
+	    btl_restore_OperationBuffer( setup, rec );
+	    restore_SetupSubset( setup, &rec->setupSubset );
+    }
+    break;
 
-  restore_Party( setup, rec, heapID );
-  restore_ClientStatus( setup, rec );
-  restore_OperationBuffer( setup, rec );
-  restore_SetupSubset( setup, rec );
+  case BTLREC_RESOTRE_MODE_POKEWOOD:
+    {
+      POKEWOOD_REC_WORK  *rec = POKEWOOD_REC_GetWork();
+
+	    BATTLE_REC_TOOL_Printf("*** PokeWood Rec Info ***\n");
+	    BATTLE_REC_TOOL_Printf(" recWorkSize = %d byte\n", sizeof(BATTLE_REC_WORK));
+	    BATTLE_REC_TOOL_Printf("   ->setupSubset  = %d byte\n", sizeof(rec->setupSubset) );
+	    BATTLE_REC_TOOL_Printf("   ->opBuffer     = %d byte\n", sizeof(rec->opBuffer) );
+	    BATTLE_REC_TOOL_Printf("   ->clientStatus = %d byte\n", sizeof(rec->clientStatus) );
+	    BATTLE_REC_TOOL_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
+	
+	    pokewood_restore_Party( setup, rec, heapID );
+	    restore_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX );
+	    pokewood_restore_OperationBuffer( setup, rec );
+	    restore_SetupSubset( setup, &rec->setupSubset );
+    }
+    break;
+  }
 }
 
 //=============================================================================
@@ -135,7 +208,7 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
  * @param   rec_party   変換後のデータ代入先
  */
 //--------------------------------------------------------------
-static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party )
+static void Btl_PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party )
 {
   int i;
   POKEMON_PARAM *pp;
@@ -164,14 +237,14 @@ static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *re
  * @param   party     変換後のデータ代入先
  */
 //--------------------------------------------------------------
-static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID )
+static void Btl_RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID )
 {
   int i;
   POKEMON_PARAM *pp;
   u8 cb_id_para = 0;
 
   pp = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKETOOL_GetWorkSize() );
-  TAYA_Printf("RecParty pokeCnt=%d\n", rec_party->PokeCount);
+  BATTLE_REC_TOOL_Printf("RecParty pokeCnt=%d\n", rec_party->PokeCount);
 
   PokeParty_Init(party, rec_party->PokeCountMax);
   for(i = 0; i < rec_party->PokeCount; i++){
@@ -192,7 +265,7 @@ static void RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *part
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+static void btl_store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   u32 i;
 
@@ -202,7 +275,7 @@ static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
     if( setup->party[i] ){
-      PokeParty_to_RecPokeParty( setup->party[i], &(rec->rec_party[i]) );
+      Btl_PokeParty_to_RecPokeParty( setup->party[i], &(rec->rec_party[i]) );
     }
   }
 }
@@ -214,13 +287,13 @@ static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
+static void btl_restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID )
 {
   u32 i;
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
     if( setup->party[i] ){
-      RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i], heapID );
+      Btl_RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i], heapID );
     }
   }
 }
@@ -233,25 +306,25 @@ static void restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num )
 {
   u32 i;
-  for(i=0; i<NELEMS(setup->playerStatus); ++i)
+  for(i=0; i<client_num; ++i)
   {
     // ここのチェック順番（トレーナーデータ->プレイヤーデータ）は変えてはいけません
     // （btl_setup.cでサブウェイトレーナーにplayerStatusを設定しているので）
     if( setup->tr_data[i] ){
-      store_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
+      store_TrainerData( setup->tr_data[i], &clientStatus[i].trainer );
+      clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
     }
     else if( setup->playerStatus[i] ){
-      MyStatus_Copy( setup->playerStatus[i], &rec->clientStatus[i].player );
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_PLAYER;
+      MyStatus_Copy( setup->playerStatus[i], &clientStatus[i].player );
+      clientStatus[i].type = BTLREC_CLIENTSTATUS_PLAYER;
     }
     else{
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
+      clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
     }
-    rec->clientStatus[i].voiceLevel = setup->perappVoiceLevel[ i ];
+    clientStatus[i].voiceLevel = setup->perappVoiceLevel[ i ];
   }
 }
 //----------------------------------------------------------------------------------
@@ -262,24 +335,24 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
+static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num )
 {
   u32 i;
-  for(i=0; i<NELEMS(setup->playerStatus); ++i)
+  for(i=0; i<client_num; ++i)
   {
-    switch( rec->clientStatus[i].type ){
+    switch( clientStatus[i].type ){
     case BTLREC_CLIENTSTATUS_PLAYER:
       GF_ASSERT(setup->playerStatus[i]!=NULL);
-      MyStatus_Copy( &rec->clientStatus[i].player, (MYSTATUS*)setup->playerStatus[i] );
+      MyStatus_Copy( &clientStatus[i].player, (MYSTATUS*)setup->playerStatus[i] );
       break;
 
     case BTLREC_CLIENTSTATUS_TRAINER:
       GF_ASSERT(setup->tr_data[i]!=NULL);
-      restore_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
+      restore_TrainerData( setup->tr_data[i], &clientStatus[i].trainer );
       break;
     }
 
-    setup->perappVoiceLevel[i] = rec->clientStatus[i].voiceLevel;
+    setup->perappVoiceLevel[i] = clientStatus[i].voiceLevel;
   }
 }
 
@@ -340,14 +413,14 @@ static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAI
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+static BOOL btl_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   if( (setup->recBuffer != NULL)
   &&  (setup->recDataSize < sizeof(rec->opBuffer.buffer))
   ){
     rec->opBuffer.size = setup->recDataSize;
     GFL_STD_MemCopy( setup->recBuffer, rec->opBuffer.buffer, setup->recDataSize );
-    TAYA_Printf("Store Operation Buffer %dbyte\n", rec->opBuffer.size);
+    BATTLE_REC_TOOL_Printf("Store Operation Buffer %dbyte\n", rec->opBuffer.size);
     return TRUE;
   }
   return FALSE;
@@ -362,10 +435,10 @@ static BOOL store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_W
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
+static BOOL btl_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
 {
   setup->recDataSize = rec->opBuffer.size;
-  TAYA_Printf("Restore Operation Buffer %dbyte\n", setup->recDataSize );
+  BATTLE_REC_TOOL_Printf("Restore Operation Buffer %dbyte\n", setup->recDataSize );
   GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
   return TRUE;
 }
@@ -379,31 +452,31 @@ static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
+static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BTLREC_SETUP_SUBSET* setupSubset )
 {
-  rec->setupSubset.fieldSituation = setup->fieldSituation;
-  rec->setupSubset.randomContext = setup->recRandContext;
-  rec->setupSubset.musicDefault = setup->musicDefault;
-  rec->setupSubset.musicWin = setup->musicWin;
+  setupSubset->fieldSituation = setup->fieldSituation;
+  setupSubset->randomContext = setup->recRandContext;
+  setupSubset->musicDefault = setup->musicDefault;
+  setupSubset->musicWin = setup->musicWin;
 
-  rec->setupSubset.competitor = setup->competitor;
-  rec->setupSubset.rule = setup->rule;
-  rec->setupSubset.MultiMode = setup->multiMode;
-  rec->setupSubset.debugFlagBit = setup->DebugFlagBit;
-  rec->setupSubset.myCommPos = setup->commPos;
-  rec->setupSubset.shooterBit = (setup->shooterBitWork.shooter_use != 0);
+  setupSubset->competitor = setup->competitor;
+  setupSubset->rule = setup->rule;
+  setupSubset->MultiMode = setup->multiMode;
+  setupSubset->debugFlagBit = setup->DebugFlagBit;
+  setupSubset->myCommPos = setup->commPos;
+  setupSubset->shooterBit = (setup->shooterBitWork.shooter_use != 0);
 
-  CONFIG_Copy( setup->configData, &rec->setupSubset.config );
+  CONFIG_Copy( setup->configData, &setupSubset->config );
 
   {
     u32 i;
-    const u8* p = (u8*)(&(rec->setupSubset.randomContext));
-    TAYA_Printf("*** 書き戻したRandomContext ***\n");
+    const u8* p = (u8*)(&(setupSubset->randomContext));
+    BATTLE_REC_TOOL_Printf("*** 書き戻したRandomContext ***\n");
     for(i=0; i<sizeof(setup->recRandContext); ++i)
     {
-      TAYA_Printf("%02x ", p[i]);
+      BATTLE_REC_TOOL_Printf("%02x ", p[i]);
       if( (i+1)%8 == 0 ){
-        TAYA_Printf("\n");
+        BATTLE_REC_TOOL_Printf("\n");
       }
     }
   }
@@ -420,23 +493,125 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec )
+static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BTLREC_SETUP_SUBSET* setupSubset )
 {
-  setup->fieldSituation = rec->setupSubset.fieldSituation;
-  setup->recRandContext = rec->setupSubset.randomContext;
-  setup->musicDefault = rec->setupSubset.musicDefault;
-  setup->musicWin = rec->setupSubset.musicWin;
+  setup->fieldSituation = setupSubset->fieldSituation;
+  setup->recRandContext = setupSubset->randomContext;
+  setup->musicDefault = setupSubset->musicDefault;
+  setup->musicWin = setupSubset->musicWin;
 
-  setup->competitor = rec->setupSubset.competitor;
-  setup->rule = rec->setupSubset.rule;
-  setup->multiMode = rec->setupSubset.MultiMode;
-  setup->DebugFlagBit = rec->setupSubset.debugFlagBit;
-  setup->commPos = rec->setupSubset.myCommPos;
-  setup->shooterBitWork.shooter_use = rec->setupSubset.shooterBit;
+  setup->competitor = setupSubset->competitor;
+  setup->rule = setupSubset->rule;
+  setup->multiMode = setupSubset->MultiMode;
+  setup->DebugFlagBit = setupSubset->debugFlagBit;
+  setup->commPos = setupSubset->myCommPos;
+  setup->shooterBitWork.shooter_use = setupSubset->shooterBit;
 
 // コンフィグは録画データに含めず、再生するユーザのローカル設定に準じる (2010.06.17）
-//  CONFIG_Copy( &rec->setupSubset.config, (CONFIG*)(setup->configData) );
+//  CONFIG_Copy( &setupSubset->config, (CONFIG*)(setup->configData) );
 
   return TRUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief ポケウッド用　パーティ格納
+ *
+ *	@param	const BATTLE_SETUP_PARAM* setup バトル
+ *	@param	rec   録画
+ */
+//-----------------------------------------------------------------------------
+static void pokewood_store_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec )
+{
+  u32 i;
+
+  //不正チェック用に未使用領域は全て0で埋める必要がある為、一旦バッファ全体を0クリアしておく
+  GFL_STD_MemClear(rec->rec_party, sizeof(POKEWOOD_REC_POKEPARTY) * POKEWOOD_REC_CLIENT_MAX);
+
+  //TODO　今後、敵のデータはROMから読み込むかも。
+
+  for(i=0; i<POKEWOOD_REC_CLIENT_MAX; ++i)
+  {
+    if( setup->party[i] ){
+      pokewood_PokeParty_to_RecPokeParty( setup->party[i], &(rec->rec_party[i]) );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケウッド用  パーティ格納
+ *
+ *	@param	const BATTLE_SETUP_PARAM* setup バトル
+ *	@param	rec　録画
+ *	@param	heapID 　ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void pokewood_restore_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec, HEAPID heapID )
+{
+  u32 i;
+  for(i=0; i<POKEWOOD_REC_CLIENT_MAX; ++i)
+  {
+    if( setup->party[i] ){
+      pokewood_RecPokeParty_to_PokeParty( &(rec->rec_party[i]), setup->party[i], heapID );
+    }
+  }
+}
+static BOOL pokewood_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec )
+{
+  if( (setup->recBuffer != NULL)
+  &&  (setup->recDataSize < sizeof(rec->opBuffer.buffer))
+  ){
+    rec->opBuffer.size = setup->recDataSize;
+    GFL_STD_MemCopy( setup->recBuffer, rec->opBuffer.buffer, setup->recDataSize );
+    BATTLE_REC_TOOL_Printf("Store Operation Buffer %dbyte\n", rec->opBuffer.size);
+    return TRUE;
+  }
+  return FALSE;
+}
+static BOOL pokewood_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK* rec )
+{
+  setup->recDataSize = rec->opBuffer.size;
+  BATTLE_REC_TOOL_Printf("Restore Operation Buffer %dbyte\n", setup->recDataSize );
+  GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
+  return TRUE;
+}
+static void pokewood_PokeParty_to_RecPokeParty( const POKEPARTY *party, POKEWOOD_REC_POKEPARTY *rec_party )
+{
+  int i;
+  POKEMON_PARAM *pp;
+
+  GFL_STD_MemClear(rec_party, sizeof(REC_POKEPARTY));
+
+  if(PokeParty_GetPokeCount(party) == 0){  //不正チェック用に空の時は全て0でクリアされたまま終了
+    return;
+  }
+
+  rec_party->PokeCountMax = MATH_IMin( POKEWOOD_REC_TEMOTI_MAX, PokeParty_GetPokeCountMax(party) );
+
+  rec_party->PokeCount = MATH_IMin( PokeParty_GetPokeCount(party), rec_party->PokeCountMax );
+
+  for(i=0; i < rec_party->PokeCount; i++){
+    pp = PokeParty_GetMemberPointer(party, i);
+    POKETOOL_PokePara_to_RecPokePara(pp, &rec_party->member[i]);
+    NAGI_Printf( "poke[%d]=%d\n", i, PP_Get( pp, ID_PARA_monsno, NULL ) );
+  }
+}
+static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID )
+{
+  int i;
+  POKEMON_PARAM *pp;
+  u8 cb_id_para = 0;
+
+  pp = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapID), POKETOOL_GetWorkSize() );
+  BATTLE_REC_TOOL_Printf("RecParty pokeCnt=%d\n", rec_party->PokeCount);
+
+  PokeParty_Init(party, TEMOTI_POKEMAX);
+  for(i = 0; i < rec_party->PokeCount; i++){
+    POKETOOL_RecPokePara_to_PokePara(&rec_party->member[i], pp);
+    PP_Put(pp, ID_PARA_cb_id, cb_id_para);  //カスタムボールは出ないようにする
+    PokeParty_Add(party, pp);
+  }
+
+  GFL_HEAP_FreeMemory( pp );
+}

@@ -70,7 +70,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/gear_3ds_save.c \
         savedata/wbt_ex_save.c \
         savedata/outside_permanent.c \
-        savedata/key_system_save.c
+        savedata/key_system_save.c \
+        savedata/pokewood_rec.c
 
 
 #’ÊM‚Ìí’“

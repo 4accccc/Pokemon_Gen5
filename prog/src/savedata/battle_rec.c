@@ -679,10 +679,6 @@ static SAVE_EXTRA_ID BattleRec_LoadDataNumToSaveExtraID( int num )
     return SAVE_EXTRA_ID_REC_DL_1;
   case LOADDATA_DOWNLOAD2:
     return SAVE_EXTRA_ID_REC_DL_2;
-  case LOADDATA_POKEWOOD0:
-    return SAVE_EXTRA_ID_POKEWOOD_00;
-  case LOADDATA_POKEWOOD1:
-    return SAVE_EXTRA_ID_POKEWOOD_01;
   }
 }
 //============================================================================================

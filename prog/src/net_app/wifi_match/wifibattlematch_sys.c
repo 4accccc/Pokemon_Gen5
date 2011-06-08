@@ -1784,7 +1784,7 @@ static void *RECPLAY_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
   BattleRec_LoadToolModule();
-  BattleRec_RestoreSetupParam( p_param, heapID );
+  BattleRec_RestoreSetupParam( p_param, BTLREC_RESOTRE_MODE_NORMAL, heapID );
   BattleRec_UnloadToolModule();
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );

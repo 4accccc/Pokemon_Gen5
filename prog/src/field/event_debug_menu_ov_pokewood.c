@@ -34,6 +34,7 @@
 
 //アプリ
 #include "savedata/battle_rec.h"
+#include "savedata/pokewood_rec.h"
 #include "app/pkwd_count.h"
 
 //デバッグ
@@ -51,9 +52,9 @@
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 typedef enum {
-  DEBUG_SHOW_01 = 0,
-  DEBUG_SHOW_02 = 1,
-  DEBUG_SHOW_03 = 2,
+  DEBUG_SHOW_01 = LOADDATA_POKEWOOD0,
+  DEBUG_SHOW_02 = LOADDATA_POKEWOOD1,
+  DEBUG_SHOW_03 = LOADDATA_POKEWOOD1,
   DEBUG_SHOW_ROM,
 }DEBUG_SHOW_TYPE;
 

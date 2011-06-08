@@ -39,6 +39,7 @@
 
 #include "waza_tool/wazano_def.h"
 #include "item/itemsym.h"
+#include "savedata/pokewood_rec.h"
 
 #include "field_fade.h"
 //======================================================================
@@ -177,7 +178,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
 
   int i;
 
-  BattleRec_Init( heapID );
+  POKEWOOD_REC_Init( heapID );
   {
     BTL_FIELD_SITUATION sit;
     BTL_FIELD_SITUATION_Init( &sit );
@@ -217,16 +218,15 @@ static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
   LOAD_RESULT result;
 
-  BattleRec_Load( sv, heapID, &result, replay_id );
+  result = POKEWOOD_REC_Load( sv, heapID, replay_id );
   if ( result == LOAD_RESULT_OK )
   {
-
     BATTLE_SETUP_PARAM * bsp;
     bsp = BATTLE_PARAM_Create( heapID );
     BATTLE_PARAM_Init( bsp );
     BTL_SETUP_InitForRecordPlay( bsp, gamedata, heapID );
     BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
-    BattleRec_RestoreSetupParam( bsp, heapID );
+    BattleRec_RestoreSetupParam( bsp, BTLREC_RESOTRE_MODE_POKEWOOD, heapID );
     BattleRec_UnloadToolModule();
     bsp->PokewoodMode = BTL_POKEWOOD_SHOW;
     bsp->pokewoodSenario = 0; //仮
@@ -271,10 +271,7 @@ static void deletePokewoodBSP( BATTLE_SETUP_PARAM * bsp )
     GFL_HEAP_FreeMemory( bsp->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
     BTL_SETUP_QuitForRecordPlay( bsp );
   }
-  if ( BattleRec_DataExistCheck() )
-  {
-    BattleRec_Exit();
-  }
+  POKEWOOD_REC_Exit();
   BATTLE_PARAM_Delete( bsp );
 }
 
@@ -320,21 +317,12 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
      */
     {
       SAVE_RESULT result;
-      result = BattleRec_Save(
-          psew->gamedata, psew->heapID, 0, 0, bufID, &psew->saveSeq0, &psew->saveSeq1);
+      result = POKEWOOD_REC_Save(psew->gamedata, psew->heapID, bufID, &psew->saveSeq0 );
       switch( result ){
       case SAVE_RESULT_OK:
-        {
-          u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
-          OS_Printf("録画データ正常にセーブ完了 (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
-        }
         (*seq)++;
         break;
       case SAVE_RESULT_NG:
-        {
-          u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
-          OS_Printf("録画データセーブ失敗 ... (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
-        }
         (*seq)++;
         break;
 

@@ -545,7 +545,7 @@ static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   BTL_SETUP_InitForRecordPlay( p_param, p_gamedata, heapID );
 
   BattleRec_LoadToolModule();
-  BattleRec_RestoreSetupParam( p_param, heapID );
+  BattleRec_RestoreSetupParam( p_param, BTLREC_RESOTRE_MODE_NORMAL,heapID );
   BattleRec_UnloadToolModule();
 
   PMSND_PauseBGM(TRUE);

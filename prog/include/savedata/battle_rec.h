@@ -31,15 +31,15 @@ enum {
 typedef u64 DATA_NUMBER;
 
 //ロードデータ用インデックス
-#define LOADDATA_MYREC    (0)
-#define LOADDATA_DOWNLOAD0  (1)
-#define LOADDATA_DOWNLOAD1  (2)
-#define LOADDATA_DOWNLOAD2  (3)
+enum
+{
+  LOADDATA_MYREC,
+  LOADDATA_DOWNLOAD0,
+  LOADDATA_DOWNLOAD1,
+  LOADDATA_DOWNLOAD2,
 
-//ポケウッド用（のちのちポケウッド用録画データは別になる可能性がある） TODO
-#define LOADDATA_POKEWOOD0  (4)
-#define LOADDATA_POKEWOOD1  (5)
-
+  LOADDATA_MAX,
+};
 
 ///録画データロード時の結果値
 #define RECLOAD_RESULT_NULL   (0) ///<データなし
@@ -193,7 +193,13 @@ extern void BattleRec_CalcCrcRec( BATTLE_REC_WORK_PTR rec );
 extern void BattleRec_LoadToolModule( void );
 extern void BattleRec_UnloadToolModule( void );
 extern void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup );
-extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID );
+
+typedef enum
+{
+  BTLREC_RESOTRE_MODE_NORMAL,
+  BTLREC_RESOTRE_MODE_POKEWOOD,
+}BTLREC_RESOTRE_MODE;
+extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE mode, HEAPID heapID );
 
 //==============================================================================
 //  一部関数をbattle_rec_ov.cに移動した為、外部公開する必要になったもの

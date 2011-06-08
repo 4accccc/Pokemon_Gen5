@@ -1,0 +1,69 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		pokewood_rec.h
+ *	@brief  ポケウッド用戦闘録画セーブデータ
+ *	@author	Toru=Nagihashi
+ *	@date		2011.06.08
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
+//全クライアントの操作内容保持バッファサイズ
+#define POKEWOOD_REC_OPERATION_BUFFER_SIZE  (0xc00) 
+
+//ポケウッドでセーブするクライアント数
+#define POKEWOOD_REC_CLIENT_MAX             (4)
+
+//ポケウッドでセーブする１クライアントあたりの手持ち数
+#define POKEWOOD_REC_TEMOTI_MAX             (6)
+
+//TODO 後々、敵のデータをROMから読み込むので、クライアントは１or2になる。
+//仕様によってはポケモン手持ち数も減る
+//ROMから読み込む部分はbattle_rec_tool.cに書くこと
+
+typedef enum
+{
+  LOADDATA_POKEWOOD0 = LOADDATA_MAX,  //battle_rec.hのロードデータの続きから始まる
+  LOADDATA_POKEWOOD1,
+}POKEWOOD_LOADDATA_NUM;
+
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	ポケウッド戦闘録画本体
+//=====================================
+typedef struct _POKEWOOD_REC_WORK POKEWOOD_REC_WORK;
+
+//-------------------------------------
+///	ポケウッド操作内容保存バッファ
+//=====================================
+typedef struct _POKEWOOD_REC_OPERATION_BUFFER POKEWOOD_REC_OPERATION_BUFFER;
+
+//=============================================================================
+/**
+ *					外部公開関数
+*/
+//=============================================================================
+//読み込みバッファの作成
+extern void POKEWOOD_REC_Init( HEAPID heapID );
+extern void POKEWOOD_REC_Exit( void );
+
+//セーブ　ロード
+extern LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num );
+extern SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOADDATA_NUM num, u16 *p_work );
+
+//存在チェック
+extern BOOL POKEWOOD_REC_IsExist( void );
+
+//取得
+extern POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void );

@@ -37,6 +37,7 @@
 #include "debug\debug_makepoke.h"
 #include "poke_tool\monsno_def.h"
 #include "savedata\battle_rec.h"
+#include "savedata\pokewood_rec.h"
 #include "battle\battle.h"
 #include "field\zonedata.h"
 #include "fieldmap\zone_id.h"
@@ -788,7 +789,7 @@ static BOOL mainProc_Save( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq );
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq );
 static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVEDATA* save );
-static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam );
+static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam, u8 bufID );
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID );
 static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst );
 static void setDebugParams( const DEBUG_BTL_SAVEDATA* save, BATTLE_SETUP_PARAM* setup );
@@ -833,10 +834,11 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     GF_ASSERT_MSG( pp_size <= POKEPARA_SIZE, "PPSize=%d bytes", pp_size );
   }
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,    0x11000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_SYS,    0x20000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BTL_DEBUG_VIEW,   0xb0000 );
 
   BattleRec_Init(HEAPID_BTL_DEBUG_SYS );
+  POKEWOOD_REC_Init( HEAPID_BTL_DEBUG_SYS );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(DEBUG_BTL_WORK), HEAPID_BTL_DEBUG_SYS );
   GFL_STD_MemClear( wk, sizeof(DEBUG_BTL_WORK) );
@@ -894,6 +896,7 @@ static GFL_PROC_RESULT DebugFightProcQuit( GFL_PROC * proc, int * seq, void * pw
   GFL_HEAP_FreeMemory( wk->ppTmpWork );
   deleteTemporaryModules( wk );
   quitGraphicSystems();
+  POKEWOOD_REC_Exit();
   BattleRec_Exit();
 
   GFL_HEAP_DeleteHeap( HEAPID_BTL_DEBUG_VIEW );
@@ -2360,6 +2363,31 @@ FS_EXTERN_OVERLAY(battle);
 
     BATTLE_PARAM_Init( &wk->setupParam );
 
+
+    //モードと録画箇所がかってなかったら返す
+    if( wk->saveData.recMode != DBF_RECMODE_NONE )
+    {
+      int pokewoodflag = btltype_GetPokewood(wk->saveData.btlType);
+      if( wk->saveData.recBufID < LOADDATA_MAX )
+      {
+        if( pokewoodflag != BTL_POKEWOOD_NONE )
+        {
+          PMSND_PlaySE( SEQ_SE_BEEP );
+          (*seq) = SEQ_WAIT_BEEP;
+          break;
+        }
+      }
+      else
+      {
+        if( pokewoodflag == BTL_POKEWOOD_NONE )
+        {
+          PMSND_PlaySE( SEQ_SE_BEEP );
+          (*seq) = SEQ_WAIT_BEEP;
+          break;
+        }
+      }
+    }
+
     // 録画再生
     if( wk->saveData.recMode == DBF_RECMODE_PLAY )
     {
@@ -2647,7 +2675,7 @@ FS_EXTERN_OVERLAY(battle);
             PP_SetSick( pp, POKESICK_NULL );
           }
         }
-        SaveRecordStart( wk, &(wk->setupParam) );
+        SaveRecordStart( wk, &(wk->setupParam), wk->saveData.recBufID );
         (*seq) = SEQ_BTL_SAVING;
       }else{
         (*seq) = SEQ_BTL_RELEASE;
@@ -2672,6 +2700,8 @@ FS_EXTERN_OVERLAY(battle);
 
   case SEQ_WAIT_BEEP:
     if( !PMSND_CheckPlaySE() ){
+      GX_SetMasterBrightness( 0 );
+      GXS_SetMasterBrightness( 0 );
       setMainProc( wk, mainProc_Root );
     }
     break;
@@ -2700,11 +2730,12 @@ static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVED
 /**
  *  BATTLE_SETUP_PARAM の録画データセーブ開始
  */
-static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam )
+static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam, u8 bufID )
 {
   BattleRec_StoreSetupParam( setupParam );
 
   TAYA_Printf("*** 録画データバッファダンプ（書き込み直後）***\n");
+  if( bufID < LOADDATA_MAX )
   {
     u8* p = (u8*)BattleRec_GetOperationBufferPtr();
     u32 i;
@@ -2715,6 +2746,7 @@ static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setup
         TAYA_Printf("\n");
       }
     }
+
   }
 
   wk->saveCtrl = GAMEDATA_GetSaveControlWork( wk->gameData );
@@ -2728,23 +2760,40 @@ static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setup
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID )
 {
   SAVE_RESULT result;
-  result = BattleRec_Save(wk->gameData, wk->heapID, 0, 0, bufID, &wk->saveSeq0, &wk->saveSeq1);
-  switch( result ){
-  case SAVE_RESULT_OK:
-    {
-      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
-      TAYA_Printf("録画データ正常にセーブ完了 (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
-    }
-    return TRUE;
-  case SAVE_RESULT_NG:
-    {
-      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
-      TAYA_Printf("録画データセーブ失敗 ... (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
-    }
-    return TRUE;
 
-  default:
-    return FALSE;
+  if( bufID < LOADDATA_MAX )
+  {
+	  result = BattleRec_Save(wk->gameData, wk->heapID, 0, 0, bufID, &wk->saveSeq0, &wk->saveSeq1);
+	  switch( result ){
+	  case SAVE_RESULT_OK:
+	    {
+	      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
+	      TAYA_Printf("録画データ正常にセーブ完了 (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
+	    }
+	    return TRUE;
+	  case SAVE_RESULT_NG:
+	    {
+	      u32* dataPtr = (u32*)BattleRec_GetOperationBufferPtr();
+	      TAYA_Printf("録画データセーブ失敗 ... (bufID=%d, dataPtr=%p, dump=%08x)\n", bufID, dataPtr, *dataPtr);
+	    }
+	    return TRUE;
+	
+	  default:
+	    return FALSE;
+	  }
+  }
+  else
+  {
+	  result = POKEWOOD_REC_Save(wk->gameData, wk->heapID, bufID, &wk->saveSeq0 );
+	  switch( result ){
+	  case SAVE_RESULT_OK:
+	    return TRUE;
+	  case SAVE_RESULT_NG:
+	    return TRUE;
+	
+	  default:
+	    return FALSE;
+	  }
   }
 }
 /**
@@ -2754,12 +2803,22 @@ static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
 {
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( wk->gameData );
   LOAD_RESULT result;
+  BTLREC_RESOTRE_MODE mode;
 
-  BattleRec_Load( sv, wk->heapID, &result, bufID );
+  if( bufID < LOADDATA_MAX )
+  {
+    BattleRec_Load( sv, wk->heapID, &result, bufID );
+    mode = BTLREC_RESOTRE_MODE_NORMAL;
+  }
+  else
+  {
+    result = POKEWOOD_REC_Load( sv, wk->heapID, bufID );
+    mode = BTLREC_RESOTRE_MODE_POKEWOOD;
+  }
   if( result == LOAD_RESULT_OK )
   {
     BTL_SETUP_InitForRecordPlay( dst, wk->gameData, wk->heapID );
-    BattleRec_RestoreSetupParam( dst, wk->heapID );
+    BattleRec_RestoreSetupParam( dst, mode, wk->heapID );
     return TRUE;
   }
   else
