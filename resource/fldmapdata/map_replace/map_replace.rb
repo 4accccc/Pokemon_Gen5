@@ -57,13 +57,21 @@ class Dict
   #マップマトリックスID検索
   def Dict.searchMatrix( str )
     name = "NARC_map_matrix_" + str.downcase + "_mat_bin"
-    return @@matrix_syms.search( name )
+    result = @@matrix_syms.search( name )
+    if result == nil then
+      raise FileReadError, " matrix ID '#{str}' は未定義です\n"
+    end
+    return result
   end
 
   #地形ブロックID検索
   def Dict.searchLandData( str )
     name = "NARC_map_land_data_" + str + "_3dppack"
-    return @@landdata_syms.search( name )
+    result = @@landdata_syms.search( name )
+    if result == nil then
+      raise FileReadError, " map block ID '#{str}' は未定義です\n"
+    end
+    return result
   end
 
   #タイプ指定検索
@@ -211,7 +219,9 @@ class MapReplaceArray
 
   def dumpBinary()
     output = ""
-    @items.each{|item| output += item.dumpBinary() }
+    @items.each{|item|
+      output += item.dumpBinary()
+    }
     return output
   end
 
