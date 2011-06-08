@@ -1,3 +1,5 @@
 DATA_LIST = \
-  hasu01.nsbmd
+  hasu.nsbmd \
+  hasu_move.nsbca \
+  hasu_shake.nsbca
 

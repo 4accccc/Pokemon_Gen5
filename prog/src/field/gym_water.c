@@ -59,8 +59,32 @@
 
 #define HASU_NUM   (11);   // ハスの個数
 
-#define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハス1　X座標
-#define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハス1　Z座標
+#define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
+#define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
+#define HASU2_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　X座標
+#define HASU2_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　Z座標
+#define HASU3_X    (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　X座標
+#define HASU3_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　Z座標
+#define HASU4_X    (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　X座標
+#define HASU4_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　Z座標
+#define HASU5_X    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　X座標
+#define HASU5_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　Z座標
+#define HASU6_X    ( 6 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　X座標
+#define HASU6_Z    (31 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　Z座標
+#define HASU7_X    (12 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　X座標
+#define HASU7_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　Z座標
+#define HASU8_X    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　X座標
+#define HASU8_Z    (22 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　Z座標
+#define HASU9_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　X座標
+#define HASU9_Z    (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　Z座標
+#define HASU10_X   (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　X座標
+#define HASU10_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　Z座標
+#define HASU11_X   (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　X座標
+#define HASU11_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　Z座標
+
+// アニメ
+#define HASU_ANM_MOVE   (0)   // 常時たゆわう
+#define HASU_ANM_SHAKE  (1)   // 降りるとき
 
 //=============================================================================
 /**
@@ -119,11 +143,23 @@ typedef struct {
 // リソースの並び順
 enum {
   RESID_HASU_MDL = 0,     // ハス
+  RESID_HASU_ANM_MOVE,    // ハスが揺れる(降りるとき)
+  RESID_HASU_ANM_SHAKE,   // ハスがたゆわう(常時)
 };
 
 // OBJインデックス
 enum {
-  OBJ_HASU_1,
+  OBJ_HASU_1,   // ハスA
+  OBJ_HASU_2,   // ハスB
+  OBJ_HASU_3,   // ハスC
+  OBJ_HASU_4,   // ハスD
+  OBJ_HASU_5,   // ハスE
+  OBJ_HASU_6,   // ハスF
+  OBJ_HASU_7,   // ハスG
+  OBJ_HASU_8,   // ハスH
+  OBJ_HASU_9,   // ハスI
+  OBJ_HASU_10,  // ハスJ
+  OBJ_HASU_11,  // ハスK
 
   OBJ_NUM,
 };
@@ -131,7 +167,16 @@ enum {
 // RES
 static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
-  { ARCID_GYM_WATER, NARC_gym_water_hasu01_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_move_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_shake_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+};
+
+// ANIME
+static const GFL_G3D_UTIL_ANM anm_hasu[] =
+{
+  { RESID_HASU_ANM_SHAKE, 0 }, // nsbca
+  { RESID_HASU_ANM_MOVE, 0 }, // nsbca
 };
 
 // OBJ
@@ -142,8 +187,88 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_HASU_MDL,       // モデルリソースID
     0,                    // モデルデータID(リソース内部INDEX)
     RESID_HASU_MDL,       // テクスチャリソースID
-    NULL,         // アニメテーブル(複数指定のため)
-    0, // アニメリソース数
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス2
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス3
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス4
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス5
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス6
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス7
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス8
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス9
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス10
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
+  },
+  // ハス11
+  {
+    RESID_HASU_MDL,       // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_HASU_MDL,       // テクスチャリソースID
+    anm_hasu,             // アニメテーブル(複数指定のため)
+    NELEMS(anm_hasu),     // アニメリソース数
   },
 };
 
@@ -466,6 +591,16 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
   {
     VecFx32 pos[ OBJ_NUM ] = {
       { HASU1_X, 0, HASU1_Z },
+      { HASU2_X, 0, HASU2_Z },
+      { HASU3_X, 0, HASU3_Z },
+      { HASU4_X, 0, HASU4_Z },
+      { HASU5_X, 0, HASU5_Z },
+      { HASU6_X, 0, HASU6_Z },
+      { HASU7_X, 0, HASU7_Z },
+      { HASU8_X, 0, HASU8_Z },
+      { HASU9_X, 0, HASU9_Z },
+      { HASU10_X, 0, HASU10_Z },
+      { HASU11_X, 0, HASU11_Z },
     };
 
     u16 obj_idx = i;    // OBJインデックス
@@ -495,18 +630,17 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, FALSE );
 
-#if 0
     // アニメ再生
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-      // ICA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
-      // ITA
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
+      // MOVE
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE, TRUE );
+      // SHAKE
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_SHAKE, FALSE );
+
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
     }
-#endif
   }
 
 }
@@ -885,27 +1019,35 @@ static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk )
 {
   const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
 
-  const int merge = (3 * FIELD_CONST_GRID_FX32_SIZE);
+  const int merge = (3);
   VecFx32 pos;
   u16 obj_idx = 0;
+  s16 start_gx;
+  s16 start_gy;
+  s16 start_gz;
   int i;
 
-  // 自機位置取得
-  FIELD_PLAYER_GetPos( cp_player, &pos );
+  // 自機グリッド位置
+  FIELD_PLAYER_GetGridPos( cp_player, &start_gx, &start_gy, &start_gz );
 
   // 4方向チェック
   for( i=0; i<DIR_MAX4; i++ )
   {
-    fx32 x = pos.x;
-    fx32 z = pos.z;
+    fx32 x;
+    fx32 z;
+    int gx = start_gx;
+    int gz = start_gz;
 
     switch( i ){
-    case DIR_UP:    z -= merge; break;
-    case DIR_DOWN:  z += merge; break;
-    case DIR_LEFT:  x -= merge; break;
-    case DIR_RIGHT: x += merge; break;
+    case DIR_UP:    gz -= merge; break;
+    case DIR_DOWN:  gz += merge; break;
+    case DIR_LEFT:  gx -= merge; break;
+    case DIR_RIGHT: gx += merge; break;
     default: GF_ASSERT(0);
     }
+
+    x = GRID_TO_FX32(gx);
+    z = GRID_TO_FX32(gz);
 
     // 半グリッドずれを調整
     x += GRID_HALF_SIZE;
@@ -933,9 +1075,6 @@ static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk )
 static void HASU_InitExHeight( GYM_WATER_TMP *p_wk )
 {
   int i;
-
-  // 拡張高さリセット
-  EX_HEIGHT_Reset( p_wk );
 
   for( i=0; i<2; i++ )
   {
@@ -1164,6 +1303,9 @@ static void EX_HEIGHT_Reset( GYM_WATER_TMP *p_wk )
   }
 
   p_wk->ex_height_idx = 0;
+
+  // セーブデータも破棄
+  HASU_ExitExHeight( p_wk );
 }
 
 //----------------------------------------------------------------------------
