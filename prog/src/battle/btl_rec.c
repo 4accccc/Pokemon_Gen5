@@ -10,6 +10,7 @@
 
 #include <gflib.h>
 #include "savedata\battle_rec.h"
+#include "savedata\pokewood_rec.h"
 
 #include "btl_common.h"
 #include "btl_util.h"
@@ -82,14 +83,9 @@ struct _BTL_REC {
   u8   fSizeOver;
   u8   dmy;
   const void* readData;
-
-#if 1
   u8   buf[ BTLREC_OPERATION_BUFFER_SIZE ];
-#else
-  // ２ターンでバッファを一杯にするテスト措置用
-  u8   buf[ 24 ];
-#endif
 
+  u32 buf_size;
 };
 
 
@@ -102,9 +98,19 @@ struct _BTL_REC {
  * @retval  BTL_REC*
  */
 //=============================================================================================
-BTL_REC* BTL_REC_Create( HEAPID heapID )
+BTL_REC* BTL_REC_Create( HEAPID heapID, int pokewood )
 {
   BTL_REC* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_REC) );
+
+  if( pokewood == BTL_POKEWOOD_NONE )
+  {
+    wk->buf_size = BTLREC_OPERATION_BUFFER_SIZE;
+  }
+  else
+  {
+    wk->buf_size = POKEWOOD_REC_OPERATION_BUFFER_SIZE;
+  }
+
   return wk;
 }
 //=============================================================================================
@@ -139,7 +145,10 @@ void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size )
     --size;
 
     endPtr = wk->writePtr + size;
-    if( endPtr <= sizeof(wk->buf) )
+
+    NAGI_Printf( "rec%d\n",size );
+
+    if( endPtr <= wk->buf_size )
     {
       GFL_STD_MemCopy( pData, &wk->buf[wk->writePtr], size );
       wk->writePtr = endPtr;
@@ -485,6 +494,8 @@ void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_
   if( (recTool->clientBit & (1 << clientID)) == 0 )
   {
     u32 endPtr = recTool->writePtr + ((sizeof(BTL_ACTION_PARAM) * numAction) + 1);
+
+    NAGI_Printf( "BTL_REC end%d start%d numAct%d\n", endPtr, recTool->writePtr, numAction );
     if( endPtr <= sizeof(recTool->buffer) )
     {
       recTool->clientBit |= (1 << clientID);

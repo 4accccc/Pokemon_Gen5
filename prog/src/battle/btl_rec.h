@@ -80,7 +80,7 @@ extern BOOL BTL_RECTOOL_RestoreFwd( BTL_RECTOOL* recTool, u32* rp, u8* clientID,
 
 typedef struct _BTL_REC   BTL_REC;
 
-extern BTL_REC* BTL_REC_Create( HEAPID heapID );
+extern BTL_REC* BTL_REC_Create( HEAPID heapID, int pokewood );
 extern void BTL_REC_Delete( BTL_REC* wk );
 extern void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size );
 extern BOOL BTL_REC_IsCorrect( const BTL_REC* wk );

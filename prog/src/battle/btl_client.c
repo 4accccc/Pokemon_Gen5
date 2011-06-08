@@ -609,7 +609,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   if( (wk->myType == BTL_CLIENT_TYPE_UI)
   &&  (BTL_MAIN_IsRecordEnable(wk->mainModule))
   ){
-    wk->btlRec = BTL_REC_Create( heapID );
+    int pokewood = BTL_MAIN_GetPokewoodMode(wk->mainModule);
+    wk->btlRec = BTL_REC_Create( heapID, pokewood );
   }else{
     wk->btlRec = NULL;
   }

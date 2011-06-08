@@ -191,13 +191,14 @@ SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOA
 
 //----------------------------------------------------------------------------
 /**
- *	@brief 存在しているかチェック
+ *	@brief 存在しているかチェック 何らかのデータがあるかどうか
  *	@return　TRUE存在　FALSEなし
  */
 //-----------------------------------------------------------------------------
 BOOL POKEWOOD_REC_IsExist( void )
 {
-  return FALSE; // TODO
+  GF_ASSERT( sp_pokewood_rec_sv != NULL );
+  return GFL_STD_CODED_CheckSum(sp_pokewood_rec_sv, SAVESIZE_EXTRA_POKEWOOD) != 0;
 }
 
 //----------------------------------------------------------------------------
