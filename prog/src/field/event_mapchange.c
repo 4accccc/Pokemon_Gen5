@@ -102,6 +102,8 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "resonance_resort/resort_map.h"
 #include "resonance_resort/resort_binary.h"
 
+#include "map_replace.h"  //MAPREPLACE_GetFlag
+
 //============================================================================================
 
 #define MMLID_MAX  (MMLID_NOENTRY)
@@ -3259,6 +3261,18 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
 
   //レゾナンスリゾートの設定
   MAPCHG_SetUpResort( gamedata, zone_id );
+
+  //仮：イベントによるエリアデータ切り替え
+  if ( MAPREPLACE_GetFlag( gamedata, MAPREPLACE_ID_01 ) )
+  {
+    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, TRUE );
+    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08W_ID, TRUE );
+  }
+  else
+  {
+    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08B_ID, FALSE );
+    ZONEDATA_SetChangeAreaID( ZONEDATA_CHANGE_AREA_C08W_ID, FALSE );
+  }
 }
 
 //--------------------------------------------------------------
