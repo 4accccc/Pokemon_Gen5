@@ -69,6 +69,7 @@
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  BOOL                is_hasu_ride;   // ハスの上かフラグ
   u8                  ex_height_idx;  // 拡張高さインデックス         
 } GYM_WATER_TMP;
 
@@ -213,6 +214,7 @@ static void EXPOBJ_ObjMain( GYM_WATER_TMP *p_wk );
 static BOOL HASU_CheckPos( FLD_EXP_OBJ_CNT_PTR exp_obj, const fx32 x, const fx32 z, u16 *p_obj_idx );
 static BOOL HASU_GetCenterPos( u8 id, int *p_gx, int *p_gz );
 static int HASU_GetMoveDistance( GYM_WATER_TMP *p_wk, u8 id );
+static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk );
 
 // HASUイベント
 static GMEVENT * HASU_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u8 id, u16 obj_idx );
@@ -224,6 +226,7 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk );
 
 
 // EX_HEIGHT 拡張高さ
+static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz );
 static void EX_HEIGHT_Reset( GYM_WATER_TMP *p_wk ); 
 static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id );
 static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx );
@@ -264,6 +267,7 @@ void GYM_WATER_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap = p_fieldmap;
 
+  p_wk->is_hasu_ride  = FALSE;
   p_wk->ex_height_idx = 0;
 
   // EXPOBJセット
@@ -306,6 +310,30 @@ void GYM_WATER_End(FIELDMAP_WORK *p_fieldmap)
 void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap)
 {
   GYM_WATER_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_WATER_TMP_ASSIGN_ID );
+  const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
+
+  // ハスの上にいる場合は降りたチェック
+  if( p_wk->is_hasu_ride == TRUE )
+  {
+    s16 gx, gy, gz;
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+
+    // 自機過去グリッド位置
+    // ※過去座標でないと、一瞬拡張高さの消えた状態が出来てしまう
+    gx = MMDL_GetOldGridPosX( mmdl);
+    gz = MMDL_GetOldGridPosZ( mmdl);
+
+    if( EX_HEIGHT_CheckHasuRide( p_wk, gx, gz ) == FALSE )
+    {
+      // ハスの上に乗っていない
+      p_wk->is_hasu_ride = FALSE;
+
+      // 拡張高さリセット
+      EX_HEIGHT_Reset( p_wk );
+
+      ICHI_Printf("ハスの上から降りた\n");
+    }
+  }
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
@@ -359,7 +387,8 @@ GMEVENT * GYM_WATER_CheckHasuEvent( GAMESYS_WORK *p_gamesys )
       // ハス存在チェック
       if( HASU_CheckPos( p_wk->exp_obj, x, z, &obj_idx ) )
       {
-        ICHI_Printf("はす %d イベント起動\n", obj_idx );
+        ICHI_Printf("はす %d イベント起動\n", i );
+
         event = HASU_CreateEvent( NULL, p_gamesys, i, obj_idx );
         return event;
       }
@@ -590,10 +619,20 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
   case SEQ_MOVE:
     {
+      // ハス移動終了チェック
       if( HASU_EVENT_MoveMain( p_wk ) == TRUE )
       {
-        // 拡張高さ更新
+        // 拡張高さリセット
+        EX_HEIGHT_Reset( p_gym_wk );
+
+        // 拡張高さ更新(自分のいるハス)
         EX_HEIGHT_Set2( p_gym_wk, p_wk->obj_idx );
+
+        // 周りのハスを調べて、拡張高さ更新
+        HASU_SetExHeight_DirMax4( p_gym_wk );
+
+        // ハスの上フラグを立てる
+        p_gym_wk->is_hasu_ride = TRUE;
 
         *seq = SEQ_END;
       }
@@ -634,16 +673,11 @@ static BOOL HASU_CheckPos( FLD_EXP_OBJ_CNT_PTR exp_obj, const fx32 x, const fx32
 {
   u8 i;
 
-  ICHI_Printf("x %x z %x\n", x, z);
-
   for( i=OBJ_HASU_1; i<OBJ_NUM; i++ )
   {
     u16 obj_idx = i;    // OBJインデックス
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
-
-    ICHI_Printf("OBJチェック");
-    ICHI_Printf("x %x z %x\n", status->trans.x, status->trans.z);
 
     if( status->trans.x == x && status->trans.z == z )
     {
@@ -717,9 +751,6 @@ static int HASU_GetMoveDistance( GYM_WATER_TMP *p_wk, u8 id )
   int start_gx;
   int start_gz;
 
-  //start_gx = HasuPosParam[ id ].gx;
-  //start_gz = HasuPosParam[ id ].gz;
-
   HASU_GetCenterPos( id, &start_gx, &start_gz );
 
   for( i=1; i< HasuPosParam[ id ].move_distance; i++ )
@@ -746,13 +777,59 @@ static int HASU_GetMoveDistance( GYM_WATER_TMP *p_wk, u8 id )
     if( HASU_CheckPos( p_wk->exp_obj, x, z, &obj_idx ) )
     {
       ICHI_Printf("途中にハス %d が見つかった\n", obj_idx );
-      EX_HEIGHT_Set2( p_wk, obj_idx );
       return i;
     }
   }
 
   // 見つからない場合は設定された距離
   return HasuPosParam[ id ].move_distance;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機の位置から四方向を調べてハスがあると拡張高さを設定する
+ *
+ *	@param	GYM_WATER_TMP *p_wk ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk )
+{
+  const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+
+  const int merge = (3 * FIELD_CONST_GRID_FX32_SIZE);
+  VecFx32 pos;
+  u16 obj_idx = 0;
+  int i;
+
+  // 自機位置取得
+  FIELD_PLAYER_GetPos( cp_player, &pos );
+
+  // 4方向チェック
+  for( i=0; i<DIR_MAX4; i++ )
+  {
+    fx32 x = pos.x;
+    fx32 z = pos.z;
+
+    switch( i ){
+    case DIR_UP:    z -= merge; break;
+    case DIR_DOWN:  z += merge; break;
+    case DIR_LEFT:  x -= merge; break;
+    case DIR_RIGHT: x += merge; break;
+    default: GF_ASSERT(0);
+    }
+
+    // 半グリッドずれを調整
+    x += GRID_HALF_SIZE;
+    z += GRID_HALF_SIZE;
+
+    if( HASU_CheckPos( p_wk->exp_obj, x, z, &obj_idx ) )
+    {
+      ICHI_Printf("周りにハス %d が見つかった\n", obj_idx );
+      // 拡張高さセット
+      EX_HEIGHT_Set2( p_wk, obj_idx );
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -814,6 +891,59 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
   }
 
   return FALSE;
+}
+
+//=============================================================================
+/**
+ *        EX_HEIGHT 拡張高さ関連
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハス(拡張高さ)の上に乗っているか
+ *
+ *	@param	p_wk  ギミックワーク 
+ *	@param  gx    チェックするグリッドX座標
+ *	@param  gz    チェックするグリッドZ座標
+ *
+ *	@return TRUEで乗っている
+ */
+//-----------------------------------------------------------------------------
+static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz )
+{
+  FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
+  EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
+
+  BOOL ret;
+  int  i;
+
+#if 1
+  // 拡張高さヒットチェック
+  for( i=0; i<p_wk->ex_height_idx; i++ )
+  {
+    ret = EXH_HitCheckHeight(	gx, gz, ex_height_list, i );
+
+    if( ret )
+    {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+#endif
+
+#if 0
+  // ハス起動位置にいるかチェック
+  for( i=0; i<HASU_POS_NUM; i++ )
+  {
+    if( gx == HasuPosParam[i].gx && gz == HasuPosParam[i].gz )
+    {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+#endif
 }
 
 //----------------------------------------------------------------------------
