@@ -242,7 +242,6 @@
   $VERSION_W2  ARCID_ZUKAN_AREA "zukan_area_w.narc"  # 図鑑で使用するポケモンの分布データ
   $VERSION_B2  ARCID_ZUKAN_AREA "zukan_area_b.narc"  # 図鑑で使用するポケモンの分布データ
   ARCID_ENTRANCE_CAMERA "entrance_camera.narc"  # 出入り口のカメラ演出データ
-  ARCID_ENC_CI_FACE "enc_ci_face.narc"  # エンカウントカットインバストアップ画像データ
   ARCID_COMM_BTL_DEMO_GRA "comm_btl_demo.narc" " 通信バトルデモ
   ARCID_SHINKA_DEMO "shinka_demo_particle.narc"  # 進化デモのデータ
   ARCID_GURU2  "guru2.narc" #ぐるぐる交換

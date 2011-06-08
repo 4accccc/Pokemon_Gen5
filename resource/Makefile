@@ -149,7 +149,6 @@ SUBDIRS	=	wmi \
 			tr_ai \
 			enceff_imd \
 			pl_boat \
-			enc_ci_face \
 			comm_btl_demo \
 			shinka_demo \
 			face_up \
