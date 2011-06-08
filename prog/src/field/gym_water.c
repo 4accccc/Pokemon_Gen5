@@ -33,6 +33,7 @@
 // mine
 #include "gym_water.h"
 #include "gym_water_se_def.h"
+#include "gym_water_sv.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -52,10 +53,13 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
+#define HASU_EX_OBJ_NULL (0xff)   // ハスOBJIDXなし
+#define HASU_EX_OBJ_IDX_MINE  (0) // 拡張高さハスインデックス(自分)
+#define HASU_EX_OBJ_IDX_OTHER (1) // 拡張高さハスインデックス(周り)
+
 #define HASU_NUM   (11);   // ハスの個数
 
 #define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハス1　X座標
-#define HASU1_Y    (0  * FIELD_CONST_GRID_FX32_SIZE)       // ハス1　Y座標
 #define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハス1　Z座標
 
 //=============================================================================
@@ -69,6 +73,7 @@
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  GYM_WATER_SV_WORK   *p_sv_wk;       // セーブワーク
   BOOL                is_hasu_ride;   // ハスの上かフラグ
   u8                  ex_height_idx;  // 拡張高さインデックス         
 } GYM_WATER_TMP;
@@ -222,6 +227,8 @@ static BOOL HASU_CheckPos( FLD_EXP_OBJ_CNT_PTR exp_obj, const fx32 x, const fx32
 static BOOL HASU_GetCenterPos( u8 id, int *p_gx, int *p_gz );
 static int HASU_GetMoveDistance( GYM_WATER_TMP *p_wk, u8 id );
 static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk );
+static void HASU_InitExHeight( GYM_WATER_TMP *p_wk );
+static void HASU_ExitExHeight( GYM_WATER_TMP *p_wk );
 
 // HASUイベント
 static GMEVENT * HASU_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u8 id, u16 obj_idx );
@@ -237,6 +244,18 @@ static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const in
 static void EX_HEIGHT_Reset( GYM_WATER_TMP *p_wk ); 
 static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id );
 static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx );
+
+
+//-------------------------------------
+///	セーブ情報
+//=====================================
+static void SAVE_SetHasuPos( GYM_WATER_SV_WORK *p_wk, const fx32 x, const fx32 z, const int idx );
+static void SAVE_GetHasuPos( GYM_WATER_SV_WORK *p_wk, fx32 *p_x, fx32 *p_z, const int idx );
+static void SAVE_SetSaveFlag( GYM_WATER_SV_WORK *p_wk );
+static BOOL SAVE_GetSaveFlag( GYM_WATER_SV_WORK *p_wk );
+static void SAVE_SetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx, const u8 obj_idx );
+static u8   SAVE_GetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx );
+
 
 #ifdef GYM_WATER_DEBUG_MENU
 //-------------------------------------
@@ -275,12 +294,19 @@ void GYM_WATER_Setup(FIELDMAP_WORK *p_fieldmap)
   
   p_wk->exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap = p_fieldmap;
+  p_wk->p_sv_wk = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_GYM_WATER );
 
   p_wk->is_hasu_ride  = FALSE;
   p_wk->ex_height_idx = 0;
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
+
+  // 初回セーブフラグが立っている場合
+  if( SAVE_GetSaveFlag( p_wk->p_sv_wk ) == TRUE )
+  {
+    HASU_InitExHeight( p_wk );
+  }
 
 #ifdef GYM_WATER_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, HEAPID_FIELDMAP );
@@ -301,6 +327,9 @@ void GYM_WATER_End(FIELDMAP_WORK *p_fieldmap)
 #ifdef GYM_WATER_DEBUG_MENU
   DEBUGMENU_Exit();
 #endif // GYM_WATER_DEBUG_MENU
+
+  // ハス拡張高さの破棄
+  HASU_ExitExHeight( p_wk );
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -435,9 +464,8 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
   // ハスの初期設定
   for( i=OBJ_HASU_1; i<OBJ_NUM; i++ )
   {
-    // 座標セット
     VecFx32 pos[ OBJ_NUM ] = {
-      { HASU1_X,  HASU1_Y,  HASU1_Z },
+      { HASU1_X, 0, HASU1_Z },
     };
 
     u16 obj_idx = i;    // OBJインデックス
@@ -445,9 +473,22 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
 
     // 座標
-    status->trans.x = pos[i].x;
-    status->trans.y = pos[i].y;
-    status->trans.z = pos[i].z;
+    // 初回ならデフォルト座標だが、
+    // 以降は、セーブされている座標
+    VEC_Set( &status->trans, 0,0,0 );
+    if( SAVE_GetSaveFlag( p_wk->p_sv_wk ) == FALSE )
+    {
+      status->trans.x = pos[i].x;
+      status->trans.z = pos[i].z;
+    }
+    else
+    {
+      // セーブデータから取得
+      SAVE_GetHasuPos( p_wk->p_sv_wk,
+          &status->trans.x,
+          &status->trans.z,
+          i );
+    }
 
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
@@ -478,6 +519,26 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjDell( GYM_WATER_TMP *p_wk )
 {
+  int i;
+
+  //=====================================
+  // ハスの初期設定
+  for( i=OBJ_HASU_1; i<OBJ_NUM; i++ )
+  {
+    u16 obj_idx = i;    // OBJインデックス
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+    // セーブデータ設定
+    SAVE_SetHasuPos( p_wk->p_sv_wk,
+        status->trans.x,
+        status->trans.z,
+        obj_idx );
+  }
+  // セーブしたフラグを立てる
+  SAVE_SetSaveFlag( p_wk->p_sv_wk );
+
+
   FLD_EXP_OBJ_DelUnit( p_wk->exp_obj, GYM_WATER_UNIT_IDX );
 }
 //----------------------------------------------------------------------------
@@ -553,6 +614,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_JUMP,
     SEQ_MOVE_INIT,
     SEQ_MOVE,
+    SEQ_SAVE,
     SEQ_END,
   };
 
@@ -636,6 +698,8 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
         // 拡張高さ更新(自分のいるハス)
         EX_HEIGHT_Set2( p_gym_wk, p_wk->obj_idx );
+        // セーブしておく
+        SAVE_SetObjIdx( p_gym_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE, p_wk->obj_idx );
 
         // 周りのハスを調べて、拡張高さ更新
         HASU_SetExHeight_DirMax4( p_gym_wk );
@@ -643,10 +707,26 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         // ハスの上フラグを立てる
         p_gym_wk->is_hasu_ride = TRUE;
 
-        *seq = SEQ_END;
+        *seq = SEQ_SAVE;
       }
     }
     break;
+
+  case SEQ_SAVE:
+    {
+      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx );
+
+      // セーブデータ設定
+      SAVE_SetHasuPos( p_gym_wk->p_sv_wk,
+          status->trans.x,
+          status->trans.z,
+          p_wk->obj_idx );
+      // セーブしたフラグを立てる
+      SAVE_SetSaveFlag( p_gym_wk->p_sv_wk );
+
+      *seq = SEQ_END;
+    }
+    /* break throw */
 
   case SEQ_END:
     {
@@ -836,9 +916,67 @@ static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk )
       ICHI_Printf("周りにハス %d が見つかった\n", obj_idx );
       // 拡張高さセット
       EX_HEIGHT_Set2( p_wk, obj_idx );
+      // セーブしておく
+      SAVE_SetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_OTHER, obj_idx );
     }
   }
+}
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハス拡張高さの初期化
+ *
+ *	@param	p_wk  ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void HASU_InitExHeight( GYM_WATER_TMP *p_wk )
+{
+  int i;
+
+  // 拡張高さリセット
+  EX_HEIGHT_Reset( p_wk );
+
+  for( i=0; i<2; i++ )
+  {
+    u8 ex_obj_idx = SAVE_GetObjIdx( p_wk->p_sv_wk, i );
+    if( ex_obj_idx != HASU_EX_OBJ_NULL )
+    {
+      // 拡張高さセット
+      EX_HEIGHT_Set2( p_wk, ex_obj_idx );
+
+      // ハスの上フラグを立てる
+      p_wk->is_hasu_ride = TRUE;
+      ICHI_Printf("ハス %d の上にいた\n", ex_obj_idx );
+    }
+  }
+  
+  // 接地させる
+  {
+    const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+    MMDL_UpdateCurrentHeight( mmdl );   // 接地
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハス拡張高さの破棄
+ *
+ *	@param	p_wk  ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void HASU_ExitExHeight( GYM_WATER_TMP *p_wk )
+{
+  // ハスに乗っていない場合は、NULLを入れておく
+  if( p_wk->is_hasu_ride == FALSE )
+  {
+    SAVE_SetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE, HASU_EX_OBJ_NULL );
+    SAVE_SetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_OTHER, HASU_EX_OBJ_NULL );
+  }
+  // ハスに乗っている場合は、
+  // フラグを立てている場所で、すでにセーブしている
+  
 }
 
 //----------------------------------------------------------------------------
@@ -1111,6 +1249,96 @@ static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx )
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
 
+}
+
+//=============================================================================
+/**
+ *        セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハスの位置を設定
+ *
+ *	@param	GYM_WATER_SV_WORK *p_wk 水ジムセーブワーク
+ *	@param	fx32 x    X座標
+ *	@param	fx32 z    Z座標
+ *	@param	int idx   ハスの番号
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetHasuPos( GYM_WATER_SV_WORK *p_wk, const fx32 x, const fx32 z, const int idx )
+{
+  p_wk->x[ idx ] = x;
+  p_wk->z[ idx ] = z;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハスの位置を取得
+ *
+ *	@param	GYM_WATER_SV_WORK *p_wk 水ジムセーブワーク
+ *	@param	*p_x      取得するX座標へのポインタ
+ *	@param	*p_z      取得するZ座標へのポインタ
+ *	@param	int idx   ハスの番号
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_GetHasuPos( GYM_WATER_SV_WORK *p_wk, fx32 *p_x, fx32 *p_z, const int idx )
+{
+  *p_x = p_wk->x[ idx ];
+  *p_z = p_wk->z[ idx ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回セーブフラグを設定
+ *
+ *	@param	p_wk  水ジムセーブワーク
+ *	@param	flag  フラグ
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetSaveFlag( GYM_WATER_SV_WORK *p_wk )
+{
+  p_wk->save_flag = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回セーブフラグを取得
+ *
+ *	@param	p_wk  水ジムセーブワーク
+ *
+ *	@return flag  フラグ
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetSaveFlag( GYM_WATER_SV_WORK *p_wk )
+{
+  return p_wk->save_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張高さが設定されているOBJインデックスを設定 
+ *
+ *	@param	GYM_WATER_SV_WORK *p_wk
+ *	@param	idx       セーブインデックス
+ *	@param	obj_idx   OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx, const u8 obj_idx )
+{
+  p_wk->ex_obj_idx[ idx ] = obj_idx;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張高さが設定されているOBJインデックスを取得 
+ *
+ *	@param	GYM_WATER_SV_WORK *p_wk
+ *	@param	idx   セーブインデックス
+ *
+ *	@return OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static u8   SAVE_GetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx )
+{
+  return p_wk->ex_obj_idx[ idx ];
 }
 
 #ifdef GYM_WATER_DEBUG_MENU
