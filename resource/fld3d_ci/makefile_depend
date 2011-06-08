@@ -1,0 +1,52 @@
+
+#------------------------------------------------------------------------------
+#
+#	フィールドカットインコンバート
+#
+#------------------------------------------------------------------------------
+
+# 共通定義を利用
+include mkdefine
+
+#------------------------------------------------------------------------------
+#※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
+#------------------------------------------------------------------------------
+#共通ルールファイルのインクルード
+include $(PROJECT_RSCDIR)\macro_define
+
+.PHONY:	do-build clean
+
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+.SUFFIXES:	
+endif
+
+#------------------------------------------------------------------------------
+#	make do-build ルール
+#------------------------------------------------------------------------------
+do-build: $(DATA_HASH) $(REPLACE_TEX_DEPEND)
+
+$(DATA_HASH): $(CSV_DATA) make_data_hash.rb
+	@echo __DATAHASH CONVERT
+	ruby make_data_hash.rb $(CSV_DATA) $(DATA_HASH)
+
+$(TEX_CSV_DATA): $(XLS_DATA) $(RURU_CNV)
+	$(XLS_CNV) -o $(TEX_CSV_DATA) -p 2 -s csv $(XLS_DATA)
+
+$(REPLACE_TEX_DEPEND):$(TEX_CSV_DATA)
+	ruby $(RURU_CNV) $(REPLACE_TEX_TARGET) $(REPLACE_TEX_DEPEND) $(TEX_CSV_DATA) $(ARC_LIST) $(DATA_ARC_LIST)
+
+#------------------------------------------------------------------------------
+#	make clean ルール
+#------------------------------------------------------------------------------
+clean:
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+	@rm -f $(DATA_HASH)
+	@rm -f $(TEX_CSV_DATA)
+	@rm -f $(ARC_LIST)
+	@rm -f $(DATA_ARC_LIST)
+	@rm -f ./cnv_tmp/*
+endif
+
+
+
+

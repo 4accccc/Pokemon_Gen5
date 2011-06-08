@@ -1,0 +1,24 @@
+#======================================================================
+#	mkdefine
+#	フィールドカットイン　共通define
+#======================================================================
+#------------------------------------------------------------------------------
+#※コンバート作業が必要なユーザーの名前を記述する
+#------------------------------------------------------------------------------
+USERS	=	saitou unno ibe_mana onoue_masayuki
+
+#ツールパス
+XLS_CNV   = ../../tools/exceltool/ExcelSeetConv.exe
+RURU_CNV  = convert_rule.rb
+
+
+#コンバート用定数
+REPLACE_TEX_TARGET 	= replace_tex_make_target
+REPLACE_TEX_DEPEND 	= replace_tex_depend
+TEX_CSV_DATA				= fld3d_ci_tex.csv
+XLS_DATA 						= fld3d_ci.xls
+CSV_DATA 						= fld3d_ci.csv
+DATA_HASH						= data_hash.rb
+ARC_LIST						= arc_list.txt
+DATA_ARC_LIST				= data_arc_list.txt
+

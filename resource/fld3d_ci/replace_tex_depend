@@ -1,0 +1,69 @@
+cnv_tmp\enc_gym04_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym04.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym04.NCGR cnv_tmp\enc_gym04_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym04_0_0_16_16_LZ.bin : cnv_tmp\enc_gym04_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym04_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym04.NCLR : replace_tex/VSdemo_Face/enc_gym04.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym04_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym04.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_gym04.NCGR cnv_tmp\enc_gym04_0_16_16_16.NCGR
+
+cnv_tmp\enc_gym04_0_16_16_16_LZ.bin : cnv_tmp\enc_gym04_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym04_0_16_16_16.NCGR
+
+cnv_tmp\enc_hero.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_hero_LZ.bin : cnv_tmp\enc_hero.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_hero.NCGR
+
+cnv_tmp\enc_hero.NCLR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_hero_up_down_0_0_16_16.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero_up_down.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_hero_up_down.NCGR cnv_tmp\enc_hero_up_down_0_0_16_16.NCGR
+
+cnv_tmp\enc_hero_up_down_0_0_16_16_LZ.bin : cnv_tmp\enc_hero_up_down_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_hero_up_down_0_0_16_16.NCGR
+
+cnv_tmp\enc_hero_up_down.NCLR : replace_tex/VSdemo_Hero_Heroine/enc_hero_up_down.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_hero_up_down_0_16_16_16.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero_up_down.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_hero_up_down.NCGR cnv_tmp\enc_hero_up_down_0_16_16_16.NCGR
+
+cnv_tmp\enc_hero_up_down_0_16_16_16_LZ.bin : cnv_tmp\enc_hero_up_down_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_hero_up_down_0_16_16_16.NCGR
+
+cnv_tmp\enc_heroine.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_heroine.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_heroine_LZ.bin : cnv_tmp\enc_heroine.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_heroine.NCGR
+
+cnv_tmp\enc_heroine.NCLR : replace_tex/VSdemo_Hero_Heroine/enc_heroine.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_heroine_up_down_0_0_16_16.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_heroine_up_down.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_heroine_up_down.NCGR cnv_tmp\enc_heroine_up_down_0_0_16_16.NCGR
+
+cnv_tmp\enc_heroine_up_down_0_0_16_16_LZ.bin : cnv_tmp\enc_heroine_up_down_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_heroine_up_down_0_0_16_16.NCGR
+
+cnv_tmp\enc_heroine_up_down.NCLR : replace_tex/VSdemo_Hero_Heroine/enc_heroine_up_down.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_heroine_up_down_0_16_16_16.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_heroine_up_down.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_heroine_up_down.NCGR cnv_tmp\enc_heroine_up_down_0_16_16_16.NCGR
+
+cnv_tmp\enc_heroine_up_down_0_16_16_16_LZ.bin : cnv_tmp\enc_heroine_up_down_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_heroine_up_down_0_16_16_16.NCGR
+

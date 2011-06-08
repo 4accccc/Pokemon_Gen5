@@ -1,0 +1,14 @@
+TARGET_LIST = \
+	cnv_tmp\enc_gym04_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym04.NCLR \
+	cnv_tmp\enc_gym04_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_hero_LZ.bin \
+	cnv_tmp\enc_hero.NCLR \
+	cnv_tmp\enc_hero_up_down_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_hero_up_down.NCLR \
+	cnv_tmp\enc_hero_up_down_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_heroine_LZ.bin \
+	cnv_tmp\enc_heroine.NCLR \
+	cnv_tmp\enc_heroine_up_down_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_heroine_up_down.NCLR \
+	cnv_tmp\enc_heroine_up_down_0_16_16_16_LZ.bin \

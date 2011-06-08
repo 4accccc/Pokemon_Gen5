@@ -1,0 +1,30 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fld3d_ci_tex.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FLD3D_CI_TEX_NAIX_
+#define NARC_FLD3D_CI_TEX_NAIX_
+
+enum {
+	NARC_fld3d_ci_tex_enc_gym04_0_0_16_16_LZ_bin = 0,
+	NARC_fld3d_ci_tex_enc_gym04_0_16_16_16_LZ_bin = 1,
+	NARC_fld3d_ci_tex_enc_hero_LZ_bin = 2,
+	NARC_fld3d_ci_tex_enc_hero_up_down_0_0_16_16_LZ_bin = 3,
+	NARC_fld3d_ci_tex_enc_hero_up_down_0_16_16_16_LZ_bin = 4,
+	NARC_fld3d_ci_tex_enc_heroine_LZ_bin = 5,
+	NARC_fld3d_ci_tex_enc_heroine_up_down_0_0_16_16_LZ_bin = 6,
+	NARC_fld3d_ci_tex_enc_heroine_up_down_0_16_16_16_LZ_bin = 7,
+	NARC_fld3d_ci_tex_enc_gym04_NCLR = 8,
+	NARC_fld3d_ci_tex_enc_hero_NCLR = 9,
+	NARC_fld3d_ci_tex_enc_hero_up_down_NCLR = 10,
+	NARC_fld3d_ci_tex_enc_heroine_NCLR = 11,
+	NARC_fld3d_ci_tex_enc_heroine_up_down_NCLR = 12
+};
+
+/* NARC_FLD3D_CI_TEX_NAIX_ */
+#endif
