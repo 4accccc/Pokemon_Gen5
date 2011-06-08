@@ -123,7 +123,7 @@ typedef struct{
 //-------------------------------------
 // BGPAL
 static const BS_BGPAL_DATA bs_bgpal_00_tbl[] = {
-	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_NCLR,	0,	3,},	// â∫ÅABG
+	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_NCLR,	0,	7,},	// â∫ÅABG
 	{ 0xff, 0, 0, 0,}, // end code
 };
 // BGCHR
@@ -218,7 +218,7 @@ static const BS_CANVAS_DATA bs_canvas_00_tbl[] = {
 	{ GFL_BG_FRAME1_S,	3,	3,	28,	2,	8,},		// TITLE_MES
 	{ GFL_BG_FRAME1_S,	3,	7,	28,	4,	8,},		// PLOT_MES
 	{ GFL_BG_FRAME1_S,	3,	14,	28,	4,	8,},		// GOAL_MES
-	{ GFL_BG_FRAME1_S,	2,	21,	10,	2,	8,},		// ãrñ{
+	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ãrñ{
 	{ GFL_BG_FRAME1_S,	14,	21,	10,	2,	8,},		// ã§ââé“
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
@@ -230,7 +230,7 @@ static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	10,	28,	2,	8,},		// SCENE01
 	{ GFL_BG_FRAME1_S,	3,	5,	28,	2,	8,},		// SCENE00_MES
 	{ GFL_BG_FRAME1_S,	3,	12,	28,	2,	8,},		// SCENE01_MES
-	{ GFL_BG_FRAME1_S,	2,	21,	10,	2,	8,},		// ãrñ{
+	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ãrñ{
 	{ GFL_BG_FRAME1_S,	12,	16,	 2,	2,	8,},		// åªç›(test)
 	{ GFL_BG_FRAME1_S,	15,	16,	 2,	2,	8,},		// ç≈ëÂ(test)
 	{ GFL_BG_FRAME1_S,	14,	16,	 1,	2,	8,},		// Åu/Åv(test)
@@ -251,7 +251,7 @@ static const BS_CANVAS_DATA bs_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME1_S,	16,	13,	12,	2,	8,},		// ãZ03
 	{ GFL_BG_FRAME1_S,	13,	15,	12,	2,	8,},		// ì¡ê´(fix)
 	{ GFL_BG_FRAME1_S,	13,	17,	12,	2,	8,},		// ì¡ê´2
-	{ GFL_BG_FRAME1_S,	2,	21,	10,	2,	8,},		// ãrñ{
+	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// ãrñ{
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -792,11 +792,24 @@ void BsCmn_ClearAllCanvas( BSCENARIO_WORK* wk )
 	s32		i;
 	
 	for(i=0;i<BS_CANVAS_MAXNUM;i++){
+#if 1
+		// win
+		if(wk->PrintUtil[i].win){
+			// chrë§
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[i].win ), MES_CLEAR_COLOR );
+			GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[i].win );
+			// scnë§
+			GFL_BMPWIN_ClearTransWindow( wk->PrintUtil[i].win );
+		}
+#else
+		BsCmn_ClearCanvas( wk, i );
+		//
 		if(wk->PrintUtil[i].win){
 			GFL_BMPWIN_ClearTransWindow( wk->PrintUtil[i].win );
 			// ì]ëóÇµÇ»Ç¢Ç∆ÇæÇﬂÇÁÇµÇ¢
-			PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+//			PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
 		}
+#endif
 	}
 }
 
@@ -818,7 +831,9 @@ void BsCmn_MainPrint( BSCENARIO_WORK *wk )
 	PRINTSYS_QUE_Main( wk->print_que );
 	//
 	for(i=0;i<BS_CANVAS_MAXNUM;i++){
-		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+		if(wk->PrintUtil[i].win){
+			PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+		}
 	}
 }
 

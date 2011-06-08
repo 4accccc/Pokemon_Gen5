@@ -159,6 +159,7 @@ typedef struct {
 	s32					NextMode;		///< 次
 	u32					Flag;			///< フラグ
 	s32					SubMode;		///< サブモード
+	s32					TitleMode;		///< タイトルモード(0-2)
 	// トップ情報
 	s32					TopNum;			///< 台本番号(0-39)
 	s32					TopCurPos;		///< カーソル位置

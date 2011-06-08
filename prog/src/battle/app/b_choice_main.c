@@ -859,24 +859,26 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 	}
 	
 	if(mflg == 0){
-		// 上
-		if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
-			flg = 1;
-		}
-		// 下
-		else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
-			flg = 2;
-		}
-		// 決定
-		else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
-			flg = 3;
-		}
 		// タッチペンの判定
+		id = bc_chk_tp( wk, wk->Mode );
+		if((id >= 0)&&(id < (wk->Mode+2))){
+			flg = 1;
+			tflg = 1;
+		}
+		//
+		// キー入力
 		if(flg == 0){
-			id = bc_chk_tp( wk, wk->Mode );
-			if((id >= 0)&&(id < (wk->Mode+2))){
+			// 上
+			if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
 				flg = 1;
-				tflg = 1;
+			}
+			// 下
+			else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+				flg = 2;
+			}
+			// 決定
+			else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+				flg = 3;
 			}
 		}
 	}
