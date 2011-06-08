@@ -20,6 +20,11 @@
 #ifndef ZONE_C04_EVC_H
 #define ZONE_C04_EVC_H
 
+#define C04_SWPLAZMAM_02                   0
+#define C04_SWPLAZMAM_01                   1
+#define C04_SWPLAZMAW_01                   2
+#define C04_SWRIVAL_01                     3
+#define C04_SWPLAZMAM_04                   4
 
 #endif //ZONE_C04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

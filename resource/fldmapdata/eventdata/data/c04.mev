@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/19 17:03:38
+#save date:2011/06/07 20:16:43
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,162 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c04.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+C04_SWPLAZMAM_02
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SWPLASMAM_01
+#Event Script Name
+SCRID_C04_SWPLAZMAM_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 16 -120
+#event number: 1
+#type
+1
+#ID name
+C04_SWPLAZMAM_01
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SWPLASMAM_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 16 -104
+#event number: 2
+#type
+1
+#ID name
+C04_SWPLAZMAW_01
+#OBJ CODE Number
+SWPLAZMAW
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SWPLASMAM_01
+#Event Script Name
+SCRID_C04_SWPLAZMAW_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 16 -136
+#event number: 3
+#type
+1
+#ID name
+C04_SWRIVAL_01
+#OBJ CODE Number
+SWRIVAL
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SWRIVAL_01
+#Event Script Name
+SCRID_C04_SWRIVAL_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 16 -104
+#event number: 4
+#type
+1
+#ID name
+C04_SWPLAZMAM_04
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C04_SWPLASMAM_01
+#Event Script Name
+SCRID_C04_SWPLAZMAM_04
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 16 -88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -133,7 +288,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POS_C04_SWRIVAL_01
+#Pos Script Name
+SCRID_POS_C04_SWRIVAL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C04_SWRIVAL
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 16 -88
+#size
+1 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
