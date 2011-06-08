@@ -23,6 +23,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
+ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 do-build: $(DATA_HASH) $(REPLACE_TEX_DEPEND)
 
 $(DATA_HASH): $(CSV_DATA) make_data_hash.rb
@@ -34,6 +35,7 @@ $(TEX_CSV_DATA): $(XLS_DATA) $(RURU_CNV)
 
 $(REPLACE_TEX_DEPEND):$(TEX_CSV_DATA)
 	ruby $(RURU_CNV) $(REPLACE_TEX_TARGET) $(REPLACE_TEX_DEPEND) $(TEX_CSV_DATA) $(ARC_LIST) $(DATA_ARC_LIST)
+endif
 
 #------------------------------------------------------------------------------
 #	make clean ルール
