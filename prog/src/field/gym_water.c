@@ -77,10 +77,17 @@ typedef struct {
 ///	ハス移動ワーク
 //=====================================
 typedef struct {
+
+  // 移動用
   int               frame;  // 現在のフレーム数
   int            endFrame;  // 最終フレーム数
   VecFx32        startPos;  // 移動開始位置
   VecFx32          endPos;  // 最終位置
+
+  // 上下ゆれ用
+  s16              Height;  // ゆれ高さ
+  u32                Sync;  // 1周期するのにかかるシンク数
+  u32             NowSync;  // 現在のシンク
 } HASU_MOVE_WORK;
 
 //-------------------------------------
@@ -238,7 +245,9 @@ static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx );
 static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
 static void DEBUGMENU_Exit( void );
 
-static int  debug_frame = 4;
+static int  debug_frame = HASU_MOVE_SPEED;
+static s16  debug_height = HASU_SHAKE_HEIGHT;
+static u32  debug_sync = HASU_SHAKE_SYNC;
 
 #endif // GYM_WATER_DEBUG_MENU
 
@@ -609,7 +618,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 #ifdef GYM_WATER_DEBUG_MENU
         HASU_EVENT_MoveInit( p_wk, move_distance*debug_frame, &move_pos );
 #else
-        HASU_EVENT_MoveInit( p_wk, move_distance*4, &move_pos );
+        HASU_EVENT_MoveInit( p_wk, move_distance*HASU_MOVE_SPEED, &move_pos );
 #endif
 
         *seq = SEQ_MOVE;
@@ -843,10 +852,22 @@ static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk )
 //-----------------------------------------------------------------------------
 static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos )
 {
-  p_wk->move_wk.frame = 0;
-  p_wk->move_wk.endFrame = frame;
-  VEC_Set( &p_wk->move_wk.endPos, pos->x, pos->y, pos->z );
-  FIELD_PLAYER_GetPos( p_wk->player, &p_wk->move_wk.startPos );
+  HASU_MOVE_WORK* p_move_wk = &p_wk->move_wk;
+
+  // 初期化
+  p_move_wk->frame = 0;
+  p_move_wk->endFrame = frame;
+  VEC_Set( &p_move_wk->endPos, pos->x, pos->y, pos->z );
+  FIELD_PLAYER_GetPos( p_wk->player, &p_move_wk->startPos );
+
+#ifdef GYM_WATER_DEBUG_MENU
+  p_move_wk->Height = debug_height;
+  p_move_wk->Sync   = debug_sync;
+#else
+  p_move_wk->Height = HASU_SHAKE_HEIGHT;
+  p_move_wk->Sync   = HASU_SHAKE_SYNC;
+#endif
+  p_move_wk->NowSync= 0;
 }
 //----------------------------------------------------------------------------
 /**
@@ -862,35 +883,73 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
   HASU_MOVE_WORK* p_move_wk = &p_wk->move_wk;
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
 
-  p_move_wk->frame++;
+  VecFx32 out_pos;      // 移動後位置
+  fx32    h;            // ハスゆれ値
+  BOOL    end = FALSE;
 
+  p_move_wk->frame++;
+ 
+  // 終了チェック
+  if( p_move_wk->endFrame <= p_move_wk->frame )
   {
-    VecFx32 v0, v1, v2;
+    end = TRUE;
+  }
+
+  //=====================================
+  // 移動
+  {
+    VecFx32 v0, v1;
     fx32 w1 = FX_F32_TO_FX32( (float)p_move_wk->frame / (float)p_move_wk->endFrame );
     fx32 w0 = FX32_ONE - w1;
 
     GFL_CALC3D_VEC_MulScalar( &p_move_wk->startPos, w0, &v0 );
     GFL_CALC3D_VEC_MulScalar( &p_move_wk->endPos,   w1, &v1 );
-    VEC_Add( &v0, &v1, &v2 );
+    VEC_Add( &v0, &v1, &out_pos );
+  }
 
-    // 自機更新
-    FIELD_PLAYER_SetPos( p_wk->player, &v2 );   // 移動
+  //=====================================
+  // ゆれ
+  {
+    int tmp;
+    u16 rad;
+    p_move_wk->NowSync++;
+    tmp = (p_move_wk->NowSync * 0x10000) / p_move_wk->Sync;
+    rad = tmp;
+    h = p_move_wk->Height * FX_SinIdx(rad);
 
-    // ハス更新
+    // ゆれセット
+    if( end )
     {
-      int obj_idx = p_wk->obj_idx;
-      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, obj_idx);
-      status->trans = v2;
+      // オフセット初期化
+      VecFx32 offset;
+      MMDL    *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+      VEC_Set( &offset, 0,0,0 );
+      MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+    }
+    else
+    {
+      VecFx32 offset;
+      MMDL    *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+      VEC_Set( &offset, 0,0,0 );
+      offset.y = h;
+      MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
     }
   }
 
-  // 終了チェック
-  if( p_move_wk->endFrame <= p_move_wk->frame )
+  //=====================================
+  // 自機更新
+  FIELD_PLAYER_SetPos( p_wk->player, &out_pos );   // 移動
+
+  // ハス更新
   {
-    return TRUE;
+    int obj_idx = p_wk->obj_idx;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, obj_idx);
+    out_pos.y += h;
+    status->trans = out_pos;
   }
 
-  return FALSE;
+  // 終了チェック
+  return end;
 }
 
 //=============================================================================
@@ -1073,6 +1132,10 @@ static BOOL DebugWin_ChangeData( int *p_param, int min, int max );
 // 音量の変更
 static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeData( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
 
 //----------------------------------------------------------------------------
 /**
@@ -1089,9 +1152,19 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
   // デバッグメニューグループ追加
   DEBUGWIN_AddGroupToTop( DEBUGMENU_GYM_WATER, "みずジム", heapID );
 
-  // 風力変更の時間
+  // 
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeData,
                               DebugWin_Draw_ChangeData,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_WATER,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeHeight,
+                              DebugWin_Draw_ChangeHeight,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_WATER,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeSync,
+                              DebugWin_Draw_ChangeSync,
                               p_fieldmap,
                               DEBUGMENU_GYM_WATER,
                               heapID );
@@ -1147,7 +1220,7 @@ static BOOL DebugWin_ChangeData( int *p_param, int min, int max )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  音量1変更 更新
+ *	@brief  ハス速度変更 更新
  *
  *	@param	*userWork ワーク
  *	@param	*item     アイテム
@@ -1167,7 +1240,7 @@ static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  音量1変更 描画
+ *	@brief  ハス速度変更 描画
  *
  *	@param	*userWork ワーク
  *	@param	*item     アイテム
@@ -1175,7 +1248,60 @@ static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
 //-----------------------------------------------------------------------------
 static void DebugWin_Draw_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
 {
-  DEBUGWIN_ITEM_SetNameV( item, "1GなんFでいどう[%d]", debug_frame );
+  DEBUGWIN_ITEM_SetNameV( item, "ハスそくど[%d]", debug_frame );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゆれ高さ 更新
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item )
+{
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  int value = debug_height;
+
+  if( DebugWin_ChangeData( &value, 0, 100 ) )
+  {
+    // 更新あり
+    debug_height = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゆれ高さ 描画
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "ゆれたかさ[%d]", debug_height );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゆれシンク 更新
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
+{
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  int value = debug_sync;
+
+  if( DebugWin_ChangeData( &value, 0, 100 ) )
+  {
+    // 更新あり
+    debug_sync = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゆれシンク 描画
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "ゆれシンク[%d]", debug_sync );
 }
 
 #endif // GYM_WATER_DEBUG_MENU
