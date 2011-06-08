@@ -579,6 +579,7 @@
 #define FV_C04_SWRIVAL_01                  661 /* 0x0295 ライモンシティ：ライバル */
 #define FV_C04_SWPLASMAM_01                662 /* 0x0296 ライモンシティ：プラズマ団 */
 #define FV_C13GYM0102_SWLEADER2ISS         663 /* 0x0297 C12GYM0102：ホミカISS */
+#define FV_C04_SWHEROINE_01                664 /* 0x0298 ライモンシティ：異性主人公 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
