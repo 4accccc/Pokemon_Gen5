@@ -88,10 +88,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・Black2ver
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:10:17" />
+				Time="2011-06-09T13:03:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -146,10 +147,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・White2ver
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:38:14" />
+				Time="2011-06-09T13:03:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -168,7 +170,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_03"
+		Label="msg_c08_swleader7_03b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -201,10 +203,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・Black2ver
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:10:19" />
+				Time="2011-06-09T13:03:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -213,6 +216,56 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-09T08:08:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_03w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T13:03:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T13:03:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T13:03:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T13:03:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T13:03:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T13:03:07" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
