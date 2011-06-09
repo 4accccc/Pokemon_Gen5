@@ -263,6 +263,8 @@ static void bs_set_pokework( BSCENARIO_WORK * wk );
 static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode );
 // 個数計算
 static void bs_calc_hintnum( BSCENARIO_WORK * wk );
+//
+static BOOL bs_chk_timeout( BSCENARIO_WORK * wk );
 
 //============================================================================================
 //  データ2
@@ -364,12 +366,10 @@ static void battle_scenario_main( GFL_TCB * tcb, void * work )
 {
 	BSCENARIO_WORK * wk = (BSCENARIO_WORK *)work;
 	
-//	if( wk->dat->comm_err_flg == TRUE ){
-//		wk->dat->ret_item = ITEM_DUMMY_DATA;
-//		wk->dat->ret_cost = 0;
-//		wk->seq = SEQ_BBAG_END;
-//		wk->Step = STEP_END;
-//	}
+	// 通信エラー時
+	if( wk->dat->comm_err_flg == TRUE ){
+		wk->Step = STEP_END;
+	}
 	//
 	// 処理
 	bs_main_seq( wk );
@@ -404,41 +404,34 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 	s32		i;
 	s32		mode;
 	
-	if( wk->initFlag == TRUE ){
-/*
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-			// 通信エラー時は強制クリア
-			if( wk->dat->comm_err_flg == 1 ){
-				PRINTSYS_QUE_Clear( wk->que );
-			}else{
-				return FALSE;
-			}
-	  }
-		if( WIPE_SYS_EndCheck() == FALSE ){
-			// 通信エラー時は強制終了
-			if( wk->dat->comm_err_flg == 1 ){
-				WIPE_SYS_ExeEnd();
-			}else{
-				return FALSE;
-			}
+	// キュー待ち
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		// 通信エラー時は強制クリア
+		if( wk->dat->comm_err_flg == TRUE ){
+			PRINTSYS_QUE_Clear( wk->print_que );
+		}else{
+			return FALSE;
 		}
-
-		if( wk->stream != NULL ){
-			PRINTSYS_PrintStreamDelete( wk->stream );
-		}
-*/
-//	  BBAGANM_ButtonExit( wk );
-
-//	  BattleBag_ObjFree( wk );
-//	  BattleBag_BmpFreeAll( wk );
-//	  BBAG_MsgManExit( wk );
-		// obj
-		BsCmn_ExitObj( wk );
-		// bg
-		bs_exit_bg( wk );
-		//
-		GFL_TCBL_Exit( wk->tcbl );
 	}
+	// ワイプ待ちの場合
+	if( WIPE_SYS_EndCheck() == FALSE ){
+		// 通信エラー時は強制終了
+		if( wk->dat->comm_err_flg == TRUE ){
+			WIPE_SYS_ExeEnd();
+		}else{
+			return FALSE;
+		}
+	}
+	//
+	//---------------------------
+	// 以下の処理になると完全終了
+	//---------------------------
+	// obj
+	BsCmn_ExitObj( wk );
+	// bg
+	bs_exit_bg( wk );
+	//
+	GFL_TCBL_Exit( wk->tcbl );
 	//
 	//メッセージ破棄
 	for(i=0;i<BS_MES_MAX;i++){
@@ -558,7 +551,9 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	wk->sfont = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->dat->heap );
 	//
 	// PRINT_QUE作成
-	wk->print_que = PRINTSYS_QUE_Create( wk->dat->heap );
+	// defaultの1024では、画面切り替え時に間に合わないことがあり、
+	// 画面がちらつくことがあったので2048に変更した
+	wk->print_que = PRINTSYS_QUE_CreateEx( 2048, wk->dat->heap );
 	//
 	// WORDSET生成
 	wk->Wordset = WORDSET_Create( wk->dat->heap );
@@ -2122,7 +2117,15 @@ static void bs_hide_info_obj( BSCENARIO_WORK * wk )
 static BOOL bs_main_loop( BSCENARIO_WORK * wk )
 {
 	BOOL	bflg=TRUE;
+	BOOL	tflg;
 	
+	// タイムアウトエラー判定
+	tflg = bs_chk_timeout( wk );
+	if(tflg == TRUE){
+		wk->NextMode = SMODE_END;
+		return( FALSE );
+	}
+	//
 	if((wk->Mode < 0)||(wk->Mode >= SMODE_MAX)){
 		OS_Printf("mode error\n");
 		return( FALSE );
@@ -2315,4 +2318,23 @@ static void bs_calc_hintnum( BSCENARIO_WORK * wk )
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	強制終了チェック
+ *
+ * @param	BSCENARIO_WORK*	wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL bs_chk_timeout( BSCENARIO_WORK * wk )
+{
+	BOOL	bflg=FALSE;
+	
+	// 判定
+	if( wk->dat->time_out_flg == TRUE ){
+		bflg = TRUE;
+	}
+	return( bflg );
+}
 

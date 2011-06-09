@@ -413,12 +413,11 @@ static void battle_choice_main( GFL_TCB * tcb, void * work )
 {
 	BCHOICE_WORK * wk = (BCHOICE_WORK *)work;
 	
-//	if( wk->dat->comm_err_flg == TRUE ){
-//		wk->dat->ret_item = ITEM_DUMMY_DATA;
-//		wk->dat->ret_cost = 0;
-//		wk->seq = SEQ_BBAG_END;
-//		wk->Step = STEP_END;
-//	}
+	// 通信エラー処理
+	if( wk->dat->comm_err_flg == TRUE ){
+		wk->Result = 0;
+		wk->Step = STEP_END;
+	}
 	//
 	// 処理
 	bc_main_seq( wk );
@@ -451,41 +450,34 @@ static BOOL battle_choice_end( GFL_TCB * tcb, BCHOICE_WORK * wk )
 	s32		i;
 	int		*adr;
 	
-	if( wk->initFlag == TRUE ){
-/*
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-			// 通信エラー時は強制クリア
-			if( wk->dat->comm_err_flg == 1 ){
-				PRINTSYS_QUE_Clear( wk->que );
-			}else{
-				return FALSE;
-			}
-	  }
-		if( WIPE_SYS_EndCheck() == FALSE ){
-			// 通信エラー時は強制終了
-			if( wk->dat->comm_err_flg == 1 ){
-				WIPE_SYS_ExeEnd();
-			}else{
-				return FALSE;
-			}
+	// キュー待ち
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		// 通信エラー時は強制クリア
+		if( wk->dat->comm_err_flg == TRUE ){
+			PRINTSYS_QUE_Clear( wk->print_que );
+		}else{
+			return FALSE;
 		}
-
-		if( wk->stream != NULL ){
-			PRINTSYS_PrintStreamDelete( wk->stream );
-		}
-*/
-//	  BBAGANM_ButtonExit( wk );
-
-//	  BattleBag_ObjFree( wk );
-//	  BattleBag_BmpFreeAll( wk );
-//	  BBAG_MsgManExit( wk );
-		// obj
-		bc_exit_obj( wk );
-		// bg
-		bc_exit_bg( wk );
-		//
-		GFL_TCBL_Exit( wk->tcbl );
 	}
+	// ワイプ待ち
+	if( WIPE_SYS_EndCheck() == FALSE ){
+		// 通信エラー時は強制終了
+		if( wk->dat->comm_err_flg == TRUE ){
+			WIPE_SYS_ExeEnd();
+		}else{
+			return FALSE;
+		}
+	}
+	
+	//-------------------------
+	// 以下の処理になると完全終了
+	//-------------------------
+	// obj
+	bc_exit_obj( wk );
+	// bg
+	bc_exit_bg( wk );
+	//
+	GFL_TCBL_Exit( wk->tcbl );
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	

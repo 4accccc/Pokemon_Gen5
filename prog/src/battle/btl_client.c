@@ -3471,7 +3471,7 @@ static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq )
     break;
 
   case 1:
-    // 制限時間による強制終了通知(現在未対応)
+    // 制限時間による強制終了通知
     if( CheckSelactForceQuit(wk, NULL) ){
       BTLV_SCENARIOSELECT_ForceQuit( wk->viewCore );
       (*seq) = 2;
@@ -3480,14 +3480,14 @@ static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq )
     
     if( BTLV_SCENARIOSELECT_Wait(wk->viewCore) )
     {
-		ClientSubProc_Set( wk, selact_Root );
+      ClientSubProc_Set( wk, selact_Root );
     }
     break;
 
   // 制限時間による強制終了待ち後
   case 2:
     if( BTLV_SCENARIOSELECT_Wait(wk->viewCore) ){
-      ClientSubProc_Set( wk, selact_ForceQuit );
+      ClientSubProc_Set( wk, selact_Root );
     }
     break;
 

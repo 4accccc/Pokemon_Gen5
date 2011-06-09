@@ -1583,34 +1583,15 @@ void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
   {
     wk->scenarioData.end_flg = FALSE;
     wk->scenarioData.heap 	 = wk->heapID;
-	wk->scenarioData.font	 = wk->largeFontHandle;
-	
-#if 0	// 敵パーティを取得できるようになれば削除でいいはず
-  // ポケモンリストパラメータ初期化
-    SetupPlistDataCommon( wk, &wk->plistData, BPL_MODE_ITEMUSE, 0, 0 );
-
-  //「さしおさえ」で道具を使用できないポケモンを指定
-    {
-      const BTL_PARTY* party = BTL_CLIENT_GetParty( wk->myClient );
-      const BTL_POKEPARAM* bpp;
-      u32 i, members = BTL_PARTY_GetMemberCount( party );
-
-      for(i=0; i<members; ++i){
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        wk->plistData.skill_item_use[ i ] = BPP_CheckSick( bpp, WAZASICK_SASIOSAE );
-      }
-      for( ; i<NELEMS(wk->plistData.skill_item_use); ++i){
-        wk->plistData.skill_item_use[ i ] = 0;  // 0=使用可 / 1=使用不可
-      }
-    }
-    // (自パーティでテスト)
-    wk->scenarioData.party = wk->plistData.pp;
-#else
-	// 相手側のパーティ情報を取得
-	wk->scenarioData.party = BTL_MAIN_GetClientSrcParty( wk->mainModule, BTL_CLIENT_ENEMY1 );
-	// 台本番号をセット
-	wk->scenarioData.scenario_num = BTL_MAIN_GetPokewoodSenarioNo( wk->mainModule );
-#endif
+    wk->scenarioData.font	 = wk->largeFontHandle;
+    wk->scenarioData.comm_err_flg = FALSE;
+    wk->scenarioData.time_out_flg = FALSE;
+    
+    // 相手側のパーティ情報を取得
+    wk->scenarioData.party = BTL_MAIN_GetClientSrcParty( wk->mainModule, BTL_CLIENT_ENEMY1 );
+    // 台本番号をセット
+    wk->scenarioData.scenario_num = BTL_MAIN_GetPokewoodSenarioNo( wk->mainModule );
+    //
     wk->selectItemSeq = 1;
   }
 }
@@ -1624,8 +1605,8 @@ void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_SCENARIOSELECT_ForceQuit( BTLV_CORE* wk )
 {
-//  wk->scenarioData.time_out_flg = TRUE;
-  wk->plistData.time_out_flg = TRUE;
+  wk->scenarioData.time_out_flg = TRUE;
+//  wk->scenarioData.comm_err_flg = TRUE;
 }
 
 //=============================================================================================
@@ -1706,6 +1687,7 @@ void BTLV_CHOICE_Start( BTLV_CORE* wk )
     wk->choiceData.end_flg	= FALSE;
     wk->choiceData.heap		= wk->heapID;
     wk->choiceData.font		= wk->largeFontHandle;
+    wk->choiceData.comm_err_flg = FALSE;
     
 //	wk->choiceData.mesnum 	= 3;					// 行数
 //	wk->choiceData.result	= &wk->choice_result;	// 結果格納
@@ -1755,8 +1737,7 @@ void BTLV_CHOICE_SetStrbuf( BTLV_CORE *wk, int no, STRBUF *str )
 //=============================================================================================
 void BTLV_CHOICE_ForceQuit( BTLV_CORE* wk )
 {
-//  wk->scenarioData.time_out_flg = TRUE;
-  wk->plistData.time_out_flg = TRUE;
+//  wk->choiceData.comm_err_flg = TRUE;
 }
 
 //=============================================================================================
