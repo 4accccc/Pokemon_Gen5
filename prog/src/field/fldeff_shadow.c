@@ -16,6 +16,7 @@
 #include "field_effect.h"
 #include "fldmmdl.h"
 #include "fldeff_shadow.h"
+#include "field/zonedata.h"
 
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 //======================================================================
@@ -328,16 +329,23 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
     /*
      * ハイリンクの森のシンボルポケのための調整
      * シンボルポケは、フリップを避けるためDrawOffsetに大き目のオフセットを
-     * 入れて描画しているので、影もDrawOffsetに追随する。
+     * 入れて描画しているので、影もDrawOffsetX・Zに追随する。
      *
      * 関連処理は fldmmdl_draw_0.c TsurePoke_SetAnmAndOffset()
      */
     if( obj_prm->draw_proc_no == MMDL_DRAWPROCNO_TPOKE ||
         obj_prm->draw_proc_no == MMDL_DRAWPROCNO_TPOKE_FLY ){
+
       //X,ZのDrawOffsetを引継ぎ、足元が影にめり込まないよう、ちょっと影の位置を通常より下げている
-      MMDL_GetVectorDrawOffsetPos( work->fmmdl, &offs );
+      if( ZONEDATA_IsBingo( MMDL_GetZoneID( work->fmmdl ))){
+        MMDL_GetVectorDrawOffsetPos( work->fmmdl, &offs );
+        offs.y = 0;
+      }else{
+        VEC_Set( &offs, 0,0,0 ); 
+      }
+      //小さいやつは足元が気になるので、Yもちょっと調整
 	    if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_32x32 ){
-        offs.y = FX32_CONST(-0.5);  //小さいやつは足元が気になるので、Yもちょっと調整
+        offs.y = FX32_CONST(-0.5);
       }
       VEC_Add( &pos, &offs, &pos );
     }

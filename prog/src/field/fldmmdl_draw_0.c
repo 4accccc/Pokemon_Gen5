@@ -1510,18 +1510,21 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
    *
    * 処理の意図・詳細については、MMDL_POKE_OFS_SYMBOL_ALL_Z定義のコメントを参照のこと
    */
-  if( ZONEDATA_IsBingo( zone_id) && !jiki_f){
-    u8 idx = gx%3;
-
-    //シンボルポケ同士のフリップ対策
-    if( idx == 0 ){
-      vec.z -= MMDL_POKE_OFS_SYMBOL_ALL_Z;
-    }else if( idx == 2){
-      vec.z += MMDL_POKE_OFS_SYMBOL_ALL_Z;
-    }
-  
-    //自機とのフリップ対策
+  if( !jiki_f )
+  {
+    //自機とのフリップ対策はビンゴマップに限らず入れる(スワンで通常フィールドにもTPOKEが置かれるようになるための処置)
     vec.z += MMDL_POKE_OFS_SYMBOL_FOR_PLAYER_Z;
+    
+    if( ZONEDATA_IsBingo( zone_id) ){
+      u8 idx = gx%3;
+
+      //シンボルポケ同士のフリップ対策
+      if( idx == 0 ){
+        vec.z -= MMDL_POKE_OFS_SYMBOL_ALL_Z;
+      }else if( idx == 2){
+        vec.z += MMDL_POKE_OFS_SYMBOL_ALL_Z;
+      }
+    } 
   }
   //向きからX描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
@@ -1542,17 +1545,16 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
    * もともと連れ歩き絵なので、そのままだとマップグリッド中心からずれて見えるのを
    * 補正するために、方向から描画オフセットをつけている。
    *
-   * 大きいポケモンについては気にならなかったので、小さいポケモンだけ
+   * BWでは大きいポケモンについては気にならなかったので、小さいポケモンだけにしていたが
+   * スワンでは大小問わずオフセットをつける
    */
-	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_32x32 ){
-		switch(dir){
-		case DIR_LEFT:
-			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT_S;
-			break;
-		case DIR_RIGHT:
-			outVec->x += MMDL_POKE_OFS_RIGHTLEFT_S;
-			break;
-		}
+  switch(dir){
+	case DIR_LEFT:
+	  outVec->x -= MMDL_POKE_OFS_RIGHTLEFT_S;
+		break;
+	case DIR_RIGHT:
+		outVec->x += MMDL_POKE_OFS_RIGHTLEFT_S;
+		break;
 	}
 }
 
