@@ -1181,8 +1181,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERM_1">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERM_2">
@@ -1191,93 +1191,93 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERW_1">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BREEDERW_2">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERM_1">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERM_2">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERW_1">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERW_2">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP_1">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP_2">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEM_2">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEM_3">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEW_2">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEW_3">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANM_3">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANM_4">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANW_3">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANW_4">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP2_1">
-		<language name="JPN" width="216">むげんボスＷ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＷ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP2_2">
-		<language name="JPN" width="216">むげんボスＢ</language>
-		<language name="JPN_KANJI" width="216">むげんボスＢ</language>
+		<language name="JPN" width="216">ボストレーナー</language>
+		<language name="JPN_KANJI" width="216">ボストレーナー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DPLEADER1">
@@ -1413,6 +1413,11 @@
 	<row id="MSG_TRTYPE_SWCHAMPION">
 		<language name="JPN" width="216">チャンピオン</language>
 		<language name="JPN_KANJI" width="216">チャンピオン</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_VILLAIN">
+		<language name="JPN" width="216">かいじん</language>
+		<language name="JPN_KANJI" width="216">かいじん</language>
 	</row>
 
 	<flowchart-group-list>

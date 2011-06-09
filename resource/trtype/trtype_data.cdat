@@ -595,7 +595,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		128,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_05
 	},
-	{ // No.147 BREEDERM_1♂むげんボスＷ
+	{ // No.147 BREEDERM_1♂ボストレーナー
 		 17,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -603,75 +603,75 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 17,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.149 BREEDERW_1♀むげんボスＷ
+	{ // No.149 BREEDERW_1♀ボストレーナー
 		 18,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_06
 	},
-	{ // No.150 BREEDERW_2♀むげんボスＢ
+	{ // No.150 BREEDERW_2♀ボストレーナー
 		 18,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_06
 	},
-	{ // No.151 RANGERM_1♂むげんボスＷ
+	{ // No.151 RANGERM_1♂ボストレーナー
 		 24,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.152 RANGERM_2♂むげんボスＢ
+	{ // No.152 RANGERM_2♂ボストレーナー
 		 24,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.153 RANGERW_1♀むげんボスＷ
+	{ // No.153 RANGERW_1♀ボストレーナー
 		 25,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.154 RANGERW_2♀むげんボスＢ
+	{ // No.154 RANGERW_2♀ボストレーナー
 		 25,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.155 BCHAMP_1♂むげんボスＷ
+	{ // No.155 BCHAMP_1♂ボストレーナー
 		 87,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.156 BCHAMP_2♂むげんボスＢ
+	{ // No.156 BCHAMP_2♂ボストレーナー
 		 87,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.157 ELITEM_2♂むげんボスＷ
+	{ // No.157 ELITEM_2♂ボストレーナー
 		 49,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.158 ELITEM_3♂むげんボスＢ
+	{ // No.158 ELITEM_3♂ボストレーナー
 		 49,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.159 ELITEW_2♀むげんボスＷ
+	{ // No.159 ELITEW_2♀ボストレーナー
 		 48,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.160 ELITEW_3♀むげんボスＢ
+	{ // No.160 ELITEW_3♀ボストレーナー
 		 48,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.161 VETERANM_3♂むげんボスＷ
+	{ // No.161 VETERANM_3♂ボストレーナー
 		 69,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.162 VETERANM_4♂むげんボスＢ
+	{ // No.162 VETERANM_4♂ボストレーナー
 		 69,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.163 VETERANW_3♀むげんボスＷ
+	{ // No.163 VETERANW_3♀ボストレーナー
 		 70,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.164 VETERANW_4♀むげんボスＢ
+	{ // No.164 VETERANW_4♀ボストレーナー
 		 70,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.165 BCHAMP2_1♂むげんボスＷ
+	{ // No.165 BCHAMP2_1♂ボストレーナー
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.166 BCHAMP2_2♂むげんボスＢ
+	{ // No.166 BCHAMP2_2♂ボストレーナー
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -781,6 +781,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	},
 	{ // No.193 SWCHAMPION♀チャンピオン
 		155,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.194 PKWD_VILLAIN♂かいじん
+		156,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
 };
