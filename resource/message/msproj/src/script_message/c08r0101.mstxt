@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>シャガ『まえフリ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:40" />
+				Time="2011-06-09T12:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -52,14 +52,23 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_02"
+		Label="msg_c08_swleader7_02b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>２ねんまえの　ことだ
+ドラゴンポケモンが　２ひき　めざめた▼
+りそうを　もとめ　あらたなる
+きぼうの　せかいに　みちびく▽
+くろき　ドラゴンポケモン　ゼクロム▼
+しんじつを　もとめ　あらたなる
+ぜんの　せかいに　みちびく▽
+しろき　ドラゴンポケモン　レシラム▼
+ゼクロムと　レシラムは
+もともと　１ひきの　ポケモンだった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-09T12:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -70,7 +79,7 @@
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-09T12:38:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -101,14 +110,78 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c08_swleader7_02w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２ねんまえの　ことだ
+ドラゴンポケモンが　２ひき　めざめた▼
+しんじつを　もとめ　あらたなる
+ぜんの　せかいに　みちびく▽
+しろき　ドラゴンポケモン　レシラム▼
+りそうを　もとめ　あらたなる
+きぼうの　せかいに　みちびく▽
+くろき　ドラゴンポケモン　ゼクロム▼
+レシラムと　ゼクロムは
+もともと　１ひきの　ポケモンだった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T12:38:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T12:38:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T12:38:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T12:38:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T12:38:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-09T12:38:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c08_swleader7_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>no data
+イッシュに　くにが　できた
+はるか　むかしの　こと
+ふたごのえいゆう～
+
+りそうと　しんじつは　かならずしも
+対立する　ものでは　ないのに</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-09T12:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -154,10 +227,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-09T12:22:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -177,10 +250,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・爆音SE+画面ゆれ
 ・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:10:19" />
+				Time="2011-06-09T12:23:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -203,10 +277,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>なにごと　だ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-09T12:23:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -226,10 +300,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・画面外に消えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:10:19" />
+				Time="2011-06-09T12:23:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
