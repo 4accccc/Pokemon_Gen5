@@ -9602,4 +9602,379 @@
 				Time="2011-06-02T12:01:49" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="pw_castindex_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:48:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:48:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:48:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:48:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+
+ポケモン名用タグ
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:47:16" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>♂</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>♂</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ポケモンの「♂」表記</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>♀</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>♀</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:49:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ポケモンの「♀」表記</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:50:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>L[Digit:3digits Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:50:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>L[Digit:3digits Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ポケモンのレベル表示用タグ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:50:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+持ち物</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:51:37" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Ability Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:52:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:52:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Ability Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:52:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+特性</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:52:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ステータスメイン
+技名１
+0：技名</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ステータスメイン
+技名２
+0：技名</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ステータスメイン
+技名３
+0：技名</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:54:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ステータスメイン
+技名４
+0：技名</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:55:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>/</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:56:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:56:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>/</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:56:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:56:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本共演者画面
+ステータスメイン
+
+スラッシュ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-09T07:56:23" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

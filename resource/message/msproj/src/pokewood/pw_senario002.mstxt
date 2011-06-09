@@ -1010,13 +1010,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『ゆうえんち……
-それは　ひとときの　ゆめ……▽
-すなわち　ひとの　りそう……▼
-……りそうなど　いらぬわ……</Text>
+			<Text>ハチクマン『遊園地……
+それは　甘い　ひと時の　夢……▽
+すなわち　人の　理想……▼
+……理想など　みにくい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T02:24:17" />
+				Time="2011-06-08T11:57:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1100,11 +1100,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ゆけ！　わが　ポケモン！
-このゆうえんちで　あばれるのだ！▼
-すべてを　はかい　しつくせ！</Text>
+この遊園地で　暴れまれい！▼
+すべてを　破壊　しつくせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-24T03:59:45" />
+				Time="2011-06-08T11:58:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1136,10 +1136,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？？？『やめるんだ！</Text>
+			<Text>？？？『やめるんだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-24T04:00:19" />
+				Time="2011-06-08T12:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1147,10 +1147,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？？？『やめるんだ！</Text>
+			<Text>？？？『止めるんだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-24T04:00:23" />
+				Time="2011-06-08T12:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1181,11 +1181,10 @@
 		Label="pw_scenario_001_evt00_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『きさま……　なにものだ！
-</Text>
+			<Text>ハチクマン『きさま……　だれだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-24T05:14:37" />
+				Time="2011-06-08T12:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1193,11 +1192,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『きさま……　なにものだ！
+			<Text>ハチクマン『貴様……　何者だ……
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-24T05:14:44" />
+				Time="2011-06-08T11:59:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1221,14 +1220,14 @@
 		Label="pw_scenario_001_evt00_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『しんじつと　りそうの　ししゃ
-[Name:PokemonNickname ]キッド　すいさん！▽
+			<Text>？？？『しんじつとりそうの　ししゃ！
+[Name:PokemonNickname ]キッド　すいさん！▼
 ハチクマン！
 おまえの　あくぎょう▽
-ゆるすわけには　いかない！▽</Text>
+ゆるすわけには　いかない！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-05-31T09:25:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-08T12:02:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1236,14 +1235,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『しんじつと　りそうの　ししゃ
-[Name:PokemonNickname ]キッド　すいさん！▽
+			<Text>？？？『真実と理想の　使者！
+[Name:PokemonNickname ]キッド　参上！▽
 ハチクマン！
-おまえの　あくぎょう▽
-ゆるすわけには　いかない！▽</Text>
+お前の　悪行▽
+許すわけには　いかない！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-05-31T09:25:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-08T12:02:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1280,11 +1279,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆうえんちの　きゃく『わー！
-なんだ！　なんだ！</Text>
+			<Text>遊園地の　客『わー！
+何だ！　何だ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:29:48" />
+				Time="2011-06-08T12:02:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1312,20 +1311,21 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_001_evt01_02">
+		Label="pw_scenario_001_evt01_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『わがはいの　ポケモンを
 たったの　いちげきで……▼
-やるな！　[Name:PokemonNickname ]キッド！▽
-だが　しかし！　だが　しかし！▽
-きゅうきょくの　ポケモン　タイプ　わざで
-きさまを　ひざまづかせる！▽
+やるな！　[Name:PokemonNickname ]キッド！▼
+だが　しかし！　だが　しかし！
+きゅうきょくの　ポケモン　タイプ　わざで▽
+きさまを　ひざまづかせる！▼
 さあ！　くらいたい　わざの
-タイプを　さけぶが　いい！▽</Text>
+タイプを　さけぶが　よいわっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:30:32" />
+				Time="2011-06-08T12:03:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1335,15 +1335,15 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『わがはいの　ポケモンを
 たったの　いちげきで……▼
-やるな！　[Name:PokemonNickname ]キッド！▽
-だが　しかし！　だが　しかし！▽
-きゅうきょくの　ポケモン　タイプ　わざで
-きさまを　ひざまづかせる！▽
+やるな！　[Name:PokemonNickname ]キッド！▼
+だが　しかし！　だが　しかし！
+究極の　ポケモン　タイプ　わざで▽
+貴様を　ひざまづかせる！▼
 さあ！　くらいたい　わざの
-タイプを　さけぶが　いい！▽</Text>
+タイプを　叫ぶが　よいわっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:30:41" />
+				Time="2011-06-08T12:04:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1368,10 +1368,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname ]キッド『むし　タイプだっ！</Text>
+			<Text>[Name:PokemonNickname ]キッド『むし　タイプだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T10:21:30" />
+				Time="2011-06-09T08:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1379,10 +1379,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname ]キッド『むし　タイプだっ！</Text>
+			<Text>[Name:PokemonNickname ]キッド『むし　タイプだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T10:22:13" />
+				Time="2011-06-09T08:09:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1456,10 +1456,10 @@
 			<Text>ハチクマン『いいだろう！▼
 では　わがはいの　ポケモン
 きゅうきょくの　タイプ　わざを▼
-くらうが　よいわーっ！</Text>
+うけるが　よいわーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:06:55" />
+				Time="2011-06-08T12:05:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1469,11 +1469,11 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『いいだろう！▼
 では　わがはいの　ポケモン
-きゅうきょくの　タイプ　わざを▼
-くらうが　よいわーっ！</Text>
+究極の　タイプ　わざを▼
+うけるが　よいわーっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:07:00" />
+				Time="2011-06-08T12:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1517,13 +1517,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファー　ファファファ！▼
-タイプも　しらぬとは　おろかなり！
+タイプも　知らぬとは　おろかなり！
 [Name:PokemonNickname ]キッド！▼
-この　わざを　うけて　その　ちから
-ほねみに　きざみつけるが　よいわ！▼</Text>
+この　わざを　受け　その　パワー
+骨身に　刻みつけるが　よいわ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T02:24:17" />
+				Time="2011-06-08T12:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1556,12 +1556,12 @@
 なにが　ヒーローだ！　こわっぱ！▼
 たった　いちげきで　たおれるなど
 ポケモンが　ないて　おるわ！▼
-ついでに　ゆうえんちが　ひめいを
+そのまま　ゆうえんちが　ひめいを
 あげる　こうけいを　そこで▽
-ながめて　いるが　よいわ！</Text>
+ながめているが　よいわっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:40:30" />
+				Time="2011-06-08T12:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1573,12 +1573,12 @@
 なにが　ヒーローだ！　こわっぱ！▼
 たった　いちげきで　たおれるなど
 ポケモンが　ないて　おるわ！▼
-ついでに　ゆうえんちが　ひめいを
-あげる　こうけいを　そこで▽
-ながめて　いるが　よいわ！</Text>
+そのまま　遊園地が　悲鳴に
+包まれる　光景を　そこで▽
+眺めているが　よいわっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:40:40" />
+				Time="2011-06-08T12:08:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1611,7 +1611,7 @@
 こんな　はずじゃ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:42:42" />
+				Time="2011-06-08T12:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1654,19 +1654,18 @@
 			Language="JPN">
 			<Text>かいじんハチクマンに　やぶれた
 [Name:PokemonNickname ]キッド……▼
-とくに　かつやくも　ないまま
-たおれた　かれが▽
-なにもの　なのか　しるものが▽
+これと　いった　かつやくも　しないまま
+たおれてしまった　かれが▽
+だれなのか　しるものが▽
 いるはずも　ない……▼
 ともかく……▼
 ありがとう！
 [Name:PokemonNickname ]キッド！▼
 さらば！
-[Name:PokemonNickname ]キッド！▼
-</Text>
+[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:42:18" />
+				Time="2011-06-08T12:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1674,21 +1673,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいじんハチクマンに　やぶれた
+			<Text>怪人ハチクマンに　敗れた
 [Name:PokemonNickname ]キッド……▼
-とくに　かつやくも　ないまま
-たおれた　かれが▽
-なにもの　なのか　しるものが▽
+これと　いった　活躍も　しないまま
+たおれてしまった　彼が▽
+誰なのか　知る者が▽
 いるはずも　ない……▼
 ともかく……▼
 ありがとう！
 [Name:PokemonNickname ]キッド！▼
 さらば！
-[Name:PokemonNickname ]キッド！▼
-</Text>
+[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:42:27" />
+				Time="2011-06-08T12:10:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1712,16 +1710,17 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_001_evt03_01">
+		Label="pw_scenario_001_evt03_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『グムムム……▼
 わがはいの　ほこる
 ポケモン　ぐんだんを▽
-いちげきで　しずめるとは……▼</Text>
+いちげきで　しずめるとは……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T08:45:51" />
+				Time="2011-06-08T12:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1731,11 +1730,11 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『グムムム……▼
 わがはいの　ほこる
-ポケモン　ぐんだんを▽
-いちげきで　しずめるとは……▼</Text>
+ポケモン　軍団を▽
+いちげきで　沈めるとは……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T08:45:56" />
+				Time="2011-06-08T12:11:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1758,12 +1757,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
-ここは　みんなの　りそうの▽
+ここは　みんなの　ゆめと　りそうが▽
 つまった　ゆうえんちだ！▼
+バカな　ことは　やめて
 おとなしく　たちされ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T08:46:45" />
+				Time="2011-06-08T12:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1772,12 +1772,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
-ここは　みんなの　りそうの▽
-つまった　ゆうえんちだ！▼
-おとなしく　たちされ！</Text>
+ここは　みんなの　夢と　理想が▽
+つまった　遊園地だ！▼
+バカな　ことは　やめて
+おとなしく　立ち去れ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T08:46:57" />
+				Time="2011-06-08T12:13:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1804,7 +1805,7 @@
 [Name:PokemonName ]キッド　だって！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T11:58:03" />
+				Time="2011-06-08T12:13:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1812,12 +1813,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆうえんちの　きゃく『わー！
-みてみて！　かっこいい！▽
+			<Text>遊園地の客『わー！
+見て見て！　かっこいい！▽
 [Name:PokemonName ]キッド　だって！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T11:58:08" />
+				Time="2011-06-08T12:13:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1833,6 +1834,13 @@
 				User="nakatsui:DB5YGPBX"
 				Time="2011-05-26T08:45:27" />
 		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-08T12:13:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scenario_001_evt03_06"
@@ -1842,16 +1850,16 @@
 			<Text>ハチクマン『グム……　いいだろう……
 きょうの　ところは　きえると　しよう▼
 だが　[Name:PokemonNickname ]キッド……▼
-しんじつ……　りそう……
-きさまの　かざす　ことばは▼
-この　かいじん　ハチクマンが
-にくみ……　のろう　もの……
-つまり　きさまと　わがはいは▽
+しんじつ……　りそう……▼
+きさまの　ふりかざす　ことばは
+この　かいじん　ハチクマンが▽
+にくみ……　のろう　もの……▼
+つまり　きさまと　わがはいは
 けっして　あいいれぬ……▼
 つぎは　こうは　いかぬぞ……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:28:09" />
+				Time="2011-06-08T12:14:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1860,18 +1868,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『グム……　いいだろう……
-きょうの　ところは　きえると　しよう▼
+今日の　ところは　消えると　しよう▼
 だが　[Name:PokemonNickname ]キッド……▼
-しんじつ……　りそう……
-きさまの　かざす　ことばは▼
-この　かいじん　ハチクマンが
-にくみ……　のろう　もの……
-つまり　きさまと　わがはいは▽
-けっして　あいいれぬ……▼
-つぎは　こうは　いかぬぞ……▼</Text>
+真実……　理想……▼
+貴様の　振りかざす　言葉は
+この　怪人　ハチクマンが▽
+憎み……　のろう　もの……▼
+つまり　貴様と　わがはいは
+けっして　相容れぬ……▼
+次は　こうは　いかぬぞ……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:28:13" />
+				Time="2011-06-08T12:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1894,11 +1902,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]キッド『……
-かいじん　ハチクマン……▽
+かいじん　ハチクマン……▼
 いったい　なにもの　なんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:19:22" />
+				Time="2011-06-08T12:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1907,11 +1915,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]キッド『……
-かいじん　ハチクマン……▽
-いったい　なにもの　なんだ……</Text>
+怪人　ハチクマン……▼
+いったい　何者　なんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:19:28" />
+				Time="2011-06-08T12:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1941,12 +1949,14 @@
 ことばを　のこし　きえた……▼
 イッシュの　りそうと　しんじつを
 まもるため！▼
-ゆけゆけ！　[Name:PokemonNickname ]キッド！▼
-たたかえ！　[Name:PokemonNickname ]キッド！
+ゆけゆけ！
+[Name:PokemonNickname ]キッド！▼
+たたかえ！
+[Name:PokemonNickname ]キッド！▼
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:19:42" />
+				Time="2011-06-09T06:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1954,20 +1964,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　かいじん　ハチクマンを
-こらしめ　ゆうえんちの　ききを▽
-すくった　[Name:PokemonNickname ]キッド！▼
+			<Text>謎の　怪人　ハチクマンを
+こらしめ　遊園地の　危機を▽
+救った　[Name:PokemonNickname ]キッド！▼
 しかし
-ハチクマンは　ふてきな▽
-ことばを　のこし　きえた……▼
-イッシュの　りそうと　しんじつを
-まもるため！▼
-ゆけゆけ！　[Name:PokemonNickname ]キッド！▼
-たたかえ！　[Name:PokemonNickname ]キッド！
+ハチクマンは　不敵な▽
+言葉を　残し　消えた……▼
+イッシュの　理想と　真実を
+守るため！▼
+ゆけゆけ！
+[Name:PokemonNickname ]キッド！▼
+戦え！
+[Name:PokemonNickname ]キッド！▼
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T10:05:20" />
+				Time="2011-06-09T06:31:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1995,11 +2007,12 @@
 わがはい　きゅうきょくの
 ポケモン　タイプわざを▽
 うけたのが　うんの　つきよ！▼
-さあ　ゆうえんちが　はかいされる
-こうけいを　そこで　ながめておれ！▼</Text>
+さあ　そのまま　ゆうえんちが
+はかいされる　こうけいを▽
+ながめておれ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:18:53" />
+				Time="2011-06-09T06:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2008,16 +2021,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファー　ファファファ！
-ざんねん　だったな！▽
+残念　だったな！▽
 [Name:PokemonNickname ]キッド！！▼
-わがはい　きゅうきょくの
+わがはい　究極の
 ポケモン　タイプわざを▽
-うけたのが　うんの　つきよ！▼
-さあ　ゆうえんちが　はかいされる
-こうけいを　そこで　ながめておれ！▼</Text>
+うけたのが　運の　つきよ！▼
+さあ　そのまま　遊園地が
+破壊される　光景を▽
+眺めておれ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:21:41" />
+				Time="2011-06-09T06:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2052,10 +2066,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]キッド『くっ……
-ぼくは　なにか　まちがったのか……？</Text>
+僕は　何か　間違ったのか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:46:37" />
+				Time="2011-06-09T06:32:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2078,11 +2092,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆうえんちの　きゃく『わー！
-みてみて！　かっこいい！▽
-かいじん　ハチクマン　だって！</Text>
+ちょっと　みてよ！　ステキねえ！▽
+かいじん　ハチクマン　ですって！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:27:43" />
+				Time="2011-06-09T07:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2090,12 +2104,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆうえんちの　きゃく『わー！
-みてみて！　かっこいい！▽
-かいじん　ハチクマン　だって！</Text>
+			<Text>遊園地の　客『わー！
+ちょっと　見てよ！　ステキねえ！▽
+怪人　ハチクマン　ですって！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T06:27:53" />
+				Time="2011-06-09T07:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2113,23 +2127,23 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pw_scenario_001_evt04_04">
+		Label="pw_scenario_001_evt04_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なぞのかいじん　ハチクマンの　まえに
 [Name:PokemonNickname ]キッドは▽
-ちから　つきた……▼
+おしくも　ちから　つきた……▼
 たたかい……▼
 その　いっしゅんの　せんたくが
-かれの　うんめいを　きめた……▼
+かれの　うんめいを　きめたのだ……▼
 ざんねん！
 [Name:PokemonNickname ]キッド！▼
 さらば！
-[Name:PokemonNickname ]キッド！▼
-</Text>
+[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T01:54:03" />
+				Time="2011-06-09T08:03:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2137,20 +2151,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞのかいじん　ハチクマンの　まえに
+			<Text>謎の怪人　ハチクマンの　前に
 [Name:PokemonNickname ]キッドは▽
-ちから　つきた……▼
-たたかい……▼
-その　いっしゅんの　せんたくが
-かれの　うんめいを　きめた……▼
-ざんねん！
+おしくも　力　尽きた……▼
+戦い……▼
+その　一瞬の　選択が
+彼の　運命を　決めたのだ……▼
+残念！
 [Name:PokemonNickname ]キッド！▼
 さらば！
-[Name:PokemonNickname ]キッド！▼
-</Text>
+[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-27T01:54:03" />
+				Time="2011-06-09T08:03:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2175,12 +2188,12 @@
 			<Text>ハチクマン『グムムム……▼
 わざの　タイプも　しらぬ
 むちな　ヒーローに▽
-やぶれるとは……▼
+わがはいが　やぶれるとは……▼
 この　くつじょく……
-いずれ　はらしてやるぞ……</Text>
+いずれ　はらして　やるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:28:50" />
+				Time="2011-06-09T07:59:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2189,14 +2202,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『グムムム……▼
-わざの　タイプも　しらぬ
-むちな　ヒーローに▽
-やぶれるとは……▼
+わざの　タイプも　知らぬ
+無知な　ヒーローに▽
+わがはいが　敗れるとは……▼
 この　くつじょく……
-いずれ　はらしてやるぞ……</Text>
+いずれ　晴らして　やるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:28:59" />
+				Time="2011-06-09T08:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2222,11 +2235,11 @@
 タイプが　なんだって　いうんだ！▽
 ヒーローは　つよく　かっこよく
 まけないと　きまってるんだ！▼
-さあ！
-いますぐ　ここから　たちされ！▼</Text>
+さあ！　いますぐ
+この　ゆうえんちから　たちされ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:33:04" />
+				Time="2011-06-09T08:02:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2235,14 +2248,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]キッド『ハチクマン！
-タイプが　なんだって　いうんだ！▽
-ヒーローは　つよく　かっこよく
-まけないと　きまってるんだ！▼
-さあ！
-いますぐ　ここから　たちされ！▼</Text>
+タイプが　何だって　いうんだ！▽
+ヒーローは　強く　かっこよく
+負けないと　決まってるんだ！▼
+さあ！　今すぐ
+この　遊園地から　立ち去れ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:33:10" />
+				Time="2011-06-09T08:01:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2267,18 +2280,18 @@
 			<Text>なぞの　かいじん　ハチクマンを
 こらしめ　ゆうえんちの　ききを▽
 すくった　[Name:PokemonNickname ]キッド！▼
-しかし　かれには　ポケモンの
-タイプを　しらないという▽
+しかし　かれには
+ポケモンの　タイプを　しらない　という▽
 おおきな　じゃくてんが　あった！▼
 イッシュの　りそうと　しんじつを
 まもるため！▼
 まなべ！　
 [Name:PokemonNickname ]キッド！▼
 おぼえて！
-[Name:PokemonNickname ]キッド！▼</Text>
+[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T10:00:56" />
+				Time="2011-06-09T08:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2289,18 +2302,18 @@
 			<Text>なぞの　かいじん　ハチクマンを
 こらしめ　ゆうえんちの　ききを▽
 すくった　[Name:PokemonNickname ]キッド！▼
-しかし　かれには　ポケモンの
-タイプを　しらないという▽
-おおきな　じゃくてんが　あった！▼
-イッシュの　りそうと　しんじつを
-まもるため！▼
-まなべ！　
+しかし　かれには
+ポケモンの　タイプを　知らない　という▽
+大きな　弱点が　あった！▼
+イッシュの　理想と　真実を
+守るため！▼
+学べ！　
 [Name:PokemonNickname ]キッド！▼
-おぼえて！
-[Name:PokemonNickname ]キッド！▼</Text>
+覚えて！
+[Name:PokemonNickname ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T10:01:01" />
+				Time="2011-06-09T08:04:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2325,13 +2338,14 @@
 			<Text>ハチクマン『ファー　ファファファ！
 ざんねん　だったな！▽
 [Name:PokemonNickname ]キッド！！▼
-タイプも　しらずして　わがはいに
-いどんだのが　まちがいよっ！▼
+ポケモンの　タイプも　しらずして
+わがはいに　いどんだのが▽
+きさまの　まちがいよっ！▼
 さあ　ゆうえんちが　はかいされる
-こうけいを　そこで　ながめておれ！▼</Text>
+こうけいを　そこで　ながめておれ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:59:15" />
+				Time="2011-06-09T08:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2340,15 +2354,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファー　ファファファ！
-ざんねん　だったな！▽
+残念　だったな！▽
 [Name:PokemonNickname ]キッド！！▼
-タイプも　しらずして　わがはいに
-いどんだのが　まちがいよっ！▼
-さあ　ゆうえんちが　はかいされる
-こうけいを　そこで　ながめておれ！▼</Text>
+ポケモンの　タイプも　知らずして
+わがはいに　挑んだのが▽
+きさまの　間違いよっ！▼
+さあ　遊園地が　破壊される
+光景を　そこで　眺めておれ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:59:21" />
+				Time="2011-06-09T08:06:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2382,10 +2397,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]キッド『……
-タイプって……　なんだ……？</Text>
+タイプって……　何だ……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:57:05" />
+				Time="2011-06-09T08:06:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2410,18 +2425,17 @@
 			<Text>かいじんハチクマンの　まえに
 [Name:PokemonNickname ]キッドは▽
 ちから　つきた……▼
-しかし
 ポケモンの　タイプも　しらないまま▽
 たたかった　かれの　ゆうしを▽
-わすれるものは　いないだろう▼
-ありがとう！
+おぼえているものは　いないだろう▼
+がんばった！
 [Name:PokemonNickname ]キッド！▼
 さらば！
-[Name:PokemonNickname ]キッド！▼
+[Name:PokemonNickname ]キッド！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:13:37" />
+				Time="2011-06-09T08:08:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2429,21 +2443,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいじんハチクマンの　まえに
+			<Text>怪人ハチクマンの　前に
 [Name:PokemonNickname ]キッドは▽
-ちから　つきた……▼
-しかし
-ポケモンの　タイプも　しらないまま▽
-たたかった　かれの　ゆうしを▽
-わすれるものは　いないだろう▼
-ありがとう！
+力　尽きた……▼
+ポケモンの　タイプも　知らないまま▽
+戦った　彼の　勇姿を▽
+覚えている者は　いないだろう……▼
+がんばった！
 [Name:PokemonNickname ]キッド！▼
 さらば！
-[Name:PokemonNickname ]キッド！▼
+[Name:PokemonNickname ]キッド！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-05-26T09:13:45" />
+				Time="2011-06-09T08:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
