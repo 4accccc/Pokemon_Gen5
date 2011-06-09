@@ -75,11 +75,13 @@ INIT_EVENT_START	ev_zone_c04
 	_FLAG_SET( FE_C04R0201_STYLIST_TALK )
 
   //主人公の性別を取得してヒロイン（ヒーロー）の見た目を指定
-  _GET_MY_SEX( SCWK_ANSWER )
-  IF $SCWK_ANSWER == PM_MALE THEN
-    $OBJCHRWORK0 = SWHEROINE   //女の子を指定
-    ELSE
-    $OBJCHRWORK0 = SWHERO      //男の子を指定
+  IF FLAG_OFF( FV_C04_SWHEROINE_01 ) THEN
+    _GET_MY_SEX( SCWK_ANSWER )
+    IF $SCWK_ANSWER == PM_MALE THEN
+      $OBJCHRWORK0 = SWHEROINE   //女の子を指定
+      ELSE
+      $OBJCHRWORK0 = SWHERO      //男の子を指定
+    ENDIF
   ENDIF
 
 INIT_EVENT_END
