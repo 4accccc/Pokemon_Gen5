@@ -57,7 +57,7 @@
 #define HASU_EX_OBJ_IDX_MINE  (0) // 拡張高さハスインデックス(自分)
 #define HASU_EX_OBJ_IDX_OTHER (1) // 拡張高さハスインデックス(周り)
 
-#define HASU_NUM   (11);   // ハスの個数
+#define HASU_NUM   (11)   // ハスの個数
 
 #define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
 #define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
@@ -134,6 +134,15 @@ typedef struct {
 
 } HASU_EVENT_WORK;
 
+//-------------------------------------
+///	ANIME用タスクワーク
+//=====================================
+typedef struct {
+  FLD_EXP_OBJ_CNT_PTR exp_obj;
+  u16                 obj_idx;
+  u8                  anm_num;
+} ANM_TASK_WORK;
+
 
 //=============================================================================
 /**
@@ -145,6 +154,18 @@ enum {
   RESID_HASU_MDL = 0,     // ハス
   RESID_HASU_ANM_MOVE,    // ハスが揺れる(降りるとき)
   RESID_HASU_ANM_SHAKE,   // ハスがたゆわう(常時)
+
+  RESID_WATER1_MDL,       // 衝突波紋(自機側)
+  RESID_WATER1_ANM_IMA,   // 
+  RESID_WATER1_ANM_ITA,   // 
+  RESID_WATER2_MDL,       // 衝突波紋(相手側)
+  RESID_WATER2_ANM_IMA,   // 
+  RESID_WATER2_ANM_ITA,   // 
+  RESID_WATER3_MDL,       // 移動波紋
+  RESID_WATER3_ANM_IMA,   // 
+  RESID_WATER3_ANM_ITA,   // 
+  RESID_WATER4_MDL,       // 水しぶき
+  RESID_WATER4_ANM_ITA,   // 
 };
 
 // OBJインデックス
@@ -161,6 +182,18 @@ enum {
   OBJ_HASU_10,  // ハスJ
   OBJ_HASU_11,  // ハスK
 
+  // 演出
+  EFFECT_HIT_RIPPLE1,   // 衝突波紋(自分)
+  EFFECT_HIT_RIPPLE2,   // 衝突波紋(相手)
+  EFFECT_MOVE_RIPPLE1,  // 移動波紋
+  EFFECT_MOVE_RIPPLE2,  // 移動波紋
+  EFFECT_MOVE_RIPPLE3,  // 移動波紋
+  EFFECT_MOVE_RIPPLE4,  // 移動波紋
+  EFFECT_MOVE_RIPPLE5,  // 移動波紋
+  EFFECT_MOVE_RIPPLE6,  // 移動波紋
+  EFFECT_MOVE_RIPPLE_MAX, // 移動波紋 総数
+  EFFECT_SPLASH = EFFECT_MOVE_RIPPLE_MAX, // 水しぶき
+
   OBJ_NUM,
 };
 
@@ -170,6 +203,17 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_GYM_WATER, NARC_gym_water_hasu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_WATER, NARC_gym_water_hasu_move_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_GYM_WATER, NARC_gym_water_hasu_shake_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water1_down_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
 };
 
 // ANIME
@@ -177,6 +221,25 @@ static const GFL_G3D_UTIL_ANM anm_hasu[] =
 {
   { RESID_HASU_ANM_SHAKE, 0 }, // nsbca
   { RESID_HASU_ANM_MOVE, 0 }, // nsbca
+};
+static const GFL_G3D_UTIL_ANM anm_water1[] =
+{
+  { RESID_WATER1_ANM_IMA, 0 }, // nsbma
+  { RESID_WATER1_ANM_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_water2[] =
+{
+  { RESID_WATER2_ANM_IMA, 0 }, // nsbma
+  { RESID_WATER2_ANM_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_water3[] =
+{
+  { RESID_WATER3_ANM_IMA, 0 }, // nsbma
+  { RESID_WATER3_ANM_ITA, 0 }, // nsbta
+};
+static const GFL_G3D_UTIL_ANM anm_water4[] =
+{
+  { RESID_WATER4_ANM_ITA, 0 }, // nsbta
 };
 
 // OBJ
@@ -269,6 +332,79 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_HASU_MDL,       // テクスチャリソースID
     anm_hasu,             // アニメテーブル(複数指定のため)
     NELEMS(anm_hasu),     // アニメリソース数
+  },
+
+  // 衝突波紋(自分)
+  {
+    RESID_WATER1_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER1_MDL,     // テクスチャリソースID
+    anm_water1,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water1),   // アニメリソース数
+  },
+  // 衝突波紋(相手)
+  {
+    RESID_WATER2_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER2_MDL,     // テクスチャリソースID
+    anm_water2,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water2),   // アニメリソース数
+  },
+  // 移動波紋
+  {
+    RESID_WATER3_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER3_MDL,     // テクスチャリソースID
+    anm_water3,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water3),   // アニメリソース数
+  },
+  // 移動波紋
+  {
+    RESID_WATER3_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER3_MDL,     // テクスチャリソースID
+    anm_water3,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water3),   // アニメリソース数
+  },
+  // 移動波紋
+  {
+    RESID_WATER3_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER3_MDL,     // テクスチャリソースID
+    anm_water3,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water3),   // アニメリソース数
+  },
+  // 移動波紋
+  {
+    RESID_WATER3_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER3_MDL,     // テクスチャリソースID
+    anm_water3,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water3),   // アニメリソース数
+  },
+  // 移動波紋
+  {
+    RESID_WATER3_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER3_MDL,     // テクスチャリソースID
+    anm_water3,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water3),   // アニメリソース数
+  },
+  // 移動波紋
+  {
+    RESID_WATER3_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER3_MDL,     // テクスチャリソースID
+    anm_water3,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water3),   // アニメリソース数
+  },
+  // 水しぶき
+  {
+    RESID_WATER4_MDL,     // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_WATER4_MDL,     // テクスチャリソースID
+    anm_water4,           // アニメテーブル(複数指定のため)
+    NELEMS(anm_water4),   // アニメリソース数
   },
 };
 
@@ -363,6 +499,10 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk );
 static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos );
 static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk );
 
+// ANIME
+static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk );
+static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk );
+static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk );
 
 // EX_HEIGHT 拡張高さ
 static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz );
@@ -392,6 +532,7 @@ static void DEBUGMENU_Exit( void );
 static int  debug_frame = HASU_MOVE_SPEED;
 static s16  debug_height = HASU_SHAKE_HEIGHT;
 static u32  debug_sync = HASU_SHAKE_SYNC;
+static int  debug_ripple = WATER_MOVE_RIPPLE_INTERVAL;
 
 #endif // GYM_WATER_DEBUG_MENU
 
@@ -587,9 +728,9 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
   //=====================================
   // ハスの初期設定
-  for( i=OBJ_HASU_1; i<OBJ_NUM; i++ )
+  for( i=OBJ_HASU_1; i<OBJ_HASU_1+HASU_NUM; i++ )
   {
-    VecFx32 pos[ OBJ_NUM ] = {
+    VecFx32 pos[ HASU_NUM ] = {
       { HASU1_X, 0, HASU1_Z },
       { HASU2_X, 0, HASU2_Z },
       { HASU3_X, 0, HASU3_Z },
@@ -643,6 +784,55 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
     }
   }
 
+  //=====================================
+  // 演出の初期設定
+  for( i=EFFECT_HIT_RIPPLE1; i<EFFECT_MOVE_RIPPLE_MAX; i++ )
+  {
+    u16 obj_idx = i;    // OBJインデックス
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+    VEC_Set( &status->trans, 0,0,0 );
+
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+      // IMA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
+      // ITA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, FALSE );
+
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+    }
+  }
+  {
+    u16 obj_idx = EFFECT_SPLASH;    // OBJインデックス
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+    VEC_Set( &status->trans, 0,0,0 );
+
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+      // ITA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
+
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -657,7 +847,7 @@ static void EXPOBJ_ObjDell( GYM_WATER_TMP *p_wk )
 
   //=====================================
   // ハスの初期設定
-  for( i=OBJ_HASU_1; i<OBJ_NUM; i++ )
+  for( i=OBJ_HASU_1; i<OBJ_HASU_1+HASU_NUM; i++ )
   {
     u16 obj_idx = i;    // OBJインデックス
 
@@ -817,6 +1007,9 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         HASU_EVENT_MoveInit( p_wk, move_distance*HASU_MOVE_SPEED, &move_pos );
 #endif
 
+        // 水しぶき
+        ANIME_WATER_Splash( p_wk );
+
         *seq = SEQ_MOVE;
       }
     }
@@ -896,7 +1089,7 @@ static BOOL HASU_CheckPos( FLD_EXP_OBJ_CNT_PTR exp_obj, const fx32 x, const fx32
 {
   u8 i;
 
-  for( i=OBJ_HASU_1; i<OBJ_NUM; i++ )
+  for( i=OBJ_HASU_1; i<OBJ_HASU_1+HASU_NUM; i++ )
   {
     u16 obj_idx = i;    // OBJインデックス
 
@@ -1202,6 +1395,8 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
       MMDL    *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
       VEC_Set( &offset, 0,0,0 );
       MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+      out_pos.y = 0;
+      h = 0;
     }
     else
     {
@@ -1225,8 +1420,187 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
     status->trans = out_pos;
   }
 
+  // エフェクト波紋
+#ifdef GYM_WATER_DEBUG_MENU
+  if( ( p_move_wk->frame % debug_ripple) == 0 )
+#else
+  if( ( p_move_wk->frame % WATER_MOVE_RIPPLE_INTERVAL) == 0 )
+#endif
+  {
+    ANIME_WATER_MoveRipple( p_wk );
+  }
+
   // 終了チェック
   return end;
+}
+
+//=============================================================================
+/**
+ *        ANIME
+ */
+//=============================================================================
+//=======================================================
+///	アニメ終了監視タスク
+//=======================================================
+static void tcb_CheckAnime( GFL_TCB *tcb, void* work )
+{
+  ANM_TASK_WORK *p_wk = (ANM_TASK_WORK*)work;
+
+  EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, 0 );
+
+  // アニメ終了していないなら戻る
+  if( !FLD_EXP_OBJ_ChkAnmEnd(exp_anm) )
+  {
+    return;
+  }
+
+  // 非表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, TRUE );
+
+  // ANIME終了
+  {
+    int i;
+    for( i=0; i<p_wk->anm_num; i++ )
+    {
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, i, FALSE );
+    }
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+  }
+  ICHI_Printf("EffectIdx %d 破棄\n", p_wk->obj_idx);
+
+  GFL_HEAP_FreeMemory( work );  // ワークを破棄
+  GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  水しぶきアニメ再生
+ *
+ *	@param	HASU_EVENT_WORK *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk )
+{
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( p_wk->p_fieldmap );
+  ANM_TASK_WORK *p_task_wk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof( ANM_TASK_WORK ) );
+
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+  u16 obj_idx = EFFECT_SPLASH;    // OBJインデックス
+
+  GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+  // ハスの位置に更新
+  {
+    GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx );
+
+    status->trans = hasu->trans;
+  }
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, FALSE );
+
+  // ANIME再生
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
+    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
+  }
+
+  // タスク登録
+  {
+    p_task_wk->exp_obj = exp_obj;
+    p_task_wk->obj_idx = obj_idx;
+    p_task_wk->anm_num = 1;
+
+    GFL_TCB_AddTask( tcbsys, tcb_CheckAnime, (void*)p_task_wk, 0 );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動波紋アニメ再生
+ *
+ *	@param	HASU_EVENT_WORK *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk )
+{
+
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+  u16 obj_idx;    // OBJインデックス
+
+  // 使用できるOBJを調べる
+  {
+    int i;
+    BOOL is_not = TRUE;
+    for( i=EFFECT_MOVE_RIPPLE1; i<EFFECT_MOVE_RIPPLE_MAX; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, i, 0 );
+      if( FLD_EXP_OBJ_GetAnmStopFlg( exp_anm ) )
+      {
+        obj_idx = i;
+        is_not = FALSE;
+        break;
+      }
+    }
+
+    if( is_not )
+    {
+      ICHI_Printf("余りOBJがない!\n");
+      return;
+    }
+  }
+
+
+  // ハスの位置に更新
+  {
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+    GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx );
+
+    status->trans = hasu->trans;
+    status->trans.y = 0;
+
+    // 方向により回転させる
+    {
+      u16 rtbl[DIR_MAX4][3] = {{0,0x4000,0},{0,0xc000,0},{0,0x8000,0},{0,0,0}};
+      u16 *rot;
+      u16 dir = FIELD_PLAYER_GetDir( p_wk->player );
+
+      rot = rtbl[ dir ];
+
+      GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &status->rotate );
+    }
+  }
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, FALSE );
+
+  // ANIME再生
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
+    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
+    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
+  }
+
+  // タスク登録
+  {
+    GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( p_wk->p_fieldmap );
+    ANM_TASK_WORK *p_task_wk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof( ANM_TASK_WORK ) );
+
+    p_task_wk->exp_obj = exp_obj;
+    p_task_wk->obj_idx = obj_idx;
+    p_task_wk->anm_num = 2;
+
+    GFL_TCB_AddTask( tcbsys, tcb_CheckAnime, (void*)p_task_wk, 0 );
+  }
+}
+static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk )
+{
 }
 
 //=============================================================================
@@ -1506,6 +1880,8 @@ static void DebugWin_Update_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeHeight( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Update_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
 static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Update_ChangeRipple( void *userWork, DEBUGWIN_ITEM *item );
+static void DebugWin_Draw_ChangeRipple( void *userWork, DEBUGWIN_ITEM *item );
 
 //----------------------------------------------------------------------------
 /**
@@ -1535,6 +1911,11 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID
                               heapID );
   DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeSync,
                               DebugWin_Draw_ChangeSync,
+                              p_fieldmap,
+                              DEBUGMENU_GYM_WATER,
+                              heapID );
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeRipple,
+                              DebugWin_Draw_ChangeRipple,
                               p_fieldmap,
                               DEBUGMENU_GYM_WATER,
                               heapID );
@@ -1673,6 +2054,34 @@ static void DebugWin_Draw_ChangeSync( void *userWork, DEBUGWIN_ITEM *item )
 {
   DEBUGWIN_ITEM_SetNameV( item, "ゆれシンク[%d]", debug_sync );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動波紋インターバル 更新
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_ChangeRipple( void *userWork, DEBUGWIN_ITEM *item )
+{
+  FIELDMAP_WORK *p_fieldmap = userWork;
+  int value = debug_ripple;
+
+  if( DebugWin_ChangeData( &value, 0, 100 ) )
+  {
+    // 更新あり
+    debug_ripple = value;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動波紋インターバル 描画
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_ChangeRipple( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item, "はもんひんど[%d]", debug_ripple );
+}
+
 
 #endif // GYM_WATER_DEBUG_MENU
 

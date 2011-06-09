@@ -13,6 +13,8 @@
 #define HASU_SHAKE_HEIGHT (3)
 //1周期するのにかかるシンク数
 #define HASU_SHAKE_SYNC (12)
+//ハスの移動波紋頻度
+#define WATER_MOVE_RIPPLE_INTERVAL (12)	// 基本シンク数と同じ
 //ハスに飛び乗れる箇所数
 #define HASU_POS_NUM (36)
 //ハス起動位置
