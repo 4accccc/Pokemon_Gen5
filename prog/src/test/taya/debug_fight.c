@@ -2365,7 +2365,7 @@ FS_EXTERN_OVERLAY(battle);
 
 
     //モードと録画箇所がかってなかったら返す
-    if( wk->saveData.recMode != DBF_RECMODE_NONE )
+    if( wk->saveData.recMode == DBF_RECMODE_REC )
     {
       int pokewoodflag = btltype_GetPokewood(wk->saveData.btlType);
       if( wk->saveData.recBufID < LOADDATA_MAX )
@@ -2601,16 +2601,6 @@ FS_EXTERN_OVERLAY(battle);
 
   case SEQ_BTL_START:
 
-    // ポケウッド
-    {
-      int pokewoodflag = btltype_GetPokewood(wk->saveData.btlType);
-      if(pokewoodflag != BTL_POKEWOOD_NONE){
-        wk->setupParam.PokewoodMode = pokewoodflag;
-      }
-
-      wk->setupParam.pokewoodSenario = wk->saveData.pokewoodSenario;
-    }
-
     changeScene_start( wk );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
     GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
@@ -2675,6 +2665,13 @@ FS_EXTERN_OVERLAY(battle);
             PP_SetSick( pp, POKESICK_NULL );
           }
         }
+
+        //ポケウッドならばコンバートしてからセーブ
+        if( wk->saveData.recBufID >= LOADDATA_MAX )
+        {
+          POKEWOOD_REC_ConvertRecToShow( &(wk->setupParam), wk->heapID );
+        }
+
         SaveRecordStart( wk, &(wk->setupParam), wk->saveData.recBufID );
         (*seq) = SEQ_BTL_SAVING;
       }else{
@@ -2732,6 +2729,7 @@ static void setupFieldSituation( BTL_FIELD_SITUATION* sit, const DEBUG_BTL_SAVED
  */
 static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setupParam, u8 bufID )
 {
+
   BattleRec_StoreSetupParam( setupParam );
 
   TAYA_Printf("*** 録画データバッファダンプ（書き込み直後）***\n");

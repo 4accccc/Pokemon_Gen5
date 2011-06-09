@@ -97,6 +97,8 @@ static BOOL pokewood_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, POK
 static BOOL pokewood_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK* rec );
 static void pokewood_PokeParty_to_RecPokeParty( const POKEPARTY *party, POKEWOOD_REC_POKEPARTY *rec_party );
 static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
+static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_SENARIO *senario );
+static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_SENARIO *senario );
 
 //=============================================================================================
 /**
@@ -134,6 +136,7 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
       store_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX );
       pokewood_store_OperationBuffer( setup, rec );
       store_SetupSubset( setup, &rec->setupSubset );
+      pokewood_store_Senario( setup, &rec->senario );
     }
     break;
   }
@@ -189,6 +192,10 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE
 	    restore_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX );
 	    pokewood_restore_OperationBuffer( setup, rec );
 	    restore_SetupSubset( setup, &rec->setupSubset );
+      pokewood_restore_Senario( setup, &rec->senario );
+
+      //ポケウッド再生は強制上映モード
+      setup->PokewoodMode = BTL_POKEWOOD_SHOW;
     }
     break;
   }
@@ -540,7 +547,7 @@ static void pokewood_store_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  ポケウッド用  パーティ格納
+ *	@brief  ポケウッド用  パーティ復元
  *
  *	@param	const BATTLE_SETUP_PARAM* setup バトル
  *	@param	rec　録画
@@ -557,6 +564,16 @@ static void pokewood_restore_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_RE
     }
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief ポケウッド用操作バッファ格納
+ *
+ *	@param	const BATTLE_SETUP_PARAM* setup
+ *	@param	rec 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
 static BOOL pokewood_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec )
 {
   if( (setup->recBuffer != NULL)
@@ -569,6 +586,16 @@ static BOOL pokewood_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, POK
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief ポケウッド用操作バッファ復元
+ *
+ *	@param	const BATTLE_SETUP_PARAM* setup
+ *	@param	rec 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
 static BOOL pokewood_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_WORK* rec )
 {
   setup->recDataSize = rec->opBuffer.size;
@@ -576,6 +603,14 @@ static BOOL pokewood_restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const P
   GFL_STD_MemCopy( rec->opBuffer.buffer, setup->recBuffer, setup->recDataSize );
   return TRUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ポケウッド用パーティ変換
+ *
+ *	@param	const POKEPARTY *party
+ *	@param	*rec_party 
+ */
+//-----------------------------------------------------------------------------
 static void pokewood_PokeParty_to_RecPokeParty( const POKEPARTY *party, POKEWOOD_REC_POKEPARTY *rec_party )
 {
   int i;
@@ -597,6 +632,15 @@ static void pokewood_PokeParty_to_RecPokeParty( const POKEPARTY *party, POKEWOOD
     NAGI_Printf( "poke[%d]=%d\n", i, PP_Get( pp, ID_PARA_monsno, NULL ) );
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ポケウッド用パーティ変換
+ *
+ *	@param	POKEWOOD_REC_POKEPARTY *rec_party
+ *	@param	*party
+ *	@param	heapID 
+ */
+//-----------------------------------------------------------------------------
 static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID )
 {
   int i;
@@ -615,3 +659,106 @@ static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_part
 
   GFL_HEAP_FreeMemory( pp );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ポケウッド用シナリオデータ
+ *
+ *	@param	const BATTLE_SETUP_PARAM* setup
+ *	@param	*senario 
+ */
+//-----------------------------------------------------------------------------
+static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_SENARIO *senario )
+{
+  senario->senario_no = setup->pokewoodSenario;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief　ポケウッド用シナリオデータ
+ *
+ *	@param	BATTLE_SETUP_PARAM* setup
+ *	@param	POKEWOOD_REC_SENARIO *senario 
+ */
+//-----------------------------------------------------------------------------
+static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_SENARIO *senario )
+{
+  setup->pokewoodSenario = senario->senario_no;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief ポケウッドの撮影データを上映データに変換
+ */
+//-----------------------------------------------------------------------------
+void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
+{
+  enum
+  {
+    POKEWOOD_CONV_DATA_POKE_NUM = 3,
+  };
+
+  //TODO　本来ROMから読み出す予定だが、ないので
+  //データべた書き
+  static const struct _POKEWOOD_REC_CONV_DATA
+  {
+    u32 trainerID;
+
+    struct _POKEWOOD_REC_POKE_DATA
+    {
+      u16 src_monsno; //変更前
+      u16 dst_monsno; //変更先
+    } poke_data[POKEWOOD_CONV_DATA_POKE_NUM];
+  } sc_rec_to_show_data[] =
+  {
+    //シナリオ０
+    {
+      TRID_SCIENTISTW_01,
+      {
+        MONSNO_ufo,
+        MONSNO_ufo,
+      }
+    },
+    //シナリオ１
+    {
+      0,
+    },
+  };
+
+  const struct _POKEWOOD_REC_CONV_DATA *p_setup_data = &sc_rec_to_show_data[ bsp->pokewoodSenario ];
+
+  GF_ASSERT(bsp->pokewoodSenario < NELEMS(sc_rec_to_show_data) );
+
+
+  //敵トレーナーの設定
+  if( p_setup_data->trainerID != 0 )
+  {
+    TT_EncountTrainerPersonalDataMake( p_setup_data->trainerID, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID );
+  }
+
+  //敵ポケモンの設定
+  //置換するものがあったら変える
+  {
+    int i,j;
+
+    POKEPARTY *p_party = bsp->party[BTL_CLIENT_ENEMY1];
+
+    for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+    {
+      POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party, i );
+      if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) == 0 )
+      {
+        continue;
+      }
+      for( j = 0; j < POKEWOOD_CONV_DATA_POKE_NUM; j++ )
+      {
+        const struct _POKEWOOD_REC_POKE_DATA *p_poke_data = &p_setup_data->poke_data[j];
+
+        if( p_poke_data->src_monsno == PP_Get( p_pp, ID_PARA_monsno, NULL ) )
+        {
+          PP_Put( p_pp, ID_PARA_monsno, p_poke_data->dst_monsno );
+        }
+      }
+    }
+  }
+}
+

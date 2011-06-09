@@ -68,3 +68,7 @@ extern BOOL POKEWOOD_REC_IsExist( void );
 
 //Žæ“¾
 extern POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void );
+
+//ŽB‰eƒf[ƒ^‚ðã‰fƒf[ƒ^‚Ö•ÏŠ·
+//->battle_rec_tool.c‚É‚ ‚é‚Ì‚ÅBattleRec_LoadToolModule‚µ‚Ä‚­‚¾‚³‚¢
+extern void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID );
