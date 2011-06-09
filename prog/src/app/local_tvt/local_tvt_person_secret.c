@@ -16,9 +16,9 @@
 #include "sound/pm_sndsys.h"
 #include "gamesystem/game_data.h"
 #include "savedata/questionnaire_save.h"
+#include "savedata/questionnaire_index.h"
 #include "app/research_radar/question_id.h"
 #include "app/research_radar/answer_id.h"
-#include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
 //アーカイブ
 #include "arc_def.h"
@@ -661,7 +661,7 @@ static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_qu
       }
       else
       {
-        u32 answerID  = AnswerID_question[ sc_quest_tbl[state] ][ ansIdx-1 ];
+        u32 answerID  = QIDATA_Get_AnswerID( sc_quest_tbl[state], ansIdx-1 );
         LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 0, answerID );
         return LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
       }

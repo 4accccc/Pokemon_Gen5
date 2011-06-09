@@ -20,7 +20,6 @@
 
 #include "app/research_radar/question_id.h"
 #include "app/research_radar/answer_id.h"
-#include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
 #include "font/font.naix"
 #include "arc_def.h"

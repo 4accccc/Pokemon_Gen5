@@ -19,12 +19,10 @@
 #include "field/research_team_def.h"
 #include "savedata/misc.h" 
 #include "savedata/questionnaire_save.h" 
+#include "savedata/questionnaire_index.h" 
 #include "gamesystem/game_beacon.h"
 
 #include "../../../resource/research_radar/data/question_id.h"            // for QUESTION_ID_xxxx
-#include "../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
-#include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
-
 
 //#define DEBUG_PRINT_ON
 
@@ -327,7 +325,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
     int ansIdx;
     int maxCount;
 
-    ansNum = AnswerNum_question[ qID ];
+    ansNum = QIDATA_Get_AnswerNum( qID );
     maxCount = -1;
     for( ansIdx=0; ansIdx < ansNum; ansIdx++ )
     {
@@ -336,7 +334,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
       int sumCount   = totalCount + todayCount;
       if( maxCount < sumCount ) {
         maxCount = sumCount;
-        majorityAnswerID = AnswerID_question[ qID ][ ansIdx ];
+        majorityAnswerID = QIDATA_Get_AnswerID( qID, ansIdx );
       }
 #ifdef DEBUG_PRINT_ON
       OS_TFPrintf( 3, 

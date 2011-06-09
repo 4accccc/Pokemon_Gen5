@@ -12,9 +12,32 @@
 
 #include "../../../../resource/research_radar/data/answer_id.h"              // for ANSWER_ID_xxxx
 #include "../../../../resource/research_radar/data/question_id.h"            // for QUESTION_ID_xxxx
+#include "../../../../resource/research_radar/data/answer_id_question.cdat"  // for u8 AnswerID_question[]
 #include "../../../../resource/research_radar/data/questionnaire_index.cdat" // for QuestionnaireIndex
 #include "../../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
 
+//=================================================================
+// ■cdatのデータ配列にアクセスするための関数
+//=================================================================
+u8 QIDATA_Get_AnswerID( int question_id, int data_idx )
+{
+  GF_ASSERT(data_idx<17);
+  return AnswerID_question[question_id][data_idx];
+}
+
+u8 QIDATA_Get_AnswerNum( int question_id )
+{
+  return AnswerNum_question[question_id];
+}
+
+const QUESTIONNAIRE_INDEX* QIDATA_Get_QuestionnaireIndex( int question_id )
+{
+  return &QuestionnaireIndex[question_id];
+}
+
+//=================================================================
+// ■情報取得関数
+//=================================================================
 
 //---------------------------------------------------------------------------
 /**

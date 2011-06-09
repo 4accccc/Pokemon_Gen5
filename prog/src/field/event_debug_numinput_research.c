@@ -25,7 +25,6 @@
 
 #include "savedata/questionnaire_save.h"
 #include "app/research_radar/question_id.h"
-//#include "app/research_radar/answer_num_question.cdat"
 
 //======================================================================
 //======================================================================

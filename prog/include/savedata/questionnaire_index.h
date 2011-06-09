@@ -21,6 +21,14 @@ typedef struct
 
 } QUESTIONNAIRE_INDEX;
 
+//=================================================================
+// ■cdatのデータ配列にアクセスするための関数
+//=================================================================
+extern u8 QIDATA_Get_AnswerID( int question_id, int data_idx );
+
+extern u8 QIDATA_Get_AnswerNum( int question_id );
+
+extern const QUESTIONNAIRE_INDEX* QIDATA_Get_QuestionnaireIndex( int question_id );
 
 //=================================================================
 // ■情報取得関数

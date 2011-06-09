@@ -28,6 +28,7 @@
 #include "gamesystem/game_beacon.h"      // for GAMEBEACON_xxxx
 #include "savedata/save_control.h"       // for SaveControl_xxxx
 #include "savedata/questionnaire_save.h" // for QuestionnareWork_xxxx
+#include "savedata/questionnaire_index.h" // for QIDATA_Get_xxx
 #include "sound/pm_sndsys.h"             // for PMSND_xxxx
 #include "sound/swan_sound_data.sadl"      // for SEQ_SE_XXXX
 #include "print/gf_font.h"               // for GFL_FONT_xxxx
@@ -45,8 +46,6 @@
 #include "question_id.h"                    // for QUESTION_ID_xxxx
 #include "answer_id.h"                      // for ANSWER_ID_xxxx
 
-#include "answer_id_question.cdat"         // for AnswerID_question[][]
-#include "answer_num_question.cdat"        // for AnswerNum_question[]
 #include "question_id_topic.cdat"          // for QuestionX_topic[]
 #include "string_id_question.cdat"         // for StringID_question[]
 #include "string_id_topic_title.cdat"      // for StringID_topicTitle[]
@@ -4553,9 +4552,9 @@ static void SetupResearchData( RRG_WORK* work )
   questionID[0] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 ); // 質問ID
   questionID[1] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 1 ); // 質問ID
   questionID[2] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 2 ); // 質問ID
-  answerNumOfQuestion[0] = AnswerNum_question[ questionID[0] ]; // 質問ID ==> 回答選択肢の数
-  answerNumOfQuestion[1] = AnswerNum_question[ questionID[1] ]; // 質問ID ==> 回答選択肢の数
-  answerNumOfQuestion[2] = AnswerNum_question[ questionID[2] ]; // 質問ID ==> 回答選択肢の数
+  answerNumOfQuestion[0] = QIDATA_Get_AnswerNum( questionID[0] ); // 質問ID ==> 回答選択肢の数
+  answerNumOfQuestion[1] = QIDATA_Get_AnswerNum( questionID[1] ); // 質問ID ==> 回答選択肢の数
+  answerNumOfQuestion[2] = QIDATA_Get_AnswerNum( questionID[2] ); // 質問ID ==> 回答選択肢の数
   todayCountOfQuestion[0] = QuestionnaireWork_GetTodayCount( QSave, questionID[0] ); // 質問に対する, 今日の回答人数
   todayCountOfQuestion[1] = QuestionnaireWork_GetTodayCount( QSave, questionID[1] ); // 質問に対する, 今日の回答人数
   todayCountOfQuestion[2] = QuestionnaireWork_GetTodayCount( QSave, questionID[2] ); // 質問に対する, 今日の回答人数
@@ -4568,7 +4567,7 @@ static void SetupResearchData( RRG_WORK* work )
 
     for( aIdx=0; aIdx < answerNumOfQuestion[ qIdx ]; aIdx++ )
     {
-      answerID[ qIdx ][ aIdx ] = AnswerID_question[ qID ][ aIdx ]; // 回答ID
+      answerID[ qIdx ][ aIdx ] = QIDATA_Get_AnswerID( qID, aIdx ); // 回答ID
       todayCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTodayAnswerNum( QSave, qID, aIdx + 1 ); // 回答に対する, 今日の回答人数
       totalCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTotalAnswerNum( QSave, qID, aIdx + 1 ); // 回答に対する, いままでの回答人数 ( 今日の人数を除く )
     }
