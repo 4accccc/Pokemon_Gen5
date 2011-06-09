@@ -10,7 +10,6 @@
 #include "enc_cutin_no.h"
 #include "msg/msg_sptr_name.h"
 #include "../../../resource/fld3d_ci/fldci_id_def.h"
-#include "../../arc/enc_ci_face.naix"
 
 //TODO エンカウントカットインで使用する名前を整理する（sptr_name.gmmにメッセージデータが用意されている)
 static const ENC_CUTIN_DAT EncCutinDat[] = 
