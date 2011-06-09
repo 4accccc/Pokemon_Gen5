@@ -1372,7 +1372,7 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
 
   case SELITEM_REC_BUF:
     {
-      save->recBufID = loopValue( save->recBufID+incValue, 0, 5 );
+      save->recBufID = loopValue( save->recBufID+incValue, 0, 4+5-1 );
     }
     break;
 

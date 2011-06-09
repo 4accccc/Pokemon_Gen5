@@ -63,6 +63,7 @@
 #include "savedata/infinity_dungeon_save.h"
 #include "savedata/gear_3ds_save.h"
 #include "savedata/wbt_ex_save.h"
+#include "savedata/pokewood_rec.h"
 
 //--------------------------------------------------------------
 //  通常セーブデータのテーブル
@@ -521,16 +522,8 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_Dendou[] = {
 static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_PokeWood_00[] = {
   {
     EXGMDATA_ID_POKEWOOD_REC_00,
-    (FUNC_GET_SIZE)BattleRec_GetWorkSize,
-    (FUNC_INIT_WORK)BattleRec_WorkInit,
-  },
-};
-//ポケウッド０１
-static const GFL_SAVEDATA_TABLE SaveDataTbl_Extra_PokeWood_01[] = {
-  {
-    EXGMDATA_ID_POKEWOOD_REC_01,
-    (FUNC_GET_SIZE)BattleRec_GetWorkSize,
-    (FUNC_INIT_WORK)BattleRec_WorkInit,
+    (FUNC_GET_SIZE)POKEWOOD_REC_GetWorkSize,
+    (FUNC_INIT_WORK)POKEWOOD_REC_WorkInit,
   },
 };
 //WBT00
@@ -672,10 +665,34 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     SAVE_MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：ポケウッド０１
-    SaveDataTbl_Extra_PokeWood_01,
-    NELEMS(SaveDataTbl_Extra_PokeWood_01),
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
     EXTRA_MM_POKEWOOD_01,                    //バックアップ領域先頭アドレス
     EXTRA_MM_POKEWOOD_01,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ポケウッド０２
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
+    EXTRA_MM_POKEWOOD_02,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_POKEWOOD_02,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ポケウッド０３
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
+    EXTRA_MM_POKEWOOD_03,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_POKEWOOD_03,             //ミラーリング領域先頭アドレス ※ミラー無し指定
+    SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
+    SAVE_MAGIC_NUMBER,
+  },
+  {//外部セーブパラメータテーブル：ポケウッド０４
+    SaveDataTbl_Extra_PokeWood_00,
+    NELEMS(SaveDataTbl_Extra_PokeWood_00),
+    EXTRA_MM_POKEWOOD_04,                    //バックアップ領域先頭アドレス
+    EXTRA_MM_POKEWOOD_04,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_POKEWOOD,              //使用するバックアップ領域の大きさ
     SAVE_MAGIC_NUMBER,
   },

@@ -25,14 +25,13 @@
 //ポケウッドでセーブする１クライアントあたりの手持ち数
 #define POKEWOOD_REC_TEMOTI_MAX             (6)
 
-//TODO 後々、敵のデータをROMから読み込むので、クライアントは１or2になる。
-//仕様によってはポケモン手持ち数も減る
-//ROMから読み込む部分はbattle_rec_tool.cに書くこと
-
 typedef enum
 {
   LOADDATA_POKEWOOD0 = LOADDATA_MAX,  //battle_rec.hのロードデータの続きから始まる
   LOADDATA_POKEWOOD1,
+  LOADDATA_POKEWOOD2,
+  LOADDATA_POKEWOOD3,
+  LOADDATA_POKEWOOD4,
 }POKEWOOD_LOADDATA_NUM;
 
 //=============================================================================
@@ -55,6 +54,11 @@ typedef struct _POKEWOOD_REC_OPERATION_BUFFER POKEWOOD_REC_OPERATION_BUFFER;
  *					外部公開関数
 */
 //=============================================================================
+//save_tbl.cで仕様する関数
+extern void POKEWOOD_REC_WorkInit( void *p_wk_adrs );
+extern u32 POKEWOOD_REC_GetWorkSize( void );
+
+
 //読み込みバッファの作成
 extern void POKEWOOD_REC_Init( HEAPID heapID );
 extern void POKEWOOD_REC_Exit( void );

@@ -55,6 +55,9 @@ typedef struct
   u32 crc;                ///<最後尾にすること
 } POKEWOOD_REC_SAVEDATA;
 
+//セーブ領域より小さくないとダメ
+SDK_COMPILER_ASSERT( sizeof(POKEWOOD_REC_SAVEDATA) < SAVESIZE_EXTRA_POKEWOOD );
+
 static POKEWOOD_REC_SAVEDATA * sp_pokewood_rec_sv = NULL;
 
 //=============================================================================
@@ -63,6 +66,27 @@ static POKEWOOD_REC_SAVEDATA * sp_pokewood_rec_sv = NULL;
 */
 //=============================================================================
 static SAVE_EXTRA_ID PokeWood_Rec_LoadDataNumToSaveExtraID( POKEWOOD_LOADDATA_NUM num );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークを初期化
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+void POKEWOOD_REC_WorkInit( void *p_wk_adrs )
+{
+  GFL_STD_MemClear( p_wk_adrs, sizeof(POKEWOOD_REC_SAVEDATA) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief ワークサイズを取得
+ */
+//-----------------------------------------------------------------------------
+u32 POKEWOOD_REC_GetWorkSize( void )
+{
+  return sizeof( POKEWOOD_REC_SAVEDATA );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -96,7 +120,7 @@ void POKEWOOD_REC_Exit( void )
  *	@param	heapID    ヒープID
  *	@param	num       ロードするセーブデータ番号
  *
- *	@return　ロード結果 battle_rec.hにあるRECLOAD_RESULT_xxxxの値
+ *	@return　ロード結果 LOAD_RESULT_BREAKはこない。破壊の場合はNG
  */
 //-----------------------------------------------------------------------------
 LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num )
@@ -118,23 +142,23 @@ LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_
   if( result == LOAD_RESULT_NULL )
   {
     POKEWOOD_REC_Printf("ポケウッド録画データが存在しません\n");
-    return RECLOAD_RESULT_NULL;  //初期化データの為、データなし
+    return LOAD_RESULT_NULL;  //初期化データの為、データなし
   }
   else if( result != LOAD_RESULT_OK )
   {
     POKEWOOD_REC_Printf("ポケウッド録画データの読み込みエラーです\h");
-    return RECLOAD_RESULT_ERROR;
+    return LOAD_RESULT_ERROR;
   }
 
   //整合性チェック
   if( sp_pokewood_rec_sv->crc == GFL_STD_CrcCalc(sp_pokewood_rec_sv,sizeof(POKEWOOD_REC_SAVEDATA) - sizeof(sp_pokewood_rec_sv->crc) ) )
   {
-    return RECLOAD_RESULT_OK;
+    return LOAD_RESULT_OK;
   }
   else
   {
     POKEWOOD_REC_Printf("ポケウッド録画データが不正です\n");
-    return RECLOAD_RESULT_NG;
+    return LOAD_RESULT_NG;
   }
 
 }
@@ -232,13 +256,23 @@ POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void )
 //-----------------------------------------------------------------------------
 static SAVE_EXTRA_ID PokeWood_Rec_LoadDataNumToSaveExtraID( POKEWOOD_LOADDATA_NUM num )
 {
-  switch( num )
+  static const SAVE_EXTRA_ID sc_loaddata_to_extra_id[]  =
   {
-  default:
+    SAVE_EXTRA_ID_POKEWOOD_00,
+    SAVE_EXTRA_ID_POKEWOOD_01,
+    SAVE_EXTRA_ID_POKEWOOD_02,
+    SAVE_EXTRA_ID_POKEWOOD_03,
+    SAVE_EXTRA_ID_POKEWOOD_04,
+  };
+
+  num -= LOADDATA_MAX;
+
+  if( num >= NELEMS(sc_loaddata_to_extra_id)
+      || num < 0 )
+  {
     GF_ASSERT(0);
-  case LOADDATA_POKEWOOD0:
-    return SAVE_EXTRA_ID_POKEWOOD_00;
-  case LOADDATA_POKEWOOD1:
-    return SAVE_EXTRA_ID_POKEWOOD_01;
+    num = 0;
   }
+
+  return sc_loaddata_to_extra_id[ num ];
 }
