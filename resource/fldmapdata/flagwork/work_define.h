@@ -186,6 +186,7 @@
 #define WK_SCENE_C05GYM0101_TRBTL_06     16574 /* 0x40be じめんジム：６人目の視線トレーナー */
 #define WK_SCENE_C05GYM0101_TRBTL_07     16575 /* 0x40bf じめんジム：７人目の視線トレーナー */
 #define WK_SCENE_C04_SWRIVAL             16576 /* 0x40c0 ライモンシティ：ジムクリア後プラズマ団イベント制御ワーク */
+#define WK_SCENE_C06GYM                  16577 /* 0x40c1 フキヨセシティ：イベント進行管理ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

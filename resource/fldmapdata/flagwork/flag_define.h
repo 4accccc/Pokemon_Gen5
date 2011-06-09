@@ -580,6 +580,9 @@
 #define FV_C04_SWPLASMAM_01                662 /* 0x0296 ライモンシティ：プラズマ団 */
 #define FV_C13GYM0102_SWLEADER2ISS         663 /* 0x0297 C12GYM0102：ホミカISS */
 #define FV_C04_SWHEROINE_01                664 /* 0x0298 ライモンシティ：異性主人公 */
+#define FV_C06_SWLEADER6_01                665 /* 0x0299 フキヨセシティ：フウロと博士 */
+#define FV_R07R0101_HAKASE2_01             666 /* 0x029a タワーオブヘブン：アララギ博士（娘） */
+#define FV_C06R0201_SWLEADER6_01           667 /* 0x029b フキヨセシティ：カーゴサービスフウロとアララギ娘とベル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
