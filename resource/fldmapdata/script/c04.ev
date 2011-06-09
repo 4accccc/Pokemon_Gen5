@@ -31,11 +31,14 @@ _EVENT_DATA    ev_zone_c04
 _EVENT_DATA    ev_init_c04
 _EVENT_DATA    ev_bg_c04_board_07
 _EVENT_DATA    ev_bg_c04_board_08
-_EVENT_DATA    ev_pos_c04_swrival_01      //ライモンジムクリア後に発生
+_EVENT_DATA    ev_pos_c04_swrival_01    //ライモンジムクリア後に発生
 _EVENT_DATA    ev_c04_swrival_01
 _EVENT_DATA    ev_c04_swplazmam_04
 _EVENT_DATA    ev_c04_swplazmam_02
 _EVENT_DATA    ev_c04_swplazmaw_01
+_EVENT_DATA    ev_c04_swheroine_01
+_EVENT_DATA    ev_C04_tbossbl_01
+_EVENT_DATA    ev_C04_tboss_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -71,6 +74,14 @@ INIT_EVENT_START	ev_zone_c04
 	//ミュージカルスタイリストの助言メッセージをリセット
 	_FLAG_SET( FE_C04R0201_STYLIST_TALK )
 
+  //主人公の性別を取得してヒロイン（ヒーロー）の見た目を指定
+  _GET_MY_SEX( SCWK_ANSWER )
+  IF $SCWK_ANSWER == PM_MALE THEN
+    $OBJCHRWORK0 = SWHEROINE   //女の子を指定
+    ELSE
+    $OBJCHRWORK0 = SWHERO      //男の子を指定
+  ENDIF
+
 INIT_EVENT_END
 
 
@@ -78,8 +89,9 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_c04
-	
-	
+
+
+
 
 INIT_EVENT_END
 
@@ -568,6 +580,201 @@ EVENT_START		ev_pos_c04_swrival_02
   _FLAG_SET( FV_C04_SWRIVAL_01 )
   //========================================//
 
+EVENT_END
+
+
+/**************************************************************/
+/* SWHEROINE(SWHERO)イベント01                                */
+/**************************************************************/
+EVENT_START   ev_c04_swheroine_01
+
+{
+
+  //初めて話しかけたか
+	IF FLAG_OFF( FE_C04_SWHEROINE_01 ) THEN
+
+    _TALK_OBJ_START()
+    //ヒロイン：あの　ギアステーションって（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_01, msg_c04_hero_01, C04_SWHEROINE_01, POS_DOWN )
+    _LAST_KEYWAIT()
+
+    //========================================//
+    //２度目以降から下のセリフに
+    _FLAG_SET( FE_C04_SWHEROINE_01 )
+    //========================================//
+
+    ELSE
+    _TALK_OBJ_START()
+    //ヒロイン：じゅんびオーケー　よね▼（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_03, msg_c04_hero_03, C04_SWHEROINE_01, POS_DOWN )
+    _LAST_KEYWAIT()
+
+  ENDIF
+
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //ヒロイン：ありがとう！▼（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_04, msg_c04_hero_04, C04_SWHEROINE_01, POS_DOWN )
+    _MSGWIN_CLOSE()
+
+    //アニメ：ヒロイン向き直す
+    _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_u )
+    _TIME_WAIT( 3 )
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+    //アニメ：主人公移動
+    IF $LCW_POSX == 422 && $LCW_POSZ == 462 THEN
+      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 423, 461, FORCE_TYPE_NPC, 8, DIR_LR )
+      _OBJ_ANIME_WAIT()
+      ELSE
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+    //アニメ：ノボリ振り向き
+    _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+
+    //ヒロイン：ということで　サブウェイマスターに（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_05, msg_c04_hero_05, C04_SWHEROINE_01, POS_DOWN )
+    _MSGWIN_CLOSE()
+
+    //ノボリ：このような　ばしょでの
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_02, C04_TBOSSBL_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //クダリ：ルールを　まもって
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_02, C04_TBOSS_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
+    _TRAINER_MULTI_BTL_SET( TRID_TANPAN_10, TRID_TANPAN_11, TRID_TANPAN_12 ) 
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //勝利後メッセージ
+    //ノボリ：ブラボー！！▼
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_03, C04_TBOSSBL_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //クダリ：ぼく　クダリ▼
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tboss_03, C04_TBOSS_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //ノボリ：ぜひ！　ぜひ！　つぎは
+    _BALLOONWIN_OBJMSG_POS( msg_c04_tbossbl_04, C04_TBOSSBL_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //アニメ：ノボリとクダリ振り向き
+    _OBJ_ANIME( C04_TBOSS_01, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+
+    //アニメ：ノボリとクダリ移動
+    _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 460, FORCE_TYPE_NPC, 8, DIR_LR )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 460, FORCE_TYPE_NPC, 8, DIR_LR )
+
+    //アニメ：クダリ退場
+    _OBJ_ANIME_AUTO( C04_TBOSS_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_u )  //ノボリ待機
+    _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+    _OBJ_DEL( C04_TBOSS_01 )
+    _SE_WAIT()
+
+    //アニメ：ノボリ退場
+    _OBJ_ANIME_AUTO( C04_TBOSSBL_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
+    _TIME_WAIT( 8 )
+    _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+    _OBJ_DEL( C04_TBOSSBL_01 )
+    _SE_WAIT()
+
+    _TIME_WAIT( 15 )
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+    //アニメ：主人公とヒロイン向かい合う
+    IF $LCW_POSX == 423 && $LCW_POSZ == 461 THEN
+      _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_r )
+      _TIME_WAIT( 3 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+      _OBJ_ANIME_WAIT()
+      ELSE
+      _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_l )
+      _TIME_WAIT( 3 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ヒロイン：つよかった……！（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_06, msg_c04_hero_06, C04_SWHEROINE_01, POS_DOWN )
+    _MSGWIN_CLOSE()
+
+    //アイテム入手：バトルレコーダー
+    _ITEM_EVENT_KEYWAIT( ITEM_BATORUREKOODAA, 1 )
+
+    //ヒロイン：バトルレコーダーを　もっていると（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_07, msg_c04_hero_07, C04_SWHEROINE_01, POS_DOWN )
+    _MSGWIN_CLOSE()
+
+    //アニメ：ヒロイン退場
+    _OBJ_ANIME_AUTO( C04_SWHEROINE_01, 422, 459, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+    _OBJ_DEL( C04_SWHEROINE_01 )
+    _SE_WAIT()
+
+    //========================================//
+    //ヒロイン、ノボリとクダリを非表示
+    _FLAG_SET( FV_C04_SWHEROINE_01 )
+    //========================================//
+
+    //いいえ
+    ELSE
+
+    //あっ　そうか！（主人公が女の子の場合は男口調）
+    _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_02, msg_c04_hero_02, C04_SWHEROINE_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //アニメ：ヒロイン向き直す
+    _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+
+  ENDIF
+
+}
+EVENT_END
+
+
+/**************************************************************/
+/* ノボリ話しかけ                                             */
+/**************************************************************/
+EVENT_START   ev_C04_tbossbl_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tbossbl_01 )
+
+  //アニメ：ノボリ上を見る
+  _OBJ_ANIME( C04_TBOSSBL_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+/**************************************************************/
+/* クダリ話しかけ                                             */
+/**************************************************************/
+EVENT_START   ev_C04_tboss_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tboss_01 )
 EVENT_END
 
 

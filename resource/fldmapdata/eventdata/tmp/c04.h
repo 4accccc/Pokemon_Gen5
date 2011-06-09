@@ -25,6 +25,9 @@
 #define C04_SWPLAZMAW_01                   2
 #define C04_SWRIVAL_01                     3
 #define C04_SWPLAZMAM_04                   4
+#define C04_SWHEROINE_01                   5
+#define C04_TBOSSBL_01                     6
+#define C04_TBOSS_01                       7
 
 #endif //ZONE_C04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
