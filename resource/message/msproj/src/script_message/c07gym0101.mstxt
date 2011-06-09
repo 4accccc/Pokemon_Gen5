@@ -420,10 +420,10 @@
 			Language="JPN">
 			<Comment>♂
 ・クリア後
-・このメッセージ保留</Comment>
+・このメッセージの対応は保留</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:40:14" />
+				Time="2011-06-09T09:44:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -617,10 +617,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セッカ　ポケモンジムあとち</Text>
+			<Text>セッカ　ポケモンジム　あとち</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:39:41" />
+				Time="2011-06-09T09:44:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
