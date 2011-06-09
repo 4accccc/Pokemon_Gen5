@@ -20,7 +20,7 @@
 #define POKEWOOD_REC_OPERATION_BUFFER_SIZE  (356)//(0xc00) 
 
 //ポケウッドでセーブするクライアント数
-#define POKEWOOD_REC_CLIENT_MAX             (4)
+#define POKEWOOD_REC_CLIENT_MAX             (2)
 
 //ポケウッドでセーブする１クライアントあたりの手持ち数
 #define POKEWOOD_REC_TEMOTI_MAX             (6)
