@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『あのね　ほんとうに
-プラズマだんが　いるかも　しれないし▼
-それに　やせいポケモンも　いるから
-いっしょに　いこうよ？</Text>
+			<Text>アイリス『あのね　本当に
+プラズマ団が　いるかも　しれないし▼
+それに　野生ポケモンも　いるから
+一緒に　いこうよ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,10 +83,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『うん　わかった！
-じゃあ　じゅんび　してきてね▼</Text>
+じゃあ　準備してきてね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -143,14 +143,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『うん　いきましょ！▼
-あっ　きみが　さがしたい　ばしょを
-すきに　さがして　いいからね▼
+			<Text>アイリス『うん　行きましょ！▼
+あっ　きみが　探したい　場所を
+好きに　探して　いいからね▼
 ポケモンが　きずついたら
-あたしが　かいふく　してあげるから！</Text>
+あたしが　回復して　あげるから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -203,10 +203,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『いちど　そとに　でる？▼</Text>
+			<Text>アイリス『いちど　外に　でる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -251,10 +251,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アイリス『ほんとうに　プラズマだん？
-２ねんまえに　かいさんしたはずだけど</Text>
+２ねんまえに　かいさん　したはずだよ▼
+あのときは　かなり
+たいへん　だったんだから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:20:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,11 +264,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『ほんとうに　プラズマだん？
-２ねんまえに　かいさんしたはずだけど</Text>
+			<Text>アイリス『本当に　プラズマ団？
+２年前に　解散したはずだよ▼
+あのときは　かなり
+大変　だったんだから！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:20:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -307,11 +311,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『下水道って
-ドラゴンタイプの　ポケモン▼</Text>
+			<Text>アイリス『げすいどう　って
+ドラゴンタイプの　ポケモンは▽
+いるわけ　ないよね……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:18:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -319,11 +324,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『下水道って
-ドラゴンタイプの　ポケモン▼</Text>
+			<Text>アイリス『下水道　って
+ドラゴンタイプの　ポケモンは▽
+いるわけ　ないよね……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:18:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -364,10 +370,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『ポケモン図鑑？▼</Text>
+			<Text>アイリス『ポケモンずかん？▼
+ああ　アララギはかせの
+おてつだいを　してるんだ！▼
+ページが　うまっていくのって
+トレーナーとしても　うれしいよね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:18:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -375,10 +385,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『ポケモン図鑑？▼</Text>
+			<Text>アイリス『ポケモン図鑑？▼
+ああ　アララギ博士の
+お手伝いを　してるんだ！▼
+ページが　埋まっていくのって
+トレーナーとしても　うれしいよね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:17:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -419,11 +433,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『あたしはね
-・竜の里について▼</Text>
+			<Text>アイリス『あたしはね　しゅぎょうで
+うまれこきょうを　はなれて▽
+イッシュちほうに　きたんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -431,11 +446,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『あたしはね
-・竜の里について▼</Text>
+			<Text>アイリス『あたしはね　修行のため
+生まれ故郷を　離れて▽
+イッシュ地方に　来たんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -487,10 +503,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『さ　さがしましょ！▼</Text>
+			<Text>アイリス『さ　探しましょ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:05:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -546,11 +562,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『あなぬけのヒモ？▼
-それを　つかわれたら　あたし
+それを　使われたら　あたし
 ここで　おいてけぼりに　なるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:05:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -605,11 +621,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『あなをほる？▼
-その　わざを　つかわれたら　あたし
+その　わざを　使われたら　あたし
 ここで　おいてけぼりに　なるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:06:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -650,10 +666,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイリス『？？？▼</Text>
+			<Text>アイリス『ねえ！
+あなたたち　そこで　なにしてるの？▼
+ここには　もしかしたら
+ポケモンどろぼうが　いて　あぶないよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:34:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -661,10 +680,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『？？？▼</Text>
+			<Text>アイリス『ねえ！
+あなたたち　そこで　なにしてるの？▼
+ここには　もしかしたら
+ポケモンどろぼうが　いて　危ないよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:34:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -673,10 +695,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・イベント戦闘前</Comment>
+・posイベント
+　座標未定
+・続けてswplazmam1_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:29:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -716,10 +740,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ネオプラズマ団『戦闘前▼</Text>
+			<Text>したっぱ『なんだ　おまえら？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:02:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -728,10 +752,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswchampion_13</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:24:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -766,12 +790,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『プラズマだん　なの？▼
-なんだか　２ねんまえと
-かっこうが　ちがってるけれど……▼</Text>
+			<Text>アイリス『プラズマ団　なの？▼
+なんだか　２年前と
+格好が　違ってるけれど……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:06:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -780,10 +804,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて</Comment>
+・続けてswplazmam1_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:24:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -829,14 +853,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>したっぱ『そうとも！
-われわれは　プラズマだん！▼
-こんどこそ　せかいを　てにするため
-にちや　かつどうを　つづけている！▼
+われわれは　プラズマ団！▼
+今度こそ　世界を　支配するため
+日夜　活動を　続けている！▼
 で　おまえら
 いったい　なんの　ようだ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:06:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -845,10 +869,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswchampion_14</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:24:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -886,13 +910,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『あきれた……！▼
-２ねんまえに　あんなことが　あったのに
+２年前に　あんなことが　あったのに
 まだ　あきらめて　なかったんだ……▼
 じゃ　タチワキで　ポケモンを
-うばったのも　あなたたち　ね！▼</Text>
+奪ったのも　あなたたち　ね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:07:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -901,10 +925,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて</Comment>
+・続けてswplazmam1_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -935,11 +959,11 @@
 			Language="JPN">
 			<Text>したっぱ『タチワキ？　そいつらは
 おれたちと　べつの　チームだな▼
-だが　おまえらは　ジャマだな
+だが　おまえらは　ジャマ！
 ここで　かたづけておくか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:07:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -948,12 +972,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>したっぱ『タチワキ？　そいつらは
-おれたちと　べつの　チームだな▼
-だが　おまえらは　ジャマだな
+おれたちと　別の　チームだな▼
+だが　おまえらは　ジャマ！
 ここで　かたづけておくか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:07:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -962,10 +986,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswchampion_15</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1000,10 +1024,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『きみ！
-２ｖｓ２で　たたかうよ！！▼</Text>
+２ｖｓ２で　戦うよ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:07:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1048,11 +1072,11 @@
 			<Text>したっぱ『チッ！
 こいつら　つよいな！▼
 まあいい！　もくてきの　ポケモンは
-つかまえることが　できた▽
+てにいれることが　できた▽
 ここは　ひきあげる！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1062,12 +1086,12 @@
 			Language="JPN_KANJI">
 			<Text>したっぱ『チッ！
 こいつら　つよいな！▼
-まあいい！　もくてきの　ポケモンは
-つかまえることが　できた▽
+まあいい！　目的の　ポケモンは
+手に入れることが　できた▽
 ここは　ひきあげる！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1076,10 +1100,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・イベント戦闘後
+・続けてswchampion_16</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1103,12 +1128,14 @@
 			Language="JPN">
 			<Text>アイリス『まちなさいよ！！▼
 もー！　なんて　にげあし！
-（ポケモンみたい）▼
-ほんとうに　ポケモンどろぼうが　いたんだ
-じゃ　おくも　しらべたほうが　いいかも▼</Text>
+まるで　ミネズミ　みたい▼
+あきれた！　ほんとうに　
+ポケモンどろぼうが　いたんだ▼
+じゃ　この　おくも
+しらべたほうが　いいかも▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1116,14 +1143,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『まちなさいよ！！▼
+			<Text>アイリス『待ちなさいよ！！▼
 もー！　なんて　にげあし！
-（ポケモンみたい）▼
-ほんとうに　ポケモンどろぼうが　いたんだ
-じゃ　おくも　しらべたほうが　いいかも▼</Text>
+まるで　ミネズミ　みたい▼
+あきれた！　本当に　
+ポケモンどろぼうが　いたんだ▼
+じゃ　この奥も
+調べたほうが　いいかも▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1132,10 +1161,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・イベント戦闘後</Comment>
+・続けてswleader3_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1189,10 +1218,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswchampion_17</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1244,10 +1273,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて</Comment>
+・続けてswleader3_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:26:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1276,14 +1305,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『おくは　しらべたけれど
+			<Text>アーティ『このさき　だけど
 ほかには　だれも　いなかったよ▼
 ボクが　さいしょに　ここを　しらべてて
 つぎに　あいつらが　きてさ▽
 さいご　キミたちが　きたんだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1291,14 +1320,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーティ『おくは　しらべたけれど
-ほかには　だれも　いなかったよ▼
-ボクが　さいしょに　ここを　しらべてて
-つぎに　あいつらが　きてさ▽
-さいご　キミたちが　きたんだね▼</Text>
+			<Text>アーティ『この先だけど
+他には　だれも　いなかったよ▼
+ボクが　最初に　ここを　調査して
+次に　あいつらが　来てさ▽
+最後　キミたちが　来たんだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:24:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1307,10 +1336,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswchampion_18</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1353,11 +1382,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『ふうん　そっか……▼
-それにしても　プラズマだんが
-ふっかつ　だなんて　どうしよう？▼</Text>
+それにしても　プラズマ団が
+復活だなんて　どうしよう？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1366,10 +1395,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて</Comment>
+・続けてswleader3_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:26:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1400,14 +1429,14 @@
 			Language="JPN">
 			<Text>アーティ『そうだねー▼
 それについては
-シャガさんや　ヤーコンさんにも▽
-れんらく　しておくよ▼
+シャガさんや　ヤーコンさん　とか▽
+ジムリーダーたちに　れんらく　しておくよ▼
 それよりも　ここから　でないかい？
 げすいどうは　なんだか▽
 ムシムシしている　からね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:12:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1417,14 +1446,14 @@
 			Language="JPN_KANJI">
 			<Text>アーティ『そうだねー▼
 それについては
-シャガさんや　ヤーコンさんにも▽
-れんらく　しておくよ▼
+シャガさんや　ヤーコンさん含め▽
+他のジムリーダーに　連絡しておくよ▼
 それよりも　ここから　でないかい？
-げすいどうは　なんだか▽
+下水道は　なんだか▽
 ムシムシしている　からね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:11:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1433,10 +1462,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswchampion_19</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1478,10 +1507,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アイリス『……そうだね
-ここに　プラズマだんは　いないんだし▼</Text>
+ここに　プラズマ団は　いないんだし▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:12:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1490,10 +1519,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けて</Comment>
+・続けてswchampion_20</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:25:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1537,12 +1566,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]！▼
-いっしょに　たんけん　できて
+いっしょに　探検できて
 とても　おもしろかったよ！▼
-これは　その　おれい！▼</Text>
+これは　その　お礼！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:12:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1603,13 +1632,13 @@
 			Language="JPN_KANJI">
 			<Text>アイリス『アーティはね
 ヒウンの　ジムリーダー　なの！▼
-しかも　こんな　かんじなのに
-いがいと　つよいからね　ここで▽
-ポケモン　きたえたら　どう？▼
+しかも　こんな　雰囲気なのに
+意外と　強いからね　ここで▽
+ポケモン　鍛えたら　どう？▼
 [Name:TrainerName Idx="0" ]　じゃねー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T09:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
