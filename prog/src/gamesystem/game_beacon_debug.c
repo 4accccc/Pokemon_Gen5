@@ -19,9 +19,6 @@
 #include "savedata/my_pms_data.h"
 #include "app/townmap_util.h"
 #include "net_app\union\union_beacon_tool.h"
-#include "app/research_radar/research_data.h"   //QUESTION_NUM_PER_TOPIC
-#include "app/research_radar/question_id.h"
-#include "app/research_radar/questionnaire_index.h"
 #include "savedata/playtime.h"
 #include "field/research_team_def.h"
 
