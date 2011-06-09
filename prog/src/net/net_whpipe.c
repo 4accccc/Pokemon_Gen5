@@ -16,7 +16,7 @@
 
 #include "net/net_whpipe.h"
 #include "system/gfl_use.h"
-
+#include "gamesystem/game_beacon.h"
 //接続相手制限コード定義
 #include "net_alone_test.h"
 
@@ -2052,6 +2052,7 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
       pNetWL->crossChannel=0;
     }
 		NET_WHPIPE_BeaconSetInfo();
+    GAMEBEACON_BeaconTypeSwap();  //BW互換ビーコン送信モードと、Swan専用ビーコン送信モードを切り替える
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
       pNetWL->CrossRand = 60 + GFUser_GetPublicRand(152);
       _CHANGE_STATE(_crossScanWait);  // 親機になる

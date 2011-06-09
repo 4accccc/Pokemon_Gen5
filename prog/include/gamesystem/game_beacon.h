@@ -29,6 +29,11 @@
 #define GAMEBEACON_RECV_VERSION_FULL  (0xFFFF)  //全バージョン受け取り可
 #define GAMEBEACON_RECV_VERSION_SWAN  (0xFFFC)  //スワン以降の全バージョン受け取り可(BW受け取り不可)
 
+typedef enum{
+  GAME_BEACON_TYPE_COMMON,    ///<BWと互換する(bwとswan両方で受け取る)
+  GAME_BEACON_TYPE_SWAN_ONLY, ///<BWと互換しないSWAN専用ビーコン
+}GAME_BEACON_TYPE;
+
 ///詳細No
 typedef enum{
   GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE,       ///<野生ポケモンと対戦中
@@ -151,6 +156,7 @@ extern void GAMEBEACON_SetGameSystemWork( GAMESYS_WORK* gsys );
 extern void GAMEBEACON_Update(void);
 extern void GAMEBEACON_Setting(GAMEDATA *gamedata);
 extern void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info);
+extern void GAMEBEACON_BeaconTypeSwap(void);
 extern void GAMEBEACON_SendBeaconUpdate(void);
 
 //--------------------------------------------------------------

@@ -82,6 +82,7 @@ GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 //==============================================================================
 static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
+static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_TYPE type );
 static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
@@ -116,6 +117,7 @@ void GAMEBEACON_Init(HEAPID heap_id)
   
   GameBeaconSys = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAMEBEACON_SYSTEM));
   GameBeaconSys->end_log = -1;
+  GameBeaconSys->beacon_type = GAME_BEACON_TYPE_COMMON;      //初期タイプはBW互換
   GAMEBEACON_Set_ResortDataEnable( TRUE );
 }
 
@@ -223,7 +225,33 @@ void GAMEBEACON_Setting(GAMEDATA *gamedata)
 //==================================================================
 void GAMEBEACON_SendDataCopy(GAMEBEACON_INFO *info)
 {
-  GFL_STD_MemCopy(&GameBeaconSys->send, info, sizeof(GAMEBEACON_INFO));
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+  
+  GFL_STD_MemCopy(&bsys->send, info, sizeof(GAMEBEACON_INFO));
+
+  //BW互換のビーコンとswan専用ビーコンを切り替えるためにコピーしたデータを改変
+  BeaconInfo_BeaconTypeOverwrite( info, bsys->beacon_type );
+}
+
+//==================================================================
+/**
+ * ゲームビーコン送信タイプを切り替える
+ *
+ * 呼び出されるたびに、GAME_BEACON_TYPE_SWAN_ONLYとGAME_BEACON_TYPE_COMMONを切り替える
+ */
+//==================================================================
+void GAMEBEACON_BeaconTypeSwap(void)
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+ 
+  if( bsys == NULL ){
+    return; //スルー
+  }
+  if( bsys->beacon_type == GAME_BEACON_TYPE_COMMON ){
+    bsys->beacon_type = GAME_BEACON_TYPE_SWAN_ONLY;
+  }else{
+    bsys->beacon_type = GAME_BEACON_TYPE_COMMON;
+  }
 }
 
 //==================================================================
@@ -370,6 +398,34 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   bsys->update_log |= 1 << bsys->end_log;
   if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
     bsys->log_num++;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 受信ビーコンのタイプを切り替えるために、ビーコン情報を上書きする
+ *
+ * @param   info		
+ * @param   type  GAME_BEACON_TYPE(GAME_BEACON_TYPE_COMMONならBW互換、TYPE_SWAN_ONLYならSwan専用)
+ *
+ * ビーコンデータはSwanをメインターゲットに生成しておき、
+ * BW互換にしたい時、BWが受け取れないパラメータをクリアする
+ */
+//--------------------------------------------------------------
+static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_TYPE type )
+{
+  //BW互換のビーコンとswan専用ビーコンを切り替えるためにデータを改変
+  if( type == GAME_BEACON_TYPE_SWAN_ONLY ){
+    //スワン専用ビーコンなので、BW受信可フラグを強制Off
+    info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;
+  }else{
+    /*
+     BWとの互換のためにデータを上書き(11.06.06現在、アンケートで互換性のない回答を無回答にしている)
+     元々Swan専用のアクションはデータ生成時にversion_bitを操作しているので、ここでは特になにもしない
+    */
+
+    //アンケートのバッファを上書き
+    GFL_STD_MemClear( &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
   }
 }
 

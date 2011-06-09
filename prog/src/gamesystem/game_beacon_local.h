@@ -54,7 +54,10 @@ typedef struct{
   u8 resort_extend_index;             ///<リゾート現在送信中の拡張インデックス
   void *p_resort_buff;                ///<リゾート用拡張バッファ
   u16 resort_extend_count;            ///<リゾート用拡張切り替えカウント
-  
+
+  GAME_BEACON_TYPE  beacon_type;      ///<typeがG_BEACON_TYPE_COMMONの時BWと互換性のあるビーコンを送信する
+                                      ///<swanとbwではアンケートに互換性がないため、ビーコン送受信の1ターンごとに
+                                      ///<swan専用ビーコンとbw互換のビーコンを交互に切り替えて発信する。
 #ifdef PM_DEBUG
   BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
 #endif
