@@ -33,6 +33,9 @@ _EVENT_DATA		ev_c13_swleader2_02
 _EVENT_DATA		ev_c13_swrival_01
 _EVENT_DATA		ev_c13_swplazmam_01
 _EVENT_DATA		ev_init_c13
+_EVENT_DATA		ev_bg_c13_sign1_01
+_EVENT_DATA		ev_bg_c13_sign2_01
+_EVENT_DATA		ev_bg_c13_gymsign_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -719,3 +722,25 @@ _ANIME_LABEL	anm_player_come_z671
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
+	
+	
+/**************************************************************/
+/*		C13		街看板										  */
+/**************************************************************/
+EVENT_START		ev_bg_c13_sign1_01
+	_EASY_BGWIN_MSG( msg_c13_sign1_01, 1 )
+EVENT_END
+	
+/**************************************************************/
+/*		C13		ポケウッド案内看板							  */
+/**************************************************************/
+EVENT_START		ev_bg_c13_sign2_01
+	_EASY_BGWIN_MSG( msg_c13_sign2_01, 2 )
+EVENT_END
+
+/**************************************************************/
+/*		C13		ジム看板									  */
+/**************************************************************/
+EVENT_START		ev_bg_c13_gymsign_01
+	_EASY_BGWIN_MSG( msg_c13_gymsign_01, 2 )
+EVENT_END

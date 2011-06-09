@@ -19,5 +19,8 @@
 #define SCRID_C13_SWRIVAL_01 (12)
 #define SCRID_C13_SWPLAZMAM_01 (13)
 #define SCRID_INIT_C13 (14)
+#define SCRID_BG_C13_SIGN1_01 (15)
+#define SCRID_BG_C13_SIGN2_01 (16)
+#define SCRID_BG_C13_GYMSIGN_01 (17)
 
 #endif //_C13_DEF_H_
