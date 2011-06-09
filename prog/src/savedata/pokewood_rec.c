@@ -51,9 +51,8 @@
 //=====================================
 typedef struct
 {
-  ///後々battle_recのようにGDSプロフィールやヘッダが必要になる可能性を
-  //考えて切り分けておく
-  POKEWOOD_REC_WORK rec;  ///<戦闘録画本体 この構造体は最後尾にすること
+  POKEWOOD_REC_WORK rec;  ///<戦闘録画本体
+  u32 crc;                ///<最後尾にすること
 } POKEWOOD_REC_SAVEDATA;
 
 static POKEWOOD_REC_SAVEDATA * sp_pokewood_rec_sv = NULL;
@@ -97,7 +96,7 @@ void POKEWOOD_REC_Exit( void )
  *	@param	heapID    ヒープID
  *	@param	num       ロードするセーブデータ番号
  *
- *	@return　ロード結果
+ *	@return　ロード結果 battle_rec.hにあるRECLOAD_RESULT_xxxxの値
  */
 //-----------------------------------------------------------------------------
 LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num )
@@ -127,15 +126,15 @@ LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_
     return RECLOAD_RESULT_ERROR;
   }
 
-  //整合性チェック  TODO
-  if( 0 )
+  //整合性チェック
+  if( sp_pokewood_rec_sv->crc == GFL_STD_CrcCalc(sp_pokewood_rec_sv,sizeof(POKEWOOD_REC_SAVEDATA) - sizeof(sp_pokewood_rec_sv->crc) ) )
   {
-    POKEWOOD_REC_Printf("ポケウッド録画データが不正です\n");
-    return RECLOAD_RESULT_NG;
+    return RECLOAD_RESULT_OK;
   }
   else
   {
-    return RECLOAD_RESULT_OK;
+    POKEWOOD_REC_Printf("ポケウッド録画データが不正です\n");
+    return RECLOAD_RESULT_NG;
   }
 
 }
@@ -169,6 +168,11 @@ SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOA
 
   switch(*p_seq){
   case SEQ_START:
+  
+    //CRC作成
+    sp_pokewood_rec_sv->crc = GFL_STD_CrcCalc(sp_pokewood_rec_sv,sizeof(POKEWOOD_REC_SAVEDATA) - sizeof(sp_pokewood_rec_sv->crc) );
+
+
     //セーブ対象の外部セーブ領域のセーブシステムを作成
     SaveControl_Extra_SystemSetup(p_sv, extraID, heapID, sp_pokewood_rec_sv, SAVESIZE_EXTRA_POKEWOOD);
 
@@ -191,14 +195,16 @@ SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOA
 
 //----------------------------------------------------------------------------
 /**
- *	@brief 存在しているかチェック 何らかのデータがあるかどうか
- *	@return　TRUE存在　FALSEなし
+ *	@brief 存在しているかチェック 読み出されているかつ壊れていないならばTRUE
+ *	@return　TRUE存在　FALSEなしor壊れている
  */
 //-----------------------------------------------------------------------------
 BOOL POKEWOOD_REC_IsExist( void )
 {
   GF_ASSERT( sp_pokewood_rec_sv != NULL );
-  return GFL_STD_CODED_CheckSum(sp_pokewood_rec_sv, SAVESIZE_EXTRA_POKEWOOD) != 0;
+
+  return (GFL_STD_CODED_CheckSum(sp_pokewood_rec_sv, SAVESIZE_EXTRA_POKEWOOD) != 0)
+    && (sp_pokewood_rec_sv->crc == GFL_STD_CrcCalc(sp_pokewood_rec_sv,sizeof(POKEWOOD_REC_SAVEDATA) - sizeof(sp_pokewood_rec_sv->crc) ));
 }
 
 //----------------------------------------------------------------------------
