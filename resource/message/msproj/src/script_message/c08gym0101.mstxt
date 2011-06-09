@@ -719,11 +719,11 @@
 ポケモンが　したがってくれるだろう！▼
 これも　もらってくれたまえ▼
 わたしが　すきな
-わざマシンの　ひとつ▼
+わざマシンの　ひとつ▽
 そのなも　ドラゴンテール▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:35:17" />
+				Time="2011-06-09T10:55:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -737,11 +737,11 @@
 ポケモンが　従ってくれるだろう！▼
 これも　もらってくれたまえ▼
 私が　好きな
-わざマシンの　ひとつ▼
+わざマシンの　ひとつ▽
 その名も　ドラゴンテール▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:35:34" />
+				Time="2011-06-09T10:56:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -882,10 +882,10 @@
 			<Comment>♂
 ・メッセージ後、ジムの外へ
 　画面外に消えると主人公、操作可能に
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T11:19:16" />
+				Time="2011-06-09T10:57:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1106,14 +1106,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ！　イッシュちほう
-さいきょう　にして▽
-さいだいの　しれん！▽
+トップクラスの　しれん！▽
 といわれる　ソウリュウジムへ！▼
 まずは　この　おいしいみず
 うけとって　くださいっすよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T10:57:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1122,14 +1121,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ようこそ！　イッシュ地方
-最強にして▽
-最大の　試練！▽
+トップクラスの　試練！▽
 といわれる　ソウリュウジムへ！▼
 まずは　この　おいしいみず
 受け取って　くださいっすよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T10:57:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1141,10 +1139,11 @@
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
-・No030「おいしいみず」入手</Comment>
+・No030「おいしいみず」入手
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-09T10:57:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
