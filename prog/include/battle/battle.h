@@ -243,6 +243,12 @@ enum {
 
 };
 
+
+enum
+{
+  BTL_POKEWOOD_CHOICE_MAX = 20, ///ポケウッド選択肢の格納最大数
+};
+
 //--------------------------------------------------------------
 /**
  *  デバッグフラグ
@@ -364,6 +370,12 @@ typedef struct {
   // ひん死・状態異常など結果格納
   BtlPokeStatCode  party_state[ BTL_CLIENT_NUM ][ TEMOTI_POKEMAX ];
   u32              restHPRatio[ BTL_CLIENT_NUM ];
+
+  // [io] ポケウッドデータ  撮影モードのときはoutput 上映モードのときはinput
+  u8 pokewoodChoiceTbl[BTL_POKEWOOD_CHOICE_MAX];
+  u8 pokewoodSuccessFlag;
+  u8 dummy[3];  
+
 
 }BATTLE_SETUP_PARAM;
 

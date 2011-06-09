@@ -45,8 +45,9 @@ struct _POKEWOOD_REC_OPERATION_BUFFER
 //=====================================
 typedef struct
 {
-  int senario_no;
-  BOOL clear;
+  int   senario_no;
+  BOOL  success;
+  u8    choiceTbl[ BTL_POKEWOOD_CHOICE_MAX ];
 }POKEWOOD_REC_SENARIO;
 
 //-------------------------------------
@@ -73,10 +74,4 @@ struct _POKEWOOD_REC_WORK
 
   POKEWOOD_REC_POKEPARTY  rec_party[ POKEWOOD_REC_CLIENT_MAX ];
   BTLREC_CLIENT_STATUS  clientStatus[ POKEWOOD_REC_CLIENT_MAX ];
-
-  u16 magic_key;
-  u16 padding;
-
-  //CRC(ïKÇ∏ç≈å„îˆÇ…ÇµÇƒÇ®Ç≠Ç±Ç∆)
-  GDS_CRC       crc;
 };

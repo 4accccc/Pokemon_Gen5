@@ -670,6 +670,8 @@ static void pokewood_RecPokeParty_to_PokeParty( POKEWOOD_REC_POKEPARTY *rec_part
 static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_SENARIO *senario )
 {
   senario->senario_no = setup->pokewoodSenario;
+  senario->success    = setup->pokewoodSuccessFlag;
+  GFL_STD_MemCopy( setup->pokewoodChoiceTbl, senario->choiceTbl, BTL_POKEWOOD_CHOICE_MAX );
 }
 //----------------------------------------------------------------------------
 /**
@@ -682,6 +684,8 @@ static void pokewood_store_Senario( const BATTLE_SETUP_PARAM* setup, POKEWOOD_RE
 static void pokewood_restore_Senario( BATTLE_SETUP_PARAM* setup, const POKEWOOD_REC_SENARIO *senario )
 {
   setup->pokewoodSenario = senario->senario_no;
+  setup->pokewoodSuccessFlag = senario->success;
+  GFL_STD_MemCopy( senario->choiceTbl, setup->pokewoodChoiceTbl, BTL_POKEWOOD_CHOICE_MAX );
 }
 
 
