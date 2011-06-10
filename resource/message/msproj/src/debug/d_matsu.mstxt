@@ -1962,10 +1962,10 @@ B面はかい</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド００（ミラー無）</Text>
+			<Text>ポケウッド００（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:20:01" />
+				Time="2011-06-10T04:18:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1973,10 +1973,10 @@ B面はかい</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド００（ミラー無）</Text>
+			<Text>ポケウッド００（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:20:03" />
+				Time="2011-06-10T04:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1988,10 +1988,10 @@ B面はかい</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド０１（ミラー無）</Text>
+			<Text>ポケウッド０１（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:20:18" />
+				Time="2011-06-10T04:18:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1999,10 +1999,88 @@ B面はかい</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド０１（ミラー無）</Text>
+			<Text>ポケウッド０１（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:20:20" />
+				Time="2011-06-10T04:18:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DM_MSG_EXSAVE_019"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド０２（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-10T04:18:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド０２（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-10T04:18:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DM_MSG_EXSAVE_020"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド０３（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-10T04:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド０３（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-10T04:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DM_MSG_EXSAVE_021"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド０４（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-10T04:18:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド０４（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-10T04:18:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2014,10 +2092,10 @@ B面はかい</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>WBT００（ミラー無）</Text>
+			<Text>WBT００（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:20:42" />
+				Time="2011-06-10T04:18:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2025,10 +2103,10 @@ B面はかい</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WBT００（ミラー無）</Text>
+			<Text>WBT００（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:20:39" />
+				Time="2011-06-10T04:18:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2040,10 +2118,10 @@ B面はかい</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>WBT０１（ミラー無）</Text>
+			<Text>WBT０１（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:21:00" />
+				Time="2011-06-10T04:18:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2051,10 +2129,10 @@ B面はかい</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WBT０１（ミラー無）</Text>
+			<Text>WBT０１（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:21:02" />
+				Time="2011-06-10T04:18:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2066,10 +2144,10 @@ B面はかい</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>WBT０２（ミラー無）</Text>
+			<Text>WBT０２（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:21:12" />
+				Time="2011-06-10T04:18:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2077,10 +2155,10 @@ B面はかい</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WBT０２（ミラー無）</Text>
+			<Text>WBT０２（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:21:14" />
+				Time="2011-06-10T04:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2092,10 +2170,10 @@ B面はかい</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>３DS（ミラー無）</Text>
+			<Text>３DS（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:21:25" />
+				Time="2011-06-10T04:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2103,10 +2181,10 @@ B面はかい</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３DS（ミラー無）</Text>
+			<Text>３DS（ミラー無）[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-02T09:21:29" />
+				Time="2011-06-10T04:23:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

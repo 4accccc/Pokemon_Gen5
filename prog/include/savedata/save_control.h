@@ -41,12 +41,15 @@
 #define FST_EXTRA_DENDOU_BREAK_BIT	  	(1<<10)		//外部セーブ：殿堂入り：破壊
 #define FST_EXTRA_POKEWOOD_00_BREAK_BIT	  	(1<<11)		//外部セーブ：ポケウッド００：破壊
 #define FST_EXTRA_POKEWOOD_01_BREAK_BIT	  	(1<<12)		//外部セーブ：ポケウッド０１：破壊
-#define FST_EXTRA_WBT_00_BREAK_BIT	  	  (1<<12)		//外部セーブ：WBT0：破壊
-#define FST_EXTRA_WBT_01_BREAK_BIT	  	  (1<<13)		//外部セーブ：WBT1：破壊
-#define FST_EXTRA_WBT_02_BREAK_BIT	  	  (1<<14)		//外部セーブ：WBT2：破壊
-#define FST_EXTRA_3DS_BREAK_BIT	  	      (1<<15)		//外部セーブ：3DS連動：破壊
-#define FST_OUTSIDE_MYSTERY_BREAK_BIT	  	(1<<16)	//管理外セーブ：不思議な贈り物：破壊
-#define FST_OUTSIDE_PERMANENT_BREAK_BIT	  (1<<17)	//管理外セーブ：キー＆コンバート：破壊
+#define FST_EXTRA_POKEWOOD_02_BREAK_BIT	  	(1<<13)		//外部セーブ：ポケウッド０１：破壊
+#define FST_EXTRA_POKEWOOD_03_BREAK_BIT	  	(1<<14)		//外部セーブ：ポケウッド０１：破壊
+#define FST_EXTRA_POKEWOOD_04_BREAK_BIT	  	(1<<15)		//外部セーブ：ポケウッド０１：破壊
+#define FST_EXTRA_WBT_00_BREAK_BIT	  	  (1<<16)		//外部セーブ：WBT0：破壊
+#define FST_EXTRA_WBT_01_BREAK_BIT	  	  (1<<17)		//外部セーブ：WBT1：破壊
+#define FST_EXTRA_WBT_02_BREAK_BIT	  	  (1<<18)		//外部セーブ：WBT2：破壊
+#define FST_EXTRA_3DS_BREAK_BIT	  	      (1<<19)		//外部セーブ：3DS連動：破壊
+#define FST_OUTSIDE_MYSTERY_BREAK_BIT	  	(1<<20)	//管理外セーブ：不思議な贈り物：破壊
+#define FST_OUTSIDE_PERMANENT_BREAK_BIT	  (1<<21)	//管理外セーブ：キー＆コンバート：破壊
 
 //--------------------------------------------------------------
 //  外部セーブ番号
