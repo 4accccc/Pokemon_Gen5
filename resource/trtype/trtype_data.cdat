@@ -787,6 +787,18 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		156,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.195 SWBOSS_1♂ポケモントレーナー
+		148,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.196 MOUNT_2♂ゲームフリーク
+		 73,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.197 SWLEADER1_1♂ポケモントレーナー
+		 97,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {
@@ -795,12 +807,13 @@ const u16 DATA_TrainerBackCGIndex[][2] = {
 		{ TRTYPE_RIVAL, 2 },
 		{ TRTYPE_SUPPORT, 3 },
 		{ TRTYPE_DOCTOR, 4 },
-		{ TRTYPE_HERO_S, 5 },
-		{ TRTYPE_HEROINE_S, 6 },
-		{ TRTYPE_WBHERO, 7 },
-		{ TRTYPE_WBHEROINE, 8 },
-		{ TRTYPE_WBHERO_S, 9 },
-		{ TRTYPE_WBHEROINE_S, 10 },
-		{ TRTYPE_SWCHAMPION, 11 },
+		{ TRTYPE_SWRIVAL, 5 },
+		{ TRTYPE_HERO_S, 6 },
+		{ TRTYPE_HEROINE_S, 7 },
+		{ TRTYPE_WBHERO, 8 },
+		{ TRTYPE_WBHEROINE, 9 },
+		{ TRTYPE_WBHERO_S, 10 },
+		{ TRTYPE_WBHEROINE_S, 11 },
+		{ TRTYPE_SWCHAMPION, 12 },
 };
 

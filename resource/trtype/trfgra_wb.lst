@@ -160,6 +160,7 @@ tbwb_heroine,PTL_SEX_FEMALE
 tbwb_rival,PTL_SEX_MALE
 tbwb_support,PTL_SEX_FEMALE
 tbwb_araragi,PTL_SEX_MALE
+tbwb_swrival,PTL_SEX_MALE
 tbwb_hero_s,PTL_SEX_MALE
 tbwb_heroine_s,PTL_SEX_FEMALE
 tbwb_wbhero,PTL_SEX_MALE

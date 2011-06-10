@@ -205,4 +205,7 @@
 #define	TRTYPE_NINJA    ( 192 )    //NINJA♂プラズマだん
 #define	TRTYPE_SWCHAMPION    ( 193 )    //SWCHAMPION♀チャンピオン
 #define	TRTYPE_PKWD_VILLAIN    ( 194 )    //PKWD_VILLAIN♂かいじん
-#define	TRTYPE_MAX	( 195 )
+#define	TRTYPE_SWBOSS_1    ( 195 )    //SWBOSS_1♂ポケモントレーナー
+#define	TRTYPE_MOUNT_2    ( 196 )    //MOUNT_2♂ゲームフリーク
+#define	TRTYPE_SWLEADER1_1    ( 197 )    //SWLEADER1_1♂ポケモントレーナー
+#define	TRTYPE_MAX	( 198 )

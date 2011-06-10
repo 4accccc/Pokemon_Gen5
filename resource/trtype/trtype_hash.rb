@@ -196,6 +196,9 @@
 		"NINJA♂プラズマだん"=>192,
 		"SWCHAMPION♀チャンピオン"=>193,
 		"PKWD_VILLAIN♂かいじん"=>194,
+		"SWBOSS_1♂ポケモントレーナー"=>195,
+		"MOUNT_2♂ゲームフリーク"=>196,
+		"SWLEADER1_1♂ポケモントレーナー"=>197,
 	}
 #
 	$trtype_id_hash = {
@@ -394,4 +397,7 @@
 		"TRTYPE_NINJA" =>192,
 		"TRTYPE_SWCHAMPION" =>193,
 		"TRTYPE_PKWD_VILLAIN" =>194,
+		"TRTYPE_SWBOSS_1" =>195,
+		"TRTYPE_MOUNT_2" =>196,
+		"TRTYPE_SWLEADER1_1" =>197,
 	}
