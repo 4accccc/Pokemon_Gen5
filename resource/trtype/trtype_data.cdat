@@ -799,6 +799,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 97,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.198 SWCHAMPION_1♀ポケモントレーナー
+		155,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {
@@ -815,5 +819,7 @@ const u16 DATA_TrainerBackCGIndex[][2] = {
 		{ TRTYPE_WBHERO_S, 10 },
 		{ TRTYPE_WBHEROINE_S, 11 },
 		{ TRTYPE_SWCHAMPION, 12 },
+		{ TRTYPE_SWLEADER1_1, 13 },
+		{ TRTYPE_SWCHAMPION_1, 12 },
 };
 

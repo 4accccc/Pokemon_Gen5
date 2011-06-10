@@ -199,6 +199,7 @@
 		"SWBOSS_1♂ポケモントレーナー"=>195,
 		"MOUNT_2♂ゲームフリーク"=>196,
 		"SWLEADER1_1♂ポケモントレーナー"=>197,
+		"SWCHAMPION_1♀ポケモントレーナー"=>198,
 	}
 #
 	$trtype_id_hash = {
@@ -400,4 +401,5 @@
 		"TRTYPE_SWBOSS_1" =>195,
 		"TRTYPE_MOUNT_2" =>196,
 		"TRTYPE_SWLEADER1_1" =>197,
+		"TRTYPE_SWCHAMPION_1" =>198,
 	}

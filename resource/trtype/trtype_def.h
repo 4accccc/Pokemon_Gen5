@@ -208,4 +208,5 @@
 #define	TRTYPE_SWBOSS_1    ( 195 )    //SWBOSS_1♂ポケモントレーナー
 #define	TRTYPE_MOUNT_2    ( 196 )    //MOUNT_2♂ゲームフリーク
 #define	TRTYPE_SWLEADER1_1    ( 197 )    //SWLEADER1_1♂ポケモントレーナー
-#define	TRTYPE_MAX	( 198 )
+#define	TRTYPE_SWCHAMPION_1    ( 198 )    //SWCHAMPION_1♀ポケモントレーナー
+#define	TRTYPE_MAX	( 199 )

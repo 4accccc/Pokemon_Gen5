@@ -898,7 +898,7 @@
 #define	TRID_ELITEM_28   ( 885 ) 
 #define	TRID_ELITEW_28   ( 886 ) 
 #define	TRID_SWPLAZMAM_02   ( 887 ) 
-#define	TRID_SWCHAMPION_02   ( 888 ) 
+#define	TRID_SWCHAMPION_1_01   ( 888 ) 
 #define	TRID_MOUNT_2_01   ( 889 ) 
 #define	TRID_SWBOSS_1_01   ( 890 ) 
 #define	TRID_SWPLAZMAM_03   ( 891 ) 
