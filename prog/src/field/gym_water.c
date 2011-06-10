@@ -86,11 +86,28 @@
 #define HASU_ANM_MOVE   (0)   // 常時たゆわう
 #define HASU_ANM_SHAKE  (1)   // 降りるとき
 
+#define ANM_HIT_RIPPLE_MINE   (0)     // 衝突波紋(自分)
+#define ANM_HIT_RIPPLE_OTHER  (1)     // 衝突波紋(相手)
+
+// タスク
+#define TASK_MAX        (8)   // 移動波紋6 + 衝突波紋2
+
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+
+//-------------------------------------
+///	ANIME用タスクワーク
+//=====================================
+typedef struct {
+  BOOL                is_enable;    // 動作しているか
+  FLD_EXP_OBJ_CNT_PTR exp_obj;
+  u16                 obj_idx;
+  u8                  anm_num;
+} ANM_TASK_WORK;
+
 //-------------------------------------
 ///	ジム内部中の一時ワーク
 //=====================================
@@ -98,6 +115,9 @@ typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
   GYM_WATER_SV_WORK   *p_sv_wk;       // セーブワーク
+
+  ANM_TASK_WORK       anm_task_wk[ TASK_MAX ];
+
   BOOL                is_hasu_ride;   // ハスの上かフラグ
   u8                  ex_height_idx;  // 拡張高さインデックス         
 } GYM_WATER_TMP;
@@ -132,16 +152,14 @@ typedef struct {
   u8              id;           // ハスID
   u16             obj_idx;      // OBJインデックス
 
+  // 衝突用
+  BOOL            is_collision; // ハスに衝突したか
+  u16             other_obj_idx;// 衝突したハスOBJインデックス
+  u16             other_move_distance;  // 衝突ハスの移動距離
+  s16             wait_frame;   // 待ちフレーム
+
 } HASU_EVENT_WORK;
 
-//-------------------------------------
-///	ANIME用タスクワーク
-//=====================================
-typedef struct {
-  FLD_EXP_OBJ_CNT_PTR exp_obj;
-  u16                 obj_idx;
-  u8                  anm_num;
-} ANM_TASK_WORK;
 
 
 //=============================================================================
@@ -468,6 +486,7 @@ static const HASU_POS_PARAM HasuPosParam[ HASU_POS_NUM ] = {
   { HASU_POS_33_X, HASU_POS_33_Z, HASU_POS_33_DIR, HASU_POS_33_MOVE },
   { HASU_POS_34_X, HASU_POS_34_Z, HASU_POS_34_DIR, HASU_POS_34_MOVE },
   { HASU_POS_35_X, HASU_POS_35_Z, HASU_POS_35_DIR, HASU_POS_35_MOVE },
+  { HASU_POS_36_X, HASU_POS_36_Z, HASU_POS_36_DIR, HASU_POS_36_MOVE },
 };
 
 
@@ -486,7 +505,6 @@ static void EXPOBJ_ObjMain( GYM_WATER_TMP *p_wk );
 // HASU
 static BOOL HASU_CheckPos( FLD_EXP_OBJ_CNT_PTR exp_obj, const fx32 x, const fx32 z, u16 *p_obj_idx );
 static BOOL HASU_GetCenterPos( u8 id, int *p_gx, int *p_gz );
-static int HASU_GetMoveDistance( GYM_WATER_TMP *p_wk, u8 id );
 static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk );
 static void HASU_InitExHeight( GYM_WATER_TMP *p_wk );
 static void HASU_ExitExHeight( GYM_WATER_TMP *p_wk );
@@ -496,13 +514,16 @@ static GMEVENT * HASU_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u8 id, u
 static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk );
 
 // HASU移動
+static int  HASU_EVENT_GetMoveDistance( HASU_EVENT_WORK *p_wk, u8 id );
 static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos );
 static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk );
+static BOOL HASU_EVENT_OtherMoveInit( HASU_EVENT_WORK *p_wk );
+static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk );
 
 // ANIME
 static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk );
-static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk );
-static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk );
+static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx );
+static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx, const u8 anm_type );
 
 // EX_HEIGHT 拡張高さ
 static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz );
@@ -510,6 +531,10 @@ static void EX_HEIGHT_Reset( GYM_WATER_TMP *p_wk );
 static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id );
 static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx );
 
+// TASK追加
+static void ANM_TASK_Add( GYM_WATER_TMP *p_wk, u16 obj_idx, u8 anm_num );
+// task関数
+static void tcb_CheckAnime( GFL_TCB *tcb, void* work );
 
 //-------------------------------------
 ///	セーブ情報
@@ -574,6 +599,7 @@ void GYM_WATER_Setup(FIELDMAP_WORK *p_fieldmap)
     HASU_InitExHeight( p_wk );
   }
 
+
 #ifdef GYM_WATER_DEBUG_MENU
   DEBUGMENU_Init( p_wk, p_fieldmap, HEAPID_FIELDMAP );
 #endif // GYM_WATER_DEBUG_MENU
@@ -593,6 +619,7 @@ void GYM_WATER_End(FIELDMAP_WORK *p_fieldmap)
 #ifdef GYM_WATER_DEBUG_MENU
   DEBUGMENU_Exit();
 #endif // GYM_WATER_DEBUG_MENU
+
 
   // ハス拡張高さの破棄
   HASU_ExitExHeight( p_wk );
@@ -749,22 +776,30 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
 
     // 座標
-    // 初回ならデフォルト座標だが、
-    // 以降は、セーブされている座標
-    VEC_Set( &status->trans, 0,0,0 );
-    if( SAVE_GetSaveFlag( p_wk->p_sv_wk ) == FALSE )
+    // セーブされている座標があればその座標
+    // ないならデフォルト座標
     {
-      status->trans.x = pos[i].x;
-      status->trans.z = pos[i].z;
-    }
-    else
-    {
+      fx32 save_x;
+      fx32 save_z;
       // セーブデータから取得
       SAVE_GetHasuPos( p_wk->p_sv_wk,
-          &status->trans.x,
-          &status->trans.z,
+          &save_x,
+          &save_z,
           i );
+
+      if( save_x == 0 && save_z == 0 )
+      {
+        status->trans.x = pos[i].x;
+        status->trans.z = pos[i].z;
+      }
+      else
+      {
+        status->trans.x = save_x;
+        status->trans.z = save_z;
+      }
+      status->trans.y = 0;
     }
+    
 
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
@@ -913,6 +948,11 @@ static GMEVENT * HASU_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u8 id, u
   work->id          = id;
   work->obj_idx     = obj_idx;
 
+  work->is_collision        = FALSE;
+  work->other_obj_idx       = 0;
+  work->other_move_distance = 0;
+  work->wait_frame = 0;
+
   return event;
 }
 
@@ -934,15 +974,20 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
   // 処理シーケンス
   enum{
-    SEQ_START,
-    SEQ_JUMP,
-    SEQ_MOVE_INIT,
-    SEQ_MOVE,
-    SEQ_SAVE,
+    SEQ_START,            // イベント開始
+    SEQ_JUMP,             // 飛び乗り
+    SEQ_MOVE_INIT,        // ハス移動初期化
+    SEQ_MOVE,             // ハス移動
+    SEQ_MOVE_END,         // ハス移動終了(衝突エフェクト)
+    SEQ_OTHER_MOVE_INIT,  // 衝突ハス移動初期化
+    SEQ_OTHER_MOVE,       // 衝突ハス移動
+    SEQ_EX_HEIGHT_SET,    // 拡張高さ設定
+    SEQ_SAVE,             // セーブ
     SEQ_END,
   };
 
   switch( *seq ){
+  // イベント開始
   case SEQ_START:
     {
       // 拡張高さリセット
@@ -955,6 +1000,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
     }
     break;
 
+  // 飛び乗り
   case SEQ_JUMP:
     {
       // アニメ終了待ち
@@ -965,20 +1011,31 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         MMDL  *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
         MMDL_SetAcmd( mmdl, AC_JUMP_U_2G_16F + dir ); 
 
+        // SE 再生
+        //PMSND_PlaySE( GYM_WATER_SE_JUMP );
+
         *seq = SEQ_MOVE_INIT;
       }
     }
     break;
-
+  
+  // ハス移動初期化
   case SEQ_MOVE_INIT:
     {
       if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
       {
-        int move_distance = HASU_GetMoveDistance( p_gym_wk, p_wk->id );
+        int move_distance = HASU_EVENT_GetMoveDistance( p_wk, p_wk->id );
         VecFx32 move_pos;
         // 実際の移動するのは3グリッド少ない
         move_distance -= 3;
         ICHI_Printf("移動距離 %d\n", move_distance);
+
+        if( move_distance == 0 )
+        {
+          // 移動しないなら何もしない
+          *seq = SEQ_EX_HEIGHT_SET;
+          break;
+        }
 
         // 移動後位置計算
         {
@@ -1010,44 +1067,132 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         // 水しぶき
         ANIME_WATER_Splash( p_wk );
 
+        // SE 再生
+        PMSND_PlaySE( GYM_WATER_SE_LAND );
+        
         *seq = SEQ_MOVE;
       }
     }
     break;
 
+  // ハス移動
   case SEQ_MOVE:
     {
       // ハス移動終了チェック
       if( HASU_EVENT_MoveMain( p_wk ) == TRUE )
       {
-        // 拡張高さリセット
-        EX_HEIGHT_Reset( p_gym_wk );
+        // 衝突波紋(自分
+        ANIME_WATER_HitRipple( p_wk, p_wk->obj_idx, ANM_HIT_RIPPLE_MINE );
 
-        // 拡張高さ更新(自分のいるハス)
-        EX_HEIGHT_Set2( p_gym_wk, p_wk->obj_idx );
-        // セーブしておく
-        SAVE_SetObjIdx( p_gym_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE, p_wk->obj_idx );
+        if( p_wk->is_collision == TRUE )
+        {
+          // 衝突波紋(相手
+          ANIME_WATER_HitRipple( p_wk, p_wk->other_obj_idx, ANM_HIT_RIPPLE_OTHER );
+          // 少しだけ待つ
+          p_wk->wait_frame = 7;
+        }
 
-        // 周りのハスを調べて、拡張高さ更新
-        HASU_SetExHeight_DirMax4( p_gym_wk );
+        // SE 再生
+        PMSND_PlaySE( GYM_WATER_SE_HIT );
 
-        // ハスの上フラグを立てる
-        p_gym_wk->is_hasu_ride = TRUE;
-
-        *seq = SEQ_SAVE;
+        *seq = SEQ_MOVE_END;
       }
     }
     break;
 
+  // ハス移動終了(衝突エフェクト)
+  case SEQ_MOVE_END:
+    {
+      // 少しだけ待つ
+      if( p_wk->wait_frame-- == 0 )
+      {
+        if( p_wk->is_collision == TRUE )
+        {
+          // ハス衝突した
+          *seq = SEQ_OTHER_MOVE_INIT;
+        }
+        else
+        {
+          *seq = SEQ_EX_HEIGHT_SET;
+        }
+      }
+    }
+    break;
+
+  // 衝突ハス移動初期化
+  case SEQ_OTHER_MOVE_INIT:
+    {
+      BOOL ret;
+      ret = HASU_EVENT_OtherMoveInit( p_wk );
+
+      // 移動有無で分岐
+      if( ret ) { *seq = SEQ_OTHER_MOVE; }
+      else      { *seq = SEQ_EX_HEIGHT_SET; }
+    }
+    break;
+
+  // 衝突ハス移動
+  case SEQ_OTHER_MOVE:
+    {
+      // ハス移動終了チェック
+      if( HASU_EVENT_OtherMoveMain( p_wk ) == TRUE )
+      {
+        // 衝突波紋
+        ANIME_WATER_HitRipple( p_wk, p_wk->other_obj_idx, ANM_HIT_RIPPLE_MINE );
+
+        // SE 再生
+        PMSND_PlaySE( GYM_WATER_SE_HIT );
+
+        *seq = SEQ_EX_HEIGHT_SET;
+      }
+    }
+    break;
+
+  // 拡張高さ設定
+  case SEQ_EX_HEIGHT_SET:
+    {
+      // 拡張高さリセット
+      EX_HEIGHT_Reset( p_gym_wk );
+
+      // 拡張高さ更新(自分のいるハス)
+      EX_HEIGHT_Set2( p_gym_wk, p_wk->obj_idx );
+
+      // 周りのハスを調べて、拡張高さ更新
+      HASU_SetExHeight_DirMax4( p_gym_wk );
+
+      // ハスの上フラグを立てる
+      p_gym_wk->is_hasu_ride = TRUE;
+
+      *seq = SEQ_SAVE;
+    }
+    break;
+
+  // セーブ
   case SEQ_SAVE:
     {
       GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx );
 
-      // セーブデータ設定
+      // ハス位置設定
       SAVE_SetHasuPos( p_gym_wk->p_sv_wk,
           status->trans.x,
           status->trans.z,
           p_wk->obj_idx );
+
+      if( p_wk->is_collision == TRUE )
+      {
+        status = FLD_EXP_OBJ_GetUnitObjStatus( p_gym_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->other_obj_idx );
+
+        // ハス位置設定
+        SAVE_SetHasuPos( p_gym_wk->p_sv_wk,
+            status->trans.x,
+            status->trans.z,
+            p_wk->other_obj_idx );
+      }
+
+      // 自分のいるハスのOBJインデックスを保存
+      SAVE_SetObjIdx( p_gym_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE, p_wk->obj_idx );
+      // ※周りのハスのOBJインデックスはHASU_SetExHeight_DirMax4で設定している
+      
       // セーブしたフラグを立てる
       SAVE_SetSaveFlag( p_gym_wk->p_sv_wk );
 
@@ -1149,57 +1294,7 @@ static BOOL HASU_GetCenterPos( u8 id, int *p_gx, int *p_gz )
   return TRUE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  ハス起動IDからハスの移動距離を求める
- *	        途中にハスがある場合はそのハスまでの距離を求める
- *
- *	@param	p_wk  ギミックワーク
- *	@param	id    ハスID
- *
- *	@return 移動距離(グリッド)
- */
-//-----------------------------------------------------------------------------
-static int HASU_GetMoveDistance( GYM_WATER_TMP *p_wk, u8 id )
-{
-  int i;
-  u16 obj_idx = 0;
-  int start_gx;
-  int start_gz;
 
-  HASU_GetCenterPos( id, &start_gx, &start_gz );
-
-  for( i=1; i< HasuPosParam[ id ].move_distance; i++ )
-  {
-    fx32 x;
-    fx32 z;
-    int gx = start_gx;
-    int gz = start_gz;
-
-    switch( HasuPosParam[ id ].move_dir ){
-    case DIR_UP:    gz -= i; break;
-    case DIR_DOWN:  gz += i; break;
-    case DIR_LEFT:  gx -= i; break;
-    case DIR_RIGHT: gx += i; break;
-    }
-
-    x = GRID_TO_FX32(gx);
-    z = GRID_TO_FX32(gz);
-
-    // 半グリッドずれを調整
-    x += GRID_HALF_SIZE;
-    z += GRID_HALF_SIZE;
-
-    if( HASU_CheckPos( p_wk->exp_obj, x, z, &obj_idx ) )
-    {
-      ICHI_Printf("途中にハス %d が見つかった\n", obj_idx );
-      return i;
-    }
-  }
-
-  // 見つからない場合は設定された距離
-  return HasuPosParam[ id ].move_distance;
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -1257,7 +1352,6 @@ static void HASU_SetExHeight_DirMax4( GYM_WATER_TMP *p_wk )
   }
 }
 
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  ハス拡張高さの初期化
@@ -1313,6 +1407,68 @@ static void HASU_ExitExHeight( GYM_WATER_TMP *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ハス起動IDからハスの移動距離を求める
+ *	        途中にハスがある場合はそのハスまでの距離を求める
+ *
+ *	@param	p_wk  イベントワーク
+ *	@param	id    ハスID
+ *
+ *	@return 移動距離(グリッド)
+ */
+//-----------------------------------------------------------------------------
+static int  HASU_EVENT_GetMoveDistance( HASU_EVENT_WORK *p_wk, u8 id )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+
+  int i;
+  u16 obj_idx = 0;
+  int start_gx;
+  int start_gz;
+
+  HASU_GetCenterPos( id, &start_gx, &start_gz );
+
+  for( i=1; i< HasuPosParam[ id ].move_distance; i++ )
+  {
+    fx32 x;
+    fx32 z;
+    int gx = start_gx;
+    int gz = start_gz;
+
+    switch( HasuPosParam[ id ].move_dir ){
+    case DIR_UP:    gz -= i; break;
+    case DIR_DOWN:  gz += i; break;
+    case DIR_LEFT:  gx -= i; break;
+    case DIR_RIGHT: gx += i; break;
+    }
+
+    x = GRID_TO_FX32(gx);
+    z = GRID_TO_FX32(gz);
+
+    // 半グリッドずれを調整
+    x += GRID_HALF_SIZE;
+    z += GRID_HALF_SIZE;
+
+    if( HASU_CheckPos( exp_obj, x, z, &obj_idx ) )
+    {
+      ICHI_Printf("途中にハス %d が見つかった\n", obj_idx );
+      
+      // 衝突ハス情報
+      {
+        p_wk->is_collision        = TRUE;
+        p_wk->other_obj_idx       = obj_idx;
+        p_wk->other_move_distance = HasuPosParam[ id ].move_distance - i;
+      }
+
+      return i;
+    }
+  }
+
+  // 見つからない場合は設定された距離
+  return HasuPosParam[ id ].move_distance;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ハス移動初期化
  *
  *	@param	p_wk    イベントワーク
@@ -1339,6 +1495,7 @@ static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos 
 #endif
   p_move_wk->NowSync= 0;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ハス移動メイン
@@ -1427,7 +1584,156 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
   if( ( p_move_wk->frame % WATER_MOVE_RIPPLE_INTERVAL) == 0 )
 #endif
   {
-    ANIME_WATER_MoveRipple( p_wk );
+    ANIME_WATER_MoveRipple( p_wk, p_wk->obj_idx );
+  }
+
+  // 終了チェック
+  return end;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  衝突ハス移動初期化
+ *
+ *	@param	p_wk    イベントワーク
+ *
+ *	@return TRUEで移動する FALSE移動しない
+ */
+//-----------------------------------------------------------------------------
+static BOOL HASU_EVENT_OtherMoveInit( HASU_EVENT_WORK *p_wk )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+  HASU_MOVE_WORK* p_move_wk = &p_wk->move_wk;
+
+  GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, p_wk->other_obj_idx);
+
+  int move_distance = p_wk->other_move_distance;
+  VecFx32 move_pos;
+  // 実際の移動するのは3グリッド少ない
+  move_distance -= 3;
+  ICHI_Printf("移動距離 %d\n", move_distance);
+
+  if( move_distance == 0 )
+  {
+    // 移動しない
+    return FALSE;
+  }
+
+  // 移動後位置計算
+  {
+    move_pos = status->trans;
+    switch( HasuPosParam[ p_wk->id ].move_dir ){
+    case DIR_UP:
+      move_pos.z -= GRID_TO_FX32(move_distance);
+      break;
+    case DIR_DOWN:
+      move_pos.z += GRID_TO_FX32(move_distance);
+      break;
+    case DIR_LEFT:
+      move_pos.x -= GRID_TO_FX32(move_distance);
+      break;
+    case DIR_RIGHT:
+      move_pos.x += GRID_TO_FX32(move_distance);
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+  }
+
+  // 初期化
+  p_move_wk->frame = 0;
+#ifdef GYM_WATER_DEBUG_MENU
+  p_move_wk->endFrame = move_distance*debug_frame;
+#else
+  p_move_wk->endFrame = move_distance*HASU_MOVE_SPEED;
+#endif
+  VEC_Set( &p_move_wk->endPos, move_pos.x, move_pos.y, move_pos.z );
+  p_move_wk->startPos = status->trans;
+
+#ifdef GYM_WATER_DEBUG_MENU
+  p_move_wk->Height = debug_height;
+  p_move_wk->Sync   = debug_sync;
+#else
+  p_move_wk->Height = HASU_SHAKE_HEIGHT;
+  p_move_wk->Sync   = HASU_SHAKE_SYNC;
+#endif
+  p_move_wk->NowSync= 0;
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  衝突ハス移動メイン
+ *
+ *	@param	p_wk    イベントワーク
+ *
+ *	@return TRUEで終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk )
+{
+  HASU_MOVE_WORK* p_move_wk = &p_wk->move_wk;
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+
+  VecFx32 out_pos;      // 移動後位置
+  fx32    h;            // ハスゆれ値
+  BOOL    end = FALSE;
+
+  p_move_wk->frame++;
+ 
+  // 終了チェック
+  if( p_move_wk->endFrame <= p_move_wk->frame )
+  {
+    end = TRUE;
+  }
+
+  //=====================================
+  // 移動
+  {
+    VecFx32 v0, v1;
+    fx32 w1 = FX_F32_TO_FX32( (float)p_move_wk->frame / (float)p_move_wk->endFrame );
+    fx32 w0 = FX32_ONE - w1;
+
+    GFL_CALC3D_VEC_MulScalar( &p_move_wk->startPos, w0, &v0 );
+    GFL_CALC3D_VEC_MulScalar( &p_move_wk->endPos,   w1, &v1 );
+    VEC_Add( &v0, &v1, &out_pos );
+  }
+
+  //=====================================
+  // ゆれ
+  {
+    int tmp;
+    u16 rad;
+    p_move_wk->NowSync++;
+    tmp = (p_move_wk->NowSync * 0x10000) / p_move_wk->Sync;
+    rad = tmp;
+    h = p_move_wk->Height * FX_SinIdx(rad);
+
+    if( end )
+    {
+      // オフセット初期化
+      h = 0;
+    }
+  }
+
+  //=====================================
+  // ハス更新
+  {
+    int obj_idx = p_wk->other_obj_idx;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, obj_idx);
+    out_pos.y += h;
+    status->trans = out_pos;
+  }
+
+  // エフェクト波紋
+#ifdef GYM_WATER_DEBUG_MENU
+  if( ( p_move_wk->frame % debug_ripple) == 0 )
+#else
+  if( ( p_move_wk->frame % WATER_MOVE_RIPPLE_INTERVAL) == 0 )
+#endif
+  {
+    ANIME_WATER_MoveRipple( p_wk, p_wk->other_obj_idx );
   }
 
   // 終了チェック
@@ -1439,39 +1745,6 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
  *        ANIME
  */
 //=============================================================================
-//=======================================================
-///	アニメ終了監視タスク
-//=======================================================
-static void tcb_CheckAnime( GFL_TCB *tcb, void* work )
-{
-  ANM_TASK_WORK *p_wk = (ANM_TASK_WORK*)work;
-
-  EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, 0 );
-
-  // アニメ終了していないなら戻る
-  if( !FLD_EXP_OBJ_ChkAnmEnd(exp_anm) )
-  {
-    return;
-  }
-
-  // 非表示
-  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, TRUE );
-
-  // ANIME終了
-  {
-    int i;
-    for( i=0; i<p_wk->anm_num; i++ )
-    {
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, i, FALSE );
-    }
-    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
-  }
-  ICHI_Printf("EffectIdx %d 破棄\n", p_wk->obj_idx);
-
-  GFL_HEAP_FreeMemory( work );  // ワークを破棄
-  GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  水しぶきアニメ再生
@@ -1481,9 +1754,6 @@ static void tcb_CheckAnime( GFL_TCB *tcb, void* work )
 //-----------------------------------------------------------------------------
 static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk )
 {
-  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( p_wk->p_fieldmap );
-  ANM_TASK_WORK *p_task_wk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof( ANM_TASK_WORK ) );
-
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
   u16 obj_idx = EFFECT_SPLASH;    // OBJインデックス
 
@@ -1510,21 +1780,19 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk )
 
   // タスク登録
   {
-    p_task_wk->exp_obj = exp_obj;
-    p_task_wk->obj_idx = obj_idx;
-    p_task_wk->anm_num = 1;
-
-    GFL_TCB_AddTask( tcbsys, tcb_CheckAnime, (void*)p_task_wk, 0 );
+    GYM_WATER_TMP *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_WATER_TMP_ASSIGN_ID );
+    ANM_TASK_Add( p_gym_wk, obj_idx, 1 );
   }
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief  移動波紋アニメ再生
  *
- *	@param	HASU_EVENT_WORK *p_wk 
+ *	@param	p_wk          イベントワーク
+ *	@param  hasu_obj_idx  表示するハスOBJインデックス
  */
 //-----------------------------------------------------------------------------
-static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk )
+static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx )
 {
 
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
@@ -1556,7 +1824,7 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk )
   // ハスの位置に更新
   {
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
-    GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx );
+    GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, hasu_obj_idx );
 
     status->trans = hasu->trans;
     status->trans.y = 0;
@@ -1589,18 +1857,58 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk )
 
   // タスク登録
   {
-    GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( p_wk->p_fieldmap );
-    ANM_TASK_WORK *p_task_wk = GFL_HEAP_AllocClearMemoryLo( FIELDMAP_GetHeapID(p_wk->p_fieldmap), sizeof( ANM_TASK_WORK ) );
-
-    p_task_wk->exp_obj = exp_obj;
-    p_task_wk->obj_idx = obj_idx;
-    p_task_wk->anm_num = 2;
-
-    GFL_TCB_AddTask( tcbsys, tcb_CheckAnime, (void*)p_task_wk, 0 );
+    GYM_WATER_TMP *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_WATER_TMP_ASSIGN_ID );
+    ANM_TASK_Add( p_gym_wk, obj_idx, 2 );
   }
 }
-static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk )
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  衝突波紋アニメ再生
+ *
+ *	@param	HASU_EVENT_WORK *p_wk イベントワーク
+ *	@param  hasu_obj_idx  表示するハスOBJインデックス
+ *	@param	anm_type      アニメ種類 ANM_HIT_RIPPLE_MINE or ANM_HIT_RIPPLE_OTHER
+ */
+//-----------------------------------------------------------------------------
+static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx, const u8 anm_type )
 {
+
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+  u16 obj_idx;    // OBJインデックス
+
+  // アニメ種類
+  if( anm_type == ANM_HIT_RIPPLE_MINE ){ obj_idx = EFFECT_HIT_RIPPLE1; }
+  else                                 { obj_idx = EFFECT_HIT_RIPPLE2; }
+
+  // ハスの位置に更新
+  {
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+    GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, hasu_obj_idx );
+
+    status->trans = hasu->trans;
+    status->trans.y = 0;
+  }
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, FALSE );
+
+  // ANIME再生
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
+    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
+    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+    FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
+  }
+
+  // タスク登録
+  {
+    GYM_WATER_TMP *p_gym_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, GYM_WATER_TMP_ASSIGN_ID );
+    ANM_TASK_Add( p_gym_wk, obj_idx, 2 );
+  }
 }
 
 //=============================================================================
@@ -1765,6 +2073,77 @@ static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx )
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
 
+}
+
+//=============================================================================
+/**
+ *        アニメタスク
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エフェクトアニメタスク追加
+ *
+ *	@param	GYM_WATER_TMP *p_wk   ジムワーク
+ *	@param	obj_idx               エフェクトのOBJインデックス
+ *	@param	anm_num               アニメの数
+ */
+//-----------------------------------------------------------------------------
+static void ANM_TASK_Add( GYM_WATER_TMP *p_wk, u16 obj_idx, u8 anm_num )
+{
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( p_wk->p_fieldmap );
+  int i;
+
+  // 空きタスクを探して登録
+  for( i=0; i<TASK_MAX; i++ )
+  {
+    ANM_TASK_WORK *task_wk = &p_wk->anm_task_wk[i];
+    if( task_wk->is_enable == FALSE )
+    {
+      task_wk->is_enable = TRUE;
+      task_wk->exp_obj = p_wk->exp_obj;
+      task_wk->obj_idx = obj_idx;
+      task_wk->anm_num = anm_num;
+
+      GFL_TCB_AddTask( tcbsys, tcb_CheckAnime, (void*)task_wk, 0 );
+      break;
+    }
+  }
+}
+
+//=======================================================
+///	アニメ終了監視タスク
+//=======================================================
+static void tcb_CheckAnime( GFL_TCB *tcb, void* work )
+{
+  ANM_TASK_WORK *p_wk = (ANM_TASK_WORK*)work;
+
+  EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, 0 );
+
+  // アニメ終了していないなら戻る
+  if( !FLD_EXP_OBJ_ChkAnmEnd(exp_anm) )
+  {
+    return;
+  }
+
+  // 非表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, TRUE );
+
+  // ANIME終了
+  {
+    int i;
+    for( i=0; i<p_wk->anm_num; i++ )
+    {
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx, i, FALSE );
+    }
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+  }
+  ICHI_Printf("EffectIdx %d 破棄\n", p_wk->obj_idx);
+
+  // フラグを元に戻す
+  p_wk->is_enable = FALSE;
+
+  GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
 }
 
 //=============================================================================

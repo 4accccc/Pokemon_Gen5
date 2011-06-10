@@ -16,7 +16,7 @@
 //ハスの移動波紋頻度
 #define WATER_MOVE_RIPPLE_INTERVAL (12)	// 基本シンク数と同じ
 //ハスに飛び乗れる箇所数
-#define HASU_POS_NUM (36)
+#define HASU_POS_NUM (37)
 //ハス起動位置
 #define HASU_POS_0_X (5)
 #define HASU_POS_0_Z (10)
@@ -162,3 +162,7 @@
 #define HASU_POS_35_Z (64)
 #define HASU_POS_35_DIR (DIR_LEFT)
 #define HASU_POS_35_MOVE (6)
+#define HASU_POS_36_X (5)
+#define HASU_POS_36_Z (13)
+#define HASU_POS_36_DIR (DIR_RIGHT)
+#define HASU_POS_36_MOVE (21)
