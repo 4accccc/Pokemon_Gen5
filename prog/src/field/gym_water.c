@@ -83,8 +83,8 @@
 #define HASU11_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　Z座標
 
 // アニメ
-#define HASU_ANM_MOVE   (0)   // 常時たゆわう
-#define HASU_ANM_SHAKE  (1)   // 降りるとき
+#define HASU_ANM        (0)   // 常時たゆわう
+#define HASU_ANM_MOVE   (1)   // 降りるとき
 
 #define ANM_HIT_RIPPLE_MINE   (0)     // 衝突波紋(自分)
 #define ANM_HIT_RIPPLE_OTHER  (1)     // 衝突波紋(相手)
@@ -119,6 +119,8 @@ typedef struct {
   ANM_TASK_WORK       anm_task_wk[ TASK_MAX ];
 
   BOOL                is_hasu_ride;   // ハスの上かフラグ
+  BOOL                is_anm_hasu;    // ハス降りるアニメフラグ
+  u16                 anm_hasu_obj;   // ↑のハスOBJ
   u8                  ex_height_idx;  // 拡張高さインデックス         
 } GYM_WATER_TMP;
 
@@ -170,8 +172,8 @@ typedef struct {
 // リソースの並び順
 enum {
   RESID_HASU_MDL = 0,     // ハス
-  RESID_HASU_ANM_MOVE,    // ハスが揺れる(降りるとき)
-  RESID_HASU_ANM_SHAKE,   // ハスがたゆわう(常時)
+  RESID_HASU_ANM,         // ハスたゆわう(常時)
+  RESID_HASU_ANM_MOVE,    // ハス揺れる（降りるとき）
 
   RESID_WATER1_MDL,       // 衝突波紋(自機側)
   RESID_WATER1_ANM_IMA,   // 
@@ -219,8 +221,8 @@ enum {
 static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
   { ARCID_GYM_WATER, NARC_gym_water_hasu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
-  { ARCID_GYM_WATER, NARC_gym_water_hasu_move_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_GYM_WATER, NARC_gym_water_hasu_shake_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_GYM_WATER, NARC_gym_water_hasu_move_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
   { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
   { ARCID_GYM_WATER, NARC_gym_water_water1_up_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
@@ -237,7 +239,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 // ANIME
 static const GFL_G3D_UTIL_ANM anm_hasu[] =
 {
-  { RESID_HASU_ANM_SHAKE, 0 }, // nsbca
+  { RESID_HASU_ANM, 0 }, // nsbca
   { RESID_HASU_ANM_MOVE, 0 }, // nsbca
 };
 static const GFL_G3D_UTIL_ANM anm_water1[] =
@@ -521,6 +523,9 @@ static BOOL HASU_EVENT_OtherMoveInit( HASU_EVENT_WORK *p_wk );
 static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk );
 
 // ANIME
+static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk );
+static BOOL ANIME_HASU_LeaveCheck( GYM_WATER_TMP *p_wk );
+static void ANIME_HASU_LeaveEnd( GYM_WATER_TMP *p_wk );
 static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk );
 static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx );
 static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx, const u8 anm_type );
@@ -643,6 +648,26 @@ void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap)
   GYM_WATER_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_WATER_TMP_ASSIGN_ID );
   const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
 
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+    }
+  }
+#endif
+
+  // ハス降りるアニメ中チェック
+  if( p_wk->is_anm_hasu == TRUE )
+  {
+    // ※ハス降りるアニメ開始の後に呼ばないこと。
+    // アニメフレームが0なので、終了とみなされてしまう
+    if( ANIME_HASU_LeaveCheck( p_wk ) == TRUE )
+    {
+      // ANIME終了
+      ANIME_HASU_LeaveEnd( p_wk );
+    }
+  }
+
   // ハスの上にいる場合は降りたチェック
   if( p_wk->is_hasu_ride == TRUE )
   {
@@ -659,8 +684,15 @@ void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap)
       // ハスの上に乗っていない
       p_wk->is_hasu_ride = FALSE;
 
+      // ハス降りるアニメ
+      // ※拡張高さをリセットする前に呼ぶこと
+      ANIME_HASU_LeaveStart( p_wk );
+
       // 拡張高さリセット
       EX_HEIGHT_Reset( p_wk );
+
+      // SE 再生
+      PMSND_PlaySE( GYM_WATER_SE_GET_OFF );
 
       ICHI_Printf("ハスの上から降りた\n");
     }
@@ -808,14 +840,23 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
     // アニメ再生
     {
-      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
-      // MOVE
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE, TRUE );
-      // SHAKE
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_SHAKE, FALSE );
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
 
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
+      // 常時
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM );
+      // アニメ有効
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM, TRUE );
+
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );   // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+
+      // 降りるとき
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE );
+      // アニメ無効
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE, FALSE );
+
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );   // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
   }
 
@@ -1747,6 +1788,110 @@ static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk )
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ハスから出るアニメ再生
+ *
+ *	@param	p_wk  ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+  u16 obj_idx;    // OBJインデックス
+
+  // セーブデータから自分のいるハスのOBJインデックスを取得
+  obj_idx = SAVE_GetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE );
+
+  // 自機の向きによって回転
+  {
+    const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+    u16 rtbl[DIR_MAX4][3] = {{0,0xc000,0},{0,0xc000,0},{0,0,0},{0,0x8000,0}};
+    u16 dir = FIELD_PLAYER_GetDir( cp_player );
+    u16 *rot = rtbl[ dir ];
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+    GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &status->rotate );
+  }
+
+  // ハス常時アニメは停止する
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ停止
+
+    // 常時
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM, FALSE );
+  }
+
+  // ハス降りるときアニメを再生する
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE );
+
+    // 降りるとき
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE, TRUE );
+    FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE, 0 );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+  }
+  
+
+  // フラグ立てる
+  p_wk->is_anm_hasu = TRUE;
+  p_wk->anm_hasu_obj= obj_idx;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハスから出るアニメ終了チェック
+ *
+ *	@param	GYM_WATER_TMP *p_wk 
+ *
+ *	@return TRUEで終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL ANIME_HASU_LeaveCheck( GYM_WATER_TMP *p_wk )
+{
+  EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, p_wk->anm_hasu_obj, HASU_ANM_MOVE );
+
+  // アニメ終了していないなら戻る
+  if( !FLD_EXP_OBJ_ChkAnmEnd(exp_anm) )
+  {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハスから出るアニメ終了
+ *
+ *	@param	GYM_WATER_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANIME_HASU_LeaveEnd( GYM_WATER_TMP *p_wk )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+  u16 obj_idx = p_wk->anm_hasu_obj;    // OBJインデックス
+
+  // 降りるアニメ停止
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM_MOVE, FALSE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+
+  }
+
+  // 常時アニメ再生
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, HASU_ANM, TRUE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+  }
+
+  // フラグOFF
+  p_wk->is_anm_hasu = FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  水しぶきアニメ再生
  *
  *	@param	HASU_EVENT_WORK *p_wk 
@@ -1775,7 +1920,6 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk )
     FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
     FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
-    FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
   }
 
   // タスク登録
@@ -1852,7 +1996,6 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_id
     FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
     FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
-    FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
   }
 
   // タスク登録
@@ -1901,7 +2044,6 @@ static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx
     FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, 0 );
     FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, 0 );
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
-    FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
   }
 
   // タスク登録
