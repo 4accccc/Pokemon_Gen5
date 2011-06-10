@@ -33,11 +33,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・WHITEver
+・White2ver
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T11:36:23" />
+				Time="2011-06-10T09:08:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -94,14 +94,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・BLACKver
-※swanでメッセージ修正予定
-
-※氷結時のメッセージ追加
-　c08r0102にも</Comment>
+・Black2ver
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:06:54" />
+				Time="2011-06-10T09:07:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -117,6 +114,153 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_lady_01b_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・氷マップ時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:05:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY
+淑女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:05:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_lady_01b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver＋クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY
+淑女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:05:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_lady_01b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver＋クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:06:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY
+淑女</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:05:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -160,11 +304,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITEver
+・White2ver
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T11:36:30" />
+				Time="2011-06-10T09:08:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -221,11 +365,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・BLACKver
+・Black2ver
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T11:36:31" />
+				Time="2011-06-10T09:08:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -249,5 +393,275 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_gentleman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・氷マップ時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+紳士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_gentleman_03w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver＋クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+紳士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_gentleman_03b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver＋クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+紳士</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:08:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_boy2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・通常時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:18:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:12:51" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_boy2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・氷マップ時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:12:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_boy2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:12:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T09:13:07" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
