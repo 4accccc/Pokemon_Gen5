@@ -2460,4 +2460,36 @@
 				Time="2011-06-02T13:13:10" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="pw_index_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プログラム判定用ラベル</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:58:29" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
