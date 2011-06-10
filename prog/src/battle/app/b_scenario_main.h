@@ -26,14 +26,15 @@ enum{
 	BS_CLWKMODE_NORMAL	= 0,		// 通常(clwk)
 	BS_CLWKMODE_POKE,				// ポケモン(clwk)
 	BS_CLWKMODE_CURSOR,				// カーソル
+	BS_CLWKMODE_ARROW,				// 矢印
 };
 
 // 各種最大数
 enum{
 	BS_BG_MAXNUM		= 8,		// BG最大
 	BS_CANVAS_MAXNUM	= 14,		// canvas最大(場面ごとに切り替え)
-	BS_MES_MAX			= 3,		// メッセージ最大
-	BS_EMPTY_MAX		= 34*2,		// empty最大
+	BS_MES_MAX			= 2,		// メッセージ最大
+	BS_EMPTY_MAX		= 37*2,		// empty最大
 	//
 	BS_POKE_MAX			= 6,		// ポケモン最大
 };
@@ -43,6 +44,7 @@ enum{
 	BS_RES_TYPE_PAL		= 0,		// type
 	BS_RES_POKE_PAL,				// poke
 	BS_RES_CURSOR_PAL,				// cursor
+	BS_RES_ARROW_PAL,				// arrow
 	BS_RES_PAL_MAX,
 	//
 	BS_RES_TYPE_CHR_00	= 0,		// type
@@ -58,11 +60,13 @@ enum{
 	BS_RES_POKE_CHR_04,
 	BS_RES_POKE_CHR_05,
 	BS_RES_CURSOR_CHR,				// cursor
+	BS_RES_ARROW_CHR,				// arrow
 	BS_RES_CHR_MAX,
 	//
 	BS_RES_TYPE_CELL	= 0,		// type
 	BS_RES_POKE_CELL,				// poke
 	BS_RES_CURSOR_CELL,				// cursor
+	BS_RES_ARROW_CELL,				// arrow
 	BS_RES_CELL_MAX,
 	//
 	// type用
@@ -72,6 +76,8 @@ enum{
 	//
 	// poke用
 	BS_RES_POKE_CHR_MAX		= 6,
+	// arrow用
+	BS_RES_ARROW_CHR_MAX	= 3,
 };
 
 // clwk(type)
@@ -108,9 +114,19 @@ enum{
 	BS_CLWK_CURSOR_MAX,
 };
 
+// clwk(arrow)
+enum{
+	BS_CLWK_ARROW_LEFT = 0,			// 左
+	BS_CLWK_ARROW_RIGHT,			// 右
+	BS_CLWK_ARROW_BACK,				// 戻る
+	//
+	BS_CLWK_ARROW_MAX,
+};
+
+
 // clwkの合計
 enum{
-	BS_TOTAL_CLWK_NUM	= (BS_CLWK_MAX+BS_CLWK_POKE_MAX+BS_CLWK_CURSOR_MAX),
+	BS_TOTAL_CLWK_NUM	= (BS_CLWK_MAX+BS_CLWK_POKE_MAX+BS_CLWK_CURSOR_MAX+BS_CLWK_ARROW_MAX),
 };
 
 // ポケモンの情報(1体)
@@ -146,6 +162,7 @@ typedef struct {
 	GFL_CLWK*			clwk[BS_CLWK_MAX];					///< CLWK(type)
 	GFL_CLWK*			clwk_poke[BS_CLWK_POKE_MAX];		///< CLWK(poke)
 	GFL_CLWK*			clwk_cursor[BS_CLWK_CURSOR_MAX];	///< CLWK(cursor)
+	GFL_CLWK*			clwk_arrow[BS_CLWK_ARROW_MAX];		///< CLWK(arrow)
 	//
 	u32					ResPal[ BS_RES_PAL_MAX];
 	u32					ResChr[ BS_RES_CHR_MAX];

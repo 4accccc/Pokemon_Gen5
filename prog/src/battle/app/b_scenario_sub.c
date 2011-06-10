@@ -48,6 +48,7 @@ enum{
 	BS_OBJ_PAL_POKE		= 0,		// ポケモン(0-2)
 	BS_OBJ_PAL_TYPE		= 4,		// タイプ(4-6)
 	BS_OBJ_PAL_CURSOR	= 7,		// カーソル(7)
+	BS_OBJ_PAL_ARROW	= 8,		// 矢印(8-10)
 	//
 	BS_CURSOR_OFFSET	= 4,		// カーソルデータ(注意：palの中の4番目を使用)
 };
@@ -137,6 +138,7 @@ static const BS_BGSCN_DATA bs_bgscn_00_tbl[] = {
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
+#if 0
 //---------------
 // BG関連(矢印など)
 //---------------
@@ -204,6 +206,16 @@ static const s16 bs_scr_emp_tbl[] = {
 	28, 29, 30, -1,		// scenario
 	31, 32, 33, -1,		// info
 };
+#endif
+
+
+// arrow(obj)情報
+static const s16 bs_arrow_tbl[] = {
+	-1, -1, 0, -1,		// top
+	 0,  0, 0, -1,		// scenario
+	 0,  0, 0, -1,		// info
+};
+
 
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -231,9 +243,9 @@ static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME1_S,	3,	5,	28,	2,	8,},		// SCENE00_MES
 	{ GFL_BG_FRAME1_S,	3,	12,	28,	2,	8,},		// SCENE01_MES
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// 脚本
-	{ GFL_BG_FRAME1_S,	12,	16,	 2,	2,	8,},		// 現在(test)
-	{ GFL_BG_FRAME1_S,	15,	16,	 2,	2,	8,},		// 最大(test)
-	{ GFL_BG_FRAME1_S,	14,	16,	 1,	2,	8,},		// 「/」(test)
+	{ GFL_BG_FRAME1_S,	12,	17,	 2,	2,	8,},		// 現在(test)
+	{ GFL_BG_FRAME1_S,	15,	17,	 2,	2,	8,},		// 最大(test)
+	{ GFL_BG_FRAME1_S,	14,	17,	 1,	2,	8,},		// 「/」(test)
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -385,6 +397,28 @@ const BS_OBJ_DATA bs_obj_02_tbl[] = {
 };
 
 //----------------
+// OBJ(arrow)
+//----------------
+// 情報
+static const s16 bs_obj_03_itbl[] = {
+	3,		// plt res
+	3,		// chr res(未使用)
+	3,		// cel res
+	//
+	3,		// max
+	3,		// mode(3:arrow)
+};
+
+// OBJのテーブルデータ
+const BS_OBJ_DATA bs_obj_03_tbl[] = {
+	{ 3,	0x28,	1,	0,	0,	1,	34,	BS_RES_ARROW_CHR,},	// 左
+	{ 6,	0x28,	1,	0,	0,	1,	35,	BS_RES_ARROW_CHR,},	// 右
+	{ 0,	0x28,	1,	0,	0,	1,	36,	BS_RES_ARROW_CHR,},	// 戻る
+	
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//----------------
 // OBJ(cursor)座標
 //----------------
 // (左上、左下、右上、右下)の順
@@ -426,7 +460,10 @@ void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, cons
 void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
 void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex );
 void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 mode, const s32 num );
-void BsCmn_DispScr( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg );
+//
+void BsCmn_DispArrow( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg );
+void BsCmn_ChgSeq( BSCENARIO_WORK *wk, const s32 wnum, const s32 seqnum );
+BOOL BsCmn_IsAnimEnd( BSCENARIO_WORK *wk, const s32 wnum );
 
 
 //------------
@@ -441,15 +478,12 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 static void bscmn_init_type_obj( BSCENARIO_WORK * wk );
 static void bscmn_init_poke_obj( BSCENARIO_WORK * wk );
 static void bscmn_init_cursor_obj( BSCENARIO_WORK * wk );
+static void bscmn_init_arrow_obj( BSCENARIO_WORK * wk );
 //
 static s16 bscmn_get_empty( BSCENARIO_WORK *wk, const s32 num );
 //
 static void bscmn_disp_cursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 num );
 //
-static void bscmn_set_scr( BSCENARIO_WORK *wk, const s32 mode, const s32 smode, void *src, const s32 x, const s32 y, const s32 width, const s32 height );
-static void bscmn_set_scrbuffer( BSCENARIO_WORK *wk );
-static void bscmn_make_scr( BSCENARIO_WORK *wk, const s32 mode, const s32 x, const s32 y, const s32 smode );
-
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -468,10 +502,10 @@ void BsCmn_InitBg( BSCENARIO_WORK* wk )
 	// 通常
 	bscmn_init_bg( wk );
 	// 矢印
-	bscmn_init_bg2( wk );
+//	bscmn_init_bg2( wk );
 	//
 	// バッファにセット
-	bscmn_set_scrbuffer( wk );
+//	bscmn_set_scrbuffer( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -542,6 +576,7 @@ static void bscmn_init_bg( BSCENARIO_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
+#if 0
 static void bscmn_init_bg2( BSCENARIO_WORK* wk )
 {
 	s32				i;
@@ -605,6 +640,7 @@ static void bscmn_init_bg2( BSCENARIO_WORK* wk )
 	// 終了
 	GFL_ARC_CloseDataHandle( handle );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -996,6 +1032,35 @@ static void bscmn_init_cursor_obj( BSCENARIO_WORK * wk )
 	//
 	GFL_ARC_CloseDataHandle( ah );
 }
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	矢印のグラフィックロード
+ *
+ * @param	BSCENARIO_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bscmn_init_arrow_obj( BSCENARIO_WORK * wk )
+{
+	ARCHANDLE	*ah;
+	u32			i;
+	
+	ah = GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, GFL_HEAP_LOWID(wk->dat->heap) );
+	// パレット
+	wk->ResPal[BS_RES_ARROW_PAL] = GFL_CLGRP_PLTT_RegisterEx( ah,
+												NARC_b_scenario_gra_pkwd_scenario_arrow_NCLR,
+												CLSYS_DRAW_SUB, BS_OBJ_PAL_ARROW*0x20, 0, 3, wk->dat->heap );
+	// セル・アニメ
+	wk->ResCell[BS_RES_ARROW_CELL] = GFL_CLGRP_CELLANIM_Register( ah,
+												NARC_b_scenario_gra_pkwd_scenario_arrow_NCER,
+												NARC_b_scenario_gra_pkwd_scenario_arrow_NANR,
+												wk->dat->heap );
+	// キャラ
+	wk->ResChr[BS_RES_ARROW_CHR] = GFL_CLGRP_CGR_Register( ah, NARC_b_scenario_gra_pkwd_scenario_arrow_NCGR, FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+	//
+	GFL_ARC_CloseDataHandle( ah );
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1025,7 +1090,8 @@ void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, cons
 	//
 	GFL_ARC_CloseDataHandle( ah );
 	// パレット変更
-	GFL_CLACT_WK_SetPlttOffs( wk->clwk[wnum], 4+APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+//	GFL_CLACT_WK_SetPlttOffs( wk->clwk[wnum], 4+APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	GFL_CLACT_WK_SetPlttOffs( wk->clwk[wnum], APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1093,6 +1159,9 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 	}
 	else if(buf[4] == BS_CLWKMODE_CURSOR){	// cursor
 		clwk = &wk->clwk_cursor[0];
+	}
+	else if(buf[4] == BS_CLWKMODE_ARROW){	// arrow
+		clwk = &wk->clwk_arrow[0];
 	}
 	for(i=0;i<buf[3];i++){
 		// 終了判定
@@ -1167,6 +1236,8 @@ void BsCmn_InitObj( BSCENARIO_WORK* wk )
 	bscmn_init_poke_obj( wk );
 	// カーソル
 	bscmn_init_cursor_obj( wk );
+	// 矢印
+	bscmn_init_arrow_obj( wk );
 	//
 	// CLWK登録(type)
 	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_00_tbl[0], &bs_obj_00_itbl[0] );
@@ -1174,6 +1245,8 @@ void BsCmn_InitObj( BSCENARIO_WORK* wk )
 	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_01_tbl[0], &bs_obj_01_itbl[0] );
 	// CLWK登録(cursor)
 	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_02_tbl[0], &bs_obj_02_itbl[0] );
+	// CLWK登録(arrow)
+	bscmn_init_obj_clwk( wk, CLSYS_DRAW_SUB, &bs_obj_03_tbl[0], &bs_obj_03_itbl[0] );
 	//
 	// cursorはパレット番号を修正する必要がある
 	for(i=0;i<BS_CLWK_CURSOR_MAX;i++){
@@ -1203,6 +1276,9 @@ void BsCmn_ExitObj( BSCENARIO_WORK* wk )
 	}
 	for(i=0;i<BS_CLWK_CURSOR_MAX;i++){
 		GFL_CLACT_WK_Remove( wk->clwk_cursor[i] );
+	}
+	for(i=0;i<BS_CLWK_ARROW_MAX;i++){
+		GFL_CLACT_WK_Remove( wk->clwk_arrow[i] );
 	}
 	//
 	//リソース破棄
@@ -1263,6 +1339,13 @@ void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnum, cons
 			return;
 		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->clwk_cursor[wnum], bflg );
+	}
+	else if(wmode == BS_CLWKMODE_ARROW){		// arrow
+		if(wnum >= BS_CLWK_ARROW_MAX){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetDrawEnable(  wk->clwk_arrow[wnum], bflg );
 	}
 }
 
@@ -1354,101 +1437,7 @@ void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 mode, cons
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
- *	@brief  スクリーンの領域取得(バッファにセット)
- *
- *	@param	BSCENARIO_WORK*		wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void bscmn_set_scrbuffer( BSCENARIO_WORK *wk )
-{
-	s16			sbuf[2];
-	s32			i;
-	s32			j;
-	const s16	*adr;
-	NNSG2dScreenData * dat;
-	ARCHANDLE	*hdl = GFL_ARC_OpenDataHandle( ARCID_B_PLIST_GRA,  GFL_HEAP_LOWID(wk->dat->heap) );
-	void 		*buf = GFL_ARCHDL_UTIL_LoadScreen( hdl, NARC_b_plist_gra_b_plist_anm_lz_NSCR, TRUE, &dat, wk->dat->heap );
-	//
-	for(i=0;i<3;i++){
-		adr = bs_area_tbl[i];
-		sbuf[0] = bs_area_size_tbl[i*2];		// width
-		sbuf[1] = bs_area_size_tbl[i*2+1];		// height
-		//
-		for(j=0;j<4;j++){
-			bscmn_set_scr( wk, i, j, (u16*)dat->rawData, adr[2*j], adr[2*j+1], sbuf[0], sbuf[1] );
-		}
-	}
-	GFL_HEAP_FreeMemory( buf );
-	GFL_ARC_CloseDataHandle( hdl );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  スクリーンの領域取得(同一段階では同じサイズであること)
- *
- *	@param	BSCENARIO_WORK* 	wk
- *	@param	const s32			(0:左矢印、1:右矢印、2:戻る)
- *	@param	const s32			(段階：0-2)
- *	@param	void*				元のアドレス
- *	@param	const s32,s32		左上座標(x,y)
- *	@param	const s32,s32		サイズ(width,height)
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void bscmn_set_scr( BSCENARIO_WORK *wk, const s32 mode, const s32 smode, void *src, const s32 x, const s32 y, const s32 width, const s32 height )
-{
-	u16		*dest;
-	u16		*org;
-	s32		i;
-	s32		j;
-	s32		k;
-	
-	org = src;
-	k = smode*width*height;		// 決めうち注意
-	dest = wk->ScrBuffer[mode];
-	for(j=0;j<height;j++){
-		for(i=0;i<width;i++){
-			dest[k] = org[x + (y+j)*32 + i];
-			k++;
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  スクリーンに書き込む
- *
- *	@param	BSCENARIO_WORK* 	wk
- *	@param	const s32			(0:左矢印、1:右矢印、2:戻る)
- *	@param	const s32,s32		座標(x,y)
- *	@param	const s32			(パターン番号(0-2))
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void bscmn_make_scr( BSCENARIO_WORK *wk, const s32 mode, const s32 x, const s32 y, const s32 smode )
-{
-	s16			sbuf[2];
-	u16			*buf;
-	
-	// サイズ取得
-	sbuf[0] = bs_area_size_tbl[mode*2];			// width
-	sbuf[1] = bs_area_size_tbl[mode*2+1];		// height
-	
-	// スクリーンデータ
-	buf = wk->ScrBuffer[mode];
-	buf += smode*sbuf[0]*sbuf[1];
-	//
-	GFL_BG_WriteScreen( GFL_BG_FRAME2_S, buf, x, y, sbuf[0], sbuf[1] );
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  スクリーンに書き込む
+ *	@brief  矢印表示
  *
  *	@param	BSCENARIO_WORK* 	wk
  *	@param	const s32			(0:TOP、1:シナリオ、2:情報)
@@ -1457,29 +1446,61 @@ static void bscmn_make_scr( BSCENARIO_WORK *wk, const s32 mode, const s32 x, con
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void BsCmn_DispScr( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg )
+void BsCmn_DispArrow( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg )
 {
 	s16		buf[2];
 	s32		tmp;
 	s32		i;
+	BOOL	mflg;
 	
-	// クリア
-	if(bflg == TRUE){
-		GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0, 0, 0, 32, 24, 0x0a);
-	}
-	//
+	// objのテスト
 	for(i=0;i<3;i++){
-		// どのパターンを表示するかを調べる
-		tmp = bs_scr_tbl[4*mode+i];
+		mflg = TRUE;
+		tmp = bs_arrow_tbl[4*mode+i];
 		if( tmp == -1 ){
-			continue;
+			mflg = FALSE;
 		}
-		// 座標をセット
-		buf[0] = bscmn_get_empty( wk, 2*bs_scr_emp_tbl[4*mode+tmp] );
-		buf[1] = bscmn_get_empty( wk, 2*bs_scr_emp_tbl[4*mode+tmp]+1 );
-		// 表示
-		bscmn_make_scr( wk, tmp, buf[0], buf[1], 0 );
+		BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, i, mflg );
 	}
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  シーケンス切り替え
+ *
+ *	@param	BSCENARIO_WORK* 	wk
+ *	@param	const s32			(0:左、1:右、2:戻る)
+ *	@param	const s32			シーケンス番号
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void BsCmn_ChgSeq( BSCENARIO_WORK *wk, const s32 wnum, const s32 seqnum )
+{
+	// 切り替え
+	GFL_CLACT_WK_SetAnmSeq( wk->clwk_arrow[wnum], seqnum );
+	// セット
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_arrow[wnum], TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  シーケンス切り替え
+ *
+ *	@param	BSCENARIO_WORK* 	wk
+ *	@param	const s32			(0:左、1:右、2:戻る)
+ *
+ *	@retval	BOOL				(TRUE:再生中、FALSE:終了)
+ */
+//-----------------------------------------------------------------------------
+BOOL BsCmn_IsAnimEnd( BSCENARIO_WORK *wk, const s32 wnum )
+{
+	BOOL	bflg=TRUE;
+	
+	// 終了判定
+	if( GFL_CLACT_WK_CheckAnmActive( wk->clwk_arrow[wnum] ) == FALSE ){
+		bflg = FALSE;
+	}
+	return( bflg );
+}
 
