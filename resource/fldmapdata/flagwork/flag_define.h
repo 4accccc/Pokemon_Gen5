@@ -2059,11 +2059,11 @@
 #define SYS_FLAG_BGM_C04GYM0101_SHOW      2429 /* 0x097d BGM変更フラグ：スワンでんきジム曲変更フラグ */
 #define SYS_FLAG_BGM_C12PC0101_GUIDE      2430 /* 0x097e BGM変更フラグ：スワンヒオウギシティPC BGM変更フラグ */
 #define SYS_FLAG_AT_DOWSING_HIT           2431 /* 0x097f 獣道でダウジングマシンが反応する */
-		/* not used  2432(0x0980) */
-		/* not used  2433(0x0981) */
-		/* not used  2434(0x0982) */
-		/* not used  2435(0x0983) */
-		/* not used  2436(0x0984) */
+#define SYS_FLAG_C08GYM_BUTTON_U          2432 /* 0x0980 ドラゴンジム：上ボタン */
+#define SYS_FLAG_C08GYM_BUTTON_D          2433 /* 0x0981 ドラゴンジム：下ボタン */
+#define SYS_FLAG_C08GYM_BUTTON_L          2434 /* 0x0982 ドラゴンジム：左ボタン */
+#define SYS_FLAG_C08GYM_BUTTON_R          2435 /* 0x0983 ドラゴンジム：右ボタン */
+#define SYS_FLAG_C08GYM_BUTTON_C          2436 /* 0x0984 ドラゴンジム：中ボタン */
 		/* not used  2437(0x0985) */
 		/* not used  2438(0x0986) */
 		/* not used  2439(0x0987) */
