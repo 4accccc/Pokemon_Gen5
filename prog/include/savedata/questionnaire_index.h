@@ -14,7 +14,8 @@
 //=================================================================
 typedef struct
 {
-  u8 answerNum;        // 回答選択肢の数
+  u8 swanNew:1;        // スワンで変更された質問ならTRUE
+  u8 answerNum:7;      // 回答選択肢の数
   u8 bitCount;         // 回答を表現するのに必要なビット数
   u8 answerNumOffset;  // 項目数インデックス
   u8 bitCountOffset;   // bit数インデックス
@@ -46,6 +47,8 @@ extern u8 QUESTIONNAIRE_INDEX_GetAnswerNumOffset( u8 questionID );
 // セーブデータ オフセット ( ビット数 )
 extern u8 QUESTIONNAIRE_INDEX_GetBitCountOffset( u8 questionID );
 
+// スワンで変更された質問かチェック( TRUEならBWと互換無し )
+extern BOOL QUESTIONNAIRE_INDEX_IsSwanNewQuestion( u8 questionID );
 
 //=================================================================
 // ■ツール関数

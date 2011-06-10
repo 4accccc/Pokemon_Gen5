@@ -24,13 +24,14 @@ class Question
     @captionStringJPN_KANJI = nil        # 補足文字列 (漢字)
     @answerNum              = 0          # 回答選択肢の数
     @bitCount               = 0          # 回答を表現するために必要なビット数
+    @swanNew                = 0          # スワンで変更のあった質問ならTRUE
     @answers                = Array.new  # 回答配列
   end
 
   attr_reader :ID, :ID_lavel, 
               :titleStringID_lavel, :titleStringJPN, :titleStringJPN_KANJI, 
               :captionStringID_lavel, :captionStringJPN, :captionStringJPN_KANJI, 
-              :answerNum, :bitCount, :answers
+              :answerNum, :bitCount, :swanNew, :answers
 
   #----------------------------------
   # □brief: 質問IDを設定する
@@ -81,6 +82,13 @@ class Question
   def SetBitCount( bitCount )
     @bitCount = bitCount
   end
+  
+  #-------------------------------------------------------
+  # □brief: スワンで内容に変更のあった質問かどうかを設定する
+  # □param: swanNew 変更された質問ならTRUE
+  def SetSwanNew( swanNew )
+    @swanNew = swanNew
+  end
 
   #--------------------------
   # □brief: 回答を追加する
@@ -105,6 +113,7 @@ class Question
     outData << "captionStringJPN_KANJI = #{@captionStringJPN_KANJI}"
     outData << "answerNum              = #{@answerNum}"
     outData << "bitCount               = #{@bitCount}"
+    outData << "swanNew                = #{@swanNew}"
     @answers.each do |answer|
       outData << "A.#{answer.stringJPN} (#{answer.stringJPN_KANJI})"
     end

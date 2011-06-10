@@ -118,6 +118,27 @@ u8 QUESTIONNAIRE_INDEX_GetBitCountOffset( u8 questionID )
 
 //---------------------------------------------------------------------------
 /**
+ * @brief スワンで変更になった質問かどうかチェック 
+ *
+ * @param questionID 質問ID
+ *
+ * @retval  TRUE:スワンで変更されたのでBWとは互換性の無い質問
+ * @retval  FALSE:BWとは互換性のある質問
+ */
+//---------------------------------------------------------------------------
+BOOL QUESTIONNAIRE_INDEX_IsSwanNewQuestion( u8 questionID )
+{
+  // IDエラー
+  if( QUESTION_ID_MAX < questionID ) {
+    GF_ASSERT(0);
+    return TRUE; //BWで無効にする処理を走らせるためにTRUEで返す
+  }
+  return QuestionnaireIndex[ questionID ].swanNew;
+}
+
+
+//---------------------------------------------------------------------------
+/**
  * @brief 指定した回答が所属する質問のIDを取得する
  *
  * @param answerID 回答ID ( ANSWER_ID_xxxx )

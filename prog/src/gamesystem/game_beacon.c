@@ -329,35 +329,59 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   {
     SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
     QUESTIONNAIRE_SAVE_WORK *questsave = SaveData_GetQuestionnaire(sv_ctrl);
-    int search_question_id, i;
-    u32 answer;
+    MISC *misc = SaveData_GetMisc(sv_ctrl);
+    int search_question_id, team_q_id, i;
+    u32 answer, lower_version = FALSE;
+    
+    if( info->pm_version == VERSION_WHITE || info->pm_version == VERSION_BLACK ){
+      lower_version = TRUE; //ホワイトorブラック
+    }
     
     for(i = 0; i < QUESTION_NUM_PER_TOPIC; i++){
+      int j;
+
       search_question_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, i);
-      if(search_question_id != INVESTIGATING_QUESTION_NULL){
-        if(search_question_id == QUESTION_ID_PLAY_TIME){
-          answer = info->play_hour / 10;
-          answer++; //0は無回答なので1インクリメント
-          if(answer > GetAnswerNum_byQuestionID(search_question_id)){
-            answer = GetAnswerNum_byQuestionID(search_question_id);
-          }
-        }
-        else{
-          answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
-        }
-        
-        if(answer != 0){  //0は無回答
-          if(QuestionnaireWork_IsTodayAnswerNumFull(questsave, search_question_id, answer) == FALSE){
-            QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
-            QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
-            bsys->new_entry = TRUE;
-            MATSUDA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
-          }
+      if(search_question_id == INVESTIGATING_QUESTION_NULL){
+        continue;
+      }
+      //送り主がBWの時、スワンで変わった質問の結果は受け取らない
+      if( lower_version && QUESTIONNAIRE_INDEX_IsSwanNewQuestion( search_question_id ) ){
+        continue;
+      }
+      if(search_question_id == QUESTION_ID_PLAY_TIME){
+        answer = info->play_hour / 10;
+        answer++; //0は無回答なので1インクリメント
+        if(answer > GetAnswerNum_byQuestionID(search_question_id)){
+          answer = GetAnswerNum_byQuestionID(search_question_id);
         }
       }
-    } 
-  }
+      else{
+        answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
+      }
+        
+      if(answer == 0){  //0は無回答
+        continue;
+      }
+      //アンケート反映
+      if(QuestionnaireWork_IsTodayAnswerNumFull(questsave, search_question_id, answer) == FALSE){
+        QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
+        QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
+        bsys->new_entry = TRUE;
+        MATSUDA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
+      }
+      //調査隊依頼成果反映
+      for(j = 0; j < MAX_QNUM_PER_RESEARCH_REQ; j++) {
+        team_q_id = MISC_GetResearchQuestionID(misc, j);
+        if(team_q_id == QUESTION_ID_DUMMY){ continue; }
 
+        //受けている依頼と、調査中の質問が同じならカウントアップ
+        if( team_q_id == search_question_id ){
+          MISC_AddResearchCount(misc, j, 1);
+        }
+      }
+    }
+  }
+#if 0
   // 調査隊反映
   {
     SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
@@ -390,7 +414,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
       } 
     }
   }
-
+#endif
   //ログにセット
   GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
   setlog->info = *info;
@@ -414,6 +438,8 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
 //--------------------------------------------------------------
 static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_TYPE type )
 {
+  int i;
+
   //BW互換のビーコンとswan専用ビーコンを切り替えるためにデータを改変
   if( type == GAME_BEACON_TYPE_SWAN_ONLY ){
     //スワン専用ビーコンなので、BW受信可フラグを強制Off
@@ -425,7 +451,13 @@ static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_T
     */
 
     //アンケートのバッファを上書き
-    GFL_STD_MemClear( &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
+    for( i = 0;i < QUESTION_ID_MAX;i++ ){
+      if( QUESTIONNAIRE_INDEX_IsSwanNewQuestion( i ) ){
+        //スワンで変更があった質問の内容は無回答=0にする
+        QuestionnaireAnswer_WriteBit( &info->question_answer, i, 0);
+      }
+    }
+//    GFL_STD_MemClear( &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
   }
 }
 

@@ -84,28 +84,30 @@ COLUMN_QUESTION_TITLE_ID_LAVEL    = 2   # gmm内ラベル名
 COLUMN_QUESTION_CAPTION_ID_LAVEL  = 3   # gmm内ラベル名
 COLUMN_QUESTION_ANSWER_NUM        = 4   # 選択数
 COLUMN_QUESTION_BIT_COUNT         = 5   # bit数
-COLUMN_QUESTION_TITLE_JPN         = 6   # 回答文字列 (かな)
-COLUMN_QUESTION_TITLE_JPN_KANJI   = 7   # 回答文字列 (漢字)
-COLUMN_QUESTION_CAPTION_JPN       = 8   # 回答文字列 (かな)
-COLUMN_QUESTION_CAPTION_JPN_KANJI = 9   # 回答文字列 (漢字)
-COLUMN_QUESTION_ANSWER_ID_0       = 10   # 回答0
-COLUMN_QUESTION_ANSWER_ID_1       = 12   # 回答1
-COLUMN_QUESTION_ANSWER_ID_2       = 14  # 回答2 
-COLUMN_QUESTION_ANSWER_ID_3       = 16  # 回答3 
-COLUMN_QUESTION_ANSWER_ID_4       = 18  # 回答4 
-COLUMN_QUESTION_ANSWER_ID_5       = 20  # 回答5 
-COLUMN_QUESTION_ANSWER_ID_6       = 22  # 回答6 
-COLUMN_QUESTION_ANSWER_ID_7       = 24  # 回答7 
-COLUMN_QUESTION_ANSWER_ID_8       = 26  # 回答8 
-COLUMN_QUESTION_ANSWER_ID_9       = 28  # 回答9 
-COLUMN_QUESTION_ANSWER_ID_10      = 30  # 回答10
-COLUMN_QUESTION_ANSWER_ID_11      = 32  # 回答11
-COLUMN_QUESTION_ANSWER_ID_12      = 34  # 回答12
-COLUMN_QUESTION_ANSWER_ID_13      = 36  # 回答13
-COLUMN_QUESTION_ANSWER_ID_14      = 38  # 回答14
-COLUMN_QUESTION_ANSWER_ID_15      = 40  # 回答15
-COLUMN_QUESTION_ANSWER_ID_16      = 42  # 回答16
-COLUMN_QUESTION_ANSWER_ID_17      = 44  # 回答17
+COLUMN_QUESTION_SWAN_NEW          = 6   # スワンで変更のあった質問か？
+COLUMN_QUESTION_TITLE_JPN         = 7   # 回答文字列 (かな)
+COLUMN_QUESTION_TITLE_JPN_KANJI   = 8   # 回答文字列 (漢字)
+COLUMN_QUESTION_CAPTION_JPN       = 9   # 回答文字列 (かな)
+COLUMN_QUESTION_CAPTION_JPN_KANJI = 10  # 回答文字列 (漢字)
+
+COLUMN_QUESTION_ANSWER_ID_0       = 11  # 回答0
+COLUMN_QUESTION_ANSWER_ID_1       = 13  # 回答1
+COLUMN_QUESTION_ANSWER_ID_2       = 15  # 回答2 
+COLUMN_QUESTION_ANSWER_ID_3       = 17  # 回答3 
+COLUMN_QUESTION_ANSWER_ID_4       = 19  # 回答4 
+COLUMN_QUESTION_ANSWER_ID_5       = 21  # 回答5 
+COLUMN_QUESTION_ANSWER_ID_6       = 23  # 回答6 
+COLUMN_QUESTION_ANSWER_ID_7       = 25  # 回答7 
+COLUMN_QUESTION_ANSWER_ID_8       = 27  # 回答8 
+COLUMN_QUESTION_ANSWER_ID_9       = 29  # 回答9 
+COLUMN_QUESTION_ANSWER_ID_10      = 31  # 回答10
+COLUMN_QUESTION_ANSWER_ID_11      = 33  # 回答11
+COLUMN_QUESTION_ANSWER_ID_12      = 35  # 回答12
+COLUMN_QUESTION_ANSWER_ID_13      = 37  # 回答13
+COLUMN_QUESTION_ANSWER_ID_14      = 39  # 回答14
+COLUMN_QUESTION_ANSWER_ID_15      = 41  # 回答15
+COLUMN_QUESTION_ANSWER_ID_16      = 43  # 回答16
+COLUMN_QUESTION_ANSWER_ID_17      = 45  # 回答17
 # 行インデックス
 ROW_FIRST_QUESTION = 1  # 先頭データ行
 
@@ -118,6 +120,7 @@ ROW_FIRST_QUESTION.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   captionIDLavel   = fileReader.GetCell( rowIdx, COLUMN_QUESTION_CAPTION_ID_LAVEL )
   answerNum        = fileReader.GetCell( rowIdx, COLUMN_QUESTION_ANSWER_NUM ).to_i
   bitCount         = fileReader.GetCell( rowIdx, COLUMN_QUESTION_BIT_COUNT ).to_i
+  swanNew          = fileReader.GetCell( rowIdx, COLUMN_QUESTION_SWAN_NEW ).to_i
   titleJPN         = fileReader.GetCell( rowIdx, COLUMN_QUESTION_TITLE_JPN )
   titleJPN_KANJI   = fileReader.GetCell( rowIdx, COLUMN_QUESTION_TITLE_JPN_KANJI )
   captionJPN       = fileReader.GetCell( rowIdx, COLUMN_QUESTION_CAPTION_JPN )
@@ -148,6 +151,7 @@ ROW_FIRST_QUESTION.upto( fileReader.GetRowNum - 1 ) do |rowIdx|
   question.SetCaptionString( captionJPN, captionJPN_KANJI )
   question.SetAnswerNum( answerNum )
   question.SetBitCount( bitCount )
+  question.SetSwanNew( swanNew )
   answerID.each do |ansID|
     question.AddAnswer( answers[ ansID ] )
   end
@@ -262,18 +266,21 @@ end
 # ■main
 # □アンケート回答インデックス データ出力
 #===================================================================================
+answerSwanNew   = Array.new  # スワン新規フラグ
 answerNum       = Array.new  # 項目数
 answerBitCount  = Array.new  # bit数
 answerNumOffset = Array.new  # 項目数オフセット
 answerBitOffset = Array.new  # bit数オフセット
 
 # データ集計
+answerSwanNew[0]   = questions[0].swanNew
 answerNum[0]       = questions[0].answerNum
 answerBitCount[0]  = questions[0].bitCount
 answerNumOffset[0] = 0
 answerBitOffset[0] = 0
 
 1.upto( questions.size - 1 ) do |questionIdx|
+  answerSwanNew  [ questionIdx ] = questions[ questionIdx ].swanNew
   answerNum      [ questionIdx ] = questions[ questionIdx ].answerNum
   answerBitCount [ questionIdx ] = questions[ questionIdx ].bitCount
   answerNumOffset[ questionIdx ] = answerNumOffset[ questionIdx - 1 ] + ( questions[ questionIdx - 1 ].answerNum - 1 ) # "無回答"を除くため1を引く
@@ -286,7 +293,7 @@ outData << "// コンバータにより生成"
 outData << "static const QUESTIONNAIRE_INDEX QuestionnaireIndex[] = "
 outData << "{"
 0.upto( questions.size - 1 ) do |qIdx|
-  outData << "  { #{answerNum[qIdx]}, #{answerBitCount[qIdx]}, #{answerNumOffset[qIdx]}, #{answerBitOffset[qIdx]} },"
+  outData << "  { #{answerSwanNew[qIdx]}, #{answerNum[qIdx]}, #{answerBitCount[qIdx]}, #{answerNumOffset[qIdx]}, #{answerBitOffset[qIdx]} },"
 end
 outData << "};"
 
