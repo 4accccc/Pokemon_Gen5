@@ -441,13 +441,12 @@ static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAME_BEACON_T
   int i;
 
   //BW互換のビーコンとswan専用ビーコンを切り替えるためにデータを改変
-  if( type == GAME_BEACON_TYPE_SWAN_ONLY ){
+  if( type == GAME_BEACON_TYPE_SWAN_ONLY || (info->version_bit==GAMEBEACON_RECV_VERSION_SWAN)){
     //スワン専用ビーコンなので、BW受信可フラグを強制Off
     info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;
   }else{
     /*
      BWとの互換のためにデータを上書き(11.06.06現在、アンケートで互換性のない回答を無回答にしている)
-     元々Swan専用のアクションはデータ生成時にversion_bitを操作しているので、ここでは特になにもしない
     */
 
     //アンケートのバッファを上書き
