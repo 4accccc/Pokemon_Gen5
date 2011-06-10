@@ -1662,11 +1662,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さすがだな
-・回復？
-ジムへはいる</Text>
+きみの　おかげで　たすかった▼
+たたかってくれた　ポケモンたちにも
+かんしゃ　しているよ▽
+さあ　くすりを　つかってあげよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T05:50:33" />
+				Time="2011-06-10T10:24:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1686,10 +1688,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・主人公のポケモンを回復処理
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T05:50:20" />
+				Time="2011-06-10T10:24:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1709,6 +1712,47 @@
 	</TextRow>
 	<TextRow
 		Label="msg_c08_swleader7_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:36:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:36:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:36:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:36:20" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:27:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_15"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1759,7 +1803,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_15"
+		Label="msg_c08_swleader7_16"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1786,10 +1830,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてninja_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:23:04" />
+				Time="2011-06-10T10:23:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1812,15 +1856,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど
-ジムが隠し場所でしたか
-よく考えている
-シャガがいなければ入れないし
-いれば最強の番人となる
-ジムを改装したのもそのためだと</Text>
+			<Text>？？？『……ジムが　かくしばしょか
+なるほど　よく　かんがえている▼
+シャガが　いなければ　はいれないし
+いれば　さいきょうの　ばんにんとなる▼
+ポケモンジムを　かいそう　したのも
+それが　りゆう　か▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T05:52:17" />
+				Time="2011-06-10T10:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1828,10 +1872,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>？？？『……ジムが　かくしばしょか
+なるほど　よく　かんがえている▼
+シャガが　いなければ　はいれないし
+いれば　さいきょうの　ばんにんとなる▼
+ポケモンジムを　かいそう　したのも
+それが　りゆう　か▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T05:52:20" />
+				Time="2011-06-10T10:25:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1856,16 +1905,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_16"
+		Label="msg_c08_swleader7_17"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まさか　ゆだんさせるために
-七賢人を　つかったと　いうのか
-なりふりかまわぬ～</Text>
+			<Text>シャガ『まさか　しちけんじん　すら
+りようして　いでんしのくさびの　ありかを▽
+さぐる　つもり　だったとはな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:24:02" />
+				Time="2011-06-10T10:25:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1873,10 +1922,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガ『まさか　しちけんじん　すら
+りようして　いでんしのくさびの　ありかを▽
+さぐる　つもり　だったとはな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T05:53:21" />
+				Time="2011-06-10T10:27:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1911,16 +1962,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ええ
-アンフェアなやり方だというのは
-自覚しております
-ですが今度こそ
-どんな手を使っても
-目的を達成する
-２年は案外長いものです</Text>
+			<Text>？？？『ええ　おっしゃるとおり▼
+ですが　どんな　てを　つかってでも
+こんかいは　もくてきを　たっせいします▼
+２ねんは　あんがい　ながいものです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:24:13" />
+				Time="2011-06-10T10:30:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1928,10 +1976,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>？？？『ええ　おっしゃるとおり▼
+ですが　どんな　てを　つかってでも
+こんかいは　もくてきを　たっせいします▼
+２ねんは　あんがい　ながいものです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:23:45" />
+				Time="2011-06-10T10:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1965,15 +2016,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_17"
+		Label="msg_c08_swleader7_18"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シャガ『うばわれたら
-うばいかえすだけだ　いくぞ▼</Text>
+うばいかえすだけだ　いくぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:30:39" />
+				Time="2011-06-10T10:30:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1981,10 +2032,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガ『うばわれたら
+うばいかえすだけだ　いくぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:24:52" />
+				Time="2011-06-10T10:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2015,14 +2067,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_18"
+		Label="msg_c08_swleader7_19"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『この　あたりには　おらぬようだな</Text>
+			<Text>シャガ『この　あたりには　おらぬようだ
+だが　あいつらは　けはいを　けすからな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:31:59" />
+				Time="2011-06-10T10:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2030,10 +2083,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガ『この　あたりには　おらぬようだ
+だが　あいつらは　けはいを　けすからな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:31:42" />
+				Time="2011-06-10T10:31:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2043,10 +2097,10 @@
 			Language="JPN">
 			<Comment>♂
 ・氷のないところでキョロキョロ＋ウロウロ
-・～まで繰り返し</Comment>
+・ダークトリニティとの戦闘後まで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:32:11" />
+				Time="2011-06-10T10:30:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2069,11 +2123,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……
+			<Text>？？？『……
 うばいかえせるか　わたしから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:34:54" />
+				Time="2011-06-10T10:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2081,10 +2135,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>？？？『……
+うばいかえせるか　わたしから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:31:15" />
+				Time="2011-06-10T10:32:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2119,14 +2174,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ざんねん　でしたね
+			<Text>？？？『……ざんねん　でしたね▼
 いでんしのくさびを　もっているのは
-ほかの　なかま　です
+ほかの　なかま　です▼
 じかんかせぎは　できました
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:04:11" />
+				Time="2011-06-10T10:32:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2134,10 +2189,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>？？？『……ざんねん　でしたね▼
+いでんしのくさびを　もっているのは
+ほかの　なかま　です▼
+じかんかせぎは　できました
+では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:35:05" />
+				Time="2011-06-10T10:32:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2149,10 +2208,10 @@
 ・戦闘後メッセージ
 ・消える
 ・シャガ登場する
-・続けて</Comment>
+・続けてswleader7_20</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:35:56" />
+				Time="2011-06-10T10:32:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2164,14 +2223,14 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_19"
+		Label="msg_c08_swleader7_20"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんたること！</Text>
+			<Text>シャガ『なんたること！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:39:37" />
+				Time="2011-06-10T10:32:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2179,10 +2238,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガ『なんたること！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:36:08" />
+				Time="2011-06-10T10:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2191,10 +2250,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてtvt_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T06:36:10" />
+				Time="2011-06-10T10:32:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2316,14 +2375,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_20"
+		Label="msg_c08_swleader7_21"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>シャガ『……ぐぬう！
+わたしの　からだが　ふたつ　あれば▼
+まちを　まもりつつ
+あいつらを　おいかけられるのに！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:05:49" />
+				Time="2011-06-10T10:38:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2365,14 +2427,64 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_21"
+		Label="msg_c08_swleader1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『</Text>
+			<Text>チェレン『[Name:TrainerName ]！
+あっ　シャガさんも　ごぶじ　でしたか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:07:18" />
+				Time="2011-06-10T10:38:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:33:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:33:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:33:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:33:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:33:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『チェレンでは　ないか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2404,6 +2516,207 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-09T11:23:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しゅじんこうは　きいたと　おもうけど
+プラズマだんの　ふねを　みかけたとの
+じょうほうを　えたんです
+で　ボクが～
+シャガさんは　まちを～▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:35:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・d10イベントまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:39:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:40:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:40:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:40:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:40:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swleader7_24表示後からクリアまで
+・クリアすると、ここから削除してc08r0101に配置</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:40:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-10T10:40:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
