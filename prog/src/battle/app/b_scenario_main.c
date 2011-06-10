@@ -87,25 +87,9 @@ enum{
 
 // いろいろ
 enum{
-//	MES_END_ID 			= pw_movie01_hint_19,	// 終了番号([なし]の記述番号)(仮)
 	MES_END_ID 			= pw_index_00,			// 終了番号([なし]の記述番号)
 	MES_HINT_MAX		= 20,
 };
-
-#if 0
-// シーケンス
-enum{
-	BS_SEQ_BACK_00 = 0,				// 戻る(通常)
-	BS_SEQ_BACK_01,					// 戻る(決定アニメ)
-	BS_SEQ_BACK_02,					// 戻る(反応なし)
-	BS_SEQ_LEFT_00,					// 左(通常)
-	BS_SEQ_LEFT_01,					// 左(決定アニメ)
-	BS_SEQ_LEFT_02,					// 左(反応なし)
-	BS_SEQ_RIGHT_00,				// 右(通常)
-	BS_SEQ_RIGHT_01,				// 右(決定アニメ)
-	BS_SEQ_RIGHT_02,				// 右(反応なし)
-};
-#endif
 
 //------------
 // フラグ
@@ -217,6 +201,13 @@ static const u16 *bs_fmes_tbl[] = {
 	bs_fmes00_tbl,
 	bs_fmes01_tbl,
 	bs_fmes02_tbl,
+};
+
+//----------
+// 半透明
+//----------
+static const s16 bs_rate_tbl[] = {
+	10,6,		// blend
 };
 
 //============================================================================================
@@ -614,6 +605,11 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	if(flg == GFL_APP_END_KEY){
 		wk->Flag |= FLG_KEY_INPUT;
 	}
+	//
+	// 半透明設定
+	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
+		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		bs_rate_tbl[0], bs_rate_tbl[1] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1806,6 +1802,11 @@ static void bs_exit_info( BSCENARIO_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+#if 0	// test
+static s32 rx=16;
+static s32 ry=0;
+#endif
+//
 static void bs_key_info( BSCENARIO_WORK * wk )
 {
 	s32		flg=0;
@@ -2058,6 +2059,38 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 		// OBJ表示
 		bs_disp_info_obj( wk, 1 );
 	}
+
+#if 0	// test
+	flg = 0;
+	// L
+	if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT){
+		rx--;
+		flg = 1;
+	}
+	// R
+	else if(GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT){
+		rx++;
+		flg = 1;
+	}
+	// UP
+	if(GFL_UI_KEY_GetTrg() & PAD_KEY_UP){
+		ry--;
+		flg = 1;
+	}
+	// DOWN
+	else if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN){
+		ry++;
+		flg = 1;
+	}
+	//
+	if(flg == 1){
+		G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
+			GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+			rx, ry);
+		//
+		OS_Printf("%d,%d\n",rx,ry);
+	}
+#endif
 }
 
 //--------------------------------------------------------------------------------------------

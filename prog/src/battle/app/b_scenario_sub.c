@@ -1132,6 +1132,10 @@ void BsCmn_InitObj( BSCENARIO_WORK* wk )
 	for(i=0;i<BS_CLWK_CURSOR_MAX;i++){
 		GFL_CLACT_WK_SetPlttOffs( wk->clwk_cursor[i], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
+	// 半透明設定
+	// パラメータの設定はG2S_SetBlendAlpha
+	// 第1対象面にはobjは含まないようにすること(全objにかかってしまう)
+	GFL_CLACT_WK_SetObjMode( wk->clwk_arrow[BS_CLWK_ARROW_UPMARK], GX_OAM_MODE_XLU );
 }
 
 //-----------------------------------------------------------------------------

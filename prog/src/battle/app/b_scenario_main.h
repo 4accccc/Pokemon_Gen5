@@ -203,7 +203,6 @@ typedef struct {
 	//
 	s16					Timer[BS_TIMER_MAX];	///< タイマ
 	s16					*EmptyBuffer;	///< 座標用のバッファ(必ず破棄すること)
-//	u16					*ScrBuffer[3];	///< スクリーンバッファ(必ず破棄すること)
 	//
 	BSCENARIO_POKE_WORK	PokeWork[BS_POKE_MAX];	///< ポケモン情報(初期化時にセット)
 } BSCENARIO_WORK;
