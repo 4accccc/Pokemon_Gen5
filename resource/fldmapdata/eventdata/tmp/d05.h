@@ -11,6 +11,11 @@
 #ifndef ZONE_D05_EVC_H
 #define ZONE_D05_EVC_H
 
+#define D05_MAN1_01                        0
+#define D05_WOMAN2_01                      1
+#define D05_MIDDLEMAN1_01                  2
+#define D05_MIDDLEWOMAN1_01                3
+#define D05_MAN3_01                        4
 
 #endif //ZONE_D05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
