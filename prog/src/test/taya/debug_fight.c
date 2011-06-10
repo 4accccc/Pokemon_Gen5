@@ -626,6 +626,14 @@ typedef BOOL (*pMainProc)( DEBUG_BTL_WORK*, int* );
 /*--------------------------------------------------------------------------*/
 
 /**
+ * トレーナーID検索領域
+ */
+typedef struct
+{
+  TrainerID id_to_type[TRTYPE_MAX];
+}DEBUG_FIGHT_TRDATA;
+
+/**
  *  SaveData
  */
 typedef struct {
@@ -730,6 +738,8 @@ struct _DEBUG_BTL_WORK {
   u8   recBuffer[ 4096 ];
   u32  recDataSize;
   GFL_STD_RandContext  recRand;
+
+  DEBUG_FIGHT_TRDATA tr_data;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -803,7 +813,9 @@ static void comm_dummy_callback(void* pWork);
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void btlAutoConnectCallback( void* pWork );
 static void btlExitConnectCallback( void* pWork );
-static TrainerID SearchTrainerData(u16 kindType, HEAPID heapID );
+
+static void CreateTrainerData( DEBUG_FIGHT_TRDATA *p_data, HEAPID heapID );
+static TrainerID GetTrainerData(u16 kindType, const DEBUG_FIGHT_TRDATA *cp_data );
 
 /*--------------------------------------------------------------------------*/
 /* Menu Table                                                               */
@@ -852,6 +864,8 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   wk->partyEnemy2 = PokeParty_AllocPartyWork( HEAPID_BTL_DEBUG_SYS );
   wk->clipPoke = NULL;
   wk->ppTmpWork = GFL_HEAP_AllocMemory( HEAPID_BTL_DEBUG_SYS, POKETOOL_GetWorkSize() );
+
+  CreateTrainerData( &wk->tr_data, HEAPID_BTL_DEBUG_SYS );
 
   initGraphicSystems( HEAPID_BTL_DEBUG_VIEW );
   createTemporaryModules( wk, HEAPID_BTL_DEBUG_VIEW );
@@ -2042,7 +2056,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       // トレーナーIDの再選択
       if( selItem_IsTrainerType(wk->selectItem) )
       {
-        wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
+        wk->saveData.trainerID = GetTrainerData( wk->saveData.trainerType, &wk->tr_data );
       }
 
       PrintItem( wk, wk->selectItem, TRUE );
@@ -2058,7 +2072,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       // トレーナーIDの再選択
       if( selItem_IsTrainerType(wk->selectItem) )
       {
-        wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
+        wk->saveData.trainerID = GetTrainerData( wk->saveData.trainerType, &wk->tr_data );
       }
 
       PrintItem( wk, wk->selectItem, TRUE );
@@ -2077,7 +2091,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     {
       selItem_Increment( wk, wk->selectItem, 10 );
       // トレーナーIDの再選択
-      wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
+      wk->saveData.trainerID = GetTrainerData( wk->saveData.trainerType, &wk->tr_data );
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
       
@@ -2094,7 +2108,7 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
     if( selItem_IsTrainerType(wk->selectItem) )
     {
       selItem_Increment( wk, wk->selectItem, -10 );
-      wk->saveData.trainerID = SearchTrainerData( wk->saveData.trainerType, wk->heapID );
+      wk->saveData.trainerID = GetTrainerData( wk->saveData.trainerType, &wk->tr_data );
       PrintItem( wk, wk->selectItem, TRUE );
       GFL_BMPWIN_TransVramCharacter( wk->win );
     }
@@ -2497,7 +2511,7 @@ FS_EXTERN_OVERLAY(battle);
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
 
       TrainerID  trID = wk->saveData.trainerID;
-      if( trID == 0 )
+      if( trID == 0 && wk->saveData.trainerType == 0 )
       {
         trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
       }
@@ -2566,6 +2580,11 @@ FS_EXTERN_OVERLAY(battle);
       }
       if( wk->saveData.fSubway ){
         BTL_SETUP_SetSubwayMode( &wk->setupParam );
+      }
+
+      if( trID == 0 && wk->saveData.trainerType != 0 )
+      {
+        wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->tr_type = wk->saveData.trainerType;
       }
     }
     
@@ -3083,6 +3102,36 @@ static void btlExitConnectCallback( void* pWork )
   wk->fNetConnect = FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特定のトレーナータイプを持っているトレーナーデータを取得するため
+ *	        検索結果を格納する
+ *
+ *	@param	DEBUG_FIGHT_TRDATA *p_data　トレーナーデータ検索結果格納領域
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void CreateTrainerData( DEBUG_FIGHT_TRDATA *p_data, HEAPID heapID )
+{
+
+  TRAINER_DATA  data;
+  u32         tr_id;
+
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_TRDATA , heapID );
+
+  GFL_STD_MemClear( p_data, sizeof(DEBUG_FIGHT_TRDATA) );
+
+  for( tr_id = 0; tr_id < TRID_MAX; tr_id++ )
+  {
+    GFL_ARC_LoadDataOfsByHandle( handle,  tr_id, 0, sizeof(data), &data );
+    if( p_data->id_to_type[data.tr_type] == 0 )
+    {
+      p_data->id_to_type[data.tr_type]   = tr_id;
+    }
+  }
+
+  GFL_ARC_CloseDataHandle( handle );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -3094,32 +3143,10 @@ static void btlExitConnectCallback( void* pWork )
  *	@retval トレーナーID
  */
 //-----------------------------------------------------------------------------
-static TrainerID SearchTrainerData(u16 kindType, HEAPID heapID )
+static TrainerID GetTrainerData(u16 kindType, const DEBUG_FIGHT_TRDATA *cp_data )
 {
-  ARCHANDLE*    handle;
-  TRAINER_DATA  data;
-  u16         ofs   = 0;
-  u32         tr_id = 0;
-
-
-  // アーカイブハンドルの取得
-  handle = GFL_ARC_OpenDataHandle( ARCID_TRDATA , heapID );
-
-  while( tr_id != TRID_MAX ){
-    GFL_ARC_LoadDataOfsByHandle( handle,  tr_id, 0, sizeof(data), &data );
-    
-    // トレーナータイプが一致するまで続ける
-    if( data.tr_type == kindType )
-    {
-      return tr_id;
-    }
-
-    // トレーナーIDとデータのIDは基本一致している
-    tr_id++;
-  }
-  GFL_ARC_CloseDataHandle( handle );
-
-  return 0;
+  GF_ASSERT( kindType < TRTYPE_MAX );
+  return cp_data->id_to_type[ kindType ];
 }
 
 #endif //PM_DEBUG
