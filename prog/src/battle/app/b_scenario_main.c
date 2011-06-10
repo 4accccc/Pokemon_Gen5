@@ -42,6 +42,7 @@ enum{
 	STEP_LV1		= 100,
 	STEP_LV2		= 200,
 	STEP_LV3		= 300,
+	STEP_LV4		= 400,
 	//
 	STEP_END		= 10000,
 };
@@ -91,6 +92,7 @@ enum{
 	MES_HINT_MAX		= 20,
 };
 
+#if 0
 // シーケンス
 enum{
 	BS_SEQ_BACK_00 = 0,				// 戻る(通常)
@@ -103,6 +105,7 @@ enum{
 	BS_SEQ_RIGHT_01,				// 右(決定アニメ)
 	BS_SEQ_RIGHT_02,				// 右(反応なし)
 };
+#endif
 
 //------------
 // フラグ
@@ -321,7 +324,6 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	//
 	wk->dat			= dat;
 	wk->pfd 		= BTLV_EFFECT_GetPfd();
-	wk->initFlag	= FALSE;
 	//
 	// 初期化
 	wk->Step 		= STEP_INIT;
@@ -330,6 +332,7 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	wk->Flag		= 0;
 	wk->SubMode		= STEP_INIT;
 	wk->TitleMode	= BS_TOP;
+	wk->AnimFlag	= 0;
 	//
 	// 台本番号
 	wk->TopNum		= dat->scenario_num;
@@ -344,6 +347,9 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	wk->PokeMax		= PokeParty_GetPokeCount( wk->dat->party );
 	wk->InfoCurPos	= 0;
 	//
+	for(i=0;i<BS_TIMER_MAX;i++){
+		wk->Timer[i] = 0;
+	}
 	OS_Printf("scenario num:%d\n",wk->TopNum);
 	//
 	//
@@ -453,11 +459,6 @@ static BOOL battle_scenario_end( GFL_TCB * tcb, BSCENARIO_WORK * wk )
 			wk->MsgData[i] = 0;
 		}
 	}
-	// 破棄
-	GFL_HEAP_FreeMemory( wk->ScrBuffer[0] );
-	GFL_HEAP_FreeMemory( wk->ScrBuffer[1] );
-	GFL_HEAP_FreeMemory( wk->ScrBuffer[2] );
-	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	//
@@ -574,11 +575,6 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_B_SCENARIO_GRA, NARC_b_scenario_gra_b_scenario_pos_tblbin, wk->dat->heap );
 	//
-	// スクロール
-	wk->ScrBuffer[0] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), 4*4*4*2 );		// 左矢印
-	wk->ScrBuffer[1] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), 4*4*4*2 );		// 右矢印
-	wk->ScrBuffer[2] = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID(wk->dat->heap), 5*5*4*2 );		// 戻る
-	//
 	// 入らなければ、要修正
 	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->dat->heap );
 	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_hint001_dat, wk->dat->heap );
@@ -609,12 +605,6 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	bs_init_wipe( wk );
 	// パレットアニメ用
 	bs_set_palanim( wk );
-	//
-	// bgスクリーン
-//	BsCmn_DispScr( wk, BS_TOP, TRUE );
-	
-	// 初期化終了
-	wk->initFlag = TRUE;
 	//
 //	wk->Flag |= FLG_UPDATE;
 	wk->Flag |= FLG_KEY_UPDATE;
@@ -804,7 +794,7 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 	// ここまでで、パレットの転送は終えておくこと
 	//
 	// BGのパレット(7本分)
-	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*7 );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*8 );
 	// BGのパレット(10番から3本分)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 10*16, 0x20*3 );
 	// フォントパレット(8)
@@ -813,10 +803,8 @@ static void bs_set_palanim( BSCENARIO_WORK * wk )
 	// 通信アイコンセット
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
 	//
-	// OBJのパレット(0番目、15本分)
+	// OBJのパレット(0番目、15本分まとめ)
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, 0x20*15 );
-	// OBJのパレット(14番目、1本分)
-//	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
 	PaletteFadeReq( wk->pfd, PF_BIT_SUB_ALL, 0xffff, 0, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
 }
 
@@ -844,8 +832,9 @@ static void bs_chk_canvas( BSCENARIO_WORK * wk )
 		// スクロール切り替え
 		BsCmn_BgScroll( wk, wk->TitleMode );
 		// bgスクリーン
-//		BsCmn_DispScr( wk, wk->TitleMode, TRUE );
 		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+		// 上マーク切替
+		BsCmn_DispUpMark( wk, wk->TitleMode );
 		// 切り替え終了
 		wk->Flag &= ~FLG_CHG_TITLE;
 	}
@@ -881,8 +870,6 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 		BsCmn_InitString( wk, BS_TOP );
 		// 表示まとめ
 		bs_disp_top_string( wk, STR_INIT );
-		// bgスクリーン
-//		BsCmn_DispScr( wk, BS_TOP, TRUE );
 		//
 //		wk->Flag |= FLG_UPDATE;
 		wk->Flag |= FLG_KEY_UPDATE;
@@ -914,7 +901,7 @@ static void bs_main_top( BSCENARIO_WORK * wk )
 			bs_key_top( wk );
 			break;
 		
-		// アニメ待ち
+		// アニメ待ち(obj)
 		case STEP_LV2:
 			// キャンセル待ち
 			bflg = BsCmn_IsAnimEnd( wk, BS_CLWK_ARROW_BACK );
@@ -925,7 +912,28 @@ static void bs_main_top( BSCENARIO_WORK * wk )
 			}
 			break;
 		//
+		// アニメ待ち(脚本)
 		case STEP_LV3:
+			// アニメ待ち
+			BsCmn_MainScreenAnime( wk );
+			bflg = BsCmn_IsScreenAnimeEnd( wk );
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->NextMode = SMODE_INIT_SCENARIO;
+			}
+			break;
+		//
+		// アニメ待ち(シナリオ)
+		case STEP_LV3+10:
+			// アニメ待ち
+			BsCmn_MainScreenAnime( wk );
+			bflg = BsCmn_IsScreenAnimeEnd( wk );
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->NextMode = SMODE_INIT_INFO;
+			}
 			break;
 		//
 		default:
@@ -1044,15 +1052,19 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 				}
 				else if(flg == 3){		// 決定
 					if(wk->TopCurPos == 0){			// 脚本
-						nmode = SMODE_INIT_SCENARIO;
-						mflg = 2;
+//						nmode = SMODE_INIT_SCENARIO;
+//						mflg = 2;
+						BsCmn_InitScreenAnime( wk, BS_SCR_TOP_00 );
+						wk->SubMode = STEP_LV3;
 						wk->ScenarioCurPos = 0;
 						// 決定
 						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
 					else if(wk->TopCurPos == 1){	// 共演者
-						nmode = SMODE_INIT_INFO;
-						mflg = 2;
+//						nmode = SMODE_INIT_INFO;
+//						mflg = 2;
+						BsCmn_InitScreenAnime( wk, BS_SCR_TOP_01 );
+						wk->SubMode = STEP_LV3+10;
 						wk->ScenarioCurPos = 0;
 						// 決定
 						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
@@ -1102,15 +1114,20 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 				PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 			}
 			else if(flg == 5){		// 共演者
-				nmode = SMODE_INIT_INFO;
-				mflg = 2;
+//				nmode = SMODE_INIT_INFO;
+//				mflg = 2;
+				BsCmn_InitScreenAnime( wk, BS_SCR_TOP_01 );
+				wk->SubMode = STEP_LV3+10;
 				wk->InfoCurPos = 0;
 				// 決定
 				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 			}
 			else if(flg == 6){		// シナリオ
-				nmode = SMODE_INIT_SCENARIO;
-				mflg = 2;
+//				nmode = SMODE_INIT_SCENARIO;
+//				mflg = 2;
+				BsCmn_InitScreenAnime( wk, BS_SCR_TOP_00 );
+				wk->SubMode = STEP_LV3;
+				//
 				wk->ScenarioCurPos = 0;
 				// 決定
 				PMSND_PlaySE( SND_PKWD_BS_DECIDE );
@@ -1128,10 +1145,10 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 	}
 	//
 	// 次の画面へ
-	else if(mflg == 2){
-		wk->Mode++;
-		wk->NextMode = nmode;
-	}
+//	else if(mflg == 2){
+//		wk->Mode++;
+//		wk->NextMode = nmode;
+//	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1192,8 +1209,6 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 	//
 	// 表示(パラメータをセットしておくこと)
 	bs_disp_scenario_string( wk, STR_INIT );
-	// bgスクリーン
-//	BsCmn_DispScr( wk, BS_SCENARIO, TRUE );
 	//
 //	wk->Flag |= FLG_UPDATE;
 	wk->Flag |= FLG_KEY_UPDATE;
@@ -1250,7 +1265,19 @@ static void bs_main_scenario( BSCENARIO_WORK * wk )
 			}
 			break;
 		//
+		// アニメ待ち(脚本)
 		case STEP_LV3:
+			// アニメ待ち
+			BsCmn_MainScreenAnime( wk );
+			bflg = BsCmn_IsScreenAnimeEnd( wk );
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->NextMode = SMODE_INIT_INFO;
+			}
+			break;
+		//
+		case STEP_LV4:
 			break;
 		//
 		default:
@@ -1384,8 +1411,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 				}
 				else if(flg == 3){		// 決定
 					if(wk->ScenarioCurPos == 0){		// 脚本
-						nmode = SMODE_INIT_INFO;
-						mflg = 2;
+//						nmode = SMODE_INIT_INFO;
+//						mflg = 2;
+						BsCmn_InitScreenAnime( wk, BS_SCR_SCENARIO_00 );
+						wk->SubMode = STEP_LV3;
 						// 決定
 						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
@@ -1470,8 +1499,11 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 				PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 			}
 			else if(flg == 5){		// 共演者
-				nmode = SMODE_INIT_INFO;
-				mflg = 2;
+//				nmode = SMODE_INIT_INFO;
+//				mflg = 2;
+				BsCmn_InitScreenAnime( wk, BS_SCR_SCENARIO_00 );
+				wk->SubMode = STEP_LV3;
+				//
 				wk->Flag &= ~FLG_KEY_INPUT;
 				wk->ScenarioCurPos = 0;
 				// 決定
@@ -1532,10 +1564,10 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 	}
 	//
 	// 次の画面へ
-	else if(mflg == 2){
-		wk->Mode++;
-		wk->NextMode = nmode;
-	}
+//	else if(mflg == 2){
+//		wk->Mode++;
+//		wk->NextMode = nmode;
+//	}
 	//
 	if(dflg == 1){
 		// メッセージ更新
@@ -1670,8 +1702,6 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	//
 	// 表示(初期パラメータをセットしておくこと)
 	bs_disp_info_string( wk, STR_INIT );
-	// bgスクリーン
-//	BsCmn_DispScr( wk, BS_INFO, TRUE );
 	// 表示
 	bs_disp_info_obj( wk, 0 );
 	//
@@ -1730,7 +1760,19 @@ static void bs_main_info( BSCENARIO_WORK * wk )
 			}
 			break;
 		//
+		// アニメ待ち(共演者)
 		case STEP_LV3:
+			// アニメ待ち
+			BsCmn_MainScreenAnime( wk );
+			bflg = BsCmn_IsScreenAnimeEnd( wk );
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->NextMode = SMODE_INIT_SCENARIO;
+			}
+			break;
+		//
+		case STEP_LV4:
 			break;
 		//
 		default:
@@ -1865,8 +1907,10 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 				}
 				else if(flg == 3){		// 決定
 					if(wk->InfoCurPos == 0){		// 脚本
-						nmode = SMODE_INIT_SCENARIO;
-						mflg = 2;
+//						nmode = SMODE_INIT_SCENARIO;
+//						mflg = 2;
+						BsCmn_InitScreenAnime( wk, BS_SCR_INFO_00 );
+						wk->SubMode = STEP_LV3;
 						// 決定
 						PMSND_PlaySE( SND_PKWD_BS_DECIDE );
 					}
@@ -1946,8 +1990,11 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 				PMSND_PlaySE( SND_PKWD_BS_CANCEL );
 			}
 			else if(flg == 5){		// 脚本
-				nmode = SMODE_INIT_SCENARIO;
-				mflg = 2;
+//				nmode = SMODE_INIT_SCENARIO;
+//				mflg = 2;
+				BsCmn_InitScreenAnime( wk, BS_SCR_INFO_00 );
+				wk->SubMode = STEP_LV3;
+				//
 				wk->Flag &= ~FLG_KEY_INPUT;
 				wk->InfoCurPos = 0;
 				// 決定
@@ -2000,10 +2047,10 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 	}
 	//
 	// 次の画面へ
-	else if(mflg == 2){
-		wk->Mode++;
-		wk->NextMode = nmode;
-	}
+//	else if(mflg == 2){
+//		wk->Mode++;
+//		wk->NextMode = nmode;
+//	}
 	//
 	if(dflg == 1){
 		// メッセージ更新

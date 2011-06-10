@@ -34,7 +34,7 @@ enum{
 	BS_BG_MAXNUM		= 8,		// BG最大
 	BS_CANVAS_MAXNUM	= 14,		// canvas最大(場面ごとに切り替え)
 	BS_MES_MAX			= 2,		// メッセージ最大
-	BS_EMPTY_MAX		= 37*2,		// empty最大
+	BS_EMPTY_MAX		= 38*2,		// empty最大
 	//
 	BS_POKE_MAX			= 6,		// ポケモン最大
 };
@@ -77,7 +77,7 @@ enum{
 	// poke用
 	BS_RES_POKE_CHR_MAX		= 6,
 	// arrow用
-	BS_RES_ARROW_CHR_MAX	= 3,
+	BS_RES_ARROW_CHR_MAX	= 1,
 };
 
 // clwk(type)
@@ -119,6 +119,7 @@ enum{
 	BS_CLWK_ARROW_LEFT = 0,			// 左
 	BS_CLWK_ARROW_RIGHT,			// 右
 	BS_CLWK_ARROW_BACK,				// 戻る
+	BS_CLWK_ARROW_UPMARK,			// 上マーク
 	//
 	BS_CLWK_ARROW_MAX,
 };
@@ -127,6 +128,14 @@ enum{
 // clwkの合計
 enum{
 	BS_TOTAL_CLWK_NUM	= (BS_CLWK_MAX+BS_CLWK_POKE_MAX+BS_CLWK_CURSOR_MAX+BS_CLWK_ARROW_MAX),
+};
+
+// タイマindex
+enum{
+	BS_TIMER_ANIM,					// パネルイン/アウト
+	BS_TIMER_PAD,					// pad
+	
+	BS_TIMER_MAX,
 };
 
 // ポケモンの情報(1体)
@@ -168,7 +177,7 @@ typedef struct {
 	u32					ResChr[ BS_RES_CHR_MAX];
 	u32					ResCell[BS_RES_CELL_MAX];
 	//
-	BOOL				initFlag;		///< 初期化したか（初期化前に外部から終了要求されると止まるので）
+//	BOOL				initFlag;		///< 初期化したか（初期化前に外部から終了要求されると止まるので）
 	//
 	// 以下、追加
 	s32					Step;			///< ステップ
@@ -177,6 +186,9 @@ typedef struct {
 	u32					Flag;			///< フラグ
 	s32					SubMode;		///< サブモード
 	s32					TitleMode;		///< タイトルモード(0-2)
+	u32					AnimFlag;		///< アニメ用
+	s32					AnimNum;		///< アニメ用(段階)
+	s32					AnimType;		///< アニメ用タイプ
 	// トップ情報
 	s32					TopNum;			///< 台本番号(0-39)
 	s32					TopCurPos;		///< カーソル位置
@@ -189,8 +201,9 @@ typedef struct {
 	s32					PokeMax;		///< 最大数(6)
 	s32					InfoCurPos;		///< カーソル位置
 	//
+	s16					Timer[BS_TIMER_MAX];	///< タイマ
 	s16					*EmptyBuffer;	///< 座標用のバッファ(必ず破棄すること)
-	u16					*ScrBuffer[3];	///< スクリーンバッファ(必ず破棄すること)
+//	u16					*ScrBuffer[3];	///< スクリーンバッファ(必ず破棄すること)
 	//
 	BSCENARIO_POKE_WORK	PokeWork[BS_POKE_MAX];	///< ポケモン情報(初期化時にセット)
 } BSCENARIO_WORK;

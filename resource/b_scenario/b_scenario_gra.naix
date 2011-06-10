@@ -15,10 +15,12 @@ enum {
 	NARC_b_scenario_gra_pkwd_scenario_arrow_NCLR = 1,
 	NARC_b_scenario_gra_pkwd_scenario_NCGR = 2,
 	NARC_b_scenario_gra_pkwd_scenario_arrow_NCGR = 3,
-	NARC_b_scenario_gra_pkwd_scenario_arrow_NCER = 4,
-	NARC_b_scenario_gra_pkwd_scenario_NSCR = 5,
-	NARC_b_scenario_gra_pkwd_scenario_arrow_NANR = 6,
-	NARC_b_scenario_gra_b_scenario_pos_tblbin = 7
+	NARC_b_scenario_gra_pkwd_scenario_NCER = 4,
+	NARC_b_scenario_gra_pkwd_scenario_arrow_NCER = 5,
+	NARC_b_scenario_gra_pkwd_scenario_NSCR = 6,
+	NARC_b_scenario_gra_pkwd_scenario_NANR = 7,
+	NARC_b_scenario_gra_pkwd_scenario_arrow_NANR = 8,
+	NARC_b_scenario_gra_b_scenario_pos_tblbin = 9
 };
 
 /* NARC_B_SCENARIO_GRA_NAIX_ */

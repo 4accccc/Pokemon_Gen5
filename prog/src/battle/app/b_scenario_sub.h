@@ -68,6 +68,28 @@ enum{
 	BS_TP_INFO_RETURN,
 };
 
+// スクリーン書き換え
+enum{
+	BS_SCR_TOP_00 		= 0,			// TOP
+	BS_SCR_TOP_01,
+	BS_SCR_SCENARIO_00,					// SCENARIO
+	BS_SCR_INFO_00,						// INFO
+};
+
+// シーケンス
+enum{
+	BS_SEQ_BACK_00 = 0,				// 戻る(通常)
+	BS_SEQ_BACK_01,					// 戻る(決定アニメ)
+	BS_SEQ_BACK_02,					// 戻る(反応なし)
+	BS_SEQ_LEFT_00,					// 左(通常)
+	BS_SEQ_LEFT_01,					// 左(決定アニメ)
+	BS_SEQ_LEFT_02,					// 左(反応なし)
+	BS_SEQ_RIGHT_00,				// 右(通常)
+	BS_SEQ_RIGHT_01,				// 右(決定アニメ)
+	BS_SEQ_RIGHT_02,				// 右(反応なし)
+	BS_SEQ_UPMARK,					// 上マーク
+};
+
 //============================================================================================
 //	宣言
 //============================================================================================
@@ -84,7 +106,6 @@ extern void BsCmn_DispStringNumber( BSCENARIO_WORK* wk, const s32 mode, const s3
 							const u32 pmode, const s32 fmode);
 extern void BsCmn_ExitString( BSCENARIO_WORK* wk );
 extern void BsCmn_ClearCanvas( BSCENARIO_WORK* wk, const s32 mode );
-extern void BsCmn_ClearAllCanvas( BSCENARIO_WORK* wk );
 
 //
 // タッチペン
@@ -97,10 +118,16 @@ extern void BsCmn_ObjVisible( BSCENARIO_WORK *wk, const s32 wmode, const s32 wnu
 extern void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
 extern void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const s32 sex );
 extern void BsCmn_DispCursor( BSCENARIO_WORK *wk, const BOOL bflg, const s32 mode, const s32 num );
-//extern void BsCmn_DispScr( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg );
 //
 extern void BsCmn_DispArrow( BSCENARIO_WORK *wk, const s32 mode, const BOOL bflg );
 extern void BsCmn_ChgSeq(    BSCENARIO_WORK *wk, const s32 wnum, const s32 seqnum );
 extern BOOL BsCmn_IsAnimEnd( BSCENARIO_WORK *wk, const s32 wnum );
+//
+extern void BsCmn_ChgScreen( BSCENARIO_WORK *wk, const s32 num, const s32 mode );
+extern void BsCmn_InitScreenAnime( BSCENARIO_WORK *wk, const s32 num );
+extern void BsCmn_MainScreenAnime( BSCENARIO_WORK *wk );
+extern BOOL BsCmn_IsScreenAnimeEnd( BSCENARIO_WORK *wk );
+//
+extern void BsCmn_DispUpMark( BSCENARIO_WORK *wk, const s32 mode );
 
 
