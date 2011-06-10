@@ -13,6 +13,7 @@
 
 #include "print/printsys.h"  // for PRINTSYSS_xxxx
 #include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
+#include "field_info_def.h" //フェスミッション情報表示と共有したいBG_PRIなどのdefine定義
 
 #ifdef PM_DEBUG
 #include "debug/debug_flg.h"
@@ -585,8 +586,8 @@ static void Pn_Plate_Top_Init( PN_PLATE *plate, void *wk_adrs, const void *param
     actorData.y          = 0;
     actorData.pltt_index = param->fontPlttRegIdx;
     actorData.pal_offset = 0;
-    actorData.soft_pri   = 0;
-    actorData.bg_pri     = 0;
+    actorData.soft_pri   = FLD_PLACE_NAME_OAM_SPRI;
+    actorData.bg_pri     = FLD_PLACE_NAME_BG_PRIORITY;
     actorData.setSerface = plate->surface;
     actorData.draw_type  = CLSYS_DRAW_MAIN; 
 
@@ -618,6 +619,8 @@ static void Pn_Plate_Top_Init( PN_PLATE *plate, void *wk_adrs, const void *param
           wk->placeCgrIdx, wk->placePltIdx, wk->placeCelIdx,
           &data, 0, plate->heapID );
     GFL_CLACT_WK_SetDrawEnable( wk->placeIcon, FALSE );
+    GFL_CLACT_WK_SetBgPri( wk->placeIcon, FLD_PLACE_NAME_BG_PRIORITY );
+    GFL_CLACT_WK_SetSoftPri( wk->placeIcon, FLD_PLACE_NAME_OAM_SPRI );
   }
 
 }
@@ -1095,6 +1098,8 @@ static void Pn_Plate_Bottom_Init( PN_PLATE *plate, void *wk_adrs, const void *pa
           wk->seasonCgrIdx, wk->seasonPltIdx, wk->seasonCelIdx,
           &data, 0, plate->heapID );
     GFL_CLACT_WK_SetDrawEnable( wk->seasonIcon, FALSE );
+    GFL_CLACT_WK_SetBgPri( wk->seasonIcon, FLD_PLACE_NAME_BG_PRIORITY );
+    GFL_CLACT_WK_SetSoftPri( wk->seasonIcon, FLD_PLACE_NAME_OAM_SPRI );
   }
 }
 //----------------------------------------------------------------------------

@@ -33,6 +33,8 @@
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
+#include "field_info_def.h" //フェスミッション情報表示と共有したいBG_PRIなどのdefine定義
+
 #ifdef PM_DEBUG
 #include "debug/debug_flg.h"
 #endif 
@@ -84,7 +86,7 @@ DEBUG_GROBAL BOOL PlaceNameVersionFlag       = 0;        //0がブラック１がホワイ
 // BG
 #define BG_PALETTE_NO          (0) // BGパレット番号
 #define BG_FRAME (GFL_BG_FRAME3_M) // 使用するBGフレーム
-#define BG_FRAME_PRIORITY      (1) // BGフレームのプライオリティ
+
 // αブレンド
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3) // αブレンドの第1対象面
 #define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_OBJ) // αブレンドの第2対象面
@@ -692,7 +694,7 @@ static void SetupBG( FIELD_PLACE_NAME* system )
   AllocBGNullCharArea( system );
 
   // BG表示設定
-	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
+	GFL_BG_SetPriority( BG_FRAME, FLD_PLACE_NAME_BG_PRIORITY );
 	GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
 
   SetAlpha( system );
@@ -917,7 +919,7 @@ static void CreateClactUnit( FIELD_PLACE_NAME* system )
 
   heapID = GetHeapID( system );
 	system->clunit[ CLUNIT_PLATE ] = 
-		GFL_CLACT_UNIT_Create( OBJ_CLUNIT_WK_NUM, BG_FRAME_PRIORITY, heapID );
+		GFL_CLACT_UNIT_Create( OBJ_CLUNIT_WK_NUM, FLD_PLACE_NAME_BG_PRIORITY, heapID );
 
 	// 初期設定
 	GFL_CLACT_UNIT_SetDrawEnable( system->clunit[ CLUNIT_PLATE ], TRUE );
@@ -1562,7 +1564,7 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
     GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
     GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
   }
-    GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
+    GFL_BG_SetPriority( BG_FRAME, FLD_PLACE_NAME_BG_PRIORITY );
     GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
     SetAlpha( system );
     IncStateSeq( system );

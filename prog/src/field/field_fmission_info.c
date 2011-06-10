@@ -30,6 +30,7 @@
 #include "msg/msg_place_name.h"
 
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "field_info_def.h" //地名表示と共有したいBG_PRIなどのdefine定義
 
 #include "field_fmission_info.h"
 
@@ -346,7 +347,7 @@ static GFL_CLWK* _sub_ObjAdd( FIELD_FMISSION_INFO* wk, s16 x,s16 y,u8 anm, u8 sp
   ini.pos_x = x;
   ini.pos_y = y;
   ini.anmseq = anm;
-  ini.bgpri = 3;
+  ini.bgpri = FLD_FMISSION_INFO_BG_PRIORITY;
   ini.softpri = spri;
   
   obj = GFL_CLACT_WK_Create( wk->cellUnit, wk->resChar,wk->resPltt,wk->resCell,
@@ -363,34 +364,34 @@ static void _sub_ActorCreate( FIELD_FMISSION_INFO* wk )
   int i;
 
   //プレート追加
-  wk->pAct[ACT_MS_P] = _sub_ObjAdd( wk, AP_MSP_X, AP_MSP_Y, ACTANM_MSCORE, 2 );
-  wk->pAct[ACT_TS_P] = _sub_ObjAdd( wk, AP_TSP_X, AP_TSP_Y, ACTANM_TSCORE, 2 );
-  wk->pAct[ACT_TIME_P] = _sub_ObjAdd( wk, AP_TIMEP_X, AP_TIMEP_Y, ACTANM_TIME, 2 );
+  wk->pAct[ACT_MS_P] = _sub_ObjAdd( wk, AP_MSP_X, AP_MSP_Y, ACTANM_MSCORE, FLD_FMISSION_INFO_OAM_SPRI2 );
+  wk->pAct[ACT_TS_P] = _sub_ObjAdd( wk, AP_TSP_X, AP_TSP_Y, ACTANM_TSCORE, FLD_FMISSION_INFO_OAM_SPRI2 );
+  wk->pAct[ACT_TIME_P] = _sub_ObjAdd( wk, AP_TIMEP_X, AP_TIMEP_Y, ACTANM_TIME, FLD_FMISSION_INFO_OAM_SPRI2 );
 
   //スコアナンバー追加
   for( i = 0;i < ACT_SCOREN_PLACE_NUM;i++){
-    wk->pAct[ACT_MSN01+i] = _sub_ObjAdd( wk, AP_MSN_X+(AP_MSN_OX*i), AP_MSN_Y, ACTANM_SNUM, 1 );
-    wk->pAct[ACT_TSN01+i] = _sub_ObjAdd( wk, AP_TSN_X+(AP_TSN_OX*i), AP_TSN_Y, ACTANM_LNUM, 1 );
+    wk->pAct[ACT_MSN01+i] = _sub_ObjAdd( wk, AP_MSN_X+(AP_MSN_OX*i), AP_MSN_Y, ACTANM_SNUM, FLD_FMISSION_INFO_OAM_SPRI1 );
+    wk->pAct[ACT_TSN01+i] = _sub_ObjAdd( wk, AP_TSN_X+(AP_TSN_OX*i), AP_TSN_Y, ACTANM_LNUM, FLD_FMISSION_INFO_OAM_SPRI1 );
   }
 
   //タイムナンバー追加
   for( i = 0;i < ACT_TIMEN_PLACE_NUM;i++){
-    wk->pAct[ACT_TIMEN01+i] = _sub_ObjAdd( wk, AP_TIMEN_X+(AP_TIMEN_OX*i), AP_TIMEN_Y, ACTANM_LNUM, 1 );
-    wk->pAct[ACT_TIMEN03+i] = _sub_ObjAdd( wk, AP_TIMEN_X+(AP_TIMEN_OX*(i+ACT_TIMEN_PLACE_NUM))+AP_TIMENC_OX, AP_TIMEN_Y, ACTANM_LNUM, 1 );
+    wk->pAct[ACT_TIMEN01+i] = _sub_ObjAdd( wk, AP_TIMEN_X+(AP_TIMEN_OX*i), AP_TIMEN_Y, ACTANM_LNUM, FLD_FMISSION_INFO_OAM_SPRI1 );
+    wk->pAct[ACT_TIMEN03+i] = _sub_ObjAdd( wk, AP_TIMEN_X+(AP_TIMEN_OX*(i+ACT_TIMEN_PLACE_NUM))+AP_TIMENC_OX, AP_TIMEN_Y, ACTANM_LNUM, FLD_FMISSION_INFO_OAM_SPRI1 );
   }
   //タイム区切り文字追加
-  wk->pAct[ACT_TIMEN_C] = _sub_ObjAdd( wk, AP_TIMENC_X, AP_TIMENC_Y, ACTANM_LNUM_C, 1 );
+  wk->pAct[ACT_TIMEN_C] = _sub_ObjAdd( wk, AP_TIMENC_X, AP_TIMENC_Y, ACTANM_LNUM_C, FLD_FMISSION_INFO_OAM_SPRI1 );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->pAct[ACT_TIMEN_C], TRUE );
 
   //キラパネル
-  wk->pAct[ACT_SCORE_KIRA] = _sub_ObjAdd( wk, AP_TSP_KIRA_X, AP_TSP_KIRA_Y, ACTANM_KIRA, 0);
-  wk->pAct[ACT_TIME_KIRA] = _sub_ObjAdd( wk, AP_TIME_KIRA_X, AP_TIME_KIRA_Y, ACTANM_KIRA, 0);
+  wk->pAct[ACT_SCORE_KIRA] = _sub_ObjAdd( wk, AP_TSP_KIRA_X, AP_TSP_KIRA_Y, ACTANM_KIRA, FLD_FMISSION_INFO_OAM_SPRI0);
+  wk->pAct[ACT_TIME_KIRA] = _sub_ObjAdd( wk, AP_TIME_KIRA_X, AP_TIME_KIRA_Y, ACTANM_KIRA, FLD_FMISSION_INFO_OAM_SPRI0);
   GFL_CLACT_WK_SetAutoAnmFlag( wk->pAct[ACT_SCORE_KIRA], TRUE );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->pAct[ACT_TIME_KIRA], TRUE );
 
   //ボーナスパネル
-  wk->pAct[ACT_SCORE_UP] = _sub_ObjAdd( wk, AP_SCORE_UP_X, AP_SCORE_UP_Y, ACTANM_SCORE_UP, 2 );
-  wk->pAct[ACT_TIME_BONUS] = _sub_ObjAdd( wk, AP_TIME_BONUS_X, AP_TIME_BONUS_Y, ACTANM_TIME_BONUS, 2 );
+  wk->pAct[ACT_SCORE_UP] = _sub_ObjAdd( wk, AP_SCORE_UP_X, AP_SCORE_UP_Y, ACTANM_SCORE_UP, FLD_FMISSION_INFO_OAM_SPRI2 );
+  wk->pAct[ACT_TIME_BONUS] = _sub_ObjAdd( wk, AP_TIME_BONUS_X, AP_TIME_BONUS_Y, ACTANM_TIME_BONUS, FLD_FMISSION_INFO_OAM_SPRI2 );
 
   for(i = 0;i < ACT_MAX;i++){
     GFL_CLACT_WK_GetPos( wk->pAct[i], &wk->actPos[i], ACT_RENDER_ID );
