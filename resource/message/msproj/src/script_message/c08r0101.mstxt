@@ -6,10 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『まえフリ▼</Text>
+			<Text>シャガ『では　はなそう
+ながくなるが　こころして　きいてほしい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:22:48" />
+				Time="2011-06-11T06:04:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガ『では　話そう
+長くなるが　心して　きいてほしい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:34" />
+				Time="2011-06-11T06:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,10 +32,12 @@
 			Language="JPN">
 			<Comment>♂
 ・c08ジムバッジ取得後に出現
-・続けて</Comment>
+・続けて
+　Black2→swleader7_02b
+　White2→swleader7_02w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:10:16" />
+				Time="2011-06-11T05:55:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -76,10 +80,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>２年前の　ことだ
+ドラゴンポケモンが　２匹　めざめた▼
+理想を　求め　新たなる
+希望の　世界に　導く▽
+黒き　ドラゴンポケモン　ゼクロム▼
+真実を　求め　新たなる
+善の　世界に　導く▽
+白き　ドラゴンポケモン　レシラム▼
+ゼクロムと　レシラムは
+もともと　１匹の　ポケモンだった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:38:43" />
+				Time="2011-06-11T06:05:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -89,10 +102,10 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・続けて</Comment>
+・続けてswleader7_03b</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:03:37" />
+				Time="2011-06-11T06:00:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -135,10 +148,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>２年前の　ことだ
+ドラゴンポケモンが　２匹　めざめた▼
+真実を　求め　新たなる
+善の　世界に　導く▽
+白き　ドラゴンポケモン　レシラム▼
+理想を　求め　新たなる
+希望の　世界に　導く▽
+黒き　ドラゴンポケモン　ゼクロム▼
+レシラムと　ゼクロムは
+もともと　１匹の　ポケモンだった▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:38:14" />
+				Time="2011-06-11T06:05:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -148,10 +170,10 @@
 			Language="JPN">
 			<Comment>♂
 ・White2ver
-・続けて</Comment>
+・続けてswleader7_03w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:03:45" />
+				Time="2011-06-11T06:00:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -174,16 +196,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data
-イッシュに　くにが　できた
-はるか　むかしの　こと
-ふたごのえいゆう～
-
+			<Text>なぜ　わかたれたか？▼
+ドラゴンポケモンは
+ふたごの　えいゆうを　たすけ▽
+あたらしい　くにを　つくった▼
+だが　ふたごの　えいゆうは　それぞれ
+りそうと　しんじつを　おいもとめ▼
+どちらが　ただしいか　きめるべく
+あらそい　はじめた……▼
+このときだ　ドラゴンポケモンが
+くろと　しろの２ひきに　わかたれた！▼
 りそうと　しんじつは　かならずしも
-対立する　ものでは　ないのに</Text>
+たいりつ　する　もの　ではないのに▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:52:05" />
+				Time="2011-06-11T06:13:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -191,10 +218,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>なぜ　分かたれたか？▼
+ドラゴンポケモンは
+双子の　英雄を　たすけ▽
+イッシュに　新しい国を　造った▼
+だが　双子の　英雄は　それぞれ
+理想と　真実を　追い求め▼
+どちらが　正しいか　決めるべく
+国を　二つにして　争いはじめた……▼
+このときだ　ドラゴンポケモンが
+黒と　白の　２匹に　分かたれた！▼
+理想と　真実は　必ずしも
+対立する　もの　ではないのに▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-11T06:14:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -204,10 +242,10 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・続けて</Comment>
+・続けてswleader7_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:03:38" />
+				Time="2011-06-11T06:01:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -230,10 +268,91 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>なぜ　わかたれたか？▼
+ドラゴンポケモンは
+ふたごの　えいゆうを　たすけ▽
+あたらしい　くにを　つくった▼
+だが　ふたごの　えいゆうは　それぞれ
+しんじつと　りそうを　おいもとめ▼
+どちらが　ただしいか　きめるべく
+あらそい　はじめた……▼
+このときだ　ドラゴンポケモンが
+しろと　くろの　２ひきに　わかたれた！▼
+しんじつと　りそうは　かならずしも
+たいりつ　する　もの　ではないのに▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:03:12" />
+				Time="2011-06-11T06:12:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:56:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なぜ　分かたれたか？▼
+ドラゴンポケモンは
+双子の　英雄を　たすけ▽
+イッシュに　新しい国を　造った▼
+だが　双子の　英雄は　それぞれ
+真実と　理想を　追い求め▼
+どちらが　正しいか　決めるべく
+国を　二つにして　争いはじめた……▼
+このときだ　ドラゴンポケモンが
+白と　黒の　２匹に　分かたれた！▼
+真実と　理想は　必ずしも
+対立する　もの　ではないのに▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T06:15:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:56:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・続けてswleader7_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:57:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:56:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じつは　このとき　もういっぴきの
+ドラゴンポケモンが　うまれたのでは？▽
+と　すいそく　している▼
+その　しょうこと　なるのが
+だいだい　わがやに　つたわる▽
+いでんしのくさび　という　たから　だ▼
+アララギはかせの　しらべ　では
+リュウラセンのとう　と▼
+おなじ　じだいの　せいぶんが
+けいそく　できたらしい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T06:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -241,10 +360,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>じつは　このとき　もう一匹の
+ドラゴンポケモンが　うまれたのでは？▽
+と　推測している▼
+その証拠と　なるのが
+代々　我が一族に　伝わる▽
+いでんしのくさび　という　宝だ▼
+アララギ博士の　調べでは
+リュウラセンの塔と▼
+同じ　時代の　成分が
+計測できたらしい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:03:12" />
+				Time="2011-06-11T06:20:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -253,11 +381,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・White2ver
-・続けて</Comment>
+・続けてswleader7_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T13:03:47" />
+				Time="2011-06-11T05:57:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -276,14 +403,25 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_04"
+		Label="msg_c08_swleader7_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ああ　いでんしのくさびは
+たいせつに　ほかん　している▼
+どうぐとして　どのような　ちからを
+ひめているか　わからぬのでな▼
+ただし……　もう　いっぴきの
+ドラゴンポケモンが　いるのか？▼
+ほんとうに　いるとしても
+どんなポケモンかは　ふめい　だ▼
+そもそも　あれほど　つよい
+２ひきの　ポケモンに　わかれたのだ▼
+いたとしても　ぬけがらでは　ないか？
+そんなふうにも　かんがえたりする……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:22:55" />
+				Time="2011-06-11T06:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -291,10 +429,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ああ　いでんしのくさびは
+大切に　保管している▼
+道具として　どのような　力を
+秘めているか　わからぬのでな▼
+ただし……　もう　一匹の
+ドラゴンポケモンが　いるのか？▼
+本当に　いるとしても
+どんなポケモンかは　不明だ▼
+そもそも　あれほど　強大な
+２ひきの　ポケモンに　分かれたのだ▼
+いたとしても　抜け殻では　ないか？
+そんな風にも　考えたりする……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-11T06:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -303,11 +452,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・爆音SE+画面ゆれ
-・続けて</Comment>
+・続けてevent_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:23:16" />
+				Time="2011-06-11T06:24:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -326,14 +474,64 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader7_05"
+		Label="msg_c08_event_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにごと　だ？▼</Text>
+			<Text>どごおおっおっ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:23:26" />
+				Time="2011-06-11T05:58:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:50:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どごおおっおっ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:59:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:50:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ギザウインで
+・爆音SE+画面ゆれ
+・続けてswleader7_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:59:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>イベント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T05:59:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『なにごと　だ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-11T06:19:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -341,10 +539,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガ『なにごと　だ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T08:08:59" />
+				Time="2011-06-11T06:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
