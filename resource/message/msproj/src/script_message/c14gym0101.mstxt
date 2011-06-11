@@ -111,10 +111,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　シズイから
+ウェーブバッジを　もらった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T07:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,10 +123,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>[Name:TrainerName Idx="0" ]は　シズイから
+ウェーブバッジを　もらった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T07:45:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -184,10 +186,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No000「わざマシン？？」（アクロバット）</Comment>
+　No000「わざマシン？？」（？？？）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:17:03" />
+				Time="2011-06-11T07:31:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -357,10 +359,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>これ　どうぞっす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:18:37" />
+				Time="2011-06-11T07:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
