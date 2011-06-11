@@ -33,11 +33,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・White2ver
+・White2ver＋氷マップになる前
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:27" />
+				Time="2011-06-11T06:28:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -94,11 +94,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・Black2ver
+・Black2ver＋氷マップになる前
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:07:50" />
+				Time="2011-06-11T06:28:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -128,10 +128,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>なあに？　なにが　どうして
+どうなったと　いうの？？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:06:33" />
+				Time="2011-06-11T06:41:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -139,10 +140,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>なあに？　なにが　どうして
+どうなったと　いうの？？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:06:35" />
+				Time="2011-06-11T06:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -177,10 +179,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>あたりまえ　ですけど
+じんせい　なにが　おきるか　わからない▼
+ゆったり　くらすにしても
+やりたいことは　ちゃんと　もってないとね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:06:35" />
+				Time="2011-06-11T06:47:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -188,10 +193,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>当たり前　ですけど
+人生　何が　起きるか　わからない▼
+ゆったり　暮らすにしても
+やりたいことは　ちゃんと　持ってないとね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:06:35" />
+				Time="2011-06-11T06:47:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -226,10 +234,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>あたりまえ　ですけど
+じんせい　なにが　おきるか　わからない▼
+やりたいことを　するにしても
+それは　すべきかどうか　かんがえないと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:06:35" />
+				Time="2011-06-11T06:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -237,10 +248,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>当たり前　ですけど
+人生　何が　起きるか　わからない▼
+やりたいことを　するにしても
+それは　すべきかどうか　考えないと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:06:35" />
+				Time="2011-06-11T06:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -304,11 +318,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・White2ver
+・White2ver＋氷マップになる前
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:29" />
+				Time="2011-06-11T06:28:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -365,11 +379,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・Black2ver
+・Black2ver＋氷マップになる前
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:33" />
+				Time="2011-06-11T06:28:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -399,10 +413,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ふむ
+どうりで　ひんやり　すると　おもった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:41" />
+				Time="2011-06-11T06:31:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -410,10 +425,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ふむ
+どうりで　ひんやり　すると　おもった</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:41" />
+				Time="2011-06-11T06:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -448,10 +464,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>どんな　せかいでも
+わたしは　わたしで　ありたい▽
+それは　しんじつ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:41" />
+				Time="2011-06-11T06:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -459,10 +477,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>どんな　世界でも
+わたしは　わたしで　ありたい▽
+それは　真実だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:41" />
+				Time="2011-06-11T06:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -497,10 +517,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>どんな　せかいでも
+わたしは　わたしで　ありたい▽
+それが　りそう　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:41" />
+				Time="2011-06-11T06:54:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -508,10 +530,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>どんな　世界でも
+わたしは　わたしで　ありたい▽
+それが　理想だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:08:41" />
+				Time="2011-06-11T06:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -546,10 +570,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>かわった　ポケモンジムを　みたいけど
+ボク　まだ　トレーナーじゃないし……▼
+いっしょに　たびを　してくれる
+ポケモン　ほしいな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:13:09" />
+				Time="2011-06-11T06:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -557,10 +584,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>変わった　ポケモンジムを　みたいけど
+ボク　まだ　トレーナーじゃないし……▼
+共に　旅を　してくれる
+ポケモン　ほしいな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:13:09" />
+				Time="2011-06-11T06:40:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -587,10 +617,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ボク　みたんだけど
+そらから　でっかい　つららが！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:13:09" />
+				Time="2011-06-11T06:32:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -598,10 +629,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ボク　みたんだけど
+空から　でっかい　氷柱が！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:13:09" />
+				Time="2011-06-11T06:40:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -628,10 +660,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>シャガさんが　ポケモンと　たびをするなら
+ポケモンが　うけた　いたみを▽
+じぶんの　いたみとして　かんじろ　だって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:13:09" />
+				Time="2011-06-11T06:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -639,10 +673,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シャガさんが　ポケモンと　旅をするなら
+ポケモンが　受けた　痛みを▽
+自分の　痛みとして　感じろ　だって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:13:09" />
+				Time="2011-06-11T06:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
