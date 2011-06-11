@@ -65,10 +65,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>このような　おかしな　じたい……
+たとえ　シャガさまでも　ひとりでは……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:09:51" />
+				Time="2011-06-11T07:05:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76,10 +77,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>このような　おかしな　事態……
+たとえ　シャガさまでも　一人では……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:09:51" />
+				Time="2011-06-11T07:06:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -341,10 +343,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ソ　ソウリュウシティ
+どうなっちゃうんですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:11:48" />
+				Time="2011-06-11T07:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -352,10 +355,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ソ　ソウリュウシティ
+どうなっちゃうんですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:11:48" />
+				Time="2011-06-11T07:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -364,10 +368,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・氷マップ時</Comment>
+・氷マップ時
+・左右にウロウロしている</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:11:47" />
+				Time="2011-06-11T07:01:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -642,10 +647,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>なんだか　さむくて……▼
+ドラゴンポケモンは
+こおりが　にがて　なのに……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:12:12" />
+				Time="2011-06-11T07:08:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -653,10 +660,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>なんだか　寒くて……▼
+ドラゴンポケモンは
+氷が　苦手なのに……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:12:12" />
+				Time="2011-06-11T07:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

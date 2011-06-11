@@ -451,11 +451,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なに……　ごと　だ
-この　けしき　は？▼</Text>
+			<Text>こおり……　だと？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:37:41" />
+				Time="2011-06-11T07:10:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -463,11 +462,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なに……　ごと　だ
-この　景色は？▼</Text>
+			<Text>氷……　だと？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:37:50" />
+				Time="2011-06-11T07:10:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -874,10 +872,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ようけんを　つたえよう！　シャガどの
-いでんしのくさび　とやらを　わたせ▼</Text>
+いでんしのくさび　とやらを　ください▼
+この　ソウリュウは
+かこと　みらいが　からみあう　まち▼
+わかれた　ポケモンを　つなげる
+くさびが　あるに　ふさわしい　ばしょだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:48:12" />
+				Time="2011-06-11T07:04:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -886,10 +888,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>用件を　伝えよう！　シャガ殿
-いでんしのくさび　とやらを　渡せ▼</Text>
+いでんしのくさび　とやらを　ください▼
+この　ソウリュウは
+過去と　未来が　絡みあう　街▼
+分かれた　ポケモンを　つなげる
+くさびが　あるに　ふさわしい　場所だ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:42:46" />
+				Time="2011-06-11T07:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

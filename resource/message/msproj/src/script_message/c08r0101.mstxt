@@ -551,10 +551,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・画面外に消えると主人公操作可能に</Comment>
+・主人公と連れ立って
+　c08方面へ移動、画面切り替え
+・msg_c08_swleader7_04へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T12:23:38" />
+				Time="2011-06-11T07:09:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
