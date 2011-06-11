@@ -853,11 +853,12 @@
 			Language="JPN">
 			<Text>さてと
 アララギの　むすめから　きいた▼
-・仮メッセージ
-・シャガ　退場▼</Text>
+イッシュを　つくった　でんせつの
+ドラゴンポケモンを　かたるのだな▽
+では　そとで　まっているぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T11:18:54" />
+				Time="2011-06-11T07:31:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -866,12 +867,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さてと
-アララギの　むすめから　きいた▼
-・仮メッセージ
-・シャガ　退場▼</Text>
+アララギの　娘から　きいた▼
+イッシュを　造った　伝説の
+ドラゴンポケモンを　語るのだな▽
+では　外で　待っているぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T11:18:59" />
+				Time="2011-06-11T07:31:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -960,10 +962,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア後</Comment>
+・クリア後
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:20:29" />
+				Time="2011-06-11T07:28:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
