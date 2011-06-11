@@ -6,10 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>おいが　シズイ！
+ま　ジムリーダー　させてもらってる▼
+で　ごらんのとーり
+みずタイプの　ポケモンで　たたかうよ▼
+おはん　つよそーやね！
+ほな　はじめよーかい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:15:36" />
+				Time="2011-06-11T09:08:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おいが　シズイ！
+ま　ジムリーダー　させてもらってる▼
+で　ごらんのとーり
+みずタイプの　ポケモンで　戦うよ▼
+おはん　強そーやね！
+ほな　はじめよーかい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:15:36" />
+				Time="2011-06-11T09:17:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29,10 +39,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・posイベント
+　GRIDX＝？？？、GRIDZ＝？？？で起動
+　水中から飛び出してくる（要相談）
 ・戦闘前メッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:15:40" />
+				Time="2011-06-11T09:32:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -62,10 +75,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>おはん　つよそーじゃなく
+わっせ　つよいんじゃな！▼
+おいも　おどろいたよ！
+……って　おお　そうじゃ！▼
+おどろきの　あまり　わすれてたが
+これを　わたさないと　ダメじゃな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:17:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -73,10 +91,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おはん　強そーじゃなく
+わっせ　強いんじゃな！▼
+おいも　驚いたよ！
+……って　おお　そうじゃ！▼
+驚きの　あまり　忘れてたが
+これを　渡さないと　ダメじゃな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -162,10 +185,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>それは　ウェーブバッジ！▼
+イッシュちほうの　あたらしい
+ジムバッジじゃ！　きれいじゃろ？▼
+で　ジムバッジが　８こ　あるんなら
+どんな　ポケモンとでも　なかよしだ！▼
+えーっと
+わざマシンも　わたすんじゃな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -173,10 +202,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>それは　ウェーブバッジ！▼
+イッシュ地方の　あたらしい
+ジムバッジじゃ！　きれいじゃろ？▼
+で　ジムバッジが　８個　あるんなら
+どんな　ポケモンとでも　仲良しだ！▼
+えーっと
+わざマシンも　渡すんじゃな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -212,10 +247,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>わざマシンの　せつめい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -223,10 +258,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>わざマシンの　説明</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:20:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -261,10 +296,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ほな　いっとこかい！
+ついてくると　えーよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:21:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -272,10 +308,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ほな　行っとこかい！
+ついてくると　えーよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:24" />
+				Time="2011-06-11T09:21:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -284,10 +321,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリアまで繰り返し</Comment>
+・メッセージ表示後、水上移動でジム入り口へ
+　動作モデルの追加を要相談</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:16" />
+				Time="2011-06-11T09:27:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -359,10 +397,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これ　どうぞっす！▼</Text>
+			<Text>リゾートきぶんな　ジムですけれど
+いるのは　てごわい　ジムリーダーっす！▼
+これを　プレゼントするので
+きを　ひきしめて　くださいっすね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:35:08" />
+				Time="2011-06-11T09:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -370,10 +411,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>リゾート気分な　ジムですけれど
+いるのは　手強い　ジムリーダーっす！▼
+これを　プレゼントするので
+気を　引き締めて　くださいっすね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:18:37" />
+				Time="2011-06-11T09:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -411,10 +455,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>みずタイプの　ポケモンは
+でんきタイプ　くさタイプの▽
+わざを　にがてと　しているっす！▼
+だけど　ジムリーダーですからね
+たいさく　してるっすよ　きっと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:19:08" />
+				Time="2011-06-11T09:29:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -422,10 +470,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>みずタイプの　ポケモンは
+でんきタイプ　くさタイプの▽
+わざを　苦手と　しているっす！▼
+だけど　ジムリーダーですからね
+対策してるっすよ　きっと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:19:08" />
+				Time="2011-06-11T09:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -461,10 +513,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>シズイさん　およいじゃってますね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:19:11" />
+				Time="2011-06-11T09:23:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -472,10 +524,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>シズイさん　およいじゃってますね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:19:11" />
+				Time="2011-06-11T09:23:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
