@@ -5574,10 +5574,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム1A</Text>
+			<Text>ジム1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5585,10 +5585,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム1A</Text>
+			<Text>ジム1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5607,10 +5607,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム1B</Text>
+			<Text>ジム2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5618,10 +5618,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム1B</Text>
+			<Text>ジム2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5640,10 +5640,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム1C</Text>
+			<Text>ジム3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5651,10 +5651,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム1C</Text>
+			<Text>ジム3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5673,10 +5673,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム2</Text>
+			<Text>ジム4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5684,10 +5684,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム2</Text>
+			<Text>ジム4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5706,10 +5706,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム3</Text>
+			<Text>ジム5</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5717,10 +5717,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム3</Text>
+			<Text>ジム5</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5739,10 +5739,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム4</Text>
+			<Text>ジム6</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5750,10 +5750,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム4</Text>
+			<Text>ジム6</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5772,10 +5772,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム5</Text>
+			<Text>ジム7</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5783,10 +5783,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム5</Text>
+			<Text>ジム7</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5805,10 +5805,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム6</Text>
+			<Text>ジム8</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:44:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5816,10 +5816,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム6</Text>
+			<Text>ジム8</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5838,10 +5838,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム7</Text>
+			<Text>してんのう1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5849,10 +5849,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム7</Text>
+			<Text>四天王1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5871,10 +5871,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム8A</Text>
+			<Text>してんのう2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5882,10 +5882,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム8A</Text>
+			<Text>四天王2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5904,10 +5904,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジム8B</Text>
+			<Text>してんのう3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5915,10 +5915,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジム8B</Text>
+			<Text>四天王3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5937,10 +5937,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>してんのう1</Text>
+			<Text>してんのう4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5948,10 +5948,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>四天王1</Text>
+			<Text>四天王4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5970,10 +5970,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>してんのう2</Text>
+			<Text>チャンプ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5981,10 +5981,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>四天王2</Text>
+			<Text>チャンプ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6003,10 +6003,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>してんのう3</Text>
+			<Text>N</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T10:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6014,10 +6014,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>四天王3</Text>
+			<Text>N</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T10:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6036,10 +6036,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>してんのう4</Text>
+			<Text>ゲーチス</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T10:05:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6047,10 +6047,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>四天王4</Text>
+			<Text>ゲーチス</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T10:05:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6069,10 +6069,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンプ</Text>
+			<Text>プラズマ団</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T10:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6080,10 +6080,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンプ</Text>
+			<Text>プラズマ団</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T10:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6102,10 +6102,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん</Text>
+			<Text>エフェクト</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6113,10 +6113,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団</Text>
+			<Text>エフェクト</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6135,10 +6135,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>N</Text>
+			<Text>パッケージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6146,10 +6146,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>N</Text>
+			<Text>パッケージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6168,10 +6168,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲーチス</Text>
+			<Text>いどう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6179,10 +6179,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲーチス</Text>
+			<Text>移動</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:57:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6201,10 +6201,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エフェクト</Text>
+			<Text>さんじゅうし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6212,10 +6212,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エフェクト</Text>
+			<Text>三銃士</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:55:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6234,109 +6234,10 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>パッケージ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>パッケージ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>160</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="DEBUG_FIELD_ENCEFF34"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>いどう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>移動</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>160</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="DEBUG_FIELD_ENCEFF35"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さんじゅうし</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>三銃士</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>160</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="DEBUG_FIELD_ENCEFF36"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>ゾロアーク</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:45:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6346,8 +6247,8 @@ allocable (0x[Digit:8digits Idx="5" ])</Text>
 			Language="JPN_KANJI">
 			<Text>ゾロアーク</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="onoue_masayuki:W00272"
+				Time="2011-06-12T09:56:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

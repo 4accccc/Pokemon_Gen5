@@ -61,17 +61,14 @@ static const ENCEFF_TBL EncEffTbl[] = {
 
   {ENCEFF_CI_CreateRival, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //ライバル
   {ENCEFF_CI_CreateSupport, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //サポーター
-  {ENCEFF_CI_CreateGym01A, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C1ジムリーダーＡ
-  {ENCEFF_CI_CreateGym01B, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C1ジムリーダーＢ
-  {ENCEFF_CI_CreateGym01C, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C1ジムリーダーＣ
+  {ENCEFF_CI_CreateGym01, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C1ジムリーダー
   {ENCEFF_CI_CreateGym02, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C2ジムリーダー
   {ENCEFF_CI_CreateGym03, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C3ジムリーダー
   {ENCEFF_CI_CreateGym04, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C4ジムリーダー
   {ENCEFF_CI_CreateGym05, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C5ジムリーダー
   {ENCEFF_CI_CreateGym06, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C6ジムリーダー
   {ENCEFF_CI_CreateGym07, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C7ジムリーダー
-  {ENCEFF_CI_CreateGym08A, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C8ジムリーダーＡ
-  {ENCEFF_CI_CreateGym08B, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C8ジムリーダーＢ
+  {ENCEFF_CI_CreateGym08, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0xe570},    //C8ジムリーダー
   {ENCEFF_CI_CreateBigFour1, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //四天王1
   {ENCEFF_CI_CreateBigFour2, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //四天王2
   {ENCEFF_CI_CreateBigFour3, NULL, FS_OVERLAY_ID(enceff_ci), FALSE, 0x12a68},    //四天王3
