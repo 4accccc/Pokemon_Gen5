@@ -249,7 +249,10 @@ EVENT_END
 /*	C13	guitarw		一言メッセージ							  */
 /**************************************************************/
 EVENT_START		ev_c13_guitarw_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_guitarw_01 )
+_TALK_START_TURN_NOT()
+	_BALLOONWIN_TALKOBJ_MSG( msg_c13_guitarw_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
