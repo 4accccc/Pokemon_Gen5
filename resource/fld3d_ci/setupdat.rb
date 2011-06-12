@@ -88,6 +88,7 @@ while line = csv_file.gets
     ary << 1
   end
   
+  column[15].strip!
   if $effect_id_hash.include?(column[15]) == FALSE then
     raise column[0]+":未定義のカットインエフェクトID["+column[15].to_s+"]が使用されています"
   end
