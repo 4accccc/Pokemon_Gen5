@@ -2,8 +2,8 @@
 # *
 # *	@file		ci_effect.rb
 # *	@brief    カットインエフェクトデータファイル生成
-# *	@author		Masayuki Onoue
-# *	@data		2010.11.15
+# *	@author	Masayuki Onoue
+# *	@date		2011.06.12
 # *
 #]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
@@ -154,6 +154,7 @@ end
 data_csv = File.open( ARGV[0] , "r" );
 se_cdat = File.open( ARGV[1] , "w" );
 fade_cdat = File.open( ARGV[2] , "w" );
+eff_id_hash = File.open( ARGV[3] , "w" );
 
 #---------------------------------------------------------------
 # SECDATのヘッダー部分を書き込む
@@ -202,6 +203,9 @@ $fadecmd = nil
 # エラーフラグ
 $erro_flg = false
 
+# エフェクトIDテーブル
+effect_id_array = Array.new
+
 data_csv.each_with_index do |line,index|
 
   # 読み込み終了
@@ -233,6 +237,9 @@ data_csv.each_with_index do |line,index|
     $secmd = SeCmd.new( now_id , id_cnt )
     $fadecmd = FadeCmd.new( now_id , id_cnt )
     id_cnt += 1
+
+    # EFFECTIDを保存する
+    effect_id_array << now_id
   end
 
   # コマンド列にSEコマンドが含まれているか
@@ -275,16 +282,30 @@ end
 fade_cdat.printf("};\n")
 
 #---------------------------------------------------------------
+# EFFECTIDのハッシュテーブルを作成する
+#---------------------------------------------------------------
+eff_id_hash.puts "#! ruby -Ks"
+eff_id_hash.puts "#フィールド3Dカットイン用エフェクトIDテーブル"
+eff_id_hash.puts "$effect_id_hash = {"
+	
+effect_id_array.each_with_index{|data,i|
+	eff_id_hash.puts '  "'+data+'" => '+i.to_s+','
+}
+eff_id_hash.puts "}"
+
+#---------------------------------------------------------------
 # ファイルクローズ
 #---------------------------------------------------------------
 data_csv.close
 se_cdat.close
 fade_cdat.close
+eff_id_hash.close
 
 if $erro_flg == true
   File.delete(ARGV[0])
   File.delete(ARGV[1])
   File.delete(ARGV[2])
+  File.delete(ARGV[3])
   abort("定義値に誤りがあります。\n\\resource\\fld3d_ci_effect\\fld3d_ci_eff.xlsを確認してください\n")
 end
 

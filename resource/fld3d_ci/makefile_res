@@ -107,7 +107,7 @@ $(targetname).narc: $(ARC_TARGET) $(ARC_TARGET_DATA) $(FLD_CI_LIST)
 	nnsarc -cl -l -n -i $(NARCNAME) -S $(FLD_CI_LIST) > arc_rsult.txt
 	$(NAIXCUT) $(targetname).naix
 
-$(targetname2).narc: $(CSV_DATA) $(FLD_CI_LIST)
+$(targetname2).narc: $(CSV_DATA) $(FLD_CI_LIST) setupdat.rb
 	@echo __NAKE TARGET2
 	ruby setupdat.rb $(CSV_DATA) $(FLD_CI_LIST)
 	nnsarc -cl -l -n -i $(NARCNAME2) -S ci_list > arc_rsult2.txt

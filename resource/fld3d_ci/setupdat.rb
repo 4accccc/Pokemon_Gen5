@@ -1,4 +1,5 @@
 $KCODE = "SJIS"
+require File.dirname(__FILE__) + '/../fld3d_ci_effect/effect_id.rb'
 
 def GetIdxByStr(vec, str)
   if str == "NONE" then
@@ -37,7 +38,7 @@ while line = res_file.gets
   name = tmp.chomp("\n").chomp("\r")
 #  tmp = /\./.match(file_name)
 #  name = tmp.pre_match
-  p name
+#  p name
   vec << name
 end
 
@@ -53,13 +54,13 @@ while line = csv_file.gets
 	end
   column = line.split ","
 
-  p column
+  #p column
 
   #データ収集
 
   bin_name = "ci_" + cutin_no.to_s
 
-  p bin_name
+  #p bin_name
 
   #↓プログラムで使用する構造体に合わせます
   ary << GetIdxByStr(vec, column[1])  #SPA
@@ -87,11 +88,16 @@ while line = csv_file.gets
     ary << 1
   end
   
-  p ary
+  if $effect_id_hash.include?(column[15]) == FALSE then
+    raise column[0]+":未定義のカットインエフェクトID["+column[15].to_s+"]が使用されています"
+  end
+  ary << $effect_id_hash[column[15]]   #EFFECT_ID
+
+  #p ary
 
   #バイナリ作成
   dst_file = open("bin/#{bin_name}.bin","wb")
-  pack_str = ary.pack("LS14L")
+  pack_str = ary.pack("LS14SS")
   dst_file.write(pack_str)
 
   list_file.write("\"bin/#{bin_name}.bin\"\n")

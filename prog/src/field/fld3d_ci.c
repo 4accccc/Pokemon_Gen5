@@ -237,7 +237,8 @@ typedef struct {
   u16 MdlBAnmWait;
   u16 MdlAAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
   u16 MdlBAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
-  u32 Bright;
+  u16 Bright;
+  u16 EffectIdx;
 }RES_DEF_DAT;
 
 typedef struct TEXREPLACE_DEF_tag
@@ -261,7 +262,8 @@ typedef struct {
   u8 ObjNum;
   u8 Anm1Num;
   u8 Anm2Num;
-  u32 Bright;
+  u16 Bright;
+  u16 EffectIdx;
 }RES_SETUP_DAT;
 
 typedef struct {
@@ -330,8 +332,8 @@ static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexN
 static void ChangeCapDatCol(void);
 static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work);
 
-static void PlaySE(FLD3D_CI_PTR ptr);
-static void StartFade(FLD3D_CI_PTR ptr);
+static void PlaySE(FLD3D_CI_PTR ptr,u8 EffectIdx);
+static void StartFade(FLD3D_CI_PTR ptr,u8 EffectIdx);
 
 static void DispSetVTask( GFL_TCB *p_tcb, void *p_work );
 
@@ -432,7 +434,7 @@ FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPt
 {
   FLD3D_CI_PTR ptr;
 
-  GF_ASSERT_MSG(FLDCIID_MAX == CI_SE_TBL_MAX,"ci_def error");
+  // GF_ASSERT_MSG(FLDCIID_MAX == CI_SE_TBL_MAX,"ci_def error");
   
   GF_ASSERT(inPrtclSysPtr != NULL);
 
@@ -1042,8 +1044,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       ptr->MdlAnm2End = rc3;
 
       //ＳＥ再生
-      PlaySE(ptr);
-      StartFade(ptr);
+      {
+        u8 EffectIdx = evt_work->SetupDat.EffectIdx;
+        PlaySE(ptr,EffectIdx);
+        StartFade(ptr,EffectIdx);
+      }
 
       main_rc = FALSE;
       if (ptr->MainSeqFunc != NULL) main_rc = ptr->MainSeqFunc(event, ptr);
@@ -1059,7 +1064,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     {
       // フェードを全て終了してからフェードを終了させる。
       ptr->FrameCount++;
-      StartFade(ptr);
+      
+      {
+        u8 EffectIdx = evt_work->SetupDat.EffectIdx;
+        StartFade(ptr,EffectIdx);
+      }
 
       if( CI_FADE_CheckFade(ptr->pFadeSys) == FALSE )
       {
@@ -1624,8 +1633,9 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
   outDat->Setup.objTbl = outDat->Obj;
   outDat->Setup.objCount = obj_num;
 
-  outDat->SpaIdx = def_dat.SpaIdx;
-  outDat->Bright = def_dat.Bright;
+  outDat->SpaIdx    = def_dat.SpaIdx;
+  outDat->Bright    = def_dat.Bright;
+  outDat->EffectIdx = def_dat.EffectIdx;
 }
 
 //--------------------------------------------------------------
@@ -2787,10 +2797,10 @@ static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work)
  * @return none
  */
 //--------------------------------------------------------------------------------------------
-static void PlaySE(FLD3D_CI_PTR ptr)
+static void PlaySE(FLD3D_CI_PTR ptr,u8 EffectIdx)
 {
   u32 se;
-  const CI_SE_TBL * tbl = SeTbl[ptr->CutInNo];
+  const CI_SE_TBL * tbl = SeTbl[EffectIdx];
   se = tbl[ptr->SeTblIdx].Se;
   if (se != CI_SE_NONE)
   {
@@ -2815,10 +2825,10 @@ static void PlaySE(FLD3D_CI_PTR ptr)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void StartFade(FLD3D_CI_PTR ptr)
+static void StartFade(FLD3D_CI_PTR ptr,u8 EffectIdx)
 {
   u32 frame;
-  const CI_FADE_TBL * tbl = FadeTbl[ptr->CutInNo];
+  const CI_FADE_TBL * tbl = FadeTbl[EffectIdx];
   frame = tbl[ptr->FadeTblIdx].Frame;
   if (frame != CI_FADE_NONE)
   {

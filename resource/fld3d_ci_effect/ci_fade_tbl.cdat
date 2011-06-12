@@ -37,6 +37,10 @@ const CI_FADE_TBL FTbl5[] = {
 };
 
 const CI_FADE_TBL FTbl6[] = {
+	{ 88, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,0 ,16 ,3 },
+	{ 93, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,16 ,0 ,3 },
+	{ 165, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,0 ,16 ,5 },
+	{ 170, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,16 ,0 ,5 },
 	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
 };
 
@@ -65,10 +69,6 @@ const CI_FADE_TBL FTbl12[] = {
 };
 
 const CI_FADE_TBL FTbl13[] = {
-	{ 88, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,0 ,16 ,3 },
-	{ 93, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,16 ,0 ,3 },
-	{ 165, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,0 ,16 ,5 },
-	{ 170, CI_FADE_MASTER_BRIGHT_WHITEOUT_MAIN ,16 ,0 ,5 },
 	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
 };
 
@@ -116,119 +116,7 @@ const CI_FADE_TBL FTbl24[] = {
 	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
 };
 
-const CI_FADE_TBL FTbl25[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl26[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl27[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl28[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl29[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl30[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl31[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl32[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl33[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl34[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl35[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl36[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl37[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl38[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl39[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl40[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl41[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl42[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl43[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl44[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl45[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl46[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl47[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl48[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl49[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl50[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl51[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-const CI_FADE_TBL FTbl52[] = {
-	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
-};
-
-#define CI_FADE_TBL_MAX  (53)
+#define CI_FADE_TBL_MAX  (25)
 const CI_FADE_TBL * const FadeTbl[ CI_FADE_TBL_MAX ] = {
 	FTbl0,
 	FTbl1,
@@ -255,32 +143,4 @@ const CI_FADE_TBL * const FadeTbl[ CI_FADE_TBL_MAX ] = {
 	FTbl22,
 	FTbl23,
 	FTbl24,
-	FTbl25,
-	FTbl26,
-	FTbl27,
-	FTbl28,
-	FTbl29,
-	FTbl30,
-	FTbl31,
-	FTbl32,
-	FTbl33,
-	FTbl34,
-	FTbl35,
-	FTbl36,
-	FTbl37,
-	FTbl38,
-	FTbl39,
-	FTbl40,
-	FTbl41,
-	FTbl42,
-	FTbl43,
-	FTbl44,
-	FTbl45,
-	FTbl46,
-	FTbl47,
-	FTbl48,
-	FTbl49,
-	FTbl50,
-	FTbl51,
-	FTbl52,
 };
