@@ -365,21 +365,33 @@ FS_EXTERN_OVERLAY(enc_cutin_no);
 
 //※カットンが必要とするフィールドヒープのテーブル  リソースに依存しているので、変更があった場合は再調査が必要
 static const CutinUseFldHeapSize[FLDCIID_MAX] = {
-  0x57e4,
-  0x3438,
-  0x20290,
-  0x51a0,
-  0x21cc8,
-  0x2409c,
-  0x24f50,
-  0x27fc0,
-  0x28fd0,
-  0x29fac,
-  0x27630,
-  0xa478,
-  0x884c,
-  0xe570,
-  0x12a68,
+  0x57e4, //FLDCIID_GET1
+  0x3438, //FLDCIID_GET2
+  0x20290,//FLDCIID_GYM01
+  0x51a0,//FLDCIID_POKE
+  0x21cc8,  // FLDCIID_GYM02
+  0x2409c,// FLDCIID_GYM03
+  0x24f50,// FLDCIID_GYM04
+  0x27fc0,// FLDCIID_GYM05
+  0x28fd0,// FLDCIID_GYM06
+  0x29fac,// FLDCIID_GYM07
+  0x27630,// FLDCIID_GYM08
+  0xa478,// FLDCIID_FLY_OUT
+  0x884c,//FLDCIID_FLY_IN
+  0xe570, // FLDCIID_RIVAL
+  0xe570, // FLDCIID_GYM_VS_01
+  0xe570, // FLDCIID_GYM_VS_02
+  0xe570, // FLDCIID_GYM_VS_03
+  0xe570, // FLDCIID_GYM_VS_04
+  0xe570, // FLDCIID_GYM_VS_05
+  0xe570, // FLDCIID_GYM_VS_06
+  0xe570, // FLDCIID_GYM_VS_07
+  0xe570, // FLDCIID_GYM_VS_08
+  0x12a68,  //FLDCIID_SITEN_01
+  0x12a68,  //FLDCIID_SITEN_02
+  0x12a68,  //FLDCIID_SITEN_03
+  0x12a68,  //FLDCIID_SITEN_04
+  0x12a68,  //FLDCIID_CHAMP
   0xcf20,
   0xd530,
   0x8710,

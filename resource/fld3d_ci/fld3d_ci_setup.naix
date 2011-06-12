@@ -63,7 +63,20 @@ enum {
 	NARC_fld3d_ci_setup_ci_49_bin = 49,
 	NARC_fld3d_ci_setup_ci_50_bin = 50,
 	NARC_fld3d_ci_setup_ci_51_bin = 51,
-	NARC_fld3d_ci_setup_ci_52_bin = 52
+	NARC_fld3d_ci_setup_ci_52_bin = 52,
+	NARC_fld3d_ci_setup_ci_53_bin = 53,
+	NARC_fld3d_ci_setup_ci_54_bin = 54,
+	NARC_fld3d_ci_setup_ci_55_bin = 55,
+	NARC_fld3d_ci_setup_ci_56_bin = 56,
+	NARC_fld3d_ci_setup_ci_57_bin = 57,
+	NARC_fld3d_ci_setup_ci_58_bin = 58,
+	NARC_fld3d_ci_setup_ci_59_bin = 59,
+	NARC_fld3d_ci_setup_ci_60_bin = 60,
+	NARC_fld3d_ci_setup_ci_61_bin = 61,
+	NARC_fld3d_ci_setup_ci_62_bin = 62,
+	NARC_fld3d_ci_setup_ci_63_bin = 63,
+	NARC_fld3d_ci_setup_ci_64_bin = 64,
+	NARC_fld3d_ci_setup_ci_65_bin = 65
 };
 
 /* NARC_FLD3D_CI_SETUP_NAIX_ */

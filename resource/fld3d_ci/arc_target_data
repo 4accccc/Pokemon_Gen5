@@ -70,14 +70,6 @@ ARC_TARGET_DATA = \
 	fly_in1.nsbma \
 	fly_in1.nsbtp \
 	rival.spa \
-	rival_ci_a.nsbmd \
-	rival_ci_b.nsbmd \
-	rival_ci_a.nsbca \
-	rival_ci_a.nsbma \
-	rival_ci_a.nsbta \
-	rival_ci_b.nsbca \
-	rival_ci_b.nsbma \
-	rival_ci_b.nsbta \
 	shiten_a.nsbmd \
 	shiten_b.nsbmd \
 	shiten_a.nsbca \
@@ -86,6 +78,14 @@ ARC_TARGET_DATA = \
 	shiten_b.nsbca \
 	shiten_b.nsbta \
 	shiten_b.nsbva \
+	rival_ci_a.nsbmd \
+	rival_ci_b.nsbmd \
+	rival_ci_a.nsbca \
+	rival_ci_a.nsbma \
+	rival_ci_a.nsbta \
+	rival_ci_b.nsbca \
+	rival_ci_b.nsbma \
+	rival_ci_b.nsbta \
 	plasma_ci01a.nsbmd \
 	plasma_ci01b.nsbmd \
 	plasma_ci01a.nsbca \

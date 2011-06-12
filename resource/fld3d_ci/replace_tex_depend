@@ -1,3 +1,43 @@
+cnv_tmp\enc_rival_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_rival.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_rival.NCGR cnv_tmp\enc_rival_0_0_16_16.NCGR
+
+cnv_tmp\enc_rival_0_0_16_16_LZ.bin : cnv_tmp\enc_rival_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_rival_0_0_16_16.NCGR
+
+cnv_tmp\enc_rival.NCLR : replace_tex/VSdemo_Face/enc_rival.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym01_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym01.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym01.NCGR cnv_tmp\enc_gym01_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym01_0_0_16_16_LZ.bin : cnv_tmp\enc_gym01_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym01_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym01.NCLR : replace_tex/VSdemo_Face/enc_gym01.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym02_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym02.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym02.NCGR cnv_tmp\enc_gym02_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym02_0_0_16_16_LZ.bin : cnv_tmp\enc_gym02_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym02_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym02.NCLR : replace_tex/VSdemo_Face/enc_gym02.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym03_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym03.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym03.NCGR cnv_tmp\enc_gym03_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym03_0_0_16_16_LZ.bin : cnv_tmp\enc_gym03_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym03_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym03.NCLR : replace_tex/VSdemo_Face/enc_gym03.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
 cnv_tmp\enc_gym04_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym04.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
 	mv  cnv_tmp\enc_gym04.NCGR cnv_tmp\enc_gym04_0_0_16_16.NCGR
@@ -8,12 +48,148 @@ cnv_tmp\enc_gym04_0_0_16_16_LZ.bin : cnv_tmp\enc_gym04_0_0_16_16.NCGR
 cnv_tmp\enc_gym04.NCLR : replace_tex/VSdemo_Face/enc_gym04.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 
-cnv_tmp\enc_gym04_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym04.ncg
-	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
-	mv  cnv_tmp\enc_gym04.NCGR cnv_tmp\enc_gym04_0_16_16_16.NCGR
+cnv_tmp\enc_gym05_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym05.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym05.NCGR cnv_tmp\enc_gym05_0_0_16_16.NCGR
 
-cnv_tmp\enc_gym04_0_16_16_16_LZ.bin : cnv_tmp\enc_gym04_0_16_16_16.NCGR
-	ntrcomp -l 2 cnv_tmp\enc_gym04_0_16_16_16.NCGR
+cnv_tmp\enc_gym05_0_0_16_16_LZ.bin : cnv_tmp\enc_gym05_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym05_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym05.NCLR : replace_tex/VSdemo_Face/enc_gym05.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym06_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym06.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym06.NCGR cnv_tmp\enc_gym06_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym06_0_0_16_16_LZ.bin : cnv_tmp\enc_gym06_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym06_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym06.NCLR : replace_tex/VSdemo_Face/enc_gym06.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym07_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym07.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym07.NCGR cnv_tmp\enc_gym07_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym07_0_0_16_16_LZ.bin : cnv_tmp\enc_gym07_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym07_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym07.NCLR : replace_tex/VSdemo_Face/enc_gym07.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_gym08_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_gym08.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_gym08.NCGR cnv_tmp\enc_gym08_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym08_0_0_16_16_LZ.bin : cnv_tmp\enc_gym08_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_gym08_0_0_16_16.NCGR
+
+cnv_tmp\enc_gym08.NCLR : replace_tex/VSdemo_Face/enc_gym08.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_bigfour01_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour01.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_bigfour01.NCGR cnv_tmp\enc_bigfour01_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour01_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour01_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour01_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour01.NCLR : replace_tex/VSdemo_Face/enc_bigfour01.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_bigfour01_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour01.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_bigfour01.NCGR cnv_tmp\enc_bigfour01_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour01_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour01_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour01_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour02_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour02.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_bigfour02.NCGR cnv_tmp\enc_bigfour02_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour02_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour02_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour02_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour02.NCLR : replace_tex/VSdemo_Face/enc_bigfour02.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_bigfour02_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour02.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_bigfour02.NCGR cnv_tmp\enc_bigfour02_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour02_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour02_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour02_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour03_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour03.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_bigfour03.NCGR cnv_tmp\enc_bigfour03_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour03_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour03_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour03_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour03.NCLR : replace_tex/VSdemo_Face/enc_bigfour03.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_bigfour03_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour03.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_bigfour03.NCGR cnv_tmp\enc_bigfour03_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour03_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour03_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour03_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour04_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour04.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_bigfour04.NCGR cnv_tmp\enc_bigfour04_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour04_0_0_16_16_LZ.bin : cnv_tmp\enc_bigfour04_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour04_0_0_16_16.NCGR
+
+cnv_tmp\enc_bigfour04.NCLR : replace_tex/VSdemo_Face/enc_bigfour04.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_bigfour04_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_bigfour04.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_bigfour04.NCGR cnv_tmp\enc_bigfour04_0_16_16_16.NCGR
+
+cnv_tmp\enc_bigfour04_0_16_16_16_LZ.bin : cnv_tmp\enc_bigfour04_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_bigfour04_0_16_16_16.NCGR
+
+cnv_tmp\enc_champ_0_0_16_16.NCGR : replace_tex/VSdemo_Face/enc_champ.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_0_16_16
+	mv  cnv_tmp\enc_champ.NCGR cnv_tmp\enc_champ_0_0_16_16.NCGR
+
+cnv_tmp\enc_champ_0_0_16_16_LZ.bin : cnv_tmp\enc_champ_0_0_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_champ_0_0_16_16.NCGR
+
+cnv_tmp\enc_champ.NCLR : replace_tex/VSdemo_Face/enc_champ.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_champ_0_16_16_16.NCGR : replace_tex/VSdemo_Face/enc_champ.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp -cr/0_16_16_16
+	mv  cnv_tmp\enc_champ.NCGR cnv_tmp\enc_champ_0_16_16_16.NCGR
+
+cnv_tmp\enc_champ_0_16_16_16_LZ.bin : cnv_tmp\enc_champ_0_16_16_16.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_champ_0_16_16_16.NCGR
+
+cnv_tmp\enc_sage.NCGR : replace_tex/VSdemo_Face/enc_sage.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_sage_LZ.bin : cnv_tmp\enc_sage.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_sage.NCGR
+
+cnv_tmp\enc_sage.NCLR : replace_tex/VSdemo_Face/enc_sage.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_boss.NCGR : replace_tex/VSdemo_Face/enc_boss.ncg
+	@g2dcvtr $< -bg -o/cnv_tmp
+
+cnv_tmp\enc_boss_LZ.bin : cnv_tmp\enc_boss.NCGR
+	ntrcomp -l 2 cnv_tmp\enc_boss.NCGR
+
+cnv_tmp\enc_boss.NCLR : replace_tex/VSdemo_Face/enc_boss.ncl
+	@g2dcvtr $< -bg -o/cnv_tmp
 
 cnv_tmp\enc_hero.NCGR : replace_tex/VSdemo_Hero_Heroine/enc_hero.ncg
 	@g2dcvtr $< -bg -o/cnv_tmp

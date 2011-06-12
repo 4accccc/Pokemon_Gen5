@@ -1,7 +1,41 @@
 TARGET_LIST = \
+	cnv_tmp\enc_rival_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_rival.NCLR \
+	cnv_tmp\enc_gym01_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym01.NCLR \
+	cnv_tmp\enc_gym02_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym02.NCLR \
+	cnv_tmp\enc_gym03_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym03.NCLR \
 	cnv_tmp\enc_gym04_0_0_16_16_LZ.bin \
 	cnv_tmp\enc_gym04.NCLR \
-	cnv_tmp\enc_gym04_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_gym05_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym05.NCLR \
+	cnv_tmp\enc_gym06_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym06.NCLR \
+	cnv_tmp\enc_gym07_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym07.NCLR \
+	cnv_tmp\enc_gym08_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_gym08.NCLR \
+	cnv_tmp\enc_bigfour01_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour01.NCLR \
+	cnv_tmp\enc_bigfour01_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour02_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour02.NCLR \
+	cnv_tmp\enc_bigfour02_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour03_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour03.NCLR \
+	cnv_tmp\enc_bigfour03_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour04_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_bigfour04.NCLR \
+	cnv_tmp\enc_bigfour04_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_champ_0_0_16_16_LZ.bin \
+	cnv_tmp\enc_champ.NCLR \
+	cnv_tmp\enc_champ_0_16_16_16_LZ.bin \
+	cnv_tmp\enc_sage_LZ.bin \
+	cnv_tmp\enc_sage.NCLR \
+	cnv_tmp\enc_boss_LZ.bin \
+	cnv_tmp\enc_boss.NCLR \
 	cnv_tmp\enc_hero_LZ.bin \
 	cnv_tmp\enc_hero.NCLR \
 	cnv_tmp\enc_hero_up_down_0_0_16_16_LZ.bin \
