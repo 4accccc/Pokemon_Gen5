@@ -2880,11 +2880,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2931,11 +2931,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2982,11 +2982,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3033,11 +3033,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3084,11 +3084,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3135,11 +3135,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3186,11 +3186,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3237,11 +3237,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：アナウンス
-・ジムリーダー：ゴウソ
+・ジムリーダー：シズイ
 ・前口上メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:29:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7027,11 +7027,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１かいせん
-かりメッセージ▼</Text>
+			<Text>ときに　はるかぜの　ように　まい
+あるいは　いなづまの　ように　さす▼
+そんな　ほれぼれ　するような
+たたかいを　みせて　もらいましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:48:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7039,11 +7041,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１回戦
-仮メッセージ▼</Text>
+			<Text>ときに　春風の　ように　舞い
+あるいは　稲妻の　ように　刺す▼
+そんな　ほれぼれ　するような
+戦いを　みせて　もらいましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:49:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7078,11 +7082,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２かいせん
-かりメッセージ▼</Text>
+			<Text>きみと……　きみの　ポケモンが
+ちからを　あわせたからこそ▽
+こんなんを　のりこえ　ここに　きた▽
+その　つよさ　みせてもらいましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7090,11 +7096,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２回戦
-仮メッセージ▼</Text>
+			<Text>きみと……　きみの　ポケモンが
+力を　合わせたからこそ▽
+困難を　乗り越え　ここに　来た▽
+その強さ　みせてもらいましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:48:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7143,11 +7151,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決勝戦
-仮メッセージ▼</Text>
+			<Text>さあ！　一番
+華麗に　ポケモンと▽
+踊れるのは　だれなのか！▽
+いま　ここで　みせて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7196,11 +7206,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんと　ワンダフル！▼
-にくらしいほど　エレガント！▼
+憎らしいほど　エレガント！▼
 だけど　とっても　グロリアス！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:43:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7235,11 +7245,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>ぞんぶんに　おみせ　しすぎましたね▼
+わたしと　ポケモンに　よる
+みずの　イリュ－ジョンを！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:41:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7247,11 +7258,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>存分に　おみせ　しすぎましたね▼
+わたしと　ポケモンに　よる
+水の　イリュ－ジョンを！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:43:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7286,11 +7298,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>すばらしい！▼
+きみが　ほんとうに　すばらしい！
+ポケモン　トレ－ナ－だと　わかった▼
+そんな　きみと　きみの　ポケモンに
+であえたことを　よろこびたい▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:39:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7298,11 +7313,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>すばらしい！▼
+きみが　本当に　すばらしい！
+ポケモン　トレ－ナ－だと　わかった▼
+そんな　きみと　きみの　ポケモンに
+出会えたことを　喜びたい▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7337,11 +7355,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>きみの　ふんいきが　すこし　かわった▼
+そう　おもえるときが　きたら
+また　おあいしましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7349,11 +7368,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>きみの　雰囲気が　少し　変わった▼
+そう　思えるときが　きたら
+また　お会いしましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7388,11 +7408,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みずを　あいする　アーティスト
-ミクリ▼</Text>
+			<Text>みずの　イリュージョニスト　ミクリ！
+いま　ひのきぶたいに　あらわれるッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:39:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7400,11 +7420,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ミクリ▼</Text>
+			<Text>水の　イリュージョニスト　ミクリ！
+いま　ひのき舞台に　現れるッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7949,11 +7969,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けっしょうせん
-かりメッセージ▼</Text>
+			<Text>この　トーナメントで　どちらが
+つよい　ポケモントレーナーで　あるか▽
+きめるのが　たのしみで　たまらんよ！▼
+ポケモントレーナーの
+アデク　まいるぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8102,11 +8125,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>アデク『あっぱれ！
+まさに　てんかむそう　なり！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8204,11 +8227,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ
-アデク▼</Text>
+			<Text>さいしょの　パートナー　ウルガモスの
+おもいでと　ともに　すすめ　アデク！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-13T12:50:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
