@@ -52,6 +52,7 @@ SUBDIRS	=	wmi \
 			fldmmdl \
 			wbt \
 			entry_checker \
+			pokewood \
 			message\
 			encount \
 			encount_ex \
@@ -182,7 +183,6 @@ SUBDIRS	=	wmi \
 			assert_err \
 			field_goout_effect \
 			resonance_resort \
-			pokewood \
 			mobiclip \
 			medal_info \
 			pkwd_announce \
