@@ -24,6 +24,7 @@
 #include "msg/debug/msg_d_numinput_r.h"
 
 #include "savedata/questionnaire_save.h"
+#include "savedata/questionnaire_index.h"
 #include "app/research_radar/question_id.h"
 
 //======================================================================
@@ -825,8 +826,8 @@ static void SetResearchDataAtRandom_today( GAMESYS_WORK* gameSystem, u32 rand_ma
   for( q_id=0; q_id < QUESTION_ID_NUM; q_id++ )
   {
     u32 total_add_count = 0;
-
-    for( a_id=0; a_id < AnswerNum_question[ q_id ]; a_id++ )
+    int max = QIDATA_Get_AnswerNum( q_id );
+    for( a_id=0; a_id < max; a_id++ )
     {
       u32 add_count, added_count;
       u32 before_count, after_count;
@@ -861,8 +862,9 @@ static void SetResearchDataAtRandom_total( GAMESYS_WORK* gameSystem, u32 rand_ma
   for( q_id=0; q_id < QUESTION_ID_NUM; q_id++ )
   {
     u32 total_add_count = 0;
+    int max = QIDATA_Get_AnswerNum( q_id );
 
-    for( a_id=0; a_id < AnswerNum_question[ q_id ]; a_id++ )
+    for( a_id=0; a_id < max; a_id++ )
     {
       u32 add_count, added_count;
       u32 before_count, after_count;
