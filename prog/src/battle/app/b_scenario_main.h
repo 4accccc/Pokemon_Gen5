@@ -177,8 +177,6 @@ typedef struct {
 	u32					ResChr[ BS_RES_CHR_MAX];
 	u32					ResCell[BS_RES_CELL_MAX];
 	//
-//	BOOL				initFlag;		///< 初期化したか（初期化前に外部から終了要求されると止まるので）
-	//
 	// 以下、追加
 	s32					Step;			///< ステップ
 	s32					Mode;			///< モード
@@ -189,6 +187,7 @@ typedef struct {
 	u32					AnimFlag;		///< アニメ用
 	s32					AnimNum;		///< アニメ用(段階)
 	s32					AnimType;		///< アニメ用タイプ
+	u32					PFlag;			///< 画面切り替え用(bitに対応)
 	// トップ情報
 	s32					TopNum;			///< 台本番号(0-39)
 	s32					TopCurPos;		///< カーソル位置

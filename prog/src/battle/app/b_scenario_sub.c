@@ -569,6 +569,9 @@ void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode )
 	s32		heapID = wk->dat->heap;
 	const BS_CANVAS_DATA *adr = bscmn_canvas_tbl[mode];
 	
+	// 初期化
+	wk->PFlag = 0;
+	
 	// (いままでのを)クリア
 	bscmn_clear_allcanvas( wk );
 	
@@ -583,8 +586,10 @@ void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode )
 		// セット
 		wk->PrintUtil[i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
 		// スクリーンは一度でよいはず
-		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
-		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
+		// このタイミングでは、画面にゴミが入ってしまう
+//		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
+//		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
+//		GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
 		//
 		adr++;
 	}
@@ -678,6 +683,11 @@ void BsCmn_ExitString( BSCENARIO_WORK* wk )
 	
 	for(i=0;i<BS_CANVAS_MAXNUM;i++){
 		if(wk->PrintUtil[i].win != 0){
+			// chr側
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[i].win ), MES_CLEAR_COLOR );
+			// scn側
+			GFL_BMPWIN_ClearScreen( wk->PrintUtil[i].win );
+			// 破棄
 			GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
 			wk->PrintUtil[i].win = 0;
 		}
@@ -715,6 +725,7 @@ void BsCmn_ClearCanvas( BSCENARIO_WORK* wk, const s32 mode )
 //-----------------------------------------------------------------------------
 static void bscmn_clear_allcanvas( BSCENARIO_WORK *wk )
 {
+#if 0	// ちらついてしまうので保留
 	s32		i;
 	
 	for(i=0;i<BS_CANVAS_MAXNUM;i++){
@@ -727,6 +738,7 @@ static void bscmn_clear_allcanvas( BSCENARIO_WORK *wk )
 			GFL_BMPWIN_ClearTransWindow( wk->PrintUtil[i].win );
 		}
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -742,13 +754,24 @@ void BsCmn_MainPrint( BSCENARIO_WORK *wk )
 {
 	s32		i;
 	BOOL	bflg;
+	BOOL	pflg;
 	
 	// Queの処理
 	PRINTSYS_QUE_Main( wk->print_que );
 	//
 	for(i=0;i<BS_CANVAS_MAXNUM;i++){
 		if(wk->PrintUtil[i].win){
-			PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+			pflg = PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+			if(pflg == TRUE){
+				if(!(wk->PFlag & (1<<i))){
+					// キャラの転送終了後スクリーン作成して転送
+					// いろいろ試したが、
+					// スクリーンの転送を最後にしないと画面にゴミが入るようだ
+					GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
+					GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
+					wk->PFlag |= (1<<i);
+				}
+			}
 		}
 	}
 }
