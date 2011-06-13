@@ -302,7 +302,7 @@
 #define FE_C04_RALLYPOINT_04               286 /* 0x011e C04：ラリーチェックポイントフラグ（リトルコート） */
 #define FE_C04_RALLYPOINT_05               287 /* 0x011f C04：ラリーチェックポイントフラグ（観覧車） */
 #define FE_C04_SWHEROINE_01                288 /* 0x0120 C04：バトルサブウェイう誘導イベント */
-		/* not used   289(0x0121) */
+#define FE_C05R0501_POKE22_GET             289 /* 0x0121 C05R0501：ゾロア入手フラグ */
 		/* not used   290(0x0122) */
 		/* not used   291(0x0123) */
 		/* not used   292(0x0124) */
@@ -521,20 +521,20 @@
 		/* not used   603(0x025b) */
 		/* not used   604(0x025c) */
 		/* not used   605(0x025d) */
-		/* not used   606(0x025e) */
-		/* not used   607(0x025f) */
-		/* not used   608(0x0260) */
-		/* not used   609(0x0261) */
-		/* not used   610(0x0262) */
-		/* not used   611(0x0263) */
-		/* not used   612(0x0264) */
-		/* not used   613(0x0265) */
-		/* not used   614(0x0266) */
-		/* not used   615(0x0267) */
-		/* not used   616(0x0268) */
-		/* not used   617(0x0269) */
-		/* not used   618(0x026a) */
-		/* not used   619(0x026b) */
+#define FV_C05_HAKAIM_01                   606 /* 0x025e ホドモエシティ：旧プラズマ団 */
+#define FV_C05_SWPLAZMAM_01                607 /* 0x025f ホドモエシティ：ネオプラズマ団 */
+#define FV_C05R0701_STOPPER_01             608 /* 0x0260 WBT方面ゲート：ストッパー */
+#define FV_D05_STOPPER_01                  609 /* 0x0261 WBT前：抜け道ストッパー */
+#define FV_D05_SWBOSS_01                   610 /* 0x0262 WBT前：アクロマ */
+#define FV_D05_SWRIVAL_01                  611 /* 0x0263 WBT前：ライバル */
+#define FV_D05_SWLEADER1_01                612 /* 0x0264 WBT前：チェレン */
+#define FV_D05_SWLEADER5_01                613 /* 0x0265 WBT前：ヤーコン */
+#define FV_C05R0501_POKE22_01              614 /* 0x0266 C05R0501：ゾロア */
+#define FV_C05_SAGE6_01                    615 /* 0x0267 ホドモエシティ：七賢人たち */
+#define FV_C05_SWRIVAL_01                  616 /* 0x0268 ホドモエシティ：ライバル */
+#define FV_C05_SWLEADER5_01                617 /* 0x0269 ホドモエシティ：ヤーコン */
+#define FV_C05_STOPPER_01                  618 /* 0x026a ホドモエシティ：抜け道ストッパー */
+#define FV_C05_STOPPER_02                  619 /* 0x026b ホドモエシティ：ジムストッパー */
 #define FV_C13GYM0102_SUNGLASSES           620 /* 0x026c ポケウッド：サングラス */
 #define FV_C13GYM0102_SWLEADER2            621 /* 0x026d C12GYM0102：ホミカ */
 #define FV_C13R0401_SWRIVAL                622 /* 0x026e C13：船舶所のライバル */

@@ -19,4 +19,140 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_d05_stopper_01
+_EVENT_DATA    ev_pos_d05_stopper_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+/**************************************************************/
+/* 			ストッパー：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_stopper_01
+  //【仮】ストッパー：工事中（メッセージラベルが仮）
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_swboss_03 )
+EVENT_END
+
+/**************************************************************/
+/* 			ストッパー：POS起動			  */
+/**************************************************************/
+EVENT_START		ev_pos_d05_stopper_01
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //主人公に隣接
+  IF $LCW_POSX >= 470 THEN
+    _OBJ_ANIME( D05_STOPPER_01, anm_stopper_lookpleyer_d )
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME( D05_STOPPER_01, anm_stopper_lookpleyer_u )
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //【仮】ストッパー：工事中（メッセージラベルが仮）
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swboss_03,D05_STOPPER_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //主人公1歩戻る・ストッパー元の位置に戻る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+  _OBJ_ANIME( D05_STOPPER_01 , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ストッパー：振り向き（上方向）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_lookpleyer_u
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ストッパー：振り向き（下方向）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_lookpleyer_d
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

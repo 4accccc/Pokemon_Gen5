@@ -188,6 +188,11 @@
 #define WK_SCENE_C04_SWRIVAL             16576 /* 0x40c0 ライモンシティ：ジムクリア後プラズマ団イベント制御ワーク */
 #define WK_SCENE_C06GYM                  16577 /* 0x40c1 フキヨセシティ：イベント進行管理ワーク */
 #define WK_SCENE_C06HAKASE               16578 /* 0x40c2 フキヨセシティ：アララギ娘イベント進行管理ワーク */
+#define WK_SCENE_C05                     16579 /* 0x40c3 ホドモエシティ：イベント制御ワーク */
+#define WK_SCENE_C05_STOPPER_01          16580 /* 0x40c4 ホドモエシティ：抜け道ストッパーPOS */
+#define WK_SCENE_C05R0701_STOPPER_01     16581 /* 0x40c5 ホドモエシティ：WBT方面ストッパーPOS */
+#define WK_SCENE_D05                     16582 /* 0x40c6 WBT前：イベント制御ワーク */
+#define WK_SCENE_D05_STOPPER_01          16583 /* 0x40c7 WBT前：イベント制御ワーク抜け道ストッパーPOS */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

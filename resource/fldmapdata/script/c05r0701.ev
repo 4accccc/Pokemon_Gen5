@@ -20,7 +20,79 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c05r0701_girl4_01
+_EVENT_DATA    ev_c05r0701_stopper_01
+_EVENT_DATA    ev_pos_c05r0701_stopper_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/* 			ストッパー：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_c05r0701_stopper_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0701_stop_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			ストッパー：POS起動			  */
+/**************************************************************/
+EVENT_START		ev_pos_c05r0701_stopper_01
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //主人公に隣接
+  IF $LCW_POSX >= 5 THEN
+    _OBJ_ANIME( C05R0701_STOPPER_01, anm_stopper_lookpleyer_r )
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
+    
+    $LCW_POSX -= 1
+    _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME( C05R0701_STOPPER_01, anm_stopper_lookpleyer_l )
+    _TIME_WAIT(16)
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+    
+    $LCW_POSX += 1
+    _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //ストッパー：ジムバッジを
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0701_stop_01,C05R0701_STOPPER_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //主人公1歩戻る・ストッパー元の位置に戻る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+  _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, 4, 8, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C05R0701_STOPPER_01 , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ストッパー：振り向き（左方向）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_lookpleyer_l
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ストッパー：振り向き（右方向）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_lookpleyer_r
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /* 			日替わりわざポケモン見せイベント			  */
@@ -228,3 +300,75 @@ ev_c05r0701_waza_check:
 	ENDIF
 
 _RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+	

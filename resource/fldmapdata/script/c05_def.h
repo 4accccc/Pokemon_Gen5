@@ -11,5 +11,10 @@
 #define SCRID_BG_C05_BOARD_04 (4)
 #define SCRID_BG_C05_BOARD_05 (5)
 #define SCRID_C05_BADRIDER_01 (6)
+#define SCRID_C05_STOPPER_01 (7)
+#define SCRID_C05_STOPPER_02 (8)
+#define SCRID_C05_SAGE6_01 (9)
+#define SCRID_C05_HAKAIM_01 (10)
+#define SCRID_C05_SWRIVAL_01 (11)
 
 #endif //_C05_DEF_H_

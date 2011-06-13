@@ -315,7 +315,7 @@ EVENT_START   ev_pos_r19_champion_01
   _CAMERA_DEF_MOVE (30)
    
    //アテグジャンプ
-	_OBJ_HIGH_JUMP( R19_CHAMPION_01, 93, 0, 693 )
+	_OBJ_HIGH_JUMP( R19_CHAMPION_01, 93, 1, 693 )
 	
 	//カメラ待ち
   _CAMERA_WAIT_MOVE()

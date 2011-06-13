@@ -11,6 +11,7 @@
 #define ZONE_C05R0701_EVC_H
 
 #define C05R0701_GIRL4_01                  0
+#define C05R0701_STOPPER_01                1
 
 #endif //ZONE_C05R0701_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
