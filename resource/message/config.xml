@@ -7,11 +7,11 @@
 <TagValue path="%PROJECT_ROOT%\tools\message\TagValue.txt"/>
 <CheckOnly>False</CheckOnly>
 <Fonts>
-<Font id="0" path="%PROJECT_ROOT%\tools\message\font\large.nftr"/>
-<Font id="1" path="%PROJECT_ROOT%\tools\message\font\small.nftr"/>
-<Font id="2" path="%PROJECT_ROOT%\tools\message\font\small_batt.nftr"/>
-<Font id="3" path="%PROJECT_ROOT%\tools\message\font\num.nftr"/>
-<Font id="4" path="%PROJECT_ROOT%\tools\message\font\shinden.nftr"/>
+<Font id="0" path="%PROJECT_ROOT%\resource\font\large.nftr"/>
+<Font id="1" path="%PROJECT_ROOT%\resource\font\small.nftr"/>
+<Font id="2" path="%PROJECT_ROOT%\resource\font\small_batt.nftr"/>
+<Font id="3" path="%PROJECT_ROOT%\resource\font\num.nftr"/>
+<Font id="4" path="%PROJECT_ROOT%\resource\font\shinden.nftr"/>
 <Font id="5" path="%PROJECT_ROOT%\tools\message\font\num_eng.nftr"/>
 <Font id="6" path="%PROJECT_ROOT%\tools\message\font\num_fra.nftr"/>
 <Font id="7" path="%PROJECT_ROOT%\tools\message\font\num_ger.nftr"/>
@@ -23,5 +23,6 @@
 <Status>debug</Status>
 <Status>unused</Status>
 <CheckType>UnknownWindow</CheckType>
+<CheckType>Empty</CheckType>
 </ErrorCheckExclude>
 </Config>

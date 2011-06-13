@@ -4117,7 +4117,7 @@
 			<Tag
 				TagName="xright"
 				HasInside="False"
-				CompareError="Strict">
+				CompareError="Warning">
 				<MultilingualName>
 					<US_English>Ｘ右寄せ</US_English>
 					<Japanese>Ｘ右寄せ</Japanese>
@@ -4147,7 +4147,7 @@
 			<Tag
 				TagName="xadd"
 				HasInside="False"
-				CompareError="Strict">
+				CompareError="Warning">
 				<MultilingualName>
 					<US_English>X加算</US_English>
 					<Japanese>X加算</Japanese>
@@ -4177,7 +4177,7 @@
 			<Tag
 				TagName="xset"
 				HasInside="False"
-				CompareError="Strict">
+				CompareError="Warning">
 				<MultilingualName>
 					<US_English>X指定</US_English>
 					<Japanese>X指定</Japanese>
@@ -4465,17 +4465,9 @@
 	<Dictionaries />
 	<BuildSettings>
 		<BuildSetting
-			Builder="8857dfd8-959a-4029-afcc-7db874bd58e8">
-			<MessageBinInfo
-				OutputDir="$(ProjectDir)\bin\$(LanguageName)\$(InputFileName).msbt"
-				Encoding="UTF16"
-				Newline="LF"
-				IsLittleEndian="True"
-				HasLabelBlock="True"
-				HashSize="101"
-				HasAttributeBlock="True"
-				DirectColor="True"
-				HasStyleBlock="False" />
+			Builder="069ba92b-266e-4e81-82c6-fe488dd4407e">
+			<SyachiBuilder
+				OutputFilePath="$(ProjectDir)\bin\$(LanguageName)\$(InputFileName).dat" />
 		</BuildSetting>
 	</BuildSettings>
 	<Roles>

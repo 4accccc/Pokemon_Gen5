@@ -4,4 +4,6 @@
 <LayoutCsv path="$(ProjectDir)\..\..\..\tools\message\layout.csv"/>
 <SceneDir path="$(ProjectDir)\"/>
 <TagValue path="$(ProjectDir)\..\..\..\tools\message\TagValue.txt"/>
+<MsgConvConfig path="$(ProjectDir)\..\config.xml"/>
+<ProjectRoot path="$(ProjectDir)\..\..\..\"/>
 </Config>
