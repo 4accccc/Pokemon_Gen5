@@ -272,6 +272,55 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c06_hakase2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T03:34:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T03:34:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T03:34:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T03:34:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・博士登場時、飛行機に乗る前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T03:34:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE2
+アララギ博士娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T03:33:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c06_hakase2_01"
 		Style="Large">
 		<LanguageCell
