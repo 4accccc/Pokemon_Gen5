@@ -187,9 +187,13 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
   }
 
   if(BTL_MAIN_GetPokewoodMode(mainModule)!=BTL_POKEWOOD_NONE){
+
+    const MYSTATUS*cp_mystatus = BTL_MAIN_GetPlayerStatus( mainModule );
+    u8 sex_ofs = MyStatus_GetMySex(cp_mystatus) == PM_MALE? 1: 0;
+
     // ポケウッド用メッセージデータはシナリオＮＯで読みかえる
     SysWork.msg[MSGDATA_MAX-1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-                                 NARC_message_pw_senario001_dat+BTL_MAIN_GetPokewoodSenarioNo(mainModule), 
+                                 NARC_message_pokewood_senario01_f_dat+BTL_MAIN_GetPokewoodSenarioNo(mainModule)*2+sex_ofs, 
                                  heapID );
   }
 }

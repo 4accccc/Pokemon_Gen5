@@ -30,3 +30,9 @@ src/trade_head.gmm
 src/wbt_trname.gmm
 src/itemname.gmm
 src/iteminfo.gmm
+src/pokewood/pokewood_senario01_m.gmm
+src/pokewood/pokewood_senario01_f.gmm
+src/pokewood/pokewood_senario02_m.gmm
+src/pokewood/pokewood_senario02_f.gmm
+src/pokewood/pokewood_senario03_m.gmm
+src/pokewood/pokewood_senario03_f.gmm

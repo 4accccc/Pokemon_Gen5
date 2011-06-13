@@ -14,6 +14,7 @@
 //sys
 #include "pokewood_cutin_script_search.cdat"
 #include "sound\pm_sndsys.h"
+#include "btl_pokewood_msg.h"
 
 //arc
 #include "arc/arc_def.h"
@@ -882,18 +883,11 @@ static BOOL Bw_Scrcmd_MessageDraw( POKEWOOD_CUTIN *p_wk, u16 *p_seq,const PW_SCR
 
       if( cp_param->param[0] >= EVENT_TALK_TURN_MAX )
       {
-        if( cp_param->param[1] == PW_CUTIN_DEF_MES_TYPE_PLAYER )
-        {
-          message = cp_ev->reaction[ cp_param->param[0] - EVENT_TALK_TURN_MAX ].my_message;
-        }
-        else
-        {
-          message = cp_ev->reaction[ cp_param->param[0] - EVENT_TALK_TURN_MAX ].enemy_message;
-        }
+        message = BTL_PWMSG_EventReAct( cp_param->param[1], p_wk->event, cp_param->param[0] - EVENT_TALK_TURN_MAX ); 
       }
       else
       {
-        message = cp_ev->talk_msg[ cp_param->param[1] ][ cp_param->param[0] ];
+        message = BTL_PWMSG_Event( cp_param->param[1], p_wk->event, cp_param->param[0] );
       }
 
       GF_ASSERT_MSG( message != 0xFFFF, "CUTINのメッセージコマンドがメッセージがない箇所を引数にしています! 引数1=%d 引数2=%d\n", cp_param->param[0], cp_param->param[1] );

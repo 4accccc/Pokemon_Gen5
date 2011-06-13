@@ -6,7 +6,7 @@
 # 出力：<入力テキスト>の拡張子を「.bin」にしたものを出力します
 #----------------------------------------------------------------------------
 require 'csv'
-
+require 'kconv'
 
 ENEMY_POKE_NUM = 6       # 敵トレーナーのポケモン保持数(仮）
 SELECT_MSG     = 9       # 技選択時のメッセージの種類数（自分・敵）
@@ -42,7 +42,6 @@ PWS_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE)       # 0x22 両方いない
 msgtitle_path   = "..\\..\\prog\\include\\msg\\msg_pw_movietitle.h"
 msgsenario_path = "..\\..\\prog\\include\\msg\\msg_pw_senario0"
 
-$msg_hash = Hash.new
 $bg_hash       = {"チェンジ０"=>0, "チェンジ１"=>1, "チェンジ２"=>2, "チェンジ３"=>3,}
 $waza_ret_hash = { "技１"=>0, "技２"=>1, "技３"=>2, "技４"=>3 }
 $batt_hash     = {"シングル"=>0, "ダブル"=>1}
@@ -179,7 +178,6 @@ class POKEWOOD_SENARIO
     @enemy_poke[index].sex    = hash2no($sex_hash, sex)
     @enemy_poke[index].level  = level.to_i
   end
-  
 
   def set_select_msg( index, msg )
     @select_msg[index] = msg2id( msg )
@@ -194,7 +192,8 @@ class POKEWOOD_SENARIO
   end
   
   #イベントデータセット
-  def set_event_data( data, index, start )
+  def set_event_data( data, index, start, gmm )
+
     if data[start][3]==EVENT_CLEARTURN_KEYWORD then
       @event[index].start_turn = 100
     elsif data[start][3]==EVENT_LOSETURN_KEYWORD then
@@ -205,13 +204,18 @@ class POKEWOOD_SENARIO
     
     @event[index].flag_provision = data[start][5].to_i
     EVENT_TALK_MAX.times{|i|
-       @event[index].set_event_msg(               i, data[start+i+2][1] )
-       @event[index].set_event_msg(i+EVENT_TALK_MAX, data[start+i+2][3])
-       @event[index].set_stage_cast_data(i, hash2no($stage_hash, data[start+i+2][7]))
+      @event[index].set_event_msg(               i, data[start+i+2][1] )
+      @event[index].set_event_msg(i+EVENT_TALK_MAX, data[start+i+2][5])
+      @event[index].set_stage_cast_data(i, hash2no($stage_hash, data[start+i+2][9]))
+
+      gmm.write_each( "pw_event#{index}_hero_#{i}", data[start+i+2][1], data[start+i+2][2], data[start+i+2][3], data[start+i+2][4] )
+      gmm.write_both( "pw_event#{index}_enemy_#{i}", data[start+i+2][5], data[start+i+2][6] )
     }
     EVENT_REACTION_MAX.times{|i|
       @event[index].set_reaction_data(i, data[start+9+i][1],
-                                      data[start+9+i][3],data[start+9+i][5],data[start+9+i][6])
+                                      data[start+9+i][5],data[start+9+i][7],data[start+9+i][8])
+      gmm.write_each( "pw_event#{index}_react_hero_#{i}", data[start+9+i][1], data[start+9+i][2], data[start+9+i][3], data[start+9+i][4] )
+      gmm.write_both( "pw_event#{index}_react_enemy_#{i}", data[start+9+i][5], data[start+9+i][6] )
     }
 #    printf("%s\n", @start_turn)
   end
@@ -251,41 +255,13 @@ class POKEWOOD_SENARIO
 
 end
 
-#----------------------------------------------------
-# メッセージ定義置換用ハッシュ作成
-#----------------------------------------------------
-def make_msg_hash( msg_hash, msgtitle_path, msgsenario_path)
-  File.open(msgtitle_path){|file|
-    file.each{|line|
-      row = line.scan(/\w+/n)
-      if row[0]=="define" then
-        msg_hash[row[1]] = row[2].to_i
-      end
-    }
-  }
-  
-  
-  File.open(msgsenario_path+ARGV[0][16..17]+".h"){|file|
-    file.each{|line|
-      row = line.scan(/\w+/n)
-      if row[0]=="define" then
-        msg_hash[row[1]] = row[2].to_i
-      end
-    }
-  }
-  p $msg_hash
-end
-
-# ハッシュ存在チェック付きでIDNOに変換
+# メッセージが存在するかどうか
 def msg2id( msg )
   if msg==nil then
     return -1
+  else 
+    return 1
   end
-  if $msg_hash.key?(msg) then
-    return $msg_hash[msg]
-  end
-  printf("%sというメッセージIDがありません\n", msg )
-  exit
 end
 
 # ハッシュからキーが見つからなかった時は-1を返す
@@ -296,20 +272,74 @@ def hash2no( hash, str )
   return hash[str]
 end
 
+#----------------------------------------------------
+# GMM作成クラス
+#   GMMファイルはUTF-8でエンコード
+#----------------------------------------------------
+class MAKE_GMM
+  def initialize
+    @buffer       = String.new
+    header = open("header.file","r:UTF-8")
+    @buffer << header.read
+    header.close
+  end
+  
+  def write( tag, str_kana, str_kanji )
+    @buffer << Kconv.toutf8("\t<row id=\"#{tag}\">\n")
+    @buffer << Kconv.toutf8("\t\t<language name=\"JPN\" width=\"256\">#{str_kana}</language>\n")
+    @buffer << Kconv.toutf8("\t\t<language name=\"JPN_KANJI\" width=\"256\">#{str_kanji}</language>\n")
+    @buffer << Kconv.toutf8("\t</row>\n")
+  end
+
+  def genelate( filename )
+
+    footer = open("footer.file","r:UTF-8")
+    @buffer << footer.read
+    footer.close
+
+    newfile = File.new( filename, "w" )
+    @buffer.each{ |line|
+      newfile.puts( line )
+    }
+    newfile.close
+  end
+  
+end
+
+#----------------------------------------------------
+# 男女別々のGMMを作成するクラス
+#----------------------------------------------------
+class MAKE_GMM_MF
+  def initialize
+    @gmm_m = MAKE_GMM.new
+    @gmm_f = MAKE_GMM.new
+  end
+  
+  def write_both( tag, str_kana, str_kanji )
+    @gmm_m.write( tag, str_kana, str_kanji )
+    @gmm_f.write( tag, str_kana, str_kanji )
+  end
+
+  def write_each( tag, str_kana_m, str_kanji_m, str_kana_f, str_kanji_f )
+    @gmm_m.write( tag, str_kana_m, str_kanji_m )
+    @gmm_f.write( tag, str_kana_f, str_kanji_f )
+  end
+
+  def genelate( filename )
+    @gmm_m.genelate( File.basename(filename, ".*")+"_m"+File.extname(filename) )
+    @gmm_f.genelate( File.basename(filename, ".*")+"_f"+File.extname(filename) )
+  end
+end
 
 #----------------------------------------------------
 # メイン処理
 #----------------------------------------------------
-
-#メッセージ置換データ作成
-make_msg_hash( $msg_hash, msgtitle_path, msgsenario_path)
-#p msg_hash
-
 # シナリオフォーマット読み込み
 datas = CSV.readlines(ARGV[0])
 #p datas
 
-
+#メッセージコンバート
+gmm = MAKE_GMM_MF.new
 
 # シナリオクラス初期化
 pokewood = POKEWOOD_SENARIO.new( datas[1][1], datas[2][1], datas[3][1], 
@@ -317,6 +347,11 @@ pokewood = POKEWOOD_SENARIO.new( datas[1][1], datas[2][1], datas[3][1],
 
 #タイトル情報入力
 pokewood.top_info( datas[9][1],  datas[10][1], datas[11][1], datas[12][1], datas[13][1] )
+
+#タイトル文字列入力
+gmm.write_both( "pw_scene_title", datas[9][1], datas[9][2] )
+gmm.write_both( "pw_scene_mission", datas[11][1], datas[11][2] )
+gmm.write_both( "pw_scene_hint", datas[12][1], datas[12][2] )
 
 # BG切り替え情報入力
 pokewood.set_bg_change( 0, datas[14][1], datas[14][2] )
@@ -331,26 +366,32 @@ ENEMY_POKE_NUM.times{|i|
 #選択時メッセージ格納
 SELECT_MSG.times{|i|
   pokewood.set_select_msg(            i, datas[i+28][1] )
-  pokewood.set_select_msg( SELECT_MSG+i, datas[i+28][3] )
+  pokewood.set_select_msg( SELECT_MSG+i, datas[i+28][5] )
+  gmm.write_each( "pw_wazasel_hero_#{i}", datas[i+28][1], datas[i+28][2], datas[i+28][3], datas[i+28][4] )
+  gmm.write_both( "pw_wazasel_enemy_#{i}", datas[i+28][5], datas[i+28][6] )
 }
 
 #シチュエーション別メッセージ格納
 SITUATION_MSG.times{|i|
   pokewood.set_situation_msg(                i, datas[i+39][1] )
-  pokewood.set_situation_msg( SITUATION_MSG+i, datas[i+39][3] )
+  pokewood.set_situation_msg( SITUATION_MSG+i, datas[i+39][5] )
+  gmm.write_each( "pw_situ_hero_#{i}", datas[i+39][1], datas[i+39][2], datas[i+39][3], datas[i+39][4] )
+  gmm.write_both( "pw_situ_enemy_#{i}", datas[i+39][5], datas[i+39][6] )
 }
 
 #ターン毎メッセージ格納
 TURN_MSG.times{|i|
   pokewood.set_turn_msg(            i, datas[i+47][1] )
-  pokewood.set_turn_msg( TURN_MSG+i, datas[i+47][3] )
+  pokewood.set_turn_msg( TURN_MSG+i, datas[i+47][5] )
+  gmm.write_each( "pw_turn_hero_#{i}", datas[i+47][1], datas[i+47][2], datas[i+47][3], datas[i+47][4] )
+  gmm.write_both( "pw_turn_enemy_#{i}", datas[i+47][5], datas[i+47][6] )
 }
 
 
 #イベント取り込み
 EVENT_MAX.times{|i|
   if datas.length>EVENT1_START_LINE+EVENT_LINE_HEIGHT*i then
-    pokewood.set_event_data(datas,i,EVENT1_START_LINE+EVENT_LINE_HEIGHT*i)
+    pokewood.set_event_data(datas,i,EVENT1_START_LINE+EVENT_LINE_HEIGHT*i,gmm )
   end
 }
 
@@ -361,4 +402,7 @@ File.open(filename,"w"){|file|
   file.binmode
   file.write( pokewood.pack )
 }
+
+#GMM出力
+gmm.genelate( ARGV[0].sub(/\.txt/,".gmm") )
 
