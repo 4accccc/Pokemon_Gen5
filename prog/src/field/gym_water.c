@@ -58,6 +58,17 @@
 #define HASU_EX_OBJ_IDX_MINE  (0) // 拡張高さハスインデックス(自分)
 #define HASU_EX_OBJ_IDX_OTHER (1) // 拡張高さハスインデックス(周り)
 
+//-------------------------------------
+///	ハスの上情報
+//=====================================
+typedef enum {
+  EX_HEIGHT_RIDE_MINE,    // 自分のハスに乗っている( =HASU_EX_OBJ_IDX_MINE
+  EX_HEIGHT_RIDE_OTHER,   // 周りのハスに乗っている( =HASU_EX_OBJ_IDX_OTHER
+  EX_HEIGHT_RIDE_NO,      // 乗っていない
+
+} EX_HEIGHT_RIDE_TYPE;
+
+
 #define HASU_NUM   (11)   // ハスの個数
 
 // ハス座標
@@ -146,7 +157,7 @@ typedef struct {
 
   ANM_TASK_WORK       anm_task_wk[ TASK_MAX ];
 
-  BOOL                is_hasu_ride;   // ハスの上かフラグ
+  EX_HEIGHT_RIDE_TYPE now_hasu_ride;  // ハスに乗っているか
   BOOL                is_anm_hasu;    // ハス降りるアニメフラグ
   u16                 anm_hasu_obj;   // ↑のハスOBJ
   u8                  ex_height_idx;  // 拡張高さインデックス         
@@ -554,7 +565,7 @@ static BOOL HASU_EVENT_OtherMoveInit( HASU_EVENT_WORK *p_wk );
 static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk );
 
 // ANIME
-static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk );
+static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk, EX_HEIGHT_RIDE_TYPE ride );
 static BOOL ANIME_HASU_LeaveCheck( GYM_WATER_TMP *p_wk );
 static void ANIME_HASU_LeaveEnd( GYM_WATER_TMP *p_wk );
 static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk );
@@ -562,7 +573,7 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_id
 static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx, const u8 anm_type );
 
 // EX_HEIGHT 拡張高さ
-static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz );
+static EX_HEIGHT_RIDE_TYPE EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz );
 static void EX_HEIGHT_Reset( GYM_WATER_TMP *p_wk ); 
 static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id );
 static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx );
@@ -626,7 +637,7 @@ void GYM_WATER_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->p_fieldmap = p_fieldmap;
   p_wk->p_sv_wk = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_GYM_WATER );
 
-  p_wk->is_hasu_ride  = FALSE;
+  p_wk->now_hasu_ride = EX_HEIGHT_RIDE_NO;
   p_wk->ex_height_idx = 0;
 
   // EXPOBJセット
@@ -716,8 +727,9 @@ void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap)
   }
 
   // ハスの上にいる場合は降りたチェック
-  if( p_wk->is_hasu_ride == TRUE )
+  if( p_wk->now_hasu_ride != EX_HEIGHT_RIDE_NO )
   {
+    EX_HEIGHT_RIDE_TYPE ret_ride;
     s16 gx, gy, gz;
     MMDL *mmdl = FIELD_PLAYER_GetMMdl( cp_player );
 
@@ -726,22 +738,79 @@ void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap)
     gx = MMDL_GetOldGridPosX( mmdl);
     gz = MMDL_GetOldGridPosZ( mmdl);
 
-    if( EX_HEIGHT_CheckHasuRide( p_wk, gx, gz ) == FALSE )
-    {
-      // ハスの上に乗っていない
-      p_wk->is_hasu_ride = FALSE;
+    ret_ride = EX_HEIGHT_CheckHasuRide( p_wk, gx, gz );
+    switch( ret_ride ){
+    // 自分のハスに乗っている(HASU_EX_OBJ_IDX_MINE
+    case EX_HEIGHT_RIDE_MINE:
+      {
+        // 周りのハスからきたか？
+        if( p_wk->now_hasu_ride == EX_HEIGHT_RIDE_OTHER )
+        {
+          // ハスの上タイプ更新
+          p_wk->now_hasu_ride = EX_HEIGHT_RIDE_MINE;
 
-      // ハス降りるアニメ
-      // ※拡張高さをリセットする前に呼ぶこと
-      ANIME_HASU_LeaveStart( p_wk );
+          // ハス降りるアニメ
+          // ※拡張高さをリセットする前に呼ぶこと
+          ANIME_HASU_LeaveStart( p_wk, EX_HEIGHT_RIDE_OTHER );
 
-      // 拡張高さリセット
-      EX_HEIGHT_Reset( p_wk );
+          // SE 再生
+          PMSND_PlaySE( GYM_WATER_SE_GET_OFF );
 
-      // SE 再生
-      PMSND_PlaySE( GYM_WATER_SE_GET_OFF );
+          ICHI_Printf("周りのハスから自分のハスに移動\n");
+        }
+      }
+      break;
+    // 周りのハスに乗っている(HASU_EX_OBJ_IDX_OTHER
+    case EX_HEIGHT_RIDE_OTHER:
+      {
+        // 自分のハスからきたか？
+        if( p_wk->now_hasu_ride == EX_HEIGHT_RIDE_MINE )
+        {
+          // ハスの上タイプ更新
+          p_wk->now_hasu_ride = EX_HEIGHT_RIDE_OTHER;
 
-      ICHI_Printf("ハスの上から降りた\n");
+          // ハス降りるアニメ
+          ANIME_HASU_LeaveStart( p_wk, EX_HEIGHT_RIDE_MINE );
+
+          // SE 再生
+          PMSND_PlaySE( GYM_WATER_SE_GET_OFF );
+
+          ICHI_Printf("自分のハスから周りのハスに移動\n");
+        }
+      }
+      break;
+    // 乗っていない
+    case EX_HEIGHT_RIDE_NO:
+      {
+        // 自分のハスからきたか？
+        if( p_wk->now_hasu_ride == EX_HEIGHT_RIDE_MINE )
+        {
+          // ハス降りるアニメ
+          // ※拡張高さをリセットする前に呼ぶこと
+          ANIME_HASU_LeaveStart( p_wk, EX_HEIGHT_RIDE_MINE );
+        }
+        else
+        {
+          // ハス降りるアニメ
+          // ※拡張高さをリセットする前に呼ぶこと
+          ANIME_HASU_LeaveStart( p_wk, EX_HEIGHT_RIDE_OTHER );
+        }
+
+        // ハスの上タイプ更新
+        p_wk->now_hasu_ride = EX_HEIGHT_RIDE_NO;
+
+        // 拡張高さリセット
+        EX_HEIGHT_Reset( p_wk );
+
+        // SE 再生
+        PMSND_PlaySE( GYM_WATER_SE_GET_OFF );
+
+        ICHI_Printf("ハスから降りた\n");
+
+      }
+      break;
+    default:
+      GF_ASSERT(0);
     }
   }
 
@@ -1274,20 +1343,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
           p_wk->wait_frame = 7;
         }
 
-        {
-          //カメラオフセットクリア
-          {
-            VecFx32 cam_ofs = {0,0,0};
-            FIELD_CAMERA_SetCamPosOffset( p_wk->camera, &cam_ofs );
-          }
-          //復帰パラメータをクリアする
-          FIELD_CAMERA_ClearRecvCamParam(p_wk->camera);
-
-          //際バインド
-          FIELD_CAMERA_BindTarget(p_wk->camera, p_wk->WatchTarget);
-          //トレース再開
-          FIELD_CAMERA_RestartTrace(p_wk->camera);
-        }
+        
 
         // SE 再生
         PMSND_PlaySE( GYM_WATER_SE_HIT );
@@ -1358,7 +1414,23 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
       HASU_SetExHeight_DirMax4( p_gym_wk );
 
       // ハスの上フラグを立てる
-      p_gym_wk->is_hasu_ride = TRUE;
+      p_gym_wk->now_hasu_ride = EX_HEIGHT_RIDE_MINE;
+
+      // カメラ
+      {
+        //カメラオフセットクリア
+        {
+          VecFx32 cam_ofs = {0,0,0};
+          FIELD_CAMERA_SetCamPosOffset( p_wk->camera, &cam_ofs );
+        }
+        //復帰パラメータをクリアする
+        FIELD_CAMERA_ClearRecvCamParam(p_wk->camera);
+
+        //際バインド
+        FIELD_CAMERA_BindTarget(p_wk->camera, p_wk->WatchTarget);
+        //トレース再開
+        FIELD_CAMERA_RestartTrace(p_wk->camera);
+      }
 
       *seq = SEQ_SAVE;
     }
@@ -1578,11 +1650,20 @@ static void HASU_InitExHeight( GYM_WATER_TMP *p_wk )
     {
       // 拡張高さセット
       EX_HEIGHT_Set2( p_wk, ex_obj_idx );
-
-      // ハスの上フラグを立てる
-      p_wk->is_hasu_ride = TRUE;
-      ICHI_Printf("ハス %d の上にいた\n", ex_obj_idx );
     }
+  }
+
+  // ハスの上情報
+  {
+    const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+    s16 gx, gy, gz;
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+    // 自機グリッド位置
+    gx = MMDL_GetGridPosX( mmdl);
+    gz = MMDL_GetGridPosZ( mmdl);
+
+    p_wk->now_hasu_ride = EX_HEIGHT_CheckHasuRide( p_wk, gx, gz );
+    ICHI_Printf("ハス乗タイプ %d\n", p_wk->now_hasu_ride );
   }
   
   // 接地させる
@@ -1603,7 +1684,7 @@ static void HASU_InitExHeight( GYM_WATER_TMP *p_wk )
 static void HASU_ExitExHeight( GYM_WATER_TMP *p_wk )
 {
   // ハスに乗っていない場合は、NULLを入れておく
-  if( p_wk->is_hasu_ride == FALSE )
+  if( p_wk->now_hasu_ride == EX_HEIGHT_RIDE_NO )
   {
     SAVE_SetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE, HASU_EX_OBJ_NULL );
     SAVE_SetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_OTHER, HASU_EX_OBJ_NULL );
@@ -1949,15 +2030,18 @@ static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk )
  *	@brief  ハスから出るアニメ再生
  *
  *	@param	p_wk  ギミックワーク
+ *	@param  ride  EX_HEIGHT_RIDE_MINE or EX_HEIGHT_RIDE_OTHER
  */
 //-----------------------------------------------------------------------------
-static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk )
+static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk, EX_HEIGHT_RIDE_TYPE ride )
 {
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
   u16 obj_idx;    // OBJインデックス
 
-  // セーブデータから自分のいるハスのOBJインデックスを取得
-  obj_idx = SAVE_GetObjIdx( p_wk->p_sv_wk, HASU_EX_OBJ_IDX_MINE );
+  GF_ASSERT_MSG( ride!=EX_HEIGHT_RIDE_NO, "ハスの上情報が間違ってる");
+
+  // セーブデータから ハスのOBJインデックスを取得
+  obj_idx = SAVE_GetObjIdx( p_wk->p_sv_wk, ride );
 
   // 自機の向きによって回転
   {
@@ -2224,18 +2308,21 @@ static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx
  *	@param  gx    チェックするグリッドX座標
  *	@param  gz    チェックするグリッドZ座標
  *
- *	@return TRUEで乗っている
+ *	@retval EX_HEIGHT_RIDE_MINE   自分のハスに乗っている
+ *	@retval EX_HEIGHT_RIDE_OTHER  周りのハスに乗っている
+ *	@retval EX_HEIGHT_RIDE_NO     乗っていない
  */
 //-----------------------------------------------------------------------------
-static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz )
+static EX_HEIGHT_RIDE_TYPE EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const int gz )
 {
   FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
   EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
 
   BOOL ret;
+  BOOL mine = FALSE;
+  BOOL other = FALSE;
   int  i;
 
-#if 1
   // 拡張高さヒットチェック
   for( i=0; i<p_wk->ex_height_idx; i++ )
   {
@@ -2243,25 +2330,30 @@ static BOOL EX_HEIGHT_CheckHasuRide( GYM_WATER_TMP *p_wk, const int gx, const in
 
     if( ret )
     {
-      return TRUE;
+      // どこのハスの上にいるのかチェックしてフラグを立てる
+      if( (i/2) == EX_HEIGHT_RIDE_MINE )
+      {
+        mine = TRUE;
+      }
+      else if( (i/2) == EX_HEIGHT_RIDE_OTHER )
+      {
+        other = TRUE;
+      }
     }
   }
 
-  return FALSE;
-#endif
-
-#if 0
-  // ハス起動位置にいるかチェック
-  for( i=0; i<HASU_POS_NUM; i++ )
+  if( mine )
   {
-    if( gx == HasuPosParam[i].gx && gz == HasuPosParam[i].gz )
-    {
-      return FALSE;
-    }
+    return EX_HEIGHT_RIDE_MINE;
   }
-
-  return TRUE;
-#endif
+  else if( other )
+  {
+    return EX_HEIGHT_RIDE_OTHER;
+  }
+  else
+  {
+    return EX_HEIGHT_RIDE_NO;
+  }
 }
 
 //----------------------------------------------------------------------------
