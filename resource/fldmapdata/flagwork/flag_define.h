@@ -303,7 +303,7 @@
 #define FE_C04_RALLYPOINT_05               287 /* 0x011f C04：ラリーチェックポイントフラグ（観覧車） */
 #define FE_C04_SWHEROINE_01                288 /* 0x0120 C04：バトルサブウェイう誘導イベント */
 #define FE_C05R0501_POKE22_GET             289 /* 0x0121 C05R0501：ゾロア入手フラグ */
-		/* not used   290(0x0122) */
+#define FE_C06R0201_SWLEADER6_01           290 /* 0x0122 C06：初回話しかけチェック */
 		/* not used   291(0x0123) */
 		/* not used   292(0x0124) */
 		/* not used   293(0x0125) */
@@ -582,7 +582,9 @@
 #define FV_C04_SWHEROINE_01                664 /* 0x0298 ライモンシティ：異性主人公 */
 #define FV_C06_SWLEADER6_01                665 /* 0x0299 フキヨセシティ：フウロと博士 */
 #define FV_R07R0101_HAKASE2_01             666 /* 0x029a タワーオブヘブン：アララギ博士（娘） */
-#define FV_C06R0201_SWLEADER6_01           667 /* 0x029b フキヨセシティ：カーゴサービスフウロとアララギ娘とベル */
+#define FV_C06R0201_SWLEADER6_01           667 /* 0x029b フキヨセシティ：カーゴサービス・フウロ */
+#define FV_C06R0201_HAKASE2_01             668 /* 0x029c フキヨセシティ：カーゴサービス・アララギ娘 */
+#define FV_C06R0201_SWBELL_01              669 /* 0x029d フキヨセシティ：カーゴサービス・ベル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
