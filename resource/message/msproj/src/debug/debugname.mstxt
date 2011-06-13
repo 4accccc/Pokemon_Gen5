@@ -3014,6 +3014,46 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="DEBUG_NAME_RIVAL_TMP"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-06-13T09:06:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-06-13T08:54:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-06-13T09:06:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-06-13T08:54:34" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>72</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-06-13T08:55:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="DEBUG_NAME_END"
 		Style="Large">
 		<LanguageCell

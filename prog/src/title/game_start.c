@@ -38,6 +38,7 @@
 
 #include "sound/pm_voice.h"   // for 
 #include "savedata/save_outside.h"
+#include "savedata/etc_save.h"
 
 //==============================================================================
 //  
@@ -624,6 +625,28 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     GFL_STR_DeleteBuffer(namebuf);
     GFL_MSG_Delete(msgman);
   }
+#ifdef PM_DEBUG
+  {
+    // ライバル名のセット
+    STRBUF *namebuf;
+    GFL_MSGDATA *msgman;
+    ETC_SAVE_WORK *etcsave = SaveData_GetEtc( sv_ctrl );
+
+    msgman = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, GFL_HEAPID_APP );
+
+    namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RIVAL_TMP );
+
+    // セーブデータに保存
+    {
+      const STRCODE *strcode = GFL_STR_GetStringCodePointer(namebuf);
+      EtcSave_SetRivalName( etcsave, strcode );
+    }
+
+    GFL_STR_DeleteBuffer(namebuf);
+    GFL_MSG_Delete(msgman);
+  }
+#endif
   { 
     //常時通信モードのセット
     CONFIG *config;
