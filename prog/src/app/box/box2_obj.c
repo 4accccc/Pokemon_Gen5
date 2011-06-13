@@ -1947,10 +1947,10 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
   int tate,yoko;
 
   // ƒ|ƒPƒ‚ƒ“‚ð‚Â‚©‚ñ‚Å‚¢‚È‚¯‚ê‚ÎI—¹
-  if( syswk->poke_get_key == 0 || syswk->poke_get_key == 1){
-    return;
-  }
-
+//  if( syswk->poke_get_key == 0 || syswk->poke_get_key == 1){		// ˆÓ–¡‚í‚©‚ç‚ñ...
+	if( syswk->poke_get_key == 0 ){
+		return;
+	}
   
   BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
 
