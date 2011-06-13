@@ -18,6 +18,7 @@
 // field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 #include "field_player_core.h"  // for FIELD_PLAYER_CORE_GetMMdl
+#include "field_task_target_pos.h" // for FIELD_TASK_CameraTargetMove
 
 // gimmick
 #include "field_gimmick_def.h"
@@ -186,6 +187,9 @@ typedef struct {
   u16             other_obj_idx;// 衝突したハスOBJインデックス
   u16             other_move_distance;  // 衝突ハスの移動距離
   s16             wait_frame;   // 待ちフレーム
+
+  FIELD_CAMERA*   camera;
+  const VecFx32   *WatchTarget;
 
 } HASU_EVENT_WORK;
 
@@ -1068,6 +1072,8 @@ static GMEVENT * HASU_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, u8 id, u
   work->other_move_distance = 0;
   work->wait_frame = 0;
 
+  work->camera   = FIELDMAP_GetFieldCamera( p_fieldmap );
+
   return event;
 }
 
@@ -1091,6 +1097,8 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
   enum{
     SEQ_START,            // イベント開始
     SEQ_JUMP,             // 飛び乗り
+    SEQ_CAMERA_TRACE_STOP,// トレース終了
+    SEQ_CAMERA_TRACE_STOP_WAIT,// トレース終了待ち
     SEQ_MOVE_INIT,        // ハス移動初期化
     SEQ_MOVE,             // ハス移動
     SEQ_MOVE_END,         // ハス移動終了(衝突エフェクト)
@@ -1129,64 +1137,123 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         // SE 再生
         //PMSND_PlaySE( GYM_WATER_SE_JUMP );
 
-        *seq = SEQ_MOVE_INIT;
+        *seq = SEQ_CAMERA_TRACE_STOP;
       }
     }
     break;
+
+  // トレース終了
+  case SEQ_CAMERA_TRACE_STOP:
+    {
+      if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) == FALSE )
+      {
+        break;
+      }
+
+      //トレース終了
+      FIELD_CAMERA_StopTraceRequest(p_wk->camera);
+      *seq = SEQ_CAMERA_TRACE_STOP_WAIT;
+    }
+    /* break through */
+
+  // トレース終了待ち
+  case SEQ_CAMERA_TRACE_STOP_WAIT:
+    {
+      if ( FIELD_CAMERA_CheckTrace(p_wk->camera) )
+      {
+        //break;
+      }
+
+      {
+        //復帰パラメータをセットする
+        FIELD_CAMERA_SetRecvCamParam(p_wk->camera);
+
+        //カメラのターゲットを取得
+        p_wk->WatchTarget = FIELD_CAMERA_GetWatchTarget(p_wk->camera);
+        //バインド解除
+        FIELD_CAMERA_FreeTarget(p_wk->camera);
+
+        //補間移動はカメラ位置不定型のみのサポート
+        FIELD_CAMERA_ChangeMode( p_wk->camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+      }
+
+      *seq = SEQ_MOVE_INIT;
+    }
+    /* break through */
   
   // ハス移動初期化
   case SEQ_MOVE_INIT:
     {
-      if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
+      int move_distance = HASU_EVENT_GetMoveDistance( p_wk, p_wk->id );
+      VecFx32 move_pos;
+      int frame;
+      // 実際の移動するのは3グリッド少ない
+      move_distance -= 3;
+      ICHI_Printf("移動距離 %d\n", move_distance);
+
+      if( move_distance == 0 )
       {
-        int move_distance = HASU_EVENT_GetMoveDistance( p_wk, p_wk->id );
-        VecFx32 move_pos;
-        // 実際の移動するのは3グリッド少ない
-        move_distance -= 3;
-        ICHI_Printf("移動距離 %d\n", move_distance);
+        // 移動しないなら何もしない
+        *seq = SEQ_EX_HEIGHT_SET;
+        break;
+      }
 
-        if( move_distance == 0 )
-        {
-          // 移動しないなら何もしない
-          *seq = SEQ_EX_HEIGHT_SET;
+      // 移動後位置計算
+      {
+        FIELD_PLAYER_GetPos( p_wk->player, &move_pos );
+        switch( HasuPosParam[ p_wk->id ].move_dir ){
+        case DIR_UP:
+          move_pos.z -= GRID_TO_FX32(move_distance);
           break;
+        case DIR_DOWN:
+          move_pos.z += GRID_TO_FX32(move_distance);
+          break;
+        case DIR_LEFT:
+          move_pos.x -= GRID_TO_FX32(move_distance);
+          break;
+        case DIR_RIGHT:
+          move_pos.x += GRID_TO_FX32(move_distance);
+          break;
+        default:
+          GF_ASSERT(0);
         }
+      }
 
-        // 移動後位置計算
-        {
-          FIELD_PLAYER_GetPos( p_wk->player, &move_pos );
-          switch( HasuPosParam[ p_wk->id ].move_dir ){
-          case DIR_UP:
-            move_pos.z -= GRID_TO_FX32(move_distance);
-            break;
-          case DIR_DOWN:
-            move_pos.z += GRID_TO_FX32(move_distance);
-            break;
-          case DIR_LEFT:
-            move_pos.x -= GRID_TO_FX32(move_distance);
-            break;
-          case DIR_RIGHT:
-            move_pos.x += GRID_TO_FX32(move_distance);
-            break;
-          default:
-            GF_ASSERT(0);
-          }
-        }
-
+      // フレーム数
 #ifdef GYM_WATER_DEBUG_MENU
-        HASU_EVENT_MoveInit( p_wk, move_distance*debug_frame, &move_pos );
+      frame = move_distance*debug_frame;
 #else
-        HASU_EVENT_MoveInit( p_wk, move_distance*HASU_MOVE_SPEED, &move_pos );
+      frame = move_distance*HASU_MOVE_SPEED;
 #endif
 
-        // 水しぶき
-        ANIME_WATER_Splash( p_wk );
+      // ハス移動初期化
+      HASU_EVENT_MoveInit( p_wk, frame, &move_pos );
 
-        // SE 再生
-        PMSND_PlaySE( GYM_WATER_SE_LAND );
-        
-        *seq = SEQ_MOVE;
+
+      // カメラ移動
+      {
+        FIELD_TASK* cam;
+        FIELD_TASK_MAN* taskMan;
+
+        VecFx32 start_pos;    // 初期座標
+        VecFx32 end_pos;      // 最終座標
+
+        FIELD_PLAYER_GetPos( p_wk->player, &start_pos );
+        end_pos = move_pos;
+
+        cam = FIELD_TASK_CameraTargetMove( p_wk->p_fieldmap, frame, &start_pos, &end_pos );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
       }
+
+      // 水しぶき
+      ANIME_WATER_Splash( p_wk );
+
+      // SE 再生
+      PMSND_PlaySE( GYM_WATER_SE_LAND );
+
+      *seq = SEQ_MOVE;
+
     }
     break;
 
@@ -1205,6 +1272,21 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
           ANIME_WATER_HitRipple( p_wk, p_wk->other_obj_idx, ANM_HIT_RIPPLE_OTHER );
           // 少しだけ待つ
           p_wk->wait_frame = 7;
+        }
+
+        {
+          //カメラオフセットクリア
+          {
+            VecFx32 cam_ofs = {0,0,0};
+            FIELD_CAMERA_SetCamPosOffset( p_wk->camera, &cam_ofs );
+          }
+          //復帰パラメータをクリアする
+          FIELD_CAMERA_ClearRecvCamParam(p_wk->camera);
+
+          //際バインド
+          FIELD_CAMERA_BindTarget(p_wk->camera, p_wk->WatchTarget);
+          //トレース再開
+          FIELD_CAMERA_RestartTrace(p_wk->camera);
         }
 
         // SE 再生
@@ -1637,7 +1719,6 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
 
   VecFx32 out_pos;      // 移動後位置
-  fx32    h;            // ハスゆれ値
   BOOL    end = FALSE;
 
   p_move_wk->frame++;
@@ -1663,8 +1744,9 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
   //=====================================
   // ゆれ
   {
-    int tmp;
-    u16 rad;
+    int   tmp;
+    u16   rad;
+    fx32  h;            // ハスゆれ値
     p_move_wk->NowSync++;
     tmp = (p_move_wk->NowSync * 0x10000) / p_move_wk->Sync;
     rad = tmp;
@@ -1674,22 +1756,13 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
     if( end )
     {
       // オフセット初期化
-      VecFx32 offset;
-      MMDL    *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
-      VEC_Set( &offset, 0,0,0 );
-      MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
-      out_pos.y = 0;
       h = 0;
     }
-    else
-    {
-      VecFx32 offset;
-      MMDL    *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
-      VEC_Set( &offset, 0,0,0 );
-      offset.y = h;
-      MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
-    }
+
+    // ゆれ加算
+    out_pos.y += h;
   }
+
 
   //=====================================
   // 自機更新
@@ -1699,9 +1772,9 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
   {
     int obj_idx = p_wk->obj_idx;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, obj_idx);
-    out_pos.y += h;
     status->trans = out_pos;
   }
+  
 
   // エフェクト波紋
 #ifdef GYM_WATER_DEBUG_MENU
