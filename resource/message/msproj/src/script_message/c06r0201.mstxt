@@ -272,7 +272,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_hakase2_03"
+		Label="msg_c06r0201_hakase2_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -321,7 +321,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_hakase2_01"
+		Label="msg_c06r0201_hakase2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -372,7 +372,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_swbell_01"
+		Label="msg_c06r0201_swbell_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -426,7 +426,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c06_hakase2_02"
+		Label="msg_c06r0201_hakase2_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
