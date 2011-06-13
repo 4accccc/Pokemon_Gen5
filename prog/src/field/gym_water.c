@@ -1262,7 +1262,13 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
       if( move_distance == 0 )
       {
-        // 移動しないなら何もしない
+        // 移動しないときは水しぶきのみだす
+        // 水しぶき
+        ANIME_WATER_Splash( p_wk );
+
+        // SE 再生
+        PMSND_PlaySE( GYM_WATER_SE_LAND );
+
         *seq = SEQ_EX_HEIGHT_SET;
         break;
       }
@@ -1830,7 +1836,7 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
     fx32  h;            // ハスゆれ値
     p_move_wk->NowSync++;
     tmp = (p_move_wk->NowSync * 0x10000) / p_move_wk->Sync;
-    rad = tmp;
+    rad = tmp + (65536/2);    // マイナスからにする
     h = p_move_wk->Height * FX_SinIdx(rad);
 
     // ゆれセット
