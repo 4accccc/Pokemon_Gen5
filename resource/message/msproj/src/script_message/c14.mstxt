@@ -60,11 +60,11 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『プラズマだんは
 チェレンさんが　みはっている▼
-さっさと　ジムバッジを　もらってこいよ
-そうでないと　あしでまとい　だ</Text>
+さっさと　ジムバッジを　とってこい
+すこしでも　つよいほうが　いいだろ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:51:49" />
+				Time="2011-06-13T07:58:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -74,11 +74,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『プラズマ団は
 チェレンさんが　みはっている▼
-さっさと　ジムバッジを　もらってこいよ
-そうでないと　足手まとい　だ</Text>
+さっさと　ジムバッジを　もらってこいよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:05:56" />
+				Time="2011-06-13T02:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -108,42 +107,6 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c14_swrival_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:51:58" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:51:58" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:51:58" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:51:58" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・ジムバッジ取得後
-・GRIDX＝782、GRIDZ＝182に配置
-・posイベント</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-11T09:50:17" />
-		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c14_swleader8_01"
@@ -196,6 +159,374 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　ってのは▼
+……　……　……
+……　……　……▼
+と　わるい　れんちゅう　だよ
+というか　しらないのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:04:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:04:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:04:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T08:02:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:04:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swleader8_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シズイ『しらん！▼
+うみで　くらしているとな
+そういうこと　あまり　きにならん▼
+なにしろ　うみは　でかすぎる！
+めぐみを　わけあたえて　くれるが▽
+やさしいだけでは　ないからなあ▼　</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T08:00:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swleader8_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>で　おまはん
+プラズマだんは　わるいと　おもうか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+・はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:34:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:05:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swleader8_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シズイ『そうか
+わるいから　たたかうのか▼
+んじゃ　まず　それを　おまはんの
+ことばで　かたれるように　なれ▼
+そうすれば　じぶんが　なにをしたいか
+なにを　のぞんでいるか▽
+いまより　はっきり　わかるようになる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:35:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:34:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:34:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swleader8_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シズイ『そうか
+わるくないが　たたかうのか▼
+んじゃ　まず　それを　おまはんの
+ことばで　かたれるように　なれ▼
+そうすれば　じぶんが　なにをしたいか
+なにを　のぞんでいるか
+いまより　はっきり　わかるようになる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:34:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:34:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swleader8_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さてと……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T08:03:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ジムリーダー
+シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだ
+おおらかというか　むせきにんというか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:57:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T08:03:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-13T07:36:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
