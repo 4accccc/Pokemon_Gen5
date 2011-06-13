@@ -1339,9 +1339,9 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/guitarw.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #swchampion.imd
-./mmdl_res/swchampion.imd: ./mmdl_nchara/swchampion.ncg ./mmdl_nchara/swchampion.ncl ./mmdl_dmy/t4x4x7.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_flip.csv
+./mmdl_res/swchampion.imd: ./mmdl_nchara/swchampion.ncg ./mmdl_nchara/swchampion.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
 	@echo convert ncg_imd swchampion
-	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swchampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x7.imd 4 4 7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/swchampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #swgoddess1.imd
 ./mmdl_res/swgoddess1.imd: ./mmdl_nchara/swgoddess1.ncg ./mmdl_nchara/swgoddess1.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
