@@ -620,7 +620,10 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	pwc_init_pal_fade( wk );
 	
 	// ”¼“§–¾Ý’è
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 10, 6);
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
+		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		10, 6);
+//	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 10, 6);
 	// ƒƒS‚Í”ñ•\Ž¦
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 }
@@ -1034,6 +1037,9 @@ static void pwc_init_obj( PKWD_COUNT_MAIN_WORK* wk )
 	pwc_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwc_obj_tbl[0], &pwc_obj_main_itbl[0] );
 	// CLWK“o˜^(ƒƒS)
 	pwc_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwc_obj_logo_tbl[0], &pwc_obj_logo_itbl[0] );
+	//
+	// ”¼“§–¾‚ÌÝ’è
+	GFL_CLACT_WK_SetObjMode( wk->wk_obj.clwk[CLWK_ROLE], GX_OAM_MODE_XLU );
 }
 
 //-----------------------------------------------------------------------------

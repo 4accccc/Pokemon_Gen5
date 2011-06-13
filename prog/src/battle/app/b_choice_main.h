@@ -33,6 +33,14 @@ enum{
 	BC_RES_MAX,
 };
 
+// タイマ
+enum{
+	BC_ANIM_TIMER 			= 0,		// 枠アニメ用
+	BC_PAD_TIMER,
+	//
+	BC_TIMER_MAX,
+};
+
 //
 // ワーク
 typedef struct {
@@ -56,6 +64,8 @@ typedef struct {
 	s32					Mode;			///< モード
 	s32					Result;			///< 結果
 	s32					Cursor;			///< カーソル
+	s32					AnimNum;		///< アニメの段階
+	s16					Timer[BC_TIMER_MAX];	///< タイマ
 	//
 	s16					*EmptyBuffer;	///< 座標用のバッファ(必ず破棄すること)
 } BCHOICE_WORK;

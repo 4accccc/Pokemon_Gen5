@@ -1763,7 +1763,8 @@ BOOL BTLV_CHOICE_Wait( BTLV_CORE* wk )
 
   switch( wk->selectItemSeq ){
   case SEQ_INIT:
-    BTLV_SCD_FadeOut( wk->scrnD, TRUE );
+    // 暗さを引き継ぎフェード
+    BTLV_SCD_FadeOut( wk->scrnD, FALSE );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_b_app ) );
     wk->selectItemSeq = SEQ_START_CHOICE;
     break;

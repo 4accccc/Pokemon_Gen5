@@ -857,8 +857,6 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 	wk->SubMode = STEP_INIT;		// 初期化
 	wk->TitleMode = BS_TOP;
 	//
-//	OS_Printf("mode init top\n");
-	//
 	// bg初期化(1回目だけは転送しない)
 	if(wk->Flag & FLG_SET_INIT){
 		// スクロール切り替え
@@ -867,8 +865,6 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 		BsCmn_InitString( wk, BS_TOP );
 		// 表示まとめ
 		bs_disp_top_string( wk, STR_INIT );
-		//
-//		BsCmn_MainPrint( wk );
 		//
 //		wk->Flag |= FLG_UPDATE;
 		wk->Flag |= FLG_KEY_UPDATE;
@@ -1200,7 +1196,6 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 	wk->SubMode = STEP_INIT;		// 初期化
 	wk->TitleMode = BS_SCENARIO;
 	//
-//	OS_Printf("mode init scenario\n");
 	// スクロール切り替え
 //	BsCmn_BgScroll( wk, BS_SCENARIO );
 	// canvas初期化
@@ -1208,8 +1203,6 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 	//
 	// 表示(パラメータをセットしておくこと)
 	bs_disp_scenario_string( wk, STR_INIT );
-	//
-//	BsCmn_MainPrint( wk );
 	
 //	wk->Flag |= FLG_UPDATE;
 	wk->Flag |= FLG_KEY_UPDATE;
@@ -1695,7 +1688,6 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	wk->SubMode = STEP_INIT;
 	wk->TitleMode = BS_INFO;
 	//
-//	OS_Printf("mode init info\n");
 	// スクロール切り替え
 //	BsCmn_BgScroll( wk, BS_INFO );
 	// canvas初期化
@@ -1704,7 +1696,6 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	// 表示(初期パラメータをセットしておくこと)
 	bs_disp_info_string( wk, STR_INIT );
 	//
-//	BsCmn_MainPrint( wk );
 	// 表示
 	bs_disp_info_obj( wk, 0 );
 	//

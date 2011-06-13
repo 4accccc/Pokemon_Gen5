@@ -56,6 +56,7 @@ enum{
 	FLG_UPDATE			= (1<<0),	// 更新フラグ
 	FLG_KEY_INPUT		= (1<<1),	// キー入力選択があった
 	FLG_KEY_INPUT_END	= (1<<2),	// キー入力で終了
+	FLG_SET_ANIME		= (1<<3),	// 枠のアニメ開始
 };
 
 // OBJのフラグ(BC_OBJ_DATA.dispflag)
@@ -76,6 +77,13 @@ enum{
 	BC_CURSOR_OFFSET	= 4,		// カーソルデータ(注意：なぜかpalの中の4番目を使用しているらしい)
 	//
 	BC_CENTER_MES_X		= 112,		// 中心の座標(message)
+	//
+	BC_SEL_COLOR		= 5,		// 選択カラー(青)
+	BC_HIDE_COLOR		= 6,		// 非選択カラー(灰)
+	// パレット
+	BC_BG_COL_OFF		= 0,		// BG:0始まり
+	BC_BG_COL_SIZE		= 7,		// BG:(0-6)の7本
+	BC_BG_FONT_OFF		= 8,		// FONT:8始まり
 };
 
 //-----------------------------------------
@@ -142,12 +150,13 @@ typedef struct{
 //---------------
 // BGPAL
 static const BC_BGPAL_DATA bc_bgpal_00_tbl[] = {
-	{ PALTYPE_SUB_BG,	NARC_b_choice_gra_pkwd_word_NCLR,	0,	4,},		// 下、BG
+	{ PALTYPE_SUB_BG,	NARC_b_choice_gra_pkwd_word_NCLR,	0,	BC_BG_COL_SIZE,},		// 下、BG
 	{ 0xff, 0, 0, 0,}, // end code
 };
 // BGCHR
 static const BC_BGCHR_DATA bc_bgchr_00_tbl[] = {
-	{ GFL_BG_FRAME3_S,	NARC_b_choice_gra_pkwd_choice_bg2_NCGR,	0,	0,},	// 下、BG
+	// まとめてもよいはずだがしばらくこのまま
+	{ GFL_BG_FRAME3_S,	NARC_b_choice_gra_pkwd_word_NCGR,	0,	0,},		// 下、BG
 	{ GFL_BG_FRAME2_S,	NARC_b_choice_gra_pkwd_word_NCGR,	0,	0,},		// 下、BG
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -253,6 +262,37 @@ static const GFL_UI_TP_HITTBL *bc_rect_tbl[] = {
 	bc_rect_02_tbl,
 };
 
+//--------------------
+// パレットチェンジ用
+//--------------------
+static const s16 bc_parea_00_tbl[] = {
+	0, 5,32,4,						// 00
+	0,12,32,4,						// 01
+};
+static const s16 bc_parea_01_tbl[] = {
+	0, 2,32,4,						// 00
+	0, 8,32,4,						// 01
+	0,14,32,4,						// 02
+};
+static const s16 bc_parea_02_tbl[] = {
+	0, 1,32,4,						// 00
+	0, 6,32,4,						// 01
+	0,11,32,4,						// 02
+	0,16,32,4,						// 03
+};
+
+// パレットチェンジ(まとめ)
+static const s16 *bc_parea_tbl[] = {
+	bc_parea_00_tbl,
+	bc_parea_01_tbl,
+	bc_parea_02_tbl,
+};
+
+// 戻り用パレット
+static const s16 bc_bpal_tbl[] = {
+	0,2,3,4,
+};
+
 //----------------
 // OBJ(cursor)
 //----------------
@@ -308,6 +348,17 @@ static const s16 *bc_cursor_emp_tbl[] = {
 	bc_cursor02_emp_tbl,	// 4行
 };
 
+//----------------
+// 切り替えタイマ
+//----------------
+static const s16 bc_timer_tbl[] = {
+	 1, BC_SEL_COLOR,	// 1フレーム目で選択色に変化
+	 5, -1,				// 5フレーム目で戻る(-1:初期にもどす)
+	 20, -2,			// 待ちの時間(-2:転送しない)(要調整)
+	//
+	-1, -1,				// 終了判定
+};
+
 //============================================================================================
 //  プロトタイプ宣言
 //============================================================================================
@@ -355,6 +406,11 @@ static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, c
 static s16  bc_get_empty( BCHOICE_WORK *wk, const s32 num );
 //
 static void bc_chk_param( BCHOICE_WORK* wk );
+//
+static void bc_chg_bg_pal( BCHOICE_WORK* wk, const s32 mode, const s32 snum, const s32 pnum );
+static void bc_init_screen_anime( BCHOICE_WORK *wk );
+static void bc_main_screen_anime( BCHOICE_WORK *wk );
+static BOOL bc_is_screen_anime_end( BCHOICE_WORK *wk );
 
 //============================================================================================
 //============================================================================================
@@ -389,6 +445,9 @@ void BattleChoice_TaskAdd( BCHOICE_DATA * dat )
 	wk->Result		= -1;
 	wk->Cursor		= 0;
 	//
+	for(i=0;i<BC_TIMER_MAX;i++){
+		wk->Timer[i] = 0;
+	}
 	for(i=0;i<BC_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 	}
@@ -540,6 +599,17 @@ static void bc_main_seq( BCHOICE_WORK * wk )
 		case STEP_LV1:
 			// 内部で分岐処理
 			bflg = bc_main_loop( wk );
+			if(bflg == FALSE){
+				bc_init_screen_anime( wk );
+				wk->Step = STEP_LV1+10;
+			}
+			break;
+		
+		// 決定アニメ待ち(戻る、はない)
+		case STEP_LV1+10:
+			// 内部で分岐処理
+			bc_main_screen_anime( wk );
+			bflg = bc_is_screen_anime_end( wk );
 			if(bflg == FALSE){
 				wk->Step = STEP_LV2;
 				bc_set_endfade( wk );
@@ -707,8 +777,10 @@ static void bc_init_graphics( BCHOICE_WORK *wk )
 
   { // BG3(背景：offsetを切り替える方式)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x2000, 0,											// X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-      GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,				// ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+//      0, 0, 0x2000, 0,											// X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
+      0, 0, 0x0800, 0,											// X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
+//      GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,				// ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,				// ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
       GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x00000, 0x8000,		// ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE							// 拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
     };
@@ -792,9 +864,9 @@ static void bc_exit_bg( BCHOICE_WORK *wk )
 static void bc_set_palanim( BCHOICE_WORK * wk )
 {
 	// BGのパレット(4本分)
-	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*4 );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_BG, 0, 0x20*BC_BG_COL_SIZE );
 	// フォントパレット(8)
-	PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_talkwin_nclr, wk->dat->heap, FADE_SUB_BG, 0x20, 8*16 );
+	PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_talkwin_nclr, wk->dat->heap, FADE_SUB_BG, 0x20, BC_BG_FONT_OFF*16 );
 	//
 	// 通信アイコンセット
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
@@ -843,6 +915,8 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 	s32		mflg=0;
 	s32		tflg=0;
 	BOOL	bflg=TRUE;
+	// 一つ前
+	s32		cursor = wk->Cursor;
 	
 	// 更新
 	if(wk->Flag & FLG_UPDATE){
@@ -1474,4 +1548,119 @@ static void bc_chk_param( BCHOICE_WORK* wk )
 		}
 	}
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パレット書き換え
+ *
+ *	@param	BCHOICE_WORK*			wk
+ *	@param	s32						(モード番号(0-2))
+ *	@param	s32						(カーソル番号(0-3))
+ *	@param	s32						パレット番号(-1はオリジナル)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bc_chg_bg_pal( BCHOICE_WORK* wk, const s32 mode, const s32 snum, const s32 pnum )
+{
+	s16			buf[4];
+	s16			pal;
+	const s16	*adr = bc_parea_tbl[mode];
+	
+	buf[0] = adr[4*snum];
+	buf[1] = adr[4*snum+1];
+	buf[2] = adr[4*snum+2];
+	buf[3] = adr[4*snum+3];
+	//
+	pal = pnum;
+	if(pal == -1){
+		// 戻しカラーセット
+		pal = bc_bpal_tbl[snum];
+	}
+	// 領域の書き換え(単一カラーになるので注意)
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, buf[0], buf[1], buf[2], buf[3], pal );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  枠アニメ初期化
+ *
+ *	@param	BCHOICE_WORK* 	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bc_init_screen_anime( BCHOICE_WORK *wk )
+{
+	s32		i;
+	
+	wk->Flag |= FLG_SET_ANIME;
+	//
+	wk->Timer[BC_ANIM_TIMER] = 0;
+	wk->AnimNum = 0;
+	//
+	// ここで非選択の枠の色変えをしてしまう
+	for(i=0;i<wk->Mode+2;i++){
+		if(i != wk->Result){
+			bc_chg_bg_pal( wk, wk->Mode, i, BC_HIDE_COLOR );
+		}
+	}
+	// 1フレーム目の処理
+	bc_main_screen_anime( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  枠アニメ処理
+ *
+ *	@param	BCHOICE_WORK* 	wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void bc_main_screen_anime( BCHOICE_WORK *wk )
+{
+	// 終了判定
+	if(!(wk->Flag & FLG_SET_ANIME)){
+		return;
+	}
+	// カウンタ加算
+	wk->Timer[BC_ANIM_TIMER]++;
+	//
+	// 指定したフレームに来た
+	if(bc_timer_tbl[2*wk->AnimNum] == wk->Timer[BC_ANIM_TIMER]){
+		// 指定のパターンを表示
+		if(bc_timer_tbl[2*wk->AnimNum+1] != -2){
+			bc_chg_bg_pal( wk, wk->Mode, wk->Result, bc_timer_tbl[2*wk->AnimNum+1] );
+		}
+		// 加算
+		wk->AnimNum++;
+		// 終了判定
+		if(bc_timer_tbl[2*wk->AnimNum] == -1){
+			wk->Flag &= ~FLG_SET_ANIME;
+			wk->Timer[BC_ANIM_TIMER] = 0;
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  枠アニメ判定
+ *
+ *	@param	BCHOICE_WORK* 	wk
+ *
+ *	@retval BOOL				(TRUE:再生中、FALSE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL bc_is_screen_anime_end( BCHOICE_WORK *wk )
+{
+	BOOL	bflg=FALSE;
+	//
+	if(wk->Flag & FLG_SET_ANIME){
+		bflg = TRUE;
+	}
+	return( bflg );
+}
+
 
