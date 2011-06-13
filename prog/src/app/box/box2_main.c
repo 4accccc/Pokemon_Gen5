@@ -921,7 +921,7 @@ void BOX2MAIN_InitBgButtonAnm( BOX2_SYS_WORK * syswk, u32 wfrmID )
 void BOX2MAIN_ResetTouchBar( BOX2_SYS_WORK * syswk )
 {
   BOX2OBJ_SetTouchBarButton(
-    syswk, syswk->tb_ret_btn, syswk->tb_exit_btn, syswk->tb_status_btn );
+		syswk, syswk->tb_ret_btn, syswk->tb_exit_btn, syswk->tb_status_btn, syswk->tb_search_btn );
   BOX2BGWFRM_PutTouchBar( syswk->app->wfrm );
 }
 
@@ -4187,7 +4187,7 @@ int BOX2MAIN_VFuncGetPokeMoveParty( BOX2_SYS_WORK * syswk )
           if( syswk->dat->callMode == BOX_MODE_BATTLE ){
             CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
           }
-          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_PASSIVE );
+          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE );
           syswk->app->old_cur_pos = syswk->get_pos;
           syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE;
         }
@@ -4521,7 +4521,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           // 戻り先のシーケンスを「つかむ」の処理にする
           BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MOVE, syswk->get_pos );
-          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_PASSIVE );
+          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE );
           syswk->app->old_cur_pos = syswk->get_pos;
           syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE;
         }
@@ -5203,7 +5203,7 @@ int BOX2MAIN_GetTrayPokeMoveDrop( BOX2_SYS_WORK * syswk )
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
           BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
+          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
           syswk->app->old_cur_pos = syswk->get_pos;
         }
       }
@@ -5721,7 +5721,7 @@ int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk )
           BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
           CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
           CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_STATUS );
-          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
+          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
           syswk->pokechg_mode = 0;
           syswk->app->msg_put = 0;
           syswk->app->old_cur_pos = syswk->get_pos;
@@ -5791,7 +5791,7 @@ int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk )
         BOX2OBJ_ItemIconAffineSet( syswk->app, FALSE );
         BOX2OBJ_ItemIconCursorOn( syswk->app );
       }
-      BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
+      BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
       vf->seq = ITEMGET_SEQ_END;
     }
     break;
@@ -6520,7 +6520,7 @@ int BOX2MAIN_VFuncItemPartyGetTouch( BOX2_SYS_WORK * syswk )
           CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
           CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_STATUS );
           BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
+          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
           syswk->pokechg_mode = 1;
           syswk->app->old_cur_pos = syswk->get_pos;
           syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ITEM_BOXPARTY_ICONMOVE_POKEADD;
@@ -6574,7 +6574,7 @@ int BOX2MAIN_VFuncItemPartyGetTouch( BOX2_SYS_WORK * syswk )
           BOX2OBJ_ItemIconAffineSet( syswk->app, FALSE );
           BOX2OBJ_ItemIconCursorOn( syswk->app );
         }
-        BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
+        BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
         vf->seq = ITEMGET_SEQ_END;
       }
     }
@@ -6881,7 +6881,7 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           // 戻り先のシーケンスを「つかむ」の処理にする
           BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );
-          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_PASSIVE );
+          BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE );
           syswk->app->old_cur_pos = syswk->get_pos;
           syswk->app->vnext_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE;
         }

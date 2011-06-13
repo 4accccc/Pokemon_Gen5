@@ -1479,19 +1479,22 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
 //--------------------------------------------------------------------------------------------
 void BOX2UI_SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
 {
-  u8  ret, status;
+  u8  ret, status, search;
 
   ret    = BOX2OBJ_TB_ICON_ON;
   status = BOX2OBJ_TB_ICON_ON;
+  search = BOX2OBJ_TB_ICON_ON;
 
   if( syswk->poke_get_key == 1 ){
     ret = BOX2OBJ_TB_ICON_PASSIVE;
     if( syswk->dat->callMode == BOX_MODE_ITEM ){
       status = BOX2OBJ_TB_ICON_OFF;
+      search = BOX2OBJ_TB_ICON_OFF;
     }
   }else{
     if( syswk->dat->callMode == BOX_MODE_ITEM ){
       status = BOX2OBJ_TB_ICON_OFF;
+      search = BOX2OBJ_TB_ICON_OFF;
     }else if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
       if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == FALSE ||
           BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) == 0 ){
@@ -1501,7 +1504,7 @@ void BOX2UI_SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
       status = BOX2OBJ_TB_ICON_PASSIVE;
     }
   }
-  BOX2OBJ_SetTouchBarButton( syswk, ret, BOX2OBJ_TB_ICON_OFF, status );
+  BOX2OBJ_SetTouchBarButton( syswk, ret, BOX2OBJ_TB_ICON_OFF, status, search );
 }
 
 //--------------------------------------------------------------------------------------------

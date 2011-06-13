@@ -464,6 +464,7 @@ typedef struct {
   u8  tb_ret_btn;       // タッチバーに表示している戻るボタンの表示状況
   u8  tb_exit_btn;      // タッチバーに表示している終了ボタンの表示状況
   u8  tb_status_btn;    // タッチバーに表示しているステータスボタンの表示状況
+	u8	tb_search_btn;		// タッチバーに表示している絞込みボタンの表示状況
 
   u32 cur_rcv_pos;      // カーソル表示復帰位置
 

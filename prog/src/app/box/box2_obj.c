@@ -425,11 +425,10 @@ void BOX2OBJ_Init( BOX2_SYS_WORK * syswk )
   ClactAdd( syswk );
 
   BOX2OBJ_SetTouchBarButton(
-    syswk, syswk->tb_ret_btn, syswk->tb_exit_btn, syswk->tb_status_btn );
+		syswk, syswk->tb_ret_btn, syswk->tb_exit_btn, syswk->tb_status_btn, syswk->tb_search_btn );
 
   BOX2OBJ_FontOamInit( syswk->app );
   BOX2OBJ_InitMultiSelectOutline( syswk );   // 複数選択の点線
-//  BOX2OBJ_VanishSearchButton(syswk,FALSE); // 絞り込み開始ボタン
 
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );    // MAIN DISP OBJ ON
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );   // SUB DISP OBJ ON
@@ -3399,15 +3398,17 @@ void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg )
  * @param   ret     戻るボタン
  * @param   exit    終了ボタン
  * @param   status  ステータスボタン
+ * @param		search	絞込みボタン
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status )
+void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status, u8 search )
 {
   syswk->tb_ret_btn    = ret;
   syswk->tb_exit_btn   = exit;
   syswk->tb_status_btn = status;
+  syswk->tb_search_btn = search;
 
   // 戻る
   if( ret == BOX2OBJ_TB_ICON_ON ){
@@ -3439,6 +3440,16 @@ void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 statu
     BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_STATUS, TRUE );
     BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_TB_STATUS, 2 );
   }
+  // 絞込み
+  if( search == BOX2OBJ_TB_ICON_ON ){
+    BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_SEARCH, TRUE );
+    BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_SEARCH, 0 );
+  }else if( search == BOX2OBJ_TB_ICON_OFF ){
+    BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_SEARCH, FALSE );
+  }else{
+    BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_SEARCH, TRUE );
+    BOX2OBJ_AutoAnmSet( syswk->app, BOX2OBJ_ID_SEARCH, 2 );
+  }
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3455,6 +3466,7 @@ void BOX2OBJ_VanishTouchBarButton( BOX2_SYS_WORK * syswk )
   BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_CANCEL, FALSE );
   BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_END, FALSE );
   BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_TB_STATUS, FALSE );
+  BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_SEARCH, FALSE );
 }
 
 
@@ -3914,18 +3926,3 @@ int BOX2OBJ_GetMultiSelectMinPos( int start, int end )
   
   return sy*BOX_MAX_COLUMN+sx;
 }
-
-
-
-//----------------------------------------------------------------------------------
-/**
- * @brief 絞り込み開始ボタンの表示非表示制御
- *
- * @param   syswk   
- */
-//----------------------------------------------------------------------------------
-void BOX2OBJ_VanishSearchButton( BOX2_SYS_WORK *syswk, int flag )
-{
-  BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_SEARCH, flag );
-}
-

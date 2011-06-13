@@ -88,6 +88,11 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	syswk->tb_exit_btn    = BOX2OBJ_TB_ICON_ON;
 	syswk->tb_ret_btn     = BOX2OBJ_TB_ICON_ON;
 	syswk->tb_status_btn  = BOX2OBJ_TB_ICON_OFF;
+	if( syswk->dat->callMode == BOX_MODE_SEIRI || syswk->dat->callMode == BOX_MODE_BATTLE ){
+		syswk->tb_search_btn  = BOX2OBJ_TB_ICON_ON;
+	}else{
+		syswk->tb_search_btn  = BOX2OBJ_TB_ICON_OFF;
+	}
 
 	// ƒ[ƒJƒ‹‚o‚q‚n‚bì¬
 	syswk->localProc = GFL_PROC_LOCAL_boot( HEAPID_BOX_SYS );

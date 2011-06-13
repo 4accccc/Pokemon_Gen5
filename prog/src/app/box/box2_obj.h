@@ -1056,11 +1056,12 @@ extern void BOX2OBJ_ChangeTrayName( BOX2_SYS_WORK * syswk, u32 pos, BOOL flg );
  * @param   ret     戻るボタン
  * @param   exit    終了ボタン
  * @param   status  ステータスボタン
+ * @param		search	絞込みボタン
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status );
+extern void BOX2OBJ_SetTouchBarButton( BOX2_SYS_WORK * syswk, u8 ret, u8 exit, u8 status, u8 search );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1153,4 +1154,3 @@ extern void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int 
 extern void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end );
 extern void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height );
 extern int BOX2OBJ_GetMultiSelectMinPos( int start, int end );
-extern void BOX2OBJ_VanishSearchButton( BOX2_SYS_WORK *syswk, int flag );
