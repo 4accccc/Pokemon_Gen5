@@ -5420,7 +5420,7 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
         BOX2OBJ_SetPos( syswk->app, icon, x, y-HANDCURSOR_MOVE_DOT, CLSYS_DEFREND_MAIN );
       }
     }
-    if(syswk->mv_cnv_mode!=3){
+    if( syswk->mv_cnv_mode != 2 ){
       BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
     }
     vf->cnt++;

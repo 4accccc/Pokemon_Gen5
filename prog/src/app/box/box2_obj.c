@@ -2612,10 +2612,12 @@ void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, int index, BOOL flg )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_SetHandCursorAnm( BOX2_SYS_WORK * syswk, u32 anm )
 {
-  if( syswk->mv_cnv_mode == 1 ){
-    anm = anm - BOX2OBJ_ANM_HAND_NORMAL + BOX2OBJ_ANM_HAND2_NORMAL;
-  }
-  BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, anm );
+	if( syswk->mv_cnv_mode == 1 ){
+		anm = anm - BOX2OBJ_ANM_HAND_NORMAL + BOX2OBJ_ANM_HAND2_NORMAL;
+	}else if( syswk->mv_cnv_mode == 2 ){
+		anm = anm - BOX2OBJ_ANM_HAND_NORMAL + BOX2OBJ_ANM_MULTI_NORMAL;
+	}
+	BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, anm );
 }
 
 //--------------------------------------------------------------------------------------------
