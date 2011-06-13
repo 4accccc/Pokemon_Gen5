@@ -25,6 +25,9 @@
 //ポケウッドでセーブする１クライアントあたりの手持ち数
 #define POKEWOOD_REC_TEMOTI_MAX             (6)
 
+//-------------------------------------
+///	ロード番号
+//=====================================
 typedef enum
 {
   LOADDATA_POKEWOOD0 = LOADDATA_MAX,  //battle_rec.hのロードデータの続きから始まる
@@ -33,6 +36,15 @@ typedef enum
   LOADDATA_POKEWOOD3,
   LOADDATA_POKEWOOD4,
 }POKEWOOD_LOADDATA_NUM;
+
+//-------------------------------------
+///	取得引数
+//=====================================
+typedef enum 
+{
+  POKEWOOD_REC_PARAM_SENARIO, //シナリオナンバー
+} POKEWOOD_REC_PARAM;
+
 
 //=============================================================================
 /**
@@ -72,6 +84,7 @@ extern BOOL POKEWOOD_REC_IsExist( void );
 
 //取得
 extern POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void );
+extern u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param );
 
 //撮影データを上映データへ変換
 //->battle_rec_tool.cにあるのでBattleRec_LoadToolModuleしてください

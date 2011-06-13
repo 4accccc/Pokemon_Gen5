@@ -243,6 +243,27 @@ POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void )
   GF_ASSERT( sp_pokewood_rec_sv != NULL );
   return &sp_pokewood_rec_sv->rec;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録画データから詳細データ取得
+ *
+ *	@param	POKEWOOD_REC_PARAM param  何のデータを取得するか
+ *
+ *	@return データ
+ */
+//-----------------------------------------------------------------------------
+u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param )
+{
+  GF_ASSERT( sp_pokewood_rec_sv != NULL );
+  switch( param )
+  {
+  case POKEWOOD_REC_PARAM_SENARIO:
+    return sp_pokewood_rec_sv->rec.senario.senario_no;
+  default:
+    GF_ASSERT(0);
+    return 0;
+  }
+}
 
 
 //----------------------------------------------------------------------------
