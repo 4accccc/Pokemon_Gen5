@@ -96,6 +96,12 @@ void * GIMMICKWORK_GetExWork(GIMMICKWORK * gimmick, int gimmick_id)
 	return gimmick->ex_work;
 }
 
+void * GIMMICKWORK_GetExWork2(GIMMICKWORK * gimmick, int gimmick_id)
+{
+	GF_ASSERT_MSG(gimmick->id == gimmick_id," %d  %d\n",gimmick->id,gimmick_id);
+	return &gimmick->ex_work2;
+}
+
 //---------------------------------------------------------------------------
 /**
  * @brief	仕掛け用ワークのID取得

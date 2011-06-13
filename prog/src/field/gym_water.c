@@ -59,6 +59,7 @@
 
 #define HASU_NUM   (11)   // ハスの個数
 
+// ハス座標
 #define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
 #define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
 #define HASU2_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　X座標
@@ -81,6 +82,32 @@
 #define HASU10_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　Z座標
 #define HASU11_X   (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　X座標
 #define HASU11_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　Z座標
+
+// クリア後のハス座標
+#define HASU1_CLEAR_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
+#define HASU1_CLEAR_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
+#define HASU2_CLEAR_X    (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　X座標
+#define HASU2_CLEAR_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスB　Z座標
+#define HASU3_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　X座標
+#define HASU3_CLEAR_Z    (58 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスC　Z座標
+#define HASU4_CLEAR_X    (19 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　X座標
+#define HASU4_CLEAR_Z    (52 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスD　Z座標
+#define HASU5_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　X座標
+#define HASU5_CLEAR_Z    (49 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスE　Z座標
+#define HASU6_CLEAR_X    ( 9 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　X座標
+#define HASU6_CLEAR_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスF　Z座標
+#define HASU7_CLEAR_X    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　X座標
+#define HASU7_CLEAR_Z    (37 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスG　Z座標
+#define HASU8_CLEAR_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　X座標
+#define HASU8_CLEAR_Z    (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスH　Z座標
+#define HASU9_CLEAR_X    ( 7 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　X座標
+#define HASU9_CLEAR_Z    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスI　Z座標
+#define HASU10_CLEAR_X   (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　X座標
+#define HASU10_CLEAR_Z   (61 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスJ　Z座標
+#define HASU11_CLEAR_X   (25 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　X座標
+#define HASU11_CLEAR_Z   (13 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスK　Z座標
+
+#define HASU_ID_CLEAR   (3)   // 乗るとクリアとするハスID
 
 // アニメ
 #define HASU_ANM        (0)   // 常時たゆわう
@@ -550,6 +577,9 @@ static void SAVE_SetSaveFlag( GYM_WATER_SV_WORK *p_wk );
 static BOOL SAVE_GetSaveFlag( GYM_WATER_SV_WORK *p_wk );
 static void SAVE_SetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx, const u8 obj_idx );
 static u8   SAVE_GetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx );
+// ギミック外でも破棄されない
+static void SAVE_SetClearFlag( GIMMICKWORK* p_gmkwk, const BOOL flag );
+static BOOL SAVE_GetClearFlag( GIMMICKWORK* p_gmkwk );
 
 
 #ifdef GYM_WATER_DEBUG_MENU
@@ -652,6 +682,19 @@ void GYM_WATER_Move(FIELDMAP_WORK *p_fieldmap)
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
     {
+      GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+      GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
+      SAVE_SetClearFlag( p_gmkwk, TRUE );
+      ICHI_Printf("クリアフラグ TRUE \n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+      GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
+      SAVE_SetClearFlag( p_gmkwk, FALSE );
+      ICHI_Printf("クリアフラグ FALSE \n");
     }
   }
 #endif
@@ -780,7 +823,14 @@ GMEVENT * GYM_WATER_CheckHasuEvent( GAMESYS_WORK *p_gamesys )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
+
   u8 i;
+
+  // クリアフラグ
+  BOOL clear_flag = SAVE_GetClearFlag( p_gmkwk );
 
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, GYM_WATER_UNIT_IDX);
@@ -803,6 +853,20 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
       { HASU11_X, 0, HASU11_Z },
     };
 
+    VecFx32 clear_pos[ HASU_NUM ] = {
+      { HASU1_CLEAR_X, 0, HASU1_CLEAR_Z },
+      { HASU2_CLEAR_X, 0, HASU2_CLEAR_Z },
+      { HASU3_CLEAR_X, 0, HASU3_CLEAR_Z },
+      { HASU4_CLEAR_X, 0, HASU4_CLEAR_Z },
+      { HASU5_CLEAR_X, 0, HASU5_CLEAR_Z },
+      { HASU6_CLEAR_X, 0, HASU6_CLEAR_Z },
+      { HASU7_CLEAR_X, 0, HASU7_CLEAR_Z },
+      { HASU8_CLEAR_X, 0, HASU8_CLEAR_Z },
+      { HASU9_CLEAR_X, 0, HASU9_CLEAR_Z },
+      { HASU10_CLEAR_X, 0, HASU10_CLEAR_Z },
+      { HASU11_CLEAR_X, 0, HASU11_CLEAR_Z },
+    };
+
     u16 obj_idx = i;    // OBJインデックス
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
@@ -821,8 +885,18 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
 
       if( save_x == 0 && save_z == 0 )
       {
-        status->trans.x = pos[i].x;
-        status->trans.z = pos[i].z;
+        if( clear_flag == FALSE )
+        {
+          // クリア前座標
+          status->trans.x = pos[i].x;
+          status->trans.z = pos[i].z;
+        }
+        else
+        {
+          // クリア後座標
+          status->trans.x = clear_pos[i].x;
+          status->trans.z = clear_pos[i].z;
+        }
       }
       else
       {
@@ -1236,6 +1310,17 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
       
       // セーブしたフラグを立てる
       SAVE_SetSaveFlag( p_gym_wk->p_sv_wk );
+
+      // ハスIDがHASU_ID_CLEARはギミック解いたとなる
+      if( p_wk->id == HASU_ID_CLEAR )
+      {
+        GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+        GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+        GIMMICKWORK   *p_gmkwk = GAMEDATA_GetGimmickWork(p_gdata);
+
+        // クリアフラグON
+        SAVE_SetClearFlag( p_gmkwk, TRUE );
+      }
 
       *seq = SEQ_END;
     }
@@ -2376,6 +2461,50 @@ static void SAVE_SetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx, const u8 obj_idx )
 static u8   SAVE_GetObjIdx( GYM_WATER_SV_WORK *p_wk, int idx )
 {
   return p_wk->ex_obj_idx[ idx ];
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  クリア(ギミック解いた)フラグ設定
+ *
+ *	@param	GIMMICKWORK* p_gmkwk  ギミックワーク
+ *	@param	BOOL flag             クリアフラグ
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetClearFlag( GIMMICKWORK* p_gmkwk, const BOOL flag )
+{
+  u8 *ex_wk;
+
+  // セーブアドレス取得
+  ex_wk = GIMMICKWORK_GetExWork2( p_gmkwk, FLD_GIMMICK_GYM_WATER );
+
+  if( flag == TRUE ){ *ex_wk = 1; }
+  else              { *ex_wk = 0; }
+
+  ICHI_Printf("クリアフラグセーブ設定 %d \n", *ex_wk);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  クリア(ギミック解いた)フラグ取得
+ *
+ *	@param	GIMMICKWORK* p_gmkwk  ギミックワーク
+ *
+ *	@return BOOL  クリアフラグ
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetClearFlag( GIMMICKWORK* p_gmkwk )
+{
+  u8 *ex_wk;
+
+  // セーブアドレス取得
+  ex_wk = GIMMICKWORK_GetExWork2( p_gmkwk, FLD_GIMMICK_GYM_WATER );
+
+  ICHI_Printf("クリアフラグセーブ取得 %d \n", *ex_wk);
+
+  if( *ex_wk == 1 ){ return TRUE; }
+  else             { return FALSE;}
 }
 
 #ifdef GYM_WATER_DEBUG_MENU
