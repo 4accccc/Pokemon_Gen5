@@ -162,20 +162,21 @@ ev_leader6_btl:
 	_BALLOONWIN_CLOSE()
 	
 	//================================================//
-	
 	//ジムトレーナーの視線無効
 	_TRAINER_FLAG_SET( TRID_PILOT_04 )
 	_TRAINER_FLAG_SET( TRID_PILOT_05 )
 	_TRAINER_FLAG_SET( TRID_PILOT_06 )
 	_TRAINER_FLAG_SET( TRID_PILOT_07 )
 	_TRAINER_FLAG_SET( TRID_PILOT_08 )
-			
 	//================================================//
-
 	//電光掲示板フラグセット
 	_FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
-
 	//================================================//
+	//POSイベント進行
+	$WK_SCENE_C06GYM = 1
+	$WK_SCENE_C06HAKASE += 1
+	//================================================//
+
 _RET
 
 /************************************************************/
@@ -189,11 +190,15 @@ EVENT_START   ev_pos_c06gym0101_guide
 
     // ガイドのX座標を自機に合わせる
     {
-      DEFINE_LOCAL	LWK_HERO_X
-      DEFINE_LOCAL	LWK_HERO_Z
+      DEFINE_LOCAL	LWK_HERO_X
 
-      //自機の位置取得
-      _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+      DEFINE_LOCAL	LWK_HERO_Z
+
+
+      //自機の位置取得
+
+      _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+
       // ガイドのX座標変更
       // 左向きなのは、回転後に見た目がいいから
       _OBJ_POS_CHANGE( C06GYM0101_DANPEI_01, LWK_HERO_X, 0, 37, DIR_LEFT )
@@ -221,12 +226,16 @@ EVENT_START   ev_pos_c06gym0101_guide
 		ENDIF
 
     // 元の位置に戻る
-    _OBJ_ANIME_AUTO( C06GYM0101_DANPEI_01, 12, 46, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_AUTO( C06GYM0101_DANPEI_01, 12, 46, FORCE_TYPE_NPC, 8, DIR_LR)
+
     _OBJ_ANIME( C06GYM0101_DANPEI_01, anm_dir_l )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 11, 46, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 11, 46, FORCE_TYPE_NPC, 8, DIR_LR)
+
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
-    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME_WAIT()
+
 
     // カメラ操作とメッセージ
     _CALL move_camera_start

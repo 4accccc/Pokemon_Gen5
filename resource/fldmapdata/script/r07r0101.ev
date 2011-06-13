@@ -19,4 +19,128 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA			ev_r07r0101_hakase2_01
 _EVENT_DATA_END
+
+//主人公の座標、方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+
+/**************************************************************/
+/* アララギ博士01                                             */
+/**************************************************************/
+EVENT_START		ev_r07r0101_hakase2_01
+
+	_TALK_OBJ_START()
+
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
+
+	//イベント進行状況
+	IF $WK_SCENE_C06HAKASE == 1 THEN		//最初に話しかけた場合のみ
+
+		//アララギ：あら？　まだ　かててないのね▼
+		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_01 )
+		_MSGWIN_CLOSE()
+
+		//アイテム入手：しあわせタマゴ
+		_ITEM_EVENT_KEYWAIT( ITEM_SIAWASETAMAGO, 1 )
+
+		//アララギ：その　しあわせタマゴを
+		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_02 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+		//========================================//
+		//POSイベント進行
+		$WK_SCENE_C06HAKASE += 1
+		//========================================//
+
+	ELSIF $WK_SCENE_C06HAKASE == 3 && $SCWK_TEMP0 == 1 THEN		//フキヨセジム攻略後
+
+		//アララギ：あら！　ジェットバッジ　じゃない！
+		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_05 )
+		_MSGWIN_CLOSE()
+
+		//アイテム入手：しあわせタマゴ
+		_ITEM_EVENT_KEYWAIT( ITEM_SIAWASETAMAGO, 1 )
+
+		//アララギ：その　しあわせタマゴを
+		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_06 )
+
+		//アララギ：じゃ　フキヨセで　まってるわね！▼
+		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_07 )
+		_MSGWIN_CLOSE()
+
+		//自機座標取得
+		_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+		//アニメ：博士退場
+		IF $LCW_POSX == 17 && $LCW_POSZ == 16 THEN
+			_OBJ_ANIME_AUTO( R07R0101_HAKASE2_01, 16, 15, FORCE_TYPE_NPC, 8, DIR_LR )
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME_AUTO( R07R0101_HAKASE2_01, 16, 27, FORCE_TYPE_NPC, 8, DIR_UD )
+			_TIME_WAIT( 16 )
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+			_OBJ_ANIME_WAIT()
+			ELSE
+			_OBJ_ANIME_AUTO( R07R0101_HAKASE2_01, 17, 27, FORCE_TYPE_NPC, 8, DIR_UD )
+			_TIME_WAIT( 8 )
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+			_OBJ_ANIME_WAIT()
+		ENDIF
+
+		_OBJ_DEL( R07R0101_HAKASE2_01 )		//博士退場
+
+		//========================================//
+		//POSイベント進行
+		$WK_SCENE_C06HAKASE += 1
+		//========================================//
+		//アララギ博士を非表示
+		_FLAG_SET( FV_R07R0101_HAKASE2_01 )
+		//========================================//
+		//カーゴサービス内のアララギ博士を非表示
+		_FLAG_RESET( FV_C06R0201_HAKASE2_01 )
+		//========================================//
+
+	ELSIF $WK_SCENE_C06HAKASE == 2 THEN		//フキヨセジム攻略まで繰り返し
+
+		//アララギ：タワーオブヘブン……		
+		_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+

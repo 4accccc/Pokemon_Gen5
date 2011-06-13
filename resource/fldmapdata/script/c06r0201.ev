@@ -21,6 +21,9 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c06r0201_waitress_01
 _EVENT_DATA    ev_c06r0201_veteranw_01
+_EVENT_DATA    ev_c06r0201_swleader6_01
+_EVENT_DATA    ev_c06r0201_hakase2_01
+
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -80,11 +83,193 @@ ev_item_get:
 	ENDIF
 _RET
 
+
 /**************************************************************/
 /*  c06r0201_veteranw_01　アイテム入手イベント*/
 /**************************************************************/
 EVENT_START   ev_c06r0201_veteranw_01
 	//【仮】入手内容を変更
 	_EASY_TALK_ITEM_EVENT( ITEM_SURUDOIKUTIBASI, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
-	
+
 EVENT_END
+
+
+/************************************************************/
+/*				フウロ話しかけ（ヤマジタウンへ） */
+/************************************************************/
+EVENT_START		ev_c06r0201_swleader6_01
+
+{
+
+	//バッジフラグ取得
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
+
+	//イベント進行状況確認
+	IF $WK_SCENE_C06HAKASE <= 3 && $SCWK_TEMP0 == 1 THEN		//博士と合流していない
+
+		_TALK_OBJ_START()
+		//フウロ：タワーオブヘブンは
+		_BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_01, C06R0201_SWLEADER6_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+	ELSIF $WK_SCENE_C06HAKASE == 4 THEN		//博士と合流している
+
+		//初めて話しかけたか
+		IF FLAG_OFF( FE_C06R0201_SWLEADER6_01 ) THEN
+
+			_TALK_OBJ_START()
+			//フウロ：はかせの　ちょうさも
+			_BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_02, C06R0201_SWLEADER6_01 )
+			_LAST_KEYWAIT()
+
+			//========================================//
+			//２度目以降から下のセリフに
+			_FLAG_SET( FE_C06R0201_SWLEADER6_01 )
+			//========================================//
+
+			ELSE
+			_TALK_OBJ_START()
+			//フウロ：ね　ひこうきに　のる？
+			_BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_05, C06R0201_SWLEADER6_01 )
+			_LAST_KEYWAIT()
+
+		ENDIF
+
+		_YES_NO_WIN( SCWK_ANSWER )
+
+		//飛行機に乗る？
+		IF $SCWK_ANSWER == SCR_YES THEN			//はい
+
+			//フウロ：じゃ　いきましょ！
+			_BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_03, C06R0201_SWLEADER6_01 )
+			_MSGWIN_CLOSE()
+
+			//アララギ：もくてきは　ソウリュウシティ！
+			_BALLOONWIN_OBJMSG( msg_c06r0201_hakase2_01, C06R0201_HAKASE2_01 )
+			_MSGWIN_CLOSE()
+
+			//========================================//
+			//ベル表示
+			_FLAG_RESET( FV_C06R0201_SWBELL_01 )
+			//========================================//
+			_OBJ_ADD( C06R0201_SWBELL_01 )	//ベル登場
+
+			//【仮】階段SE（SEは仮です）
+			_SE_PLAY( SEQ_SE_KAIDAN )
+
+			_TIME_WAIT( 8 )
+			_SE_WAIT()
+
+			//アニメ：主人公振り向き
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+			_OBJ_ANIME( C06R0201_HAKASE2_01, anm_common_turn_d )
+			_OBJ_ANIME( C06R0201_SWLEADER6_01, anm_common_turn_d )
+			_OBJ_ANIME_WAIT()
+
+			//アニメ：ベル移動
+			_OBJ_ANIME_AUTO( C06R0201_SWBELL_01, 14, 21, FORCE_TYPE_NPC, 8, DIR_UD )
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME_AUTO( C06R0201_SWBELL_01, 18, 21, FORCE_TYPE_NPC, 8, DIR_LR )
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME( C06R0201_SWBELL_01, anm_common_turn_u )
+			_OBJ_ANIME_WAIT()
+
+			//ベル：はあ　はあ▼
+			_BALLOONWIN_OBJMSG( msg_c06r0201_swbell_01, C06R0201_SWBELL_01 )
+			_MSGWIN_CLOSE()
+
+			//アララギ：あら！？　ベルったら▼
+			_BALLOONWIN_OBJMSG( msg_c06r0201_hakase2_02, C06R0201_HAKASE2_01 )
+			_MSGWIN_CLOSE()
+
+			//フウロ：うふふ
+			_BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_06, C06R0201_SWLEADER6_01 )
+			_MSGWIN_CLOSE()
+
+			//暗転【仮】発着デモへ（詳細未定）
+			_BLACK_OUT_SLOW()
+			_DISP_FADE_END_CHECK()
+
+			//フウロ、博士、ベル削除
+			_OBJ_DEL( C06R0201_SWLEADER6_01 )
+			_OBJ_DEL( C06R0201_HAKASE2_01 )
+			_OBJ_DEL( C06R0201_SWBELL_01 )
+
+			//========================================//
+			//暗転中にフウロ、博士、ベルを非表示
+			_FLAG_SET( FV_C06R0201_SWLEADER6_01 )
+			_FLAG_SET( FV_C06R0201_HAKASE2_01 )
+			_FLAG_SET( FV_C06R0201_SWBELL_01 )
+			//========================================//
+
+			//暗転復帰
+			_BLACK_IN_SLOW()
+			_DISP_FADE_END_CHECK()
+
+			_TIME_WAIT( 15 )
+
+			//いいえ
+			ELSE
+
+			//フウロ：りょうかい！
+			_BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_04, C06R0201_SWLEADER6_01 )
+			_MSGWIN_CLOSE()
+
+		ENDIF
+
+	ENDIF
+
+}
+EVENT_END
+
+
+/************************************************************/
+/*				フウロ話しかけ（ヤマジタウンへ） */
+/************************************************************/
+EVENT_START		ev_c06r0201_hakase2_01
+
+	_TALK_OBJ_START()
+	//アララギ：かりメッセージ【仮】
+	_BALLOONWIN_OBJMSG( msg_c06r0201_hakase2_03, C06R0201_HAKASE2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+

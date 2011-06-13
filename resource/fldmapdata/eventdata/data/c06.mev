@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/22 18:25:26
+#save date:2011/06/10 18:27:09
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\C06.wms
 #hold event type:
 1
 #hold event number:
-3
+5
 #event number: 0
 #type
 1
@@ -103,6 +103,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -920
+#event number: 3
+#type
+1
+#ID name
+C06_SWLEADER6_01
+#OBJ CODE Number
+SWLEADER6
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C06_SWLEADER6_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 -408
+#event number: 4
+#type
+1
+#ID name
+C06_HAKASE2_01
+#OBJ CODE Number
+HAKASE2
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C06_SWLEADER6_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 -408
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -200,7 +262,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_C06_HAKASE_01
+#Pos Script Name
+SCRID_POS_C06_HAKASE_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C06HAKASE
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+328 0 -472
+#size
+5 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

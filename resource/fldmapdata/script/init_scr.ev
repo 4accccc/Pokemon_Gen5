@@ -43,7 +43,12 @@ init_flags:
 	
 	//C06R101のGIRL1に話しかけるまで、C06のモンスターボールを非表示
 	_FLAG_SET( FV_C06_MONSTERBALL )	
-	
+
+	//C06R0201のフキヨセジムクリアと博士と合流までフウロ、博士、ベルを非表示
+	_FLAG_SET( FV_C06R0201_SWLEADER6_01 )
+	_FLAG_SET( FV_C06R0201_HAKASE2_01 )
+	_FLAG_SET( FV_C06R0201_SWBELL_01 )
+
 	//C06のモンスターボールをに話しかけるまで、BOY2とBABYGIRL1を非表示
 	_FLAG_SET( FV_C06_GIRLBOY_01 )	
 	
