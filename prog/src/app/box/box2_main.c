@@ -2475,7 +2475,6 @@ static void PokeIconDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_po
   u32 get;
   u32 ppcnt;
   u32 i;
-  int tray,pos;
 
   work = syswk->app->vfunk.work;
   dat  = work->dat;
@@ -2505,10 +2504,13 @@ static void PokeIconDropDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_po
   }
 
   // ŠJ‚¢‚Ä‚¢‚éêŠ‚ð’T‚·
-  tray = syswk->tray;
-  pos  = put_pos;
-  BOXDAT_GetEmptyTrayNumberAndPos( syswk->dat->sv_box, &tray, &pos );
-  put_pos = pos;  // put_pos‚ª‹ó‚«‚Å‚ ‚ê‚Î‚»‚Ì‚Ü‚Ü•Ô‚Á‚Ä‚­‚é‚Í‚¸
+  if( BOX2MAIN_PokeParaGet( syswk, put_pos, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
+		int	tray, pos;
+		tray = syswk->tray;
+		pos  = 0;
+		BOXDAT_GetEmptyTrayNumberAndPos( syswk->dat->sv_box, &tray, &pos );
+		put_pos = pos;
+	}
 
   work->get_pos = get_pos;
   work->put_pos = put_pos;
