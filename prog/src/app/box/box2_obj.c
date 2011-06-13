@@ -2587,8 +2587,8 @@ void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, int index, BOOL flg )
       syswk->dat->callMode != BOX_MODE_ITEM ){
     for(i=0;i<BOX2OBJ_ID_CONV_BUTTON3-BOX2OBJ_ID_CONV_BUTTON+1;i++){
       BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON+i, FALSE );
-      return;
     }
+		return;
   }
 
   // Žw’è‚Ìƒ{ƒ^ƒ“‚ð‚n‚m‚µ‚Ä‚»‚êˆÈŠO‚Ìƒ{ƒ^ƒ“‚ð‚n‚e‚e‚É‚·‚é
