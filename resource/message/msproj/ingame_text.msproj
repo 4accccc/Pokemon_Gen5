@@ -2342,7 +2342,7 @@
 				<Default>
 					<WidthCalcInfo
 						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
-						<Pixels>400</Pixels>
+						<Pixels>104</Pixels>
 						<AffectedMagnification>True</AffectedMagnification>
 					</WidthCalcInfo>
 				</Default>
@@ -2483,7 +2483,7 @@
 				<Default>
 					<WidthCalcInfo
 						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
-						<Pixels>400</Pixels>
+						<Pixels>52</Pixels>
 						<AffectedMagnification>True</AffectedMagnification>
 					</WidthCalcInfo>
 				</Default>
@@ -4117,7 +4117,7 @@
 			<Tag
 				TagName="xright"
 				HasInside="False"
-				CompareError="Warning">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>Ｘ右寄せ</US_English>
 					<Japanese>Ｘ右寄せ</Japanese>
@@ -4147,7 +4147,7 @@
 			<Tag
 				TagName="xadd"
 				HasInside="False"
-				CompareError="Warning">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>X加算</US_English>
 					<Japanese>X加算</Japanese>
@@ -4177,7 +4177,7 @@
 			<Tag
 				TagName="xset"
 				HasInside="False"
-				CompareError="Warning">
+				CompareError="Strict">
 				<MultilingualName>
 					<US_English>X指定</US_English>
 					<Japanese>X指定</Japanese>
