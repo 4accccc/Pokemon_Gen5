@@ -19,7 +19,7 @@
 
 #include "../btlv/btlv_effect.h"
 
-//#include "ui/print_tool.h"
+//#include "ui/print_tool.h"		// overlayの関係上使えない
 #include "pokeicon/pokeicon.h"
 
 #include "b_app_tool.h"
@@ -587,6 +587,7 @@ void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode )
 		wk->PrintUtil[i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
 		// スクリーンは一度でよいはず
 		// このタイミングでは、画面にゴミが入ってしまう
+		// => スクリーンを作成するのは最後
 //		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
 //		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
 //		GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
@@ -992,8 +993,7 @@ void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, cons
 	GFL_HEAP_FreeMemory( buf );
 	//
 	GFL_ARC_CloseDataHandle( ah );
-	// パレット変更(転送した番号 + offset)
-//	GFL_CLACT_WK_SetPlttOffs( wk->clwk[wnum], 4+APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	// パレット変更(転送した番号(読み込ませた際にセットされる) + offset)
 	GFL_CLACT_WK_SetPlttOffs( wk->clwk[wnum], APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
@@ -1051,7 +1051,7 @@ static void bscmn_init_obj_clwk( BSCENARIO_WORK* wk, const s32 drawtype, const B
 	buf[1] = iadr[1];		// chr(未使用)
 	buf[2] = iadr[2];		// cel
 	buf[3] = iadr[3];		// max
-	buf[4] = iadr[4];		// mode(0:type、1:poke、2:cursor)
+	buf[4] = iadr[4];		// mode(0:type、1:poke、2:cursor、3:arrow)
 	//
 	// アドレスセット
 	if(buf[4] == BS_CLWKMODE_NORMAL){		// 通常
@@ -1156,7 +1156,7 @@ void BsCmn_InitObj( BSCENARIO_WORK* wk )
 		GFL_CLACT_WK_SetPlttOffs( wk->clwk_cursor[i], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
 	// 半透明設定
-	// パラメータの設定はG2S_SetBlendAlpha
+	// パラメータの設定はG2S_SetBlendAlphaで行う
 	// 第1対象面にはobjは含まないようにすること(全objにかかってしまう)
 	GFL_CLACT_WK_SetObjMode( wk->clwk_arrow[BS_CLWK_ARROW_UPMARK], GX_OAM_MODE_XLU );
 }
@@ -1216,7 +1216,7 @@ void BsCmn_ExitObj( BSCENARIO_WORK* wk )
  *	@brief  OBJの表示/非表示
  *
  *	@param	BSCENARIO_WORK*		wk
- *	@param	const s32			(0:通常、1:ポケモン、2:カーソル)
+ *	@param	const s32			(0:通常、1:ポケモン、2:カーソル、3:矢印)
  *	@param	const s32			objワーク番号
  *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
@@ -1436,7 +1436,7 @@ void BsCmn_ChgScreen( BSCENARIO_WORK *wk, const s32 num, const s32 mode )
 	//
 	pnum = bs_apal_tbl[2*num+mode];
 	//
-	// 書き換え(単一のカラーになってしまうので注意)
+	// 書き換え(領域は単一のカラーになってしまうので注意)
 	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME3_S, buf[0], buf[1], buf[2], buf[3], pnum );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
 }
@@ -1537,7 +1537,7 @@ void BsCmn_DispUpMark( BSCENARIO_WORK *wk, const s32 mode )
 	}
 	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_UPMARK, bflg );
 	//
-	// ある場合はアニメ再生
+	// ある場合はアニメ再生(なくてもよい)
 //	if(bflg == TRUE){
 //		BsCmn_ChgSeq( wk, BS_CLWK_ARROW_UPMARK, BS_SEQ_UPMARK );
 //	}

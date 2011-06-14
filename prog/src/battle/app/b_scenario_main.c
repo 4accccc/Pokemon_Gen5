@@ -275,12 +275,11 @@ static void bs_set_pokework( BSCENARIO_WORK * wk );
 static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode );
 // 個数計算
 static void bs_calc_hintnum( BSCENARIO_WORK * wk );
-//
+// カーソル、矢印関連
 static void bs_chk_limit( BSCENARIO_WORK * wk, const s32 mode, const s32 smode );
 static void bs_disp_arrow( BSCENARIO_WORK * wk );
-//
 static void bs_disp_cursor( BSCENARIO_WORK * wk, const s32 mode, const s32 num );
-//
+// タイムアウトの判定
 static BOOL bs_chk_timeout( BSCENARIO_WORK * wk );
 
 //============================================================================================
@@ -335,6 +334,8 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	wk->SubMode		= STEP_INIT;
 	wk->TitleMode	= BS_TOP;
 	wk->AnimFlag	= 0;
+	wk->AnimNum		= 0;
+	wk->AnimType	= 0;
 	wk->PFlag		= 0;
 	//
 	// 台本番号

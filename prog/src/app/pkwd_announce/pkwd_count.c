@@ -28,12 +28,21 @@
 
 #include "system/wipe.h"
 
+//FONT
+#include "print/gf_font.h"
+#include "font/font.naix"
+
+//PRINT_QUE
+#include "print/printsys.h"
+
+
 #include "app/pkwd_count.h"
 
 #include "pkwd_announce_gra.naix"
+#include "msg/msg_pw_movietitle.h"		// test
 
 // メッセージ
-//#include "message.naix"
+#include "message.naix"
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -67,6 +76,8 @@ enum{
 // 下：OBJ (0:mark)
 enum{
 	// 何本目か(bg)
+	PLTID_MAIN_BG_TITLE			= 4,		// タイトル
+	//
 	PLTID_MAIN_BG_LOGO			= 8,		// ロゴ(1本に収まらないときはまとめてもらうこと)
 	//
 	// 何番目か
@@ -81,6 +92,10 @@ enum{
 	PKWD_COUNT_LOGO_OBJ_MAXNUM	= 2,		// obj
 	//
 	PKWD_COUNT_BGNUM_MAXNUM		= 8,		// bg
+	//
+	PKWD_COUNT_CANVAS_MAXNUM	= 2,		// canvas
+	//
+	PKWD_COUNT_MES_MAX			= 2,
 };
 
 
@@ -139,6 +154,8 @@ enum{
 enum{
 	TIMER_WAIT,								// タイマ(暗い画面)
 	TIMER_WAIT2,							// タイマ(ロゴ表示)
+	TIMER_WAIT3,							// タイマ(タイトル)
+	TIMER_PAD,
 	
 	TIMER_MAX,
 };
@@ -147,6 +164,10 @@ enum{
 enum{
 	WAIT_BLACK_MAX		= 60,				// 待ち(暗い画面)
 	WAIT_LOGO_MAX		= 60*3,				// 待ち(ロゴ表示)
+	WAIT_BG_MAX			= 60*1,				// 待ち(BG待ち)
+	WAIT_TITLE_MAX		= 60*3,				// 待ち(タイトル表示)
+	//
+	MES_POSX			= 104,				// 中央
 };
 
 //-------------------
@@ -202,6 +223,11 @@ typedef struct
 	//
 	PKWD_COUNT_PARAM 		*Param;						// 参照用として保存
 	//
+	GFL_FONT				*font;									///< フォント
+	PRINT_QUE				*print_que;								///< que
+	PRINT_UTIL				PrintUtil[PKWD_COUNT_CANVAS_MAXNUM];	///< 文字表示用
+	GFL_MSGDATA				*MsgData[PKWD_COUNT_MES_MAX];			///< 
+	//
 	s32						Step;						// ステップ
 	s32						Count;						// カウント
 	u32						Flag;						// フラグ
@@ -256,18 +282,31 @@ typedef struct{
 	u8				poff;			// パレットのオフセット
 }PKWD_COUNT_BGSCN_DATA;
 
+//-----------------------------------------
+// 文字用の定義(表示領域の設定:CANVAS)
+//------------------------------------------
+typedef struct{
+	u8				frmnumber;		// BG上下(frame定義なので注意)(0xffの場合は終了判定)
+	u8				x;				// 座標
+	u8				y;
+	u8				width;			// サイズ
+	u8				height;
+	u8				palnum;			// パレット番号
+}PKWD_CANVAS_DATA;
+
 //=============================================================================
 /**
  *							データ定義(要整理)
  */
 //=============================================================================
 //---------------
-// BG関連
+// BG関連(ロゴ)
 //---------------
 // BGPAL
 static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_tbl[] = {
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_count_bg_NCLR,	0,	2,},		// 下、BG
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_logo_NCLR,	PLTID_MAIN_BG_LOGO,	2,},		// 上、ロゴ
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_count_bg_NCLR,	0,	2,},							// 下、BG
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// タイトル
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_logo_NCLR,	PLTID_MAIN_BG_LOGO,	2,},				// 上、ロゴ
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -286,6 +325,32 @@ static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_tbl[] = {
 	{ GFL_BG_FRAME2_M,	NARC_pkwd_announce_gra_pkwd_count_bg2_NSCR,	0,	0,},		// 下、BG2(512x512)
 	{ GFL_BG_FRAME3_M,	NARC_pkwd_announce_gra_pkwd_count_bg1_NSCR,	0,	0,},		// 下、BG3
 	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_logo_NSCR,	0,	PLTID_MAIN_BG_LOGO,},		// 上、ロゴ(注意)
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
+//---------------
+// BG関連(タイトル)
+//---------------
+// BGPAL(パレットは、始めにまとめて転送すること)
+static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
+//	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	0,	0,},	// タイトル
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
+// BGCHR
+static const PKWD_COUNT_BGCHR_DATA pwc_bgchr_01_tbl[] = {
+	{ GFL_BG_FRAME3_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// タイトル
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// タイトル
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
+// BGSCN
+static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_01_tbl[] = {
+	{ GFL_BG_FRAME3_M,	NARC_pkwd_announce_gra_pkwd_title01_bg2_NSCR,	0,	PLTID_MAIN_BG_TITLE,},	// 下地
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// タイトル
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -355,6 +420,22 @@ static const s16 pwc_bg_pos_tbl[] = {
 	  0,192,	// 1
 };
 
+//---------------
+// CANVASの設定
+//---------------
+static const PKWD_CANVAS_DATA pkwd_canvas_00_tbl[] = {
+	{ GFL_BG_FRAME0_M,	3,  4,	26,	2,	10,},		// サブ(上)
+	{ GFL_BG_FRAME0_M,	3, 18,	26,	2,	10,},		// 題名(下)
+
+	{ 0xff, 0, 0, 0, 0, 0,}, // end code
+};
+
+//
+static const s16 pkwd_mes_tbl[] = {
+	pw_topindex_01,			// TOP:TITLE映画の名前
+	pw_topindex_02,			// SUB:TITLE映画の名前
+};
+
 //=============================================================================
 /**
  *							プロトタイプ宣言
@@ -381,6 +462,7 @@ static s16  pwc_get_empty( PKWD_COUNT_MAIN_WORK *wk, const s32 num );
 //
 // bgの設定
 static void pwc_init_bg( PKWD_COUNT_MAIN_WORK* wk );
+static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk );
 //
 // objの設定
 static void pwc_init_obj_clwk( PKWD_COUNT_MAIN_WORK* wk, const s32 drawtype, const PKWD_COUNT_OBJ_DATA *obj_adr, const s16 *info_adr );
@@ -409,6 +491,14 @@ static BOOL pwc_is_pal_fade( PKWD_COUNT_MAIN_WORK* wk );
 // タイマ
 static void pwc_init_timer( PKWD_COUNT_MAIN_WORK* wk, const s32 tmode, const s32 timer );
 static s32  pwc_main_timer( PKWD_COUNT_MAIN_WORK* wk, const s32 tmode );
+//
+static void pwc_init_string( PKWD_COUNT_MAIN_WORK* wk );
+static void pwc_exit_string( PKWD_COUNT_MAIN_WORK* wk );
+static void pwc_main_print( PKWD_COUNT_MAIN_WORK *wk );
+static void pwc_disp_string( PKWD_COUNT_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
+								const PRINTSYS_LSB col );
+static u16  pwc_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode );
+static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk );
 
 
 //=============================================================================
@@ -461,6 +551,12 @@ static GFL_PROC_RESULT PkwdCountProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	//描画設定初期化(上:メイン、下:サブ)
 	wk->graphic	= PKWD_COUNT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
 	//
+	// フォント作成(大元を使用)
+	wk->font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+	//
+	// PRINT_QUE作成
+	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
+	//
 	//----------------
 	// 通常はこの中で初期化
 	//----------------
@@ -493,6 +589,11 @@ static GFL_PROC_RESULT PkwdCountProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	// 処理を記述
 	//----------------
 	pwc_exit( wk );
+	
+	// PRINT_QUE
+	PRINTSYS_QUE_Delete( wk->print_que );
+	// FONT
+	GFL_FONT_Delete( wk->font );
 	
 	//描画設定破棄
 	PKWD_COUNT_GRAPHIC_Exit( wk->graphic );
@@ -563,6 +664,9 @@ static GFL_PROC_RESULT PkwdCountProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 	//----------------
 	pwc_main( wk );
 	
+	// Queの処理
+	pwc_main_print( wk );
+	
 	//2D描画
 	PKWD_COUNT_GRAPHIC_2D_Draw( wk->graphic );
 	
@@ -604,10 +708,29 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	//---------------------
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_PKWD_ANNOUNCE, NARC_pkwd_announce_gra_pkwd_count_pos_tblbin, wk->heapID );
 	
+	//---------------------
+	// empty用バッファ取得
+	//---------------------
+	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->heapID );
+	wk->MsgData[1] = 0;
+	
 	//---------------
 	// bgの初期化
 	//---------------
 	pwc_init_bg( wk );
+	
+	//---------------
+	// stringの初期化
+	//---------------
+	pwc_init_string( wk );
+	
+	// パレットは10番に転送
+	{
+		ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
+		//上画面フォントパレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, 10*0x20, 0x20, wk->heapID );
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
 	
 	//------------
 	// OBJ初期化
@@ -623,7 +746,6 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
 		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
 		10, 6);
-//	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 10, 6);
 	// ロゴは非表示
 	GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 }
@@ -654,8 +776,21 @@ static void pwc_main( PKWD_COUNT_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void pwc_exit( PKWD_COUNT_MAIN_WORK* wk )
 {
+	s32		i;
+	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
+	
+	// stringの破棄
+	pwc_exit_string( wk );
+	
+	//メッセージ破棄
+	for(i=0;i<PKWD_COUNT_MES_MAX;i++){
+		if(wk->MsgData[i]){
+			GFL_MSG_Delete( wk->MsgData[i] );
+			wk->MsgData[i] = 0;
+		}
+	}
 	
 	// OBJ破棄
 	pwc_exit_obj( wk );
@@ -680,7 +815,7 @@ static void pwc_down( PKWD_COUNT_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  キー入力処理まとめ
+ *	@brief  キー入力処理まとめ(処理の流れmain)
  *
  *	@param	PKWD_COUNT_MAIN_WORK* wk 
  *
@@ -754,22 +889,68 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 			if(tmp == 0){
 				// フェードアウト
 				pwc_set_pal_fade( wk, PKWD_FADE_OUT );
-				wk->Step = STEP_LV3;
+				wk->Step = STEP_LV2+10;
 			}
-#if 0
-			// キー入力(test2)
-			bflg = pwc_chk_key_input( wk );
-			if(bflg == TRUE){
-				// フェードアウト
-				pwc_set_pal_fade( wk, PKWD_FADE_OUT );
-				wk->Step = STEP_LV3;
-			}
-#endif
 			break;
 		//
-		// 終了処理
-		case STEP_LV3:
+		// フェード待ち
+		case STEP_LV2+10:
 			// フェードアウト待ち
+			bflg = pwc_is_pal_fade( wk );
+			if( bflg == FALSE){
+				wk->Step = STEP_LV2+20;
+				// 完全黒の状態で、少し待ち、BG書き換え
+				GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+				GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+				GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+				// obj非表示
+				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_MOUSE, FALSE );
+				pwc_set_obj_visible( wk, CLWKMODE_LOGO, CLWK_LOGO_EYE,   FALSE );
+				// 少し待ち
+				pwc_init_timer( wk, TIMER_WAIT3, WAIT_BG_MAX );
+			}
+			break;
+		//
+		// 待ち
+		case STEP_LV2+20:
+			tmp = pwc_main_timer( wk, TIMER_WAIT3 );
+			if(tmp == 0){
+				// 完全黒の状態で、BG書き換え
+				// BGセット(BGは非表示状態)
+				pwc_init_bg2( wk );
+				// 文字列表示
+				pwc_disp_title_string( wk );
+				// BG1,BG3を表示
+				// BG2を非表示のまま
+				GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+				GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+				// フェード開始
+				pwc_set_pal_fade( wk, PKWD_FADE_IN );
+				wk->Step = STEP_LV3;
+			}
+			break;
+		//
+		// フェードイン待ち
+		case STEP_LV3:
+			bflg = pwc_is_pal_fade( wk );
+			if( bflg == FALSE){
+				wk->Step = STEP_LV3+10;
+				pwc_init_timer( wk, TIMER_WAIT3, WAIT_TITLE_MAX );
+			}
+			break;
+		//
+		// タイトル表示
+		case STEP_LV3+10:
+			tmp = pwc_main_timer( wk, TIMER_WAIT3 );
+			if(tmp == 0){
+				// フェードアウト
+				pwc_set_pal_fade( wk, PKWD_FADE_OUT );
+				wk->Step = STEP_LV3+20;
+			}
+			break;
+		//
+		// フェードアウト待ち
+		case STEP_LV3+20:
 			bflg = pwc_is_pal_fade( wk );
 			if( bflg == FALSE){
 				wk->Step = STEP_END;
@@ -827,6 +1008,86 @@ static void pwc_init_bg( PKWD_COUNT_MAIN_WORK* wk )
 	const PKWD_COUNT_BGPAL_DATA	*padr = &pwc_bgpal_tbl[0];
 	const PKWD_COUNT_BGCHR_DATA	*cadr = &pwc_bgchr_tbl[0];
 	const PKWD_COUNT_BGSCN_DATA	*sadr = &pwc_bgscn_tbl[0];
+	//
+	ARCHANDLE		*handle;
+	//
+	handle	= GFL_ARC_OpenDataHandle( ARCID_PKWD_ANNOUNCE, wk->heapID );
+	
+	// パレット転送
+	for(i=0;i<PKWD_COUNT_BGNUM_MAXNUM;i++){
+		// 終了条件
+		if(padr->type == 0xff){
+			break;
+		}
+		tmp = padr->size;
+		tmp *= 0x20;		// 転送サイズ
+		off = padr->offset;
+		off *= 0x20;
+		GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, off, tmp, wk->heapID );
+		//
+		padr++;
+	}
+	//
+	// キャラ転送
+	for(i=0;i<PKWD_COUNT_BGNUM_MAXNUM;i++){
+		// 終了条件
+		if(cadr->frmnumber == 0xff){
+			break;
+		}
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, cadr->arcid, cadr->frmnumber, cadr->offset, 0, 0, wk->heapID );
+		cadr++;
+	}
+	
+	// スクリーン転送
+	for(i=0;i<PKWD_COUNT_BGNUM_MAXNUM;i++){
+		// 終了条件
+		if(sadr->frmnumber == 0xff){
+			break;
+		}
+		GFL_ARCHDL_UTIL_TransVramScreen( handle, sadr->arcid, sadr->frmnumber, sadr->offset, 0, 0, wk->heapID );
+		//
+		//
+		// スクリーンのパレット指定を変更
+		if(sadr->poff != 0){
+			// スクリーンバッファ指定
+			adr = GFL_BG_GetScreenBufferAdrs( sadr->frmnumber );
+			// 1画面分修正
+			for(k=0;k<24;k++){
+				for(j=0;j<32;j++){
+					// オフセットを加算
+					adr[k*32+j] += ((sadr->poff&0x0f)<<12);
+				}
+			}
+//			GFL_BG_ChangeScreenPalette( sadr->frmnumber, 0, 0, 32, 24, sadr->poff );
+			GFL_BG_LoadScreenReq( sadr->frmnumber );
+		}
+		sadr++;
+	}
+	// 終了
+	GFL_ARC_CloseDataHandle( handle );
+	//
+	// 背景色をセット
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BG関連の初期化
+ *
+ *	@param	PKWD_COUNT_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk )
+{
+	u16		*adr;
+	s32		i,j,k;
+	s32		tmp;
+	u32		off;
+	const PKWD_COUNT_BGPAL_DATA	*padr = &pwc_bgpal_01_tbl[0];
+	const PKWD_COUNT_BGCHR_DATA	*cadr = &pwc_bgchr_01_tbl[0];
+	const PKWD_COUNT_BGSCN_DATA	*sadr = &pwc_bgscn_01_tbl[0];
 	//
 	ARCHANDLE		*handle;
 	//
@@ -1428,4 +1689,147 @@ static s32 pwc_main_timer( PKWD_COUNT_MAIN_WORK* wk, const s32 tmode )
 	return( wk->Timer[tmode] );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示準備(Canvasの作成)
+ *
+ *	@param	PKWD_COUNT_MAIN_WORK*		wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwc_init_string( PKWD_COUNT_MAIN_WORK* wk )
+{
+	s32		i;
+	const PKWD_CANVAS_DATA *adr = &pkwd_canvas_00_tbl[0];
+	//
+	for(i=0;i<PKWD_COUNT_CANVAS_MAXNUM;i++){
+		// 終了条件
+		if(adr->frmnumber == 0xff){
+			break;
+		}
+		// セット
+		wk->PrintUtil[i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
+		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
+		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
+		//
+		adr++;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字列破棄
+ *
+ *	@param	PKWD_COUNT_MAIN_WORK* 			wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwc_exit_string( PKWD_COUNT_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	for(i=0;i<PKWD_COUNT_CANVAS_MAXNUM;i++){
+		if(wk->PrintUtil[i].win != 0){
+			GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
+			wk->PrintUtil[i].win = 0;
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Queの処理
+ *
+ *	@param	PKWD_COUNT_MAIN_WORK*			wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwc_main_print( PKWD_COUNT_MAIN_WORK *wk )
+{
+	s32		i;
+	BOOL	bflg;
+	
+	// Queの処理
+	PRINTSYS_QUE_Main( wk->print_que );
+	//
+	for(i=0;i<PKWD_COUNT_CANVAS_MAXNUM;i++){
+		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示
+ *
+ *	@param	PKWD_COUNT_MAIN_WORK* 			wk
+ *	@param	const s32				Canvasの番号
+ *	@param	const s32				表示座標(x)
+ *	@param	const s32				表示座標(y)
+ *	@param	const STRBUF* 			表示文字列
+ *	@param	const u32				表示位置(左(0)、右(1)、中央(2)など)
+ *	@param	const PRINTSYS_LSB		カラー
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwc_disp_string( PKWD_COUNT_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
+								const PRINTSYS_LSB col )
+{
+	u16		siz;
+	
+	// 表示位置の補正
+	siz = pwc_get_putsize( strbuf, wk->font, pmode );
+	PRINT_UTIL_PrintColor( &wk->PrintUtil[mode], wk->print_que, x-siz, y, strbuf, wk->font, col );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	文字列表示サイズから各モードの補正値を取得(static)
+ *			(ui/printtoolから持ってきた)
+ *
+ * @param	const STRBUF*	buf		文字列
+ * @param	GFL_FONT*		font	フォント
+ * @param	u32				mode	表示モード(0-2)
+ *
+ * @return	補正値
+ */
+//--------------------------------------------------------------------------------------------
+static u16 pwc_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode )
+{
+	// 右詰
+	if( mode == 1 ){
+		return PRINTSYS_GetStrWidth( buf, font, 0 );
+	// 中央
+	}else if( mode == 2 ){
+		return ( PRINTSYS_GetStrWidth( buf, font, 0 ) / 2 );
+	}
+	return 0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	タイトル表示
+ *
+ * @param	PKWD_COUNT_MAIN_WORK* 			wk
+ *
+ * @return
+ */
+//--------------------------------------------------------------------------------------------
+static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
+{
+	STRBUF		*strbuf;
+	
+	// タイトル(上)
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], pkwd_mes_tbl[0] );
+	pwc_disp_string( wk, 0, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// タイトル(下)
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], pkwd_mes_tbl[1] );
+	pwc_disp_string( wk, 1, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+}
 
