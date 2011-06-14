@@ -1591,13 +1591,20 @@ static BOOL TsurePoke_CheckUpDown( DRAW_BLACT_POKE_WORK* work, u8 dir, const OBJ
 //-----------------------------------------------------------------------------
 static void SetLightMask( GFL_BBDACT_SYS *actSys, MMDL* mmdl, DRAW_BLACT_WORK *work )
 {
-  GFL_BBD_LIGHTMASK lightMask = GFL_BBD_LIGHTMASK_0;
   if( MMDL_GetLightAttr( mmdl ) )
   {
-    lightMask = GFL_BBD_LIGHTMASK_3;
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, TRUE, 3 );
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, FALSE, 0 );
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, FALSE, 1 );
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, FALSE, 2 );
   }
-  GFL_BBD_SetObjectLightMask( 
-      GFL_BBDACT_GetBBDSystem(actSys), work->actID, &lightMask );
+  else
+  {
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, TRUE, 0 );
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, FALSE, 1 );
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, FALSE, 2 );
+    GFL_BBDACT_SetLightEnable(actSys,work->actID, FALSE, 3 );
+  }
 }
 //--------------------------------------------------------------
 /**

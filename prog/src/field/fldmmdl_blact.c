@@ -2420,7 +2420,7 @@ void MMDL_BLACTCONT_ChangeOBJCodeWithDummy( MMDL *mmdl, u16 next_code )
   //続いて描画初期化処理呼び出して
   //内部でnext_codeのadd_actor()が行われリソース追加等が起きる筈
   MMDL_ChangeOBJCode( mmdl, next_code );
-  
+
   //念のためここでアクター追加完了チェック。
   //完了済みなら即終了
   if( MMDL_CallDrawGetProc(mmdl,0) != MMDL_BLACTID_NULL ){
@@ -2482,7 +2482,29 @@ static void DummyAct_UpdateAct(
     MMDL_BLACTCONT *pBlActCont, DMYACT_RESCHG *pDmyAct )
 {
   MMDL *mmdl = pDmyAct->mmdl;
-  
+
+  //ダミーのビルボードにもライトを反映させる
+  {
+    u16 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+    if( actID != MMDL_BLACTID_NULL )
+    {
+      if( MMDL_GetLightAttr( mmdl ) )
+      {
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, TRUE, 3 );
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, FALSE, 0 );
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, FALSE, 1 );
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, FALSE, 2 );
+      }
+      else
+      {
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, TRUE, 0 );
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, FALSE, 1 );
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, FALSE, 2 );
+        GFL_BBDACT_SetLightEnable(pBlActCont->pBbdActSys,actID, FALSE, 3 );
+      }
+    }
+  }
+
   if( MMDL_CheckStatusBitUse(mmdl) == FALSE ){ //死亡
     blact_DeleteResource(
         pBlActCont, mmdl, pDmyAct->dmy_act_id, pDmyAct->dmy_obj_code );
