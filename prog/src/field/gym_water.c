@@ -72,7 +72,7 @@ typedef enum {
 
 #define HASU_NUM   (11)   // ハスの個数
 
-#define HASU_Y      (-8*FX32_ONE) // ハスの高さ(8ユニット)
+#define HASU_Y      (-4*FX32_ONE) // ハスの高さ(4ユニット)
 #define EX_HEIGHT_Y (-4*FX32_ONE) // 拡張高さ(4ユニット)
 
 // ハス座標
@@ -182,6 +182,7 @@ typedef struct {
   s16              Height;  // ゆれ高さ
   u32                Sync;  // 1周期するのにかかるシンク数
   u32             NowSync;  // 現在のシンク
+  BOOL              First;  // 最初のゆれフラグ
 } HASU_MOVE_WORK;
 
 //-------------------------------------
@@ -1968,14 +1969,19 @@ static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos 
   VEC_Set( &p_move_wk->endPos, pos->x, pos->y, pos->z );
   FIELD_PLAYER_GetPos( p_wk->player, &p_move_wk->startPos );
 
+  // ハスの高さにしないと0になってしまう
+  p_move_wk->startPos.y = HASU_Y;
+  p_move_wk->endPos.y = HASU_Y;
+
 #ifdef GYM_WATER_DEBUG_MENU
   p_move_wk->Height = debug_height;
-  p_move_wk->Sync   = debug_sync;
 #else
   p_move_wk->Height = HASU_SHAKE_HEIGHT;
-  p_move_wk->Sync   = HASU_SHAKE_SYNC;
 #endif
+  p_move_wk->Sync   = 18;   // 最初の1回のみの設定
   p_move_wk->NowSync= 0;
+
+  p_move_wk->First  = TRUE;
 }
 
 //----------------------------------------------------------------------------
@@ -2024,7 +2030,30 @@ static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk )
     p_move_wk->NowSync++;
     tmp = (p_move_wk->NowSync * 0x10000) / p_move_wk->Sync;
     rad = tmp + (65536/2);    // マイナスからにする
-    h = p_move_wk->Height * FX_SinIdx(rad);
+
+    if( p_move_wk->First == TRUE )
+    {
+      // 最初のゆれだけドカンといく
+      h = 8 * FX_SinIdx(rad);
+
+      // 1回のみ
+      if( rad == 0 )
+      {
+        p_move_wk->First = FALSE; 
+
+        // 1周期のシンク数を元に戻す
+#ifdef GYM_WATER_DEBUG_MENU
+        p_move_wk->Sync   = debug_sync;
+#else
+        p_move_wk->Sync   = HASU_SHAKE_SYNC;
+#endif
+      }
+    }
+    else
+    {
+      // ゆれ算出
+      h = p_move_wk->Height * FX_SinIdx(rad);
+    }
 
     // ゆれセット
     if( end )
@@ -2387,6 +2416,7 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_id
     GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, hasu_obj_idx );
 
     status->trans = hasu->trans;
+    status->trans.y = HASU_Y;
 
     // 方向により回転させる
     {
@@ -2445,6 +2475,7 @@ static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx
     GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, hasu_obj_idx );
 
     status->trans = hasu->trans;
+    status->trans.y = HASU_Y;
   }
 
   // 表示
