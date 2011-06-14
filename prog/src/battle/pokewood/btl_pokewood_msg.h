@@ -50,7 +50,7 @@ static inline int BTL_PWMSG_Turn( BTL_PWMSG_TYPE type, int turn )
 }
 static inline int BTL_PWMSG_Event( BTL_PWMSG_TYPE type, int ev_no, int ev_turn )
 {
-  const int event_msg_no = pw_event0_hero_0 - pw_event1_hero_0;
+  const int event_msg_no = pw_event1_hero_0 - pw_event0_hero_0;
   return pw_event0_hero_0 + type + ev_turn * 2 + event_msg_no * ev_no;
 }
 
