@@ -54,3 +54,7 @@ extern VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGymPoison_AnmStop( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGymPoison_IssObjStop( VMHANDLE * core, void *wk );
 
+//êÖ
+extern VMCMD_RESULT EvCmdGymWater_SplashAnime( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdGymWater_ReturnAnime( VMHANDLE * core, void *wk );
+

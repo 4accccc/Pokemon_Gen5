@@ -27,6 +27,7 @@
 // arc
 #include "arc/fieldmap/gym_water.naix"
 #include "../../../resource/fldmapdata/gimmick/gym_water/gym_water_local_def.h"
+#include "../../../resource/fldmapdata/eventdata/tmp/c14gym0101.h"
 
 // sound
 #include "sound/pm_sndsys.h"
@@ -228,6 +229,14 @@ enum {
   RESID_WATER3_ANM_ITA,   // 
   RESID_WATER4_MDL,       // 水しぶき
   RESID_WATER4_ANM_ITA,   // 
+
+  // スクリプト ジムリーダー用
+  RESID_LEADER_SPLASH_MDL,      // 水しぶき
+  RESID_LEADER_SPLASH_ANM_ICA,  //
+  RESID_LEADER_RETURN_MDL,      // 帰るアニメ
+  RESID_LEADER_RETURN_ANM_ICA,  // 
+  RESID_LEADER_RETURN_ANM_IMA,  // 
+  RESID_LEADER_RETURN_ANM_ITA,  // 
 };
 
 // OBJインデックス
@@ -256,6 +265,10 @@ enum {
   EFFECT_MOVE_RIPPLE_MAX, // 移動波紋 総数
   EFFECT_SPLASH = EFFECT_MOVE_RIPPLE_MAX, // 水しぶき
 
+  // ジムリーダー用
+  EFFECT_LEADER_SPLASH, // 水しぶき
+  EFFECT_LEADER_RETURN, // 帰るアニメ
+
   OBJ_NUM,
 };
 
@@ -276,6 +289,15 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_GYM_WATER, NARC_gym_water_water2_move_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
   { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
   { ARCID_GYM_WATER, NARC_gym_water_water3_shibu_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+
+  // ジムリーダー用
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_shibu1_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbmd, GFL_G3D_UTIL_RESARC }, // IMD
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbca, GFL_G3D_UTIL_RESARC }, // ICA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbma, GFL_G3D_UTIL_RESARC }, // IMA
+  { ARCID_GYM_WATER, NARC_gym_water_le_a_head1_nsbta, GFL_G3D_UTIL_RESARC }, // ITA
+
 };
 
 // ANIME
@@ -302,6 +324,17 @@ static const GFL_G3D_UTIL_ANM anm_water3[] =
 static const GFL_G3D_UTIL_ANM anm_water4[] =
 {
   { RESID_WATER4_ANM_ITA, 0 }, // nsbta
+};
+
+static const GFL_G3D_UTIL_ANM anm_leader_splash[] =
+{
+  { RESID_LEADER_SPLASH_ANM_ICA, 0 }, // nsbca
+};
+static const GFL_G3D_UTIL_ANM anm_leader_return[] =
+{
+  { RESID_LEADER_RETURN_ANM_ICA, 0 }, // nsbca
+  { RESID_LEADER_RETURN_ANM_IMA, 0 }, // nsbma
+  { RESID_LEADER_RETURN_ANM_ITA, 0 }, // nsbta
 };
 
 // OBJ
@@ -467,6 +500,24 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_WATER4_MDL,     // テクスチャリソースID
     anm_water4,           // アニメテーブル(複数指定のため)
     NELEMS(anm_water4),   // アニメリソース数
+  },
+
+  // スクリプト ジムリーダー用
+  // 水しぶき
+  {
+    RESID_LEADER_SPLASH_MDL,    // モデルリソースID
+    0,                          // モデルデータID(リソース内部INDEX)
+    RESID_LEADER_SPLASH_MDL,    // テクスチャリソースID
+    anm_leader_splash,          // アニメテーブル(複数指定のため)
+    NELEMS(anm_leader_splash),  // アニメリソース数
+  },
+  // 帰るアニメ
+  {
+    RESID_LEADER_RETURN_MDL,    // モデルリソースID
+    0,                          // モデルデータID(リソース内部INDEX)
+    RESID_LEADER_RETURN_MDL,    // テクスチャリソースID
+    anm_leader_return,          // アニメテーブル(複数指定のため)
+    NELEMS(anm_leader_return),  // アニメリソース数
   },
 };
 
@@ -877,6 +928,85 @@ GMEVENT * GYM_WATER_CheckHasuEvent( GAMESYS_WORK *p_gamesys )
   return NULL;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド
+ *	        シ･ズイ飛込みの水しぶき再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void GYM_WATER_SplashAnime( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+
+  MMDL *mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C14GYM0101_SWLEADER8_01 );  // ジムリーダー
+  u16 obj_idx = EFFECT_LEADER_SPLASH;    // OBJインデックス
+
+  // 位置
+  {
+    GFL_G3D_OBJSTATUS *status;
+    VecFx32 pos;
+
+    MMDL_GetVectorPos( mmdl, &pos );
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+    // 座標
+    status->trans.x = pos.x;
+    status->trans.z = pos.z;
+    // 表示
+    FLD_EXP_OBJ_SetVanish( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, FALSE );
+  }
+  // アニメ再生
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+    // ICA
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド
+ *	        シ･ズイ帰りのアニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void GYM_WATER_ReturnAnime( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+
+  MMDL *mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C14GYM0101_SWLEADER8_01 );  // ジムリーダー
+  u16 obj_idx = EFFECT_LEADER_RETURN;    // OBJインデックス
+
+  // 位置
+  {
+    GFL_G3D_OBJSTATUS *status;
+    VecFx32 pos;
+
+    MMDL_GetVectorPos( mmdl, &pos );
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+    // 座標
+    status->trans.x = pos.x;
+    status->trans.z = pos.z;
+    // 表示
+    FLD_EXP_OBJ_SetVanish( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, FALSE );
+  }
+  // アニメ再生
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, TRUE );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, TRUE );
+    FLD_EXP_OBJ_ValidCntAnm( exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 2, TRUE );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+  }
+}
+
 //=============================================================================
 /**
  *      static関数
@@ -1055,6 +1185,57 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
       FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
       FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
     }
+  }
+
+  //=====================================
+  // スクリプトコマンド用
+  // 水しぶき
+  {
+    u16 obj_idx = EFFECT_LEADER_SPLASH;    // OBJインデックス
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+    VEC_Set( &status->trans, 0,0,0 );
+
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+      // ICA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+    }
+  }
+  // 帰り道アニメ
+  {
+    u16 obj_idx = EFFECT_LEADER_RETURN;    // OBJインデックス
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
+
+    VEC_Set( &status->trans, 0,0,0 );
+
+    // カリングする
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
+
+    // アニメ再生
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0 );
+      // ICA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 0, FALSE );
+      // IMA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 1, FALSE );
+      // ITA
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, 2, FALSE );
+
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );  // アニメ再生設定
+    }
+
   }
 }
 //----------------------------------------------------------------------------

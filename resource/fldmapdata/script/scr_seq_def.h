@@ -7221,6 +7221,31 @@
   .short  \obj_id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　水ジム 水しぶき再生
+ */
+//--------------------------------------------------------------
+#define _GYM_WATER_SPLASH_ANIME() \
+    _ASM_GYM_WATER_SPLASH_ANIME
+
+  .macro  _ASM_GYM_WATER_SPLASH_ANIME
+  .short  EV_SEQ_GYM_WATER_SPLASH_ANIME
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　水ジム シ・ズイ帰りアニメ
+ */
+//--------------------------------------------------------------
+#define _GYM_WATER_RETURN_ANIME() \
+    _ASM_GYM_WATER_RETURN_ANIME
+
+  .macro  _ASM_GYM_WATER_RETURN_ANIME
+  .short  EV_SEQ_GYM_WATER_RETURN_ANIME 
+  .endm
+
+
 //======================================================================
 //
 //  モデルアニメ関連

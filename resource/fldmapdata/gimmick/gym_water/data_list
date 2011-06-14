@@ -12,5 +12,11 @@ DATA_LIST = \
   water2_move.nsbma \
   water2_move.nsbta \
   water3_shibu.nsbmd \
-  water3_shibu.nsbta
+  water3_shibu.nsbta \
+  le_a_head1.nsbmd \
+  le_a_head1.nsbca \
+  le_a_head1.nsbma \
+  le_a_head1.nsbta \
+  le_a_shibu1.nsbmd \
+  le_a_shibu1.nsbta
 

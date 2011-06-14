@@ -8,6 +8,7 @@
 #ifndef ZONE_C14GYM0101_EVC_H
 #define ZONE_C14GYM0101_EVC_H
 
+#define C14GYM0101_SWLEADER8_01            0
 
 #endif //ZONE_C14GYM0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14gym0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -24,7 +24,13 @@ enum {
 	NARC_gym_water_water2_move_nsbma = 10,
 	NARC_gym_water_water2_move_nsbta = 11,
 	NARC_gym_water_water3_shibu_nsbmd = 12,
-	NARC_gym_water_water3_shibu_nsbta = 13
+	NARC_gym_water_water3_shibu_nsbta = 13,
+	NARC_gym_water_le_a_head1_nsbmd = 14,
+	NARC_gym_water_le_a_head1_nsbca = 15,
+	NARC_gym_water_le_a_head1_nsbma = 16,
+	NARC_gym_water_le_a_head1_nsbta = 17,
+	NARC_gym_water_le_a_shibu1_nsbmd = 18,
+	NARC_gym_water_le_a_shibu1_nsbta = 19
 };
 
 /* NARC_GYM_WATER_NAIX_ */

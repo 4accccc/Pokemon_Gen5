@@ -1026,6 +1026,10 @@
   DEF_CMD( EvCmdCheckIsMedalGet, EV_SEQ_MEDAL_IS_GET )
   DEF_CMD( EvCmdGetMostGetCategory, EV_SEQ_MEDAL_MOSTGET_CATEGORY )
 
+  // 水ジム
+  DEF_CMD( EvCmdGymWater_SplashAnime, EV_SEQ_GYM_WATER_SPLASH_ANIME )
+  DEF_CMD( EvCmdGymWater_ReturnAnime, EV_SEQ_GYM_WATER_RETURN_ANIME )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="kawamoto_yuki" host="W00239" date="2011-06-14T11:01:31" source="le_a_head1.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<original_create user="kawamoto_yuki" host="W00239" date="2011-06-14T11:01:31" source="le_a_head1.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="3 3"
+	compress_material="on" material_size="2 2"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="3" xyz="-1.911621 -1.956787 -0.606934" whd="3.822754 1.479004 7.213623"/>
+
+<tex_image_array size="2">
+	<tex_image index="0" name="le_a_head1"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="le_a_head1_pl"
+		path="C:/home/swan_data3d/gimmick/gym_water/leader_anime/tex/le_a_head1.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 2220 0000 2432 2460 2433
+			3240 2133 3250 0213 3250 0211 1150 0521
+			1440 0521 4600 0645 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="lea_a_nami3"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="lea_a_nami3_pl"
+		path="C:/home/swan_data3d/gimmick/gym_water/leader_anime/tex/lea_a_nami3.tga"
+	>
+		<bitmap size="128">
+			1000 0023 0000 0000 2000 0023 0000 0000
+			2000 0233 0000 0000 2100 0333 0000 0000
+			2220 0333 0000 0000 2432 0233 0000 0000
+			2044 0033 0000 0000 3000 0033 0000 0000
+			3300 0233 0000 0000 3420 0343 0000 0000
+			0443 0343 0000 0000 2004 0243 0002 0000
+			3200 0443 0000 0000 3332 0443 0000 0000
+			0003 4442 0000 0000 2000 4433 0004 0000
+			2000 4343 0004 0000 2000 4344 0000 0000
+			2200 0043 0000 0000 3222 2343 0044 0000
+			0333 0443 0000 0000 0000 2433 0000 0000
+			0000 0423 0004 0000 2000 4432 0040 0000
+			3200 4332 0004 0000 0333 4332 0000 0000
+			0000 4432 0004 0000 0000 4400 0000 0000
+			2000 4322 0000 0000 2300 0222 0000 0000
+			0333 0442 0000 0000 0000 0040 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="2">
+	<tex_palette index="0" name="le_a_head1_pl" color_size="8">
+		5e79 4903 2060 6162 72c9 7f2c 6687 7fff
+	</tex_palette>
+	<tex_palette index="1" name="lea_a_nami3_pl" color_size="8">
+		7c1f 6a87 7b2c 7fb5 7ffb 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="2">
+	<material index="0" name="le_a_head1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="2.000000 2.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="tex"
+	/>
+	<material index="1" name="le_a_nami2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="flip repeat"
+		tex_scale="1.000000 0.500000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="tex"
+	/>
+</material_array>
+
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
+</matrix_array>
+
+<polygon_array size="2">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 -3.044678 -0.722656"
+		volume_max="2.000000 -0.955322 1.277588"
+		volume_r="3.860352"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 5.625000"/>
+					<pos_xyz xyz="-2.000000 -3.044678 1.277588"/>
+					<tex st="4.375000 5.625000"/>
+					<pos_xy xy="2.000000 -3.044678"/>
+					<tex st="4.375000 0.000000"/>
+					<pos_yz yz="-0.955322 -0.722656"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-2.000000 -0.955322"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-3.822754 0.000000 -7.213623"
+		volume_max="3.822754 0.000000 7.213623"
+		volume_r="8.164063"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="51.687500 -1.312500"/>
+					<pos_xyz xyz="-3.822754 0.000000 -7.213623"/>
+					<tex st="51.687500 63.687500"/>
+					<pos_xz xz="-3.822754 7.213623"/>
+					<tex st="42.125000 -1.312500"/>
+					<pos_xz xz="0.000000 -7.213623"/>
+					<tex st="42.125000 63.687500"/>
+					<pos_xz xz="0.000000 7.213623"/>
+					<tex st="51.687500 -1.312500"/>
+					<pos_xz xz="3.822754 -7.213623"/>
+					<tex st="51.687500 63.687500"/>
+					<pos_xz xz="3.822754 7.213623"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="3">
+	<node index="0" name="world_root" kind="null"
+		parent="-1"
+		child="1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="pPlane2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-2.000000 -3.044678 -0.722656"
+		volume_max="2.000000 -0.955322 1.277588"
+		volume_r="3.860352"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="pPlane3" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 -15.653564 24.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="6" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-3.822754 0.000000 -7.213623"
+		volume_max="3.822754 0.000000 7.213623"
+		volume_r="8.164063"
+	>
+		<display index="0" material="1" polygon="1" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="10" polygon_size="3"
+	triangle_size="0" quad_size="3"/>
+
+</body>
+
+</imd>

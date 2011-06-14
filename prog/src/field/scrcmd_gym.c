@@ -40,6 +40,7 @@
 #include "gym_ice.h"
 #include "gym_dragon.h"
 #include "gym_poison.h"
+#include "gym_water.h"
 
 //--電気--
 //--------------------------------------------------------------
@@ -522,6 +523,49 @@ VMCMD_RESULT EvCmdGymPoison_IssObjStop( VMHANDLE * core, void *wk )
   obj_id  = VMGetU16( core );
 
   GYM_POISON_IssObjStop( gsys, obj_id );
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--水--
+//--------------------------------------------------------------
+/**
+ * @brief   水ジムギミック 水しぶきの再生
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymWater_SplashAnime( VMHANDLE * core, void *wk )
+{
+  u16 idx;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // アニメ再生
+  GYM_WATER_SplashAnime( gsys );
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   水ジムギミック シ・ズイ帰りアニメ再生
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymWater_ReturnAnime( VMHANDLE * core, void *wk )
+{
+  u16 idx;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // アニメ再生
+  GYM_WATER_ReturnAnime( gsys );
 
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;

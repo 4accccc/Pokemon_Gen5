@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="kawamoto_yuki" host="W00239" date="2011-06-14T11:03:00" source="le_a_shibu1.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<original_create user="kawamoto_yuki" host="W00239" date="2011-06-14T11:03:00" source="le_a_shibu1.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+
+<model_info
+	pos_scale="1"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="2 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="2" xyz="-3.864990 -3.417480 -2.026123" whd="7.729492 5.358643 2.036133"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="le_a_shibu1"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="le_a_shibu1_pl"
+		path="C:/home/swan_data3d/gimmick/gym_water/leader_anime/tex/le_a_shibu1.tga"
+	>
+		<bitmap size="512">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0040 0000 0000 0000
+			0000 0000 0000 4300 0000 0300 0000 0000
+			0000 0000 0300 0000 0400 0000 0000 0000
+			0000 0000 0000 0000 0000 0040 0000 0000
+			0000 0000 0044 0000 0000 0000 0000 0000
+			0000 0030 0000 0004 0000 0000 0040 0000
+			0000 0000 0000 0000 0004 0000 0000 0000
+			0000 0000 0100 0000 0400 0020 0000 0000
+			0000 0000 3400 4003 0000 0400 0000 0000
+			0000 3000 0000 0000 0011 0003 0000 0000
+			0000 0000 0000 4041 0041 0040 0000 0000
+			0000 0000 0000 4003 0004 0200 0000 0000
+			0000 0300 4231 0043 0043 0000 0000 0000
+			0000 1204 1100 4440 3442 0000 0000 0000
+			0000 0000 0000 4000 0042 0001 0041 0000
+			0000 4000 4113 3433 0032 0030 0001 0000
+			0000 0044 1000 4430 0444 4434 0000 0000
+			0000 1440 3100 1431 1443 0434 4040 0000
+			4000 4400 3011 1441 3143 1134 0034 0000
+			0000 1000 1310 4410 0011 0131 0003 0000
+			0000 2100 1310 4104 0121 0320 0003 0000
+			0000 2400 4320 1121 1424 0321 0003 0000
+			0000 0000 3120 1111 1224 0121 0000 0000
+			0000 0000 3101 2122 1211 0100 0000 0000
+			0000 0000 2101 2111 2121 0021 0000 0000
+			0000 0000 2100 2111 2122 0020 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0400 0000 0030 0000 0000 0000
+			0000 1000 4000 0003 0404 0000 0000 0000
+			0000 4000 0004 0000 4404 0000 0004 0000
+			0000 0000 0400 0020 0040 2000 0000 0000
+			4000 3000 4001 0013 0004 4000 4004 0000
+			0000 0000 0000 0010 4004 0200 3000 0000
+			0040 0000 0010 4101 0000 4244 0003 0000
+			0000 0043 4000 4400 0044 0304 0003 0040
+			0000 0043 0000 0013 0010 0334 0020 0000
+			0000 0300 4044 0411 3414 3443 0000 0004
+			4000 3300 4004 4434 4444 0043 0200 0400
+			1000 3330 2301 4434 4434 0113 4020 0000
+			0000 4010 1141 4441 4424 2043 1024 0004
+			0000 4100 4000 0441 4420 1314 0410 0000
+			0000 0000 1104 4334 1323 1314 0110 0000
+			3000 0004 0441 4321 4433 4441 0004 0000
+			0000 0034 1411 4313 4431 4341 0000 0000
+			3000 3441 1114 4414 1331 1314 0331 0000
+			0000 3120 3121 4111 4314 1313 0030 0000
+			0000 1100 3122 1141 1214 3231 0330 0000
+			0000 4300 3222 1214 4241 3211 0030 0000
+			0000 3300 1222 1113 2241 0211 0001 0000
+			0000 0200 2321 1223 2112 1111 0001 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="le_a_shibu1_pl" color_size="8">
+		7c1f 76c9 6a87 7b0b 7f70 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="le_a_shibu1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.899902"
+		tex_gen_mode="tex"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-7.729492 -6.834473 -4.052246"
+		volume_max="7.729492 3.882568 0.020264"
+		volume_r="10.317871"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 33.375000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-7.729492 -6.834473 0.020264"/>
+					<tex st="32.000000 33.375000"/>
+					<pos_xy xy="7.729492 -6.834473"/>
+					<tex st="32.000000 17.375000"/>
+					<pos_yz yz="3.882568 -4.052246"/>
+					<tex st="0.000000 17.375000"/>
+					<pos_xy xy="-7.729492 3.882568"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pCube57" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-7.729492 -6.834473 -4.052246"
+		volume_max="7.729492 3.882568 0.020264"
+		volume_r="10.317871"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>
