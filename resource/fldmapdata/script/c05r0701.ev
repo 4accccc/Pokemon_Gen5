@@ -43,22 +43,28 @@ EVENT_START		ev_pos_c05r0701_stopper_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
-  //主人公に隣接
+  //主人公にふりむき
   IF $LCW_POSX >= 5 THEN
     _OBJ_ANIME( C05R0701_STOPPER_01, anm_stopper_lookpleyer_r )
     _TIME_WAIT(16)
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
     _OBJ_ANIME_WAIT()
-    
-    $LCW_POSX -= 1
-    _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
+  
   ELSE
+  
     _OBJ_ANIME( C05R0701_STOPPER_01, anm_stopper_lookpleyer_l )
     _TIME_WAIT(16)
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME_WAIT()
     
+  ENDIF
+  
+  //主人公に隣接
+  IF $LCW_POSX >= 6 THEN
+    $LCW_POSX -= 1
+    _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSX <= 2 THEN
     $LCW_POSX += 1
     _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
     _OBJ_ANIME_WAIT()
@@ -69,9 +75,14 @@ EVENT_START		ev_pos_c05r0701_stopper_01
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
-  //主人公1歩戻る・ストッパー元の位置に戻る
+  //主人公1歩戻る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
-  _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, 4, 8, FORCE_TYPE_NPC, 8, DIR_LR)
+  
+  //ストッパー元の位置に戻る
+  IF $LCW_POSX >= 6 || $LCW_POSX <= 2 THEN
+    _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, 4, 8, FORCE_TYPE_NPC, 8, DIR_LR)
+  ENDIF
+  
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C05R0701_STOPPER_01 , anm_staystep_u )
   _OBJ_ANIME_WAIT()

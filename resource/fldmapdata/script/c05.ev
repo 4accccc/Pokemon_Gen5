@@ -10,6 +10,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c05.h"
   .include  "c05.h"
+  .include  "c05r0501.h"
+  .include  "c05r0501_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -29,27 +31,466 @@ _EVENT_DATA    ev_c05_stopper_02
 _EVENT_DATA    ev_c05_sage6_01
 _EVENT_DATA    ev_c05_hakaim_01
 _EVENT_DATA    ev_c05_swrival_01
+_EVENT_DATA    ev_pos_c05_plazma_sage_01
+_EVENT_DATA    ev_zone_c05
+_EVENT_DATA    ev_init_c05
+_EVENT_DATA    ev_scene_c05_swleader5_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c05
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c05
+  
+  //元プラズマ団イベント後
+  IF $WK_SCENE_C05 == 1 THEN
+    _OBJ_POS_CHANGE( C05_SAGE6_01, 197, 0, 396, DIR_DOWN )
+  ELSIF $WK_SCENE_C05 == 2 THEN
+    _OBJ_POS_CHANGE( C05_SWRIVAL_01, 211, 0, 403, DIR_DOWN )
+  //ジムクリア後
+  ELSIF $WK_SCENE_C05 == 3 THEN
+    _OBJ_POS_CHANGE( C05_SWRIVAL_01, 212, 0, 403, DIR_UP )
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/* 			SCENE_CHANGE：ヤーコンとライバル			  */
+/**************************************************************/
+EVENT_START		ev_scene_c05_swleader5_01
+  
+  //アニメ：ライバル「！」
+  _OBJ_ANIME( C05_SWRIVAL_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル名タグに代入
+  _RIVAL_NAME(1)
+  
+  //ライバル：オマエも
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_05,C05_SWRIVAL_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヤーコン主人公とライバルを見比べる
+  _OBJ_ANIME( C05_SWLEADER5_01, anm_swleader5_look_player )
+  _OBJ_ANIME_WAIT()
+  
+  //ヤーコン：なんだ
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swleader5_01,C05_SWLEADER5_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //ライバル：あのさ
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_06,C05_SWRIVAL_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //ヤーコン：なんにだって
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swleader5_02,C05_SWLEADER5_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //ライバル：ふうん
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_07,C05_SWRIVAL_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+
+  //ヤーコン：きいたことが　ないか？
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swleader5_03,C05_SWLEADER5_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヤーコン退場
+  _OBJ_ANIME_AUTO( C05_SWLEADER5_01, 202, 405, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT(32)
+  _OBJ_ANIME( C05_SWRIVAL_01,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( C05_SWRIVAL_01,anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：つよい　やつを
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_08,C05_SWRIVAL_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 202, 405, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル・ヤーコン動作OBJ削除
+  _OBJ_DEL( C05_SWLEADER5_01 )
+  _OBJ_DEL( C05_SWRIVAL_01 )
+  
+  //========================================//
+  //C05の全てのイベントを終了
+  $WK_SCENE_C05 = 4
+  
+  //ライバルを非表示に
+  _FLAG_SET( FV_C05_SWRIVAL_01 )
+  //ヤーコンを非表示に
+  _FLAG_SET( FV_C05_SWLEADER5_01 )
+  
+  //C05R0701ストッパーを非表示
+  _FLAG_SET( FV_C05R0701_STOPPER_01 )
+  
+  //C05R0701ストッパーPOSを無効
+  $WK_SCENE_C05R0701_STOPPER_01 = 1
+  
+  //========================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader5_look_player
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* 			POS：元プラズマ団とネオプラズマ団			  */
+/**************************************************************/
+EVENT_START		ev_pos_c05_plazma_sage_01
+
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  IF $LCW_POSX != 182 THEN
+  //アニメ：主人公接近
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 182, 407, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //ネオプラズマM01：いまさら
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swplazmam_01,C05_SWPLAZMAM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //元プラズマM01：だめだよ
+  _BALLOONWIN_OBJMSG_POS( msg_c05_hakaim_01,C05_HAKAIM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //ライバル表示
+  _FLAG_RESET(FV_C05_SWRIVAL_01)
+  //========================================//
+  
+  //ライバル動作OBJ生成
+  _OBJ_ADD(C05_SWRIVAL_01)
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+ 
+  //アニメ：ライバル接近
+  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 183, 407, FORCE_TYPE_NPC, 4, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル名タグに代入
+  _RIVAL_NAME(1)
+  
+  //ライバル：おい！プラズマ団
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_01,C05_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ネオプラズマ団ふりむく
+  _OBJ_ANIME( C05_SWPLAZMAM_01,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ネオプラズマ団：ここでは
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swplazmam_02,C05_SWPLAZMAM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：プラズマ団移動
+  _OBJ_ANIME_AUTO( C05_SWPLAZMAM_01, 181, 415, FORCE_TYPE_NPC, 4, DIR_LR)
+  
+  _TIME_WAIT(12)
+  
+  //アニメ：全員見送る
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
+  _OBJ_ANIME( C05_SWRIVAL_01,anm_staystep_d )
+  _OBJ_ANIME( C05_HAKAIM_01,anm_staystep_d )
+  
+  //ライバル名タグに代入
+  _RIVAL_NAME(1)
+  
+  //ライバル：まてよ！
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_02,C05_SWRIVAL_01, POS_DEFAULT )
+  
+  _OBJ_ANIME_WAIT()
+  _MSGWIN_CLOSE()
+  
+  //ライバル：追いかける
+  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 183, 415, FORCE_TYPE_NPC, 4, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ネオプラズマ団・ライバル動作OBJ非表示
+  _OBJ_DEL(C05_SWRIVAL_01)
+  _OBJ_DEL(C05_SWPLAZMAM_01)
+  
+  //アニメ：元プラズマ団隣接
+  _OBJ_ANIME( C05_HAKAIM_01,anm_walk_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団：助かりました
+  _BALLOONWIN_OBJMSG_POS( msg_c05_hakaim_02,C05_HAKAIM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ポケモンハウス前まで移動
+  _OBJ_ANIME( C05_HAKAIM_01, anm_goto_pokehouse_hakaim )
+  _TIME_WAIT(4)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_goto_pokehouse_player )
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  //七賢人表示
+  _FLAG_RESET(FV_C05_SAGE6_01)
+  //========================================//
+  
+  //七賢人動作OBJ生成
+  _OBJ_ADD(C05_SAGE6_01)
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //アニメ：七賢人1歩下へ
+  _OBJ_ANIME( C05_SAGE6_01, anm_walk_d )
+  //アニメ：元プラズマ団・主人公上を見る
+  _OBJ_ANIME( C05_HAKAIM_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //元プラズマ団：ロット様！
+  _BALLOONWIN_OBJMSG_POS( msg_c05_hakaim_03,C05_HAKAIM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ロット：なにやら
+  _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_01,C05_SAGE6_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //元プラズマ団：ロット様！
+  _BALLOONWIN_OBJMSG_POS( msg_c05_hakaim_04,C05_HAKAIM_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ロット：客人かな？
+  _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_02,C05_SAGE6_01, POS_DEFAULT )
+  
+  //========================================//
+  //C05元プラズマ団POS無効
+  $WK_SCENE_C05 = 1
+  
+  //ライバル・ネオプラズマ団のOBJ非表示
+  _FLAG_SET(FV_C05_SWRIVAL_01)
+  _FLAG_SET(FV_C05_SWPLAZMAM_01)
+  //========================================//
+  
+  {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //いいえ
+  IF $SCWK_ANSWER == SCR_NO THEN
+    
+    //ロット：おひきとりを
+    _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_04,C05_SAGE6_01, POS_DEFAULT ) 
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  
+  //はい
+  ELSE
+    _CALL ev_c05_sage6_btl
+  ENDIF
+  }
+EVENT_END
+
+//--------------------------------------------------------------------
+//  HAKAIM：ポケモンハウスへ移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_goto_pokehouse_hakaim
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,12
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：ポケモンハウスへ移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_goto_pokehouse_player
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,11
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /* 			RIVAL：話しかけ			  */
 /**************************************************************/
 EVENT_START		ev_c05_swrival_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_stop_01 )
+  //ライバル名タグに代入
+  _RIVAL_NAME(1)
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_swrival_04 )
 EVENT_END
 
 /**************************************************************/
 /* 			SAGE6：話しかけ			  */
 /**************************************************************/
 EVENT_START		ev_c05_sage6_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_stop_01 )
+  
+  _TALK_START_SE_PLAY()
+  
+  //ロット：ここに入るなら
+  _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_05,C05_SAGE6_01, POS_DEFAULT ) 
+
+  {
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //いいえ
+  IF $SCWK_ANSWER == SCR_NO THEN
+    
+    //ロット：おひきとりを
+    _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_04,C05_SAGE6_01, POS_DEFAULT ) 
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  
+  //はい
+  ELSE
+    _CALL ev_c05_sage6_btl
+  ENDIF
+  }
 EVENT_END
 
 /**************************************************************/
-/* 			プラズマ団員：話しかけ			  */
+/* 			CALL：七賢人戦闘処理～ポケモンハウスへ			  */
+/**************************************************************/
+ev_c05_sage6_btl:
+  
+  //ロット：ではまいるぞ
+  _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_03,C05_SAGE6_01, POS_DEFAULT ) 
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //【仮】戦闘処理（トレーナーIDが仮）
+  _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+  
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  
+  //ロット：すまない
+  _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_06,C05_SAGE6_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //ライバルOBJ表示
+  _FLAG_RESET(FV_C05_SWRIVAL_01)
+  //========================================//
+  
+  //ライバル動作OBJ生成
+  _OBJ_ADD(C05_SWRIVAL_01)
+  
+  //ライバル位置調整
+  _OBJ_POS_CHANGE(C05_SWRIVAL_01,185,2,398,DIR_RIGHT)
+  
+  //アニメ：ライバル戻る
+  _OBJ_ANIME( C05_SWRIVAL_01, anm_rival_back_sage )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル名タグに代入
+  _RIVAL_NAME(1)
+  
+  //ライバル：にげられた！
+  _BALLOONWIN_OBJMSG_POS( msg_c05_swrival_03,C05_SWRIVAL_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( C05_HAKAIM_01, anm_staystep_l )
+  _OBJ_ANIME( C05_SAGE6_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //ロット：そちらは？
+  _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_07,C05_SAGE6_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ロット室内に移動
+  _OBJ_ANIME( C05_SAGE6_01, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //ロットの動作OBJ削除
+  _OBJ_DEL(C05_SAGE6_01)
+  
+  //アニメ：主人公移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_pleyer_in_pokehouse )
+  _OBJ_ANIME( C05_SWRIVAL_01, anm_rival_in_pokehouse )
+  _OBJ_ANIME_WAIT()
+  
+  
+  //========================================//
+  //C05元プラズマ団戦闘終了
+  $WK_SCENE_C05 = 2
+  //C05ロット非表示
+  _FLAG_SET( FV_C05_SAGE6_01 )
+  //元プラズマ団非表示
+  _FLAG_SET( FV_C05_HAKAIM_01 )
+  //========================================//
+  
+  //予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_C05R0501_SAGE6_01 )
+	
+	//C12PC0101マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C05R0501, 7, 25, DIR_UP )
+  
+_RET
+
+//--------------------------------------------------------------------
+//	ライバル：8倍速で戻って来る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_back_sage
+	_ANIME_DATA	AC_WALK_R_4F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：ポケモンハウス内へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pleyer_in_pokehouse
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：ポケモンハウス手前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_in_pokehouse
+  _ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/* 			元プラズマ団員：話しかけ			  */
 /**************************************************************/
 EVENT_START		ev_c05_hakaim_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_stop_01 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_hakaim_05 )
 EVENT_END
 
 /**************************************************************/
@@ -328,3 +769,74 @@ ev_c08r0201_black_battle:
 
 }
 _RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

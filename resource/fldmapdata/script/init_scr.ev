@@ -121,7 +121,15 @@ init_flags:
 	
 	//R04
 	_FLAG_SET( FV_R04_SWBOSS_01 ) //アクロマ：ジムクリア後表示
-
+	
+	//C05
+	
+	//C05：ヤーコンを非表示に
+	_FLAG_SET( FV_C05_SWLEADER5_01 )
+	//C05：ライバルを非表示に
+	_FLAG_SET( FV_C05_SWRIVAL_01 )
+	//C05：SAGE6を非表示に
+  _FLAG_SET( FV_C05_SAGE6_01 )
 
 }
 _RET
@@ -232,6 +240,11 @@ ev_first_gameclear:
   
   //スカイアローブリッジのストッパーを非表示
   _FLAG_RESET( FV_H01R0201_STOPPER_01 )
+  
+  //【仮】C05,D05の抜け道ストッパーを無効に
+  _FLAG_SET( FV_C05_STOPPER_01 )
+  _FLAG_SET( FV_D05_STOPPER_01 )
+  $WK_SCENE_D05_STOPPER_01 = 1
   
 _RET
 
