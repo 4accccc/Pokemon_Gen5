@@ -193,6 +193,7 @@
 #define WK_SCENE_C05R0701_STOPPER_01     16581 /* 0x40c5 ホドモエシティ：WBT方面ストッパーPOS */
 #define WK_SCENE_D05                     16582 /* 0x40c6 WBT前：イベント制御ワーク */
 #define WK_SCENE_D05_STOPPER_01          16583 /* 0x40c7 WBT前：イベント制御ワーク抜け道ストッパーPOS */
+#define WK_SCENE_C03P09                  16584 /* 0x40c8 ヒウンアイス：行列POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

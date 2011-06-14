@@ -304,9 +304,9 @@
 #define FE_C04_SWHEROINE_01                288 /* 0x0120 C04：バトルサブウェイう誘導イベント */
 #define FE_C05R0501_POKE22_GET             289 /* 0x0121 C05R0501：ゾロア入手フラグ */
 #define FE_C06R0201_SWLEADER6_01           290 /* 0x0122 C06：初回話しかけチェック */
-		/* not used   291(0x0123) */
-		/* not used   292(0x0124) */
-		/* not used   293(0x0125) */
+#define FE_C03P09_WAITRESS_01              291 /* 0x0123 C03P09：ヒウンアイス店員初回話しかけ */
+#define FE_C03P09_WAITRESS_02              292 /* 0x0124 C03P09：ヒウンアイス店員繁盛後初回話しかけ */
+#define FE_C03P09_ICEBUY_01                293 /* 0x0125 C03P09：ヒウンアイス初回購入 */
 		/* not used   294(0x0126) */
 		/* not used   295(0x0127) */
 		/* not used   296(0x0128) */
@@ -585,6 +585,8 @@
 #define FV_C06R0201_SWLEADER6_01           667 /* 0x029b フキヨセシティ：カーゴサービス・フウロ */
 #define FV_C06R0201_HAKASE2_01             668 /* 0x029c フキヨセシティ：カーゴサービス・アララギ娘 */
 #define FV_C06R0201_SWBELL_01              669 /* 0x029d フキヨセシティ：カーゴサービス・ベル */
+#define FV_C03P09_PEOPLE_01                670 /* 0x029e ヒウンアイス：繁盛時の行列 */
+#define FV_C03P09_PEOPLE_02                671 /* 0x029f ヒウンアイス：繁盛時の行列（主人公の後ろにつく人々） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2179,7 +2181,7 @@
 #define TMFLG_R08_STONE_GET               2749 /* 0x0abd ８番道路：天候石入手イベント（１日１回入手） */
 #define TMFLG_R05_KINOMI                  2750 /* 0x0abe スワン：5番道路：木の実購入イベント確定フラグ */
 #define TMFLG_R05_KINOMI_BUY              2751 /* 0x0abf スワン：5番道路：木の実購入イベント済みフラグ */
-		/* not used  2752(0x0ac0) */
+#define TMFLG_C03P09_ICEBUY               2752 /* 0x0ac0 ヒウンアイス：一日一回購入フラグ */
 		/* not used  2753(0x0ac1) */
 		/* not used  2754(0x0ac2) */
 		/* not used  2755(0x0ac3) */
