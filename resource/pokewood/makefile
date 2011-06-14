@@ -88,10 +88,12 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 	rm *.txt
 	rm *.bin
-	rm *.gmm
+	rm *_f.gmm
+	rm *_m.gmm
 endif
 	-rm -f $(TARGETDIR)/$(targetname).narc
 	-rm -f $(TARGETDIR)/$(targetname).naix
-	-rm -f $(MESSAGEDIR)/*.gmm
+	-rm -f $(MESSAGEDIR)/*_f.gmm
+	-rm -f $(MESSAGEDIR)/*_m.gmm
 
 
