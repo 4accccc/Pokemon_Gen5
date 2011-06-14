@@ -1,0 +1,242 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		gym_dragon.cdat
+ *	@brief  ドラゴンジムデータ群
+ *	@author	Masayuki Onoue
+ *	@date		2011.06.10
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+// レイヤーごとのボタン定義[レイヤー][場所（左右中）][上がれるか(FALSE,TRUE)]
+static const GYM_BUTTON_SEQ sc_button_seq_table[FLOOR_LAYER_MAX][GYM_LOCATION_MAX][2] =
+{
+  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_U}}, // ENTRANCE
+  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_D,GYM_BUTTON_UD}},   // TAIL
+  {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // FLOOT
+  {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // ARM
+  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_D,GYM_BUTTON_D}},    // ENTRANCE
+};
+
+// レイヤーごとのアニメーション定義[レイヤー][場所（左右中）][上下左右]
+static const BUTTON_EVENT_DATA sc_button_event_data[FLOOR_LAYER_MAX][GYM_LOCATION_MAX][4] = 
+{
+  // ENTRANCE
+  {
+    // 位置->左
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->右
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->中
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+  },
+    // TAIL
+  {
+    // 位置->左
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->右
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->中
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+  },
+    // FLOOT
+  {
+    // 位置->左
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->右
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->中
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+  },
+    // ARM
+  {
+    // 位置->左
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->右
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->中
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+  },
+    // HEAD
+  {
+    // 位置->左
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->右
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+    // 位置->中
+    {
+      { 0 },  // ボタン上
+      { 0 },  // ボタン下
+      { 0 },  // ボタン左
+      { 0 },  // ボタン右
+    },
+  },
+};
+
+
+
+//-------------------------------------
+///	モデル管理
+//=====================================
+typedef enum
+{
+  MODELID_DRAGON,
+  MODELID_MOVE_DRAGON,
+  MODELID_MAX,
+}MODELID;
+
+
+//リソースID
+enum
+{
+  MODEL_RESID_DRAGON,         // 自機ドラゴン
+  MODEL_RESID_MOVE_DRAGON,    // 自機ドラゴン移動データ
+  MODEL_RESID_DRAGON_ICA,         // 自機ドラゴン(アニメーション)
+  MODEL_RESID_MOVE_DRAGON_ICA,    // 自機ドラゴン移動データ(アニメーション)
+  MODEL_RESID_MAX,
+};
+
+//リソースデータ
+static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
+{
+  // MODEL_RESID_DRAGON->自機ドラゴン
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // MODEL_RESID_MOVE_DRAGON->自機ドラゴン移動データ
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_move_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  //MODEL_RESID_DRAGON_ICA->自機ドラゴン(アニメーション)
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+    //MODEL_RESID_MOVE_DRAGON_ICA->自機ドラゴン移動データ(アニメーション)
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_move_nsbca, 
+    GFL_G3D_UTIL_RESARC
+  },
+};
+
+// アニメ設定
+#define ANIMEID_DRAGON_MAX  (1)
+static const GFL_G3D_UTIL_ANM sc_g3d_dragon_anm[ANIMEID_DRAGON_MAX] = 
+{
+  { MODEL_RESID_DRAGON_ICA, 0 }
+};
+
+// アニメ設定2
+#define ANIMEID_MOVE_DRAGON_MAX  (1)
+static const GFL_G3D_UTIL_ANM sc_g3d_move_dragon_anm[ANIMEID_MOVE_DRAGON_MAX] = 
+{
+  { MODEL_RESID_MOVE_DRAGON_ICA, 0 }
+};
+
+//3Dオブジェクト設定
+static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
+{
+    // エレベータ
+  {
+    MODEL_RESID_DRAGON, 	//モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_DRAGON, 	//テクスチャリソースID
+		sc_g3d_dragon_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_DRAGON_MAX,	        //アニメリソース数
+  },
+  // エレベータ
+  {
+    MODEL_RESID_DRAGON, 	//モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_DRAGON, 	//テクスチャリソースID
+		sc_g3d_move_dragon_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_MOVE_DRAGON_MAX,	        //アニメリソース数
+  },
+};
+
+// ブラック全情報設定
+static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
+{
+  sc_g3d_util_res,  //リソーステーブル
+  MODEL_RESID_MAX,  //リソース最大数
+  sc_g3d_util_obj,  //オブジェクトテーブル
+  MODELID_MAX,      //オブジェクト数
+};
+

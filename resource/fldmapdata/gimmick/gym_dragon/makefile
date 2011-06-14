@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou tanoue_reiko unno fuchino
+USERS	=	saitou tanoue_reiko unno fuchino onoue_masayuki
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -49,6 +49,7 @@ INCPATH	= -I$(NITROSDK_ROOT)/include
 
 DEF_MAKE = ../def_write.rb
 XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
+ICA_CNV = ../../../../tools/ica/ica_converter.rb
 
 .PHONY:	do-build clean
 
@@ -96,6 +97,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 %.nsbtp:	data/%.itp
 #	@echo $<をコンバート
 	@g3dcvtr $<
+
+%.bin:	data/null/%.ica
+	@ruby $(ICA_CNV) -srt $< $@
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)

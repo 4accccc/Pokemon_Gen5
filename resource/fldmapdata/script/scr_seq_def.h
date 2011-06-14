@@ -7134,65 +7134,26 @@
 
 //--------------------------------------------------------------
 /**
- * ジムコマンド　ドラゴンジム初期化
+ * ジムコマンド　ドラゴンジム初期化イベント
  */
 //--------------------------------------------------------------
-#define _GYM_DRAGON_INIT() \
-    _ASM_GYM_DRAGON_INIT
+#define _GYM_DRAGON_INIT() _ASM_GYM_DRAGON_INIT
 
   .macro  _ASM_GYM_DRAGON_INIT
   .short  EV_SEQ_GYM_DRAGON_INIT
-  .endm
-
-//--------------------------------------------------------------
-/**
- * ジムコマンド　ドラゴンジムギミック発動
- */
-//--------------------------------------------------------------
-#define _GYM_DRAGON_CALL_GMK(head, arm) _ASM_GYM_DRAGON_CALL_GMK head, arm
-
-  .macro  _ASM_GYM_DRAGON_CALL_GMK head, arm
-  .short  EV_SEQ_GYM_DRAGON_CALL_GMK
-  .short  \head
-  .short  \arm
-  .endm
-
-//--------------------------------------------------------------
-/**
- * ジムコマンド　ドラゴンジム自機飛び降り
- */
-//--------------------------------------------------------------
-#define _GYM_DRAGON_JUMP_DOWN(dir) _ASM_GYM_DRAGON_JUMP_DOWN dir
-
-  .macro  _ASM_GYM_DRAGON_JUMP_DOWN dir
-  .short  EV_SEQ_GYM_DRAGON_JUMP_DOWN
-  .short  \dir
-  .endm
-
-//--------------------------------------------------------------
-/**
- * ジムコマンド　ドラゴンジム腕移動
- */
-//--------------------------------------------------------------
-#define _GYM_DRAGON_MOVE_ARM(head, arm) _ASM_GYM_DRAGON_MOVE_ARM head, arm
-
-  .macro  _ASM_GYM_DRAGON_MOVE_ARM head, arm
-  .short  EV_SEQ_GYM_DRAGON_MOVE_ARM
-  .short  \head
-  .short  \arm
   .endm  
-  
+
 //--------------------------------------------------------------
 /**
- * ジムコマンド　ドラゴンジム首移動
+ * ジムコマンド　ドラゴンジムボタンイベント
  */
 //--------------------------------------------------------------
-#define _GYM_DRAGON_MOVE_HEAD(head) _ASM_GYM_DRAGON_MOVE_HEAD head
+#define _GYM_DRAGON_PUSH_BUTTON( event_seq ) _ASM_GYM_DRAGON_PUSH_BUTTON event_seq
 
-  .macro  _ASM_GYM_DRAGON_MOVE_HEAD head
-  .short  EV_SEQ_GYM_DRAGON_MOVE_HEAD
-  .short  \head
-  .endm
+  .macro  _ASM_GYM_DRAGON_PUSH_BUTTON event_seq
+  .short  EV_SEQ_GYM_DRAGON_PUSH_BUTTON
+  .short  \event_seq
+  .endm  
 
 //--------------------------------------------------------------
 /**

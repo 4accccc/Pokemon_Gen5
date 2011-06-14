@@ -11,6 +11,15 @@
   .include  "../../message/dst/script/msg_c08gym0101.h"
   .include  "c08gym0101.h"
 
+//------------------------------注意--------------------------------//
+// ローカルワークをプログラム側で操作しています。
+// 
+// LOCALWORK0⇒上ボタン
+// LOCALWORK1⇒下ボタン
+// LOCALWORK2⇒左ボタン
+// LOCALWORK3⇒右ボタン
+//------------------------------------------------------------------/
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -18,4 +27,135 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		 ev_zone_c08gym0101
+_EVENT_DATA    ev_pos_c08gym0101_button_up        // 上ボタン
+_EVENT_DATA    ev_pos_c08gym0101_button_down      // 下ボタン
+_EVENT_DATA    ev_pos_c08gym0101_button_left      // 左ボタン
+_EVENT_DATA    ev_pos_c08gym0101_button_right     // 右ボタン
 _EVENT_DATA_END
+
+/************************************************************/
+/*					ジムギミック初期化						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c08gym0101
+
+  _GYM_DRAGON_INIT()
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*                    上ボタン                                */
+/**************************************************************/
+EVENT_START   ev_pos_c08gym0101_button_up
+{
+  // 下に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down )
+  _OBJ_ANIME_WAIT()
+
+  // 上を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME_WAIT()
+
+  // 上ボタン処理
+  _GYM_DRAGON_PUSH_BUTTON(GYM_DRAGON_EVENT_SEQ_UP_BUTTON)
+}
+EVENT_END
+
+/**************************************************************/
+/*                    下ボタン                                */
+/**************************************************************/
+EVENT_START   ev_pos_c08gym0101_button_down
+{
+  // 上に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_up )
+  _OBJ_ANIME_WAIT()
+
+  // 上を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME_WAIT()
+
+  // 下ボタン処理
+  _GYM_DRAGON_PUSH_BUTTON(GYM_DRAGON_EVENT_SEQ_DOWN_BUTTON)
+}
+EVENT_END
+
+/**************************************************************/
+/*                    左ボタン                                */
+/**************************************************************/
+EVENT_START   ev_pos_c08gym0101_button_left
+{
+  // 右に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right )
+  _OBJ_ANIME_WAIT()
+
+  // 上を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME_WAIT()
+
+  // 左ボタン処理
+  _GYM_DRAGON_PUSH_BUTTON(GYM_DRAGON_EVENT_SEQ_LEFT_BUTTON)
+}
+EVENT_END
+
+/**************************************************************/
+/*                    右ボタン                                */
+/**************************************************************/
+EVENT_START   ev_pos_c08gym0101_button_right
+{
+  // 左に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_left )
+  _OBJ_ANIME_WAIT()
+
+  // 上を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+  _OBJ_ANIME_WAIT()
+
+  // 右ボタン処理
+  _GYM_DRAGON_PUSH_BUTTON(GYM_DRAGON_EVENT_SEQ_RIGHT_BUTTON)
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+// 上を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_up_dir
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 下に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_down
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 上に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_up
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 右に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_right
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_R,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 左に移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_left
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+

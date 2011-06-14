@@ -18,6 +18,7 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "../../../resource/fldmapdata/gimmick/gym_normal/gym_normal_exit_def.h"
+#include "eventwork_def.h"  // LOCALWORK*
 
 //--------------------------------------------------------------
 /**
@@ -131,10 +132,27 @@ void GYM_INIT_Insect(GAMESYS_WORK *gsys, u16 **sw_work)
 void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
 {
   GYM_DRAGON_SV_WORK *gmk_sv_work;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+  gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+
+  // レイヤーとローケーションを設定
+  gmk_sv_work->now_floor_layer  = 0;
+  gmk_sv_work->now_location     = GYM_LOCATION_CENTER;
+
+  // スクリプトワークの初期化
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
-    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_DRAGON );
+    u16       *p_wk_adrs;
+    EVENTWORK *p_event_wk;
+    p_event_wk    = GAMEDATA_GetEventWork( gamedata );
+    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_U );
+    (*p_wk_adrs) = TRUE;
+    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_D );
+    (*p_wk_adrs) = FALSE;
+    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_L );
+    (*p_wk_adrs) = FALSE;
+    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_R );
+    (*p_wk_adrs) = FALSE;
   }
 }
 

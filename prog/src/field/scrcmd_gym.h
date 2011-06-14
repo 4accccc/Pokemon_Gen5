@@ -47,8 +47,8 @@ extern VMCMD_RESULT EvCmdGymFly_Blow( VMHANDLE * core, void *wk );
 //extern VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk );
 
 //—´
-//extern VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk );
-//extern VMCMD_RESULT EvCmdGymDragon_( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymDragon_Init( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGymDragon_PushButton( VMHANDLE *core, void *wk );
 
 //“Å
 extern VMCMD_RESULT EvCmdGymPoison_AnmStop( VMHANDLE * core, void *wk );

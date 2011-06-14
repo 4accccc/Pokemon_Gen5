@@ -4,32 +4,18 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-06-10T21:11:14
+	Update:2011-06-14T17:43:28
  *****************************************************************************/
 
 #ifndef NARC_GYM_DRAGON_NAIX_
 #define NARC_GYM_DRAGON_NAIX_
 
 enum {
-	NARC_gym_dragon_in31_dragon_nsbmd = 0,
-	NARC_gym_dragon_in31_l_arm_nsbmd = 1,
-	NARC_gym_dragon_in31_r_arm_nsbmd = 2,
-	NARC_gym_dragon_m_gym0802f_nsbmd = 3,
-	NARC_gym_dragon_in31_ue_rneck_nsbca = 4,
-	NARC_gym_dragon_in31_ue_rneck2_nsbca = 5,
-	NARC_gym_dragon_in31_ue_lneck_nsbca = 6,
-	NARC_gym_dragon_in31_ue_lneck2_nsbca = 7,
-	NARC_gym_dragon_in31_si_rneck_nsbca = 8,
-	NARC_gym_dragon_in31_si_rneck2_nsbca = 9,
-	NARC_gym_dragon_in31_si_lneck_nsbca = 10,
-	NARC_gym_dragon_in31_si_lneck2_nsbca = 11,
-	NARC_gym_dragon_in31_r_ue_nsbca = 12,
-	NARC_gym_dragon_in31_r_sita_nsbca = 13,
-	NARC_gym_dragon_in31_l_ue_nsbca = 14,
-	NARC_gym_dragon_in31_l_sita_nsbca = 15,
-	NARC_gym_dragon_in31_botton_nsbmd = 16,
-	NARC_gym_dragon_in31_botton_nsbtp = 17,
-	NARC_gym_dragon_m_gym0802f_nsbta = 18
+	NARC_gym_dragon_hero_dra_nsbmd = 0,
+	NARC_gym_dragon_hero_dra_move_nsbmd = 1,
+	NARC_gym_dragon_hero_dra_move_nsbca = 2,
+	NARC_gym_dragon_hero_dra_nsbca = 3,
+	NARC_gym_dragon_hero_dra_move02_bin = 4
 };
 
 /* NARC_GYM_DRAGON_NAIX_ */

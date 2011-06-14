@@ -448,7 +448,6 @@ VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk )
 #endif
 
 //--ドラゴン--
-#if 0
 //--------------------------------------------------------------
 /**
  * ドラゴンジムギミック　
@@ -456,19 +455,17 @@ VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdGymDragon_( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdGymDragon_PushButton( VMHANDLE *core, void *wk )
 {
-  u16 head;
-  u16 arm;
+  u16 event_seq;
   GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  head = VMGetU16( core );
-  arm = VMGetU16( core );
+  event_seq = VMGetU16( core );
 
-  call_event = GYM_DRAGON_CreateGmkEvt(gsys, head, arm);
+  call_event = GYM_DRAGON_CreateButtonEvent(gsys,event_seq);
 
   if (call_event == NULL){
     GF_ASSERT(0);
@@ -479,7 +476,6 @@ VMCMD_RESULT EvCmdGymDragon_( VMHANDLE *core, void *wk )
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
 }
-#endif
 
 //--毒--
 //--------------------------------------------------------------

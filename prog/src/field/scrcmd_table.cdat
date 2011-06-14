@@ -1030,6 +1030,16 @@
   DEF_CMD( EvCmdGymWater_SplashAnime, EV_SEQ_GYM_WATER_SPLASH_ANIME )
   DEF_CMD( EvCmdGymWater_ReturnAnime, EV_SEQ_GYM_WATER_RETURN_ANIME )
 
+  //ドラゴンジム
+  DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
+  DEF_CMD( EvCmdGymDragon_PushButton, EV_SEQ_GYM_DRAGON_PUSH_BUTTON )
+
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
   END_CMD
   //スクリプトコマンドテーブル終了
 
