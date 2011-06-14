@@ -12,6 +12,11 @@
 #define ZONE_D05_EVC_H
 
 #define D05_STOPPER_01                     0
+#define D05_DUMMY_01                       1
+#define D05_DUMMY_02                       2
+#define D05_DUMMY_03                       3
+#define D05_DUMMY_04                       4
+#define D05_DUMMY_05                       5
 
 #endif //ZONE_D05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
