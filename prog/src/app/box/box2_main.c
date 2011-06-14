@@ -6980,7 +6980,7 @@ void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk )
 {
   int x,y;
   int state;
-  GFL_STD_MemClear( syswk->app->multi_pokemon_id, 30 );
+  GFL_STD_MemClear( syswk->app->multi_pokemon_id, BOX2OBJ_POKEICON_TRAY_MAX );
   
   for(y=0;y<syswk->app->multi_h;y++){
     for(x=0;x<syswk->app->multi_w;x++){
