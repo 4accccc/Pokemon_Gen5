@@ -4778,7 +4778,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
-		16,        // camera id
+		19,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		11,
 		FALSE,
@@ -4812,7 +4812,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
-		17,        // camera id
+		19,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		13,
 		FALSE,
@@ -4846,7 +4846,7 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
-		18,        // camera id
+		19,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		12,
 		FALSE,
