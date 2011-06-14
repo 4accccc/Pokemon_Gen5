@@ -38,8 +38,9 @@ _EVENT_DATA_END
 //ドア変数定義
 DEFINE_LOCAL	DOOR_ANIME_ID
 
+
 /************************************************************/
-/*		ZONE_CHANGE                             */
+/*  ZONE_CHANGE                                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_t06
   //イベント進行でアデクの配置を分岐
@@ -48,43 +49,47 @@ INIT_EVENT_START   ev_zone_t06
   ENDIF
 INIT_EVENT_END
 
+
 /************************************************************/
-/*					FIELD_INIT_SCRIPT						*/
+/*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
-INIT_EVENT_START ev_init_t06
+INIT_EVENT_START   ev_init_t06
   //イベント進行でアデクの配置を分岐
   IF $WK_SCENE_T06 < 4 && $WK_SCENE_T06 >= 1 THEN
     _OBJ_POS_CHANGE( T06_CHAMPION_01, 113, 2, 669, DIR_UP )
   ENDIF
 INIT_EVENT_END
 
+
 /**************************************************************/
-/* POS：アデクのガイド                                         */
+/* POS：アデクのガイド                                        */
 /**************************************************************/
 EVENT_START   ev_pos_t06_champion_guide_01
-  
+
   //アニメ：アデク「！」
   _OBJ_ANIME( T06_CHAMPION_01, anm_champion_guide01 )
   _OBJ_ANIME_WAIT()
-  
+
   //メッセージ：そうだ！
   _PLAYER_NAME( 0 )	 //プレイヤー名を反映
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_01,T06_CHAMPION_01, POS_DEFAULT )
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_02,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
   //アデク退場
   _OBJ_ANIME( T06_CHAMPION_01, anm_champion_guide01_bye )
   _OBJ_ANIME_WAIT()
-  
+
   //アデク寺小屋方面にワープ
   _OBJ_POS_CHANGE( T06_CHAMPION_01, 113, 2, 669, DIR_DOWN )
-  
+
   //========================================//
   //T06階段方面のPOSを有効
   $WK_SCENE_T06 = 1
   //========================================//
+
 EVENT_END
+
 
 //--------------------------------------------------------------------
 //	アデク：「！」振り向く
@@ -103,7 +108,7 @@ _ANIME_LABEL	anm_champion_guide01_bye
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/* POS：アデクのガイド                                         */
+/* POS：アデクのガイド                                        */
 /**************************************************************/
 EVENT_START   ev_pos_t06_champion_guide_02
   
@@ -174,6 +179,7 @@ EVENT_START   ev_pos_t06_champion_guide_02
   //========================================//
 EVENT_END
 
+
 //--------------------------------------------------------------------
 //	アデク：20ばんどうろを見る
 //--------------------------------------------------------------------
@@ -183,7 +189,7 @@ _ANIME_LABEL	anm_champion_look_r20
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/* POS：アデクのガイド（ストッパー）                         */
+/* POS：アデクのガイド（ストッパー）                          */
 /**************************************************************/
 EVENT_START   ev_pos_t06_champion_guide_03
 
@@ -207,7 +213,7 @@ EVENT_START   ev_pos_t06_champion_guide_03
 EVENT_END
 
 /**************************************************************/
-/* POS：アデクのガイド（迷子ポケモン終了）                      */
+/* POS：アデクのガイド（迷子ポケモン終了）                    */
 /**************************************************************/
 EVENT_START   ev_pos_t06_champion_guide_04
   
@@ -462,33 +468,34 @@ EVENT_END
 /* WOMAN2話しかけ                                         */
 /**************************************************************/
 EVENT_START   ev_t06_woman2_01
+{
 
   _TALK_OBJ_START()
   //ひらがなよりも漢字が好き？
-  //_BALLOONWIN_OBJMSG_POS( msg_t06_woman2_01, T06_WOMAN2_01, POS_DEFAULT )
   _BALLOONWIN_TALKOBJ_MSG( msg_t06_woman2_01 )
 
-  {
   _YES_NO_WIN( SCWK_ANSWER )
 
   //はい
-   IF $SCWK_ANSWER == SCR_YES THEN
-    _BALLOONWIN_OBJMSG_POS( msg_t06_woman2_02, T06_WOMAN2_01, POS_DEFAULT )
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_TALKOBJ_MSG( msg_t06_woman2_02 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-  //漢字ひらがな切り替え
-   _CHG_LANGID()
+    //漢字ひらがな切り替え
+    _CHG_LANGID()
 
   //いいえ
   ELSE
-    _BALLOONWIN_OBJMSG_POS( msg_t06_woman2_03, T06_WOMAN2_01, POS_DEFAULT )
+    _BALLOONWIN_TALKOBJ_MSG( msg_t06_woman2_03 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
   ENDIF
-  }
+
+}
 EVENT_END
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：下に1歩歩く
@@ -570,3 +577,5 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
+
+

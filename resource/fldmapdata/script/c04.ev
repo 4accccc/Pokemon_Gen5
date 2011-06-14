@@ -26,7 +26,7 @@ _EVENT_DATA    ev_bg_c04_board_03
 _EVENT_DATA    ev_bg_c04_board_04
 _EVENT_DATA    ev_bg_c04_board_05
 _EVENT_DATA    ev_bg_c04_board_06
-_EVENT_DATA    ev_reserve_c04_exit			//ギアステーションから出てきた時のアニメ
+_EVENT_DATA    ev_reserve_c04_exit      //ギアステーションから出てきた時のアニメ
 _EVENT_DATA    ev_zone_c04
 _EVENT_DATA    ev_init_c04
 _EVENT_DATA    ev_bg_c04_board_07
@@ -48,38 +48,38 @@ DEFINE_LOCAL  LCW_POSZ
 
 
 /************************************************************/
-/*					ZONE_CHANGE_SCRIPT						*/
+/*            ZONE_CHANGE_SCRIPT            */
 /************************************************************/
-INIT_EVENT_START	ev_zone_c04
-	
-	//ギアステーション内階段降りる演出用にワークをリセット
-	$WK_OTHER_STATION_CONNECT = 1
+INIT_EVENT_START  ev_zone_c04
 
-	//ビッグスタジアム／リトルコートの処理を初期化
-	$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_NONE
-	_FLAG_RESET( FE_SPORTS_PLAYING )
+  //ギアステーション内階段降りる演出用にワークをリセット
+  $WK_OTHER_STATION_CONNECT = 1
 
-	//ミュージカルファンの表示状態をリセット
-	_FLAG_SET( FV_MUSICAL_FUN_01 )
-	_FLAG_SET( FV_MUSICAL_FUN_02 )
-	_FLAG_SET( FV_MUSICAL_FUN_03 )
-	_FLAG_SET( FV_MUSICAL_FUN_04 )
-	_FLAG_SET( FV_MUSICAL_FUN_05 )
-	_FLAG_SET( FV_MUSICAL_FUN_06 )
-	_FLAG_SET( FV_MUSICAL_FUN_07 )
-	_FLAG_SET( FV_MUSICAL_FUN_08 )
-	_FLAG_SET( FV_MUSICAL_FUN_09 )
-	_FLAG_SET( FV_MUSICAL_FUN_10 )
+  //ビッグスタジアム／リトルコートの処理を初期化
+  $WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_NONE
+  _FLAG_RESET( FE_SPORTS_PLAYING )
 
-	//ミュージカルスタイリストの助言メッセージをリセット
-	_FLAG_SET( FE_C04R0201_STYLIST_TALK )
+  //ミュージカルファンの表示状態をリセット
+  _FLAG_SET( FV_MUSICAL_FUN_01 )
+  _FLAG_SET( FV_MUSICAL_FUN_02 )
+  _FLAG_SET( FV_MUSICAL_FUN_03 )
+  _FLAG_SET( FV_MUSICAL_FUN_04 )
+  _FLAG_SET( FV_MUSICAL_FUN_05 )
+  _FLAG_SET( FV_MUSICAL_FUN_06 )
+  _FLAG_SET( FV_MUSICAL_FUN_07 )
+  _FLAG_SET( FV_MUSICAL_FUN_08 )
+  _FLAG_SET( FV_MUSICAL_FUN_09 )
+  _FLAG_SET( FV_MUSICAL_FUN_10 )
+
+  //ミュージカルスタイリストの助言メッセージをリセット
+  _FLAG_SET( FE_C04R0201_STYLIST_TALK )
 
   //主人公の性別を取得してヒロイン（ヒーロー）の見た目を指定
   IF FLAG_OFF( FV_C04_SWHEROINE_01 ) THEN
     _GET_MY_SEX( SCWK_ANSWER )
     IF $SCWK_ANSWER == PM_MALE THEN
       $OBJCHRWORK0 = SWHEROINE   //女の子を指定
-      ELSE
+    ELSE
       $OBJCHRWORK0 = SWHERO      //男の子を指定
     ENDIF
   ENDIF
@@ -88,26 +88,24 @@ INIT_EVENT_END
 
 
 /************************************************************/
-/*					FIELD_INIT_SCRIPT						*/
+/*            FIELD_INIT_SCRIPT           */
 /************************************************************/
-INIT_EVENT_START	ev_init_c04
-
-
+INIT_EVENT_START  ev_init_c04
 
 
 INIT_EVENT_END
 
 
 /************************************************************/
-/*	予約スクリプト：ギアステーションから出てくるアニメ		*/
+/*  予約スクリプト：ギアステーションから出てくるアニメ      */
 /************************************************************/
-EVENT_START	ev_reserve_c04_exit
+EVENT_START  ev_reserve_c04_exit
 
-	_PLACE_NAME_DISPLAY()	//地名表示演出
+  _PLACE_NAME_DISPLAY() //地名表示演出
 
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_exit_player_walk_out )
-	_OBJ_ANIME_WAIT()
-	
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_exit_player_walk_out )
+  _OBJ_ANIME_WAIT()
+
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -123,74 +121,74 @@ DEFINE_LOCAL	LWK_GUIDE_POS
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_01
-	_EASY_BGWIN_MSG( msg_c04_sign1_01, TYPE_TOWN )
+EVENT_START   ev_bg_c04_board_01
+  _EASY_BGWIN_MSG( msg_c04_sign1_01, TYPE_TOWN )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_02
-	_EASY_BGWIN_MSG( msg_c04_sign2_01, TYPE_POST )
+EVENT_START   ev_bg_c04_board_02
+  _EASY_BGWIN_MSG( msg_c04_sign2_01, TYPE_POST )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_03
-	_EASY_BGWIN_MSG( msg_c04_sign3_01, TYPE_POST )
+EVENT_START   ev_bg_c04_board_03
+  _EASY_BGWIN_MSG( msg_c04_sign3_01, TYPE_POST )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_04
-	_EASY_BGWIN_MSG( msg_c04_sign4_01, TYPE_POST )
+EVENT_START   ev_bg_c04_board_04
+  _EASY_BGWIN_MSG( msg_c04_sign4_01, TYPE_POST )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_05
-	_EASY_BGWIN_MSG( msg_c04_sign5_01, TYPE_POST )
+EVENT_START   ev_bg_c04_board_05
+  _EASY_BGWIN_MSG( msg_c04_sign5_01, TYPE_POST )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_06
-	_EASY_BGWIN_MSG( msg_c04_sign6_01, TYPE_INFO )
+EVENT_START   ev_bg_c04_board_06
+  _EASY_BGWIN_MSG( msg_c04_sign6_01, TYPE_INFO )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
-EVENT_START	ev_bg_c04_board_07
-	_EASY_BGWIN_MSG( msg_c04_sign7_01, TYPE_INFO )
+EVENT_START   ev_bg_c04_board_07
+  _EASY_BGWIN_MSG( msg_c04_sign7_01, TYPE_INFO )
 EVENT_END
 
 
 /************************************************************/
-/*							看板							*/
+/*              看板              */
 /************************************************************/
 //トライアルハウス
-EVENT_START	ev_bg_c04_board_08
-	_EASY_BGWIN_MSG( msg_c04_sign8_01, TYPE_POST )
+EVENT_START   ev_bg_c04_board_08
+  _EASY_BGWIN_MSG( msg_c04_sign8_01, TYPE_POST )
 EVENT_END
 
 
 /**************************************************************/
-/*		POS：ライバルイベント（プラズマ団戦）
+/*    POS：ライバルイベント（プラズマ団戦）
 /**************************************************************/
-EVENT_START		ev_pos_c04_swrival_01
+EVENT_START   ev_pos_c04_swrival_01
 
   //==================================//
   //【仮】POSイベント終了
@@ -227,7 +225,6 @@ EVENT_START		ev_pos_c04_swrival_01
 
   //プラズマ団男：やれやれ……
   _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam1_02, C04_SWPLAZMAM_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //アニメ：プラズマ団２人の移動
@@ -257,7 +254,6 @@ EVENT_START		ev_pos_c04_swrival_01
   _PLAYER_NAME( 0 )
   //ライバル：そこに　いるんだろ▼
   _BALLOONWIN_OBJMSG_POS( msg_c04_swrival_03, C04_SWRIVAL_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバルがプラズマ団男04と向かい合う
@@ -268,7 +264,7 @@ EVENT_END
 
 
 /**************************************************************/
-/* ライバル（ライバルイベント中）                             */
+/*  ライバル（ライバルイベント中）                            */
 /**************************************************************/
 EVENT_START   ev_c04_swrival_01
 
@@ -287,21 +283,21 @@ EVENT_END
 
 
 /**************************************************************/
-/*		プラズマ団男04（ライバルイベント中）
+/*  プラズマ団男04（ライバルイベント中）
 /**************************************************************/
 EVENT_START   ev_c04_swplazmam_04
 
-	_TALK_START_TURN_NOT()
+  _TALK_START_TURN_NOT()
   //プラズマ団男04：……！　オレが
-	_BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmam4_01 )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04_swplazmam4_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
 
 
 /**************************************************************/
-/*		プラズマ団男02（ライバルイベント中）
+/*  プラズマ団男02（ライバルイベント中）
 /**************************************************************/
 EVENT_START   ev_c04_swplazmam_02
 
@@ -319,7 +315,7 @@ EVENT_START   ev_c04_swplazmam_02
         _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam2_01, C04_SWPLAZMAM_02, POS_DEFAULT )
         _MSGWIN_CLOSE()
 
-        ELSE
+      ELSE
         //自機座標取得
         _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
@@ -397,7 +393,7 @@ EVENT_END
 
 
 /**************************************************************/
-/*		プラズマ団女01（ライバルイベント中）
+/*  プラズマ団女01（ライバルイベント中）
 /**************************************************************/
 EVENT_START   ev_c04_swplazmaw_01
 
@@ -415,8 +411,8 @@ EVENT_START   ev_c04_swplazmaw_01
         _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmaw1_01, C04_SWPLAZMAW_01, POS_DEFAULT )
         _MSGWIN_CLOSE()
 
-        ELSE
-        //自機方向取得 
+      ELSE
+        //自機方向取得
         _PLAYER_DIR_GET( LWK_DIR )
         SWITCH $LWK_DIR
         CASE DIR_LEFT THEN
@@ -478,22 +474,22 @@ EVENT_START   ev_c04_swplazmaw_01
 
 EVENT_END
 
-ev_battle_check:	
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-	ELSE
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
 _RET
 
 
 /**************************************************************/
-/*		ライバルイベント２（プラズマ団全滅）
+/*    ライバルイベント２（プラズマ団全滅）
 /**************************************************************/
-EVENT_START		ev_pos_c04_swrival_02
+EVENT_START   ev_pos_c04_swrival_02
 
   //==================================//
   //【仮】POSイベント終了
@@ -507,20 +503,19 @@ EVENT_START		ev_pos_c04_swrival_02
   _OBJ_ANIME_WAIT()
 
   //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
 
   //アニメ：主人公ライバルに隣接
   IF $LCW_POSX == 407 && $LCW_POSZ == 440 THEN
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 406, 439, FORCE_TYPE_NPC, 8, DIR_UD )
     _OBJ_ANIME_WAIT()
 
-    ELSE
+  ELSE
     //隣接済みだった場合は振り向きのみ
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
     _OBJ_ANIME_WAIT()
 
   ENDIF
-
 
   //プラズマ団男：まいったね！
   _BALLOONWIN_OBJMSG_POS( msg_c04_swplazmam1_03, C04_SWPLAZMAM_01, POS_DEFAULT )
@@ -529,8 +524,8 @@ EVENT_START		ev_pos_c04_swrival_02
   _TIME_WAIT( 15 )
 
   //暗転
-	_BLACK_OUT_SLOW()
-	_DISP_FADE_END_CHECK()
+  _BLACK_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
 
   //プラズマ団×４削除
   _OBJ_DEL( C04_SWPLAZMAM_01 )
@@ -543,9 +538,9 @@ EVENT_START		ev_pos_c04_swrival_02
   _FLAG_SET( FV_C04_SWPLASMAM_01 )
   //========================================//
 
-	//暗転復帰
-	_BLACK_IN_SLOW()
-	_DISP_FADE_END_CHECK()
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
 
   _TIME_WAIT( 45 )
 
@@ -563,10 +558,10 @@ EVENT_START		ev_pos_c04_swrival_02
 
   //ライバル：たすかったよ
   _BALLOONWIN_OBJMSG_POS( msg_c04_swrival_06, C04_SWRIVAL_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバルポケセンへ
-  //_OBJ_ANIME( C04_SWRIVAL_01, anm_staystep_r )
   _OBJ_ANIME_AUTO( C04_SWRIVAL_01, 411, 438, FORCE_TYPE_NPC, 8, DIR_LR )
   _TIME_WAIT( 3 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
@@ -586,30 +581,26 @@ EVENT_END
 
 
 /**************************************************************/
-/* SWHEROINE(SWHERO)イベント01                                */
+/*  SWHEROINE(SWHERO)イベント01                               */
 /**************************************************************/
 EVENT_START   ev_c04_swheroine_01
-
 {
 
   //初めて話しかけたか
-	IF FLAG_OFF( FE_C04_SWHEROINE_01 ) THEN
-
+  IF FLAG_OFF( FE_C04_SWHEROINE_01 ) THEN
     _TALK_OBJ_START()
     //ヒロイン：あの　ギアステーションって（主人公が女の子の場合は男口調）
     _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_01, msg_c04_hero_01, C04_SWHEROINE_01, POS_DOWN )
-    _LAST_KEYWAIT()
 
     //========================================//
     //２度目以降から下のセリフに
     _FLAG_SET( FE_C04_SWHEROINE_01 )
     //========================================//
 
-    ELSE
+  ELSE
     _TALK_OBJ_START()
     //ヒロイン：じゅんびオーケー　よね▼（主人公が女の子の場合は男口調）
     _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_03, msg_c04_hero_03, C04_SWHEROINE_01, POS_DOWN )
-    _LAST_KEYWAIT()
 
   ENDIF
 
@@ -632,7 +623,7 @@ EVENT_START   ev_c04_swheroine_01
     IF $LCW_POSX == 422 && $LCW_POSZ == 462 THEN
       _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 423, 461, FORCE_TYPE_NPC, 8, DIR_LR )
       _OBJ_ANIME_WAIT()
-      ELSE
+    ELSE
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
       _OBJ_ANIME_WAIT()
     ENDIF
@@ -709,7 +700,7 @@ EVENT_START   ev_c04_swheroine_01
       _TIME_WAIT( 3 )
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
       _OBJ_ANIME_WAIT()
-      ELSE
+    ELSE
       _OBJ_ANIME( C04_SWHEROINE_01, anm_staystep_l )
       _TIME_WAIT( 3 )
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
@@ -741,12 +732,12 @@ EVENT_START   ev_c04_swheroine_01
     _FLAG_SET( FV_C04_SWHEROINE_01 )
     //========================================//
 
-    //いいえ
-    ELSE
+  //いいえ
+  ELSE
 
     //あっ　そうか！（主人公が女の子の場合は男口調）
     _BALLOONWIN_OBJMSG_MF( msg_c04_heroine_02, msg_c04_hero_02, C04_SWHEROINE_01, POS_DOWN )
-    _LAST_KEYWAIT()
+    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //アニメ：ヒロイン向き直す

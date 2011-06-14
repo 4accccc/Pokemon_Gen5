@@ -46,27 +46,29 @@ _EVENT_DATA_END
 DEFINE_LOCAL easy_talk_word1
 DEFINE_LOCAL easy_talk_word2
 
+
 /************************************************************/
-/*          入った時の主人公アニメ          */
+/*          入った時の主人公アニメ                          */
 /************************************************************/
 EVENT_START ev_scene_c04r0101_entry
+
   //主人公：階段を降りる
-//  _TIME_WAIT( 8 )
-  
+  //  _TIME_WAIT( 8 )
   _PLACE_NAME_DISPLAY() //地名表示演出
-  
+
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_in )
   _OBJ_ANIME_WAIT()
-  
+
   //プレイヤー位置を別のレール座標に変更
   _PLAYER_RAIL_LOC_SET( 2, 0, 1 )
-  
+
   //========================================//
   //シーンチェンジを無効にする
   $WK_OTHER_STATION_CONNECT = 0
   //========================================//
-  
+
 EVENT_END
+
 
 //--------------------------------------------------------------------
 //主人公：階段を降りる
@@ -77,24 +79,25 @@ _ANIME_LABEL  anm_player_walk_in
 
 
 /************************************************************/
-/*          POSイベント：C04に出る          */
+/*          POSイベント：C04に出る                          */
 /************************************************************/
 //スクリプトによる特殊な接続イベント
 EVENT_START ev_pos_c04r0101_connect_c04
   //プレイヤー位置を別のレール座標に変更
   _PLAYER_RAIL_LOC_SET( 6, 0, 0 )
-  
+
   //主人公：階段を登る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_out )
   _OBJ_ANIME_WAIT()
-  
+
   //予約スクリプト：C04マップチェンジ後に主人公出てくるアニメを起動
   _RESERVE_SCRIPT( SCRID_RESERVE_C04_EXIT )
-  
+
   //C04にマップチェンジ
   _MAP_CHANGE( ZONE_ID_C04, 422, 459, DIR_DOWN )
-  
+
 EVENT_END
+
 
 //--------------------------------------------------------------------
 //主人公：階段を登る
@@ -124,8 +127,8 @@ EVENT_END
 /*            格闘家              */
 /************************************************************/
 EVENT_START ev_c04r0101_fighterm_01
-  _TALK_OBJ_START()
 
+  _TALK_OBJ_START()
   //ゲームクリア前後で分岐
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
     //殿堂入り後
@@ -134,6 +137,7 @@ EVENT_START ev_c04r0101_fighterm_01
     //殿堂入り前
     _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_01 )
   ENDIF
+
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
@@ -381,36 +385,35 @@ EVENT_END
 
 
 /************************************************************/
-/*            クラウン１（ライモンラリー）              */
+/*            クラウン１（ライモンラリー）                  */
 /************************************************************/
 EVENT_START ev_c04r0101_clown_01
 
   _TALK_OBJ_START()
-    //ライモンラリー・ギアステーション通過（1回のみ）
-    IF $WK_SCENE_C04_RALLY != 7 && FLAG_OFF( FE_C04_RALLYPOINT_01 )THEN
-      _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
-      _BALLOONWIN_OBJMSG_POS( msg_c04r0101_rally_01, C04R0101_CLOWN_01, POS_DEFAULT )
-      //========================================//
-      //クリア後メッセージ表示終了
-      _FLAG_SET( FE_C04_RALLYPOINT_01 )
-      //========================================//
+  //ライモンラリー・ギアステーション通過（1回のみ）
+  IF $WK_SCENE_C04_RALLY != 7 && FLAG_OFF( FE_C04_RALLYPOINT_01 )THEN
+    _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_rally_01 )
 
-      //========================================//
-      //C04イベント進行
-      $WK_SCENE_C04_RALLY += 1
-      //========================================//
+    //========================================//
+    //クリア後メッセージ表示終了
+    _FLAG_SET( FE_C04_RALLYPOINT_01 )
+    //========================================//
+    //C04イベント進行
+    $WK_SCENE_C04_RALLY += 1
+    //========================================//
 
-      _SE_WAIT()
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-    ELSE
-    //以降のメッセージ
-    _BALLOONWIN_OBJMSG_POS( msg_c04r0101_rally_02, C04R0101_CLOWN_01, POS_DEFAULT )
+    _SE_WAIT()
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-    ENDIF
+  ELSE
+    //以降のメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_rally_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
 
 EVENT_END
 

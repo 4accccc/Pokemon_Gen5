@@ -19,68 +19,67 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bg_c04p01_sign_01
-_EVENT_DATA		 ev_zone_c04p01
-_EVENT_DATA    ev_c04p01_clown_01
+_EVENT_DATA   ev_bg_c04p01_sign_01
+_EVENT_DATA   ev_zone_c04p01
+_EVENT_DATA   ev_c04p01_clown_01
 _EVENT_DATA_END
 
 /************************************************************/
-/*					ZONE CHANGE						*/
+/*            ZONE CHANGE           */
 /************************************************************/
-INIT_EVENT_START	ev_zone_c04p01
+INIT_EVENT_START  ev_zone_c04p01
 
-	//進行状況によってジムギミックを初期化
-	//クリア時
-	IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
-		
-		//================================================//
-		//ゾーンBGM変更フラグをリセット
-		_FLAG_RESET( SYS_FLAG_BGM_C04GYM0101_SHOW )
-		//================================================//
-	ENDIF
-	
+  //進行状況によってジムギミックを初期化
+  //クリア時
+  IF FLAG_ON( FE_C04GYM0101_CLEAR ) THEN
+    //================================================//
+    //ゾーンBGM変更フラグをリセット
+    _FLAG_RESET( SYS_FLAG_BGM_C04GYM0101_SHOW )
+    //================================================//
+
+  ENDIF
+
 INIT_EVENT_END
 
 
 /************************************************************/
-/*						ジム看板							*/
+/*            ジム看板            */
 /************************************************************/
-EVENT_START	ev_bg_c04p01_sign_01
+EVENT_START   ev_bg_c04p01_sign_01
 	_EASY_BGWIN_MSG( msg_c04p01_gymsign_01, TYPE_POST )
 EVENT_END
 
 
 /************************************************************/
-/*            クラウン１（ライモンラリー）              */
+/*            クラウン１（ライモンラリー）                  */
 /************************************************************/
-EVENT_START ev_c04p01_clown_01
+EVENT_START   ev_c04p01_clown_01
 
   _TALK_OBJ_START()
-    //ライモンラリー・かんらんしゃ通過（1回のみ）
-    IF $WK_SCENE_C04_RALLY != 7 && FLAG_OFF( FE_C04_RALLYPOINT_05 )THEN
-      _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
-      _BALLOONWIN_OBJMSG_POS( msg_c04p01_rally_01, C04P01_CLOWN_01, POS_DEFAULT )
-      //========================================//
-      //クリア後メッセージ表示終了
-      _FLAG_SET( FE_C04_RALLYPOINT_05 )
-      //========================================//
+  //ライモンラリー・かんらんしゃ通過（1回のみ）
+  IF $WK_SCENE_C04_RALLY != 7 && FLAG_OFF( FE_C04_RALLYPOINT_05 )THEN
+    _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04p01_rally_01 )
 
-      //========================================//
-      //C04イベント進行
-      $WK_SCENE_C04_RALLY += 1
-      //========================================//
+    //========================================//
+    //クリア後メッセージ表示終了
+    _FLAG_SET( FE_C04_RALLYPOINT_05 )
+    //========================================//
+    //C04イベント進行
+    $WK_SCENE_C04_RALLY += 1
+    //========================================//
 
-      _SE_WAIT()
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-
-    ELSE
-    //以降のメッセージ
-    _BALLOONWIN_OBJMSG_POS( msg_c04p01_rally_02, C04P01_CLOWN_01, POS_DEFAULT )
+    _SE_WAIT()
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-    ENDIF
+  ELSE
+    //以降のメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04p01_rally_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
 
 EVENT_END
 

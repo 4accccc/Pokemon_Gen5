@@ -11,7 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c06.h"
   .include  "c06.h"
-		
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -37,356 +37,358 @@ DEFINE_LOCAL  LCW_POSZ
 /*  C06 看板のイベントスクリプト1                      */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign1_01
-	_EASY_BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN)
+  _EASY_BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN)
 EVENT_END
 
- /**************************************************************/
+/**************************************************************/
 /*  C06 看板のイベントスクリプト2                      */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign2_01
-	_EASY_BGWIN_MSG(msg_c06_sign2_01,TYPE_POST)
+  _EASY_BGWIN_MSG(msg_c06_sign2_01,TYPE_POST)
 EVENT_END
 
- /**************************************************************/
+/**************************************************************/
 /*  C06 看板のイベントスクリプト3                      */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign3_01
-	_EASY_BGWIN_MSG(msg_c06_gymsign_01,TYPE_POST)
+  _EASY_BGWIN_MSG(msg_c06_gymsign_01,TYPE_POST)
 EVENT_END
 
 /**************************************************************/
 /*  C06 BOY2とGIRL1のつばめがえし入手イベントスクリプト           */
 /**************************************************************/
 EVENT_START   ev_c06_monsterball_01
-	_TALK_START_SE_PLAY()
 
-	//===============フラグ操作===============//
-	//つばめがえしを隠している、少年と少女を出現させる
-	_FLAG_RESET( FV_C06_GIRLBOY_01 )
-	_OBJ_ADD(C06_BOY2_01)
-	_OBJ_ADD(C06_BABYGIRL1_01)
-	//===============フラグ操作===============//
+  _TALK_START_SE_PLAY()
 
-	//アイテム入手処理
-	_OBJ_DEL(C06_MONSTERBALL_01)
- 	_ITEM_EVENT_FIELD_KEYWAIT(ITEM_WAZAMASIN40,1)
- 	_FLAG_SET(FV_C06_MONSTERBALL)
- 	_FLAG_SET(FE_C06_ITEMGET_1)
+  //===============フラグ操作===============//
+  //つばめがえしを隠している、少年と少女を出現させる
+  _FLAG_RESET( FV_C06_GIRLBOY_01 )
+  _OBJ_ADD(C06_BOY2_01)
+  _OBJ_ADD(C06_BABYGIRL1_01)
+  //===============フラグ操作===============//
 
-  	//主人公が初年と少女に気づく
-  	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
-  	_OBJ_ANIME_WAIT()
-  	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
-  	_OBJ_ANIME_WAIT()
-  	
-  	//少年と幼女がやってくる
-  	_OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_come_01)
-   	_OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_come_01)
+  //アイテム入手処理
+  _OBJ_DEL(C06_MONSTERBALL_01)
+  _ITEM_EVENT_FIELD_KEYWAIT(ITEM_WAZAMASIN40,1)
+  _FLAG_SET(FV_C06_MONSTERBALL)
+  _FLAG_SET(FE_C06_ITEMGET_1)
 
-  	//あー！　ぼくらの
-  	_BALLOONWIN_OBJMSG_POS(msg_c06_boy2_01,C06_BOY2_01,POS_UR)
-  	_MSGWIN_CLOSE()
-  	_OBJ_ANIME_WAIT()
-  	
-  	//とったあ！！
-   	_BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_01,C06_BABYGIRL1_01,POS_DR)
-  	_MSGWIN_CLOSE()
-  	  
-  	//間をつくる
-  	_TIME_WAIT(32)
-  	
-  	//なんてね
-  	_BALLOONWIN_OBJMSG_MF(msg_c06_boy2_02,msg_c06_boy2_03,C06_BOY2_01,POS_UP)
-  	_MSGWIN_CLOSE() 
+  //主人公が初年と少女に気づく
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+  _OBJ_ANIME_WAIT()
 
-	//つかって　いーよー！！
-  	_BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_02,C06_BABYGIRL1_01,POS_DR)
-  	_MSGWIN_CLOSE()
+  //少年と幼女がやってくる
+  _OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_come_01)
+  _OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_come_01)
 
-  	//間をつくる
-  	_TIME_WAIT(16)
-  	
-	//じゃあね！　バイバイ！！
-  	_BALLOONWIN_OBJMSG_POS(msg_c06_boy2_04,C06_BOY2_01,POS_UR)
-  	_MSGWIN_CLOSE()
+  //あー！　ぼくらの
+  _BALLOONWIN_OBJMSG_POS(msg_c06_boy2_01,C06_BOY2_01,POS_UR)
+  _MSGWIN_CLOSE()
+  _OBJ_ANIME_WAIT()
 
-  	//少年と幼女が帰っていく
-	_OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_back_01)
-   	_OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_back_01)
-  	_OBJ_ANIME_WAIT()
-  
- 	//===============フラグ操作===============//
- 	//つばめがえしを隠している、少年と少女を消す
-  	_OBJ_DEL(C06_BABYGIRL1_01)
-  	_OBJ_DEL(C06_BOY2_01)
-  	_FLAG_SET( FV_C06_GIRLBOY_01 )
- 	//===============フラグ操作===============//
-  	
+  //とったあ！！
+  _BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_01,C06_BABYGIRL1_01,POS_DR)
+  _MSGWIN_CLOSE()
+
+  //間をつくる
+  _TIME_WAIT(32)
+
+  //なんてね
+  _BALLOONWIN_OBJMSG_MF(msg_c06_boy2_02,msg_c06_boy2_03,C06_BOY2_01,POS_UP)
+  _MSGWIN_CLOSE() 
+
+  //つかって　いーよー！！
+  _BALLOONWIN_OBJMSG_POS(msg_c06_babygirl_02,C06_BABYGIRL1_01,POS_DR)
+  _MSGWIN_CLOSE()
+
+  //間をつくる
+  _TIME_WAIT(16)
+
+  //じゃあね！　バイバイ！！
+  _BALLOONWIN_OBJMSG_POS(msg_c06_boy2_04,C06_BOY2_01,POS_UR)
+  _MSGWIN_CLOSE()
+
+  //少年と幼女が帰っていく
+  _OBJ_ANIME(C06_BABYGIRL1_01,anm_c06_babygirl1_01_back_01)
+  _OBJ_ANIME(C06_BOY2_01,anm_c06_boy2_01_back_01)
+  _OBJ_ANIME_WAIT()
+
+  //===============フラグ操作===============//
+  //つばめがえしを隠している、少年と少女を消す
+  _OBJ_DEL(C06_BABYGIRL1_01)
+  _OBJ_DEL(C06_BOY2_01)
+  _FLAG_SET( FV_C06_GIRLBOY_01 )
+  //===============フラグ操作===============//
+
 EVENT_END
 
 
 /**************************************************************/
-/*		POS：博士イベント01
+/*  POS：博士イベント01
 /**************************************************************/
-EVENT_START		ev_pos_c06_hakase_01
+EVENT_START   ev_pos_c06_hakase_01
 
-	//==================================//
-	//POSイベント進行
-	$WK_SCENE_C06HAKASE = 1
-	//==================================//
+  //==================================//
+  //POSイベント進行
+  $WK_SCENE_C06HAKASE = 1
+  //==================================//
 
-	//アニメ：アララギ博士登場
-	_OBJ_ANIME_AUTO( C06_HAKASE2_01, 100, 297, FORCE_TYPE_NPC, 8, DIR_LR )
-	_OBJ_ANIME_WAIT()
+  //アニメ：アララギ博士登場
+  _OBJ_ANIME_AUTO( C06_HAKASE2_01, 100, 297, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
 
-	//アニメ：アララギ「！」
-	_OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_guide01 )
-	_OBJ_ANIME_WAIT()
+  //アニメ：アララギ「！」
+  _OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_guide01 )
+  _OBJ_ANIME_WAIT()
 
-	//自機座標取得
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-	//アニメ：アララギ博士隣接
-	$LCW_POSZ -= 1
-	_OBJ_ANIME_AUTO( C06_HAKASE2_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
-	_OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //アニメ：アララギ博士隣接
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( C06_HAKASE2_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
 
-	//主人公名代入
-	_PLAYER_NAME( 0 )
-	//アララギ：はーい！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_01, C06_HAKASE2_01, POS_DEFAULT )
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //アララギ：はーい！
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_01, C06_HAKASE2_01, POS_DEFAULT )
 
-	//アララギ：やっと　ライブキャスターを　つかわず
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_02, C06_HAKASE2_01, POS_DEFAULT )
+  //アララギ：やっと　ライブキャスターを　つかわず
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_02, C06_HAKASE2_01, POS_DEFAULT )
 
-	//アララギ：わたしの　おねがいを　きいて
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_03, C06_HAKASE2_01, POS_DEFAULT )
+  //アララギ：わたしの　おねがいを　きいて
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_03, C06_HAKASE2_01, POS_DEFAULT )
 
-	//主人公名代入
-	_PLAYER_NAME( 0 )
-	//捕獲ポケモン変数
-	DEFINE_LOCAL LWK_ZUKAN
-	//見つけたポケモン数をチェック
-	_GET_ZUKAN_COUNT ( ZUKANCTRL_MODE_SEE, LWK_ZUKAN )
-	//見つけたポケモン数を代入
-	_NUMBER( 1, LWK_ZUKAN, 3 )
-	//アララギ：主人公　がいままでに
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_04, C06_HAKASE2_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //捕獲ポケモン変数
+  DEFINE_LOCAL LWK_ZUKAN
+  //見つけたポケモン数をチェック
+  _GET_ZUKAN_COUNT ( ZUKANCTRL_MODE_SEE, LWK_ZUKAN )
+  //見つけたポケモン数を代入
+  _NUMBER( 1, LWK_ZUKAN, 3 )
+  //アララギ：主人公　がいままでに
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_04, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//アイテム入手：バトルレコーダー
-	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN54, 1 )
+  //アイテム入手：バトルレコーダー
+  _ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN54, 1 )
 
-	//アララギ：みねうちは　てがけん　して
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_05, C06_HAKASE2_01, POS_DEFAULT )
+  //アララギ：みねうちは　てがけん　して
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_05, C06_HAKASE2_01, POS_DEFAULT )
 
-	//アララギ：しかし　ポケモンの　ぶんぷって
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_06, C06_HAKASE2_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //アララギ：しかし　ポケモンの　ぶんぷって
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_06, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//軽く間
-	_TIME_WAIT( 15 )
+  //軽く間
+  _TIME_WAIT( 15 )
 
-	//？？？：アララギはかせーッ！！（フウロのメッセージのみ）
-	_PLAINWIN_MSG_UP( msg_c06_swleader6_01 )
-	_MSGWIN_CLOSE()
+  //？？？：アララギはかせーッ！！（フウロのメッセージのみ）
+  _PLAINWIN_MSG_UP( msg_c06_swleader6_01 )
+  _MSGWIN_CLOSE()
 
-	//アニメ：アララギ振り向き
-	_OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_u )
-	_OBJ_ANIME_WAIT()
+  //アニメ：アララギ振り向き
+  _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
 
-	//自機座標取得
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-	//アニメ：フウロ登場
-	IF $LCW_POSX == 100 && $LCW_POSZ == 301 THEN
-		_OBJ_ANIME_AUTO( C06_SWLEADER6_01, 101, 300, FORCE_TYPE_NPC, 8, DIR_LR )	//主人公が柵側の場合は指定位置
-		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_l )
-		_TIME_WAIT( 3 )
-		_OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_r )
-		_OBJ_ANIME_WAIT()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //アニメ：フウロ登場
+  IF $LCW_POSX == 100 && $LCW_POSZ == 301 THEN
+    _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 101, 300, FORCE_TYPE_NPC, 8, DIR_LR )  //主人公が柵側の場合は指定位置
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_l )
+    _TIME_WAIT( 3 )
+    _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_r )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSZ -= 1
+    $LCW_POSX -= 1
+    _OBJ_ANIME_AUTO( C06_SWLEADER6_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+    _TIME_WAIT( 64 )
+    _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_l )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_r )
+    _OBJ_ANIME_WAIT()
+  ENDIF
 
-		ELSE
-		$LCW_POSZ -= 1
-		$LCW_POSX -= 1
-		_OBJ_ANIME_AUTO( C06_SWLEADER6_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
-		_TIME_WAIT( 64 )
-		_OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_l )
-		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_r )
-		_OBJ_ANIME_WAIT()
-	ENDIF
+  //アララギ：あら！　フウロじゃない！
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_08, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//アララギ：あら！　フウロじゃない！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_08, C06_HAKASE2_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //アニメ：アララギ振り向き
+  _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
 
-	//アニメ：アララギ振り向き
-	_OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_d )
-	_OBJ_ANIME_WAIT()
+  //アララギ：こちらは　フウロ！
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_09, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//アララギ：こちらは　フウロ！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_09, C06_HAKASE2_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //フウロ：あら！　じゃないですよ▼
+  _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_02, C06_SWLEADER6_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//フウロ：あら！　じゃないですよ▼
-	_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_02, C06_SWLEADER6_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //アララギ：あはは！　そうだったわね
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_10, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//主人公名代入
-	_PLAYER_NAME( 0 )
-	//アララギ：あはは！　そうだったわね
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_10, C06_HAKASE2_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //アニメ：博士タワーオブヘブンへ歩く
+  _OBJ_ANIME_AUTO( C06_HAKASE2_01, 109, 297, FORCE_TYPE_NPC, 8, DIR_UD )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( C06_HAKASE2_01 )
 
-	//自機座標取得
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-	//アニメ：博士タワーオブヘブンへ歩く
-	_OBJ_ANIME_AUTO( C06_HAKASE2_01, 109, 297, FORCE_TYPE_NPC, 8, DIR_UD )
-	_TIME_WAIT( 16 )
-	_OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_u )
-	_OBJ_ANIME_WAIT()
-	_OBJ_DEL( C06_HAKASE2_01 )
+  //フウロ：もう！
+  _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_03, C06_SWLEADER6_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//フウロ：もう！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_03, C06_SWLEADER6_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  _TIME_WAIT( 15 )
 
-	_TIME_WAIT( 15 )
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //フウロ：接近
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( C06_SWLEADER6_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
 
-	//自機座標取得
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-	//フウロ：接近
-	$LCW_POSZ -= 1
-	_OBJ_ANIME_AUTO( C06_SWLEADER6_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_d )
-	_OBJ_ANIME_WAIT()
+  //フウロ：さてと　アナタ▼
+  _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_04, C06_SWLEADER6_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
 
-	//フウロ：さてと　アナタ▼
-	_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_04, C06_SWLEADER6_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //フウロ退場
+  _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 90, 297, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( C06_SWLEADER6_01 )
 
-	//フウロ退場
-	_OBJ_ANIME_AUTO( C06_SWLEADER6_01, 90, 297, FORCE_TYPE_NPC, 8, DIR_UD )
-	_OBJ_ANIME_WAIT()
-	_OBJ_DEL( C06_SWLEADER6_01 )
-
-	//========================================//
-	//フウロ、アララギを非表示
-	_FLAG_SET( FV_C06_SWLEADER6_01 )
-	//========================================//
+  //========================================//
+  //フウロ、アララギを非表示
+  _FLAG_SET( FV_C06_SWLEADER6_01 )
+  //========================================//
 
 EVENT_END
 
 
 /************************************************************/
-/*				SCENE_CHANGE：ジムリーダーイベント                */
+/*        SCENE_CHANGE：ジムリーダーイベント                */
 /************************************************************/
-EVENT_START		ev_scene_c06_swleader6_01
+EVENT_START   ev_scene_c06_swleader6_01
 
-	//アニメ：主人公移動
-	_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 78, 271, FORCE_TYPE_NPC, 8, DIR_UD )
-	_OBJ_ANIME_WAIT()
+  //アニメ：主人公移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 78, 271, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
 
-	//========================================//
-	//フウロと博士再表示
-	_FLAG_RESET( FV_C06_SWLEADER6_01 )
-	//========================================//
-	_OBJ_ADD( C06_SWLEADER6_01 )
-	_OBJ_ADD( C06_HAKASE2_01 )
+  //========================================//
+  //フウロと博士再表示
+  _FLAG_RESET( FV_C06_SWLEADER6_01 )
+  //========================================//
+  _OBJ_ADD( C06_SWLEADER6_01 )
+  _OBJ_ADD( C06_HAKASE2_01 )
 
-	//【仮】階段SE（SEは仮です）
-	_SE_PLAY( SEQ_SE_KAIDAN )		//【仮】階段SE再生？
-	//フウロと博士再配置（表示）
-	_OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 269, DIR_DOWN )
-	_OBJ_POS_CHANGE( C06_HAKASE2_01, 84, 0, 279, DIR_UP )
+  //【仮】階段SE（SEは仮です）
+  _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+  //フウロと博士再配置（表示）
+  _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 269, DIR_DOWN )
+  _OBJ_POS_CHANGE( C06_HAKASE2_01, 84, 0, 279, DIR_UP )
 
-	_TIME_WAIT( 15 )
-	_SE_WAIT()
+  _TIME_WAIT( 15 )
+  _SE_WAIT()
 
-	//アニメ：フウロ移動
-	_OBJ_ANIME_AUTO( C06_SWLEADER6_01, 78, 270, FORCE_TYPE_NPC, 8, DIR_UD )
-	_OBJ_ANIME_WAIT()
+  //アニメ：フウロ移動
+  _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 78, 270, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
 
-	//アニメ：主人公振り向き
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
-	_OBJ_ANIME_WAIT()
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
 
-	//フウロ：さて！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_05, C06_SWLEADER6_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+  //フウロ：さて！
+  _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_05, C06_SWLEADER6_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
-	//タワーオブヘブンへ向かった？
-	IF $WK_SCENE_C06HAKASE == 3 THEN
+  //タワーオブヘブンへ向かった？
+  IF $WK_SCENE_C06HAKASE == 3 THEN
 
-		//アニメ：博士登場
-		_OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_come_01 )
-		_OBJ_ANIME_WAIT()
+    //アニメ：博士登場
+    _OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_come_01 )
+    _OBJ_ANIME_WAIT()
 
-		//アニメ：主人公とフウロ振り向き
-		_OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_r )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
-		_OBJ_ANIME_WAIT()
+    //アニメ：主人公とフウロ振り向き
+    _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+    _OBJ_ANIME_WAIT()
 
-		//主人公名代入
-		_PLAYER_NAME( 0 )
-		//アララギ：はーい！▼
-		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_11, C06_HAKASE2_01, POS_DEFAULT )
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //アララギ：はーい！▼
+    _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_11, C06_HAKASE2_01, POS_DEFAULT )
 
-		//アララギ：それに　ソウリュウシティに
-		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_12, C06_HAKASE2_01, POS_DEFAULT )
-		_MSGWIN_CLOSE()
+    //アララギ：それに　ソウリュウシティに
+    _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_12, C06_HAKASE2_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
 
-		//アニメ：博士退場
-		_OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_back_01 )
-		_OBJ_ANIME_WAIT()
+    //アニメ：博士退場
+    _OBJ_ANIME( C06_HAKASE2_01, anm_hakase2_back_01 )
+    _OBJ_ANIME_WAIT()
 
-		//フウロ：あっ　まってよ　はかせ！
-		_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_07, C06_SWLEADER6_01, POS_DEFAULT )
-		_MSGWIN_CLOSE()
+    //フウロ：あっ　まってよ　はかせ！
+    _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_07, C06_SWLEADER6_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
 
-		//アニメ：主人公とフウロ向き合う
-		_OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_d )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
-		_OBJ_ANIME_WAIT()
+    //アニメ：主人公とフウロ向き合う
+    _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_d )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+    _OBJ_ANIME_WAIT()
 
-		//フウロ：じゃ　アナタも　きてね！　▼
-		_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_08, C06_SWLEADER6_01, POS_DEFAULT )
-		_MSGWIN_CLOSE()
+    //フウロ：じゃ　アナタも　きてね！　▼
+    _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_08, C06_SWLEADER6_01, POS_DEFAULT )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
 
-		//========================================//
-		//カーゴサービスのフウロと博士表示
-		_FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
-		_FLAG_RESET( FV_C06R0201_HAKASE2_01 )
-		//========================================//
+    //========================================//
+    //カーゴサービスのフウロと博士表示
+    _FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
+    _FLAG_RESET( FV_C06R0201_HAKASE2_01 )
+    //========================================//
 
-		ELSE
-		//フウロ：まだ　タワーオブヘブンを
-		_BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_06, C06_SWLEADER6_01, POS_DEFAULT )
-		_MSGWIN_CLOSE()
+  ELSE
+    //フウロ：まだ　タワーオブヘブンを
+    _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_06, C06_SWLEADER6_01, POS_DEFAULT )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
 
-		//========================================//
-		//カーゴサービスのフウロのみ表示
-		_FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
-		//========================================//
+    //========================================//
+    //カーゴサービスのフウロのみ表示
+    _FLAG_RESET( FV_C06R0201_SWLEADER6_01 )
+    //========================================//
 
-	ENDIF
-	//アニメ：フウロ退場
-		_OBJ_ANIME( C06_SWLEADER6_01, anm_swleader6_back_01 )
-		_OBJ_ANIME_WAIT()
+  ENDIF
+  //アニメ：フウロ退場
+  _OBJ_ANIME( C06_SWLEADER6_01, anm_swleader6_back_01 )
+  _OBJ_ANIME_WAIT()
 
-	_OBJ_DEL( C06_SWLEADER6_01 )
-	_OBJ_DEL( C06_HAKASE2_01 )
+  _OBJ_DEL( C06_SWLEADER6_01 )
+  _OBJ_DEL( C06_HAKASE2_01 )
 
-	//========================================//
-	//フウロ、アララギを非表示
-	_FLAG_SET( FV_C06_SWLEADER6_01 )
-	//========================================//
-	//POSイベント進行
-	$WK_SCENE_C06GYM = 2
-	$WK_SCENE_C06HAKASE += 1
-	//========================================//
-
+  //========================================//
+  //フウロ、アララギを非表示
+  _FLAG_SET( FV_C06_SWLEADER6_01 )
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_C06GYM = 2
+  $WK_SCENE_C06HAKASE += 1
+  //========================================//
 
 EVENT_END
 
