@@ -521,9 +521,9 @@
 	</row>
 	<row id="pw_turn_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ！
-おわりだ！　$MYPOKE0キッド！</language>
+おわりだ！　[1:02:ポケモンニックネーム:0]キッド！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！
-おわりだ！　$MYPOKE0キッド！</language>
+おわりだ！　[1:02:ポケモンニックネーム:0]キッド！</language>
 	</row>
 	<row id="pw_turn_hero_2">
 		<language name="JPN" width="256"></language>
@@ -693,12 +693,12 @@
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">？？？『しんじつと　りそうの　ししゃ
-$MYPOKE0キッド　すいさん！▽
+[1:02:ポケモンニックネーム:0]キッド　すいさん！▽
 ハチクマン！
 おまえの　あくぎょう▽
 ゆるすわけには　いかない！▽』</language>
 		<language name="JPN_KANJI" width="256">？？？『しんじつと　りそうの　ししゃ
-$MYPOKE0キッド　すいさん！▽
+[1:02:ポケモンニックネーム:0]キッド　すいさん！▽
 ハチクマン！
 おまえの　あくぎょう▽
 ゆるすわけには　いかない！▽』</language>
@@ -780,7 +780,7 @@ $MYPOKE0キッド　すいさん！▽
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ハチクマン『わがはいの　ポケモンを
 たったの　いちげきで……▼
-やるな！　$MYPOKE0キッド！▽
+やるな！　[1:02:ポケモンニックネーム:0]キッド！▽
 だが　しかし！　だが　しかし！▽
 きゅうきょくの　ポケモン　タイプ　わざで
 きさまを　ひざまづかせる！▽
@@ -788,7 +788,7 @@ $MYPOKE0キッド　すいさん！▽
 タイプを　さけぶが　いい！▽</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『わがはいの　ポケモンを
 たったの　いちげきで……▼
-やるな！　$MYPOKE0キッド！▽
+やるな！　[1:02:ポケモンニックネーム:0]キッド！▽
 だが　しかし！　だが　しかし！▽
 きゅうきょくの　ポケモン　タイプ　わざで
 きさまを　ひざまづかせる！▽
@@ -844,8 +844,8 @@ $MYPOKE0キッド　すいさん！▽
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">$MYPOKE0キッド『むし　タイプだっ！</language>
-		<language name="JPN_KANJI" width="256">$MYPOKE0キッド『むし　タイプだっ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『むし　タイプだっ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『むし　タイプだっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">ハチクマン『いいだろう！▼
@@ -858,18 +858,18 @@ $MYPOKE0キッド　すいさん！▽
 くらうが　よいわーっ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">$MYPOKE0キッド『た…　タイプ？</language>
-		<language name="JPN_KANJI" width="256">$MYPOKE0キッド『た…　タイプ？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『た…　タイプ？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『た…　タイプ？</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！▼
 タイプも　しらぬとは　おろかなり！
-$MYPOKE0キッド！▼
+[1:02:ポケモンニックネーム:0]キッド！▼
 この　わざを　うけて　その　ちから
 ほねみに　きざみつけるが　よいわ！▼</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！▼
 タイプも　しらぬとは　おろかなり！
-$MYPOKE0キッド！▼
+[1:02:ポケモンニックネーム:0]キッド！▼
 この　わざを　うけて　その　ちから
 ほねみに　きざみつけるが　よいわ！▼</language>
 	</row>
@@ -910,11 +910,11 @@ $MYPOKE0キッド！▼
 ながめて　いるが　よいわ！</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">$MYPOKE0キッド『クッ……
-すまない　$MYPOKE0……▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『クッ……
+すまない　[1:02:ポケモンニックネーム:0]……▼
 こんな　はずじゃ……</language>
-		<language name="JPN_KANJI" width="256">$MYPOKE0キッド『クッ……
-すまない　$MYPOKE0……▼
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『クッ……
+すまない　[1:00:トレーナー名:1]……▼
 こんな　はずじゃ……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
@@ -923,28 +923,28 @@ $MYPOKE0キッド！▼
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">かいじんハチクマンに　やぶれた
-$MYPOKE0キッド……▼
+[1:02:ポケモンニックネーム:0]キッド……▼
 とくに　かつやくも　ないまま
 たおれた　かれが▽
 なにもの　なのか　しるものが▽
 いるはずも　ない……▼
 ともかく……▼
 ありがとう！
-$MYPOKE0キッド！▼
+[1:02:ポケモンニックネーム:0]キッド！▼
 さらば！
-$MYPOKE0キッド！▼
+[1:02:ポケモンニックネーム:0]キッド！▼
 </language>
 		<language name="JPN_KANJI" width="256">かいじんハチクマンに　やぶれた
-$MYPOKE0キッド……▼
+[1:02:ポケモンニックネーム:0]キッド……▼
 とくに　かつやくも　ないまま
 たおれた　かれが▽
 なにもの　なのか　しるものが▽
 いるはずも　ない……▼
 ともかく……▼
 ありがとう！
-$MYPOKE0キッド！▼
+[1:02:ポケモンニックネーム:0]キッド！▼
 さらば！
-$MYPOKE0キッド！▼
+[1:02:ポケモンニックネーム:0]キッド！▼
 </language>
 	</row>
 	<row id="pw_event2_enemy_2">
@@ -1030,11 +1030,11 @@ $MYPOKE0キッド！▼
 いちげきで　しずめるとは……▼</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">$MYPOKE0キッド『ハチクマン！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『ハチクマン！
 ここは　みんなの　りそうの▽
 つまった　ゆうえんちだ！▼
 おとなしく　たちされ！</language>
-		<language name="JPN_KANJI" width="256">$MYPOKE0キッド『ハチクマン！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『ハチクマン！
 ここは　みんなの　りそうの▽
 つまった　ゆうえんちだ！▼
 おとなしく　たちされ！</language>
@@ -1046,20 +1046,20 @@ $MYPOKE0キッド！▼
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">ゆうえんちの　きゃく『わー！
 みてみて！　かっこいい！▽
-$MYPOKE0キッド　だって！</language>
+[1:02:ポケモンニックネーム:0]キッド　だって！</language>
 		<language name="JPN_KANJI" width="256">ゆうえんちの　きゃく『わー！
 みてみて！　かっこいい！▽
-$MYPOKE0キッド　だって！</language>
+[1:02:ポケモンニックネーム:0]キッド　だって！</language>
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256"></language>
 		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">$MYPOKE0キッド『……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『……
 かいじん　ハチクマン……▽
 いったい　なにもの　なんだ……</language>
-		<language name="JPN_KANJI" width="256">$MYPOKE0キッド『……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『……
 かいじん　ハチクマン……▽
 いったい　なにもの　なんだ……</language>
 	</row>
@@ -1070,25 +1070,25 @@ $MYPOKE0キッド　だって！</language>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">なぞの　かいじん　ハチクマンを
 こらしめ　ゆうえんちの　ききを▽
-すくった　$MYPOKE0キッド！▼
+すくった　[1:02:ポケモンニックネーム:0]キッド！▼
 しかし
 ハチクマンは　ふてきな▽
 ことばを　のこし　きえた……▼
 イッシュの　りそうと　しんじつを
 まもるため！▼
-ゆけゆけ！　$MYPOKE0キッド！▼
-たたかえ！　$MYPOKE0キッド！
+ゆけゆけ！　[1:02:ポケモンニックネーム:0]キッド！▼
+たたかえ！　[1:02:ポケモンニックネーム:0]キッド！
 </language>
 		<language name="JPN_KANJI" width="256">なぞの　かいじん　ハチクマンを
 こらしめ　ゆうえんちの　ききを▽
-すくった　$MYPOKE0キッド！▼
+すくった　[1:02:ポケモンニックネーム:0]キッド！▼
 しかし
 ハチクマンは　ふてきな▽
 ことばを　のこし　きえた……▼
 イッシュの　りそうと　しんじつを
 まもるため！▼
-ゆけゆけ！　$MYPOKE0キッド！▼
-たたかえ！　$MYPOKE0キッド！
+ゆけゆけ！　[1:02:ポケモンニックネーム:0]キッド！▼
+たたかえ！　[1:02:ポケモンニックネーム:0]キッド！
 </language>
 	</row>
 	<row id="pw_event3_enemy_4">

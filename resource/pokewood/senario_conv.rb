@@ -39,9 +39,6 @@ PWS_A_NONE_B_TRAINER    =(PWS_B_TRAINER|PWS_A_NONE)    # 0x12 自分側いない敵側ト
 PWS_A_NONE_B_NONE       =(PWS_B_NONE|PWS_A_NONE)       # 0x22 両方いない
 
 
-msgtitle_path   = "..\\..\\prog\\include\\msg\\msg_pw_movietitle.h"
-msgsenario_path = "..\\..\\prog\\include\\msg\\msg_pw_senario0"
-
 $bg_hash       = {"チェンジ０"=>0, "チェンジ１"=>1, "チェンジ２"=>2, "チェンジ３"=>3,}
 $waza_ret_hash = { "技１"=>0, "技２"=>1, "技３"=>2, "技４"=>3 }
 $batt_hash     = {"シングル"=>0, "ダブル"=>1}
@@ -55,6 +52,8 @@ $stage_hash    = {"両方役者"=>PWS_A_TRAINER_B_TRAINER,
                   "敵退出"=>PWS_A_TRAINER_B_NONE,
                   "自分退出"=>PWS_A_NONE_B_TRAINER,
                   "無人"=>PWS_A_NONE_B_NONE}
+$gmmtag_hash   = {"%MYPOKE"=>"[1:02:ポケモンニックネーム:@]",
+                  "%MYNAME"=>"[1:00:トレーナー名:@]"}
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------
@@ -285,10 +284,28 @@ class MAKE_GMM
   end
   
   def write( tag, str_kana, str_kanji )
+    str_kana = tag_translate( str_kana )
+    str_kanji = tag_translate( str_kanji )
+
     @buffer << Kconv.toutf8("\t<row id=\"#{tag}\">\n")
     @buffer << Kconv.toutf8("\t\t<language name=\"JPN\" width=\"256\">#{str_kana}</language>\n")
     @buffer << Kconv.toutf8("\t\t<language name=\"JPN_KANJI\" width=\"256\">#{str_kanji}</language>\n")
     @buffer << Kconv.toutf8("\t</row>\n")
+  end
+
+
+  def tag_translate( str )
+      $gmmtag_hash.each {|k,v|
+        reg = Regexp.new(/#{k}\d/)
+        if reg =~ str then
+          tag = str.scan( reg )
+          tag = str.scan( /\d/ )
+          v.gsub!( /@/, tag[0] )
+          str.gsub!( reg, v )
+        end
+      }
+
+      return str
   end
 
   def genelate( filename )
