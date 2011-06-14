@@ -24971,11 +24971,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１かいせん
-かりメッセージ▼</Text>
+			<Text>あなたが　スズナの　あいて？▼
+いいよ！　つよい　ひと　まってたし▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24983,11 +24983,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１回戦
-仮メッセージ▼</Text>
+			<Text>あなたが　スズナの　相手？▼
+いいよ！　強い　人　待ってたし▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:43:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25030,11 +25030,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２かいせん
-かりメッセージ▼</Text>
+			<Text>あなたが　スズナの　あいて？▼
+いいよ！　つよい　ひと　まってたし▼
+だけど　あたしも
+きあい　はいってるから　つよいよ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25042,11 +25044,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２回戦
-仮メッセージ▼</Text>
+			<Text>あなたが　スズナの　相手？▼
+いいよ！　強い　人　待ってたし▼
+だけど　あたしも
+気合　入ってるから　強いよ？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:43:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25089,11 +25093,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けっしょうせん
-かりメッセージ▼</Text>
+			<Text>あなたが　スズナの　あいて？▼
+いいよ！　つよい　ひと　まってたし▼
+だけど　あたしも
+きあい　はいってるから　つよいよ？▼
+ポケモンも　オシャレも　れんあいも
+ぜんぶ　きあい　なのッ！▼
+そこんとこ　みせたげるから
+かくご　しちゃってよね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25101,11 +25111,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決勝戦
-仮メッセージ▼</Text>
+			<Text>あなたが　スズナの　相手？▼
+いいよ！　強い　人　待ってたし▼
+だけど　あたしも
+気合　入ってるから　強いよ？▼
+ポケモンも　オシャレも　恋愛も
+全部　気合　なのッ！▼
+そこんとこ　みせたげるから
+覚悟しちゃってよね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:44:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25160,11 +25176,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後
-仮メッセージ▼</Text>
+			<Text>すごいんだ！
+ちょっと　尊敬するかも▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:44:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25207,11 +25223,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>あなたの　きあい
+つたわってきたけど　まけないから！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25219,11 +25235,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>あなたの　気合
+伝わってきたけど　負けないから！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25266,11 +25282,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スズナ『プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>スズナ『すごいんだ！
+あなたのこと　そんけい　しちゃう！▼
+うん　なんだか　あなたの　きあい
+そういうものに　おしきられちゃった▼
+でも　つぎは　もっと　きあい　いれて
+ぜったいに　まけないからね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T08:06:47" />
+				Time="2011-06-14T12:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25278,11 +25298,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>スズナ『すごいんだ！
+あなたのこと　尊敬しちゃう！▼
+うん　なんだか　あなたの　気合
+そういうものに　押し切られちゃった▼
+でも　次は　もっと　気合　入れて
+絶対に　負けないからね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:44:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25325,11 +25349,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スズナ『プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>スズナ『どう？　スズナの　きあい！
+ポケモンも　きあい　たっぷり　でしょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T08:06:51" />
+				Time="2011-06-14T12:43:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25337,11 +25361,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>スズナ『どう？　スズナの　気合！
+ポケモンも　気合　たっぷり　でしょ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T12:44:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
