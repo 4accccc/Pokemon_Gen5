@@ -477,6 +477,102 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="c03p09_waitress_11_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>1こ</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>1こ</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:22" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_11_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>12こ</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>12こ</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:35" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="c03p09_waitress_11_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-06-14T10:00:51" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="c03p09_business_01">
 		<LanguageCell
 			Language="JPN">
