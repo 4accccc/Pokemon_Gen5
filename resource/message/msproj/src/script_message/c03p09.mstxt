@@ -2,7 +2,7 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="c03p09_waitress_01">
+		Label="msg_c03p09_waitress_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒウンシティのおみやげに　さいてき
@@ -69,7 +69,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_02">
+		Label="msg_c03p09_waitress_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒウンシティのおみやげに　さいてき
@@ -114,7 +114,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_03">
+		Label="msg_c03p09_waitress_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>チャンピオンも　ごあいよう！
@@ -161,7 +161,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_04">
+		Label="msg_c03p09_waitress_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう　ございます！▼
@@ -206,7 +206,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_05">
+		Label="msg_c03p09_waitress_05">
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう　ございます！▼
@@ -251,7 +251,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_06">
+		Label="msg_c03p09_waitress_06">
 		<LanguageCell
 			Language="JPN">
 			<Text>せっかく　ならんでくれたのに……
@@ -293,7 +293,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_07">
+		Label="msg_c03p09_waitress_07">
 		<LanguageCell
 			Language="JPN">
 			<Text>せっかく　きてくれたのに……
@@ -335,7 +335,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_08">
+		Label="msg_c03p09_waitress_08">
 		<LanguageCell
 			Language="JPN">
 			<Text>おかいあげ
@@ -378,7 +378,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_09">
+		Label="msg_c03p09_waitress_09">
 		<LanguageCell
 			Language="JPN">
 			<Text>きょうは　おきゃくさんが
@@ -422,7 +422,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_10">
+		Label="msg_c03p09_waitress_10">
 		<LanguageCell
 			Language="JPN">
 			<Text>はわわわわ！▼
@@ -477,7 +477,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_11_01">
+		Label="msg_c03p09_waitress_11_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>1こ</Text>
@@ -509,7 +509,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_11_02">
+		Label="msg_c03p09_waitress_11_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>12こ</Text>
@@ -541,7 +541,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_waitress_11_03">
+		Label="msg_c03p09_waitress_11_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -573,7 +573,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_business_01">
+		Label="msg_c03p09_business_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>ん……？　そんなところに
@@ -619,7 +619,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_01">
+		Label="msg_c03p09_customer_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>でんしゃに　のって　はるばる
@@ -653,7 +653,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_02">
+		Label="msg_c03p09_customer_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>ドキドキ！　チャンピオンが
@@ -687,7 +687,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_03">
+		Label="msg_c03p09_customer_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>ソワソワ……
@@ -721,7 +721,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_04">
+		Label="msg_c03p09_customer_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>むすめに　たのまれて
@@ -757,7 +757,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_05_01">
+		Label="msg_c03p09_customer_05_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは
@@ -795,7 +795,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_05_02">
+		Label="msg_c03p09_customer_05_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうかー
@@ -833,7 +833,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_05_03">
+		Label="msg_c03p09_customer_05_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうかー　こんでるしな▼
@@ -871,7 +871,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p09_customer_05_04">
+		Label="msg_c03p09_customer_05_04">
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは
