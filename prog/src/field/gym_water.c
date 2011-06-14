@@ -72,6 +72,9 @@ typedef enum {
 
 #define HASU_NUM   (11)   // ハスの個数
 
+#define HASU_Y      (-8*FX32_ONE) // ハスの高さ(8ユニット)
+#define EX_HEIGHT_Y (-4*FX32_ONE) // 拡張高さ(4ユニット)
+
 // ハス座標
 #define HASU1_X    (10 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　X座標
 #define HASU1_Z    (64 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)       // ハスA　Z座標
@@ -1106,7 +1109,9 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
         status->trans.x = save_x;
         status->trans.z = save_z;
       }
-      status->trans.y = 0;
+
+      // 8ユニット下げる
+      status->trans.y = HASU_Y;
     }
     
 
@@ -1146,6 +1151,8 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
 
     VEC_Set( &status->trans, 0,0,0 );
+    // 8ユニット下げる
+    status->trans.y = HASU_Y;
 
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
@@ -1170,6 +1177,8 @@ static void EXPOBJ_ObjSet( GYM_WATER_TMP *p_wk )
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx );
 
     VEC_Set( &status->trans, 0,0,0 );
+    // 8ユニット下げる
+    status->trans.y = HASU_Y;
 
     // カリングする
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GYM_WATER_UNIT_IDX, obj_idx, TRUE );
@@ -1509,7 +1518,6 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
       PMSND_PlaySE( GYM_WATER_SE_LAND );
 
       *seq = SEQ_MOVE;
-
     }
     break;
 
@@ -1529,8 +1537,6 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
           // 少しだけ待つ
           p_wk->wait_frame = 7;
         }
-
-        
 
         // SE 再生
         PMSND_PlaySE( GYM_WATER_SE_HIT );
@@ -2144,7 +2150,6 @@ static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk )
   FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
 
   VecFx32 out_pos;      // 移動後位置
-  fx32    h;            // ハスゆれ値
   BOOL    end = FALSE;
 
   p_move_wk->frame++;
@@ -2168,28 +2173,10 @@ static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk )
   }
 
   //=====================================
-  // ゆれ
-  {
-    int tmp;
-    u16 rad;
-    p_move_wk->NowSync++;
-    tmp = (p_move_wk->NowSync * 0x10000) / p_move_wk->Sync;
-    rad = tmp;
-    h = p_move_wk->Height * FX_SinIdx(rad);
-
-    if( end )
-    {
-      // オフセット初期化
-      h = 0;
-    }
-  }
-
-  //=====================================
   // ハス更新
   {
     int obj_idx = p_wk->other_obj_idx;
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, obj_idx);
-    out_pos.y += h;
     status->trans = out_pos;
   }
 
@@ -2400,7 +2387,6 @@ static void ANIME_WATER_MoveRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_id
     GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, hasu_obj_idx );
 
     status->trans = hasu->trans;
-    status->trans.y = 0;
 
     // 方向により回転させる
     {
@@ -2459,7 +2445,6 @@ static void ANIME_WATER_HitRipple( HASU_EVENT_WORK *p_wk, const u16 hasu_obj_idx
     GFL_G3D_OBJSTATUS *hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, hasu_obj_idx );
 
     status->trans = hasu->trans;
-    status->trans.y = 0;
   }
 
   // 表示
@@ -2593,7 +2578,7 @@ static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id )
       center_gz-1,   // 領域開始グリッドZ座標
       1,      // 領域グリッド横幅
       3,      // 領域グリッド縦幅
-      0,      // 領域内高さ
+      EX_HEIGHT_Y,      // 領域内高さ
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
 
@@ -2604,7 +2589,7 @@ static void EX_HEIGHT_Set( GYM_WATER_TMP *p_wk, u8 id )
       center_gz,   // 領域開始グリッドZ座標
       3,      // 領域グリッド横幅
       1,      // 領域グリッド縦幅
-      0,      // 領域内高さ
+      EX_HEIGHT_Y,      // 領域内高さ
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
 
@@ -2637,7 +2622,7 @@ static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx )
       gz-1,   // 領域開始グリッドZ座標
       1,      // 領域グリッド横幅
       3,      // 領域グリッド縦幅
-      0,      // 領域内高さ
+      EX_HEIGHT_Y,      // 領域内高さ
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
 
@@ -2648,7 +2633,7 @@ static void EX_HEIGHT_Set2( GYM_WATER_TMP *p_wk, u16 obj_idx )
       gz,     // 領域開始グリッドZ座標
       3,      // 領域グリッド横幅
       1,      // 領域グリッド縦幅
-      0,      // 領域内高さ
+      EX_HEIGHT_Y,      // 領域内高さ
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
 
