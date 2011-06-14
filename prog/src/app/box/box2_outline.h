@@ -15,6 +15,9 @@
 #define MULTISELECT_OUTLINE_SW        ( 24 )    // 選択時の左上座標X
 #define MULTISELECT_OUTLINE_SH        ( 24 )    // 選択時の左上座標Y
 
+#define	MULTISELECT_OL_POKE_OFFS_X		( -14 )
+#define	MULTISELECT_OL_POKE_OFFS_Y		( -6 )
+
 
 #define POSITION_NUM  ( 4 ) // 左上X,左上Y,右下X,右下Yの２頂点分
 

@@ -2508,7 +2508,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       // 範囲内にポケモンがいる
 			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
 				BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos, width, height );
-				BOX2OBJ_PokeIconPriChgMulti( syswk->app, width*height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+				BOX2OBJ_PokeIconPriChgMulti( syswk->app, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
 				syswk->poke_get_key = 2;
 			// いない（範囲選択不成立）
 			}else{

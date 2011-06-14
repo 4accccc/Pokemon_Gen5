@@ -369,10 +369,9 @@ static const BOX_CLWK_DATA ClaTypeIconParam = {
 };
 
 static const BOX_CLWK_DATA ClaSelectOutlineParam = {
-  { 220, 120, BOX2OBJ_ANM_BORDER_DOT, 0, 1 },
+  { 220, 120, BOX2OBJ_ANM_BORDER_DOT, POKEICON_OBJ_PRI_GET-1, POKEICON_BG_PRI_GET },
   BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
   0, CLSYS_DRAW_MAIN,
-
 };
 
 // トレイアイコンに描画する壁紙のカラー
@@ -3698,6 +3697,7 @@ void BOX2OBJ_DrawMultiSelectOutline( BOX2_SYS_WORK *syswk )
   int n, m, i;
   int length,point,w,h,half;
   int x, y;
+	int	lx, ly, rx, ry;
   MULTISELECT_OUTLINE_WORK *work = &syswk->app->multiselect_outline;
 
   // 描画ON/OFF制御
@@ -3719,32 +3719,46 @@ void BOX2OBJ_DrawMultiSelectOutline( BOX2_SYS_WORK *syswk )
   h      = work->position[3]-work->position[1];
   half   = w+h;
   length = half*2;
-  
-  // ４つの辺を一つに繋げて１直線とした時の位置を算出し、
-  // 半分までで場合分け、横の辺に到達しているかどうかで場合分けで描画。
-  for(i=0;i<BOX2OBJ_ID_SELECTLINE_MAX;i++){
-    point = (length*(work->anime_count+MS_DEFAULT_ANIME_SKIP*i))/work->anime_max;
-    point %= length;
-    if(point<half){
-      if(point<w){
-        x = work->position[0]+point;
-        y = work->position[1];
-      }else{
-        x = work->position[2];
-        y = work->position[1]+(point-w);
-      }
-    }else{
-      point -= half;
-      if(point<w){
-        x = work->position[2]-point;
-        y = work->position[3];
-      }else{
-        x = work->position[0];
-        y = work->position[3]-(point-w);
-      }
-    }
-    BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_SELECTLINE+i, x, y, CLSYS_DEFREND_MAIN );
-  }
+
+	if( syswk->poke_get_key != 2 ){
+		lx = work->position[0];
+		ly = work->position[1];
+		rx = work->position[2];
+		ry = work->position[3];
+	}else{
+		s16	ix, iy;
+		BOX2OBJ_GetPos( syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], &ix, &iy, CLSYS_DEFREND_MAIN );
+		lx = ix + MULTISELECT_OL_POKE_OFFS_X;
+		ly = iy + MULTISELECT_OL_POKE_OFFS_Y;
+		rx = lx + w;
+		ry = ly + h;
+	}
+
+	// ４つの辺を一つに繋げて１直線とした時の位置を算出し、
+	// 半分までで場合分け、横の辺に到達しているかどうかで場合分けで描画。
+	for(i=0;i<BOX2OBJ_ID_SELECTLINE_MAX;i++){
+		point = (length*(work->anime_count+MS_DEFAULT_ANIME_SKIP*i))/work->anime_max;
+		point %= length;
+		if(point<half){
+			if(point<w){
+				x = lx+point;
+				y = ly;
+			}else{
+				x = rx;
+				y = ly+(point-w);
+			}
+		}else{
+			point -= half;
+			if(point<w){
+				x = rx-point;
+				y = ry;
+			}else{
+				x = lx;
+				y = ry-(point-w);
+			}
+		}
+		BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_SELECTLINE+i, x, y, CLSYS_DEFREND_MAIN );
+	}
 }
 
 //----------------------------------------------------------------------------------
@@ -3941,25 +3955,27 @@ int BOX2OBJ_GetMultiSelectMinPos( int start, int end )
 
 
 // 取得したポケモンアイコンの表示優先を変更
-void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, u32 num, u32 flg )
+void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, int w, int h, u32 flg )
 {
 	u32 id;
-	u32	i;
+	u32	i, j;
 
-	for( i=0; i<num; i++ ){
-		id = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i];
-		if( flg == BOX2OBJ_POKEICON_PRI_CHG_GET ){
-			BOX2OBJ_BgPriChange( appwk, id, POKEICON_BG_PRI_GET );
-			BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_GET );
-		}else{
-/*
-			if( pos < BOX2OBJ_POKEICON_TRAY_MAX || pos == BOX2OBJ_POKEICON_GET_POS ){
-				BOX2OBJ_BgPriChange( appwk, id, POKEICON_TBG_PRI_PUT );
+	for( i=0; i<h; i++ ){
+		for( j=0; j<w; j++ ){
+			id = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*BOX_MAX_COLUMN+j];
+			if( flg == BOX2OBJ_POKEICON_PRI_CHG_GET ){
+				BOX2OBJ_BgPriChange( appwk, id, POKEICON_BG_PRI_GET );
+				BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_GET );
 			}else{
-				BOX2OBJ_BgPriChange( appwk, id, POKEICON_PBG_PRI_PUT );
-			}
-			BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_PUT(pos) );
+/*
+				if( pos < BOX2OBJ_POKEICON_TRAY_MAX || pos == BOX2OBJ_POKEICON_GET_POS ){
+					BOX2OBJ_BgPriChange( appwk, id, POKEICON_TBG_PRI_PUT );
+				}else{
+					BOX2OBJ_BgPriChange( appwk, id, POKEICON_PBG_PRI_PUT );
+				}
+				BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_PUT(pos) );
 */
+			}
 		}
 	}
 }

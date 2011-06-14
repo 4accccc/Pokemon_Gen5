@@ -1157,4 +1157,4 @@ extern int BOX2OBJ_GetMultiSelectMinPos( int start, int end );
 
 
 // 取得したポケモンアイコンの表示優先を変更
-extern void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, u32 num, u32 flg );
+extern void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, int w, int h, u32 flg );
