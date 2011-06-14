@@ -7024,39 +7024,68 @@ int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app )
 //=============================================================================================
 int BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
 {
-  int x,y;
-  int state;
+	int x,y;
+	int state;
+  
+	// 元の場所か?
+	if( syswk->get_tray == tray && syswk->get_pos == pos ){
+		return TRUE;
+	}
 
-  // 元の場所か?
-  if(syswk->get_tray==tray && syswk->get_pos==pos){
-    return TRUE;
-  }
+	// トレイ
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		// 範囲外
+		if( ((pos%BOX_MAX_COLUMN)+syswk->app->multi_w) > BOX_MAX_COLUMN ||
+				((pos/BOX_MAX_COLUMN)+syswk->app->multi_h) > BOX_MAX_RAW ){
+			return FALSE;
+		}
 
-  OS_Printf("drop tray=%d, pos=%d\n", tray, pos);
+		for( y=0; y<syswk->app->multi_h; y++ ){
+			for( x=0; x<syswk->app->multi_w; x++ ){
+				state = BOXDAT_PokeParaGet(
+									syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x, ID_PARA_poke_exist, NULL );
+				// 衝突しているかどうか
+				if( syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state == 1 ){
+					return FALSE;
+				}
+			}
+		}
+	// 手持ち
+	}else{
+		int	ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
+		if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) > (BOX2OBJ_POKEICON_MINE_MAX-ppcnt) ){
+			return FALSE;
+		}
+	}
 
-  if(pos<BOX2OBJ_POKEICON_TRAY_MAX){
-    // ポケモンが重なっていないかチェック
-    if(tray<BOX_MAX_TRAY){
-      for(y=0;y<syswk->app->multi_h;y++){
-        for(x=0;x<syswk->app->multi_w;x++){
-          state = BOXDAT_PokeParaGet( syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x,
-                                      ID_PARA_poke_exist, NULL );
-          // 衝突しているかどうか
-          if(syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state==1 ){
-            return FALSE;
-          }
-        }
-      }
-    }
-  // 手持ちに置いた
-  }else{
-    // 手持ちの空きより多かったらダメ
-    int temoti_aki = BOX2OBJ_POKEICON_MINE_MAX-PokeParty_GetPokeCount( syswk->dat->pokeparty );
-    if(temoti_aki<BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app )){
-      return FALSE;
-    }
-  }
-  return TRUE;
+/*
+	OS_Printf("drop tray=%d, pos=%d\n", tray, pos);
+
+	if(pos<BOX2OBJ_POKEICON_TRAY_MAX){
+		// ポケモンが重なっていないかチェック
+		if(tray<BOX_MAX_TRAY){
+			for(y=0;y<syswk->app->multi_h;y++){
+				for(x=0;x<syswk->app->multi_w;x++){
+					state = BOXDAT_PokeParaGet(
+										syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x, ID_PARA_poke_exist, NULL );
+					// 衝突しているかどうか
+					if(syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state==1 ){
+						return FALSE;
+					}
+				}
+			}
+		}
+	// 手持ちに置いた
+	}else{
+		// 手持ちの空きより多かったらダメ
+		int temoti_aki = BOX2OBJ_POKEICON_MINE_MAX-PokeParty_GetPokeCount( syswk->dat->pokeparty );
+		if(temoti_aki<BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app )){
+			return FALSE;
+		}
+	}
+*/
+
+	return TRUE;
 }
 
 

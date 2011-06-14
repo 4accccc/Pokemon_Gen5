@@ -285,7 +285,7 @@ static void ItemMoveWorkFree( BOX2_SYS_WORK * syswk );
 static void PartyFrmSet( BOX2_SYS_WORK * syswk );
 static void PartyFrmSetRight( BOX2_SYS_WORK * syswk );
 static void PartyFrmSet_PartyOut( BOX2_SYS_WORK * syswk );
-static int BoxMoveTrayScrollSet( BOX2_SYS_WORK * syswk, u32 mode );
+static int BoxMoveTrayScrollSet( BOX2_SYS_WORK * syswk, int next );
 static void CreateTrayIconScrollWork( BOX2_SYS_WORK * syswk );
 static int BoxMoveFrmInSet( BOX2_SYS_WORK * syswk, int next );
 static int BoxMoveFrmOutSet( BOX2_SYS_WORK * syswk, int next );
@@ -1969,7 +1969,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
         syswk->app->chg_tray_pos -= syswk->trayMax;
       }
       if( syswk->app->chg_tray_pos != syswk->tray ){
-        return BoxMoveTrayScrollSet( syswk, 0 );
+        return BoxMoveTrayScrollSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN );
       }
     }
     break;
@@ -2334,8 +2334,12 @@ static int MainSeq_ArrangeMultiPokeGetInit( BOX2_SYS_WORK * syswk )
     BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
     syswk->app->sub_seq++;
 		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
-	    BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
-	    return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_INIT );
+			BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+			BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
+			BOX2MAIN_ResetTouchBar( syswk );
+			BOX2BGWFRM_TemochiButtonOn( syswk->app );
+			BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+			return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_INIT );
 		}
 
   case 1:
@@ -2462,76 +2466,73 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   _debug_multipokemain(syswk);
 #endif
 
-
-  // ƒ|ƒPƒ‚ƒ“ƒhƒ‰ƒbƒOƒ`ƒFƒbƒNÕ’n
-
   // ƒ|ƒPƒ‚ƒ“ƒhƒ‰ƒbƒOƒ`ƒFƒbƒN
   if( syswk->poke_get_key == 0 ){
     ret = BOX2UI_HitCheckTrgTrayPoke();
     if( ret != GFL_UI_TP_HIT_NONE ){
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
-//      BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
-      // ƒ|ƒPƒ‚ƒ“‚ª‚¢‚é
-      if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-          BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // “_ü•\Ž¦ŠJŽn
-          BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
-          syswk->app->multiselect_outline.start_pos = ret;
-          syswk->poke_get_key = 3;
-          syswk->get_tray = syswk->tray;
-      }else{
-      // ‚¢‚È‚¢
-      }
-      return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
+      BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // “_ü•\Ž¦ŠJŽn
+			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
+			syswk->app->multiselect_outline.start_pos = ret;
+			syswk->poke_get_key = 3;
+			syswk->get_tray = syswk->tray;
+			return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
     }
-  }else if(syswk->poke_get_key==3){
-    ret=BOX2UI_HitCheckContTrayPoke();    // ƒgƒŒƒC’PˆÊ‚Ìƒ^ƒbƒ`ƒ`ƒFƒbƒNiƒxƒ^j
-    // ƒ^ƒbƒ`Œp‘±
-    if(ret!=GFL_UI_TP_HIT_NONE){
-      BOX2OBJ_SetBox2MultiSelectOutline( syswk, 
-        syswk->app->multiselect_outline.start_pos, ret );
-      syswk->app->multiselect_outline.end_pos = ret;
-    }else{
-    // —£‚ê‚½‚Ì‚Å”ÍˆÍŒˆ’è
-      int num,width,height;
-      syswk->get_pos = BOX2OBJ_GetMultiSelectMinPos( 
-                          syswk->app->multiselect_outline.start_pos,
-                          syswk->app->multiselect_outline.end_pos );
-      CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
-      BOX2UI_PutHandCursor( syswk, syswk->get_pos );
-      BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, 
-                                                syswk->app->multiselect_outline.end_pos );
-      BOX2OBJ_GetMultiSelectWidth( syswk->app->multiselect_outline.start_pos, 
-                                   syswk->app->multiselect_outline.end_pos, 
-                                   &width, &height );
-      syswk->app->multi_w = width;
-      syswk->app->multi_h = height;
-      BOX2MAIN_StockMultiSelectTable( syswk );
+	// ”ÍˆÍ‘I‘ð’†
+	}else if( syswk->poke_get_key == 3 ){
+		ret = BOX2UI_HitCheckContTrayPoke();    // ƒgƒŒƒC’PˆÊ‚Ìƒ^ƒbƒ`ƒ`ƒFƒbƒNiƒxƒ^j
+		// ƒ^ƒbƒ`Œp‘±
+		if( ret != GFL_UI_TP_HIT_NONE ){
+			BOX2OBJ_SetBox2MultiSelectOutline(
+				syswk, syswk->app->multiselect_outline.start_pos, ret );
+			syswk->app->multiselect_outline.end_pos = ret;
+		// —£‚ê‚½‚Ì‚Å”ÍˆÍŒˆ’è
+		}else{
+			int width, height;
+			syswk->get_pos = BOX2OBJ_GetMultiSelectMinPos( 
+												syswk->app->multiselect_outline.start_pos,
+												syswk->app->multiselect_outline.end_pos );
+			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+			BOX2UI_PutHandCursor( syswk, syswk->get_pos );
+			BOX2OBJ_SetBox2MultiSelectOutline(
+				syswk, syswk->app->multiselect_outline.start_pos,
+				syswk->app->multiselect_outline.end_pos );
+			BOX2OBJ_GetMultiSelectWidth(
+				syswk->app->multiselect_outline.start_pos,
+				syswk->app->multiselect_outline.end_pos,
+				&width, &height );
+			syswk->app->multi_w = width;
+			syswk->app->multi_h = height;
+			BOX2MAIN_StockMultiSelectTable( syswk );
+      // ”ÍˆÍ“à‚Éƒ|ƒPƒ‚ƒ“‚ª‚¢‚é
+			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
+				BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos, width, height );
+				BOX2OBJ_PokeIconPriChgMulti( syswk->app, width*height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+				syswk->poke_get_key = 2;
+			// ‚¢‚È‚¢i”ÍˆÍ‘I‘ð•s¬—§j
+			}else{
+				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );     // “_ü”ñ•\Ž¦
+				syswk->poke_get_key = 0;
+			}
+		}
+		return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
+	// ƒ|ƒPƒ‚ƒ“Žæ“¾’†
+	}else if( syswk->poke_get_key == 2 ){
+	}
 
-      // ”ÍˆÍ“à‚Éƒ|ƒPƒ‚ƒ“‚ª‚¢‚é‚©H
-      num = BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app );
-      if(num!=0){ // ‚¢‚éi”ÍˆÍ‘I‘ð¬Œ÷j
-        BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos, width, height );
-        syswk->poke_get_key = 2;
-      }else{      // ‚¢‚È‚¢i”ÍˆÍ‘I‘ð•s¬—§j
-        BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );     // “_ü•\Ž¦ŠJŽn
-        syswk->poke_get_key = 0;
-      }
-    }
-  }
 
+	// ƒ^ƒbƒ`ƒgƒŒƒCƒXƒNƒ[ƒ‹ƒ`ƒFƒbƒN
+	if( BOX2UI_HitCheckTrayScrollStart( &x, &y ) == TRUE ){
+		syswk->app->tpx = x;
+		syswk->app->tpy = y;
+		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
+		CreateTrayIconScrollWork( syswk );
+		return BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH;
+	}
 
-
-  // ƒ^ƒbƒ`ƒgƒŒƒCƒXƒNƒ[ƒ‹ƒ`ƒFƒbƒN
-  if( BOX2UI_HitCheckTrayScrollStart( &x, &y ) == TRUE ){
-    syswk->app->tpx = x;
-    syswk->app->tpy = y;
-    syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
-    CreateTrayIconScrollWork( syswk );
-    return BOX2SEQ_MAINSEQ_TRAYSCROLL_TOUCH;
-  }
-
-  // ƒL[Eƒ^ƒbƒ`ƒ`ƒFƒbƒN
-  ret = BOX2UI_ArrangePokeGetMain( syswk );
+	// ƒL[Eƒ^ƒbƒ`ƒ`ƒFƒbƒN
+	ret = BOX2UI_ArrangePokeGetMain( syswk );
 
   switch( ret ){
   case BOX2UI_ARRANGE_PGT_NAME:   // 30: ƒ{ƒbƒNƒX–¼
@@ -2576,6 +2577,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     }
     return TrayRightScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case BOX2UI_ARRANGE_PGT_PARTY:  // 39: ŽèŽ‚¿ƒ|ƒPƒ‚ƒ“
     PMSND_PlaySE( SE_BOX2_DECIDE );
     if( syswk->poke_get_key == 0 ){
@@ -2583,7 +2585,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, 
                            ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_PARTY_CHANGE) );
+	/********************************************************************************************************************/
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case BOX2UI_ARRANGE_PGT_STATUS: // 40: ƒXƒe[ƒ^ƒX
     if( syswk->poke_get_key == 0 ){
       u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
@@ -2603,6 +2607,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     }
     PMSND_PlaySE( SE_BOX2_DECIDE );
     return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_STATUS, 1, BOX2SEQ_MAINSEQ_STATUS_CALL );
+	/********************************************************************************************************************/
 
   case BOX2UI_ARRANGE_PGT_RET:    // 41: –ß‚é
     if( syswk->poke_get_key == 0 ){
@@ -2614,14 +2619,13 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     break;
 
   case BOX2UI_ARRANGE_PGT_NORMAL:   // 42: ’Êíƒ‚[ƒh
-//    if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
 		if( syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 0;
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT );
     }
     break;
+
   case BOX2UI_ARRANGE_PGT_MOVE:   // 43: ˆÚ“®ƒ‚[ƒh
-//    if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
 		if( syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 1;
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT );
@@ -2629,22 +2633,19 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     break;
 
   case CURSORMOVE_CANCEL:         // ƒLƒƒƒ“ƒZƒ‹
-    if( syswk->poke_get_key == 1 ){
-      // ”ÍˆÍ‘I‘ð’†‚ÉƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½‚Ì‚Å‰ðœ
-      BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
-      return PokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
-    }else if( syswk->poke_get_key == 2){
-      // ƒ|ƒPƒ‚ƒ“‚ð–ß‚µ‚Ä‘I‘ð‚ð‰ðœ‚·‚é
-      BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
-      return PokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
-    }else{
-      // ƒ{ƒbƒNƒX®—ƒƒCƒ“‚Ö
-      PMSND_PlaySE( SE_BOX2_CANCEL );
-      syswk->mv_cnv_mode = 0;
-      return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT) );
-    }
-    break;
+		if( syswk->poke_get_key == 2 ){
+			// ƒ|ƒPƒ‚ƒ“‚ð–ß‚µ‚Ä‘I‘ð‚ð‰ðœ‚·‚é
+			BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
+			return PokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
+		}else{
+			// ƒ{ƒbƒNƒX®—ƒƒCƒ“‚Ö
+			PMSND_PlaySE( SE_BOX2_CANCEL );
+			syswk->mv_cnv_mode = 0;
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT) );
+		}
+		break;
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case CURSORMOVE_NO_MOVE_UP:     // \ŽšƒL[ã‚ª‰Ÿ‚³‚ê‚½‚ªAˆÚ“®‚È‚µ
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_TRAY2 ){
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
@@ -2652,7 +2653,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollDown, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
     }
     break;
+	/********************************************************************************************************************/
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case CURSORMOVE_NO_MOVE_DOWN:   // \ŽšƒL[‰º‚ª‰Ÿ‚³‚ê‚½‚ªAˆÚ“®‚È‚µ
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_TRAY5 ){
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
@@ -2660,21 +2663,27 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollUp, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
     }
     break;
+	/********************************************************************************************************************/
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case CURSORMOVE_NO_MOVE_LEFT:   // \ŽšƒL[¶‚ª‰Ÿ‚³‚ê‚½‚ªAˆÚ“®‚È‚µ
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_NAME ){
       PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
       return TrayLeftScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
     }
     break;
+	/********************************************************************************************************************/
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case CURSORMOVE_NO_MOVE_RIGHT:  // \ŽšƒL[‰E‚ª‰Ÿ‚³‚ê‚½‚ªAˆÚ“®‚È‚µ
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_NAME ){
       PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
       return TrayRightScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
     }
     break;
+	/********************************************************************************************************************/
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   case CURSORMOVE_CURSOR_MOVE:    // ˆÚ“®
     PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
     {
@@ -2699,6 +2708,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       }
     }
     return VFuncReqSet( syswk, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN) );
+	/********************************************************************************************************************/
 
   case CURSORMOVE_CURSOR_ON:      // ƒJ[ƒ\ƒ‹•\Ž¦
     PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
@@ -2721,27 +2731,31 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_PGT_TRAY3:  // 35: ƒgƒŒƒCƒAƒCƒRƒ“
   case BOX2UI_ARRANGE_PGT_TRAY4:  // 36: ƒgƒŒƒCƒAƒCƒRƒ“
   case BOX2UI_ARRANGE_PGT_TRAY5:  // 37: ƒgƒŒƒCƒAƒCƒRƒ“
-    BOX2OBJ_ChangeTrayName( syswk, ret-BOX2UI_ARRANGE_PGT_TRAY2, TRUE );
-    // Žæ“¾’†
-    if( syswk->poke_get_key == 2){
-      return MultiPokeMovePutKey( syswk, BOX2OBJ_POKEICON_PUT_MAX+ret-BOX2UI_ARRANGE_PGT_TRAY2, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
-    // –¢Žæ“¾
-    }else{
-      PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
-      BOX2MAIN_PokeInfoOff( syswk );
-      syswk->app->chg_tray_pos = syswk->box_mv_pos + ret - BOX2UI_ARRANGE_PGT_TRAY2;
-      if( syswk->app->chg_tray_pos >= syswk->trayMax ){
-        syswk->app->chg_tray_pos -= syswk->trayMax;
-      }
-      if( syswk->app->chg_tray_pos != syswk->tray ){
-        return BoxMoveTrayScrollSet( syswk, 0 );
-      }
+		{
+			u32	trayPos = ret - BOX2UI_ARRANGE_PGT_TRAY2;
+	    BOX2OBJ_ChangeTrayName( syswk, trayPos, TRUE );
+	    // Žæ“¾’†
+	    if( syswk->poke_get_key == 2 ){
+				return MultiPokeMovePutKey( syswk, BOX2OBJ_POKEICON_PUT_MAX+trayPos, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
+	    // –¢Žæ“¾
+	    }else{
+	      PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
+	      BOX2MAIN_PokeInfoOff( syswk );
+	      syswk->app->chg_tray_pos = syswk->box_mv_pos + trayPos;
+	      if( syswk->app->chg_tray_pos >= syswk->trayMax ){
+	        syswk->app->chg_tray_pos -= syswk->trayMax;
+	      }
+	      if( syswk->app->chg_tray_pos != syswk->tray ){
+	        return BoxMoveTrayScrollSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
+	      }
+			}
     }
     break;
 
+	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   default:
-
-    BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+   
+		BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
     // ”ÍˆÍ‘I‘ðŽn“_Œˆ’èó‘Ô¨I“_Œˆ’è
     if( syswk->poke_get_key == 1 ){
       int width,height;
@@ -2787,6 +2801,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     }
     OS_Printf( "tray=%d, pos=%d\n", syswk->get_tray, syswk->get_pos );
     break;
+	/********************************************************************************************************************/
   }
 
   return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
@@ -8259,7 +8274,7 @@ static int MainSeq_BoxThemaJumpMain( BOX2_SYS_WORK * syswk )
     }
     if( syswk->app->chg_tray_pos != syswk->tray ){
       BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
-      return BoxMoveTrayScrollSet( syswk, 1 );
+      return BoxMoveTrayScrollSet( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_JUMP_RET );
     }else{
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
       BOX2OBJ_ChangeTrayName( syswk, ret-BOX2UI_BOXJUMP_TRAY2, TRUE );
@@ -10553,12 +10568,12 @@ static void PartyFrmSet_PartyOut( BOX2_SYS_WORK * syswk )
  * @brief   ƒ{ƒbƒNƒXØ‚è‘Ö‚¦iƒgƒŒƒCƒAƒCƒRƒ“‘I‘ðj
  *
  * @param   syswk   ƒ{ƒbƒNƒX‰æ–ÊƒVƒXƒeƒ€ƒ[ƒN
- * @param   mode    ƒXƒNƒ[ƒ‹ƒ‚[ƒh
+ * @param   next		ŽŸ‚ÌƒV[ƒPƒ“ƒX
  *
  * @return  ŽŸ‚ÌƒV[ƒPƒ“ƒX
  */
 //--------------------------------------------------------------------------------------------
-static int BoxMoveTrayScrollSet( BOX2_SYS_WORK * syswk, u32 mode )
+static int BoxMoveTrayScrollSet( BOX2_SYS_WORK * syswk, int next )
 {
   void * func;
   u32 dir;
@@ -10575,16 +10590,7 @@ static int BoxMoveTrayScrollSet( BOX2_SYS_WORK * syswk, u32 mode )
   }else{
     func = BOX2MAIN_VFuncTrayScrollLeft;
   }
-
-  switch( mode ){
-  case 0:   //u‚Â‚©‚Þv’†‚ÌƒgƒŒƒC‘I‘ð
-    syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
-    break;
-
-  case 1:   // ƒ{ƒbƒNƒXƒWƒƒƒ“ƒv
-    syswk->next_seq = BOX2SEQ_MAINSEQ_BOXTHEMA_JUMP_RET;
-    break;
-  }
+	syswk->next_seq = next;
 
   PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
 
