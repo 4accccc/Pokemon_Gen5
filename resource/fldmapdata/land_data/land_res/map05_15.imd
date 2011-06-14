@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-13T20:27:53" source="map05_15.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-14T18:03:02" source="map05_15.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-13T20:27:53" source="map05_15.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-14T18:03:02" source="map05_15.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -100,8 +100,8 @@
 			4444 4444 4444 4444 4444 4444 4444 4444
 			4444 4444 4444 4444 4444 4444 4444 4444
 			4444 4444 4444 4444 4444 4444 4444 4444
+			3333 3333 3333 3333 3333 3333 3333 3333
 			2222 2222 2222 2222 2222 2222 2222 2222
-			1111 1111 1111 1111 1111 1111 1111 1111
 			1111 1111 1111 1111 1111 1111 1111 1111
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
@@ -313,7 +313,7 @@
 		1461 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="out56_dekki1_pl" color_size="8">
-		21b1 21d2 25f3 2e14 3235 7fff 7fff 7fff
+		2190 21b1 25f3 2e14 3235 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="4" name="out56_dekki2_pl" color_size="16">
 		25f2 2a13 1d8f 21b0 25d1 29f2 1d6e 25d2
@@ -415,7 +415,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -469,7 +469,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -531,10 +531,10 @@
 	<material index="8" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -555,10 +555,10 @@
 	<material index="9" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2663,8 +2663,8 @@
 		<display index="5" material="5" polygon="8" priority="0"/>
 		<display index="6" material="6" polygon="9" priority="0"/>
 		<display index="7" material="7" polygon="7" priority="0"/>
-		<display index="8" material="8" polygon="1" priority="0"/>
-		<display index="9" material="9" polygon="2" priority="0"/>
+		<display index="8" material="8" polygon="2" priority="0"/>
+		<display index="9" material="9" polygon="1" priority="0"/>
 	</node>
 </node_array>
 

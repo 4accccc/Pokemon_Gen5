@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-13T20:26:41" source="map05_14.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-14T18:00:59" source="map05_14.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-13T20:26:41" source="map05_14.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-14T18:00:59" source="map05_14.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -485,22 +485,22 @@
 		path="C:/home/swan_data3d/field/out56/chip/tex/out56_hata01.tga"
 	>
 		<bitmap size="128">
-			1111 1111 1111 1111 2221 2222 2222 1222
-			2221 2222 2222 1222 5221 5555 5555 1225
-			5221 2205 5022 1225 5221 2220 0222 1225
-			5221 5555 5555 1225 5221 0000 0000 1225
-			5221 2220 0222 1225 5331 3330 0333 1335
-			5331 3330 0333 1335 5331 3330 0333 1335
-			5441 4440 0444 1445 5441 4440 0444 1445
-			5441 4440 0444 1445 5441 4440 0444 1445
-			5441 4440 0444 1445 5441 4440 0444 1445
-			5441 4440 0444 1445 5441 4440 0444 1445
-			5331 3330 0333 1335 5331 3330 0333 1335
-			5331 3330 0333 1335 5221 2220 0222 1225
-			5221 0000 0000 1225 5221 5555 5555 1225
-			5221 2220 0222 1225 5221 2205 5022 1225
-			5221 5555 5555 1225 2221 2222 2222 1222
-			2221 2222 2222 1222 1111 1111 1111 1111
+			2222 2222 2222 2222 2222 2222 2222 2222
+			3332 3333 3333 2333 4432 4444 4444 2344
+			4432 0000 0000 2344 4432 0000 0000 2344
+			4432 0000 0000 2344 4432 0000 0000 2344
+			4432 1100 0011 2344 5532 1100 0011 2355
+			5532 1100 0011 2355 5532 1100 0011 2355
+			6632 1100 0011 2366 6632 1100 0011 2366
+			6632 1100 0011 2366 6632 1100 0011 2366
+			6632 1100 0011 2366 6632 1100 0011 2366
+			6632 1100 0011 2366 6632 1100 0011 2366
+			5532 1100 0011 2355 5532 1100 0011 2355
+			5532 1100 0011 2355 4432 1100 0011 2344
+			4432 0000 0000 2344 4432 0000 0000 2344
+			4432 0000 0000 2344 4432 0000 0000 2344
+			4432 4444 4444 2344 4432 4444 4444 2344
+			4432 4444 4444 2344 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="out56_michih"
@@ -1065,7 +1065,7 @@
 		7fff 458c 49cd 66d5 4ded 562f 5a71 41ab
 	</tex_palette>
 	<tex_palette index="15" name="out56_hata01_pl" color_size="8">
-		594f 5508 6d6b 71ad 71ef 253a 7fff 7fff
+		253a 2a7d 5508 6129 6d6b 71ad 71ef 7fff
 	</tex_palette>
 	<tex_palette index="16" name="out56_michih_pl" color_size="16">
 		2a98 3ad9 42fa 2257 2678 2214 3298 36b9
@@ -1584,7 +1584,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="15"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -1844,10 +1844,10 @@
 	<material index="30" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1868,10 +1868,10 @@
 	<material index="31" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -8410,8 +8410,8 @@
 		<display index="27" material="27" polygon="9" priority="0"/>
 		<display index="28" material="28" polygon="5" priority="0"/>
 		<display index="29" material="29" polygon="6" priority="0"/>
-		<display index="30" material="30" polygon="10" priority="0"/>
-		<display index="31" material="31" polygon="11" priority="0"/>
+		<display index="30" material="30" polygon="11" priority="0"/>
+		<display index="31" material="31" polygon="10" priority="0"/>
 	</node>
 </node_array>
 

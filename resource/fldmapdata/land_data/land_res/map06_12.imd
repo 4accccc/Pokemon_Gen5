@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-08T00:07:45" source="map06_12.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-14T18:25:22" source="map06_12.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-08T00:07:45" source="map06_12.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-06-14T18:25:22" source="map06_12.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2123,10 +2123,10 @@
 	<material index="30" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2147,10 +2147,10 @@
 	<material index="31" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2352,14 +2352,14 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="128.000000 -96.000000"/>
+					<tex st="384.000000 -352.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="-4.000000 -0.625000 4.000000"/>
-					<tex st="384.000000 -96.000000"/>
-					<pos_xy xy="4.000000 -0.625000"/>
-					<tex st="384.000000 -352.000000"/>
-					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="128.000000 -352.000000"/>
+					<pos_xy xy="4.000000 -0.625000"/>
+					<tex st="128.000000 -96.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="384.000000 -96.000000"/>
 					<pos_xy xy="-4.000000 -0.625000"/>
 				</primitive>
 			</primitive_array>
@@ -5357,8 +5357,8 @@
 		<display index="27" material="27" polygon="11" priority="0"/>
 		<display index="28" material="28" polygon="7" priority="0"/>
 		<display index="29" material="29" polygon="8" priority="0"/>
-		<display index="30" material="30" polygon="1" priority="0"/>
-		<display index="31" material="31" polygon="2" priority="0"/>
+		<display index="30" material="30" polygon="2" priority="0"/>
+		<display index="31" material="31" polygon="1" priority="0"/>
 		<display index="32" material="32" polygon="13" priority="0"/>
 		<display index="33" material="33" polygon="14" priority="0"/>
 	</node>
