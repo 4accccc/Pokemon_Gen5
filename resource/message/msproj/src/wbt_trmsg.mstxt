@@ -20848,11 +20848,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１かいせん
-かりメッセージ▼</Text>
+			<Text>おまえの　こうげきを
+ぜんぶ　うけとめた　うえで▽
+しょうり　するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T07:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20860,11 +20861,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１回戦
-仮メッセージ▼</Text>
+			<Text>おまえの　攻撃を
+全部　受け止めた　うえで▽
+勝利するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20899,11 +20901,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２かいせん
-かりメッセージ▼</Text>
+			<Text>みずのちからで　きたえた
+おれさまの　ポケモンはぁ！▼
+おまえの　こうげきを
+ぜんぶ　うけとめた　うえで▽
+しょうり　するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20911,11 +20916,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２回戦
-仮メッセージ▼</Text>
+			<Text>水の力で　鍛えた
+おれさまの　ポケモンはぁ！▼
+おまえの　攻撃を
+全部　受け止めた　うえで▽
+勝利するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:02:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20950,11 +20958,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けっしょうせん
-かりメッセージ▼</Text>
+			<Text>おれさまは
+そのなも　マキシマムかめん！▼
+みずのちからで　きたえた
+おれさまの　ポケモンはぁ！▼
+おまえの　こうげきを
+ぜんぶ　うけとめた　うえで▽
+しょうり　するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T07:56:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20962,11 +20975,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決勝戦
-仮メッセージ▼</Text>
+			<Text>おれさまは
+その名も　マキシマム仮面！▼
+水の力で　鍛えた
+おれさまの　ポケモンはぁ！▼
+おまえの　攻撃を
+全部　受け止めた　うえで▽
+勝利するから　かかってこぉい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:02:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21001,11 +21019,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご
-かりメッセージ▼</Text>
+			<Text>おわっ！
+おわっちまったか！▼
+なんというか　もっともっと
+たたかいたかった　そんな　きぶんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T07:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21013,11 +21033,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後
-仮メッセージ▼</Text>
+			<Text>おわっ！
+終わっちまったか！▼
+なんというか　もっともっと
+戦いたかった　そんな　気分だ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21052,11 +21074,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>かったけれど　もっともっと
+たたかいたかった　そんな　きぶんだ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T07:57:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21064,11 +21086,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>勝ったけれど　もっともっと
+戦いたかった　そんな　気分だ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:02:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21103,11 +21125,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>マキシ『どんな　たたかいかたで
+どんなふうに　かつかは▽
+トレーナー　それぞれ　だぁ！▼
+そのなかで　おれさまはぁ
+かったほうも　まけたほうも▽
+たのしかった！　そういえる▽
+ポケモンしょうぶを　したい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T07:57:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21115,11 +21142,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>マキシ『どんな　戦い方で
+どんな風に　勝つかは▽
+トレーナー　それぞれ　だぁ！▼
+その中で　おれさまはぁ
+勝った方も　負けた方も▽
+楽しかった！　そういえる▽
+ポケモン勝負を　したい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:03:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21154,11 +21186,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>マキシ『あいてを　ねじふせても
+のこるのは　ちいさな　じこまんぞく▼
+それよりも　あいての　ちからを
+ひきだしてから　しょうり　する！▼
+そうすれば　おたがい　より
+たかみに　ちかづけると　いうものだ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:01:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21166,11 +21202,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>マキシ『相手を　ねじふせても
+残るのは　小さな　自己満足▼
+それよりも　相手の　力を
+引き出してから　勝利する！▼
+そうすれば　お互い　より
+高みに　近づけると　いうものだ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:03:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21205,11 +21245,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウォーター　ストリーム　マスクマン
-マキシ▼</Text>
+			<Text>ウォーター　ストリーム　マスクマン！
+マキシマムかめん！　ちぢめてマキシ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T07:59:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21217,11 +21257,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-マキシ▼</Text>
+			<Text>ウォーター　ストリーム　マスクマン！
+マキシマム仮面！　縮めて　マキシ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-14T08:00:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
