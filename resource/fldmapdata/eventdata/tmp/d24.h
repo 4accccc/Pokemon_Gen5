@@ -2,6 +2,9 @@
 #ifndef ZONE_D24_EVD_H
 #define ZONE_D24_EVD_H
 
+#define DOOR_ID_D24_D24R0101_EXIT01       0
+#define DOOR_ID_D24_D24R0501_EXIT01       1
+#define DOOR_ID_D24_D24R0501_EXIT02       2
 
 #endif //ZONE_D24_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

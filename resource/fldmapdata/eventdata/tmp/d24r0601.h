@@ -2,6 +2,7 @@
 #ifndef ZONE_D24R0601_EVD_H
 #define ZONE_D24R0601_EVD_H
 
+#define DOOR_ID_D24R0601_D24R0301_EXIT01  0
 
 #endif //ZONE_D24R0601_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
