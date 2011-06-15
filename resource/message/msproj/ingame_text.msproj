@@ -309,12 +309,6 @@
 					Name="pw_hint003.mstxt" />
 				<ContentItem
 					Name="pw_movietitle.mstxt" />
-				<ContentItem
-					Name="pw_senario001.mstxt" />
-				<ContentItem
-					Name="pw_senario002.mstxt" />
-				<ContentItem
-					Name="pw_senario003.mstxt" />
 			</Directory>
 			<Directory
 				Name="script_message">
