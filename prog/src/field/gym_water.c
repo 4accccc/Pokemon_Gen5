@@ -1505,9 +1505,11 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
       if( move_distance == 0 )
       {
-        // à⁄ìÆÇµÇ»Ç¢Ç∆Ç´ÇÕêÖÇµÇ‘Ç´ÇÃÇ›ÇæÇ∑
+        // à⁄ìÆÇµÇ»Ç¢Ç∆Ç´ÇÕêÖÇµÇ‘Ç´Ç∆è’ìÀîgñ‰
         // êÖÇµÇ‘Ç´
         ANIME_WATER_Splash( p_wk, EFFECT_SPLASH );
+        // è’ìÀîgñ‰(é©ï™
+        ANIME_WATER_HitRipple( p_wk, p_wk->obj_idx, ANM_HIT_RIPPLE_MINE );
 
         // SE çƒê∂
         PMSND_PlaySE( GYM_WATER_SE_LAND );
@@ -1574,6 +1576,8 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
       // êÖÇµÇ‘Ç´
       ANIME_WATER_Splash( p_wk, EFFECT_SPLASH );
+      // à⁄ìÆîgñ‰(ç≈èâÇÃ1âÒóp)
+      ANIME_WATER_MoveRipple( p_wk, p_wk->obj_idx );
 
       // SE çƒê∂
       PMSND_PlaySE( GYM_WATER_SE_LAND );
