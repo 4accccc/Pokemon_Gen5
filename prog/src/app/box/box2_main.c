@@ -1451,8 +1451,13 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
   if( work->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
     if( work->put_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
       // ボックス同士の入れ替え
-//      BOXDAT_ChangePokeData( syswk->dat->sv_box, syswk->get_tray, work->get_pos, syswk->tray, work->put_pos );
-      _ChangePokeData( syswk, work->get_pos, work->put_pos );
+			// 通常
+			if( syswk->mv_cnv_mode != 2 ){
+				BOXDAT_ChangePokeData( syswk->dat->sv_box, syswk->get_tray, work->get_pos, syswk->tray, work->put_pos );
+			// 複数選択
+			}else{
+				_ChangePokeData( syswk, work->get_pos, work->put_pos );
+			}
       // トレイアイコン更新
       BOX2OBJ_TrayIconCgxMake( syswk, syswk->tray );
       BOX2OBJ_TrayIconCgxTrans( syswk, syswk->tray );
@@ -1771,6 +1776,85 @@ static void PokeIconObjMoveSub( BOX2_SYS_WORK *syswk, BOX2MAIN_POKEMOVE_DATA *da
 
 }
 
+static BOOL PokeIconObjMoveMultiSelect( BOX2_SYS_WORK * syswk )
+{
+	BOX2MAIN_POKEMOVE_WORK * work;
+	BOX2MAIN_POKEMOVE_DATA * dat;
+	u32 mvID;
+	u16	i, j;
+	s16 px, py;
+
+	work = syswk->app->vfunk.work;
+	dat  = work->dat;
+
+	// アニメ中
+	if( work->cnt < POKEICON_MOVE_CNT ){
+		work->cnt++;
+		// チェックフラグがついていないものはスルー
+//		if( dat[0].flg == 0){ continue; }
+		// 範囲選択されている分のポケモンアイコンを全て動かす
+		for( i=0; i<syswk->app->multi_h; i++ ){
+			for( j=0; j<syswk->app->multi_w; j++ ){
+				PokeIconObjMoveSub( syswk, &dat[0], work->cnt, j, i );
+			}
+		}
+//		BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
+//		BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+	// アニメ終了時
+	}else if( work->cnt == POKEICON_MOVE_CNT ){
+
+		for( i=0; i<syswk->app->multi_h; i++ ){
+			for( j=0; j<syswk->app->multi_w; j++ ){
+				u16	df_pos, mv_pos;
+
+				df_pos = dat[0].df_pos + i*BOX_MAX_COLUMN + j;
+				mv_pos = dat[0].mv_pos + i*BOX_MAX_COLUMN + j;
+
+				BOX2OBJ_PokeIconPriChg2( syswk->app, df_pos, mv_pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
+
+				// 移動させるOBJIDの取得
+				mvID = syswk->app->pokeicon_id[ df_pos ];
+
+				// 移動場所の座標取得
+				// トレイへ移動
+				if( mv_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+					BOX2OBJ_PokeIconDefaultPosGet( mv_pos, &px, &py, syswk->move_mode );
+				// 手持ちへ移動
+				}else if( mv_pos < BOX2OBJ_POKEICON_PUT_MAX ){
+					BOX2OBJ_PokeIconDefaultPosGet( mv_pos, &px, &py, syswk->move_mode );
+					if( syswk->move_mode == BOX2MAIN_POKEMOVE_MODE_ALL &&
+							BOX2BGWFRM_CheckPartyPokeFrame(syswk->app->wfrm) == FALSE ){
+						py += 192;
+					}
+				// それ以外
+				}else{
+					// 移動前が手持ち
+					if( df_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+						BOX2OBJ_PokeIconDefaultPosGet( BOX2OBJ_POKEICON_MAX-1, &px, &py, syswk->move_mode );
+						if( syswk->move_mode == BOX2MAIN_POKEMOVE_MODE_ALL &&
+								BOX2BGWFRM_CheckPartyPokeFrame(syswk->app->wfrm) == FALSE ){
+							py += 192;
+						}
+					// 移動前がトレイ
+					}else{
+						BOX2OBJ_PokeIconDefaultPosGet( df_pos, &px, &py, syswk->move_mode );
+					}
+					BOX2OBJ_Vanish( syswk->app, mvID, FALSE );
+				}
+				BOX2OBJ_SetPos( syswk->app, mvID, px, py, CLSYS_DEFREND_MAIN );
+//				if( dat[0].flg == 2 ){
+//					BOX2OBJ_Vanish( syswk->app, mvID, FALSE );
+//				}
+			}
+		}
+//		BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
+//		BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   ポケモンアイコン入れ替え動作
@@ -1793,6 +1877,10 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
   work = syswk->app->vfunk.work;
   dat  = work->dat;
 
+	if( syswk->mv_cnv_mode == 2 ){
+		return PokeIconObjMoveMultiSelect( syswk );
+	}
+
   // アニメ中
   if( work->cnt < POKEICON_MOVE_CNT ){
     work->cnt++;
@@ -1806,7 +1894,6 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
           PokeIconObjMoveSub(syswk, &dat[i], work->cnt, yoko, tate);
         }
       }
-      
     }
     BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
     BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
@@ -2678,7 +2765,7 @@ static void PokeIconFreeDataMake( BOX2_SYS_WORK * syswk, u32 get_pos )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * dat )
+static void PokeIconBufPosChangeNormal( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * dat )
 {
   u16 i;
   u16 gmp;
@@ -2719,6 +2806,41 @@ static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA 
   for( i=0; i<BOX2OBJ_POKEICON_PUT_MAX; i++ ){
     BOX2OBJ_PokeIconPriChg( syswk->app, i, BOX2OBJ_POKEICON_PRI_CHG_PUT );
   }
+}
+
+static void PokeIconBufPosChangeMulti( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * dat )
+{
+  u16 i, j;
+	u16	pos;
+
+  // いれかえる
+	for( i=0; i<syswk->app->multi_h; i++ ){
+		for( j=0; j<syswk->app->multi_w; j++ ){
+			pos = i*BOX_MAX_COLUMN + j;
+			if( syswk->app->multi_pokemon_id[pos] == 0 ){
+				continue;
+			}
+			{
+				u8	tmp = syswk->app->pokeicon_id[ dat[0].mv_pos + pos ];
+				syswk->app->pokeicon_id[ dat[0].mv_pos + pos ] = syswk->app->pokeicon_id[ dat[0].df_pos + pos ];
+				syswk->app->pokeicon_id[ dat[0].df_pos + pos ] = tmp;
+			}
+		}
+	}
+
+  // 全体のプライオリティを再設定する
+  for( i=0; i<BOX2OBJ_POKEICON_PUT_MAX; i++ ){
+    BOX2OBJ_PokeIconPriChg( syswk->app, i, BOX2OBJ_POKEICON_PRI_CHG_PUT );
+  }
+}
+
+static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * dat )
+{
+	if( syswk->mv_cnv_mode == 2 ){
+		PokeIconBufPosChangeMulti( syswk, dat );
+	}else{
+		PokeIconBufPosChangeNormal( syswk, dat );
+	}
 }
 
 
@@ -7099,12 +7221,14 @@ int BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
 //----------------------------------------------------------------------------------
 static void _ChangePokeData( BOX2_SYS_WORK * syswk, int get_pos, int put_pos )
 {
-  int x,y;
-  for(y=0;y<syswk->app->multi_h;y++){
-    for(x=0;x<syswk->app->multi_w;x++){
-      BOXDAT_ChangePokeData( syswk->dat->sv_box, 
-                              syswk->get_tray, get_pos+y*BOX_MAX_COLUMN+x,
-                              syswk->tray, put_pos+y*BOX_MAX_COLUMN+x );
-    }
-  }
+	int i, j;
+
+	for( i=0; i<syswk->app->multi_h; i++ ){
+		for( j=0; j<syswk->app->multi_w; j++ ){
+			int	p = i*BOX_MAX_COLUMN + j;
+			if( syswk->app->multi_pokemon_id[p] != 0 ){
+				BOXDAT_ChangePokeData( syswk->dat->sv_box, syswk->get_tray, get_pos+p, syswk->tray, put_pos+p );
+			}
+		}
+	}
 }

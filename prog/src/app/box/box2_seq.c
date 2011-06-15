@@ -2809,7 +2809,8 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			// 選択中のポケモンをおくことができるかチェック
 			if(BOX2MAIN_CheckMultiSelectTable( syswk, syswk->tray, ret )){
 				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
-				return PokeMovePutKey( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
+//				return PokeMovePutKey( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
+				return MultiPokeMovePutKey( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 			}else{
 				PMSND_PlaySE( SE_BOX2_MOVE_ERROR );
 			}
@@ -2824,7 +2825,6 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->app->multi_w = 1;
 			syswk->app->multi_h = 1;
     }
-    OS_Printf( "tray=%d, pos=%d\n", syswk->get_tray, syswk->get_pos );
     break;
   }
 
