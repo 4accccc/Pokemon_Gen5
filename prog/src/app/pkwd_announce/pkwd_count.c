@@ -432,8 +432,8 @@ static const PKWD_CANVAS_DATA pkwd_canvas_00_tbl[] = {
 
 //
 static const s16 pkwd_mes_tbl[] = {
-	pw_topindex_01,			// TOP:TITLE映画の名前
-	pw_topindex_02,			// SUB:TITLE映画の名前
+	pw_topindex_01,			// TITLE映画の名前
+	pw_topindex_02,			// SubTitleの名前
 };
 
 //=============================================================================
@@ -473,9 +473,6 @@ static void pwc_set_obj_visible( PKWD_COUNT_MAIN_WORK *wk, const s32 wmode, cons
 static void pwc_chg_objseq( PKWD_COUNT_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
 static BOOL pwc_is_anime_end( PKWD_COUNT_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
 //
-// 入力
-static BOOL pwc_chk_key_input( PKWD_COUNT_MAIN_WORK* wk );
-//
 // タイマ表示/切り替え
 static BOOL pwc_wait_timer( PKWD_COUNT_MAIN_WORK* wk );
 static void pwc_bg_scroll( PKWD_COUNT_MAIN_WORK* wk, const s32 mode );
@@ -492,6 +489,7 @@ static BOOL pwc_is_pal_fade( PKWD_COUNT_MAIN_WORK* wk );
 static void pwc_init_timer( PKWD_COUNT_MAIN_WORK* wk, const s32 tmode, const s32 timer );
 static s32  pwc_main_timer( PKWD_COUNT_MAIN_WORK* wk, const s32 tmode );
 //
+// 文字列表示
 static void pwc_init_string( PKWD_COUNT_MAIN_WORK* wk );
 static void pwc_exit_string( PKWD_COUNT_MAIN_WORK* wk );
 static void pwc_main_print( PKWD_COUNT_MAIN_WORK *wk );
@@ -551,7 +549,7 @@ static GFL_PROC_RESULT PkwdCountProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	//描画設定初期化(上:メイン、下:サブ)
 	wk->graphic	= PKWD_COUNT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
 	//
-	// フォント作成(大元を使用)
+	// フォント作成
 	wk->font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	//
 	// PRINT_QUE作成
@@ -723,14 +721,6 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	// stringの初期化
 	//---------------
 	pwc_init_string( wk );
-	
-	// パレットは10番に転送
-	{
-		ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
-		//上画面フォントパレット
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, 10*0x20, 0x20, wk->heapID );
-		GFL_ARC_CloseDataHandle( p_handle );
-	}
 	
 	//------------
 	// OBJ初期化
@@ -918,7 +908,7 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 				// 完全黒の状態で、BG書き換え
 				// BGセット(BGは非表示状態)
 				pwc_init_bg2( wk );
-				// 文字列表示
+				// 文字列表示(BG0はそのまま表示)
 				pwc_disp_title_string( wk );
 				// BG1,BG3を表示
 				// BG2を非表示のまま
@@ -1299,7 +1289,7 @@ static void pwc_init_obj( PKWD_COUNT_MAIN_WORK* wk )
 	// CLWK登録(ロゴ)
 	pwc_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &pwc_obj_logo_tbl[0], &pwc_obj_logo_itbl[0] );
 	//
-	// 半透明の設定
+	// 半透明の設定(カウントダウンの上マーク)
 	GFL_CLACT_WK_SetObjMode( wk->wk_obj.clwk[CLWK_ROLE], GX_OAM_MODE_XLU );
 }
 
@@ -1444,38 +1434,11 @@ static BOOL pwc_is_anime_end( PKWD_COUNT_MAIN_WORK *wk, const s32 wmode, const s
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  キー入力(上下)
+ *	@brief  時間待ち
  *
  *	@param	PKWD_COUNT_MAIN_WORK* wk
  *
- *	@retval BOOL					(TRUE:入力あり、FALSE:なし)
- */
-//-----------------------------------------------------------------------------
-static BOOL pwc_chk_key_input( PKWD_COUNT_MAIN_WORK* wk )
-{
-	s32		flg=0;
-	BOOL	bflg=FALSE;
-	//
-	// 戻る
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		flg = 1;
-	}
-	//
-	// 更新
-	if(flg == 1){
-		bflg = TRUE;
-	}
-	return( bflg );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  時間待ち(アニメ終了で-1)
- *
- *	@param	PKWD_COUNT_MAIN_WORK* wk
- *	@param	BOOL				(TRUE:再生中、FALSE:終了)
- *
- *	@retval
+ *	@retval BOOL				(TRUE:再生中、FALSE:終了)
  */
 //-----------------------------------------------------------------------------
 static BOOL pwc_wait_timer( PKWD_COUNT_MAIN_WORK* wk )
@@ -1579,7 +1542,9 @@ static void pwc_init_pal_fade( PKWD_COUNT_MAIN_WORK* wk )
 	// メイン側のBGとOBJの取得
 	PaletteFadeWorkAllocSet( ptr, FADE_MAIN_BG,  PALANIM_SIZE, wk->heapID );
 	PaletteFadeWorkAllocSet( ptr, FADE_MAIN_OBJ, PALANIM_SIZE, wk->heapID );
+	//
 	// データ転送後に使用すること
+	// (この前までにパレットを転送してしまうこと)
 	PaletteWorkSet_VramCopy( ptr, FADE_MAIN_BG,  0, PALANIM_SIZE );
 	PaletteWorkSet_VramCopy( ptr, FADE_MAIN_OBJ, 0, PALANIM_SIZE );
 }
@@ -1638,9 +1603,8 @@ static void pwc_set_pal_fade( PKWD_COUNT_MAIN_WORK* wk, const s32 mode )
  *  @brief		パレットフェードリクエスト
  *
  *	@param	PKWD_COUNT_MAIN_WORK* wk
- *	@param	const BOOL				(TRUE:処理中、FALSE:終了)
  *
- *  @return	none
+ *  @return	BOOL				(TRUE:処理中、FALSE:終了)
  */
 //--------------------------------------------------------------------------------------------
 static BOOL pwc_is_pal_fade( PKWD_COUNT_MAIN_WORK* wk )
@@ -1702,6 +1666,7 @@ static void pwc_init_string( PKWD_COUNT_MAIN_WORK* wk )
 {
 	s32		i;
 	const PKWD_CANVAS_DATA *adr = &pkwd_canvas_00_tbl[0];
+	ARCHANDLE* p_handle;
 	//
 	for(i=0;i<PKWD_COUNT_CANVAS_MAXNUM;i++){
 		// 終了条件
@@ -1715,6 +1680,13 @@ static void pwc_init_string( PKWD_COUNT_MAIN_WORK* wk )
 		//
 		adr++;
 	}
+	//------------------------
+	// フォントパレットセット
+	//------------------------
+	// パレットは10番に転送
+	p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, 10*0x20, 0x20, wk->heapID );
+	GFL_ARC_CloseDataHandle( p_handle );
 }
 
 //-----------------------------------------------------------------------------
