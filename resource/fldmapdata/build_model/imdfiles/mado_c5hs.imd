@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-06-07T12:52:04" source="mado_in48hotel.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-06-09T15:32:09" source="mado_c5hs.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-06-07T12:52:04" source="mado_in48hotel.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-06-09T15:32:09" source="mado_c5hs.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="3 3"
@@ -27,32 +27,32 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-7.875000 0.000000 -5.375000" whd="7.250000 1.703125 3.812500"/>
+<box_test pos_scale="5" xyz="-7.875000 -0.125000 -5.375000" whd="7.250000 1.828125 3.812500"/>
 
 <tex_image_array size="3">
 	<tex_image index="0" name="in48_m_hi1"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a5i3"
 		palette_name="in48_m_hi1_pl"
-		path="C:/home/swan_data3d/build_model/indoor/mado_in48hotel/tex/in48_m_hi1.tga"
+		path="C:/home/swan_data3d/build_model/indoor/mado_c5hs/tex/in48_m_hi1.tga"
 	>
 		<bitmap size="512">
-			b1b1 b9b1 b1b9 b1b1 0909 0909 0909 0909
-			b1b1 b9b1 b1b9 b1b1 0909 0909 0909 0909
-			a1a1 b1a1 a1b1 a1a1 0909 0909 0909 0909
-			9191 a191 91a1 9191 0909 0909 0909 0909
-			8181 9181 8191 8181 0909 0909 0909 0909
-			6161 8161 6181 6161 0909 0909 0909 0909
-			4949 6149 4961 4949 0909 0909 0909 0909
-			2121 4921 2149 2121 0909 0909 0909 0909
-			0101 2101 0121 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
-			0101 0101 0101 0101 0909 0909 0909 0909
+			b1b1 b9b1 b1b9 b1b1 0101 0101 0101 0101
+			a1a1 b1a1 a1b1 a1a1 0101 0101 0101 0101
+			9191 a191 91a1 9191 0101 0101 0101 0101
+			8181 9181 8191 8181 0101 0101 0101 0101
+			6161 8161 6181 6161 0101 0101 0101 0101
+			4949 6149 4961 4949 0101 0101 0101 0101
+			2121 4921 2149 2121 0101 0101 0101 0101
+			0101 2101 0121 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
+			0101 0101 0101 0101 0101 0101 0101 0101
 			8282 9282 8292 8282 8282 9282 8292 8282
 			8282 9282 8292 8282 8282 9282 8292 8282
 			6262 8262 6282 6262 6262 8262 6282 6262
@@ -107,7 +107,7 @@
 		width="16" height="64" original_width="16" original_height="64"
 		format="a5i3"
 		palette_name="in48_m_hi2_pl"
-		path="C:/home/swan_data3d/build_model/indoor/mado_in48hotel/tex/in48_m_hi2.tga"
+		path="C:/home/swan_data3d/build_model/indoor/mado_c5hs/tex/in48_m_hi2.tga"
 	>
 		<bitmap size="512">
 			2929 2929 2929 2929 0101 0101 0101 0101
@@ -181,7 +181,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="in48_sun_m_pl"
-		path="C:/home/swan_data3d/build_model/indoor/mado_in48hotel/tex/in48_sun_m.tga"
+		path="C:/home/swan_data3d/build_model/indoor/mado_c5hs/tex/in48_sun_m.tga"
 	>
 		<bitmap size="256">
 			6666 6666 8876 8888 6666 6666 8887 7888
@@ -546,7 +546,7 @@
 	<polygon index="2" name="polygon2"
 		vertex_size="32" polygon_size="8"
 		triangle_size="0" quad_size="8"
-		volume_min="-7.875000 0.000000 -5.375000"
+		volume_min="-7.875000 -0.125000 -5.375000"
 		volume_max="-0.625000 1.703125 -1.562500"
 		volume_r="9.685303"
 		mtx_prim_size="1"
@@ -563,7 +563,7 @@
 					<tex st="16.000000 15.000000"/>
 					<pos_xz xz="-0.625000 -5.375000"/>
 					<tex st="16.000000 1.000000"/>
-					<pos_xy xy="-0.625000 0.000000"/>
+					<pos_xy xy="-0.625000 -0.125000"/>
 					<tex st="0.000000 1.000000"/>
 					<pos_xz xz="-0.625000 -4.437500"/>
 					<tex st="0.000000 15.000000"/>
@@ -571,7 +571,7 @@
 					<tex st="16.000000 15.000000"/>
 					<pos_xz xz="-0.625000 -4.437500"/>
 					<tex st="16.000000 1.000000"/>
-					<pos_xy xy="-0.625000 0.000000"/>
+					<pos_xy xy="-0.625000 -0.125000"/>
 					<tex st="0.000000 1.000000"/>
 					<pos_xz xz="-0.625000 -3.500000"/>
 					<tex st="0.000000 15.000000"/>
@@ -579,7 +579,7 @@
 					<tex st="16.000000 15.000000"/>
 					<pos_xz xz="-0.625000 -3.500000"/>
 					<tex st="16.000000 1.000000"/>
-					<pos_xy xy="-0.625000 0.000000"/>
+					<pos_xy xy="-0.625000 -0.125000"/>
 					<tex st="0.000000 1.000000"/>
 					<pos_xz xz="-0.625000 -2.562500"/>
 					<tex st="0.000000 15.000000"/>
@@ -587,13 +587,13 @@
 					<tex st="16.000000 15.000000"/>
 					<pos_xz xz="-0.625000 -2.562500"/>
 					<tex st="16.000000 1.000000"/>
-					<pos_xy xy="-0.625000 0.000000"/>
+					<pos_xy xy="-0.625000 -0.125000"/>
 					<tex st="0.000000 1.000000"/>
 					<pos_xz xz="-0.625000 -1.562500"/>
 					<tex st="0.000000 15.000000"/>
 					<pos_s xyz="-7.875000 1.703125 -4.437500"/>
 					<tex st="0.000000 1.000000"/>
-					<pos_xy xy="-7.875000 0.000000"/>
+					<pos_xy xy="-7.875000 -0.125000"/>
 					<tex st="16.000000 1.000000"/>
 					<pos_xz xz="-7.875000 -5.375000"/>
 					<tex st="16.000000 15.000000"/>
@@ -601,7 +601,7 @@
 					<tex st="0.000000 15.000000"/>
 					<pos_xz xz="-7.875000 -3.500000"/>
 					<tex st="0.000000 1.000000"/>
-					<pos_xy xy="-7.875000 0.000000"/>
+					<pos_xy xy="-7.875000 -0.125000"/>
 					<tex st="16.000000 1.000000"/>
 					<pos_xz xz="-7.875000 -4.437500"/>
 					<tex st="16.000000 15.000000"/>
@@ -609,7 +609,7 @@
 					<tex st="0.000000 15.000000"/>
 					<pos_xz xz="-7.875000 -2.562500"/>
 					<tex st="0.000000 1.000000"/>
-					<pos_xy xy="-7.875000 0.000000"/>
+					<pos_xy xy="-7.875000 -0.125000"/>
 					<tex st="16.000000 1.000000"/>
 					<pos_xz xz="-7.875000 -3.500000"/>
 					<tex st="16.000000 15.000000"/>
@@ -617,7 +617,7 @@
 					<tex st="0.000000 15.000000"/>
 					<pos_xz xz="-7.875000 -1.562500"/>
 					<tex st="0.000000 1.000000"/>
-					<pos_xy xy="-7.875000 0.000000"/>
+					<pos_xy xy="-7.875000 -0.125000"/>
 					<tex st="16.000000 1.000000"/>
 					<pos_xz xz="-7.875000 -2.562500"/>
 					<tex st="16.000000 15.000000"/>
@@ -643,7 +643,7 @@
 		display_size="3"
 		vertex_size="128" polygon_size="32"
 		triangle_size="0" quad_size="32"
-		volume_min="-7.875000 0.000000 -5.375000"
+		volume_min="-7.875000 -0.125000 -5.375000"
 		volume_max="-0.625000 1.703125 -1.562500"
 		volume_r="9.685303"
 	>
