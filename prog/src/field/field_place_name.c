@@ -68,6 +68,11 @@ DEBUG_GROBAL u32  ALPHA_VALUE_1              = (14);     //第1対象面のαブレンデ
 DEBUG_GROBAL u32  ALPHA_VALUE_2              = (8);      //第2対象面のαブレンディング係数
 DEBUG_GROBAL BOOL PlaceNameVersionFlag       = 0;        //0がブラック１がホワイト
 
+static BOOL GetVersionIsWhite( void )
+{
+  return PlaceNameVersionFlag == 1 || GetVersion() == VERSION_W2;
+}
+
 //===================================================================================
 // ■ 定数・マクロ
 //=================================================================================== 
@@ -376,7 +381,15 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
   CreateBmpOamSystem( system ); 
   CreatePlate( system );
   GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
-  LoadBGPaletteData( system, NARC_place_name_place_name_back_NCLR );
+
+  if( GetVersionIsWhite() )
+  {
+    LoadBGPaletteData( system, NARC_place_name_place_name_back_w_NCLR );
+  }
+  else
+  {
+    LoadBGPaletteData( system, NARC_place_name_place_name_back_NCLR );
+  }
   AllocBGNullCharArea( system );
 
 	ChangeState( system, SYSTEM_STATE_HIDE ); 
@@ -657,7 +670,7 @@ static void SetAlpha( const FIELD_PLACE_NAME* system )
 void FIELD_PLACE_NAME_DebugChangeVersion( FIELD_PLACE_NAME* system )
 {
   UnloadBGPaletteData( system );
-  if( PlaceNameVersionFlag == 1 )
+  if( GetVersionIsWhite() )
   {
     GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_w_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
     GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_w_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));
@@ -1554,7 +1567,7 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
 
   case 2:
 
-  if( PlaceNameVersionFlag == 1 )
+  if( GetVersionIsWhite() )
   {
     GFL_ARCHDL_UTIL_TransVramBgCharacter( GetArcHandle(system), NARC_place_name_place_name_back_w_NCGR, BG_FRAME, 0, 0, FALSE, GetHeapID(system) );
     GFL_ARCHDL_UTIL_TransVramScreen( GetArcHandle(system), NARC_place_name_place_name_back_w_NSCR, BG_FRAME, 0, 0, FALSE, GetHeapID(system));

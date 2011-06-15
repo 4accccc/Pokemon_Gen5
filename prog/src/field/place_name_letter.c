@@ -772,11 +772,13 @@ static BOOL UpdateFunction_Top_Setup( PN_PLATE *plate, PN_PLATE_TOP *wk, u32 *se
       color = PRINTSYS_LSB_Make( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACK );
 
 #ifdef PM_DEBUG
-      if( PlaceNameVersionFlag == 1 )
+      if( PlaceNameVersionFlag == 1 || GetVersion() == VERSION_W2 )
+#else
+      if( GetVersion() == VERSION_W2 )
+#endif
       {
         color = PRINTSYS_LSB_Make( 0xF, COLOR_NO_SHADOW, COLOR_NO_BACK );
       }
-#endif
 
 #ifdef STRING_LENGTH_CHECK
       if( PlaceNameLong )
