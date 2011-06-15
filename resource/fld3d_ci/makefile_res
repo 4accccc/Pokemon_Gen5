@@ -122,7 +122,7 @@ $(HEADER_FILE): $(CSV_DATA)
 	@g3dcvtr $< -tex-nomerge
 
 %.nsbca: data/%.ica
-	@g3dcvtr $< -tex-nomerge
+	@g3dcvtr $<
 
 %.nsbta: data/%.ita
 	@g3dcvtr $<
