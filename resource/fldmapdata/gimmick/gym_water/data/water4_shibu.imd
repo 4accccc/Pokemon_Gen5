@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="kawamoto_yuki" host="W00239" date="2011-06-14T18:41:57" source="water4_shibu.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<original_create user="kawamoto_yuki" host="W00239" date="2011-06-14T18:41:57" source="water4_shibu.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="3" xyz="-3.500000 -0.500000 -3.500000" whd="7.000000 0.000000 7.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="in82_shibu_4"
+		width="16" height="64" original_width="16" original_height="64"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="in82_shibu_4_pl"
+		path="C:/home/swan_data3d/gimmick/gym_water/hasu/tex/in82_shibu_4.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0008 0000 0001 0000 0084 0000
+			0020 0000 0800 0000 0010 0000 0100 0000
+			0a80 0000 0200 0000 0800 0000 0a00 0000
+			0a00 0000 0000 0000 0200 0000 2220 0000
+			0040 0000 0044 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0040 0000 0000 0000 0400 0000 0000 0008
+			0000 0000 0145 0000 2500 0000 0145 0100
+			4155 0000 4444 0008 4540 0000 2400 0000
+			1040 0041 4100 0009 4410 0000 4640 0202
+			4a20 0000 5920 0000 4900 0002 1908 0002
+			9940 0002 9460 0000 0568 0000 091a 0000
+			0885 0000 0028 0080 0000 0000 8000 0000
+			0020 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="in82_shibu_4_pl" color_size="4">
+		081c 77db 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="water4_shibu"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="flip repeat"
+		tex_scale="1.000000 0.500000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="tex"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="12" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-7.000000 -1.000000 -7.000000"
+		volume_max="7.000000 -1.000000 7.000000"
+		volume_r="9.949951"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="0.000000 -2.937500"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="0.000000 -1.000000 7.000000"/>
+					<tex st="15.000000 -2.937500"/>
+					<pos_xy xy="7.000000 -1.000000"/>
+					<tex st="0.000000 -35.500000"/>
+					<pos_xz xz="0.000000 0.000000"/>
+					<tex st="15.000000 -35.500000"/>
+					<pos_xy xy="7.000000 -1.000000"/>
+					<tex st="0.000000 -68.000000"/>
+					<pos_xz xz="0.000000 -7.000000"/>
+					<tex st="15.000000 -68.000000"/>
+					<pos_xy xy="7.000000 -1.000000"/>
+				</primitive>
+				<primitive index="1" type="quad_strip" vertex_size="6">
+					<tex st="-14.937500 -2.937500"/>
+					<pos_xz xz="-7.000000 7.000000"/>
+					<tex st="0.000000 -2.937500"/>
+					<pos_xy xy="0.000000 -1.000000"/>
+					<tex st="-14.937500 -35.500000"/>
+					<pos_xz xz="-7.000000 0.000000"/>
+					<tex st="0.000000 -35.500000"/>
+					<pos_xy xy="0.000000 -1.000000"/>
+					<tex st="-14.937500 -68.000000"/>
+					<pos_xz xz="-7.000000 -7.000000"/>
+					<tex st="0.000000 -68.000000"/>
+					<pos_xy xy="0.000000 -1.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pPlane1" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="12" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-7.000000 -1.000000 -7.000000"
+		volume_max="7.000000 -1.000000 7.000000"
+		volume_r="9.949951"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="12" polygon_size="4"
+	triangle_size="0" quad_size="4"/>
+
+</body>
+
+</imd>
