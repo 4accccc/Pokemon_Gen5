@@ -9977,4 +9977,1704 @@
 				Time="2011-06-09T07:56:23" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="pw_movietitle_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:55:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル１
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:55:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:55:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル２
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル３
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル４
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+ローカライズ時に使用
+映画メインタイトル５</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル６
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:19" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル７
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル８
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル９
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:58" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movietitle_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:58:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画メインタイトル１０
+ローカライズ時に使用</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T03:59:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T09:07:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:01:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T11:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:03:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画１－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:00:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画１－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画１－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_01_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画１－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画２－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_02_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画２－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_02_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画２－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:05:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_02_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:04:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画２－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:05:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_03_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画３－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_03_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画３－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_03_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画３－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:36" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_03_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画３－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:06:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_04_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画４－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_04_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画４－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_04_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画４－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:32" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_04_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画４－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:07:35" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_05_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画５－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:09:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_05_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画５－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:09:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_05_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画５－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:09:07" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_05_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:08:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画５－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:09:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_06_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画６－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:38" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_06_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画６－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_06_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画６－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_06_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画６－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_07_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画７－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:57" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_07_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画７－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:00" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_07_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画７－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_07_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:11:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画７－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_08_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画８－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_08_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画８－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:16" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_08_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画８－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:19" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_08_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画８－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:22" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_09_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画9－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:13:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_09_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画9－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_09_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画9－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:13:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_09_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画9－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:13:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_10_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画10－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_10_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画10－２のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_10_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画10－３のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:39" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_10_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画10－４のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-15T04:12:36" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>
