@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-06-15T11:30:02" source="d23_obj02_off.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="120"
+	tool_start_frame="1"
+	tool_end_frame="120"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="5 5"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="121">
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	-0.003662 -0.013916 -0.030273 -0.052002 -0.078125 -0.107910 -0.140869 -0.176025 -0.212646 -0.250000
+	-0.287354 -0.323975 -0.359131 -0.392090 -0.421875 -0.447998 -0.469727 -0.486084 -0.496338 -0.500000
+	-0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000
+	-0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000
+	-0.499023 -0.496338 -0.491943 -0.486084 -0.478516 -0.469727 -0.459473 -0.447998 -0.435547 -0.421875
+	-0.407471 -0.392090 -0.375977 -0.359131 -0.341797 -0.323975 -0.305908 -0.287354 -0.268799 -0.250000
+	-0.231201 -0.212646 -0.194092 -0.176025 -0.158203 -0.140869 -0.124023 -0.107910 -0.092529 -0.078125
+	-0.064453 -0.052002 -0.040527 -0.030273 -0.021484 -0.013916 -0.008057 -0.003662 -0.000977 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+	1.000000
+</tex_translate_data>
+
+<tex_srt_anm_array size="2">
+	<tex_srt_anm index="0" material_name="lambert5">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="120" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="lambert4">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="120"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
