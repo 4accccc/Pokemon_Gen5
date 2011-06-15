@@ -4009,11 +4009,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１かいせん
-かりメッセージ▼</Text>
+			<Text>きみと　ポケモンしょうぶ！
+なんだか　すっごく　ワクワクする！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T11:56:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4021,11 +4021,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１回戦
-仮メッセージ▼</Text>
+			<Text>きみと　ポケモン勝負！
+なんだか　すっごく　ワクワクする！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T11:55:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4068,11 +4068,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２かいせん
-かりメッセージ▼</Text>
+			<Text>ポケモンを　ヒオウギに　とどけたとき
+きみと　ここで　たたかうだなんて▽
+ぜんぜん　そうぞう　できなかった！▼
+そう　ポケモンが　あたしたちを
+ひきあわせて　くれたんだよお！▽
+これって　すっごいことだよねえ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T12:34:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4080,11 +4084,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２回戦
-仮メッセージ▼</Text>
+			<Text>ポケモンを　ヒオウギに　届けたとき
+きみと　ここで　戦うだなんて▽
+全然　想像できなかった！▼
+そう　ポケモンが　あたしたちを
+引き合わせて　くれたんだよお！▽
+これって　すっごいことだよねえ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T12:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4127,11 +4135,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けっしょうせん
-かりメッセージ▼</Text>
+			<Text>あたしね　いろいろ　あったけれど
+ポケモンと　イッシュちほうを　めぐる▽
+たびを　して　ほんと　よかったよお！▼
+おおくの　ポケモンと　であって
+やりたいことも　みつかって……▼
+うまく　いえないけれど
+この　きもち　あたしの　ポケモンを▽
+つうじて　きみに　とどけたいな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T12:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4139,11 +4153,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決勝戦
-仮メッセージ▼</Text>
+			<Text>あたしね　いろいろ　あったけれど
+ポケモンと　イッシュ地方を　巡る▽
+旅を　して　ほんと　よかったよお！▼
+多くの　ポケモンと　出会って
+やりたいことも　みつかって……▼
+うまく　いえないけれど
+この気持ち　あたしの　ポケモンを▽
+通じて　きみに　届けたいな！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T12:38:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4186,11 +4206,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてしてくれて　ありがとう！
-うん！　べんきょうに　なったよ！▼</Text>
+			<Text>ふえええ！▼
+やっぱり　きみは
+すごく　強い　トレーナーだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:04:19" />
+				Time="2011-06-15T11:53:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4198,11 +4219,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手してくれて　ありがとう！
-うん！　勉強に　なったよ！▼</Text>
+			<Text>ふえええ！▼
+やっぱり　きみは
+すごく　強い　トレーナーだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T13:04:30" />
+				Time="2011-06-15T11:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4257,11 +4279,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>どっちの　ポケモンも
+すごく　がんばったよね！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T12:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4304,11 +4326,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『プレイヤーしょうり
-かりメッセージ▼</Text>
+			<Text>ベル『あいてしてくれて　ありがとう！
+うん！　べんきょうに　なったよ！▼
+あたしね　ポケモンは
+ひとと　ひとを　なかよくさせるため▽
+あたしたちの　そばに　いてくれる……▼
+さいきん　そう　かんがえていて
+けんきゅう　しようと　してるんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:59:48" />
+				Time="2011-06-15T12:14:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4316,11 +4343,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー勝利
-仮メッセージ▼</Text>
+			<Text>ベル『相手してくれて　ありがとう！
+うん！　勉強に　なったよ！▼
+あたしね　ポケモンは
+人と　人を　仲良くさせるため▽
+あたしたちの　そばに　いてくれる……▼
+最近　そう　考えていて
+研究しようと　してるんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T12:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4363,11 +4395,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>ベル『あたし　きみが　する
+ポケモンしょうぶ　だいすきだよ▼
+なんだか　ポケモンも
+とても　うれしそうなんだもん！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:59:54" />
+				Time="2011-06-15T11:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4375,11 +4409,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>ベル『あたし　きみが　する
+ポケモン勝負　大好きだよ▼
+なんだか　ポケモンも
+とても　うれしそうなんだもん！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T11:47:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
