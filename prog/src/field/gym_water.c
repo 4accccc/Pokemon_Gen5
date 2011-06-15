@@ -186,6 +186,16 @@ typedef struct {
 } HASU_MOVE_WORK;
 
 //-------------------------------------
+///	ハス衝突の反動ゆれワーク
+//=====================================
+typedef struct {
+  VecFx32        startPos;  // 移動開始位置
+  s16               Width;  // ゆれ幅
+  u32                Sync;  // 1周期するのにかかるシンク数
+  u32             NowSync;  // 現在のシンク
+} HASU_REACTION_WORK;
+
+//-------------------------------------
 ///	ハスイベントワーク
 //=====================================
 typedef struct {
@@ -194,6 +204,7 @@ typedef struct {
   FIELD_PLAYER    *player;      // 自機
 
   HASU_MOVE_WORK  move_wk;      // 移動ワーク
+  HASU_REACTION_WORK  reaction_wk;  // 反動ワーク
 
   u8              id;           // ハスID
   u16             obj_idx;      // OBJインデックス
@@ -644,6 +655,8 @@ static void HASU_EVENT_MoveInit( HASU_EVENT_WORK *p_wk, int frame, VecFx32* pos 
 static BOOL HASU_EVENT_MoveMain( HASU_EVENT_WORK *p_wk );
 static BOOL HASU_EVENT_OtherMoveInit( HASU_EVENT_WORK *p_wk );
 static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk );
+static void HASU_EVENT_ReactionInit( HASU_EVENT_WORK *p_wk );
+static BOOL HASU_EVENT_ReactionMain( HASU_EVENT_WORK *p_wk );
 
 // ANIME
 static void ANIME_HASU_LeaveStart( GYM_WATER_TMP *p_wk, EX_HEIGHT_RIDE_TYPE ride );
@@ -1395,9 +1408,8 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_CAMERA_TRACE_STOP_WAIT,// トレース終了待ち
     SEQ_MOVE_INIT,        // ハス移動初期化
     SEQ_MOVE,             // ハス移動
-    SEQ_MOVE_END,         // ハス移動終了(衝突エフェクト)
-    SEQ_OTHER_MOVE_INIT,  // 衝突ハス移動初期化
     SEQ_OTHER_MOVE,       // 衝突ハス移動
+    SEQ_REACTION_WAIT,    // 反動ゆれまち
     SEQ_EX_HEIGHT_SET,    // 拡張高さ設定
     SEQ_SAVE,             // セーブ
     SEQ_END,
@@ -1500,19 +1512,27 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
       // 移動後位置計算
       {
+        fx32  hit_dis=0; // 反動距離
+
+        // 衝突していたら、距離を少し伸ばして、ぶつかったように見せる
+        if( p_wk->is_collision == TRUE )
+        {
+          //hit_dis = 4*FX32_ONE; // 4ユニット
+        }
+
         FIELD_PLAYER_GetPos( p_wk->player, &move_pos );
         switch( HasuPosParam[ p_wk->id ].move_dir ){
         case DIR_UP:
-          move_pos.z -= GRID_TO_FX32(move_distance);
+          move_pos.z -= ( GRID_TO_FX32(move_distance) + hit_dis );
           break;
         case DIR_DOWN:
-          move_pos.z += GRID_TO_FX32(move_distance);
+          move_pos.z += ( GRID_TO_FX32(move_distance) + hit_dis );
           break;
         case DIR_LEFT:
-          move_pos.x -= GRID_TO_FX32(move_distance);
+          move_pos.x -= ( GRID_TO_FX32(move_distance) + hit_dis );
           break;
         case DIR_RIGHT:
-          move_pos.x += GRID_TO_FX32(move_distance);
+          move_pos.x += ( GRID_TO_FX32(move_distance) + hit_dis );
           break;
         default:
           GF_ASSERT(0);
@@ -1572,52 +1592,35 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
           // 衝突波紋(相手
           ANIME_WATER_HitRipple( p_wk, p_wk->other_obj_idx, ANM_HIT_RIPPLE_OTHER );
-          // 少しだけ待つ
-          p_wk->wait_frame = 7;
-        }
 
-        // SE 再生
-        PMSND_PlaySE( GYM_WATER_SE_HIT );
+          // ハス反動ゆれ
+          HASU_EVENT_ReactionInit( p_wk );
 
-        *seq = SEQ_MOVE_END;
-      }
-    }
-    break;
-
-  // ハス移動終了(衝突エフェクト)
-  case SEQ_MOVE_END:
-    {
-      // 少しだけ待つ
-      if( p_wk->wait_frame-- == 0 )
-      {
-        if( p_wk->is_collision == TRUE )
-        {
-          // ハス衝突した
-          *seq = SEQ_OTHER_MOVE_INIT;
+          // 衝突したハスが移動有無で分岐
+          {
+            BOOL ret;
+            ret = HASU_EVENT_OtherMoveInit( p_wk );
+            if( ret ) { *seq = SEQ_OTHER_MOVE; }
+            else      { *seq = SEQ_EX_HEIGHT_SET; }
+          }
         }
         else
         {
           *seq = SEQ_EX_HEIGHT_SET;
         }
+
+        // SE 再生
+        PMSND_PlaySE( GYM_WATER_SE_HIT );
       }
-    }
-    break;
-
-  // 衝突ハス移動初期化
-  case SEQ_OTHER_MOVE_INIT:
-    {
-      BOOL ret;
-      ret = HASU_EVENT_OtherMoveInit( p_wk );
-
-      // 移動有無で分岐
-      if( ret ) { *seq = SEQ_OTHER_MOVE; }
-      else      { *seq = SEQ_EX_HEIGHT_SET; }
     }
     break;
 
   // 衝突ハス移動
   case SEQ_OTHER_MOVE:
     {
+      // ハス反動ゆれ更新
+      HASU_EVENT_ReactionMain( p_wk );
+
       // ハス移動終了チェック
       if( HASU_EVENT_OtherMoveMain( p_wk ) == TRUE )
       {
@@ -1627,8 +1630,16 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         // SE 再生
         PMSND_PlaySE( GYM_WATER_SE_HIT );
 
-        *seq = SEQ_EX_HEIGHT_SET;
+        *seq = SEQ_REACTION_WAIT;
       }
+    }
+    break;
+
+  // 衝突ハス反動ゆれ待ち(念のため)
+  case SEQ_REACTION_WAIT:
+    if( HASU_EVENT_ReactionMain(p_wk) == TRUE)
+    {
+      *seq = SEQ_EX_HEIGHT_SET;
     }
     break;
 
@@ -2258,6 +2269,100 @@ static BOOL HASU_EVENT_OtherMoveMain( HASU_EVENT_WORK *p_wk )
 
   // 終了チェック
   return end;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハス衝突の反動のゆれ  初期化
+ *
+ *	@param	HASU_EVENT_WORK *p_wk イベントワーク
+ */
+//-----------------------------------------------------------------------------
+static void HASU_EVENT_ReactionInit( HASU_EVENT_WORK *p_wk )
+{
+  HASU_REACTION_WORK* p_reaction_wk = &p_wk->reaction_wk;
+
+  // 初期化
+  p_reaction_wk->Width  = 2;
+  p_reaction_wk->Sync   = 16;
+  p_reaction_wk->NowSync= 0;
+
+  {
+    FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, p_wk->obj_idx);
+    p_reaction_wk->startPos = status->trans;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハス衝突の反動のゆれ  メイン
+ *
+ *	@param	HASU_EVENT_WORK *p_wk イベントワーク
+ *
+ *	@return TRUEで終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL HASU_EVENT_ReactionMain( HASU_EVENT_WORK *p_wk )
+{
+  HASU_REACTION_WORK* p_reaction_wk = &p_wk->reaction_wk;
+  FLD_EXP_OBJ_CNT_PTR exp_obj = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
+
+  int obj_idx = p_wk->obj_idx;
+  GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exp_obj, GYM_WATER_UNIT_IDX, obj_idx);
+
+  int tmp;
+  u16 rad;
+  p_reaction_wk->NowSync++;
+  tmp = (p_reaction_wk->NowSync * 0x10000) / p_reaction_wk->Sync;
+  rad = tmp;
+
+  if (p_reaction_wk->NowSync >= p_reaction_wk->Sync)
+  {
+    p_reaction_wk->NowSync = 0;
+  }
+  // 半周期ごとに幅を減らす
+  if( FX_SinIdx(rad) == 0 )
+  {
+    p_reaction_wk->Width--;
+    if( p_reaction_wk->Width < 0 )
+    {
+      p_reaction_wk->Width = 0;
+    }
+  }
+  if (p_reaction_wk->Width == 0)
+  {
+    // 初期化
+    status->trans = p_reaction_wk->startPos;
+    // 自機更新
+    FIELD_PLAYER_SetPos( p_wk->player, &p_reaction_wk->startPos );   // 移動
+
+    return TRUE;
+  }
+
+  // ハス更新
+  {
+    fx32    w;
+    u16     dir;
+
+    // ゆれ幅
+    w = p_reaction_wk->Width * FX_SinIdx(rad);
+
+    // 向き
+    dir = FIELD_PLAYER_GetDir( p_wk->player );
+
+    // 座標セット
+    switch( dir ){
+    case DIR_UP:    status->trans.z = p_reaction_wk->startPos.z - w;  break;
+    case DIR_DOWN:  status->trans.z = p_reaction_wk->startPos.z + w;  break;
+    case DIR_LEFT:  status->trans.x = p_reaction_wk->startPos.x - w;  break;
+    case DIR_RIGHT: status->trans.x = p_reaction_wk->startPos.x + w;  break;
+    }
+  }
+  // 自機更新
+  FIELD_PLAYER_SetPos( p_wk->player, &status->trans );   // 移動
+
+  return FALSE;
 }
 
 //=============================================================================
