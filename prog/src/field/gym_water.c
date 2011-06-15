@@ -1442,6 +1442,9 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
 
         // SE 再生
         //PMSND_PlaySE( GYM_WATER_SE_JUMP );
+        
+        // ジャンプアニメのフレーム数(16F) - 1
+        p_wk->wait_frame = 15;
 
         *seq = SEQ_CAMERA_TRACE_STOP;
       }
@@ -1451,7 +1454,10 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
   // トレース終了
   case SEQ_CAMERA_TRACE_STOP:
     {
-      if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) == FALSE )
+      //if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) == FALSE )
+      // アニメコマンド待ちだと1F遅れる→スムーズに見えないため
+      // フレーム管理している
+      if( p_wk->wait_frame-- > 0 )
       {
         break;
       }
