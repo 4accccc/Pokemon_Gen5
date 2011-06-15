@@ -401,4 +401,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d23_obj_03.nsbmd \
 	$(RESDIR)/t06_house_04.nsbmd \
 	$(RESDIR)/door_c05_hotel.nsbmd \
+	$(RESDIR)/d7_inaba_02.nsbmd \
 

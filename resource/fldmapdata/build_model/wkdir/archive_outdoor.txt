@@ -400,3 +400,4 @@
 "nsbmdfiles/d23_obj_03.nsbmd"
 "nsbmdfiles/t06_house_04.nsbmd"
 "nsbmdfiles/door_c05_hotel.nsbmd"
+"nsbmdfiles/d7_inaba_02.nsbmd"

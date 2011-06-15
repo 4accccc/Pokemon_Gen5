@@ -2244,7 +2244,8 @@ DEP_TEXSET_IMD_OUTDOOR055 = \
 	$(SRCDIR)/c13_ship_01.imd \
 	$(SRCDIR)/d23_obj_01.imd \
 	$(SRCDIR)/d23_obj_02.imd \
-	$(SRCDIR)/d23_obj_03.imd
+	$(SRCDIR)/d23_obj_03.imd \
+	$(SRCDIR)/d7_inaba_02.imd
 
 texset/outdoor055.imd: $(DEP_TEXSET_IMD_OUTDOOR055) texset/tmp/outdoor055.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor055.list
