@@ -1575,9 +1575,10 @@ void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk )
  * ポケウッドシナリオ画面開始
  *
  * @param   wk
+ * @param   const s32 ページ番号(0-19)
  */
 //=============================================================================================
-void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
+void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk, const s32 pagenum )
 {
   if( wk->selectItemSeq == 0 )
   {
@@ -1591,6 +1592,8 @@ void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk )
     wk->scenarioData.party = BTL_MAIN_GetClientSrcParty( wk->mainModule, BTL_CLIENT_ENEMY1 );
     // 台本番号をセット
     wk->scenarioData.scenario_num = BTL_MAIN_GetPokewoodSenarioNo( wk->mainModule );
+    // ページ番号
+    wk->scenarioData.page_num = pagenum;
     //
     wk->selectItemSeq = 1;
   }

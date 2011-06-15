@@ -366,7 +366,7 @@ extern u8  BTLV_ITEMSELECT_GetTargetIdx( BTLV_CORE* wk );
 extern u8 BTLV_ITEMSELECT_GetWazaIdx( BTLV_CORE* wk );
 extern void BTLV_ITEMSELECT_ReflectUsedItem( BTLV_CORE* wk );
 //
-extern void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk );
+extern void BTLV_SCENARIOSELECT_Start( BTLV_CORE* wk, const s32 pagenum );
 extern BOOL BTLV_SCENARIOSELECT_Wait( BTLV_CORE* wk );
 extern void BTLV_SCENARIOSELECT_ForceQuit( BTLV_CORE* wk );
 //

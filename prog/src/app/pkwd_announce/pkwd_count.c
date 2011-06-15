@@ -424,8 +424,8 @@ static const s16 pwc_bg_pos_tbl[] = {
 // CANVASの設定
 //---------------
 static const PKWD_CANVAS_DATA pkwd_canvas_00_tbl[] = {
-	{ GFL_BG_FRAME0_M,	3,  4,	26,	2,	10,},		// サブ(上)
-	{ GFL_BG_FRAME0_M,	3, 18,	26,	2,	10,},		// 題名(下)
+	{ GFL_BG_FRAME0_M,	3,  4,	26,	2,	10,},		// サブ(上1行)
+	{ GFL_BG_FRAME0_M,	3, 18,	26,	4,	10,},		// 題名(下2行)
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };

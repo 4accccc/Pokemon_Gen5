@@ -3466,7 +3466,7 @@ static BOOL selact_Scenario( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTLV_SCENARIOSELECT_Start( wk->viewCore );
+    BTLV_SCENARIOSELECT_Start( wk->viewCore, wk->clientTurnCount );
     (*seq)++;
     break;
 

@@ -279,6 +279,8 @@ static void bs_calc_hintnum( BSCENARIO_WORK * wk );
 static void bs_chk_limit( BSCENARIO_WORK * wk, const s32 mode, const s32 smode );
 static void bs_disp_arrow( BSCENARIO_WORK * wk );
 static void bs_disp_cursor( BSCENARIO_WORK * wk, const s32 mode, const s32 num );
+// 初期ページ番号
+static void bs_set_init_page( BSCENARIO_WORK * wk );
 // タイムアウトの判定
 static BOOL bs_chk_timeout( BSCENARIO_WORK * wk );
 
@@ -341,9 +343,8 @@ void BattleScenario_TaskAdd( BSCENARIO_DATA * dat )
 	// 台本番号
 	wk->TopNum		= dat->scenario_num;
 	wk->TopCurPos	= 0;
-	//
-	wk->PageNum		= 0;
-	// wk->ScenarioMaxは初期化時(bs_init_seq)に決まる
+	// wk->PageNumは初期化時(bs_init_seq)で決まる
+	// wk->ScenarioMaxは初期化時(bs_init_seq)で決まる
 	wk->ScenarioCurPos	= 0;
 	//
 	wk->PokePageNum	= 0;
@@ -592,6 +593,7 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	// ヒント数を比較
 	// (内部でScenarioMaxが決まる)
 	bs_calc_hintnum( wk );
+	bs_set_init_page( wk );
 	//
 	// 文字列初期化
 	BsCmn_InitString( wk, BS_TOP );
@@ -2533,7 +2535,7 @@ static void bs_calc_hintnum( BSCENARIO_WORK * wk )
 	OS_Printf("hit num :%d\n",j);
 	//
 	wk->ScenarioMax = j;
-//	wk->ScenarioMax = 5;		// test
+//	wk->ScenarioMax = 11;		// test
 	//
 	GFL_STR_DeleteBuffer( strbuf );
 }
@@ -2693,6 +2695,27 @@ static void bs_disp_cursor( BSCENARIO_WORK * wk, const s32 mode, const s32 num )
 	BsCmn_DispCursor( wk, bflg, mode, num );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	初期ページ計算
+ *
+ * @param	BSCENARIO_WORK*	wk
+ *
+ * @return
+ */
+//--------------------------------------------------------------------------------------------
+static void bs_set_init_page( BSCENARIO_WORK * wk )
+{
+	// 単純に計算
+	wk->PageNum = wk->dat->page_num/2;
+	//
+	// ここまででwk->ScenarioMaxの計算をしておくこと
+	if((wk->PageNum < 0)||(wk->PageNum >= wk->ScenarioMax)){
+		OS_Printf("page error : %d -> %d\n",wk->dat->page_num, wk->PageNum);
+		wk->PageNum = 0;
+	}
+}
+
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------
@@ -2716,4 +2739,5 @@ static BOOL bs_chk_timeout( BSCENARIO_WORK * wk )
 	}
 	return( bflg );
 }
+
 

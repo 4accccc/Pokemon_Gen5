@@ -28,6 +28,7 @@ typedef struct {
   POKEPARTY   *party;		///< パーティ情報
   //
   int         scenario_num;	///< シナリオ番号
+  int         page_num;		///< シナリオのページ番号(0-19)
   //
   BOOL        time_out_flg;	///< 強制終了フラグ TRUE = 強制終了
   BOOL        comm_err_flg;	///< 通信エラー時の強制終了フラグ
