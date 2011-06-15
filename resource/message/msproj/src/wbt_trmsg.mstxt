@@ -1100,11 +1100,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２かいせん
-かりメッセージ▼</Text>
+			<Text>むしポケモンの　うつくしさを
+ひきだせる　たたかいを　すれば▼
+かっても　まけても
+こころおどる　こうけいに　なるよ！▼
+ぼくの　むしポケモンも
+そう　いってくれてるし！▼
+ではでは
+さっそくだけど　しょうぶ　だね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:14:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1112,11 +1118,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２回戦
-仮メッセージ▼</Text>
+			<Text>むしポケモンの　美しさを
+ひきだせる　戦いを　すれば▼
+勝っても　負けても
+心踊る　光景に　なるよ！▼
+ぼくの　むしポケモンも
+そう　いってくれてるし！▼
+ではでは
+さっそくだけど　勝負だね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:15:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1159,11 +1171,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けっしょうせん
-かりメッセージ▼</Text>
+			<Text>んうん……▼
+この　たたかいに　かてば
+いままでに　ない　えを　かける▽
+そんな　イメージが　あるんだ……▼
+うん！　たたかいかたの
+イマジネーション　いっぱい！▼
+ではでは
+さっそくだけど　しょうぶ　だね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:15:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1171,11 +1189,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決勝戦
-仮メッセージ▼</Text>
+			<Text>んうん……▼
+この　戦いに　勝てば
+いままでに　ない　絵を　描ける▽
+そんな　イメージが　あるんだ……▼
+うん！　戦い方の
+イマジネーション　いっぱい！▼
+ではでは
+さっそくだけど　勝負だね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:15:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1277,11 +1301,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいせんご　プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>うわあ……
+なんだか……　うつくしいね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1289,11 +1313,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>対戦後　プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>うわあ……
+なんだか……　美しいね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:16:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1399,11 +1423,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『プレイヤーまけ
-かりメッセージ▼</Text>
+			<Text>アーティ『ときどき　さあ
+かっこわるい　かちかた　ってきくけど▽
+いっしょうけんめい　なら▼
+どんな　たたかいかた　だって
+きれいに　みえると　おもうんだよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-14T06:51:48" />
+				Time="2011-06-15T06:18:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1411,11 +1438,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プレイヤー負け
-仮メッセージ▼</Text>
+			<Text>アーティ『ときどき　さあ
+かっこわるい　勝ち方　ってきくけど▽
+一生懸命　なら▼
+どんな　戦い方　だって
+キレイに　みえると　思うんだよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1458,11 +1488,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モスト　インセクト　アーティスト
-アーティ▼</Text>
+			<Text>モスト　インセクト　アーティスト！
+アーティ！　キャンパスは　ここだあ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:19:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1470,11 +1500,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-アーティ▼</Text>
+			<Text>モスト　インセクト　アーティスト！
+アーティ！　キャンパスは　ここだあ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-15T06:19:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
