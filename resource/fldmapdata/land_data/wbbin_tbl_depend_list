@@ -1302,6 +1302,10 @@ $(DIR_WBTMP)/map19_02.tbl: $(DIR_RES)/map19_02.bin
 	@echo create_bintbl map19_02
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map19_02.bin
 
+$(DIR_WBTMP)/map19_02_ex.tbl: $(DIR_RES)/map19_02_ex.bin
+	@echo create_bintbl map19_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map19_02_ex.bin
+
 $(DIR_WBTMP)/map18_02.tbl: $(DIR_RES)/map18_02.bin
 	@echo create_bintbl map18_02
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/map18_02.bin
