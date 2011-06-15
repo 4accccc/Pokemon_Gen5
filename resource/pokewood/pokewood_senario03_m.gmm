@@ -529,19 +529,11 @@
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
-	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_turn_enemy_0">
 		<language name="JPN" width="256">アナタ　とっても　べんりだったわ　
 ゆうしゅうで　だまされやすくて……</language>
 		<language name="JPN_KANJI" width="256">アナタ　とっても　べんりだったわ　
 ゆうしゅうで　だまされやすくて……</language>
-	</row>
-	<row id="pw_turn_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_turn_enemy_1">
 		<language name="JPN" width="256">この　ひを　まちのぞんでいた……
@@ -549,19 +541,11 @@
 		<language name="JPN_KANJI" width="256">この　ひを　まちのぞんでいた……
 フ　フフ　フフフフッ！！</language>
 	</row>
-	<row id="pw_turn_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_turn_enemy_2">
 		<language name="JPN" width="256">わたしの　ずのうを　みとめなかった
 せかいへ　ふくしゅうが　はじまるの！</language>
 		<language name="JPN_KANJI" width="256">わたしの　ずのうを　みとめなかった
 せかいへ　ふくしゅうが　はじまるの！</language>
-	</row>
-	<row id="pw_turn_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_turn_enemy_3">
 		<language name="JPN" width="256">どう？　わたしのＵＦＯの　ちからは？
@@ -569,29 +553,17 @@
 		<language name="JPN_KANJI" width="256">どう？　わたしのＵＦＯの　ちからは？
 すばらしいでしょう！</language>
 	</row>
-	<row id="pw_turn_hero_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_turn_enemy_4">
 		<language name="JPN" width="256">このＵＦＯで　ヒウンを　はかいして
 イッシュに　わたしの　なを　しめす！</language>
 		<language name="JPN_KANJI" width="256">このＵＦＯで　ヒウンを　はかいして
 イッシュに　わたしの　なを　しめす！</language>
 	</row>
-	<row id="pw_turn_hero_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_turn_enemy_5">
 		<language name="JPN" width="256">フフ………　すばらしい　ちから……
 まちも　ビルも　もえていく……　</language>
 		<language name="JPN_KANJI" width="256">フフ………　すばらしい　ちから……
 まちも　ビルも　もえていく……　</language>
-	</row>
-	<row id="pw_turn_hero_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_turn_enemy_6">
 		<language name="JPN" width="256">しぶとい　こどもね……▼
@@ -601,111 +573,11 @@
 こんなことなら　もっと　まえに
 たおしておけば　よかったわ</language>
 	</row>
-	<row id="pw_turn_hero_7">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_turn_enemy_7">
 		<language name="JPN" width="256">ヒウンシティも　これで　おしまい……
 サヨナラさせて　もらうかしら？</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティも　これで　おしまい……
 サヨナラさせて　もらうかしら？</language>
-	</row>
-	<row id="pw_turn_hero_8">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_8">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_9">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_9">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_10">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_10">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_11">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_11">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_12">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_12">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_13">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_13">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_14">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_14">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_15">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_15">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_16">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_16">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_17">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_17">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_18">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_18">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_hero_19">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_turn_enemy_19">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">まさか　あの　ＵＦＯは……！！
@@ -720,54 +592,6 @@
 		<language name="JPN_KANJI" width="256">フフフ　ついに　このひが　きた……　
 かんせいした　ＵＦＯの　ちから！▽
 この　ヒウンで　ためしてやる</language>
-	</row>
-	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_hero_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_enemy_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_hero_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_enemy_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_hero_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_enemy_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_event0_react_hero_0">
 		<language name="JPN" width="256">バカな！　なにを　かんがえてる！</language>
@@ -805,14 +629,6 @@
 このＵＦＯを　かんせいさせる▽
 じっけんと　ちょうさ　だったのよ</language>
 	</row>
-	<row id="pw_event0_react_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event0_react_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">あのポケモンたち……　まさか……
 ……あやつられて　いる？</language>
@@ -829,55 +645,11 @@
 さあ……　つみもない　ポケモンを
 キミは　たおせるのかしら？▼</language>
 	</row>
-	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">わたしの　かがくりょくの　まえでは
 すべて　むりょく　なのよ！</language>
 		<language name="JPN_KANJI" width="256">わたしの　かがくりょくの　まえでは
 すべて　むりょく　なのよ！</language>
-	</row>
-	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_hero_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_enemy_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_hero_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_enemy_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_hero_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_enemy_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">みんな！　めを　さますんだっ！</language>
@@ -908,14 +680,6 @@
 もう　あきらめるのかしら？</language>
 		<language name="JPN_KANJI" width="256">なにを　ブツブツ　いってるの！　
 もう　あきらめるのかしら？</language>
-	</row>
-	<row id="pw_event1_react_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event1_react_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">なぜ……　きまじめだった　あなたが
@@ -1013,42 +777,6 @@
 ほんとうに　たいせつなことを▽
 おもいだして　ください……</language>
 	</row>
-	<row id="pw_event2_enemy_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event2_react_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
 		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
@@ -1059,86 +787,6 @@
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
-	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_hero_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_enemy_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_hero_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_enemy_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_hero_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_enemy_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_hero_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event3_react_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
 		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
@@ -1148,86 +796,6 @@
 ヒウンも　キミも　もうおしまいね……</language>
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
-	</row>
-	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_enemy_4">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_enemy_5">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_hero_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_enemy_6">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_hero_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_enemy_0">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_hero_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_enemy_1">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_hero_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_enemy_2">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_hero_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
-	</row>
-	<row id="pw_event4_react_enemy_3">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

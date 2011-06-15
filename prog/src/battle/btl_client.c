@@ -48,7 +48,6 @@
 #include "pokewood/pokewood_senario.h"
 #include "pokewood/pokewood_work.h"
 #include "pokewood/pokewood_cutin.h"
-#include "pokewood/btl_pokewood_msg.h"
 
 #include "debug/debug_hudson.h"
 
@@ -1679,7 +1678,7 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
   // 会話
   case POKEWOOD_SEQ_TRAINER_TALK:
     BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, 
-                          BTL_PWMSG_Turn( BTL_PWMSG_ENEMY, wk->clientTurnCount-1 ) );
+                         senario->turn_msg[1][wk->clientTurnCount-1] );
     BTLV_StartMsg( wk->viewCore, &wk->strParam );
     wk->pokewoodSeqWork.seq++;
     break;
@@ -1837,8 +1836,8 @@ static void POKEWOOD_StartChoice( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, POK
   BTLV_CHOICE_SetParam(  wk->viewCore, count, &work->choice );
   for(i=0;i<count;i++){
     work->choice_str[i] = GFL_STR_CreateBuffer( POKEWOOD_CHOICE_STR_MAX, wk->heapID );
-    BTL_STR_MakeString_Pokewood_Param( work->choice_str[i],
-        BTL_PWMSG_EventReAct( BTL_PWMSG_PLAYER, work->event_no, i ) );
+    BTL_STR_MakeString_Pokewood_Param( work->choice_str[i], 
+                                       senario->event[work->event_no].reaction[i].my_message );
     BTLV_CHOICE_SetStrbuf( wk->viewCore, i, work->choice_str[i] );
   }
   // 選択肢処理開始
@@ -1948,7 +1947,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   case POKEWOOD_EVENT_SEQ_MY_TALK:
     if(senario->event[wk->pokewoodSeqWork.event_no].talk_msg[0][wk->pokewoodSeqWork.bookmark]!=-1){
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, 
-                          BTL_PWMSG_Event( BTL_PWMSG_PLAYER, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.bookmark ) );
+                           senario->event[wk->pokewoodSeqWork.event_no].talk_msg[0][wk->pokewoodSeqWork.bookmark] );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_TRAINER_TALK);
     }else{
@@ -1959,7 +1958,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   case POKEWOOD_EVENT_SEQ_TRAINER_TALK:
     if(senario->event[wk->pokewoodSeqWork.event_no].talk_msg[1][wk->pokewoodSeqWork.bookmark]!=-1){
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, 
-                          BTL_PWMSG_Event( BTL_PWMSG_ENEMY, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.bookmark ) );
+                           senario->event[wk->pokewoodSeqWork.event_no].talk_msg[1][wk->pokewoodSeqWork.bookmark] );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_CHECK_SENARIO);
     }else{
@@ -2018,7 +2017,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 選択肢会話：自分
   case POKEWOOD_EVENT_SEQ_MY_REACTION:
     {
-      int reaction_talk = BTL_PWMSG_EventReAct( BTL_PWMSG_PLAYER, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
+      int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].my_message;
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, reaction_talk );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_TRAINER_REACTION);
@@ -2027,7 +2026,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   // 選択肢会話：相手
   case POKEWOOD_EVENT_SEQ_TRAINER_REACTION:
     {
-      int reaction_talk = BTL_PWMSG_EventReAct( BTL_PWMSG_ENEMY, wk->pokewoodSeqWork.event_no, wk->pokewoodSeqWork.choice );
+      int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].enemy_message;
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, reaction_talk );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_TRAINER_OUT);
