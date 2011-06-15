@@ -1991,11 +1991,15 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
   if( syswk->dat->callMode == BOX_MODE_ITEM ){
     BOX2OBJ_ItemIconCursorMove( syswk->app );
   }else{
-    if( syswk->app->clwk[BOX2OBJ_ID_OUTLINE] == NULL ){
-      BOX2OBJ_PokeCursorAdd( syswk );
-    }
-    BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
-  }
+		if( syswk->app->clwk[BOX2OBJ_ID_OUTLINE] == NULL ){
+			BOX2OBJ_PokeCursorAdd( syswk );
+		}
+		if( syswk->mv_cnv_mode != 2 ){
+			BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+		}else{
+			BOX2OBJ_PokeCursorVanish( syswk, FALSE );
+		}
+	}
 }
 
 

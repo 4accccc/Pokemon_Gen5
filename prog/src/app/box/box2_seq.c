@@ -299,6 +299,8 @@ static void BoxEndPassiveSet( BOX2_SYS_WORK * syswk );
 static int ChgSeqSelectButton( BOX2_SYS_WORK * syswk, int next );
 static int ChgSeqSelectTouch( BOX2_SYS_WORK * syswk, int next );
 
+static void MultiSelectCancel( BOX2_SYS_WORK * syswk );
+
 
 //============================================================================================
 //  グローバル変数
@@ -2512,8 +2514,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				syswk->poke_get_key = 2;
 			// いない（範囲選択不成立）
 			}else{
-				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );     // 点線非表示
-				syswk->poke_get_key = 0;
+				MultiSelectCancel( syswk );
 			}
 		}
 		return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
@@ -2542,7 +2543,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       PMSND_PlaySE( SE_BOX2_DECIDE );
       BOX2MAIN_PokeInfoOff( syswk );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_INIT );
-    }
+		}else if( syswk->poke_get_key == 1 ){
+			MultiSelectCancel( syswk );
+		}
     break;
 
   case BOX2UI_ARRANGE_PGT_LEFT:   // 31: ボックス切り替え矢印（左）
@@ -2557,6 +2560,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_PokeSelectOff( syswk );
     // 取得中
     }else{
+			if( syswk->poke_get_key == 1 ){
+				MultiSelectCancel( syswk );
+			}
       BOX2OBJ_MovePokeIconHand( syswk );
     }
     return TrayLeftScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
@@ -2573,6 +2579,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_PokeSelectOff( syswk );
     // 取得中
     }else{
+			if( syswk->poke_get_key == 1 ){
+				MultiSelectCancel( syswk );
+			}
       BOX2OBJ_MovePokeIconHand( syswk );
     }
     return TrayRightScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
@@ -2581,7 +2590,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     PMSND_PlaySE( SE_BOX2_DECIDE );
     if( syswk->poke_get_key == 0 ){
       BOX2MAIN_PokeInfoOff( syswk );
-    }
+    }else if( syswk->poke_get_key == 1 ){
+			MultiSelectCancel( syswk );
+		}
 		return BgButtonAnmSet(
 						syswk, BOX2MAIN_WINFRM_POKE_BTN, 
 						ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_PARTY_CHANGE) );
@@ -2632,7 +2643,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     break;
 
   case CURSORMOVE_CANCEL:         // キャンセル
-		if( syswk->poke_get_key != 0 ){
+		if( syswk->poke_get_key == 1 ){
+			MultiSelectCancel( syswk );
+		}else if( syswk->poke_get_key != 0 ){
 			// ポケモンを戻して選択を解除する
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
 			return PokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
@@ -2646,6 +2659,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_TRAY2 ){
+			if( syswk->poke_get_key == 1 ){
+				MultiSelectCancel( syswk );
+			}
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
       BOX2MAIN_InitTrayIconScroll( syswk, -1 );
       return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollDown, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
@@ -2654,6 +2670,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_TRAY5 ){
+			if( syswk->poke_get_key == 1 ){
+				MultiSelectCancel( syswk );
+			}
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
       BOX2MAIN_InitTrayIconScroll( syswk, 1 );
       return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollUp, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
@@ -2662,6 +2681,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_NAME ){
+			if( syswk->poke_get_key == 1 ){
+				MultiSelectCancel( syswk );
+			}
       PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
       return TrayLeftScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
     }
@@ -2669,6 +2691,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_NAME ){
+			if( syswk->poke_get_key == 1 ){
+				MultiSelectCancel( syswk );
+			}
       PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
       return TrayRightScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
     }
@@ -2709,11 +2734,17 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     break;
 
   case BOX2UI_ARRANGE_PGT_TRAY1:  // 33: トレイアイコン
+		if( syswk->poke_get_key == 1 ){
+			MultiSelectCancel( syswk );
+		}
     PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
     BOX2MAIN_InitTrayIconScroll( syswk, -1 );
     return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollDown, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 
   case BOX2UI_ARRANGE_PGT_TRAY6:  // 38: トレイアイコン
+		if( syswk->poke_get_key == 1 ){
+			MultiSelectCancel( syswk );
+		}
     PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
     BOX2MAIN_InitTrayIconScroll( syswk, 1 );
     return VFuncSet( syswk, BOX2MAIN_VFuncTrayIconScrollUp, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
@@ -2730,6 +2761,9 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				return MultiPokeMovePutKey( syswk, BOX2OBJ_POKEICON_PUT_MAX+trayPos, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 	    // 未取得
 	    }else{
+				if( syswk->poke_get_key == 1 ){
+					MultiSelectCancel( syswk );
+				}
 	      PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
 	      BOX2MAIN_PokeInfoOff( syswk );
 	      syswk->app->chg_tray_pos = syswk->box_mv_pos + trayPos;
@@ -2768,8 +2802,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				syswk->poke_get_key = 2;
 				return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 			}else{
-				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );     // 点線非表示
-				syswk->poke_get_key = 0;
+				MultiSelectCancel( syswk );
 			}
     // 掴んでいる→離す
 		}else if( syswk->poke_get_key == 2 ){
@@ -10844,3 +10877,14 @@ static int ChgSeqSelectTouch( BOX2_SYS_WORK * syswk, int next )
 	syswk->mv_cnv_end = 0;
 	return ChangeSequence( syswk, next );
 }
+
+
+// 複数範囲選択をキャンセル
+static void MultiSelectCancel( BOX2_SYS_WORK * syswk )
+{
+	BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );     // 点線非表示
+  syswk->get_pos = BOX2MAIN_GETPOS_NONE;
+	syswk->poke_get_key = 0;
+}
+
+
