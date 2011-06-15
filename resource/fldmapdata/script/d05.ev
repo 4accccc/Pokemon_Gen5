@@ -11,6 +11,10 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d05.h"
   .include  "d05.h"
+  .include  "d05_def.h" //アジト船イベント完成まで仮参照
+  .include  "d05r0101.h"  //WBT誘導イベント用参照
+  .include  "d05r0101_def.h"  //WBT誘導イベント用参照
+
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,12 +25,460 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d05_stopper_01
 _EVENT_DATA    ev_pos_d05_stopper_01
+_EVENT_DATA    ev_pos_d05_swleader5_01
+_EVENT_DATA    ev_scene_d05_swplazma_01
+_EVENT_DATA    ev_reserve_d05_swplazma_af_01
+_EVENT_DATA    ev_d05_swboss_01
+_EVENT_DATA    ev_zone_d05
+_EVENT_DATA    ev_init_d05
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d05
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_d05
+  
+  //WBT誘導前
+  IF $WK_SCENE_D05 == 0 THEN
+    _OBJ_POS_CHANGE( D05_SWRIVAL_01, 196, 0, 468, DIR_UP )
+  //元プラズマ団イベント後
+  ELSIF $WK_SCENE_D05 == 3 THEN
+    _OBJ_POS_CHANGE( D05_SWBOSS_01, 197, 0, 469, DIR_DOWN )
+  //アジト船イベント後
+  ELSIF $WK_SCENE_D05 == 4 THEN
+    _OBJ_POS_CHANGE( D05_SWRIVAL_01, 196, 0, 490, DIR_RIGHT )
+    _OBJ_POS_CHANGE( D05_SWLEADER1_01, 198, 0, 490, DIR_LEFT )
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/* 			POS：WBT誘導イベント			  */
+/**************************************************************/
+EVENT_START		ev_pos_d05_swleader5_01
+
+  //アニメ：主人公WBT前へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 197, 469, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：主人公とヤーコン・ライバル向き合う
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_staystep_d)
+  _OBJ_ANIME( D05_SWLEADER5_01, anm_staystep_d)
+
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  //zが469より小さかったらsteystep_uを入れる
+  IF  $LCW_POSZ <= 469 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //ヤーコン：ここだ！
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swleader5_01,D05_SWLEADER5_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公とヤーコン・ライバル向き合う
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_staystep_u)
+  _OBJ_ANIME( D05_SWLEADER5_01, anm_staystep_u)
+  
+  //カメラ操作　WBT写す
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 8024,0,970752,12943360,0,30289920,40 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //アニメ待ち
+  _OBJ_ANIME_WAIT()
+  
+  //ヤーコン：このりっぱな
+  _PLAINWIN_MSG_DOWN( msg_d05_swleader5_02 )
+  _PLAINWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+   
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //アニメ：ヤーコン建物内へ
+  _OBJ_ANIME( D05_SWLEADER5_01, anm_go_wbt_swleader5 )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //ヤーコン動作モデル削除
+  _OBJ_DEL(D05_SWLEADER5_01)
+  
+  //アニメ：主人公・ライバルWBT入室
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_go_wbt_player )
+  _TIME_WAIT( 12 )
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_go_wbt_swrival)
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //D05WBT誘導イベントPOS無効
+  $WK_SCENE_C05 = 1
+  //D05ライバル非表示
+  _FLAG_SET( FV_D05_SWRIVAL_01 )
+  //D05ヤーコン非表示
+  _FLAG_SET( FV_D05_SWLEADER5_01 )
+  //========================================//
+
+  //予約スクリプト(WBTチュートリアルイベント開始）
+	_RESERVE_SCRIPT( SCRID_RESERVE_D05R0101_TUTORIAL )
+	
+	//D05R0101マップチェンジ
+	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 26, DIR_UP )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ヤーコン：WBTに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_go_wbt_swleader5
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：WBTに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_go_wbt_player
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：WBTに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_go_wbt_swrival
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* 			SCENE_CHANGE：WBTから出てネオプラズマ団イベント			  */
+/**************************************************************/
+EVENT_START		ev_scene_d05_swplazma_01
+  
+  //========================================//
+  //D05ライバル表示
+  _FLAG_RESET( FV_D05_SWRIVAL_01 )
+  //D05チェレン表示
+  _FLAG_RESET( FV_D05_SWLEADER1_01 )
+  //D05アクロマ表示
+  _FLAG_RESET( FV_D05_SWBOSS_01 )
+  //========================================//
+  
+  //カメラ操作　WBT写す
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,12943360,0,30703616,10 )
+  
+  //アニメ：主人公出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_out_wbt_player )
+  _TIME_WAIT(12)
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD( D05_SWRIVAL_01 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //アニメ：ライバル出てくる
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_out_wbt_rival )
+  
+  _TIME_WAIT(12)
+  
+  //チェレン動作モデル生成
+  _OBJ_ADD( D05_SWLEADER1_01 )
+  
+  //アニメ：チェレン出てくる
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_out_wbt_swleader1 )
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー名タグに代入
+  _PLAYER_NAME(0)
+  
+  //チェレン：それにしても
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swleader1_01,D05_SWLEADER1_01, POS_DEFAULT )
+  
+  //フィールド上にプラズマ団配置
+  _OBJ_ADD_EX( 186, 470, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWPLAZMAM, MV_DMY )
+  
+  //アニメ：プラズマ団ダッシュ
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swplazmam_dash_ship )
+  _TIME_WAIT( 48 )
+  //アニメ：ライバル気がつく
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_swrival_look_pz )
+  _OBJ_ANIME_WAIT()
+  
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公・チェレン下方面を見る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル名タグに代入
+  _RIVAL_NAME(1)
+  
+  //ライバル：いまのっ！？
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swrival_01,D05_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公とライバル向き合う
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：プラズマ団！
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swrival_02,D05_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アクロマ動作モデル生成
+  _OBJ_ADD( D05_SWBOSS_01 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //アニメ：アクロマ登場
+  _OBJ_ANIME( D05_SWBOSS_01, anm_out_wbt_swboss )
+  _TIME_WAIT(8)
+  
+  //アニメ：アクロマ以外上を見る
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：話は聴こえました
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swboss_01,D05_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //ライバル：オレのポケモンが！
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swrival_03,D05_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル高速で船方向に移動
+  _OBJ_ANIME_AUTO( D05_SWRIVAL_01, 196, 480, FORCE_TYPE_NPC, 4, DIR_UD)
+  _TIME_WAIT(12)
+  
+  //アニメ：主人公・ライバルチェレン見送る
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：主人公・チェレンを見る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：ぼくも
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swleader1_02,D05_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン船方向に移動
+  _OBJ_ANIME_AUTO( D05_SWLEADER1_01, 196, 480, FORCE_TYPE_NPC, 8, DIR_UD)
+  _TIME_WAIT(24)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：アクロマと主人公向き合う
+  _OBJ_ANIME( D05_SWBOSS_01, anm_swboss_look_player )
+  _TIME_WAIT(8)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：りかいできません
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swboss_02,D05_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (10)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //【仮】以下アジト船～イベント終了までの流れは仮
+  
+  //========================================//
+  //D05プラズマ団イベント終了
+  $WK_SCENE_D05 = 4
+  //D05アクロマ非表示
+  _FLAG_SET( FV_D05_SWBOSS_01 )
+  //アクロマ動作OBJ削除
+  _OBJ_DEL( D05_SWBOSS_01 )
+  //========================================//
+  
+  //予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_D05_SWPLAZMA_AF_01 )
+	
+	//D05マップチェンジ
+	_MAP_CHANGE( ZONE_ID_D05, 197, 491, DIR_UP )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	主人公：WBTから出てくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_out_wbt_player
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：WBTから出てくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_out_wbt_rival
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：WBTから出てくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_out_wbt_swleader1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	プラズマ団員：アジト船方向へダッシュ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazmam_dash_ship
+	_ANIME_DATA	AC_WALK_R_4F,10
+	_ANIME_DATA	AC_WALK_D_4F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プラズマ団員：ライバル「！」下方向を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_look_pz
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	アクロマ：WBTから出てくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_out_wbt_swboss
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	アクロマ：主人公と向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swboss_look_player
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
+/**************************************************************/
+/* 			RESERVE：アジト船から復帰イベント			  */
+/**************************************************************/
+EVENT_START		ev_reserve_d05_swplazma_af_01
+  
+  //アニメ：ライバルきょろきょろ
+  _OBJ_ANIME( D05_SWRIVAL_01, anm_rival_look_lr )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル名代入
+  _RIVAL_NAME(1)
+
+  //ライバル：いまの！？
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swrival_04,D05_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル高速で退場
+  _OBJ_ANIME_AUTO( D05_SWRIVAL_01, 196, 476, FORCE_TYPE_NPC, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル動作OBJ削除
+  _OBJ_DEL( D05_SWRIVAL_01 )
+  
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：あんなことができるのは
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swleader1_03,D05_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン主人公に向き合う
+  _OBJ_ANIME( D05_SWLEADER1_01, anm_swleader1_look_player)
+  _OBJ_ANIME_WAIT()
+  
+  //主人公名代入
+  _PLAYER_NAME(0)
+  
+  //チェレン：あんなことができるのは
+  _BALLOONWIN_OBJMSG_POS( msg_d05_swleader1_04,D05_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン退場
+  _OBJ_ANIME_AUTO( D05_SWLEADER1_01, 197, 476, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン動作OBJ削除
+  _OBJ_DEL( D05_SWLEADER1_01 )
+  
+  //========================================//
+  //D05 全てのイベントを終了
+  $WK_SCENE_D05 = 5
+  //D05ライバル非表示
+  _FLAG_SET( FV_D05_SWRIVAL_01 )
+  //D05チェレン非表示
+  _FLAG_SET( FV_D05_SWLEADER1_01 )
+  //========================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル：きょろきょろ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_look_lr
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：主人公と向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_look_player
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/* 			アクロマ：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d05_swboss_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_swboss_03 )
+EVENT_END
 
 /**************************************************************/
 /* 			ストッパー：話しかけ			  */

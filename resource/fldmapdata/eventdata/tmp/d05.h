@@ -17,6 +17,10 @@
 #define D05_DUMMY_03                       3
 #define D05_DUMMY_04                       4
 #define D05_DUMMY_05                       5
+#define D05_SWRIVAL_01                     6
+#define D05_SWLEADER5_01                   7
+#define D05_SWLEADER1_01                   8
+#define D05_SWBOSS_01                      9
 
 #endif //ZONE_D05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

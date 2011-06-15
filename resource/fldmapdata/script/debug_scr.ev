@@ -303,8 +303,10 @@ EVENT_START   ev_debug_mizuguchi
 			_FLAG_RESET( FV_R04_BIGROCK_01 )
 			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
 		ELSIF $SCWK_TEMP2 == 4 THEN
-      $WK_SCENE_C05 = 3
-      _FLAG_RESET(FV_C05_SWLEADER5_01)
+      //========================================//
+      //D05 プラズマ団イベントSCENE_CHANGE有効
+      $WK_SCENE_D05 = 2
+      //========================================//
 		ELSIF $SCWK_TEMP2 == 5 THEN
 				$WK_SCENE_C04GYM0101_SHOWEND = 1
 		ELSIF $SCWK_TEMP2 == 6 THEN

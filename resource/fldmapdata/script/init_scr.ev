@@ -130,7 +130,13 @@ init_flags:
 	_FLAG_SET( FV_C05_SWRIVAL_01 )
 	//C05：SAGE6を非表示に
   _FLAG_SET( FV_C05_SAGE6_01 )
-
+  
+  //D05
+  
+  //D05：チェレンを非表示に
+  _FLAG_SET( FV_D05_SWLEADER1_01 )
+  //D05：アクロマを非表示に
+  _FLAG_SET( FV_D05_SWBOSS_01 )
 }
 _RET
 
