@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド：さつえい１</Text>
+			<Text>撮影：シナリオ１</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T04:52:35" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド：さつえい１</Text>
+			<Text>撮影：シナリオ１</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T04:52:38" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +39,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド：さつえい２</Text>
+			<Text>撮影：シナリオ２</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:16:15" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -50,10 +50,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド：さつえい２</Text>
+			<Text>撮影：シナリオ２</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:16:15" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -79,10 +79,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド：再生１</Text>
+			<Text>上映：シナリオ１</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:16:24" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -90,10 +90,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド：再生１</Text>
+			<Text>上映：シナリオ１</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:16:24" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -119,10 +119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド：再生２</Text>
+			<Text>上映：シナリオ２</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:17:08" />
+				User="mori:W00269"
+				Time="2011-06-16T09:41:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -130,10 +130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド：再生２</Text>
+			<Text>上映：シナリオ２</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:17:08" />
+				User="mori:W00269"
+				Time="2011-06-16T09:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
