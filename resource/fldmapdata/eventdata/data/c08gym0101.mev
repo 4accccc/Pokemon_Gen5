@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/16 20:22:09
+#save date:2011/06/16 20:54:40
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -246,10 +246,10 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-20
+32
 #event number: 0
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_UP_02
+POSID_C08GYM0101_BUTTON_UP_04
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_UP
 #Pos Check Type
@@ -266,7 +266,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 1
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_UP_04
+POSID_C08GYM0101_BUTTON_UP_07
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_UP
 #Pos Check Type
@@ -317,7 +317,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 4
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_UP_05
+POSID_C08GYM0101_BUTTON_UP_06
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_UP
 #Pos Check Type
@@ -351,7 +351,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 6
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_DOWN_02
+POSID_C08GYM0101_BUTTON_DOWN_03
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_DOWN
 #Pos Check Type
@@ -368,7 +368,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 7
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_DOWN_03
+POSID_C08GYM0101_BUTTON_DOWN_04
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_DOWN
 #Pos Check Type
@@ -385,7 +385,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 8
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_DOWN_04
+POSID_C08GYM0101_BUTTON_DOWN_06
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_DOWN
 #Pos Check Type
@@ -402,7 +402,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 9
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_DOWN_05
+POSID_C08GYM0101_BUTTON_DOWN_07
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_DOWN
 #Pos Check Type
@@ -436,7 +436,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 11
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_LEFT_02
+POSID_C08GYM0101_BUTTON_LEFT_03
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_LEFT
 #Pos Check Type
@@ -453,7 +453,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 12
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_LEFT_03
+POSID_C08GYM0101_BUTTON_LEFT_04
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_LEFT
 #Pos Check Type
@@ -487,7 +487,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 14
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_LEFT_05
+POSID_C08GYM0101_BUTTON_LEFT_07
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_LEFT
 #Pos Check Type
@@ -521,7 +521,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 16
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_RIGHT_02
+POSID_C08GYM0101_BUTTON_RIGHT_03
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_RIGHT
 #Pos Check Type
@@ -538,7 +538,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 17
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_RIGHT_03
+POSID_C08GYM0101_BUTTON_RIGHT_04
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_RIGHT
 #Pos Check Type
@@ -555,7 +555,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 18
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_RIGHT_04
+POSID_C08GYM0101_BUTTON_RIGHT_06
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_RIGHT
 #Pos Check Type
@@ -572,7 +572,7 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 19
 #Pos Event Label
-POSID_C08GYM0101_BUTTON_RIGHT_05
+POSID_C08GYM0101_BUTTON_RIGHT_07
 #Pos Script Name
 SCRID_POS_C08GYM0101_BUTTON_RIGHT
 #Pos Check Type
@@ -585,6 +585,210 @@ LOCALWORK3
 EVENTDATA_POSTYPE_GRID
 #position
 88 192 -136
+#size
+1 1
+#event number: 20
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_UP_02
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_UP
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 112 -248
+#size
+1 1
+#event number: 21
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_LEFT_02
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_LEFT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK2
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 112 -264
+#size
+1 1
+#event number: 22
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_RIGHT_02
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_RIGHT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK3
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 112 -264
+#size
+1 1
+#event number: 23
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_DOWN_02
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_DOWN
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK1
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 112 -280
+#size
+1 1
+#event number: 24
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_UP_05
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_UP
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 192 -120
+#size
+1 1
+#event number: 25
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_LEFT_05
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_LEFT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK2
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 192 -136
+#size
+1 1
+#event number: 26
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_RIGHT_05
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_RIGHT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK3
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 192 -136
+#size
+1 1
+#event number: 27
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_DOWN_05
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_DOWN
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK1
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 192 -152
+#size
+1 1
+#event number: 28
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_UP_08
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_UP
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 272 -232
+#size
+1 1
+#event number: 29
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_LEFT_08
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_LEFT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK2
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 272 -248
+#size
+1 1
+#event number: 30
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_RIGHT_08
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_RIGHT
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK3
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 272 -248
+#size
+1 1
+#event number: 31
+#Pos Event Label
+POSID_C08GYM0101_BUTTON_DOWN_08
+#Pos Script Name
+SCRID_POS_C08GYM0101_BUTTON_DOWN
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK1
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 272 -264
 #size
 1 1
 #Map Event List Data End
