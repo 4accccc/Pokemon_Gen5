@@ -96,6 +96,8 @@ enum{
 	PKWD_COUNT_CANVAS_MAXNUM	= 2,		// canvas
 	//
 	PKWD_COUNT_MES_MAX			= 2,
+	//
+	PKWD_COUNT_MAX_TITLENUM		= 10,		// タイトル数最大
 };
 
 
@@ -305,7 +307,6 @@ typedef struct{
 // BGPAL
 static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_tbl[] = {
 	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_count_bg_NCLR,	0,	2,},							// 下、BG
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// タイトル
 	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_logo_NCLR,	PLTID_MAIN_BG_LOGO,	2,},				// 上、ロゴ
 
 	{ 0xff, 0, 0, 0,}, // end code
@@ -332,25 +333,50 @@ static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_tbl[] = {
 //---------------
 // BG関連(タイトル)
 //---------------
-// BGPAL(パレットは、始めにまとめて転送すること)
+// BGPAL(パレットは、始めにまとめて所定のタイトルだけを転送)
 static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
-//	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	0,	0,},	// タイトル
-
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 00
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 01
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 02(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 03(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 04(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 05(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 06(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 07(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 08(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 09(dummy)
+	//
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
-// BGCHR
+// BGCHR(切り替え時に、所定のタイトルだけを転送)
 static const PKWD_COUNT_BGCHR_DATA pwc_bgchr_01_tbl[] = {
-	{ GFL_BG_FRAME3_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// タイトル
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// タイトル
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCGR,	0,	0,},	// 00
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 01
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 02(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 03(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 04(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 05(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 06(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 07(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 08(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 09(dummy)
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
-// BGSCN
+// BGSCN(切り替え時に、所定のタイトルだけを転送)
 static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_01_tbl[] = {
-	{ GFL_BG_FRAME3_M,	NARC_pkwd_announce_gra_pkwd_title01_bg2_NSCR,	0,	PLTID_MAIN_BG_TITLE,},	// 下地
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// タイトル
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 00
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 01
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 02(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 03(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 04(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 05(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 06(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 07(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 08(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 09(dummy)
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -481,7 +507,8 @@ static s16  pwc_get_empty( PKWD_COUNT_MAIN_WORK *wk, const s32 num );
 //
 // bgの設定
 static void pwc_init_bg( PKWD_COUNT_MAIN_WORK* wk );
-static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk );
+static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk, const s32 mode, const s32 pmode);
+
 //
 // objの設定
 static void pwc_init_obj_clwk( PKWD_COUNT_MAIN_WORK* wk, const s32 drawtype, const PKWD_COUNT_OBJ_DATA *obj_adr, const s16 *info_adr );
@@ -564,6 +591,12 @@ static GFL_PROC_RESULT PkwdCountProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	
 	// 参照用
 	wk->Param = pwk;
+	//
+	// 念のためチェック
+	if((wk->Param->title_no < 0)||(wk->Param->title_no >= PKWD_COUNT_MAX_TITLENUM)){
+		OS_Printf("title_no error :%d\n",wk->Param->title_no);
+		wk->Param->title_no = 0;
+	}
 	
 	//描画設定初期化(上:メイン、下:サブ)
 	wk->graphic	= PKWD_COUNT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, wk->heapID );
@@ -735,6 +768,8 @@ static void pwc_init( PKWD_COUNT_MAIN_WORK* wk )
 	// bgの初期化
 	//---------------
 	pwc_init_bg( wk );
+	// パレットだけはセット
+	pwc_init_bg2( wk, wk->Param->title_no, 0 );
 	
 	//---------------
 	// stringの初期化
@@ -926,7 +961,7 @@ static void pwc_key_all( PKWD_COUNT_MAIN_WORK* wk )
 			if(tmp == 0){
 				// 完全黒の状態で、BG書き換え
 				// BGセット(BGは非表示状態)
-				pwc_init_bg2( wk );
+				pwc_init_bg2( wk, wk->Param->title_no, 1 );
 				// 文字列表示(BG0はそのまま表示)
 				pwc_disp_title_string( wk );
 				// BG1,BG3を表示
@@ -1084,11 +1119,13 @@ static void pwc_init_bg( PKWD_COUNT_MAIN_WORK* wk )
  *	@brief  BG関連の初期化
  *
  *	@param	PKWD_COUNT_MAIN_WORK* wk
+ *	@param	const s32			(タイトル番号)
+ *	@param	const s32			(0:パレット、1:パレット以外)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk )
+static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk, const s32 mode, const s32 pmode)
 {
 	u16		*adr;
 	s32		i,j,k;
@@ -1103,38 +1140,24 @@ static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk )
 	handle	= GFL_ARC_OpenDataHandle( ARCID_PKWD_ANNOUNCE, wk->heapID );
 	
 	// パレット転送
-	for(i=0;i<PKWD_COUNT_BGNUM_MAXNUM;i++){
-		// 終了条件
-		if(padr->type == 0xff){
-			break;
-		}
+	// パレットフェードの関係上転送するタイミングを別とした
+	if(pmode == 0){
+		padr += mode;		// 番号分加算
+		//
 		tmp = padr->size;
 		tmp *= 0x20;		// 転送サイズ
 		off = padr->offset;
 		off *= 0x20;
 		GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, off, tmp, wk->heapID );
-		//
-		padr++;
 	}
-	//
-	// キャラ転送
-	for(i=0;i<PKWD_COUNT_BGNUM_MAXNUM;i++){
-		// 終了条件
-		if(cadr->frmnumber == 0xff){
-			break;
-		}
+	else{
+		// キャラ転送
+		cadr += mode;
 		GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, cadr->arcid, cadr->frmnumber, cadr->offset, 0, 0, wk->heapID );
-		cadr++;
-	}
-	
-	// スクリーン転送
-	for(i=0;i<PKWD_COUNT_BGNUM_MAXNUM;i++){
-		// 終了条件
-		if(sadr->frmnumber == 0xff){
-			break;
-		}
+		
+		// スクリーン転送
+		sadr += mode;
 		GFL_ARCHDL_UTIL_TransVramScreen( handle, sadr->arcid, sadr->frmnumber, sadr->offset, 0, 0, wk->heapID );
-		//
 		//
 		// スクリーンのパレット指定を変更
 		if(sadr->poff != 0){
@@ -1147,10 +1170,8 @@ static void pwc_init_bg2( PKWD_COUNT_MAIN_WORK* wk )
 					adr[k*32+j] += ((sadr->poff&0x0f)<<12);
 				}
 			}
-//			GFL_BG_ChangeScreenPalette( sadr->frmnumber, 0, 0, 32, 24, sadr->poff );
 			GFL_BG_LoadScreenReq( sadr->frmnumber );
 		}
-		sadr++;
 	}
 	// 終了
 	GFL_ARC_CloseDataHandle( handle );
