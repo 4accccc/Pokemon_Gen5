@@ -307,7 +307,7 @@
 #define FE_C03P09_WAITRESS_01              291 /* 0x0123 C03P09：ヒウンアイス店員初回話しかけ */
 #define FE_C03P09_WAITRESS_02              292 /* 0x0124 C03P09：ヒウンアイス店員繁盛後初回話しかけ */
 #define FE_C03P09_ICEBUY_01                293 /* 0x0125 C03P09：ヒウンアイス初回購入 */
-#define FE_ T07PC0101_ITEMGET_01           294 /* 0x0126 T07PC0101：アイテム入手フラグ */
+#define FE_T07PC0101_ITEMGET_01            294 /* 0x0126 T07PC0101：アイテム入手フラグ */
 		/* not used   295(0x0127) */
 		/* not used   296(0x0128) */
 		/* not used   297(0x0129) */
