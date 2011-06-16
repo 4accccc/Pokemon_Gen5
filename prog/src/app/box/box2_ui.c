@@ -428,7 +428,8 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 
   { 0, 0, 0, 0, 15,15,15,15, { 0, 10,   8,  59 } },   // 15: 通常モードボタン
   { 0, 0, 0, 0, 16,16,16,16, { 0, 10,  60, 109 } },   // 16: 便利モード1
-  { 0, 0, 0, 0, 16,16,16,16, { 0, 10, 110, 159 } },   // 17: 便利モード2
+  { 0, 0, 0, 0, 17,17,17,17, { 0, 10, 110, 159 } },   // 17: 便利モード2
+  { 0, 0, 0, 0, 18,18,18,18, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 18: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -495,7 +496,7 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeMoveCursorMoveData[] =
   { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 10,   8,  59 } },   // 42: 通常モードボタン
   { 0, 0, 0, 0, 43, 43, 43, 43, { 0, 10,  60, 109 } },   // 43: 便利モード1
   { 0, 0, 0, 0, 44, 44, 44, 44, { 0, 10, 110, 159 } },   // 44: 便利モード2
-
+  { 0, 0, 0, 0, 45, 45, 45, 45, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 45: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1783,7 +1784,9 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
       now_pos == BOX2UI_ARRANGE_PTGT_RET ||           // 41: 戻る
       now_pos == BOX2UI_ARRANGE_PTGT_NORMAL ||        // 42: 便利モード
       now_pos == BOX2UI_ARRANGE_PTGT_MOVE ||          // 42: 便利モード
-      now_pos == BOX2UI_ARRANGE_PTGT_MULTI ){         // 42: 便利モード
+      now_pos == BOX2UI_ARRANGE_PTGT_MULTI ||         // 42: 便利モード
+			now_pos == BOX2UI_ARRANGE_PTGT_SEARCH ){				// 45: 絞り込みボタン
+
     CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
     now_pos = syswk->app->old_cur_pos;
   }else{
