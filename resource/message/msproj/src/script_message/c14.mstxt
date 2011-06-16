@@ -6,11 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なんだ
-ソウリュウでは　たいへん　だったな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+ぜったいに　とりもどすぞ▼
+というわけで　オマエの　ミッションは
+ジムバッジを　てにいれること</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:10:53" />
+				Time="2011-06-16T05:33:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,10 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+ぜったいに　とりもどすぞ▼
+というわけで　オマエの　ミッションは
+ジムバッジを　てにいれること</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:51:54" />
+				Time="2011-06-16T05:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -58,13 +63,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマだんは
-チェレンさんが　みはっている▼
-さっさと　ジムバッジを　とってこい
-すこしでも　つよいほうが　いいだろ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエさ
+さっさと　ジムバッジを　とってこい▼
+すこしでも　つよいほうが　いいんだ
+プラズマだんと　やりあうんだから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-13T07:58:15" />
+				Time="2011-06-16T05:08:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,12 +77,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマ団は
-チェレンさんが　みはっている▼
-さっさと　ジムバッジを　もらってこいよ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエさ
+さっさと　ジムバッジを　とってこい▼
+すこしでも　つよいほうが　いいんだ
+プラズマだんと　やりあうんだから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-13T02:35:14" />
+				Time="2011-06-16T05:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -143,10 +149,12 @@
 			Language="JPN">
 			<Comment>♂
 ・c08ジムバッジ取得後
+・posイベント
+　GRIDX＝GRIDZ＝
 ・暫定ラベル、現状未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:00:43" />
+				Time="2011-06-16T05:33:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -334,10 +342,10 @@
 ことばで　かたれるように　なれ▼
 そうすれば　じぶんが　なにをしたいか
 なにを　のぞんでいるか▽
-いまより　はっきり　わかるようになる</Text>
+いまより　はっきり　わかるようになる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-13T07:36:07" />
+				Time="2011-06-16T02:55:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -383,16 +391,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シズイ『そうか
-わるくないが　たたかうのか▼
+			<Text>シズイ『ほう　わるくない……　そう
+かんがえているが　たたかうのか▼
 んじゃ　まず　それを　おまはんの
 ことばで　かたれるように　なれ▼
 そうすれば　じぶんが　なにをしたいか
-なにを　のぞんでいるか
-いまより　はっきり　わかるようになる</Text>
+なにを　のぞんでいるか▽
+いまより　はっきり　わかるようになる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-13T07:36:18" />
+				Time="2011-06-16T02:55:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -665,14 +673,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なみまに　ぷかぷか
-うかぶ　あたしは　にんぎょ　なの▼
-そういえば　カントーちほうに
+			<Text>波間に　ぷかぷか
+浮かぶ　あたしは　人魚なの▼
+そういえば　カントー地方に
 おてんばにんぎょ　っていわれる▽
 ジムリーダーが　いたわね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:42:29" />
+				Time="2011-06-16T04:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
