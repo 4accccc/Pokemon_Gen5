@@ -10321,10 +10321,10 @@
 		Label="pw_moviesubtitle_01_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<Text>まちを　おそう　かがくしゃ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T09:07:37" />
+				User="mori:W00269"
+				Time="2011-06-16T16:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10332,10 +10332,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<Text>まちを　おそう　かがくしゃ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T11:40:57" />
+				User="mori:W00269"
+				Time="2011-06-16T16:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10355,10 +10355,10 @@
 		Label="pw_moviesubtitle_01_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T04:04:27" />
+				User="mori:W00269"
+				Time="2011-06-16T16:00:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10366,10 +10366,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T04:04:29" />
+				User="mori:W00269"
+				Time="2011-06-16T16:00:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
