@@ -531,6 +531,7 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
   // Ž–‘OƒAƒvƒŠ
   case 100:
 //    prew->pkwd_count_param.gamesys = gsys;
+    prew->pkwd_count_param.title_no = pbew->bp->pokewoodSenario;
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
     (*seq) = 101;
     break;
