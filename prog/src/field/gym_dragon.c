@@ -34,6 +34,9 @@
 
 #include "eventwork_def.h"  // LOCALWORK*
 
+#include "tr_tool/trno_def.h" // TRID_*
+#include "script_trainer.h"
+
 //=============================================================================
 /**
  *					íËêîêÈåæ
@@ -347,7 +350,6 @@ static BOOL CheckCanUpLayer( EVENTWORK* p_event_wk,FLOOR_LAYER layer_id )
 //-----------------------------------------------------------------------------
 static BOOL CheckUpLayerEntrance(EVENTWORK* p_wk)
 {
-  // èÌÇ…è„Ç™ÇÍÇÈ
   return TRUE;
 }
 
@@ -362,8 +364,7 @@ static BOOL CheckUpLayerEntrance(EVENTWORK* p_wk)
 //-----------------------------------------------------------------------------
 static BOOL CheckUpLayerTail(EVENTWORK* p_wk)
 {
-  // èÌÇ…è„Ç™ÇÍÇÈ
-  return TRUE;
+  return SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_09);
 }
 
 //----------------------------------------------------------------------------
@@ -377,8 +378,15 @@ static BOOL CheckUpLayerTail(EVENTWORK* p_wk)
 //-----------------------------------------------------------------------------
 static BOOL CheckUpLayerFoot(EVENTWORK* p_wk)
 {
-  // èÌÇ…è„Ç™ÇÍÇÈ
-  return TRUE;
+  BOOL tr1_ret;
+  BOOL tr2_ret;
+  tr1_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_10);
+  tr2_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_07);
+  if( (tr1_ret == TRUE )  || (tr2_ret == TRUE ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -392,8 +400,15 @@ static BOOL CheckUpLayerFoot(EVENTWORK* p_wk)
 //-----------------------------------------------------------------------------
 static BOOL CheckUpLayerArm(EVENTWORK* p_wk)
 {
-  // èÌÇ…è„Ç™ÇÍÇÈ
-  return TRUE;
+  BOOL tr1_ret;
+  BOOL tr2_ret;
+  tr1_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_11);
+  tr2_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_08);
+  if( (tr1_ret == TRUE )  || (tr2_ret == TRUE ) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -407,8 +422,8 @@ static BOOL CheckUpLayerArm(EVENTWORK* p_wk)
 //-----------------------------------------------------------------------------
 static BOOL CheckUpLayerHead(EVENTWORK* p_wk)
 {
-  // èÌÇ…è„Ç™ÇÍÇÈ
-  return TRUE;
+  // Ç±ÇÍà»è„ÅAè„Ç…ÇÕÇ¢ÇØÇ»Ç¢
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------

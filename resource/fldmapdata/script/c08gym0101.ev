@@ -32,15 +32,20 @@ _EVENT_DATA    ev_pos_c08gym0101_button_up        // 上ボタン
 _EVENT_DATA    ev_pos_c08gym0101_button_down      // 下ボタン
 _EVENT_DATA    ev_pos_c08gym0101_button_left      // 左ボタン
 _EVENT_DATA    ev_pos_c08gym0101_button_right     // 右ボタン
+_EVENT_DATA    ev_tr_c08gym0101_tail              // 尻尾トレーナー
+_EVENT_DATA    ev_tr_c08gym0101_arm_l             // 左腕トレーナー
+_EVENT_DATA    ev_tr_c08gym0101_arm_r             // 左腕トレーナー
+_EVENT_DATA    ev_tr_c08gym0101_foot_l            // 左足トレーナー
+_EVENT_DATA    ev_tr_c08gym0101_foot_r            // 左足トレーナー
+_EVENT_DATA    ev_tr_c08gym0101_guide             // ガイド
+_EVENT_DATA    ev_tr_c08gym0101_swleader7         // シャガ
 _EVENT_DATA_END
 
 /************************************************************/
 /*					ジムギミック初期化						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c08gym0101
-
   _GYM_DRAGON_INIT()
-
 INIT_EVENT_END
 
 /**************************************************************/
@@ -112,6 +117,177 @@ EVENT_START   ev_pos_c08gym0101_button_right
 
   // 右ボタン処理
   _GYM_DRAGON_PUSH_BUTTON(GYM_DRAGON_EVENT_SEQ_RIGHT_BUTTON)
+}
+EVENT_END
+
+// トレーナーID設定用グローバル変数
+DEFINE_LOCAL  LWK_TRID
+
+//--------------------------------------------------------------------
+// トレーナー共通処理
+//--------------------------------------------------------------------
+trainer_battle:
+{
+  //視線曲を再生
+  //_TRAINER_BGM_SET( LWK_TRID )
+
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( LWK_TRID, 0 )
+  
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+	
+  // 戦闘フラグセット
+  _TRAINER_FLAG_SET( LWK_TRID )
+}
+_RET
+
+///**************************************************************/
+///*                    尻尾トレーナー                          */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_tail
+{
+  _TALK_OBJ_START()
+  $LWK_TRID = TRID_VETERANM_09
+	
+	//既に戦闘しているか状態を取得
+	DEFINE_LOCAL LWK_BATTLE_FG
+	_TRAINER_FLAG_CHECK( LWK_TRID, LWK_BATTLE_FG )
+	
+	//既に戦闘を行った
+	IF $LWK_BATTLE_FG == 0 THEN
+    // 戦闘を行う
+    _CALL trainer_battle
+  ELSE
+//    // ヒント会話
+  ENDIF
+}
+EVENT_END
+
+///**************************************************************/
+///*                    左腕トレーナー                          */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_arm_l
+{
+  _TALK_OBJ_START()
+  $LWK_TRID = TRID_VETERANM_11
+	
+	//既に戦闘しているか状態を取得
+	DEFINE_LOCAL LWK_BATTLE_FG
+	_TRAINER_FLAG_CHECK( LWK_TRID, LWK_BATTLE_FG )
+	
+	//既に戦闘を行った
+	IF $LWK_BATTLE_FG == 0 THEN
+	  DEFINE_LOCAL LWK_PARTY_NUM
+
+    // 手持ち数判定
+    _GET_PARTY_POKE_COUNT ( LWK_PARTY_NUM , POKECOUNT_MODE_BATTLE_ENABLE)
+    IF $LWK_PARTY_NUM < 3 THEN
+      // 戦えないよメッセージ
+    ELSE
+      // 戦闘を行う
+      _CALL trainer_battle
+    ENDIF
+  ELSE
+//    // ヒント会話
+  ENDIF
+}
+EVENT_END
+
+///**************************************************************/
+///*                    右腕トレーナー                          */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_arm_r
+{
+  _TALK_OBJ_START()
+  $LWK_TRID = TRID_VETERANW_08
+	
+	//既に戦闘しているか状態を取得
+	DEFINE_LOCAL LWK_BATTLE_FG
+	_TRAINER_FLAG_CHECK( LWK_TRID, LWK_BATTLE_FG )
+	
+	//既に戦闘を行った
+	IF $LWK_BATTLE_FG == 0 THEN
+	  DEFINE_LOCAL LWK_PARTY_NUM
+    
+    // 手持ち数判定
+    _GET_PARTY_POKE_COUNT ( LWK_PARTY_NUM , POKECOUNT_MODE_BATTLE_ENABLE)
+    IF $LWK_PARTY_NUM < 3 THEN
+      // 戦えないよメッセージ
+    ELSE
+      // 戦闘を行う
+      _CALL trainer_battle
+    ENDIF
+  ELSE
+    // ヒント会話
+  ENDIF
+}
+EVENT_END
+
+///**************************************************************/
+///*                    右足トレーナー                          */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_foot_r
+{
+  _TALK_OBJ_START()
+  $LWK_TRID = TRID_VETERANW_07
+	
+	//既に戦闘しているか状態を取得
+	DEFINE_LOCAL LWK_BATTLE_FG
+	_TRAINER_FLAG_CHECK( LWK_TRID, LWK_BATTLE_FG )
+	
+	//既に戦闘を行った
+	IF $LWK_BATTLE_FG == 0 THEN
+    // 戦闘を行う
+    _CALL trainer_battle
+  ELSE
+//    // ヒント会話
+  ENDIF
+}
+EVENT_END
+
+///**************************************************************/
+///*                    左足トレーナー                          */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_foot_l
+{
+  _TALK_OBJ_START()
+  $LWK_TRID = TRID_VETERANM_10
+	
+	//既に戦闘しているか状態を取得
+	DEFINE_LOCAL LWK_BATTLE_FG
+	_TRAINER_FLAG_CHECK( LWK_TRID, LWK_BATTLE_FG )
+	
+	//既に戦闘を行った
+	IF $LWK_BATTLE_FG == 0 THEN
+    // 戦闘を行う
+    _CALL trainer_battle
+  ELSE
+//    // ヒント会話
+  ENDIF
+}
+EVENT_END
+
+///**************************************************************/
+///*                    ガイド                                  */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_guide
+{
+  _TALK_OBJ_START()
+}
+EVENT_END
+
+///**************************************************************/
+///*                    シャガ                                  */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_swleader7
+{
+  _TALK_OBJ_START()
 }
 EVENT_END
 
