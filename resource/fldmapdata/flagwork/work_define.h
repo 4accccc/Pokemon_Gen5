@@ -194,6 +194,9 @@
 #define WK_SCENE_D05                     16582 /* 0x40c6 WBT前：イベント制御ワーク */
 #define WK_SCENE_D05_STOPPER_01          16583 /* 0x40c7 WBT前：イベント制御ワーク抜け道ストッパーPOS */
 #define WK_SCENE_C03P09                  16584 /* 0x40c8 ヒウンアイス：行列POS制御ワーク */
+#define WK_SCENE_R06_SWLEADER1           16585 /* 0x40c9 6番道路：季節研究所誘導POS制御ワーク */
+#define WK_SCENE_R06_LEGEND_MEET         16586 /* 0x40ca 6番道路：コバルオンとの出会いPOS制御ワーク */
+#define WK_SCENE_T07                     16587 /* 0x40cb ヤマジタウン：アララギ娘イベント制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
