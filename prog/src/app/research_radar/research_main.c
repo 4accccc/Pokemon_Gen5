@@ -638,6 +638,9 @@ static void SetupBG( HEAPID heapID )
   // MAIN-BG
   GFL_BG_SetBGControl( MAIN_BG_BACK, &MainBGControl_BACK, GFL_BG_MODE_TEXT );
   GFL_BG_SetVisible( MAIN_BG_BACK, VISIBLE_ON );
+
+  GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
+  GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
 }
 
 //-------------------------------------------------------------------------------
