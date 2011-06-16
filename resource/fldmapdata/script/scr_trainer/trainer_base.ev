@@ -225,6 +225,8 @@ sub_trainer_talk_battle_hide_pulloff:
     _CALL sub_trainer_talk_battle_hide_pulloff_change
   CASE MV_HIDE_KUSA THEN
     _CALL sub_trainer_talk_battle_hide_pulloff_change
+  CASE MV_HIDE_OCHIBA THEN
+    _CALL sub_trainer_talk_battle_hide_pulloff_change
   ENDSWITCH //MOVE_CODE
 }
 _RET
