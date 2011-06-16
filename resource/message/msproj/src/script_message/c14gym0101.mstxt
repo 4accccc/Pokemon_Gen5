@@ -6,15 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいが　シズイ！
-ま　ジムリーダー　させてもらってる▼
-で　ごらんのとーり
-みずタイプの　ポケモンで　たたかうよ▼
+			<Text>お！　さっそく　きたか！▼
 おはん　つよそーやね！
 ほな　はじめよーかい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:08:51" />
+				Time="2011-06-16T07:20:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいが　シズイ！
-ま　ジムリーダー　させてもらってる▼
-で　ごらんのとーり
-みずタイプの　ポケモンで　戦うよ▼
+			<Text>お！　さっそく　きたか！▼
 おはん　強そーやね！
 ほな　はじめよーかい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:17:01" />
+				Time="2011-06-16T07:20:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -393,7 +387,62 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14gym0101_glasses_01"
+		Label="msg_c14gym0101_glasses_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジムリーダー　なんですけど▼
+うみー！　って　さけんで
+どこか　およぎに　いっちゃいましてね▽
+よければ　さがして　きてください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-16T07:24:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-16T07:18:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジムリーダー　なんですけど▼
+うみー！　って　叫んで
+どこか　泳ぎに　いっちゃいましてね▽
+よければ　探して　きてください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-16T07:25:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-16T07:18:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・c14でシズイと会う前
+・ストッパー処理</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-16T07:25:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-16T07:18:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14gym0101_glasses_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -451,7 +500,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14gym0101_glasses_02"
+		Label="msg_c14gym0101_glasses_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -509,7 +558,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14gym0101_glasses_03"
+		Label="msg_c14gym0101_glasses_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
