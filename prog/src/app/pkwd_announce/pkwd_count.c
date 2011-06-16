@@ -430,11 +430,30 @@ static const PKWD_CANVAS_DATA pkwd_canvas_00_tbl[] = {
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
-//
-static const s16 pkwd_mes_tbl[] = {
-	pw_topindex_01,			// TITLE映画の名前
-	pw_topindex_02,			// SubTitleの名前
+//-------------------
+// タイトルのテーブル
+//-------------------
+static const s16 pkwd_title_tbl[] = {
+	pw_movietitle_01,			// TITLE映画の名前
+	0,
 };
+
+//------------------------
+// サブタイトルのテーブル
+//------------------------
+static const s16 pkwd_subtitle_tbl[] = {
+	pw_moviesubtitle_01_01,		// 1章
+	pw_moviesubtitle_02_01,		// 2章
+	pw_moviesubtitle_03_01,		// 3章
+	pw_moviesubtitle_04_01,		// 4章
+	pw_moviesubtitle_05_01,		// 5章
+	pw_moviesubtitle_06_01,		// 6章
+	pw_moviesubtitle_07_01,		// 7章
+	pw_moviesubtitle_08_01,		// 8章
+	pw_moviesubtitle_09_01,		// 9章
+	pw_moviesubtitle_10_01,		// 10章
+};
+
 
 //=============================================================================
 /**
@@ -1792,16 +1811,38 @@ static u16 pwc_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode )
 //--------------------------------------------------------------------------------------------
 static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 {
+	s32			mesid;
 	STRBUF		*strbuf;
+	STRBUF		*destbuf;
+	WORDSET		*wordset = WORDSET_Create( wk->heapID );
 	
 	// タイトル(上)
-	strbuf = GFL_MSG_CreateString( wk->MsgData[0], pkwd_mes_tbl[0] );
+	// id(連番となっているのが前提)
+	mesid = pkwd_title_tbl[0]+wk->Param->title_no;
+	strbuf = GFL_MSG_CreateString( wk->MsgData[0], mesid );
 	pwc_disp_string( wk, 0, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
 	GFL_STR_DeleteBuffer( strbuf );
 	//
-	// タイトル(下)
-	strbuf = GFL_MSG_CreateString( wk->MsgData[0], pkwd_mes_tbl[1] );
-	pwc_disp_string( wk, 1, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
-	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// サブタイトル表示
+	mesid = pkwd_subtitle_tbl[wk->Param->title_no]+wk->Param->scenario_no;
+	if(wk->Param->message){
+		destbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
+		// wordset
+		WORDSET_RegisterWord( wordset, 0, wk->Param->message, 0, TRUE, PM_LANG );
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], mesid );
+		// パラメータを展開しMsgBufferに再セット
+		WORDSET_ExpandStr( wordset, destbuf, strbuf );
+		pwc_disp_string( wk, 1, MES_POSX, 0, destbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
+		GFL_STR_DeleteBuffer( destbuf );
+	}else{
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], mesid );
+		pwc_disp_string( wk, 1, MES_POSX, 0, strbuf, 2, PRINTSYS_LSB_Make(1,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
+	}
+	//
+	// WORDSET破棄
+	WORDSET_Delete( wordset );
 }
 
