@@ -181,7 +181,7 @@ enum {
   BOX2OBJ_ID_RARE,      // レアマーク（上）
   BOX2OBJ_ID_POKERUS,   // ポケルスマーク（上）
   BOX2OBJ_ID_POKERUS_ICON,  // ポケルスアイコン（上）
-  BOX2OBJ_ID_SEARCH, // 複数ポケモンをトレイに持っていったときの数字OBJ（下）
+  BOX2OBJ_ID_SEARCH, // 絞込みボタン
 
   BOX2OBJ_ID_TYPEICON,  // 属性アイコン（上）
 
@@ -272,6 +272,7 @@ enum {
   BOX2MAIN_FNTOAM_TRAY_NUM6,
   BOX2MAIN_FNTOAM_BOX_NAME1,
   BOX2MAIN_FNTOAM_BOX_NAME2,
+  BOX2MAIN_FNTOAM_MULTI_NUM,
   BOX2MAIN_FNTOAM_MAX
 };
 

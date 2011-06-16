@@ -65,10 +65,12 @@ enum {
 // 手持ちの持ち物を持っていないポケモンアイコンに半透明設定
 #define BOX2OBJ_BLENDTYPE_PARTYITEM ( BOX2OBJ_BLENDTYPE_ITEM | BOX2OBJ_BLENDTYPE_PARTYPOKE )
 
-#define BOX2OBJ_FNTOAM_BOXNAME_SX ( 12 )  // OAMフォント：ボックス名Ｘサイズ
-#define BOX2OBJ_FNTOAM_BOXNAME_SY ( 2 )   // OAMフォント：ボックス名Ｙサイズ
-#define BOX2OBJ_FNTOAM_BOXNUM_SX  ( 2 )   // OAMフォント：格納数Ｘサイズ
-#define BOX2OBJ_FNTOAM_BOXNUM_SY  ( 1 )   // OAMフォント：格納数Ｙサイズ
+#define BOX2OBJ_FNTOAM_BOXNAME_SX			( 12 )	// OAMフォント：ボックス名Ｘサイズ
+#define BOX2OBJ_FNTOAM_BOXNAME_SY			( 2 )		// OAMフォント：ボックス名Ｙサイズ
+#define BOX2OBJ_FNTOAM_BOXNUM_SX			( 2 )		// OAMフォント：格納数Ｘサイズ
+#define BOX2OBJ_FNTOAM_BOXNUM_SY			( 1 )		// OAMフォント：格納数Ｙサイズ
+#define BOX2OBJ_FNTOAM_MULTI_NUM_SX		( 4 )		// OAMフォント：複数選択数
+#define BOX2OBJ_FNTOAM_MULTI_NUM_SY		( 4 )		// OAMフォント：複数選択数
 
 // タッチーバーに表示されているボタンの状態
 enum {

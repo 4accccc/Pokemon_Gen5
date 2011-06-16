@@ -62,7 +62,7 @@
 
 // フォントOAMで使用するOBJ管理数
 // トレイ名と収納数で使用するBMPWINのキャラサイズ分が最大なので、それだけあれば足りる。
-#define FNTOAM_CHR_MAX    ( BOX2OBJ_FNTOAM_BOXNAME_SX*BOX2OBJ_FNTOAM_BOXNAME_SY*3 + BOX2OBJ_FNTOAM_BOXNUM_SX*BOX2OBJ_FNTOAM_BOXNUM_SY*6 )
+#define FNTOAM_CHR_MAX    ( BOX2OBJ_FNTOAM_BOXNAME_SX*BOX2OBJ_FNTOAM_BOXNAME_SY*3 + BOX2OBJ_FNTOAM_BOXNUM_SX*BOX2OBJ_FNTOAM_BOXNUM_SY*6 + BOX2OBJ_FNTOAM_MULTI_NUM_SX*BOX2OBJ_FNTOAM_MULTI_NUM_SY )
 
 // ポケモンアイコンのプライオリティ（80は適当）
 #define POKEICON_OBJ_PRI(a)     ( 80 + BOX2OBJ_POKEICON_MAX - a*2 ) // 通常のOBJプライオリティ
@@ -89,6 +89,9 @@
 
 #define BOXNAME_OBJ_PX  ( 212-6 )   // トレイ名のOAMフォントのデフォルト表示Ｘ座標
 #define BOXNAME_OBJ_PY  ( 18 )      // トレイ名のOAMフォントのデフォルト表示Ｙ座標
+
+#define BOX2OBJ_MULTI_NUM_PX	( 0 )		// 複数選択数のデフォルトＸ座標
+#define BOX2OBJ_MULTI_NUM_PY	( 0 )		// 複数選択数のデフォルトＹ座標
 
 #define PARTYPOKE_FRM_PX  ( 16 )    // 手持ちポケモンのアイコンデフォルト表示Ｘ座標
 #define PARTYPOKE_FRM_PY  ( 192 )   // 手持ちポケモンのアイコンデフォルト表示Ｙ座標
@@ -3547,6 +3550,15 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
     finit.bg_pri = 1;       // BGプライオリティ
     fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
   }
+
+	// 複数選択数
+	fobj = &appwk->fobj[BOX2MAIN_FNTOAM_MULTI_NUM];
+	fobj->bmp = GFL_BMP_Create( BOX2OBJ_FNTOAM_MULTI_NUM_SX, BOX2OBJ_FNTOAM_MULTI_NUM_SY, GFL_BMP_16_COLOR, HEAPID_BOX_APP );
+	finit.bmp = fobj->bmp;
+	finit.x = BOX2OBJ_MULTI_NUM_PX;
+	finit.y = BOX2OBJ_MULTI_NUM_PY;
+	finit.bg_pri = 0;       // BGプライオリティ
+	fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
 }
 
 //--------------------------------------------------------------------------------------------
