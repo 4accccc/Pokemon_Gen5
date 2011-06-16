@@ -2981,7 +2981,7 @@ static int MainSeq_ArrangeMultiPokeGetDataChange( BOX2_SYS_WORK * syswk )
   // トレイ移動表示時
   if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
     // 手持ちモードに戻る場合
-    if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN ){
+    if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN ){
       BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MOVE, pos );
       BOX2MAIN_PokeInfoPut( syswk, pos );
       syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
