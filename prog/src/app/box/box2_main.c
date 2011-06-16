@@ -2123,6 +2123,14 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
 				syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MULTI;
 				return FALSE;
 			}
+			// 手持ちに配置しようとするとき
+			if( put_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+				// 配置位置にポケモンがいる場合は配置できない
+				if( exist == 1 ){
+					syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MULTI;
+					return FALSE;
+				}
+			}
 		}
 	}
 
@@ -4606,13 +4614,13 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 	        }
 */
 	      }
-/*
-	      // 手持ちポケモンのフレームが表示中
+
+				// 手持ちポケモンのフレームが表示中
 	      if( BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == TRUE ){
 	        put_pos = PartyPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy, PartyPokeAreaRight );
 	      }
-*/
-	      // 参照中のトレイ
+
+				// 参照中のトレイ
 	      if( put_pos == BOX2MAIN_GETPOS_NONE ){
 	        put_pos = TrayPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy );
 	      }
