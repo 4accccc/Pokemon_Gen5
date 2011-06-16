@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r06.h"
   .include  "r06.h"
+  .include  "r06r0101.h"  //季節研究所reserve用
+  .include  "r06r0101_def.h"  //季節研究所reserve用
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,7 +24,241 @@
 _EVENT_DATA		ev_bg_r06_sign1_01
 _EVENT_DATA		ev_bg_r06_sign2_01
 _EVENT_DATA		ev_bg_r06_sign4_01
+_EVENT_DATA		ev_pos_r06_swleader1_01
+_EVENT_DATA		ev_pos_r06_legend_meet_01
+_EVENT_DATA		ev_r06_oldman1_01
+_EVENT_DATA		ev_r06_sage6_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+/**************************************************************/
+/*  POS：季節研究所誘導イベント */
+/**************************************************************/
+EVENT_START   ev_pos_r06_swleader1_01
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：チェレン接近
+  SWITCH $LCW_POSZ
+  CASE 371 THEN
+    _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z371 )
+  CASE 372 THEN
+    _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z372 )
+  CASE 374 THEN
+    _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z374 )
+  CASE 375 THEN
+    _OBJ_ANIME( R06_SWLEADER1_01, anm_swleader_come_z375 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン：あっ　ちょっと
+  _BALLOONWIN_OBJMSG_POS( msg_r06_swleader1_01,R06_SWLEADER1_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン退場
+  _OBJ_ANIME_AUTO( R06_SWLEADER1_01, 135, 370, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 135, 371, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  {
+  //ドア生成
+  DEFINE_LOCAL	DOOR_ANIME_ID
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 135, 369 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	}
+	//アニメ：チェレン中へ
+	_OBJ_ANIME( R06_SWLEADER1_01, anm_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //チェレン動作モデル削除
+  _OBJ_DEL( R06_SWLEADER1_01 )
+  
+  //アニメ：主人公も退場
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_to_up2 )
+	_OBJ_ANIME_WAIT()
+  
+  //========================================//
+  //R06季節研究所誘導POS無効
+  $WK_SCENE_R06_SWLEADER1 = 2
+  //R06チェレン非表示
+  _FLAG_SET( FV_R06_SWLEADER1_01 )
+  //========================================//
+  
+  //予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_R06R0101_SWLEADER1_01 )
+	
+	//C12PC0101マップチェンジ
+	_MAP_CHANGE( ZONE_ID_R06R0101, 6, 9, DIR_UP )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	チェレン：接近z371
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader_come_z371
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：接近z372
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader_come_z372
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：接近z374
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader_come_z374
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：接近z375
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader_come_z375
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：2歩上に歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_to_up2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/*  POS：コバルオン遭遇イベント */
+/**************************************************************/
+EVENT_START   ev_pos_r06_legend_meet_01
+
+  //========================================//
+  //R06七賢人ロット表示
+  _FLAG_RESET( FV_R06_SAGE6_01 )
+  //R06事情通の老人表示
+  _FLAG_RESET( FV_R06_OLDMAN1_01 )
+  //========================================//
+  
+   //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //フィールド上にコバルオン配置
+  _OBJ_ADD_EX( LCW_POSX, 355, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE4, MV_DMY )
+  
+  //アニメ：コバルオン接近
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, 363, FORCE_TYPE_NPC, 8, DIR_UD)
+  //アニメ：主人公「！」
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //コバルオン：こふおおおーっ！
+  _BALLOONWIN_OBJMSG_POS( msg_r06_poke4_01,MMDL_ID_EVENTOBJ_00, POS_DEFAULT ) 
+  _VOICE_PLAY( MONSNO_645, 0 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //アニメ：コバルオン退場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 114, 363, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //コバルオン動作OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  //七賢人動作OBJ生成
+  _OBJ_ADD( R06_SAGE6_01 )
+  //事情通老人OBJ生成
+  _OBJ_ADD( R06_OLDMAN1_01 )
+  
+   //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  IF $LCW_POSX == 103 THEN
+    $LCW_POSX -= 1
+  ENDIF
+  
+  //事情通老人・配置箇所変更
+  _OBJ_POS_CHANGE( R06_OLDMAN1_01, LCW_POSX, 0, 372, DIR_UP )
+  
+  $LCW_POSZ += 2
+  //アニメ：ロット接近
+  _OBJ_ANIME_AUTO( R06_SAGE6_01, 103, LCW_POSZ, FORCE_TYPE_NPC, 16, DIR_UD)
+  _TIME_WAIT(8)
+  //アニメ：事情通老人接近
+  _OBJ_ANIME_AUTO( R06_OLDMAN1_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 16, DIR_UD)
+  _TIME_WAIT(16)
+  //アニメ：主人公振り向く
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ロット：いまのポケモンは…！
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_01,R06_SAGE6_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //事情通：でんせつの
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_01,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //ロット：おお！
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_02,R06_SAGE6_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //事情通：コバルオン
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_02,R06_OLDMAN1_01, POS_DEFAULT ) 
+  
+  //事情通：ひとが　たたかいを
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_03,R06_OLDMAN1_01, POS_DEFAULT ) 
+  
+  //事情通：…しかしなぜ
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_04,R06_OLDMAN1_01, POS_DEFAULT ) 
+  
+  //事情通：2年前
+  _BALLOONWIN_OBJMSG_POS( msg_r06_oldman1_05,R06_OLDMAN1_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //ロット：ぐぬぬ
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_03,R06_SAGE6_01, POS_DEFAULT ) 
+  
+  //ロット：コバルオンがおまえの
+  _BALLOONWIN_OBJMSG_POS( msg_r06_sage6_04,R06_SAGE6_01, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //R06七賢人ロット非表示
+  _FLAG_SET( FV_R06_SAGE6_01 )
+  //R06コバルオン遭遇イベントPOS無効
+  $WK_SCENE_R06_LEGEND_MEET = 2
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  話しかけ：事情通老人  */
+/**************************************************************/
+EVENT_START   ev_r06_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_oldman1_06 )
+EVENT_END
+
+/**************************************************************/
+/*  話しかけ：SAGE6 */
+/**************************************************************/
+EVENT_START   ev_r06_sage6_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06_sage6_04 )
+EVENT_END
 /**************************************************************/
 /*  R06 看板1のイベントスクリプト*/
 /**************************************************************/
@@ -47,3 +283,74 @@ EVENT_START   ev_bg_r06_sign4_01
   	_EASY_BGWIN_MSG(msg_r06_sign3_02, TYPE_POST) 
     	
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

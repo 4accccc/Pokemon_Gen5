@@ -19,6 +19,9 @@
 #define TR_PARASOL_10                      5
 #define TR_SCHOOLB_12                      6
 #define TR_RANGERM_13                      7
+#define R06_SWLEADER1_01                   8
+#define R06_OLDMAN1_01                     9
+#define R06_SAGE6_01                      10
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

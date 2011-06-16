@@ -451,6 +451,14 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   _FLAG_SET( FV_D05_SWRIVAL_01 )
   //D05チェレン非表示
   _FLAG_SET( FV_D05_SWLEADER1_01 )
+  
+  //R06チェレン表示
+  _FLAG_RESET( FV_R06_SWLEADER1_01 )
+  _FLAG_RESET( FV_R06R0101_SWLEADER1_01 )
+  //R06異常気象イベントPOS有効
+  $WK_SCENE_R06_SWLEADER1 = 1
+  //R06コバルオンイベントPOS有効
+  $WK_SCENE_R06_LEGEND_MEET = 1
   //========================================//
 EVENT_END
 

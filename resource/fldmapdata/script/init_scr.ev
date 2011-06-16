@@ -137,6 +137,19 @@ init_flags:
   _FLAG_SET( FV_D05_SWLEADER1_01 )
   //D05：アクロマを非表示に
   _FLAG_SET( FV_D05_SWBOSS_01 )
+  
+  //R06
+  
+  //R06：季節研究所前チェレン
+  _FLAG_SET( FV_R06_SWLEADER1_01 )
+  
+  //R06：でんきいし前SAGE6
+  _FLAG_SET( FV_R06_SAGE6_01 )
+  //R06：でんきいし前事情通老人
+  _FLAG_SET( FV_R06_OLDMAN1_01 )
+  
+  //R06R0101：季節研究所チェレン
+  _FLAG_SET( FV_R06R0101_SWLEADER1_01 )
 }
 _RET
 

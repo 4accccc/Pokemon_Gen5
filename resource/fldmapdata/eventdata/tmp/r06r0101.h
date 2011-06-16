@@ -9,6 +9,7 @@
 #ifndef ZONE_R06R0101_EVC_H
 #define ZONE_R06R0101_EVC_H
 
+#define R06R0101_SWLEADER1_01              0
 
 #endif //ZONE_R06R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
