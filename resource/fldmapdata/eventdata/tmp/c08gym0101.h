@@ -9,6 +9,13 @@
 #ifndef ZONE_C08GYM0101_EVC_H
 #define ZONE_C08GYM0101_EVC_H
 
+#define C08GYM0101_DANPEI_01               0
+#define C08GYM0101_VETERANM_01             1
+#define C08GYM0101_VETERANW_01             2
+#define C08GYM0101_VETERANM_02             3
+#define C08GYM0101_VETERANM_03             4
+#define C08GYM0101_VETERANW_02             5
+#define C08GYM0101_SWLEADER7_01            6
 
 #endif //ZONE_C08GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
