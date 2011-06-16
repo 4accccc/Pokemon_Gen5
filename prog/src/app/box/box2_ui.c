@@ -2668,7 +2668,7 @@ u32 BOX2UI_HitCheckTrgPartyPokeLeft(void)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   タッチチェック：手持ちポケモン（右）
+ * @brief   タッチチェック：手持ちポケモン（右）（トリガ）
  *
  * @param   none
  *
@@ -2679,6 +2679,22 @@ u32 BOX2UI_HitCheckTrgPartyPokeLeft(void)
 u32 BOX2UI_HitCheckTrgPartyPokeRight(void)
 {
   return HitCheckTrg(
+          &BoxArrangePartyPokeMoveCursorMoveData[BOX2UI_ARRANGE_PTGT_PARTY_POKE], BOX2OBJ_POKEICON_MINE_MAX );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   タッチチェック：手持ちポケモン（右）（ベタ）
+ *
+ * @param   none
+ *
+ * @retval  "GFL_UI_TP_HIT_NONE = タッチなし"
+ * @retval  "GFL_UI_TP_HIT_NONE != それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+u32 BOX2UI_HitCheckContPartyPokeRight(void)
+{
+  return HitCheckCont(
           &BoxArrangePartyPokeMoveCursorMoveData[BOX2UI_ARRANGE_PTGT_PARTY_POKE], BOX2OBJ_POKEICON_MINE_MAX );
 }
 
