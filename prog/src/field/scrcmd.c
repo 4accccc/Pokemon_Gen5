@@ -110,6 +110,7 @@
 #include "scrcmd_medal.h"
 #include "scrcmd_fmission.h"
 #include "scrcmd_animal_trail.h"
+#include "scrcmd_ochiba.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

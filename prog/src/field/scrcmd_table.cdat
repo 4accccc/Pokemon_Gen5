@@ -1040,6 +1040,11 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+
+  // 落ち葉
+  DEF_CMD( EvCmdOchiba_Fall, EV_SEQ_OCHIBA_FALL )
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
