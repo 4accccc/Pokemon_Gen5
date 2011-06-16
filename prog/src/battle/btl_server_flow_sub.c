@@ -47,7 +47,7 @@
 #include "btl_server_flow_def.h"
 #include "btl_server_flow_sub.h"
 
-
+#include "pokewood/pokewood_senario.h"
 
 
 /*--------------------------------------------------------------------------*/
@@ -2004,6 +2004,8 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
   int senario_no = BTL_MAIN_GetPokewoodSenarioNo( mainModule );
   int win_flag =0, lose_flag=0;
 
+
+
 //  OS_Printf("ポケウッドシナリオ %d\n", senario_no);
   switch(senario_no){
   case 0:   // UFOが倒れればOK、ワシボンが落ちると負け
@@ -2032,7 +2034,6 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
           }
         }
       }
-      
     }
     break;
   case 1:
@@ -2060,6 +2061,17 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
       OS_Printf("turncount=%d, dead=%d\n", turncount,dead);
     }
     break;
+  }
+
+  // 規定ターンチェック
+  {
+    BTL_SVFLOW_WORK  *svflow_work = BTL_MAIN_GetSVFWorkForAI( mainModule );
+    POKEWOOD_SENARIO *senario     = BTL_MAIN_GetPokewoodSenario( (BTL_MAIN_MODULE*)mainModule );
+    if(svflow_work->turnCount >= senario->turn_max){
+      if(!win_flag){    // 規定ターンに勝利していなかったら負け
+        lose_flag = 1;
+      }
+    }
   }
 
   OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);

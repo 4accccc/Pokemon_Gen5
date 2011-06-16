@@ -308,6 +308,13 @@ extern const MYSTATUS* BTL_MAIN_GetCommSuppoortPlayerData( const BTL_MAIN_MODULE
 extern BTL_FIELD_WORK* BTL_MAIN_GetFieldSimWork( BTL_MAIN_MODULE* wk );
 
 
+//----------------------------------------------------------------------------------------------
+/*
+ *  変更できるBATTLE_SETUP_PARAM取得（要注意）
+ */
+//----------------------------------------------------------------------------------------------
+extern BATTLE_SETUP_PARAM *BTL_MAIN_GetBSP( BTL_MAIN_MODULE *wk );
+
 
 //----------------------------------------------------------------------------------------------
 /*

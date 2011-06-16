@@ -54,13 +54,14 @@
 typedef enum {
   DEBUG_SHOW_01 = LOADDATA_POKEWOOD0,
   DEBUG_SHOW_02 = LOADDATA_POKEWOOD1,
-  DEBUG_SHOW_03 = LOADDATA_POKEWOOD1,
+  DEBUG_SHOW_03 = LOADDATA_POKEWOOD3,
   DEBUG_SHOW_ROM,
 }DEBUG_SHOW_TYPE;
 
 typedef enum {
-  DEBUG_REC_01 = 0,
-  DEBUG_REC_02,
+  DEBUG_REC_01 = LOADDATA_POKEWOOD0,
+  DEBUG_REC_02 = LOADDATA_POKEWOOD1,
+  DEBUG_REC_03 = LOADDATA_POKEWOOD3,
 
   DEBUG_REC_TYPE_NUM,
 }DEBUG_REC_TYPE;
@@ -230,19 +231,20 @@ static BOOL callShowProc( POKEWOOD_FUNC_WORK * wk, DEBUG_SHOW_TYPE type )
   LOAD_RESULT result;
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( wk->gmSys ) );
 
-  if ( BattleRec_DataOccCheck( sv, HEAPID_FIELDMAP, &result, type ) == FALSE )
-  { //対応する録画データが存在しないときにはなにもせずに戻る
-    PMSND_PlaySE( SEQ_SE_BEEP );
-    return FALSE;
-  }
-  else
+//  if ( BattleRec_DataOccCheck( sv, HEAPID_FIELDMAP, &result, type ) == FALSE )
+//  { //対応する録画データが存在しないときにはなにもせずに戻る
+//    PMSND_PlaySE( SEQ_SE_BEEP );
+//    return FALSE;
+//  }
+//  else
   {
     GMEVENT *event = wk->gmEvent;
     FIELDMAP_WORK *fieldWork = wk->fieldWork;
     GAMESYS_WORK  *gameSys  = wk->gmSys;
     GMEVENT *next_event;
+    int rec_id = type;
     next_event = GMEVENT_CreateOverlayEventCall( gameSys,
-        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)type );
+        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)&rec_id );
     GMEVENT_ChangeEvent( event, next_event );
 
     return TRUE;
@@ -251,7 +253,7 @@ static BOOL callShowProc( POKEWOOD_FUNC_WORK * wk, DEBUG_SHOW_TYPE type )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type )
+static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type, int senario_no )
 {
   if ( type >= DEBUG_REC_TYPE_NUM )
   { //対応するシナリオデータが存在しないときにはなにもせずに戻る
@@ -264,8 +266,11 @@ static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type )
     FIELDMAP_WORK *fieldWork = wk->fieldWork;
     GAMESYS_WORK  *gameSys  = wk->gmSys;
     GMEVENT *next_event;
+    POKEWOOD_EVENT_PARAM param;
+    param.type       = type;
+    param.senario_no = senario_no;
     next_event = GMEVENT_CreateOverlayEventCall( gameSys,
-        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Rec, (void*)type );
+        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Rec, (void*)&param );
     GMEVENT_ChangeEvent( event, next_event );
 
     return TRUE;
@@ -275,14 +280,14 @@ static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec1( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, DEBUG_REC_01 );
+  return callRecProc( wk, DEBUG_REC_01, 0 );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec2( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, DEBUG_REC_02 );
+  return callRecProc( wk, DEBUG_REC_02, 1 );
 }
 
 //-----------------------------------------------------------------------------

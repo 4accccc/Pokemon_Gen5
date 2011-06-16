@@ -83,7 +83,7 @@ typedef struct{
   s16 pokenum_limit;  ///< 出せるポケモン最大数
   s16 item_ok;        ///< 道具使用OKかどうか
   s16 turn_max;       ///< ターン最大数
-  s16 etc1,etc2;      ///< パディング
+  s16 trtype,name_id; ///< パディング
   
   s16 bg_change[POKEWOOD_NORMAL_VFX_MAX][2];  ///< 背景チェンジターン
   s16 etc3,etc4;

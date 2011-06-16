@@ -30,6 +30,7 @@
 #include "arc_def.h"
 #include "battle/batt_bg_tbl.h"
 #include "batt_bg_tbl.naix"
+#include "../pokewood/pokewood_senario.h"
 
 #include "debug/debug_hudson.h"
 
@@ -356,8 +357,13 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   bew->bgw  = BTLV_GAUGE_Init( fontHandle, besp->pokewood, heapID );
   bew->btw  = BTLV_TIMER_Init( heapID );
   bew->bbw  = BTLV_BG_Init( bew->tcb_sys, heapID );
-
-
+  
+  // ポケウッド撮影時メーターの初期状態
+  if(BTL_MAIN_GetPokewoodMode(bew->besp.mainModule)==BTL_POKEWOOD_REC){
+    POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario((BTL_MAIN_MODULE*)bew->besp.mainModule);
+    BTLV_CLACT_SetRecMeterAnime( bew->bclw, senario->turn_max, 0 );
+  }
+  
   BTLV_MCSS_SetOrthoMode( bew->bmw );
 
   //パーティクル初期化
@@ -1020,10 +1026,12 @@ void  BTLV_EFFECT_DelTrainer( int position )
 {
   GF_ASSERT_MSG( ( position - BTLV_MCSS_POS_MAX ) >= 0, "position:%d\n", position );
   GF_ASSERT( position - BTLV_MCSS_POS_MAX < BTLV_MCSS_POS_MAX );
-  GF_ASSERT_MSG( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
+//  GF_ASSERT_MSG( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
 
-  BTLV_MCSS_Del( bew->bmw, position );
-  bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+  if(bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE){
+    BTLV_MCSS_Del( bew->bmw, position );
+    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
+  }
 }
 
 

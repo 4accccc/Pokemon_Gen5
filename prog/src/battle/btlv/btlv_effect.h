@@ -141,12 +141,20 @@ enum{
   BTLEFF_N_POKE,                              // Nポケ登場
   BTLEFF_HERO_APPEAR,                         // 手前ポケモンが主人公と入れ替わり
   BTLEFF_HERO_DISAPPEAR,                      // 手前主人公がポケモンと入れ替わり
-  BTLEFF_HERO_ENEMY_APPEAR,                   // ABポケモン隠れる、その後主人公・敵トレーナー同時に出現
+  BTLEFF_HERO_ENEMY_APPEAR,                   // ABポケモン隠れる、その後主人公・敵トレーナー同時に出現 65
   BTLEFF_HERO_ENEMY_DISAPPEAR,                // 主人公・敵トレーナー同時に退出、その後ABポケモン登場
   BTLEFF_ENEMY_APPEAR,                        // Bポケモン隠れる、その後敵トレーナー登場
   BTLEFF_ENEMY_DISAPPEAR,                     // 敵トレーナー退出、その後Bポケモン隠れる
   BTLEFF_ENEMY_VANISH,                        // 敵トレーナー退出、誰もいなくなる
-  BTLEFF_HERO_VANISH,                         // 主人公退出、誰もいなくなる
+  BTLEFF_HERO_VANISH,                         // 主人公退出、誰もいなくなる 70
+
+  BTLEFF_ENEMY_VANISH_2_APPEAR,               // 敵トレーナーいないところから登場
+  BTLEFF_HERO_VANISH_2_APPEAR,                // 主人公いないところから登場
+  BTLEFF_BB_POKE_VANISH,                      // 敵ポケモン消える
+  BTLEFF_AA_POKE_VANISH,                      // 自分ポケモン消える
+  BTLEFF_BB_POKE_VANISH_2_APPEAR,             // 敵ポケモンいないところから登場
+  BTLEFF_AA_POKE_VANISH_2_APPEAR,             // 自分ポケモンいないところから登場
+  
   BTLEFF_STATUS_EFFECT_END,
 };
 

@@ -5825,9 +5825,13 @@ void BTL_MAIN_NotifyPokemonGetToGameSystem( BTL_MAIN_MODULE* wk, const BTL_POKEP
 static void reflectPartyData( BTL_MAIN_MODULE* wk )
 {
   // 録画再生時は何もしない
-  if( wk->setupParam->fRecordPlay ){
+  if( wk->setupParam->fRecordPlay){ 
     return;
   }
+  if(BTL_MAIN_GetPokewoodMode(wk)!=BTL_POKEWOOD_NONE){
+    return;
+  }
+  
 
   // 野生or通常トレーナー戦：経験値・レベルアップ・なつき度を反映
   if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
@@ -6264,6 +6268,21 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
       }
     }
   }
+}
+
+
+//=============================================================================================
+/**
+ * @brief	書き換えできるバトルセットアップバラムの取得
+ *
+ * @param   wk		BTL_MAIN_MODULE
+ *
+ * @retval  BATTLE_SETUP_PARAM *
+ */
+//=============================================================================================
+BATTLE_SETUP_PARAM *BTL_MAIN_GetBSP( BTL_MAIN_MODULE *wk )
+{
+  return wk->setupParam;
 }
 
 //=============================================================================================

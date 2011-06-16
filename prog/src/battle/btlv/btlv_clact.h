@@ -11,7 +11,7 @@
 #pragma once
 
 #define BTLV_CLACT_CLWK_MAX ( 3 )    // UNITのMAX. SWANで7から3に減らしました
-#define BTLV_CLACT_REC_MAX  ( 23 )   // ポケウッド録画モードの際に表示する残り撮影ターンメーター
+#define BTLV_CLACT_REC_MAX  ( 22 )   // ポケウッド録画モードの際に表示する残り撮影ターンメーター
 
 typedef struct _BTLV_CLACT_WORK BTLV_CLACT_WORK;
 typedef struct _BTLV_CLACT_CLWK BTLV_CLACT_CLWK;

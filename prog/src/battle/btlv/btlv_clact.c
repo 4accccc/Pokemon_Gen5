@@ -343,16 +343,13 @@ void BTLV_CLACT_AddRecMeter( BTLV_CLACT_WORK *bclw )
 //=============================================================================================
 void BTLV_CLACT_SetRecMeterAnime( BTLV_CLACT_WORK *bclw, int max_frame, int now_frame )
 {
-  int i,frame_num,set_pat;
-  GF_ASSERT( max_frame>=10 && max_frame<=20 );
+  int i,set_pat;
+  GF_ASSERT( max_frame<=20 );
 
-  frame_num = max_frame-10;
-  GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[0].clwk, REC_METER_PAT_FRAMENUM+frame_num );
   if(now_frame==0){
-    
-    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[1].clwk, REC_METER_PAT_START_0 );
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[0].clwk, REC_METER_PAT_START_0 );
   }else{
-    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[1].clwk, REC_METER_PAT_START );
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[0].clwk, REC_METER_PAT_START );
   }
 
   for( i=0; i<max_frame; i++ ){
@@ -363,11 +360,11 @@ void BTLV_CLACT_SetRecMeterAnime( BTLV_CLACT_WORK *bclw, int max_frame, int now_
     }else if(i>now_frame){
       set_pat = REC_METER_PAT_YET_FRAME;
     }
-    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i+2].clwk, set_pat );
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i+1].clwk, set_pat );
   }
-  GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i+2].clwk, REC_METER_PAT_END );
+  GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i+1].clwk, REC_METER_PAT_END );
 
-  i+=3;
+  i+=2;
   for(;i<BTLV_CLACT_REC_MAX;i++){
     GFL_CLACT_WK_SetAnmSeq( bclw->rec_meter[i].clwk, REC_METER_PAT_BLANK );
   }
