@@ -837,6 +837,18 @@ void MMDL_MoveHideKusa_Init( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
+ * MV_HIDE_OCHIBA èâä˙âª
+ * @param  mmdl  MMDL *
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void MMDL_MoveHideOchiba_Init( MMDL * mmdl )
+{
+  MMdl_MoveHide_Init( mmdl, HIDE_OCHIBA );
+}
+
+//--------------------------------------------------------------
+/**
  * MV_HIDE ìÆçÏ
  * @param  mmdl  MMDL *
  * @retval  nothing

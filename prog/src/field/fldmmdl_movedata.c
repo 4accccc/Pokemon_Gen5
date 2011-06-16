@@ -1046,6 +1046,17 @@ static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_RailRoot2 =
   MMDL_RailDmy_Return,      ///<復帰関数
 };
 
+//--------------------------------------------------------------
+///  MV_HIDE_OCHIBA
+//--------------------------------------------------------------
+static const MMDL_MOVE_PROC_LIST DATA_FieldOBJMove_HideOchiba =
+{
+  MV_HIDE_OCHIBA,                        ///<動作コード
+  MMDL_MoveHideOchiba_Init,                ///<初期化関数
+  MMDL_MoveHide_Move,                ///<動作関数
+  MMDL_MoveHide_Delete,                ///<削除関数
+  MMDL_MoveHide_Return,              ///<復帰関数
+};
 
 
 
@@ -1147,6 +1158,7 @@ const MMDL_MOVE_PROC_LIST * const DATA_FieldOBJMoveProcListTbl[MV_CODE_MAX] =
   &DATA_FieldOBJMove_RailRndV,            //MV_RAIL_RND_V
   &DATA_FieldOBJMove_RailRndH,            //MV_RAIL_RND_H
   &DATA_FieldOBJMove_RailRoot2,           ///<ルート2分岐
+  &DATA_FieldOBJMove_HideOchiba,              //MV_HIDE_OCHIBA
 };
 
 //==============================================================================

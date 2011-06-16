@@ -24,6 +24,7 @@ typedef enum
 {
 	HIDE_GRASS,
 	HIDE_GROUND,
+	HIDE_OCHIBA,
   HIDE_MAX,
   
   //以下wbでは使用しないが、過去から移植した動作関数は存在する為、置き換え

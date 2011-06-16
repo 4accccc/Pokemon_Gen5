@@ -152,7 +152,8 @@
 #define MV_RAIL_RND_V    0x52    ///<ランダムに縦移動  (移動制限あり)
 #define MV_RAIL_RND_H    0x53    ///<ランダムに横移動  (移動制限あり) 
 #define MV_RAIL_RT2    0x54    ///<ルート2分岐
-#define MV_CODE_MAX    0x55    ///<コード最大（プログラム判定専用
+#define MV_HIDE_OCHIBA    0x55    ///<隠れ蓑　落ち葉
+#define MV_CODE_MAX    0x56    ///<コード最大（プログラム判定専用
 #define MV_CODE_NOT    0xff    ///<非動作コード(プログラム判定専用
 
 /*　未対応

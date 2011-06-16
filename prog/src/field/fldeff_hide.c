@@ -394,6 +394,7 @@ static const HIDE_ARCIDX data_ArcIdxTbl[HIDE_MAX] =
 {
   { NARC_fldeff_mv_hide_kusa_nsbmd, NARC_fldeff_mv_hide_kusa_nsbtp },
   { NARC_fldeff_mv_hide_tsuchi_nsbmd, NARC_fldeff_mv_hide_tsuchi_nsbtp },
+  { NARC_fldeff_mv_hide_ochiba_nsbmd, NARC_fldeff_mv_hide_ochiba_nsbca },
 };
 
 //--------------------------------------------------------------
@@ -403,4 +404,5 @@ static const u32 data_PullOffSeTbl[HIDE_MAX] =
 {
   SEQ_SE_TB_START,
   SEQ_SE_FLD_149,
+  SEQ_SE_OCHIBA_01,
 };

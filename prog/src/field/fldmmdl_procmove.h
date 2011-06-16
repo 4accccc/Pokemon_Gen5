@@ -99,6 +99,7 @@ extern void MMDL_MoveHideSnow_Init( MMDL * fmmdl );
 extern void MMDL_MoveHideSand_Init( MMDL * fmmdl );
 extern void MMDL_MoveHideGround_Init( MMDL * fmmdl );
 extern void MMDL_MoveHideKusa_Init( MMDL * fmmdl );
+extern void MMDL_MoveHideOchiba_Init( MMDL * fmmdl );
 extern void MMDL_MoveHide_Move( MMDL * fmmdl );
 extern void MMDL_MoveHide_Delete( MMDL * fmmdl );
 extern void MMDL_MoveHide_Return( MMDL * fmmdl );

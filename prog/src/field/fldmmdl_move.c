@@ -2280,7 +2280,8 @@ void MMDL_CallMoveProcAfterDrawInit( MMDL * mmdl )
 {
   u16 code = MMDL_GetMoveCode( mmdl );
   if( code == MV_HIDE_SNOW || code == MV_HIDE_SAND ||
-    code == MV_HIDE_GRND || code == MV_HIDE_KUSA ){
+    code == MV_HIDE_GRND || code == MV_HIDE_KUSA ||
+    code == MV_HIDE_OCHIBA ){
     MMDL_CallMoveProc( mmdl );
   }
 }

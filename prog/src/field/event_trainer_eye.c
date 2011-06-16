@@ -587,6 +587,7 @@ static int eyeMeetMove_JikiMoveWait( EV_EYEMEET_MOVE_WORK *work )
     case MV_HIDE_SAND:
     case MV_HIDE_GRND:
     case MV_HIDE_KUSA:
+    case MV_HIDE_OCHIBA:
       work->seq_no = SEQNO_TRMOVE_HIDE_PULLOFF_SET;
     }
   }
