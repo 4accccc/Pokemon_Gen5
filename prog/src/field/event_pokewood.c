@@ -92,6 +92,7 @@ typedef struct {
   u16 monsno;
   u16 wazano[4];
   u16 itemno;
+  u8  pow[12];
 }POKEWOOD_MONS_DATA;
 
 
@@ -117,9 +118,10 @@ static const POKEWOOD_MONS_DATA myData[2][3] = {
   },
   {
     {
-      15, MONSNO_RESIRAMU,
-      { WAZANO_10MANBORUTO, WAZANO_INFAITO, WAZANO_KAWARAWARI, WAZANO_NULL },
+      15, MONSNO_RIORU,
+      { WAZANO_INFAITO, WAZANO_REITOUPANTI, WAZANO_KAMINARIPANTI, WAZANO_HADOUDAN },
       0,  //no item
+      { 0,0,31,255,0,0,0,0,31,255,31,0,},
     },
   }
 };
@@ -143,18 +145,35 @@ static const POKEWOOD_MONS_DATA enemyData[2][2] = {
   {
     {
       15, MONSNO_ZURUGGU,
-      { WAZANO_KAWARAWARI, WAZANO_DAMASIUTI, WAZANO_NULL, WAZANO_NULL },
-      ITEM_KUROITEKKYUU,
+      { WAZANO_SINENNOZUTUKI, WAZANO_NULL, WAZANO_NULL, WAZANO_NULL },
+      0,
+      { 0,0, 0,0, 0,0, 0,0, 31,0, 0,0,},
     },
     {
       15, MONSNO_BARUTYAI,
-      { WAZANO_TUBAMEGAESI, WAZANO_DAMASIUTI, WAZANO_TUBASADEUTU, WAZANO_NULL },
+      { WAZANO_TUIBAMU, WAZANO_DAMASIUTI, WAZANO_NULL, WAZANO_NULL },
       0,  //no item
+      { 0,0, 31,255, 0,0, 31,0, 31,0, 31,0, },
     }
   },
 };
 
 static const int enemyDataNum[]={2,2,};
+
+#if 0
+  ID_PARA_hp_rnd,     //HP乱数
+  ID_PARA_hp_exp,     //HP努力値
+  ID_PARA_pow_rnd,    //攻撃力乱数
+  ID_PARA_pow_exp,    //攻撃力努力値
+  ID_PARA_def_rnd,    //防御力乱数
+  ID_PARA_def_exp,    //防御力努力値
+  ID_PARA_agi_rnd,    //素早さ乱数
+  ID_PARA_agi_exp,    //素早さ努力値
+  ID_PARA_spepow_rnd, //特攻乱数
+  ID_PARA_spepow_exp, //特攻努力値
+  ID_PARA_spedef_exp, //特防努力値
+  ID_PARA_spedef_rnd, //特防乱数
+#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -190,6 +209,18 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
     PP_SetWazaPos( pp, mons_data->wazano[2], 2 );
     PP_SetWazaPos( pp, mons_data->wazano[3], 3 );
     PP_Put( pp, ID_PARA_item, mons_data->itemno );
+    PP_Put( pp, ID_PARA_hp_rnd,    mons_data->pow[0] );
+    PP_Put( pp, ID_PARA_hp_exp,    mons_data->pow[1] );
+    PP_Put( pp, ID_PARA_pow_rnd,   mons_data->pow[2] );
+    PP_Put( pp, ID_PARA_pow_exp,   mons_data->pow[3] );
+    PP_Put( pp, ID_PARA_def_rnd,   mons_data->pow[4] );
+    PP_Put( pp, ID_PARA_def_exp,   mons_data->pow[5] );
+    PP_Put( pp, ID_PARA_agi_rnd,   mons_data->pow[6] );
+    PP_Put( pp, ID_PARA_agi_exp,   mons_data->pow[7] );
+    PP_Put( pp, ID_PARA_spepow_rnd,mons_data->pow[8] );
+    PP_Put( pp, ID_PARA_spepow_exp,mons_data->pow[9] );
+    PP_Put( pp, ID_PARA_spedef_exp,mons_data->pow[10] );
+    PP_Put( pp, ID_PARA_spedef_rnd,mons_data->pow[11] );
     PokeParty_Add( add_party, pp );
   }
   PokeParty_Copy( add_party, party );
@@ -225,7 +256,6 @@ static void dataMakeEncountTrainer( int senario_no, int PokewoodType, BSP_TRAINE
     }
     GFL_MSG_Delete(man);
   }
-
   PMSDAT_Clear( &data->win_word );
   PMSDAT_Clear( &data->lose_word );
 
@@ -700,7 +730,7 @@ static GMEVENT_RESULT eventPkwdCount( GMEVENT *p_event, int *p_seq, void *p_wk_a
 GMEVENT * PKWD_COUNT_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 {
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  POKEWOOD_EVENT_PARAM *param = (POKEWOOD_EVENT_PARAM *)parent_work;
+  PKWD_COUNT_PARAM *param = (PKWD_COUNT_PARAM *)parent_work;
   PKWD_COUNT_EVENT_WORK *p_param;
   GMEVENT * new_event;
 
@@ -711,7 +741,10 @@ GMEVENT * PKWD_COUNT_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 
   p_param->gsys      = gsys;
   p_param->fieldmap  = fieldmap;
-  p_param->pkwd_param.scenario_no = param->senario_no;
+  p_param->pkwd_param.scenario_no = param->scenario_no;
+
+  // デバッグメニューからもらった引数としてのPOKEWOOD_EVENT_PARAMは解放
+  PKWD_COUNT_PARAM_Delete( param );
 
   OS_Printf( "PKWD COUNT Start\n" );
 

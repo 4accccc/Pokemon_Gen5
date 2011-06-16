@@ -1977,6 +1977,7 @@ enum{
   POKEWOOD_EVENT_SEQ_TRAINER_REACTION,
   POKEWOOD_EVENT_SEQ_TRAINER_REACTION_WAIT,
 
+  POKEWOOD_EVENT_SEQ_OUT_CHECK,
   POKEWOOD_EVENT_SEQ_END,
   POKEWOOD_EVENT_SEQ_EFFECT_WAIT,
   POKEWOOD_EVENT_SEQ_TALK_WAIT,
@@ -2114,7 +2115,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CHOICE_READ; // 上映時は選択読み込み反映へ
       }
     }else{
-      wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_TRAINER_OUT;  // 無かったらトレーナー退場
+      wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_OUT_CHECK;  // 無かったら終了チェック
     }
     break;
   // 選択肢終了待ち(撮影時のみ）
@@ -2155,7 +2156,16 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
       int reaction_talk = senario->event[wk->pokewoodSeqWork.event_no].reaction[wk->pokewoodSeqWork.choice].enemy_message;
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, reaction_talk );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_TRAINER_OUT);
+      _set_next_seq(&wk->pokewoodSeqWork, POKEWOOD_EVENT_SEQ_TALK_WAIT, POKEWOOD_EVENT_SEQ_OUT_CHECK);
+    }
+    break;
+  // エンディングイベントだったらポケモンに戻さないかチェック
+  case POKEWOOD_EVENT_SEQ_OUT_CHECK:
+    if(wk->clientTurnCount>=100){
+      wk->pokewoodSeqWork.seq=POKEWOOD_EVENT_SEQ_END;
+      wk->pokewoodSeqWork.stage_cond = 0;
+    }else{
+      wk->pokewoodSeqWork.seq=POKEWOOD_EVENT_SEQ_TRAINER_OUT;
     }
     break;
   // 終了
@@ -6542,7 +6552,11 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_POKEWOOD_END_EVENT:  
-    if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+    if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW ){
+      if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+        return TRUE;
+      }
+    }else{
       return TRUE;
     }
     break;
