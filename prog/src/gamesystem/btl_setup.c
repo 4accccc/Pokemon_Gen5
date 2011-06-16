@@ -21,6 +21,7 @@
 
 #include "gamesystem/btl_setup.h"
 #include "field/seasonpoke_form.h"
+#include "savedata/key_system_save.h"
 
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -30,7 +31,7 @@
 void BATTLE_PARAM_Init( BATTLE_SETUP_PARAM* bp );
 void BATTLE_PARAM_Release( BATTLE_SETUP_PARAM* bp );
 
-static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID );
+//static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID );
 static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data );
 static void setup_common_situation( BTL_FIELD_SITUATION* sit );
 
@@ -234,7 +235,7 @@ static void setup_common_situation( BTL_FIELD_SITUATION* sit )
  *
  *  内部でメモリをアロケートするため、必ずBSP_TRAINER_DATA_Createで解放してください
  */
-static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
+BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
   tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
@@ -939,7 +940,46 @@ void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
   BATTLE_PARAM_Release( bsp );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  戦闘に難易度を設定
+ *
+ *	@param	BATTLE_SETUP_PARAM* bsp バトルセットアップぱらむ
+ *	@param	gameData  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+void BTL_SETUP_SetDifficulty( BATTLE_SETUP_PARAM* bsp, GAMEDATA* gameData )
+{
+  //TODO 本来はセーブデータからGetしてくる
+  KEY_SYSTEM_DIFFICULT difficulty = KEY_SYSTEM_DIFFICULT_NORMAL;
 
+  OS_TPrintf( "難易度%d\n",difficulty );
+
+
+  //if(  )
+  if(1)
+  {
+  }
+  else
+  //レベル変更
+  {
+    int i, j;
+    for( i = BTL_CLIENT_ENEMY1; i < BTL_CLIENT_NUM; i++ )
+    {
+      POKEPARTY*  p_party = bsp->party[i];
+      if( p_party )
+      {
+        for( j = 0; j < PokeParty_GetPokeCount(p_party); j++ )
+        {
+          POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party,j);
+          u16 lv = PP_Get( p_pp, ID_PARA_level, NULL );
+          PP_Put( p_pp, ID_PARA_level, lv/2 );
+        }
+      }
+    }
+  }
+
+}
 
 /*
  *  @brief  セットアップ済みパラメータをバトルサブウェイモード用に切り替え

@@ -1266,7 +1266,15 @@ enum {
 	NARC_trfgra_trwb_pkwd_villain_NMCR = 1252,
 	NARC_trfgra_trwb_pkwd_villain_NMAR = 1253,
 	NARC_trfgra_trwb_pkwd_villain_NCEC = 1254,
-	NARC_trfgra_trwb_pkwd_villain_NCLR = 1255
+	NARC_trfgra_trwb_pkwd_villain_NCLR = 1255,
+	NARC_trfgra_trwb_pkwd_hero_NCGR = 1256,
+	NARC_trfgra_trwb_pkwd_hero_NCBR = 1257,
+	NARC_trfgra_trwb_pkwd_hero_NCER = 1258,
+	NARC_trfgra_trwb_pkwd_hero_NANR = 1259,
+	NARC_trfgra_trwb_pkwd_hero_NMCR = 1260,
+	NARC_trfgra_trwb_pkwd_hero_NMAR = 1261,
+	NARC_trfgra_trwb_pkwd_hero_NCEC = 1262,
+	NARC_trfgra_trwb_pkwd_hero_NCLR = 1263
 };
 
 /* NARC_TRFGRA_NAIX_ */

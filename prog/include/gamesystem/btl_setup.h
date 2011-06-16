@@ -166,6 +166,9 @@ extern void BTL_SETUP_Rotation_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData
 //////////////////////////////////////////////
 extern void BTL_SETUP_InitForRecordPlay( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEAPID heapID );
 extern void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp );
+extern void BTL_SETUP_SetDifficulty( BATTLE_SETUP_PARAM* bsp, GAMEDATA* gameData );
+
+extern BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID );
 
 //-----------------------------------------------------------------------------
 /*

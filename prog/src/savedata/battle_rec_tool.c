@@ -22,6 +22,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 #include "savedata/battle_rec.h"
+#include "gamesystem/btl_setup.h"
 #include "battle/battle.h"
 
 #include "../battle/btl_common.h"
@@ -706,9 +707,12 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
   //データべた書き
   static const struct _POKEWOOD_REC_CONV_DATA
   {
-    u32 tr_type;
-    STRCODE trainer_name[PERSON_NAME_SIZE + EOM_SIZE];
-    u32 trainer_name_length;
+    struct _POKEWOOD_REC_TR_DATA
+    {
+      u32 tr_type;
+      STRCODE trainer_name[PERSON_NAME_SIZE + EOM_SIZE];
+      u32 trainer_name_length;
+    } tr_data[2];
 
     struct _POKEWOOD_REC_POKE_DATA
     {
@@ -719,9 +723,22 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
   {
     //シナリオ０
     {
-      TRTYPE_SCIENTISTW,
-      L"サトミ",
-      3,
+      //トレーナーデータ
+      {
+        //味方
+        {
+          0,
+          L"",
+          0,
+        },
+        //敵
+        {
+          TRTYPE_SCIENTISTW,
+          L"サトミ",
+          3,
+        },
+      },
+      //敵のポケモンデータ
       {
         MONSNO_ufo,
         MONSNO_ufo,
@@ -729,9 +746,22 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
     },
     //シナリオ１
     {
-      TRTYPE_PKWD_VILLAIN,
-      L"ハチクマン",
-      5,
+      //トレーナーデータ
+      {
+        //味方
+        {
+          TRTYPE_PKWD_HERO,
+          L"",
+          0,
+        },
+        //敵
+        {
+          TRTYPE_PKWD_VILLAIN,
+          L"ハチクマン",
+          5,
+        },
+      },
+      //敵のポケモンデータ
       {
         0,
       },
@@ -744,20 +774,37 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
 
 
   //敵トレーナーの設定
-  if( p_setup_data->tr_type != 0 )
   {
-    bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_id   = 1;//1とすることでトレーナーとしてだましている
-    bsp->tr_data[BTL_CLIENT_ENEMY1]->tr_type = p_setup_data->tr_type;
-    bsp->tr_data[BTL_CLIENT_ENEMY1]->ai_bit  = 0;
-  }
+    int i;
+    for( i = BTL_CLIENT_PLAYER; i <= BTL_CLIENT_ENEMY1; i++ )
+    {
+      const struct _POKEWOOD_REC_TR_DATA *p_tr_data = &p_setup_data->tr_data[i];
 
-  {
+      if( p_tr_data->tr_type != 0 || p_tr_data->trainer_name_length != 0 )
+      {
+        if( bsp->tr_data[i] == NULL )
+        {
 
-    STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
-    GFL_STD_MemCopy( p_setup_data->trainer_name, name, sizeof(STRCODE)*p_setup_data->trainer_name_length );
-    name[p_setup_data->trainer_name_length] = GFL_STR_GetEOMCode();
-    bsp->tr_data[BTL_CLIENT_ENEMY1]->name    = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, heapID );
-    GFL_STR_SetStringCode( bsp->tr_data[BTL_CLIENT_ENEMY1]->name, name );
+          bsp->tr_data[i] = BSP_TRAINER_DATA_Create( heapID );
+        }
+      }
+
+
+      if( p_tr_data->tr_type != 0 )
+      {
+        bsp->tr_data[i]->tr_id   = 1;//1とすることでトレーナーとしてだましている
+        bsp->tr_data[i]->tr_type = p_tr_data->tr_type;
+        bsp->tr_data[i]->ai_bit  = 0;
+      }
+
+      if( p_tr_data->trainer_name_length != 0 )
+      {
+        STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];
+        GFL_STD_MemCopy( p_tr_data->trainer_name, name, sizeof(STRCODE)*p_tr_data->trainer_name_length );
+        name[p_tr_data->trainer_name_length] = GFL_STR_GetEOMCode();
+        GFL_STR_SetStringCode( bsp->tr_data[i]->name, name );
+      }
+    }
   }
 
   //敵ポケモンの設定
@@ -786,4 +833,3 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
     }
   }
 }
-
