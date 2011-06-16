@@ -209,4 +209,6 @@
 #define	TRTYPE_MOUNT_2    ( 196 )    //MOUNT_2♂ゲームフリーク
 #define	TRTYPE_SWLEADER1_1    ( 197 )    //SWLEADER1_1♂ポケモントレーナー
 #define	TRTYPE_SWCHAMPION_1    ( 198 )    //SWCHAMPION_1♀ポケモントレーナー
-#define	TRTYPE_MAX	( 199 )
+#define	TRTYPE_PKWD_HERO    ( 199 )    //PKWD_HERO♂ヒーロー
+#define	TRTYPE_PKWD_HEROINE    ( 200 )    //PKWD_HEROINE♀ヒーロー
+#define	TRTYPE_MAX	( 201 )

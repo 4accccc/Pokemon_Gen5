@@ -803,6 +803,14 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		155,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.199 PKWD_HERO♂ヒーロー
+		  0,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
+	{ // No.200 PKWD_HEROINE♀ヒーロー
+		  1,PTL_SEX_FEMALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {
@@ -821,5 +829,7 @@ const u16 DATA_TrainerBackCGIndex[][2] = {
 		{ TRTYPE_SWCHAMPION, 12 },
 		{ TRTYPE_SWLEADER1_1, 13 },
 		{ TRTYPE_SWCHAMPION_1, 12 },
+		{ TRTYPE_PKWD_HERO, 0 },
+		{ TRTYPE_PKWD_HEROINE, 1 },
 };
 

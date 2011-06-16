@@ -1440,6 +1440,16 @@
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
+	<row id="MSG_TRTYPE_PKWD_HERO">
+		<language name="JPN" width="216">ヒーロー</language>
+		<language name="JPN_KANJI" width="216">ヒーロー</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_HEROINE">
+		<language name="JPN" width="216">ヒーロー</language>
+		<language name="JPN_KANJI" width="216">ヒーロー</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
