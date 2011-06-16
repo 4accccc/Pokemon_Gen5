@@ -18,6 +18,7 @@ EVENT_REACTION_MAX   = 4 # イベント中の選択肢データ最大数
 EVENT_REACTION_ARRAY = 4 # 選択肢データ内の項目数（自分会話・相手会話・技指定・背景チェンジ）
 EVENT_CLEARTURN_KEYWORD = "クリア"
 EVENT_LOSETURN_KEYWORD  = "失敗"
+EVENT_NO_PROVISION      = "なし"
 
 EVENT_LINE_HEIGHT = 14   # イベントデータの行数
 EVENT1_START_LINE = 69	 # イベントデータスタート位置
@@ -201,7 +202,9 @@ class POKEWOOD_SENARIO
       @event[index].start_turn = data[start][3].to_i
     end
     
-    @event[index].flag_provision = data[start][5].to_i
+    if data[start][5]!=EVENT_NO_PROVISION then
+      @event[index].flag_provision = data[start][5].to_i
+    end
     EVENT_TALK_MAX.times{|i|
       msg1 = gmm.write_each( "pw_event#{index}_hero_#{i}", data[start+i+2][1], data[start+i+2][2], data[start+i+2][3], data[start+i+2][4] )
       msg2 = gmm.write_both( "pw_event#{index}_enemy_#{i}", data[start+i+2][5], data[start+i+2][6] )
