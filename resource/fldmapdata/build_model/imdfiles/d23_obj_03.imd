@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-06-16T18:49:44" source="d23_obj_03.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-06-16T19:12:43" source="d23_obj_03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-06-16T18:49:44" source="d23_obj_03.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-06-16T19:12:43" source="d23_obj_03.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -462,7 +462,7 @@
 	/>
 	<material index="1" name="d23_en02"
 		light0="on" light1="off" light2="off" light3="off"
-		face="front"
+		face="both"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -1462,8 +1462,8 @@
 		vertex_size="52" polygon_size="18"
 		triangle_size="0" quad_size="18"
 		volume_min="-1.375000 0.125000 -1.375000"
-		volume_max="1.375000 3.750000 1.375000"
-		volume_r="3.880127"
+		volume_max="1.375000 3.812500 1.375000"
+		volume_r="3.940674"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1516,41 +1516,41 @@
 					<tex st="-80.000000 19.000000"/>
 					<pos_xy xy="0.593750 1.500000"/>
 					<tex st="63.000000 19.000000"/>
-					<pos_xy xy="0.593750 3.750000"/>
+					<pos_xy xy="0.593750 3.812500"/>
 					<tex st="-80.000000 23.000000"/>
 					<nrm xyz="-0.865234 0.000000 0.501953"/>
 					<pos_xyz xyz="0.438477 1.500000 -0.468750"/>
 					<tex st="63.000000 23.000000"/>
 					<nrm xyz="-0.707031 0.035156 0.707031"/>
-					<pos_xy xy="0.438477 3.750000"/>
+					<pos_xy xy="0.438477 3.812500"/>
 					<tex st="-80.000000 29.000000"/>
 					<nrm xyz="-0.865234 0.000000 -0.501953"/>
 					<pos_yz yz="1.500000 -0.656250"/>
 					<tex st="63.000000 29.000000"/>
 					<nrm xyz="-0.707031 0.035156 -0.707031"/>
-					<pos_xy xy="0.438477 3.750000"/>
+					<pos_xy xy="0.438477 3.812500"/>
 					<tex st="-80.000000 29.000000"/>
 					<nrm xyz="0.000000 0.025391 -1.000000"/>
 					<pos_s xyz="0.593750 1.500000 -0.734375"/>
 					<tex st="63.000000 29.000000"/>
-					<pos_xy xy="0.593750 3.750000"/>
+					<pos_xy xy="0.593750 3.812500"/>
 					<tex st="-80.000000 29.000000"/>
 					<nrm xyz="0.865234 0.000000 -0.501953"/>
 					<pos_s xyz="0.750000 1.500000 -0.656250"/>
 					<tex st="63.000000 29.000000"/>
 					<nrm xyz="0.707031 0.035156 -0.707031"/>
-					<pos_xy xy="0.750000 3.750000"/>
+					<pos_xy xy="0.750000 3.812500"/>
 					<tex st="-80.000000 23.000000"/>
 					<nrm xyz="0.865234 0.000000 0.501953"/>
 					<pos_yz yz="1.500000 -0.468750"/>
 					<tex st="63.000000 23.000000"/>
 					<nrm xyz="0.707031 0.035156 0.707031"/>
-					<pos_xy xy="0.750000 3.750000"/>
+					<pos_xy xy="0.750000 3.812500"/>
 					<tex st="-80.000000 19.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_s xyz="0.593750 1.500000 -0.390625"/>
 					<tex st="63.000000 19.000000"/>
-					<pos_xy xy="0.593750 3.750000"/>
+					<pos_xy xy="0.593750 3.812500"/>
 				</primitive>
 				<primitive index="2" type="quads" vertex_size="24">
 					<tex st="-92.000000 64.000000"/>
