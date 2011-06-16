@@ -544,7 +544,7 @@ static void Bw_Graphic_Load( POKEWOOD_CUTIN *p_wk, ARCDATID plt, ARCDATID chr, A
     p_wk->chr = GFL_CLGRP_CGR_Register( p_handle, chr, FALSE, CLSYS_DRAW_MAIN, p_wk->heapID );
     p_wk->plt = GFL_CLGRP_PLTT_Register( p_handle, plt, CLSYS_DRAW_MAIN, 0, p_wk->heapID );
 
-    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ, 0, 32*14 );
+    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ, 0, 32*0xF );
 
     p_wk->cel = GFL_CLGRP_CELLANIM_Register( p_handle, cel, nan, p_wk->heapID );
 
