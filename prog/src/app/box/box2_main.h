@@ -597,6 +597,7 @@ enum {
   BOX2MAIN_ERR_CODE_EGG,        // タマゴはえらべない
   BOX2MAIN_ERR_CODE_ROCK,       // ロックされている（バトルボックス専用）
   BOX2MAIN_ERR_CODE_SLEEP,      // 眠くない（寝かせる専用）
+	BOX2MAIN_ERR_CODE_MULTI,			// 複数選択用エラー
 };
 
 
@@ -1751,5 +1752,5 @@ extern int BOX2MAIN_VFuncTrayIconScrollDownJump( BOX2_SYS_WORK * syswk );
 extern int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk );
 
 extern void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk );
-extern  int BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos );
+extern BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos );
 extern  int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app );
