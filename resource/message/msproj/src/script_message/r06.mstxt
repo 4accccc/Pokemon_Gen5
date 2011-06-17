@@ -42,11 +42,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:45:55" />
+				Time="2011-06-17T05:53:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -98,10 +98,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>コバルオン</Text>
+			<Text>ポケモン
+コバルオン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:26:29" />
+				Time="2011-06-17T05:54:24" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -147,11 +148,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:13:50" />
+				Time="2011-06-17T05:54:19" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -265,11 +266,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:13:51" />
+				Time="2011-06-17T05:54:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -576,11 +577,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:13:52" />
+				Time="2011-06-17T05:54:13" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -649,11 +650,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:13:53" />
+				Time="2011-06-17T05:54:13" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

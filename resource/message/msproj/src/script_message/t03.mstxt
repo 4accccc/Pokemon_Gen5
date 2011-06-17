@@ -304,10 +304,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:52" />
+				Time="2011-06-17T06:01:04" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -406,10 +406,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T03:56:18" />
+				Time="2011-06-17T06:01:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -537,11 +537,11 @@
 			Language="JPN">
 			<Text>ベル『そうですねえ▼
 あたりいったいを　こおらせるなんて
-でんせつの　ドラゴンポケモンに▽
-ひってきする　ちから　ですよねえ▼</Text>
+でんせつの　ドラゴンポケモンにも▽
+ひってきする　パワー　ですよねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:53:10" />
+				Time="2011-06-17T06:04:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -550,12 +550,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ベル『そうですねえ▼
-あたりいったいを　こおらせるなんて
-でんせつの　ドラゴンポケモンに▽
-ひってきする　ちから　ですよねえ▼</Text>
+辺り一体を　凍らせるなんて
+伝説の　ドラゴンポケモンにも▽
+匹敵する　パワー　ですよねえ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:08:01" />
+				Time="2011-06-17T06:03:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1465,14 +1465,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はなしが　ながくなったわね▼
+			<Text>話が　長くなったわね▼
 [Name:TrainerName ]
 そのあたりも　シャガさんに　きいてね！▼
 わたしたちは　フィールドワークです
 ベル　手伝ってね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:28:06" />
+				Time="2011-06-17T06:04:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1706,10 +1706,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-17T06:00:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1741,12 +1742,12 @@
 			Language="JPN_KANJI">
 			<Text>ヴィオ『やれやれ
 おまえらと　でくわすとはな▼
-われわれの　もくてき　なぞ
-りかい　できぬくせに▽
+われわれの　目的なぞ
+理解できぬくせに▽
 あれこれ　かぎまわるで　ない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:59:53" />
+				Time="2011-06-17T06:05:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1796,15 +1797,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエらの　つごうなんて
+			<Text>[Name:TrainerName Idx="1" ]『オマエらの　都合なんて
 どうでも　いいんだよ▼
-オレは　オレの　うばわれた
-ポケモンを　とりもどすだけさ！▼
-[Name:TrainerName ]！　オマエの　ちからを
-かりるけど　じゅんびは　いいか？</Text>
+オレは　オレの　奪われた
+ポケモンを　取り戻すだけさ！▼
+[Name:TrainerName ]！　オマエの　力を
+借りるけど　準備は　いいか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:02:28" />
+				Time="2011-06-17T06:05:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1825,10 +1826,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-17T06:00:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1877,10 +1879,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T08:09:21" />
+				Time="2011-06-17T06:00:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1910,12 +1913,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『わかった
-じゅんび　してきな▼
-コイツら　あいてに　しんちょうなのは
-わるいことじゃ　ないからな</Text>
+準備してきな▼
+コイツら　相手に　慎重なのは
+悪いことじゃ　ないからな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:04:24" />
+				Time="2011-06-17T06:05:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1932,10 +1935,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:45:05" />
+				Time="2011-06-17T06:00:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1962,11 +1966,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエの　ちからを
-かりるけど　じゅんびは　いいか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オマエの　力を
+借りるけど　準備は　いいか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:05:08" />
+				Time="2011-06-17T06:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1986,10 +1990,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:52:25" />
+				Time="2011-06-17T06:00:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2016,11 +2021,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>したっぱ『ヴィオさまと　ともに
-たたかったのに　なんだ　こいつら！？▼</Text>
+			<Text>したっぱ『ヴィオさまと　共に
+戦ったのに　なんだ　こいつら！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:21:33" />
+				Time="2011-06-17T06:06:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2052,13 +2057,15 @@
 			Language="JPN">
 			<Text>ヴィオ『この　トレーナーども
 ２ねんまえを　おもいださせます▼
-が　それよりも　アレを　さがさねば！
+が　それよりも
+アレを　さがさねば！▼
+あの　かがくしゃが　いうように
 やはり　ソウリュウに　あるのかも▼
 おまえたち
 また　あいて　してやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:23:31" />
+				Time="2011-06-17T06:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2067,14 +2074,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『この　トレーナーども
-２ねんまえを　おもいださせます▼
-が　それよりも　アレを　さがさねば！
+２年前を　おもいださせます▼
+が　それよりも
+アレを　探さねば！▼
+あの　科学者が　いうように
 やはり　ソウリュウに　あるのかも▼
 おまえたち
-また　あいて　してやるぞ！▼</Text>
+また　相手してやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:23:38" />
+				Time="2011-06-17T06:06:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2090,10 +2099,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ヴィオ</Text>
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:00" />
+				Time="2011-06-17T06:02:13" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2146,10 +2156,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:55:09" />
+				Time="2011-06-17T06:00:51" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2208,10 +2219,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T03:57:34" />
+				Time="2011-06-17T06:01:11" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2296,10 +2307,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:47" />
+				Time="2011-06-17T06:01:11" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2355,10 +2366,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:04" />
+				Time="2011-06-17T06:01:13" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2405,10 +2416,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:32:29" />
+				Time="2011-06-17T06:01:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2464,10 +2475,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>middlewoman1</Text>
+			<Text>MIDDLEWOMAN1</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:31:01" />
+				Time="2011-06-17T06:01:51" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2572,10 +2583,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T06:01:17" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2626,10 +2637,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T06:01:17" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2680,10 +2691,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>oldwoman1</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T06:01:17" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2777,13 +2788,13 @@
 			Language="JPN_KANJI">
 			<Text>夜に　なると
 大きな　穴から　でてくる▽
-お化けって　ポケモンでしょ▼
+おばけって　ポケモンでしょ▼
 町の　みんなが
 言い伝えを　信じて　守るなんて▽
 すごく　怖い　ポケモン　なのかな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:29:49" />
+				Time="2011-06-17T06:03:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3259,10 +3270,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>middleman2</Text>
+			<Text>MIDDLEMAN2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T06:01:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

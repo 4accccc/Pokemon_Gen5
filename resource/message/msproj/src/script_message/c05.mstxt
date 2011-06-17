@@ -206,11 +206,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>プラズマ団♂
-SWPLAZMAM</Text>
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:48:42" />
+				Time="2011-06-17T05:48:43" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -266,11 +266,11 @@ SWPLAZMAM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団♂
-HAKAIM</Text>
+			<Text>HAKAIM
+元プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:48:49" />
+				Time="2011-06-17T05:48:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -319,10 +319,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:49:54" />
+				Time="2011-06-17T05:47:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -379,11 +380,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>プラズマ団♂
-SWPLAZMAM</Text>
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:52:47" />
+				Time="2011-06-17T05:48:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -437,10 +438,11 @@ SWPLAZMAM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:54:21" />
+				Time="2011-06-17T05:47:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -499,11 +501,11 @@ SWPLAZMAM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団♂
-HAKAIM</Text>
+			<Text>HAKAIM
+元プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:57:28" />
+				Time="2011-06-17T05:48:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -557,11 +559,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団♂
-HAKAIM</Text>
+			<Text>HAKAIM
+元プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:00:43" />
+				Time="2011-06-17T05:48:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -613,11 +615,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:59:53" />
+				Time="2011-06-17T05:50:23" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -673,11 +675,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団♂
-HAKAIM</Text>
+			<Text>HAKAIM
+元プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:58:46" />
+				Time="2011-06-17T05:49:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -734,11 +736,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:59:24" />
+				Time="2011-06-17T05:50:22" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -791,11 +793,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T02:59:32" />
+				Time="2011-06-17T05:50:22" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -847,11 +849,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:04:00" />
+				Time="2011-06-17T05:50:22" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -914,11 +916,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:04:00" />
+				Time="2011-06-17T05:50:20" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -974,11 +976,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団♂
-HAKAIM</Text>
+			<Text>HAKAIM
+元プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:14:35" />
+				Time="2011-06-17T05:49:02" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1038,11 +1040,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:04:00" />
+				Time="2011-06-17T05:50:27" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1096,10 +1098,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:19:03" />
+				Time="2011-06-17T05:47:39" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1162,11 +1165,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>元プラズマ団
-七賢人ロット</Text>
+			<Text>SAGE6
+元プラズマ団・七賢人ロット</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T03:04:00" />
+				Time="2011-06-17T05:50:27" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1228,10 +1231,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:15:16" />
+				Time="2011-06-17T05:47:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1304,10 +1308,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:15:16" />
+				Time="2011-06-17T05:47:40" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1365,11 +1370,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-ヤーコン</Text>
+			<Text>SWLEADER5
+ジムリーダー・ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:22:06" />
+				Time="2011-06-17T05:48:27" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1417,10 +1422,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:22:15" />
+				Time="2011-06-17T05:47:42" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1482,11 +1488,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-ヤーコン</Text>
+			<Text>SWLEADER5
+ジムリーダー・ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:22:07" />
+				Time="2011-06-17T05:48:28" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1549,10 +1555,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:28:43" />
+				Time="2011-06-17T05:47:43" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1615,11 +1622,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-ヤーコン</Text>
+			<Text>SWLEADER5
+ジムリーダー・ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:22:11" />
+				Time="2011-06-17T05:48:29" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1678,10 +1685,11 @@ HAKAIM</Text>
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:30:56" />
+				Time="2011-06-17T05:47:44" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

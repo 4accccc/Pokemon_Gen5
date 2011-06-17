@@ -48,15 +48,15 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:51:39" />
+				Time="2011-06-17T05:53:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -103,12 +103,19 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:51:49" />
+				Time="2011-06-17T05:53:50" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_swleader1_03"
@@ -153,12 +160,19 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:51:49" />
+				Time="2011-06-17T05:53:50" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_swleader1_04"
@@ -201,12 +215,19 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:51:49" />
+				Time="2011-06-17T05:53:50" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r06r0101_assistantm1_01"

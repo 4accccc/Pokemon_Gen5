@@ -382,11 +382,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・チラーチィ以外を選択</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T05:59:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -437,12 +437,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T05:59:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -501,11 +501,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂
 ・ポケモン交換後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T05:59:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

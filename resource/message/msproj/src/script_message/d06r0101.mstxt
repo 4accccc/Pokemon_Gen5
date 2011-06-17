@@ -38,10 +38,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ベル</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:40:42" />
+				Time="2011-06-17T05:54:53" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -95,10 +96,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ベル</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:24" />
+				Time="2011-06-17T05:54:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -155,10 +157,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ベル</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:24" />
+				Time="2011-06-17T05:54:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -225,10 +228,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ベル</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:24" />
+				Time="2011-06-17T05:54:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -286,10 +290,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ベル</Text>
+			<Text>SWBELL
+ベル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:24" />
+				Time="2011-06-17T05:54:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -354,10 +359,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:16" />
+				Time="2011-06-17T05:55:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -416,10 +422,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>Ｎ</Text>
+			<Text>BOSS
+Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:44:18" />
+				Time="2011-06-17T05:55:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
