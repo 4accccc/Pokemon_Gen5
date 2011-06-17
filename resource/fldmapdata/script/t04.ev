@@ -23,7 +23,18 @@
 _EVENT_DATA		ev_bg_t04_sign1_01
 _EVENT_DATA		ev_bg_t04_sign1_02
 _EVENT_DATA		ev_zone_t04
+_EVENT_DATA		ev_pos_t04_swrival_01
+_EVENT_DATA		ev_t04_man3_01
+_EVENT_DATA		ev_t04_trainerm_01
+_EVENT_DATA		ev_t04_maid_01
+_EVENT_DATA		ev_t04_ambrella_01
+_EVENT_DATA		ev_t04_babygirl1_01
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 /************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
@@ -220,6 +231,178 @@ INIT_EVENT_START	ev_zone_t04
 INIT_EVENT_END
 
 /**************************************************************/
+/*			POS：ライバル戦									  */
+/**************************************************************/
+EVENT_START		ev_pos_t04_swrival_01
+
+  //プライヤー名代入
+  _PLAYER_NAME( 0 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+   //フィールド上にライバル配置
+  _OBJ_ADD_EX( LCW_POSX, 307, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
+  
+  //【仮】ライバル曲再生（曲が仮）
+  _START_EVENT_BGM( SEQ_BGM_E_RIVAL )
+  
+  //ライバル：待てよ！
+  _PLAINWIN_MSG_DOWN( msg_t04_swrival_01 )
+  
+  //アニメ：主人公振り向く
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _PLAINWIN_CLOSE()
+    
+  $LCW_POSZ += 2
+  //アニメ：ライバル接近
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：どれだけ
+  _BALLOONWIN_OBJMSG_POS( msg_t04_swrival_02,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //【仮】（ラベルが仮）ライバル戦呼び出し　最初の３匹によって分岐
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+    //初期３匹で草タイプを選択
+    _TRAINER_BTL_SET( TRID_SWRIVAL_04, 0 )
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+    //初期３匹で炎タイプを選択
+    _TRAINER_BTL_SET( TRID_SWRIVAL_05, 0 )
+  ELSE
+    //初期３匹で水タイプを選択
+    _TRAINER_BTL_SET( TRID_SWRIVAL_06, 0 )
+  ENDIF
+  
+  //結果チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()
+  ELSE
+    _TRAINER_LOSE()
+  ENDIF
+  
+  //ライバル：なるほど
+  _BALLOONWIN_OBJMSG_POS( msg_t04_swrival_03,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル別方向を向く
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：まっ　プラズマ団のあいては
+  _BALLOONWIN_OBJMSG_POS( msg_t04_swrival_04,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル向きなおす
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：というわけで
+  _BALLOONWIN_OBJMSG_POS( msg_t04_swrival_05,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  IF $LCW_POSX > 752  THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_swrival_bye_753 )
+  //一番左の座標のケース
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_swrival_bye_751 )
+  ENDIF
+  
+  _TIME_WAIT( 12 )
+  
+  //アニメ：主人公見送り
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  //SE待ち
+  _SE_WAIT()
+  
+  //ライバル曲停止
+	_END_EVENT_BGM()
+  
+  //========================================//
+  //T04POS無効
+  $WK_SCENE_T04 = 1
+  //========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_bye_751
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_bye_753
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+  
+
+
+/**************************************************************/
+/*			話しかけ：man3									  */
+/**************************************************************/
+EVENT_START		ev_t04_man3_01
+  _TALK_OBJ_START()
+  _GIZAWIN_OBJMSG_POS( msg_t04_man3_01 , T04_MAN3_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*			話しかけ：trainerm									  */
+/**************************************************************/
+EVENT_START		ev_t04_trainerm_01
+  //【仮】WBTシロナ登場後
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_trainerm_02 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_trainerm_01 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*			話しかけ：maid									  */
+/**************************************************************/
+EVENT_START		ev_t04_maid_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_maid_01 )
+EVENT_END
+
+
+/**************************************************************/
+/*			話しかけ：ambrella									  */
+/**************************************************************/
+EVENT_START		ev_t04_ambrella_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_ambrella_01 )
+EVENT_END
+
+/**************************************************************/
+/*			話しかけ：babygirl1									  */
+/**************************************************************/
+EVENT_START		ev_t04_babygirl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_babygirl1_01 )
+EVENT_END
+
+/**************************************************************/
 /*			T04		看板									  */
 /**************************************************************/
 EVENT_START		ev_bg_t04_sign1_01
@@ -232,3 +415,75 @@ EVENT_END
 EVENT_START		ev_bg_t04_sign1_02
 	_EASY_BGWIN_MSG( msg_t04_sign1_02, TYPE_POST)	//簡易メッセージＢＧ用
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

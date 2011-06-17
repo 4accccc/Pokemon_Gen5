@@ -21,7 +21,52 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t04pc0101_shop
 _EVENT_DATA    ev_t04pc0101_fix_shop
+_EVENT_DATA    ev_t04pc0101_middleman1_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/*   MIDDLEMAN アイテム入手イベント            */
+/**************************************************************/
+EVENT_START   ev_t04pc0101_middleman1_01
+{
+	//初回話しかけ
+	IF FLAG_OFF( FE_T04PC0101_ITEMGET_01 ) THEN
+		_TALK_OBJ_START()
+		
+		//性別が格納されるローカル変数を定義
+		DEFINE_LOCAL SCWK_SEX
+		_GET_MY_SEX(SCWK_SEX)
+		
+		//男性だった場合
+		IF $SCWK_SEX == PM_MALE THEN
+			_BALLOONWIN_OBJMSG( msg_t04pc0101_middleman_01 , T04PC0101_MIDDLEMAN1_01)
+			_BALLOONWIN_CLOSE()
+		//女性だった場合
+		ELSE
+			_BALLOONWIN_OBJMSG( msg_t04pc0101_middleman_02 , T04PC0101_MIDDLEMAN1_01)
+			_BALLOONWIN_CLOSE()
+		ENDIF
+		
+		//どうぐ入手処理
+		_ITEM_EVENT_KEYWAIT ( ITEM_KIREINAUROKO , 1)
+		
+		_BALLOONWIN_OBJMSG( msg_t04pc0101_middleman_03 , T04PC0101_MIDDLEMAN1_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		//======================================//
+			
+		//アイテム入手イベント終了
+		_FLAG_SET( FE_T04PC0101_ITEMGET_01 )
+		
+		//======================================//
+		
+	//購入済み
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04pc0101_middleman_03)
+	ENDIF
+}
+EVENT_END
 
 
 //=============================================================

@@ -17,6 +17,7 @@
 #define T04PC0101_SHOPM1_02                5
 #define T04PC0101_SHOPM1_01                6
 #define T04PC0101_MEDALOYAJI               7
+#define T04PC0101_MIDDLEMAN1_01            8
 
 #endif //ZONE_T04PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
