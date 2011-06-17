@@ -308,7 +308,7 @@
 #define FE_C03P09_WAITRESS_02              292 /* 0x0124 C03P09：ヒウンアイス店員繁盛後初回話しかけ */
 #define FE_C03P09_ICEBUY_01                293 /* 0x0125 C03P09：ヒウンアイス初回購入 */
 #define FE_T07PC0101_ITEMGET_01            294 /* 0x0126 T07PC0101：アイテム入手フラグ */
-		/* not used   295(0x0127) */
+#define FE_T04PC0101_ITEMGET_01            295 /* 0x0127 T04PC0101：アイテム入手フラグ */
 		/* not used   296(0x0128) */
 		/* not used   297(0x0129) */
 		/* not used   298(0x012a) */
@@ -593,6 +593,12 @@
 #define FV_R06R0101_SWLEADER1_01           675 /* 0x02a3 6番道路季節研究所：チェレン */
 #define FV_T07_HAKASE2_01                  676 /* 0x02a4 ヤマジタウン：アララギ娘 */
 #define FV_T07_SWBELL_01                   677 /* 0x02a5 ヤマジタウン：ベル */
+#define FV_T03_HAKASE2_01                  678 /* 0x02a6 カゴメタウン：アララギ娘 */
+#define FV_T03_SWBELL_01                   679 /* 0x02a7 カゴメタウン：ベル */
+#define FV_T03_OLDWOMAN1_01                680 /* 0x02a8 カゴメタウン：おばあさん */
+#define FV_T03R0201_HAKASE2_01             681 /* 0x02a9 カゴメタウン：アララギ娘 */
+#define FV_T03R0201_SWBELL_01              682 /* 0x02aa カゴメタウン：ベル */
+#define FV_T03R0201_OLDWOMAN1_01           683 /* 0x02ab カゴメタウン：おばあさん */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

@@ -197,6 +197,8 @@
 #define WK_SCENE_R06_SWLEADER1           16585 /* 0x40c9 6番道路：季節研究所誘導POS制御ワーク */
 #define WK_SCENE_R06_LEGEND_MEET         16586 /* 0x40ca 6番道路：コバルオンとの出会いPOS制御ワーク */
 #define WK_SCENE_T07                     16587 /* 0x40cb ヤマジタウン：アララギ娘イベント制御ワーク */
+#define WK_SCENE_T03                     16588 /* 0x40cc カゴメタウン：アララギ娘イベント制御ワーク */
+#define WK_SCENE_T04                     16589 /* 0x40cd サザナミタウン：ライバル戦POSイベント制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
