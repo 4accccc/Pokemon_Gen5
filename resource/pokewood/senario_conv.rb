@@ -1,3 +1,4 @@
+#!ruby -Ks
 #----------------------------------------------------------------------------
 # ポケウッドシナリオコンバーター
 # 2011/03 by mori
@@ -7,6 +8,9 @@
 #----------------------------------------------------------------------------
 require 'csv'
 require 'kconv'
+require "jcode"
+
+$KECODE = 'SJIS'
 
 ENEMY_POKE_NUM = 6       # 敵トレーナーのポケモン保持数(仮）
 SELECT_MSG     = 9       # 技選択時のメッセージの種類数（自分・敵）
@@ -207,17 +211,17 @@ class POKEWOOD_SENARIO
     end
     EVENT_TALK_MAX.times{|i|
       msg1 = gmm.write_each( "pw_event#{index}_hero_#{i}", data[start+i+2][1], data[start+i+2][2], data[start+i+2][3], data[start+i+2][4] )
-      msg2 = gmm.write_both( "pw_event#{index}_enemy_#{i}", data[start+i+2][5], data[start+i+2][6] )
+      msg2 = gmm.write_each( "pw_event#{index}_enemy_#{i}", data[start+i+2][5], data[start+i+2][6], data[start+i+2][7], data[start+i+2][8] )
       @event[index].set_event_msg(               i, msg1 )
       @event[index].set_event_msg(i+EVENT_TALK_MAX, msg2 )
-      @event[index].set_stage_cast_data(i, hash2no($stage_hash, data[start+i+2][9]))
+      @event[index].set_stage_cast_data(i, hash2no($stage_hash, data[start+i+2][11]))
 
     }
     EVENT_REACTION_MAX.times{|i|
       msg1 = gmm.write_each( "pw_event#{index}_react_hero_#{i}", data[start+9+i][1], data[start+9+i][2], data[start+9+i][3], data[start+9+i][4] )
-      msg2 = gmm.write_both( "pw_event#{index}_react_enemy_#{i}", data[start+9+i][5], data[start+9+i][6] )
+      msg2 = gmm.write_each( "pw_event#{index}_react_enemy_#{i}", data[start+9+i][5], data[start+9+i][6], data[start+9+i][7], data[start+9+i][8] )
       @event[index].set_reaction_data(i, msg1,
-                                      msg2,data[start+9+i][7],data[start+9+i][8])
+                                      msg2,data[start+9+i][11],data[start+9+i][12])
     }
 #    printf("%s\n", @start_turn)
   end
@@ -275,11 +279,44 @@ def hash2no( hash, str )
 end
 
 #----------------------------------------------------
+# 文字列チェッククラス
+#----------------------------------------------------
+class STR_CHECKER
+  def initialize
+    @buffer = String.new
+    file = open("font_table.lst", "r" )
+    @buffer << file.read
+    file.close
+  end
+
+  def check( str )
+    match_word = @buffer.split(//)
+    check_word = str.split(//)
+
+    check_word.each{ |c|
+      ok = 0
+      match_word.each{ |m|
+        if c == m then
+          ok = 1
+          break
+        end
+      }
+      if ok == 0 then
+        puts "『#{str}』の中の『#{c}』の文字は使えません！\n"
+        return 0;
+      end
+    }
+    return 1
+  end
+end
+
+#----------------------------------------------------
 # GMM作成クラス
 #   GMMファイルはUTF-8でエンコード
 #----------------------------------------------------
 class MAKE_GMM
   def initialize
+    @str_check    = STR_CHECKER.new
     @buffer       = String.new
     header = open("header.file","r:UTF-8")
     @buffer << header.read
@@ -290,6 +327,10 @@ class MAKE_GMM
   def write( tag, str_kana, str_kanji )
     if str_kana == "" || str_kana == nil then
       return -1
+    end
+
+    if @str_check.check( str_kanji ) == 0 then
+      exit(1)
     end
 
     str_kana = tag_translate( str_kana )
@@ -405,7 +446,7 @@ ENEMY_POKE_NUM.times{|i|
 #選択時メッセージ格納
 SELECT_MSG.times{|i|
   msg1 = gmm.write_each( "pw_wazasel_hero_#{i}", datas[i+28][1], datas[i+28][2], datas[i+28][3], datas[i+28][4] )
-  msg2 = gmm.write_both( "pw_wazasel_enemy_#{i}", datas[i+28][5], datas[i+28][6] )
+  msg2 = gmm.write_each( "pw_wazasel_enemy_#{i}", datas[i+28][5], datas[i+28][6], datas[i+28][7], datas[i+28][8] )
   pokewood.set_select_msg(            i, msg1 )
   pokewood.set_select_msg( SELECT_MSG+i, msg2 )
 }
@@ -413,7 +454,7 @@ SELECT_MSG.times{|i|
 #シチュエーション別メッセージ格納
 SITUATION_MSG.times{|i|
   msg1 = gmm.write_each( "pw_situ_hero_#{i}", datas[i+39][1], datas[i+39][2], datas[i+39][3], datas[i+39][4] )
-  msg2 = gmm.write_both( "pw_situ_enemy_#{i}", datas[i+39][5], datas[i+39][6] )
+  msg2 = gmm.write_each( "pw_situ_enemy_#{i}", datas[i+39][5], datas[i+39][6], datas[i+39][7], datas[i+39][8] )
   pokewood.set_situation_msg(                i, msg1 )
   pokewood.set_situation_msg( SITUATION_MSG+i, msg2 )
 }
@@ -421,7 +462,7 @@ SITUATION_MSG.times{|i|
 #ターン毎メッセージ格納
 TURN_MSG.times{|i|
   msg1 = gmm.write_each( "pw_turn_hero_#{i}", datas[i+47][1], datas[i+47][2], datas[i+47][3], datas[i+47][4] )
-  msg2 = gmm.write_both( "pw_turn_enemy_#{i}", datas[i+47][5], datas[i+47][6] )
+  msg2 = gmm.write_each( "pw_turn_enemy_#{i}", datas[i+47][5], datas[i+47][6], datas[i+47][7], datas[i+47][8] )
   pokewood.set_turn_msg(            i, msg1 )
   pokewood.set_turn_msg( TURN_MSG+i, msg2 )
 }
