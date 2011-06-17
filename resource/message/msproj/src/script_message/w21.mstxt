@@ -6,10 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>チェレン『あれ？　[Name:TrainerName Idx="1" ]くんに
+ジムバッジを　とるよう　いわれなかった？▼
+だいじょうぶ！　プラズマだんは
+ぼくが　みはっておくから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:32:10" />
+				Time="2011-06-17T09:39:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>チェレン『あれ？　[Name:TrainerName Idx="1" ]くんに
+ジムバッジを　とるよう　いわれなかった？▼
+大丈夫！　プラズマ団は
+ぼくが　みはっておくから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:32:10" />
+				Time="2011-06-17T09:39:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,11 +36,10 @@
 			Language="JPN">
 			<Comment>♂
 ・c14ジムバッジ取得前
-・続けて
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:32:15" />
+				Time="2011-06-17T09:39:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -69,10 +74,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName Idx="1" ]『チェレンさん
+様子は　どうですか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-06-17T09:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -82,11 +88,13 @@
 			Language="JPN">
 			<Comment>♂
 ・c14ジムバッジ取得後
-・続けて
+・posイベント
+　GRIDX＝、GRIDZ＝
+・続けてswleader1_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T08:45:25" />
+				Time="2011-06-17T09:40:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -111,13 +119,13 @@
 			Language="JPN">
 			<Text>チェレン『なにも　うごきは　ないね▼
 もっとも　こちらにも
-かんぱんに　あがったり▽
-なかに　しのびこむ　すべが　ないよ▼
+かんぱんに　あがったり　なかに▽
+しのびこむ　すべが　ないけどね▼
 だからこそ　かれらも
 わざと　ここに　いるんだろうけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:31:51" />
+				Time="2011-06-17T09:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -125,10 +133,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>チェレン『なにも　動きは　ないね▼
+もっとも　こちらにも
+甲板に　あがったり▽
+船内に　忍びこむ　術が　ないけどね▼
+だからこそ　かれらも
+わざと　ここに　いるんだろうけど……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-06-17T09:41:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -137,10 +150,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader8_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:53" />
+				Time="2011-06-17T09:40:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -186,11 +199,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・アジト船のほうからメッセージ表示
 ・表示後、アジト船のタラップが降りる
 ・続けてシズイがタラップを降りてくる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T08:54:55" />
+				Time="2011-06-17T09:41:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -224,10 +238,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シズイ『これで　だいじょうぶ　たい！▼</Text>
+			<Text>シズイ『これで　大丈夫たい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T08:55:21" />
+				Time="2011-06-17T09:41:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -236,10 +250,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・降りて所定の位置（未定）に
+　到達するとメッセージ表示
+・続けてswrival_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:55" />
+				Time="2011-06-17T09:42:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -262,11 +278,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライバル『アンタ　プラズマだんと
+			<Text>[Name:TrainerName Idx="1" ]『アンタ　プラズマだんと
 たたかう　つもりは　ないんじゃ……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:43" />
+				Time="2011-06-17T09:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -274,11 +290,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライバル『アンタ　プラズマだんと
-たたかう　つもりは　ないんじゃ……？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『アンタ　プラズマ団と
+戦う　つもりは　ないんじゃ……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:47" />
+				Time="2011-06-17T09:48:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -287,10 +303,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader8_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:55" />
+				Time="2011-06-17T09:42:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -332,10 +348,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シズイ『おうともよ！
+おいは　プラズマ団に　うらみはない▼
+ほんまに　悪いことを
+しているのかも　知らん▼
+みんなが　あいつらは　悪い……！
+そう　いってるからって▽
+なんにも　考えず▼
+プラズマだんは　悪いと　決めるのは
+おいの　流儀ではない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-06-17T09:53:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -344,10 +368,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・画面下を向いてメッセージ表示
+・続けてswleader8_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:55" />
+				Time="2011-06-17T09:42:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -383,10 +408,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>でも　おまはんらが　困っとる
+それなら　助けてやらねば　ならん▽
+これが　おいの　やりたいことじゃ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:08:50" />
+				Time="2011-06-17T09:53:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -395,10 +422,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・主人公たちの方を向いてメッセージ表示
+・続けてswleader1_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:55" />
+				Time="2011-06-17T09:43:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -433,11 +461,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『たすかりました！
+			<Text>チェレン『助かりました！
 ありがとう　ございます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:26:10" />
+				Time="2011-06-17T09:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -446,10 +474,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader8_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:21:20" />
+				Time="2011-06-17T09:43:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -492,10 +520,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>シズイ『ええか
+おはんら　信念を　持てよ！▼
+奪われた　ポケモンを
+探すのでも　いい！▼
+イッシュを　氷漬け　から
+守る　ためでも　いい！▼
+理由は　なんでも　いい
+自分は　なぜ　そうするのか？▼
+信念の　強さが　ポケモンと
+自分に　力を　くれるたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:08:50" />
+				Time="2011-06-17T09:54:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -504,10 +541,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader8_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:55" />
+				Time="2011-06-17T09:43:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -530,12 +567,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほな　きをつけて　いけよ！▼
-うえで　さわいで　しまったから
+			<Text>うえで　さわいで　しまったから
 みんな　まちかまえて　いるたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:15:53" />
+				Time="2011-06-17T09:47:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -543,12 +579,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほな　気をつけて　いけよ！▼
-上で　騒いでしまったから
+			<Text>上で　騒いでしまったから
 みんな　待ち構えて　いるたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:26:16" />
+				Time="2011-06-17T09:47:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -557,11 +592,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・表示後、c14方面に去っていく
-・続けて</Comment>
+・再度、アジト船を向いてメッセージ表示
+・続けてswleader8_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:26:31" />
+				Time="2011-06-17T09:50:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -580,14 +615,65 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_w21_swleader8_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほな　きをつけて　いけよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T09:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T09:47:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほな　気をつけて　いけよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T09:47:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T09:47:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、c14方面に去っていく
+・続けてswrival_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T09:50:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER8
+ジムリーダー・シズイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T09:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_w21_swrival_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なんだよー
+さいご　しまらない　ひと　だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-06-17T09:51:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -595,10 +681,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なんだよー
+最後　しまらない　人だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:19:50" />
+				Time="2011-06-17T09:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -607,10 +694,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・c14を向きながらメッセージ表示
+・続けてswrival_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:12:59" />
+				Time="2011-06-17T09:50:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -633,10 +721,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>とはいえ
+あの　ひとなりの　やさしさ　か▼
+さ　いくぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:25:19" />
+				Time="2011-06-17T09:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -644,10 +734,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>とはいえ
+あの人なりの　優しさ　か▼
+さ　行くぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:25:19" />
+				Time="2011-06-17T09:52:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -656,10 +748,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・表示後、ライバル、チェレンの順で
+　タラップを上がっていく
+・彼らが移動を終えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:25:19" />
+				Time="2011-06-17T09:50:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
