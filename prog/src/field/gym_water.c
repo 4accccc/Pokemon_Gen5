@@ -1432,15 +1432,35 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
       // 拡張高さセット
       EX_HEIGHT_Set( p_gym_wk, p_wk->id );
 
+      // アニメコマンド破棄
+      {
+        MMDL  *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+
+        // アニメコマンドがあるかチェック
+        if( MMDL_CheckEndAcmd( mmdl ) == FALSE )
+        {
+          // 壁ヒット時のみ、アニメを破棄する
+          // (壁ヒット時のアニメはその場歩き)
+          if( FIELD_PLAYER_IsHitch( p_wk->player ) == TRUE )
+          {
+            MMDL_FreeAcmd( mmdl );
+            ICHI_Printf("アニメ強制開放\n");
+          }
+        }
+      }
+
       *seq = SEQ_JUMP;
     }
+    // アニメ破棄後 すぐにアニメ終了してもよいが、
+    // 念のため1フレーム待つ
     break;
 
   // 飛び乗り
   case SEQ_JUMP:
     {
+      MMDL  *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
       // アニメ終了待ち
-      if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
+      if( MMDL_CheckPossibleAcmd( mmdl ) )
       {
         // ジャンプアニメ
         u16   dir   = FIELD_PLAYER_GetDir( p_wk->player );
@@ -2549,14 +2569,10 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk, u16 type )
         // 自機の向きによって回転
         FIELD_PLAYER_GetFrontGridPos( p_wk->player, &gx, &gy, &gz );
         FIELD_PLAYER_GetGridPos( p_wk->player, &gx2, &gy2, &gz2 );
-        ICHI_Printf("gx x:%x z:%x \n", gx, gz);
-        ICHI_Printf("gx2 x:%x z:%x \n", gx2, gz2);
 
         // 少しだけ前方に出す
         x = (gx-gx2) * 0x6000;
         z = (gz-gz2) * 0x6000;
-
-        ICHI_Printf("差 x:%x z:%x \n", x, z);
 
         // ハスの位置
         status->trans = hasu->trans;
