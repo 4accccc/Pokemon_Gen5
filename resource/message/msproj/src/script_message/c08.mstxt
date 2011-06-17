@@ -586,10 +586,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>ポケモン
-オノノクス</Text>
+クリムガン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T03:44:23" />
+				Time="2011-06-17T07:50:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -604,10 +604,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よくやった　オノノクス！▼</Text>
+			<Text>よくやった　クリムガン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:24:31" />
+				Time="2011-06-17T07:50:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -615,10 +615,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よくやった　オノノクス！▼</Text>
+			<Text>よくやった　クリムガン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:24:39" />
+				Time="2011-06-17T07:50:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -627,11 +627,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・オノノクスを消す
+・クリムガンを消す
 ・続けてswleader7_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:39:37" />
+				Time="2011-06-17T07:51:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
