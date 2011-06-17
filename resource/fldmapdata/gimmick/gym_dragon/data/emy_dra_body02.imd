@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2011-06-14T22:37:59" source="map_test02.mb"/>
+	<create user="unno" host="W00199" date="2011-06-17T19:06:17" source="map_test02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2011-06-14T22:37:59" source="map_test02.mb"/>
+<original_create user="unno" host="W00199" date="2011-06-17T19:06:17" source="map_test02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-2.299805 -0.652344 -1.555908" whd="4.599365 4.411133 2.982910"/>
+<box_test pos_scale="7" xyz="0.287598 2.361328 -2.840576" whd="2.299561 2.205566 1.491455"/>
 
 <tex_image_array size="6">
 	<tex_image index="0" name="gym_08darm01"
@@ -1883,7 +1883,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="184.000000 344.000000 -264.000000"
 		visibility="on"
 		display_size="6"
 		vertex_size="510" polygon_size="196"

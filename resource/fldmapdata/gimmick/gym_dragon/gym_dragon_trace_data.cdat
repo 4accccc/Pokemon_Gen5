@@ -31,7 +31,7 @@ static const ARCDATID sc_hero_move_data[] =
 // =================================================
 static const GYM_DRAGON_TRACE_DATA sc_trace_data[] =
 {
- { 0 ,0 ,50 },
+ { 0 ,0 ,1000 },
  { 0 ,0 ,50 },
  { 0 ,0 ,50 },
  { 0 ,0 ,50 },
