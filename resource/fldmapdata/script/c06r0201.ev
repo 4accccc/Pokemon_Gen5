@@ -199,6 +199,10 @@ EVENT_START   ev_c06r0201_swleader6_01
       _FLAG_SET( FV_C06R0201_SWBELL_01 )
       //========================================//
 
+      //t07ヤマジタウンまでジャンプ【仮】
+      $WK_SCENE_T07 = 1 //イベント発生
+      _MAP_CHANGE( ZONE_ID_T07R0101, 6, 4, DIR_DOWN )
+
       //暗転復帰
       _BLACK_IN_SLOW()
       _DISP_FADE_END_CHECK()
