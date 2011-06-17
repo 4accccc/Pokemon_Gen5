@@ -930,7 +930,11 @@
 #define	TRID_VETERANW_07   ( 917 ) 
 #define	TRID_VETERANM_11   ( 918 ) 
 #define	TRID_VETERANW_08   ( 919 ) 
-#define TRID_MAX  ( 920 )
+#define	TRID_RANGERM_17   ( 920 ) 
+#define	TRID_RANGERW_17   ( 921 ) 
+#define	TRID_RANGERM_18   ( 922 ) 
+#define	TRID_RANGERW_18   ( 923 ) 
+#define TRID_MAX  ( 924 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
