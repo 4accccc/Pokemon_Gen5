@@ -44,10 +44,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>woman1</Text>
+			<Text>WOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T02:51:37" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -94,10 +94,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>girl2</Text>
+			<Text>GIRL2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T02:51:41" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -135,10 +135,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・表示にあわせ鳴き声再生</Comment>
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T02:51:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
