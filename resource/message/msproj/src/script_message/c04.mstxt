@@ -40,10 +40,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:09" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -164,10 +165,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:11" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -296,10 +298,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:13" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -356,10 +359,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:13" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -925,10 +929,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:15" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -994,10 +999,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:15" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1986,11 +1992,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-ノボリ</Text>
+			<Text>TBOSSBL
+サブウェイマスター・ノボリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:33" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2051,11 +2057,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-クダリ</Text>
+			<Text>TBOSS
+サブウェイマスター・クダリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:46" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2121,11 +2127,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-ノボリ</Text>
+			<Text>TBOSSBL
+サブウェイマスター・ノボリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2184,11 +2190,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-クダリ</Text>
+			<Text>TBOSS
+サブウェイマスター・クダリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2245,11 +2251,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-ノボリ</Text>
+			<Text>TBOSSBL
+サブウェイマスター・ノボリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2308,11 +2314,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-クダリ</Text>
+			<Text>TBOSS
+サブウェイマスター・クダリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2374,11 +2380,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>サブウェイマスター
-クダリ</Text>
+			<Text>TBOSS
+サブウェイマスター・クダリ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:16:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
