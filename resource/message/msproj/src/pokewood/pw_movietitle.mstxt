@@ -9981,10 +9981,10 @@
 		Label="pw_movietitle_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン</Text>
+			<Text>しんりゃくしゃ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:55:24" />
+				User="mori:W00269"
+				Time="2011-06-17T02:27:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9992,10 +9992,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン</Text>
+			<Text>しんりゃくしゃ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				User="mori:W00269"
+				Time="2011-06-17T02:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10015,10 +10015,10 @@
 		Label="pw_movietitle_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>ハチクマン</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:55:34" />
+				User="mori:W00269"
+				Time="2011-06-17T02:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10026,10 +10026,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>ハチクマン</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T03:58:41" />
+				User="mori:W00269"
+				Time="2011-06-17T02:27:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10355,10 +10355,10 @@
 		Label="pw_moviesubtitle_01_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<Text>ダミー</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T16:00:00" />
+				Time="2011-06-17T02:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10366,10 +10366,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
+			<Text>ダミー</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T16:00:02" />
+				Time="2011-06-17T02:30:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10457,10 +10457,10 @@
 		Label="pw_moviesubtitle_02_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダミー</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T04:04:27" />
+				User="mori:W00269"
+				Time="2011-06-17T02:30:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -10468,10 +10468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダミー</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド　１</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-15T04:04:29" />
+				User="mori:W00269"
+				Time="2011-06-17T02:30:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
