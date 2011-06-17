@@ -10,11 +10,18 @@
 #ifndef ZONE_T07_EVC_H
 #define ZONE_T07_EVC_H
 
+#define T07_WORKMAN2_01                    0
+#define T07_POKE20_01                      1
+#define T07_HAKASE2_01                     2
+#define T07_BACKPACKERM_01                 3
+#define T07_WOMAN1_01                      4
+#define T07_SWBELL_01                      5
 
 #endif //ZONE_T07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_T07_EVB_H
 #define ZONE_T07_EVB_H
 
+#define BG_T07_SIGN_01                    0
 
 #endif //ZONE_T07_EVB_H

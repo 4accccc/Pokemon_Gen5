@@ -9,6 +9,9 @@
 #ifndef ZONE_T07PC0101_EVC_H
 #define ZONE_T07PC0101_EVC_H
 
+#define T07PC0101_MOUNTAIN_01              0
+#define T07PC0101_OLDWOMAN1_01             1
+#define T07PC0101_FIGHTERW_01              2
 
 #endif //ZONE_T07PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t07pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

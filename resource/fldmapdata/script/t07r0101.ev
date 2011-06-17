@@ -20,6 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t07r0101
+_EVENT_DATA    ev_t07r0101_infomationw_01
+_EVENT_DATA    ev_t07r0101_oldman1_01
+_EVENT_DATA    ev_t07r0101_assistantm_01
 _EVENT_DATA_END
 
 
@@ -35,4 +38,58 @@ _EVENT_DATA_END
 ev_t07r0101:
   //とりあえず最初のラベルだけ生成している
   _END
+
+/**************************************************************/
+/*  汎用受付♀（飛行機に乗ってフキヨセシティへ）              */
+/**************************************************************/
+EVENT_START   ev_t07r0101_infomationw_01
+{
+
+  _TALK_OBJ_START()
+  //フキヨセシティに　いかれますか？
+  _BALLOONWIN_TALKOBJ_MSG( msg_t07r0101_infomationw_01 )
+
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+    //ひこうきに　のって　おまちください▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t07r0101_infomationw_02 )
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+      //暗転【仮】発着デモへ（詳細未定）
+      _BLACK_OUT_SLOW()
+      _DISP_FADE_END_CHECK()
+
+      //暗転復帰
+      _BLACK_IN_SLOW()
+      _DISP_FADE_END_CHECK()
+
+      _TIME_WAIT( 15 )
+
+  ELSE  //いいえ
+    //いつでも　ごりよう　ください！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t07r0101_infomationw_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
+/*  わざおしえしょくにん【仮】技教え処理詳細未定              */
+/**************************************************************/
+EVENT_START    ev_t07r0101_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07r0101_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  わざおすすめにん【仮】技おすすめ処理詳細未定              */
+/**************************************************************/
+EVENT_START    ev_t07r0101_assistantm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07r0101_assistantm_01 )
+EVENT_END
+
 

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_t07.h"
-  //.include  "t07.h"
+  .include  "t07.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t07
+_EVENT_DATA    ev_scene_t07_hakase2_01
+_EVENT_DATA    ev_t07_HAKASE2_01
+_EVENT_DATA    ev_t07_workman2_01
+_EVENT_DATA    ev_t07_backpackerm_01
+_EVENT_DATA    ev_t07_woman1_01
+_EVENT_DATA    ev_t07_poke20_01
+_EVENT_DATA    ev_bg_t07_sign_01
 _EVENT_DATA_END
 
 
@@ -29,10 +35,156 @@ _EVENT_DATA_END
 //ev_zone_t07:
 //  _END
 
+/************************************************************/
+/*  SCENE_CHANGE：博士イベント                              */
+/************************************************************/
+EVENT_START   ev_scene_t07_hakase2_01
+{
+
+  //アニメ：主人公移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 625, 305, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ：さて　あなたを
+  _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_01, T07_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：博士主人公らを見る
+  _OBJ_ANIME( T07_HAKASE2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ：チェレンから　ききました▼
+  _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_02, T07_HAKASE2_01, POS_DEFAULT )
+
+  //アララギ：そう！　この　イッシュちほうには（バージョンでセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_t07_hakase2_03w, msg_t07_hakase2_03b, T07_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：博士下を向く
+  _OBJ_ANIME( T07_HAKASE2_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ：……ただ　２ねんまえ（バージョンでセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_t07_hakase2_04w, msg_t07_hakase2_04b, T07_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //ベル：ですよねえ……
+  _BALLOONWIN_OBJMSG_POS( msg_t07_swbell_01, T07_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：博士主人公らを見る
+  _OBJ_ANIME( T07_HAKASE2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ：そうね　ベル▼（バージョンでセリフが異なる）
+  _BALLOONWIN_OBJMSG_WB( msg_t07_hakase2_05w, msg_t07_hakase2_05b, T07_HAKASE2_01, POS_DEFAULT )
+
+  //アララギ博士に力を貸す？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+    //アララギ：ありがとう！▼
+    _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_06, T07_HAKASE2_01, POS_DEFAULT )
+
+  ELSE    //いいえ
+    //アララギ：そうよね
+    _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_07, T07_HAKASE2_01, POS_DEFAULT )
+
+  ENDIF
+
+  //アララギ：シャガさんから　ドラゴンポケモンの
+  _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_08, T07_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //ベル：では　あたしは
+  _BALLOONWIN_OBJMSG_POS( msg_t07_swbell_02, T07_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //ベル退場
+  _OBJ_ANIME_AUTO( T07_SWBELL_01, 634, 306, FORCE_TYPE_NPC, 8, DIR_UD )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( T07_SWBELL_01 )
+
+  //========================================//
+  //ベル非表示
+  _FLAG_SET( FV_T07_SWBELL_01 )
+  //POSイベント進行
+  $WK_SCENE_T07 = 0
+  //========================================//
+
+}
+EVENT_END
+
 /**************************************************************/
-/*                                                            */
+/*  アララギ博士                                              */
 /**************************************************************/
-ev_t07:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_t07_HAKASE2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_hakase2_09 )
+EVENT_END
+
+/**************************************************************/
+/*  働くおじさん                                              */
+/**************************************************************/
+EVENT_START   ev_t07_workman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_01_01 )   //【仮】仮メッセージ
+EVENT_END
+
+/**************************************************************/
+/*  バックパッカー♂                                          */
+/**************************************************************/
+EVENT_START   ev_t07_backpackerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_backpackerm_01 )   //【仮】仮メッセージ
+EVENT_END
+
+/**************************************************************/
+/*  お姉さん                                                  */
+/**************************************************************/
+EVENT_START   ev_t07_woman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07_woman1_01 )   //【仮】仮メッセージ
+EVENT_END
+
+/**************************************************************/
+/*  ワルビル                                                  */
+/**************************************************************/
+EVENT_START   ev_t07_poke20_01
+  _EASY_TALK_POKEVOICE( MONSNO_505, msg_t07_poke20_01 )
+EVENT_END
+
+/**************************************************************/
+/*  看板01                                                    */
+/**************************************************************/
+EVENT_START   ev_bg_t07_sign_01
+  _EASY_BGWIN_MSG( msg_t07_sign_01, TYPE_TOWN )
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 

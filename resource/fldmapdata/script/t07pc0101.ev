@@ -20,6 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t07pc0101
+_EVENT_DATA    ev_t07pc0101_fighterw_01
+_EVENT_DATA    ev_t07pc0101_oldwoman1_01
+_EVENT_DATA    ev_t07pc0101_mountain_01
 _EVENT_DATA_END
 
 
@@ -35,4 +38,27 @@ _EVENT_DATA_END
 ev_t07pc0101:
   //とりあえず最初のラベルだけ生成している
   _END
+
+/**************************************************************/
+/*  バトルガール                                              */
+/**************************************************************/
+EVENT_START   ev_t07pc0101_fighterw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07pc0101_fighterw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばあさん（アイテム入手処理）                            */
+/**************************************************************/
+EVENT_START   ev_t07pc0101_oldwoman1_01
+  //アイテム：のろいのおふだ入手
+  _EASY_TALK_ITEM_EVENT( ITEM_NOROINOOHUDA, 1, FE_T07PC0101_ITEMGET_01, msg_t07pc0101_oldwoman1_01, msg_t07pc0101_oldwoman1_02, msg_t07pc0101_oldwoman1_02 )
+EVENT_END
+
+/**************************************************************/
+/*  やまおとこ                                                */
+/**************************************************************/
+EVENT_START   ev_t07pc0101_mountain_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07pc0101_mountain_01 )
+EVENT_END
+
 
