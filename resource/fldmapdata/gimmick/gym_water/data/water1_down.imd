@@ -3,18 +3,18 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-06-08T19:53:12" source="water1_down.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-06-16T18:02:46" source="water1_down.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-06-08T19:53:12" source="water1_down.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-06-16T18:02:46" source="water1_down.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
-	pos_scale="3"
+	pos_scale="2"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-2.911377 -0.297363 -2.986328" whd="5.822510 0.000000 5.972412"/>
+<box_test pos_scale="3" xyz="-3.202393 -1.031250 -3.284912" whd="6.404541 0.000000 6.569336"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="in82_shibu_3"
@@ -38,17 +38,17 @@
 		path="C:/home/swan_data3d/gimmick/gym_water/hasu/tex/in82_shibu_3.tga"
 	>
 		<bitmap size="32">
+			0000 0000 0000 0000 0000 0000 aaaa 0000
+			0000 0000 0000 0000 0000 0000 0000 5555
 			0000 0000 0000 0000 0000 0000 5555 0000
-			0000 0000 0000 0000 0000 5555 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 aaaa 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="in82_shibu_3_pl" color_size="4">
-		7f61 7fff 77bd 7fff
+		7680 6ee5 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -66,9 +66,9 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="31 31 31"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
@@ -87,9 +87,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="28" polygon_size="14"
 		triangle_size="14" quad_size="0"
-		volume_min="-5.822754 -0.594238 -5.972412"
-		volume_max="5.822754 -0.594238 5.972412"
-		volume_r="6.001953"
+		volume_min="-6.404785 -2.062500 -6.569336"
+		volume_max="6.404785 -2.062500 6.569336"
+		volume_r="6.885498"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -100,57 +100,57 @@
 					<mtx idx="0"/>
 					<tex st="8.312500 -5.625000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="0.000000 -0.594238 -5.972412"/>
-					<pos_xz xz="-2.591309 -5.381104"/>
+					<pos_xyz xyz="0.000000 -2.062500 -6.569336"/>
+					<pos_xz xz="-2.850342 -5.918945"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="8.312500 -5.625000"/>
-					<pos_xz xz="-4.669434 -3.723877"/>
-					<pos_xz xz="-5.822754 -1.329102"/>
+					<pos_xz xz="-5.136230 -4.095947"/>
+					<pos_xz xz="-6.404785 -1.461914"/>
 				</primitive>
 				<primitive index="1" type="triangle_strip" vertex_size="4">
-					<pos_xz xz="0.000000 -5.972412"/>
+					<pos_xz xz="0.000000 -6.569336"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="8.312500 -5.625000"/>
-					<pos_xz xz="2.591309 -5.381104"/>
-					<pos_xz xz="4.669434 -3.723877"/>
+					<pos_xz xz="2.850342 -5.918945"/>
+					<pos_xz xz="5.136230 -4.095947"/>
 				</primitive>
 				<primitive index="2" type="triangle_strip" vertex_size="4">
-					<pos_xy xy="4.669434 -0.594238"/>
+					<pos_xy xy="5.136230 -2.062500"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="8.312500 -5.625000"/>
-					<pos_xz xz="5.822754 -1.329102"/>
-					<pos_xz xz="5.822754 1.329102"/>
+					<pos_xz xz="6.404785 -1.461914"/>
+					<pos_xz xz="6.404785 1.461914"/>
 				</primitive>
 				<primitive index="3" type="triangle_strip" vertex_size="4">
-					<pos_xy xy="5.822754 -0.594238"/>
+					<pos_xy xy="6.404785 -2.062500"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="8.312500 -5.625000"/>
-					<pos_xz xz="4.669434 3.723877"/>
-					<pos_xz xz="2.591309 5.381104"/>
+					<pos_xz xz="5.136230 4.095947"/>
+					<pos_xz xz="2.850342 5.918945"/>
 				</primitive>
 				<primitive index="4" type="triangle_strip" vertex_size="4">
-					<pos_xy xy="2.591309 -0.594238"/>
+					<pos_xy xy="2.850342 -2.062500"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="8.312500 -5.625000"/>
-					<pos_xz xz="0.000000 5.972412"/>
-					<pos_xz xz="-2.591309 5.381104"/>
+					<pos_xz xz="0.000000 6.569336"/>
+					<pos_xz xz="-2.850342 5.918945"/>
 				</primitive>
 				<primitive index="5" type="triangle_strip" vertex_size="4">
-					<pos_xy xy="-2.591309 -0.594238"/>
+					<pos_xy xy="-2.850342 -2.062500"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 					<tex st="8.312500 -5.625000"/>
-					<pos_xz xz="-4.669434 3.723877"/>
-					<pos_xz xz="-5.822754 1.329102"/>
+					<pos_xz xz="-5.136230 4.095947"/>
+					<pos_xz xz="-6.404785 1.461914"/>
 				</primitive>
 				<primitive index="6" type="triangles" vertex_size="3">
-					<pos_xz xz="-5.822754 -1.329102"/>
-					<pos_xz xz="-5.822754 1.329102"/>
+					<pos_xz xz="-6.404785 -1.461914"/>
+					<pos_xz xz="-6.404785 1.461914"/>
 					<tex st="8.312500 15.187500"/>
 					<pos_xz xz="0.000000 0.000000"/>
 				</primitive>
@@ -174,9 +174,9 @@
 		display_size="1"
 		vertex_size="28" polygon_size="14"
 		triangle_size="14" quad_size="0"
-		volume_min="-5.822754 -0.594238 -5.972412"
-		volume_max="5.822754 -0.594238 5.972412"
-		volume_r="6.001953"
+		volume_min="-6.404785 -2.062500 -6.569336"
+		volume_max="6.404785 -2.062500 6.569336"
+		volume_r="6.885498"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
