@@ -9,12 +9,25 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
+//-------------------------------------
+///	モデル管理ID
+//=====================================
+typedef enum
+{
+  MODELID_HERO_DRAGON,
+  MODELID_ENEMY_DRAGON_TAIL,
+  MODELID_ENEMY_DRAGON_FOOT_D,
+  MODELID_ENEMY_DRAGON_FOOT_U,
+  MODELID_ENEMY_DRAGON_HEAD,
+  MODELID_MAX,
+}MODELID;
+
 // レイヤーごとのボタン定義[レイヤー][場所（左右中）][上がれるか(FALSE,TRUE)]
 static const GYM_BUTTON_SEQ sc_button_seq_table[FLOOR_LAYER_MAX][GYM_LOCATION_MAX][2] =
 {
   {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_U}},   // TAIL
-  {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // FLOOT
-  {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // ARM
+  {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // FOOT_D
+  {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // FOOT_U
   {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_D,GYM_BUTTON_D}},    // HEAD
 };
 
@@ -26,114 +39,100 @@ static const BUTTON_EVENT_DATA sc_button_event_data[FLOOR_LAYER_MAX][GYM_LOCATIO
   {
     // 位置->左
     {
-      { HDRA_UMOVE_DFOOT },  // ボタン上
-      { HDRA_UMOVE_DFOOT },  // ボタン下
-      { HDRA_UMOVE_DFOOT },  // ボタン左
-      { HDRA_UMOVE_DFOOT },  // ボタン右
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
     // 位置->右
     {
-      { HDRA_UMOVE_DFOOT },  // ボタン上
-      { HDRA_UMOVE_DFOOT },  // ボタン下
-      { HDRA_UMOVE_DFOOT },  // ボタン左
-      { HDRA_UMOVE_DFOOT },  // ボタン右
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
     // 位置->中
     {
-      { HDRA_UMOVE_DFOOT },  // ボタン上
-      { HDRA_UMOVE_DFOOT },  // ボタン下
-      { HDRA_UMOVE_DFOOT },  // ボタン左
-      { HDRA_UMOVE_DFOOT },  // ボタン右
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_UMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
   },
-  // FLOOT
+  // FOOT_D
   {
     // 位置->左
     {
-      { HDRA_MOVE_DFOOT_L_C },  // ボタン上
-      { HDRA_MOVE_DFOOT_L_C },  // ボタン下
-      { HDRA_MOVE_DFOOT_L_C },  // ボタン左
-      { HDRA_MOVE_DFOOT_L_C },  // ボタン右
+      { HDRA_MOVE_DFOOT_L_C ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_MOVE_DFOOT_L_C ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_MOVE_DFOOT_L_C ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_MOVE_DFOOT_L_C ,MODELID_ENEMY_DRAGON_FOOT_D ,EDRA_DFOOT_PULL_L ,C08GYM0101_VETERANM_02 ,TRUE},  // ボタン右
     },
     // 位置->右
     {
-      { HDRA_MOVE_DFOOT_R_C },  // ボタン上
-      { HDRA_MOVE_DFOOT_R_C },  // ボタン下
-      { HDRA_MOVE_DFOOT_R_C },  // ボタン左
-      { HDRA_MOVE_DFOOT_R_C },  // ボタン右
+      { HDRA_MOVE_DFOOT_R_C ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_MOVE_DFOOT_R_C ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_MOVE_DFOOT_R_C ,MODELID_ENEMY_DRAGON_FOOT_D ,EDRA_DFOOT_PULL_R ,C08GYM0101_VETERANW_01 ,TRUE},  // ボタン左
+      { HDRA_MOVE_DFOOT_R_C ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
     // 位置->中
     {
-      { HDRA_UMOVE_UFOOT },  // ボタン上
-      { HDRA_DMOVE_TAIL },  // ボタン下
-      { HDRA_MOVE_DFOOT_C_R },  // ボタン左
-      { HDRA_MOVE_DFOOT_C_L },  // ボタン右
+      { HDRA_UMOVE_UFOOT ,0 ,0 , 0 ,FALSE },      // ボタン上
+      { HDRA_DMOVE_TAIL ,0 ,0 , 0 ,FALSE },       // ボタン下
+      { HDRA_MOVE_DFOOT_C_R ,MODELID_ENEMY_DRAGON_FOOT_D ,EDRA_DFOOT_PUSH_R ,C08GYM0101_VETERANW_01 ,TRUE},  // ボタン左
+      { HDRA_MOVE_DFOOT_C_L ,MODELID_ENEMY_DRAGON_FOOT_D ,EDRA_DFOOT_PUSH_L ,C08GYM0101_VETERANM_02 ,TRUE},  // ボタン右
     },
   },
-  // ARM
+  // FOOT_U
   {
     // 位置->左
     {
-      { HDRA_MOVE_UFOOT_L_C },  // ボタン上
-      { HDRA_MOVE_UFOOT_L_C },  // ボタン下
-      { HDRA_MOVE_UFOOT_L_C },  // ボタン左
-      { HDRA_MOVE_UFOOT_L_C },  // ボタン右
+      { HDRA_MOVE_UFOOT_L_C ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_MOVE_UFOOT_L_C ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_MOVE_UFOOT_L_C ,MODELID_ENEMY_DRAGON_FOOT_U ,EDRA_UFOOT_PULL_L ,C08GYM0101_VETERANM_03 ,TRUE},  // ボタン左
+      { HDRA_MOVE_UFOOT_L_C ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
     // 位置->右
     {
-      { HDRA_MOVE_UFOOT_R_C },  // ボタン上
-      { HDRA_MOVE_UFOOT_R_C },  // ボタン下
-      { HDRA_MOVE_UFOOT_R_C },  // ボタン左
-      { HDRA_MOVE_UFOOT_R_C },  // ボタン右
+      { HDRA_MOVE_UFOOT_R_C ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_MOVE_UFOOT_R_C ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_MOVE_UFOOT_R_C ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_MOVE_UFOOT_R_C ,MODELID_ENEMY_DRAGON_FOOT_U ,EDRA_UFOOT_PULL_R ,C08GYM0101_VETERANW_02 ,TRUE},  // ボタン右
     },
     // 位置->中
     {
-      { HDRA_UMOVE_HEAD },  // ボタン上
-      { HDRA_DMOVE_DFOOT },  // ボタン下
-      { HDRA_MOVE_UFOOT_C_L },  // ボタン左
-      { HDRA_MOVE_UFOOT_C_R },  // ボタン右
+      { HDRA_UMOVE_HEAD ,MODELID_ENEMY_DRAGON_HEAD ,EDRA_HEAD_PUSH ,C08GYM0101_SWLEADER7_01 ,TRUE},  // ボタン上
+      { HDRA_DMOVE_DFOOT ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_MOVE_UFOOT_C_L ,MODELID_ENEMY_DRAGON_FOOT_U ,EDRA_UFOOT_PUSH_L ,C08GYM0101_VETERANM_03 ,TRUE},  // ボタン左
+      { HDRA_MOVE_UFOOT_C_R ,MODELID_ENEMY_DRAGON_FOOT_U ,EDRA_UFOOT_PUSH_R ,C08GYM0101_VETERANW_02 ,TRUE},  // ボタン右
     },
   },
   // HEAD
   {
     // 位置->左
     {
-      { HDRA_DMOVE_UFOOT },  // ボタン上
-      { HDRA_DMOVE_UFOOT },  // ボタン下
-      { HDRA_DMOVE_UFOOT },  // ボタン左
-      { HDRA_DMOVE_UFOOT },  // ボタン右
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
     // 位置->右
     {
-      { HDRA_DMOVE_UFOOT },  // ボタン上
-      { HDRA_DMOVE_UFOOT },  // ボタン下
-      { HDRA_DMOVE_UFOOT },  // ボタン左
-      { HDRA_DMOVE_UFOOT },  // ボタン右
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン下
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
     // 位置->中
     {
-      { HDRA_DMOVE_UFOOT },  // ボタン上
-      { HDRA_DMOVE_UFOOT },  // ボタン下
-      { HDRA_DMOVE_UFOOT },  // ボタン左
-      { HDRA_DMOVE_UFOOT },  // ボタン右
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン上
+      { HDRA_DMOVE_UFOOT ,MODELID_ENEMY_DRAGON_HEAD ,EDRA_HEAD_PULL ,C08GYM0101_SWLEADER7_01 ,TRUE},  // ボタン下
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン左
+      { HDRA_DMOVE_UFOOT ,0 ,0 , 0 ,FALSE },  // ボタン右
     },
   },
 };
 
-
-
-//-------------------------------------
-///	モデル管理
-//=====================================
-typedef enum
-{
-  MODELID_HERO_DRAGON,
-  MODELID_ENEMY_DRAGON_TAIL,
-  MODELID_ENEMY_DRAGON_FOOT_L,
-  MODELID_ENEMY_DRAGON_FOOT_R,
-  MODELID_ENEMY_DRAGON_FOOT_HEAD,
-  MODELID_MAX,
-}MODELID;
 
 
 //リソースID
@@ -301,14 +300,13 @@ static const VecFx32 sc_mdl_offset_table[MODELID_MAX] =
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST((32+16)*16)},
   
 //  {FX32_CONST(184+16*16),FX32_CONST(288),FX32_CONST(-204+16*16)}, // TAIL
-//  {FX32_CONST(184+16*16),FX32_CONST(376),FX32_CONST(-204+16*16)}, // FOOT
-//  {FX32_CONST(184+16*16),FX32_CONST(704),FX32_CONST(-204+16*16)}, // ARM
+//  {FX32_CONST(184+16*16),FX32_CONST(376),FX32_CONST(-204+16*16)}, // FOOT_D
+//  {FX32_CONST(184+16*16),FX32_CONST(704),FX32_CONST(-204+16*16)}, // FOOT_U
 //  {FX32_CONST(184+16*16),FX32_CONST(832),FX32_CONST(-204+16*16)}, // HEAD
 
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // TAIL
-  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // FOOT
-  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // ARM
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // FOOT_D
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // FOOT_U
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // HEAD
 };
-
 

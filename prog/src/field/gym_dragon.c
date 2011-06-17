@@ -29,9 +29,11 @@
 #include "rail_line/c08gym0101.h" //for RAIL
 #include "system/ica_anime.h"
 
+#include "../../../resource/fldmapdata/eventdata/tmp/c08gym0101.h"  // obj_id
 #include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data_id.h"  // データID
 #include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data.cdat"  // sc_hero_move_data
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // SYS_FLAG_C08GYM_BUTTON_～
+#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_height_data.cdat"  // sc_ex_height_data
 #include "gym_dragon.cdat"
 
 #include "eventwork_def.h"  // LOCALWORK*
@@ -97,13 +99,18 @@ typedef struct PLAYER_MOVE_WORK_tag
   FIELDMAP_WORK     *p_fld_wk;
   EVENTWORK         *p_event_wk;
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
- 
+  MODEL *p_pl_dra_model; 
+  MODEL *p_en_dra_model; 
+
   // data
   FIELD_PLAYER  *p_player;
   MMDL          *p_plmmdl;
   u16           event_seq;
   const BUTTON_EVENT_DATA *p_button_evdata;
   GYM_DRAGON_SV_WORK  *p_sv_work;
+
+  BOOL  is_pl_move_end;
+  BOOL  is_en_move_end;
 
   // 移動データ
   s32           move_data_frame;
@@ -132,10 +139,12 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
 static GMEVENT_RESULT ButtonActive_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
 static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk );
-static BOOL MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk );
 static void UpdateButtonStatus( GYM_BUTTON_SEQ button_seq ,EVENTWORK* p_event_wk );
 static void SetWorkValue( EVENTWORK* p_event_wk ,u16 work_no ,u16 value );
+static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
 
 //-------------------------------------
 ///	上レイヤーへ行けるか判定関数テーブル
@@ -229,7 +238,34 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     }
   }
 
+  // 拡張高さの設定
+  SetExHeight( p_wk->p_fld_wk );
 }
+
+//-----------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張高さを設定する
+ *
+ *	@param	p_fld_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetExHeight( FIELDMAP_WORK* p_fld_wk )
+{
+  int i;
+  FLDMAPPER* p_mapper = FIELDMAP_GetFieldG3Dmapper( p_fld_wk );
+  EHL_PTR p_ex_height = FLDMAPPER_GetExHegihtPtr( p_mapper );
+
+  for(i = 0;i < EX_HEIGHT_DATA_NUM;i++){
+    EXH_SetUpHeightData( i,
+      sc_ex_height_data[i].x, sc_ex_height_data[i].z,
+      sc_ex_height_data[i].xw, sc_ex_height_data[i].zw,
+			sc_ex_height_data[i].h, EX_HEIGHT_ATTRIBUTE, p_ex_height );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * 解放関数
@@ -621,8 +657,12 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
     break;
   case MOVE_EVENT_SEQ_MOVE:
     {
-      BOOL is_end = MOVE_Event_UpdatePlayerPos( p_wk );
-      if( is_end == TRUE )
+      // トレーナー位置のアップデート
+      MOVE_Event_UpdatePlayerPos( p_wk );
+      MOVE_Event_UpdateEnemyTrainerPos( p_wk );
+
+      // 終了チェック
+      if( (p_wk->is_pl_move_end == TRUE) && (p_wk->is_pl_move_end == TRUE) )
       {
         (*p_seq) = MOVE_EVENT_SEQ_EXIT;
       }
@@ -657,24 +697,29 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
   // 移動用データを取得
   {
     u8  move_data_index;
-    u16 trace_data_id = p_wk->p_button_evdata->trace_data_id;
+    u16 trace_data_id = p_wk->p_button_evdata->pl_trace_data_id;
     p_wk->p_trace_data = &sc_trace_data[trace_data_id];
     move_data_index = p_wk->p_trace_data->data_index;
     p_wk->p_hero_move_data = p_wk->p_gmkwk->p_hero_move_data[move_data_index];
     p_wk->move_data_frame_max = p_wk->p_gmkwk->move_data_frame_max[move_data_index];
     p_wk->move_data_frame = p_wk->p_trace_data->start_frame;
+    p_wk->p_pl_dra_model        = &p_wk->p_gmkwk->model[MODEL_RESID_HERO_DRAGON];
+    p_wk->p_en_dra_model        = &p_wk->p_gmkwk->model[MODEL_RESID_HERO_DRAGON];
   }
   
-  // アニメーション再生
+  // 自機アニメーション再生
   {
     EXP_OBJ_ANM_CNT_PTR exobj_anm;
-    MODEL *p_model    = &p_wk->p_gmkwk->model[MODEL_RESID_HERO_DRAGON];
+    MODEL *p_model    = p_wk->p_pl_dra_model;
     exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, 0 );
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, 0, TRUE);
     FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, 0 ,FX32_CONST(p_wk->move_data_frame) );
     FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
   }
 
+  // フラグ初期化
+  p_wk->is_pl_move_end = FALSE;
+  p_wk->is_en_move_end = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -706,9 +751,10 @@ static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
+static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
 {
   // 移動処理
+  if( p_wk->is_pl_move_end == FALSE )
   {
     VecFx32 vec = {0,0,0};
     if ( ICA_ANIME_GetTranslateAt( p_wk->p_hero_move_data, &vec, p_wk->move_data_frame ) )
@@ -730,16 +776,27 @@ static BOOL MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
       // 終了フレームチェック
       if(  p_wk->move_data_frame_max <= p_wk->move_data_frame )
       {
-        return TRUE;
+        p_wk->is_pl_move_end = TRUE;
       }
       else if(  p_wk->p_trace_data->end_frame <= p_wk->move_data_frame )
       {
-        return TRUE;
+        p_wk->is_pl_move_end = TRUE;
       }
     }
   }
+}
 
-  return FALSE;
+//----------------------------------------------------------------------------
+/**
+ *	@brief  敵トレーナー移動イベント
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
+{
 }
 
 //----------------------------------------------------------------------------

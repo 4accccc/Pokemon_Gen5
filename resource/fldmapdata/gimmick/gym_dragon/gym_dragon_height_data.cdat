@@ -1,0 +1,27 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+//
+//   @file		gym_dragon_height_data.cdat
+//   @brief   ドラゴンジム用拡張高さデータテーブル
+//   @author	Masayuki Onoue
+//   @date		2011.06.17
+//   @note    /resource/fldmapdata/gimmick/gym_dragon/height_data_cnv.rbが出力しています
+//
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+//-------------------------------------
+///	拡張高さデータ型
+//=====================================
+typedef struct {
+  u8 x;
+  u8 z;
+  u8 xw;
+  u8 zw;
+  fx32 h;
+}GYM_DRAGON_EX_HEIGHT_DATA;
+
+static const GYM_DRAGON_EX_HEIGHT_DATA sc_ex_height_data[] =
+{
+  { 0 ,0 ,1 ,1 ,FX32_CONST(0) },
+};
+#define EX_HEIGHT_DATA_NUM  (NELEMS(sc_ex_height_data))

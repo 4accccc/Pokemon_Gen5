@@ -46,7 +46,11 @@ typedef enum{
 ///	ボタンイベントデータ
 //=====================================
 typedef struct {
-  u16   trace_data_id;  // NULL追従用データID
+  u16   pl_trace_data_id;   // NULL追従用データID
+  u16   en_model_id;        // 敵ドラゴン用モデルID
+  u16   en_trace_data_id;   // NULL追従用データID
+  u16   en_obj_id;          // 敵トレーナーのOBJID
+  BOOL  is_enemy_move;      // 敵も移動するかどうか
 }BUTTON_EVENT_DATA;
 
 //-------------------------------------
@@ -66,4 +70,9 @@ typedef enum{
   BA_EVENT_SEQ_SET_STATUS,
   BA_EVENT_SEQ_EXIT,
 }BA_EVENT_SEQ;
+
+// 拡張高さ用アトリビュート
+#define EX_HEIGHT_ATTRIBUTE (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
+
+
 

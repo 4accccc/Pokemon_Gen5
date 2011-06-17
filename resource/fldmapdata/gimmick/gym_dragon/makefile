@@ -2,7 +2,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou tanoue_reiko unno fuchino onoue_masayuki
+USERS	=	saitou tanoue_reiko unno fuchino onoue_masayuki nakamura_akira
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -36,9 +36,13 @@ ARCLIST = arc_list.txt
 #コンバートファイル
 #------------------------------------------------------------------------------
 XLS_FILE 	= gym_data.xls
+HEIGHT_XLS_FILE 	= ex_height_data.xls
 DATACONV	= data_cnv.rb
+HEIGHT_DATACONV	= height_data_cnv.rb
 DATA_CSV_FILE = gym_data.csv
+HEIGHT_DATA_CSV_FILE = height_data.csv
 DATA_CDAT_FILE = gym_dragon_trace_data.cdat
+HEIGHT_DATA_CDAT_FILE = gym_dragon_height_data.cdat
 ID_HEADER_FILE = gym_dragon_trace_data_id.h
 
 #LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
@@ -64,7 +68,7 @@ EXCELCONV = ../../../../tools/exceltool/xls2xml/tab_out_direct_sheet.rb
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc $(DATA_CDAT_FILE)
+do-build: $(TARGETDIR)/$(targetname).narc $(DATA_CDAT_FILE) $(HEIGHT_DATA_CDAT_FILE)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -77,6 +81,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(DATA_CSV_FILE)
 	@rm -f $(DATA_CDAT_FILE)
 	@rm -f $(ID_HEADER_FILE)
+	@rm -f $(HEIGHT_DATA_CSV_FILE)
+	@rm -f $(HEIGHT_DATA_CDAT_FILE)
 endif
 
 
@@ -92,8 +98,14 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 $(DATA_CSV_FILE): $(XLS_FILE) $(DATACONV)
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 0 -s > $(DATA_CSV_FILE)
 
+$(HEIGHT_DATA_CSV_FILE): $(HEIGHT_XLS_FILE) $(HEIGHT_DATACONV)
+	@ruby $(EXCELCONV) $(HEIGHT_XLS_FILE) -n 0 -s > $(HEIGHT_DATA_CSV_FILE)
+
 $(DATA_CDAT_FILE): $(DATA_CSV_FILE) $(DATACONV)
 	@ruby $(DATACONV) $(DATA_CSV_FILE) $(DATA_CDAT_FILE) $(ID_HEADER_FILE)
+
+$(HEIGHT_DATA_CDAT_FILE): $(HEIGHT_DATA_CSV_FILE)
+	@ruby $(HEIGHT_DATACONV) $(HEIGHT_DATA_CSV_FILE) $(HEIGHT_DATA_CDAT_FILE)
 
 #.SUFFIXES:	.nsbmd .imd
 #imdデータからの生成ルール
