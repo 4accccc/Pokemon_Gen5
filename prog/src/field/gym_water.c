@@ -132,6 +132,13 @@ typedef enum {
 #define ANM_HIT_RIPPLE_MINE   (0)     // 衝突波紋(自分)
 #define ANM_HIT_RIPPLE_OTHER  (1)     // 衝突波紋(相手)
 
+// 水しぶきの種類
+enum {
+  ANM_SPLASH,       // 水しぶき(着水：その場)
+  ANM_SPLASH_MOVE,  // 水しぶき(着水：前方)
+  ANM_HIT_SPLASH,   // 水しぶき(衝突)
+};
+
 // タスク
 #define TASK_MAX        (9)   // 移動波紋6 + 衝突波紋2 + 水しぶき1
 
@@ -1507,7 +1514,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
       {
         // 移動しないときは水しぶきと衝突波紋
         // 水しぶき
-        ANIME_WATER_Splash( p_wk, EFFECT_SPLASH );
+        ANIME_WATER_Splash( p_wk, ANM_SPLASH );
         // 衝突波紋(自分
         ANIME_WATER_HitRipple( p_wk, p_wk->obj_idx, ANM_HIT_RIPPLE_MINE );
 
@@ -1575,7 +1582,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
       }
 
       // 水しぶき
-      ANIME_WATER_Splash( p_wk, EFFECT_SPLASH );
+      ANIME_WATER_Splash( p_wk, ANM_SPLASH_MOVE );
       // 移動波紋(最初の1回用)
       ANIME_WATER_MoveRipple( p_wk, p_wk->obj_idx );
 
@@ -1598,7 +1605,7 @@ static GMEVENT_RESULT HasuEvent( GMEVENT* event, int* seq, void* wk )
         if( p_wk->is_collision == TRUE )
         {
           // 衝突水しぶき
-          ANIME_WATER_Splash( p_wk, EFFECT_HIT_SPLASH );
+          ANIME_WATER_Splash( p_wk, ANM_HIT_SPLASH );
 
           // 衝突波紋(相手
           ANIME_WATER_HitRipple( p_wk, p_wk->other_obj_idx, ANM_HIT_RIPPLE_OTHER );
@@ -2504,9 +2511,15 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk, u16 type )
   // 水しぶきの種類
   switch( type ){
   // 着水
-  case EFFECT_SPLASH:     obj_idx = EFFECT_SPLASH;  break;
+  case ANM_SPLASH:
+  case ANM_SPLASH_MOVE:
+    obj_idx = EFFECT_SPLASH;
+    break;
   // 衝突
-  case EFFECT_HIT_SPLASH: obj_idx = EFFECT_HIT_SPLASH;  break;
+  case ANM_HIT_SPLASH:
+    obj_idx = EFFECT_HIT_SPLASH;
+    break;
+
   default: GF_ASSERT_MSG(0,"存在しない水しぶきです"); return;
   }
 
@@ -2519,12 +2532,41 @@ static void ANIME_WATER_Splash( HASU_EVENT_WORK *p_wk, u16 type )
     // 種類によって位置が違う
     switch( type ){
     // 着水
-    case EFFECT_SPLASH:
-      // ハスの位置
-      status->trans = hasu->trans;
+    case ANM_SPLASH:
+      {
+        // ハスの位置
+        status->trans = hasu->trans;
+      }
       break;
+
+    // 着水
+    case ANM_SPLASH_MOVE:
+      {
+        s16 gx, gy, gz;
+        s16 gx2, gy2, gz2;
+        fx32 x, z;
+
+        // 自機の向きによって回転
+        FIELD_PLAYER_GetFrontGridPos( p_wk->player, &gx, &gy, &gz );
+        FIELD_PLAYER_GetGridPos( p_wk->player, &gx2, &gy2, &gz2 );
+        ICHI_Printf("gx x:%x z:%x \n", gx, gz);
+        ICHI_Printf("gx2 x:%x z:%x \n", gx2, gz2);
+
+        // 少しだけ前方に出す
+        x = (gx-gx2) * 0x6000;
+        z = (gz-gz2) * 0x6000;
+
+        ICHI_Printf("差 x:%x z:%x \n", x, z);
+
+        // ハスの位置
+        status->trans = hasu->trans;
+        status->trans.x += x;
+        status->trans.z += z;
+      }
+      break;
+
     // 衝突
-    case EFFECT_HIT_SPLASH:
+    case ANM_HIT_SPLASH:
       // ハスとハスの間の位置
       {
         GFL_G3D_OBJSTATUS *other_hasu = FLD_EXP_OBJ_GetUnitObjStatus( exp_obj, GYM_WATER_UNIT_IDX, p_wk->other_obj_idx );
