@@ -1,7 +1,13 @@
 DATA_LIST = \
-    hero_dra.nsbmd \
+    emy_dra_body01.nsbmd \
+    emy_dra_body02.nsbmd \
+    emy_dra_body03.nsbmd \
+    emy_dra_body04.nsbmd \
+    emy_dra_body01.nsbca \
+    emy_dra_body02.nsbca \
+    emy_dra_body03.nsbca \
+    emy_dra_body04.nsbca \
     hero_dra_move.nsbmd \
     hero_dra_move.nsbca \
-    hero_dra.nsbca \
-    hero_dra_move02.bin
+    hero_move.bin
     

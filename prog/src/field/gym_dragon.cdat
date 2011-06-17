@@ -12,134 +12,110 @@
 // レイヤーごとのボタン定義[レイヤー][場所（左右中）][上がれるか(FALSE,TRUE)]
 static const GYM_BUTTON_SEQ sc_button_seq_table[FLOOR_LAYER_MAX][GYM_LOCATION_MAX][2] =
 {
-  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_U}}, // ENTRANCE
-  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_D,GYM_BUTTON_UD}},   // TAIL
+  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_U}},   // TAIL
   {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // FLOOT
   {{GYM_BUTTON_R,GYM_BUTTON_R}, {GYM_BUTTON_L,GYM_BUTTON_L}, {GYM_BUTTON_DLR,GYM_BUTTON_UDLR}},           // ARM
-  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_D,GYM_BUTTON_D}},    // ENTRANCE
+  {{GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_NONE,GYM_BUTTON_NONE}, {GYM_BUTTON_D,GYM_BUTTON_D}},    // HEAD
 };
+
 
 // レイヤーごとのアニメーション定義[レイヤー][場所（左右中）][上下左右]
 static const BUTTON_EVENT_DATA sc_button_event_data[FLOOR_LAYER_MAX][GYM_LOCATION_MAX][4] = 
 {
-  // ENTRANCE
+  // TAIL
   {
     // 位置->左
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_UMOVE_DFOOT },  // ボタン上
+      { HDRA_UMOVE_DFOOT },  // ボタン下
+      { HDRA_UMOVE_DFOOT },  // ボタン左
+      { HDRA_UMOVE_DFOOT },  // ボタン右
     },
     // 位置->右
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_UMOVE_DFOOT },  // ボタン上
+      { HDRA_UMOVE_DFOOT },  // ボタン下
+      { HDRA_UMOVE_DFOOT },  // ボタン左
+      { HDRA_UMOVE_DFOOT },  // ボタン右
     },
     // 位置->中
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_UMOVE_DFOOT },  // ボタン上
+      { HDRA_UMOVE_DFOOT },  // ボタン下
+      { HDRA_UMOVE_DFOOT },  // ボタン左
+      { HDRA_UMOVE_DFOOT },  // ボタン右
     },
   },
-    // TAIL
+  // FLOOT
   {
     // 位置->左
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_MOVE_DFOOT_L_C },  // ボタン上
+      { HDRA_MOVE_DFOOT_L_C },  // ボタン下
+      { HDRA_MOVE_DFOOT_L_C },  // ボタン左
+      { HDRA_MOVE_DFOOT_L_C },  // ボタン右
     },
     // 位置->右
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_MOVE_DFOOT_R_C },  // ボタン上
+      { HDRA_MOVE_DFOOT_R_C },  // ボタン下
+      { HDRA_MOVE_DFOOT_R_C },  // ボタン左
+      { HDRA_MOVE_DFOOT_R_C },  // ボタン右
     },
     // 位置->中
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_UMOVE_UFOOT },  // ボタン上
+      { HDRA_DMOVE_TAIL },  // ボタン下
+      { HDRA_MOVE_DFOOT_C_R },  // ボタン左
+      { HDRA_MOVE_DFOOT_C_L },  // ボタン右
     },
   },
-    // FLOOT
+  // ARM
   {
     // 位置->左
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_MOVE_UFOOT_L_C },  // ボタン上
+      { HDRA_MOVE_UFOOT_L_C },  // ボタン下
+      { HDRA_MOVE_UFOOT_L_C },  // ボタン左
+      { HDRA_MOVE_UFOOT_L_C },  // ボタン右
     },
     // 位置->右
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_MOVE_UFOOT_R_C },  // ボタン上
+      { HDRA_MOVE_UFOOT_R_C },  // ボタン下
+      { HDRA_MOVE_UFOOT_R_C },  // ボタン左
+      { HDRA_MOVE_UFOOT_R_C },  // ボタン右
     },
     // 位置->中
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_UMOVE_HEAD },  // ボタン上
+      { HDRA_DMOVE_DFOOT },  // ボタン下
+      { HDRA_MOVE_UFOOT_C_L },  // ボタン左
+      { HDRA_MOVE_UFOOT_C_R },  // ボタン右
     },
   },
-    // ARM
+  // HEAD
   {
     // 位置->左
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_DMOVE_UFOOT },  // ボタン上
+      { HDRA_DMOVE_UFOOT },  // ボタン下
+      { HDRA_DMOVE_UFOOT },  // ボタン左
+      { HDRA_DMOVE_UFOOT },  // ボタン右
     },
     // 位置->右
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_DMOVE_UFOOT },  // ボタン上
+      { HDRA_DMOVE_UFOOT },  // ボタン下
+      { HDRA_DMOVE_UFOOT },  // ボタン左
+      { HDRA_DMOVE_UFOOT },  // ボタン右
     },
     // 位置->中
     {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
-    },
-  },
-    // HEAD
-  {
-    // 位置->左
-    {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
-    },
-    // 位置->右
-    {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
-    },
-    // 位置->中
-    {
-      { 0 },  // ボタン上
-      { 0 },  // ボタン下
-      { 0 },  // ボタン左
-      { 0 },  // ボタン右
+      { HDRA_DMOVE_UFOOT },  // ボタン上
+      { HDRA_DMOVE_UFOOT },  // ボタン下
+      { HDRA_DMOVE_UFOOT },  // ボタン左
+      { HDRA_DMOVE_UFOOT },  // ボタン右
     },
   },
 };
@@ -151,8 +127,11 @@ static const BUTTON_EVENT_DATA sc_button_event_data[FLOOR_LAYER_MAX][GYM_LOCATIO
 //=====================================
 typedef enum
 {
-  MODELID_DRAGON,
-  MODELID_MOVE_DRAGON,
+  MODELID_HERO_DRAGON,
+  MODELID_ENEMY_DRAGON_TAIL,
+  MODELID_ENEMY_DRAGON_FOOT_L,
+  MODELID_ENEMY_DRAGON_FOOT_R,
+  MODELID_ENEMY_DRAGON_FOOT_HEAD,
   MODELID_MAX,
 }MODELID;
 
@@ -160,78 +139,153 @@ typedef enum
 //リソースID
 enum
 {
-  MODEL_RESID_DRAGON,         // 自機ドラゴン
-  MODEL_RESID_MOVE_DRAGON,    // 自機ドラゴン移動データ
-  MODEL_RESID_DRAGON_ICA,         // 自機ドラゴン(アニメーション)
-  MODEL_RESID_MOVE_DRAGON_ICA,    // 自機ドラゴン移動データ(アニメーション)
+  MODEL_RESID_HERO_DRAGON,        // 自機ドラゴン
+  MODEL_RESID_HERO_DRAGON_ICA,    // 自機ドラゴンアニメーション
+  MODEL_RESID_ENEMY_DRAGON_TAIL,  // 敵ドラゴン（尻尾）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_L,  // 敵ドラゴン（左足）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_R,  // 敵ドラゴン（右足）
+  MODEL_RESID_ENEMY_DRAGON_HEAD,    // 敵ドラゴン（頭）
+  MODEL_RESID_ENEMY_DRAGON_TAIL_ICA,  // 敵ドラゴン（尻尾）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA,  // 敵ドラゴン（左足）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA,  // 敵ドラゴン（右足）
+  MODEL_RESID_ENEMY_DRAGON_HEAD_ICA,    // 敵ドラゴン（頭）
   MODEL_RESID_MAX,
 };
 
 //リソースデータ
 static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
 {
-  // MODEL_RESID_DRAGON->自機ドラゴン
-  {
-    ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_nsbmd,
-    GFL_G3D_UTIL_RESARC,
-  },
-  // MODEL_RESID_MOVE_DRAGON->自機ドラゴン移動データ
   {
     ARCID_GYM_DRAGON,
     NARC_gym_dragon_hero_dra_move_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
-  //MODEL_RESID_DRAGON_ICA->自機ドラゴン(アニメーション)
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_nsbca,
+    NARC_gym_dragon_hero_dra_move_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body01_nsbmd,
     GFL_G3D_UTIL_RESARC
   },
-    //MODEL_RESID_MOVE_DRAGON_ICA->自機ドラゴン移動データ(アニメーション)
   {
     ARCID_GYM_DRAGON,
-    NARC_gym_dragon_hero_dra_move_nsbca, 
+    NARC_gym_dragon_emy_dra_body02_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body03_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body04_nsbmd,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body01_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body02_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body03_nsbca,
+    GFL_G3D_UTIL_RESARC
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_emy_dra_body04_nsbca,
     GFL_G3D_UTIL_RESARC
   },
 };
 
 // アニメ設定
-#define ANIMEID_DRAGON_MAX  (1)
-static const GFL_G3D_UTIL_ANM sc_g3d_dragon_anm[ANIMEID_DRAGON_MAX] = 
+static const GFL_G3D_UTIL_ANM sc_g3d_hero_dragon_anm[] = 
 {
-  { MODEL_RESID_DRAGON_ICA, 0 }
+  { MODEL_RESID_HERO_DRAGON_ICA, 0 }
 };
+#define ANIMEID_HERO_DRAGON_MAX  (NELEMS(sc_g3d_hero_dragon_anm))
 
-// アニメ設定2
-#define ANIMEID_MOVE_DRAGON_MAX  (1)
-static const GFL_G3D_UTIL_ANM sc_g3d_move_dragon_anm[ANIMEID_MOVE_DRAGON_MAX] = 
+static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon1_anm[] = 
 {
-  { MODEL_RESID_MOVE_DRAGON_ICA, 0 }
+  { MODEL_RESID_ENEMY_DRAGON_TAIL_ICA, 0 }
 };
+#define ANIMEID_ENEMY_DRAGON1_MAX  (NELEMS(sc_g3d_enemy_dragon1_anm))
+
+static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon2_anm[] = 
+{
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA, 0 }
+};
+#define ANIMEID_ENEMY_DRAGON2_MAX  (NELEMS(sc_g3d_enemy_dragon2_anm))
+
+static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon3_anm[] = 
+{
+  { MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA, 0 }
+};
+#define ANIMEID_ENEMY_DRAGON3_MAX  (NELEMS(sc_g3d_enemy_dragon3_anm))
+
+static const GFL_G3D_UTIL_ANM sc_g3d_enemy_dragon4_anm[] = 
+{
+  { MODEL_RESID_ENEMY_DRAGON_HEAD_ICA, 0 }
+};
+#define ANIMEID_ENEMY_DRAGON4_MAX  (NELEMS(sc_g3d_enemy_dragon4_anm))
+
 
 //3Dオブジェクト設定
 static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
 {
-    // エレベータ
+  // 主人ドラゴン
   {
-    MODEL_RESID_DRAGON, 	//モデルリソースID
-		0, 							        //モデルデータID(リソース内部INDEX)
-		MODEL_RESID_DRAGON, 	//テクスチャリソースID
-		sc_g3d_dragon_anm,			    //アニメテーブル(複数指定のため)
-		ANIMEID_DRAGON_MAX,	        //アニメリソース数
+    MODEL_RESID_HERO_DRAGON, 	//モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_HERO_DRAGON, 	//テクスチャリソースID
+		sc_g3d_hero_dragon_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_HERO_DRAGON_MAX,	        //アニメリソース数
   },
-  // エレベータ
+  // 敵ドラゴン（尻尾）
   {
-    MODEL_RESID_DRAGON, 	//モデルリソースID
-		0, 							        //モデルデータID(リソース内部INDEX)
-		MODEL_RESID_DRAGON, 	//テクスチャリソースID
-		sc_g3d_move_dragon_anm,			    //アニメテーブル(複数指定のため)
-		ANIMEID_MOVE_DRAGON_MAX,	        //アニメリソース数
+    MODEL_RESID_ENEMY_DRAGON_TAIL, 	//モデルリソースID
+		0, 							                //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ENEMY_DRAGON_TAIL, 	//テクスチャリソースID
+		sc_g3d_enemy_dragon1_anm,       //アニメテーブル(複数指定のため)
+		ANIMEID_ENEMY_DRAGON1_MAX,      //アニメリソース数
+  },
+  // 敵ドラゴン（左足）
+  {
+    MODEL_RESID_ENEMY_DRAGON_FOOT_L, 	//モデルリソースID
+		0, 							                  //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ENEMY_DRAGON_FOOT_L, 	//テクスチャリソースID
+		sc_g3d_enemy_dragon2_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_ENEMY_DRAGON2_MAX,	      //アニメリソース数
+  },
+  // 敵ドラゴン（右足）
+  {
+    MODEL_RESID_ENEMY_DRAGON_FOOT_R, 	//モデルリソースID
+		0, 							                  //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ENEMY_DRAGON_FOOT_R, 	//テクスチャリソースID
+		sc_g3d_enemy_dragon3_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_ENEMY_DRAGON3_MAX,	      //アニメリソース数
+  },
+
+  // 敵ドラゴン（頭足）
+  {
+    MODEL_RESID_ENEMY_DRAGON_HEAD, 	//モデルリソースID
+		0, 							                //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ENEMY_DRAGON_HEAD, 	//テクスチャリソースID
+		sc_g3d_enemy_dragon4_anm,       //アニメテーブル(複数指定のため)
+		ANIMEID_ENEMY_DRAGON4_MAX,	    //アニメリソース数
   },
 };
 
-// ブラック全情報設定
+// 全情報設定
 static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
 {
   sc_g3d_util_res,  //リソーステーブル
@@ -239,4 +293,22 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
   sc_g3d_util_obj,  //オブジェクトテーブル
   MODELID_MAX,      //オブジェクト数
 };
+
+// モデルごとのオフセット情報
+static const VecFx32 sc_mdl_offset_table[MODELID_MAX] =
+{
+  //{FX32_CONST(0),FX32_CONST(0),FX32_CONST(0)},
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST((32+16)*16)},
+  
+//  {FX32_CONST(184+16*16),FX32_CONST(288),FX32_CONST(-204+16*16)}, // TAIL
+//  {FX32_CONST(184+16*16),FX32_CONST(376),FX32_CONST(-204+16*16)}, // FOOT
+//  {FX32_CONST(184+16*16),FX32_CONST(704),FX32_CONST(-204+16*16)}, // ARM
+//  {FX32_CONST(184+16*16),FX32_CONST(832),FX32_CONST(-204+16*16)}, // HEAD
+
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // TAIL
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // FOOT
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // ARM
+  {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // HEAD
+};
+
 

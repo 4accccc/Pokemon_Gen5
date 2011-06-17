@@ -27,4 +27,5 @@ extern void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork);
 
 // スクリプトコマンド用
 extern  GMEVENT * GYM_DRAGON_CreateButtonEvent( GAMESYS_WORK *p_gamesys, u16 event_seq );
+extern void GYM_DRAGON_RefreshButton( GAMESYS_WORK *p_gamesys );
 

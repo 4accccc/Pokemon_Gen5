@@ -19,7 +19,6 @@
 ///	ドラゴンジムレイヤー
 //=====================================
 typedef enum{
-  FLOOR_LAYER_ENTRANCE,
   FLOOR_LAYER_TAIL,
   FLOOR_LAYER_FOOT,
   FLOOR_LAYER_ARM,
@@ -47,7 +46,7 @@ typedef enum{
 ///	ボタンイベントデータ
 //=====================================
 typedef struct {
-  ARCDATID ica_dat_id;  // プレイヤー移動用ICAデータ
+  u16   trace_data_id;  // NULL追従用データID
 }BUTTON_EVENT_DATA;
 
 //-------------------------------------

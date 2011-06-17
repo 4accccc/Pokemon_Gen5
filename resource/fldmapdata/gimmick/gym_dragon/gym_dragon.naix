@@ -4,18 +4,24 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2011-06-14T17:43:28
+
  *****************************************************************************/
 
 #ifndef NARC_GYM_DRAGON_NAIX_
 #define NARC_GYM_DRAGON_NAIX_
 
 enum {
-	NARC_gym_dragon_hero_dra_nsbmd = 0,
-	NARC_gym_dragon_hero_dra_move_nsbmd = 1,
-	NARC_gym_dragon_hero_dra_move_nsbca = 2,
-	NARC_gym_dragon_hero_dra_nsbca = 3,
-	NARC_gym_dragon_hero_dra_move02_bin = 4
+	NARC_gym_dragon_emy_dra_body01_nsbmd = 0,
+	NARC_gym_dragon_emy_dra_body02_nsbmd = 1,
+	NARC_gym_dragon_emy_dra_body03_nsbmd = 2,
+	NARC_gym_dragon_emy_dra_body04_nsbmd = 3,
+	NARC_gym_dragon_emy_dra_body01_nsbca = 4,
+	NARC_gym_dragon_emy_dra_body02_nsbca = 5,
+	NARC_gym_dragon_emy_dra_body03_nsbca = 6,
+	NARC_gym_dragon_emy_dra_body04_nsbca = 7,
+	NARC_gym_dragon_hero_dra_move_nsbmd = 8,
+	NARC_gym_dragon_hero_dra_move_nsbca = 9,
+	NARC_gym_dragon_hero_move_bin = 10
 };
 
 /* NARC_GYM_DRAGON_NAIX_ */

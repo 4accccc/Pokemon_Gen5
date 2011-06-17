@@ -139,21 +139,6 @@ void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
   // レイヤーとローケーションを設定
   gmk_sv_work->now_floor_layer  = 0;
   gmk_sv_work->now_location     = GYM_LOCATION_CENTER;
-
-  // スクリプトワークの初期化
-  {
-    u16       *p_wk_adrs;
-    EVENTWORK *p_event_wk;
-    p_event_wk    = GAMEDATA_GetEventWork( gamedata );
-    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_U );
-    (*p_wk_adrs) = TRUE;
-    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_D );
-    (*p_wk_adrs) = FALSE;
-    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_L );
-    (*p_wk_adrs) = FALSE;
-    p_wk_adrs  = EVENTWORK_GetEventWorkAdrs( p_event_wk ,SC_BUTTON_WK_R );
-    (*p_wk_adrs) = FALSE;
-  }
 }
 
 

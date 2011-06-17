@@ -450,7 +450,7 @@ VMCMD_RESULT EvCmdGymIce_( VMHANDLE *core, void *wk )
 //--ドラゴン--
 //--------------------------------------------------------------
 /**
- * ドラゴンジムギミック　
+ * ドラゴンジムギミック　足元ボタン処理
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  */
@@ -475,6 +475,26 @@ VMCMD_RESULT EvCmdGymDragon_PushButton( VMHANDLE *core, void *wk )
   SCRIPT_CallEvent( sc, call_event );
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * ドラゴンジムギミック　ボタン更新処理
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_RefreshButton( VMHANDLE *core, void *wk )
+{
+  u16 event_seq;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // ボタンリフレッシュ
+  GYM_DRAGON_RefreshButton(gsys);
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--毒--

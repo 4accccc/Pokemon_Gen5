@@ -32,6 +32,15 @@ include data_list
 #------------------------------------------------------------------------------
 ARCLIST = arc_list.txt
 
+#------------------------------------------------------------------------------
+#コンバートファイル
+#------------------------------------------------------------------------------
+XLS_FILE 	= gym_data.xls
+DATACONV	= data_cnv.rb
+DATA_CSV_FILE = gym_data.csv
+DATA_CDAT_FILE = gym_dragon_trace_data.cdat
+ID_HEADER_FILE = gym_dragon_trace_data_id.h
+
 #LDIRT_CLEAN = $(TARGETDIR)/$(targetname).narc $(TARGETDIR)/$(targetname).naix
 #コンバート対象者のみ、中間ファイル削除
 #ifeq	($(CONVERTUSER),true)	
@@ -48,14 +57,14 @@ INCPATH	= -I$(NITROSDK_ROOT)/include
 #------------------------------------------------------------------------------
 
 DEF_MAKE = ../def_write.rb
-XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
 ICA_CNV = ../../../../tools/ica/ica_converter.rb
+EXCELCONV = ../../../../tools/exceltool/xls2xml/tab_out_direct_sheet.rb
 
 .PHONY:	do-build clean
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc
+do-build: $(TARGETDIR)/$(targetname).narc $(DATA_CDAT_FILE)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -65,6 +74,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(targetname).naix
 	@rm -f *.nsb*
 	@rm -f *.bin
+	@rm -f $(DATA_CSV_FILE)
+	@rm -f $(DATA_CDAT_FILE)
+	@rm -f $(ID_HEADER_FILE)
 endif
 
 
@@ -76,6 +88,13 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
+
+$(DATA_CSV_FILE): $(XLS_FILE) $(DATACONV)
+	@ruby $(EXCELCONV) $(XLS_FILE) -n 0 -s > $(DATA_CSV_FILE)
+
+$(DATA_CDAT_FILE): $(DATA_CSV_FILE) $(DATACONV)
+	@ruby $(DATACONV) $(DATA_CSV_FILE) $(DATA_CDAT_FILE) $(ID_HEADER_FILE)
+
 #.SUFFIXES:	.nsbmd .imd
 #imdデータからの生成ルール
 %.nsbmd:	data/%.imd
@@ -104,10 +123,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
 	@nnsarc -i -cl -l -n $(targetname).narc -S $(ARCLIST) > arc_result.txt
-#	@-rm -f *.nsb*
-#	@-rm -f *.bin
+	$(NAIXCUT) $(targetname).naix
 
-#$(DEF_HEADER): def_make.xls
-#	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
-#	ruby $(DEF_MAKE) def_make.csv $(DEF_HEADER)
 endif

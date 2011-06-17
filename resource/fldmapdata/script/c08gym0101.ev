@@ -45,7 +45,23 @@ _EVENT_DATA_END
 /*					ジムギミック初期化						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c08gym0101
+{
+  // ジムの初期化
   _GYM_DRAGON_INIT()
+
+  // ※戦闘状況によってボタンフラグを操作します
+	DEFINE_LOCAL LWK_BATTLE_FG
+	_TRAINER_FLAG_CHECK( TRID_VETERANM_09, LWK_BATTLE_FG )
+	IF $LWK_BATTLE_FG == 0 THEN
+    $LOCALWORK0 = FALSE
+  ELSE
+    $LOCALWORK0 = TRUE 
+  ENDIF
+
+  $LOCALWORK1 = FALSE
+  $LOCALWORK2 = FALSE
+  $LOCALWORK3 = FALSE
+}
 INIT_EVENT_END
 
 /**************************************************************/
@@ -144,6 +160,9 @@ trainer_battle:
 	
   // 戦闘フラグセット
   _TRAINER_FLAG_SET( LWK_TRID )
+
+  // ボタン状況を再設定
+  _GYM_DRAGON_REFRESH_BUTTON()
 }
 _RET
 
