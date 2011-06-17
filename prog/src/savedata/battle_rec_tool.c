@@ -703,6 +703,15 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
     POKEWOOD_CONV_DATA_POKE_NUM = 3,
   };
 
+  enum
+  {
+    POKEWOOD_TRDATA_PLAYER_M,
+    POKEWOOD_TRDATA_ENEMY_M,
+    POKEWOOD_TRDATA_PLAYER_F,
+    POKEWOOD_TRDATA_ENEMY_F,
+    POKEWOOD_TRDATA_MAX,
+  };
+
   //TODO　本来ROMから読み出す予定だが、ないので
   //データべた書き
   static const struct _POKEWOOD_REC_CONV_DATA
@@ -712,7 +721,7 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
       u32 tr_type;
       STRCODE trainer_name[PERSON_NAME_SIZE + EOM_SIZE];
       u32 trainer_name_length;
-    } tr_data[2];
+    } tr_data[POKEWOOD_TRDATA_MAX];
 
     struct _POKEWOOD_REC_POKE_DATA
     {
@@ -725,6 +734,18 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
     {
       //トレーナーデータ
       {
+        //味方
+        {
+          0,
+          L"",
+          0,
+        },
+        //敵
+        {
+          TRTYPE_SCIENTISTW,
+          L"サトミ",
+          3,
+        },
         //味方
         {
           0,
@@ -760,6 +781,18 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
           L"ハチクマン",
           5,
         },
+        //味方（女）
+        {
+          TRTYPE_PKWD_HEROINE,
+          L"",
+          0,
+        },
+        //敵（女）
+        {
+          TRTYPE_PKWD_VILLAIN,
+          L"ハチクマン",
+          5,
+        },
       },
       //敵のポケモンデータ
       {
@@ -776,9 +809,20 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
   //敵トレーナーの設定
   {
     int i;
+    int ofs;
+
+    if( MyStatus_GetMySex( bsp->playerStatus[ BTL_CLIENT_PLAYER ] ) == PM_MALE )
+    {
+      ofs = POKEWOOD_TRDATA_PLAYER_M;
+    }
+    else
+    {
+      ofs = POKEWOOD_TRDATA_PLAYER_F;
+    }
+
     for( i = BTL_CLIENT_PLAYER; i <= BTL_CLIENT_ENEMY1; i++ )
     {
-      const struct _POKEWOOD_REC_TR_DATA *p_tr_data = &p_setup_data->tr_data[i];
+      const struct _POKEWOOD_REC_TR_DATA *p_tr_data = &p_setup_data->tr_data[i+ofs];
 
       if( p_tr_data->tr_type != 0 || p_tr_data->trainer_name_length != 0 )
       {

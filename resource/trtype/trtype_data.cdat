@@ -808,7 +808,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		SEQ_BGM_EYE_01
 	},
 	{ // No.200 PKWD_HEROINEÅäÉqÅ[ÉçÅ[
-		157,PTL_SEX_FEMALE,
+		158,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
 };
@@ -830,6 +830,6 @@ const u16 DATA_TrainerBackCGIndex[][2] = {
 		{ TRTYPE_SWLEADER1_1, 13 },
 		{ TRTYPE_SWCHAMPION_1, 12 },
 		{ TRTYPE_PKWD_HERO, 14 },
-		{ TRTYPE_PKWD_HEROINE, 14 },
+		{ TRTYPE_PKWD_HEROINE, 15 },
 };
 

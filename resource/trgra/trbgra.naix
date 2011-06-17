@@ -130,7 +130,15 @@ enum {
 	NARC_trbgra_tbwb_pkwd_hero_NMCR = 116,
 	NARC_trbgra_tbwb_pkwd_hero_NMAR = 117,
 	NARC_trbgra_tbwb_pkwd_hero_NCEC = 118,
-	NARC_trbgra_tbwb_pkwd_hero_NCLR = 119
+	NARC_trbgra_tbwb_pkwd_hero_NCLR = 119,
+	NARC_trbgra_tbwb_pkwd_heroine_NCGR = 120,
+	NARC_trbgra_tbwb_pkwd_heroine_NCBR = 121,
+	NARC_trbgra_tbwb_pkwd_heroine_NCER = 122,
+	NARC_trbgra_tbwb_pkwd_heroine_NANR = 123,
+	NARC_trbgra_tbwb_pkwd_heroine_NMCR = 124,
+	NARC_trbgra_tbwb_pkwd_heroine_NMAR = 125,
+	NARC_trbgra_tbwb_pkwd_heroine_NCEC = 126,
+	NARC_trbgra_tbwb_pkwd_heroine_NCLR = 127
 };
 
 /* NARC_TRBGRA_NAIX_ */

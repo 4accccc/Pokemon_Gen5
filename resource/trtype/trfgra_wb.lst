@@ -156,6 +156,7 @@ trwb_ninja,PTL_SEX_MALE
 trwb_swchampion,PTL_SEX_FEMALE
 trwb_pkwd_villain,PTL_SEX_MALE
 trwb_pkwd_hero,PTL_SEX_MALE
+trwb_pkwd_heroine,PTL_SEX_FEMALE
 tbwb_hero,PTL_SEX_MALE
 tbwb_heroine,PTL_SEX_FEMALE
 tbwb_rival,PTL_SEX_MALE
@@ -171,3 +172,4 @@ tbwb_wbheroine_s,PTL_SEX_FEMALE
 tbwb_swchampion,PTL_SEX_FEMALE
 tbwb_swleader1,PTL_SEX_MALE
 tbwb_pkwd_hero,PTL_SEX_MALE
+tbwb_pkwd_heroine,PTL_SEX_FEMALE

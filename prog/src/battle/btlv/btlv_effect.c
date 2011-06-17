@@ -953,7 +953,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   GF_ASSERT( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] == BTLV_EFFECT_TRAINER_INDEX_NONE );
 
   //上映中であれば、主人公だとしてもトレーナータイプをきちんとみる
-  if( bew->besp.pokewood == BTL_POKEWOOD_SHOW )
+  if( bew->besp.pokewood != BTL_POKEWOOD_NONE )
   {
     if( trtype == TRTYPE_HERO || trtype == TRTYPE_HEROINE )
     {
