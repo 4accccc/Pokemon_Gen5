@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="c03p10_sightseeing_01">
+		Label="c03p10_sightseeing_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>イベント開始前</Text>
@@ -41,7 +42,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p10_sightseeing_02">
+		Label="c03p10_sightseeing_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トレーナー戦前</Text>
@@ -80,7 +82,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p10_sightseeing_03">
+		Label="c03p10_sightseeing_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トレーナー戦後</Text>
@@ -119,7 +122,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p10_sightseeing_04">
+		Label="c03p10_sightseeing_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トレーナー戦後
@@ -161,7 +165,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p10_sightseeing_05">
+		Label="c03p10_sightseeing_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリア
@@ -203,7 +208,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p10_sightseeing_06">
+		Label="c03p10_sightseeing_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリア

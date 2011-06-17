@@ -2,10 +2,11 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c03p09_waitress_01">
+		Label="msg_c03p09_waitress_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティのおみやげに　さいてき
+			<Text>ヒウンシティの　おみやげに　さいてき
 ヒウンアイス　でーす！▼
 うちの　おみせ　むかしは
 ちょっとした　ブーム　だったんだけど▼
@@ -17,8 +18,8 @@
 １こ　１００円　です▽
 なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:59:44" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -26,7 +27,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティのおみやげに　さいてき
+			<Text>ヒウンシティの　おみやげに　さいてき
 ヒウンアイス　でーす！▼
 うちの　おみせ　むかしは
 ちょっとした　ブーム　だったんだけど▼
@@ -38,8 +39,8 @@
 １こ　１００円　です▽
 なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:59:46" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -47,18 +48,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初回話しかけ
-</Comment>
+			<Comment>♀
+・初回話しかけ</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:21" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>waitress</Text>
+			<Text>WAITRESS</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:48:28" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:02" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -69,16 +70,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_02">
+		Label="msg_c03p09_waitress_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティのおみやげに　さいてき
+			<Text>ヒウンシティの　おみやげに　さいてき
 ヒウンアイス　でーす！▼
 １こ　１００円　です
 なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:59:53" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -86,13 +88,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティのおみやげに　さいてき
+			<Text>ヒウンシティの　おみやげに　さいてき
 ヒウンアイス　でーす！▼
 １こ　１００円　です
 なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:59:54" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -100,11 +102,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>二回目話しかけ</Comment>
+			<Comment>♀
+・２回目話しかけ</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:24" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:35" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -114,17 +124,18 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_03">
+		Label="msg_c03p09_waitress_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオンも　ごあいよう！
-ヒウンシティのおみやげに　さいてき▽
+			<Text>チャンピオンも　あいよう！
+ヒウンシティの　おみやげに　さいてき▽
 ヒウンアイス　でーす！▼
 １こ　１００円　です
 なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:02" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -132,14 +143,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオンも　ごあいよう！
-ヒウンシティのおみやげに　さいてき▽
+			<Text>チャンピオンも　あいよう！
+ヒウンシティの　おみやげに　さいてき▽
 ヒウンアイス　でーす！▼
 １こ　１００円　です
 なんこ　おかいあげに　なりますか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:03" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -147,11 +158,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>繁盛イベント後購入前</Comment>
+			<Comment>♀
+・繁盛イベント後購入前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:25" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -161,16 +180,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_04">
+		Label="msg_c03p09_waitress_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう　ございます！▼
 ……あれ　あれれ？
-おかねが　たりないみたいですね▽
+おかねが　たりない　みたいですね▽
 また　きてくださいませ▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -180,11 +200,11 @@
 			Language="JPN_KANJI">
 			<Text>ありがとう　ございます！▼
 ……あれ　あれれ？
-おかねが　たりないみたいですね▽
+おかねが　たりない　みたいですね▽
 また　きてくださいませ▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -192,11 +212,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お金が足りない</Comment>
+			<Comment>♀
+・お金が足りない</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:28" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:39" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -206,16 +234,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_05">
+		Label="msg_c03p09_waitress_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ありがとう　ございます！▼
 ……あれ　あれれ？
-バッグが　いっぱいみたいですね▽
+バッグが　いっぱい　みたいですね▽
 また　きてくださいませ▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:15" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -225,11 +254,11 @@
 			Language="JPN_KANJI">
 			<Text>ありがとう　ございます！▼
 ……あれ　あれれ？
-バッグが　いっぱいみたいですね▽
+バッグが　いっぱい　みたいですね▽
 また　きてくださいませ▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -237,11 +266,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>バッグがいっぱい</Comment>
+			<Comment>♀
+・バッグがいっぱい</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:30" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -251,7 +288,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_06">
+		Label="msg_c03p09_waitress_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せっかく　ならんでくれたのに……
@@ -278,12 +316,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買わずにキャンセル
-繁盛時</Comment>
+			<Comment>♀
+・買わずにキャンセル
+　繁盛時</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:32" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:43" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -293,7 +339,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_07">
+		Label="msg_c03p09_waitress_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せっかく　きてくれたのに……
@@ -320,12 +367,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>買わずにキャンセル
-繁盛前</Comment>
+			<Comment>♀
+・買わずにキャンセル
+　繁盛前</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:34" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:45" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -335,15 +390,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_08">
+		Label="msg_c03p09_waitress_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おかいあげ
-ありがとうございました▼
+ありがとう　ございました！▽
 また　きてくださいね！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:43" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -352,11 +408,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おかいあげ
-ありがとうございました▼
+ありがとう　ございました！▽
 また　きてくださいね！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:44" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -364,11 +420,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>購入後</Comment>
+			<Comment>♀
+・購入後</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:36" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -378,7 +442,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_09">
+		Label="msg_c03p09_waitress_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きょうは　おきゃくさんが
@@ -407,12 +472,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>購入後
-話しかけ</Comment>
+			<Comment>♀
+・購入後話しかけ</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:02:51" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:51" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -422,21 +494,21 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_10">
+		Label="msg_c03p09_waitress_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はわわわわ！▼
 あたらしい　チャンピオンが
 うちの　ヒウンアイスを▼
-あいようしてるって　うわさ　で
+あいようしてるって　ウワサで
 とつぜん　おきゃくさんが　さっとう！▼
 うれしい　ひめいで　キャー！
 にんきばくはつ！　ヒウンアイス▽
-なんこ　おかいあげですか？
-</Text>
+なんこ　おかいあげ　ですか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:53" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -447,15 +519,14 @@
 			<Text>はわわわわ！▼
 あたらしい　チャンピオンが
 うちの　ヒウンアイスを▼
-あいようしてるって　うわさ　で
+あいようしてるって　ウワサで
 とつぜん　おきゃくさんが　さっとう！▼
 うれしい　ひめいで　キャー！
 にんきばくはつ！　ヒウンアイス▽
-なんこ　おかいあげですか？
-</Text>
+なんこ　おかいあげ　ですか？</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:00:56" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -463,11 +534,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>購入後話しかけ</Comment>
+			<Comment>♀
+・購入後話しかけ</Comment>
 			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T01:53:57" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:58" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -477,13 +556,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_11_01">
+		Label="msg_c03p09_waitress_11_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>1こ</Text>
+			<Text>１こ</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-06-14T10:00:17" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -491,15 +571,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>1こ</Text>
+			<Text>１こ</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-06-14T10:00:22" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
 				Time="2011-06-14T10:00:22" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -509,13 +603,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_11_02">
+		Label="msg_c03p09_waitress_11_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>12こ</Text>
+			<Text>１２こ</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-06-14T10:00:31" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -523,15 +618,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>12こ</Text>
+			<Text>１２こ</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-06-14T10:00:37" />
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
 				Time="2011-06-14T10:00:35" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -541,7 +650,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_waitress_11_03">
+		Label="msg_c03p09_waitress_11_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -564,6 +674,20 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-06-14T10:00:51" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:03:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:07" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -573,7 +697,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_business_01">
+		Label="msg_c03p09_business_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ん……？　そんなところに
@@ -610,6 +735,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:56:36" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:14" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#408080</CellData>
@@ -619,7 +751,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_01">
+		Label="msg_c03p09_customer_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>でんしゃに　のって　はるばる
@@ -644,6 +777,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:57:24" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:02:19" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -653,7 +793,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_02">
+		Label="msg_c03p09_customer_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ドキドキ！　チャンピオンが
@@ -678,6 +819,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:57:34" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:05:17" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -687,7 +835,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_03">
+		Label="msg_c03p09_customer_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ソワソワ……
@@ -721,7 +870,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_04">
+		Label="msg_c03p09_customer_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>むすめに　たのまれて
@@ -748,6 +898,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:57:51" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:05:22" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -757,7 +914,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_05_01">
+		Label="msg_c03p09_customer_05_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは
@@ -786,6 +944,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:58:41" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:05:26" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>
@@ -795,7 +960,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_05_02">
+		Label="msg_c03p09_customer_05_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうかー
@@ -833,7 +999,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_05_03">
+		Label="msg_c03p09_customer_05_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうかー　こんでるしな▼
@@ -871,7 +1038,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p09_customer_05_04">
+		Label="msg_c03p09_customer_05_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>うん？　ここでは
@@ -902,6 +1070,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:59:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-17T03:05:38" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>
