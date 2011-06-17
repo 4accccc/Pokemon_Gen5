@@ -42,10 +42,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:37:51" />
+				Time="2011-06-17T02:39:38" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -97,11 +98,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:38:18" />
+				Time="2011-06-17T02:39:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -149,11 +150,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T05:48:20" />
+				Time="2011-06-17T02:39:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -200,11 +201,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ１</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:15" />
+				Time="2011-06-17T02:40:12" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -245,10 +246,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T05:50:23" />
+				Time="2011-06-17T02:39:39" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -297,11 +299,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ２</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:08" />
+				Time="2011-06-17T02:40:18" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -345,10 +347,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T05:55:25" />
+				Time="2011-06-17T02:39:39" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -395,11 +398,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ１</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:18" />
+				Time="2011-06-17T02:40:24" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -447,11 +450,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ１</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:18" />
+				Time="2011-06-17T02:40:29" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -491,11 +494,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ２</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:20" />
+				Time="2011-06-17T02:40:33" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -536,11 +539,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ２</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:13:20" />
+				Time="2011-06-17T02:40:39" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -580,11 +583,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ３</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ３</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:45:39" />
+				Time="2011-06-17T02:40:45" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -632,11 +635,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:16:56" />
+				Time="2011-06-17T02:39:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -684,11 +687,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:20:51" />
+				Time="2011-06-17T02:39:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -736,11 +739,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:21:44" />
+				Time="2011-06-17T02:39:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -788,11 +791,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ４</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ４</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:45:43" />
+				Time="2011-06-17T02:41:46" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -833,11 +836,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ５</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ５</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:45:46" />
+				Time="2011-06-17T02:41:44" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -878,11 +881,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♀
-したっぱ６</Text>
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ６</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:45:50" />
+				Time="2011-06-17T02:40:55" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -921,11 +924,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ７</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ７</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:46:14" />
+				Time="2011-06-17T02:41:41" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -964,11 +967,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ８</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ８</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:46:17" />
+				Time="2011-06-17T02:41:38" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1007,11 +1010,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ９</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ９</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:46:20" />
+				Time="2011-06-17T02:41:35" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1050,11 +1053,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ１０</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１０</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:46:22" />
+				Time="2011-06-17T02:41:32" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1093,11 +1096,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♂
-したっぱ１１</Text>
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:46:25" />
+				Time="2011-06-17T02:41:29" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1136,11 +1139,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ネオプラズマ団♀
-したっぱ１２</Text>
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ１２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T07:46:03" />
+				Time="2011-06-17T02:41:26" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1188,10 +1191,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:32:22" />
+				Time="2011-06-17T02:39:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1238,10 +1242,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:53:12" />
+				Time="2011-06-17T02:39:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1291,10 +1296,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:37:27" />
+				Time="2011-06-17T02:39:43" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1341,11 +1347,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:37:25" />
+				Time="2011-06-17T02:39:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1392,10 +1398,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ヴィオ</Text>
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:41:42" />
+				Time="2011-06-17T02:39:55" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1442,11 +1449,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:41:31" />
+				Time="2011-06-17T02:39:17" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1502,10 +1509,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ヴィオ</Text>
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:42:54" />
+				Time="2011-06-17T02:39:54" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1553,10 +1561,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>七賢人ヴィオ</Text>
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T06:40:32" />
+				Time="2011-06-17T02:39:52" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1598,10 +1607,18 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ダークトリニティ</Text>
+			<Text>NINJA
+ダークトリニティ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T03:45:51" />
+				Time="2011-06-17T02:39:25" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

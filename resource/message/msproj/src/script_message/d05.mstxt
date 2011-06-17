@@ -39,11 +39,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-ヤーコン</Text>
+			<Text>SWLEADER5
+ジムリーダー・ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:07:37" />
+				Time="2011-06-17T02:36:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -52,6 +52,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T04:46:49" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d05_swleader5_02"
@@ -95,11 +102,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-ヤーコン</Text>
+			<Text>SWLEADER5
+ジムリーダー・ヤーコン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:07:37" />
+				Time="2011-06-17T02:36:14" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -108,6 +115,13 @@
 				User="matsumiya:W00224"
 				Time="2011-05-22T04:46:49" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d05_swleader1_01"
@@ -157,11 +171,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:07:51" />
+				Time="2011-06-17T02:38:54" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -208,10 +222,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:53:07" />
+				Time="2011-06-17T02:36:04" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -270,10 +285,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:54:07" />
+				Time="2011-06-17T02:36:04" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -332,10 +348,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>アクロマ</Text>
+			<Text>SWBOSS
+アクロマ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:56:56" />
+				Time="2011-06-17T02:36:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -346,7 +363,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -391,10 +408,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:56:56" />
+				Time="2011-06-17T02:36:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -451,11 +469,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:07:47" />
+				Time="2011-06-17T02:38:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -516,10 +534,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>アクロマ</Text>
+			<Text>SWBOSS
+アクロマ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:58:47" />
+				Time="2011-06-17T02:36:30" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -530,7 +549,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -573,10 +592,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>アクロマ</Text>
+			<Text>SWBOSS
+アクロマ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:58:52" />
+				Time="2011-06-17T02:36:28" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -587,7 +607,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -636,10 +656,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ライバル</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:12:15" />
+				Time="2011-06-17T02:36:08" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -701,11 +722,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:07:48" />
+				Time="2011-06-17T02:38:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -768,11 +789,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ジムリーダー
-チェレン</Text>
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:07:48" />
+				Time="2011-06-17T02:38:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
