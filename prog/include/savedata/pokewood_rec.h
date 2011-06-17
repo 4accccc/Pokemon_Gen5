@@ -42,7 +42,8 @@ typedef enum
 //=====================================
 typedef enum 
 {
-  POKEWOOD_REC_PARAM_SENARIO, //シナリオナンバー
+  POKEWOOD_REC_PARAM_SENARIO, // シナリオナンバー
+  POKEWOOD_REC_PARAM_POKE0,   // 自分の手持ち１匹目のPOKEMON_PARAM
 } POKEWOOD_REC_PARAM;
 
 
@@ -84,7 +85,7 @@ extern BOOL POKEWOOD_REC_IsExist( void );
 
 //取得
 extern POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void );
-extern u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param );
+extern u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst );
 
 //撮影データを上映データへ変換
 //->battle_rec_tool.cにあるのでBattleRec_LoadToolModuleしてください

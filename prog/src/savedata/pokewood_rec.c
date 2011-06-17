@@ -248,17 +248,24 @@ POKEWOOD_REC_WORK* POKEWOOD_REC_GetWork( void )
  *	@brief  録画データから詳細データ取得
  *
  *	@param	POKEWOOD_REC_PARAM param  何のデータを取得するか
+ *	@param	void dst                  データ書き出しが必要な場合の出力バッファ
  *
  *	@return データ
  */
 //-----------------------------------------------------------------------------
-u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param )
+u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
 {
   GF_ASSERT( sp_pokewood_rec_sv != NULL );
   switch( param )
   {
   case POKEWOOD_REC_PARAM_SENARIO:
     return sp_pokewood_rec_sv->rec.senario.senario_no;
+  case POKEWOOD_REC_PARAM_POKE0:
+    {
+      POKEMON_PARAM *pp = (POKEMON_PARAM*)dst;
+      POKETOOL_RecPokePara_to_PokePara( &sp_pokewood_rec_sv->rec.rec_party[0].member[0], pp);
+    }
+    return 1;
   default:
     GF_ASSERT(0);
     return 0;
