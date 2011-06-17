@@ -93,6 +93,7 @@ typedef struct {
   u16 wazano[4];
   u16 itemno;
   u8  pow[12];
+  u16 seikaku;
 }POKEWOOD_MONS_DATA;
 
 
@@ -118,10 +119,11 @@ static const POKEWOOD_MONS_DATA myData[2][3] = {
   },
   {
     {
-      15, MONSNO_RIORU,
-      { WAZANO_INFAITO, WAZANO_REITOUPANTI, WAZANO_KAMINARIPANTI, WAZANO_HADOUDAN },
+      15, MONSNO_RUKARIO,
+      { WAZANO_HADOUDAN, WAZANO_REITOUPANTI, WAZANO_INFAITO, WAZANO_NULL },
       0,  //no item
-      { 0,0,31,255,0,0,0,0,31,255,31,0,},
+      { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
+      PTL_SEIKAKU_YANTYA,
     },
   }
 };
@@ -145,15 +147,17 @@ static const POKEWOOD_MONS_DATA enemyData[2][2] = {
   {
     {
       15, MONSNO_ZURUGGU,
-      { WAZANO_SINENNOZUTUKI, WAZANO_NULL, WAZANO_NULL, WAZANO_NULL },
+      { WAZANO_TOBIHIZAGERI, WAZANO_NULL, WAZANO_NULL, WAZANO_NULL },
       0,
-      { 0,0, 0,0, 0,0, 0,0, 31,0, 0,0,},
+      { 0,0, 31,255, 0,0, 0,0, 0,0, 0,0,},
+      PTL_SEIKAKU_HIKAEME,
     },
     {
-      15, MONSNO_BARUTYAI,
-      { WAZANO_TUIBAMU, WAZANO_DAMASIUTI, WAZANO_NULL, WAZANO_NULL },
+      20, MONSNO_YAMIKARASU,
+      { WAZANO_DAMASIUTI, WAZANO_EASURASSYU, WAZANO_NULL, WAZANO_NULL },
       0,  //no item
-      { 0,0, 31,255, 0,0, 31,0, 31,0, 31,0, },
+      { 0,0, 31,255, 0,0, 31,0, 31,255, 31,0, },
+      PTL_SEIKAKU_OTTORI,
     }
   },
 };
@@ -208,6 +212,7 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
     PP_SetWazaPos( pp, mons_data->wazano[1], 1 );
     PP_SetWazaPos( pp, mons_data->wazano[2], 2 );
     PP_SetWazaPos( pp, mons_data->wazano[3], 3 );
+    PP_Put( pp, ID_PARA_seikaku, mons_data->seikaku );
     PP_Put( pp, ID_PARA_item, mons_data->itemno );
     PP_Put( pp, ID_PARA_hp_rnd,    mons_data->pow[0] );
     PP_Put( pp, ID_PARA_hp_exp,    mons_data->pow[1] );
@@ -219,8 +224,9 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
     PP_Put( pp, ID_PARA_agi_exp,   mons_data->pow[7] );
     PP_Put( pp, ID_PARA_spepow_rnd,mons_data->pow[8] );
     PP_Put( pp, ID_PARA_spepow_exp,mons_data->pow[9] );
-    PP_Put( pp, ID_PARA_spedef_exp,mons_data->pow[10] );
-    PP_Put( pp, ID_PARA_spedef_rnd,mons_data->pow[11] );
+    PP_Put( pp, ID_PARA_spedef_rnd,mons_data->pow[10] );
+    PP_Put( pp, ID_PARA_spedef_exp,mons_data->pow[11] );
+    PP_Renew( pp );
     PokeParty_Add( add_party, pp );
   }
   PokeParty_Copy( add_party, party );
@@ -461,6 +467,29 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
   return GMEVENT_RES_CONTINUE;
 }
 
+static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM *bsp )
+{
+  STRBUF *str       = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, HEAPID_PROC );
+  POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( HEAPID_PROC, POKETOOL_GetWorkSize() );
+
+  BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+  
+  // 録画データから手持ちポケモンの名前を取得する
+  POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
+  PP_Get( pp, ID_PARA_nickname, str );
+  param->message = str;
+  BattleRec_UnloadToolModule();
+  GFL_HEAP_FreeMemory( pp );
+  
+  // 現在はシナリオNOとタイトル画像指定番号を同じにする
+  param->title_no = bsp->pokewoodSenario;
+}
+
+static void _delete_pkwd_count_param( PKWD_COUNT_PARAM *param )
+{
+  // 取得しポケモン名文字列の解放
+  GFL_STR_DeleteBuffer( param->message );
+}
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static GMEVENT * createPokewoodSaveEvent(
@@ -519,24 +548,32 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
     //侵入システムに戦闘中であることを伝える
     TAMADA_Printf(" BSP ADDRESS %08x\n", pbew->bp );
     if ( prew->PokewoodMode == BTL_POKEWOOD_REC ){
-      (*seq)=101;
+      (*seq)=102;
     }else{
+#ifdef PM_DEBUG
       if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
-        (*seq)=101;
+        (*seq)=102;   //直接バトルへ
       }else{
-        (*seq)=100;
+        (*seq)=100;   //上映前アプリを実行してからバトルへ
       }
+#else
+      (*seq)=100;   //上映前アプリを実行してからバトルへ
+#endif
     }
     break;
   // 事前アプリ
   case 100:
 //    prew->pkwd_count_param.gamesys = gsys;
-    prew->pkwd_count_param.title_no = pbew->bp->pokewoodSenario;
+    _init_pkwd_count_param( &prew->pkwd_count_param, pbew->bp );
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
     (*seq) = 101;
     break;
-  // バトル呼び出し
   case 101:
+    _delete_pkwd_count_param( &prew->pkwd_count_param );
+    (*seq) = 102;
+    break;
+  // バトル呼び出し
+  case 102:
     // BGM切り替え
     FIELD_SOUND_ChangePlayerVolume( fsnd, MAX_VOLUME, 1 );  
 

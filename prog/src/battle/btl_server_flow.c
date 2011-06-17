@@ -571,6 +571,7 @@ static u8 scproc_HandEx_vanishMsgWin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_setWazaEffectIndex( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_setWazaEffectEnable( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
+static BOOL _pokewood_check( BTL_SVFLOW_WORK *wk );
 
 
 
@@ -7273,7 +7274,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_Critical, fxDamage);
     }
     //ランダム補正(100～85％)
-    if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_DMG_RAND_OFF) )
+    if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_DMG_RAND_OFF) && _pokewood_check(wk))
     {
       u16 ratio;
       if( !fSimurationMode ){
@@ -12582,6 +12583,8 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
       BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_ONE, FX32_CONST(0.1), FX32_CONST(32) );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_ATTACKER_POWER );
+
+
       power = BTL_EVENTVAR_GetValue( BTL_EVAR_POWER );
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       power = BTL_CALC_MulRatio( power, ratio );
@@ -16323,6 +16326,17 @@ static u8 scproc_HandEx_setWazaEffectEnable( BTL_SVFLOW_WORK* wk, const BTL_HAND
   return 1;
 }
 
+/**
+ * ポケウッドチェック
+ * @return 録画：再生なら 1 / 通常選択なら 0
+ */
+static BOOL _pokewood_check( BTL_SVFLOW_WORK *wk )
+{
+  if(BTL_MAIN_GetPokewoodMode( wk->mainModule )==BTL_POKEWOOD_NONE){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 /*
 

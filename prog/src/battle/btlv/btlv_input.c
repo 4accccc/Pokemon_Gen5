@@ -500,6 +500,10 @@ enum
   BTLV_INPUT_WIRELESS_ICON_PAL = 14 * 0x10,
 };
 
+// 6/17版
+#define __DEBUG_AUDIENCE__
+//#undef  __DEBUG_AUDIENCE__
+
 //============================================================================================
 /**
  *  構造体宣言
@@ -633,6 +637,8 @@ struct _BTLV_INPUT_WORK
   u8                    pokewood;           // ポケウッドフラグ（0=なし, 1=撮影, 2=上映）
   u8                    etc[2];
 
+  s32                   SetFlag;			// audience
+  
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
   const BTL_POKEPARAM*  rotate_bpp[ BTLV_INPUT_POKEICON_MAX ];
@@ -855,6 +861,8 @@ static  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw );
 static  ARCDATID  get_command_screen( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw );
 static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw );
+//
+static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw );
 
 
 static  void  SePlayOpen( BTLV_INPUT_WORK* biw );
@@ -989,7 +997,9 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_btlv_input_dat, biw->heapID );
 
   biw->hit = GFL_UI_TP_HIT_NONE;
-
+  //
+  biw->SetFlag = 0;
+  //
   BTLV_INPUT_InitBG( biw );
 
   {
@@ -1380,7 +1390,15 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
       //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
       SetupSetScroll( biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_OFF, BG_VISIBLE_OFF, BG_VISIBLE_NO_SET, BG_VISIBLE_ON );
-      PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+
+      //
+      // ポケウッドなら観客表示
+      if(biw->pokewood == BTL_POKEWOOD_SHOW){	
+        btlv_init_audience_disp( biw );
+      }else{
+        // パレットが壊れてしまうようなので保留
+        PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      }
     }
     else
     {
@@ -1643,9 +1661,9 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         biw->button_exist[ i ] = 1;
       }
-
+#ifndef __DEBUG_AUDIENCE__		// コメントアウト
       BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
-
+#endif
       switch( bibrp->stop_flag ){
       case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
       case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
@@ -1680,6 +1698,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
+#ifndef __DEBUG_AUDIENCE__		// スクロールしてしまうのでコメントアウト
         if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
         {
           //GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
@@ -1694,6 +1713,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
           SetupSetScroll( biw, GFL_BG_FRAME0_S, TTS2BR_FRAME0_SCROLL_X, 0,
                           BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET, BG_VISIBLE_NO_SET );
         }
+#endif
         if( msg_src )
         {
           PRINTSYS_Print( biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, msg_src, biw->font );
@@ -2220,6 +2240,8 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
 {
   u32 pltt;
   
+  // 再生中は処理しない
+  if(biw->pokewood != BTL_POKEWOOD_SHOW){
   // バージョン毎に違うBGのパレットを適用する
   if(GET_VERSION()==VERSION_B2){
     pltt = _get_arcid(NARC_battgra_wb_battle_b_bg_NCLR,biw);
@@ -2244,6 +2266,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
     u16*  pal = PaletteWorkDefaultWorkGet( BTLV_EFFECT_GetPfd(), FADE_SUB_BG );
     MI_CpuCopy16( &pal[ 0x10 * 2 ], &biw->bag_pal, 0x20 );
   }
+}		// 再生中は処理しない
 
   biw->objcharID = GFL_CLGRP_CGR_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCGR, FALSE,
                                            CLSYS_DRAW_SUB, biw->heapID );
@@ -2871,6 +2894,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
+#ifndef __DEBUG_AUDIENCE__		// 保留
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg0f_NSCR,ttw->biw),
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, _get_arcid(NARC_battgra_wb_battle_w_bg1f_NSCR,ttw->biw),
@@ -2886,6 +2910,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
     PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+#endif
     ttw->seq_no++;
     break;
   case 1:
@@ -2905,21 +2930,24 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       //GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       //GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       //GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+#ifndef __DEBUG_AUDIENCE__		// スクロールしてしまうので保留
       SetupSetScroll( ttw->biw, GFL_BG_FRAME0_S, ttw->scr_x, ttw->scr_y,
                       BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_NO_SET, BG_VISIBLE_OFF );
+#endif
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
 
     if(BTL_MAIN_GetPokewoodMode(BTLV_EFFECT_GetMainModule())==BTL_POKEWOOD_SHOW){
+#ifndef __DEBUG_AUDIENCE__		// 新データのため保留
         // BGリソース転送
-        GFL_ARCHDL_UTIL_TransVramBgCharacter( ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCGR,
-                                            GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
-        PaletteWorkSet_ArcHandle( ttw->biw->pfd, ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCLR, 
-                                  ttw->biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
-        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_pkwd_movie02_NSCR,
-                                         GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
+//        GFL_ARCHDL_UTIL_TransVramBgCharacter( ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCGR,
+//                                            GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+//        PaletteWorkSet_ArcHandle( ttw->biw->pfd, ttw->biw->handle, NARC_battgra_wb_pkwd_movie_NCLR, 
+//                                  ttw->biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
+//        GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_pkwd_movie02_NSCR,
+//                                         GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
         // OBJリソース転送・登録
 //        BTLV_INPUT_CreateAudienceObj( ttw->biw );
-
+#endif
       }
     }
     break;
@@ -3034,6 +3062,48 @@ static  void  BTLV_INPUT_DeleteAudienceObj( BTLV_INPUT_WORK* biw )
   GFL_CLGRP_CGR_Release( biw->audience_charID );
   GFL_CLGRP_CELLANIM_Release( biw->audience_cellID );
   GFL_CLGRP_PLTT_Release( biw->audience_plttID );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   観客の処理(仮)
+ */
+//--------------------------------------------------------------
+static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw )
+{
+	// 再生中のみ(念のため)
+    if(biw->pokewood != BTL_POKEWOOD_SHOW){
+		return;
+	}
+	// 念のため
+	if(biw->SetFlag == 1){
+		return;
+	}
+	// BG0非表示：操作パネル => 今回は表示(仮対応)
+	// BG1表示：上書きして使用
+	// BG2非表示：メッセージ、情報パネル
+	// BG3非表示：背景(アフィン)
+	GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+	GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+	GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
+	GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+	//
+	// BG表示(下面)
+	GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_pkwd_movie01_c_NSCR,	// test
+                                          GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
+	// リソース転送(仮対応)
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( biw->handle, NARC_battgra_wb_pkwd_movie_c_NCGR,
+                                          GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
+	GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_pkwd_movie02_c_NSCR,	// test
+                                          GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( biw->handle, NARC_battgra_wb_pkwd_movie_c_NCLR,
+                                          PALTYPE_SUB_BG, 0, 7*0x20, biw->heapID );
+    // BGのパレット
+    PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_BG, 0, 0x20*15 );
+    // 念のため
+    SetupSetScroll( biw, BG_NO_FRAME, 0, 0, BG_VISIBLE_ON, BG_VISIBLE_ON, BG_VISIBLE_OFF, BG_VISIBLE_OFF );
+
+	biw->SetFlag = 1;
 }
 
 //============================================================================================
