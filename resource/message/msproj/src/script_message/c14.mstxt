@@ -11,10 +11,10 @@
 というわけで　オマエの　ミッションは
 ジムバッジを　てにいれること▼
 プラズマだんが　あいてだ
-すこしでも　つよくないとな▼</Text>
+できるかぎり　つよくならないとな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:07:11" />
+				Time="2011-06-18T04:57:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,14 +23,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
-ぜったいに　とりもどすぞ▼
+絶対に　取り戻すぞ▼
 というわけで　オマエの　ミッションは
-ジムバッジを　てにいれること▼
-プラズマだんが　あいてだ
-すこしでも　つよくないとな▼</Text>
+ジムバッジを　手に入れること▼
+プラズマ団が　相手だ
+できるかぎり　強くならないとな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:07:15" />
+				Time="2011-06-18T04:57:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83,15 +83,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『その　プラズマだん　だけど
-２１ばんすいどうに　いる▼
+			<Text>[Name:TrainerName Idx="1" ]『その　プラズマ団だけど
+２１番水道に　いる▼
 みはっている　チェレンさんによると
-どうやら　ねんりょうぶそく　らしいな▼
-とはいえ　こちらも　ふねに
-せんにゅう　できないんだけどな</Text>
+どうやら　燃量不足らしいな▼
+とはいえ　こちらも　船に
+潜入できないんだけどな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:37:59" />
+				Time="2011-06-18T05:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,10 +131,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『オマエの　ミッションは
 ジムバッジを　てにいれること▼
 プラズマだんが　あいてだ
-すこしでも　つよくないとな</Text>
+できるかぎり　つよくならないとな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:04:59" />
+				Time="2011-06-18T05:07:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -143,12 +143,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『オマエの　ミッションは
-ジムバッジを　てにいれること▼
-プラズマだんが　あいてだ
-すこしでも　つよくないとな</Text>
+ジムバッジを　手に入れること▼
+プラズマ団が　相手だ
+できるかぎり　強くならないとな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:04:59" />
+				Time="2011-06-18T05:07:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -199,11 +199,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ばしゃーん！▼
-って　じぶんで　いうのも
-なんか　なさけない　はなし　たい▼</Text>
+って　自分で　いうのも
+なんか　情けない　話たい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:15:04" />
+				Time="2011-06-18T05:07:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -261,15 +261,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おう！　おはん
-ポケモンジムに　ちょうせん　だろ？▼
+ポケモンジムに　挑戦だろ？▼
 おいが　ジムリーダーの　シズイたい
-さがさせて　わるかったな▼
-ポケモンたちと　およいでたら
-きもちよおて　とおくまで　いっとてな▼
-ほな　ジムで　まっとるたい！▼</Text>
+探させて　悪かったな▼
+ポケモンたちと　泳いでたら
+気持ちよおて　遠くまで　いっとてな▼
+ほな　ジムで　待っとるたい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:38:23" />
+				Time="2011-06-18T04:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -321,12 +321,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
-ほんとうなら　ポケモンリーグに
-ちょうせん　できるけど▽
-プラズマだん　たいじに　ちからを　かせ▼</Text>
+本当なら　ポケモンリーグに
+挑戦できるけど▽
+プラズマ団　掃討を　手伝え▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:39:41" />
+				Time="2011-06-18T04:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -440,16 +440,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　ってのは
-ひとの　ポケモンは　うばうし▼
-ポケモンの　ちからで
-イッシュを　こおりづけに　して▽
-しはい　しようと　もくろんでいる▼
-わるい　れんちゅう　だよ
+			<Text>[Name:TrainerName Idx="1" ]『プラズマ団　ってのは
+人の　ポケモンは　奪うし▼
+ポケモンの　力で
+イッシュを　氷漬けに　して▽
+支配しようと　目論んでいる▼
+悪い　連中だよ
 というか　しらないのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:44:38" />
+				Time="2011-06-18T04:55:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -500,15 +500,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シズイ『しらん！▼
-うみで　くらしているとな
-そういうこと　あまり　きにならん▼
-なにしろ　うみは　でかすぎる！
-めぐみを　わけあたえて　くれるが▽
-やさしいだけでは　ないからなあ▼　</Text>
+			<Text>シズイ『知らん！▼
+海で　くらしているとな
+そういうこと　あまり　気にならん▼
+なにしろ　海は　でかすぎる！
+恵みを　わけあたえて　くれるが▽
+優しいだけでは　ないからなあ▼　</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:44:38" />
+				Time="2011-06-18T05:08:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -556,10 +556,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>で　おまはん
-プラズマだんは　わるいと　おもうか？</Text>
+プラズマ団は　悪いと　思うか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:44:38" />
+				Time="2011-06-18T04:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -615,15 +615,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シズイ『そうか
-わるいから　たたかうのか▼
+悪いから　戦うのか▼
 んじゃ　まず　それを　おはんの
-ことばで　かたれるように　ならんと▼
-そうすれば　じぶんが　なにをしたいか
-なにを　のぞんでいるか▽
+言葉で　語れるように　ならんと▼
+そうすれば　自分が　なにをしたいか
+なにを　望んでいるか▽
 いまより　はっきり　わかるたい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:44:38" />
+				Time="2011-06-18T04:55:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -676,16 +676,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シズイ『ほう　わるくない……　そう
-かんがえているのに　たたかうのか▼
+			<Text>シズイ『ほう　悪くない……　そう
+考えているのに　戦うのか▼
 んじゃ　まず　それを　おはんの
-ことばで　かたれるように　ならんと▼
-そうすれば　じぶんが　なにをしたいか
-なにを　のぞんでいるか▽
+言葉で　語れるように　ならんと▼
+そうすれば　自分が　なにをしたいか
+なにを　望んでいるか▽
 いまより　はっきり　わかるたい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:44:38" />
+				Time="2011-06-18T04:54:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -774,10 +774,11 @@
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
 おおらかというか　むせきにんというか▼
 なんか　きせいを　そがれたけど
-あいては　プラズマだんだ！　いくぞ▼</Text>
+あいては　プラズマだんだ！▽
+きを　ひきしめて　いくぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:47:04" />
+				Time="2011-06-18T05:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -786,12 +787,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なんだ
-おおらかというか　むせきにんというか▼
-なんか　きせいを　そがれたけど
-あいては　プラズマだんだ！　いくぞ▼</Text>
+おおらかというか　無責任というか▼
+なんか　気勢を　削がれたけど
+相手は　プラズマ団だ！▽
+気を　ひきしめて　行くぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:47:06" />
+				Time="2011-06-18T05:09:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
