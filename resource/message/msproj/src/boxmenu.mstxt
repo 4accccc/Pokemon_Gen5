@@ -4871,12 +4871,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※以下、全てSWANより追加
-
-絞込みアプリ見出し</Comment>
+			<Comment>絞込みアプリ見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4920,10 +4919,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>絞込みアプリ見出し</Comment>
+			<Comment>絞込みアプリ見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4967,10 +4967,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>絞込みメイン画面見出し</Comment>
+			<Comment>絞込みメイン画面見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5005,10 +5006,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>条件を　選び　ＯＮに　すると
-絞込みを　おこないます。</Text>
+絞りこみを　おこないます。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:03:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5016,10 +5017,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>絞込みメイン画面ガイド</Comment>
+			<Comment>絞込みメイン画面ガイド
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5041,11 +5043,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　なまえの　かしらもじを
-えらんでください。</Text>
+			<Text>ポケモンの　なまえの
+かしらもじを　えらんでください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5053,11 +5055,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　なまえの　頭文字を
-選んでください。</Text>
+			<Text>ポケモンの　なまえの
+頭文字を　選択してください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5066,11 +5068,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-
-種族名の頭文字選択</Comment>
+種族名の頭文字選択
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5107,14 +5109,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　選んでください。
+			<Text>ポケモンを　選択してください。
 
 なまえ：[Name:PokemonName Idx="0" ]
 タイプ１：[Name:Type Idx="1" ]
 タイプ２：[Name:Type Idx="2" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5123,15 +5125,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-
 種族名チェック
-
 0：種族名
 1：タイプ１
-2:：タイプ２</Comment>
+2:：タイプ２
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5167,13 +5168,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]がんばりや
-[/System:Color]バランスよく　成長　しやすい。</Text>
+[/System:Color]バランスよく　成長しやすい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5182,10 +5183,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝01</Comment>
+性格＝01
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5210,11 +5212,11 @@
 			<Text>ポケモンの　せいかくを　えらんでください。
 
 せいかく：[System:Color name="1" ]さみしがり
-[/System:Color]ごうげきが　せいちょう　しやすい。
+[/System:Color]こうげきが　せいちょう　しやすい。
 ぼうぎょが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:43:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5222,14 +5224,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]さみしがり
-[/System:Color]ごうげきが　成長　しやすい。
-ぼうぎょが　成長　しにくい。</Text>
+[/System:Color]攻撃が　成長しやすい。
+防御が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:02:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5238,10 +5240,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝02</Comment>
+性格＝02
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5266,11 +5269,11 @@
 			<Text>ポケモンの　せいかくを　えらんでください。
 
 せいかく：[System:Color name="1" ]ゆうかん
-[/System:Color]ごうげきが　せいちょう　しやすい。
+[/System:Color]こうげきが　せいちょう　しやすい。
 すばやさが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5278,14 +5281,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]ゆうかん
-[/System:Color]ごうげきが　成長　しやすい。
-すばやさが　成長　しにくい。</Text>
+[/System:Color]攻撃が　成長しやすい。
+すばやさが　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5294,10 +5297,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝03</Comment>
+性格＝03
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5322,11 +5326,11 @@
 			<Text>ポケモンの　せいかくを　えらんでください。
 
 せいかく：[System:Color name="1" ]いじっぱり
-[/System:Color]ごうげきが　せいちょう　しやすい。
+[/System:Color]こうげきが　せいちょう　しやすい。
 とくこうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5334,14 +5338,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]いじっぱり
-[/System:Color]ごうげきが　成長　しやすい。
-とくこうが　成長　しにくい。</Text>
+[/System:Color]攻撃が　成長しやすい。
+特攻が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5350,10 +5354,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝04</Comment>
+性格＝04
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5378,11 +5383,11 @@
 			<Text>ポケモンの　せいかくを　えらんでください。
 
 せいかく：[System:Color name="1" ]やんちゃ
-[/System:Color]ごうげきが　せいちょう　しやすい。
+[/System:Color]こうげきが　せいちょう　しやすい。
 とくぼうが　せいちょう　しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:43:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5390,14 +5395,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]やんちゃ
-[/System:Color]ごうげきが　成長　しやすい。
-とくぼうが　成長　しにくい。</Text>
+[/System:Color]攻撃が　成長しやすい。
+特防が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5406,10 +5411,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝05</Comment>
+性格＝05
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5446,14 +5452,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]ずぶとい
-[/System:Color]ぼうぎょが　成長　しやすい。
-こうげきが　成長　しにくい。</Text>
+[/System:Color]防御が　成長しやすい。
+攻撃が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5462,10 +5468,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝06</Comment>
+性格＝06
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5501,13 +5508,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]すなお
-[/System:Color]バランスよく　成長　しやすい。</Text>
+[/System:Color]バランスよく　成長しやすい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5516,10 +5523,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝07</Comment>
+性格＝07
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5556,14 +5564,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]のんき
-[/System:Color]ぼうぎょが　成長　しやすい。
-すばやさが　成長　しにくい。</Text>
+[/System:Color]防御が　成長しやすい。
+すばやさが　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5572,10 +5580,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝08</Comment>
+性格＝08
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5612,14 +5621,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]わんぱく
-[/System:Color]ぼうぎょが　成長　しやすい。
-とくこうが　成長　しにくい。</Text>
+[/System:Color]防御が　成長しやすい。
+特攻が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5628,10 +5637,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝09</Comment>
+性格＝09
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5668,14 +5678,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]のうてんき
-[/System:Color]ぼうぎょが　成長　しやすい。
-とくぼうが　成長　しにくい。</Text>
+[/System:Color]防御が　成長しやすい。
+特防が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5684,10 +5694,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝10</Comment>
+性格＝10
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:32:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5727,11 +5738,11 @@
 			<Text>ポケモンの　せいかくを　選んでください。
 
 せいかく：[System:Color name="1" ]おくびょう
-[/System:Color]すばやさが　成長　しやすい。
-こうげきが　成長　しにくい。</Text>
+[/System:Color]すばやさが　成長しやすい。
+攻撃が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5740,10 +5751,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝11</Comment>
+性格＝11
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5780,14 +5792,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]せっかち
-[/System:Color]すばやさが　成長　しやすい。
-ぼうぎょが　成長　しにくい。</Text>
+[/System:Color]すばやさが　成長しやすい。
+防御が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5796,10 +5808,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝12</Comment>
+性格＝12
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5838,10 +5851,10 @@
 			<Text>ポケモンの　せいかくを　選んでください。
 
 せいかく：[System:Color name="1" ]まじめ
-[/System:Color]バランスよく　成長　しやすい。</Text>
+[/System:Color]バランスよく　成長しやすい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:02:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5850,10 +5863,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝13</Comment>
+性格＝13
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5890,14 +5904,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]ようき
-[/System:Color]すばやさが　成長　しやすい。
-とくこうが　成長　しにくい。</Text>
+[/System:Color]すばやさが　成長しやすい。
+特攻が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5906,10 +5920,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝14</Comment>
+性格＝14
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5946,14 +5961,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]むじゃき
-[/System:Color]すばやさが　成長　しやすい。
-とくぼうが　成長　しにくい。</Text>
+[/System:Color]すばやさが　成長しやすい。
+特防が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5962,10 +5977,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝15</Comment>
+性格＝15
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6002,14 +6018,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]ひかえめ
-[/System:Color]とくこうが　成長　しやすい。
-こうげきが　成長　しにくい。</Text>
+[/System:Color]特攻が　成長しやすい。
+攻撃が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6018,10 +6034,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝16</Comment>
+性格＝16
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6058,14 +6075,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]おっとり
-[/System:Color]とくこうが　成長　しやすい。
-ぼうぎょが　成長　しにくい。</Text>
+[/System:Color]特攻が　成長しやすい。
+防御が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:59:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6074,10 +6091,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝17</Comment>
+性格＝17
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6114,14 +6132,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]れいせい
-[/System:Color]とくこうが　成長　しやすい。
-すばやさが　成長　しにくい。</Text>
+[/System:Color]特攻が　成長しやすい。
+すばやさが　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6130,10 +6148,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝18</Comment>
+性格＝18
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6169,13 +6188,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]てれや
-[/System:Color]バランスよく　成長　しやすい。</Text>
+[/System:Color]バランスよく　成長しやすい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:00:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6184,10 +6203,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝19</Comment>
+性格＝19
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6224,14 +6244,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]うっかりや
-[/System:Color]とくこうが　成長　しやすい。
-とくぼうが　成長　しにくい。</Text>
+[/System:Color]特攻が　成長しやすい。
+特防が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6240,10 +6260,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝20</Comment>
+性格＝20
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6280,14 +6301,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]おだやか
-[/System:Color]とくぼうが　成長　しやすい。
-こうげきが　成長　しにくい。</Text>
+[/System:Color]特防が　成長しやすい。
+攻撃が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:01:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6296,10 +6317,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝21</Comment>
+性格＝21
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6336,14 +6358,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]おとなしい
-[/System:Color]とくぼうが　成長　しやすい。
-ぼうぎょが　成長　しにくい。</Text>
+[/System:Color]特防が　成長しやすい。
+防御が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6352,10 +6374,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝22</Comment>
+性格＝22
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6392,14 +6415,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]なまいき
-[/System:Color]とくぼうが　成長　しやすい。
-すばやさが　成長　しにくい。</Text>
+[/System:Color]特防が　成長しやすい。
+すばやさが　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6408,10 +6431,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝23</Comment>
+性格＝23
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6448,14 +6472,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]しんちょう
-[/System:Color]とくぼうが　成長　しやすい。
-とくこうが　成長　しにくい。</Text>
+[/System:Color]特防が　成長しやすい。
+特攻が　成長しにくい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:01:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6464,10 +6488,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝24</Comment>
+性格＝24
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6503,13 +6528,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいかくを　選んでください。
+			<Text>ポケモンの　せいかくを　選択してください。
 
 せいかく：[System:Color name="1" ]きまぐれ
-[/System:Color]バランスよく　成長　しやすい。</Text>
+[/System:Color]バランスよく　成長しやすい。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:00:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6518,10 +6543,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-性格＝25</Comment>
+性格＝25
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6543,10 +6569,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくせいの　かしらもじを　えらんでください。</Text>
+			<Text>とくせいの
+かしらもじを　えらんでください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:43:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6554,10 +6581,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくせいの　頭文字を　選んでください。</Text>
+			<Text>とくせいの
+頭文字を　選択してください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6566,11 +6594,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-
-特性の頭文字選択</Comment>
+特性の頭文字選択
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6606,13 +6634,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくせいを　選んでください。
+			<Text>とくせいを　選択してください。
 
 [System:Color name="1" ][Name:Ability Idx="0" ][/System:Color]:
 </Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6621,14 +6649,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
-
 特性チェック
-
 0：特性名
-</Comment>
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6650,11 +6676,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　せいべつを
-えらんでください。</Text>
+			<Text>ポケモンの
+せいべつを　えらんでください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:51:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6662,11 +6688,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　せいべつを
-選んでください。</Text>
+			<Text>ポケモンの
+せいべつを　選択してください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6676,10 +6702,11 @@
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
 性別チェック
+・swanで追加
 </Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6714,10 +6741,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　もちものに　ついて
-選んでください。</Text>
+選択してください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6727,10 +6754,10 @@
 			Language="JPN">
 			<Comment>絞込みサブ画面ガイド：
 持ち物チェック
-</Comment>
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6765,10 +6792,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　マーキングについて
-選んでください。</Text>
+選択してください。</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:58:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6777,10 +6804,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>絞り込みサブ画面ガイド：
-マーキング</Comment>
+マーキング
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6815,8 +6843,8 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]なまえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:50:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6824,10 +6852,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>検索の見出し</Comment>
+			<Comment>検索の見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6862,8 +6891,8 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]せいかく</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:50:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6871,10 +6900,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>検索の見出し</Comment>
+			<Comment>検索の見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6909,8 +6939,8 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]とくせい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:50:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6918,10 +6948,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>検索の見出し</Comment>
+			<Comment>検索の見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6956,8 +6987,8 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]せいべつ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:50:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6965,10 +6996,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>検索の見出し</Comment>
+			<Comment>検索の見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7003,8 +7035,8 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]もちもの</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:50:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7012,10 +7044,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>検索の見出し</Comment>
+			<Comment>検索の見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7059,10 +7092,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>検索の見出し</Comment>
+			<Comment>検索の見出し
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7106,10 +7140,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7153,10 +7188,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7200,10 +7236,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7247,10 +7284,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7294,10 +7332,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7341,10 +7380,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7388,10 +7428,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7435,10 +7476,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7482,10 +7524,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7529,10 +7572,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7576,10 +7620,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7623,10 +7668,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7670,10 +7716,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7717,10 +7764,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7764,10 +7812,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7811,10 +7860,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7858,10 +7908,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7905,10 +7956,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7952,10 +8004,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7999,10 +8052,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8046,10 +8100,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8093,10 +8148,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8140,10 +8196,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8187,10 +8244,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8234,10 +8292,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:33:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8281,10 +8340,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8328,10 +8388,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8375,10 +8436,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8422,10 +8484,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8469,10 +8532,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8516,10 +8580,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8563,10 +8628,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8610,10 +8676,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8657,10 +8724,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8704,10 +8772,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8751,10 +8820,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8798,10 +8868,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8845,10 +8916,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8892,10 +8964,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8939,10 +9012,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -8986,10 +9060,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9033,10 +9108,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9080,10 +9156,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9127,10 +9204,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>頭文字</Comment>
+			<Comment>頭文字
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9174,10 +9252,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>性別検索しないマーク</Comment>
+			<Comment>性別検索しないマーク
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9221,10 +9300,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>性別</Comment>
+			<Comment>性別
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9268,10 +9348,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>性別</Comment>
+			<Comment>性別
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9306,8 +9387,8 @@
 			Language="JPN_KANJI">
 			<Text>せいべつなし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9315,10 +9396,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>性別</Comment>
+			<Comment>性別
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9362,10 +9444,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道具</Comment>
+			<Comment>道具
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9409,10 +9492,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道具</Comment>
+			<Comment>道具
+・swanで追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="matsumiya:W00224"
+				Time="2011-06-18T03:34:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
