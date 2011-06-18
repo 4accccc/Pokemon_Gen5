@@ -772,6 +772,391 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_w21_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『とぶのかよ！？▼
+で　あっち　は？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:20:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:47:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『飛ぶのかよ！？▼
+で　あっち　は？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:46:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・d27アジト船攻略後のでも終了してから
+・続けて
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:33:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:45:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swleader1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『おそらく　だけど……
+ジャイアントホール　だね▼
+いちど　アララギはかせと　あって
+たいさくを　ねったほうが　いいかな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:46:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『おそらく　だけど……
+ジャイアントホール　だね▼
+一度　アララギ博士と　会って
+対策を　練ったほうが　いいかな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:47:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswrival_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:50:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:46:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『じゃ　そちらは
+チェレンさんたちに　まかせる▼
+オレは　いくよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:43:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『じゃ　そちらは
+チェレンさんたちに　任せる▼
+オレは　行くよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:47:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswrival_07
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:50:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swrival_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だって　あの　ポケモン……
+キュレム　だっけ▼
+あいつの　なきごえ
+なんだか　かなしそう　だったしな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:34:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だって　あの　ポケモン……
+キュレム　だっけ▼
+あいつの　鳴き声
+なんだか　哀しそう　だったしな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:34:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ｒ22方面を見てメッセージ表示
+・表示後、r22方面へ移動
+・続けてswleader1_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:50:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swleader1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『……つらいな▼
+プラズマだんに　うばわれた
+じぶんの　ポケモンと▼
+プラズマだんに　つかわれている
+あの　キュレムを　かさねて　いるのか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:35:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『……つらいな▼
+プラズマ団に　奪われた
+自分の　ポケモンと▼
+プラズマ団に　使役されている
+あの　キュレムを　重ねて　いるのか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:34:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+　BALCK2→swleader1_06b
+　WHITE2→swleader1_06w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:50:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T04:53:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swleader1_06b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『プラズマだんを
+どうすれば　とめられるのか……？▼
+キュレムが　でんせつの
+ドラゴンポケモン　ならば▼
+たいこう　できるのは　レシラム……
+もしくは　ゼクロム　だけど……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:49:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:29:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『プラズマ団を
+どうすれば　とめられるのか……？▼
+キュレムが　伝説の
+ドラゴンポケモン　ならば▼
+対抗できるのは　レシラム……
+もしくは　ゼクロム　だけど……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:49:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:29:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK2ver
+・ここでチェレンがいっているのは
+　前作主人公、そしてNのこと</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:50:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:29:19" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_w21_swleader1_06w">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『プラズマだんを
+どうすれば　とめられるのか……？▼
+キュレムが　でんせつの
+ドラゴンポケモン　ならば▼
+たいこう　できるのは　ゼクロム……
+もしくは　レシラム　だけど……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:49:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:40:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『プラズマ団を
+どうすれば　とめられるのか……？▼
+キュレムが　伝説の
+ドラゴンポケモン　ならば▼
+対抗できるのは　ゼクロム……
+もしくは　レシラム　だけど……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:49:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:40:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WHITE2ver
+・ここでチェレンがいっているのは
+　前作主人公、そしてNのこと</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:50:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-18T05:40:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_w21_sign1_01"
 		Style="Large">
 		<LanguageCell
