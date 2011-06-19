@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_r22_poke5_01">
+		Label="msg_r22_poke5_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぐるるおおーっ！</Text>
@@ -28,17 +29,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・d05のアジトイベント後に、pos起動
-　GRIDX=102～104、GRIDZ=366
-・画面上から登場し
-　主人公と数歩離れ向き合って
-　メッセージ表示
 ・あわせて鳴き声再生
-・その後、画面右に移動
-・続けてsage6_01</Comment>
+・その後、戦闘へ
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T11:42:46" />
+				Time="2011-06-19T03:29:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -57,14 +53,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r22_poke5_02">
+		Label="msg_r22_poke5_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　ほらあなの　くらがりに
-まぎれて　きえてしまった…</Text>
+			<Text>ポケモンは　どうろの　さきへ
+はしりさって　しまった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T11:43:50" />
+				Time="2011-06-19T03:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,16 +69,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　洞穴の　暗がりに
-まぎれて　消えてしまった…</Text>
+			<Text>ポケモンは　道路の　先へ
+走り去ってしまった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T11:43:50" />
+				Time="2011-06-19T03:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-18T11:43:50" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後
+・倒した場合のメッセージ
+・復帰処理の仕様は保留</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:29:38" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>POKE5

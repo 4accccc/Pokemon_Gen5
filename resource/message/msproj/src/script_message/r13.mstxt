@@ -2,6 +2,103 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r13_poke4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こふおおおおーっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こふおおおおーっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・その後、戦闘へ
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE4
+ポケモン・コバルオン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:00" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r13_poke4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンは　どうろの　さきへ
+はしりさって　しまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンは　道路の　先へ
+走り去ってしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後
+・倒した場合のメッセージ
+・復帰処理の仕様は保留</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE4
+ポケモン・コバルオン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T03:38:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r13_salvage_01"
 		Style="Large">
 		<LanguageCell
