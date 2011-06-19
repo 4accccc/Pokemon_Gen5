@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホッホッホ　きれいな　はし　じゃろ？▼
-この　はしは　わしの
-ヒイヒイヒイヒイおじいさんの　だいに▽
-かけられた　ふるい　はし　なんじゃよ</Text>
+			<Text>この　ビレッジブリッジは　わしの
+ヒイヒイヒイヒイおじいさん　たちが▼
+ドテッコツたちと　ちからを　あわせ
+つくった　はし　なんじゃよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:08:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホッホッホ　きれいな　橋　じゃろ？▼
-この　橋は　ワシの
-ヒイヒイヒイヒイおじいさんの　代に▽
-架けられた　古い橋　なんじゃよ</Text>
+			<Text>この　ビレッジブリッジは　わしの
+ヒイヒイヒイヒイおじいさん　たちが▼
+ドテッコツたちと　協力し合って
+造った　橋なんじゃよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:09:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,10 +34,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:08:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -59,11 +60,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おじいちゃんはね　ビレッジブリッジの
-いしだいくさん　なんだよー！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71,11 +71,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おじいちゃんはね　ビレッジブリッジの
-いしだいくさん　なんだよー！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,12 +82,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・OLDMANから
-　ちょっと離れた所に配置</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:00:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -104,21 +101,75 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0101_girl1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしね　おじいちゃん　みたいに
+いしだいくに　なるんだ！▼
+ちからもちの　ポケモンと　いっしょなら
+おんなのこでも　だいじょうぶ　だよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:02:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:00:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしね　おじいちゃん　みたいに
+石大工に　なるんだ！▼
+力持ちの　ポケモンと　一緒なら
+女の子でも　大丈夫だよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:02:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:00:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・swanで新規追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:02:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:00:19" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_h04r0101_woman3_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　はし　めずらしいでしょ？▼
-むかし　かわが　みずで　あふれて
-いえが　ながされちゃったの▼
-かわに　ながされないよう　かんがえて
-はしの　うえに　いえを　たてたのよ▽
-シンプル　だけど　ごうりてき　よね</Text>
+			<Text>プラズマだんが　みんなを　だまして
+ポケモンを　かいほう　させていたら▽
+この　はしは　うまれなかったのね▼
+きっても　きれない　そんざい……▼
+ポケモンは　それいじょう　でも
+それいか　でも　ないのよ　きっと</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:15:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -126,15 +177,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この橋　珍しいでしょ？▼
-昔　川が　水で　あふれて
-家が　流されちゃったの▼
-川に　流されないよう　考えて
-橋の上に　家を　建てたのよ▽
-シンプル　だけど　合理的よね</Text>
+			<Text>プラズマだんが　みんなを　だまして
+ポケモンを　解放させていたら▽
+この橋は　生まれなかったのね▼
+きっても　きれない　存在……▼
+ポケモンは　それ以上でも
+それ以下でも　ないのよ　きっと</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:15:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
