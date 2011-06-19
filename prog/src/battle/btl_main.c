@@ -5531,6 +5531,8 @@ u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
   return trData->trainerType;
 }
 
+
+
 const PMS_DATA* BTL_MAIN_GetClientPMSData( const BTL_MAIN_MODULE* wk, u8 clientID, BtlResult playerResult )
 {
   if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_SUBWAY)

@@ -59,6 +59,9 @@ $stage_hash    = {"両方役者"=>PWS_A_TRAINER_B_TRAINER,
                   "無人"=>PWS_A_NONE_B_NONE}
 $gmmtag_hash   = {"%MYPOKE"=>"[1:02:ポケモンニックネーム:@]",
                   "%MYNAME"=>"[1:00:トレーナー名:@]"}
+$success_event = {"イベント１"=>0, "イベント２"=>1,"イベント３"=>2,"イベント４"=>3,"イベント５"=>4,
+                  "イベント６"=>5,"イベント７"=>6,"イベント８"=>7,"イベント９"=>8,"イベント１０"=>9,
+                 }
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------
@@ -161,14 +164,15 @@ class POKEWOOD_SENARIO
   attr_accessor :senario, :returation, :poke_limit, :item_ok, :select_msg, :situation_msg, :turn_msg, :event, :turn_max, :enemy_poke
 
   # 初期情報セット
-  def top_info( title, trainer_id, explain, hint, batt_bg )
-    @title      = msg2id(title)
-    @trainer_id = trainer_id.to_i
-    @explain    = msg2id(explain)
-    @hint       = msg2id(hint)
-    @bg_change  = [-1,-1, -1,-1, -1,-1]
+  def top_info( title, trainer_id, explain, hint, batt_bg, success_flag )
+    @title        = msg2id(title)
+    @trainer_id   = trainer_id.to_i
+    @explain      = msg2id(explain)
+    @hint         = msg2id(hint)
+    @success_flag = hash2no( $success_event, success_flag )
+    @bg_change    = [-1,-1, -1,-1, -1,-1]
   end
-  attr_accessor :title, :trainer_id, :explain, :hint, :batt_bg, :bg_change
+  attr_accessor :title, :trainer_id, :explain, :hint, :batt_bg, :bg_change, :success_flag
   
   # BG切り替えターン指定
   def set_bg_change( index, turn, change )
@@ -220,8 +224,8 @@ class POKEWOOD_SENARIO
     EVENT_REACTION_MAX.times{|i|
       msg1 = gmm.write_each( "pw_event#{index}_react_hero_#{i}", data[start+9+i][1], data[start+9+i][2], data[start+9+i][3], data[start+9+i][4] )
       msg2 = gmm.write_each( "pw_event#{index}_react_enemy_#{i}", data[start+9+i][5], data[start+9+i][6], data[start+9+i][7], data[start+9+i][8] )
-      @event[index].set_reaction_data(i, msg1,
-                                      msg2,data[start+9+i][11],data[start+9+i][12])
+      @event[index].set_reaction_data(i, msg1,msg2,
+                                      data[start+9+i][9],data[start+9+i][10])
     }
 #    printf("%s\n", @start_turn)
   end
@@ -236,7 +240,7 @@ class POKEWOOD_SENARIO
     array << @poke_limit
     array << @item_ok
     array << @turn_max
-    array << 0
+    array << @success_flag
     array << 0
     
     6.times{|i|
@@ -430,7 +434,7 @@ mission = gmm.write_both( "pw_scene_mission", datas[11][1], datas[11][2] )
 hint    = gmm.write_both( "pw_scene_hint", datas[12][1], datas[12][2] )
 
 #タイトル情報入力
-pokewood.top_info( title, datas[10][1], mission, hint, datas[13][1] )
+pokewood.top_info( title, datas[10][1], mission, hint, datas[13][1], datas[6][1] )
 
 
 # BG切り替え情報入力

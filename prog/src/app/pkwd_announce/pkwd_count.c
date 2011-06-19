@@ -464,20 +464,20 @@ static const s16 pkwd_title_tbl[] = {
 	0,
 };
 
-//------------------------
-// サブタイトルのテーブル
-//------------------------
-static const s16 pkwd_subtitle_tbl[] = {
-	pw_moviesubtitle_01_01,		// 1章
-	pw_moviesubtitle_02_01,		// 2章
-	pw_moviesubtitle_03_01,		// 3章
-	pw_moviesubtitle_04_01,		// 4章
-	pw_moviesubtitle_05_01,		// 5章
-	pw_moviesubtitle_06_01,		// 6章
-	pw_moviesubtitle_07_01,		// 7章
-	pw_moviesubtitle_08_01,		// 8章
-	pw_moviesubtitle_09_01,		// 9章
-	pw_moviesubtitle_10_01,		// 10章
+//-----------------------------------------------------
+// サブタイトルのテーブル(男・女の順で入っています。)
+//-----------------------------------------------------
+static const s16 pkwd_subtitle_tbl[][2] = {
+	{ pw_moviesubtitle_01_01,	pw_moviesubtitle_f_01_01, },	// 1章
+	{ pw_moviesubtitle_02_01,	pw_moviesubtitle_f_02_01, },	// 2章
+	{ pw_moviesubtitle_03_01,	pw_moviesubtitle_f_02_01, },	// 3章
+	{ pw_moviesubtitle_04_01,	pw_moviesubtitle_f_02_01, },	// 4章
+	{ pw_moviesubtitle_05_01,	pw_moviesubtitle_f_02_01, },	// 5章
+	{ pw_moviesubtitle_06_01,	pw_moviesubtitle_f_02_01, },	// 6章
+	{ pw_moviesubtitle_07_01,	pw_moviesubtitle_f_02_01, },	// 7章
+	{ pw_moviesubtitle_08_01,	pw_moviesubtitle_f_02_01, },	// 8章
+	{ pw_moviesubtitle_09_01,	pw_moviesubtitle_f_02_01, },	// 9章
+	{ pw_moviesubtitle_10_01,	pw_moviesubtitle_f_02_01, },	// 10章
 };
 
 
@@ -1846,7 +1846,7 @@ static void pwc_disp_title_string( PKWD_COUNT_MAIN_WORK* wk )
 	//
 	//
 	// サブタイトル表示
-	mesid = pkwd_subtitle_tbl[wk->Param->title_no]+wk->Param->scenario_no;
+	mesid = pkwd_subtitle_tbl[wk->Param->title_no][wk->Param->sex]+wk->Param->scenario_no;
 	if(wk->Param->message){
 		destbuf = GFL_STR_CreateBuffer( 256, wk->heapID );
 		// wordset

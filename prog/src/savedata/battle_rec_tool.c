@@ -334,6 +334,7 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_S
       clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
     }
     clientStatus[i].voiceLevel = setup->perappVoiceLevel[ i ];
+    OS_Printf("client[%d] sex=%d\n", i, MyStatus_GetMySex(&clientStatus[i].player));
   }
 }
 //----------------------------------------------------------------------------------
@@ -358,6 +359,11 @@ static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT
     case BTLREC_CLIENTSTATUS_TRAINER:
       GF_ASSERT(setup->tr_data[i]!=NULL);
       restore_TrainerData( setup->tr_data[i], &clientStatus[i].trainer );
+
+      // (仮）女の子主人公の際の対処方をもっとちゃんと考える
+      if(i==0 && (setup->tr_data[i]->tr_type==TRTYPE_PKWD_HEROINE || setup->tr_data[i]->tr_type==TRTYPE_HEROINE)){
+        MyStatus_SetMySex( setup->playerStatus[i], PM_FEMALE);
+      }
       break;
     }
 

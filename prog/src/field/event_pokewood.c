@@ -120,7 +120,7 @@ static const POKEWOOD_MONS_DATA myData[2][3] = {
   {
     {
       15, MONSNO_RUKARIO,
-      { WAZANO_HADOUDAN, WAZANO_REITOUPANTI, WAZANO_INFAITO, WAZANO_NULL },
+      { WAZANO_HADOUDAN, WAZANO_REITOUPANTI, WAZANO_NULL, WAZANO_NULL },
       0,  //no item
       { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
       PTL_SEIKAKU_YANTYA,
@@ -343,6 +343,8 @@ static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam(
     BattleRec_UnloadToolModule();
 //    bsp->PokewoodMode = BTL_POKEWOOD_SHOW;  //RestoreSetupParamが入れてくれる
 //    bsp->pokewoodSenario = senario_no; 
+    OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(bsp->playerStatus[0]));
+
     return bsp;
   }
   else
@@ -426,6 +428,8 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
     /**
      *  BATTLE_SETUP_PARAM の録画データセーブ開始
      */
+
+    OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(psew->bsp->playerStatus[0]));
     BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
     // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
     dataMakeEncountTrainer( psew->bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, psew->bsp->tr_data[BTL_CLIENT_ENEMY1], psew->heapID );
@@ -483,6 +487,7 @@ static void _init_pkwd_count_param( PKWD_COUNT_PARAM *param, BATTLE_SETUP_PARAM 
   
   // 現在はシナリオNOとタイトル画像指定番号を同じにする
   param->title_no = bsp->pokewoodSenario;
+  param->sex      = MyStatus_GetMySex( bsp->playerStatus[0] );
 }
 
 static void _delete_pkwd_count_param( PKWD_COUNT_PARAM *param )

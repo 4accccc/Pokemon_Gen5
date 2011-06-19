@@ -50,8 +50,9 @@ extern const GFL_PROC_DATA PkwdCountProcData;
 
 // PKWD_COUNT
 typedef struct{
-	int					title_no;		///< タイトル番号
+	int					title_no;		  ///< タイトル番号
 	int					scenario_no;	///< シナリオ番号
 	STRBUF*				message;		///< メッセージ
+  int         sex;          ///< 主人公性別
 }PKWD_COUNT_PARAM;
 

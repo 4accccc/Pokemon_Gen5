@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>撮影：シナリオ１</Text>
+			<Text>撮影「UFO」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:04" />
+				Time="2011-06-19T11:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>撮影：シナリオ１</Text>
+			<Text>撮影「UFO」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:14" />
+				Time="2011-06-19T11:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +39,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>撮影：シナリオ２</Text>
+			<Text>撮影「ハチクマン」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:21" />
+				Time="2011-06-19T11:10:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -50,10 +50,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>撮影：シナリオ２</Text>
+			<Text>撮影「ハチクマン」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:27" />
+				Time="2011-06-19T11:10:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -79,10 +79,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>上映：シナリオ１</Text>
+			<Text>上映「UFO」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:36" />
+				Time="2011-06-19T11:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -90,10 +90,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>上映：シナリオ１</Text>
+			<Text>上映「UFO」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:46" />
+				Time="2011-06-19T11:11:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -119,10 +119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>上映：シナリオ２</Text>
+			<Text>上映「ハチクマン」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:41:54" />
+				Time="2011-06-19T11:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -130,10 +130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>上映：シナリオ２</Text>
+			<Text>上映「ハチクマン」</Text>
 			<TextModifiedBy
 				User="mori:W00269"
-				Time="2011-06-16T09:42:00" />
+				Time="2011-06-19T11:11:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

@@ -1804,7 +1804,7 @@ static BOOL SubSeq_POKEWOOD_Sequence( BTL_CLIENT *wk )
 //----------------------------------------------------------------------------------
 static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *seqWork, int turn )
 {
-  int i;
+  int i,event_no=-1;
   for(i=0;i<EVENT_DATA_MAX;i++){
     OS_Printf("senario:%d,start_turn=%d, flagwork=%d, provision=%d\n", 
               i, senario->event[i].start_turn, seqWork->flagwork[0], senario->event[i].flag_provision);
@@ -1812,16 +1812,16 @@ static int _check_pokewood_event( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *
     // フラグ指定がなければターンチェックだけで発動
     if(senario->event[i].flag_provision==-1){
       if(senario->event[i].start_turn==turn){
-        return i;
+        event_no = i;
       }
     }else{
       // フラグ指定がある場合はそこもチェック
       if(senario->event[i].start_turn==turn && seqWork->flagwork[0]==senario->event[i].flag_provision){
-        return i;
+        event_no = i;
       }
     }
   }
-  return -1;
+  return event_no;
 }
 
 //----------------------------------------------------------------------------------
@@ -1900,6 +1900,34 @@ static void _set_pokewood_choice_bsp( BTL_CLIENT *wk, int event_no, int choice )
   BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
   bsp->pokewoodChoiceTbl[event_no] = choice;
 }
+
+static BOOL _get_pokewood_success_flag( BTL_CLIENT *wk )
+{
+  BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
+  OS_Printf("ポケウッド成功フラグ取得 = %d\n",bsp->pokewoodSuccessFlag );
+  return bsp->pokewoodSuccessFlag;
+}
+
+static void _set_pokewood_success_flag( BTL_CLIENT *wk, BOOL flag )
+{
+  BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
+  bsp->pokewoodSuccessFlag = flag;
+  OS_Printf("ポケウッド成功フラグ設定 = %d\n", flag);
+}
+
+static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, int event_no )
+{
+  // 撮影モードで
+  if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_REC){ 
+    // 成功イヴェントの起動が行われたら
+    if(senario->success_event==event_no){
+      _set_pokewood_success_flag( wk, TRUE );    // 成功フラグを立てる
+    }else{
+      _set_pokewood_success_flag( wk, FALSE );   // 逆なら立てない
+    }
+  }
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -2011,6 +2039,7 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
   case POKEWOOD_EVENT_SEQ_START:
     // このターンにイベントが存在しているかチェック
     wk->pokewoodSeqWork.event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+    _check_pokewood_success( wk, senario, wk->pokewoodSeqWork.event_no );
     BTL_STR_Register_PokewoodWord();  //WORDSET登録
 
     //カットインをすぐ見るためのデバッグ処理
@@ -2026,11 +2055,9 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
 #endif
 
     if(wk->pokewoodSeqWork.event_no>=0){
-
-      //TODO 本来は選択肢があたりだったとき->1に条件文を足す
       if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW 
           && POKEWOOD_CUTIN_IsExits( senario, wk->pokewoodSeqWork.event_no )
-          && 1 )
+          && _get_pokewood_success_flag(wk) )
       {
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CUTIN_SETUP;
       }
@@ -5222,8 +5249,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       if(_get_player_client_seq()>=SELECT_ACT_SEQ_SELECT_START){
         (*seq) = SEQ_INIT;
         OS_Printf("AI起動しました\n");
-      }else{
-        OS_Printf("AI待ってます\n");
       }
     }else{
       (*seq) = SEQ_INIT;  //通常はすぐAIを起動する
@@ -6552,12 +6577,20 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_POKEWOOD_END_EVENT:  
-    if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW ){
-      if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+    {
+      int pokewood_mode = BTL_MAIN_GetPokewoodMode(wk->mainModule);
+      if( pokewood_mode==BTL_POKEWOOD_SHOW ){
+        if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+          return TRUE;
+        }
+      }else if(pokewood_mode==BTL_POKEWOOD_REC){
+        POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+        int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+        _check_pokewood_success( wk, senario, event_no );
+        return TRUE;
+      }else{
         return TRUE;
       }
-    }else{
-      return TRUE;
     }
     break;
 

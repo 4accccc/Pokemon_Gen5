@@ -11677,4 +11677,221 @@
 				Time="2011-06-15T04:12:36" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_01_01"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちを　おそう　かがくしゃ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:51:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:51:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まちを　おそう　かがくしゃ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:51:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:51:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映タイトル画面用
+映画１－１のサブタイトル
+</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:51:31" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_01_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:53:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_02_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール　１</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール　１</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_02_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_02_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_moviesubtitle_f_02_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダミー</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-19T10:54:23" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

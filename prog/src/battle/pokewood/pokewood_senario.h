@@ -83,10 +83,11 @@ typedef struct{
   s16 pokenum_limit;  ///< 出せるポケモン最大数
   s16 item_ok;        ///< 道具使用OKかどうか
   s16 turn_max;       ///< ターン最大数
-  s16 trtype,name_id; ///< パディング
+  s16 success_event;  ///< 撮影条件イベント
+  s16 etc1;           ///< パディング
   
   s16 bg_change[POKEWOOD_NORMAL_VFX_MAX][2];  ///< 背景チェンジターン
-  s16 etc3,etc4;
+  s16 etc2,etc3;
   
   POKEWOOD_ENEMY_POKE enemy_poke[ENEMY_POKE_MAX]; ///< 敵トレーナーのポケモンの最大数
   s16 select_msg[2][SELECT_MSG_NUM];              ///< メッセージ選択時の会話ID(自分・敵）
