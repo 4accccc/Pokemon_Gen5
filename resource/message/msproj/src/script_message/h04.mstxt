@@ -2,6 +2,300 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_h04_stop_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まてーい！▼
+ここで　あったが　１００ねんめ！
+いや　おぬしで　１０００にんめ！▼
+これまで　９９９れんしょう　した
+わがはいの　あいてを　してもらう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:40:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:40:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>待てーい！▼
+ここで　会ったが　１００年め！
+いや　おぬしで　１０００人め！▼
+これまで　９９９連勝した
+我輩の　相手を　してもらう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swanで新規作成
+・ストッパーで勝利するまで先に進めてさせてくれない
+・GRIDX＝56、GRIDZ＝31、右向きで配置
+・会話時
+・はい/いいえの選択肢
+　はい　→stop_03
+　いいえ→stop_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:35:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04_stop_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　まてーい！▼
+ここで　あったが　１００ねんめ！
+いや　おぬしで　１０００にんめ！▼
+これまで　９９９れんしょう　した
+わがはいの　あいてを　してもらう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:42:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:41:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　待てーい！▼
+ここで　会ったが　１００年め！
+いや　おぬしで　１０００人め！▼
+これまで　９９９連勝した
+我輩の　相手を　してもらう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・pos起動時
+・！マーク表示してから主人公に隣接してメッセージ
+・はい/いいえの選択肢
+　はい　→stop_03
+　いいえ→stop_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:45:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:35:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04_stop_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がははは！　おぬしの　ような
+ひよっこで　１０００れんしょう　とは▽
+しょうしょう　ものたりぬ　がな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:45:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:42:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がははは！　おぬしの　ような
+ひよっこで　１０００連勝　とは▽
+少々　物足りぬ　がな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:45:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・メッセージ表示後戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:38:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:35:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04_stop_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうであろう！　９９９れんしょうの
+わがはいを　おそれるのも　とうぜん！▼
+だが　わがはいと　たたかわねば
+さきに　すすませる　わけには　いかん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:43:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:43:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうであろう！　９９９連勝の
+我輩を　恐れるのも　とうぜん！▼
+だが　我輩と　戦わねば
+先に　進ませる　わけには　いかん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:46:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+・主人公、一歩戻される
+　こいつも合わせて初期位置に戻す？</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:35:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04_stop_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２ねんかん　コツコツと　のばした
+れんしょうきろくが……　とだえた……▼
+だが　わがはいは　こころざしたかく
+ふたたび　１０００れんしょうを▽
+めざすと　せんげん　するのであった！▼
+……あっ　おぬしとは　たたかわないよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:47:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:39:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２年間　コツコツと　伸ばした
+連勝記録が……　途絶えた……▼
+だが　我輩は　志高く
+再び　１０００連勝を▽
+目指すと　宣言するので　あった！▼
+……あっ　おぬしとは　戦わないよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:47:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・プレイヤー勝利後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:47:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:38:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h04_poke_01"
 		Style="Large">
 		<LanguageCell
