@@ -29,12 +29,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・GRIDX＝726、GRIDZ＝138、右向き
 ・あわせて鳴き声再生
 ・その後、戦闘へ
 </Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T03:29:59" />
+				Time="2011-06-19T04:01:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -29,12 +29,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・pos起動
+・GRIDX＝470、GRIDZ＝173～177に到達すると
+　崖上から飛び降りて
+　GRIDX＝468、GRIDZ＝175に配置
 ・あわせて鳴き声再生
-・その後、戦闘へ
-</Comment>
+・その後、戦闘へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T03:30:18" />
+				Time="2011-06-19T04:16:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
