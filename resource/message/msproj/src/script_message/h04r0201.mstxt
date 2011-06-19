@@ -2,15 +2,57 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_h04r0201_man3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:19:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:19:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:19:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:19:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・swanで追加</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:19:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:18:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h04r0201_man3_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ビレッジサンドに　やみつき　でさ
-まいにち　たべたくて　ひっこしたんだ</Text>
+まいにち　こうして　たべにくるのさ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +61,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ビレッジサンドに　夢中でさ
-毎日　食べたくて　引っ越したんだ</Text>
+毎日　こうして　食べにくるのさ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,10 +73,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:37:22" />
+				Time="2011-06-19T07:22:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -56,13 +98,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すっごく　ふるい　はしだけど▼
-おとなりの　おじいさんが
-ていれを　してくれている　おかげで▽
-いつまでも　キレイな　ままね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70,13 +109,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すっごく　古い　橋だけど▼
-おとなりの　おじいさんが
-手入れを　してくれている　おかげで▽
-いつまでも　キレイな　ままね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,10 +120,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -103,20 +139,23 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_h04r0201_boy3_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうかしょに　のってる
-イッシュで　いちばん　ふるいはし▽
-それが　ここ　ビレッジブリッジさ！▼
-なんでも　２００ねんまえに
-つくられた　はし　らしいよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -124,14 +163,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>教科書に　載ってる
-イッシュで　一番　古い橋▽
-それが　ここ　ビレッジブリッジさ！▼
-何でも　２００年前に
-造られた　橋　らしいよ！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -139,10 +174,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-06-19T07:22:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -158,5 +193,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
