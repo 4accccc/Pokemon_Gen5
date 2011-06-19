@@ -553,10 +553,11 @@
 			<Comment>♂
 ・主人公と連れ立って
 　c08方面へ移動、画面切り替え
-・msg_c08_swleader7_04へ</Comment>
+・msg_c08_swleader7_04へ
+※氷漬けイベント終了後は、ドラゴン技教え</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:09:36" />
+				Time="2011-06-19T05:15:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -573,6 +574,48 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_poke43_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>きばっ！　ばごっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T05:15:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T05:15:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きばっ！　ばごっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T05:15:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T05:15:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T05:15:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE43
+ポケモン・キバゴ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-19T05:14:56" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08r0101_leader8a_01w"
