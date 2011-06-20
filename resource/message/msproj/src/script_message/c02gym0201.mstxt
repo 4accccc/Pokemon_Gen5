@@ -8,13 +8,13 @@
 			Language="JPN">
 			<Text>はくぶつかんの　そのおくで
 ちょうせんしゃを　まつ▽
-ポケモンジム……[Ctrl2:LineFeed ]
-なんだか　ふんいき　あるっすよね[Ctrl2:PageClear ]
+ポケモンジム……▽
+なんだか　ふんいき　あるっすよね▼
 というわけで
-これを　さしあげるっす！[Ctrl2:PageClear ]</Text>
+これを　さしあげるっす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T12:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,13 +23,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>博物館の　その奥で
-挑戦者を　待つ　ポケモンジム……[Ctrl2:LineFeed ]
-なんだか　雰囲気あるっすよね[Ctrl2:PageClear ]
+挑戦者を　待つ　ポケモンジム……▽
+なんだか　雰囲気あるっすよね▼
 というわけで
-これを　さしあげるっす！[Ctrl2:PageClear ]</Text>
+これを　さしあげるっす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T12:20:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -257,12 +257,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめて　ここに　きたときと
-ジムバッジを　てにしたあとの[Ctrl2:PageClear ]
+ジムバッジを　てにしたあとの▼
 みなさんの　ひょうじょうの　ちがいを
 みくらべるのが　すき　なんすよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T12:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -271,12 +271,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はじめて　ここに来たときと
-ジムバッジを　手にした後の[Ctrl2:PageClear ]
+ジムバッジを　手にした後の▼
 みなさんの　表情の　違いを
 見比べるのが　好きなんすよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T12:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -321,14 +321,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きいたっすか？　へんな　やつらが
-はくぶつかんに　どかどか　きて……[Ctrl2:PageClear ]
+はくぶつかんに　どかどか　きて……▼
 ああ！　ジムバッジ！！
-おめでとうございます！[Ctrl2:PageClear ]
+おめでとうございます！▼
 で　はくぶつかん　ですよ！
 ああ　どうしましょう！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T12:19:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -337,14 +337,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>聞いたっすか？　変な　やつらが
-博物館に　どかどか　きて……[Ctrl2:PageClear ]
+博物館に　どかどか　きて……▼
 ああ！　ジムバッジ！！
-おめでとうございます！[Ctrl2:PageClear ]
+おめでとうございます！▼
 で　博物館ですよ！
 ああ　どうしましょう！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T12:19:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
