@@ -487,9 +487,38 @@ void POKEWOOD_CUTIN_AttachViewCore( POKEWOOD_CUTIN *p_wk, BTLV_CORE* p_core )
  *	@return TRUE‚Å‘¶Ý  FALSE‚Å‘¶Ý‚µ‚Ä‚¢‚È‚¢
  */
 //-----------------------------------------------------------------------------
-BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event )
+BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOOL success_flag )
 {
-  return Bw_Binary_GetArcDatId( cp_senario->senario_no, event ) != POKEWOOD_CUTIN_EVENT_NONE;
+  int i;
+  for( i = 0; i < NELEMS(sc_pw_cutin_dat_search); i++ )
+  {
+    if( sc_pw_cutin_dat_search[i].senario == cp_senario->senario_no
+        && sc_pw_cutin_dat_search[i].event == event )
+    {
+      BOOL is_ok = FALSE;
+      switch( sc_pw_cutin_dat_search[i].term )
+      {
+      case PW_CUTIN_TERM_SUCCESS:
+        is_ok = (success_flag == TRUE);
+        break;
+      case PW_CUTIN_TERM_ANYTIME:
+        is_ok = TRUE;
+        break;
+      case PW_CUTIN_TERM_FAILURE:
+        is_ok = (success_flag == FALSE);
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+
+      if( is_ok )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
 }
 
 #ifdef PM_DEBUG

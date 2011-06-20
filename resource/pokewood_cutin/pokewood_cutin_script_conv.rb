@@ -117,10 +117,11 @@ end
 H_ROW_START       = 0         #行開始位置
 H_ROW_SENARIO     = 1 
 H_ROW_EVENT       = 2 
-H_ROW_WND_NUM     = 3
-H_ROW_NCL         = 4
-H_ROW_NCG         = 5
-H_ROW_NCE         = 6
+H_ROW_PLAYTERM    = 3
+H_ROW_WND_NUM     = 4
+H_ROW_NCL         = 5
+H_ROW_NCG         = 6
+H_ROW_NCE         = 7
 H_COL_START       = 0         #列開始位置
 H_COL_VALUE       = 1         #列:番号1
 H_COL_VALUE2      = 2        #列:番号2
@@ -290,7 +291,6 @@ begin
 
   #data作成
   data    = BinaryBuilder.new
-
 
   #ヘッダデータの作成
   naixdata = HeaderDataArray.new

@@ -35,7 +35,7 @@ extern void POKEWOOD_CUTIN_Start( POKEWOOD_CUTIN *p_wk, const POKEWOOD_SENARIO *
 extern void POKEWOOD_CUTIN_AttachViewCore( POKEWOOD_CUTIN *p_wk, BTLV_CORE* p_core );
 
 //Init‚µ‚Ä‚È‚­‚Ä‚àŽg‚¦‚Ü‚·
-extern BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event );
+extern BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOOL success_flag );
 
 //–{‘Ì‚Íbtl_main.c‚É‚ ‚é
 extern POKEWOOD_CUTIN * BTL_MAIN_GetPokewoodCutin( BTL_MAIN_MODULE *wk );

@@ -128,6 +128,37 @@ def convertDef( defCsv, header, rb )
   rb.write( "]\n" )
 end
 
+#-------------------------------------
+#条件コンバート
+#=====================================
+TERM_ROW_START       = 1         #行開始位置
+TERM_COL_START       = 1         #列開始位置
+TERM_COL_PG_NAME     = TERM_COL_START
+TERM_COL_JP_NAME     = 2
+TERM_COL_VALUE       = 3
+def convertTerm( termCsv, header, rb )
+  #termCsvのコンバート
+  header.write( "//条件情報\n" )
+
+  rb.write( "$term_data = [\n" )
+
+  for row in TERM_ROW_START...termCsv.row_length-1
+    pg_name  = termCsv.get( row, TERM_COL_PG_NAME )
+    jp_name  = termCsv.get( row, TERM_COL_JP_NAME )
+    value    = termCsv.get( row, TERM_COL_VALUE )
+
+    header.write( "//#{jp_name}\n" )
+    header.write( "#define PW_CUTIN_TERM_#{pg_name}  (#{value.to_i})\n" )
+
+    rb.write( "\t{\n" )
+    rb.write( "\t\t:JP_NAME=>'#{jp_name}',\n" )
+    rb.write( "\t\t:PG_VALUE=>#{value.to_i},\n" )
+    rb.write( "\t},\n" )
+  end
+
+  rb.write( "]\n" )
+end
+
 #=============================================================================
 #
 #   メイン処理
@@ -151,6 +182,11 @@ begin
   defCsv.setSuffix( '#define_data_end' )
   defCsv.load( ARGV[0] )
 
+  termCsv = CsvLoader.new
+  termCsv.setPrefix( '#define_term_start' )
+  termCsv.setSuffix( '#define_term_end' )
+  termCsv.load( ARGV[0] )
+
   #ヘッダ作成
   header    = TextBuilder.new
   header.write_header( "#{ARGV[1]}.h", 
@@ -163,6 +199,7 @@ begin
   #コンバート
   convertCmd( cmdCsv, header, rb )
   convertDef( defCsv, header, rb )
+  convertTerm( termCsv, header, rb )
 
   #書き込み
   header.genelate( "#{ARGV[1]}.h" )

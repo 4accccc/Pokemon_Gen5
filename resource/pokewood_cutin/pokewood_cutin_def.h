@@ -78,3 +78,10 @@
 #define PW_CUTIN_DEF_SHAKE_TYPE_LR  (2)
 //揺れタイプ：右左
 #define PW_CUTIN_DEF_SHAKE_TYPE_RL  (3)
+//条件情報
+//成功時
+#define PW_CUTIN_TERM_SUCCESS  (0)
+//いつでも
+#define PW_CUTIN_TERM_ANYTIME  (1)
+//失敗時
+#define PW_CUTIN_TERM_FAILURE  (2)

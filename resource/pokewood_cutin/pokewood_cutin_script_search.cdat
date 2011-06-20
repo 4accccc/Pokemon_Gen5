@@ -1,11 +1,15 @@
 static const struct{
-	u16 senario;
-	u16 event;
+	u32 senario :12;
+	u32 event   :10;
+	u32 term    :10;
 } sc_pw_cutin_dat_search[] ={
 	{
-		0,1
+		0,1,0
 	},
 	{
-		1,1
+		1,1,0
+	},
+	{
+		1,6,1
 	},
 };
