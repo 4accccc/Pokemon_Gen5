@@ -9053,6 +9053,14 @@
 		<language name="JPN" width="256">OCHIBA-02</language>
 		<language name="JPN_KANJI" width="256">OCHIBA-02</language>
 	</row>
+	<row id="msg_seq_se_sw_zkn_kaihou">
+		<language name="JPN" width="256">SW-ZKN-KAIHOU</language>
+		<language name="JPN_KANJI" width="256">SW-ZKN-KAIHOU</language>
+	</row>
+	<row id="msg_seq_se_sw_lc_no">
+		<language name="JPN" width="256">SW-LC-NO</language>
+		<language name="JPN_KANJI" width="256">SW-LC-NO</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
