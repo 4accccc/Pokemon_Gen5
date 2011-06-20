@@ -100,6 +100,304 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r22_swboss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ『ひさしぶり　ですね！▼
+いま　あなたが　むきあった
+ポケモンは　テラキオン！▼
+ポケモンを　たたかいの　ほのおから
+まもるため　ひとと　たたかった▽
+３びきの　ポケモンの　いっぴき！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:52:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ『ひさしぶり　ですね！▼
+いま　あなたが　むきあった
+ポケモンは　テラキオン！▼
+ポケモンを　たたかいの　ほのおから
+まもるため　ひとと　たたかった▽
+３びきの　ポケモンの　いっぴき！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・テラキオンとの戦闘後、
+　画面左下（草むら上）から出現</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:42:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:15:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きっと　プラズマだんに　たいして
+きけんの　においを　かぎとり▼
+たいこう　できる
+つよき　ポケモントレーナーを▽
+もとめて　いるのでしょう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:58:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きっと　プラズマだんに　たいして
+きけんの　においを　かぎとり▼
+たいこう　できる
+つよき　ポケモントレーナーを▽
+もとめて　いるのでしょう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたの　まえに　あらわれたのは
+ぐうぜんか　ひつぜんか……！▼
+それはさておき　あなたは！
+プラズマだんと　たいこう　するのですか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたの　まえに　あらわれたのは
+ぐうぜんか　ひつぜんか……！▼
+それはさておき　あなたは！
+プラズマだんと　たいこう　するのですか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+　はい　→swboss_04
+　いいえ→swboss_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:56:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:16:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なるほど！　であるならば！
+じぶんの　ポケモンを　まもれる▽
+つよさだけは　おもちなさい！▼
+ポケモンに　まもってもらうだけが
+トレーナーでは　ありません！▼
+では　あなたと　ポケモンの
+たびの　ぶじを　いのって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:00:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:53:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なるほど！　であるならば！
+じぶんの　ポケモンを　まもれる▽
+つよさだけは　おもちなさい！▼
+ポケモンに　まもってもらうだけが
+トレーナーでは　ありません！▼
+では　あなたと　ポケモンの
+たびの　ぶじを　いのって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・表示後、出現したルートをたどり
+　去っていく
+・画面外に消えると主人公操作可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:01:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:53:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r22_swboss_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なるほど！　それも　ありでしょう！▼
+あなたと　あなたの　ポケモンは
+すきな　みちを　ゆけば　いいのです！▼
+では　あなたと　ポケモンの
+たびの　ぶじを　いのって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:03:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:53:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なるほど！　それも　ありでしょう！▼
+あなたと　あなたの　ポケモンは
+すきな　みちを　ゆけば　いいのです！▼
+では　あなたと　ポケモンの
+たびの　ぶじを　いのって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+・表示後、出現したルートをたどり
+　去っていく
+・画面外に消えると主人公操作可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:01:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T08:53:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r22_sign1_01"
 		Style="Large">
 		<LanguageCell
