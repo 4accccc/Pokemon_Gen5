@@ -1,15 +1,15 @@
 #---------------------------------------------------------------
-# Project:  ゾーンマトリクス作成
+# Project:  マップマトリクス作成
 # File:     Makefile
 # Copyright 2005 GameFreak.inc  All rights reserved.
 #---------------------------------------------------------------
-#マトリクスのヘッダーつくれ
+
 #---------------------------------------------------------------
 #	定義
 #---------------------------------------------------------------
 #コンバート対象ユーザー
 #
-USERS = kagaya tamada nakatsui tomoya_takahashi obata_toshihiro iwasawa
+USERS = tamada nakatsui tomoya_takahashi obata_toshihiro iwasawa suginaka_katsunori
 
 #共通ルールファイルのインクルード
 #
