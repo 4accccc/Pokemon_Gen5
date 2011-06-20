@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/19 17:04:43
+#save date:2011/06/20 17:35:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c04gym0101.wms
 #ID name
 C04GYM0101_TRAINER_03
 #OBJ CODE Number
-GIRL1
+ADULTW
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
@@ -78,7 +78,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C04GYM0101_TRAINER_01
 #OBJ CODE Number
-GIRL3
+ADULTW
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
@@ -109,7 +109,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C04GYM0101_TRAINER_02
 #OBJ CODE Number
-GIRL2
+ADULTW
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
