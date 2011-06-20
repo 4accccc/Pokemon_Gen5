@@ -359,10 +359,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママー！！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -370,10 +370,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママー！！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -381,13 +381,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・まずメッセージウインドウ表示
-・主人公たちに！マーク後
-　ad_02に</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -406,7 +403,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -417,13 +414,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キダチ『ママ！！
-たいへん！　たいへんだよ！▼
-プラズマだん　という　れんちゅうが
-ホネを　いただく！　って▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -431,13 +425,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キダチ『ママ！！
-大変！　大変だよ！▼
-プラズマ団　という　連中が
-ホネを　いただく！　って▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -445,13 +436,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後
-　ジムリーダー退場
-　c02gym0101に出現</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -470,7 +458,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -481,13 +469,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アロエ『なんだって！
-どういうことだい！？[Ctrl2:PageClear ]
-[Name:TrainerName Idx="0" ]！
-アンタも　おいで！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -495,13 +480,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アロエ『なんだって！
-どういうことだい！？[Ctrl2:PageClear ]
-[Name:TrainerName Idx="0" ]！
-アンタも　おいで！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -509,14 +491,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・メッセージ表示後、博物館のほうへ
-・副館長も追いかけるようにして
-　博物館のほうへ移動
-・そうすると主人公、操作可能に</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T09:40:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -532,6 +510,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c02gym0202_leader_end_01"
