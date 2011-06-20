@@ -83,12 +83,12 @@
 			Language="JPN">
 			<Comment>♂
 ・中央受付の１歩下が初期配置
-・主人公たちに気づいて[！]を出す
+・主人公に気づいて[！]を出す
 ・初期配置箇所から下へ3歩移動してくる
 ・続けてowner_demo_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:42:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -155,13 +155,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・主人公とサポートの前方を行ったりきたりした後メッセージ
+・主人公の前方を行ったりきたりした後メッセージ
 ・メッセージ表示後
 　グッズケース入手処理
 ・続けてowner_demo_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:42:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -563,7 +563,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドレスアップさえ　できれば　だれでも
-ミュージカルに　さんかできます！▼
+ミュージカルに　さんか　できます！▼
 あなたも　ミュージカルに
 ぜひ　さんか　してくださいませ！▼
 ミュージカルに　ついての　せつめいは
@@ -571,8 +571,8 @@
 では　ぶたいで　あえる　ひを
 たのしみに　しております！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T14:00:32" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:51:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1151,7 +1151,7 @@
 わたしからは　この　ハッピーな
 グッズを　きみに　プレゼントです！▼
 オーナーの　わたしが
-わたすのは　ケーキ！▼
+わたしたいのは　ケーキ！▼
 もちろん　グッズですから
 ポケモンに　つけることも　できます！▼
 ちなみに　きょうが　きみの
@@ -1160,8 +1160,8 @@
 だって
 わたしは　オーナーですからね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1173,7 +1173,7 @@
 わたしからは　この　ハッピーな
 グッズを　きみに　プレゼントです！▼
 オーナーの　わたしが
-わたすのは　ケーキ！▼
+わたしたいのは　ケーキ！▼
 もちろん　グッズですから
 ポケモンに　つけることも　できます！▼
 ちなみに　今日が　きみの
@@ -1182,8 +1182,8 @@
 だって
 わたしは　オーナーですからね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1386,10 +1386,10 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・上記OBJに隣接
-・メッセージ表示と共に鳴き声再生</Comment>
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:52:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1505,10 +1505,10 @@
 そして　ユニーク▼
 どういう　イメージにするか
 考えて　ドレスアップするのも▽
-ありだと　おもいますです</Text>
+ありだと　思いますです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:48:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1730,11 +1730,11 @@
 			<Text>きみが　さんかする　えんもくは
 すべて　みさせて　もらっている！▼
 おかねもちの　わたしから　みても
-じつに　すばらしい！▽
+ミュージカルは　じつに　すばらしい！▽
 ごくじょうの　エンターテイメントだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:55:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1745,11 +1745,11 @@
 			<Text>きみが　参加する　演目は
 すべて　拝見させて　もらっている！▼
 お金持ちの　わたしから　みても
-じつに　すばらしい！▽
+ミュージカルは　実に　すばらしい！▽
 極上の　エンターテイメントだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2356,10 +2356,11 @@
 			Language="JPN">
 			<Comment>♂
 ・初回会話
-・なにかSE？</Comment>
+・なにかSE？
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:05:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2390,10 +2391,10 @@
 			Language="JPN">
 			<Text>ミュージカルホールでは
 いとしの　ポケモンに　グッズをつけて▽
-ダンスさせられるんだよ！</Text>
+ダンスを　してもらえるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2402,11 +2403,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミュージカルホールでは
-いとしの　ポケモンに　グッズをつけて▽
-ダンスさせられるんだよ！</Text>
+愛しの　ポケモンに　グッズをつけて▽
+ダンスを　してもらえるんだよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2416,10 +2417,11 @@
 			Language="JPN">
 			<Comment>♂
 ・2回目以降
-※ミュージカルに関する情報メッセージは仮</Comment>
+※ミュージカルに関する情報メッセージは仮
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T07:05:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2476,18 +2478,19 @@
 			Language="JPN">
 			<Comment>♂
 ・話しかけイベント
-・メッセージ表示後、[！]を出す
+・メッセージ表示後、頭上に！表示
 ・続けてowner_demo_swan_02</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T13:56:00" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:50:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>CLOWN</Text>
+			<Text>GENTLEMAN
+＝オーナー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2505,20 +2508,21 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_02">
+		Label="msg_c04r0201_owner_demo_swan_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ふーむ！　なんというか　あなた
 いい　かんじの　トレーナーですねえ！▼
 ポケモンに　グッズを　つけて
-きかざってあげることを▽
-ドレスアップと　いうのですが▽
+きかざって　あげることを▼
+ドレスアップと　いうのですが
 ぜひ　やってみて　くれませんか？▼
 こちらの　グッズケースを
 プレゼント　しますから！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T13:56:31" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2529,14 +2533,14 @@
 			<Text>ふーむ！　なんというか　あなた
 いい　感じの　トレーナーですねえ！▼
 ポケモンに　グッズを　つけて
-着飾ってあげることを▽
-ドレスアップと　いうのですが▽
+着飾って　あげることを▼
+ドレスアップと　いうのですが
 ぜひ　やってみて　くれませんか？▼
 こちらの　グッズケースを
 プレゼント　しますから！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T14:09:00" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:50:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2552,6 +2556,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:56:34" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff0080</CellData>
@@ -2561,7 +2573,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_01a">
+		Label="msg_c04r0201_owner_demo_swan_01a"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おや　あなた　どこかで
@@ -2603,6 +2616,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:56:59" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8000ff</CellData>
@@ -2612,7 +2633,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_02a">
+		Label="msg_c04r0201_owner_demo_swan_02a"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ふーむ！　なんというか　あなたから
@@ -2621,10 +2643,10 @@
 とある　スーパースターと▽
 よく　にた　オーラを……▼
 ところで　トレーナーさん
-ドレスアップを　ごぞんじですか？▼</Text>
+ドレスアップを　ごぞんじ　ですか？▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T13:57:22" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2638,10 +2660,10 @@
 とある　スーパースターと▽
 よく　似た　オーラを……▼
 ところで　トレーナーさん
-ドレスアップを　ごぞんじですか？▼</Text>
+ドレスアップを　ご存知ですか？▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T14:10:05" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2660,6 +2682,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:57:26" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8000ff</CellData>
@@ -2669,7 +2699,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_02b">
+		Label="msg_c04r0201_owner_demo_swan_02b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ならば　はなしは　はやい
@@ -2703,6 +2734,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:57:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8000ff</CellData>
@@ -2712,7 +2751,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_02c">
+		Label="msg_c04r0201_owner_demo_swan_02c"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンに　グッズを　つけて
@@ -2752,6 +2792,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:57:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8000ff</CellData>
@@ -2761,18 +2809,19 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_02d">
+		Label="msg_c04r0201_owner_demo_swan_02d"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうだ！　あなたに　さしあげる
 グッズケースは　コレにしよう！▼
 かつての　スーパースターが
-つかっていた　グッズと▽
-おなじものが　はいっている▽
+つかっていた　グッズと▼
+おなじ　ものが　はいっている
 グッズケース　です！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T13:58:08" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:51:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2783,12 +2832,12 @@
 			<Text>そうだ！　あなたに　さしあげる
 グッズケースは　コレにしよう！▼
 かつての　スーパースターが
-使っていた　グッズと▽
-同じものが　入っている▽
+使っていた　グッズと▼
+同じ　ものが　入っている
 グッズケース　です！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-24T14:10:58" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2805,6 +2854,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:58:11" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8000ff</CellData>
@@ -2814,7 +2871,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c04r0201_owner_demo_swan_03a">
+		Label="msg_c04r0201_owner_demo_swan_03a"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたなら　きっと　しんせだいの
@@ -2860,6 +2918,14 @@
 				User="ito_hiroto:W00178"
 				Time="2011-05-24T13:58:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T06:49:18" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8000ff</CellData>
