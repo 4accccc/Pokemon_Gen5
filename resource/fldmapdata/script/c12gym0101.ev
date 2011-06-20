@@ -56,6 +56,7 @@ EVENT_END
 /*  黒板                         */
 /**************************************************************/
 EVENT_START ev_c12gym0101_boy3_01
+{
   _TALK_START_SE_PLAY()
   
   //話しかけた方向によって演出を分岐
@@ -87,11 +88,20 @@ EVENT_START ev_c12gym0101_boy3_01
   //先頭ポケモンの名前を取得
   _TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
   
-  //【仮】戦闘ポケモンの特性を格納
+  //戦闘ポケモンの特性を格納
+  DEFINE_LOCAL LWK_TOKUSEI
+  _GET_PARTY_POKE_PARAM( LWK_TOKUSEI, LWK_FRONT, SCR_POKEPARA_TOKUSEI )
+  _TOKUSEI_NAME( 1, LWK_TOKUSEI )
   
   //メッセージ：ポケモンにはとくせいとよばれる
   _BALLOONWIN_OBJMSG_POS( msg_c12gym0101_boy2b_01, C12GYM0101_BOY3_02 ,POS_UR)
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( C12GYM0101_BOY3_01, anm_staystep_r )
+  _OBJ_ANIME( C12GYM0101_BOY3_02, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+}
 EVENT_END
 /**************************************************************/
 /*  黒板                         */

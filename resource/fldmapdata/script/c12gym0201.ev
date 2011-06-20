@@ -350,7 +350,13 @@ EVENT_START ev_c12gym0201_boy2_01
        
        //========================================/
       
-    //戦闘済み
+   //トレーナー二人と戦闘済み
+    ELSIF $WK_SCENE_C12GYM0201 >= 3 THEN
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_04 , C12GYM0201_BOY2_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    
+    //片方に勝利していない
     ELSE
       _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_02 , C12GYM0201_BOY2_01 )
       _LAST_KEYWAIT()
@@ -417,7 +423,13 @@ EVENT_START ev_c12gym0201_girl2_01
        
        //========================================/
       
-    //戦闘済み
+    //トレーナー二人と戦闘済み
+    ELSIF $WK_SCENE_C12GYM0201 >= 3 THEN
+      _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_04 , C12GYM0201_GIRL2_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    
+    //片方に勝利していない
     ELSE
       _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_02 , C12GYM0201_GIRL2_01 )
       _LAST_KEYWAIT()

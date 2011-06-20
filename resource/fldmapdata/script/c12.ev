@@ -113,8 +113,8 @@ EVENT_START ev_c12_swrival_01
   _TALK_OBJ_START()
   
   IF $WK_SCENE_C12_WHITE_MEET < 3 THEN
-     //【仮】ライバル名代入
-    _NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
     //メッセージ
     _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_12,C12_SWRIVAL_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
@@ -182,8 +182,8 @@ EVENT_END
 /*  妹はなしかけ                         */
 /**************************************************************/
 EVENT_START ev_c12_swsister_01
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_white_20 )
 EVENT_END
@@ -192,8 +192,8 @@ EVENT_END
 /*  POS：ベルと出会う（ストッパー）                         */
 /**************************************************************/
 EVENT_START ev_pos_c12_swbell_meet_02
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   //ライバル：あのひとが　ベルか
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_13,C12_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -249,8 +249,8 @@ EVENT_START ev_pos_c12_swbell_meet_03
   IF $SCWK_ANSWER == SCR_NO THEN
     _MSGWIN_CLOSE()
     _PLAYER_NAME( 0 )
-    //【仮】ライバル名代入
-    _NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
     //ライバル：なにいってるんだ
     _BALLOONWIN_OBJMSG_POS(msg_c12_swrival_14,C12_SWRIVAL_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
@@ -285,6 +285,7 @@ EVENT_START ev_pos_c12_swbell_meet_03
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
 		_SET_MY_ANSWER( QUESTION_ID_FIRST_POKEMON, 3 ) // 草タイプを選択（すれ違い調査隊用）
 		$lwk_poke_num = MONSNO_551	//ツタージャをセット
+		_MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
 		_MONS_NAME( 2, MONSNO_551 )	//ポケモン名タグをセット
 
 	ELSIF $lwk_ret_num == 1 THEN
@@ -292,6 +293,7 @@ EVENT_START ev_pos_c12_swbell_meet_03
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
 		_SET_MY_ANSWER( QUESTION_ID_FIRST_POKEMON, 1 ) // 炎タイプを選択（すれ違い調査隊用）
 		$lwk_poke_num = MONSNO_554	//ポカブをセット
+		_MONS_NAME( 1, MONSNO_554 )	//ポケモン名タグをセット
 		_MONS_NAME( 2, MONSNO_554 )	//ポケモン名タグをセット
 
 	ELSE
@@ -299,6 +301,7 @@ EVENT_START ev_pos_c12_swbell_meet_03
 		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
 		_SET_MY_ANSWER( QUESTION_ID_FIRST_POKEMON, 2 ) // 水タイプを選択（すれ違い調査隊用）
 		$lwk_poke_num = MONSNO_557	//ミジュマルをセット
+		_MONS_NAME( 1, MONSNO_557 )	//ポケモン名タグをセット
 		_MONS_NAME( 2, MONSNO_557 )	//ポケモン名タグをセット
 
 	ENDIF
@@ -341,8 +344,8 @@ EVENT_START ev_pos_c12_swbell_meet_03
 	
 
   
-  //【仮】ライバル名代入
-   _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   //ライバル：そいつが
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_15 , C12_SWRIVAL_01 , POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -381,8 +384,8 @@ EVENT_START ev_pos_c12_swbell_meet_03
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_12 , C12_SWBELL_01 , POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
    
   //ライバル：それあまってたら
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_16 , C12_SWRIVAL_01 , POS_DEFAULT )
@@ -434,9 +437,9 @@ ev_name_input:
 
 		//ニックネームがついていないなら確認
 		IF $lwk_nick_name == TRUE THEN
-			//【仮】その[ニックネーム]で良いですか？
+			//その[ニックネーム]で良いですか？
 			_TEMOTI_NICK_NAME( 0, 0 )
-			_BALLOONWIN_OBJMSG_POS( msg_c12_white_08, C12_SWBELL_01, POS_DEFAULT )
+			_BALLOONWIN_OBJMSG_POS( msg_c12_white_09, C12_SWBELL_01, POS_DEFAULT )
 			_YES_NO_WIN( SCWK_ANSWER )
 
 			IF $SCWK_ANSWER == SCR_YES THEN
@@ -530,8 +533,8 @@ ev_vs_rival:
 
 	//ローカル変数を定義
 	{
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
 	//というわけで！
 	_BALLOONWIN_OBJMSG_POS( msg_c12_swrival_17, C12_SWRIVAL_01, POS_DEFAULT )
@@ -552,8 +555,8 @@ ev_vs_rival:
 	//戦闘復帰処理
 	_TRAINER_WIN()
 	
-	//【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+	//ライバル名代入
+  _RIVAL_NAME( 1 )
 
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -782,8 +785,8 @@ EVENT_START		ev_scene_c12_townmap_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+	//ライバル名代入
+  _RIVAL_NAME( 1 )
 	
 	//妹：あたしからはこれを
 	_BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_03,C12_SWSISTER_01, POS_DEFAULT )
@@ -796,8 +799,8 @@ EVENT_START		ev_scene_c12_townmap_01
 	_BALLOONWIN_OBJMSG_POS( msg_c12_white_18,C12_SWBELL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】ライバル名代入
-   _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
    
   //妹：おにいちゃんに
 	_BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_05,C12_SWSISTER_01, POS_DEFAULT )
@@ -1000,8 +1003,8 @@ EVENT_START ev_pos_c12_rival_pair_01
 {
   //主人公名を代入
   _PLAYER_NAME(0)
-  //【仮】ライバル名代入
-   _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //妹：主人公さーん！
   _PLAINWIN_MSG_DOWN( msg_c12_rivalsister_01 )
@@ -1034,7 +1037,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   _MSGWIN_CLOSE()
   
   //アニメ：妹退場
-  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 751, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 43, 751, FORCE_TYPE_NOT, 8, DIR_LR)
 	_OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_d )
   
   //ライバル：さてと
@@ -1074,8 +1077,8 @@ EVENT_END
 EVENT_START ev_pos_c12_rival_pair_return_01
 {
 
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
    
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_11, PAIR_TRAINER_01, POS_DEFAULT )
   _LAST_KEYWAIT()
@@ -1103,8 +1106,8 @@ EVENT_END
 //連れ歩き中話しかけスクリプト
 EVENT_START ev_c12_rival_pair_01
 
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
 
   //話しかけるごとに0～2のセリフを順番に表示
   
@@ -1133,8 +1136,8 @@ EVENT_START ev_pos_c12_ng_01
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng01,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1153,8 +1156,8 @@ EVENT_START ev_pos_c12_ng_02
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng02,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1173,8 +1176,8 @@ EVENT_START ev_pos_c12_ng_03
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng03,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1193,8 +1196,8 @@ EVENT_START ev_pos_c12_ng_04
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng04,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1213,8 +1216,8 @@ EVENT_START ev_pos_c12_ng_05
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng05,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1233,8 +1236,8 @@ EVENT_START ev_pos_c12_ng_06
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng06,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1253,8 +1256,8 @@ EVENT_START ev_pos_c12_ng_07
   //振り向き処理
   _CALL ev_c12_rival_ng_return01
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_ng07,PAIR_TRAINER_01, POS_DEFAULT )
@@ -1317,8 +1320,8 @@ EVENT_START ev_pos_c12_rival_pair_01_guide
     _OBJ_ANIME_WAIT()
   ENDSWITCH
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_04,PAIR_TRAINER_01, POS_DEFAULT )

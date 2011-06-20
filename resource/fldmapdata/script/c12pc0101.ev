@@ -120,13 +120,17 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
   //ベル動作モデル非表示
   _OBJ_DEL(C12PC0101_SWBELL_01)
   
-  //【仮】フィールド通常曲に戻す
+  //==================================//
+  
+  //ゾーンBGM変更フラグをリセット
+	_FLAG_RESET( SYS_FLAG_BGM_C12PC0101_GUIDE)
+	
+  //==================================//
+  
+  //フィールド通常曲に戻す
 	_BGM_NOW_MAP_RECOVER()
   
   //==================================//
-	
-	//ゾーンBGM変更フラグをリセット
-	_FLAG_RESET( SYS_FLAG_BGM_C12PC0101_GUIDE)
 	
 	//C12のSCENE_CHANGE起動
 	$WK_SCENE_C12_WHITE_MEET = 5

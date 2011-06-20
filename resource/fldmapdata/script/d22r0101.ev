@@ -96,14 +96,12 @@ EVENT_START ev_pos_d22r0101_pokesearch_01
 	
   _OBJ_ANIME_WAIT()
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
   
   //メッセージ：オマエも
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_01,D22R0101_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  //【仮】戦闘をスキップ
   
   //ライバル戦呼び出し　最初の３匹によって分岐
   IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
@@ -126,8 +124,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_01
   ENDIF
   
   
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
   
   //メッセージ：なかなか
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_02,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -171,8 +169,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_01
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_breederm_01,D22R0101_BREEDERM_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
   
   //メッセージ：だれ
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_05,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -220,8 +218,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_01
   _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
   
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
 	
 	//メッセージ：なんだそれ！
 	_BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_06,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -297,8 +295,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_02
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
   
   //メッセージ：むこうにはいなかった
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_07,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -358,8 +356,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_03
   _OBJ_ANIME( D22R0101_SWRIVAL_01, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
   
   //メッセージ：まだみつからない
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_08,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -420,8 +418,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_04
   
   _OBJ_ANIME_WAIT()
   
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
   
   //メッセージ：いまのこえ
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_09,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -497,8 +495,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
 	
   //メッセージ：みつかったか！
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_swrival_12,D22R0101_SWRIVAL_01, POS_DEFAULT )
@@ -537,8 +535,8 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 
-  //【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名格納
+  _RIVAL_NAME(1)
 
   //メッセージ：おーヨーテリー
   _BALLOONWIN_OBJMSG_POS( msg_d22r0101_breederm_05,D22R0101_BREEDERM_01, POS_DEFAULT )
@@ -748,7 +746,20 @@ _ANIME_LABEL	anm_pokeserch05_breeder_to_player
 /*  はなしかけ：ライバル                         */
 /**************************************************************/
 EVENT_START ev_d22r0101_swrival_01
-//
+  
+  //ライバル名格納
+  _RIVAL_NAME(1)
+  
+  //進行状況によってメッセージが変わる
+  IF $WK_SCENE_D22R0101 == 1 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_14)
+  ELSIF $WK_SCENE_D22R0101 == 2 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_07)
+  ELSIF $WK_SCENE_D22R0101 == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_08)
+  ELSIF $WK_SCENE_D22R0101 == 4 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_11)
+  ENDIF
 EVENT_END
 
 /**************************************************************/
