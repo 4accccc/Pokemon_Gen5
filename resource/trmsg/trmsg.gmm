@@ -15658,25 +15658,9 @@ può accadere ancora di tutto!</language>
 ステキな　発見を　させてくれるの</language>
 	</row>
 
-	<row id="TRID_GENTLE_05_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
-	</row>
-
 	<row id="TRID_GENTLE_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_GENTLE_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">ああ！　むじょう　なり……</language>
+		<language name="JPN_KANJI" width="216">ああ！　無情なり……</language>
 	</row>
 
 	<row id="TRID_HEADS_06_TRMSG_FIGHT_START">
