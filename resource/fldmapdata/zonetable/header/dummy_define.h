@@ -49,6 +49,7 @@ enum {
   RSC_GRID_LEAGIN02 = 20, //グリッド　リーグフロント２専用
   RSC_GRID_H06 = 21,      //グリッド　H06専用
   RSC_GRID_GYM_GROUND = 22,//グリッド　C05地面ジム専用
+  RSC_HYBRID_GYM_DRAGON = 23,//ハイブリッド C08ドラゴンジム専用
 
 	RSC_TYPE_END
 };
