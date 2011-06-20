@@ -258,5 +258,29 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_WATER_End,       // 水ジム
     GYM_WATER_Move,       // 水ジム
   },
+  {
+    FS_OVERLAY_ID(field_fourkings_ghost),//C09R0101
+    FOURKINGS_GHOST_Setup,  // 四天王 ゴースト
+    FOURKINGS_GHOST_End,    // 四天王 ゴースト
+    FOURKINGS_GHOST_Move,   // 四天王 ゴースト
+  },
+  {
+    FS_OVERLAY_ID(field_fourkings_evil),//C09R0201
+    FOURKINGS_EVIL_Setup,  // 四天王 悪
+    FOURKINGS_EVIL_End,    // 四天王 悪
+    FOURKINGS_EVIL_Move,   // 四天王 悪
+  },
+  {
+    FS_OVERLAY_ID(field_fourkings_fight),//C09R0301
+    FOURKINGS_FIGHT_Setup,  // 四天王 格闘
+    FOURKINGS_FIGHT_End,    // 四天王 格闘
+    FOURKINGS_FIGHT_Move,   // 四天王 格闘
+  },
+  {
+    FS_OVERLAY_ID(field_fourkings_esp),//C09R0401
+    FOURKINGS_ESP_Setup,  // 四天王 エスパー
+    FOURKINGS_ESP_End,    // 四天王 エスパー
+    FOURKINGS_ESP_Move,   // 四天王 エスパー
+  },
 };
 

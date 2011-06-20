@@ -42,6 +42,10 @@
 #include "wbt_gimmick.h"
 #include "gym_poison.h"
 #include "gym_water.h"
+#include "fourkings_ghost.h"
+#include "fourkings_evil.h"
+#include "fourkings_fight.h"
+#include "fourkings_esp.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -72,6 +76,10 @@ FS_EXTERN_OVERLAY(infinity_dungeon_gimmick);
 FS_EXTERN_OVERLAY(wbt_gimmick);
 FS_EXTERN_OVERLAY(field_gym_poison);
 FS_EXTERN_OVERLAY(field_gym_water);
+FS_EXTERN_OVERLAY(field_fourkings_ghost);
+FS_EXTERN_OVERLAY(field_fourkings_evil);
+FS_EXTERN_OVERLAY(field_fourkings_fight);
+FS_EXTERN_OVERLAY(field_fourkings_esp);
 
 
 #include "field_gimmick_table.cdat"
