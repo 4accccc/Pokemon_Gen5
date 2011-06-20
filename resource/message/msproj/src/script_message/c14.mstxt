@@ -998,11 +998,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キャッキャ
-うふふ</Text>
+			<Text>キャッキャ　うふふふ！
+つかまえて　ごらんなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:54:46" />
+				Time="2011-06-20T03:56:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1010,11 +1010,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キャッキャ
-うふふ</Text>
+			<Text>キャッキャ　うふふふ！
+つかまえて　ごらんなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:54:50" />
+				Time="2011-06-20T03:56:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1050,11 +1050,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まてまてー！
-つかまえちゃうぞ！</Text>
+			<Text>あははは！　おーい！
+まてよー！　つかまえちゃうぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:52:25" />
+				Time="2011-06-20T03:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1062,11 +1062,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まてまてー！
-捕まえちゃうぞ！</Text>
+			<Text>あははは！　おーい！
+待てよー！　捕まえちゃうぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:09:28" />
+				Time="2011-06-20T03:56:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1102,11 +1102,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……つかまえた　ポケモンも
-にがすと　もう　あえないんですよ</Text>
+			<Text>ポケモンも　ひとも　であいは
+いちご　いちえ……▽
+つぎが　あるとは　かぎらない▼
+その　とき　その　しゅんかん
+ぜんりょくを　つくさないとね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:56:39" />
+				Time="2011-06-20T04:01:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1114,11 +1117,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……捕まえた　ポケモンも
-逃がすと　もう　会えないんですよ</Text>
+			<Text>ポケモンも　人も
+出会いは　一期一会……▽
+次が　あるとは　かぎらない▼
+その時　その瞬間
+全力を　つくさないとね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:09:45" />
+				Time="2011-06-20T04:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

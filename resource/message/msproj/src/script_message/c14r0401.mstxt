@@ -102,4 +102,46 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c14r0401_poke45_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>んまっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:11:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:11:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>んまっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:11:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:11:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:12:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE45
+ポケモン・マッギョ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:11:38" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

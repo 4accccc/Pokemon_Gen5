@@ -53,10 +53,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おい　マジかよっ！▼
+アンタの　[Name:PokemonName ]
+なみのり　できるのかよ！▼
+スゲー……
+マジで　リスペクトするぜ！▼
+アンタと　[Name:PokemonName ]みたいな
+ノったり　ノられたりな　バイブス▽
+さいこうに　イカしてるぜ！▼
+……オレ？▼
+オレは　カナヅチ　だから
+うみ　とか　なみ　とか▽
+マジ　ノーサンキュー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:24:10" />
+				Time="2011-06-20T04:02:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64,10 +75,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おい　マジかよっ！▼
+アンタの　[Name:PokemonName ]
+なみのり　できるのかよ！▼
+スゲー……
+マジで　リスペクトするぜ！▼
+アンタと　[Name:PokemonName ]みたいな
+ノったり　ノられたりな　バイブス▽
+最高に　イカしてるぜ！▼
+……オレ？▼
+オレは　カナヅチ　だから
+海とか　波とか▽
+マジ　ノーサンキュー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:24:10" />
+				Time="2011-06-20T04:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,10 +99,12 @@
 			Language="JPN">
 			<Comment>♂
 ・手持ちに「なみのり」をおぼえた
-　ポケモンがいる</Comment>
+　ポケモンがいる
+・0＝なみのりができるポケモンの種族名
+※動作モデルは仮</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:35:16" />
+				Time="2011-06-20T04:02:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -95,10 +119,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おい　マジかよっ！
+アンタの　ポケモン▽
+ぜんぜん　なみのり　できねーじゃん！▼
+リアルな　なみの　バイブスに
+ノったり　ノられたり　できないとか▽
+マジ　ノーサンキュー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:34:55" />
+				Time="2011-06-20T04:02:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -106,10 +135,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おい　マジかよっ！
+アンタの　ポケモン▽
+全然　なみのり　できねーじゃん！▼
+リアルな　波の　バイブスに
+ノったり　ノられたり　できないとか▽
+マジ　ノーサンキュー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:34:55" />
+				Time="2011-06-20T04:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

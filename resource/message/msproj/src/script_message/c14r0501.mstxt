@@ -2,14 +2,18 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c14r0501_01_01"
+		Label="msg_c14r0501_lady_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ちょっと！
+そこの　あなた！▼
+わたくしの　かわいい
+コジョフーちゃんの　おさんぽを▽
+ひきうけて　くださいますわね？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ちょっと！
+そこの　あなた！▼
+わたくしの　かわいい
+コジョフーちゃんの　お散歩を▽
+引き受けて　くださいますわね？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:11:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +36,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀
+・
+・はい/いいえの選択肢表示
+　はい　→lady_02
+　いいえ→lady_03
+・0＝ポケモンの種族名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:03:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>LADY</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:04:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -49,21 +62,829 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0501_02_01"
+		Label="msg_c14r0501_lady_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>あら　ヤダ！
+はなしの　わかる　おかた！▼
+それじゃあ　わたくしの　キュートな
+コジョフーちゃんを　つれて▽
+たっくさん　あるいて　くださいな！▼
+ああ　でも……
+この　おうちから　でては　ダメ！▼
+そとは　キケン　ですからね
+それでは　おねがい　しますわ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:24" />
+				Time="2011-06-20T05:12:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　ヤダ！
+話の　わかる　おかた！▼
+それじゃあ　わたくしの　キュートな
+コジョフーちゃんを　つれて▽
+たっくさん　歩いて　くださいな！▼
+ああ　でも……
+この　おうちから　でては　ダメ！▼
+外は　キケン　ですからね
+それでは　お願い　しますわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:13:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:06:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　ヤダ！▼
+わたくしの　おねがいを
+ことわる　なんて　イケズな　おかた！▼
+さんぽくらい　じぶんで　やれという
+かたも　いますけれども▼
+わたくし　モンスターボールより
+おもいものを　もったことが　ないから▽
+ムリですのに！▼
+……でも　また　きがむいたら
+コジョフーちゃんの　おさんぽ▽
+たのんであげても　よろしくてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:14:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:06:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　ヤダ！▼
+わたくしの　お願いを
+断る　なんて　イケズな　おかた！▼
+散歩くらい　自分で　やれという
+方も　いますけれども▼
+わたくし　モンスターボールより
+重いものを　もったことが　ないから▽
+ムリですのに！▼
+……でも　また　気が向いたら
+コジョフーちゃんの　お散歩▽
+頼んであげても　よろしくてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:14:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:06:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　ヤダ！▼
+わたくしの　キュートな
+コジョフーちゃんが▽
+とっても　たくましく　みえますわ▼
+おさんぽ　してくれて
+どうも　ありがとう　ございます▽
+おれいに　これを　さしあげます▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:12:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:07:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　ヤダ！▼
+わたくしの　キュートな
+コジョフーちゃんが▽
+とっても　たくましく　みえますわ▼
+お散歩　してくれて
+どうも　ありがとう　ございます▽
+お礼に　これを　さしあげます▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:15:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・連れ歩き中＋規定歩数に達している
+・アイテム入手処理</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:07:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　わたくしの　キュートな
+コジョフーちゃんの▽
+おさんぽ　おねがい　しますわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:12:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:07:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　わたくしの　キュートな
+コジョフーちゃんの▽
+お散歩　お願い　しますわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:07:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まだまだ　おさんぽは
+はじまった　ばかりですよ▽
+もっと　おさんぽ　するのです！▼
+……なぁに？▼
+あなた　まさか　わたくしの
+キュートな　コジョフーちゃんの▽
+おさんぽを　とちゅうで　やめますの？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:12:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:07:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まだまだ　お散歩は
+始まった　ばかりですよ▽
+もっと　お散歩　するのです！▼
+……なぁに？▼
+あなた　まさか　わたくしの
+キュートな　コジョフーちゃんの▽
+お散歩を　途中で　やめますの？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:15:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・つづける/やめるの選択肢表示
+　つづける→
+　やめる　→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:05:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_select_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つづける</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つづける</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・つづける</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_select_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・やめる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とうぜん　ですわ！▼
+わたくしの　キュートな
+コジョフーちゃんが▼
+まんぞく　するまで
+おさんぽを　たのみますわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:16:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>当然　ですわ！▼
+わたくしの　キュートな
+コジョフーちゃんが▼
+満足するまで
+お散歩を　たのみますわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:15:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・つづける選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　ヤダ！
+なんてこと　ですの！？▼
+わたくしの　キュートな
+コジョフーちゃんは　まだまだ▽
+あるきたりない　ようす　ですのに！▼
+これじゃあ　ちょっと
+おれいは　だせませんね▼
+……でも　また　きがむいたら
+コジョフーちゃんの　おさんぽ▽
+たのんであげても　よろしくてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:13:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:08:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　ヤダ！
+なんてこと　ですの！？▼
+わたくしの　キュートな
+コジョフーちゃんは　まだまだ▽
+歩き足りない　様子ですのに！▼
+これじゃあ　ちょっと
+お礼は　だせませんね▼
+……でも　また　気が向いたら
+コジョフーちゃんの　お散歩▽
+頼んであげても　よろしくてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:17:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・やめる選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　きがむいたら
+コジョフーちゃんの　おさんぽ▽
+たのんであげても　よろしくてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:58:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　気が向いたら
+コジョフーちゃんの　お散歩▽
+頼んであげても　よろしくてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:17:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:09:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:05:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　あなたー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　あなたー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:11:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:58:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・連れ歩き中の禁則処理
+・ギザウインで
+・室外へのposを踏んだ→lady_11
+・ゴミ箱を調べた→lady_12
+・テレビを調べた→lady_13</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:08:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナニ　やってますの！？▼
+コジョフーちゃんが　キュートすぎて
+つれだしちゃいたい　きもちは▽
+じゅうぶん　わかりますけれど▽
+そうは　いきませんわ！▼
+そとは　キケンが　いっぱい！▼
+コジョフーちゃんが　ケガでもしたら
+どうして　くれるのかしら！？▼
+へ　や　の　な　か　で　！
+おさんぽ　するのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:13:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナニ　やってますの！？▼
+コジョフーちゃんが　キュートすぎて
+連れ出しちゃいたい　気持ちは▽
+十分　わかりますけれど▽
+そうは　いきませんわ！▼
+そとは　キケンが　いっぱい！▼
+コジョフーちゃんが　ケガでもしたら
+どうして　くれるのかしら！？▼
+へ　や　の　な　か　で　！
+お散歩　するのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:17:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:58:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・連れ歩き中に室外へのposを踏んだ
+・メッセージ表示後、LADYは所定の位置へ戻る</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:10:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナニ　やってますの！？▼
+だいたんにも　ひとの　おうちの
+ゴミばこを　しらべる　なんて▼
+コジョフーちゃんの　きょういくじょう
+よろしくない　ですわ！▼
+なんど　しらべても
+カラッポは　カラッポ　ですのよ！▼
+ちゃんと　おさんぽ　するのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:11:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナニ　やってますの！？▼
+大胆にも　ひとの　おうちの
+ゴミ箱を　調べる　なんて▼
+コジョフーちゃんの　教育上
+よろしくない　ですわ！▼
+何度　調べても
+カラッポは　カラッポ　ですのよ！▼
+ちゃんと　お散歩　するのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:18:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:58:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・連れ歩き中にゴミ箱を調べた
+・メッセージ表示後、LADYは所定の位置へ戻る</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:11:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_lady_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナニ　やってますの！？▼
+わたくしの　めのまえで
+おさんぽを　サボタージュし……▼
+あまつさえ！
+テレビに　むちゅうになる　なんて▽
+みあげた　こんじょう　ですこと！▼
+きゅうけいは　それくらいにして
+ちゃんと　おさんぽ　するのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:19:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナニ　やってますの！？▼
+わたくしの　めのまえで
+お散歩を　サボタージュし……▼
+あまつさえ！
+テレビに　夢中になる　なんて▽
+みあげた　根性ですこと！▼
+休憩は　それくらいにして
+ちゃんと　お散歩　するのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:19:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:58:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・連れ歩き中にテレビを調べた
+・メッセージ表示後、LADYは所定の位置へ戻る</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:11:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……きょん？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:30:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -71,10 +892,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>……きょん？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:24" />
+				Time="2011-06-20T05:30:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -82,21 +903,388 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>ポケモン
+・連れ歩き前
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:24" />
+				Time="2011-06-20T04:12:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>POKE46
+ポケモン・コジョフー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:24" />
+				Time="2011-06-20T04:10:34" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:15:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き後、お礼をもらっていない
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:30:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょふー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:29:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょふー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:29:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き後、お礼をもらった
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:29:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:28:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コジョフーは　[Name:TrainerName ]と
+もっと　あるきたい　みたい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コジョフーは　[Name:TrainerName ]と
+もっと　あるきたい　みたい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き中で規定歩数に達している
+・あわせて鳴き声再生
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コジョフーは　[Name:TrainerName ]と
+あるくのが　たのしそうだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コジョフーは　[Name:TrainerName ]と
+あるくのが　たのしそうだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き中で規定歩数の３／４に達している
+・あわせて鳴き声再生
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コジョフーは　[Name:TrainerName ]とのことを
+すこし　きにいってきた　みたい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コジョフーは　[Name:TrainerName ]とのことを
+すこし　きにいってきた　みたい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き中で規定歩数の１／２に達している
+・あわせて鳴き声再生
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コジョフーは　[Name:TrainerName ]に
+なんとなく　ついてきている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コジョフーは　[Name:TrainerName ]に
+なんとなく　ついてきている……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き中で規定歩数の１／４に達している
+・あわせて鳴き声再生
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:13:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_poke46_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コジョフーは　[Name:TrainerName ]と
+あるくのが　めんどう　みたい……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:15:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コジョフーは　[Name:TrainerName ]と
+あるくのが　めんどう　みたい……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:32:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・連れ歩き中で規定歩数の１／４に達していない
+・あわせて鳴き声再生
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T05:31:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE46
+ポケモン・コジョフー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T04:14:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
