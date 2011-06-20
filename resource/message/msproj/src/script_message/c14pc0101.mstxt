@@ -101,10 +101,11 @@
 ・手持ちに「なみのり」をおぼえた
 　ポケモンがいる
 ・0＝なみのりができるポケモンの種族名
+※複数いる場合はリストの上位を選ぶ
 ※動作モデルは仮</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T04:02:08" />
+				Time="2011-06-20T07:15:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
