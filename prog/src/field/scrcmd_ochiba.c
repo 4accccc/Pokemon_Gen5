@@ -32,7 +32,7 @@
  *					’è”éŒ¾
 */
 //=============================================================================
-#define FALL_HEIGHT       (22 * FX32_ONE)   // ‰Šú‚‚³‚Í32
+#define FALL_HEIGHT       (10 * FX32_ONE)   // ‰ŠúˆÊ’u‚©‚ç‰º‚ª‚é‚‚³
 #define FALL_ADD          ( 5 * FX32_ONE )
 #define WAIT_FRAME_MAX    (40)
 
@@ -141,7 +141,7 @@ static GMEVENT * OCHIBA_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
 
   work->wait_frame = 0;
   work->now_height  = pos.y;
-  work->dst_height  = FALL_HEIGHT;
+  work->dst_height  = pos.y - FALL_HEIGHT;
   work->add_val     = FALL_ADD;
 
   return event;
