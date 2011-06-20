@@ -34,17 +34,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:53:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>おばさん１</Text>
+			<Text>MIDDLEWOMAN1
+おばさん１</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:19" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -89,17 +91,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+・swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:53:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>女性１</Text>
+			<Text>WOMAN1
+女性１</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:12" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -110,16 +114,18 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t02r0101_babyboy1_01"
+		Label="msg_t02r0101_boy1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ！　ポケモン！
-いいなぁ　うらやましいなぁ[Ctrl2:LineFeed ]
-ぼくも　トレーナーに　なりたい！</Text>
+いいなぁ　うらやましいなぁ▼
+なんてね！　ぼく　２ねんまえに　みた
+カノコの　あの　ひと　みたいにさ▽
+ポケモントレーナーに　なったんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -128,11 +134,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ！　ポケモン！
-いいなぁ　うらやましいなぁ[Ctrl2:LineFeed ]
-ぼくも　トレーナーに　なりたい！</Text>
+いいなぁ　うらやましいなぁ▼
+なんてね！　ぼく　２年前に　みた
+カノコの　あの人みたいにさ▽
+ポケモントレーナーに　なったんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:57:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -140,17 +148,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:57:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>男の子１</Text>
+			<Text>BOY1
+少年１</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:07" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -158,6 +168,48 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0101_poke35_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひや～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひや～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:55:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:54:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE35
+ポケモン・ヒヤップ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T11:54:30" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
