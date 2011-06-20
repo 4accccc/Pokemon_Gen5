@@ -112,7 +112,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01pc0101_woman2_01">
+		Label="msg_c01pc0101_woman2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あら　シェイミ！▼
@@ -170,7 +171,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01pc0101_woman2_02">
+		Label="msg_c01pc0101_woman2_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>むかしからね　シンオウちほう　では
@@ -234,7 +236,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01pc0101_woman2_03">
+		Label="msg_c01pc0101_woman2_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>グラシデアのはな　しってる？▼
