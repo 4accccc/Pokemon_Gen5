@@ -47,6 +47,7 @@ extern POKEMON_PARAM * PokeParty_GetMemberPointer(const POKEPARTY * party, int p
 extern BOOL PokeParty_Add(POKEPARTY * party, const POKEMON_PARAM * poke);
 extern BOOL PokeParty_Delete(POKEPARTY * party, int pos);
 extern BOOL PokeParty_ExchangePosition(POKEPARTY * party, int pos1, int pos2, HEAPID heapID );
+extern void PokeParty_ExchangePositionList( POKEPARTY * party, int * list, HEAPID heapID );
 extern void PokeParty_Copy(const POKEPARTY * src, POKEPARTY * dst);
 extern BOOL PokeParty_PokemonCheck(const POKEPARTY * ppt, int mons_no);
 extern int	PokeParty_GetPokeCountMax(const POKEPARTY * party);

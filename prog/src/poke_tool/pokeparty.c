@@ -399,6 +399,40 @@ BOOL PokeParty_ExchangePosition( POKEPARTY * party, int pos1, int pos2, HEAPID h
 
 //----------------------------------------------------------
 /**
+ * @brief	POKEPARTYをリスト通りに並び替える
+ * @param	party		POKEPARTY構造体へのポインタ
+ * @param	list		リスト
+ * @param	heapID	ヒープID
+ */
+//----------------------------------------------------------
+void PokeParty_ExchangePositionList( POKEPARTY * party, int * list, HEAPID heapID )
+{
+  POKEMON_PARAM * pp[6];		// 手持ち最大数としてますごめんなさい
+	BOOL isFront[6];
+	u32	i;
+
+	if( party->PokeCount >= 6 ){
+		// 手持ち最大数異常のPOKEPARTYは失敗しますごめんなさい
+		return;
+	}
+
+	for( i=0; i<party->PokeCount; i++ ){
+		pp[i]  = GFL_HEAP_AllocMemory( heapID, sizeof(POKEMON_PARAM) );
+		*pp[i] = party->member[i];
+		isFront[i] = PokeParty_GetStatusViewIsFront( party, i );
+	}
+
+	for( i=0; i<party->PokeCount; i++ ){
+		GF_ASSERT( pp[list[i]] != NULL );
+		PokeParty_SetMemberData( party, i, pp[list[i]] );
+		PokeParty_SetStatusViewIsFront( party , i , isFront[list[i]] );
+		GFL_STD_MemFill( pp[list[i]], 0xff, sizeof(POKEMON_PARAM) );
+		GFL_HEAP_FreeMemory( pp[list[i]] );
+	}
+}
+
+//----------------------------------------------------------
+/**
  * @brief	POKEPARTYのコピー
  * @param	src		POKEPARTY構造体へのポインタ
  * @param	dst		POKEPARTY構造体へのポインタ
