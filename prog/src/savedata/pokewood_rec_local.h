@@ -74,4 +74,7 @@ struct _POKEWOOD_REC_WORK
 
   POKEWOOD_REC_POKEPARTY  rec_party[ POKEWOOD_REC_CLIENT_MAX ];
   BTLREC_CLIENT_STATUS    clientStatus[ POKEWOOD_REC_CLIENT_MAX ];
+
+  u16 player_tr_type;  //プレイヤーはMYSTATUSとして保存するが、トレーナーのタイプがわからなくなるので別に保存する
+  u16 dummy;
 };

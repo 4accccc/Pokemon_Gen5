@@ -81,10 +81,10 @@ static void store_TrainerData( const BSP_TRAINER_DATA* bspTrainer, BTLREC_TRAINE
 static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAINER_STATUS* recTrainer );
 static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BTLREC_SETUP_SUBSET* setupSubset );
 static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BTLREC_SETUP_SUBSET* setupSubset );
-static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num );
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num );
 
 //通常録画
+static void btl_restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num );
+static void btl_store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num );
 static void btl_store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
 static void btl_restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec, HEAPID heapID );
 static BOOL btl_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
@@ -93,6 +93,8 @@ static void Btl_PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY
 static void Btl_RecPokeParty_to_PokeParty( REC_POKEPARTY *rec_party, POKEPARTY *party, HEAPID heapID );
 
 //ポケウッド用
+static void pokewood_restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num, u16 player_tr_type );
+static void pokewood_store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num, u16 *player_tr_type );
 static void pokewood_store_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec );
 static void pokewood_restore_Party( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec, HEAPID heapID );
 static BOOL pokewood_store_OperationBuffer( const BATTLE_SETUP_PARAM* setup, POKEWOOD_REC_WORK* rec );
@@ -123,7 +125,7 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
       BATTLE_REC_WORK  *rec = &brs->rec;
 
       btl_store_Party( setup, rec );
-      store_ClientStatus( setup, rec->clientStatus, BTL_CLIENT_NUM );
+      btl_store_ClientStatus( setup, rec->clientStatus, BTL_CLIENT_NUM );
       btl_store_OperationBuffer( setup, rec );
       store_SetupSubset( setup, &rec->setupSubset );
     }
@@ -135,7 +137,7 @@ void BattleRec_StoreSetupParam( const BATTLE_SETUP_PARAM* setup )
       POKEWOOD_REC_WORK  *rec = POKEWOOD_REC_GetWork();
 
       pokewood_store_Party( setup, rec );
-      store_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX );
+      pokewood_store_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX, &rec->player_tr_type );
       pokewood_store_OperationBuffer( setup, rec );
       store_SetupSubset( setup, &rec->setupSubset );
       pokewood_store_Senario( setup, &rec->senario );
@@ -173,7 +175,7 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE
 	    BATTLE_REC_TOOL_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
 	
 	    btl_restore_Party( setup, rec, heapID );
-	    restore_ClientStatus( setup, rec->clientStatus, BTL_CLIENT_NUM );
+	    btl_restore_ClientStatus( setup, rec->clientStatus, BTL_CLIENT_NUM );
 	    btl_restore_OperationBuffer( setup, rec );
 	    restore_SetupSubset( setup, &rec->setupSubset );
     }
@@ -191,7 +193,7 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, BTLREC_RESOTRE_MODE
 	    BATTLE_REC_TOOL_Printf("   ->rec_party    = %d byte\n", sizeof(rec->rec_party) );
 	
 	    pokewood_restore_Party( setup, rec, heapID );
-	    restore_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX );
+	    pokewood_restore_ClientStatus( setup, rec->clientStatus, POKEWOOD_REC_CLIENT_MAX, rec->player_tr_type );
 	    pokewood_restore_OperationBuffer( setup, rec );
 	    restore_SetupSubset( setup, &rec->setupSubset );
       pokewood_restore_Senario( setup, &rec->senario );
@@ -315,7 +317,7 @@ static void btl_restore_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num )
+static void btl_store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num )
 {
   u32 i;
   for(i=0; i<client_num; ++i)
@@ -339,13 +341,44 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_S
 }
 //----------------------------------------------------------------------------------
 /**
+ * クライアントステータス：録画セーブデータ化して格納
+ *
+ * @param   setup
+ * @param   rec
+ */
+//----------------------------------------------------------------------------------
+static void pokewood_store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC_CLIENT_STATUS clientStatus[], int client_num, u16 *player_tr_type )
+{
+  u32 i;
+  for(i=0; i<client_num; ++i)
+  {
+    switch(i)
+    {
+    case BTL_CLIENT_PLAYER:
+      MyStatus_Copy( setup->playerStatus[i], &clientStatus[i].player );
+      *player_tr_type = setup->tr_data[i]->tr_type;
+      clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
+      break;
+    case BTL_CLIENT_ENEMY1:
+      store_TrainerData( setup->tr_data[i], &clientStatus[i].trainer );
+      clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+    clientStatus[i].voiceLevel = setup->perappVoiceLevel[ i ];
+    OS_Printf("client[%d] sex=%d\n", i, MyStatus_GetMySex(&clientStatus[i].player));
+  }
+}
+//----------------------------------------------------------------------------------
+/**
  * クライアントステータス：録画セーブデータから復元
  *
  * @param   setup
  * @param   rec
  */
 //----------------------------------------------------------------------------------
-static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num )
+static void btl_restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num )
 {
   u32 i;
   for(i=0; i<client_num; ++i)
@@ -359,17 +392,47 @@ static void restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT
     case BTLREC_CLIENTSTATUS_TRAINER:
       GF_ASSERT(setup->tr_data[i]!=NULL);
       restore_TrainerData( setup->tr_data[i], &clientStatus[i].trainer );
-
-      // (仮）女の子主人公の際の対処方をもっとちゃんと考える
-      if(i==0 && (setup->tr_data[i]->tr_type==TRTYPE_PKWD_HEROINE || setup->tr_data[i]->tr_type==TRTYPE_HEROINE)){
-        MyStatus_SetMySex( setup->playerStatus[i], PM_FEMALE);
-      }
       break;
     }
 
     setup->perappVoiceLevel[i] = clientStatus[i].voiceLevel;
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * クライアントステータス：録画セーブデータから復元
+ *
+ * @param   setup
+ * @param   rec
+ */
+//----------------------------------------------------------------------------------
+static void pokewood_restore_ClientStatus( BATTLE_SETUP_PARAM* setup, const BTLREC_CLIENT_STATUS clientStatus[], int client_num, u16 player_tr_type )
+{
+  u32 i;
+  for(i=0; i<client_num; ++i)
+  {
+    switch( i ){
+    case BTL_CLIENT_PLAYER:
+      GF_ASSERT(setup->playerStatus[i]!=NULL);
+      GF_ASSERT(setup->tr_data[i]!=NULL);
+      MyStatus_Copy( &clientStatus[i].player, (MYSTATUS*)setup->playerStatus[i] );
+      setup->tr_data[i]->tr_id = 1;//1とすることでトレーナーとしてだましている
+      setup->tr_data[i]->tr_type = player_tr_type;
+      break;
+
+    case BTL_CLIENT_ENEMY1:
+      GF_ASSERT(setup->tr_data[i]!=NULL);
+      restore_TrainerData( setup->tr_data[i], &clientStatus[i].trainer );
+      break;
+
+    default:
+      GF_ASSERT(0);
+    }
+
+    setup->perappVoiceLevel[i] = clientStatus[i].voiceLevel;
+  }
+}
+
 
 /**
  *  トレーナーデータ：録画セーブデータ用に変換して格納

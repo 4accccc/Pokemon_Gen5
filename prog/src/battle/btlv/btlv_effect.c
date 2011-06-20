@@ -953,13 +953,29 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   GF_ASSERT( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] == BTLV_EFFECT_TRAINER_INDEX_NONE );
 
   //上映中であれば、主人公だとしてもトレーナータイプをきちんとみる
-  if( bew->besp.pokewood != BTL_POKEWOOD_NONE )
+  //撮影中であれば、きちんと主人公の性別からトレーナータイプを判定する
+  switch( bew->besp.pokewood )
   {
+  case BTL_POKEWOOD_REC:
     if( trtype == TRTYPE_HERO || trtype == TRTYPE_HEROINE )
     {
-
+      const MYSTATUS* cp_my =  BTL_MAIN_GetClientPlayerData( bew->besp.mainModule, 0 );
+      if( MyStatus_GetMySex( cp_my ) == PM_MALE )
+      {
+        trtype = TRTYPE_HERO;
+      }
+      else
+      {
+        trtype = TRTYPE_HEROINE;
+      }
+    }
+    break;
+  case BTL_POKEWOOD_SHOW:
+    if( trtype == TRTYPE_HERO || trtype == TRTYPE_HEROINE )
+    {
       trtype = BTL_MAIN_GetClientTrainerType( bew->besp.mainModule, 0 );
     }
+    break;
   }
 
   if( ( position & 1 ) == 0 )
