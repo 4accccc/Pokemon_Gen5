@@ -209,11 +209,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざおすすめです
-かりメッセージ</Text>
+			<Text>わざの　おすすめ　です
+マジックコート？（仮）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:33:48" />
+				Time="2011-06-20T02:52:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -221,11 +221,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざおすすめです
-仮メッセージ</Text>
+			<Text>わざの　おすすめ　です
+マジックコート？（仮）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T07:33:55" />
+				Time="2011-06-20T02:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -233,17 +233,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂：わざおすすめにん</Comment>
+			<Comment>削除ラベル</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:56" />
+				Time="2011-06-20T03:51:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ASSISTANTM</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:13:56" />
+				Time="2011-06-20T03:51:36" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -251,6 +251,261 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_osusume_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　おすすめ　です
+とおせんぼう？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T03:51:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T03:51:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わざの　おすすめ　です
+とおせんぼう？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T03:51:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T03:51:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん
+・01～05のそれぞれ20％で
+　ランダムに表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T03:51:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T03:51:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_osusume_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　おすすめ　です
+とおせんぼう？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わざの　おすすめ　です
+とおせんぼう？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん
+・01～05のそれぞれ20％で
+　ランダムに表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:54:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:55:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_osusume_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　おすすめ　です
+じゅうりょく？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わざの　おすすめ　です
+じゅうりょく？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん
+・01～05のそれぞれ20％で
+　ランダムに表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:54:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:55:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_osusume_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　おすすめ　です
+でんじふゆう？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わざの　おすすめ　です
+でんじふゆう？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん
+・01～05のそれぞれ20％で
+　ランダムに表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:54:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:55:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0101_osusume_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざの　おすすめ　です
+ギフトパス？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わざの　おすすめ　です
+ギフトパス？（仮）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:52:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:51:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：わざおすすめにん
+・01～05のそれぞれ20％で
+　ランダムに表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:54:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-20T02:55:21" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
