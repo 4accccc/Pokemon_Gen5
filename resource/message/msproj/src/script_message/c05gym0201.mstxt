@@ -173,10 +173,11 @@
 			Language="JPN">
 			<Text>ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
-にんてい　トレーナー！</Text>
+にんてい　トレーナー！▽
+[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T13:14:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -186,10 +187,11 @@
 			Language="JPN_KANJI">
 			<Text>ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
-認定　トレーナー！</Text>
+認定　トレーナー！▽
+[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T13:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,10 +201,11 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・ジムバッジ取得前
-※swanで変更</Comment>
+・1＝ライバル名
+※swanで内容変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T05:48:19" />
+				Time="2011-06-20T13:14:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -234,10 +237,10 @@
 			<Text>ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
 にんてい　トレーナー！▽
-[Name:TrainerName Idx="1" ]</Text>
+[Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:21:35" />
+				Time="2011-06-20T13:15:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -248,10 +251,10 @@
 			<Text>ホドモエ　ポケモンジム▼
 ジムリーダー　ヤーコン
 認定　トレーナー！▽
-[Name:TrainerName Idx="1" ]</Text>
+[Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:21:42" />
+				Time="2011-06-20T13:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -263,10 +266,10 @@
 ・ジムバッジ取得後
 ・0＝主人公名
 ・1＝ライバル名
-※swanで変更</Comment>
+※swanで内容変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:21:16" />
+				Time="2011-06-20T13:14:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -295,13 +298,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホドモエ　ポケモンジム▼
-ジムリーダー　ヤーコン
-にんてい　トレーナー！▽
-[Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:21:46" />
+				Time="2011-06-20T13:15:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -309,13 +309,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエ　ポケモンジム▼
-ジムリーダー　ヤーコン
-認定　トレーナー！▽
-[Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:21:51" />
+				Time="2011-06-20T13:15:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -323,14 +320,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>BGメッセージ
-・ジムバッジ取得後
-・0＝主人公名
-・1＝ライバル名
-※swanで変更</Comment>
+			<Comment>※swanで削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T08:21:18" />
+				Time="2011-06-20T13:15:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

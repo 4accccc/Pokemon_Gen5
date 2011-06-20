@@ -1725,13 +1725,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+			<Text>ソウリュウ　ポケモンジム▼
 ジムリーダー　シャガ
-にんてい　トレーナー！[Ctrl2:LineFeed ]
+にんてい　トレーナー！▽
 [Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:24:25" />
+				Time="2011-06-20T13:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1739,13 +1739,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+			<Text>ソウリュウ　ポケモンジム▼
 ジムリーダー　シャガ
-認定　トレーナー！[Ctrl2:LineFeed ]
+認定　トレーナー！▽
 [Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:24:37" />
+				Time="2011-06-20T13:13:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1755,10 +1755,11 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・ジムバッジ取得前
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※swanで内容変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:21:03" />
+				Time="2011-06-20T13:14:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1787,13 +1788,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+			<Text>ソウリュウ　ポケモンジム▼
 ジムリーダー　シャガ
-にんてい　トレーナー！[Ctrl2:LineFeed ]
+にんてい　トレーナー！▽
 [Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:24:53" />
+				Time="2011-06-20T13:13:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1801,13 +1802,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソウリュウ　ポケモンジム[Ctrl2:PageClear ]
+			<Text>ソウリュウ　ポケモンジム▼
 ジムリーダー　シャガ
-認定　トレーナー！[Ctrl2:LineFeed ]
+認定　トレーナー！▽
 [Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:25:01" />
+				Time="2011-06-20T13:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1818,10 +1819,11 @@
 			<Comment>BGメッセージ
 ・ジムバッジ取得後
 ・0＝主人公名
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※swanで内容変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T10:21:12" />
+				Time="2011-06-20T13:14:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
