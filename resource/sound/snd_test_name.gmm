@@ -5241,6 +5241,10 @@
 		<language name="JPN" width="256">BGM-SW-T-06</language>
 		<language name="JPN_KANJI" width="256">BGM-SW-T-06</language>
 	</row>
+	<row id="msg_seq_bgm_sw_t_07">
+		<language name="JPN" width="256">BGM-SW-T-07</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-T-07</language>
+	</row>
 	<row id="msg_seq_bgm_sw_c_12">
 		<language name="JPN" width="256">BGM-SW-C-12</language>
 		<language name="JPN_KANJI" width="256">BGM-SW-C-12</language>
@@ -5253,10 +5257,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1202">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1203">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
