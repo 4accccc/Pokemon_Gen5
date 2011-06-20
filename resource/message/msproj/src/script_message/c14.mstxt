@@ -1197,7 +1197,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14_sign2_01">
+		Label="msg_c14_sign2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>このさき　すいちゅうばし
