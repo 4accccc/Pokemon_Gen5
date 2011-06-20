@@ -2764,11 +2764,11 @@ static BOOL PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
 					work->exFlag = 1;
 					for( i=0; i<syswk->app->multi_h; i++ ){
 						for( j=0; j<syswk->app->multi_w; j++ ){
-							dat[i].df_pos = BOX2OBJ_POKEICON_GET_POS + i*syswk->app->multi_w+j;
-							dat[i].mv_pos = put_pos + i*syswk->app->multi_w+j;
-							dat[i].gt_pos = get_pos + i*BOX_MAX_COLUMN+j;
-							dat[i].flg    = 1;
-							PokeIconMoveParamMake( syswk, &dat[i] );
+							dat[i*syswk->app->multi_w+j].df_pos = BOX2OBJ_POKEICON_GET_POS + i*syswk->app->multi_w+j;
+							dat[i*syswk->app->multi_w+j].mv_pos = ppcnt+BOX2OBJ_POKEICON_TRAY_MAX + i*syswk->app->multi_w+j;
+							dat[i*syswk->app->multi_w+j].gt_pos = get_pos + i*BOX_MAX_COLUMN+j;
+							dat[i*syswk->app->multi_w+j].flg    = 1;
+							PokeIconMoveParamMake( syswk, &dat[i*syswk->app->multi_w+j] );
 						}
 					}
 				}
