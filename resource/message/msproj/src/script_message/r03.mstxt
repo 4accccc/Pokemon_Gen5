@@ -317,12 +317,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！▼
-トライバッジを　もつもの　どうし
-どちらが　つよいか　たしかめるよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -330,12 +328,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！▼
-トライバッジを　持つ者　同士
-どちらが　強いか　確かめるよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -343,15 +339,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・pos（GRIDX=718、GRIDZ=561~565）で発動
-　c01側から登場
-・主人公に隣接するとメッセージ表示
-・表示後、トレーナー戦闘へ
-・0＝主人公名前</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -381,11 +372,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……なるほど
-そういう　たたかいかた　ね[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -393,11 +383,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……なるほど
-そういう　戦い方ね[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -405,12 +394,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・戦闘後メッセージ
-・続けてhakaim_01</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -440,10 +427,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『どけ　どけーッ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -451,10 +438,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『どけ　どけーッ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -462,13 +449,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・会話ウインドウを出したまま
-　プラズマ団したっぱ♂×２、画面を右から左に移動
-・画面外に消えるとblack_03表示</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -497,10 +481,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『なんだよ　いまの……？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -508,10 +492,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『なんだよ　いまの……？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -519,11 +503,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・続けて画面右を向いてblack_04</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -553,11 +536,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>って　ベル？
-どうして　はしってるの？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -565,11 +547,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>って　ベル？
-どうして　走ってるの？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -577,13 +558,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後
-　サポートと送れて女の子が到着
-・続けてwhite_01</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -613,11 +591,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『ねえねえ
-いまのれんちゅう　どっちにむかった？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -625,11 +602,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『ねえねえ
-今の連中　どっちに　向かった？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -637,11 +613,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・続けてblack_05</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -671,10 +646,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『あっち　だけど……[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -682,10 +657,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『あっち　だけど……[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -693,12 +668,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・画面左を向いてメッセージ表示
-・続けてblack_06</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -728,10 +701,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だから　どうして　はしってるのさ？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -739,10 +712,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だから　どうして　走ってるのさ？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -750,12 +723,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・画面右を向いてメッセージ表示
-・続けてwhite_03</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -785,11 +756,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『ああ　もう！
-なんて　はやい　にげあし　なの！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -797,11 +767,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『ああ　もう！
-なんて　速い　逃げ足　なの！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -809,13 +778,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・画面左を向いたままメッセージ表示
-・続けてbabygirl1_01
-・テキスト案「まるでポケモン名みたい！」を追加するかも？</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -845,11 +811,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのこ『……おねえちゃん
-……あたしの　ポケモン？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -857,11 +822,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おんなのこ『……おねえちゃん
-……あたしの　ポケモン？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -869,12 +833,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・サポートのほうを向いてメッセージ表示
-・続けてwhite_03</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -904,11 +866,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『だいじょうぶ！
-だいじょうぶだから　なかないで！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -916,11 +877,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『大丈夫！
-大丈夫だから　泣かないで！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -928,12 +888,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・女の子の方を向いてメッセージ表示
-・続けてblack_07</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -963,11 +921,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……あのね　ベル
-だから　どうして　はしってたんだ？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -975,11 +932,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……あのね　ベル
-だから　どうして　走ってたんだ？[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -987,12 +943,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・サポートのほうを向いてメッセージ表示
-・続けてwhite_04</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1022,12 +976,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『きいてよ！[Ctrl2:PageClear ]
-さっきの　れんちゅうに　このこの
-ポケモンを　とられちゃったのよ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1035,12 +987,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『聞いてよ！[Ctrl2:PageClear ]
-さっきの　連中に　この子の
-ポケモンを　とられちゃったのよ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1048,12 +998,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・ライバルのほうを向いてメッセージ表示
-・続けてblack_08</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1083,11 +1031,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『それを
-はやく　いいなよ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1095,11 +1042,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『それを
-はやく　いいなよ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1107,12 +1053,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、主人公向き
-・続けてblack_08_01</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1142,13 +1086,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]
-ポケモンを　とりもどすよ[Ctrl2:PageClear ]
-ベル！　きみは
-その　おんなのこの　そばにいてよ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1156,13 +1097,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]
-ポケモンを　取り戻すよ[Ctrl2:PageClear ]
-ベル！　きみは
-その　女の子の　そばにいてよ[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1170,13 +1108,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・メッセージ表示後、画面左へ倍速移動
-・画面外に消えると、主人公操作可能に
-0＝主人公名前</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1206,12 +1141,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『おねがい……　[Name:TrainerName Idx="0" ]▼
-プラズマだんに　うばわれた
-ポケモンを　とりかえしてあげて！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1219,12 +1152,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『お願い……　[Name:TrainerName Idx="0" ]▼
-プラズマ団に　奪われた
-ポケモンを　取り返してあげて！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1232,13 +1163,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・ストッパー状態
-　直接話しかけたとき
-・r03r0301のイベントクリアまで繰り返し</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1268,12 +1196,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『おねがい……　[Name:TrainerName Idx="0" ]▼
-プラズマだんに　うばわれた
-ポケモンを　とりかえしてあげて！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1281,12 +1207,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『お願い……　[Name:TrainerName Idx="0" ]▼
-プラズマ団に　奪われた
-ポケモンを　取り返してあげて！▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1294,13 +1218,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・ストッパー状態
-　pos（GRIDX=715~717、GRIDZ=565）を踏んだとき
-・r03r0301のイベントクリアまで繰り返し</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1330,11 +1251,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのこ『……どうして
-ひとの　ポケモン　とるの……？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1342,11 +1262,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おんなのこ『……どうして
-ひとの　ポケモン　とるの……？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1354,12 +1273,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・black_08表示後
-・r03r0301のイベントクリアまで繰り返し</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1389,14 +1306,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……あいつら
-この　なかに　はいっていったよ▼
-で　[Name:TrainerName Idx="0" ]
-ポケモンの　たいりょく　とか▽
-じゅんびは　ばっちり　だよね？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1404,14 +1317,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……あいつら
-この　中に　入っていったよ▼
-で　[Name:TrainerName Idx="0" ]
-ポケモンの　体力とか▽
-準備は　万端だよね？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1419,16 +1328,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX=680、GRIDZ=554
-・話しかけたとき
-　pos（GRIDX=680、GRIDZ=555）をふんだとき
-・はい/いいえの選択肢表示
-　はい→black_08b
-　いいえ→black_08c</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1458,10 +1361,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……じゃ　いくよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1469,10 +1372,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……じゃ　行くよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1480,12 +1383,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・はい選択時
-・メッセージ表示後、ライバル洞窟の中に入る</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1515,14 +1416,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとの　ポケモンを　うばうような
-ひどい　れんちゅうに　まけるなんて▽
-ぼくの　プライドが　ゆるさない！▼
-ここで　まっているから
-はやく　じゅんび　してきなよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1530,14 +1427,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人の　ポケモンを　奪うような
-ひどい　連中に　負けるなんて▽
-ぼくの　プライドが　許さない！▼
-ここで　待っているから
-早く　準備してきなよ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1545,11 +1438,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択（話しかけの場合）</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1579,14 +1471,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとの　ポケモンを　うばうような
-ひどい　れんちゅうに　まけるなんて▽
-ぼくの　プライドが　ゆるさない！▼
-ここで　まっているから
-はやく　じゅんび　してきなよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1594,14 +1482,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人の　ポケモンを　奪うような
-ひどい　連中に　負けるなんて▽
-ぼくの　プライドが　許さない！▼
-ここで　待っているから
-早く　準備してきなよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1609,13 +1493,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時（posで起動時）
-・メッセージ表示後に主人公をを
-　GRIDX=680、GRIDZ=556に戻す</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1645,12 +1526,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0" ]
-ポケモンの　たいりょく　とか▽
-じゅんびは　ばっちり　だよね？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1658,12 +1537,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0" ]
-ポケモンの　体力とか▽
-準備は　万端だよね？</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1671,12 +1548,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・一度、いいえ選択後
-・処理はblack_08aと同じ</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1706,15 +1581,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName Idx="0" ]
-ほんとうに　ありがとうね！[Ctrl2:PageClear ]
-ふたりで　ポケモンを
-とりかえして　くれたんだよね[Ctrl2:PageClear ]
-ほんと　[Name:TrainerName Idx="0" ]たちと
-ともだちで　よかった！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1722,15 +1592,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName Idx="0" ]
-ほんとうに　ありがとうね！[Ctrl2:PageClear ]
-２人で　ポケモンを
-取り返して　くれたんだよね[Ctrl2:PageClear ]
-ほんと　[Name:TrainerName Idx="0" ]たちと
-友達で　よかった！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1738,15 +1603,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・pos（GRIDX=000、GRIDZ=000~000）で発動
-　主人公に隣接してこのメッセージ表示
-・続けて
-　主人公♂ならmsg_r03_babygirl1_02
-　主人公♀ならmsg_r03_babygirl1_03</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1776,12 +1636,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのこ『おにいちゃん
-ありがとう！！[Ctrl2:PageClear ]
-おれいに　これを　あげるね！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1789,12 +1647,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おんなのこ『おにいちゃん
-ありがとう！！[Ctrl2:PageClear ]
-おれいに　これを　あげるね！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1802,14 +1658,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公性別：♂
-・アイテム入手処理
-　No014「ヒールボール」×３
-・続けてwhite_09</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1839,12 +1691,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのこ『おねえちゃん
-ありがとう！！[Ctrl2:PageClear ]
-おれいに　これを　あげるね！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1852,12 +1702,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おんなのこ『おねえちゃん
-ありがとう！！[Ctrl2:PageClear ]
-おれいに　これを　あげるね！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1865,14 +1713,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・主人公性別：♀
-・アイテム入手処理
-　No014「ヒールボール」×３
-・続けてwhite_09</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1902,16 +1746,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『あっ！　ヒールボール！▼
-それで　つかまえた　ポケモンは
-たいりょく　まんたんに　なるんだよね▼
-じゃ　あたし
-このこを　おくっていくから[Ctrl2:PageClear ]
-じゃあね
-[Name:TrainerName Idx="0" ]　バイバーイ！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1919,16 +1757,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『あっ！　ヒールボール！▼
-それで　捕まえた　ポケモンは
-体力　満タンに　なるんだよね▼
-じゃあ　あたし
-この子を　送っていくから[Ctrl2:PageClear ]
-じゃあね
-[Name:TrainerName Idx="0" ]　バイバーイ！！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1936,14 +1768,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・メッセージ表示後、サポートと女の子
-　横並びの状態でc01方面へ移動
-　画面外に消えると、主人公操作可能に
-・0＝プレイヤー名</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1973,10 +1801,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1984,10 +1812,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="0" ]　ストップ！[Ctrl2:PageClear ]</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1995,13 +1823,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・pos（GRIDX=720、GRIDZ=581~583）で発動
-　主人公に隣接してこのメッセージ表示
-・0＝プレイヤー名</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2031,12 +1856,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっちの　いろの　こい　くさむら……[Ctrl2:PageClear ]
-まれにだけど　ポケモンが
-２ひき　どうじに　とびだしてくる▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2044,12 +1867,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっちの　色の濃い　草むら……[Ctrl2:PageClear ]
-まれにだけど　ポケモンが
-２匹同時に　飛びだしてくる▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2057,11 +1878,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・草むらを向いてこのメッセージ表示</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2091,13 +1911,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つまり　いろのこい　くさむらに
-はいるなら　ちゅうい　しなってこと▼
-じゃ　ぼくは
-シッポウシティに　いくよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2105,13 +1922,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つまり　色の濃い　草むらに
-はいるなら　注意しなってこと▼
-じゃ　ぼくは
-シッポウシティに　行くよ▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2119,13 +1933,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・再度主人公と向き合いメッセージ表示
-・表示後、道をくだりc02方面へ移動
-　画面外に消えると、主人公操作可能に</Comment>
+			<Comment>swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:49:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
