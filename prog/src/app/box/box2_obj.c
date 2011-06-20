@@ -1861,27 +1861,37 @@ void BOX2OBJ_PokeIconBlendSetItem( BOX2_SYS_WORK * syswk, u32 pos )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos, int w, int h )
+void BOX2OBJ_GetPokeIcon( BOX2_SYS_WORK * syswk, u32 pos, int w, int h )
 {
+	BOX2_APP_WORK * appwk;
 	s16 x, y;
 	u8  tmp;
-	int i, j, px, py;
+	int i, j, px, py, sx;
 
-	px = pos % BOX_MAX_COLUMN;
-	py = pos / BOX_MAX_COLUMN;
+	appwk = syswk->app;
+
+	sx = BOX2MAIN_GetMultiWidth( syswk, pos );
+
+	px = pos % sx;
+	py = pos / sx;
   
 	// 移動用ポケモンアイコンと元のポケモンアイコンのOBJIDを入れ替え
 	for( i=0; i<h; i++ ){
 		for( j=0; j<w; j++ ){
-			BOX2OBJ_GetPos( appwk, appwk->pokeicon_id[(py+i)*BOX_MAX_COLUMN+px+j], &x, &y, CLSYS_DEFREND_MAIN );
-			tmp = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*BOX_MAX_COLUMN+j];
-			appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*BOX_MAX_COLUMN+j] = appwk->pokeicon_id[(py+i)*BOX_MAX_COLUMN+j+px];
-			appwk->pokeicon_id[(py+i)*BOX_MAX_COLUMN+px+j] = tmp;
+			BOX2OBJ_GetPos( appwk, appwk->pokeicon_id[(py+i)*sx+px+j], &x, &y, CLSYS_DEFREND_MAIN );
+/*
+			tmp = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*sx+j];
+			appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*sx+j] = appwk->pokeicon_id[(py+i)*sx+j+px];
+			appwk->pokeicon_id[(py+i)*sx+px+j] = tmp;
+*/
+			tmp = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*w+j];
+			appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*w+j] = appwk->pokeicon_id[(py+i)*sx+j+px];
+			appwk->pokeicon_id[(py+i)*sx+px+j] = tmp;
 
 			// 入れ替えたOBJに元のトレイ上の位置情報を登録
-			BOX2OBJ_SetPos( appwk, appwk->pokeicon_id[(py+i)*BOX_MAX_COLUMN+px+j], x, y, CLSYS_DEFREND_MAIN );
+			BOX2OBJ_SetPos( appwk, appwk->pokeicon_id[(py+i)*sx+px+j], x, y, CLSYS_DEFREND_MAIN );
 			// 表示プライオリティを変更
-			BOX2OBJ_PokeIconPriChg( appwk, (py+i)*BOX_MAX_COLUMN+px+j, BOX2OBJ_POKEICON_PRI_CHG_PUT );
+			BOX2OBJ_PokeIconPriChg( appwk, (py+i)*sx+px+j, BOX2OBJ_POKEICON_PRI_CHG_PUT );
 		}
 	}
 
@@ -1981,7 +1991,8 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
     // 移動用ポケモンアイコンと元のポケモンアイコンのOBJIDを入れ替え
     for(tate=0;tate<syswk->app->multi_h;tate++){
       for(yoko=0;yoko<syswk->app->multi_w;yoko++){
-        id = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+tate*6+yoko];
+//        id = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+tate*6+yoko];
+				id = syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+tate*syswk->app->multi_w+yoko];
         BOX2OBJ_SetPos( syswk->app, id, x+yoko*24, y+tate*24, CLSYS_DEFREND_MAIN );
       }
     }
@@ -2818,7 +2829,7 @@ void BOX2OBJ_PokeCursorMove( BOX2_APP_WORK * appwk, u32 pos )
 
   BOX2OBJ_GetPos( appwk, appwk->pokeicon_id[pos], &x, &y, CLSYS_DEFREND_MAIN );
 
-  OS_Printf("pos=%d, icon=%d, x=%d, y=%d\n", pos, appwk->pokeicon_id[pos],x,y);
+//  OS_Printf("pos=%d, icon=%d, x=%d, y=%d\n", pos, appwk->pokeicon_id[pos],x,y);
 
   for( i=0; i<BOX2OBJ_PI_OUTLINE_MAX; i++ ){
     BOX2OBJ_SetPos(
@@ -3870,7 +3881,24 @@ static void _get_index2pos( int pos, int *array )
   array[1] = MULTISELECT_OUTLINE_SY + MULTISELECT_OUTLINE_SH*y;
   array[2] = array[0]+MULTISELECT_OUTLINE_1POKE_W;
   array[3] = array[1]+MULTISELECT_OUTLINE_1POKE_H;
+}
 
+static void _get_index2posParty( int pos, int *array )
+{
+	int x,y;
+
+	pos -= BOX2OBJ_POKEICON_TRAY_MAX;
+
+	x = pos % 2;
+	y = pos / 2;
+	array[0] = MULTISELECT_OUTLINE_SX_PT + MULTISELECT_OUTLINE_SW_PT*x;
+	if( pos & 1 ){
+		array[1] = MULTISELECT_OUTLINE_SY_PTR + MULTISELECT_OUTLINE_SH_PT*y;
+	}else{
+		array[1] = MULTISELECT_OUTLINE_SY_PT + MULTISELECT_OUTLINE_SH_PT*y;
+	}
+	array[2] = array[0]+MULTISELECT_OUTLINE_1POKE_W;
+	array[3] = array[1]+MULTISELECT_OUTLINE_1POKE_H;
 }
 
 //=============================================================================================
@@ -3888,11 +3916,16 @@ void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end
   int pos1[4], pos2[4];
   int x1, y1, x2, y2;
 
-  OS_Printf("start=%d, end=%d\n", start, end);
+//  OS_Printf("start=%d, end=%d\n", start, end);
 
   // 始点・終点の範囲矩形座標を取得
-  _get_index2pos( start, pos1 );
-  _get_index2pos( end,   pos2 );
+	if( start < BOX2OBJ_POKEICON_TRAY_MAX ){
+		_get_index2pos( start, pos1 );
+		_get_index2pos( end,   pos2 );
+	}else{
+		_get_index2posParty( start, pos1 );
+		_get_index2posParty( end,   pos2 );
+	}
 //  OS_Printf("pos1[0]=%d, pos1[1]=%d, pos1[2]=%d, pos1[3]=%d\n", pos1[0],pos1[1],pos1[2],pos1[3]);
 //  OS_Printf("pos2[0]=%d, pos2[1]=%d, pos2[2]=%d, pos2[3]=%d\n", pos2[0],pos2[1],pos2[2],pos2[3]);
 
@@ -3930,6 +3963,18 @@ static void _traypos2xy( int start, int end, int *sx, int *sy, int *ex, int *ey 
   _sort_num( sy, ey );
 
 }
+static void _traypos2xyParty( int start, int end, int *sx, int *sy, int *ex, int *ey )
+{
+  *sx = start % 2;  // 始点の位置
+  *sy = start / 2;
+  *ex = end   % 2;    // 終点の位置
+  *ey = end   / 2;
+
+  _sort_num( sx, ex );      // 左上の場所を算出
+  _sort_num( sy, ey );
+
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 選択したトレイの始点・終点からその範囲の縦幅・横幅を取得
@@ -3942,7 +3987,13 @@ void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height )
 {
   int sx, sy, ex, ey;
 
-  _traypos2xy(start, end, &sx, &sy, &ex, &ey);
+	if( start >= BOX2OBJ_POKEICON_TRAY_MAX ){
+		start -= BOX2OBJ_POKEICON_TRAY_MAX;
+		end -= BOX2OBJ_POKEICON_TRAY_MAX;
+		_traypos2xyParty(start, end, &sx, &sy, &ex, &ey);
+	}else{
+		_traypos2xy(start, end, &sx, &sy, &ex, &ey);
+	}
 
   *width  = ex-sx+1;
   *height = ey-sy+1;
@@ -3968,17 +4019,28 @@ int BOX2OBJ_GetMultiSelectMinPos( int start, int end )
   
   return sy*BOX_MAX_COLUMN+sx;
 }
+int BOX2OBJ_GetMultiSelectMinPosParty( int start, int end )
+{
+  int sx, sy, ex, ey;
+
+	start -= BOX2OBJ_POKEICON_TRAY_MAX;
+	end -= BOX2OBJ_POKEICON_TRAY_MAX;
+
+  _traypos2xyParty(start, end, &sx, &sy, &ex, &ey);
+  
+  return (sy*2+sx+BOX2OBJ_POKEICON_TRAY_MAX);
+}
 
 
 // 取得したポケモンアイコンの表示優先を変更
-void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, int w, int h, u32 flg )
+void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, u32 pos, int w, int h, u32 flg )
 {
 	u32 id;
 	u32	i, j;
 
 	for( i=0; i<h; i++ ){
 		for( j=0; j<w; j++ ){
-			id = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*BOX_MAX_COLUMN+j];
+			id = appwk->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*w+j];
 			if( flg == BOX2OBJ_POKEICON_PRI_CHG_GET ){
 				BOX2OBJ_BgPriChange( appwk, id, POKEICON_BG_PRI_GET );
 				BOX2OBJ_ObjPriChange( appwk, id, POKEICON_OBJ_PRI_GET );
@@ -4000,6 +4062,10 @@ void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, int w, int h, u32 flg )
 static BOOL CheckGetPokeIcon( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	u32	i;
+
+	if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+		return FALSE;
+	}
 
 	for( i=0; i<syswk->app->multi_h; i++ ){
 		if( pos >= (syswk->get_pos+BOX_MAX_COLUMN*i) && pos < (syswk->get_pos+BOX_MAX_COLUMN*i+syswk->app->multi_w) ){

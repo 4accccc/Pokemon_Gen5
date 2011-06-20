@@ -523,8 +523,9 @@ typedef struct {
 }BOX2MAIN_POKEMOVE_DATA;
 
 typedef struct {
-  BOX2MAIN_POKEMOVE_DATA  dat[BOX2OBJ_POKEICON_MINE_MAX+1]; // 手持ち＋トレイ選択分
-  u32 cnt;
+  BOX2MAIN_POKEMOVE_DATA  dat[BOX2OBJ_POKEICON_MINE_MAX*2]; // 手持ち同時移動数x2なので、12あれば足りる　※トレイの複数移動は独自
+  u16 cnt;
+	u16	exFlag;		// 複数選択の正規処理対応フラグ
   u32 get_pos;
   u32 put_pos;
   u32 set_pos;
@@ -1755,3 +1756,5 @@ extern int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk );
 extern void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk );
 extern BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos );
 extern  int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app );
+
+extern u32 BOX2MAIN_GetMultiWidth( BOX2_SYS_WORK * syswk, u32 pos );

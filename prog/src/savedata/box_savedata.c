@@ -880,8 +880,28 @@ POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 trayN
   return (POKEMON_PASO_PARAM*) &(trayData->ppp[pos]);
 }
 
-
-
+/** 使用注意！ **/
+/*
+	メモリを取得してポケモンのデータをコピー
+	※解放はBOXDAT_FreeCopyPokeDataを使用してください
+*/
+POKEMON_PASO_PARAM * BOXDAT_CopyPokeData( const BOX_MANAGER* box, u32 trayNum, u32 pos, HEAPID heapID )
+{
+	POKEMON_PASO_PARAM * ppp;
+	ppp = GFL_HEAP_AllocMemory( heapID, sizeof(POKEMON_PASO_PARAM) );
+	GFL_STD_MemCopy( BOXDAT_GetPokeDataAddress(box,trayNum,pos), ppp, sizeof(POKEMON_PASO_PARAM) );
+	return ppp;
+}
+/*
+	BOXDAT_CopyPokeDataでコピーしたデータをクリアして削除
+	※メモリに残しておくと不安なのでクリアする
+*/
+void BOXDAT_FreeCopyPokeData( POKEMON_PASO_PARAM * ppp )
+{
+//	GFL_STD_MemClear( ppp, sizeof(POKEMON_PASO_PARAM) );
+	GFL_STD_MemFill( ppp, 0xff, sizeof(POKEMON_PASO_PARAM) );
+	GFL_HEAP_FreeMemory( ppp );
+}
 
 
 

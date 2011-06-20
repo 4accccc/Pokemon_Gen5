@@ -48,6 +48,9 @@ typedef struct {
 #define PARTY_FRM_DPY   ( PARTY_FRM_UPY+BOX2BGWFRM_PARTYPOKE_SY*8-1 )
 #define PARTY_FRM_LLX   ( BOX2BGWFRM_PARTYPOKE_LX*8 )
 #define PARTY_FRM_LRX   ( PARTY_FRM_LLX+BOX2BGWFRM_PARTYPOKE_SX*8-1 )
+// 手持ちフレーム（右）座標データ
+#define PARTY_FRM_RLX   ( (BOX2BGWFRM_PARTYPOKE_LX+BOX2MAIN_PARTYPOKE_FRM_H_CNT)*8 )
+#define PARTY_FRM_RRX   ( PARTY_FRM_RLX+BOX2BGWFRM_PARTYPOKE_SX*8-1 )
 
 
 //============================================================================================
@@ -902,6 +905,12 @@ static const GFL_UI_TP_HITTBL PartyLeftHitTbl[] =
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
+// 手持ちフレーム（右）座標データ
+static const GFL_UI_TP_HITTBL PartyRightHitTbl[] =
+{
+  { PARTY_FRM_UPY, PARTY_FRM_DPY, PARTY_FRM_RLX, PARTY_FRM_RRX },
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
 
 
 //--------------------------------------------------------------------------------------------
@@ -2821,6 +2830,24 @@ u32 BOX2UI_HitCheckTrayIcon( u32 x, u32 y )
 BOOL BOX2UI_HitCheckPartyFrameLeft(void)
 {
   if( GFL_UI_TP_HitCont( PartyLeftHitTbl ) != GFL_UI_TP_HIT_NONE ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   タッチチェック：手持ちフレーム（右）
+ *
+ * @param   none
+ *
+ * @retval  "TRUE = タッチあり"
+ * @retval  "FALSE = タッチなし"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BOX2UI_HitCheckPartyFrameRight(void)
+{
+  if( GFL_UI_TP_HitCont( PartyRightHitTbl ) != GFL_UI_TP_HIT_NONE ){
     return TRUE;
   }
   return FALSE;

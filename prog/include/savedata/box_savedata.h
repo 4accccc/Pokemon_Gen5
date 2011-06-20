@@ -197,6 +197,8 @@ extern void BOXDAT_SetBoxName( BOX_MANAGER* box, u32 trayNumber, const STRBUF* s
 extern u32 BOXDAT_GetPokeExistCount( const BOX_MANAGER* box, u32 trayNumber );
 extern u32 BOXDAT_GetPokeExistCount2( const BOX_MANAGER* box, u32 trayNumber );
 extern POKEMON_PASO_PARAM* BOXDAT_GetPokeDataAddress( const BOX_MANAGER* box, u32 boxNum, u32 pos );
+extern POKEMON_PASO_PARAM * BOXDAT_CopyPokeData( const BOX_MANAGER* box, u32 trayNum, u32 pos, HEAPID heapID );
+extern void BOXDAT_FreeCopyPokeData( POKEMON_PASO_PARAM * ppp );
 extern BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_MANAGER* box, int* trayNum, int* pos );
 extern u32 BOXDAT_PokeParaGet( const BOX_MANAGER* box, u32 trayNum, u32 pos, int param, void* buf );
 extern void BOXDAT_PokeParaPut( BOX_MANAGER* box, u32 trayNum, u32 pos, int param, u32 arg );

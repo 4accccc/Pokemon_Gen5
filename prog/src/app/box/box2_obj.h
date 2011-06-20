@@ -573,7 +573,7 @@ extern void BOX2OBJ_PokeIconBlendSetItem( BOX2_SYS_WORK * syswk, u32 pos );
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_GetPokeIcon( BOX2_APP_WORK * appwk, u32 pos, int w, int h );
+extern void BOX2OBJ_GetPokeIcon( BOX2_SYS_WORK * syswk, u32 pos, int w, int h );
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1156,7 +1156,8 @@ extern void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int 
 extern void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end );
 extern void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height );
 extern int BOX2OBJ_GetMultiSelectMinPos( int start, int end );
+extern int BOX2OBJ_GetMultiSelectMinPosParty( int start, int end );
 
 
 // 取得したポケモンアイコンの表示優先を変更
-extern void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, int w, int h, u32 flg );
+extern void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, u32 pos, int w, int h, u32 flg );
