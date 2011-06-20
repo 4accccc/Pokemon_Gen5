@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tomoya_takahashi fujiwara_maiko #ohno #tamada
+USERS	= ichiraku_katsuhiko ibe_mana
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -34,9 +34,7 @@ NCLFILE = $(wildcard *.ncl)
 NCEFILE = $(wildcard *.nce)
 NSCFILE = $(wildcard *.nsc)
 IMDFILE = $(wildcard *.imd)
-ICAFILE = c09_01_mf.ica c09_02_mf.ica c09_03_mf.ica c09_04_mf.ica
-CAMERAICAFILE = c09_01_camera.ica c09_02_camera.ica c09_03_camera.ica c09_04_camera.ica
-SEFILE = c09_01_se.ica c09_02_se.ica c09_03_se.ica c09_04_se.ica
+ICAFILE = $(wildcard *.ica)
 IVAFILE = $(wildcard *.iva)
 IMAFILE = $(wildcard *.ima)
 ITPFILE = $(wildcard *.itp)
@@ -55,24 +53,19 @@ NSCRFILE = $(NSCFILE:.nsc=.NSCR)
 	
 #3D
 NSBMDFILE = $(IMDFILE:.imd=.nsbmd)
-NSBCAFILE = $(ICAFILE:.ica=.nsbca)
 NSBVAFILE = $(IVAFILE:.iva=.nsbva)
 NSBMAFILE = $(IMAFILE:.ima=.nsbma)
 NSBTPFILE = $(ITPFILE:.itp=.nsbtp)
 NSBTAFILE = $(ITAFILE:.ita=.nsbta)
-
-BINFILE = $(CAMERAICAFILE:.ica=.bin)
-
-SEBIN_FILE = $(SEFILE:.ica=.se)
 
 #DAT
 DATFILE = $(XLSFILE:.xls=.dat)
 
 LIST_FILE 	= list.txt
 OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
-			  $(NSBMDFILE) $(NSBCAFILE) $(NSBVAFILE) \
+			  $(NSBMDFILE) $(NSBVAFILE) \
 			  $(NSBMAFILE) $(NSBTPFILE) $(NSBTAFILE) \
-			  $(DATFILE) $(BINFILE) $(SEBIN_FILE)
+			  $(DATFILE) 
 
 
 
@@ -83,7 +76,7 @@ OBJ_FILE 	= $(NCLRFILE) $(NCERFILE) $(NSCRFILE) \
 ifeq	($(CONVERTUSER),true)	
 
 
-.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta .xls .dat .bin .se
+.SUFFIXES: .ncl .nce .nsc .NCLR .NCER .NSCR .imd .ica .iva .ima .itp .ita .nsbmd .nsbtx .nsbca .nsbma .nsbva .nsbtp .nsbta .xls .dat .bin 
 
 #コンバート環境
 #2d
@@ -114,13 +107,6 @@ ifeq	($(CONVERTUSER),true)
 
 .ita.nsbta:
 	g3dcvtr $<
-
-.ica.bin:
-	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -srt $< $@
-
-.ica.se:
-	ruby $(PROJECT_ROOT)tools/ica/ica_converter.rb -srt $< $@
-
 
 #light
 .xls.dat:
@@ -156,7 +142,6 @@ $(targetname).narc: $(OBJ_FILE) $(TXTFILE)
 	-ls *.N*R >> $(LIST_FILE)
 	-ls *.nsb* >> $(LIST_FILE)
 	-ls *.bin >> $(LIST_FILE)
-	-ls *.se >> $(LIST_FILE)
 	$(ARCLIST_MAKE) $(LIST_FILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
@@ -178,7 +163,6 @@ ifeq	($(CONVERTUSER),true)
 	rm -f *.nsb*
 	rm -f *.dat
 	rm -f *.bin
-	rm -f *.se
 	rm -f *.csv
 	rm -f *.narc
 	rm -f *.naix

@@ -1189,8 +1189,7 @@ SRCS_OVERLAY_FIELD_CROWD_PEOPLE = field/field_crowd_people.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c \
-                                     field/field_fk_sound_anime.c
+SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c
 
 
 #===> GROUP_OVERLAY_SUBSCREEN
