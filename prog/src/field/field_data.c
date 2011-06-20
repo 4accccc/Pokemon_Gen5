@@ -622,6 +622,27 @@ const SCENE_DATA resistMapTbl[] = {
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
+  //RSC_HYBRID = 23,
+	{	//グリッド、レールハイブリッド、ドラゴンジム
+		{
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      2,2,
+      FLDMAPPER_MODE_SCROLL_NONE, 
+      ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 
+      1,  // topフレームのブロック描画数
+		},
+		&FieldMapCtrl_HybridFunctions,
+		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
+	},
 
 };
 
