@@ -1973,7 +1973,6 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
   int tate,yoko;
 
   // ƒ|ƒPƒ‚ƒ“‚ğ‚Â‚©‚ñ‚Å‚¢‚È‚¯‚ê‚ÎI—¹
-//  if( syswk->poke_get_key == 0 || syswk->poke_get_key == 1){		// ˆÓ–¡‚í‚©‚ç‚ñ...
 	if( syswk->poke_get_key == 0 ){
 		return;
 	}

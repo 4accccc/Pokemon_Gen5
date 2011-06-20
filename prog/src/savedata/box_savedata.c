@@ -898,8 +898,7 @@ POKEMON_PASO_PARAM * BOXDAT_CopyPokeData( const BOX_MANAGER* box, u32 trayNum, u
 */
 void BOXDAT_FreeCopyPokeData( POKEMON_PASO_PARAM * ppp )
 {
-//	GFL_STD_MemClear( ppp, sizeof(POKEMON_PASO_PARAM) );
-	GFL_STD_MemFill( ppp, 0xff, sizeof(POKEMON_PASO_PARAM) );
+//	GFL_STD_MemFill( ppp, 0xff, sizeof(POKEMON_PASO_PARAM) );		// óLå¯Ç…Ç∑ÇÈÇ∆èdÇ≠Ç»ÇËÇ‹Ç∑
 	GFL_HEAP_FreeMemory( ppp );
 }
 

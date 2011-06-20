@@ -1284,7 +1284,7 @@ static void PokeDataMovePARTYtoBOX( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DAT
 			if( pos >= ppcnt ){ continue; }
 			pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, pos );
 			// ボックスへ
-			OS_Printf( "party->mv_pos = %d\n", party->mv_pos+i*BOX_MAX_COLUMN+j );
+//			OS_Printf( "party->mv_pos = %d\n", party->mv_pos+i*BOX_MAX_COLUMN+j );
 			BOXDAT_PutPokemonPos(
 				syswk->dat->sv_box, syswk->tray, party->mv_pos+i*BOX_MAX_COLUMN+j, PP_GetPPPPointerConst(pp) );
 			bit |= ( 1 << pos );
@@ -1344,6 +1344,19 @@ static void PokeDataMoveParty( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * p
   for( i=pos; i<PokeParty_GetPokeCount(syswk->dat->pokeparty)-1; i++ ){
     PokeParty_ExchangePosition( syswk->dat->pokeparty, i, i+1, HEAPID_BOX_APP );
   }
+}
+
+static void PokeDataMovePartyMulti( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * party )
+{
+	u32	i;
+	int	list[TEMOTI_POKEMAX];
+
+	for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX*2; i++ ){
+		if( party[i].gt_pos >= BOX2OBJ_POKEICON_TRAY_MAX && party[i].gt_pos < BOX2OBJ_POKEICON_PUT_MAX ){
+			list[ party[i].mv_pos-BOX2OBJ_POKEICON_TRAY_MAX ] = party[i].gt_pos-BOX2OBJ_POKEICON_TRAY_MAX;
+		}
+	}
+	PokeParty_ExchangePositionList( syswk->dat->pokeparty, list, HEAPID_BOX_APP_L );
 }
 
 
@@ -1574,7 +1587,11 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
         PokeDataChangeParty( syswk, &dat[0] );
       }else{
         // 手持ちを移動
-        PokeDataMoveParty( syswk, &dat[work->get_pos-BOX2OBJ_POKEICON_TRAY_MAX] );
+				if( syswk->mv_cnv_mode != 2 ){
+					PokeDataMoveParty( syswk, &dat[work->get_pos-BOX2OBJ_POKEICON_TRAY_MAX] );
+				}else{
+					PokeDataMovePartyMulti( syswk, &dat[0] );
+				}
       }
     }
   }
@@ -2274,8 +2291,10 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
 	if( syswk->mv_cnv_mode == 2 ){
 	  if( put_pos < BOX2OBJ_POKEICON_PUT_MAX ){
 			if( BOX2MAIN_CheckMultiSelectTable(syswk,syswk->tray,put_pos) == FALSE ){
-				syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MULTI;
-				return FALSE;
+//				if( get_pos < BOX2OBJ_POKEICON_TRAY_MAX || put_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+					syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MULTI;
+					return FALSE;
+//				}
 			}
 			// 手持ちに配置しようとするとき
 			if( put_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
@@ -7717,7 +7736,8 @@ BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
 	// 手持ち
 	}else{
 		int	ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
-		if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) > (BOX2OBJ_POKEICON_MINE_MAX-ppcnt) ){
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX &&
+				BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) > (BOX2OBJ_POKEICON_MINE_MAX-ppcnt) ){
 			return FALSE;
 		}
 	}

@@ -2704,7 +2704,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		}else if( syswk->poke_get_key != 0 ){
 			// ポケモンを戻して選択を解除する
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
-			return PokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
+			return MultiPokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 		}else{
 			// ボックス整理メインへ
 			PMSND_PlaySE( SE_BOX2_CANCEL );
@@ -3307,27 +3307,6 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
 	// ポケモンドラッグチェック
 	if( syswk->poke_get_key == 0 ){
-/*
-    // 手持ちのポケモン
-    ret = BOX2UI_HitCheckTrgPartyPokeRight();
-    if( ret != GFL_UI_TP_HIT_NONE ){
-      CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
-      ret += BOX2OBJ_POKEICON_TRAY_MAX;
-      if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-        PMSND_PlaySE( SE_BOX2_POKE_CATCH );
-        GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
-        BOX2MAIN_PokeInfoPut( syswk, ret );
-        return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
-      }else{
-        CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-        BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
-        syswk->app->old_cur_pos = ret;
-        BOX2UI_PutHandCursor( syswk, ret );
-        BOX2MAIN_PokeInfoOff( syswk );
-      }
-      return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
-    }
-*/
 		// トレイ
     ret = BOX2UI_HitCheckTrgTrayPoke();
     if( ret != GFL_UI_TP_HIT_NONE ){
@@ -3583,7 +3562,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		}else if( syswk->poke_get_key != 0 ){
 			// ポケモンを戻して選択を解除する
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
-      return PokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
+      return MultiPokeMovePutKey( syswk, BOX2MAIN_GETPOS_NONE, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
 		}else{
 			// ボックス整理メインへ
 			PMSND_PlaySE( SE_BOX2_CANCEL );
@@ -3629,12 +3608,15 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				}
 			}else if( syswk->poke_get_key == 1 ){
 				// 範囲選択中のカーソルの移動に範囲選択枠が追従する
-				/*****************************/
-				if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-					BOX2OBJ_SetBox2MultiSelectOutline(
-						syswk, syswk->app->multiselect_outline.start_pos, pos );
+				if( syswk->app->multiselect_outline.start_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+					if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+						BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, pos );
+					}
+				}else{
+					if( pos >= BOX2OBJ_POKEICON_TRAY_MAX && pos < BOX2OBJ_POKEICON_PUT_MAX ){
+						BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, pos );
+					}
 				}
-				/*****************************/
 			}
 		}
 		return VFuncReqSet( syswk, SetCursorMoveRet(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN) );
@@ -3642,34 +3624,40 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 	default:
 		// 範囲選択始点決定状態→終点決定
 		if( syswk->poke_get_key == 1 ){
-			int width,height;
-
-			syswk->app->multiselect_outline.end_pos = ret;
-
-			MultiSelectChangePos( syswk );
-			syswk->get_pos = BOX2OBJ_GetMultiSelectMinPos( 
-												syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos );
-			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
-			BOX2UI_PutHandCursor( syswk, syswk->get_pos );
-			BOX2OBJ_SetBox2MultiSelectOutline(
-				syswk, syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos );
-      BOX2OBJ_GetMultiSelectWidth(
-				syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos, &width, &height );
-			syswk->app->multi_w = width;
-			syswk->app->multi_h = height;
-			BOX2MAIN_StockMultiSelectTable( syswk );
-			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
-				BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
-				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
-				syswk->poke_get_key = 2;
-				return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
-			}else{
+			if( ( syswk->app->multiselect_outline.end_pos < BOX2OBJ_POKEICON_TRAY_MAX && ret >= BOX2OBJ_POKEICON_TRAY_MAX ) ||
+					( syswk->app->multiselect_outline.end_pos >= BOX2OBJ_POKEICON_TRAY_MAX && ret < BOX2OBJ_POKEICON_TRAY_MAX ) ){
 				MultiSelectCancel( syswk );
+			}else{
+				int width,height;
+				syswk->app->multiselect_outline.end_pos = ret;
+				MultiSelectChangePos( syswk );
+				syswk->get_pos = BOX2OBJ_GetMultiSelectMinPos( 
+													syswk->app->multiselect_outline.start_pos,
+													syswk->app->multiselect_outline.end_pos );
+				CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+				BOX2UI_PutHandCursor( syswk, syswk->get_pos );
+				BOX2OBJ_SetBox2MultiSelectOutline(
+					syswk, syswk->app->multiselect_outline.start_pos,
+					syswk->app->multiselect_outline.end_pos );
+	      BOX2OBJ_GetMultiSelectWidth(
+					syswk->app->multiselect_outline.start_pos,
+					syswk->app->multiselect_outline.end_pos, &width, &height );
+				syswk->app->multi_w = width;
+				syswk->app->multi_h = height;
+				BOX2MAIN_StockMultiSelectTable( syswk );
+				if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
+					BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
+					BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+					syswk->poke_get_key = 2;
+					return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
+				}else{
+					MultiSelectCancel( syswk );
+				}
 			}
 		// 掴んでいる→離す
 		}else if( syswk->poke_get_key == 2 ){
 			// 選択中のポケモンをおくことができるかチェック
-			if(BOX2MAIN_CheckMultiSelectTable( syswk, syswk->tray, ret )){
+			if( BOX2MAIN_CheckMultiSelectTable( syswk, syswk->tray, ret ) ){
 				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
 //				return PokeMovePutKey( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
 				return MultiPokeMovePutKey( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
@@ -3678,6 +3666,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			}
 		// 掴んでいない→範囲選択始点決定
 		}else{
+			// トレイ
 			if( ret < BOX2OBJ_POKEICON_TRAY_MAX ){
 				syswk->get_tray = syswk->tray;		// 取得したボックス
 			}
