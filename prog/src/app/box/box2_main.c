@@ -1426,26 +1426,57 @@ static void PokeDataBoxMoveBox( BOX2_SYS_WORK * syswk, u32 getTray, u32 getPos, 
 //--------------------------------------------------------------------------------------------
 static void PokeDataBoxMoveParty( BOX2_SYS_WORK * syswk, u32 getPos, u32 putPos )
 {
-  POKEMON_PARAM * pp;
-  u32 tray;
+	POKEMON_PARAM * pp;
+	u32 tray, ppcnt;
+	u16	i, j;
+	u8	mv[6];
+	u8	pppos;
 
-  tray = MoveBoxGet( syswk, putPos );
+	tray  = MoveBoxGet( syswk, putPos );
+	ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
+	pppos = getPos - BOX2OBJ_POKEICON_TRAY_MAX;
+	for( i=0; i<6; i++ ){
+		mv[i] = 0;
+	}
+	for( i=0; i<syswk->app->multi_h; i++ ){
+		for( j=0; j<syswk->app->multi_w; j++ ){
+			if( (pppos+i*2+j) < ppcnt ){
+				mv[pppos+i*2+j] = 1;
+			}
+		}
+	}
+	for( i=0; i<ppcnt; i++ ){
+		if( mv[i] == 0 ){ continue; }
+		pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, i );
+		// シェイミならフォルムチェンジ
+		// ここのシェイミはおｋ　2011/06/20 by nakahiro
+		if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_SHEIMI ){
+			PP_ChangeFormNo( pp, FORMNO_SHEIMI_LAND );
+			BOX2MAIN_FormChangeRenew( syswk, i+BOX2OBJ_POKEICON_TRAY_MAX );
+			ZUKANSAVE_SetPokeSee( GAMEDATA_GetZukanSave(syswk->dat->gamedata), pp );
+		}
+		BOXDAT_PutPokemonBox( syswk->dat->sv_box, tray, PP_GetPPPPointerConst(pp) );
+	}
 
-  pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, getPos-BOX2OBJ_POKEICON_TRAY_MAX );
+	while(1){
+		for( i=0; i<6; i++ ){
+			if( mv[i] == 1 ){ break; }
+		}
+		if( i == 6 ){ break; }
 
-  // シェイミならフォルムチェンジ
-  if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_SHEIMI ){
-    PP_ChangeFormNo( pp, FORMNO_SHEIMI_LAND );
-    BOX2MAIN_FormChangeRenew( syswk, getPos );
-    ZUKANSAVE_SetPokeSee( GAMEDATA_GetZukanSave(syswk->dat->gamedata), pp );
-  }
+		BOX2MAIN_PokeDataClear( syswk, syswk->tray, i+BOX2OBJ_POKEICON_TRAY_MAX );
+		mv[i] = 0;
+		for( i=i+1; i<6; i++ ){
+			if( mv[i] == 1 ){
+				mv[i-1] = 1;
+				mv[i] = 0;
+			}
+		}
+	}
 
-  BOXDAT_PutPokemonBox( syswk->dat->sv_box, tray, PP_GetPPPPointerConst(pp) );
-  BOX2MAIN_PokeDataClear( syswk, syswk->tray, getPos );
-
-  // トレイアイコン更新
-  BOX2OBJ_TrayIconCgxMake( syswk, tray );
-  BOX2OBJ_TrayIconCgxTrans( syswk, tray );
+	// トレイアイコン更新
+	BOX2OBJ_TrayIconCgxMake( syswk, tray );
+	BOX2OBJ_TrayIconCgxTrans( syswk, tray );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2526,14 +2557,6 @@ static BOOL PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
   dat  = work->dat;
 
   // 初期化
-/*
-  for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX+1; i++ ){
-    dat[i].df_pos = 0;
-    dat[i].mv_pos = 0;
-    dat[i].gt_pos = 0;
-    dat[i].flg    = 0;
-  }
-*/
 	GFL_STD_MemClear( dat, sizeof(BOX2MAIN_POKEMOVE_DATA)*BOX2OBJ_POKEICON_MINE_MAX*2 );
 
 	work->set_pos = put_pos;
@@ -2604,31 +2627,104 @@ static BOOL PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
 
   ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
 
-  // トレイアイコン上
-  if( put_pos >= BOX2OBJ_POKEICON_PUT_MAX ){
-    dat[0].df_pos = BOX2OBJ_POKEICON_GET_POS;
-    dat[0].mv_pos = put_pos;
-    dat[0].gt_pos = BOX2OBJ_POKEICON_GET_POS;
-    dat[0].flg    = 1;
-    PokeIconMoveParamMake( syswk, &dat[0] );
-    // 手持ちからトレイへ
-    if( get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-      get = get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
-      for( i=get+1; i<ppcnt; i++ ){
-        dat[i].df_pos = i + BOX2OBJ_POKEICON_TRAY_MAX;
-        dat[i].mv_pos = i - 1 + BOX2OBJ_POKEICON_TRAY_MAX;
-        dat[i].gt_pos = i + BOX2OBJ_POKEICON_TRAY_MAX;
-        dat[i].flg    = 1;
-        PokeIconMoveOutRangeParamMake( syswk, &dat[i] );
-      }
-      dat[ppcnt].df_pos = get_pos;
-      dat[ppcnt].mv_pos = ppcnt - 1 + BOX2OBJ_POKEICON_TRAY_MAX;
-      dat[ppcnt].gt_pos = get_pos;
-      dat[ppcnt].flg    = 1;
-      PokeIconMoveOutRangeParamMake( syswk, &dat[ppcnt] );
-    }
-    return TRUE;
-  }
+	// トレイアイコン上
+	if( put_pos >= BOX2OBJ_POKEICON_PUT_MAX ){
+		// 複数選択
+		if( syswk->mv_cnv_mode == 2 ){
+			// 手持ち
+			if( get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+				u8	bit;
+				u8	stbp;
+				u8	h;
+
+				work->exFlag = 1;
+
+				get = get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
+
+				// 取得したポケモンの移動データ
+				stbp = 0;
+				for( i=0; i<syswk->app->multi_h; i++ ){
+					for( j=0; j<syswk->app->multi_w; j++ ){
+					  if( (get+i*2+j) < ppcnt ){
+							// 取得アイコン
+							dat[stbp].df_pos = BOX2OBJ_POKEICON_GET_POS+i*syswk->app->multi_w+j;
+							dat[stbp].mv_pos = put_pos;
+							dat[stbp].gt_pos = get_pos + i * 2 + j;
+							dat[stbp].flg    = 1;
+							PokeIconMoveParamMake( syswk, &dat[stbp] );
+							stbp++;
+						}
+					}
+				}
+
+				bit = 0;
+        for( i=0; i<ppcnt; i++ ){
+					bit |= (1<<i);
+				}
+				for( i=0; i<ppcnt; i++ ){
+					for( j=0; j<syswk->app->multi_h; j++ ){
+						if( i >= (get+j*2) && i < (get+j*2+syswk->app->multi_w) ){
+							bit ^= (1<<i);
+						}
+					}
+				}
+				// 取得しなかったポケモンの移動データ
+				for( i=get+1; i<ppcnt; i++ ){
+					for( j=0; j<syswk->app->multi_h; j++ ){
+						if( i >= (get+j*2) && i < (get+j*2+syswk->app->multi_w) ){
+							break;
+						}
+					}
+					if( j == syswk->app->multi_h ){
+						bit ^= (1<<i);
+						dat[stbp].df_pos = i + BOX2OBJ_POKEICON_TRAY_MAX;
+	          dat[stbp].gt_pos = i + BOX2OBJ_POKEICON_TRAY_MAX;
+						for( j=0; j<i; j++ ){
+							if( (bit & (1<<j)) == 0 ){
+								dat[stbp].mv_pos = j + BOX2OBJ_POKEICON_TRAY_MAX;
+								bit |= (1<<j);
+								break;
+							}
+						}
+	          dat[stbp].flg    = 1;
+						PokeIconMoveOutRangeParamMake( syswk, &dat[stbp] );
+						stbp++;
+					}
+				}
+			// トレイ
+			}else{
+				dat[0].df_pos = BOX2OBJ_POKEICON_GET_POS;
+				dat[0].mv_pos = put_pos;
+				dat[0].gt_pos = BOX2OBJ_POKEICON_GET_POS;
+				dat[0].flg    = 1;
+				PokeIconMoveParamMake( syswk, &dat[0] );
+			}
+		// 通常
+		}else{
+			dat[0].df_pos = BOX2OBJ_POKEICON_GET_POS;
+			dat[0].mv_pos = put_pos;
+			dat[0].gt_pos = BOX2OBJ_POKEICON_GET_POS;
+			dat[0].flg    = 1;
+			PokeIconMoveParamMake( syswk, &dat[0] );
+			// 手持ちからトレイへ
+			if( get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+				get = get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
+				for( i=get+1; i<ppcnt; i++ ){
+					dat[i].df_pos = i + BOX2OBJ_POKEICON_TRAY_MAX;
+					dat[i].mv_pos = i - 1 + BOX2OBJ_POKEICON_TRAY_MAX;
+					dat[i].gt_pos = i + BOX2OBJ_POKEICON_TRAY_MAX;
+					dat[i].flg    = 1;
+					PokeIconMoveOutRangeParamMake( syswk, &dat[i] );
+				}
+				dat[ppcnt].df_pos = get_pos;
+				dat[ppcnt].mv_pos = ppcnt - 1 + BOX2OBJ_POKEICON_TRAY_MAX;
+				dat[ppcnt].gt_pos = get_pos;
+				dat[ppcnt].flg    = 1;
+				PokeIconMoveOutRangeParamMake( syswk, &dat[ppcnt] );
+			}
+		}
+		return TRUE;
+	}
 
   // トレイがスクロールされているとき
   if( syswk->tray != syswk->get_tray && get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
@@ -4943,7 +5039,6 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 	      // トレイアイコンのフレームが表示中
 	      if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
 	        put_pos = BoxMovePutAreaCheck( syswk, syswk->app->tpx, syswk->app->tpy );
-/*
 	        // 手持ちキャンセルのとき
 	        if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
 	          if( put_pos == BOX2MAIN_GETPOS_NONE || PokeIconMoveBoxPartyDataMake(syswk,syswk->get_pos,put_pos) == FALSE ){
@@ -4954,7 +5049,6 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 	            break;
 	          }
 	        }
-*/
 	      }
 
 				// 手持ちポケモンのフレームが表示中
