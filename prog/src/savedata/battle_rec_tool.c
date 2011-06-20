@@ -356,7 +356,21 @@ static void pokewood_store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BTLREC
     {
     case BTL_CLIENT_PLAYER:
       MyStatus_Copy( setup->playerStatus[i], &clientStatus[i].player );
-      *player_tr_type = setup->tr_data[i]->tr_type;
+      if( setup->tr_data[i] )
+      {
+        *player_tr_type = setup->tr_data[i]->tr_type;
+      }
+      else
+      {
+        if( MyStatus_GetMySex( setup->playerStatus[i] ) == PM_MALE )
+        {
+          *player_tr_type  = TRTYPE_HERO;
+        }
+        else
+        {
+          *player_tr_type = TRTYPE_HEROINE;
+        }
+      }
       clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
       break;
     case BTL_CLIENT_ENEMY1:
