@@ -35,11 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-
-※SWANでメッセージ修正</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:31:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64,10 +63,12 @@
 			Language="JPN">
 			<Text>アーティストで　ありながら
 ヒウンの　ジムリーダーでも　ある▽
-アーティさんは　おれらの　あこがれ！</Text>
+アーティさんは　おれらの　あこがれ！▼
+おれ　ずっと　あこがれつづけてる！▼
+うん　あこがれつづけてる　だけ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:31:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,10 +78,12 @@
 			Language="JPN_KANJI">
 			<Text>アーティストで　ありながら
 ヒウンの　ジムリーダーも　兼ねる▽
-アーティさんは　おれらの　あこがれ！</Text>
+アーティさんは　おれらの　あこがれ！▼
+おれ　ずっと　あこがれ続けてる！▼
+うん　あこがれ続けてる　だけ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:31:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,10 +91,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:31:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -152,10 +156,12 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手前
-・選択肢表示</Comment>
+・選択肢表示
+
+※swanで場所を移動予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-20T10:30:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
