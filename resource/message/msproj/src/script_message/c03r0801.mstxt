@@ -36,13 +36,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>リタイア受付
-全抜き時はex_2へ
-
+			<Comment>♂
+・リタイア受付
+　全抜き時はex_2へ
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:08:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -92,13 +92,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>リタイア受付
-全抜き時はex_2へ
-
+			<Comment>♂
+・リタイア受付
+　全抜き時はex_2へ
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -148,14 +148,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント１
+			<Comment>♂
+・トレーナーヒント１
 ・右部、左部で何人いるか？
 ・はい/いいえの選択肢表示
 ・はい　→hint_01
 　いいえ→hint_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -211,10 +212,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>長話客の説明</Comment>
+			<Comment>♂
+・長話客の説明</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -260,10 +262,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>甲板部の説明</Comment>
+			<Comment>♂
+・甲板部の説明</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -311,13 +314,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント２
-・ダブルルームに何人いるか？
-
-</Comment>
+			<Comment>♂
+・トレーナーヒント２
+・ダブルルームに何人いるか？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -372,13 +374,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント２
+			<Comment>♂
+・トレーナーヒント２
 ・ダブルルームに何人いるか？
-[1桁:1]の所に任意の数字が
-入ります。</Comment>
+・1＝1桁の数字</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -431,11 +433,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>移動を妨害
+			<Comment>♀
+・移動を妨害
 ・固定会話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:09:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -483,11 +486,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>移動を妨害
+			<Comment>♀
+・移動を妨害
 ・固定会話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -535,11 +539,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>移動を妨害
+			<Comment>♀
+・移動を妨害
 ・固定会話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -587,11 +592,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>移動を妨害
+			<Comment>♀
+・移動を妨害
 ・固定会話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -637,11 +643,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>移動を妨害
+			<Comment>♀
+・移動を妨害
 ・固定会話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -687,11 +694,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -763,11 +771,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・長い話前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -824,11 +833,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・長い話後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -882,10 +892,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♂
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -938,10 +949,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♂
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -996,11 +1008,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:10:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1054,11 +1067,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話２</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1115,10 +1129,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♂
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1176,10 +1191,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♂
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1236,11 +1252,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:15:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1294,11 +1311,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・短い話２</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:15:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1353,10 +1371,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♀
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1410,10 +1429,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♀
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1472,11 +1492,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:15:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1531,11 +1552,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話２</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:15:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1590,10 +1612,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♂
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1647,10 +1670,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♂
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1705,11 +1729,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1778,11 +1803,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・長い話前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1839,11 +1865,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・長い話後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1898,10 +1925,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♀
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1959,10 +1987,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♀
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2017,11 +2046,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2076,11 +2106,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話２</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2133,10 +2164,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♂
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2190,10 +2222,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♂
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2248,11 +2281,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2309,11 +2343,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・短い話２</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2366,10 +2401,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♀
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2423,10 +2459,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♀
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2483,11 +2520,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2554,11 +2592,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・長い話前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2613,11 +2652,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・長い話後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2672,10 +2712,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♂
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2729,10 +2770,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♂
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2787,11 +2829,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2856,11 +2899,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・長い話前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2915,11 +2959,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♀
+・お客さん
 ・長い話後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2972,10 +3017,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♀
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3029,10 +3075,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♀
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3085,11 +3132,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・短い話</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3158,11 +3206,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・長い話前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3217,11 +3266,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>お客さん
+			<Comment>♂
+・お客さん
 ・長い話後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:14:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3282,10 +3332,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー前</Comment>
+			<Comment>♀
+・トレーナー戦闘前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3342,10 +3393,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナー後</Comment>
+			<Comment>♀
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:11:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3508,12 +3560,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント１
-
-はいの場合</Comment>
+			<Comment>♂
+・トレーナーヒント１
+　はいの場合</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3568,12 +3620,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント１
-
-左側の人が０人だった場合</Comment>
+			<Comment>♂
+・トレーナーヒント１
+　左側の人が０人だった場合</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3628,12 +3680,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント１
-
-右側の人が０人だった場合</Comment>
+			<Comment>♂
+・トレーナーヒント１
+　右側の人が０人だった場合</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3686,12 +3738,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント１
-
-いいえの場合</Comment>
+			<Comment>♂
+・トレーナーヒント１
+・いいえの場合</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3744,12 +3796,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>トレーナーヒント１
-
-再度話しかけた場合</Comment>
+			<Comment>♂
+・トレーナーヒント１
+　再度話しかけた場合</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:12:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3802,10 +3854,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>リタイア用・</Comment>
+			<Comment>♂
+・リタイア用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3858,10 +3911,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>リタイア用・</Comment>
+			<Comment>♂
+・リタイア用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:13:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3914,11 +3968,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>全てのトレーナーを倒した際に
-表示されます</Comment>
+			<Comment>システム
+・すべてのトレーナーを倒すと表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:12:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3970,10 +4024,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>案内後の受付員のセリフ</Comment>
+			<Comment>♂
+・案内後の受付員のセリフ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:12:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4036,11 +4091,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>リタイヤ員
-全抜き時のセリフ</Comment>
+			<Comment>♂
+・リタイヤ
+　全員抜き時のセリフ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:12:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4095,11 +4151,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>全てのトレーナーを倒した際に
-表示されます</Comment>
+			<Comment>システム
+・すべてのトレーナーを倒すと表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T03:12:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
