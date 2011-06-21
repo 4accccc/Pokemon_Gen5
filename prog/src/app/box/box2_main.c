@@ -1351,9 +1351,17 @@ static void PokeDataMovePartyMulti( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DAT
 	u32	i;
 	int	list[TEMOTI_POKEMAX];
 
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
+		list[i] = 0xff;
+	}
 	for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX*2; i++ ){
 		if( party[i].gt_pos >= BOX2OBJ_POKEICON_TRAY_MAX && party[i].gt_pos < BOX2OBJ_POKEICON_PUT_MAX ){
 			list[ party[i].mv_pos-BOX2OBJ_POKEICON_TRAY_MAX ] = party[i].gt_pos-BOX2OBJ_POKEICON_TRAY_MAX;
+		}
+	}
+	for( i=0; i<TEMOTI_POKEMAX; i++ ){
+		if( list[i] == 0xff ){
+			list[i] = i;
 		}
 	}
 	PokeParty_ExchangePositionList( syswk->dat->pokeparty, list, HEAPID_BOX_APP_L );
