@@ -552,7 +552,7 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk )
 
 #ifdef PM_DEBUG
 #include "arc/fieldmap/fldmmdl_objcode.h"
-#include "field/fldmmdl_list_symbol.h"
+#include "field/fmmdl_anm/fldmmdl_anmtbl.h"
 #include "field/fldmmdl.h"
 /*
  *  @brief  流用しているfldmmdlのアニメIDが、demo3dが把握しているタイプと
@@ -565,17 +565,17 @@ static void debug_FldmmdlAnmCodeCheck( const GAMESYS_WORK* gsys )
   const MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( GAMESYSTEM_GetGameData( (GAMESYS_WORK*)gsys ));
 
   static const u16 checkTbl[][2] = {
-    HERO,     ANMID_HERO,
-    HEROINE,  ANMID_HERO,
-		BOSS,     ANMID_NONFLIP_BOSS_N,
-		DANCER,   ANMID_FLIP,
-		TRAINERM, ANMID_FLIP,
-    WAITRESS, ANMID_FLIP,
-    BOY4,     ANMID_NONFLIP,
-    GIRL2,    ANMID_FLIP,
-    MOUNTMAN, ANMID_FLIP,
-    OL,       ANMID_NONFLIP,
-    BABYGIRL2,ANMID_FLIP,
+    HERO,     MMDL_BLACT_ANMTBLNO_HERO,
+    HEROINE,  MMDL_BLACT_ANMTBLNO_HERO,
+		BOSS,     MMDL_BLACT_ANMTBLNO_NONFLIP_BOSS_N,
+		DANCER,   MMDL_BLACT_ANMTBLNO_FLIP,
+		TRAINERM, MMDL_BLACT_ANMTBLNO_FLIP,
+    WAITRESS, MMDL_BLACT_ANMTBLNO_FLIP,
+    BOY4,     MMDL_BLACT_ANMTBLNO_NONFLIP,
+    GIRL2,    MMDL_BLACT_ANMTBLNO_FLIP,
+    MOUNTMAN, MMDL_BLACT_ANMTBLNO_FLIP,
+    OL,       MMDL_BLACT_ANMTBLNO_NONFLIP,
+    BABYGIRL2,MMDL_BLACT_ANMTBLNO_FLIP,
   };
 
   for(i = 0;i < NELEMS(checkTbl);i++){
