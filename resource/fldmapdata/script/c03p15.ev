@@ -51,7 +51,10 @@ EVENT_START	ev_scene_c03p15_first_01
   _MSGWIN_CLOSE()
   
   //【仮】ライブキャスター登録処理
-  //【仮】ライブキャスターME再生
+  
+  //ライブキャスター登録SE再生
+  _SE_PLAY( SEQ_SE_SW_LC_NO )
+  _SE_WAIT()
   
   //アニメ：ライバル停泊している船を見てコメント
   _OBJ_ANIME( C03P15_SWRIVAL_01, anm_staystep_r )

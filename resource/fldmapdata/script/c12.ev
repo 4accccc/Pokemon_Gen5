@@ -938,7 +938,9 @@ EVENT_START		ev_scene_c12_gymclear_01
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
-  //【仮】登録SE再生
+  //ライブキャスター登録SE再生
+  _SE_PLAY( SEQ_SE_SW_LC_NO )
+  _SE_WAIT()
   
   //メッセージ：これで
   _BALLOONWIN_OBJMSG_POS( msg_c12_swleader1_03,C12_SWLEADER1_01, POS_DEFAULT )
@@ -953,7 +955,9 @@ EVENT_START		ev_scene_c12_gymclear_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
-  //【仮】登録SE再生
+  //ライブキャスター登録SE再生
+  _SE_PLAY( SEQ_SE_SW_LC_NO )
+  _SE_WAIT()
   
   //メッセージ：いっしょに
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_27,C12_SWBELL_01, POS_DEFAULT )

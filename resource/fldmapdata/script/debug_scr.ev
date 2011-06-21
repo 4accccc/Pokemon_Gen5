@@ -304,11 +304,14 @@ EVENT_START   ev_debug_mizuguchi
 			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
 		ELSIF $SCWK_TEMP2 == 4 THEN
       //========================================//
-      //D05 プラズマ団イベントSCENE_CHANGE有効
-      $WK_SCENE_D05 = 2
+       //R20
+       $WK_SCENE_R20 = 1
+       $WK_SCENE_C12GYM_OPEN = 2
       //========================================//
 		ELSIF $SCWK_TEMP2 == 5 THEN
-				$WK_SCENE_C04GYM0101_SHOWEND = 1
+		    //========================================//
+				$WK_SCENE_T04 = 0
+				//========================================//
 		ELSIF $SCWK_TEMP2 == 6 THEN
 		    //C12のSCENE_CHANGE起動
 	      $WK_SCENE_C12_WHITE_MEET = 5
