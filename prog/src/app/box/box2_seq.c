@@ -3647,9 +3647,15 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				int width,height;
 				syswk->app->multiselect_outline.end_pos = ret;
 				MultiSelectChangePos( syswk );
-				syswk->get_pos = BOX2OBJ_GetMultiSelectMinPos( 
-													syswk->app->multiselect_outline.start_pos,
-													syswk->app->multiselect_outline.end_pos );
+				if( syswk->app->multiselect_outline.start_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+					syswk->get_pos = BOX2OBJ_GetMultiSelectMinPos( 
+														syswk->app->multiselect_outline.start_pos,
+														syswk->app->multiselect_outline.end_pos );
+				}else{
+					syswk->get_pos = BOX2OBJ_GetMultiSelectMinPosParty( 
+														syswk->app->multiselect_outline.start_pos,
+														syswk->app->multiselect_outline.end_pos );
+				}
 				CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
 				BOX2UI_PutHandCursor( syswk, syswk->get_pos );
 				BOX2OBJ_SetBox2MultiSelectOutline(
