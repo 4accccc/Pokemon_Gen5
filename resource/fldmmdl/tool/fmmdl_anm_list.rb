@@ -65,6 +65,7 @@ class CMakeAnmList
       file.puts("\n\n");
       file.puts("//===================================================\n");
       file.puts("//ビルボードアクター　アニメーションテーブルID定義\n");
+      file.puts("// *fldmmdl_list.xls->アニメID ANMID_XXXXに対応している\n");
       file.puts("//===================================================\n\n");
     
       file.puts("typedef enum\n{\n");
@@ -164,6 +165,23 @@ class CMakeAnmList
       end
     }
   end
+  
+  def output_anm_id
+    path = @anmid_path
+    File::open( path ,"w"){ |file|
+      file.puts("#! ruby -Ks");
+      file.puts("#このファイルはresource/fldmmdl/tool/fmmdl_anm_list.rbで自動生成されています");
+      file.puts("\n\n");
+      file.puts("  $anmid_hash = {"); 
+      ct = 1
+      file.puts("    \"ANMID_NON\"=>0,");
+      for anm in @list do
+        file.puts("    \"ANMID_#{anm.name.upcase}\"=>#{ct}, ##{anm.comment}");
+        ct += 1
+      end
+      file.puts("  }");
+    }
+  end
 
   def line_get fp
     line = fp.gets
@@ -175,10 +193,11 @@ class CMakeAnmList
     @header_path = arg[0]
     @dat_path = arg[1]
     @anmlist_path = arg[2]
-    @list_dir = arg[3]
+    @anmid_path = arg[3] 
+    @list_dir = arg[4]
 
     size = arg.size
-    arg.slice!(0..3)
+    arg.slice!(0..4)
 
     @list = Array.new
     for n in arg do
@@ -233,6 +252,7 @@ def convert arg
   c_list.output_header()
   c_list.output_dat()
   c_list.output_anm_list()
+  c_list.output_anm_id()
 end
 
 convert(arg)

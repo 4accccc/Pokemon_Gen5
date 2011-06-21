@@ -15,6 +15,7 @@ anm_list = $(ANMDIR)anmlist.txt
 anm_header = $(DATDIR)fldmmdl_anmtbl.h
 anm_data = $(DATDIR)fldmmdl_anmtbl.cdat
 anm_convert_list = $(NCG_CONV_LIST_TXT)
+anm_id_hash = $(TOOLDIR)fmmdl_anmid_hash.rb
 
 include $(anm_list)
 
@@ -49,7 +50,7 @@ CSVCONV = ../../tools/exceltool/xls2xml/tab_out_direct.rb
 #---------------------------------------------------------------
 #	build
 #---------------------------------------------------------------
-do-build: $(TARGET_ANMFILE_H) $(TARGET_ANMFILE_DAT) $(target_anm_header) $(target_anm_data) $(anm_convert_list)
+do-build: $(TARGET_ANMFILE_H) $(TARGET_ANMFILE_DAT) $(target_anm_header) $(target_anm_data) $(anm_convert_list) $(anm_id_hash)
 #do-build: $(ANMFILE_CSV)  $(anm_pat_list)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -74,13 +75,16 @@ $(DATDIR)%.cdat: $(TMPDIR)%.csv
 	unix2dos -D $(@:%.cdat=%.h)
 
 $(anm_header): $(anm_list)
-	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(anm_id_hash) $(TMPDIR) $(ANMFILE_XLS)
 
 $(anm_data): $(anm_list)
-	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(anm_id_hash) $(TMPDIR) $(ANMFILE_XLS)
+
+$(anm_id_hash): $(anm_list)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(anm_id_hash) $(TMPDIR) $(ANMFILE_XLS)
 
 $(anm_convert_list): $(anm_list) $(ANMFILE_CSV)
-	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(TMPDIR) $(ANMFILE_XLS)
+	ruby $(RUBY_DAT_LIST) $(anm_header) $(anm_data) $(anm_convert_list) $(anm_id_hash) $(TMPDIR) $(ANMFILE_XLS)
 
 endif
 
@@ -100,6 +104,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(TMPDIR)*.*
 	rm -f $(DATDIR)*.*
 	rm -f $(anm_convert_list)
+	rm -f $(anm_id_hash)
 endif
 	@echo $(MMDL_ANM_DIR)
 	rm -f $(MMDL_ANM_DIR)*.h

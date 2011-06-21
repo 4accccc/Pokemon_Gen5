@@ -107,36 +107,6 @@
 #define TEXSIZE_1024x1024 63
 #define TEXSIZE_MAX 64
 
-//ANMID アニメIDで指定するシンボルです。
-#define ANMID_NON 0 //ダミー
-#define ANMID_HERO 1 //自機基本アニメ
-#define ANMID_FLIP 2 //汎用人型　フリップ有アニメ
-#define ANMID_NONFLIP 3 //汎用人型　ノンフリップアニメ
-#define ANMID_ONECELL 4 //ワンセルアニメ　同一ファイル内継承
-#define ANMID_SWIMHERO 5 //自機波乗りアニメ
-#define ANMID_CYCLEHERO 6 //自機自転車アニメ
-#define ANMID_GETHERO 7 //自機アイテムゲットアニメ
-#define ANMID_PCHERO 8 //自機ポケセン預けアニメ
-#define ANMID_SAVEHERO 9 //自機セーブアニメ
-#define ANMID_FISHINGHERO 10 //自機釣りアニメ
-#define ANMID_CUTINHERO 11 //自機カットインアニメ
-#define ANMID_YUREHERO 12 //自機ゆらゆらアニメ
-#define ANMID_POKE_FLIP 13 //連れ歩きポケモンフリップ有アニメ
-#define ANMID_POKE_NONFLIP 14 //連れ歩きポケモンフリップ無しアニメ
-#define ANMID_FLIP_PCWOMAN 15 //ポケセン受付嬢おじぎアニメ　汎用人型　フリップ有アニメを継承
-#define ANMID_NONFLIP_RIVAL 16 //汎用人型　フリップ無しアニメ＋ライバル芝居
-#define ANMID_NONFLIP_SUPPORT 17 //汎用人型　フリップ無しアニメ＋サポート芝居
-#define ANMID_NONFLIP_BOSS_N 18 //ボスN　フリップ無しアニメ＋ボスＮ芝居
-#define ANMID_NONFLIP_SAGE1 19 //汎用人型　フリップ無しアニメ＋七賢人ゲーチス芝居
-#define ANMID_NONFLIP_NINJA 20 //汎用人型　フリップ無しアニメ＋ダークトリニティ芝居(通常アニメ2倍速)
-#define ANMID_NONFLIP_CHAMPION 21 //汎用人型　フリップ無しアニメ＋チャンピオンアデク芝居
-#define ANMID_SPIDER 22 //蜘蛛の巣アニメ
-#define ANMID_MELODYER 23 //メロディアアニメ
-#define ANMID_SHINMU_A 24 //ゼクレシキュレムアニメ　待機正面・ぐったり・飛び立ち上昇・飛行
-#define ANMID_SHINMU_B 25 //ゼクレシキュレムアニメ　待機正面・待機背面・吼える・振り向き
-#define ANMID_SHINMU_C 26 //ゼクレシキュレムアニメ　上昇
-#define ANMID_NONFLIP_SWLEADER4 27 //スワンカミツレ　フリップ無しアニメ＋芝居1パターン
-
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0
 #define SEX_FEMALE 1

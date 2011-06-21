@@ -12,6 +12,8 @@
 $KCODE = "SJIS"
 load "rbdefine"
 
+require "tool/fmmdl_anmid_hash.rb"
+
 #=======================================================================
 #  パラメタフォーマット
 #  0-3 モデル総数
@@ -483,8 +485,8 @@ def convert_line_bbd( no, line, wfile, idxfile, file_symbol, flag_selres )
   
   #アニメID 1 (10)
   word = str[RBDEF_NUM_BBD_ANMID]
-  ret = hfile_search( file_symbol, word )
-  if( ret == RET_ERROR )
+  ret = $anmid_hash[word] #hfile_search( file_symbol, word )
+  if( ret == nil )
     printf( "ERROR アニメID異常 _%s_\n", word )
     return RET_FALSE
   end
@@ -670,7 +672,7 @@ def convert_line_pokemon( no, line, wfile, idxfile, file_symbol, flag_selres )
   
   #アニメID 1 (10)
   word = str[RBDEF_NUM_POKEMON_ANMID]
-  ret = hfile_search( file_symbol, word )
+  ret = $anmid_hash[word] #hfile_search( file_symbol, word )
   if( ret == RET_ERROR )
     printf( "ERROR アニメID異常 _%s_\n", word )
     return RET_FALSE
