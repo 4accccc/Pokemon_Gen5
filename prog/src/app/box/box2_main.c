@@ -2796,14 +2796,18 @@ static BOOL PokeIconMoveBoxPartyDataMake( BOX2_SYS_WORK * syswk, u32 get_pos, u3
 					PokeIconChgDataMeke( syswk, get_pos, ppcnt+BOX2OBJ_POKEICON_TRAY_MAX );
 				// •¡”‘I‘ð
 				}else{
+					u8	stbp = 0;
 					work->exFlag = 1;
 					for( i=0; i<syswk->app->multi_h; i++ ){
 						for( j=0; j<syswk->app->multi_w; j++ ){
-							dat[i*syswk->app->multi_w+j].df_pos = BOX2OBJ_POKEICON_GET_POS + i*syswk->app->multi_w+j;
-							dat[i*syswk->app->multi_w+j].mv_pos = ppcnt+BOX2OBJ_POKEICON_TRAY_MAX + i*syswk->app->multi_w+j;
-							dat[i*syswk->app->multi_w+j].gt_pos = get_pos + i*BOX_MAX_COLUMN+j;
-							dat[i*syswk->app->multi_w+j].flg    = 1;
-							PokeIconMoveParamMake( syswk, &dat[i*syswk->app->multi_w+j] );
+							if( syswk->app->multi_pokemon_id[i*BOX_MAX_COLUMN+j] != 0 ){
+								dat[stbp].df_pos = BOX2OBJ_POKEICON_GET_POS + i*syswk->app->multi_w+j;
+								dat[stbp].mv_pos = ppcnt+BOX2OBJ_POKEICON_TRAY_MAX + stbp;
+								dat[stbp].gt_pos = get_pos + i*BOX_MAX_COLUMN+j;
+								dat[stbp].flg    = 1;
+								PokeIconMoveParamMake( syswk, &dat[stbp] );
+								stbp++;
+							}
 						}
 					}
 				}
