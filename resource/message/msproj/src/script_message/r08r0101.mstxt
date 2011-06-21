@@ -7,12 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モンスターボールに　はいっている
-[Name:PokemonNickname Idx="0" ]が[Ctrl2:LineFeed ]
-でたがっている　ようだ…！[Ctrl2:PageClear ]
+[Name:PokemonNickname Idx="0" ]が▽
+でたがっている　ようだ……！▼
 そとに　だして　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,12 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モンスターボールに　入っている
-[Name:PokemonNickname Idx="0" ]が[Ctrl2:LineFeed ]
-でたがっている　ようだ…！[Ctrl2:PageClear ]
+[Name:PokemonNickname Idx="0" ]が▽
+でたがっている　ようだ……！▼
 外に　だして　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:43:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,18 +34,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●r08r0101に入った直後、「！」表示。
-●イベントポジション（GRIDX=24/GRIDZ=40）へ移動。
-●移動後にこのメッセージを表示。
-
-０：ケルディオのニックネーム
-
-●「はい／いいえ」選択肢
-　・はい　→msg_r08r0101_narrator_03
-　・いいえ→msg_r08r0101_narrator_02</Comment>
+			<Comment>ポケモン
+・r08r0101に入った直後、「！」表示
+・pos、GRIDX=24、GRIDZ=40へ移動
+・移動後にこのメッセージを表示
+・はい/いいえの選択肢表示
+　はい　→msg_r08r0101_narrator_03
+　いいえ→msg_r08r0101_narrator_02
+・0＝ケルディオのニックネーム</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:41:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -75,10 +74,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モンスターボールの
-うごきが　とまったようだ…</Text>
+うごきが　とまったようだ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:45:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,10 +86,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モンスターボールの
-動きが　とまったようだ…</Text>
+動きが　とまったようだ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98,10 +97,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●イベント進行をキャンセルした場合のメッセージ</Comment>
+			<Comment>・イベント進行をキャンセルした場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:41:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -131,10 +130,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]が
-とびだしてきた！！[Ctrl2:PageClear ]</Text>
+とびだしてきた！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:45:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -143,10 +142,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]が
-飛び出してきた！！[Ctrl2:PageClear ]</Text>
+飛び出してきた！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -154,19 +153,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●メッセージ後、ケルディオをボールから出すアクション。
-
-０：ケルディオのニックネーム
-
-●ボールから出た後、ケルディオは
+			<Comment>・メッセージ後、ケルディオをボールから出すアクション。
+・ボールから出た後、ケルディオは
 　１：１回その場ジャンプ
 　２：画面上を向いて
 　３：１回その場ジャンプ
 　４：画面下（主人公）を向いて
-　５：１回その場ジャンプ</Comment>
+　５：１回その場ジャンプ
+・0＝ケルディオのニックネーム</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:41:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -195,15 +192,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおう…！
-その　ポケモンは　まさか…！[Ctrl2:PageClear ]
+			<Text>おおう……！
+その　ポケモンは　まさか……！▼
 まっかな　たてがみに
-みずみずしい　しっぽ[Ctrl2:LineFeed ]
-そして　りっぱな　１ほんのツノ…！[Ctrl2:PageClear ]
-ふるい　いいつたえの　とおりじゃ！[Ctrl2:PageClear ]</Text>
+みずみずしい　しっぽ▽
+そして　りっぱな　１ほんのツノ……！▼
+ふるい　いいつたえの　とおりじゃ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:46:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -211,15 +208,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おおう…！
-その　ポケモンは　まさか…！[Ctrl2:PageClear ]
+			<Text>おおう……！
+その　ポケモンは　まさか……！▼
 真っ赤な　たてがみに
-みずみずしい　しっぽ[Ctrl2:LineFeed ]
-そして　立派な　１本のツノ…！[Ctrl2:PageClear ]
-古い　言い伝えの　とおりじゃ！[Ctrl2:PageClear ]</Text>
+みずみずしい　しっぽ▽
+そして　立派な　１ほんのツノ……！▼
+古い　言い伝えの　とおりじゃ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:46:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -227,13 +224,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●老人は画面上（ケルディオ）を向いたまま、セリフ。
-●主人公は老人を見る。
-
-●この後msg_r08r0101_guide_09へ。</Comment>
+			<Comment>♂
+・老人は画面上（ケルディオ）を向いたまま表示
+・主人公は老人を見る
+・続けてmsg_r08r0101_guide_09へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:42:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -256,17 +253,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ひとが　はじめた　いくさが　もとで
-この　もりが　やけてしまったとき[Ctrl2:PageClear ]
+この　もりが　やけてしまったとき▼
 １ひきの　おさない　ポケモンが
-おやと　はぐれてしまった…[Ctrl2:PageClear ]
+おやと　はぐれてしまった……▼
 おやが　いなければ　その　ポケモンは
-いきていけないと　おもったのじゃろう[Ctrl2:PageClear ]
+いきていけないと　おもったのじゃろう▼
 コバルオン　テラキオン　ビリジオンは
-その　おさない　ポケモンの[Ctrl2:LineFeed ]
-おやがわりと　なったのじゃ[Ctrl2:PageClear ]</Text>
+その　おさない　ポケモンの▽
+おやがわりと　なったのじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:47:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -275,17 +272,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>人が　はじめた　戦が　もとで
-この森が　焼けてしまったとき[Ctrl2:LineFeed ]
-１匹の　幼い　ポケモンが[Ctrl2:LineFeed ]
-親と　はぐれてしまった…[Ctrl2:PageClear ]
+この森が　焼けてしまったとき▼
+１匹の　幼い　ポケモンが
+親と　はぐれてしまった……▼
 親が　いなければ　その　ポケモンは
-生きていけないと　思ったのじゃろう[Ctrl2:PageClear ]
+生きていけないと　思ったのじゃろう▼
 コバルオン　テラキオン　ビリジオンは
-その　幼い　ポケモンの[Ctrl2:LineFeed ]
-親代わりと　なったのじゃ[Ctrl2:PageClear ]</Text>
+その　幼い　ポケモンの▽
+親代わりと　なったのじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:47:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -293,11 +290,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●老人が（GRIDX=25/GRIDZ=38）に移動。
-●画面上を向いたまま、このセリフ。</Comment>
+			<Comment>♂
+・老人が、GRIDX=25、GRIDZ=38へ移動
+・画面上を向いたままメッセージ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:42:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -320,11 +318,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>３ひきは　このこの　おやがわりとなり
-いきるために　ひつような[Ctrl2:LineFeed ]
-ちしきや　わざを　つたえたという…[Ctrl2:PageClear ]</Text>
+いきるために　ひつような▽
+ちしきや　わざを　つたえたという……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -333,11 +331,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>３匹は　この子の　親がわりとなり
-生きるために　必要な[Ctrl2:LineFeed ]
-知識や　技を　伝えたという…[Ctrl2:PageClear ]</Text>
+生きるために　必要な▽
+知識や　技を　伝えたという……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:47:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -345,10 +343,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●老人が画面左（ケルディオ）を向いて、セリフ。</Comment>
+			<Comment>♂
+・老人が画面左（ケルディオ）を向いて、セリフ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:42:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -371,19 +370,19 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やがて　おさなかった　ポケモンは
-すくすくと　せいちょうし[Ctrl2:LineFeed ]
-３ひきをも　しのぐほどの　ちからを[Ctrl2:LineFeed ]
-みにつける　ほどに　なったのじゃ[Ctrl2:PageClear ]
-ところが…
-あるとき　その　わかい　ポケモンは[Ctrl2:LineFeed ]
-もりから　すがたを　けしたのじゃ[Ctrl2:PageClear ]
+すくすくと　せいちょうし▼
+３ひきをも　しのぐほどの　ちからを
+みにつける　ほどに　なったのじゃ▼
+ところが……▼
+あるとき　その　わかい　ポケモンは
+もりから　すがたを　けしたのじゃ▼
 りゆうは　だれにも　わからなかった
-わしが　おもうに…[Ctrl2:LineFeed ]
-わかものは　いつでも　むてっぽうで[Ctrl2:LineFeed ]
-ぼうけんに　あこがれるものじゃ…[Ctrl2:PageClear ]</Text>
+わしが　おもうに……▼
+わかものは　いつでも　むてっぽうで
+ぼうけんに　あこがれるものじゃ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:52:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -392,19 +391,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やがて　幼かった　ポケモンは
-すくすくと　成長し[Ctrl2:LineFeed ]
-３匹をも　しのぐほどの　力を[Ctrl2:LineFeed ]
-みにつけたと　いわれるほどになった[Ctrl2:PageClear ]
-ところが…
-あるとき　その　若い　ポケモンは[Ctrl2:LineFeed ]
-森から　姿を　消したのじゃ[Ctrl2:PageClear ]
+すくすくと　成長し▼
+３匹をも　しのぐほどの　力を
+みにつける　ほどに　なったのじゃ▼
+ところが……▼
+あるとき　その　若い　ポケモンは
+森から　姿を　消したのじゃ▼
 理由は　だれにも　わからなかった
-わしが　思うに…[Ctrl2:LineFeed ]
-若者は　いつでも　無鉄砲で[Ctrl2:LineFeed ]
-冒険に　あこがれるものじゃ…[Ctrl2:PageClear ]</Text>
+わしが　思うに……▼
+若者は　いつでも　無鉄砲で
+冒険に　あこがれるものじゃ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:53:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -412,18 +411,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●老人が主人公の隣（GRIDX=25/GRIDZ=40）に
-戻ってきてから、セリフ。
-
-
-●老人のセリフの後、手持ちチェック
-　・伝説３匹が揃っている
-　　　→ボールを投げて順番に伝説の３匹が出現。
-　・伝説３匹が欠けている
-　　　→msg_r08r0101_guide_07</Comment>
+			<Comment>♂
+・老人が主人公の隣（GRIDX=25/GRIDZ=40）に
+　戻ってきてから、セリフ。
+・老人のセリフの後、手持ちチェック
+　伝説３匹が揃っている
+　→ボールを投げて順番に伝説の３匹が出現。
+　伝説３匹が欠けている
+　→msg_r08r0101_guide_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:43:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -446,13 +444,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しばらくぶりの　さいかいを
-よろこんでいるように　みえるが…[Ctrl2:PageClear ]
+よろこんでいるように　みえるが……▼
 ３ひきが　ケルディオに
-なにかを　つたえようと[Ctrl2:LineFeed ]
-しておるのかのう…？[Ctrl2:PageClear ]</Text>
+なにかを　つたえようと▽
+しておるのかのう……？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -461,13 +459,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>しばらくぶりの　再会を
-喜んでいるように　みえるが…[Ctrl2:PageClear ]
+喜んでいるように　みえるが……▼
 ３匹が　ケルディオに
-なにかを　伝えようと[Ctrl2:LineFeed ]
-しておるのかのう…？[Ctrl2:PageClear ]</Text>
+なにかを　伝えようと▽
+しておるのかのう……？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:54:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -475,11 +473,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●コンテ９
+			<Comment>♂
 ・イベント進行を確認</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:48:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -502,14 +500,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>コバルオン　テラキオン　ビリジオンは
-[Name:PokemonNickname Idx="0" ]に[Ctrl2:LineFeed ]
-あたらしい　わざ　しんぴのつるぎを[Ctrl2:LineFeed ]
-おしえようとしている！[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0" ]に　しんぴのつるぎを
-おぼえさせますか？</Text>
+[Name:PokemonNickname Idx="0" ]に▼
+あたらしい　わざ
+しんぴのつるぎを　おしえようとしている！▼
+[Name:PokemonNickname Idx="0" ]に
+しんぴのつるぎを　おぼえさせますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:55:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -518,14 +516,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コバルオン　テラキオン　ビリジオンは
-[Name:PokemonNickname Idx="0" ]に[Ctrl2:LineFeed ]
-新しい　技　しんぴのつるぎを[Ctrl2:LineFeed ]
-教えようとしている！[Ctrl2:PageClear ]
-[Name:PokemonNickname Idx="0" ]に　しんぴのつるぎを
-覚えさせますか？</Text>
+[Name:PokemonNickname Idx="0" ]に▼
+新しい　技
+しんぴのつるぎを　教えようとしている！▼
+[Name:PokemonNickname Idx="0" ]に
+しんぴのつるぎを　覚えさせますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -533,17 +531,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●コンテ１０
+			<Comment>♂
 ・新技を習得させるか確認
-
-０：ケルディオのニックネーム
-
-・「はい／いいえ」選択肢
-　はい→技の空きチェック
-　いいえ→msg_r08r0101_guide_08</Comment>
+・はい/いいえの選択肢表示
+　はい　→技の空きチェック
+　いいえ→msg_r08r0101_guide_08
+・0＝ケルディオのニックネーム</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:55:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -573,10 +569,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>すでに　わざを　４つ　おぼえている！
-わざを　わすれさせますか？[Ctrl2:PageClear ]</Text>
+わざを　わすれさせますか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:56:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -585,10 +581,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すでに　技を　４つ　覚えている！
-技を　忘れさせますか？[Ctrl2:PageClear ]</Text>
+技を　忘れさせますか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -597,13 +593,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>・技に空きが無い場合
-
-・「わすれさせる／あきらめる」選択肢
+・わすれさせる/あきらめるの選択肢表示
 　わすれさせる→技リスト画面へ
 　あきらめる→msg_r08r0101_guide_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:56:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -621,7 +616,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -668,7 +663,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -715,7 +710,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -727,16 +722,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>３ひきは　やりのこしていた　ことを
-やりとげる　ことが　できたようじゃ[Ctrl2:PageClear ]
+やりとげる　ことが　できたようじゃ▼
 おぬしが　いなければ
-かれらは　この　おもいでの　もりで[Ctrl2:LineFeed ]
-さいかい　できなかったじゃろう[Ctrl2:PageClear ]
+かれらは　この　おもいでの　もりで▽
+さいかい　できなかったじゃろう▼
 おぬしの　ような　トレーナーと
-であえた　ことを[Ctrl2:LineFeed ]
-きっと　よろこんでいる　はずじゃ[Ctrl2:PageClear ]</Text>
+であえた　ことを▽
+きっと　よろこんでいる　はずじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T06:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -745,16 +740,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>３匹は　やり残していた　ことを
-やりとげる　ことが　できたようじゃ[Ctrl2:PageClear ]
+やりとげる　ことが　できたようじゃ▼
 おぬしが　いなければ
-彼らは　この　思い出の　森で[Ctrl2:LineFeed ]
-再会　できなかったじゃろう[Ctrl2:PageClear ]
+彼らは　この　思い出の　森で▽
+再会　できなかったじゃろう▼
 おぬしの　ような　トレーナーと
-出会えた　ことを[Ctrl2:LineFeed ]
-きっと　喜んでいる　はずじゃ[Ctrl2:PageClear ]</Text>
+出会えた　ことを▽
+きっと　喜んでいる　はずじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T06:02:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,18 +757,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●ケルディオが技を覚えた後
-●伝説３匹がボールに入って手持ちに戻った後、
-ケルディオが画面下（主人公）を向く
-●その後、このセリフ。
-●セリフ後、ケルディオがボールに戻る。
-
-●老人はその場に留まり続ける。
-
-→イベント終了</Comment>
+			<Comment>♂
+・ケルディオが技を覚えた後
+・伝説３匹がボールに入って手持ちに戻った後、
+　ケルディオが画面下（主人公）を向く
+・その後、このセリフ。
+・セリフ後、ケルディオがボールに戻る。
+・老人はその場に留まり続ける。
+　→イベント終了</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:51:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -795,14 +789,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じぶんの　おやがわりだった
-３ひきを　さがしているようじゃ[Ctrl2:PageClear ]
+			<Text>じぶんの　おやがわり　だった
+３ひきを　さがしている　ようじゃ▼
 コバルオン　テラキオン　ビリジオン
-かれらを　つれて　ここに　くると[Ctrl2:LineFeed ]
-なにかが　おこるかも　しれんのう…[Ctrl2:PageClear ]</Text>
+かれらを　つれて　ここに　くると▽
+なにかが　おこるかも　しれんのう……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T06:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -811,13 +805,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自分の　親代わりだった
-３匹を　探しているようじゃ[Ctrl2:PageClear ]
+３匹を　探している　ようじゃ▼
 コバルオン　テラキオン　ビリジオン
-かれらを　つれて　ここに　来ると[Ctrl2:LineFeed ]
-なにかが　起こるかも　しれんのう…[Ctrl2:PageClear ]</Text>
+かれらを　連れて　ここに　来ると▽
+なにかが　起こるかも　しれんのう……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T06:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -825,15 +819,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●伝説３匹が手持ちに揃っていない場合のセリフ
-
-●喋り終えるとケルディオが手持ちに戻る。
-●老人はその場に留まり続ける。
-
-→イベント終了</Comment>
+			<Comment>♂
+・伝説３匹が手持ちに揃っていない場合のセリフ
+・喋り終えるとケルディオが手持ちに戻る。
+・老人はその場に留まり続ける。
+　→イベント終了</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:52:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -856,13 +849,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ケルディオを　どのように
-そだてるかは　おぬし　しだいじゃ[Ctrl2:PageClear ]
+そだてるかは　おぬし　しだいじゃ▼
 いっときの　かんじょうに　ながされず
-じっくり　かんがえる　ことも[Ctrl2:LineFeed ]
-ときには　ひつようじゃな…[Ctrl2:PageClear ]</Text>
+じっくり　かんがえる　ことも▽
+ときには　ひつようじゃな……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -871,13 +864,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ケルディオを　どのように
-育てるかは　おぬし　しだいじゃ[Ctrl2:PageClear ]
+育てるかは　おぬし　しだいじゃ▼
 いっときの　感情に　流されず
-じっくり　考える　ことも[Ctrl2:LineFeed ]
-ときには　必要じゃな…[Ctrl2:PageClear ]</Text>
+じっくり　考える　ことも▽
+ときには　必要じゃな……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T06:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -885,16 +878,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●新技習得をさせない場合のセリフ
-
-●喋り終えたあと、ポケモンたちは手持ちに戻る。
-
-●老人はその場に留まり続ける。
-
-→イベント終了</Comment>
+			<Comment>♂
+・新技習得をさせない場合のセリフ
+・喋り終えたあと、ポケモンたちは手持ちに戻る
+・老人はその場に留まり続ける
+　→イベント終了</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:51:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -917,17 +908,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　イッシュちほうに　つたわる
-でんせつの　３ひきの　ポケモン[Ctrl2:LineFeed ]
-コバルオン　テラキオン　ビリジオンと[Ctrl2:PageClear ]
-この　ケルディオに　とって
-ふかい　かかわりのある　もり…[Ctrl2:PageClear ]
+でんせつの　３ひきの　ポケモン▼
+コバルオン　テラキオン　ビリジオンと
+この　ケルディオに　とって▽
+ふかい　かかわりのある　もり……▼
 おぬしも　かれらの　ものがたりを
-しっておいた　ほうが　よさそうじゃな[Ctrl2:PageClear ]
+しっておいた　ほうが　よさそうじゃな▼
 ちっと　じじいの　はなしに
-つきあってもらおうかのう[Ctrl2:PageClear ]</Text>
+つきあって　もらおうかのう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -936,17 +927,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　イッシュ地方に　伝わる
-伝説の　３匹の　ポケモン[Ctrl2:LineFeed ]
-コバルオン　テラキオン　ビリジオンと[Ctrl2:PageClear ]
-この　ケルディオに　とって
-深い　関わりのある　森…[Ctrl2:PageClear ]
+伝説の　３匹の　ポケモン▼
+コバルオン　テラキオン　ビリジオンと
+この　ケルディオに　とって▽
+深い　関わりのある　森……▼
 おぬしも　彼らの　物語を
-知っておいた方が　良さそうじゃな[Ctrl2:PageClear ]
+知っておいた方が　よさそうじゃな▼
 ちっと　じじいの　話に
-付き合ってもらおうかのう[Ctrl2:PageClear ]</Text>
+付き合って　もらおうかのう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -954,13 +945,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●老人は主人公を向いてからセリフ。
-
-●この後msg_r08r0101_guide_02へ。
-</Comment>
+			<Comment>♂
+・老人は主人公を向いてからセリフ
+・この後msg_r08r0101_guide_02へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:51:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -983,11 +973,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ケルディオに　わざを　おしえるときは
-コバルオン　テラキオン　ビリジオンの[Ctrl2:LineFeed ]
-３ひきも　つれてくるのじゃ[Ctrl2:PageClear ]</Text>
+コバルオン　テラキオン　ビリジオンの▽
+３ひきも　つれてくるのじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:57:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -996,11 +986,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ケルディオに　技を　教えるときは
-コバルオン　テラキオン　ビリジオンの[Ctrl2:LineFeed ]
-３匹も　つれてくるのじゃ[Ctrl2:PageClear ]</Text>
+コバルオン　テラキオン　ビリジオンの▽
+３匹も　連れて来るのじゃ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T06:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1008,11 +998,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●２回目以降
-●伝説３匹が手持ちにいない場合のセリフ</Comment>
+			<Comment>♂
+・２回目以降
+・伝説３匹が手持ちにいない場合のセリフ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:51:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1034,14 +1025,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆたかな　もりと　すんだ　みず…
-ポケモンたちに　とっては[Ctrl2:LineFeed ]
-らくえんの　ような　もりじゃな[Ctrl2:PageClear ]
+			<Text>ゆたかな　もりと
+すんだ　みず……▼
+ポケモンたちに　とっては
+らくえんの　ような　もりじゃな▼
 ひとに　とっても　だいじな　もりじゃ
 たいせつに　したいものじゃのう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1049,14 +1041,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>豊かな　森と　澄んだ　水…
-ポケモンたちに　とっては[Ctrl2:LineFeed ]
-楽園のような　森じゃな[Ctrl2:PageClear ]
+			<Text>豊かな　森と
+澄んだ　水……▼
+ポケモンたちに　とっては
+楽園のような　森じゃな▼
 人に　とっても　大事な　森じゃ
 大切にしたい　ものじゃのう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1064,11 +1057,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●技取得イベント終了後。
-●イベント起動条件を満たしていない場合のセリフ</Comment>
+			<Comment>♂
+・技取得イベント終了後
+・イベント起動条件を満たしていない場合のセリフ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:50:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1114,14 +1108,16 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●イベント２回目以降
-●イベント発生条件を満たして、再び専用技を覚えさせるときのセリフ
-●「はい／いいえ」選択肢
-　・はい　→主人公をポジション（GRIDX=24/GIRDZ=40）に移動
-　・いいえ　→msg_r08r0101_guide_11</Comment>
+			<Comment>♂
+・イベント２回目以降
+・イベント発生条件を満たして
+　再び専用技を覚えさせるときのセリフ
+・はい/いいえ選択肢
+　はい　→主人公をposGRIDX=24、GIRDZ=40に移動
+　いいえ　→msg_r08r0101_guide_11</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:50:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1144,10 +1140,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やりのこした　ことが　あると
-きになる　ものじゃからな[Ctrl2:PageClear ]</Text>
+きになる　ものじゃからな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1156,10 +1152,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やり残した　ことが　あると
-気になる　ものじゃからな[Ctrl2:PageClear ]</Text>
+気になる　ものじゃからな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:49:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1167,10 +1163,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●イベントを中断させていた場合のセリフ</Comment>
+			<Comment>♂
+・イベントを中断させていた場合のセリフ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:50:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1193,10 +1190,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]は　さみしそうに
-モンスターボールに　もどった…</Text>
+モンスターボールに　もどった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1205,10 +1202,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]は　さみしそうに
-モンスターボールに　もどった…</Text>
+モンスターボールに　戻った……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:49:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1216,15 +1213,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●コンテ２３
-※２回目以降のながれ
-伝説３匹が手持ちにいない場合のメッセージ。
-ボールに戻るアクション後に表示。
-
-０：ケルディオのニックネーム</Comment>
+			<Comment>・２回目以降のながれ
+　伝説３匹が手持ちにいない場合のメッセージ
+　ボールに戻るアクション後に表示
+・0＝ケルディオのニックネーム</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T05:49:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
