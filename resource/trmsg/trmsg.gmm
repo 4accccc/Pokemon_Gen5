@@ -18871,10 +18871,12 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_ELITEM_26_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">はっぱ　どうしが　ぶつかると
+いどうしていた　はっぱは　とまり▽
+ぶつけられた　はっぱが　うごきだすぜ</language>
+		<language name="JPN_KANJI" width="216">はっぱ　どうしが　ぶつかると
+いどうしていた　はっぱは　とまり▽
+ぶつけられた　はっぱが　うごきだすぜ</language>
 	</row>
 
 	<row id="TRID_ELITEM_27_TRMSG_FIGHT_START">
@@ -18934,10 +18936,12 @@ può accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_ELITEW_26_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">はっぱ　はね
+のる　ほうこうに　よって▽
+ゆきさきが　かわるから</language>
+		<language name="JPN_KANJI" width="216">はっぱ　はね
+のる　ほうこうに　よって▽
+ゆきさきが　かわるから</language>
 	</row>
 
 	<row id="TRID_ELITEW_27_TRMSG_FIGHT_START">
