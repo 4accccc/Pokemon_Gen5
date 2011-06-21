@@ -9061,6 +9061,22 @@
 		<language name="JPN" width="256">SW-LC-NO</language>
 		<language name="JPN_KANJI" width="256">SW-LC-NO</language>
 	</row>
+	<row id="msg_seq_se_sw_geema_01">
+		<language name="JPN" width="256">SW-GEEMA-01</language>
+		<language name="JPN_KANJI" width="256">SW-GEEMA-01</language>
+	</row>
+	<row id="msg_seq_se_sw_geema_02">
+		<language name="JPN" width="256">SW-GEEMA-02</language>
+		<language name="JPN_KANJI" width="256">SW-GEEMA-02</language>
+	</row>
+	<row id="msg_seq_se_sw_geema_03">
+		<language name="JPN" width="256">SW-GEEMA-03</language>
+		<language name="JPN_KANJI" width="256">SW-GEEMA-03</language>
+	</row>
+	<row id="msg_seq_se_sw_geema_04">
+		<language name="JPN" width="256">SW-GEEMA-04</language>
+		<language name="JPN_KANJI" width="256">SW-GEEMA-04</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
