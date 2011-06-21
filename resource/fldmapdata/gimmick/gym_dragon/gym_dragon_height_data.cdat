@@ -22,6 +22,11 @@ typedef struct {
 
 static const GYM_DRAGON_EX_HEIGHT_DATA sc_ex_height_data[] =
 {
-  { 0 ,0 ,1 ,1 ,FX32_CONST(0) },
+  { 14 ,30 ,3 ,5 ,FX32_CONST(112) },
+  { 15 ,29 ,1 ,1 ,FX32_CONST(112) },
+  { 14 ,22 ,3 ,5 ,FX32_CONST(192) },
+  { 15 ,21 ,1 ,1 ,FX32_CONST(192) },
+  { 14 ,29 ,3 ,5 ,FX32_CONST(272) },
+  { 15 ,28 ,1 ,1 ,FX32_CONST(272) },
 };
 #define EX_HEIGHT_DATA_NUM  (NELEMS(sc_ex_height_data))

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/16 20:54:40
+#save date:2011/06/20 22:21:25
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c08gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -520
+120 0 -552
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 32 -248
+-8 32 -248
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 112 -200
+-88 112 -200
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 112 -200
+72 112 -200
 #event number: 4
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 192 -72
+104 192 -72
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 192 -72
+-120 192 -72
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 272 -184
+-8 272 -184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -261,7 +261,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 112 -248
+-88 112 -248
 #size
 1 1
 #event number: 1
@@ -278,7 +278,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 192 -120
+-120 192 -120
 #size
 1 1
 #event number: 2
@@ -295,7 +295,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 32 -296
+-8 32 -296
 #size
 1 1
 #event number: 3
@@ -312,7 +312,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 112 -248
+72 112 -248
 #size
 1 1
 #event number: 4
@@ -329,7 +329,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 192 -120
+104 192 -120
 #size
 1 1
 #event number: 5
@@ -346,7 +346,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 32 -328
+-8 32 -328
 #size
 1 1
 #event number: 6
@@ -363,7 +363,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 112 -280
+72 112 -280
 #size
 1 1
 #event number: 7
@@ -380,7 +380,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-104 112 -280
+-88 112 -280
 #size
 1 1
 #event number: 8
@@ -397,7 +397,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 192 -152
+104 192 -152
 #size
 1 1
 #event number: 9
@@ -414,7 +414,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 192 -152
+-120 192 -152
 #size
 1 1
 #event number: 10
@@ -431,7 +431,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 32 -312
+-24 32 -312
 #size
 1 1
 #event number: 11
@@ -448,7 +448,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-248 112 -264
+56 112 -264
 #size
 1 1
 #event number: 12
@@ -465,7 +465,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 112 -264
+-104 112 -264
 #size
 1 1
 #event number: 13
@@ -482,7 +482,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 192 -136
+88 192 -136
 #size
 1 1
 #event number: 14
@@ -499,7 +499,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 192 -136
+-136 192 -136
 #size
 1 1
 #event number: 15
@@ -516,7 +516,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 32 -312
+8 32 -312
 #size
 1 1
 #event number: 16
@@ -533,7 +533,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 112 -264
+88 112 -264
 #size
 1 1
 #event number: 17
@@ -550,7 +550,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 112 -264
+-72 112 -264
 #size
 1 1
 #event number: 18
@@ -567,7 +567,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-312 192 -136
+120 192 -136
 #size
 1 1
 #event number: 19
@@ -584,7 +584,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 192 -136
+-104 192 -136
 #size
 1 1
 #event number: 20
@@ -601,7 +601,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 112 -248
+-8 112 -248
 #size
 1 1
 #event number: 21
@@ -618,7 +618,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 112 -264
+-24 112 -264
 #size
 1 1
 #event number: 22
@@ -635,7 +635,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 112 -264
+8 112 -264
 #size
 1 1
 #event number: 23
@@ -652,7 +652,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 112 -280
+-8 112 -280
 #size
 1 1
 #event number: 24
@@ -669,7 +669,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 192 -120
+-8 192 -120
 #size
 1 1
 #event number: 25
@@ -686,7 +686,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 192 -136
+-24 192 -136
 #size
 1 1
 #event number: 26
@@ -703,7 +703,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 192 -136
+8 192 -136
 #size
 1 1
 #event number: 27
@@ -720,7 +720,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 192 -152
+-8 192 -152
 #size
 1 1
 #event number: 28
@@ -737,7 +737,7 @@ LOCALWORK0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 272 -232
+-8 272 -232
 #size
 1 1
 #event number: 29
@@ -754,7 +754,7 @@ LOCALWORK2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 272 -248
+-24 272 -248
 #size
 1 1
 #event number: 30
@@ -771,7 +771,7 @@ LOCALWORK3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 272 -248
+8 272 -248
 #size
 1 1
 #event number: 31
@@ -788,7 +788,7 @@ LOCALWORK1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 272 -264
+-8 272 -264
 #size
 1 1
 #Map Event List Data End
@@ -815,7 +815,7 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -568
+72 0 -600
 #size
 3 1
 #Map Event List Data End
