@@ -2,14 +2,14 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_d07r0201_black_01"
+		Label="msg_mapscript_dummy"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『……[Name:TrainerName Idx="0" ]！▼</Text>
+			<Text>テストメッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:25:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『……[Name:TrainerName Idx="0" ]！▼</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:25:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,24 +28,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ライバル　GRIDX=4、GRIDZ=50、上向き
-　ヤーコン　GRIDX=4、GRIDZ=49、下向き
-・pos起動（GRIDX=3~5、GRIDZ=52）を踏むと
- ライバル下向きでメッセージ表示後
-　主人公GRIDX=5、GRIDZ=50まで誘導
-・続けてleader5_01</Comment>
+			<Comment>？？？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:25:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>友達♂
-チェレン</Text>
+			<Text>？？？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:25:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -56,400 +49,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d07r0201_leader5_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヤーコン『ネジやまを　しさつしていて
-おまえたちに　であうとはな▼
-ちっとは……▼
-たくましくなった　みたいだな▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヤーコン『ネジ山を　視察していて
-おまえたちに　出会うとはな▼
-ちっとは……▼
-たくましくなった　みたいだな▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてblack_02</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d07r0201_black_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>チェレン『……そうですか▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>チェレン『……そうですか▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてleader5_02</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>友達♂
-チェレン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d07r0201_leader5_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヤーコン『ところで　おまえたち……
-さいきん　プラズマだんを　みたか？▼
-あれから　ジムリーダーたちで
-あつまって　はなしあったが▼
-まるで　ちに　もぐっているのか
-あいつらの　アジトが　わからなくてな▼
-コチラとしても
-でかたを　まつしかないのだ▼
-まあ　おまえたち　には
-かんけいのない　はなし　だな▼
-こどもは　ポケモンと　たのしく
-たびを　しておれば　いいんだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヤーコン『ところで　おまえたち……
-最近　プラズマ団を　みたか？▼
-あれから　ジムリーダーたちで
-集まって　話し合ったが▼
-まるで　地に　潜っているのか
-あいつらの　アジトが　わからなくてな▼
-コチラとしても
-でかたを　待つしかないのだ▼
-まあ　おまえたち　には
-関係のない　話だな▼
-子供は　ポケモンと　楽しく
-旅を　しておれば　いいんだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてleader5_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d07r0201_leader5_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ネジやまは　いいぞ！▼
-とくに　ワシの　おきにいりは
-この　つうろを　ぬけたときの……▼
-フムウ……　ことばよりも
-じっさいに　みれば　わかるか▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ネジ山は　いいぞ！▼
-とくに　ワシの　お気に入りは
-この　通路を　ぬけたときの……▼
-フムウ……　言葉よりも
-実際に　みれば　わかるか▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・画面右を向いてメッセージ表示
-・続けて下を向いてleader5_04</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d07r0201_leader5_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>じゃあな
-ヒヨッコども！▼
-よければ　ワシの　やまで
-トレーナーしゅぎょうでも　していけ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>じゃあな
-ヒヨッコども！▼
-よければ　ワシの　山で
-トレーナー修行でも　していけ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・表示後、主人公たちを押しのけ画面下に移動
-・主人公、ライバルの向きを移動する
-　ヤーコンにあわせ下に向ける
-・画面外に消えると続けてblack_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>LEADER5
-ヤーコン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d07r0201_black_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>チェレン『また　なにか
-メンドーなことを　おしつけられるかと▽
-おもわず　みがまえたよ▼
-[Name:TrainerName Idx="0" ]
-じゃ　ぼくは　さきに　いくから▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>チェレン『また　なにか
-メンドーなことを　おしつけられるかと▽
-思わず　身構えたよ▼
-[Name:TrainerName Idx="0" ]
-じゃ　ぼくは　先に　行くから▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・下を向いたままメッセージ表示
-・表示後、ライバル画面右に移動
-　画面外に消えると主人公、操作可能
-・0＝主人公名前</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>友達♂
-チェレン</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
