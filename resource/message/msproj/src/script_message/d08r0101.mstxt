@@ -2,14 +2,14 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_d08r0101_hakaim1_01"
+		Label="msg_mapscript_dummy"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>テストメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:40:46" />
+				Time="2011-06-21T07:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:40:52" />
+				Time="2011-06-21T07:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +28,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>？？？</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:40:42" />
+				Time="2011-06-21T07:30:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text />
+			<Text>？？？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:40:54" />
+				Time="2011-06-21T07:30:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -49,7 +49,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
