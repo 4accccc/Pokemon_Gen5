@@ -211,4 +211,115 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c13gym0101_statue_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タチワキ　ポケモンジム▼
+ジムリーダー　ホミカ
+にんてい　トレーナー！▽
+[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:50:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タチワキ　ポケモンジム▼
+ジムリーダー　ホミカ
+認定　トレーナー！▽
+[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:50:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・ジムバッジ取得前
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13gym0101_statue_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タチワキ　ポケモンジム▼
+ジムリーダー　ホミカ
+にんてい　トレーナー！▽
+[Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:50:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タチワキ　ポケモンジム▼
+ジムリーダー　ホミカ
+認定　トレーナー！▽
+[Name:TrainerName Idx="0" ]　[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:50:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・ジムバッジ取得後
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T12:49:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
