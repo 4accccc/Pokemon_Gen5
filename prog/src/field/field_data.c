@@ -451,8 +451,8 @@ const SCENE_DATA resistMapTbl[] = {
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
 
-  //RSC_GRID_FOURKINGS = 15,
-	{	//四天王部屋 グリッド移動
+  //RSC_HYBRID_FOURKINGS = 15,
+	{	//四天王部屋 ハイブリッド
 		{
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       1,1,
@@ -468,7 +468,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLD_MAPPER_CROSSBLOCK_MEMSIZE,	// 1ブロックメモリサイズ
       0,  // topフレームのブロック描画数
 		},
-		&FieldMapCtrl_GridFunctions,
+		&FieldMapCtrl_HybridFunctions,
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},

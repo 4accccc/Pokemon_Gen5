@@ -732,6 +732,10 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
     { ZONE_ID_C03P13,     NARC_field_rail_setup_C03P13_bin },
     { ZONE_ID_H04,        NARC_field_rail_setup_H04_bin },
     { ZONE_ID_C09P01,     NARC_field_rail_setup_C09P01_bin },
+    { ZONE_ID_C09R0101,   NARC_field_rail_setup_C09R0101_bin },
+    { ZONE_ID_C09R0201,   NARC_field_rail_setup_C09R0201_bin },
+    { ZONE_ID_C09R0301,   NARC_field_rail_setup_C09R0301_bin },
+    { ZONE_ID_C09R0401,   NARC_field_rail_setup_C09R0401_bin },
   };
   zone_id = ControlZoneID(zone_id);
 
