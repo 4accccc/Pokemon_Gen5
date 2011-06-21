@@ -1368,6 +1368,111 @@
 	@echo convert ncg_imd adultw
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/adultw.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
+#mugenboss.imd
+./mmdl_res/mugenboss.imd: ./mmdl_nchara/mugenboss.ncg ./mmdl_nchara/mugenboss.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd mugenboss
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/mugenboss.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke29.imd
+./mmdl_res/poke29.imd: ./mmdl_nchara/poke29.ncg ./mmdl_nchara/poke29.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke29
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke29.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke30.imd
+./mmdl_res/poke30.imd: ./mmdl_nchara/poke30.ncg ./mmdl_nchara/poke30.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke30
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke30.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke31.imd
+./mmdl_res/poke31.imd: ./mmdl_nchara/poke31.ncg ./mmdl_nchara/poke31.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke31
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke31.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke32.imd
+./mmdl_res/poke32.imd: ./mmdl_nchara/poke32.ncg ./mmdl_nchara/poke32.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke32
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke32.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke33.imd
+./mmdl_res/poke33.imd: ./mmdl_nchara/poke33.ncg ./mmdl_nchara/poke33.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke33
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke33.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke34.imd
+./mmdl_res/poke34.imd: ./mmdl_nchara/poke34.ncg ./mmdl_nchara/poke34.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke34
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke34.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke35.imd
+./mmdl_res/poke35.imd: ./mmdl_nchara/poke35.ncg ./mmdl_nchara/poke35.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke35
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke35.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke36.imd
+./mmdl_res/poke36.imd: ./mmdl_nchara/poke36.ncg ./mmdl_nchara/poke36.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke36
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke36.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke37.imd
+./mmdl_res/poke37.imd: ./mmdl_nchara/poke37.ncg ./mmdl_nchara/poke37.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke37
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke37.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke38.imd
+./mmdl_res/poke38.imd: ./mmdl_nchara/poke38.ncg ./mmdl_nchara/poke38.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke38
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke38.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke39.imd
+./mmdl_res/poke39.imd: ./mmdl_nchara/poke39.ncg ./mmdl_nchara/poke39.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke39
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke39.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke40.imd
+./mmdl_res/poke40.imd: ./mmdl_nchara/poke40.ncg ./mmdl_nchara/poke40.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke40
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke40.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke41.imd
+./mmdl_res/poke41.imd: ./mmdl_nchara/poke41.ncg ./mmdl_nchara/poke41.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke41
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke41.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke42.imd
+./mmdl_res/poke42.imd: ./mmdl_nchara/poke42.ncg ./mmdl_nchara/poke42.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke42
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke42.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke43.imd
+./mmdl_res/poke43.imd: ./mmdl_nchara/poke43.ncg ./mmdl_nchara/poke43.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke43
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke43.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke44.imd
+./mmdl_res/poke44.imd: ./mmdl_nchara/poke44.ncg ./mmdl_nchara/poke44.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke44
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke44.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke45.imd
+./mmdl_res/poke45.imd: ./mmdl_nchara/poke45.ncg ./mmdl_nchara/poke45.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke45
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke45.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke46.imd
+./mmdl_res/poke46.imd: ./mmdl_nchara/poke46.ncg ./mmdl_nchara/poke46.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke46
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke46.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke47.imd
+./mmdl_res/poke47.imd: ./mmdl_nchara/poke47.ncg ./mmdl_nchara/poke47.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke47
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke47.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#poke48.imd
+./mmdl_res/poke48.imd: ./mmdl_nchara/poke48.ncg ./mmdl_nchara/poke48.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke48
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke48.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
