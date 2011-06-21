@@ -215,10 +215,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-　No000「わざマシン？？」（？？？）</Comment>
+　No382「わざマシン５５」（ねっとう）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:31:49" />
+				Time="2011-06-21T09:12:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -241,10 +241,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざマシンの　せつめい</Text>
+			<Text>ねっとうはな　つかうと　ときどき
+あいてを　やけどに　するたい▼
+あとな　じぶんが　こおっていても
+つかえる　おとくな　わざ　たい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:20:01" />
+				Time="2011-06-21T09:21:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -252,10 +255,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざマシンの　説明</Text>
+			<Text>ねっとうはな　使うと　ときどき
+相手を　やけどに　するたい▼
+あとな　自分が　こおっていても
+使える　お得な　技たい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:20:11" />
+				Time="2011-06-21T09:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -264,10 +270,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アイテム入手処理後</Comment>
+・アイテム入手処理後
+・続けてswleader8_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:16" />
+				Time="2011-06-21T09:21:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -365,10 +372,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・復帰タイミングは要検討
 ・クリアから</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:16:16" />
+				Time="2011-06-21T08:56:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -387,7 +395,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14gym0101_glasses_01">
+		Label="msg_c14gym0101_glasses_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジムリーダー　なんですけど▼
@@ -504,14 +513,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みずタイプの　ポケモンは
+			<Text>この　ポケモンジムは
+はっぱに　のって　すいすいと▽
+すいめんを　すすんでくださいっす！▼
+もうひとつ　アドバイスっす！▼
+みずタイプの　ポケモンは
 でんきタイプ　くさタイプの▽
 わざを　にがてと　しているっす！▼
 だけど　ジムリーダーですからね
 たいさく　してるっすよ　きっと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:29:56" />
+				Time="2011-06-21T08:53:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -519,14 +532,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みずタイプの　ポケモンは
+			<Text>この　ポケモンジムは
+はっぱに　乗って　すいすいと▽
+水面を　進んでくださいっす！▼
+もうひとつ　アドバイスっす！▼
+みずタイプの　ポケモンは
 でんきタイプ　くさタイプの▽
 わざを　苦手と　しているっす！▼
 だけど　ジムリーダーですからね
 対策してるっすよ　きっと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:30:32" />
+				Time="2011-06-21T08:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -573,10 +590,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シズイさん　およいじゃってますね</Text>
+			<Text>シズイさん　泳いじゃってますね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:23:49" />
+				Time="2011-06-21T08:53:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

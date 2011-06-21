@@ -2,649 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_d08r0901_boss_01w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_01b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_02w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_02b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_03w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_03b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_04w"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_boss_04b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_black_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_leader7_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_black_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:36" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d08r0901_leader7_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:34" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text />
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-05-23T02:36:40" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_d08r0901_dstone_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>バッグの　なか……
-ダークストーンが　うごめいている！？</Text>
+ダークストーンが　うごめいている！？▼
+ダークストーンを　とりだしますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:37:55" />
+				Time="2011-06-21T08:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -653,10 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バッグの　なか……
-ダークストーンが　うごめいている！？</Text>
+ダークストーンが　うごめいている！？▼
+ダークストーンを　とりだしますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:37:55" />
+				Time="2011-06-21T08:38:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -664,15 +32,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・BLACK２ver
-・posで表示
+			<Comment>システム：BLACK2ver
+・ダークストーン所有＋posイベント
+　GRIDX＝16、GRIDZ＝18で起動
 ・はい/いいえの選択肢表示
-・はい　→
-・いいえ→</Comment>
+　はい　→dstone_02
+　いいえ→dstone_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:41:35" />
+				Time="2011-06-21T08:37:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -722,6 +90,16 @@
 				User="matsumiya:W00224"
 				Time="2011-05-23T02:38:42" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム：BLACK2ver
+・はい選択時
+・まずストーン浮上デモ
+・ゼクロム復活デモ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T08:39:24" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ダークストーン</Text>
@@ -735,6 +113,51 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_dstone_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+ふしぎな　ちからで　おしもどされた……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+不思議な力で　押し戻された……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム：BLACK2ver
+・いいえ選択時
+・主人公、一歩押し戻される
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T08:37:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ダークストーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:41:03" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -764,23 +187,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・BLACKver
-・クリア後に登場
-・メッセージ表示とともに鳴き声再生
+			<Comment>ポケモン：BLACK2ver
+・話かけでメッセージ表示とともに鳴き声再生
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:44:23" />
+				Time="2011-06-21T08:37:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-ゼクロム</Text>
+			<Text>POKE8
+ポケモン・ゼクロム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:44:23" />
+				Time="2011-06-21T07:39:55" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -826,21 +247,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・WHITEver
+			<Comment>ポケモン：BLACK2ver
 ・倒した場合、フィールド復帰時に
-　このメッセージを表示</Comment>
+　このメッセージを表示
+※復帰条件未定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:44:23" />
+				Time="2011-06-21T08:37:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-ゼクロム</Text>
+			<Text>POKE8
+ポケモン・ゼクロム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:44:23" />
+				Time="2011-06-21T07:39:56" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -863,10 +284,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>バッグの　なか……
-ライトストーンが　うごめいている！？</Text>
+ライトストーンが　うごめいている！？▼
+ライトストーンを　とりだしますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:38:34" />
+				Time="2011-06-21T08:38:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -875,10 +297,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バッグの　なか……
-ライトストーンが　うごめいている！？</Text>
+ライトストーンが　うごめいている！？▼
+ライトストーンを　とりだしますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:38:34" />
+				Time="2011-06-21T08:38:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -886,15 +309,15 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・WHITE２ver
-・posで表示
+			<Comment>システム：WHITE2ver
+・ライトストーン所有＋posイベント
+　GRIDX＝16、GRIDZ＝18で起動
 ・はい/いいえの選択肢表示
-・はい　→
-・いいえ→</Comment>
+　はい　→lstone_02
+　いいえ→lstone_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:41:42" />
+				Time="2011-06-21T08:37:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -919,7 +342,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d08r0901_ｌstone_02"
+		Label="msg_d08r0901_lstone_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -951,6 +374,16 @@
 				User="matsumiya:W00224"
 				Time="2011-05-23T02:38:52" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム：WHITE2ver
+・はい選択時
+・まずストーン浮上デモ
+・レシラム復活デモ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T08:39:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>ライトストーン</Text>
@@ -964,6 +397,51 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-05-23T02:44:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_lstone_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+ふしぎな　ちからで　おしもどされた……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+不思議な力で　押し戻された……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:42:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム：WHITE2ver
+・いいえ選択時
+・主人公、一歩押し戻される
+・0＝主人公名前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T08:37:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライトストーン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:45:49" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -993,23 +471,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・WHITEver
-・クリア後に登場
-・メッセージ表示とともに鳴き声再生
+			<Comment>ポケモン：WHITE2ver
+・話かけでメッセージ表示とともに鳴き声再生
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:38:25" />
+				Time="2011-06-21T08:38:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-レシラム</Text>
+			<Text>POKE7
+ポケモン・レシラム</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T02:38:25" />
+				Time="2011-06-21T07:39:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1055,21 +531,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・BLACKver
+			<Comment>ポケモン：WHITE2ver
 ・倒した場合、フィールド復帰時に
-　このメッセージを表示</Comment>
+　このメッセージを表示
+※復帰条件未定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T08:38:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-レシラム</Text>
+			<Text>POKE7
+ポケモン・レシラム</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T07:39:48" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
