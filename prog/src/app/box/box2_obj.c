@@ -4116,17 +4116,22 @@ void BOX2OBJ_PutMultiSelectIcon( BOX2_APP_WORK * appwk, s16 x, s16 y )
 void BOX2OBJ_ChangeMultiSelectIcon( BOX2_SYS_WORK * syswk, BOOL flg )
 {
 	if( syswk->mv_cnv_mode == 2 ){
+		u32	sx;
 		u16	i, j;
 
 		BOX2OBJ_VanishMultiSelectIcon( syswk->app, flg );
 
 		flg ^= 1;
 
+		sx = BOX2MAIN_GetMultiWidth( syswk, syswk->app->multiselect_outline.start_pos );
+
 		// ポケモンアイコン
 		for( i=0; i<syswk->app->multi_h; i++ ){
 			for( j=0; j<syswk->app->multi_w; j++ ){
-				BOX2OBJ_Vanish(
-					syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*syswk->app->multi_w+j], flg );
+				if( syswk->app->multi_pokemon_id[i*sx+j] != 0 ){
+					BOX2OBJ_Vanish(
+						syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*syswk->app->multi_w+j], flg );
+				}
 			}
 		}
 		BOX2OBJ_DisplayMultiSelectOutline( syswk, flg );
