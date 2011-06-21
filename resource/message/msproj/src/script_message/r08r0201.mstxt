@@ -35,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:07:12" />
+				Time="2011-06-21T06:10:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -94,10 +94,10 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=7、GRIDZ=3、下向き
-※swanでメッセージ修正</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:07:13" />
+				Time="2011-06-21T06:10:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -150,10 +150,10 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=8、GRIDZ=3、下向き
-※swanでメッセージ修正</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:07:15" />
+				Time="2011-06-21T06:10:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
