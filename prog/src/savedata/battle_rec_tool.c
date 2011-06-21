@@ -882,6 +882,41 @@ void POKEWOOD_REC_ConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
         0,
       },
     },
+    //シナリオ2
+    {
+      //トレーナーデータ
+      {
+        //味方
+        {
+          0,
+          L"",
+          0,
+        },
+        //敵
+        {
+          TRTYPE_SCIENTISTW,
+          L"サトミ",
+          3,
+        },
+        //味方
+        {
+          0,
+          L"",
+          0,
+        },
+        //敵
+        {
+          TRTYPE_SCIENTISTW,
+          L"サトミ",
+          3,
+        },
+      },
+      //敵のポケモンデータ
+      {
+        0
+      }
+    },
+
   };
 
   const struct _POKEWOOD_REC_CONV_DATA *p_setup_data = &sc_rec_to_show_data[ bsp->pokewoodSenario ];

@@ -99,7 +99,7 @@ typedef struct {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static const POKEWOOD_MONS_DATA myData[2][3] = {
+static const POKEWOOD_MONS_DATA myData[][3] = {
    {
     {
       50, MONSNO_RANKURUSU,
@@ -125,13 +125,22 @@ static const POKEWOOD_MONS_DATA myData[2][3] = {
       { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
       PTL_SEIKAKU_YANTYA,
     },
+  },
+  {
+    {
+      20, MONSNO_TUTAAZYA,
+      { WAZANO_TURUNOMUTI, WAZANO_NULL, WAZANO_NULL, WAZANO_NULL },
+      0,  //no item
+      { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
+      PTL_SEIKAKU_YANTYA,
+    },
   }
 };
 
 static const int myDataNum[]={3,1};
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static const POKEWOOD_MONS_DATA enemyData[2][2] = {
+static const POKEWOOD_MONS_DATA enemyData[][2] = {
   {
     {
       50, MONSNO_WASIBON,
@@ -160,9 +169,18 @@ static const POKEWOOD_MONS_DATA enemyData[2][2] = {
       PTL_SEIKAKU_OTTORI,
     }
   },
+  {
+    {
+      19, MONSNO_TABUNNE,
+      { WAZANO_HIKARINOKABE, WAZANO_HINOKO, WAZANO_MIZUDEPPOU, WAZANO_NULL },
+      0,  //no item
+      { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
+      PTL_SEIKAKU_YANTYA,
+    },
+  }
 };
 
-static const int enemyDataNum[]={2,2,};
+static const int enemyDataNum[]={2,2,1,};
 
 #if 0
   ID_PARA_hp_rnd,     //HP乱数
@@ -184,6 +202,7 @@ static const int enemyDataNum[]={2,2,};
 static const int trainerData[][2]={
   { TRTYPE_SCIENTISTW, TRTYPE_SCIENTISTW,   },     // 研究員
   { TRTYPE_LEADER7,    TRTYPE_PKWD_VILLAIN, },     // ハチクマン
+  { TRTYPE_SCIENTISTW, TRTYPE_SCIENTISTW,   },     // 研究員
 };
 
 //============================================================================================

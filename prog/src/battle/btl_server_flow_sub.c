@@ -2061,6 +2061,32 @@ int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_
       OS_Printf("turncount=%d, dead=%d\n", turncount,dead);
     }
     break;
+  case 2:
+    {
+      int i,mydead=0,e_dead=0;
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 0 );
+      const BTL_POKEPARAM* bpp; 
+      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        if(BPP_IsDead(bpp)){
+          mydead++;
+        }
+      }
+      party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+        bpp = BTL_PARTY_GetMemberDataConst( party, i );
+        if(BPP_IsDead(bpp)){
+          e_dead++;
+        }
+      }
+      if(mydead){
+        lose_flag = 1;
+      }
+      if(e_dead){
+        win_flag = 1;
+      }
+    }
+    break;
   }
 
   // 規定ターンチェック

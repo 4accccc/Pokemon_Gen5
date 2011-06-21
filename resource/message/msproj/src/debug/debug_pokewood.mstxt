@@ -75,6 +75,32 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_REC_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>撮影「はじめてのポケウッド」</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-21T11:19:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-21T11:19:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>撮影「はじめてのポケウッド」</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-06-21T11:19:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-06-21T11:19:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DEBUG_STRID_POKEWOOD_SHOW_01"
 		Style="Large">
 		<LanguageCell
@@ -159,10 +185,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド：再生３</Text>
+			<Text>上映「はじめてのポケウッド」</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:17:16" />
+				User="mori:W00269"
+				Time="2011-06-21T11:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -170,10 +196,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド：再生３</Text>
+			<Text>上映「はじめてのポケウッド」</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-21T05:17:16" />
+				User="mori:W00269"
+				Time="2011-06-21T11:19:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

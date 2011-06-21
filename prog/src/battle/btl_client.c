@@ -2263,6 +2263,8 @@ enum{
   POKEWOOD_STAGE_SEQ_HERO_2_POKE,
   POKEWOOD_STAGE_SEQ_ENEMY_DISSAPPEAR,
   POKEWOOD_STAGE_SEQ_HERO_DISSAPPEAR,
+  POKEWOOD_STAGE_SEQ_NONE_2_ENEMY,
+  POKEWOOD_STAGE_SEQ_NONE_2_HERO,
   POKEWOOD_STAGE_SEQ_EFFECT_WAIT,
   POKEWOOD_STAGE_SEQ_END,
 };
@@ -2275,6 +2277,8 @@ enum{
   HERO_2_POKE,
   ENEMY_DISSAPPEAR,
   HERO_DISSAPPEAR,
+  ENEMY_NONE_2_APPEAR,
+  HERO_NONE_2_APPEAR,
   EFFECT_WAIT,
 };
 
@@ -2284,9 +2288,9 @@ static const int stage_tbl[][6]={
   { PW_STAGE_A_POKEMON_B_TRAINER, HERO_APPEAR,  ENEMY_2_POKE, -1,                -1,              -1, },///< 敵がトレーナー自分はポケモン
   { PW_STAGE_A_TRAINER_B_TRAINER, 0,            ENEMY_2_POKE, ENEMY_DISSAPPEAR,  HERO_DISSAPPEAR, ENEMY_DISSAPPEAR},///< 両方トレーナー
   { PW_STAGE_A_TRAINER_B_POKEMON, ENEMY_APPEAR, HERO_2_POKE,  -1,                -1,              -1, },///< 敵がポケモン自分がトレーナー
-  { PW_STAGE_A_TRAINER_B_NONE,    -1,           -1,           HERO_DISSAPPEAR,   -1,              0,  },///< 自分側いない敵側トレーナー
-  { PW_STAGE_A_NONE_B_TRAINER,    -1,           -1,           ENEMY_DISSAPPEAR,   0,              -1  },///< 自分側いない敵側トレーナー
-  { PW_STAGE_A_NONE_B_NONE,       -1,           -1,           0,                 -1               -1  },///< 両方いない
+  { PW_STAGE_A_TRAINER_B_NONE,    -1,           -1,           HERO_DISSAPPEAR,   -1,               0,  },///< 自分側いない敵側トレーナー
+  { PW_STAGE_A_NONE_B_TRAINER,    HERO_NONE_2_APPEAR,  -1,    ENEMY_DISSAPPEAR,   0,              -1  },///< 自分側いない敵側トレーナー
+  { PW_STAGE_A_NONE_B_NONE,       ENEMY_NONE_2_APPEAR, -1,    0,                 -1,              -1  },///< 両方いない
 };
 
 
@@ -2388,6 +2392,17 @@ static int ChangeEventStageCondition( POKEWOOD_SENARIO *senario, BTL_CLIENT *wk 
     BTLV_EFFECT_Add( BTLEFF_HERO_VANISH );
     _set_next_stage_seq( &wk->pokewoodSeqWork, POKEWOOD_STAGE_SEQ_CHECK );
     wk->pokewoodSeqWork.stage_cond = (wk->pokewoodSeqWork.stage_cond&0xf0)|PWS_A_NONE;
+    break;
+  case POKEWOOD_STAGE_SEQ_NONE_2_ENEMY:
+    TrainerGraphicIn( wk, 1, TRUE );
+    BTLV_EFFECT_Add( BTLEFF_ENEMY_VANISH_2_APPEAR );
+    _set_next_stage_seq( &wk->pokewoodSeqWork, POKEWOOD_STAGE_SEQ_CHECK );
+    wk->pokewoodSeqWork.stage_cond = (wk->pokewoodSeqWork.stage_cond&0x0f)|PWS_B_TRAINER;
+    break;
+  case POKEWOOD_STAGE_SEQ_NONE_2_HERO:
+    BTLV_EFFECT_Add( BTLEFF_HERO_VANISH_2_APPEAR );
+    _set_next_stage_seq( &wk->pokewoodSeqWork, POKEWOOD_STAGE_SEQ_CHECK );
+    wk->pokewoodSeqWork.stage_cond = (wk->pokewoodSeqWork.stage_cond&0xf0)|PWS_A_TRAINER;
     break;
   // エフェクト終了待ち
   case POKEWOOD_STAGE_SEQ_EFFECT_WAIT:
