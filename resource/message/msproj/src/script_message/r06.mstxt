@@ -776,10 +776,10 @@
 			Language="JPN">
 			<Comment>♂
 ・d06洞窟前ストッパー解除前
-※SWANではメッセージ変更予定</Comment>
+※swanではメッセージ変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:46:07" />
+				Time="2011-06-21T06:17:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
