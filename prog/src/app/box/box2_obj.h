@@ -1153,7 +1153,7 @@ extern void BOX2OBJ_DrawMultiSelectOutline( BOX2_SYS_WORK *syswk );
 extern void BOX2OBJ_DisplayMultiSelectOutline( BOX2_SYS_WORK *syswk, int flag );
 extern void BOX2OBJ_InitMultiSelectOutline( BOX2_SYS_WORK *syswk );
 extern void BOX2OBJ_SetPosMultiSelectOutline( BOX2_SYS_WORK *syswk, int x1, int y1, int x2, int y2 );
-extern void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end );
+extern void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end, BOOL getFlg );
 extern void BOX2OBJ_GetMultiSelectWidth( int start, int end, int *width, int *height );
 extern int BOX2OBJ_GetMultiSelectMinPos( int start, int end );
 extern int BOX2OBJ_GetMultiSelectMinPosParty( int start, int end );

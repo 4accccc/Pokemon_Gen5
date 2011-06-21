@@ -2484,7 +2484,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
       BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
-			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
+			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret, FALSE );
 			syswk->app->multiselect_outline.start_pos = ret;
 			syswk->app->multiselect_outline.end_pos = ret;
 			syswk->poke_get_key = 3;
@@ -2497,7 +2497,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		// タッチ継続
 		if( ret != GFL_UI_TP_HIT_NONE ){
 			BOX2OBJ_SetBox2MultiSelectOutline(
-				syswk, syswk->app->multiselect_outline.start_pos, ret );
+				syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
 			syswk->app->multiselect_outline.end_pos = ret;
 		// 離れたので範囲決定
 		}else{
@@ -2510,7 +2510,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2UI_PutHandCursor( syswk, syswk->get_pos );
 			BOX2OBJ_SetBox2MultiSelectOutline(
 				syswk, syswk->app->multiselect_outline.start_pos,
-				syswk->app->multiselect_outline.end_pos );
+				syswk->app->multiselect_outline.end_pos, FALSE );
 			BOX2OBJ_GetMultiSelectWidth(
 				syswk->app->multiselect_outline.start_pos,
 				syswk->app->multiselect_outline.end_pos,
@@ -2771,7 +2771,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
         // 範囲選択中のカーソルの移動に範囲選択枠が追従する
         if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
           BOX2OBJ_SetBox2MultiSelectOutline( syswk, 
-            syswk->app->multiselect_outline.start_pos, pos );
+            syswk->app->multiselect_outline.start_pos, pos, FALSE );
         }
       }
       if( pos >= BOX2UI_ARRANGE_PGT_TRAY2 && pos <= BOX2UI_ARRANGE_PGT_TRAY5 ){
@@ -2847,7 +2847,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
 			BOX2UI_PutHandCursor( syswk, syswk->get_pos );
 			BOX2OBJ_SetBox2MultiSelectOutline(
-				syswk, syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos );
+				syswk, syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos, FALSE );
 			BOX2OBJ_GetMultiSelectWidth(
 				syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos, &width, &height );
 			syswk->app->multi_w = width;
@@ -2877,7 +2877,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->get_pos  = ret;
 			syswk->app->multiselect_outline.start_pos = ret;  
 			syswk->app->multiselect_outline.end_pos = ret;
-			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret ); // 点線範囲設定
+			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret, FALSE ); // 点線範囲設定
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
 			syswk->poke_get_key = 1;
 			syswk->app->multi_w = 1;
@@ -3315,7 +3315,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_PokeInfoPut( syswk, ret );
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
-			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
+			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret, FALSE );
 			syswk->app->multiselect_outline.start_pos = ret;
 			syswk->app->multiselect_outline.end_pos = ret;
 			syswk->poke_get_key = 3;
@@ -3329,7 +3329,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_PokeInfoPut( syswk, ret );
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
-			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
+			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret, FALSE );
 			syswk->app->multiselect_outline.start_pos = ret;
 			syswk->app->multiselect_outline.end_pos = ret;
 			syswk->poke_get_key = 4;
@@ -3342,7 +3342,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		// タッチ継続
 		if( ret != GFL_UI_TP_HIT_NONE ){
 			BOX2OBJ_SetBox2MultiSelectOutline(
-				syswk, syswk->app->multiselect_outline.start_pos, ret );
+				syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
 			syswk->app->multiselect_outline.end_pos = ret;
 		// 離れたので範囲決定
 		}else{
@@ -3355,7 +3355,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2UI_PutHandCursor( syswk, syswk->get_pos );
 			BOX2OBJ_SetBox2MultiSelectOutline(
 				syswk, syswk->app->multiselect_outline.start_pos,
-				syswk->app->multiselect_outline.end_pos );
+				syswk->app->multiselect_outline.end_pos, FALSE );
 			BOX2OBJ_GetMultiSelectWidth(
 				syswk->app->multiselect_outline.start_pos,
 				syswk->app->multiselect_outline.end_pos,
@@ -3382,7 +3382,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			if( ret != GFL_UI_TP_HIT_NONE ){
 				ret += BOX2OBJ_POKEICON_TRAY_MAX;
 				BOX2OBJ_SetBox2MultiSelectOutline(
-					syswk, syswk->app->multiselect_outline.start_pos, ret );
+					syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
 				syswk->app->multiselect_outline.end_pos = ret;
 			}
 		// 離れたので範囲決定
@@ -3396,7 +3396,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2UI_PutHandCursor( syswk, syswk->get_pos );
 			BOX2OBJ_SetBox2MultiSelectOutline(
 				syswk, syswk->app->multiselect_outline.start_pos,
-				syswk->app->multiselect_outline.end_pos );
+				syswk->app->multiselect_outline.end_pos, FALSE );
 			BOX2OBJ_GetMultiSelectWidth(
 				syswk->app->multiselect_outline.start_pos,
 				syswk->app->multiselect_outline.end_pos,
@@ -3440,6 +3440,8 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				for( y=0; y<syswk->app->multi_h; y++ ){
 					if( ret >= (pos+y*2) && ret < (pos+y*2+syswk->app->multi_w) ){
 						PMSND_PlaySE( SE_BOX2_POKE_CATCH );
+						BOX2OBJ_SetBox2MultiSelectOutline(
+							syswk, syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos, TRUE );
 						GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
 						CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
 						BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
@@ -3613,11 +3615,11 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				// 範囲選択中のカーソルの移動に範囲選択枠が追従する
 				if( syswk->app->multiselect_outline.start_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
 					if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-						BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, pos );
+						BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, pos, FALSE );
 					}
 				}else{
 					if( pos >= BOX2OBJ_POKEICON_TRAY_MAX && pos < BOX2OBJ_POKEICON_PUT_MAX ){
-						BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, pos );
+						BOX2OBJ_SetBox2MultiSelectOutline( syswk, syswk->app->multiselect_outline.start_pos, pos, FALSE );
 					}
 				}
 			}
@@ -3641,7 +3643,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2UI_PutHandCursor( syswk, syswk->get_pos );
 				BOX2OBJ_SetBox2MultiSelectOutline(
 					syswk, syswk->app->multiselect_outline.start_pos,
-					syswk->app->multiselect_outline.end_pos );
+					syswk->app->multiselect_outline.end_pos, FALSE );
 	      BOX2OBJ_GetMultiSelectWidth(
 					syswk->app->multiselect_outline.start_pos,
 					syswk->app->multiselect_outline.end_pos, &width, &height );
@@ -3676,7 +3678,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->get_pos = ret;
 			syswk->app->multiselect_outline.start_pos = ret;
 			syswk->app->multiselect_outline.end_pos = ret;
-			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
+			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );
 			syswk->poke_get_key = 1;
 			syswk->app->multi_w = 1;

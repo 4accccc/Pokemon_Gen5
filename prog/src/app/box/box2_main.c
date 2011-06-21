@@ -5053,6 +5053,9 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
 			// 複数選択
 			if( syswk->mv_cnv_mode == 2 ){
+				// 範囲選択のラインを消去
+				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
+
 	      // トレイアイコンのフレームが表示中
 	      if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
 	        put_pos = BoxMovePutAreaCheck( syswk, syswk->app->tpx, syswk->app->tpy );
@@ -6046,6 +6049,10 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
   case 3:   // 手カーソルを上へ
     if( vf->cnt == HANDCURSOR_MOVE_CNT ){
 			BOX2OBJ_MovePokeIconHand( syswk );
+			if( syswk->mv_cnv_mode == 2 ){
+				BOX2OBJ_SetBox2MultiSelectOutline(
+					syswk, syswk->app->multiselect_outline.start_pos, syswk->app->multiselect_outline.end_pos, TRUE );
+			}
       vf->cnt = 0;
       vf->seq = 0;
       return 0;

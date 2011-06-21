@@ -3900,6 +3900,21 @@ static void _get_index2posParty( int pos, int *array )
 	array[3] = array[1]+MULTISELECT_OUTLINE_1POKE_H;
 }
 
+static void _get_index2posPartyGet( int pos, int *array )
+{
+	int x,y;
+
+	pos -= BOX2OBJ_POKEICON_TRAY_MAX;
+
+	x = pos % 2;
+	y = pos / 2;
+	array[0] = MULTISELECT_OUTLINE_SX_PT + MULTISELECT_OUTLINE_SW*x;
+	array[1] = MULTISELECT_OUTLINE_SY_PT + MULTISELECT_OUTLINE_SH*y;
+	array[2] = array[0]+MULTISELECT_OUTLINE_1POKE_W;
+	array[3] = array[1]+MULTISELECT_OUTLINE_1POKE_H;
+}
+
+
 //=============================================================================================
 /**
  * @brief カーソル位置から選択範囲座標を設定する
@@ -3907,9 +3922,10 @@ static void _get_index2posParty( int pos, int *array )
  * @param   syswk   
  * @param   start   範囲指定の始点
  * @param   end     範囲指定の終点
+ * @param		getFlg	取得時の特殊操作
  */
 //=============================================================================================
-void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end )
+void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end, BOOL getFlg )
 {
   int x, y;
   int pos1[4], pos2[4];
@@ -3922,8 +3938,13 @@ void BOX2OBJ_SetBox2MultiSelectOutline( BOX2_SYS_WORK *syswk, int start, int end
 		_get_index2pos( start, pos1 );
 		_get_index2pos( end,   pos2 );
 	}else{
-		_get_index2posParty( start, pos1 );
-		_get_index2posParty( end,   pos2 );
+		if( getFlg == TRUE ){
+			_get_index2posPartyGet( start, pos1 );
+			_get_index2posPartyGet( end,   pos2 );
+		}else{
+			_get_index2posParty( start, pos1 );
+			_get_index2posParty( end,   pos2 );
+		}
 	}
 //  OS_Printf("pos1[0]=%d, pos1[1]=%d, pos1[2]=%d, pos1[3]=%d\n", pos1[0],pos1[1],pos1[2],pos1[3]);
 //  OS_Printf("pos2[0]=%d, pos2[1]=%d, pos2[2]=%d, pos2[3]=%d\n", pos2[0],pos2[1],pos2[2],pos2[3]);
