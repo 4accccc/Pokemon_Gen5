@@ -6133,6 +6133,8 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
           PokeIconMoveBoxPartyDataMake(syswk,syswk->get_pos,syswk->app->poke_put_key) == FALSE ){
         BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
         BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
         PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
         vf->seq = 5;
         break;
@@ -6148,6 +6150,8 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
         syswk->tray = syswk->get_tray;
         BOX2OBJ_PokeIconBufLoad( syswk, syswk->tray );
         BOX2MAIN_WallPaperSet( syswk, BOX2MAIN_GetWallPaperNumber(syswk,syswk->tray), dir );
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
         if( dir == BOX2MAIN_TRAY_SCROLL_L ){
           vf->seq = 2;
           break;
@@ -6157,6 +6161,11 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
         }
       }
     }
+		if( syswk->app->poke_put_key == BOX2MAIN_GETPOS_NONE ){
+			BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+			BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
+		}
+
   case 1:
     BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_OPEN );
     PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, syswk->app->poke_put_key );
@@ -7947,7 +7956,6 @@ static void ChangeMultiSelectIconTouch( BOX2_SYS_WORK * syswk )
 }
 void BOX2MAIN_ChangeMultiSelectIconKey( BOX2_SYS_WORK * syswk, u32 pos )
 {
-/*
 	if( syswk->mv_cnv_mode == 2 && syswk->poke_get_key == 2 ){
 		if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == TRUE ){
 			if( pos < BOX2OBJ_POKEICON_PUT_MAX ){
@@ -7963,5 +7971,4 @@ void BOX2MAIN_ChangeMultiSelectIconKey( BOX2_SYS_WORK * syswk, u32 pos )
 			}
 		}
 	}
-*/
 }

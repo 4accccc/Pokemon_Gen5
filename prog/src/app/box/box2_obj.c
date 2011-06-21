@@ -1998,7 +1998,7 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
         BOX2OBJ_SetPos( syswk->app, id, x+yoko*24, y+tate*24, CLSYS_DEFREND_MAIN );
       }
     }
-		BOX2OBJ_PutMultiSelectIcon( syswk->app, x, y+12 );
+		BOX2OBJ_PutMultiSelectIcon( syswk->app, x, y+9 );
   }
 
 

@@ -3180,6 +3180,9 @@ static int MainSeq_ArrangeMultiPokeGetPartyChange( BOX2_SYS_WORK * syswk )
     }
     BOX2BGWFRM_BoxListButtonOn( syswk->app );
     syswk->app->old_cur_pos = BOX2UI_ARRANGE_PTGT_PARTY_POKE;
+		if( syswk->poke_get_key == 2 ){
+			BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+		}
     syswk->app->sub_seq = 0;
     return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
   }
