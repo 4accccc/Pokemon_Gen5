@@ -194,7 +194,11 @@ EVENT_START   ev_pos_r20_swbell_01
   _BALLOONWIN_OBJMSG_POS( msg_r20_white_12, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //【仮】芝居・SE
+  //【仮】芝居
+  
+  //ポケガイダンス開放SE再生
+  _SE_PLAY( SEQ_SE_SW_ZKN_KAIHOU  )
+  _SE_WAIT()
   
   //メッセージ：じゃじゃーん
   _BALLOONWIN_OBJMSG_POS( msg_r20_white_13, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
