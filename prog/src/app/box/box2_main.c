@@ -6045,6 +6045,7 @@ int BOX2MAIN_VFuncPokeMoveGetKey( BOX2_SYS_WORK * syswk )
     vf->seq++;
   case 3:   // èƒJ[ƒ\ƒ‹‚ğã‚Ö
     if( vf->cnt == HANDCURSOR_MOVE_CNT ){
+			BOX2OBJ_MovePokeIconHand( syswk );
       vf->cnt = 0;
       vf->seq = 0;
       return 0;
