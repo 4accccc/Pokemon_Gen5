@@ -2061,15 +2061,15 @@
 #define SYS_FLAG_PCNAME                   2411 /* 0x096b 「だれかのパソコン」→「○○○のパソコン」の表示切替フラグ */
 #define SYS_FLAG_ZENKOKU_GET              2412 /* 0x096c 全国図鑑入手フラグ */
 #define SYS_FLAG_WEATHER_R07              2413 /* 0x096d 移動ポケモン用天候フラグ：イベント中R07の天気が大荒れになる */
-#define SYS_FLAG_ELBOARD_C01GYMWIN        2414 /* 0x096e 電光掲示板用フラグ：臨時ニュースC01ジムクリア */
-#define SYS_FLAG_ELBOARD_C02GYMWIN        2415 /* 0x096f 電光掲示板用フラグ：臨時ニュースC02ジムクリア */
+#define SYS_FLAG_ELBOARD_C12GYMWIN        2414 /* 0x096e 電光掲示板用フラグ：臨時ニュースC12ジムクリア */
+#define SYS_FLAG_ELBOARD_C13GYMWIN        2415 /* 0x096f 電光掲示板用フラグ：臨時ニュースC13ジムクリア */
 #define SYS_FLAG_ELBOARD_C03GYMWIN        2416 /* 0x0970 電光掲示板用フラグ：臨時ニュースC03ジムクリア */
 #define SYS_FLAG_ELBOARD_C04GYMWIN        2417 /* 0x0971 電光掲示板用フラグ：臨時ニュースC04ジムクリア */
 #define SYS_FLAG_ELBOARD_C05GYMWIN        2418 /* 0x0972 電光掲示板用フラグ：臨時ニュースC05ジムクリア */
 #define SYS_FLAG_ELBOARD_C06GYMWIN        2419 /* 0x0973 電光掲示板用フラグ：臨時ニュースC06ジムクリア */
-#define SYS_FLAG_ELBOARD_C07GYMWIN        2420 /* 0x0974 電光掲示板用フラグ：臨時ニュースC07ジムクリア */
-#define SYS_FLAG_ELBOARD_C08WGYMWIN       2421 /* 0x0975 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verホワイト） */
-#define SYS_FLAG_ELBOARD_C08BGYMWIN       2422 /* 0x0976 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verブラック） */
+#define SYS_FLAG_ELBOARD_C08GYMWIN        2420 /* 0x0974 電光掲示板用フラグ：臨時ニュースC08ジムクリア */
+#define SYS_FLAG_ELBOARD_C14GYMWIN        2421 /* 0x0975 電光掲示板用フラグ：臨時ニュースC14ジムクリア */
+		/* not used  2422(0x0976) */
 #define SYS_FLAG_ELBOARD_CHAMPWIN         2423 /* 0x0977 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
 #define SYS_FLAG_CHAMPION_WIN             2424 /* 0x0978 殿堂入りフラグ（チャンピオンに勝利） */
 #define SYS_FLAG_PALACE_MISSION_START     2425 /* 0x0979 ハイリンク：ミッションを初めて開始したフラグ */
