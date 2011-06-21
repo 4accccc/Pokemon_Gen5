@@ -2480,6 +2480,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   if( syswk->poke_get_key == 0 ){
     ret = BOX2UI_HitCheckTrgTrayPoke();
     if( ret != GFL_UI_TP_HIT_NONE ){
+			BOX2MAIN_PokeInfoPut( syswk, ret );
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
       BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
@@ -2539,6 +2540,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 //					BOX2MAIN_PokeInfoPut( syswk, ret );
 //					CURSORMOVE_PosSet( syswk->app->cmwk, ret );
 					CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+					BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 					return MultiBoxPartyPokeGet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 				}
 			}
@@ -3310,6 +3312,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		// トレイ
     ret = BOX2UI_HitCheckTrgTrayPoke();
     if( ret != GFL_UI_TP_HIT_NONE ){
+			BOX2MAIN_PokeInfoPut( syswk, ret );
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
 			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
@@ -3323,6 +3326,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		ret = BOX2UI_HitCheckTrgPartyPokeRight();
     if( ret != GFL_UI_TP_HIT_NONE ){
 			ret += BOX2OBJ_POKEICON_TRAY_MAX;
+			BOX2MAIN_PokeInfoPut( syswk, ret );
       CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
 			BOX2OBJ_DisplayMultiSelectOutline( syswk, TRUE );     // 点線表示開始
 			BOX2OBJ_SetBox2MultiSelectOutline( syswk, ret, ret );
@@ -3422,9 +3426,8 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 					if( ret >= (syswk->get_pos+y*BOX_MAX_COLUMN) && ret < (syswk->get_pos+y*BOX_MAX_COLUMN+syswk->app->multi_w) ){
 						PMSND_PlaySE( SE_BOX2_POKE_CATCH );
 						GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
-//						BOX2MAIN_PokeInfoPut( syswk, ret );
-//						CURSORMOVE_PosSet( syswk->app->cmwk, ret );
 						CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+						BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 						return MultiBoxPartyPokeGet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
 					}
 				}
@@ -3438,8 +3441,8 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 					if( ret >= (pos+y*2) && ret < (pos+y*2+syswk->app->multi_w) ){
 						PMSND_PlaySE( SE_BOX2_POKE_CATCH );
 						GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
-//						BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 						CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+						BOX2MAIN_PokeInfoPut( syswk, syswk->get_pos );
 						return MultiBoxPartyPokeGet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
 					}
 				}
