@@ -1875,3 +1875,44 @@ void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk, u32 mode )
 		SysMesPut( syswk, msg_boxmes_07_02, BOX2BMPWIN_ID_MSG4 );
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックス移動処理の格納数表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		tray		トレイ番号
+ * @param		idx			OAMフォントのインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BOX2BMP_WriteMultiSelectNum( BOX2_SYS_WORK * syswk )
+{
+	STRBUF * str;
+	u16	num, sx;
+	u16	i, j;
+
+	sx  = BOX2MAIN_GetMultiWidth( syswk, syswk->get_pos );
+	num = 0;
+	for( i=0; i<syswk->app->multi_h; i++ ){
+		for( j=0; j<syswk->app->multi_w; j++ ){
+			if( syswk->app->multi_pokemon_id[i*sx+j] != 0 ){
+				num++;
+			}
+		}
+	}
+
+	str = GFL_MSG_CreateString( syswk->app->mman, mes_boxmenu_02_20 );
+
+	WORDSET_RegisterNumber( syswk->app->wset, 0, num, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( syswk->app->wset, syswk->app->exp, str );
+
+	GFL_BMP_Clear( syswk->app->fobj[BOX2MAIN_FNTOAM_MULTI_NUM].bmp, 0 );
+	PRINTSYS_PrintColor(
+		syswk->app->fobj[BOX2MAIN_FNTOAM_MULTI_NUM].bmp, 0, 0, syswk->app->exp, syswk->app->nfnt, FCOL_FNTOAM );
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( syswk->app->fobj[BOX2MAIN_FNTOAM_MULTI_NUM].oam );
+}

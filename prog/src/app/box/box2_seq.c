@@ -2523,6 +2523,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
 				BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
 			// いない（範囲選択不成立）
 			}else{
@@ -2857,6 +2858,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
 				BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
 				return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
 			}else{
@@ -3374,6 +3376,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
 				BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
 			// いない（範囲選択不成立）
 			}else{
@@ -3416,6 +3419,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
 				BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
 				BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+				BOX2BMP_WriteMultiSelectNum( syswk );
 				syswk->poke_get_key = 2;
 			// いない（範囲選択不成立）
 			}else{
@@ -3660,6 +3664,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 				if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) != 0 ){
 					BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, width, height );
 					BOX2OBJ_PokeIconPriChgMulti( syswk->app, syswk->get_pos, width, height, BOX2OBJ_POKEICON_PRI_CHG_GET );
+					BOX2BMP_WriteMultiSelectNum( syswk );
 					syswk->poke_get_key = 2;
 					return MultiPokeMoveGetKey( syswk, syswk->get_pos, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
 				}else{

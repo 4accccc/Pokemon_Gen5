@@ -520,3 +520,16 @@ extern void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk, u32 mode );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボックス移動処理の格納数表示
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		tray		トレイ番号
+ * @param		idx			OAMフォントのインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BMP_WriteMultiSelectNum( BOX2_SYS_WORK * syswk );
