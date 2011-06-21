@@ -181,7 +181,9 @@ enum {
   BOX2OBJ_ID_RARE,      // レアマーク（上）
   BOX2OBJ_ID_POKERUS,   // ポケルスマーク（上）
   BOX2OBJ_ID_POKERUS_ICON,  // ポケルスアイコン（上）
-  BOX2OBJ_ID_SEARCH, // 絞込みボタン
+
+	BOX2OBJ_ID_SEARCH,		// 絞込みボタン
+	BOX2OBJ_ID_EZ_MULTI,	// 複数選択簡易表示
 
   BOX2OBJ_ID_TYPEICON,  // 属性アイコン（上）
 
@@ -1758,3 +1760,5 @@ extern BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int
 extern  int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app );
 
 extern u32 BOX2MAIN_GetMultiWidth( BOX2_SYS_WORK * syswk, u32 pos );
+
+extern void BOX2MAIN_ChangeMultiSelectIconKey( BOX2_SYS_WORK * syswk, u32 pos );

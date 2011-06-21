@@ -702,3 +702,15 @@ extern BOOL BOX2UI_HitCheckPartyFrameRight(void);
 extern u32 BOX2UI_HitCheckModeChange(void);
 
 extern u32 BOX2UI_HitCheckContTrayPoke(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   タッチチェック：トレイ
+ *
+ * @param   none
+ *
+ * @retval  "TRUE = タッチあり"
+ * @retval  "FALSE = タッチなし"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL BOX2UI_HitCheckTray(void);

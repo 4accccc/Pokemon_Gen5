@@ -912,6 +912,13 @@ static const GFL_UI_TP_HITTBL PartyRightHitTbl[] =
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
+// トレイ座標データ
+static const GFL_UI_TP_HITTBL TrayHitTbl[] =
+{
+	{ 40, 160, 0, 167 },
+	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1495,12 +1502,15 @@ void BOX2UI_SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
   status = BOX2OBJ_TB_ICON_ON;
   search = BOX2OBJ_TB_ICON_ON;
 
-  if( syswk->poke_get_key == 1 ){
+  if( syswk->poke_get_key != 0 ){
     ret = BOX2OBJ_TB_ICON_PASSIVE;
     if( syswk->dat->callMode == BOX_MODE_ITEM ){
       status = BOX2OBJ_TB_ICON_OFF;
       search = BOX2OBJ_TB_ICON_OFF;
-    }
+		}else if( syswk->mv_cnv_mode == 2 ){
+      status = BOX2OBJ_TB_ICON_PASSIVE;
+      search = BOX2OBJ_TB_ICON_PASSIVE;
+		}
   }else{
     if( syswk->dat->callMode == BOX_MODE_ITEM ){
       status = BOX2OBJ_TB_ICON_OFF;
@@ -1572,6 +1582,8 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
   }else{
     CursorObjMove( syswk, now_pos );
   }
+
+	BOX2MAIN_ChangeMultiSelectIconKey( syswk, now_pos );
 
   BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
   syswk->app->old_cur_pos = now_pos;
@@ -1801,6 +1813,8 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
   }else{
     CursorObjMove( syswk, now_pos );
   }
+
+	BOX2MAIN_ChangeMultiSelectIconKey( syswk, now_pos );
 
   BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
 
@@ -2866,4 +2880,22 @@ BOOL BOX2UI_HitCheckPartyFrameRight(void)
 u32 BOX2UI_HitCheckModeChange(void)
 {
   return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_PARTY], 1 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   タッチチェック：トレイ
+ *
+ * @param   none
+ *
+ * @retval  "TRUE = タッチあり"
+ * @retval  "FALSE = タッチなし"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL BOX2UI_HitCheckTray(void)
+{
+  if( GFL_UI_TP_HitCont( TrayHitTbl ) != GFL_UI_TP_HIT_NONE ){
+    return TRUE;
+  }
+  return FALSE;
 }

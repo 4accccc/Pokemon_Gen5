@@ -69,8 +69,8 @@ enum {
 #define BOX2OBJ_FNTOAM_BOXNAME_SY			( 2 )		// OAMフォント：ボックス名Ｙサイズ
 #define BOX2OBJ_FNTOAM_BOXNUM_SX			( 2 )		// OAMフォント：格納数Ｘサイズ
 #define BOX2OBJ_FNTOAM_BOXNUM_SY			( 1 )		// OAMフォント：格納数Ｙサイズ
-#define BOX2OBJ_FNTOAM_MULTI_NUM_SX		( 4 )		// OAMフォント：複数選択数
-#define BOX2OBJ_FNTOAM_MULTI_NUM_SY		( 4 )		// OAMフォント：複数選択数
+#define BOX2OBJ_FNTOAM_MULTI_NUM_SX		( 2 )		// OAMフォント：複数選択数
+#define BOX2OBJ_FNTOAM_MULTI_NUM_SY		( 2 )		// OAMフォント：複数選択数
 
 // タッチーバーに表示されているボタンの状態
 enum {
@@ -1161,3 +1161,7 @@ extern int BOX2OBJ_GetMultiSelectMinPosParty( int start, int end );
 
 // 取得したポケモンアイコンの表示優先を変更
 extern void BOX2OBJ_PokeIconPriChgMulti( BOX2_APP_WORK * appwk, u32 pos, int w, int h, u32 flg );
+
+extern void BOX2OBJ_VanishMultiSelectIcon( BOX2_APP_WORK * appwk, BOOL flg );
+extern void BOX2OBJ_PutMultiSelectIcon( BOX2_APP_WORK * appwk, s16 x, s16 y );
+extern void BOX2OBJ_ChangeMultiSelectIcon( BOX2_SYS_WORK * syswk, BOOL flg );

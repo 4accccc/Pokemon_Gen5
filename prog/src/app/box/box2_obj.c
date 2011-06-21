@@ -346,8 +346,11 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
     BOX2MAIN_CHRRES_SEARCH_BUTTON, BOX2MAIN_PALRES_TOUCH_BAR, BOX2MAIN_CELRES_SEARCH_BUTTON,
     0, CLSYS_DRAW_MAIN,
   },
-
-
+	{ // 複数選択簡易表示
+		{ 0, 0, BOX2OBJ_ANM_MULTI_TRAY, 1, 0 },
+		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
+		0, CLSYS_DRAW_MAIN,
+	},
 };
 
 // ポケモンアイコン
@@ -552,7 +555,7 @@ static void ClactAdd( BOX2_SYS_WORK * syswk )
 {
   syswk->app->clunit = GFL_CLACT_UNIT_Create( BOX2OBJ_ID_MAX+FNTOAM_CHR_MAX, 0, HEAPID_BOX_APP );
 
-  OS_Printf("box clact init num = %d\n", BOX2OBJ_ID_MAX+FNTOAM_CHR_MAX);
+//  OS_Printf("box clact init num = %d\n", BOX2OBJ_ID_MAX+FNTOAM_CHR_MAX);
 
   TrayObjAdd( syswk->app );
   PokeIconObjAdd( syswk->app );
@@ -1019,7 +1022,7 @@ static void PokeIconObjAdd( BOX2_APP_WORK * appwk )
     prm.dat.pos_y += ( i / BOX2OBJ_POKEICON_H_MAX * BOX2OBJ_TRAYPOKE_SY );
     prm.dat.softpri = POKEICON_OBJ_PRI(i);
     prm.chrRes = BOX2MAIN_CHRRES_POKEICON + i;
-    OS_Printf("%d:chrres=%d\n",i,BOX2MAIN_CHRRES_POKEICON + i);
+//    OS_Printf("%d:chrres=%d\n",i,BOX2MAIN_CHRRES_POKEICON + i);
     appwk->clwk[BOX2OBJ_ID_POKEICON+i] = ClactWorkCreate( appwk, &prm );
     appwk->pokeicon_id[i] = BOX2OBJ_ID_POKEICON+i;  // OBJIDを保存
   }
@@ -1995,6 +1998,7 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
         BOX2OBJ_SetPos( syswk->app, id, x+yoko*24, y+tate*24, CLSYS_DEFREND_MAIN );
       }
     }
+		BOX2OBJ_PutMultiSelectIcon( syswk->app, x, y+12 );
   }
 
 
@@ -2574,17 +2578,19 @@ static void BoxObjAdd( BOX2_SYS_WORK * syswk )
   appwk->clwk[BOX2OBJ_ID_POKERUS] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_POKERUS] );
   appwk->clwk[BOX2OBJ_ID_POKERUS_ICON] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_POKERUS_ICON] );
   appwk->clwk[BOX2OBJ_ID_SEARCH] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_SEARCH] );
+  appwk->clwk[BOX2OBJ_ID_EZ_MULTI] = ClactWorkCreate( appwk, &ClactParamTbl[BOX2OBJ_ID_EZ_MULTI] );
 
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_HAND_SHADOW, FALSE );
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_ITEMICON, FALSE );
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_RARE, FALSE );
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS, FALSE );
   BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_POKERUS_ICON, FALSE );
+	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_EZ_MULTI, FALSE );
 
   // 範囲選択アウトラインOBJ
   for(i=0;i<BOX2OBJ_ID_SELECTLINE_MAX;i++){
     appwk->clwk[BOX2OBJ_ID_SELECTLINE+i] = ClactWorkCreate( appwk, &ClaSelectOutlineParam );
-    
+		BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_SELECTLINE+i, FALSE );
   }
 
   BOX2OBJ_PutConvButton( syswk, BOX2OBJ_ID_CONV_BUTTON, TRUE );
@@ -3567,6 +3573,7 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 	finit.bmp = fobj->bmp;
 	finit.x = BOX2OBJ_MULTI_NUM_PX;
 	finit.y = BOX2OBJ_MULTI_NUM_PY;
+  finit.soft_pri = 0;     // ソフトプライオリティ
 	finit.bg_pri = 0;       // BGプライオリティ
 	fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
 }
@@ -4093,4 +4100,35 @@ static BOOL CheckGetPokeIcon( BOX2_SYS_WORK * syswk, u32 pos )
 		}
 	}
 	return FALSE;
+}
+
+
+// 複数選択OBJ表示
+void BOX2OBJ_VanishMultiSelectIcon( BOX2_APP_WORK * appwk, BOOL flg )
+{
+	BOX2OBJ_Vanish( appwk, BOX2OBJ_ID_EZ_MULTI, flg );
+	BOX2OBJ_FontOamVanish( appwk, BOX2MAIN_FNTOAM_MULTI_NUM, flg );
+}
+void BOX2OBJ_PutMultiSelectIcon( BOX2_APP_WORK * appwk, s16 x, s16 y )
+{
+	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_EZ_MULTI, x, y, CLSYS_DEFREND_MAIN );
+}
+void BOX2OBJ_ChangeMultiSelectIcon( BOX2_SYS_WORK * syswk, BOOL flg )
+{
+	if( syswk->mv_cnv_mode == 2 ){
+		u16	i, j;
+
+		BOX2OBJ_VanishMultiSelectIcon( syswk->app, flg );
+
+		flg ^= 1;
+
+		// ポケモンアイコン
+		for( i=0; i<syswk->app->multi_h; i++ ){
+			for( j=0; j<syswk->app->multi_w; j++ ){
+				BOX2OBJ_Vanish(
+					syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS+i*syswk->app->multi_w+j], flg );
+			}
+		}
+		BOX2OBJ_DisplayMultiSelectOutline( syswk, flg );
+	}
 }

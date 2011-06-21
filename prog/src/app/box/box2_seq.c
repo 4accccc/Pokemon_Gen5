@@ -2489,6 +2489,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->app->multiselect_outline.end_pos = ret;
 			syswk->poke_get_key = 3;
 			syswk->get_tray = syswk->tray;
+			BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
 			return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
     }
 	// 範囲選択中
@@ -2882,6 +2883,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->poke_get_key = 1;
 			syswk->app->multi_w = 1;
 			syswk->app->multi_h = 1;
+			BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
     }
     break;
   }
@@ -3320,6 +3322,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->app->multiselect_outline.end_pos = ret;
 			syswk->poke_get_key = 3;
 			syswk->get_tray = syswk->tray;
+			BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
 			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
 		}
 		// 手持ち
@@ -3334,6 +3337,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->app->multiselect_outline.end_pos = ret;
 			syswk->poke_get_key = 4;
 			syswk->get_tray = BOX2MAIN_GETPOS_NONE;
+			BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
 			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
 		}
 	// 範囲選択中（トレイ）
@@ -3683,8 +3687,8 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 			syswk->poke_get_key = 1;
 			syswk->app->multi_w = 1;
 			syswk->app->multi_h = 1;
+			BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
     }
-//    OS_Printf( "tray=%d, pos=%d\n", syswk->get_tray, syswk->get_pos );
     break;
   }
 
@@ -10300,7 +10304,7 @@ static int MultiPokeMoveGetKey( BOX2_SYS_WORK * syswk, u32 pos, int seq )
   // アウトラインカーソル追加
   //BOX2OBJ_PokeCursorAdd2( syswk, BOX2OBJ_POKEICON_GET_POS ); 
   // タッチバーの戻るボタンの色を薄く（無効化）
-  BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
+//  BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
 
   // 移動用処理登録
   return VFuncSet( syswk, BOX2MAIN_VFuncPokeMoveGetKey, seq );
@@ -10404,8 +10408,8 @@ static int MultiPokeMovePutKey( BOX2_SYS_WORK * syswk, u32 pos, int next )
     }
   }
 
-  // 範囲選択のラインを消去
-  BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
+	// 範囲選択のラインを消去
+	BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
 
   syswk->app->poke_put_key = pos;
   syswk->next_seq = next;
@@ -11138,6 +11142,7 @@ static void MultiSelectCancel( BOX2_SYS_WORK * syswk )
 	BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );     // 点線非表示
   syswk->get_pos = BOX2MAIN_GETPOS_NONE;
 	syswk->poke_get_key = 0;
+	BOX2UI_SetTouchBarIconPokeGet( syswk, CURSORMOVE_PosGet(syswk->app->cmwk) );
 }
 
 // 始点と終点をいれかえる

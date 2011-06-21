@@ -219,6 +219,8 @@ static void MoveGetItemIcon( BOX2_APP_WORK * appwk, u32 x, u32 y );
 
 static BOOL PokePutMailCheck( BOX2_SYS_WORK * syswk, u32 pos );
 
+static void ChangeMultiSelectIconTouch( BOX2_SYS_WORK * syswk );
+
 
 //============================================================================================
 //  グローバル
@@ -1894,6 +1896,10 @@ static void PokeIconObjMoveSub( BOX2_SYS_WORK *syswk, BOX2MAIN_POKEMOVE_DATA *da
 	// 座標適用
 	BOX2OBJ_SetPos( syswk->app, mvID, px, py, CLSYS_DEFREND_MAIN );
 	BOX2OBJ_PokeIconPriChg( syswk->app, dat->df_pos+tate*w+yoko, BOX2OBJ_POKEICON_PRI_CHG_GET );
+
+	if( (dat->df_pos+tate*w+yoko) == BOX2OBJ_POKEICON_GET_POS ){
+		BOX2OBJ_PutMultiSelectIcon( syswk->app, px, py+8 );
+	}
 }
 
 static BOOL PokeIconObjMoveMultiSelect( BOX2_SYS_WORK * syswk )
@@ -2026,6 +2032,8 @@ static BOOL PokeIconObjMoveMultiSelect( BOX2_SYS_WORK * syswk )
 			}
 //			BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
 //			BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
+
+			BOX2OBJ_VanishMultiSelectIcon( syswk->app, FALSE );
 		}
 
 		return FALSE;
@@ -4679,6 +4687,8 @@ static void MoveGetPokeIcon( BOX2_SYS_WORK * syswk, u32 x, u32 y )
 				CLSYS_DEFREND_MAIN );
 		}
 	}
+	BOX2OBJ_PutMultiSelectIcon( syswk->app, x, y );
+
 	BOX2OBJ_PokeCursorMove( syswk->app, BOX2OBJ_POKEICON_GET_POS );
 	syswk->app->tpx = x;
 	syswk->app->tpy = y;
@@ -5053,8 +5063,6 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
 			// 複数選択
 			if( syswk->mv_cnv_mode == 2 ){
-				// 範囲選択のラインを消去
-				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
 
 	      // トレイアイコンのフレームが表示中
 	      if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
@@ -5064,6 +5072,8 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 	          if( put_pos == BOX2MAIN_GETPOS_NONE || PokeIconMoveBoxPartyDataMake(syswk,syswk->get_pos,put_pos) == FALSE ){
 	            BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
 	            BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+							BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+							BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
 	            PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
 	            vf->seq = SEIRI_SEQ_CANCEL_TRAYFRM_OUT;
 	            break;
@@ -5087,6 +5097,12 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 	      if( BOX2BGWFRM_PokeMenuOpenPutCheck( syswk->app->wfrm ) == FALSE ){
 	        BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 	      }
+
+				if( put_pos == BOX2MAIN_GETPOS_NONE ){
+					BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+				}
+				// 範囲選択のラインを消去
+				BOX2OBJ_DisplayMultiSelectOutline( syswk, FALSE );
 
 			// 通常
 			}else{
@@ -5240,6 +5256,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
         }
       }
       MoveGetPokeIcon( syswk, tpx, tpy );
+			ChangeMultiSelectIconTouch( syswk );
     }
     break;
 
@@ -5943,6 +5960,7 @@ int BOX2MAIN_VFuncCursorMove( BOX2_SYS_WORK * syswk )
   if( cwk->cnt == 0 ){
     BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, cwk->px, cwk->py, CLSYS_DEFREND_MAIN );
     BOX2OBJ_MovePokeIconHand( syswk );
+		BOX2MAIN_ChangeMultiSelectIconKey( syswk, CURSORMOVE_PosGet(syswk->app->cmwk) );
     return 0;
   }
   cwk->cnt--;
@@ -7904,4 +7922,42 @@ u32 BOX2MAIN_GetMultiWidth( BOX2_SYS_WORK * syswk, u32 pos )
 		return BOX_MAX_COLUMN;
 	}
 	return 2;
+}
+
+// 複数選択のアイコン表示切り替え
+static void ChangeMultiSelectIconTouch( BOX2_SYS_WORK * syswk )
+{
+	if( syswk->mv_cnv_mode == 2 && syswk->poke_get_key == 2 ){
+		if( BOX2UI_HitCheckTray() == TRUE ){
+			BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+			return;
+		}
+		if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == TRUE ){
+			if( BOX2UI_HitCheckPartyFrameRight() == TRUE ){
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+				return;
+			}
+		}
+		BOX2OBJ_ChangeMultiSelectIcon( syswk, TRUE );
+	}
+}
+void BOX2MAIN_ChangeMultiSelectIconKey( BOX2_SYS_WORK * syswk, u32 pos )
+{
+/*
+	if( syswk->mv_cnv_mode == 2 && syswk->poke_get_key == 2 ){
+		if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == TRUE ){
+			if( pos < BOX2OBJ_POKEICON_PUT_MAX ){
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+			}else{
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, TRUE );
+			}
+		}else{
+			if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, FALSE );
+			}else{
+				BOX2OBJ_ChangeMultiSelectIcon( syswk, TRUE );
+			}
+		}
+	}
+*/
 }
