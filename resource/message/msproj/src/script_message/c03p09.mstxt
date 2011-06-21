@@ -784,6 +784,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-17T03:02:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:13" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -826,6 +833,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-17T03:05:17" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -861,6 +875,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:57:42" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -905,6 +926,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-17T03:05:22" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -951,6 +979,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-17T03:05:26" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>
@@ -990,6 +1025,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:58:49" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>
@@ -1029,6 +1071,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T01:58:58" />
 		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>
@@ -1077,6 +1126,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-17T03:05:38" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:15" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>

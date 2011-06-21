@@ -33,6 +33,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:10:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:36" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -73,6 +80,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:10:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:37" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -113,6 +127,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:10:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:37" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -156,6 +177,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:10:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:37" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -199,6 +227,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:10:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:37" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -242,6 +277,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:10:19" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:34:37" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -568,10 +610,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にやにや……！</Text>
+			<Text>にやにや！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -579,10 +621,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にやにや……！</Text>
+			<Text>にやにや！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -592,10 +634,14 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=18、GRIDZ=30、下向き固定
-・話しかけても主人公を向かない</Comment>
+・話しかけても主人公を向かない
+・どちらに話しかけても
+　badman1_01からbadman2_05のメッセージを
+　サブウインドウで続けて表示する
+※swanで処理変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:39:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -641,12 +687,10 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=18、GRIDZ=31、上向き固定
-・話しかけても主人公を向かない
-
-※SWANで処理変更予定、サブウインドウ一杯に</Comment>
+・話しかけても主人公を向かない</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:38:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -661,6 +705,170 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p12_badman2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マジかよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マジかよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:39:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p12_badman2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:39:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p12_badman2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲヘヘ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲヘヘ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:39:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p12_badman2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒャッハー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒャッハー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:38:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:38:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:39:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-21T02:37:51" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
