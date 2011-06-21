@@ -199,6 +199,7 @@
 #define WK_SCENE_T07                     16587 /* 0x40cb ヤマジタウン：アララギ娘イベント制御ワーク */
 #define WK_SCENE_T03                     16588 /* 0x40cc カゴメタウン：アララギ娘イベント制御ワーク */
 #define WK_SCENE_T04                     16589 /* 0x40cd サザナミタウン：ライバル戦POSイベント制御ワーク */
+#define WK_SCENE_T03_SWRIVAL             16590 /* 0x40ce カゴメタウン：カゴメタウンのライバルイベント制御 */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

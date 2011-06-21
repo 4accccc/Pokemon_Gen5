@@ -599,6 +599,10 @@
 #define FV_T03R0201_HAKASE2_01             681 /* 0x02a9 カゴメタウン：アララギ娘 */
 #define FV_T03R0201_SWBELL_01              682 /* 0x02aa カゴメタウン：ベル */
 #define FV_T03R0201_OLDWOMAN1_01           683 /* 0x02ab カゴメタウン：おばあさん */
+#define FV_T03_SWEIVAL_01                  684 /* 0x02ac カゴメタウン：ライバル */
+#define FV_T03_SWPLASMAM_01                685 /* 0x02ad カゴメタウン：七賢者ヴィオとプラズマ団 */
+#define FV_T03_MORNING_PEOPLE_01           686 /* 0x02ae カゴメタウン：カゴメタウン民家の住人を朝&#xff5e;昼 */
+#define FV_T03_NIGHT_PEOPLE_01             687 /* 0x02af カゴメタウン：カゴメタウンの住人を夜間 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
