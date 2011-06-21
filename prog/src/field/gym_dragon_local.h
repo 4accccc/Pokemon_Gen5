@@ -71,6 +71,15 @@ typedef enum{
   BA_EVENT_SEQ_EXIT,
 }BA_EVENT_SEQ;
 
+//-------------------------------------
+///	ICA追従データID
+//=====================================
+typedef enum{
+  ICA_MOVE_ID_PLAYER,
+  ICA_MOVE_ID_ENEMY,
+  ICA_MOVE_ID_MAX,
+}ICA_MOVE_ID;
+
 // 拡張高さ用アトリビュート
 #define EX_HEIGHT_ATTRIBUTE (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
 

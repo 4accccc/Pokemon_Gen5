@@ -129,6 +129,10 @@ $(HEIGHT_DATA_CDAT_FILE): $(HEIGHT_DATA_CSV_FILE)
 #	@echo $<をコンバート
 	@g3dcvtr $<
 
+%.nsbva:	data/%.iva
+#	@echo $<をコンバート
+	@g3dcvtr $<
+
 %.bin:	data/null/%.ica
 	@ruby $(ICA_CNV) -srt $< $@
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2011-06-20T22:50:39" source="hero_dra_03.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="1000"
+	tool_start_frame="1"
+	tool_end_frame="1000"
+	compress_material="off" material_size="6 6"
+/>
+
+<tex_pattern_list_data image_size="1" palette_size="1">
+	<image_name index="0" name="in31_dansa.1"/>
+	<palette_name index="0" name="in31_dansa.1_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="1">
+		0
+	</frame_idx>
+	<image_idx size="1">
+		0
+	</image_idx>
+	<palette_idx size="1">
+		0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="yaji_up" data_size="1" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

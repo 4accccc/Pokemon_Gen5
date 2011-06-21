@@ -135,19 +135,35 @@ static const BUTTON_EVENT_DATA sc_button_event_data[FLOOR_LAYER_MAX][GYM_LOCATIO
 
 
 
+// 自機ドラゴンアニメーション
+enum
+{
+  HERO_DRA_ANM_ICA,
+  HERO_DRA_ANM_IMA,
+  HERO_DRA_ANM_ITA,
+  HERO_DRA_ANM_IVA,
+  HERO_DRA_ANM_ITP,
+  HERO_DRA_ANM_BUTTON_ITP,
+};
+
 //リソースID
 enum
 {
-  MODEL_RESID_HERO_DRAGON,        // 自機ドラゴン
-  MODEL_RESID_HERO_DRAGON_ICA,    // 自機ドラゴンアニメーション
-  MODEL_RESID_ENEMY_DRAGON_TAIL,  // 敵ドラゴン（尻尾）
-  MODEL_RESID_ENEMY_DRAGON_FOOT_L,  // 敵ドラゴン（左足）
-  MODEL_RESID_ENEMY_DRAGON_FOOT_R,  // 敵ドラゴン（右足）
-  MODEL_RESID_ENEMY_DRAGON_HEAD,    // 敵ドラゴン（頭）
-  MODEL_RESID_ENEMY_DRAGON_TAIL_ICA,  // 敵ドラゴン（尻尾）
-  MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA,  // 敵ドラゴン（左足）
-  MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA,  // 敵ドラゴン（右足）
-  MODEL_RESID_ENEMY_DRAGON_HEAD_ICA,    // 敵ドラゴン（頭）
+  MODEL_RESID_HERO_DRAGON,                // 自機ドラゴン
+  MODEL_RESID_HERO_DRAGON_ICA,            // 自機ドラゴンキャラクタアニメーション
+  MODEL_RESID_HERO_DRAGON_IMA,            // 自機ドラゴンマテリアルカラーアニメーション
+  MODEL_RESID_HERO_DRAGON_ITA,            // 自機ドラゴンテクスチャSRTアニメーション
+  MODEL_RESID_HERO_DRAGON_IVA,            // 自機ドラゴンビジビリティーアニメーション
+  MODEL_RESID_HERO_DRAGON_ITP,            // 自機ドラゴンテクスチャパターンアニメーション
+  MODEL_RESID_HERO_DRAGON_BUTTON_ITP,     // 自機ドラゴンボタン用
+  MODEL_RESID_ENEMY_DRAGON_TAIL,          // 敵ドラゴン（尻尾）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_L,        // 敵ドラゴン（左足）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_R,        // 敵ドラゴン（右足）
+  MODEL_RESID_ENEMY_DRAGON_HEAD,          // 敵ドラゴン（頭）
+  MODEL_RESID_ENEMY_DRAGON_TAIL_ICA,      // 敵ドラゴン（尻尾）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_L_ICA,    // 敵ドラゴン（左足）
+  MODEL_RESID_ENEMY_DRAGON_FOOT_R_ICA,    // 敵ドラゴン（右足）
+  MODEL_RESID_ENEMY_DRAGON_HEAD_ICA,      // 敵ドラゴン（頭）
   MODEL_RESID_MAX,
 };
 
@@ -162,6 +178,31 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
   {
     ARCID_GYM_DRAGON,
     NARC_gym_dragon_hero_dra_move_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_move_nsbma,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_move_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_move_nsbva,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_move_nsbtp,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_GYM_DRAGON,
+    NARC_gym_dragon_hero_dra_sign_nsbtp,
     GFL_G3D_UTIL_RESARC,
   },
   {
@@ -209,7 +250,12 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MODEL_RESID_MAX] =
 // アニメ設定
 static const GFL_G3D_UTIL_ANM sc_g3d_hero_dragon_anm[] = 
 {
-  { MODEL_RESID_HERO_DRAGON_ICA, 0 }
+  { MODEL_RESID_HERO_DRAGON_ICA, 0 },
+  { MODEL_RESID_HERO_DRAGON_IMA, 0 },
+  { MODEL_RESID_HERO_DRAGON_ITA, 0 },
+  { MODEL_RESID_HERO_DRAGON_IVA, 0 },
+  { MODEL_RESID_HERO_DRAGON_ITP, 0 },
+  { MODEL_RESID_HERO_DRAGON_BUTTON_ITP, 0 },
 };
 #define ANIMEID_HERO_DRAGON_MAX  (NELEMS(sc_g3d_hero_dragon_anm))
 
@@ -296,14 +342,7 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
 // モデルごとのオフセット情報
 static const VecFx32 sc_mdl_offset_table[MODELID_MAX] =
 {
-  //{FX32_CONST(0),FX32_CONST(0),FX32_CONST(0)},
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST((32+16)*16)},
-  
-//  {FX32_CONST(184+16*16),FX32_CONST(288),FX32_CONST(-204+16*16)}, // TAIL
-//  {FX32_CONST(184+16*16),FX32_CONST(376),FX32_CONST(-204+16*16)}, // FOOT_D
-//  {FX32_CONST(184+16*16),FX32_CONST(704),FX32_CONST(-204+16*16)}, // FOOT_U
-//  {FX32_CONST(184+16*16),FX32_CONST(832),FX32_CONST(-204+16*16)}, // HEAD
-
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // TAIL
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // FOOT_D
   {FX32_CONST(16*16),FX32_CONST(0),FX32_CONST(16*16)}, // FOOT_U
