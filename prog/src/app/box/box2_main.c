@@ -3267,45 +3267,35 @@ static void PokeIconBufPosChangeMulti( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_
 {
 	BOX2MAIN_POKEMOVE_DATA * dat;
   s16 i, j;
-	u16	tb_sx, df_sx, mv_sx;
+	u16	mv_sx;
 
 	dat = pmwk->dat;
 
-//	if( syswk->app->multiselect_outline.start_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
 	if( pmwk->exFlag == 1 ){
 	  // ‚¢‚ê‚©‚¦‚é
 		for( i=0; i<BOX2OBJ_POKEICON_MINE_MAX*2; i++ ){
-			if( dat[i].flg != 0 ){
+			if( dat[i].flg != 0 && dat[i].mv_pos < BOX2OBJ_POKEICON_PUT_MAX ){
 				u8	tmp = syswk->app->pokeicon_id[ dat[i].mv_pos ];
 				syswk->app->pokeicon_id[ dat[i].mv_pos ] = syswk->app->pokeicon_id[ dat[i].df_pos ];
 				syswk->app->pokeicon_id[ dat[i].df_pos ] = tmp;
 			}
 		}
 	}else{
-		tb_sx = BOX_MAX_COLUMN;
-		if( dat[0].df_pos < BOX2OBJ_POKEICON_GET_POS ){
-			df_sx = BOX2MAIN_GetMultiWidth( syswk, dat[0].df_pos );
-		}else{
-			df_sx = syswk->app->multi_w;
-		}
 		if( dat[0].mv_pos < BOX2OBJ_POKEICON_GET_POS ){
 			mv_sx = BOX2MAIN_GetMultiWidth( syswk, dat[0].mv_pos );
 		}else{
 			mv_sx = syswk->app->multi_w;
 		}
 
-//		OS_Printf( "dp = %d, mp = %d\n", dat[0].df_pos, dat[0].mv_pos );
-
 	  // ‚¢‚ê‚©‚¦‚é
-		for( i=0; i<syswk->app->multi_h; i++ ){
-			for( j=0; j<syswk->app->multi_w; j++ ){
-				if( syswk->app->multi_pokemon_id[i*tb_sx+j] == 0 ){
-					continue;
-				}
-				{
-					u8	tmp = syswk->app->pokeicon_id[ dat[0].mv_pos + i*mv_sx+j ];
-					syswk->app->pokeicon_id[ dat[0].mv_pos + i*mv_sx+j ] = syswk->app->pokeicon_id[ dat[0].df_pos + i*df_sx+j ];
-					syswk->app->pokeicon_id[ dat[0].df_pos + i*df_sx+j ] = tmp;
+		if( dat[0].mv_pos < BOX2OBJ_POKEICON_PUT_MAX ){
+			for( i=0; i<syswk->app->multi_h; i++ ){
+				for( j=0; j<syswk->app->multi_w; j++ ){
+					if( syswk->app->multi_pokemon_id[i*BOX_MAX_COLUMN+j] != 0 ){
+						u8	tmp = syswk->app->pokeicon_id[ dat[0].df_pos + i*syswk->app->multi_w+j ];
+						syswk->app->pokeicon_id[ dat[0].df_pos + i*syswk->app->multi_w+j ] = syswk->app->pokeicon_id[ dat[0].mv_pos + i*mv_sx+j ];
+						syswk->app->pokeicon_id[ dat[0].mv_pos + i*mv_sx+j ] = tmp;
+					}
 				}
 			}
 		}
