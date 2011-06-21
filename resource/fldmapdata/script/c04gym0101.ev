@@ -337,11 +337,12 @@ EVENT_START	ev_pos_c04gym0101_show1
 	//まだジムをクリアしてしていない
 	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
 	
+	/*
 		//視線曲再生・[!]アイコン表示
 		_OBJ_ANIME( C04GYM0101_TRAINER_01,anm_tr_gyoe )
 		_OBJ_ANIME_WAIT()
 		_TRAINER_BGM_SET( TRID_PRINCESS_08 )
-	
+	*/
 
 		//主人公の座標を見て移動
 		DEFINE_LOCAL  LCW_POSX
@@ -453,12 +454,13 @@ EVENT_START	ev_pos_c04gym0101_show2
 	
 	//まだジムをクリアしていない
 	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
-	
+	/*
 		//視線曲再生・[!]アイコン表示
 		_OBJ_ANIME( C04GYM0101_TRAINER_02,anm_tr_gyoe )
 		_OBJ_ANIME_WAIT()
 		_TRAINER_BGM_SET( TRID_PRINCESS_09 )
-
+  */
+  
 		//主人公の座標を見て移動
 		DEFINE_LOCAL  LCW_POSX
 		DEFINE_LOCAL  LCW_POSZ
@@ -569,11 +571,12 @@ EVENT_START	ev_pos_c04gym0101_show3
 	
 	//まだジムをクリアしていない
 	IF FLAG_OFF( FE_C04GYM0101_CLEAR ) THEN
-	
+	/*
 		//視線曲再生・[!]アイコン表示
 		_OBJ_ANIME( C04GYM0101_TRAINER_03,anm_tr_gyoe )
 		_OBJ_ANIME_WAIT()
 		_TRAINER_BGM_SET( TRID_PRINCESS_10 )
+	*/
 	
 		//主人公の座標を見て移動
 		DEFINE_LOCAL  LCW_POSX
