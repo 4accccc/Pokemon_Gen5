@@ -813,7 +813,7 @@ end
   fp_hash.printf("\t$formmax_hash = {\n" )
   monsno.size.times {|no|
     split_data = read_data[ no ].split(/,/)
-    fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::POKENAME ], form[ no ].get_form_max )
+    fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::POKENAME ], form[ no+1 ].get_form_max )
   }
   fp_hash.printf("\t}\n" )
 
