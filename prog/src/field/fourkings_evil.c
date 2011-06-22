@@ -74,6 +74,7 @@
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   BOOL                play_flg;       // 再生フラグ 
+  u16                 id;             // どの炎 0:階段下 1:階段上
 } ANM_CONTROL_WORK;
 
 //-------------------------------------
@@ -113,6 +114,18 @@ enum {
   OBJ_FIRE_6,             // 炎(階段下)
 
   OBJ_NUM,
+};
+// 階段下と階段上の炎のオブジェ開始インデックス
+static const int start_obj_tbl[] =
+{
+  OBJ_FIRE_5,   // 階段下
+  OBJ_FIRE_1,   // 階段上
+};
+// 階段下と階段上の炎のオブジェ終了インデックス
+static const int end_obj_tbl[] =
+{
+  OBJ_FIRE_6,   // 階段下
+  OBJ_FIRE_4,   // 階段上
 };
 
 // RES
@@ -229,9 +242,10 @@ static void EXPOBJ_ObjDell( FOURKINGS_EVIL_TMP *p_wk );
 static void EXPOBJ_ObjMain( FOURKINGS_EVIL_TMP *p_wk );
 
 // アニメ管理
-static void ANM_FIRE_Play( FOURKINGS_EVIL_TMP *p_gmk_wk, ANM_CONTROL_WORK *p_wk );
+static void ANM_FIRE_Play( FOURKINGS_EVIL_TMP *p_gmk_wk, ANM_CONTROL_WORK *p_wk, const u16 id );
 static void ANM_FIRE_Main( ANM_CONTROL_WORK *p_wk );
 static BOOL ANM_FIRE_CheckEnd( ANM_CONTROL_WORK *p_wk );
+static void ANM_FIRE_SetEnable( ANM_CONTROL_WORK *p_wk, u16 id, u16 anm_type );
 
 static void ANM_CLAW_Play( FOURKINGS_EVIL_TMP *p_wk, const u16 anm_idx );
 
@@ -254,6 +268,10 @@ void FOURKINGS_EVIL_Setup(FIELDMAP_WORK *p_fieldmap)
 
   p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap  = p_fieldmap;
+
+  p_wk->anm_wk.exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  p_wk->anm_wk.play_flg= FALSE;
+  p_wk->anm_wk.id      = 0;
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
@@ -292,7 +310,8 @@ void FOURKINGS_EVIL_Move(FIELDMAP_WORK *p_fieldmap)
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      ANM_FIRE_Play( p_wk, &p_wk->anm_wk );
+      ANM_FIRE_Play( p_wk, &p_wk->anm_wk, 0 );
+      ANM_FIRE_Play( p_wk, &p_wk->anm_wk, 1 );
       OS_Printf("炎再生\n");
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
@@ -305,52 +324,6 @@ void FOURKINGS_EVIL_Move(FIELDMAP_WORK *p_fieldmap)
       ANM_CLAW_Play( p_wk, 1 );
       OS_Printf("爪閉じる\n");
     }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      int obj_idx = OBJ_FIRE_6;
-      int anm_idx;
-      // anime
-      for( anm_idx=0; anm_idx<4; anm_idx++ )
-      {
-        EXP_OBJ_ANM_CNT_PTR exp_anm;
-        exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );   // アニメ再生設定
-        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, FALSE );
-      }
-      OS_Printf("アニメ全て停止\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      int obj_idx = OBJ_FIRE_6;
-      int anm_idx;
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, FALSE );
-      // anime
-      for( anm_idx=0; anm_idx<2; anm_idx++ )
-      {
-        EXP_OBJ_ANM_CNT_PTR exp_anm;
-        exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );   // アニメ再生設定
-        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
-      }
-      OS_Printf("炎点火アニメ\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-    {
-      int obj_idx = OBJ_FIRE_6;
-      int anm_idx;
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, FALSE );
-      // anime
-      for( anm_idx=2; anm_idx<4; anm_idx++ )
-      {
-        EXP_OBJ_ANM_CNT_PTR exp_anm;
-        exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );   // アニメ再生設定
-        FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
-      }
-      OS_Printf("炎ループアニメ\n");
-    }
   }
 #endif
 
@@ -360,6 +333,45 @@ void FOURKINGS_EVIL_Move(FIELDMAP_WORK *p_fieldmap)
   // 炎アニメ管理
   ANM_FIRE_Main( &p_wk->anm_wk );
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  炎のアニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id  0:階段下  1:階段上
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_EVIL_FireAnm( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_EVIL_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_EVIL_TMP_ASSIGN_ID );
+
+  GF_ASSERT_MSG( id<2, "_FOURKINGS_EVIL_FIRE 引数の指定が間違っている");
+
+  // 炎アニメ再生
+  ANM_FIRE_Play( p_wk, &p_wk->anm_wk, id );
+  ICHI_Printf("炎アニメ id %d \n", id);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  爪のアニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id  0:開く  1:閉じる
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_EVIL_ClawAnm( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_EVIL_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_EVIL_TMP_ASSIGN_ID );
+
+  GF_ASSERT_MSG( id<2, "_FOURKINGS_EVIL_CLAW 引数の指定が間違っている");
+
+  // 爪アニメ再生
+  ANM_CLAW_Play( p_wk, id );
 }
 
 //=============================================================================
@@ -489,37 +501,32 @@ static void EXPOBJ_ObjMain( FOURKINGS_EVIL_TMP *p_wk )
  *
  *	@param	FOURKINGS_EVIL_TMP *p_gmk_wk  ギミックワーク
  *	@param	ANM_CONTROL_WORK   *p_wk      アニメ管理ワーク
+ *	@param  u16 id  どこの炎を再生させる  0:階段下 1:階段上
  */
 //-----------------------------------------------------------------------------
-static void ANM_FIRE_Play( FOURKINGS_EVIL_TMP *p_gmk_wk, ANM_CONTROL_WORK *p_wk )
+static void ANM_FIRE_Play( FOURKINGS_EVIL_TMP *p_gmk_wk, ANM_CONTROL_WORK *p_wk, const u16 id )
 {
   FLD_EXP_OBJ_CNT_PTR exp_obj = p_gmk_wk->exp_obj;
   u8 i;
   u8 anm_idx;
 
-  // アニメの状態を初期化
-  for( i=0; i<FIRE_NUM; i++ )
+  const int start_obj_idx = start_obj_tbl[ id ];  // OBJインデックス 開始値
+  const int end_obj_idx = end_obj_tbl[ id ];    // OBJインデックス 終了値
+
+  // 状態を初期化
+  for( i=start_obj_idx; i<=end_obj_idx; i++ )
   {
-    u16 obj_idx = OBJ_FIRE_1 + i;    // OBJインデックス
+    u16 obj_idx = i;    // OBJインデックス
     // 表示
     FLD_EXP_OBJ_SetVanish( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, FALSE );
-
-    // アニメ再生(点火)
-    for( anm_idx=FIRE_ANMIDX_IGNITION_START; anm_idx<=FIRE_ANMIDX_IGNITION_END; anm_idx++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm;
-      exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-      // 再生
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );
-      // 無効化解除
-      FLD_EXP_OBJ_ValidCntAnm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
-      // 頭だし
-      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, 0 );
-    }
   }
 
+  // 炎点火にする
+  ANM_FIRE_SetEnable( p_wk, id, 0 );
+
   p_wk->exp_obj = exp_obj;
-  p_wk->play_flg = TRUE;
+  p_wk->play_flg= TRUE;
+  p_wk->id      = id;
 }
 //----------------------------------------------------------------------------
 /**
@@ -546,36 +553,7 @@ static void ANM_FIRE_Main( ANM_CONTROL_WORK *p_wk )
   }
 
   // ループ炎にする
-  for( i=0; i<FIRE_NUM; i++ )
-  {
-    u16 obj_idx = OBJ_FIRE_1 + i;    // OBJインデックス
-
-    // 点火アニメ無効
-    for( anm_idx=FIRE_ANMIDX_IGNITION_START; anm_idx<=FIRE_ANMIDX_IGNITION_END; anm_idx++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm;
-      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-      // 停止
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );
-      // 無効化
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, FALSE );
-    }
-
-    // ループアニメ有効
-    for( anm_idx=FIRE_ANMIDX_LOOP_START; anm_idx<=FIRE_ANMIDX_LOOP_END; anm_idx++ )
-    {
-      EXP_OBJ_ANM_CNT_PTR exp_anm;
-      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-      // 再生
-      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
-      // 無効化解除
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
-      // 頭だし
-      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, 0 );
-    }
-  }
-  ICHI_Printf("炎ループ再生\n");
+  ANM_FIRE_SetEnable( p_wk, p_wk->id, 1 );
 
   // 再生終了
   p_wk->play_flg = FALSE;
@@ -595,13 +573,13 @@ static BOOL ANM_FIRE_CheckEnd( ANM_CONTROL_WORK *p_wk )
   u8 i;
   u8 anm_idx;
 
-  ICHI_Printf("====アニメ終了チェック=====\n");
+  const int start_obj_idx = start_obj_tbl[ p_wk->id ];  // OBJインデックス 開始値
+  const int end_obj_idx = end_obj_tbl[ p_wk->id ];    // OBJインデックス 終了値
 
-  for( i=0; i<FIRE_NUM; i++ )
+  for( i=start_obj_idx; i<=end_obj_idx; i++ )
   {
-    u16 obj_idx = OBJ_FIRE_1 + i;    // OBJインデックス
+    u16 obj_idx = i;    // OBJインデックス
 
-    ICHI_Printf("OBJインデックス %d \n", obj_idx);
     // 点火のアニメ終了チェック
     for( anm_idx=FIRE_ANMIDX_IGNITION_START; anm_idx<=FIRE_ANMIDX_IGNITION_END; anm_idx++ )
     {
@@ -610,7 +588,6 @@ static BOOL ANM_FIRE_CheckEnd( ANM_CONTROL_WORK *p_wk )
       exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
 
       frm = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
-      ICHI_Printf("Anime %d Frame %x \n", anm_idx, frm );
       // 終了していないアニメを発見
       if( FLD_EXP_OBJ_ChkAnmEnd(exp_anm) == FALSE )
       {
@@ -620,6 +597,84 @@ static BOOL ANM_FIRE_CheckEnd( ANM_CONTROL_WORK *p_wk )
   }
 
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  炎アニメ  設定
+ *
+ *	@param	ANM_CONTROL_WORK *p_wk  アニメ管理ワーク
+ *	@param	id        どこの炎  0:階段下  1:階段上
+ *	@param	anm_type  アニメ種類  0:点火  1:ループ
+ */
+//-----------------------------------------------------------------------------
+static void ANM_FIRE_SetEnable( ANM_CONTROL_WORK *p_wk, u16 id, u16 anm_type )
+{
+  FLD_EXP_OBJ_CNT_PTR exp_obj = p_wk->exp_obj;
+  u8 i;
+  u8 anm_idx;
+
+  const int start_obj_idx = start_obj_tbl[ id ];  // OBJインデックス 開始値
+  const int end_obj_idx = end_obj_tbl[ id ];    // OBJインデックス 終了値
+
+  // アニメ種類
+  // アニメの状態を初期化
+  for( i=start_obj_idx; i<=end_obj_idx; i++ )
+  {
+    u16 obj_idx = i;    // OBJインデックス
+
+    for( anm_idx=0; anm_idx<FIRE_ANM_NUM; anm_idx++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
+      // 停止
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );
+      // 無効化
+      FLD_EXP_OBJ_ValidCntAnm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, FALSE );
+      // 頭だし
+      FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, 0 );
+    }
+  }
+
+  // 指定したアニメを再生
+  for( i=start_obj_idx; i<=end_obj_idx; i++ )
+  {
+    u16 obj_idx = i;    // OBJインデックス
+
+    if( anm_type == 0 )
+    {
+      // アニメ再生(点火)
+      for( anm_idx=FIRE_ANMIDX_IGNITION_START; anm_idx<=FIRE_ANMIDX_IGNITION_END; anm_idx++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm;
+        exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
+        // 再生
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+        // 無効化解除
+        FLD_EXP_OBJ_ValidCntAnm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
+        // 頭だし
+        FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, 0 );
+      }
+    }
+    else
+    {
+      // アニメ再生(ループ)
+      for( anm_idx=FIRE_ANMIDX_LOOP_START; anm_idx<=FIRE_ANMIDX_LOOP_END; anm_idx++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm;
+        exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
+        // 再生
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, TRUE );  // ループ再生設定
+        // 無効化解除
+        FLD_EXP_OBJ_ValidCntAnm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
+        // 頭だし
+        FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, 0 );
+      }
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------

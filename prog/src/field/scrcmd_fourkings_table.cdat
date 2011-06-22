@@ -18,6 +18,10 @@
   DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
   DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
   DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
+
+  // 悪
+  DEF_CMD( EvCmdFourKings_Evil_Fire, EV_SEQ_FOURKINGS_EVIL_FIRE )
+  DEF_CMD( EvCmdFourKings_Evil_Claw, EV_SEQ_FOURKINGS_EVIL_CLAW )
   
   END_CMD
   //スクリプトコマンドテーブル終了

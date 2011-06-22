@@ -20,3 +20,7 @@ extern void FOURKINGS_EVIL_Setup(FIELDMAP_WORK *p_fieldmap);
 extern void FOURKINGS_EVIL_End(FIELDMAP_WORK *p_fieldmap);
 extern void FOURKINGS_EVIL_Move(FIELDMAP_WORK *p_fieldmap);
 
+// スクリプトコマンドで呼ばれる関数
+extern void FOURKINGS_EVIL_FireAnm( GAMESYS_WORK *gsys, int id );
+extern void FOURKINGS_EVIL_ClawAnm( GAMESYS_WORK *gsys, int id );
+

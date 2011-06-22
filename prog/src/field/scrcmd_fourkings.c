@@ -27,6 +27,8 @@
 
 #include "event_fourkings.h"
 
+#include "fourkings_evil.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -132,6 +134,48 @@ VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk )
   default:
     break;
   }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//==== 悪 =====
+//----------------------------------------------------------------------------
+/**
+ *	@brief  炎のアニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Evil_Fire( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // 0:階段下アニメ再生
+  // 1:階段上アニメ再生
+  id  = VMGetU16( core );
+
+  FOURKINGS_EVIL_FireAnm( gsys, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  爪のアニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Evil_Claw( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // 0:開くアニメ再生
+  // 1:閉じるアニメ再生
+  id  = VMGetU16( core );
+
+  FOURKINGS_EVIL_ClawAnm( gsys, id );
 
   return VMCMD_RESULT_CONTINUE;
 }

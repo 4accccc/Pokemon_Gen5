@@ -45,6 +45,9 @@ extern VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk );
 // 四天王部屋　サウンドシステム　開始
 extern VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk );
 
+// 悪
+extern VMCMD_RESULT EvCmdFourKings_Evil_Fire( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Evil_Claw( VMHANDLE *core, void *wk );
 
 #ifdef _cplusplus
 }	// extern "C"{

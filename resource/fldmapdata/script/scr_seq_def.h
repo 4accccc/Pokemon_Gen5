@@ -9507,6 +9507,36 @@
   .short  \fourking_id
   .endm
 
+// 悪部屋
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_EVIL_FIRE
+ * @brief 四天王  悪  炎アニメ
+ * @param id  0:階段下  1:階段上
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_EVIL_FIRE( id ) _ASM_FOURKINGS_EVIL_FIRE id
+
+  .macro  _ASM_FOURKINGS_EVIL_FIRE id
+  .short  EV_SEQ_FOURKINGS_EVIL_FIRE
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_EVIL_CLAW
+ * @brief 四天王  悪  爪アニメ
+ * @param id  0:開く  1:閉じる
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_EVIL_CLAW( id ) _ASM_FOURKINGS_EVIL_CLAW id
+
+  .macro  _ASM_FOURKINGS_EVIL_CLAW id
+  .short  EV_SEQ_FOURKINGS_EVIL_CLAW
+  .short  \id
+  .endm
 
 
 //======================================================================
