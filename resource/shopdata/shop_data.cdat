@@ -382,6 +382,68 @@ static const u16 shop_mall4[] = {
 };
 #define SHOP_MALL4_MAX	(NELEMS(shop_mall4))
 
+// ヒウギシティ
+static const u16 c12_fs[] = {
+		ITEM_HAZIMETEMEERU,
+		ITEM_DAISUKIMEERU,
+		ITEM_OSASOIMEERU,
+		ITEM_KANSYAMEERU,
+		ITEM_SITUMONMEERU,
+		ITEM_OSUSUMEMEERU,
+		ITEM_OKAESIMEERU,
+};
+#define C12_FS_MAX	(NELEMS(c12_fs))
+
+// タチワキシティ
+static const u16 c13_fs[] = {
+		ITEM_HIIRUBOORU,
+		ITEM_NETTOBOORU,
+		ITEM_HAZIMETEMEERU,
+		ITEM_DAISUKIMEERU,
+		ITEM_OSASOIMEERU,
+		ITEM_KANSYAMEERU,
+		ITEM_SITUMONMEERU,
+		ITEM_OSUSUMEMEERU,
+		ITEM_OKAESIMEERU,
+};
+#define C13_FS_MAX	(NELEMS(c13_fs))
+
+// セイガイハシティ
+static const u16 c14_fs[] = {
+		ITEM_DAAKUBOORU,
+		ITEM_TAIMAABOORU,
+		ITEM_KUIKKUBOORU,
+		ITEM_BURIZZIMEERUc,
+		ITEM_HAZIMETEMEERU,
+		ITEM_DAISUKIMEERU,
+		ITEM_OSASOIMEERU,
+		ITEM_KANSYAMEERU,
+		ITEM_SITUMONMEERU,
+		ITEM_OSUSUMEMEERU,
+		ITEM_OKAESIMEERU,
+};
+#define C14_FS_MAX	(NELEMS(c14_fs))
+
+// サンギタウン
+static const u16 t06_fs[] = {
+		ITEM_HAZIMETEMEERU,
+		ITEM_DAISUKIMEERU,
+		ITEM_OSASOIMEERU,
+		ITEM_KANSYAMEERU,
+		ITEM_SITUMONMEERU,
+		ITEM_OSUSUMEMEERU,
+		ITEM_OKAESIMEERU,
+};
+#define T06_FS_MAX	(NELEMS(t06_fs))
+
+// ヤマジタウン
+static const u16 t07_fs[] = {
+		ITEM_WAZAMASIN14,
+		ITEM_WAZAMASIN25,
+		ITEM_WAZAMASIN38,
+};
+#define T07_FS_MAX	(NELEMS(t07_fs))
+
 
 
 // 一括アクセス用配列定義
@@ -412,6 +474,11 @@ static const u16 *shop_data_table[]={
 	shop_mall2,
 	shop_mall3,
 	shop_mall4,
+	c12_fs,
+	c13_fs,
+	c14_fs,
+	t06_fs,
+	t07_fs,
 };
 
 
@@ -443,4 +510,9 @@ static const u8 shop_itemnum_table[]={
 	SHOP_MALL2_MAX,
 	SHOP_MALL3_MAX,
 	SHOP_MALL4_MAX,
+	C12_FS_MAX,
+	C13_FS_MAX,
+	C14_FS_MAX,
+	T06_FS_MAX,
+	T07_FS_MAX,
 };

@@ -29,6 +29,11 @@
 #define SHOP_MALL2    ( 17 )  // ショッピングモール２Ｆ右
 #define SHOP_MALL3    ( 18 )  // ショッピングモール２Ｆ左
 #define SHOP_MALL4    ( 19 )  // ショッピングモール３Ｆ左
+#define C12_FS    ( 20 )  // ヒウギシティ
+#define C13_FS    ( 21 )  // タチワキシティ
+#define C14_FS    ( 22 )  // セイガイハシティ
+#define T06_FS    ( 23 )  // サンギタウン
+#define T07_FS    ( 24 )  // ヤマジタウン
 
 
 #endif
