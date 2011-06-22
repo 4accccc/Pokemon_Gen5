@@ -12,6 +12,8 @@
   .include  "msg_r20.h"
   .include  "r20.h"
 
+//LOCALWORK0は落ち葉で使用しています
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -24,6 +26,7 @@ _EVENT_DATA    ev_pos_r20_mountman_02
 _EVENT_DATA    ev_pos_r20_swbell_01
 _EVENT_DATA    ev_r20_mountman_01
 _EVENT_DATA    ev_bg_r20_board_01
+_EVENT_DATA    ev_pos_ochiba_fall
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
@@ -231,6 +234,16 @@ EVENT_END
 EVENT_START   ev_bg_r20_board_01
   _EASY_BGWIN_MSG(msg_r20_sign1_01 , TYPE_ROAD)
 EVENT_END
+
+
+/**************************************************************/
+/*落下落ち葉                     */
+/**************************************************************/
+EVENT_START   ev_pos_ochiba_fall
+  // 落下落ち葉イベント
+  _OCHIBA_FALL()
+EVENT_END
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：下に1歩歩く
