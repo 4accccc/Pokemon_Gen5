@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-06-18T14:27:56"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-06-21T17:52:54"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 0.250000" whd="4.000000 0.000000 1.500000"/>
 
-<tex_image_array size="21">
+<tex_image_array size="25">
 	<tex_image index="0" name="c13_crane1"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
@@ -1223,9 +1223,145 @@
 			9999 9999 9999 9999 9999 9999 9999 9999
 		</bitmap>
 	</tex_image>
+	<tex_image index="21" name="d23_tou01"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="d23_tou01_pl"
+		path="C:/home/swan_data3d/field/out55/chip/tex/d23_tou01.tga"
+	>
+		<bitmap size="128">
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5544 5555 5555 4455
+			5544 5555 5555 4455 5544 0005 5000 4455
+			5544 0055 5500 4455 0543 0055 5500 3450
+			0543 0555 5550 3450 0543 0550 0550 3450
+			0543 5550 0555 3450 0543 5500 0055 3450
+			0543 5500 0055 3450 0543 5000 0005 3450
+			0543 5000 0005 3450 0543 5500 0055 3450
+			0543 5500 0055 3450 0543 5550 0555 3450
+			0543 0550 0550 3450 0543 0555 5550 3450
+			0544 0055 5500 4450 5555 0055 5500 5555
+			5333 4445 5444 3335 5111 4445 5444 1115
+			5222 4444 4444 2225 1111 1111 1111 1111
+			2222 2222 2222 2222 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+		</bitmap>
+	</tex_image>
+	<tex_image index="22" name="d23_yuka1"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="d23_yuka1_pl"
+		path="C:/home/swan_data3d/field/out55/chip/tex/d23_yuka1.tga"
+	>
+		<bitmap size="256">
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			3333 3333 3333 3333 3333 3333 3333 3333
+			0000 0000 0000 1110 0111 0000 0000 0000
+			1111 1011 1111 2220 0222 1111 0220 1111
+			2222 2122 2222 4441 1444 2222 1441 2222
+			4444 4244 4444 4441 1444 4444 1441 4444
+			4444 4244 4444 4441 1444 4444 1441 4444
+			2222 2122 2222 4441 1444 2222 1441 2222
+			1111 1011 1111 2220 0222 1111 0440 1111
+			1111 1011 1111 2220 0222 1111 0220 1111
+			0000 0000 0000 1110 0111 0000 0110 0000
+			0000 0000 0000 1110 0111 0000 0110 0000
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			6666 6666 6666 6666 cccc cccc cccc cccc
+			7777 7777 7777 7777 cccc cccc cccc cccc
+			5555 7755 5577 5555 cccc cccc cccc cccc
+			5555 7755 5577 5555 cccc cccc cccc cccc
+			7777 bb77 77bb 7777 cccc cccc cccc cccc
+			bbbb bbbb bbbb bbbb cccc cccc cccc cccc
+			bbbb 777b b777 bbbb cccc cccc cccc cccc
+			bbbb 557b b755 bbbb cccc cccc cccc cccc
+			bbbb 57bb bb75 bbbb cccc cccc cccc cccc
+			bbbb 7bbb bbb7 bbbb cccc cccc cccc cccc
+			bbbb bbbb bbbb bbbb cccc cccc cccc cccc
+			b777 bbbb bbbb 7bbb cccc cccc cccc cccc
+			7777 7777 7777 7777 cccc cccc cccc cccc
+			9999 9999 9999 9999 cccc cccc cccc cccc
+			7777 7777 7777 7777 cccc cccc cccc cccc
+			6666 6666 6666 6666 cccc cccc cccc cccc
+		</bitmap>
+	</tex_image>
+	<tex_image index="23" name="d23_yuka2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="d23_yuka2_pl"
+		path="C:/home/swan_data3d/field/out55/chip/tex/d23_yuka2.tga"
+	>
+		<bitmap size="256">
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			8888 8888 8888 5558 8555 8888 8888 8888
+			5555 5555 5555 8845 5258 5555 5555 5555
+			2222 0022 2222 8840 0058 2222 2002 2222
+			4444 2244 4444 8842 2058 4444 4224 4444
+			7777 4477 7777 8844 4058 7777 7447 7777
+			9999 7799 9999 8844 4058 9999 9779 9999
+			7777 4477 7777 8844 4058 7777 7447 7777
+			4444 2244 4444 8840 2058 4444 4224 4444
+			5555 5555 5555 8845 5258 5555 5555 5555
+			8888 8888 8888 6658 8566 8888 8888 8888
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			bbb9 bbbb bbbb bbbb bbbb bbbb bbbb 9bbb
+			bbb9 bbbb bbbb bbbb bbbb bbbb bbbb 9bbb
+			6663 6666 6666 6666 6666 6666 6666 3666
+			3333 3333 3333 3333 3333 3333 3333 3333
+			1366 1331 3311 3111 1113 1133 1331 6631
+			1366 3113 1131 1313 3131 1311 3113 6631
+			3366 1111 1113 1131 1311 3111 1111 6633
+			3366 1111 1113 1131 1311 3111 1111 6633
+			1366 3113 1131 1313 3131 1311 3113 6631
+			1366 1331 3311 3111 1113 1133 1331 6631
+			3333 3333 3333 3333 3333 3333 3333 3333
+			6663 6666 6666 6666 6666 6666 6666 3666
+			bbb9 bbbb bbbb bbbb bbbb bbbb bbbb 9bbb
+			bbb9 bbbb bbbb bbbb bbbb bbbb bbbb 9bbb
+			9999 9999 9999 9999 9999 9999 9999 9999
+		</bitmap>
+	</tex_image>
+	<tex_image index="24" name="d23_yuka3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="d23_yuka3_pl"
+		path="C:/home/swan_data3d/field/out55/chip/tex/d23_yuka3.tga"
+	>
+		<bitmap size="128">
+			fd75 d55f fd75 d55f fffd 547f fffd 547f
+			ffd5 f5fd ffd5 f5fd f554 7fd5 f554 7fd5
+			7fd5 5f7f 7fd5 5f7f ffd5 ffff ffd5 ffff
+			7ffd ffd7 7ffd ffd7 ff7f f545 ff7f f545
+			ffdf ff57 ffdf ff57 f557 7d69 f557 7d69
+			fd15 7f65 fd15 7f65 d555 15d4 d555 15d4
+			567d 05d5 5654 f5d5 d51f 017d d514 ddfd
+			d407 007f d405 ffff f511 007f f511 f5ff
+			7d75 d415 fd75 d55f d7fd 543f 45fd 547d
+			f7d5 f51f 3dd5 f5fd f554 7f41 3f54 5555
+			07d5 5f74 1f15 4ffd 5fd5 fffd 0055 47fd
+			7ffd ffd7 55fd d154 ff7f f545 ff7f d401
+			ffdf ff57 57df fd40 f557 7d69 fd57 7d1f
+			fd15 7f65 ff55 7d3f d555 15d4 ff15 151f
+			567d f5d5 fd3d f547 d51f ddfd 001f ddd0
+			d407 ffff 0407 dff5 f511 f5ff f511 f5ff
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="21">
+<tex_palette_array size="25">
 	<tex_palette index="0" name="c13_crane1_pl" color_size="16">
 		0cc9 0d0d 10c8 10c9 1150 150b 1572 1574
 		18c6 192c 1995 1dd7 221b 2d40 7fff 7fff
@@ -1301,6 +1437,20 @@
 	<tex_palette index="20" name="d23_ps01_pl" color_size="16">
 		2173 25b6 29f8 31fd 323f 3e10 4652 5ef7
 		6739 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="21" name="d23_tou01_pl" color_size="8">
+		0000 4273 3e31 4631 4210 39ce 7fff 7fff
+	</tex_palette>
+	<tex_palette index="22" name="d23_yuka1_pl" color_size="16">
+		1d2e 2971 2db3 318c 31f5 4652 4653 4a95
+		4e94 52b6 52d6 56b5 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="23" name="d23_yuka2_pl" color_size="16">
+		35ef 39ce 3a10 3a11 3e51 3e53 4274 4674
+		46b5 4eb6 5318 56f7 5739 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="24" name="d23_yuka3_pl" color_size="4">
+		535b 537b 577b 579b
 	</tex_palette>
 </tex_palette_array>
 
@@ -2121,7 +2271,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="21">
+	<ex_tex_image_array size="25">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -2143,8 +2293,12 @@
 		<ex_tex_image index="18" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="19" disp_pos="840.000000 300.000000"/>
 		<ex_tex_image index="20" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="24" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="21">
+	<ex_tex_palette_array size="25">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -2166,6 +2320,10 @@
 		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="19" disp_pos="840.000000 360.000000"/>
 		<ex_tex_palette index="20" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="23" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="24" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="15">
 		<ex_material index="0" disp_pos="-840.000000 240.000000"/>
