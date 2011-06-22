@@ -25,6 +25,7 @@
 #include "arc/fieldmap/fourkings_evil.naix"
 
 // mine
+#include "fourkings_sv.h"
 #include "fourkings_evil.h"
 
 //=============================================================================
@@ -83,6 +84,7 @@ typedef struct {
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  FOURKINGS_SV_WORK   *p_sv_wk;       // セーブワーク
   ANM_CONTROL_WORK    anm_wk;         // アニメ管理構造体
 } FOURKINGS_EVIL_TMP;
 
@@ -240,6 +242,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 static void EXPOBJ_ObjSet( FOURKINGS_EVIL_TMP *p_wk );
 static void EXPOBJ_ObjDell( FOURKINGS_EVIL_TMP *p_wk );
 static void EXPOBJ_ObjMain( FOURKINGS_EVIL_TMP *p_wk );
+static void EXPOBJ_ObjSaveSet( FOURKINGS_EVIL_TMP *p_wk );
 
 // アニメ管理
 static void ANM_FIRE_Play( FOURKINGS_EVIL_TMP *p_gmk_wk, ANM_CONTROL_WORK *p_wk, const u16 id );
@@ -248,6 +251,15 @@ static BOOL ANM_FIRE_CheckEnd( ANM_CONTROL_WORK *p_wk );
 static void ANM_FIRE_SetEnable( ANM_CONTROL_WORK *p_wk, u16 id, u16 anm_type );
 
 static void ANM_CLAW_Play( FOURKINGS_EVIL_TMP *p_wk, const u16 anm_idx );
+
+
+//-------------------------------------
+///	セーブ情報
+//=====================================
+static void SAVE_SetPos1Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPos1Flag( const FOURKINGS_SV_WORK *p_wk );
+static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -263,11 +275,15 @@ static void ANM_CLAW_Play( FOURKINGS_EVIL_TMP *p_wk, const u16 anm_idx );
 //--------------------------------------------------------------
 void FOURKINGS_EVIL_Setup(FIELDMAP_WORK *p_fieldmap)
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+
   // 汎用ワーク確保
   FOURKINGS_EVIL_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, FOURKINGS_EVIL_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(p_fieldmap), sizeof(FOURKINGS_EVIL_TMP) );
 
   p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap  = p_fieldmap;
+  p_wk->p_sv_wk     = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_C09R0201 );
 
   p_wk->anm_wk.exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->anm_wk.play_flg= FALSE;
@@ -275,6 +291,9 @@ void FOURKINGS_EVIL_Setup(FIELDMAP_WORK *p_fieldmap)
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
+
+  // セーブを使用してEXPOBJセット
+  EXPOBJ_ObjSaveSet( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -352,7 +371,10 @@ void FOURKINGS_EVIL_FireAnm( GAMESYS_WORK *gsys, int id )
 
   // 炎アニメ再生
   ANM_FIRE_Play( p_wk, &p_wk->anm_wk, id );
-  ICHI_Printf("炎アニメ id %d \n", id);
+
+  // POSイベント踏まれたのでセーブ
+  if( id == 0 ) { SAVE_SetPos1Flag( p_wk->p_sv_wk, TRUE ); }
+  else          { SAVE_SetPos2Flag( p_wk->p_sv_wk, TRUE ); }
 }
 
 //----------------------------------------------------------------------------
@@ -490,6 +512,47 @@ static void EXPOBJ_ObjMain( FOURKINGS_EVIL_TMP *p_wk )
   FLD_EXP_OBJ_PlayAnime( p_wk->exp_obj );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ状態で3D拡張OBJ設定
+ *
+ *	@param	FOURKINGS_EVIL_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void EXPOBJ_ObjSaveSet( FOURKINGS_EVIL_TMP *p_wk )
+{
+  const BOOL pos1_flag = SAVE_GetPos1Flag( p_wk->p_sv_wk );
+  const BOOL pos2_flag = SAVE_GetPos2Flag( p_wk->p_sv_wk );
+
+  // POS1(=階段下)が起動していたら 炎をアニメ再生
+  if( pos1_flag == TRUE )
+  {
+    ANM_FIRE_SetEnable( &p_wk->anm_wk, 0, 1 );
+  }
+  // POS2(=階段上)が起動していたら 炎をアニメ再生
+  if( pos2_flag == TRUE )
+  {
+    ANM_FIRE_SetEnable( &p_wk->anm_wk, 1, 1 );
+  }
+
+  // POS1起動かつPOS2起動していないなら 爪開く
+  if( pos1_flag == TRUE && pos2_flag == FALSE)
+  {
+    u16 obj_idx = OBJ_CLAW;   // OBJインデックス
+    u16 anm_idx = 0;  // 開くアニメ
+    fx32 last_frame;
+    EXP_OBJ_ANM_CNT_PTR exp_anm;
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx );
+
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, TRUE );
+    // 最終フレーム取得
+    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+    ICHI_Printf("last frame %x", last_frame);
+    // フレーム設定
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, last_frame );
+  }
+}
+
 //=============================================================================
 /**
  *          アニメ管理
@@ -512,14 +575,6 @@ static void ANM_FIRE_Play( FOURKINGS_EVIL_TMP *p_gmk_wk, ANM_CONTROL_WORK *p_wk,
 
   const int start_obj_idx = start_obj_tbl[ id ];  // OBJインデックス 開始値
   const int end_obj_idx = end_obj_tbl[ id ];    // OBJインデックス 終了値
-
-  // 状態を初期化
-  for( i=start_obj_idx; i<=end_obj_idx; i++ )
-  {
-    u16 obj_idx = i;    // OBJインデックス
-    // 表示
-    FLD_EXP_OBJ_SetVanish( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, FALSE );
-  }
 
   // 炎点火にする
   ANM_FIRE_SetEnable( p_wk, id, 0 );
@@ -623,6 +678,9 @@ static void ANM_FIRE_SetEnable( ANM_CONTROL_WORK *p_wk, u16 id, u16 anm_type )
   {
     u16 obj_idx = i;    // OBJインデックス
 
+    // 表示
+    FLD_EXP_OBJ_SetVanish( exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, FALSE );
+
     for( anm_idx=0; anm_idx<FIRE_ANM_NUM; anm_idx++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm;
@@ -715,5 +773,61 @@ static void ANM_CLAW_Play( FOURKINGS_EVIL_TMP *p_wk, const u16 anm_idx )
     // 頭だし
     FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_EVIL_UNIT_IDX, obj_idx, anm_idx, 0 );
   }
+}
+
+//=============================================================================
+/**
+ *          セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント1起動フラグを設定
+ *
+ *	@param	p_wk  セーブワーク
+ *	@param	flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPos1Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos1_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント1起動フラグを取得
+ *
+ *	@param	p_wk  セーブワーク
+ *
+ *	@return flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPos1Flag( const FOURKINGS_SV_WORK *p_wk )
+{
+  return p_wk->pos1_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント2起動フラグを設定
+ *
+ *	@param	p_wk  セーブワーク
+ *	@param	flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos2_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント2起動フラグを取得
+ *
+ *	@param	p_wk  セーブワーク
+ *
+ *	@return flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk )
+{
+  return p_wk->pos2_flag;
 }
 
