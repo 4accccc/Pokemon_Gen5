@@ -79,6 +79,7 @@ typedef struct GYM_DRAGON_TMP_tag
   HEAPID              heapAnmID;
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
   FIELDMAP_WORK       *p_fld_wk;  
+  EVENTWORK           *p_event_wk;
 
   // data
   GYM_DRAGON_SV_WORK  *p_sv_work;
@@ -149,6 +150,8 @@ static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk );
 static void UpdateButtonStatus( GYM_BUTTON_SEQ button_seq ,EVENTWORK* p_event_wk );
 static void SetWorkValue( EVENTWORK* p_event_wk ,u16 work_no ,u16 value );
 static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
+static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk );
+static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk );
 
 //-------------------------------------
 ///	上レイヤーへ行けるか判定関数テーブル
@@ -171,8 +174,8 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 {
   int i;
   GYM_DRAGON_TMP *p_wk;
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
-  GIMMICKWORK *p_gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+  GIMMICKWORK *p_gmkwork = GAMEDATA_GetGimmickWork(p_gamedata);
 
 #ifdef PM_DEBUG
   // 空きヒープサイズ
@@ -194,6 +197,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   p_wk->p_fld_wk    = fieldWork;
   p_wk->p_sv_work   = GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_GYM_DRAGON );
   p_wk->p_ex_obj    = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  p_wk->p_event_wk  = GAMEDATA_GetEventWork( p_gamedata );
  
   // 3D拡張オブジェクトユニットの追加
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, GYM_DRAGON_UNIT_IDX );
@@ -251,7 +255,9 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   // 拡張高さの設定
   SetExHeight( p_wk->p_fld_wk );
 
-  
+  // ボタンを点灯状態にする
+  SetButtonITPSeq( p_wk );
+
 #ifdef PM_DEBUG
   // 空きヒープサイズ
   {
@@ -259,6 +265,59 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     OS_Printf("開始後残りヒープサイズ:%x\n",heap_size);
   }
 #endif
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機ドラゴン用ITPを設定する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk )
+{
+  // アニメーションの有効状態を設定する
+  MODEL *p_model    = &p_wk->model[MODELID_HERO_DRAGON];
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, TRUE);
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, FALSE);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のボタン状態に合わせて、ITPを設定する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk )
+{
+  // アニメーションの有効状態を設定する
+  MODEL *p_model    = &p_wk->model[MODELID_HERO_DRAGON];
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, FALSE);
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, TRUE);
+  }
+
+   
+  OS_Printf("現在のレイヤー：%u\n",p_wk->p_sv_work->now_floor_layer);
+  OS_Printf("現在のロケーション：%u\n",p_wk->p_sv_work->now_location);
+
+  // IPTのシーケンスを設定する
+  {
+    FLOOR_LAYER   now_layer = p_wk->p_sv_work->now_floor_layer;
+    GYM_LOCATION  now_loc   = p_wk->p_sv_work->now_location;
+    GYM_BUTTON_SEQ button_seq = GetNowButtonType( p_wk->p_event_wk, now_layer, now_loc );
+
+    // フレーム
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,button_seq );
+  }
 
 }
 
@@ -329,6 +388,29 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     int trg = GFL_UI_KEY_GetTrg();
     GMEVENT *call_event;
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
+
+    // モデル非表示
+    if( (cont & PAD_BUTTON_DEBUG) && (trg & PAD_BUTTON_START) )
+    {
+      int i;
+      for( i = 0; i < MODELID_MAX; i++ )
+      {
+        MODEL *p_model    = &p_wk->model[i];
+        FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,  p_model->unitID, p_model->modelID, FALSE );
+      }
+    }
+
+    // モデル表示
+    if( (cont & PAD_BUTTON_DEBUG) && (trg & PAD_BUTTON_SELECT) )
+    {
+      int i;
+      for( i = 0; i < MODELID_MAX; i++ )
+      {
+        MODEL *p_model    = &p_wk->model[i];
+        FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,  p_model->unitID, p_model->modelID, TRUE );
+      }
+    }
+
     if ( GAMESYSTEM_GetEvent( gsys ) == NULL )
     {
       if( (cont & PAD_BUTTON_L) && (trg & PAD_KEY_UP) )
@@ -386,7 +468,7 @@ static GYM_BUTTON_SEQ GetNowButtonType( EVENTWORK* p_event_wk ,u16 layer ,u16 lo
   GYM_BUTTON_SEQ ret  = GYM_BUTTON_NONE;
 
   ret = sc_button_seq_table[layer][loc][can_up];
-  GF_ASSERT_MSG( GYM_BUTTON_NONE != ret ,"押すことの出来るボタンがありません" );
+  //GF_ASSERT_MSG( GYM_BUTTON_NONE != ret ,"押すことの出来るボタンがありません" );
   return ret;
 }
 
@@ -645,8 +727,8 @@ static GMEVENT * CreateButtonEvent_UDLR( GAMESYS_WORK *p_gamesys, u16 event_seq 
   
     // イベントワークの初期化
     p_wk->p_event_wk    = GAMEDATA_GetEventWork( p_gamedata );
-
   }
+
   return p_event;
 }
 
@@ -666,6 +748,22 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
   PLAYER_MOVE_WORK *p_wk = p_wk_adrs;
   switch( (*p_seq) )
   {
+  case MOVE_EVENT_SEQ_START_SE:
+    {
+      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_01 );
+      (*p_seq) = MOVE_EVENT_SEQ_START_SE_WAIT;
+    }
+    break;
+  case MOVE_EVENT_SEQ_START_SE_WAIT:
+    {
+      if( PMSND_CheckPlaySE() == FALSE )
+      {
+        // 移動中音を再生
+        PMSND_PlaySE( SEQ_SE_SW_DRGGYM_02 );
+        (*p_seq) = MOVE_EVENT_SEQ_INIT;
+      }
+    }
+    break;
   case MOVE_EVENT_SEQ_INIT:
     {
       MOVE_EVENT_Init( p_wk );
@@ -689,7 +787,24 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
           return GMEVENT_RES_CONTINUE;
         }
       }
-      // 全て終わっていたら終了処理へ移動
+      // 全て終わっていたら移動音を止め、停止音を再生
+      PMSND_StopSE();
+      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_03 );
+      (*p_seq) = MOVE_EVENT_SEQ_END_SE_WAIT;
+    }
+    break;
+  case MOVE_EVENT_SEQ_END_SE_WAIT:
+    {
+      if( PMSND_CheckPlaySE() == FALSE )
+      {
+        (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+      }
+    }
+    break;
+  case MOVE_EVENT_SEQ_BUTTON_SET:
+    {
+      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
+      SetButtonITPSeq( p_wk->p_gmkwk );
       (*p_seq) = MOVE_EVENT_SEQ_EXIT;
     }
     break;
@@ -715,11 +830,15 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
 //-----------------------------------------------------------------------------
 static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
 {
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( p_wk->p_fld_wk ) );
   
   p_wk->p_player      = FIELDMAP_GetFieldPlayer( p_wk->p_fld_wk );
   p_wk->p_ex_obj      = p_wk->p_gmkwk->p_ex_obj;
   p_wk->p_mmdl_sys    = GAMEDATA_GetMMdlSys( p_gamedata );
+  
+  // 自機ドラゴン用ITPを設定する
+  SetHeroDragonITPSeq( p_wk->p_gmkwk );
 
   // 自機ICA移動データ
   {
@@ -736,16 +855,19 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
     p_md->move_data_frame     = p_md->p_trace_data->start_frame;
     p_md->p_mmdl              = FIELD_PLAYER_GetMMdl( p_wk->p_player );
     p_md->is_move_end         = FALSE;
- 
+
     // 自機アニメーション再生
     for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
     {
-      EXP_OBJ_ANM_CNT_PTR exobj_anm;
-      MODEL *p_model    = p_md->p_model;
-      // フレーム
-      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i ,FX32_CONST(p_md->move_data_frame) );
-      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
-      FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+      // ボタン用ITPは再生しない
+      if( i != HERO_DRA_ANM_BUTTON_ITP )
+      {
+        MODEL *p_model    = p_md->p_model;
+        // フレーム
+        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i ,FX32_CONST(p_md->move_data_frame) );
+        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+      }
     }
   }
 
