@@ -1472,7 +1472,6 @@ static void PokeDataBoxMoveParty( BOX2_SYS_WORK * syswk, u32 getPos, u32 putPos 
 		if( mv[i] == 0 ){ continue; }
 		pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, i );
 		// シェイミならフォルムチェンジ
-		// ここのシェイミはおｋ　2011/06/20 by nakahiro
 		if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_SHEIMI ){
 			PP_ChangeFormNo( pp, FORMNO_SHEIMI_LAND );
 			BOX2MAIN_FormChangeRenew( syswk, i+BOX2OBJ_POKEICON_TRAY_MAX );
@@ -1563,11 +1562,11 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       if( ( work->put_pos - BOX2OBJ_POKEICON_TRAY_MAX ) < ppcnt ){
         // ボックス・手持ち間の入れ替え
         PokeDataChangeBoxParty( syswk, &dat[0], &dat[1] );
-        BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray );
+        BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray );	// ●複数選択はこない
       }else{
         // ボックスから手持ちへ移動
         PokeDataMoveBOXtoPARTY( syswk, &dat[0] );
-        BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray ); // TODO:これ必要？
+//        BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->get_tray );
       }
     }
 	// 手持ちから取得
@@ -1578,17 +1577,24 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
 			if( BOX2MAIN_PokeParaGet( syswk, work->put_pos, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
 				// 手持ち・ボックス間の入れ替え
 				PokeDataChangeBoxParty( syswk, &dat[1], &dat[0] );
-				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->tray );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->tray );		// ●複数選択はこない
 			}else{
 				// 手持ちからボックスへ移動
 				// 通常
 				if( syswk->mv_cnv_mode != 2 ){
 					PokeDataMovePARTYtoBOX( syswk, &dat[work->get_pos-BOX2OBJ_POKEICON_TRAY_MAX] );
+					BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->tray );
 				// 複数選択
 				}else{
+					u16	i, j;
 					PokeDataMovePARTYtoBOX( syswk, &dat[0] );
+					for( i=0; i<syswk->app->multi_h; i++ ){
+						for( j=0; j<syswk->app->multi_w; j++ ){
+							if( syswk->app->multi_pokemon_id[i*2+j] == 0 ){ continue; }
+							BOX2MAIN_FormChangeSheimi( syswk, work->put_pos+i*BOX_MAX_COLUMN+j, work->get_pos, syswk->tray );
+						}
+					}
 				}
-				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos, syswk->tray );
 			}
 		// 手持ちへ配置
     }else{
@@ -7677,7 +7683,6 @@ void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk )
 		for( j=0; j<syswk->app->multi_w; j++ ){
 			prm = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos+i*sx+j, syswk->get_tray, ID_PARA_poke_exist, NULL );
 			syswk->app->multi_pokemon_id[i*sx+j] = prm;
-//			syswk->app->multi_pokemon_id[i*BOX_MAX_COLUMN+j] = prm;		// 後々の計算が面倒なので、トレイと手持ちで共通にしておく
 		}
 	}
 
