@@ -335,6 +335,7 @@
 "freezew.bin"
 "freezeb.bin"
 "gym0901.bin"
+"swbcgate.bin"
 "DUN2701.bin"
 "DUN2702.bin"
 "DUN2703.bin"

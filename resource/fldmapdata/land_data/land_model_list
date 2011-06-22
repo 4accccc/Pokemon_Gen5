@@ -360,6 +360,9 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/freezeb_00_01.nsbmd \
 	$(DIR_TEMP)/freezeb_01_00.nsbmd \
 	$(DIR_TEMP)/freezeb_01_01.nsbmd \
+	$(DIR_TEMP)/swbcgate01_00_00.nsbmd \
+	$(DIR_TEMP)/swbcgate01_01_00.nsbmd \
+	$(DIR_TEMP)/swbcgate01_02_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \

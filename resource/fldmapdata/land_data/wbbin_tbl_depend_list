@@ -1498,6 +1498,18 @@ $(DIR_WBTMP)/freezeb_01_01.tbl: $(DIR_RES)/freezeb_01_01.bin
 	@echo create_bintbl freezeb_01_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/freezeb_01_01.bin
 
+$(DIR_WBTMP)/swbcgate01_00_00.tbl: $(DIR_RES)/swbcgate01_00_00.bin
+	@echo create_bintbl swbcgate01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbcgate01_00_00.bin
+
+$(DIR_WBTMP)/swbcgate01_01_00.tbl: $(DIR_RES)/swbcgate01_01_00.bin
+	@echo create_bintbl swbcgate01_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbcgate01_01_00.bin
+
+$(DIR_WBTMP)/swbcgate01_02_00.tbl: $(DIR_RES)/swbcgate01_02_00.bin
+	@echo create_bintbl swbcgate01_02_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbcgate01_02_00.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin
