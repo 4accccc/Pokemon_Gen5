@@ -3209,6 +3209,18 @@ static int MainSeq_ArrangePartyMultiPokeGetInit( BOX2_SYS_WORK * syswk )
   switch( syswk->app->sub_seq ){
   case 0:
 		if( BOX2BGWFRM_CheckPartyPokeFrameRight( syswk->app->wfrm ) == TRUE ){
+/*　バトルボックスがロックされているときは便利モードにもいかないはずなので、この状況はありえないはず。 */
+/*
+			// バトルボックスがロックされているとき
+			if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->dat->bbRockFlg == TRUE ){
+				PMSND_PlaySE( SE_BOX2_WARNING );
+				BOX2BMP_BattleBoxRockMsgPut( syswk, 0 );
+				syswk->mv_cnv_mode  = 0;
+				syswk->app->sub_seq = 0;
+				syswk->next_seq     = BOX2SEQ_MAINSEQ_BATTLEBOX_ROCK;
+				return BOX2SEQ_MAINSEQ_TRGWAIT;
+			}
+*/
 			syswk->get_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
 			syswk->app->sub_seq = 2;
 			break;
@@ -4772,7 +4784,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_BATTLEBOX_MAIN_MULTI:    // 42: 複数選択モードへ
     syswk->get_start_mode = 0;
 		syswk->mv_cnv_mode    = 2;
-    return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
+    return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_INIT );
 
   case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_BATTLEBOX_MAIN_NAME ){
@@ -5023,12 +5035,18 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MENU_CLOSE );
 
-  case BOX2UI_BATTLEBOX_PARTY_NORMAL:       // 13: 便利モード
+	case BOX2UI_BATTLEBOX_PARTY_NORMAL:		// 13: 通常モードボタン
+		break;
+
+	case BOX2UI_BATTLEBOX_PARTY_MOVE:			// 14: 移動モードボタン
     syswk->get_start_mode = 1;
+		syswk->mv_cnv_mode    = 1;
     return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
-  case BOX2UI_BATTLEBOX_PARTY_MOVE:       // 13: 便利モード
+
+	case BOX2UI_BATTLEBOX_PARTY_MULTI:		// 15: 複数選択モードボタン
     syswk->get_start_mode = 1;
-    return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
+		syswk->mv_cnv_mode    = 2;
+    return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_INIT );
 
   case CURSORMOVE_CANCEL:             // キャンセル
     PMSND_PlaySE( SE_BOX2_CANCEL );
@@ -9871,6 +9889,9 @@ static int RcvStatus_ModeBattleBox( BOX2_SYS_WORK * syswk )
     // クリアしないと、スクロール時にアイコンが消える
     syswk->get_pos = BOX2MAIN_GETPOS_NONE;
 #endif  // BUGFIX_AF_GFBTS2020_20100924
+		if( syswk->mv_cnv_mode == 2 ){
+			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
+		}
     return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 
   case SUB_PROC_MODE_TB_PARTY_GET:  // 手持ちのポケモンのタッチバーから（掴んでいる時）
