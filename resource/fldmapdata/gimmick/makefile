@@ -27,7 +27,8 @@ SUBDIRS	=	gym_denki \
 					infinity \
 					wbt \
 					gym_poison \
-					gym_water
+					gym_water \
+					fourkings_evil
 
 .PHONY:	do-build clean
 

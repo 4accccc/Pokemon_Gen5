@@ -1,0 +1,9 @@
+"claw.nsbmd"
+"claw01.nsbca"
+"claw02.nsbca"
+"fire.nsbmd"
+"fire01.nsbca"
+"fire01.nsbtp"
+"fire02.nsbca"
+"fire02.nsbtp"
+

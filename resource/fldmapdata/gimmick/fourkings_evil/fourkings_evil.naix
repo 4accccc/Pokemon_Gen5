@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fourkings_evil.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FOURKINGS_EVIL_NAIX_
+#define NARC_FOURKINGS_EVIL_NAIX_
+
+enum {
+	NARC_fourkings_evil_claw_nsbmd = 0,
+	NARC_fourkings_evil_claw01_nsbca = 1,
+	NARC_fourkings_evil_claw02_nsbca = 2,
+	NARC_fourkings_evil_fire_nsbmd = 3,
+	NARC_fourkings_evil_fire01_nsbca = 4,
+	NARC_fourkings_evil_fire01_nsbtp = 5,
+	NARC_fourkings_evil_fire02_nsbca = 6,
+	NARC_fourkings_evil_fire02_nsbtp = 7
+};
+
+/* NARC_FOURKINGS_EVIL_NAIX_ */
+#endif

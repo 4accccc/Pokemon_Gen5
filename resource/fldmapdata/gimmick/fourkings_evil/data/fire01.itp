@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2011-06-21T12:02:32" source="fire.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="10"
+	tool_start_frame="1"
+	tool_end_frame="10"
+	compress_material="on" material_size="2 2"
+/>
+
+<tex_pattern_list_data image_size="5" palette_size="5">
+	<image_name index="0" name="aku_fire.1"/>
+	<image_name index="1" name="aku_fire.2"/>
+	<image_name index="2" name="aku_fire.3"/>
+	<image_name index="3" name="aku_fire.4"/>
+	<image_name index="4" name="aku_fire.5"/>
+	<palette_name index="0" name="aku_fire.1_pl"/>
+	<palette_name index="1" name="aku_fire.2_pl"/>
+	<palette_name index="2" name="aku_fire.3_pl"/>
+	<palette_name index="3" name="aku_fire.4_pl"/>
+	<palette_name index="4" name="aku_fire.5_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="6">
+		0 2 3 4 6 8
+	</frame_idx>
+	<image_idx size="6">
+		4 2 0 1 2 3
+	</image_idx>
+	<palette_idx size="6">
+		4 2 0 1 2 3
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="aku_fire_1" data_size="6" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
