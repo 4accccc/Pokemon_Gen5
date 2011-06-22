@@ -187,6 +187,7 @@ SUBDIRS	=	wmi \
 			medal_info \
 			pkwd_announce \
 			animal_trail \
+			pokewood_scenario \
 			pokewood_cutin
 
 

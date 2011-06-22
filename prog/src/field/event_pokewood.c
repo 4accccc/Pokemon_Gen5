@@ -44,10 +44,41 @@
 #include "savedata/pokewood_rec.h"
 #include "msg/msg_pokewood_name.h"
 
+#include "pokewood_scenario.naix"
+
 #include "field_fade.h"
 //======================================================================
 //  define
 //======================================================================
+// pokewood
+enum{
+  PKWDS_REC_POKE = 0,   // 撮影用ポケモン
+  PKWDS_PLAY_POKE,      // 上映用ポケモン
+  PKWDS_LEVEL,          // レベル
+  PKWDS_FORM,           // フォルム
+  PKWDS_SEX,            // 性別
+  PKWDS_MIND,           // 性格
+  PKWDS_STATE,          // 特性
+  PKWDS_GOODS,          // 道具
+  PKWDS_SKILL_1,        // 技1
+  PKWDS_SKILL_2,        // 技2
+  PKWDS_SKILL_3,        // 技3
+  PKWDS_SKILL_4,        // 技4
+  PKWDS_HP_FIX,         // HP固体値
+  PKWDS_HP_EFF,         // HP努力値
+  PKWDS_ATK_FIX,        // 攻撃固体値
+  PKWDS_ATK_EFF,        // 攻撃努力値
+  PKWDS_DEF_FIX,        // 防御固体値
+  PKWDS_DEF_EFF,        // 防御努力値
+  PKWDS_SPD_FIX,        // 早さ固体値
+  PKWDS_SPD_EFF,        // 早さ努力値
+  PKWDS_SPATK_FIX,      // 特攻固体値
+  PKWDS_SPATK_EFF,      // 特攻努力値
+  PKWDS_SPDEF_FIX,      // 特防固体値
+  PKWDS_SPDEF_EFF,      // 特防努力値
+  //
+  PKWDS_PARAM_MAX,
+};
 
 //======================================================================
 //  struct
@@ -87,6 +118,7 @@ typedef struct {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+#if 0	// 保留
 typedef struct {
   u8 level;
   u16 monsno;
@@ -182,6 +214,8 @@ static const POKEWOOD_MONS_DATA enemyData[][2] = {
 
 static const int enemyDataNum[]={2,2,1,};
 
+#endif	// 保留
+
 #if 0
   ID_PARA_hp_rnd,     //HP乱数
   ID_PARA_hp_exp,     //HP努力値
@@ -209,17 +243,71 @@ static const int trainerData[][2]={
 //============================================================================================
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const POKEWOOD_MONS_DATA * mons_data, u32 max )
+//static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const POKEWOOD_MONS_DATA * mons_data, u32 max )
+static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const s32 scenario_id, const s32 mode )
 {
   //
   int i;
   u32 id = MyStatus_GetID( mystat );
   u8 sex = MyStatus_GetMySex( mystat );
+  s16 *adr;
+  s16 maxnum;
+  s16 off;
+  s16 aoff;
 
   POKEPARTY * add_party = PokeParty_AllocPartyWork( heapID );
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
-  GF_ASSERT( max <= TEMOTI_POKEMAX );
-  PokeParty_Init( add_party, max );
+//  GF_ASSERT( max <= TEMOTI_POKEMAX );
+//  PokeParty_Init( add_party, max );
+#if 1
+  // 読み込み
+  adr = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_SCENARIO, NARC_pokewood_scenario_pkwd_senario00_bin+scenario_id, heapID );
+  // 最大数
+  maxnum = adr[mode];
+  PokeParty_Init( add_party, maxnum );
+  //
+  // オフセット
+  // (敵の場合はオフセットに注意)
+  off = 0;
+  if(mode == 1){
+    off = PKWDS_PARAM_MAX*adr[0];
+  }
+  //
+  // 情報をセット
+  for ( i = 0; i < maxnum; i ++ )
+  {
+    // オフセット
+    aoff = 2+PKWDS_PARAM_MAX*i+off;
+    //
+    PP_Clear( pp );
+    PP_SetupEx( pp, adr[aoff], adr[aoff+PKWDS_LEVEL], id, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
+    POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystat, MAPNAME_T1KANOKO , heapID );
+    PP_Put( pp, ID_PARA_oyasex, sex );
+    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_1], 0 );
+    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_2], 1 );
+    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_3], 2 );
+    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_4], 3 );
+    PP_Put( pp, ID_PARA_seikaku,   adr[aoff+PKWDS_MIND] );
+    PP_Put( pp, ID_PARA_item,      adr[aoff+PKWDS_GOODS] );
+    PP_Put( pp, ID_PARA_hp_rnd,    adr[aoff+PKWDS_HP_FIX] );
+    PP_Put( pp, ID_PARA_hp_exp,    adr[aoff+PKWDS_HP_EFF] );
+    PP_Put( pp, ID_PARA_pow_rnd,   adr[aoff+PKWDS_ATK_FIX] );
+    PP_Put( pp, ID_PARA_pow_exp,   adr[aoff+PKWDS_ATK_EFF] );
+    PP_Put( pp, ID_PARA_def_rnd,   adr[aoff+PKWDS_DEF_FIX] );
+    PP_Put( pp, ID_PARA_def_exp,   adr[aoff+PKWDS_DEF_EFF] );
+    PP_Put( pp, ID_PARA_agi_rnd,   adr[aoff+PKWDS_SPD_FIX] );
+    PP_Put( pp, ID_PARA_agi_exp,   adr[aoff+PKWDS_SPD_EFF] );
+    PP_Put( pp, ID_PARA_spepow_rnd,adr[aoff+PKWDS_SPATK_FIX] );
+    PP_Put( pp, ID_PARA_spepow_exp,adr[aoff+PKWDS_SPATK_EFF] );
+    PP_Put( pp, ID_PARA_spedef_rnd,adr[aoff+PKWDS_SPDEF_FIX] );
+    PP_Put( pp, ID_PARA_spedef_exp,adr[aoff+PKWDS_SPDEF_EFF] );
+    PP_Renew( pp );
+    PokeParty_Add( add_party, pp );
+  }
+  // 破棄
+  GFL_HEAP_FreeMemory( adr );
+  
+#else
   for ( i = 0; i < max; i ++, mons_data ++ )
   {
     PP_Clear( pp );
@@ -248,6 +336,7 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
     PP_Renew( pp );
     PokeParty_Add( add_party, pp );
   }
+#endif
   PokeParty_Copy( add_party, party );
   GFL_HEAP_FreeMemory( pp );
   GFL_HEAP_FreeMemory( add_party );
@@ -314,7 +403,8 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
   }
 //  TT_EncountTrainerPersonalDataMake( tr_id, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID );
   dataMakeEncountTrainer( senario_no, BTL_POKEWOOD_REC, bsp->tr_data[BTL_CLIENT_ENEMY1], heapID);
-  setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, enemyData[senario_no], enemyDataNum[senario_no] );
+//  setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, enemyData[senario_no], enemyDataNum[senario_no] );
+  setupPokemon( mystatus, bsp->party[BTL_CLIENT_ENEMY1], heapID, senario_no, 1 );
 
   //プレイヤーセット
   { 
@@ -322,7 +412,8 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
     bsp->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gamedata );
     
     // プレイヤーパーティーの登録
-    setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, myData[senario_no], myDataNum[senario_no] );
+//    setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, myData[senario_no], myDataNum[senario_no] );
+    setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, senario_no, 0 );
   }
 
   GFL_HEAP_FreeMemory( pp );
