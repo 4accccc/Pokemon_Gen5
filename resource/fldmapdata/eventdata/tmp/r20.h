@@ -17,6 +17,10 @@
 #define TR_KINDERGARTENW_06                5
 #define TR_CHILDCARE_05                    6
 #define TR_TANPAN_18                       7
+#define TR_RANGERW_17                      8
+#define TR_RANGERM_18                      9
+#define TR_RANGERW_18                     10
+#define TR_RANGERM_17                     11
 
 #endif //ZONE_R20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
