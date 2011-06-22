@@ -1651,7 +1651,8 @@ BOOL BOX2MAIN_BattlePokeCheck( BOX2_SYS_WORK * syswk, u32 pos )
 	// •¡”‘I‘ð
 	if( syswk->mv_cnv_mode == 2 ){
 		for( i=0; i<PokeParty_GetPokeCount(syswk->dat->pokeparty); i++ ){
-			if( i >= pos && i < (pos+syswk->app->multi_w*syswk->app->multi_h) ){
+			if( (i%2) < syswk->app->multi_w &&
+					(i/2) >= (pos/2) && (i/2) < (pos/2)+syswk->app->multi_h ){
 				continue;
 			}
 			pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, i );
