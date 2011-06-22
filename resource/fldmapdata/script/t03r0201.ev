@@ -19,4 +19,298 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_t03r0201
+_EVENT_DATA    ev_init_t03r0201
+_EVENT_DATA    ev_reserve_t03r0201_hakase2_01
+_EVENT_DATA    ev_t03r0201_oldwoman1_01
+_EVENT_DATA    ev_t03r0201_badman_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+//時間変数
+DEFINE_LOCAL  LWK_TIMEZONE
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_t03r0201
+
+  //現在の時間帯を取得
+  _GET_TIMEZONE( LWK_TIMEZONE )
+
+  //夜の場合は住人を表示
+  IF $LWK_TIMEZONE == TIMEZONE_NIGHT || $LWK_TIMEZONE == TIMEZONE_MIDNIGHT THEN
+
+    //========================================//
+    //住人表示
+    _FLAG_RESET( FV_T03_MORNING_PEOPLE_01 )
+    //おばあさん表示
+    _FLAG_RESET( FV_T03R0201_OLDWOMAN1_01 )
+    //========================================//
+
+  //昼の場合は住人を非表示
+  ELSE
+
+    //========================================//
+    //住人非表示
+    _FLAG_SET( FV_T03_MORNING_PEOPLE_01 )
+    //おばあさん非表示
+    _FLAG_SET( FV_T03R0201_OLDWOMAN1_01 )
+    //========================================//
+
+  ENDIF
+
+INIT_EVENT_END
+
+
+/************************************************************/
+/*  FIELD_INIT_LABEL                                        */
+/************************************************************/
+INIT_EVENT_START  ev_init_t03r0201
+
+  //カゴメタウンのプラズマ団を倒していなかった場合は表示
+  IF $WK_SCENE_T03 != 4 && FLAG_ON( FV_T03R0201_OLDWOMAN1_01 ) THEN
+
+    //========================================//
+    //おばあさん表示
+    _FLAG_RESET( FV_T03R0201_OLDWOMAN1_01 )
+    //========================================//
+    //イベント終了までおばあさんを表示
+    _OBJ_ADD( T03R0201_OLDWOMAN1_01 )
+
+  ENDIF
+
+INIT_EVENT_END
+
+
+/**************************************************************/
+/*  アララギ娘イベント（予約スクリプト）                      */
+/**************************************************************/
+EVENT_START   ev_reserve_t03r0201_hakase2_01
+
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_T03 = 2
+  //========================================//
+
+  //アニメ：主人公指定位置へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 5, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //ベルを表示
+  _FLAG_RESET( FV_T03R0201_SWBELL_01 )
+  //========================================//
+  _OBJ_ADD( T03R0201_SWBELL_01 )  //ベル表示
+  _SE_PLAY( SEQ_SE_KAIDAN ) //【仮】階段SE
+  _SE_WAIT()
+
+  //アニメ：ベル指定位置へ
+  _OBJ_ANIME_AUTO( T03R0201_SWBELL_01, 6, 6, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME_AUTO( T03R0201_SWBELL_01, 7, 5, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
+  //現在の時間帯を取得
+  _GET_TIMEZONE( LWK_TIMEZONE )
+
+  //夜の場合はイベントが変化
+  IF $LWK_TIMEZONE == TIMEZONE_NIGHT || $LWK_TIMEZONE == TIMEZONE_MIDNIGHT THEN
+    //おばあさん：カゴメの　むかしばなしを
+    _BALLOONWIN_OBJMSG_POS( msg_t03r0201_oldwoman1_01, T03R0201_OLDWOMAN1_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+    //アララギ娘：はい
+    _BALLOONWIN_OBJMSG_POS( msg_t03r0201_hakase2_01, T03R0201_HAKASE2_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+  //昼の場合はここから
+  ENDIF
+
+  //おばあさん：カゴメタウンの　うらには
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_oldwoman1_02, T03R0201_OLDWOMAN1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公、ベル向かい合う
+  _OBJ_ANIME( T03R0201_SWBELL_01, anm_common_turn_l )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //ベル：あのね　さいきん
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_swbel_01, T03R0201_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アララギ娘：いまは　いけないけれどね
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_hakase2_02, T03R0201_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公とベル、おばあさんを見る
+  _OBJ_ANIME( T03R0201_SWBELL_01, anm_common_turn_u )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //おばあさん：むかしむかしの　ことじゃ▼
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_oldwoman1_03, T03R0201_OLDWOMAN1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アララギ娘：……いん石　ね▼
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_hakase2_03, T03R0201_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //おばあさん：あたりが　やみに　つつまれると▼
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_oldwoman1_04, T03R0201_OLDWOMAN1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ベル「！」
+  _OBJ_ANIME( T03R0201_SWBELL_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //ベル：ポケモンが　ひとを
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_swbel_02, T03R0201_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //おばあさん：じゃから　むかしの　もんは
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_oldwoman1_05, T03R0201_OLDWOMAN1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アララギ娘：とても　きょうみぶかい
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_hakase2_04, T03R0201_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：アララギ娘、主人公らを見る
+  _OBJ_ANIME( T03R0201_HAKASE2_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ娘：とても　きょうみぶかい
+  _BALLOONWIN_OBJMSG_POS( msg_t03r0201_hakase2_05, T03R0201_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：アララギ娘、ベル退場
+  _OBJ_ANIME( T03R0201_HAKASE2_01, anm_hakase2_back )
+  _OBJ_ANIME( T03R0201_SWBELL_01, anm_swbell_back )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( T03R0201_HAKASE2_01 )
+  _OBJ_DEL( T03R0201_SWBELL_01 )
+
+  //========================================//
+  //アララギ娘とベルを非表示
+  _FLAG_SET( FV_T03R0201_HAKASE2_01 )
+  _FLAG_SET( FV_T03R0201_SWBELL_01 )
+
+  //ライバルイベントの準備
+  _FLAG_RESET( FV_T03_SWEIVAL_01 )
+  $WK_SCENE_T03_SWRIVAL = 1
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  おばあさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t03r0201_oldwoman1_01
+{
+  _TALK_OBJ_START()
+
+  //カゴメタウンのプラズマ団を倒したか？
+  IF $WK_SCENE_T03 != 4 THEN
+    //おばあさん：むかしばなし　とはいえ
+    _BALLOONWIN_TALKOBJ_MSG( msg_t03r0201_oldwoman1_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+    //おばあさん：はなしを　きくのか……？
+    _BALLOONWIN_TALKOBJ_MSG( msg_t03r0201_oldwoman1_07 )
+
+    //昔話を聞く？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+      //おばあさん：んん……
+      _BALLOONWIN_TALKOBJ_MSG( msg_t03r0201_oldwoman1_08 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE    //いいえ
+      //おばあさん：ふあ……　ああ　そうかい……
+      _BALLOONWIN_TALKOBJ_MSG( msg_t03r0201_oldwoman1_09 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
+/*  スキンヘッド：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_t03r0201_badman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03r0201_badman_01 )
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//  アララギ娘：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_hakase2_back
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_VANISH_ON,0
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ベル：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swbell_back
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_VANISH_ON,0
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+

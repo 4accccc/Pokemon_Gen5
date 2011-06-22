@@ -15,4 +15,13 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_ZONE_CHANGE_LABEL    SCRID_ZONE_T03
+_FIELD_INIT_LABEL   SCRID_INIT_T03
+_SCENE_CHANGE_LABEL   sp_t03_tbl
 _SP_EVENT_DATA_END
+
+//テーブル定義
+sp_t03_tbl:
+  _SCENE_CHANGE_DATA    WK_SCENE_T03, 2, SCRID_SCENE_T03_HAKASE2_01
+  _SCENE_CHANGE_END
+

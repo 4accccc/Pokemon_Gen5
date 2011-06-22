@@ -5,5 +5,7 @@
 #define _T03R0401_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_ZONE_T03R0401 (1)
+#define SCRID_T03R0401_WAITRESS_01 (2)
 
 #endif //_T03R0401_DEF_H_

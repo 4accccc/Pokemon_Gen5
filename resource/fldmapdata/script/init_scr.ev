@@ -154,6 +154,15 @@ init_flags:
   
   //R06R0101：季節研究所チェレン
   _FLAG_SET( FV_R06R0101_SWLEADER1_01 )
+
+  //T03R0201：カゴメ民家のアララギ娘とベル 
+  //_FLAG_SET( FV_T03R0201_HAKASE2_01 )
+  _FLAG_SET( FV_T03R0201_SWBELL_01 )
+
+  //T03：カゴメタウンのライバルとヴィオとプラズマ団 
+  _FLAG_SET( FV_T03_SWEIVAL_01 )
+  _FLAG_SET( FV_T03_SWPLASMAM_01 )
+
 }
 _RET
 
