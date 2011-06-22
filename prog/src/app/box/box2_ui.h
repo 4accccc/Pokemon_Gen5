@@ -149,7 +149,7 @@ enum {
   BOX2UI_BATTLEBOX_MAIN_NORMAL,   // 40: 通常モードボタン
   BOX2UI_BATTLEBOX_MAIN_MOVE,     // 41: 移動モードボタン
   BOX2UI_BATTLEBOX_MAIN_MULTI,    // 42: 複数選択モードボタン
-
+	BOX2UI_BATTLEBOX_MAIN_SEARCH,		// 43: 絞込みボタン
 
   // バトルボックス・パーティ操作
   BOX2UI_BATTLEBOX_PARTY_POKE1 = 0, // 00: 手持ちポケモン
@@ -169,10 +169,10 @@ enum {
   BOX2UI_BATTLEBOX_PARTY_CLOSE,     // 12: やめる
 
 //  BOX2UI_BATTLEBOX_PARTY_CONV,      // 13: 便利モード
-  BOX2UI_BATTLEBOX_PARTY_NORMAL,   // 13: 通常モードボタン
-  BOX2UI_BATTLEBOX_PARTY_MOVE,     // 14: 移動モードボタン
-  BOX2UI_BATTLEBOX_PARTY_MULTI,    // 15: 複数選択モードボタン
-
+	BOX2UI_BATTLEBOX_PARTY_NORMAL,		// 13: 通常モードボタン
+	BOX2UI_BATTLEBOX_PARTY_MOVE,			// 14: 移動モードボタン
+	BOX2UI_BATTLEBOX_PARTY_MULTI,			// 15: 複数選択モードボタン
+	BOX2UI_BATTLEBOX_PARTY_SEARCH,		// 16: 絞込みボタン
 
   // つれていく・メイン操作
   BOX2UI_PTIN_MAIN_POKE1 = 0,   // 00: ポケモン

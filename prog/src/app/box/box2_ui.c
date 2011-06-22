@@ -683,7 +683,7 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
   { 0, 0, 0, 0, 40, 40, 40, 40, { 0, 10,   8,  59 } },   // 40: 通常モードボタン
   { 0, 0, 0, 0, 41, 41, 41, 41, { 0, 10,  60, 109 } },   // 41: 便利モード1
   { 0, 0, 0, 0, 42, 42, 42, 42, { 0, 10, 110, 159 } },   // 42: 便利モード2
-
+  { 0, 0, 0, 0, 43, 43, 43, 43, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 43: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -717,7 +717,7 @@ static const CURSORMOVE_DATA BattleBoxPartyMainCursorMoveData[] =
   { 0, 0, 0, 0, 13, 13, 13, 13, { 0, 10,   8,  59 } },   // 13: 通常モードボタン
   { 0, 0, 0, 0, 14, 14, 14, 14, { 0, 10,  60, 109 } },   // 14: 便利モード1
   { 0, 0, 0, 0, 15, 15, 15, 15, { 0, 10, 110, 159 } },   // 15: 便利モード2
-
+  { 0, 0, 0, 0, 16, 16, 16, 16, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+TOUCHBAR_ICON_WIDTH-1 } },      // 16: 絞り込み画面ボタン
 
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1415,7 +1415,8 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
   }else{
     if( ret == BOX2UI_ARRANGE_MAIN_PARTY ||
         ret == BOX2UI_ARRANGE_MAIN_RETURN1 ||
-        ret == BOX2UI_ARRANGE_MAIN_RETURN2 ){
+        ret == BOX2UI_ARRANGE_MAIN_RETURN2 ||
+				ret == BOX2UI_ARRANGE_MAIN_SEARCH ){
       CURSORMOVE_PosSet( syswk->app->cmwk, now );
       CursorObjMove( syswk, now );
       return CURSORMOVE_NONE;
@@ -1454,6 +1455,8 @@ static void BoxArrangeMainCallBack_Move( void * work, int now_pos, int old_pos )
   BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 
   BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1474,9 +1477,13 @@ static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos 
   if( now_pos == BOX2UI_ARRANGE_MAIN_RETURN1 ||
       now_pos == BOX2UI_ARRANGE_MAIN_RETURN2 ||
       now_pos == BOX2UI_ARRANGE_MAIN_SEARCH ){
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+		now_pos = syswk->app->old_cur_pos;
   }else{
     CursorObjMove( syswk, now_pos );
   }
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 
@@ -1576,7 +1583,7 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
       now_pos == BOX2UI_ARRANGE_PGT_NORMAL ||       // 42: 通常モード
       now_pos == BOX2UI_ARRANGE_PGT_MOVE ||         // 43: 移動モード
       now_pos == BOX2UI_ARRANGE_PGT_MULTI ||        // 44: 複数選択モード
-      now_pos == BOX2UI_ARRANGE_PGT_SEARCH ){        // 45: 絞り込みモード
+      now_pos == BOX2UI_ARRANGE_PGT_SEARCH ){				// 45: 絞り込みモード
     CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
     now_pos = syswk->app->old_cur_pos;
   }else{
@@ -1672,7 +1679,8 @@ u32 BOX2UI_BoxArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
   }else{
     if( ret == BOX2UI_ARRANGE_PARTY_BOXLIST ||
         ret == BOX2UI_ARRANGE_PARTY_RETURN1 ||
-        ret == BOX2UI_ARRANGE_PARTY_RETURN2 ){
+        ret == BOX2UI_ARRANGE_PARTY_RETURN2 ||
+				ret == BOX2UI_ARRANGE_PARTY_SEARCH ){
       CURSORMOVE_PosSet( syswk->app->cmwk, now );
       CursorObjMove( syswk, now );
       return CURSORMOVE_NONE;
@@ -1700,6 +1708,8 @@ static void BoxArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_
   BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 
   BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1718,10 +1728,15 @@ static void BoxArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old
   BOX2_SYS_WORK * syswk = work;
 
   if( now_pos == BOX2UI_ARRANGE_PARTY_RETURN1 ||    // 06: 戻る１
-      now_pos == BOX2UI_ARRANGE_PARTY_RETURN2 ){    // 07: 戻る２
+      now_pos == BOX2UI_ARRANGE_PARTY_RETURN2 ||    // 07: 戻る２
+			now_pos == BOX2UI_ARRANGE_PARTY_SEARCH ){
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+		now_pos = syswk->app->old_cur_pos;
   }else{
     CursorObjMove( syswk, now_pos );
   }
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 //============================================================================================
@@ -2217,7 +2232,8 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
     if( ret == BOX2UI_BATTLEBOX_MAIN_NAME ||
         ret == BOX2UI_BATTLEBOX_MAIN_PARTY ||
         ret == BOX2UI_BATTLEBOX_MAIN_RETURN1 ||
-        ret == BOX2UI_BATTLEBOX_MAIN_RETURN2 ){
+        ret == BOX2UI_BATTLEBOX_MAIN_RETURN2 ||
+        ret == BOX2UI_BATTLEBOX_MAIN_SEARCH ){
       CURSORMOVE_PosSet( syswk->app->cmwk, now );
       CursorObjMove( syswk, now );
       return CURSORMOVE_NONE;
@@ -2256,6 +2272,8 @@ static void BattleBoxMainCallBack_Move( void * work, int now_pos, int old_pos )
   BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 
   BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2274,10 +2292,15 @@ static void BattleBoxMainCallBack_Touch( void * work, int now_pos, int old_pos )
   BOX2_SYS_WORK * syswk = work;
 
   if( now_pos == BOX2UI_BATTLEBOX_MAIN_RETURN1 ||
-      now_pos == BOX2UI_BATTLEBOX_MAIN_RETURN2 ){
+      now_pos == BOX2UI_BATTLEBOX_MAIN_RETURN2 ||
+      now_pos == BOX2UI_BATTLEBOX_MAIN_SEARCH ){
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+		now_pos = syswk->app->old_cur_pos;
   }else{
     CursorObjMove( syswk, now_pos );
   }
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 
@@ -2323,7 +2346,8 @@ u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
   }else{
     if( ret == BOX2UI_BATTLEBOX_PARTY_BOXLIST ||
         ret == BOX2UI_BATTLEBOX_PARTY_RETURN1 ||
-        ret == BOX2UI_BATTLEBOX_PARTY_RETURN2 ){
+        ret == BOX2UI_BATTLEBOX_PARTY_RETURN2 ||
+        ret == BOX2UI_BATTLEBOX_PARTY_SEARCH ){
       CURSORMOVE_PosSet( syswk->app->cmwk, now );
       CursorObjMove( syswk, now );
       return CURSORMOVE_NONE;
@@ -2351,6 +2375,8 @@ static void BattleBoxPartyMainCallBack_Move( void * work, int now_pos, int old_p
   BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
 
   BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2369,10 +2395,15 @@ static void BattleBoxPartyMainCallBack_Touch( void * work, int now_pos, int old_
   BOX2_SYS_WORK * syswk = work;
 
   if( now_pos == BOX2UI_BATTLEBOX_PARTY_RETURN1 ||
-      now_pos == BOX2UI_BATTLEBOX_PARTY_RETURN2 ){
+      now_pos == BOX2UI_BATTLEBOX_PARTY_RETURN2 ||
+			now_pos == BOX2UI_BATTLEBOX_PARTY_SEARCH ){
+		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
+		now_pos = syswk->app->old_cur_pos;
   }else{
     CursorObjMove( syswk, now_pos );
   }
+
+	syswk->app->old_cur_pos = now_pos;
 }
 
 
