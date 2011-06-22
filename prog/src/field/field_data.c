@@ -622,11 +622,11 @@ const SCENE_DATA resistMapTbl[] = {
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
-  //RSC_HYBRID = 23,
+  //RSC_HYBRID_GYM_DRAGON = 23,
 	{	//グリッド、レールハイブリッド、ドラゴンジム
 		{
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
-      2,2,
+      1,2,
       FLDMAPPER_MODE_SCROLL_NONE, 
       ARCID_FLDMAP_LANDDATA,
 
