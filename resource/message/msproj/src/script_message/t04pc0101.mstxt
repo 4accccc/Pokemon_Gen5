@@ -445,7 +445,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04pc0101_badman_01">
+		Label="msg_t04pc0101_badman_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>うっている　モンスターボールも

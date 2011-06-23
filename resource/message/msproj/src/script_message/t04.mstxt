@@ -665,10 +665,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ワールドバトルトーナメント……
-シロナさんも　さんか　するのかな？</Text>
+シロナさんも　参加するのかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:51:46" />
+				Time="2011-06-23T12:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -679,10 +679,10 @@
 			<Comment>♂
 ・夏だけ出現＋WBTでシロナ登場前
 　GRIDX=734、GRIDZ=307付近近
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:50:54" />
+				Time="2011-06-23T12:08:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -700,7 +700,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_trainerm_02">
+		Label="msg_t04_trainerm_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ワールドバトルトーナメント！
@@ -732,10 +733,10 @@
 			<Comment>♂
 ・夏だけ出現＋WBTでシロナ登場後
 　GRIDX=734、GRIDZ=307付近近
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:50:58" />
+				Time="2011-06-23T12:08:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -752,10 +753,10 @@
 			Language="JPN">
 			<Text>ブルジョワールの　かたがたが
 とおくとおくへ　ひっこし　なされ▽
-ここも　しばし　さみしいままですわ</Text>
+ちょっぴり　さみしく　なりましたね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:48:23" />
+				Time="2011-06-23T12:08:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -765,10 +766,10 @@
 			Language="JPN_KANJI">
 			<Text>ブルジョワール一家の　方々が
 はるか　遠方へ　引越しなされ▽
-ここも　しばし　寂しいままですわ</Text>
+ちょっぴり　寂しく　なりましたね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:48:46" />
+				Time="2011-06-23T12:08:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -779,10 +780,10 @@
 			<Comment>♀
 ・夏だけ出現
 　GRIDX=727、GRIDZ=300付近
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T10:35:40" />
+				Time="2011-06-23T12:08:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -906,6 +907,140 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_trainerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ときどき　ながれてくる　プルンゲル
+ひとあじ　ちがうって　ひょうばん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:13:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:11:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ときどき　流れてくる　プルンゲル
+一味　違うって　評判！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:13:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:12:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX=763、GRIDZ=302、下向き
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:13:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:14:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_poke47_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぷるうッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:11:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:02:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぷるうッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:03:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・GRIDX=764、GRIDZ=308、下向き
+・あわせてj鳴き声再生
+・続けてエンカウント
+※金曜日に出現</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:16:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE47
+ポケモン・プルンゲル♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:14:52" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04_poke48_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぷぅるぅ♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:03:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぷぅるぅ♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:11:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:03:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・GRIDX=762、GRIDZ=308、下向き
+・あわせてj鳴き声再生
+・続けてエンカウント
+※日曜日に出現</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:16:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE48
+ポケモン・プルンゲル♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-23T12:14:55" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
