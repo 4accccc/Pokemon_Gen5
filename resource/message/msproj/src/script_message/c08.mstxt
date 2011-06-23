@@ -548,7 +548,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_poke_01"
+		Label="msg_c08_poke47_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -585,11 +585,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-クリムガン</Text>
+			<Text>POKE47
+ポケモン・オノノクス</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T07:50:47" />
+				Time="2011-06-23T09:37:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -604,10 +604,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よくやった　クリムガン！▼</Text>
+			<Text>よくやった　オノノクス！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T07:50:54" />
+				Time="2011-06-23T09:38:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -615,10 +615,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よくやった　クリムガン！▼</Text>
+			<Text>よくやった　オノノクス！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T07:50:57" />
+				Time="2011-06-23T09:38:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
