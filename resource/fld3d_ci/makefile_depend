@@ -20,11 +20,18 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	
 endif
 
+# 定義
+MEDAL_NCG = ../medal/medal_icon/medal_icon.ncg
+MEDAL_NCL = ../medal/medal_icon/medal_icon.ncl
+
+CP_MEDAL_NCG = replace_tex/medal/medal_icon.ncg
+CP_MEDAL_NCL = replace_tex/medal/medal_icon.ncl
+
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
-do-build: $(DATA_HASH) $(REPLACE_TEX_DEPEND)
+do-build: $(DATA_HASH) $(REPLACE_TEX_DEPEND)  $(CP_MEDAL_NCG) $(CP_MEDAL_NCL)
 
 $(DATA_HASH): $(CSV_DATA) make_data_hash.rb
 	@echo __DATAHASH CONVERT
@@ -32,6 +39,12 @@ $(DATA_HASH): $(CSV_DATA) make_data_hash.rb
 
 $(TEX_CSV_DATA): $(XLS_DATA) $(RURU_CNV)
 	$(XLS_CNV) -o $(TEX_CSV_DATA) -p 2 -s csv $(XLS_DATA)
+
+$(CP_MEDAL_NCG) : $(MEDAL_NCG)
+	@$(COPY) $(MEDAL_NCG) $(CP_MEDAL_NCG)
+
+$(CP_MEDAL_NCL) : $(MEDAL_NCL)
+	@$(COPY) $(MEDAL_NCL) $(CP_MEDAL_NCL)
 
 $(REPLACE_TEX_DEPEND):$(TEX_CSV_DATA) $(XLS_DATA)
 	ruby $(RURU_CNV) $(REPLACE_TEX_TARGET) $(REPLACE_TEX_DEPEND) $(TEX_CSV_DATA) $(ARC_LIST) $(DATA_ARC_LIST)

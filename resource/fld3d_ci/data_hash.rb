@@ -68,6 +68,7 @@ $cutin_id_array = [
   "FLDCIID_GET2_08M",
 ]
 $cutin_ncg_hash = {
+  "medal_icon.ncg" => "replace_tex/medal/",
   "enc_bigfour01.ncg" => "replace_tex/VSdemo_Face/",
   "enc_bigfour02.ncg" => "replace_tex/VSdemo_Face/",
   "enc_bigfour03.ncg" => "replace_tex/VSdemo_Face/",
@@ -91,6 +92,7 @@ $cutin_ncg_hash = {
   "enc_hero_up_down.ncg" => "replace_tex/VSdemo_Hero_Heroine/",
 }
 $cutin_ncl_hash = {
+  "medal_icon.ncl" => "replace_tex/medal/",
   "enc_bigfour01.ncl" => "replace_tex/VSdemo_Face/",
   "enc_bigfour02.ncl" => "replace_tex/VSdemo_Face/",
   "enc_bigfour03.ncl" => "replace_tex/VSdemo_Face/",

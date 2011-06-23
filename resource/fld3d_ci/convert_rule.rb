@@ -8,7 +8,7 @@ require "csv"
 #======================
 class TEX_DATA
   # サクセサ
-  attr_accessor :id, :model_id, :model_index ,:trans_tex_name ,:trans_pal_name , :ncg_name ,:ncl_name ,:cut_x, :cut_y, :cut_w, :cut_h ,:pal_id ,:is_dummy ,:is_nocut ,:ncg_dir ,:ncl_dir ,:line_num ,:cut_data_str ,:ncgr_name ,:nclr_name ,:bin_name ,:player_trans_type
+  attr_accessor :id, :model_id, :model_index ,:trans_tex_name ,:trans_pal_name , :ncg_name ,:ncl_name ,:cut_x, :cut_y, :cut_w, :cut_h ,:pal_id ,:is_dummy ,:is_nocut ,:ncg_dir ,:ncl_dir ,:line_num ,:cut_data_str ,:ncgr_name ,:nclr_name ,:bin_name ,:player_trans_type ,:ncg_w
 
   #======================
   # プライベートデータ
@@ -60,12 +60,13 @@ class TEX_DATA
     @trans_tex_name  = data[2]
     @trans_pal_name  = data[3]
     @ncg_name        = data[4]
-    @ncl_name        = data[5]
-    @cut_x           = data[6].to_i
-    @cut_y           = data[7].to_i
-    @cut_w           = data[8].to_i
-    @cut_h           = data[9].to_i
-    @pal_id          = data[10].to_i
+    @ncg_w           = data[5].to_i
+    @ncl_name        = data[6]
+    @cut_x           = data[7].to_i
+    @cut_y           = data[8].to_i
+    @cut_w           = data[9].to_i
+    @cut_h           = data[10].to_i
+    @pal_id          = data[11].to_i
     @ncgr_name       = @ncg_name.gsub(/\.ncg/,".NCGR")
     @nclr_name       = @ncl_name.gsub(/\.ncl/,".NCLR")
     @cut_data_str       = ""
@@ -156,37 +157,37 @@ data_file.each_with_index{|line,index|
 # 主人公用男女顔グラフィック
 # =============================
 # ヒーロー一枚転送
-data = ["DUMMY","ModelA","dummy","dummy","enc_hero.ncg","enc_hero.ncl",0,0,0,0,0]
+data = ["DUMMY","ModelA","dummy","dummy","enc_hero.ncg",128,"enc_hero.ncl",0,0,0,0,0]
 tex_data = TEX_DATA.new( "DUMMY" ,data ,data_size )
 tex_data_arry << tex_data
 data_size+=1
 
 # ヒーロー上
-data = ["DUMMY","ModelA","dummy","dummy","enc_hero_up_down.ncg","enc_hero_up_down.ncl",0,0,16,16,0]
+data = ["DUMMY","ModelA","dummy","dummy","enc_hero_up_down.ncg",128,"enc_hero_up_down.ncl",0,0,16,16,0]
 tex_data = TEX_DATA.new( "DUMMY" ,data ,data_size )
 tex_data_arry << tex_data
 data_size+=1
 
 # ヒーロー下
-data = ["DUMMY","ModelA","dummy","dummy","enc_hero_up_down.ncg","enc_hero_up_down.ncl",0,16,16,16,0]
+data = ["DUMMY","ModelA","dummy","dummy","enc_hero_up_down.ncg",128,"enc_hero_up_down.ncl",0,16,16,16,0]
 tex_data = TEX_DATA.new( "DUMMY" ,data ,data_size )
 tex_data_arry << tex_data
 data_size+=1
 
 # ヒロイン一枚転送
-data = ["DUMMY","ModelA","dummy","dummy","enc_heroine.ncg","enc_heroine.ncl",0,0,0,0,0]
+data = ["DUMMY","ModelA","dummy","dummy","enc_heroine.ncg",128,"enc_heroine.ncl",0,0,0,0,0]
 tex_data = TEX_DATA.new( "DUMMY" ,data ,data_size )
 tex_data_arry << tex_data
 data_size+=1
 
 # ヒロイン上
-data = ["DUMMY","ModelA","dummy","dummy","enc_heroine_up_down.ncg","enc_heroine_up_down.ncl",0,0,16,16,0]
+data = ["DUMMY","ModelA","dummy","dummy","enc_heroine_up_down.ncg",128,"enc_heroine_up_down.ncl",0,0,16,16,0]
 tex_data = TEX_DATA.new( "DUMMY" ,data ,data_size )
 tex_data_arry << tex_data
 data_size+=1
 
 # ヒロイン下
-data = ["DUMMY","ModelA","dummy","dummy","enc_heroine_up_down.ncg","enc_heroine_up_down.ncl",0,16,16,16,0]
+data = ["DUMMY","ModelA","dummy","dummy","enc_heroine_up_down.ncg",128,"enc_heroine_up_down.ncl",0,16,16,16,0]
 tex_data = TEX_DATA.new( "DUMMY" ,data ,data_size )
 tex_data_arry << tex_data
 data_size+=1
@@ -350,6 +351,10 @@ $cutin_id_array.each{|id|
         nclr_index = arc_list_hash[ "cnv_tmp\\"+tex_data.nclr_name ]
         bin_data << [ nclr_index ].pack( "C" )                         # NCLインデックス
         bin_data << [ tex_data.pal_id ].pack( "C" )           # パレットデータ
+        bin_data << [ tex_data.cut_w.to_i ].pack( "C" )           # 切り取る幅
+        bin_data << [ tex_data.cut_h.to_i ].pack( "C" )           # 切り取る高さ
+        bin_data << [ tex_data.ncg_w.to_i ].pack( "C" )           # NCGの幅
+        bin_data << [ 0 ].pack( "C" )      # パディング
       end
     end
   }

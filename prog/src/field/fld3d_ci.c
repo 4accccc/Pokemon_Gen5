@@ -91,6 +91,9 @@
 #define NAMEGRA_TEX_NAME_DOWN "name_down"
 #define NAMEGRA_PAL_NAME_DOWN "name_down_pl"
 
+#define DEFAULT_CHARACTER_W (16)
+#define DEFAULT_CHARACTER_H (16)
+
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 typedef BOOL (*MAIN_SEQ_FUNC)( GMEVENT* event, FLD3D_CI_PTR ptr );
 
@@ -164,6 +167,10 @@ typedef struct {
   u8 ncg_arc_id;            // 転送するNCGが格納されているインデックスID
   u8 ncl_arc_id;            // 転送するパレットが格納されているインデックスID
   u8 pal_id;                // 実際に使用するパレットID
+  u8 w;                     // 切り抜いた幅
+  u8 h;                     // 切り抜いた幅
+  u8 ncg_cw;                // NCGの幅(キャラクタ単位)
+  u8 padding;
 }EX_TEX_DATA;
 
 typedef struct TEXREPLACE_WORK_tag
@@ -322,6 +329,10 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const char *inPlttName,
                           const int inChrArcID,
                           const int inPltArcID,
+                          const u8 cw ,
+                          const u8 ch ,
+                          const u8 ncg_cw ,
+                          const u8 model_id ,
                           const u8 palnum );
 static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work );
@@ -2264,6 +2275,10 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
                           const char *inPlttName,
                           const int inChrArcID,
                           const int inPltArcID ,
+                          const u8 cw ,
+                          const u8 ch ,
+                          const u8 ncg_cw ,
+                          const u8 model_id ,
                           const u8 palnum )
 {
   u32 tex_adr;
@@ -2271,7 +2286,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
   HEAPID heapID = ptr->HeapID; 
   //リソースのＶＲＡＭアドレス取得
   {
-    GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( ptr->Util, 0 );
+    GFL_G3D_RES* res = GFL_G3D_UTIL_GetResHandle( ptr->Util, model_id );
     NNSG3dTexKey texkey = GFL_G3D_GetTextureDataVramKey( res );
     NNSG3dPlttKey palkey = GFL_G3D_GetTexturePlttVramKey( res );
     {
@@ -2293,6 +2308,9 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
     ONOUE_Printf("plname = %s\n",inPlttName);
     ONOUE_Printf("key = %d %d\n",texkey, palkey);
     ONOUE_Printf("adr = %x %x\n",tex_adr, pal_adr);
+    ONOUE_Printf("cw =  %u\n",cw);
+    ONOUE_Printf("ch =  %u\n",ch);
+    ONOUE_Printf("ncg_cw =  %u\n",ncg_cw);
     ONOUE_Printf("============================================\n\n");
     
   }
@@ -2309,12 +2327,11 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 
       src = ptr->chr->pRawData;
 		  dst = GFL_BMP_GetCharacterAdrs(ptr->ImgBitmap);
-      GFL_STD_MemClear32((void*)dst, 16*16*0x20);
+      GFL_STD_MemClear32((void*)dst, cw*ch*0x20);
 
-      for (y=0; y<16; y++){
-        for(x=0; x<16; x++){
-          GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
-          chrNum++;
+      for (y=0; y<ch; y++){
+        for(x=0; x<cw; x++){
+          GFL_STD_MemCopy32((void*)(&src[(y*ncg_cw+x)*0x20]), (void*)(&dst[(y*cw+x)*0x20]), 0x20);
         }
       }
     }
@@ -2329,7 +2346,7 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 		u32		dst;
     src = (void*)GFL_BMP_GetCharacterAdrs(ptr->ImgBitmap);
 		dst = tex_adr;
-    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, TEXVRAMSIZ);
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, cw*ch*0x20);
     GF_ASSERT(rc);
     src = ptr->plt->pRawData;
 		dst = pal_adr;
@@ -2457,7 +2474,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
       }
         
       // 転送
-      ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt , 0);
+      ReTransToGra( ptr, HEROGRA_TEX_NAME_UP, HEROGRA_PAL_NAME_UP, chr, plt ,DEFAULT_CHARACTER_W ,DEFAULT_CHARACTER_H ,TEXSIZ_S/8 ,0, 0);
     }
     break;
   case 2:
@@ -2478,7 +2495,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work )
         chr = NARC_fld3d_ci_tex_enc_heroine_up_down_0_16_16_16_LZ_bin;
         plt = NARC_fld3d_ci_tex_enc_heroine_up_down_NCLR;
       }
-      ReTransToGra( ptr, HEROGRA_TEX_NAME_DOWN, HEROGRA_PAL_NAME_DOWN, chr, plt , 1);
+      ReTransToGra( ptr, HEROGRA_TEX_NAME_DOWN, HEROGRA_PAL_NAME_DOWN, chr, plt,DEFAULT_CHARACTER_W,DEFAULT_CHARACTER_H ,TEXSIZ_S/8 ,0, 1);
       (*seq)++;
     }
     break;
@@ -2541,10 +2558,25 @@ static GMEVENT_RESULT ExTextureTransEvt( GMEVENT* event, int* seq, void* work )
   case 1:
     {
       u8 trans_cnt = tex_wk->trans_cnt;
-      ptr->ImgBitmap = GFL_BMP_Create(TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, ptr->HeapID);
+      u8 cw = tex_wk->p_tex_data[trans_cnt].w;
+      u8 ch = tex_wk->p_tex_data[trans_cnt].h;
+      u8 ncg_cw = tex_wk->p_tex_data[trans_cnt].ncg_cw;
+      if( cw == 0 )
+      {
+        cw = DEFAULT_CHARACTER_W;
+      }
+      if( ch ==  0 )
+      {
+        ch = DEFAULT_CHARACTER_H;
+      }
+      ptr->ImgBitmap = GFL_BMP_Create(cw,ch, GFL_BMP_16_COLOR, ptr->HeapID);
       ReTransToGra( ptr,
           tex_wk->p_tex_data[trans_cnt].trans_tex_name , tex_wk->p_tex_data[trans_cnt].trans_pal_name,
           tex_wk->p_tex_data[trans_cnt].ncg_arc_id, tex_wk->p_tex_data[trans_cnt].ncl_arc_id,
+          cw,
+          ch,
+          ncg_cw,
+          tex_wk->p_tex_data[trans_cnt].model_id,
           tex_wk->p_tex_data[trans_cnt].pal_id);
       GFL_HEAP_FreeMemory( ptr->chr_buf );
       GFL_HEAP_FreeMemory( ptr->pal_buf );
