@@ -668,6 +668,7 @@ static int Subseq_SelectMarkInit(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SelectMark(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SelectMarkExit(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq);
+static int Subseq_SearchOnEnd( BOX_SEARCH_MAIN_WORK * wk, int seq );
 static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
@@ -715,13 +716,14 @@ enum{
   SUBSEQ_SELECTMARK,          //
   SUBSEQ_SELECTMARKEXIT,      //
   SUBSEQ_SEARCHON,            // 33: 検索条件ON
-  SUBSEQ_SEARCHOFF,           // 34: 検索条件OFF
-  SUBSEQ_SEARCHRESET,         // 35: 検索条件リセット
+  SUBSEQ_SEARCHONEND,         // 34: 検索条件ON
+  SUBSEQ_SEARCHOFF,           // 35: 検索条件OFF
+  SUBSEQ_SEARCHRESET,         // 36: 検索条件リセット
   SUBSEQ_ANIMEWAIT,           // 
   SUBSEQ_FRAMELISTINITWAIT,   //
-  SUBSEQ_SEARCHEXIT,          //38
-	SUBSEQ_BUTTON_ANIME,				// 39: ボタンアニメ終了待ち
-	SUBSEQ_SELECT_SET,					// 40: 各検索条件選択へ
+  SUBSEQ_SEARCHEXIT,          //39
+	SUBSEQ_BUTTON_ANIME,				// 40: ボタンアニメ終了待ち
+	SUBSEQ_SELECT_SET,					// 41: 各検索条件選択へ
 };
 
 //=============================================================================
@@ -765,6 +767,7 @@ static int (* const FuncTable[])(BOX_SEARCH_MAIN_WORK *wk, int seq)={
   Subseq_SelectMark,            // 
   Subseq_SelectMarkExit,        // 
   Subseq_SearchOn,              // 
+  Subseq_SearchOnEnd,           // 
   Subseq_SearchOff,             // 
   Subseq_SearchReset,           // 
   Subseq_AnimeWait,             // 
@@ -2410,6 +2413,22 @@ static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		return SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SEARCHEXIT );
 	}
 
+	// リセット
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		CURSORMOVE_PosSet( wk->cmwk, BOXSEARCH_PLATE_RESET );
+		CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
+		return SetButtonAnime( wk, BOXSEARCH_OBJID_RESET, BOXSEARCH_ANM_RESET_DECIDE, SUBSEQ_SEARCHRESET );
+	}
+	// ONにして終了
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		CURSORMOVE_PosSet( wk->cmwk, BOXSEARCH_PLATE_ON );
+		CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
+		CURSORMOVE_Exit( wk->cmwk );
+		return SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_ON, BOXSEARCH_ANM_SEARCHON_DECIDE, SUBSEQ_SEARCHONEND );
+	}
+
 	result = CURSORMOVE_Main( wk->cmwk );
 
 	switch( result ){
@@ -2419,13 +2438,7 @@ static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
 	case CURSORMOVE_CURSOR_ON:			// カーソル表示
 	case CURSORMOVE_CURSOR_MOVE:		// 移動
-		break;
-
 	case CURSORMOVE_CANCEL:					// キャンセル
-		break;
-//		CURSORMOVE_Exit( wk->cmwk );
-//		return SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SEARCHEXIT );
-
 	case CURSORMOVE_NONE:						// 動作なし
 		break;
 
@@ -3016,6 +3029,13 @@ static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	}
 	return SUBSEQ_MAIN;
 }
+// 検索条件をONにして終了
+static int Subseq_SearchOnEnd( BOX_SEARCH_MAIN_WORK * wk, int seq )
+{
+	Subseq_SearchOn( wk, 0 );
+	return SUBSEQ_SEARCHEXIT;
+}
+
 // 検索条件OFF
 static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
