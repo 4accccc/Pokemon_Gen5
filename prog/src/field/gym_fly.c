@@ -29,6 +29,7 @@
 // event
 #include "event_mapchange.h"  // for EVENT_ChangeMapPos
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
+#include "event_trainer_eye.h"// for TRAINER_MMDL_GetTrainerID
 
 // gimmick
 #include "field_gimmick_def.h"
@@ -37,6 +38,7 @@
 // script
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/c06gym0101_def.h"  //for SCRID_～
+#include "script_trainer.h" // for SCRIPT_CheckEventFlagTrainer
 
 // arc
 #include "arc/fieldmap/gym_fly.naix"
@@ -253,6 +255,8 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk );
 
 // 吹き飛びの移動距離算出
 static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, BLOW_HIT_TYPE *p_hit_type, s16 gx, s16 gz );
+// NPCにぶつかった時に、上を向かせる
+static BOOL BLOW_EVENT_HitMdl( FIELDMAP_WORK *p_fieldmap, FIELD_PLAYER *p_player );
 
 // EXPOBJ
 static void EXPOBJ_ObjSet( GYM_FLY_TMP *p_wk );
@@ -384,7 +388,7 @@ void GYM_FLY_Setup(FIELDMAP_WORK *p_fieldmap)
   p_wk->windmeter_wk.parent_exp_obj = p_wk->exp_obj;
 
   // 環境音
-  FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
+  //FSND_PlayEnvSE( p_wk->p_sound, GYM_FLY_SE_FAN );
 
   // セーブから取得
   p_wk->time_start = SAVE_GetTimeFlg( p_wk->p_sv_wk );
@@ -1472,8 +1476,23 @@ static GMEVENT_RESULT BlowEvent( GMEVENT* event, int* seq, void* wk )
       MMDL_OffStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
     }
 
-    // 上を向く
-    MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
+    // NPCとぶつかった時かつ1歩後ろではない時は
+    // 自機下を向く
+    // NPC上を向く
+    if( p_wk->hit_type == BLOW_HIT_NPC && p_wk->is_wall == FALSE )
+    {
+      // NPC上を向く
+      BOOL ret = BLOW_EVENT_HitMdl( p_wk->p_fieldmap, p_wk->player );
+
+      // 上を向くのに成功すると自機も下を向く
+      if( ret == TRUE ){ MMDL_SetAcmd( p_wk->mmdl, AC_DIR_D ); }
+      else             { MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U ); }
+    }
+    else
+    {
+      // 上を向く
+      MMDL_SetAcmd( p_wk->mmdl, AC_DIR_U );
+    }
 
     // SE停止
     {
@@ -2112,6 +2131,24 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
         MMDL_OnStatusBit( p_wk->mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
       }
 
+      // カメラ振動タスクを登録
+      {
+        FIELD_TASK* cam;
+        FIELD_TASK_MAN* taskMan;
+
+        CAM_SHAKE_PARAM shakeParam;
+        shakeParam.Width           = 0;
+        shakeParam.Height          = 2;
+        shakeParam.Sync            = 3;
+        shakeParam.Time            = 4;
+        shakeParam.NowSync         = 0;
+        shakeParam.WaitStartFrame  = move_distance*3 - 6; // -6でぶつかる前にタスク起動
+
+        cam = FIELD_TASK_ShakeCamera( p_wk->p_fieldmap, &shakeParam );
+        taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+        FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
+      }
+
       // SE ヒュー
       PMSND_PlaySE( GYM_FLY_SE_BLOW );
 
@@ -2135,7 +2172,8 @@ static GMEVENT_RESULT ScriptBlowEvent( GMEVENT* event, int* seq, void* wk )
       {
         FIELD_TASK_MAN* taskMan;
         taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
-        if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) {
+        // カメラ振動タスクが残っているため1以下
+        if( FIELD_TASK_MAN_GetTaskNum(taskMan) <= 1 ) {
 
           // SE 停止
           {
@@ -2272,6 +2310,60 @@ static const u8 BLOW_EVENT_GetMoveDistance( FIELDMAP_WORK *p_fieldmap, BLOW_HIT_
   }
 
   return move_distance;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プレイヤーの1歩下にいるNPCに上を向かせる
+ *	        NPCが上を向く条件は
+ *	        動作モデルがいる かつ 対戦していない
+ *
+ *	@param	p_fieldmap
+ *	@param	p_player 
+ *
+ *	@return 成功するとTRUE
+ */
+//-----------------------------------------------------------------------------
+static BOOL BLOW_EVENT_HitMdl( FIELDMAP_WORK *p_fieldmap, FIELD_PLAYER *p_player )
+{
+  s16 gx, gy, gz;
+  FIELD_PLAYER_GetGridPos( p_player, &gx, &gy, &gz );
+
+  // 1歩下
+  gz += 1;
+
+  // NPCいるかチェック
+  {
+    MMDL *p_mmdl;
+    // 動作モデルを検索
+    p_mmdl = MMDLSYS_SearchGridPos(
+        FIELDMAP_GetMMdlSys( p_fieldmap ),
+        gx,
+        gz,
+        TRUE );
+
+    GF_ASSERT_MSG( p_mmdl, "動作モデルが見つかりません\n");
+
+    // 動作モデルを発見
+    if( p_mmdl )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+
+      // 動作モデルからトレーナーID取得
+      u16 tr_id = TRAINER_MMDL_GetTrainerID( p_mmdl );
+      ICHI_Printf("トレーナーID %d\n", tr_id);
+      // トレーナーIDが戦っているかチェック
+      if( SCRIPT_CheckEventFlagTrainer(evwork,tr_id) == 0 )
+      {
+        MMDL_SetAcmd( p_mmdl, AC_DIR_U );
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
 }
 
 //=============================================================================
