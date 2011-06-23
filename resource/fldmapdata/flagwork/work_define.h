@@ -203,6 +203,8 @@
 #define WK_SCENE_C08GYM_TURN_BTN_01      16591 /* 0x40cf ソウリュウジム：1階用イベント用（POSイベントの起動制御に使用） */
 #define WK_SCENE_C08GYM_TURN_BTN_02      16592 /* 0x40d0 ソウリュウジム：2階用イベント用（POSイベントの起動制御に使用） */
 #define WK_SCENE_C08GYM_TURN_BTN_03      16593 /* 0x40d1 ソウリュウジム：3階用イベント用（POSイベントの起動制御に使用） */
+#define WK_SCENE_D06R0101_SWBELL_01      16594 /* 0x40d2 電気石の洞穴：ベルイベントPOS制御用ワーク */
+#define WK_SCENE_D06R0101_BOSS_01        16595 /* 0x40d3 電気石の洞穴：NイベントPOS */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
