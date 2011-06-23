@@ -296,21 +296,21 @@
 #define FE_D11R0101_PAIR_01                280 /* 0x0118 D11R0101：連れ歩き用フラグ（将来的に廃止） */
 #define FE_R05_BADRIDER_TALK               281 /* 0x0119 R05：チャールズの会話フラグ */
 #define FE_H02_ITEMGET_01                  282 /* 0x011a H02：リザードン見せイベントのアイテム入手フラグ */
-#define FE_C04_RALLYPOINT_01               283 /* 0x011b C04：ラリーチェックポイントフラグ（ギアステーション） */
-#define FE_C04_RALLYPOINT_02               284 /* 0x011c C04：ラリーチェックポイントフラグ（ミュージカルホール） */
-#define FE_C04_RALLYPOINT_03               285 /* 0x011d C04：ラリーチェックポイントフラグ（ビッグスタジアム */
-#define FE_C04_RALLYPOINT_04               286 /* 0x011e C04：ラリーチェックポイントフラグ（リトルコート） */
-#define FE_C04_RALLYPOINT_05               287 /* 0x011f C04：ラリーチェックポイントフラグ（観覧車） */
-#define FE_C04_SWHEROINE_01                288 /* 0x0120 C04：バトルサブウェイう誘導イベント */
-#define FE_C05R0501_POKE22_GET             289 /* 0x0121 C05R0501：ゾロア入手フラグ */
-#define FE_C06R0201_SWLEADER6_01           290 /* 0x0122 C06：初回話しかけチェック */
-#define FE_C03P09_WAITRESS_01              291 /* 0x0123 C03P09：ヒウンアイス店員初回話しかけ */
-#define FE_C03P09_WAITRESS_02              292 /* 0x0124 C03P09：ヒウンアイス店員繁盛後初回話しかけ */
-#define FE_C03P09_ICEBUY_01                293 /* 0x0125 C03P09：ヒウンアイス初回購入 */
-#define FE_T07PC0101_ITEMGET_01            294 /* 0x0126 T07PC0101：アイテム入手フラグ */
-#define FE_T04PC0101_ITEMGET_01            295 /* 0x0127 T04PC0101：アイテム入手フラグ */
-		/* not used   296(0x0128) */
-		/* not used   297(0x0129) */
+#define FE_C04_RALLYPOINT_01               283 /* 0x011b ライモンシティ：ラリーチェックポイントフラグ（ギアステーション） */
+#define FE_C04_RALLYPOINT_02               284 /* 0x011c ライモンシティ：ラリーチェックポイントフラグ（ミュージカルホール） */
+#define FE_C04_RALLYPOINT_03               285 /* 0x011d ライモンシティ：ラリーチェックポイントフラグ（ビッグスタジアム */
+#define FE_C04_RALLYPOINT_04               286 /* 0x011e ライモンシティ：ラリーチェックポイントフラグ（リトルコート） */
+#define FE_C04_RALLYPOINT_05               287 /* 0x011f ライモンシティ：ラリーチェックポイントフラグ（観覧車） */
+#define FE_C04_SWHEROINE_01                288 /* 0x0120 ライモンシティ：：バトルサブウェイう誘導イベント */
+#define FE_C05R0501_POKE22_GET             289 /* 0x0121 ホドモエシティ・ポケモンハウス：ゾロア入手フラグ */
+#define FE_C06R0201_SWLEADER6_01           290 /* 0x0122 フキヨセシティ：初回話しかけチェック */
+#define FE_C03P09_WAITRESS_01              291 /* 0x0123 ヒウンシティ：ヒウンアイス店員初回話しかけ */
+#define FE_C03P09_WAITRESS_02              292 /* 0x0124 ヒウンシティ：ヒウンアイス店員繁盛後初回話しかけ */
+#define FE_C03P09_ICEBUY_01                293 /* 0x0125 ヒウンシティ：ヒウンアイス初回購入 */
+#define FE_T07PC0101_ITEMGET_01            294 /* 0x0126 ヤマジタウン：アイテム入手フラグ */
+#define FE_T04PC0101_ITEMGET_01            295 /* 0x0127 サザナミタウン：アイテム入手フラグ */
+#define FE_D06R0201_ITEMGET_01             296 /* 0x0128 電気石の洞穴：アイテム入手フラグ */
+#define FE_R08_ITEMGET_01                  297 /* 0x0129 ８番道路：アイテム入手フラグ */
 		/* not used   298(0x012a) */
 		/* not used   299(0x012b) */
 		/* not used   300(0x012c) */
@@ -603,6 +603,10 @@
 #define FV_T03_SWPLASMAM_01                685 /* 0x02ad カゴメタウン：七賢者ヴィオとプラズマ団 */
 #define FV_T03_MORNING_PEOPLE_01           686 /* 0x02ae カゴメタウン：カゴメタウン民家の住人を朝&#xff5e;昼 */
 #define FV_T03_NIGHT_PEOPLE_01             687 /* 0x02af カゴメタウン：カゴメタウンの住人を夜間 */
+#define FV_D06R0101_SWBELL_01              688 /* 0x02b0 電気石の洞穴：ベル */
+#define FV_D06R0101_BOSS_01                689 /* 0x02b1 電気石の洞穴：N */
+#define FV_D06R0201_SWBELL_01              690 /* 0x02b2 電気石の洞穴：ベル */
+#define FV_R08_FISING_01                   691 /* 0x02b3 8番道路：ツリーズ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
