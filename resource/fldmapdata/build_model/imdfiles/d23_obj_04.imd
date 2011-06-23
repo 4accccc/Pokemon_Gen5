@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-06-22T18:54:54" source="d23_obj_04.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-06-23T15:28:13" source="d23_obj_04.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-06-22T18:54:54" source="d23_obj_04.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-06-23T15:28:13" source="d23_obj_04.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-4.000000 -0.812500 -0.875000" whd="6.500000 0.312500 1.125000"/>
+<box_test pos_scale="6" xyz="-4.000000 -0.437500 -1.000000" whd="6.500000 0.312500 1.125000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="d23_sui01"
@@ -442,7 +442,7 @@
 </polygon_array>
 
 <node_array size="9">
-	<node index="0" name="null1" kind="null"
+	<node index="0" name="world_root" kind="null"
 		parent="-1"
 		child="1"
 		brother_next="-1"
@@ -465,7 +465,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-96.000000 -37.000000 -40.000000"
+		translate="-96.000000 -13.000000 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -485,7 +485,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-144.000000 -37.000000 -40.000000"
+		translate="-144.000000 -13.000000 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -505,7 +505,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="112.000000 -37.000000 -40.000000"
+		translate="112.000000 -13.000000 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -525,7 +525,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="160.000000 -37.000000 -40.000000"
+		translate="160.000000 -13.000000 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -545,7 +545,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-224.000000 -37.000000 -40.000000"
+		translate="-224.000000 -13.000000 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -565,7 +565,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-176.000000 -37.000000 -40.000000"
+		translate="-176.000000 -13.000000 -48.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -585,7 +585,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="40.000000 -37.000000 -56.000000"
+		translate="40.000000 -13.000000 -64.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -605,7 +605,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-24.000000 -37.000000 -56.000000"
+		translate="-24.000000 -13.000000 -64.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
