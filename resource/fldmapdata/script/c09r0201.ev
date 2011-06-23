@@ -55,6 +55,15 @@ INIT_EVENT_END
 /*					FIELD_RECOVER_LABEL  						*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_c09r0201
+
+  // 主人公が頂上にいるときの処理
+  IF $LOCALWORK1 == 1 THEN
+    // レールOFF
+    _FOURKINGS_RAIL_OFF( 2 )
+		// カメラ設定を変更
+		_FOURKINGS_SET_TOP_CAMERA( 2 )
+  ENDIF
+
 INIT_EVENT_END
 
 /************************************************************/
@@ -69,16 +78,19 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c09r0201_enter_01
 
+  _TIME_WAIT(1)
+
   // 炎点火
   _FOURKINGS_EVIL_FIRE(0)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_01 )    // 火がつく音
-	_SE_WAIT()
+
+  _TIME_WAIT(6)
 
   // 爪開く
   _FOURKINGS_EVIL_CLAW(0)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_02 )    // 爪が順番に開く音
-	_SE_WAIT()
 
+  _TIME_WAIT(10)
 
   //=====================================
   //このPOSの起動をさせなくする
@@ -92,19 +104,34 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c09r0201_enter_02
 
+  // レールOFF
+  _FOURKINGS_RAIL_OFF(2)
+
+	// カメラ設定を変更
+	_FOURKINGS_SET_TOP_CAMERA(2)
+
+  _TIME_WAIT(1)
+
   // 炎点火
   _FOURKINGS_EVIL_FIRE(1)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_01 )    // 火がつく音
-	_SE_WAIT()
+
+  _TIME_WAIT(6)
 
   // 爪閉じる
   _FOURKINGS_EVIL_CLAW(1)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_03 )    // 爪が一気に閉じる音
-	_SE_WAIT()
+
+  _TIME_WAIT(10)
 
   //=====================================
   //このPOSの起動をさせなくする
   $LOCALWORK1 = 1
+  //=====================================
+
+  //=====================================
+  //ワープPOSイベントを有効
+	$LOCALWORK10 = 555
   //=====================================
 
 EVENT_END
