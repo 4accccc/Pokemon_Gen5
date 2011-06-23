@@ -129,6 +129,9 @@ enum
 // 上画面に表示する説明文字列の展開用バッファ（ローカライズも考えて２倍）
 #define SUBDISP_TEXT_SIZE   ( 64*2 )
 
+#define	BUTTON_ID_TB_RETURN		( 0xffffffff )		// 終了ボタンのボタンID
+
+
 //-------------------------------------
 /// フレーム
 //=====================================
@@ -241,6 +244,7 @@ enum{
   BOXSEARCH_PLATE_RESET,
   BOXSEARCH_PLATE_ON,
   BOXSEARCH_PLATE_OFF,
+  BOXSEARCH_PLATE_RETURN,
   BOXSEARCH_PLATE_MAX,
 };
 
@@ -276,7 +280,7 @@ enum{
   BOXSEARCH_BMPID_ANSWER5,
   BOXSEARCH_BMPID_CATEGORY,
   BOXSEARCH_BMPID_TEXT,
-  BOXSEARCH_BMPID_NOW_CATETORY,
+  BOXSEARCH_BMPID_NOW_CATEGORY,
   BOXSEARCH_BMPID_OLD_SELECT,
 };
 
@@ -437,6 +441,8 @@ typedef struct
   int subseq;
   int next_subseq;
   int main_func_pos;  // トップメニューから選んだ項目
+
+	int	buttonID;		// アニメ中のボタンID
 
 } BOX_SEARCH_MAIN_WORK;
 
@@ -613,16 +619,15 @@ static void PrintStrbuf( BOX_SEARCH_MAIN_WORK *wk, int bmpid, int strbufID, int 
 static void PrintMessage( BOX_SEARCH_MAIN_WORK *wk, int bmpid, int msgID, int y );
 static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type);
 static void FrameListExit(BOX_SEARCH_MAIN_WORK *wk);
+static void FrameListClear( BOX_SEARCH_MAIN_WORK * wk );
 
-
+static void cm_dummy_callback( void *work, int pos, int old );
 static void touch_callback( void *work, int pos, int old );
 static void cursor_move_callback( void *work, int pos, int old );
 static void cursor_off_callback( void *work, int pos, int old );
 static void cursor_on_callback( void *work, int pos, int old );
 static void change_search_checkbox( BOX_SEARCH_MAIN_WORK *wk, int pos );
 static void put_search_checkbox( BOX_SEARCH_MAIN_WORK *wk );
-static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type);
-static void FrameListExit(BOX_SEARCH_MAIN_WORK *wk);
 static void _set_subseq_nextseq( BOX_SEARCH_MAIN_WORK *wk,  int next );
 static u16* ZukanSortDataGet( int heap, int* p_arry_num );
 static void TransMainBGScreen( BOX_SEARCH_MAIN_WORK *wk, int type );
@@ -632,12 +637,20 @@ static void _set_search_data( BOX_SEARCH_MAIN_WORK *wk, int type, int param );
 static void _set_search_data_mark( BOX_SEARCH_MAIN_WORK *wk, int mark, int param );
 static BOOL _get_search_data_mark( BOX_SEARCH_MAIN_WORK *wk, int mark );
 static void _strbuf_print( BOX_SEARCH_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param );
+static void PrintStrBuf( BOX_SEARCH_MAIN_WORK * wk, PRINT_UTIL * print_util, PRINT_QUE * que, GFL_MSGDATA * mman, int strIdx, PRINTSYS_LSB col, int y );
 static void SetMarkDataObj( BOX_SEARCH_MAIN_WORK *wk, int objpos );
+static void PutMarkDataObj( BOX_SEARCH_MAIN_WORK * wk, int id );
+static void SetMarkDataObjDrawEnable( BOX_SEARCH_MAIN_WORK * wk, int id, BOOL flg );
+static void PrintDefautltSubDisp( BOX_SEARCH_MAIN_WORK * wk );
 static void SetupMainMode( BOX_SEARCH_MAIN_WORK *wk );
+static void SetDrawEnableMainItemObj( BOX_SEARCH_MAIN_WORK * wk, BOOL flg );
 static void _reset_search_info( BOX_SEARCH_MAIN_WORK *wk );
-static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK *wk, int flag );
+static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK * wk, BOOL flag );
 static void SubTextPrint( BOX_SEARCH_MAIN_WORK *wk, int subseq );
-
+static void BmpWinTransScreen( GFL_BMPWIN * bmpwin );
+static int SetButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next );
+static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos );
+static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk );
 
 static int Subseq_Start(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq);
@@ -678,13 +691,16 @@ static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_FramelistInitWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchExit(BOX_SEARCH_MAIN_WORK *wk, int seq);
+static int Subseq_ButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int seq );
+static int Subseq_SelectSet( BOX_SEARCH_MAIN_WORK * wk, int seq );
+
 
 //=============================================================================
 // サブシーケンスENUM定義
 //=============================================================================
 enum{
-  SUBSEQ_START=0,             // 0
-  SUBSEQ_MAIN,                //
+  SUBSEQ_START=0,             // 00: 初期画面開始
+  SUBSEQ_MAIN,                // 01: 初期画面メイン
   SUBSEQ_RETURN,              //
   SUBSEQ_SELECTPOKEMONINIT,   //
   SUBSEQ_SELECTPOKEMON1,      //
@@ -716,12 +732,14 @@ enum{
   SUBSEQ_SELECTMARKINIT,      //30
   SUBSEQ_SELECTMARK,          //
   SUBSEQ_SELECTMARKEXIT,      //
-  SUBSEQ_SEARCHON,            //
-  SUBSEQ_SEARCHOFF,           //
-  SUBSEQ_SEARCHRESET,         //
+  SUBSEQ_SEARCHON,            // 33: 検索条件ON
+  SUBSEQ_SEARCHOFF,           // 34: 検索条件OFF
+  SUBSEQ_SEARCHRESET,         // 35: 検索条件リセット
   SUBSEQ_ANIMEWAIT,           // 
   SUBSEQ_FRAMELISTINITWAIT,   //
   SUBSEQ_SEARCHEXIT,          //38
+	SUBSEQ_BUTTON_ANIME,				// 39: ボタンアニメ終了待ち
+	SUBSEQ_SELECT_SET,					// 40: 各検索条件選択へ
 };
 
 //=============================================================================
@@ -755,9 +773,11 @@ static int (* const FuncTable[])(BOX_SEARCH_MAIN_WORK *wk, int seq)={
   Subseq_SelectTokusei3Init,    // 
   Subseq_SelectTokusei3,        // 
   Subseq_SelectTokusei3Exit,    // 
+
   Subseq_SelectSexInit,         // 
   Subseq_SelectSex,             // 
   Subseq_SelectSexExit,         // 
+
   Subseq_SelectItemHaveInit,    // 
   Subseq_SelectItemHave,        // 
   Subseq_SelectItemHaveExit,    // 
@@ -770,7 +790,204 @@ static int (* const FuncTable[])(BOX_SEARCH_MAIN_WORK *wk, int seq)={
   Subseq_AnimeWait,             // 
   Subseq_FramelistInitWait,     // 
   Subseq_SearchExit,            // 
+	Subseq_ButtonAnime,
+	Subseq_SelectSet,
 };
+
+
+
+
+static const u16 main_scr_bg_table[]={
+  NARC_box_gra_boxsearchbase_bgd_1_NSCR,
+  NARC_box_gra_boxsearchbase_bgd_2_on_NSCR,
+  NARC_box_gra_boxsearchbase_bgd_2_off_NSCR,
+};
+
+
+// トップ画面マーキング、入力用マーキング、スクロールつまみの制御
+static const u8 onoff_tbl[][3]={
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_POKEMON,        // 「ポケモン」
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_SEIKAKU,        // 「せいかく」
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_TOKUSEI,        // 「とくせい」
+  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_SEIBETU,        // 「せいべつ」
+  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_MOTIMONO,       // 「もちもの」
+  { FALSE, TRUE,  FALSE }, // BOXSEARCH_LISTID_MARK,           // 「マーク」
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_NO_SEARCH,      // 「－」
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_SIBORIKOMI,     // 「ポケモン　しぼりこみ」
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_NAME_TOPWORD,   // 名前母音
+  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_NAME_NEXTWORD,  // 名前子音
+  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_TOKUSEI_TOPWORD,// 特性母音
+  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_TOKUSEI_NEXTWORD,// 特性子音
+};
+
+static const u8 now_category_tbl[]={
+  BOXSEARCH_STRID_POKEMON, // BOXSEARCH_LISTID_POKEMON,        
+  BOXSEARCH_STRID_SEIKAKU, // BOXSEARCH_LISTID_SEIKAKU,        
+  BOXSEARCH_STRID_TOKUSEI, // BOXSEARCH_LISTID_TOKUSEI,        
+  BOXSEARCH_STRID_SEIBETU, // BOXSEARCH_LISTID_SEIBETU,        
+  BOXSEARCH_STRID_MOTIMONO,// BOXSEARCH_LISTID_MOTIMONO,       
+  BOXSEARCH_STRID_MARK,    // BOXSEARCH_LISTID_MARK,           
+  0, // BOXSEARCH_LISTID_NO_SEARCH,      
+  0, // BOXSEARCH_LISTID_SIBORIKOMI,     
+  BOXSEARCH_STRID_POKEMON, // BOXSEARCH_LISTID_NAME_TOPWORD,   
+  BOXSEARCH_STRID_POKEMON, // BOXSEARCH_LISTID_NAME_NEXTWORD,  
+  BOXSEARCH_STRID_TOKUSEI, // BOXSEARCH_LISTID_TOKUSEI_TOPWORD,
+  BOXSEARCH_STRID_TOKUSEI, // BOXSEARCH_LISTID_TOKUSEI_NEXTWORD
+};
+
+
+static const u16 topword_tbl[]={
+  mes_box_search_hyphen_01,
+  mes_box_search_initial_01,
+  mes_box_search_initial_06,
+  mes_box_search_initial_11,
+  mes_box_search_initial_16,
+  mes_box_search_initial_21,
+  mes_box_search_initial_26,
+  mes_box_search_initial_31,
+  mes_box_search_initial_36,
+  mes_box_search_initial_39,
+  mes_box_search_initial_44,
+};
+
+static const u8 childword_num[]={
+  5,  // ア
+  5,  // カ
+  5,  // サ
+  5,  // タ
+  5,  // ナ
+  5,  // ハ
+  5,  // マ
+  3,  // ヤ
+  5,  // ラ
+  1,  // ワ
+};
+
+static const int head2pokename[]={
+  0,  // あ
+  5,  // か
+  10, // さ
+  15, // た
+  20, // な
+  25, // は
+  30, // ま
+  35, // や
+  38, // ら
+  43, // わ
+};
+
+
+static const u16 sort_pokename_start_index[]={
+    ZKN_SORT_AIUEO_IDX_START_A  ,
+    ZKN_SORT_AIUEO_IDX_START_I  ,
+    ZKN_SORT_AIUEO_IDX_START_U  ,
+    ZKN_SORT_AIUEO_IDX_START_E  ,
+    ZKN_SORT_AIUEO_IDX_START_O  ,
+    ZKN_SORT_AIUEO_IDX_START_KA   ,
+    ZKN_SORT_AIUEO_IDX_START_KI   ,
+    ZKN_SORT_AIUEO_IDX_START_KU   ,
+    ZKN_SORT_AIUEO_IDX_START_KE   ,
+    ZKN_SORT_AIUEO_IDX_START_KO   ,
+    ZKN_SORT_AIUEO_IDX_START_SA   ,
+    ZKN_SORT_AIUEO_IDX_START_SI   ,
+    ZKN_SORT_AIUEO_IDX_START_SU   ,
+    ZKN_SORT_AIUEO_IDX_START_SE   ,
+    ZKN_SORT_AIUEO_IDX_START_SO   ,
+    ZKN_SORT_AIUEO_IDX_START_TA   ,
+    ZKN_SORT_AIUEO_IDX_START_TI   ,
+    ZKN_SORT_AIUEO_IDX_START_TU   ,
+    ZKN_SORT_AIUEO_IDX_START_TE   ,
+    ZKN_SORT_AIUEO_IDX_START_TO   ,
+    ZKN_SORT_AIUEO_IDX_START_NA   ,
+    ZKN_SORT_AIUEO_IDX_START_NI   ,
+    ZKN_SORT_AIUEO_IDX_START_NU   ,
+    ZKN_SORT_AIUEO_IDX_START_NE   ,
+    ZKN_SORT_AIUEO_IDX_START_NO   ,
+    ZKN_SORT_AIUEO_IDX_START_HA   ,
+    ZKN_SORT_AIUEO_IDX_START_HI   ,
+    ZKN_SORT_AIUEO_IDX_START_HU   ,
+    ZKN_SORT_AIUEO_IDX_START_HE   ,
+    ZKN_SORT_AIUEO_IDX_START_HO   ,
+    ZKN_SORT_AIUEO_IDX_START_MA   ,
+    ZKN_SORT_AIUEO_IDX_START_MI   ,
+    ZKN_SORT_AIUEO_IDX_START_MU   ,
+    ZKN_SORT_AIUEO_IDX_START_ME   ,
+    ZKN_SORT_AIUEO_IDX_START_MO   ,
+    ZKN_SORT_AIUEO_IDX_START_YA   ,
+    ZKN_SORT_AIUEO_IDX_START_YU   ,
+    ZKN_SORT_AIUEO_IDX_START_YO   ,
+    ZKN_SORT_AIUEO_IDX_START_RA   ,
+    ZKN_SORT_AIUEO_IDX_START_RI   ,
+    ZKN_SORT_AIUEO_IDX_START_RU   ,
+    ZKN_SORT_AIUEO_IDX_START_RE   ,
+    ZKN_SORT_AIUEO_IDX_START_RO   ,
+    ZKN_SORT_AIUEO_IDX_START_WA   ,
+};
+
+static const u16 sort_pokename_end_index[]={
+    ZKN_SORT_AIUEO_IDX_END_A  ,
+    ZKN_SORT_AIUEO_IDX_END_I  ,
+    ZKN_SORT_AIUEO_IDX_END_U  ,
+    ZKN_SORT_AIUEO_IDX_END_E  ,
+    ZKN_SORT_AIUEO_IDX_END_O  ,
+    ZKN_SORT_AIUEO_IDX_END_KA   ,
+    ZKN_SORT_AIUEO_IDX_END_KI   ,
+    ZKN_SORT_AIUEO_IDX_END_KU   ,
+    ZKN_SORT_AIUEO_IDX_END_KE   ,
+    ZKN_SORT_AIUEO_IDX_END_KO   ,
+    ZKN_SORT_AIUEO_IDX_END_SA   ,
+    ZKN_SORT_AIUEO_IDX_END_SI   ,
+    ZKN_SORT_AIUEO_IDX_END_SU   ,
+    ZKN_SORT_AIUEO_IDX_END_SE   ,
+    ZKN_SORT_AIUEO_IDX_END_SO   ,
+    ZKN_SORT_AIUEO_IDX_END_TA   ,
+    ZKN_SORT_AIUEO_IDX_END_TI   ,
+    ZKN_SORT_AIUEO_IDX_END_TU   ,
+    ZKN_SORT_AIUEO_IDX_END_TE   ,
+    ZKN_SORT_AIUEO_IDX_END_TO   ,
+    ZKN_SORT_AIUEO_IDX_END_NA   ,
+    ZKN_SORT_AIUEO_IDX_END_NI   ,
+    ZKN_SORT_AIUEO_IDX_END_NU   ,
+    ZKN_SORT_AIUEO_IDX_END_NE   ,
+    ZKN_SORT_AIUEO_IDX_END_NO   ,
+    ZKN_SORT_AIUEO_IDX_END_HA   ,
+    ZKN_SORT_AIUEO_IDX_END_HI   ,
+    ZKN_SORT_AIUEO_IDX_END_HU   ,
+    ZKN_SORT_AIUEO_IDX_END_HE   ,
+    ZKN_SORT_AIUEO_IDX_END_HO   ,
+    ZKN_SORT_AIUEO_IDX_END_MA   ,
+    ZKN_SORT_AIUEO_IDX_END_MI   ,
+    ZKN_SORT_AIUEO_IDX_END_MU   ,
+    ZKN_SORT_AIUEO_IDX_END_ME   ,
+    ZKN_SORT_AIUEO_IDX_END_MO   ,
+    ZKN_SORT_AIUEO_IDX_END_YA   ,
+    ZKN_SORT_AIUEO_IDX_END_YU   ,
+    ZKN_SORT_AIUEO_IDX_END_YO   ,
+    ZKN_SORT_AIUEO_IDX_END_RA   ,
+    ZKN_SORT_AIUEO_IDX_END_RI   ,
+    ZKN_SORT_AIUEO_IDX_END_RU   ,
+    ZKN_SORT_AIUEO_IDX_END_RE   ,
+    ZKN_SORT_AIUEO_IDX_END_RO   ,
+    ZKN_SORT_AIUEO_IDX_END_WA   ,
+};
+
+#include "../../../resource/tokusei/tokusei_aiueo_table.cdat"
+#include "../../../resource/tokusei/tokusei_aiueo_header_table.cdat"
+
+static const u16 sex_msg_tbl[]={
+  mes_box_search_hyphen_01, // ー  （絞り込み対象にしない）
+  mes_box_search_sex_01,    // ♂
+  mes_box_search_sex_02,    // ♀
+  mes_box_search_sex_03,    // せいべつなし
+};
+
+static const u16 item_msg_tbl[]={
+  mes_box_search_hyphen_01, // ー  （絞り込み対象にしない）
+  mes_box_search_item_02,   // もっていない
+  mes_box_search_item_01,   // もっている
+};
+
+
 
 
 //=============================================================================
@@ -854,7 +1071,7 @@ static GFL_PROC_RESULT BOXSEARCHProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
   BOXSEARCH_BG_LoadResource( &wk->wk_bg, wk->heapID );
 
   // メイン画面のBGスクリーンを転送する
-  TransMainBGScreen( wk, 0 );
+//  TransMainBGScreen( wk, 0 );
 
   // 文字列読み込み
   StrbufLoad( wk );
@@ -911,13 +1128,15 @@ static GFL_PROC_RESULT BOXSEARCHProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 
   
   // 初期状態描画
-  SetupMainMode( wk );
+//  SetupMainMode( wk );
+	PrintDefautltSubDisp( wk );
+	Subseq_Start( wk, 0 );
 
   WIPE_SYS_Start(
     WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
     WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
 
-  wk->subseq = 0;
+//  wk->subseq = 0;
   return GFL_PROC_RES_FINISH;
 }
 //-----------------------------------------------------------------------------
@@ -1024,7 +1243,8 @@ static GFL_PROC_RESULT BOXSEARCHProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
   case SEQ_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE ){
       *seq = SEQ_MAIN;
-      wk->subseq = SUBSEQ_START;
+//      wk->subseq = SUBSEQ_START;
+      wk->subseq = SUBSEQ_MAIN;
     }
     break;
   case SEQ_MAIN:
@@ -1850,6 +2070,7 @@ static void ObjInit( BOX_SEARCH_MAIN_WORK *wk, GFL_CLUNIT *unit, HEAPID heapID )
     GFL_CLACT_WK_SetBgPri( wk->clwk[i], dat->priority );
     GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], dat->appear );
     GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[i], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
   }
   
   // マーキングのパレットを上書きする
@@ -1920,8 +2141,59 @@ static void SubTextPrint( BOX_SEARCH_MAIN_WORK *wk, int subseq )
     break;
   }
 
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
+	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
 }
+
+// BGに転送
+static void BmpWinTransScreen( GFL_BMPWIN * bmpwin )
+{
+	GFL_BMPWIN_MakeScreen( bmpwin );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(bmpwin) );
+}
+
+
+
+
+#define TOPIC_NAME_OFFSET_Y ( 4 )
+
+// タイトルなどを描画
+static void PrintDefautltSubDisp( BOX_SEARCH_MAIN_WORK * wk )
+{
+	u32	i;
+
+	// タイトル描画
+	PrintStrbuf( wk, BOXSEARCH_BMPID_TITLE, BOXSEARCH_STRID_TITLE, 0 );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TITLE] );
+	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TITLE] );
+
+	//「ポケモン　しぼりこみ」
+	PrintStrbuf( wk, BOXSEARCH_BMPID_CATEGORY, BOXSEARCH_STRID_SIBORIKOMI, 0 );
+//	GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_CATEGORY] );
+	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_CATEGORY] );
+
+	// 項目描画　※書き換えてないみたいなので、ここで１回だけ
+	for( i=0; i<6; i++ ){
+		PrintStrbuf( wk, BOXSEARCH_BMPID_TOPIC0+i, i, TOPIC_NAME_OFFSET_Y );
+	}
+}
+
+// 現在選択中の項目を表示
+static void PrintNowCategory( BOX_SEARCH_MAIN_WORK * wk, u32 id )
+{
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] ), 0 );
+	PrintStrbuf( wk, BOXSEARCH_BMPID_NOW_CATEGORY, now_category_tbl[id], 0 );
+	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] );
+}
+
+// 現在選択中のデータを表示
+static void PrintNowSelect( BOX_SEARCH_MAIN_WORK * wk, GFL_MSGDATA * msg, u32 id )
+{
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_OLD_SELECT] ), 0 );
+	PrintStrBuf( wk, &wk->print_util[BOXSEARCH_BMPID_OLD_SELECT], wk->print_que, msg, id, PRINTSYS_MACRO_LSB(1,2,0), 0 );
+	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_OLD_SELECT] );
+}
+
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -1932,28 +2204,73 @@ static void SubTextPrint( BOX_SEARCH_MAIN_WORK *wk, int subseq )
 //----------------------------------------------------------------------------------
 static void SetupMainMode( BOX_SEARCH_MAIN_WORK *wk )
 {
-  // タイトル描画
-  PrintStrbuf( wk, BOXSEARCH_BMPID_TITLE, BOXSEARCH_STRID_TITLE, 0 );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TITLE] );
+	u32	i;
 
-  // 「ポケモン　しぼりこみ」
-  PrintStrbuf( wk, BOXSEARCH_BMPID_CATEGORY, BOXSEARCH_STRID_SIBORIKOMI, 0 );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_CATEGORY] );
-  
+/*
   // 左選択情報BMPWINの消去
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATETORY] ), 0 );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATETORY] );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] ), 0 );
+  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] );
+*/
 
   // 「じょうほうを　えらび　…」
-  SubTextPrint( wk, SUBSEQ_START );
-
-  // サーチON/OFFのチェックボックス反映
-  put_search_checkbox(wk);
+	SubTextPrint( wk, SUBSEQ_START );
   
   // BG・BMPWIN転送
-  SetupScreen( wk, 0, 0 );
+//  SetupScreen( wk, 0, 0 );
+
+	TransMainBGScreen( wk, 0 );
+
+	// 項目表示
+	for( i=0; i<6; i++ ){
+		BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TOPIC0+i] );
+//		GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TOPIC0+i] );
+	}
+	DecideInfoPrint( wk, TRUE );
+
+	put_search_checkbox(wk);												// サーチON/OFFのチェックボックス反映
+	SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );	// マーク反映
+	PutMarkDataObj( wk, 0 );
+	SetDrawEnableMainItemObj( wk, TRUE );
+
+
+//    ObjOnOff( wk, 0, 0 );
+    // マーキング反映
+    // 各種BG設定・転送
+//    GFL_BG_ClearScreen( BG_FRAME_BUTTON_M );
+    // 入力済情報を描画
 
 }
+
+// 初期画面表示をクリアする
+static void ClearMainDisp( BOX_SEARCH_MAIN_WORK * wk )
+{
+	int	i;
+
+	// OBJ非表示
+	SetDrawEnableMainItemObj( wk, FALSE );
+	for( i=BOXSEARCH_OBJID_RESET; i<=BOXSEARCH_OBJID_BUTTON_OFF_CHECKBOX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+	}
+
+	// 項目名非表示
+	for( i=BOXSEARCH_BMPID_TOPIC0; i<=BOXSEARCH_BMPID_TOPIC5; i++ ){
+		GFL_BMPWIN_ClearTransWindow_VBlank( wk->bmp_win[i] );
+	}
+	// 入力済み条件非表示
+	DecideInfoPrint( wk, FALSE );
+}
+
+static void SetDrawEnableMainItemObj( BOX_SEARCH_MAIN_WORK * wk, BOOL flg )
+{
+	u32	i;
+
+	// OBJ非表示
+	for( i=BOXSEARCH_OBJID_PLATE0; i<=BOXSEARCH_OBJID_BUTTON_OFF_CHECKBOX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], flg );
+	}
+	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK0_0, flg );
+}
+
 
 //      0
 //      1
@@ -1984,11 +2301,11 @@ static void SetupMainMode( BOX_SEARCH_MAIN_WORK *wk )
 
 static const CURSORMOVE_DATA cm_boxsearch_main[]={
   { 0,0,0,0, 7,1,0,0, { PLATE0_TOUCH_Y, PLATE0_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 0,2,0,0, { PLATE1_TOUCH_Y, PLATE1_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 1,3,0,0, { PLATE2_TOUCH_Y, PLATE2_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 2,4,0,0, { PLATE3_TOUCH_Y, PLATE3_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 3,5,0,0, { PLATE4_TOUCH_Y, PLATE4_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 4,7,0,0, { PLATE5_TOUCH_Y, PLATE5_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
+  { 0,0,0,0, 0,2,1,1, { PLATE1_TOUCH_Y, PLATE1_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
+  { 0,0,0,0, 1,3,2,2, { PLATE2_TOUCH_Y, PLATE2_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
+  { 0,0,0,0, 2,4,3,3, { PLATE3_TOUCH_Y, PLATE3_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
+  { 0,0,0,0, 3,5,4,4, { PLATE4_TOUCH_Y, PLATE4_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
+  { 0,0,0,0, 4,7,5,5, { PLATE5_TOUCH_Y, PLATE5_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
   { 0,0,0,0, 5,0,6,7, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H, PLATE_RESET_X, PLATE_RESET_X+PLATE_RESET_W }, },
   { 0,0,0,0, 5,0,6,8, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H, PLATE_SEARCHON_X, PLATE_SEARCHON_X+PLATE_SEARCHON_W }, },
   { 0,0,0,0, 5,0,7,8, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H, PLATE_SEARCHOFF_X, PLATE_SEARCHOFF_X+PLATE_SEARCHOFF_W }, },
@@ -2002,7 +2319,7 @@ static const CURSORMOVE_CALLBACK cm_callback[]={
   touch_callback,
 };
 
-#define TOPIC_NAME_OFFSET_Y ( 4 )
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -2016,28 +2333,44 @@ static const CURSORMOVE_CALLBACK cm_callback[]={
 //----------------------------------------------------------------------------------
 static int Subseq_Start(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  int i;
-  wk->cmwk = CURSORMOVE_Create(
-          cm_boxsearch_main,
-          cm_callback,
-          wk,
-          0,
-          wk->main_func_pos,
-          wk->heapID );
-  seq = SUBSEQ_MAIN;
+	if( GFL_UI_CheckTouchOrKey() == 0 ){
+		wk->cmwk = CURSORMOVE_Create(
+								cm_boxsearch_main,
+								cm_callback,
+								wk,
+								TRUE,
+								wk->main_func_pos,
+								wk->heapID );
+		cursor_on_callback( wk, wk->main_func_pos, wk->main_func_pos );
+	}else{
+		wk->cmwk = CURSORMOVE_Create(
+								cm_boxsearch_main,
+								cm_callback,
+								wk,
+								FALSE,
+								wk->main_func_pos,
+								wk->heapID );
+	}
+	CURSORMOVE_VanishModeSet( wk->cmwk );
 
+	FrameListClear( wk );	// リストクリア
   SetupMainMode(wk);
 
-  return seq;
+  return SUBSEQ_MAIN;
 }
 
 static int func_table[]={
-  SUBSEQ_SELECTPOKEMONINIT,
-  SUBSEQ_SELECTSEIKAKUINIT,
-  SUBSEQ_SELECTTOKUSEIINIT,
-  SUBSEQ_SELECTSEXINIT,
-  SUBSEQ_SELECTITEMHAVEINIT,
-  SUBSEQ_SELECTMARKINIT,
+/*
+	SUBSEQ_SELECTPOKEMONINIT,		// 名前
+	SUBSEQ_SELECTSEIKAKUINIT,		// 性格
+	SUBSEQ_SELECTTOKUSEIINIT,		// 特性
+*/
+	SUBSEQ_START,								// 名前
+	SUBSEQ_START,		// 性格
+	SUBSEQ_START,		// 特性
+	SUBSEQ_SELECTSEXINIT,				// 性別
+	SUBSEQ_SELECTITEMHAVEINIT,	// 持ち物
+	SUBSEQ_SELECTMARKINIT,			// マーク
 };
 
 //----------------------------------------------------------------------------------
@@ -2055,27 +2388,31 @@ static int _set_mainmode_function( BOX_SEARCH_MAIN_WORK *wk, int seq, int pos )
 {
   switch(pos){
   case BOXSEARCH_PLATE_ON:
-    change_search_checkbox(wk,pos);  // 検索ON
-    _set_search_data( wk, SEARCH_DATAID_ON_OFF, TRUE );
+		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_ON, BOXSEARCH_ANM_SEARCHON_DECIDE, SUBSEQ_SEARCHON );
     break;
+
   case BOXSEARCH_PLATE_OFF:
-    change_search_checkbox(wk,pos);  // 検索OFF
-    _set_search_data( wk, SEARCH_DATAID_ON_OFF, FALSE );
+		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_OFF, BOXSEARCH_ANM_SEARCHOFF_DECIDE, SUBSEQ_SEARCHOFF );
     break;
+
   case BOXSEARCH_PLATE_0: case BOXSEARCH_PLATE_1: case BOXSEARCH_PLATE_2:
   case BOXSEARCH_PLATE_3: case BOXSEARCH_PLATE_4: case BOXSEARCH_PLATE_5:
-    CURSORMOVE_Exit( wk->cmwk );      // 各検索条件を入力開始
-    seq = func_table[pos-BOXSEARCH_PLATE_0];
+    CURSORMOVE_Exit( wk->cmwk );
+		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_PLATE0+pos-BOXSEARCH_PLATE_0, BOXSEARCH_ANM_FRAME_DECIDE, SUBSEQ_SELECT_SET );
     break;
+
   case BOXSEARCH_PLATE_RESET: // 条件リセット
-    _reset_search_info( wk );
-    // 入力済情報を描画
-    DecideInfoPrint( wk, 1 );    
-    // マーキング反映
-    SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
-    break;
+		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_RESET, BOXSEARCH_ANM_RESET_DECIDE, SUBSEQ_SEARCHRESET );
+		break;
+
+	case BOXSEARCH_PLATE_RETURN:
+		CURSORMOVE_Exit( wk->cmwk );
+		seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SEARCHEXIT );
+		break;
   }
+
   wk->main_func_pos = pos;
+
   return seq;
 }
 
@@ -2091,29 +2428,37 @@ static int _set_mainmode_function( BOX_SEARCH_MAIN_WORK *wk, int seq, int pos )
 //----------------------------------------------------------------------------------
 static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  u32 result;
-  int pos = CURSORMOVE_PosGet( wk->cmwk );
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    // Aで決定
-    seq = _set_mainmode_function(wk, seq, pos);
-    return seq;
-  }
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    CURSORMOVE_Exit( wk->cmwk );
-    return SUBSEQ_SEARCHEXIT;
-  }
+	u32	result;
 
-  result = CURSORMOVE_Main( wk->cmwk );
-  switch(result){
-  case CURSORMOVE_NONE:
-    break;
-  default:
-    OS_Printf("pos=%d\n", result);
-    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-    seq = _set_mainmode_function( wk, seq, result );
-  }
-  return seq;
+	if( CheckCancelButton( wk ) == TRUE ){
+		CURSORMOVE_Exit( wk->cmwk );
+		return SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SEARCHEXIT );
+	}
+
+	result = CURSORMOVE_Main( wk->cmwk );
+
+	switch( result ){
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+		break;
+
+	case CURSORMOVE_CANCEL:					// キャンセル
+		break;
+//		CURSORMOVE_Exit( wk->cmwk );
+//		return SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SEARCHEXIT );
+
+	case CURSORMOVE_NONE:						// 動作なし
+		break;
+
+	default:
+		seq = _set_mainmode_function( wk, seq, result );
+	}
+
+	return seq;
 }
 
 
@@ -2491,88 +2836,146 @@ static int Subseq_SelectTokusei3Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
   seq = SUBSEQ_START;
   return seq;
 }
+
 static int Subseq_SelectSexInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FrameListInit(wk, BOXSEARCH_LISTID_SEIBETU);
-  SetupScreen( wk, 2, BOXSEARCH_LISTID_SEIBETU );
-  SubTextPrint( wk, SUBSEQ_SELECTSEXINIT );
+	ClearMainDisp( wk );
 
-  // FRAMELIST初期化待ちの後ポケモン名選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTSEX );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  return seq;
+	FrameListInit( wk, BOXSEARCH_LISTID_SEIBETU );
+	
+	SubTextPrint( wk, SUBSEQ_SELECTSEXINIT );
+
+	TransMainBGScreen( wk, 2 );
+
+	PrintNowCategory( wk, BOXSEARCH_LISTID_SEIBETU );
+	PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
+
+	// チェックボックス表示
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], TRUE );
+	PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, wk->param->syswk->search_data.sex );
+
+	// FRAMELIST初期化待ちの後ポケモン名選択へ
+	_set_subseq_nextseq( wk,  SUBSEQ_SELECTSEX );
+
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
 
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    _set_search_data( wk, SEARCH_DATAID_SEX, PTL_SEX_UNKNOWN);
-    seq = SUBSEQ_SELECTSEXEXIT;
-    OS_Printf("seibetu=%d\n", PTL_SEX_UNKNOWN);
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      int pos = FRAMELIST_GetListPos( wk->frame_list_work );
-      _set_search_data( wk, SEARCH_DATAID_SEX, pos);
-      OS_Printf("seibetu=%d\n", pos);
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      seq = SUBSEQ_SELECTSEXEXIT;
-    }
-  }
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		_set_search_data( wk, SEARCH_DATAID_SEX, result );
+		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+		PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
+		break;
 
-  return seq;
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
+		}
+		break;
+	}
+
+	return seq;
 }
 static int Subseq_SelectSexExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  TransMainBGScreen( wk, 0 );
-  seq = SUBSEQ_START;
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	return SUBSEQ_START;
 }
+
 static int Subseq_SelectItemHaveInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FrameListInit(wk, BOXSEARCH_LISTID_MOTIMONO);
-  SetupScreen( wk, 2, BOXSEARCH_LISTID_MOTIMONO );
-  SubTextPrint( wk, SUBSEQ_SELECTITEMHAVEINIT );
+	ClearMainDisp( wk );
 
-  // FRAMELIST初期化待ちの後ポケモン名選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTITEMHAVE );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  return seq;
+	FrameListInit(wk, BOXSEARCH_LISTID_MOTIMONO );
+
+	SubTextPrint( wk, SUBSEQ_SELECTITEMHAVEINIT );
+
+	TransMainBGScreen( wk, 2 );
+
+	PrintNowCategory( wk, BOXSEARCH_LISTID_MOTIMONO );
+	PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
+
+	// チェックボックス表示
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], TRUE );
+	PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, wk->param->syswk->search_data.item );
+
+	// FRAMELIST初期化待ちの後ポケモン名選択へ
+	_set_subseq_nextseq( wk,  SUBSEQ_SELECTITEMHAVE );
+
+  
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    _set_search_data( wk, SEARCH_DATAID_ITEM, 0);
-    seq = SUBSEQ_SELECTITEMHAVEEXIT;
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      int pos = FRAMELIST_GetListPos( wk->frame_list_work );
-      _set_search_data( wk, SEARCH_DATAID_ITEM, pos);
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      seq = SUBSEQ_SELECTITEMHAVEEXIT;
-    }
-  }
-  return seq;
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
+
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		_set_search_data( wk, SEARCH_DATAID_ITEM, result );
+		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+		PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
+		break;
+
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTITEMHAVEEXIT );
+		}
+		break;
+	}
+
+	return seq;
 }
 static int Subseq_SelectItemHaveExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  TransMainBGScreen( wk, 0 );
-  seq = SUBSEQ_START;
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	return SUBSEQ_START;
 }
+
 static int Subseq_SelectMarkInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FrameListInit(wk, BOXSEARCH_LISTID_MARK);
-  SetupScreen( wk, 2, BOXSEARCH_LISTID_MARK );
+	int	i;
+
+	ClearMainDisp( wk );
+
+  FrameListInit( wk, BOXSEARCH_LISTID_MARK );
+
   SubTextPrint( wk, SUBSEQ_SELECTMARKINIT );
 
-  // FRAMELIST初期化待ちの後ポケモン名選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTMARK );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  return seq;
+	TransMainBGScreen( wk, 2 );
+
+	PrintNowCategory( wk, BOXSEARCH_LISTID_MARK );
+
+	// チェックボックス表示
+	for( i=0; i<6; i++ ){
+		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0+i, i );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0+i], _get_search_data_mark(wk,i) );
+	}
+
+	SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
+	SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
+	PutMarkDataObj( wk, 1 );
+	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK0_0, TRUE );
+	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK1_0, TRUE );
+
+//  SetupScreen( wk, 2, BOXSEARCH_LISTID_MARK );
+
+	// FRAMELIST初期化待ちの後ポケモン名選択へ
+	_set_subseq_nextseq( wk,  SUBSEQ_SELECTMARK );
+
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 
 //----------------------------------------------------------------------------------
@@ -2584,6 +2987,7 @@ static int Subseq_SelectMarkInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
  * @retval  u32   
  */
 //----------------------------------------------------------------------------------
+/*
 static int _hit_and_key_decide( BOX_SEARCH_MAIN_WORK *wk )
 {
   u32 result = GFL_UI_TP_HitTrg( list_touch_tbl );
@@ -2598,11 +3002,11 @@ static int _hit_and_key_decide( BOX_SEARCH_MAIN_WORK *wk )
   }
   return GFL_UI_TP_HIT_NONE;
 }
-
-
+*/
 
 static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
+/*
   u32 result =  FRAMELIST_Main( wk->frame_list_work );
 
   if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
@@ -2619,26 +3023,76 @@ static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
       }
     }
   }
+*/
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
+
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		{
+			int	prm = _get_search_data_mark(wk,result) ^ 1;
+			_set_search_data_mark( wk, result, prm );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0+result], prm );
+		}
+		SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
+		SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
+		break;
+
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
+		}
+		break;
+	}
+
   return seq;
 }
 static int Subseq_SelectMarkExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  TransMainBGScreen( wk, 0 );
-  seq = SUBSEQ_START;
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	return SUBSEQ_START;
 }
+
+// 検索条件ON
 static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  return seq;
+	change_search_checkbox( wk, BOXSEARCH_PLATE_ON );
+	_set_search_data( wk, SEARCH_DATAID_ON_OFF, TRUE );
+
+	if( CURSORMOVE_CursorOnOffGet( wk->cmwk ) == TRUE ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_ON], BOXSEARCH_ANM_SEARCHON_ON );
+	}
+	return SUBSEQ_MAIN;
 }
+// 検索条件OFF
 static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  return seq;
+	change_search_checkbox( wk, BOXSEARCH_PLATE_OFF );
+	_set_search_data( wk, SEARCH_DATAID_ON_OFF, FALSE );
+
+	if( CURSORMOVE_CursorOnOffGet( wk->cmwk ) == TRUE ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_OFF], BOXSEARCH_ANM_SEARCHOFF_ON );
+	}
+	return SUBSEQ_MAIN;
 }
+// 検索条件リセット
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  return seq;
+	_reset_search_info( wk );
+	// 入力済情報を描画
+	DecideInfoPrint( wk, TRUE );    
+	// マーキング反映
+	SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
+
+	if( CURSORMOVE_CursorOnOffGet( wk->cmwk ) == TRUE ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_RESET], BOXSEARCH_ANM_RESET_ON );
+	}
+
+	return SUBSEQ_MAIN;
 }
 static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
@@ -2657,6 +3111,27 @@ static int Subseq_SearchExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
   return seq;
 }
 
+// ボタンアニメ終了待ち
+static int Subseq_ButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int seq )
+{
+	if( wk->buttonID == BUTTON_ID_TB_RETURN ){
+		if( TOUCHBAR_GetTrg(wk->touchbar) == TOUCHBAR_ICON_RETURN ){
+			return wk->next_subseq;
+		}
+	}else{
+		if( GFL_CLACT_WK_CheckAnmActive( wk->clwk[wk->buttonID] ) == FALSE ){
+			return wk->next_subseq;
+		}
+	}
+
+	return seq;
+}
+
+// 各検索条件選択へ
+static int Subseq_SelectSet( BOX_SEARCH_MAIN_WORK * wk, int seq )
+{
+	return func_table[wk->main_func_pos-BOXSEARCH_PLATE_0];
+}
 
 
 
@@ -2664,6 +3139,18 @@ static void _set_subseq_nextseq( BOX_SEARCH_MAIN_WORK *wk, int next )
 {
   wk->next_subseq = next;
 }
+
+// ボタンアニメセット
+static int SetButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next )
+{
+	if( buttonID != BUTTON_ID_TB_RETURN ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[buttonID], anmID );
+	}
+	wk->buttonID = buttonID;
+	_set_subseq_nextseq( wk, next );
+	return SUBSEQ_BUTTON_ANIME;
+}
+
 
 //=======================================================================================
 //=======================================================================================
@@ -2707,7 +3194,7 @@ static void cursor_on_callback( void *work, int pos, int old )
 {
   BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK*)work;
   int i;
-  for(i=0;i<BOXSEARCH_PLATE_MAX;i++){
+  for(i=0;i<=BOXSEARCH_PLATE_OFF;i++){
     if(pos==i){
       GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], plate_anm_tbl[i][1] );
     }else{
@@ -2730,7 +3217,7 @@ static void cursor_off_callback( void *work, int pos, int old )
   BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK*)work;
   int i;
 
-  for(i=0;i<BOXSEARCH_PLATE_MAX;i++){
+  for(i=0;i<=BOXSEARCH_PLATE_OFF;i++){
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], plate_anm_tbl[i][0] );
   }
   
@@ -2749,7 +3236,7 @@ static void cursor_move_callback( void *work, int pos, int old )
 {
   BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK*)work;
   int i;
-  for(i=0;i<BOXSEARCH_PLATE_MAX;i++){
+  for(i=0;i<=BOXSEARCH_PLATE_OFF;i++){
     if(pos==i){
       GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], plate_anm_tbl[i][1] );
     }else{
@@ -2770,6 +3257,7 @@ static void cursor_move_callback( void *work, int pos, int old )
 //----------------------------------------------------------------------------------
 static void touch_callback( void *work, int pos, int old )
 {
+/*
   BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK*)work;
   int i;
   for(i=0;i<BOXSEARCH_PLATE_MAX;i++){
@@ -2782,7 +3270,14 @@ static void touch_callback( void *work, int pos, int old )
   if(pos==BOXSEARCH_PLATE_ON || pos==BOXSEARCH_PLATE_OFF){
     change_search_checkbox(wk,pos);
   }
+*/
 }
+
+/*
+static void cm_dummy_callback( void *work, int pos, int old )
+{
+}
+*/
 
 
 static const checkbox_tbl[][2]={
@@ -2801,7 +3296,7 @@ static const checkbox_tbl[][2]={
 static void change_search_checkbox( BOX_SEARCH_MAIN_WORK *wk, int pos )
 {
   GF_ASSERT( pos==BOXSEARCH_PLATE_ON || pos==BOXSEARCH_PLATE_OFF );
-  
+
   GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_ON_CHECKBOX], 
                           checkbox_tbl[pos-BOXSEARCH_PLATE_ON][0] );
   GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_OFF_CHECKBOX], 
@@ -2868,7 +3363,11 @@ static void StrbufLoad( BOX_SEARCH_MAIN_WORK *wk )
   }
 
   // せいりするかバトルボックスかで分岐
-  wk->str[BOXSEARCH_STRID_TITLE] = GFL_MSG_CreateString( wk->msg, mes_box_search_cap_01 );
+	if( wk->param->box_dat->callMode == BOX_MODE_SEIRI ){
+		wk->str[BOXSEARCH_STRID_TITLE] = GFL_MSG_CreateString( wk->msg, mes_box_search_cap_01 );
+	}else{
+		wk->str[BOXSEARCH_STRID_TITLE] = GFL_MSG_CreateString( wk->msg, mes_box_search_cap_02 );
+	}
   
   wk->expand_buf = GFL_STR_CreateBuffer( SUBDISP_TEXT_SIZE, wk->heapID );
 
@@ -3200,19 +3699,24 @@ static void ListCallBackMark_Draw( void *work, u32 pos, PRINT_UTIL *print_util, 
   
 }
 
-static void _strbuf_print( BOX_SEARCH_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param )
+static void PrintStrBuf( BOX_SEARCH_MAIN_WORK * wk, PRINT_UTIL * print_util, PRINT_QUE * que, GFL_MSGDATA * mman, int strIdx, PRINTSYS_LSB col, int y )
 {
-  int width,bmp_width,x;
-  STRBUF *strbuf = GFL_MSG_CreateString( msg, param);
+	int width, bmp_width, x;
+	STRBUF * strbuf = GFL_MSG_CreateString( mman, strIdx );
 
   width     = PRINTSYS_GetStrWidth( strbuf, wk->font, 0 );
-  bmp_width = GFL_BMPWIN_GetSizeX( print_util->win )*8;
+	bmp_width = GFL_BMPWIN_GetSizeX( print_util->win ) * 8;
   x         = (bmp_width - width)/2;
 
-  PRINT_UTIL_PrintColor( print_util, que, x, 4, strbuf, wk->font, PRINTSYS_MACRO_LSB(15, 14, 0) );
+  PRINT_UTIL_PrintColor( print_util, que, x, y, strbuf, wk->font, col );
   GFL_STR_DeleteBuffer( strbuf );
-
 }
+
+static void _strbuf_print( BOX_SEARCH_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param )
+{
+	PrintStrBuf( wk, print_util, que, msg, param, PRINTSYS_MACRO_LSB(15, 14, 0), 4 );
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief コールバック関数共通文字列描画処理
@@ -3231,156 +3735,6 @@ static void _liststr_print( BOX_SEARCH_MAIN_WORK *wk, int pos, PRINT_UTIL *print
   _strbuf_print( wk, print_util, que, msg, param );
 }
 
-static const u16 topword_tbl[]={
-  mes_box_search_hyphen_01,
-  mes_box_search_initial_01,
-  mes_box_search_initial_06,
-  mes_box_search_initial_11,
-  mes_box_search_initial_16,
-  mes_box_search_initial_21,
-  mes_box_search_initial_26,
-  mes_box_search_initial_31,
-  mes_box_search_initial_36,
-  mes_box_search_initial_39,
-  mes_box_search_initial_44,
-};
-
-static const u8 childword_num[]={
-  5,  // ア
-  5,  // カ
-  5,  // サ
-  5,  // タ
-  5,  // ナ
-  5,  // ハ
-  5,  // マ
-  3,  // ヤ
-  5,  // ラ
-  1,  // ワ
-};
-
-static const int head2pokename[]={
-  0,  // あ
-  5,  // か
-  10, // さ
-  15, // た
-  20, // な
-  25, // は
-  30, // ま
-  35, // や
-  38, // ら
-  43, // わ
-};
-
-
-static const u16 sort_pokename_start_index[]={
-    ZKN_SORT_AIUEO_IDX_START_A  ,
-    ZKN_SORT_AIUEO_IDX_START_I  ,
-    ZKN_SORT_AIUEO_IDX_START_U  ,
-    ZKN_SORT_AIUEO_IDX_START_E  ,
-    ZKN_SORT_AIUEO_IDX_START_O  ,
-    ZKN_SORT_AIUEO_IDX_START_KA   ,
-    ZKN_SORT_AIUEO_IDX_START_KI   ,
-    ZKN_SORT_AIUEO_IDX_START_KU   ,
-    ZKN_SORT_AIUEO_IDX_START_KE   ,
-    ZKN_SORT_AIUEO_IDX_START_KO   ,
-    ZKN_SORT_AIUEO_IDX_START_SA   ,
-    ZKN_SORT_AIUEO_IDX_START_SI   ,
-    ZKN_SORT_AIUEO_IDX_START_SU   ,
-    ZKN_SORT_AIUEO_IDX_START_SE   ,
-    ZKN_SORT_AIUEO_IDX_START_SO   ,
-    ZKN_SORT_AIUEO_IDX_START_TA   ,
-    ZKN_SORT_AIUEO_IDX_START_TI   ,
-    ZKN_SORT_AIUEO_IDX_START_TU   ,
-    ZKN_SORT_AIUEO_IDX_START_TE   ,
-    ZKN_SORT_AIUEO_IDX_START_TO   ,
-    ZKN_SORT_AIUEO_IDX_START_NA   ,
-    ZKN_SORT_AIUEO_IDX_START_NI   ,
-    ZKN_SORT_AIUEO_IDX_START_NU   ,
-    ZKN_SORT_AIUEO_IDX_START_NE   ,
-    ZKN_SORT_AIUEO_IDX_START_NO   ,
-    ZKN_SORT_AIUEO_IDX_START_HA   ,
-    ZKN_SORT_AIUEO_IDX_START_HI   ,
-    ZKN_SORT_AIUEO_IDX_START_HU   ,
-    ZKN_SORT_AIUEO_IDX_START_HE   ,
-    ZKN_SORT_AIUEO_IDX_START_HO   ,
-    ZKN_SORT_AIUEO_IDX_START_MA   ,
-    ZKN_SORT_AIUEO_IDX_START_MI   ,
-    ZKN_SORT_AIUEO_IDX_START_MU   ,
-    ZKN_SORT_AIUEO_IDX_START_ME   ,
-    ZKN_SORT_AIUEO_IDX_START_MO   ,
-    ZKN_SORT_AIUEO_IDX_START_YA   ,
-    ZKN_SORT_AIUEO_IDX_START_YU   ,
-    ZKN_SORT_AIUEO_IDX_START_YO   ,
-    ZKN_SORT_AIUEO_IDX_START_RA   ,
-    ZKN_SORT_AIUEO_IDX_START_RI   ,
-    ZKN_SORT_AIUEO_IDX_START_RU   ,
-    ZKN_SORT_AIUEO_IDX_START_RE   ,
-    ZKN_SORT_AIUEO_IDX_START_RO   ,
-    ZKN_SORT_AIUEO_IDX_START_WA   ,
-};
-
-static const u16 sort_pokename_end_index[]={
-    ZKN_SORT_AIUEO_IDX_END_A  ,
-    ZKN_SORT_AIUEO_IDX_END_I  ,
-    ZKN_SORT_AIUEO_IDX_END_U  ,
-    ZKN_SORT_AIUEO_IDX_END_E  ,
-    ZKN_SORT_AIUEO_IDX_END_O  ,
-    ZKN_SORT_AIUEO_IDX_END_KA   ,
-    ZKN_SORT_AIUEO_IDX_END_KI   ,
-    ZKN_SORT_AIUEO_IDX_END_KU   ,
-    ZKN_SORT_AIUEO_IDX_END_KE   ,
-    ZKN_SORT_AIUEO_IDX_END_KO   ,
-    ZKN_SORT_AIUEO_IDX_END_SA   ,
-    ZKN_SORT_AIUEO_IDX_END_SI   ,
-    ZKN_SORT_AIUEO_IDX_END_SU   ,
-    ZKN_SORT_AIUEO_IDX_END_SE   ,
-    ZKN_SORT_AIUEO_IDX_END_SO   ,
-    ZKN_SORT_AIUEO_IDX_END_TA   ,
-    ZKN_SORT_AIUEO_IDX_END_TI   ,
-    ZKN_SORT_AIUEO_IDX_END_TU   ,
-    ZKN_SORT_AIUEO_IDX_END_TE   ,
-    ZKN_SORT_AIUEO_IDX_END_TO   ,
-    ZKN_SORT_AIUEO_IDX_END_NA   ,
-    ZKN_SORT_AIUEO_IDX_END_NI   ,
-    ZKN_SORT_AIUEO_IDX_END_NU   ,
-    ZKN_SORT_AIUEO_IDX_END_NE   ,
-    ZKN_SORT_AIUEO_IDX_END_NO   ,
-    ZKN_SORT_AIUEO_IDX_END_HA   ,
-    ZKN_SORT_AIUEO_IDX_END_HI   ,
-    ZKN_SORT_AIUEO_IDX_END_HU   ,
-    ZKN_SORT_AIUEO_IDX_END_HE   ,
-    ZKN_SORT_AIUEO_IDX_END_HO   ,
-    ZKN_SORT_AIUEO_IDX_END_MA   ,
-    ZKN_SORT_AIUEO_IDX_END_MI   ,
-    ZKN_SORT_AIUEO_IDX_END_MU   ,
-    ZKN_SORT_AIUEO_IDX_END_ME   ,
-    ZKN_SORT_AIUEO_IDX_END_MO   ,
-    ZKN_SORT_AIUEO_IDX_END_YA   ,
-    ZKN_SORT_AIUEO_IDX_END_YU   ,
-    ZKN_SORT_AIUEO_IDX_END_YO   ,
-    ZKN_SORT_AIUEO_IDX_END_RA   ,
-    ZKN_SORT_AIUEO_IDX_END_RI   ,
-    ZKN_SORT_AIUEO_IDX_END_RU   ,
-    ZKN_SORT_AIUEO_IDX_END_RE   ,
-    ZKN_SORT_AIUEO_IDX_END_RO   ,
-    ZKN_SORT_AIUEO_IDX_END_WA   ,
-};
-
-#include "../../../resource/tokusei/tokusei_aiueo_table.cdat"
-#include "../../../resource/tokusei/tokusei_aiueo_header_table.cdat"
-
-static const u16 sex_msg_tbl[]={
-  mes_box_search_hyphen_01, // ー  （絞り込み対象にしない）
-  mes_box_search_sex_01,    // ♂
-  mes_box_search_sex_02,    // ♀
-  mes_box_search_sex_03,    // せいべつなし
-};
-
-static const u16 item_msg_tbl[]={
-  mes_box_search_hyphen_01, // ー  （絞り込み対象にしない）
-  mes_box_search_item_02,   // もっていない
-  mes_box_search_item_01,   // もっている
-};
 
 //----------------------------------------------------------------------------------
 /**
@@ -3473,7 +3827,7 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
   }
 
   wk->frame_list_work = FRAMELIST_Create( &header, wk->heapID );
-  FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+//  FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
 
   // 項目背景設定
   FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_box_gra_boxsearch_frame_2_NSCR, FALSE, 0 );
@@ -3564,6 +3918,35 @@ static void FrameListExit(BOX_SEARCH_MAIN_WORK *wk)
   FRAMELIST_Exit( wk->frame_list_work );
 }
 
+static void FrameListClear( BOX_SEARCH_MAIN_WORK * wk )
+{
+	u32	i;
+
+	// 表示クリア
+	GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+	GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+
+	for( i=BOXSEARCH_OBJID_CHECK0; i<=BOXSEARCH_OBJID_SCROL; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+	}
+
+	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK0_0, FALSE );
+	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK1_0, FALSE );
+}
+
+
+// チェックマーク表示
+static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos )
+{
+	GFL_CLACTPOS cp_pos;
+	cp_pos.x = 127;
+	cp_pos.y = pos * 24 + 12;
+	GFL_CLACT_WK_SetWldPos( wk->clwk[id], &cp_pos );
+}
+
+
 
 
 #define ZKN_SORTDATA_ONESIZE  ( sizeof(u16) )
@@ -3591,43 +3974,6 @@ static u16* ZukanSortDataGet( int heap, int* p_arry_num )
 }
 
 
-static const u16 main_scr_bg_table[]={
-  NARC_box_gra_boxsearchbase_bgd_1_NSCR,
-  NARC_box_gra_boxsearchbase_bgd_2_on_NSCR,
-  NARC_box_gra_boxsearchbase_bgd_2_off_NSCR,
-};
-
-
-// トップ画面マーキング、入力用マーキング、スクロールつまみの制御
-static const u8 onoff_tbl[][3]={
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_POKEMON,        // 「ポケモン」
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_SEIKAKU,        // 「せいかく」
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_TOKUSEI,        // 「とくせい」
-  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_SEIBETU,        // 「せいべつ」
-  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_MOTIMONO,       // 「もちもの」
-  { FALSE, TRUE,  FALSE }, // BOXSEARCH_LISTID_MARK,           // 「マーク」
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_NO_SEARCH,      // 「－」
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_SIBORIKOMI,     // 「ポケモン　しぼりこみ」
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_NAME_TOPWORD,   // 名前母音
-  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_NAME_NEXTWORD,  // 名前子音
-  { FALSE, FALSE, TRUE  }, // BOXSEARCH_LISTID_TOKUSEI_TOPWORD,// 特性母音
-  { FALSE, FALSE, FALSE }, // BOXSEARCH_LISTID_TOKUSEI_NEXTWORD,// 特性子音
-};
-
-static const u8 now_category_tbl[]={
-  BOXSEARCH_STRID_POKEMON, // BOXSEARCH_LISTID_POKEMON,        
-  BOXSEARCH_STRID_SEIKAKU, // BOXSEARCH_LISTID_SEIKAKU,        
-  BOXSEARCH_STRID_TOKUSEI, // BOXSEARCH_LISTID_TOKUSEI,        
-  BOXSEARCH_STRID_SEIBETU, // BOXSEARCH_LISTID_SEIBETU,        
-  BOXSEARCH_STRID_MOTIMONO,// BOXSEARCH_LISTID_MOTIMONO,       
-  BOXSEARCH_STRID_MARK,    // BOXSEARCH_LISTID_MARK,           
-  0, // BOXSEARCH_LISTID_NO_SEARCH,      
-  0, // BOXSEARCH_LISTID_SIBORIKOMI,     
-  BOXSEARCH_STRID_POKEMON, // BOXSEARCH_LISTID_NAME_TOPWORD,   
-  BOXSEARCH_STRID_POKEMON, // BOXSEARCH_LISTID_NAME_NEXTWORD,  
-  BOXSEARCH_STRID_TOKUSEI, // BOXSEARCH_LISTID_TOKUSEI_TOPWORD,
-  BOXSEARCH_STRID_TOKUSEI, // BOXSEARCH_LISTID_TOKUSEI_NEXTWORD
-};
 
 //----------------------------------------------------------------------------------
 /**
@@ -3639,13 +3985,21 @@ static const u8 now_category_tbl[]={
 //----------------------------------------------------------------------------------
 static void TransMainBGScreen( BOX_SEARCH_MAIN_WORK *wk, int type )
 {
+/*
   ARCHANDLE *handle;
   GF_ASSERT(type<3);
   
   handle  = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, wk->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, main_scr_bg_table[type],  BG_FRAME_BACK_M,  0, 0, 0, wk->heapID );   
   GFL_ARC_CloseDataHandle( handle );
+*/
+	NNSG2dScreenData * scrn;
+	void * buf;
 
+	buf = GFL_ARC_UTIL_LoadScreen( ARCID_BOX2_GRA, main_scr_bg_table[type], FALSE, &scrn, wk->heapID );
+	GFL_BG_WriteScreen( BG_FRAME_BACK_M, (const void *)scrn->rawData, 0, 0, 32, 24 );
+	GFL_HEAP_FreeMemory( buf );
+	GFL_BG_LoadScreenV_Req( BG_FRAME_BACK_M );
 }
 
 static void ObjOnOff( BOX_SEARCH_MAIN_WORK *wk, int type, int category )
@@ -3693,55 +4047,50 @@ static void ObjOnOff( BOX_SEARCH_MAIN_WORK *wk, int type, int category )
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
-static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK *wk, int flag )
+static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK * wk, BOOL flag )
 {
-  BOX_SEARCH_DATA *dat = &wk->param->syswk->search_data;
-  int i;
-  
-  if(flag==0){
-    for(i=0;i<5;i++){
-      GFL_BMPWIN_ClearScreen( wk->bmp_win[BOXSEARCH_BMPID_ANSWER0+i] );
-    }
-  }else{
-    for(i=0;i<5;i++){
-      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_ANSWER0+i] ), 0 );
-    }
-    // ポケモン名
-    if(dat->pokemon_id==0){
-      _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER0], wk->print_que, wk->msg, mes_box_search_hyphen_01 );
-    }else{
-      _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER0], wk->print_que, wk->mons_msg, dat->pokemon_id );
-    }
-    
-    // せいかく
-    if(dat->seikaku==0){
-      _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER1], wk->print_que, wk->msg, mes_box_search_hyphen_01 );
-    }else{
-      _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER1], wk->print_que, wk->seikaku_msg, dat->seikaku-1 );
-    
-    }
-    
-    // とくせい
-    _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER2], wk->print_que, wk->tokusei_msg, dat->tokusei );
-    
-    // せいべつ
-    _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER3], wk->print_que, wk->msg, sex_msg_tbl[dat->sex] );
-    
-    // もちもの
-    _strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER4], wk->print_que, wk->msg, item_msg_tbl[dat->item] );
-    
-    // マークはOBJで表現する
+	BOX_SEARCH_DATA *dat = &wk->param->syswk->search_data;
+	int i;
 
-    // BMPWIN転送
-    for(i=0;i<5;i++){
-      GFL_BMPWIN_TransVramCharacter( wk->bmp_win[BOXSEARCH_BMPID_ANSWER0+i] );
-      GFL_BMPWIN_MakeScreen( wk->bmp_win[BOXSEARCH_BMPID_ANSWER0+i] );
-    }
-  }
-  // スクリーン転送
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->bmp_win[BOXSEARCH_BMPID_ANSWER0]) );
-  
-  
+	if( flag == FALSE ){
+		for( i=BOXSEARCH_BMPID_ANSWER0; i<=BOXSEARCH_BMPID_ANSWER4; i++ ){
+			GFL_BMPWIN_ClearScreen( wk->bmp_win[i] );
+		}
+	}else{
+		for( i=BOXSEARCH_BMPID_ANSWER0; i<=BOXSEARCH_BMPID_ANSWER4; i++ ){
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[i] ), 0 );
+		}
+		// ポケモン名
+		if( dat->pokemon_id == 0 ){
+			_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER0], wk->print_que, wk->msg, mes_box_search_hyphen_01 );
+		}else{
+			_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER0], wk->print_que, wk->mons_msg, dat->pokemon_id );
+		}
+		// せいかく
+		if( dat->seikaku == 0 ){
+			_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER1], wk->print_que, wk->msg, mes_box_search_hyphen_01 );
+		}else{
+			_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER1], wk->print_que, wk->seikaku_msg, dat->seikaku-1 );
+		}
+		// とくせい
+		if( dat->tokusei == 0 ){
+			_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER2], wk->print_que, wk->msg, mes_box_search_hyphen_01 );
+		}else{
+			_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER2], wk->print_que, wk->tokusei_msg, dat->tokusei );
+		}
+		// せいべつ
+		_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER3], wk->print_que, wk->msg, sex_msg_tbl[dat->sex] );
+		// もちもの
+		_strbuf_print( wk, &wk->print_util[BOXSEARCH_BMPID_ANSWER4], wk->print_que, wk->msg, item_msg_tbl[dat->item] );
+
+		// BMPWIN転送
+		for( i=BOXSEARCH_BMPID_ANSWER0; i<=BOXSEARCH_BMPID_ANSWER4; i++ ){
+//			GFL_BMPWIN_TransVramCharacter( wk->bmp_win[i] );
+			GFL_BMPWIN_MakeScreen( wk->bmp_win[i] );
+		}
+	}
+	// スクリーン転送
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->bmp_win[BOXSEARCH_BMPID_ANSWER0]) );
 }
 
 
@@ -3788,9 +4137,9 @@ static void SetupScreen( BOX_SEARCH_MAIN_WORK *wk, int type, int category )
     }
     GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->bmp_win[BOXSEARCH_BMPID_TOPIC0]) );
     // 項目名を１つだけ左中央に表示
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATETORY] ), 0 );
-    PrintStrbuf( wk, BOXSEARCH_BMPID_NOW_CATETORY, now_category_tbl[category], 0 );
-    GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATETORY] );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] ), 0 );
+    PrintStrbuf( wk, BOXSEARCH_BMPID_NOW_CATEGORY, now_category_tbl[category], 0 );
+    GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] );
     ObjOnOff( wk, type, category );
     TransMainBGScreen( wk, type );
     break;
@@ -3912,7 +4261,7 @@ static int _get_search_data( BOX_SEARCH_MAIN_WORK *wk, int type )
  * @param   objpos  マーキングOBJのスタートNO
  */
 //----------------------------------------------------------------------------------
-static void SetMarkDataObj( BOX_SEARCH_MAIN_WORK *wk, int objpos )
+static void SetMarkDataObj( BOX_SEARCH_MAIN_WORK * wk, int objpos )
 {
   int i;
   GF_ASSERT( objpos>=BOXSEARCH_OBJID_MARK0_0 && objpos<=BOXSEARCH_OBJID_MARK1_5 );
@@ -3921,6 +4270,35 @@ static void SetMarkDataObj( BOX_SEARCH_MAIN_WORK *wk, int objpos )
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[objpos+i], i*2+flag );
   }
 }
+
+static void PutMarkDataObj( BOX_SEARCH_MAIN_WORK * wk, int id )
+{
+	GFL_CLACTPOS  pos;
+	u32 i;
+
+	if( id == 0 ){
+		pos.x = 17*8;
+		pos.y = 16*8;
+	}else{
+		pos.x = 2*8-4;
+		pos.y = 12*8-4;
+	}
+
+	for( i=BOXSEARCH_OBJID_MARK0_0; i<=BOXSEARCH_OBJID_MARK0_5; i++ ){
+		GFL_CLACT_WK_SetPos( wk->clwk[i], &pos, CLSYS_DEFREND_MAIN );
+		pos.x += 16;
+  }
+}
+
+static void SetMarkDataObjDrawEnable( BOX_SEARCH_MAIN_WORK * wk, int id, BOOL flg )
+{
+	int	i;
+
+	for( i=0; i<6; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[id+i], flg );
+  }
+}
+
 
 
 //----------------------------------------------------------------------------------
@@ -3936,7 +4314,19 @@ static void _reset_search_info( BOX_SEARCH_MAIN_WORK *wk )
   _set_search_data( wk, SEARCH_DATAID_ITEM,    0 );
   _set_search_data( wk, SEARCH_DATAID_SEIKAKU, 0 );
   _set_search_data( wk, SEARCH_DATAID_TOKUSEI, 0 );
-  _set_search_data( wk, SEARCH_DATAID_SEX,     PTL_SEX_UNKNOWN );
+  _set_search_data( wk, SEARCH_DATAID_SEX,     0 );
   _set_search_data( wk, SEARCH_DATAID_MARK,    0 );
 
+}
+
+// キャンセルチェック
+static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk )
+{
+	if( TOUCHBAR_GetTouch( wk->touchbar ) == TOUCHBAR_ICON_RETURN ){
+		return TRUE;
+	}
+	if( TOUCHBAR_IsDecide( wk->touchbar ) == TRUE ){
+		return TRUE;
+	}
+	return FALSE;
 }
