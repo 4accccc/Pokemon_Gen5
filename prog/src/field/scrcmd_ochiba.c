@@ -320,9 +320,9 @@ static void EFFECT_TASK_Add( OCHIBA_EVENT_WORK *p_wk )
   handle = FLDEFF_CTRL_GetArcHandleEffect( fectrl );
 
   FLD_G3DOBJ_RES_HEADER_Init( &head );
-  FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, NARC_fldeff_mv_hide_ochiba_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetMdl( &head, handle, NARC_fldeff_ochiba02_nsbmd );
   FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
-  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, NARC_fldeff_mv_hide_ochiba_nsbca );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, NARC_fldeff_ochiba02_nsbca );
 
   task_wk->obj_ctrl = obj_ctrl;
   task_wk->res_idx = FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );

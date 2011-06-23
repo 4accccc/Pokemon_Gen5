@@ -53,6 +53,7 @@ G3D_FE_ANMICA = shibuki01.ica \
   b_train_a3.ica \
   b_train_a4.ica \
   ochiba01.ica \
+  ochiba02.ica \
   mv_hide_ochiba.ica
 
 #---------------------------------------------------------------
@@ -144,6 +145,7 @@ G3D_FE_MDL = kage.imd \
   mv_hide_kusa.imd \
   shibuki.imd \
   ochiba01.imd \
+  ochiba02.imd \
   mv_hide_ochiba.imd
 
 #---------------------------------------------------------------
