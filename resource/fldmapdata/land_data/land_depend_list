@@ -701,6 +701,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/white2405_00_00.3dppack \
 	$(DIR_OUTPUT)/white2406_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun2406_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2903_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2903_01_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2903_00_02.3dppack \
+	$(DIR_OUTPUT)/m_dun2903_01_02.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
