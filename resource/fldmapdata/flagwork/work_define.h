@@ -200,6 +200,9 @@
 #define WK_SCENE_T03                     16588 /* 0x40cc カゴメタウン：アララギ娘イベント制御ワーク */
 #define WK_SCENE_T04                     16589 /* 0x40cd サザナミタウン：ライバル戦POSイベント制御ワーク */
 #define WK_SCENE_T03_SWRIVAL             16590 /* 0x40ce カゴメタウン：カゴメタウンのライバルイベント制御 */
+#define WK_SCENE_C08GYM_TURN_BTN_01      16591 /* 0x40cf ソウリュウジム：1階用イベント用（POSイベントの起動制御に使用） */
+#define WK_SCENE_C08GYM_TURN_BTN_02      16592 /* 0x40d0 ソウリュウジム：2階用イベント用（POSイベントの起動制御に使用） */
+#define WK_SCENE_C08GYM_TURN_BTN_03      16593 /* 0x40d1 ソウリュウジム：3階用イベント用（POSイベントの起動制御に使用） */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
