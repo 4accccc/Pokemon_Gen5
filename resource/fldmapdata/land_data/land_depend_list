@@ -705,6 +705,17 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_dun2903_01_01.3dppack \
 	$(DIR_OUTPUT)/m_dun2903_00_02.3dppack \
 	$(DIR_OUTPUT)/m_dun2903_01_02.3dppack \
+	$(DIR_OUTPUT)/m_dun2708_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2709_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2710_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2710_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2711_00_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2711_00_01.3dppack \
+	$(DIR_OUTPUT)/m_dun2711_01_00.3dppack \
+	$(DIR_OUTPUT)/m_dun2711_01_01.3dppack \
+	$(DIR_OUTPUT)/white2702_00_00.3dppack \
+	$(DIR_OUTPUT)/white2710_00_00.3dppack \
+	$(DIR_OUTPUT)/white2710_00_01.3dppack \
 	$(DIR_OUTPUT)/m_ruin01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_pc01_00_00.3dppack \
