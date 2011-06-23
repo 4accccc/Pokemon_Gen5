@@ -1,0 +1,28 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: pokewood_party.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_POKEWOOD_PARTY_NAIX_
+#define NARC_POKEWOOD_PARTY_NAIX_
+
+enum {
+	NARC_pokewood_party_pkwd_party00_bin = 0,
+	NARC_pokewood_party_pkwd_party01_bin = 1,
+	NARC_pokewood_party_pkwd_party02_bin = 2,
+	NARC_pokewood_party_pkwd_party03_bin = 3,
+	NARC_pokewood_party_pkwd_party04_bin = 4,
+	NARC_pokewood_party_pkwd_party05_bin = 5,
+	NARC_pokewood_party_pkwd_party06_bin = 6,
+	NARC_pokewood_party_pkwd_party07_bin = 7,
+	NARC_pokewood_party_pkwd_party08_bin = 8,
+	NARC_pokewood_party_pkwd_party09_bin = 9,
+	NARC_pokewood_party_pkwd_party10_bin = 10
+};
+
+/* NARC_POKEWOOD_PARTY_NAIX_ */
+#endif

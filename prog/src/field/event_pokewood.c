@@ -44,7 +44,7 @@
 #include "savedata/pokewood_rec.h"
 #include "msg/msg_pokewood_name.h"
 
-#include "pokewood_scenario.naix"
+#include "pokewood_party.naix"
 
 #include "field_fade.h"
 //======================================================================
@@ -79,6 +79,42 @@ enum{
   //
   PKWDS_PARAM_MAX,
 };
+
+// ----------------------------------------
+// ポケウッド用ポケモンデータ（cast用）
+// ----------------------------------------
+
+typedef struct{
+  s16 rec_monsno, show_monsno;  // 撮影用ポケモン/上映用ポケモン
+  s16 level;                    // レベル
+  s16 form;                     // フォルム
+  s16 sex;                      // 性別
+  s16 seikaku;                  // 性格
+  s16 tokusei;                  // 特性
+  s16 item;                     // 道具
+  s16 waza[4];                  // 技４つ
+  s16 hp_rnd;                   // HP固体値
+  s16 hp_eff;                   // HP努力値
+  s16 pow_rnd;                  // 攻撃固体値
+  s16 pow_eff;                  // 攻撃努力値
+  s16 def_rnd;                  // 防御固体値
+  s16 def_eff;                  // 防御努力値
+  s16 spd_rnd;                  // 早さ固体値
+  s16 spd_eff;                  // 早さ努力値
+  s16 spepow_rnd;                // 特攻固体値
+  s16 spepow_eff;                // 特攻努力値
+  s16 spedef_rnd;                // 特防固体値
+  s16 spedef_eff;                // 特防努力値
+} POKEWOOD_POKE_DATA;
+
+// ------------------------------------------------------------
+// コンバータから出力されるポケウッド用データ全体
+// ------------------------------------------------------------
+typedef struct{
+  s16                party_num[2];  // 敵ポケモン数、自分ポケモン数の順
+  POKEWOOD_POKE_DATA data[12];      // 格納数によって変化するため、必ず11まで参照できるとは限らない
+} POKEWOOD_PARTIES_DATA;
+
 
 //======================================================================
 //  struct
@@ -118,118 +154,6 @@ typedef struct {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-#if 0	// 保留
-typedef struct {
-  u8 level;
-  u16 monsno;
-  u16 wazano[4];
-  u16 itemno;
-  u8  pow[12];
-  u16 seikaku;
-}POKEWOOD_MONS_DATA;
-
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static const POKEWOOD_MONS_DATA myData[][3] = {
-   {
-    {
-      50, MONSNO_RANKURUSU,
-      { WAZANO_TORIKKU, WAZANO_MAMORU, WAZANO_SAIKOKINESISU, WAZANO_ZIKOSAISEI },
-      0,  //no item
-    },
-    {
-      50, MONSNO_BARUZIINA,
-      { WAZANO_HUKITOBASI, WAZANO_MAMORU, WAZANO_TUBASADEUTU, WAZANO_NULL },
-      0,  //no item
-    },
-    {
-      50, MONSNO_DORYUUZU,
-      { WAZANO_ZISIN, WAZANO_MAMORU, WAZANO_TUMETOGI, WAZANO_KOUSOKUSUPIN },
-      0,  //no item
-    },
-  },
-  {
-    {
-      15, MONSNO_RUKARIO,
-      { WAZANO_HADOUDAN, WAZANO_REITOUPANTI, WAZANO_NULL, WAZANO_NULL },
-      0,  //no item
-      { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
-      PTL_SEIKAKU_YANTYA,
-    },
-  },
-  {
-    {
-      20, MONSNO_TUTAAZYA,
-      { WAZANO_TURUNOMUTI, WAZANO_NULL, WAZANO_NULL, WAZANO_NULL },
-      0,  //no item
-      { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
-      PTL_SEIKAKU_YANTYA,
-    },
-  }
-};
-
-static const int myDataNum[]={3,1};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static const POKEWOOD_MONS_DATA enemyData[][2] = {
-  {
-    {
-      50, MONSNO_WASIBON,
-      { WAZANO_TONBOGAERI, WAZANO_TUBAMEGAESI, WAZANO_TUTUKU, WAZANO_NULL },
-      ITEM_KUROITEKKYUU,
-    },
-    {
-      50, MONSNO_ufo,
-      { WAZANO_DENGEKIHA, WAZANO_SAIKOWHEEBU, WAZANO_KOUSOKUIDOU, WAZANO_NULL },
-      0,  //no item
-    }
-  },
-  {
-    {
-      15, MONSNO_ZURUGGU,
-      { WAZANO_TOBIHIZAGERI, WAZANO_NULL, WAZANO_NULL, WAZANO_NULL },
-      0,
-      { 0,0, 31,255, 0,0, 0,0, 0,0, 0,0,},
-      PTL_SEIKAKU_HIKAEME,
-    },
-    {
-      20, MONSNO_YAMIKARASU,
-      { WAZANO_DAMASIUTI, WAZANO_EASURASSYU, WAZANO_NULL, WAZANO_NULL },
-      0,  //no item
-      { 0,0, 31,255, 0,0, 31,0, 31,255, 31,0, },
-      PTL_SEIKAKU_OTTORI,
-    }
-  },
-  {
-    {
-      19, MONSNO_TABUNNE,
-      { WAZANO_HIKARINOKABE, WAZANO_HINOKO, WAZANO_MIZUDEPPOU, WAZANO_NULL },
-      0,  //no item
-      { 0,0, 31,255, 0,0, 0,0, 31,255, 0,0,},
-      PTL_SEIKAKU_YANTYA,
-    },
-  }
-};
-
-static const int enemyDataNum[]={2,2,1,};
-
-#endif	// 保留
-
-#if 0
-  ID_PARA_hp_rnd,     //HP乱数
-  ID_PARA_hp_exp,     //HP努力値
-  ID_PARA_pow_rnd,    //攻撃力乱数
-  ID_PARA_pow_exp,    //攻撃力努力値
-  ID_PARA_def_rnd,    //防御力乱数
-  ID_PARA_def_exp,    //防御力努力値
-  ID_PARA_agi_rnd,    //素早さ乱数
-  ID_PARA_agi_exp,    //素早さ努力値
-  ID_PARA_spepow_rnd, //特攻乱数
-  ID_PARA_spepow_exp, //特攻努力値
-  ID_PARA_spedef_exp, //特防努力値
-  ID_PARA_spedef_rnd, //特防乱数
-#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -247,7 +171,7 @@ static const int trainerData[][2]={
 static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const s32 scenario_id, const s32 mode )
 {
   //
-  int i;
+  int i,j;
   u32 id = MyStatus_GetID( mystat );
   u8 sex = MyStatus_GetMySex( mystat );
   s16 *adr;
@@ -257,86 +181,57 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
 
   POKEPARTY * add_party = PokeParty_AllocPartyWork( heapID );
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
-//  GF_ASSERT( max <= TEMOTI_POKEMAX );
-//  PokeParty_Init( add_party, max );
-#if 1
+  POKEWOOD_PARTIES_DATA *ppd;
+
   // 読み込み
-  adr = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_SCENARIO, NARC_pokewood_scenario_pkwd_senario00_bin+scenario_id, heapID );
+  adr = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, NARC_pokewood_party_pkwd_party00_bin+scenario_id, heapID );
+  ppd = (POKEWOOD_PARTIES_DATA*)adr;
   // 最大数
-  maxnum = adr[mode];
+  maxnum = ppd->party_num[mode];
   PokeParty_Init( add_party, maxnum );
   //
   // オフセット
   // (敵の場合はオフセットに注意)
   off = 0;
   if(mode == 1){
-    off = PKWDS_PARAM_MAX*adr[0];
+    off = ppd->party_num[0];
   }
   //
   // 情報をセット
   for ( i = 0; i < maxnum; i ++ )
   {
-    // オフセット
-    aoff = 2+PKWDS_PARAM_MAX*i+off;
+    POKEWOOD_POKE_DATA *poke = &(ppd->data[off+i]);
+    u64 rnd;
+    OS_Printf("%d: monsno=%d, form=%d, sex=%d, tokusei=%d\n", i, poke->rec_monsno, poke->form, poke->sex, poke->tokusei);
+
     //
     PP_Clear( pp );
-    PP_SetupEx( pp, adr[aoff], adr[aoff+PKWDS_LEVEL], id, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
+    rnd = POKETOOL_CalcPersonalRandEx( id, poke->rec_monsno, poke->form, poke->sex, poke->tokusei, 0 );
+    PP_SetupEx( pp, poke->rec_monsno, poke->level, id, PTL_SETUP_POW_AUTO, rnd );
     POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystat, MAPNAME_T1KANOKO , heapID );
-    PP_Put( pp, ID_PARA_oyasex, sex );
-    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_1], 0 );
-    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_2], 1 );
-    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_3], 2 );
-    PP_SetWazaPos( pp, adr[aoff+PKWDS_SKILL_4], 3 );
-    PP_Put( pp, ID_PARA_seikaku,   adr[aoff+PKWDS_MIND] );
-    PP_Put( pp, ID_PARA_item,      adr[aoff+PKWDS_GOODS] );
-    PP_Put( pp, ID_PARA_hp_rnd,    adr[aoff+PKWDS_HP_FIX] );
-    PP_Put( pp, ID_PARA_hp_exp,    adr[aoff+PKWDS_HP_EFF] );
-    PP_Put( pp, ID_PARA_pow_rnd,   adr[aoff+PKWDS_ATK_FIX] );
-    PP_Put( pp, ID_PARA_pow_exp,   adr[aoff+PKWDS_ATK_EFF] );
-    PP_Put( pp, ID_PARA_def_rnd,   adr[aoff+PKWDS_DEF_FIX] );
-    PP_Put( pp, ID_PARA_def_exp,   adr[aoff+PKWDS_DEF_EFF] );
-    PP_Put( pp, ID_PARA_agi_rnd,   adr[aoff+PKWDS_SPD_FIX] );
-    PP_Put( pp, ID_PARA_agi_exp,   adr[aoff+PKWDS_SPD_EFF] );
-    PP_Put( pp, ID_PARA_spepow_rnd,adr[aoff+PKWDS_SPATK_FIX] );
-    PP_Put( pp, ID_PARA_spepow_exp,adr[aoff+PKWDS_SPATK_EFF] );
-    PP_Put( pp, ID_PARA_spedef_rnd,adr[aoff+PKWDS_SPDEF_FIX] );
-    PP_Put( pp, ID_PARA_spedef_exp,adr[aoff+PKWDS_SPDEF_EFF] );
+    for(j=0;j<4;j++){
+      PP_SetWazaPos( pp, poke->waza[j], j );
+    }
+    PP_Put( pp, ID_PARA_seikaku,   poke->seikaku );
+    PP_Put( pp, ID_PARA_item,      poke->item );
+    PP_Put( pp, ID_PARA_hp_rnd,    poke->hp_rnd );
+    PP_Put( pp, ID_PARA_hp_exp,    poke->hp_eff );
+    PP_Put( pp, ID_PARA_pow_rnd,   poke->pow_rnd );
+    PP_Put( pp, ID_PARA_pow_exp,   poke->pow_eff );
+    PP_Put( pp, ID_PARA_def_rnd,   poke->def_rnd );
+    PP_Put( pp, ID_PARA_def_exp,   poke->def_eff );
+    PP_Put( pp, ID_PARA_agi_rnd,   poke->spd_rnd );
+    PP_Put( pp, ID_PARA_agi_exp,   poke->spd_eff );
+    PP_Put( pp, ID_PARA_spepow_rnd,poke->spepow_rnd );
+    PP_Put( pp, ID_PARA_spepow_exp,poke->spepow_eff );
+    PP_Put( pp, ID_PARA_spedef_rnd,poke->spedef_rnd );
+    PP_Put( pp, ID_PARA_spedef_exp,poke->spedef_eff );
     PP_Renew( pp );
     PokeParty_Add( add_party, pp );
   }
   // 破棄
   GFL_HEAP_FreeMemory( adr );
   
-#else
-  for ( i = 0; i < max; i ++, mons_data ++ )
-  {
-    PP_Clear( pp );
-    PP_SetupEx( pp, mons_data->monsno, mons_data->level, id,
-        PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
-    POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystat, MAPNAME_T1KANOKO , heapID );
-    PP_Put( pp, ID_PARA_oyasex, sex );
-    PP_SetWazaPos( pp, mons_data->wazano[0], 0 );
-    PP_SetWazaPos( pp, mons_data->wazano[1], 1 );
-    PP_SetWazaPos( pp, mons_data->wazano[2], 2 );
-    PP_SetWazaPos( pp, mons_data->wazano[3], 3 );
-    PP_Put( pp, ID_PARA_seikaku, mons_data->seikaku );
-    PP_Put( pp, ID_PARA_item, mons_data->itemno );
-    PP_Put( pp, ID_PARA_hp_rnd,    mons_data->pow[0] );
-    PP_Put( pp, ID_PARA_hp_exp,    mons_data->pow[1] );
-    PP_Put( pp, ID_PARA_pow_rnd,   mons_data->pow[2] );
-    PP_Put( pp, ID_PARA_pow_exp,   mons_data->pow[3] );
-    PP_Put( pp, ID_PARA_def_rnd,   mons_data->pow[4] );
-    PP_Put( pp, ID_PARA_def_exp,   mons_data->pow[5] );
-    PP_Put( pp, ID_PARA_agi_rnd,   mons_data->pow[6] );
-    PP_Put( pp, ID_PARA_agi_exp,   mons_data->pow[7] );
-    PP_Put( pp, ID_PARA_spepow_rnd,mons_data->pow[8] );
-    PP_Put( pp, ID_PARA_spepow_exp,mons_data->pow[9] );
-    PP_Put( pp, ID_PARA_spedef_rnd,mons_data->pow[10] );
-    PP_Put( pp, ID_PARA_spedef_exp,mons_data->pow[11] );
-    PP_Renew( pp );
-    PokeParty_Add( add_party, pp );
-  }
-#endif
   PokeParty_Copy( add_party, party );
   GFL_HEAP_FreeMemory( pp );
   GFL_HEAP_FreeMemory( add_party );

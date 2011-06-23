@@ -9,7 +9,7 @@ HASHPATH = "../../../swan/tools/hash/"
 #
 require HASHPATH + "monsno_hash.rb"	# ポケモン番号
 require HASHPATH + "seikaku_hash.rb"	# 性格
-require HASHPATH + "tokusei_hash.rb"	# 特性
+#require HASHPATH + "tokusei_hash.rb"	# 特性
 require HASHPATH + "item_hash.rb"	# 道具
 require HASHPATH + "wazano_hash.rb"	# 技
 #
@@ -92,7 +92,7 @@ $error_str2 = ["固体値パラメータの合計が510を超えています",
 $skip_hash = {"━"=>0, "-"=>1, "－"=>2, "ー"=>3, }
 
 # debug
-$debug_code = 0
+$debug_code = 1
 
 #-------------
 # ハッシュ
@@ -284,14 +284,15 @@ class PKWD_INFO
   def chk_state( num )
     col = $updown_col[@updown]
     row = $updown_row[@updown]
-    @state = hash2no($tokusei_hash, @data[col+PKWD_STATE][row+1+num])
+#    @state = hash2no($tokusei_hash, @data[col+PKWD_STATE][row+1+num])
+    @state = @data[col+PKWD_STATE][row+1+num].to_i
     # debug
     if($debug_code == 1)
       p sprintf("state   : %d,%s",@state,@data[col+PKWD_STATE][row+1+num])
     end
     #
-    if(@state == -1)
-      p sprintf("%s : %d体目の%sの指定が正しくありません : %s",
+    if(@state == -1 || @state>=2)
+      p sprintf("%s : %d体目の%sの指定が正しくありません : %d",
                  $updown_str[@updown],num,$error_str[PKWD_STATE],@data[col+PKWD_STATE][row+1+num])
       exit(1)
     end
