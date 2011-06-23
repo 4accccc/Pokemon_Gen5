@@ -184,7 +184,7 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
   POKEWOOD_PARTIES_DATA *ppd;
 
   // “Ç‚Ýž‚Ý
-  adr = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, NARC_pokewood_party_pkwd_party00_bin+scenario_id, heapID );
+  adr = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD_PARTY, NARC_pokewood_party_pkwd_party01_bin+scenario_id, heapID );
   ppd = (POKEWOOD_PARTIES_DATA*)adr;
   // Å‘å”
   maxnum = ppd->party_num[mode];
