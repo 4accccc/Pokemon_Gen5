@@ -390,6 +390,7 @@ typedef struct
   GFL_BMPWIN      *bmp_win[BOX_SEARCH_BMPWIN_NUM];
   PRINT_UTIL      print_util[BOX_SEARCH_BMPWIN_NUM];
   FRAMELIST_WORK  *frame_list_work;
+	u32	flist_pos_max;
 
 #ifdef BOX_SEARCH_TASKMENU
   //タスクメニュー
@@ -519,26 +520,6 @@ static const CLACT_INIT_DAT obj_init_dat[]={
 };
 
 
-// チェックボックスの付いたリスト
-static const GFL_UI_TP_HITTBL list_check_tbl[]={
-  {   0,  23, 112, 143,  },
-  {  24,  47, 112, 143,  },
-  {  48,  71, 112, 143,  },
-  {  72,  95, 112, 143,  },
-  {  96, 119, 112, 143,  },
-  { 120, 143, 112, 143,  },
-  { GFL_UI_TP_HIT_END,0,0},
-};
-// フルでタッチするリスト
-static const GFL_UI_TP_HITTBL list_touch_tbl[]={
-  {   0,  23, 112, 233,  },
-  {  24,  47, 112, 233,  },
-  {  48,  71, 112, 233,  },
-  {  72,  95, 112, 233,  },
-  {  96, 119, 112, 233,  },
-  { 120, 143, 112, 233,  },
-  { GFL_UI_TP_HIT_END,0,0},
-};
 
 
 //=============================================================================
@@ -651,6 +632,7 @@ static void BmpWinTransScreen( GFL_BMPWIN * bmpwin );
 static int SetButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next );
 static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos );
 static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk );
+static int HitCheckListBox( BOX_SEARCH_MAIN_WORK * wk );
 
 static int Subseq_Start(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq);
@@ -773,11 +755,9 @@ static int (* const FuncTable[])(BOX_SEARCH_MAIN_WORK *wk, int seq)={
   Subseq_SelectTokusei3Init,    // 
   Subseq_SelectTokusei3,        // 
   Subseq_SelectTokusei3Exit,    // 
-
   Subseq_SelectSexInit,         // 
   Subseq_SelectSex,             // 
   Subseq_SelectSexExit,         // 
-
   Subseq_SelectItemHaveInit,    // 
   Subseq_SelectItemHave,        // 
   Subseq_SelectItemHaveExit,    // 
@@ -1249,11 +1229,6 @@ static GFL_PROC_RESULT BOXSEARCHProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
     break;
   case SEQ_MAIN:
     if(PRINTSYS_QUE_IsFinished( wk->print_que )){
-      // デバッグボタンでアプリ終了
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-      {
-        *seq = SEQ_FADEOUT;;
-      }
       wk->subseq = FuncTable[wk->subseq](wk,wk->subseq);
       if(wk->subseq==SUBSEQ_SEARCHEXIT){
         *seq = SEQ_FADEOUT;;
@@ -2280,8 +2255,8 @@ static void SetDrawEnableMainItemObj( BOX_SEARCH_MAIN_WORK * wk, BOOL flg )
 //      5
 // 6   7  8
 
-#define PLATE_TOUCH_X   ( 16*8 )
-#define PLATE_TOUCH_W   ( 12*8 )
+#define PLATE_TOUCH_X   ( 15*8 )
+#define PLATE_TOUCH_W   ( 17*8 )
 #define PLATE0_TOUCH_Y  ( 0*24 )
 #define PLATE1_TOUCH_Y  ( 1*24 )
 #define PLATE2_TOUCH_Y  ( 2*24 )
@@ -2290,25 +2265,25 @@ static void SetDrawEnableMainItemObj( BOX_SEARCH_MAIN_WORK * wk, BOOL flg )
 #define PLATE5_TOUCH_Y  ( 5*24 )
 #define PLATE6_TOUCH_Y  ( 6*24 )
 #define PLATE_TOUCH_H   ( 24 )
-#define PLATE_SEARCHON_X ( 12*8 )
+#define PLATE_SEARCHON_X ( 11*8+4 )
 #define PLATE_SEARCHON_W ( 9*8 )
-#define PLATE_SEARCHON_Y ( 19*8 )
+#define PLATE_SEARCHON_Y ( 142 )
 #define PLATE_SEARCHON_H (  3*8 )
-#define PLATE_SEARCHOFF_X ( 23*8 )
+#define PLATE_SEARCHOFF_X ( 21*8+4 )
 #define PLATE_SEARCHOFF_W ( PLATE_SEARCHON_W )
-#define PLATE_RESET_X ( 1*8 )
-#define PLATE_RESET_W ( 8*8 )
+#define PLATE_RESET_X ( 2*8+2 )
+#define PLATE_RESET_W ( 8*8-4 )
 
 static const CURSORMOVE_DATA cm_boxsearch_main[]={
-  { 0,0,0,0, 7,1,0,0, { PLATE0_TOUCH_Y, PLATE0_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 0,2,1,1, { PLATE1_TOUCH_Y, PLATE1_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 1,3,2,2, { PLATE2_TOUCH_Y, PLATE2_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 2,4,3,3, { PLATE3_TOUCH_Y, PLATE3_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 3,5,4,4, { PLATE4_TOUCH_Y, PLATE4_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 4,7,5,5, { PLATE5_TOUCH_Y, PLATE5_TOUCH_Y+PLATE_TOUCH_H, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W }, },
-  { 0,0,0,0, 5,0,6,7, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H, PLATE_RESET_X, PLATE_RESET_X+PLATE_RESET_W }, },
-  { 0,0,0,0, 5,0,6,8, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H, PLATE_SEARCHON_X, PLATE_SEARCHON_X+PLATE_SEARCHON_W }, },
-  { 0,0,0,0, 5,0,7,8, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H, PLATE_SEARCHOFF_X, PLATE_SEARCHOFF_X+PLATE_SEARCHOFF_W }, },
+  { 0,0,0,0, 7,1,0,0, { PLATE0_TOUCH_Y, PLATE0_TOUCH_Y+PLATE_TOUCH_H-1, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W-1 }, },
+  { 0,0,0,0, 0,2,1,1, { PLATE1_TOUCH_Y, PLATE1_TOUCH_Y+PLATE_TOUCH_H-1, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W-1 }, },
+  { 0,0,0,0, 1,3,2,2, { PLATE2_TOUCH_Y, PLATE2_TOUCH_Y+PLATE_TOUCH_H-1, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W-1 }, },
+  { 0,0,0,0, 2,4,3,3, { PLATE3_TOUCH_Y, PLATE3_TOUCH_Y+PLATE_TOUCH_H-1, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W-1 }, },
+  { 0,0,0,0, 3,5,4,4, { PLATE4_TOUCH_Y, PLATE4_TOUCH_Y+PLATE_TOUCH_H-1, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W-1 }, },
+  { 0,0,0,0, 4,7,5,5, { PLATE5_TOUCH_Y, PLATE5_TOUCH_Y+PLATE_TOUCH_H-1, PLATE_TOUCH_X, PLATE_TOUCH_X+PLATE_TOUCH_W-1 }, },
+  { 0,0,0,0, 5,0,6,7, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H-1, PLATE_RESET_X, PLATE_RESET_X+PLATE_RESET_W-1 }, },
+  { 0,0,0,0, 5,0,6,8, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H-1, PLATE_SEARCHON_X, PLATE_SEARCHON_X+PLATE_SEARCHON_W-1 }, },
+  { 0,0,0,0, 5,0,7,8, { PLATE_SEARCHON_Y, PLATE_SEARCHON_Y+PLATE_SEARCHON_H-1, PLATE_SEARCHOFF_X, PLATE_SEARCHOFF_X+PLATE_SEARCHOFF_W-1 }, },
   { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 
@@ -2868,8 +2843,6 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 1:
 	case 2:
 	case 3:
-	case 4:
-	case 5:
 		_set_search_data( wk, SEARCH_DATAID_SEX, result );
 		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
 		PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
@@ -2878,6 +2851,14 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case FRAMELIST_RET_NONE:
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 3 ){
+				_set_search_data( wk, SEARCH_DATAID_SEX, ret );
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
+				PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
+				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+			}
 		}
 		break;
 	}
@@ -2909,7 +2890,6 @@ static int Subseq_SelectItemHaveInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 	// FRAMELIST初期化待ちの後ポケモン名選択へ
 	_set_subseq_nextseq( wk,  SUBSEQ_SELECTITEMHAVE );
-
   
 	return SUBSEQ_FRAMELISTINITWAIT;
 }
@@ -2921,9 +2901,6 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 0:
 	case 1:
 	case 2:
-	case 3:
-	case 4:
-	case 5:
 		_set_search_data( wk, SEARCH_DATAID_ITEM, result );
 		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
 		PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
@@ -2932,6 +2909,14 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case FRAMELIST_RET_NONE:
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTITEMHAVEEXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 2 ){
+				_set_search_data( wk, SEARCH_DATAID_ITEM, ret );
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
+				PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
+				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+			}
 		}
 		break;
 	}
@@ -2970,60 +2955,13 @@ static int Subseq_SelectMarkInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK0_0, TRUE );
 	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK1_0, TRUE );
 
-//  SetupScreen( wk, 2, BOXSEARCH_LISTID_MARK );
-
 	// FRAMELIST初期化待ちの後ポケモン名選択へ
 	_set_subseq_nextseq( wk,  SUBSEQ_SELECTMARK );
 
 	return SUBSEQ_FRAMELISTINITWAIT;
 }
-
-//----------------------------------------------------------------------------------
-/**
- * @brief タッチしてもキーで選択しても同じリストの結果が返るようにする
- *
- * @param   wk    
- *
- * @retval  u32   
- */
-//----------------------------------------------------------------------------------
-/*
-static int _hit_and_key_decide( BOX_SEARCH_MAIN_WORK *wk )
-{
-  u32 result = GFL_UI_TP_HitTrg( list_touch_tbl );
-  if(result!= GFL_UI_TP_HIT_NONE){
-    OS_Printf("decide=%d\n", result + FRAMELIST_GetScrollCount( wk->frame_list_work ));
-    return result + FRAMELIST_GetScrollCount( wk->frame_list_work );
-  }else{
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      OS_Printf("decide=%d\n", FRAMELIST_GetListPos( wk->frame_list_work ));
-      return FRAMELIST_GetListPos( wk->frame_list_work );
-    }
-  }
-  return GFL_UI_TP_HIT_NONE;
-}
-*/
-
 static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-/*
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
-
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    seq = SUBSEQ_SELECTMARKEXIT;
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(result==FRAMELIST_TOUCH_PARAM_ITEM || (GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE)){
-//      int pos = _hit_and_key_decide(wk);
-      int pos =FRAMELIST_GetListPos( wk->frame_list_work );
-      if(pos!=GFL_UI_TP_HIT_NONE){
-        int param = _get_search_data_mark(wk, pos);
-        _set_search_data_mark( wk, pos, param^1 );
-        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
-      }
-    }
-  }
-*/
 	u32	result = FRAMELIST_Main( wk->frame_list_work );
 
 	switch( result ){
@@ -3045,6 +2983,16 @@ static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case FRAMELIST_RET_NONE:
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 5 ){
+				int	prm = _get_search_data_mark(wk,ret) ^ 1;
+				_set_search_data_mark( wk, ret, prm );
+				GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0+ret], prm );
+				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+				SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
+				SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
+			}
 		}
 		break;
 	}
@@ -3100,10 +3048,13 @@ static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq)
 }
 static int Subseq_FramelistInitWait(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  if(  FRAMELIST_Init( wk->frame_list_work )==FALSE){
-    seq = wk->next_subseq;
-  }
-  return seq;
+	if( FRAMELIST_Init( wk->frame_list_work )==FALSE ){
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			FRAMELIST_SetCursorPosPalette( wk->frame_list_work );
+		}
+		seq = wk->next_subseq;
+	}
+	return seq;
 }
 
 static int Subseq_SearchExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
@@ -3440,13 +3391,13 @@ static void PrintMessage( BOX_SEARCH_MAIN_WORK *wk, int bmpid, int msgID, int y 
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA FrameListTouchTbl[] =
 {
-  { {   0,  23, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: ポケモンアイコン
-  { {  24,  47, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: ポケモンアイコン
-  { {  48,  71, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: ポケモンアイコン
-  { {  72,  95, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: ポケモンアイコン
-  { {  96, 119, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: ポケモンアイコン
-  { { 120, 143, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: ポケモンアイコン
-  { { 144, 167, 128, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: ポケモンアイコン
+  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: ポケモンアイコン
+  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: ポケモンアイコン
+  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: ポケモンアイコン
+  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: ポケモンアイコン
+  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: ポケモンアイコン
+  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: ポケモンアイコン
+  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: ポケモンアイコン
 
   { {   0, 168, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
@@ -3770,6 +3721,8 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
   header.cbWork = wk;
   arc_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, wk->heapID );
 
+	wk->flist_pos_max = 7;
+
   switch(type){
   case BOXSEARCH_LISTID_NAME_TOPWORD:   // 「ポケモン」母音指定
     header.itemMax = 11;
@@ -3815,14 +3768,17 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
   case BOXSEARCH_LISTID_SEIBETU:        // 「せいべつ」
     header.cbFunc  = &FrameListSexCallback;
     header.itemMax = 4;
+		wk->flist_pos_max = 4;
     break;
   case BOXSEARCH_LISTID_MOTIMONO:       // 「もちもの」
     header.cbFunc  = &FrameListItemHaveCallback;
     header.itemMax = 3;
+		wk->flist_pos_max = 3;
     break;
   case BOXSEARCH_LISTID_MARK:           // 「マーク」
     header.cbFunc  = &FrameListMarkCallback;
     header.itemMax = 6;
+		wk->flist_pos_max = 6;
     break;
   }
 
@@ -3899,7 +3855,7 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
     break;
   case BOXSEARCH_LISTID_MARK:           // 「マーク」(中身は全部０）
     for(i=0;i<header.itemMax;i++){
-      FRAMELIST_AddItem( wk->frame_list_work, 1, 0 );
+      FRAMELIST_AddItem( wk->frame_list_work, 0, 0 );
     }
     break;
   }
@@ -4329,4 +4285,31 @@ static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk )
 		return TRUE;
 	}
 	return FALSE;
+}
+
+
+
+static const GFL_UI_TP_HITTBL CheckBoxHitTbl[] =
+{
+  {   0,  23, 112, 135 },
+  {  24,  47, 112, 135 },
+  {  48,  71, 112, 135 },
+  {  72,  95, 112, 135 },
+  {  96, 119, 112, 135 },
+  { 120, 143, 112, 135 },
+  { 144, 167, 112, 135 },
+  { GFL_UI_TP_HIT_END, 0, 0, 0 }
+};
+
+static int HitCheckListBox( BOX_SEARCH_MAIN_WORK * wk )
+{
+	int	ret = GFL_UI_TP_HitTrg( CheckBoxHitTbl );
+
+	if( ret >= 0 && ret < wk->flist_pos_max ){
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+		}
+	}
+
+	return ret;
 }
