@@ -494,16 +494,16 @@ static const CLACT_INIT_DAT obj_init_dat[]={
   { 208,154,     BOXSEARCH_ANM_SEARCHOFF, 1, 1, BOXSEARCH_OBJRES_NORMAL}, // 「OFF」
   { 108,154,     BOXSEARCH_ANM_CHECKBOX, 0, 1, BOXSEARCH_OBJRES_NORMAL},  // 「ON」のチェックボックス
   { 188,154,     BOXSEARCH_ANM_CHECKON,  0, 1, BOXSEARCH_OBJRES_NORMAL},  // 「OFF」のチェックボックス
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},  // チェックボックス10個
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
-  {  64,128,     BOXSEARCH_ANM_CHECKON, 0, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},  // チェックボックス10個
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
+  {  64,128,     BOXSEARCH_ANM_CHECKON, 2, 1, BOXSEARCH_OBJRES_NORMAL},
   { 244, 12,     BOXSEARCH_ANM_SCROLL,   0, 1, BOXSEARCH_OBJRES_NORMAL},  // スクロールバーのつまみ
   { 17*8, 16*8,  APP_COMMON_POKE_MARK_CIRCLE_WHITE,   0, 1, BOXSEARCH_OBJRES_MARK },
   { 19*8, 16*8,  APP_COMMON_POKE_MARK_TRIANGLE_WHITE, 0, 1, BOXSEARCH_OBJRES_MARK },
@@ -622,6 +622,8 @@ static void PrintStrBuf( BOX_SEARCH_MAIN_WORK * wk, PRINT_UTIL * print_util, PRI
 static void SetMarkDataObj( BOX_SEARCH_MAIN_WORK *wk, int objpos );
 static void PutMarkDataObj( BOX_SEARCH_MAIN_WORK * wk, int id );
 static void SetMarkDataObjDrawEnable( BOX_SEARCH_MAIN_WORK * wk, int id, BOOL flg );
+static void InitScrollBarObj( BOX_SEARCH_MAIN_WORK * wk );
+static void PutScrollBarObj( BOX_SEARCH_MAIN_WORK * wk );
 static void PrintDefautltSubDisp( BOX_SEARCH_MAIN_WORK * wk );
 static void SetupMainMode( BOX_SEARCH_MAIN_WORK *wk );
 static void SetDrawEnableMainItemObj( BOX_SEARCH_MAIN_WORK * wk, BOOL flg );
@@ -630,7 +632,9 @@ static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK * wk, BOOL flag );
 static void SubTextPrint( BOX_SEARCH_MAIN_WORK *wk, int subseq );
 static void BmpWinTransScreen( GFL_BMPWIN * bmpwin );
 static int SetButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next );
+static void PutListCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, s16 y );
 static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos );
+static void ScrollListCheckObj( BOX_SEARCH_MAIN_WORK * wk, s8 mv );
 static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk );
 static int HitCheckListBox( BOX_SEARCH_MAIN_WORK * wk );
 
@@ -2340,11 +2344,10 @@ static int Subseq_Start(BOX_SEARCH_MAIN_WORK *wk, int seq)
 static int func_table[]={
 /*
 	SUBSEQ_SELECTPOKEMONINIT,		// 名前
-	SUBSEQ_SELECTSEIKAKUINIT,		// 性格
 	SUBSEQ_SELECTTOKUSEIINIT,		// 特性
 */
 	SUBSEQ_START,								// 名前
-	SUBSEQ_START,		// 性格
+	SUBSEQ_SELECTSEIKAKUINIT,		// 性格
 	SUBSEQ_START,		// 特性
 	SUBSEQ_SELECTSEXINIT,				// 性別
 	SUBSEQ_SELECTITEMHAVEINIT,	// 持ち物
@@ -2669,42 +2672,86 @@ static int Subseq_SelectPokemon3Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
   seq = SUBSEQ_START;
   return seq;
 }
+
 static int Subseq_SelectSeikakuInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FrameListInit(wk, BOXSEARCH_LISTID_SEIKAKU);
-  SetupScreen( wk, 1, BOXSEARCH_LISTID_SEIKAKU );
-  SubTextPrint( wk, SUBSEQ_SELECTSEIKAKUINIT );
+	ClearMainDisp( wk );
+
+	FrameListInit( wk, BOXSEARCH_LISTID_SEIKAKU );
+
+	SubTextPrint( wk, SUBSEQ_SELECTSEIKAKUINIT );
+
+	TransMainBGScreen( wk, 1 );
+
+	PrintNowCategory( wk, BOXSEARCH_LISTID_SEIKAKU );
+	if( wk->param->syswk->search_data.seikaku == 0 ){
+		PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+	}else{
+		PrintNowSelect( wk, wk->seikaku_msg, wk->param->syswk->search_data.seikaku-1 );
+	}
+
+	// チェックボックス表示
+	if( wk->param->syswk->search_data.seikaku <= 6 ){
+		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, wk->param->syswk->search_data.item );
+	}
+	// スクロールバー
+	InitScrollBarObj( wk );
 
   // FRAMELIST初期化待ちの後ポケモン名選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTSEIKAKU );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  return seq;
+  _set_subseq_nextseq( wk, SUBSEQ_SELECTSEIKAKU );
+
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 static int Subseq_SelectSeikaku(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
 
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    _set_search_data( wk, SEARCH_DATAID_SEIKAKU, 0);
-    seq = SUBSEQ_SELECTSEIKAKUEXIT;
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      int pos = FRAMELIST_GetListPos( wk->frame_list_work );
-      _set_search_data( wk, SEARCH_DATAID_SEIKAKU, pos );
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      seq = SUBSEQ_SELECTSEIKAKUEXIT;
-    }
-  }
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+		_set_search_data( wk, SEARCH_DATAID_SEIKAKU, FRAMELIST_GetListPos(wk->frame_list_work) );
+		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+		if( wk->param->syswk->search_data.seikaku == 0 ){
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+		}else{
+			PrintNowSelect( wk, wk->seikaku_msg, wk->param->syswk->search_data.seikaku-1 );
+		}
+		break;
 
-  return seq;
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 6 ){
+				_set_search_data( wk, SEARCH_DATAID_SEIKAKU, ret+FRAMELIST_GetScrollCount(wk->frame_list_work) );
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
+				if( wk->param->syswk->search_data.seikaku == 0 ){
+					PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+				}else{
+					PrintNowSelect( wk, wk->seikaku_msg, wk->param->syswk->search_data.seikaku-1 );
+				}
+				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+			}
+		}
+		break;
+	}
+
+	PutScrollBarObj( wk );
+
+	return seq;
 }
 static int Subseq_SelectSeikakuExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  TransMainBGScreen( wk, 0 );
-  seq = SUBSEQ_START;
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	return SUBSEQ_START;
 }
+
 static int Subseq_SelectTokuseiInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
   FrameListInit(wk, BOXSEARCH_LISTID_TOKUSEI_TOPWORD);
@@ -2839,7 +2886,6 @@ static int Subseq_SelectSexInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
 
 	// チェックボックス表示
-	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], TRUE );
 	PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, wk->param->syswk->search_data.sex );
 
 	// FRAMELIST初期化待ちの後ポケモン名選択へ
@@ -2898,7 +2944,6 @@ static int Subseq_SelectItemHaveInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
 
 	// チェックボックス表示
-	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], TRUE );
 	PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, wk->param->syswk->search_data.item );
 
 	// FRAMELIST初期化待ちの後ポケモン名選択へ
@@ -3446,10 +3491,10 @@ static const FRAMELIST_HEADER FrameListHeader = {
   {24,12,8,6,4,3,},    // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
    5,   // 選択項目のパレット
   21,   // スクロールバーのＹサイズ（キャラ単位）
-   6,   // 項目登録数
+   7,   // 項目登録数
    2,   // 背景登録数
    0,   // 初期カーソル位置
-   6,   // カーソル移動範囲
+   7,   // カーソル移動範囲
    0,   // 初期スクロール値
       
   FrameListTouchTbl,  // タッチデータ
@@ -3468,6 +3513,7 @@ static void ListCallBackSeikaku_Move( void *work, u32 pos, BOOL flag);
 static void ListCallBackPokemon_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackPokemon_Move(void *work, u32 pos, BOOL flag);
 static void ListCallBackSeikaku_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
+static void ListCallBackSeikaku_Scroll( void * work, s8 mv );
 static void ListCallBackTokusei_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackSex_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackItemHave_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
@@ -3489,7 +3535,7 @@ static const FRAMELIST_CALLBACK FrameListPokemonCallback = {
 static const FRAMELIST_CALLBACK FrameListSeikakuCallback = {
   ListCallBackSeikaku_Draw,
   ListCallBackSeikaku_Move,
-  ListCallBackHeadword_Scroll,
+  ListCallBackSeikaku_Scroll,
 };
 static const FRAMELIST_CALLBACK FrameListTokuseiCallback = {
   ListCallBackTokusei_Draw,
@@ -3568,19 +3614,6 @@ static void ListCallBackTokusei_Move( void *work, u32 pos, BOOL flag)
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
 }
 
-static void ListCallBackSeikaku_Move( void *work, u32 pos, BOOL flag)
-{
-  BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK *)work;
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_TEXT] ), 0 );
-  if(pos!=0){
-    STRBUF *strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_04_01+pos-1 );
-  
-    PRINT_UTIL_PrintColor( &wk->print_util[BOXSEARCH_BMPID_TEXT], wk->print_que, 
-                       0, 0, strbuf, wk->font, Window0BmpDataTable[BOXSEARCH_BMPID_TEXT]->chr );
-    GFL_STR_DeleteBuffer( strbuf );
-  }
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
-}
 
 
 static void ListCallBackHeadword_Scroll( void *work, s8 scroll )
@@ -3622,6 +3655,7 @@ static void ListCallBackSeikaku_Draw( void *work, u32 pos, PRINT_UTIL *print_uti
   PRINT_QUE *que = FRAMELIST_GetPrintQue( wk->frame_list_work );
   int param = FRAMELIST_GetItemParam( wk->frame_list_work, pos );
   STRBUF *strbuf = NULL;
+
   if(param==0){
     strbuf = wk->str[BOXSEARCH_STRID_NO_SEARCH];
   }else{
@@ -3637,7 +3671,42 @@ static void ListCallBackSeikaku_Draw( void *work, u32 pos, PRINT_UTIL *print_uti
   if(param!=0){
     GFL_STR_DeleteBuffer( strbuf );
   }
+
+	if( wk->param->syswk->search_data.seikaku == param ){
+		PutListCheckObj( wk, BOXSEARCH_OBJID_CHECK0, y+12 );
+	}
 }
+static void ListCallBackSeikaku_Move( void * work, u32 pos, BOOL flag )
+{
+	BOX_SEARCH_MAIN_WORK * wk = (BOX_SEARCH_MAIN_WORK *)work;
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmp_win[BOXSEARCH_BMPID_TEXT]), 0 );
+
+	if( pos != 0 ){
+		STRBUF * strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_04_01+pos-1 );
+		PRINT_UTIL_PrintColor(
+			&wk->print_util[BOXSEARCH_BMPID_TEXT], wk->print_que,
+			0, 0, strbuf, wk->font, Window0BmpDataTable[BOXSEARCH_BMPID_TEXT]->chr );
+		GFL_STR_DeleteBuffer( strbuf );
+		BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
+	}else{
+		GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
+	}
+}
+static void ListCallBackSeikaku_Scroll( void * work, s8 mv )
+{
+	BOX_SEARCH_MAIN_WORK * wk = (BOX_SEARCH_MAIN_WORK *)work;
+/*
+  int y = FRAMELIST_GetScrollBarPY( wk->frame_list_work );
+  GFL_CLACTPOS cp_pos;
+
+  GFL_CLACT_WK_GetWldPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &cp_pos );
+  cp_pos.y = y;
+  GFL_CLACT_WK_SetWldPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &cp_pos );
+*/
+	ScrollListCheckObj( wk, mv*-1 );
+}
+
 
 static void ListCallBackTokusei_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp )
 {
@@ -3914,12 +3983,36 @@ static void FrameListClear( BOX_SEARCH_MAIN_WORK * wk )
 
 
 // チェックマーク表示
-static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos )
+static void PutListCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, s16 y )
 {
 	GFL_CLACTPOS cp_pos;
 	cp_pos.x = 127;
-	cp_pos.y = pos * 24 + 12;
+	cp_pos.y = y;
 	GFL_CLACT_WK_SetWldPos( wk->clwk[id], &cp_pos );
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[id], TRUE );
+}
+static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos )
+{
+	PutListCheckObj( wk, id, pos * 24 + 12 );
+}
+
+static void ScrollListCheckObj( BOX_SEARCH_MAIN_WORK * wk, s8 mv )
+{
+	GFL_CLACTPOS cp_pos;
+	u32	i;
+
+	for( i=BOXSEARCH_OBJID_CHECK0; i<=BOXSEARCH_OBJID_CHECK9; i++ ){
+		if( GFL_CLACT_WK_GetDrawEnable( wk->clwk[i] ) == FALSE ){
+			continue;
+		}
+		GFL_CLACT_WK_GetWldPos( wk->clwk[i], &cp_pos );
+		cp_pos.y += mv;
+		GFL_CLACT_WK_SetWldPos( wk->clwk[i], &cp_pos );
+
+		if( cp_pos.y <= -12 || cp_pos.y >= 204 ){
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+		}
+	}
 }
 
 
@@ -4275,6 +4368,26 @@ static void SetMarkDataObjDrawEnable( BOX_SEARCH_MAIN_WORK * wk, int id, BOOL fl
   }
 }
 
+static void InitScrollBarObj( BOX_SEARCH_MAIN_WORK * wk )
+{
+	GFL_CLACTPOS  pos = { 244, 12 };
+	GFL_CLACT_WK_SetPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &pos, CLSYS_DEFREND_MAIN );
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_SCROL], TRUE );
+}
+
+static void PutScrollBarObj( BOX_SEARCH_MAIN_WORK * wk )
+{
+	GFL_CLACTPOS cp_pos;
+
+	GFL_CLACT_WK_GetWldPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &cp_pos );
+	cp_pos.y = FRAMELIST_GetScrollBarPY2( wk->frame_list_work, cp_pos.y );
+	if( cp_pos.y < 12 ){
+		cp_pos.y = 12;
+	}else if( cp_pos.y > 156 ){
+		cp_pos.y = 156;
+	}
+  GFL_CLACT_WK_SetWldPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &cp_pos );
+}
 
 
 //----------------------------------------------------------------------------------
