@@ -94,8 +94,6 @@
 
 #include "field/field_const.h"  // for FX32_TO_GRID
 
-#include "event_fourkings.h"  // 
-
 #include "pleasure_boat.h"    //for PL_BOAT_
 
 #include "event_autoway.h" // for EVENT_PlayerMoveOnAutoWay

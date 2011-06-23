@@ -9464,16 +9464,16 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @def _FOURKINGS_WALKEVENT
- * @brief 四天王　歩きアニメーションイベント呼び出し
+ * @def _FOURKINGS_RAIL_OFF
+ * @brief 四天王　レールをOFFにする
  * @param fourking_id 1～4  ゾーンIDの数値　ZONE_ID_C09R[fourking_id]01
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
-#define _FOURKINGS_WALKEVENT( fourking_id ) _ASM_FOURKINGS_WALKEVENT fourking_id
+#define _FOURKINGS_RAIL_OFF( fourking_id ) _ASM_FOURKINGS_RAIL_OFF fourking_id
 
-  .macro  _ASM_FOURKINGS_WALKEVENT fourking_id
-  .short  EV_SEQ_FOURKINGS_WALKEVENT
+  .macro  _ASM_FOURKINGS_RAIL_OFF fourking_id
+  .short  EV_SEQ_FOURKINGS_RAIL_OFF
   .short  \fourking_id
   .endm
 

@@ -25,8 +25,6 @@
 
 #include "scrcmd_fourkings.h"
 
-#include "event_fourkings.h"
-
 #include "fourkings_evil.h"
 
 //-----------------------------------------------------------------------------
@@ -34,6 +32,14 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+// 頂上カメラID
+static const u32 sc_EV_DEMO_CAMERA_ID_TBL[ FIELD_EVENT_FOURKINGS_MAX ] = 
+{
+  28,
+  29,
+  30,
+  31
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -47,18 +53,20 @@
 */
 //-----------------------------------------------------------------------------
 
-//======================================================================
-//  四天王歩きイベント
-//======================================================================
+// レールOFF
+static void FOURKINGS_RailOff( FIELDMAP_WORK *p_fieldmap, u32 fourkings_no );
+// 頂上カメラID取得
+static u32 FOURKINGS_GetCameraID( u32 fourkings_no );
+
 //----------------------------------------------------------------------------
 /**
- *	@brief  四天王歩きイベント完了待ち
+ *	@brief  四天王部屋 レールOFF
  *
  *	@param	core
  *	@param	*wk 
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdFourKings_WalkEvent( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdFourKings_RailOff( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
@@ -71,13 +79,11 @@ VMCMD_RESULT EvCmdFourKings_WalkEvent( VMHANDLE *core, void *wk )
   // ZONE ID の IDでわたってくる（1オリジン）ので、-1する
   index -= 1;
 
-  // イベントを呼び出す
-  SCRIPT_CallEvent( scw, EVENT_FourKings_CircleWalk(gsys, fieldWork, index) );
-  return VMCMD_RESULT_SUSPEND;
+  // レールOFF
+  FOURKINGS_RailOff( fieldWork, index );
+
+  return VMCMD_RESULT_CONTINUE;
 }
-
-
-
 
 //----------------------------------------------------------------------------
 /**
@@ -99,7 +105,7 @@ VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk )
 
 
   // カメラの状態を頂上にする
-  FIELD_CAMERA_SetCameraType( p_camera, EVENT_FourKings_GetCameraID( index ) );
+  FIELD_CAMERA_SetCameraType( p_camera, FOURKINGS_GetCameraID( index ) );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -111,31 +117,46 @@ VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
-  FLDMAPFUNC_SYS * fldmapFunc = FIELDMAP_GetFldmapFuncSys( fieldWork );
-  u16          index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
-
-  switch(index){
-  case 1:
-    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_GHOST_SPARK_SOUND );
-    break;
-  case 2:
-    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_BAD_SOUND );
-    break;
-  case 3:
-    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_FIGHT_SOUND );
-    break;
-  case 4:
-    FLDMAPFUNC_Create( FS_OVERLAY_ID(field_event_fourkings), fldmapFunc, &c_FLDMAPFUNC_ESPERT_SOUND );
-    break;
-
-  default:
-    break;
-  }
+  //
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  四天王各部屋のレールOFF
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap
+ *	@param	fourkings_no 
+ */
+//-----------------------------------------------------------------------------
+static void FOURKINGS_RailOff( FIELDMAP_WORK *p_fieldmap, u32 fourkings_no )
+{
+  int i;
+  FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
+
+  GF_ASSERT( fourkings_no < FIELD_EVENT_FOURKINGS_MAX );
+
+  // ライン数は一定
+  for( i=0; i<RAIL_NUM; i++ )
+  {
+    FLDNOGRID_MAPPER_SetLineActive( p_mapper, i, FALSE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  四天王各部屋の頂上カメラIDを取得
+ *
+ *	@param	fourkings_no 四天王ナンバー
+ *
+ *	@return カメラID
+ */
+//-----------------------------------------------------------------------------
+static u32 FOURKINGS_GetCameraID( u32 fourkings_no )
+{
+  GF_ASSERT( fourkings_no < FIELD_EVENT_FOURKINGS_MAX );
+  return sc_EV_DEMO_CAMERA_ID_TBL[ fourkings_no ];
 }
 
 

@@ -15,7 +15,7 @@
   INIT_OVERLAY_CMD( fourkings )
 
   // Žl“V‰¤ŠÖ˜A
-  DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
+  DEF_CMD( EvCmdFourKings_RailOff, EV_SEQ_FOURKINGS_RAIL_OFF )
   DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
   DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
 

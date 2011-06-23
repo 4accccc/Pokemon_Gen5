@@ -24,6 +24,8 @@ extern "C"{
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+#define FIELD_EVENT_FOURKINGS_MAX (4)
+#define RAIL_NUM  (3)   // 各部屋レールのライン数は一定(変更する可能性も有る)
 
 //-----------------------------------------------------------------------------
 /**
@@ -36,13 +38,9 @@ extern "C"{
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-// 四天王部屋　歩行デモ　開始
-extern VMCMD_RESULT EvCmdFourKings_WalkEvent( VMHANDLE *core, void *wk );
-
-// 四天王部屋 頂上　カメラ設定
+// 共通
+extern VMCMD_RESULT EvCmdFourKings_RailOff( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_SetCameraParam( VMHANDLE *core, void *wk );
-
-// 四天王部屋　サウンドシステム　開始
 extern VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk );
 
 // 悪
