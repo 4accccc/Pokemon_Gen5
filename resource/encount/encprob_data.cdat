@@ -10,7 +10,7 @@
 static const ENCPROB_PATTERN DATA_EncProbPattern[] = {
  //up, interval, max, safety
  { 2, 3, 13, 2 },  //ã‘Lv1
- { 4, 1, 29, 1 },  //ã‘Lv2
+ { 2, 1, 19, 2 },  //ã‘Lv2
  { 2, 3, 13, 2 },  //‹­‘Lv1
  { 2, 2, 19, 2 },  //‹­‘Lv2
  { 5, 2, 31, 2 },  //ã’·‘Lv1
