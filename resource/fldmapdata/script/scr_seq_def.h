@@ -7157,13 +7157,26 @@
 
 //--------------------------------------------------------------
 /**
- * ジムコマンド　ドラゴンジムボタンイベント
+ * ジムコマンド　ドラゴンジムボタン更新イベント
  */
 //--------------------------------------------------------------
 #define _GYM_DRAGON_REFRESH_BUTTON() _ASM_GYM_DRAGON_REFRESH_BUTTON
 
   .macro  _ASM_GYM_DRAGON_REFRESH_BUTTON
   .short  EV_SEQ_GYM_DRAGON_REFRESH_BUTTON
+  .endm  
+
+//--------------------------------------------------------------
+/**
+ * ジムコマンド　ドラゴンジム上ボタン初回起動イベント
+ * @param layer   現在のフロア番号0~2
+ */
+//--------------------------------------------------------------
+#define _GYM_DRAGON_TURNON_UP_BUTTON( layer ) _ASM_GYM_DRAGON_TURNON_UP_BUTTON layer
+
+  .macro  _ASM_GYM_DRAGON_TURNON_UP_BUTTON layer
+  .short  EV_SEQ_GYM_DRAGON_TURNON_UP_BUTTON
+  .short  \layer
   .endm  
 
 //--------------------------------------------------------------

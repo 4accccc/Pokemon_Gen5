@@ -1034,8 +1034,8 @@
   DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
   DEF_CMD( EvCmdGymDragon_PushButton, EV_SEQ_GYM_DRAGON_PUSH_BUTTON )
   DEF_CMD( EvCmdGymDragon_RefreshButton, EV_SEQ_GYM_DRAGON_REFRESH_BUTTON )
+  DEF_CMD( EvCmdGymDragon_TurnOnUpButton, EV_SEQ_GYM_DRAGON_TURNON_UP_BUTTON )
 
-  NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()

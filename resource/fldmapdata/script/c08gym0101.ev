@@ -39,6 +39,8 @@ _EVENT_DATA    ev_tr_c08gym0101_foot_l            // 左足トレーナー
 _EVENT_DATA    ev_tr_c08gym0101_foot_r            // 左足トレーナー
 _EVENT_DATA    ev_tr_c08gym0101_guide             // ガイド
 _EVENT_DATA    ev_tr_c08gym0101_swleader7         // シャガ
+_EVENT_DATA    ev_tr_c08gym0101_up_button_turn_on // 上ボタン点灯
+_EVENT_DATA    ev_bg_c08gym0101_statue            // 像
 _EVENT_DATA_END
 
 /************************************************************/
@@ -52,7 +54,7 @@ INIT_EVENT_START	ev_zone_c08gym0101
   // ※戦闘状況によってボタンフラグを操作します
 	DEFINE_LOCAL LWK_BATTLE_FG
 	_TRAINER_FLAG_CHECK( TRID_VETERANM_09, LWK_BATTLE_FG )
-	IF $LWK_BATTLE_FG == 0 THEN
+	IF ($LWK_BATTLE_FG == 0) && ($WK_SCENE_C08GYM_TURN_BTN_02 == 2) THEN
     $LOCALWORK0 = FALSE
   ELSE
     $LOCALWORK0 = TRUE 
@@ -69,6 +71,9 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_c08gym0101_button_up
 {
+  // ボタン起動音
+  _SE_PLAY( SEQ_SE_SW_DRGGYM_06 )
+
   // 下に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down )
   _OBJ_ANIME_WAIT()
@@ -87,6 +92,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_c08gym0101_button_down
 {
+  // ボタン起動音
+  _SE_PLAY( SEQ_SE_SW_DRGGYM_06 )
+
   // 上に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_up )
   _OBJ_ANIME_WAIT()
@@ -105,6 +113,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_c08gym0101_button_left
 {
+  // ボタン起動音
+  _SE_PLAY( SEQ_SE_SW_DRGGYM_06 )
+
   // 右に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right )
   _OBJ_ANIME_WAIT()
@@ -123,6 +134,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_c08gym0101_button_right
 {
+  // ボタン起動音
+  _SE_PLAY( SEQ_SE_SW_DRGGYM_06 )
+
   // 左に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_left )
   _OBJ_ANIME_WAIT()
@@ -161,8 +175,6 @@ trainer_battle:
   // 戦闘フラグセット
   _TRAINER_FLAG_SET( LWK_TRID )
 
-  // ボタン状況を再設定
-  _GYM_DRAGON_REFRESH_BUTTON()
 }
 _RET
 
@@ -192,6 +204,12 @@ EVENT_START ev_tr_c08gym0101_tail
     _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_veteranm_09_02 )
     _LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
+
+    // ボタン点灯イベントを起動する状態にする
+    IF $WK_SCENE_C08GYM_TURN_BTN_01 == 0 THEN
+      $WK_SCENE_C08GYM_TURN_BTN_01 = 1
+    ENDIF
+      
   ELSE
     // 戦闘後会話
     _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_veteranm_09_02 )    // ヒント会話
@@ -233,6 +251,14 @@ EVENT_START ev_tr_c08gym0101_arm_l
       // 戦闘を行う
       _CALL trainer_battle
 
+      // ボタン状況を再設定
+      _GYM_DRAGON_REFRESH_BUTTON()
+
+      // ボタン点灯イベントを起動する状態にする
+      IF $WK_SCENE_C08GYM_TURN_BTN_03 == 0 THEN
+        $WK_SCENE_C08GYM_TURN_BTN_03 = 1
+      ENDIF
+      
       // ヒント
       _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_veteranm_11_03 )
       _LAST_KEYWAIT()
@@ -279,6 +305,14 @@ EVENT_START ev_tr_c08gym0101_arm_r
       // 戦闘を行う
       _CALL trainer_battle
 
+      // ボタン状況を再設定
+      _GYM_DRAGON_REFRESH_BUTTON()
+
+      // ボタン点灯イベントを起動する状態にする
+      IF $WK_SCENE_C08GYM_TURN_BTN_03 == 0 THEN
+        $WK_SCENE_C08GYM_TURN_BTN_03 = 1
+      ENDIF
+      
       // ヒント
       _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_veteranw_08_03 )
       _LAST_KEYWAIT()
@@ -315,7 +349,15 @@ EVENT_START ev_tr_c08gym0101_foot_r
 
     // 戦闘を行う
     _CALL trainer_battle
-    
+
+    // ボタン状況を再設定
+    _GYM_DRAGON_REFRESH_BUTTON()
+
+    // ボタン点灯イベントを起動する状態にする
+    IF $WK_SCENE_C08GYM_TURN_BTN_02 == 0 THEN
+    $WK_SCENE_C08GYM_TURN_BTN_02 = 1
+    ENDIF
+          
     // 戦闘後会話
     _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_veteranw_07_02 )
     _LAST_KEYWAIT()
@@ -350,7 +392,15 @@ EVENT_START ev_tr_c08gym0101_foot_l
 
     // 戦闘を行う
     _CALL trainer_battle
-    
+
+    // ボタン状況を再設定
+    _GYM_DRAGON_REFRESH_BUTTON()
+
+    // ボタン点灯イベントを起動する状態にする
+    IF $WK_SCENE_C08GYM_TURN_BTN_02 == 0 THEN
+      $WK_SCENE_C08GYM_TURN_BTN_02 = 1
+    ENDIF
+              
     // 戦闘後会話
     _BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_veteranm_10_02 )
     _LAST_KEYWAIT()
@@ -442,6 +492,7 @@ EVENT_START ev_tr_c08gym0101_swleader7
 	
     //リーダー戦勝利時の情報登録
     _SET_GYM_VICTORY_INFO( BADGE_ID_07 )
+
 		//レジェンドバッジ入手処理
 		_SET_BADGE_FLAG( BADGE_ID_07 )
 		
@@ -503,6 +554,54 @@ EVENT_START ev_tr_c08gym0101_swleader7
   ENDIF
 }
 EVENT_END
+
+///**************************************************************/
+///*                1階：上ボタン点灯イベント                   */
+///**************************************************************/
+EVENT_START ev_tr_c08gym0101_up_button_turn_on
+{
+  // ボタン点灯イベントを起動する状態にする
+  IF $WK_SCENE_C08GYM_TURN_BTN_01 == 1 THEN
+    // 上ボタンを点灯する
+    _GYM_DRAGON_TURNON_UP_BUTTON( 0 )
+    $WK_SCENE_C08GYM_TURN_BTN_01 = 2
+  
+    // ボタン状況を再設定
+    _GYM_DRAGON_REFRESH_BUTTON()
+  ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*          【仮】像                                          */
+/**************************************************************/
+EVENT_START	ev_bg_c08gym0101_statue
+
+  _TALK_START_SE_PLAY()
+
+  DEFINE_LOCAL	LWK_BADGE
+
+  //ジムバッジを持っているのかを判定
+  _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_07 )
+
+  //ジムバッジを取得していない場合
+  IF $SCWK_TEMP0 == 0 THEN
+
+    _PLAYER_NAME( 0 )
+    _PLAINWIN_MSG_DOWN( msg_c08gym0101_statue_01 )
+
+  //ジムバッジを取得している場合【仮】
+  ELSE
+    _PLAYER_NAME( 0 )
+    _PLAINWIN_MSG_DOWN( msg_c08gym0101_statue_02 )
+  ENDIF
+
+  _LAST_KEYWAIT()	
+  _PLAINWIN_CLOSE()
+
+EVENT_END
+
+
 
 //--------------------------------------------------------------------
 // 上を向く

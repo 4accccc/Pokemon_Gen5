@@ -34,6 +34,7 @@
 #include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data.cdat"  // sc_hero_move_data
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // SYS_FLAG_C08GYM_BUTTON_～
 #include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_height_data.cdat"  // sc_ex_height_data
+#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_gym_data_def.h"  // 
 #include "gym_dragon.cdat"
 
 #include "eventwork_def.h"  // LOCALWORK*
@@ -124,6 +125,19 @@ typedef struct PLAYER_MOVE_WORK_tag
 
 }PLAYER_MOVE_WORK;
 
+//-------------------------------------
+///	プレイヤー移動ワーク
+//=====================================
+typedef struct BUTTON_TURN_ON_EVENT_WK_tag
+{
+  // sys
+  GYM_DRAGON_TMP    *p_gmkwk;
+  EVENTWORK         *p_event_wk;
+
+  // data
+  u16               layer;
+  u32               wait_frame;
+}BUTTON_TURN_ON_EVENT_WK;
 
 //=============================================================================
 /**
@@ -139,9 +153,11 @@ static BOOL CheckUpLayerArm(EVENTWORK* p_wk);
 static BOOL CheckUpLayerHead(EVENTWORK* p_wk);
 
 static GYM_BUTTON_SEQ GetNowButtonType( EVENTWORK* p_event_wk ,u16 layer ,u16 loc );
+static GMEVENT * CreateButtonTurnOnEvent( GAMESYS_WORK *p_gamesys, u16 layer );
 static GMEVENT * CreateButtonEvent_UDLR( GAMESYS_WORK *p_gamesys, u16 event_seq );
 static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
 static GMEVENT_RESULT ButtonActive_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
+static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
 static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
@@ -152,6 +168,17 @@ static void SetWorkValue( EVENTWORK* p_event_wk ,u16 work_no ,u16 value );
 static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
 static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk );
+
+#ifdef PM_DEBUG
+#define DEBUGMENU_GYM_DRAGON (2)
+static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fld_wk, HEAPID heapID );
+static void DEBUGMENU_Exit( void );
+
+// デバッグパラメータ
+static s32 debug_fog_slope_value  = FOG_SLOPE;
+static s32 debug_fog_offset_value = FOG_OFFSET;
+static s32 debug_fog_color_a_value  = FOG_COLOR_A;
+#endif
 
 //-------------------------------------
 ///	上レイヤーへ行けるか判定関数テーブル
@@ -198,6 +225,11 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   p_wk->p_sv_work   = GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_GYM_DRAGON );
   p_wk->p_ex_obj    = FIELDMAP_GetExpObjCntPtr( fieldWork );
   p_wk->p_event_wk  = GAMEDATA_GetEventWork( p_gamedata );
+
+#ifdef PM_DEBUG
+  // Rデバッグメニューの初期化
+  DEBUGMENU_Init( p_wk ,p_wk->p_fld_wk ,p_wk->heapID);
+#endif
  
   // 3D拡張オブジェクトユニットの追加
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, GYM_DRAGON_UNIT_IDX );
@@ -254,6 +286,18 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 
   // 拡張高さの設定
   SetExHeight( p_wk->p_fld_wk );
+
+  // フォグの設定
+  {
+    FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_wk->p_fld_wk );
+    FIELD_FOG_SetBlendMode( fog, FIELD_FOG_BLEND_COLOR_ALPHA );
+    FIELD_FOG_SetColorA( fog, FOG_COLOR_A );
+    FIELD_FOG_SetTblAll( fog, DATA_FogTable );
+    FIELD_FOG_SetSlope( fog, FOG_SLOPE );
+    FIELD_FOG_SetOffset( fog, FOG_OFFSET );
+    FIELD_FOG_SetFlag( fog, TRUE );
+    FIELD_FOG_Reflect( fog );
+  }
 
   // ボタンを点灯状態にする
   SetButtonITPSeq( p_wk );
@@ -357,6 +401,11 @@ void GYM_DRAGON_End(FIELDMAP_WORK *fieldWork)
   int i;
   GYM_DRAGON_TMP *p_wk = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
 
+#ifdef PM_DEBUG
+  // デバッグメニューの開放
+  DEBUGMENU_Exit();
+#endif
+
   // 破棄
   FLD_EXP_OBJ_DelUnit( p_wk->p_ex_obj, GYM_DRAGON_UNIT_IDX );
   
@@ -365,6 +414,7 @@ void GYM_DRAGON_End(FIELDMAP_WORK *fieldWork)
   
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
+
 }
 
 //--------------------------------------------------------------
@@ -468,7 +518,6 @@ static GYM_BUTTON_SEQ GetNowButtonType( EVENTWORK* p_event_wk ,u16 layer ,u16 lo
   GYM_BUTTON_SEQ ret  = GYM_BUTTON_NONE;
 
   ret = sc_button_seq_table[layer][loc][can_up];
-  //GF_ASSERT_MSG( GYM_BUTTON_NONE != ret ,"押すことの出来るボタンがありません" );
   return ret;
 }
 
@@ -501,7 +550,14 @@ static BOOL CheckCanUpLayer( EVENTWORK* p_event_wk,FLOOR_LAYER layer_id )
 //-----------------------------------------------------------------------------
 static BOOL CheckUpLayerTail(EVENTWORK* p_wk)
 {
-  return SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_09);
+  u16 wk_value = *EVENTWORK_GetEventWorkAdrs( p_wk, WK_SCENE_C08GYM_TURN_BTN_01 );
+  BOOL tr_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_09);
+
+  if( ( tr_ret == TRUE) && (wk_value == 2) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -517,9 +573,10 @@ static BOOL CheckUpLayerFoot(EVENTWORK* p_wk)
 {
   BOOL tr1_ret;
   BOOL tr2_ret;
+  u16 wk_value = *EVENTWORK_GetEventWorkAdrs( p_wk, WK_SCENE_C08GYM_TURN_BTN_02 );
   tr1_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_10);
   tr2_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANW_07);
-  if( (tr1_ret == TRUE )  || (tr2_ret == TRUE ) )
+  if( ((tr1_ret == TRUE )  || (tr2_ret == TRUE )) && wk_value == 2 )
   {
     return TRUE;
   }
@@ -539,9 +596,10 @@ static BOOL CheckUpLayerArm(EVENTWORK* p_wk)
 {
   BOOL tr1_ret;
   BOOL tr2_ret;
+  u16 wk_value = *EVENTWORK_GetEventWorkAdrs( p_wk, WK_SCENE_C08GYM_TURN_BTN_03 );
   tr1_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANM_11);
   tr2_ret = SCRIPT_CheckEventFlagTrainer( p_wk ,TRID_VETERANW_08);
-  if( (tr1_ret == TRUE )  || (tr2_ret == TRUE ) )
+  if( ((tr1_ret == TRUE )  || (tr2_ret == TRUE )) && wk_value == 2 )
   {
     return TRUE;
   }
@@ -734,6 +792,40 @@ static GMEVENT * CreateButtonEvent_UDLR( GAMESYS_WORK *p_gamesys, u16 event_seq 
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ボタン点灯イベント
+ *
+ *	@param	*p_gamesys
+ *	@param	layer 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * GYM_DRAGON_CreateButtonTurnOnEvent( GAMESYS_WORK *p_gamesys, u16 layer )
+{
+  FIELDMAP_WORK   *p_fld_wk = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  GYM_DRAGON_TMP  *p_gmkwk = GMK_TMP_WK_GetWork( p_fld_wk, GYM_DRAGON_TMP_ASSIGN_ID);
+
+  // イベント作成
+  GMEVENT *p_event = GMEVENT_Create( p_gamesys, NULL, ButtonTurnOn_Event, sizeof(BUTTON_TURN_ON_EVENT_WK) );
+  BUTTON_TURN_ON_EVENT_WK *p_wk = GMEVENT_GetEventWork(p_event);
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+  GIMMICKWORK *p_gmkwork = GAMEDATA_GetGimmickWork(p_gamedata);
+
+  // パラメータ設定
+  {
+    // ボタンデータの取得
+    p_wk->layer         = layer;
+    // ギミックワークの取得
+    p_wk->p_gmkwk           = p_gmkwk;
+    // イベントワークの初期化
+    p_wk->p_event_wk    = GAMEDATA_GetEventWork( p_gamedata );
+  }
+
+  return p_event;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  プレイヤー移動イベント
  *
  *	@param	p_event
@@ -797,13 +889,37 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
     {
       if( PMSND_CheckPlaySE() == FALSE )
       {
-        (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+        u16 layer2_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_02 );
+        u16 layer3_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_03 );
+
+        // ボタン起動イベントありの場合
+        if( layer2_value == 1 )
+        {
+          GMEVENT *call_event;
+          GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
+          call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,1);
+          GMEVENT_CallEvent( p_event, call_event );
+          (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+        }
+        else if( layer3_value == 1 )
+        {
+          GMEVENT *call_event;
+          GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
+          call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,2);
+          GMEVENT_CallEvent( p_event, call_event );
+          (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+        }
+        // イベントなしの場合
+        else
+        {
+          PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
+          (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+        }
       }
     }
     break;
   case MOVE_EVENT_SEQ_BUTTON_SET:
     {
-      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
       SetButtonITPSeq( p_wk->p_gmkwk );
       (*p_seq) = MOVE_EVENT_SEQ_EXIT;
     }
@@ -1020,7 +1136,7 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
       
-      MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
+      //MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
       p_md->move_data_frame++;
       
       // 終了フレームチェック
@@ -1044,7 +1160,8 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
         OS_Printf("敵アニメーション停止\n");
       }
     }
-  }}
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1102,4 +1219,313 @@ static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk )
     UpdateButtonStatus( button_seq ,p_wk->p_event_wk);
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン点灯イベントメイン
+ *
+ *	@param	p_event
+ *	@param	p_seq
+ *	@param	p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
+{
+  BUTTON_TURN_ON_EVENT_WK *p_wk = p_wk_adrs;
+  MODEL *p_model    = &p_wk->p_gmkwk->model[MODELID_HERO_DRAGON];
+
+  switch( (*p_seq) )
+  {
+  case TURNON_EVENT_SEQ_START:
+    {
+      // 待ち時間のクリア
+      p_wk->wait_frame = 0;
+
+      // ボタンの点灯する音
+      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
+      
+      if( p_wk->layer == 0 )
+      {
+        // 1階
+        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,GYM_BUTTON_EVENT1 );
+      }
+      else
+      {
+        // 2階、3回
+        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,GYM_BUTTON_EVENT2 );
+      }
+
+      (*p_seq) = TURNON_EVENT_SEQ_SE_START_WAIT;
+    }
+    break;
+  case TURNON_EVENT_SEQ_SE_START_WAIT:
+    {
+      p_wk->wait_frame++;
+      if( p_wk->wait_frame >= TURNON_EVENT_WAIT_FRAME )
+      {
+        (*p_seq) = TURNON_EVENT_SEQ_TURON_NOW_BUTTON;
+      }
+      OS_Printf("待ちフレーム%u\n",p_wk->wait_frame);
+    }
+    break;
+  case TURNON_EVENT_SEQ_TURON_NOW_BUTTON:
+    {
+      // IPTのシーケンスを設定する
+      FLOOR_LAYER   now_layer = p_wk->p_gmkwk->p_sv_work->now_floor_layer;
+      GYM_LOCATION  now_loc   = p_wk->p_gmkwk->p_sv_work->now_location;
+      GYM_BUTTON_SEQ button_seq = GetNowButtonType( p_wk->p_event_wk, now_layer, now_loc );
+
+      // フレーム
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,button_seq );
+    }
+
+    // シーンワークを2(イベント再生済み)に設定
+    switch(p_wk->layer)
+    {
+    case 0:
+      SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_01 ,2);
+      break;
+    case 1:
+      SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_02 ,2);
+      break;
+    case 2:
+      SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_03 ,2);
+      break;
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+#ifdef PM_DEBUG
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パラメターを操作する
+ *
+ *	@param	p_value     値代入先
+ *	@param	min         最小
+ *	@param	max         最大
+ *	@param	add_value1  左右キーでの速度
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL DebugWin_ValueUpdate( s32* p_value ,s32 min, s32 max ,s32 add_value1)
+{
+  BOOL is_change = FALSE;
+  int rep = GFL_UI_KEY_GetRepeat();
+  
+  if( rep & PAD_KEY_RIGHT  )
+  {
+    (*p_value) += add_value1;
+    is_change = TRUE;
+  }
+  if( rep & PAD_KEY_LEFT  )
+  {
+    (*p_value) -= add_value1;
+    is_change = TRUE;
+  }
+
+  // 最大チェック
+  (*p_value) %= max;
+
+  // 最小チェック
+  if( (*p_value) < min )
+  {
+    (*p_value) += max;
+  }
+
+  return is_change;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグのカラーAを描画
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_FogCollar( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item ,"FOG_COLOR_A[%d]" ,debug_fog_color_a_value );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグの色を調節
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_FogCollar( void *userWork, DEBUGWIN_ITEM *item )
+{
+  s32 *p_value = &debug_fog_color_a_value;
+  FIELDMAP_WORK *p_fld_wk = userWork;
+
+  if( DebugWin_ValueUpdate( p_value, 0, 256 ,1 ) )
+  {
+    // 描画更新
+    DEBUGWIN_RefreshScreen();
+    
+    // 反映
+    {
+      FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_fld_wk );
+      FIELD_FOG_SetColorA( fog, (*p_value) );
+      FIELD_FOG_Reflect( fog );
+    }
+
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグのかかり具合を描画
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_FogSlope( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item ,"FOG_SLOPE[%d]" ,debug_fog_slope_value );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグのかかりぐあいを調節
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_FogSlope( void *userWork, DEBUGWIN_ITEM *item )
+{
+  s32 *p_value = &debug_fog_slope_value;
+  FIELDMAP_WORK *p_fld_wk = userWork;
+
+  if( DebugWin_ValueUpdate( p_value, 0, FIELD_FOG_SLOPE_MAX ,1 ) )
+  {
+    // 描画更新
+    DEBUGWIN_RefreshScreen();
+    
+    // 反映
+    {
+      FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_fld_wk );
+      FIELD_FOG_SetSlope( fog, (*p_value) );
+      FIELD_FOG_Reflect( fog );
+    }
+
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグのオフセットを描画
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_FogOffset( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item ,"FOG_OFFSET[%d]" ,debug_fog_offset_value );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フォグのオフセットを調節
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_FogOffset( void *userWork, DEBUGWIN_ITEM *item )
+{
+  s32 *p_value = &debug_fog_offset_value;
+  FIELDMAP_WORK *p_fld_wk = userWork;
+
+  if( DebugWin_ValueUpdate( p_value, 0, 0xFFFFF ,0x10 ) )
+  {
+    // 描画更新
+    DEBUGWIN_RefreshScreen();
+    
+    // 反映
+    {
+      FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_fld_wk );
+      FIELD_FOG_SetOffset( fog, (*p_value) );
+      FIELD_FOG_Reflect( fog );
+    }
+
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドラゴンジム内デバッグメニュー
+ *
+ *	@param	*p_wk
+ *	@param	*p_fld_wk
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fld_wk, HEAPID heapID )
+{
+  // デバッグメニューグループ追加
+  DEBUGWIN_AddGroupToTop( DEBUGMENU_GYM_DRAGON, "ドラゴンジム", heapID );
+
+  // フォグのカラー
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_FogCollar,
+                              DebugWin_Draw_FogCollar,
+                              p_fld_wk,
+                              DEBUGMENU_GYM_DRAGON,
+                              heapID );
+
+  // フォグのかかり具合
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_FogSlope,
+                              DebugWin_Draw_FogSlope,
+                              p_fld_wk,
+                              DEBUGMENU_GYM_DRAGON,
+                              heapID );
+  
+  // フォグのオフセット
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_FogOffset,
+                              DebugWin_Draw_FogOffset,
+                              p_fld_wk,
+                              DEBUGMENU_GYM_DRAGON,
+                              heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグメニュー終了処理
+ *
+ *	@param	
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DEBUGMENU_Exit( void )
+{
+  DEBUGWIN_RemoveGroup( DEBUGMENU_GYM_DRAGON );
+}
+#endif
 

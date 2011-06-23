@@ -26,7 +26,11 @@ enum {
 	NARC_gym_dragon_hero_dra_move_nsbtp = 12,
 	NARC_gym_dragon_hero_dra_move_nsbva = 13,
 	NARC_gym_dragon_hero_dra_sign_nsbtp = 14,
-	NARC_gym_dragon_hero_move_bin = 15
+	NARC_gym_dragon_hero_move_bin = 15,
+	NARC_gym_dragon_emy_dra_body01_bin = 16,
+	NARC_gym_dragon_emy_dra_body02_bin = 17,
+	NARC_gym_dragon_emy_dra_body03_bin = 18,
+	NARC_gym_dragon_emy_dra_body04_bin = 19
 };
 
 /* NARC_GYM_DRAGON_NAIX_ */

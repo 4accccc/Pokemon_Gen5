@@ -39,6 +39,8 @@ typedef enum{
   GYM_BUTTON_R,
   GYM_BUTTON_D,
   GYM_BUTTON_U,
+  GYM_BUTTON_EVENT1,
+  GYM_BUTTON_EVENT2,
   GYM_BUTTON_MAX,
 }GYM_BUTTON_SEQ;
 
@@ -76,6 +78,15 @@ typedef enum{
 }BA_EVENT_SEQ;
 
 //-------------------------------------
+///	ボタン点灯イベントシーケンス
+//=====================================
+typedef enum{
+  TURNON_EVENT_SEQ_START,
+  TURNON_EVENT_SEQ_SE_START_WAIT,
+  TURNON_EVENT_SEQ_TURON_NOW_BUTTON,
+}TURNON_EVENT_SEQ;
+
+//-------------------------------------
 ///	ICA追従データID
 //=====================================
 typedef enum{
@@ -85,7 +96,7 @@ typedef enum{
 }ICA_MOVE_ID;
 
 // 拡張高さ用アトリビュート
-#define EX_HEIGHT_ATTRIBUTE (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
-
+#define EX_HEIGHT_ATTRIBUTE     (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
+#define TURNON_EVENT_WAIT_FRAME (20)
 
 

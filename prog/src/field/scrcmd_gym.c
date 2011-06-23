@@ -479,6 +479,35 @@ VMCMD_RESULT EvCmdGymDragon_PushButton( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * ドラゴンジムギミック　初回ボタン点灯イベント
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGymDragon_TurnOnUpButton( VMHANDLE *core, void *wk )
+{
+  u16 layer;
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  layer = VMGetU16( core );
+
+  call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,layer);
+
+  if (call_event == NULL){
+    GF_ASSERT(0);
+    return VMCMD_RESULT_SUSPEND;
+  }
+
+  SCRIPT_CallEvent( sc, call_event );
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
  * ドラゴンジムギミック　ボタン更新処理
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT

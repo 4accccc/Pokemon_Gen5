@@ -15,5 +15,10 @@
 "hero_dra_move.nsbtp"
 "hero_dra_move.nsbva"
 "hero_dra_sign.nsbtp"
-   
+
 "hero_move.bin"
+"emy_dra_body01.bin"
+"emy_dra_body02.bin"
+"emy_dra_body03.bin"
+"emy_dra_body04.bin"
+

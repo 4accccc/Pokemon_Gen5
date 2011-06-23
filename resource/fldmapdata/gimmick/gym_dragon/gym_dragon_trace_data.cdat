@@ -23,6 +23,9 @@ typedef struct {
 static const ARCDATID sc_hero_move_data[] =
 {
  NARC_gym_dragon_hero_move_bin,
+ NARC_gym_dragon_emy_dra_body02_bin,
+ NARC_gym_dragon_emy_dra_body03_bin,
+ NARC_gym_dragon_emy_dra_body04_bin,
 };
 #define HERO_MOVE_DATA_MAX  (NELEMS(sc_hero_move_data))
 
@@ -45,14 +48,14 @@ static const GYM_DRAGON_TRACE_DATA sc_trace_data[] =
  { 0 ,0 ,50 },
  { 0 ,100 ,150 },
  { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
- { 0 ,0 ,50 },
+ { 1 ,0 ,50 },
+ { 1 ,0 ,50 },
+ { 1 ,0 ,50 },
+ { 1 ,0 ,50 },
+ { 2 ,0 ,50 },
+ { 2 ,0 ,50 },
+ { 2 ,0 ,50 },
+ { 2 ,0 ,50 },
+ { 3 ,0 ,50 },
+ { 3 ,0 ,50 },
 };
