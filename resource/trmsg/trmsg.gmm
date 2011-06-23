@@ -19375,6 +19375,62 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
+	<row id="TRID_BACKPACKERM_23_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">おや！？　ここで　オレいがいの
+ひとと　あうなんて　うれしいな！▼
+ひさびさの　ポケモンしょうぶ
+あいてを　してもらえない　ですかね？▼</language>
+		<language name="JPN_KANJI" width="216">おや！？　ここで　オレ以外の
+人と　会うなんて　うれしいな！▼
+ひさびさの　ポケモン勝負
+相手を　してもらえない　ですかね？▼</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_23_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">やせいポケモンも　いいけど
+トレーナーあいては　スリルが　あるね</language>
+		<language name="JPN_KANJI" width="216">野生ポケモンも　いいけど
+トレーナー相手は　スリルが　あるね</language>
+	</row>
+
+	<row id="TRID_BACKPACKERM_23_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">この　いえ……
+かぐが　かってに　うごいてません？▼
+いえいえ　オレじゃあ　ないです！
+オレは　うごかして　ないですよ！</language>
+		<language name="JPN_KANJI" width="216">この家え……
+家具が　勝手に　動いてません？▼
+いえいえ　オレじゃあ　ないです！
+オレは　動かして　ないですよ！</language>
+	</row>
+
+	<row id="TRID_ESPW_08_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">あなた……　ダレ？▼
+ここに　あたしいがいの　にんげんが！
+トレーナーが　いるなんて　おかしい！▼</language>
+		<language name="JPN_KANJI" width="216">あなた……　ダレ？▼
+ここに　あたし以外の　人間が！
+トレーナーが　いるなんて　おかしい！▼</language>
+	</row>
+
+	<row id="TRID_ESPW_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あなたは　ふつうの　にんげん
+ふつうの　ポケモントレーナー　ね……</language>
+		<language name="JPN_KANJI" width="216">あなたは　普通の　人間
+普通の　ポケモントレーナー　ね……</language>
+	</row>
+
+	<row id="TRID_ESPW_08_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">この　いえ　には……
+おそれ　かなしみ　あきらめ……▼
+さまざまな　おもいが　うずまき……
+みちの　エネルギーと　なっている！</language>
+		<language name="JPN_KANJI" width="216">この　家には……
+恐れ　哀しみ　あきらめ……▼
+様々な　思いが　うずまき……
+未知の　エネルギーと　なっている！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
