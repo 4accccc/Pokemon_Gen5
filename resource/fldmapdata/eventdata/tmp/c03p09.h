@@ -12,6 +12,13 @@
 #ifndef ZONE_C03P09_EVC_H
 #define ZONE_C03P09_EVC_H
 
+#define C03P09_WAITRESS_01                 0
+#define C03P09_BUSINESS_01                 1
+#define C03P09_CUSTOMER_01                 2
+#define C03P09_CUSTOMER_02                 3
+#define C03P09_CUSTOMER_03                 4
+#define C03P09_CUSTOMER_04                 5
+#define C03P09_CUSTOMER_05                 6
 
 #endif //ZONE_C03P09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

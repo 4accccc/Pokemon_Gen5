@@ -21,24 +21,939 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_c03p09_board_01
 _EVENT_DATA    ev_bg_c03p09_board_02
-
-
-
-
-
-
+_EVENT_DATA    ev_c03p09_waitress_01
+_EVENT_DATA    ev_c03p09_business_01
+_EVENT_DATA    ev_c03p09_customer_01
+_EVENT_DATA    ev_c03p09_customer_02
+_EVENT_DATA    ev_c03p09_customer_03
+_EVENT_DATA    ev_c03p09_customer_04
+_EVENT_DATA    ev_c03p09_customer_05
+_EVENT_DATA    ev_zone_c03p09
+_EVENT_DATA    ev_pos_c03p09_customer_05
+_EVENT_DATA    ev_c03p09_waitress_call_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+//ヒウンアイス屋台用変数
+DEFINE_LOCAL  LWK_ICE_NUM
+DEFINE_LOCAL  LWK_ICE_NUM_SELECT
+DEFINE_LOCAL  LWK_ICE_GOLD
+DEFINE_LOCAL  LWK_GOLD_CHK
+DEFINE_LOCAL  LWK_BAG_CHK
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c03p09
+
+  //アイス屋でアイス購入済みかつ殿堂入り済みだと行列発生
+  IF FLAG_ON( FE_C03P09_ICEBUY_01 ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+      //========================================//
+      //行列表示
+      _FLAG_RESET( FV_C03P09_PEOPLE_01 )
+      //========================================//
+
+      //行列発生中にアイスの在庫があった場合、POSイベント設置
+      IF FLAG_OFF( TMFLG_C03P09_ICEBUY ) THEN
+
+        //========================================//
+        //POSイベント進行
+        $WK_SCENE_C03P09 = 1
+        //========================================//
+
+      ENDIF
+
+  ENDIF
+
+INIT_EVENT_END
+
 
 /**************************************************************/
 /* 			ギャラリー看板	C03P09								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03p09_board_01
-	_EASY_BGWIN_MSG(msg_c03p09_sign1_01 , TYPE_POST)
+  _EASY_BGWIN_MSG(msg_c03p09_sign1_01 , TYPE_POST)
 EVENT_END
+
 
 /**************************************************************/
 /* 			アイス看板	C03P09								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03p09_board_02
-	_EASY_BGWIN_MSG(msg_c03p09_sign2_01 , TYPE_POST)
+  _EASY_BGWIN_MSG(msg_c03p09_sign2_01 , TYPE_POST)
 EVENT_END
+
+
+/**************************************************************/
+/*  ヒウンアイス屋台                                          */
+/**************************************************************/
+EVENT_START   ev_c03p09_waitress_01
+
+  _TALK_OBJ_START()
+
+  //アイスが買える状態か（アイスを購入できるのは１日１回）
+  IF FLAG_OFF( TMFLG_C03P09_ICEBUY ) THEN
+
+    //過去にアイスを買っているか（なおかつ殿堂入りしているか）
+    IF FLAG_ON( FE_C03P09_ICEBUY_01 ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+      //殿堂入りした状態で始めて話しかけたか
+      IF FLAG_OFF( FE_C03P09_WAITRESS_02 ) THEN
+        //店員：はわわわわ！▼
+        _BALLOONWIN_OBJMSG( msg_c03p09_waitress_10, C03P09_WAITRESS_01 )
+
+        //========================================//
+        //２度目以降から下のセリフに
+        _FLAG_SET( FE_C03P09_WAITRESS_02 )
+        //========================================//
+
+      //殿堂入りした状態で話しかけるのは２度目以降
+      ELSE
+        //店員：チャンピオンも　ごあいよう！
+        _BALLOONWIN_OBJMSG( msg_c03p09_waitress_03, C03P09_WAITRESS_01 )
+
+      ENDIF
+
+    //過去にアイスを買っていない
+    ELSE
+
+      //初めて話しかけたか（殿堂入り前）
+      IF FLAG_OFF( FE_C03P09_WAITRESS_01 ) THEN
+        //店員：うちの　おみせ　むかしは
+        _BALLOONWIN_OBJMSG( msg_c03p09_waitress_01, C03P09_WAITRESS_01 )
+
+        //========================================//
+        //２度目以降から下のセリフに
+        _FLAG_SET( FE_C03P09_WAITRESS_01 )
+        //========================================//
+
+      //話しかけるのは２度目以降（殿堂入り前）
+      ELSE
+        //店員：ヒウンアイス　でーす！▼
+        _BALLOONWIN_OBJMSG( msg_c03p09_waitress_02, C03P09_WAITRESS_01 )
+
+      ENDIF
+
+    ENDIF
+
+    //所持金の表示
+    _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+    //買う・買わない選択画面作成【仮】現在は１２個までいっぺんに買えます
+    _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_ICE_NUM_SELECT )
+
+    _BMPMENU_MAKE_LIST( msg_c03p09_waitress_11_01, 0 ) //１こ
+    _BMPMENU_MAKE_LIST( msg_c03p09_waitress_11_02, 1 ) //１２こ
+    _BMPMENU_MAKE_LIST( msg_c03p09_waitress_11_03, 2 ) //やめる
+
+    _BMPMENU_START()
+
+    //１こを選択
+    IF $LWK_ICE_NUM_SELECT == 0 THEN
+
+      $LWK_ICE_NUM = 1
+      $LWK_ICE_GOLD  = 100
+
+    //１２こ（１ダース）を選択
+    ELSIF $LWK_ICE_NUM_SELECT == 1 THEN
+
+      //１ダース
+      $LWK_ICE_NUM = 12
+      $LWK_ICE_GOLD  = 1200
+
+    //いらないを選択
+    ELSE
+
+    ENDIF
+
+    //ヒウンアイスを買う場合の処理
+    IF $LWK_ICE_NUM_SELECT == 0 || $LWK_ICE_NUM_SELECT == 1 THEN
+
+      //バッグ空きチェック
+      _ADD_ITEM_CHK( ITEM_HIUNAISU, 1, LWK_BAG_CHK )
+      //金額チェック
+      _CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD )
+
+      //お金が足りない
+      IF $LWK_GOLD_CHK == 0 THEN
+        _GOLD_WIN_CLOSE()
+
+        //店員：おかねが　たりないみたいですね▽
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_04, C03P09_WAITRESS_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+      //バッグがいっぱい
+      ELSIF $LWK_BAG_CHK == 0 THEN
+        _GOLD_WIN_CLOSE()
+
+        //店員：バッグが　いっぱいみたいですね▽
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_05, C03P09_WAITRESS_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+      //購入条件は満たしている
+      ELSE
+
+        //レジ音再生
+        _SE_PLAY( SEQ_SE_SYS_22 )
+        _SUBTRACT_GOLD( LWK_ICE_GOLD )
+        _GOLD_WIN_UPDATE()
+        _SE_WAIT()
+
+        //店員：おかいあげ
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_08, C03P09_WAITRESS_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //金額ウィンドウを消す
+        _GOLD_WIN_CLOSE()
+
+        //アイス入手（指定数）
+        _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_HIUNAISU, LWK_ICE_NUM )
+
+        //========================================//
+        //今日の分は売り切れ
+        _FLAG_SET( TMFLG_C03P09_ICEBUY )
+        //========================================//
+
+        //初めてアイスを買った場合はフラグを立てる
+        IF FLAG_OFF( FE_C03P09_ICEBUY_01 ) THEN
+
+          //========================================//
+          //アイス初回購入
+          _FLAG_SET( FE_C03P09_ICEBUY_01 )
+          //========================================//
+
+          //ビジネスマン通過イベントへジャンプ
+          _CALL ev_c03p09_business_01
+
+        ENDIF
+
+      ENDIF
+
+    //アイスを買わない場合の処理
+    ELSE
+
+      //金額ウィンドウを消す
+      _GOLD_WIN_CLOSE()
+
+      //繁盛時（殿堂入り後）
+      IF FLAG_ON( FE_C03P09_ICEBUY_01 ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+        //店員：せっかく　ならんでくれたのに……
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_06, C03P09_WAITRESS_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      //繁盛前（殿堂入り前、それ以外）
+      ELSE
+
+        //店員：せっかく　きてくれたのに……
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_07, C03P09_WAITRESS_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ENDIF
+
+  //アイス売り切れ
+  ELSE
+
+    //店員：きょうは　おきゃくさんが
+    _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_09, C03P09_WAITRESS_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //行列からこのイベントを起こした時の後処理
+  IF $WK_SCENE_C03P09 == 2 THEN
+
+    //主人公列から抜ける
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
+
+    //後ろの列が動く
+    _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_icebuy ) //２週目の人
+    _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_walk_u ) //２週目の人
+    _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_walk_u ) //２週目の人
+    _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_walk_u ) //２週目の人
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_come_01 )  //列に並びなおす
+    _OBJ_ANIME_WAIT()
+
+    //行列に並び、アイスも買った
+    IF FLAG_ON( TMFLG_C03P09_ICEBUY ) THEN
+      //========================================//
+      //POSイベント進行（行列POS停止）
+      $WK_SCENE_C03P09 = 0
+      //========================================//
+    ELSE
+      //========================================//
+      //POSイベント進行（行列POS再配置）
+      $WK_SCENE_C03P09 = 1
+      //========================================//
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*  ビジネスマン通過                                          */
+/**************************************************************/
+ev_c03p09_business_01:
+
+  //========================================//
+  //ビジネスマン表示
+  _FLAG_RESET( FV_C03P09_PEOPLE_02 )
+  //========================================//
+  _OBJ_ADD( C03P09_BUSINESS_01 )
+
+  //アニメ：ビジネスマン移動
+  _OBJ_ANIME_AUTO( C03P09_BUSINESS_01, 14, 35, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：ビジネスマン「！」
+  _OBJ_ANIME( C03P09_BUSINESS_01, anm_business_guide01 )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //ビジネスマン：ん……？　そんなところに
+  _BALLOONWIN_OBJMSG_POS( msg_c03p09_business_01, C03P09_BUSINESS_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：ビジネスマン退場
+  _OBJ_ANIME_AUTO( C03P09_BUSINESS_01, 14, 18, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( C03P09_BUSINESS_01 )
+
+  //========================================//
+  //ビジネスマンを非表示
+  _FLAG_SET( FV_C03P09_PEOPLE_02 )
+  //========================================//
+
+_RET
+
+
+/**************************************************************/
+/*  行列の人01                                                */
+/**************************************************************/
+EVENT_START   ev_c03p09_customer_01
+
+  _TALK_OBJ_START()
+  //行列：でんしゃに　のって　はるばる
+  _BALLOONWIN_OBJMSG( msg_c03p09_customer_01, C03P09_CUSTOMER_01 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：向きを直す
+  _OBJ_ANIME( C03P09_CUSTOMER_01, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+/**************************************************************/
+/*  行列の人02                                                */
+/**************************************************************/
+EVENT_START   ev_c03p09_customer_02
+
+  _TALK_OBJ_START()
+  //行列：ドキドキ！　チャンピオンが
+  _BALLOONWIN_OBJMSG( msg_c03p09_customer_02, C03P09_CUSTOMER_02 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：向きを直す
+  _OBJ_ANIME( C03P09_CUSTOMER_02, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+/**************************************************************/
+/*  行列の人03                                                */
+/**************************************************************/
+EVENT_START   ev_c03p09_customer_03
+
+  _TALK_OBJ_START()
+  //行列：ソワソワ……
+  _BALLOONWIN_OBJMSG( msg_c03p09_customer_03, C03P09_CUSTOMER_03 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：向きを直す
+  _OBJ_ANIME( C03P09_CUSTOMER_03, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+/**************************************************************/
+/*  行列の人04                                                */
+/**************************************************************/
+EVENT_START   ev_c03p09_customer_04
+
+  _TALK_OBJ_START()
+  //行列：むすめに　たのまれて
+  _BALLOONWIN_OBJMSG( msg_c03p09_customer_04, C03P09_CUSTOMER_04 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：向きを直す
+  _OBJ_ANIME( C03P09_CUSTOMER_04, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+/**************************************************************/
+/*  行列の人05（最後尾）                                      */
+/**************************************************************/
+EVENT_START   ev_c03p09_customer_05
+{
+
+  _TALK_OBJ_START()
+
+  //アイスが買える状態か（アイスを購入できるのは１日１回）
+  IF FLAG_OFF( TMFLG_C03P09_ICEBUY ) THEN
+
+    //行列：きみも　かうために　ならぶかい？
+    _BALLOONWIN_OBJMSG( msg_c03p09_customer_05_01, C03P09_CUSTOMER_05 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    //列に並ぶ？
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //========================================//
+      //POSイベント進行
+      $WK_SCENE_C03P09 = 2
+      //========================================//
+
+      //行列：そうかー
+      _BALLOONWIN_OBJMSG( msg_c03p09_customer_05_02, C03P09_CUSTOMER_05 )
+      _MSGWIN_CLOSE()
+
+      //自機座標取得
+      _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+      //列の外にいた場合は列の後ろへ
+      IF $LCW_POSX != 12 && $LCW_POSZ != 40 THEN
+        _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 12, 40, FORCE_TYPE_NPC, 8, DIR_UD )
+        _OBJ_ANIME_WAIT()
+        _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+        _OBJ_ANIME_WAIT()
+      ENDIF
+
+      //アニメ：向きを直す
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_common_turn_u )
+      _OBJ_ANIME_WAIT()
+
+      //１番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_walk_u )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_01, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //２番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_walk_u )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_02, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //３番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_walk_u )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_walk_u ) //２週目の人
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_03, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //４番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_icebuy )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_walk_u ) //２週目の人
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_walk_u ) //２週目の人
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_04, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //５番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_walk_u ) //２週目の人
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_walk_u ) //２週目の人
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_walk_u ) //２週目の人
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_05, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //アイスイベントへジャンプ
+      _CALL ev_c03p09_waitress_01
+
+    ELSE    //いいえ
+
+      //行列：そうかー　こんでるしな▼
+      _BALLOONWIN_OBJMSG( msg_c03p09_customer_05_03, C03P09_CUSTOMER_05 )
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //アイスは売り切れ
+  ELSE
+
+    //行列：ぼくで　うりきれ　みたいだ▼
+    _BALLOONWIN_OBJMSG( msg_c03p09_customer_05_04, C03P09_CUSTOMER_05 )
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //アニメ：向きを直す
+  _OBJ_ANIME( C03P09_CUSTOMER_05, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+}
+EVENT_END
+
+
+/**************************************************************/
+/*  POS:行列の人05（最後尾の人の後ろに立ったら起動）          */
+/**************************************************************/
+EVENT_START   ev_pos_c03p09_customer_05
+{
+
+  //アニメ：ビジネスマン振り向き
+  _OBJ_ANIME( C03P09_CUSTOMER_05, anm_common_turn_d )
+  _TIME_WAIT( 3 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //アイスが買える状態か（アイスを購入できるのは１日１回）
+  IF FLAG_OFF( TMFLG_C03P09_ICEBUY ) THEN
+
+    //行列：きみも　かうために　ならぶかい？
+    _BALLOONWIN_OBJMSG_POS( msg_c03p09_customer_05_01, C03P09_CUSTOMER_05, POS_DEFAULT )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    //列に並ぶ？
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //========================================//
+      //POSイベント進行
+      $WK_SCENE_C03P09 = 2
+      //========================================//
+
+      //行列：そうかー
+      _BALLOONWIN_OBJMSG_POS( msg_c03p09_customer_05_02, C03P09_CUSTOMER_05, POS_DEFAULT )
+      _MSGWIN_CLOSE()
+
+      //アニメ：向きを直す
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_common_turn_u )
+      _OBJ_ANIME_WAIT()
+
+      //１番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_walk_u )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_01, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //２番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_walk_u )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_02, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //３番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_walk_u )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_walk_u ) //２週目の人
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_03, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //４番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_icebuy )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_walk_u )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_walk_u ) //２週目の人
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_walk_u ) //２週目の人
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_04, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //間
+      _TIME_WAIT( 8 )
+
+      //５番目の人が買い終える
+      _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_back_01 )
+      _TIME_WAIT( 16 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_customer_icebuy )
+      _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_walk_u ) //２週目の人
+      _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_walk_u ) //２週目の人
+      _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_walk_u ) //２週目の人
+      _TIME_WAIT( 4 )
+      _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_come_01 )  //列に並びなおす
+      _OBJ_ANIME_WAIT()
+      _OBJ_POS_CHANGE( C03P09_CUSTOMER_05, 12, 0, 47, DIR_UP ) //列の後ろに待機（再配置）
+
+      //アイスイベント（CALL用）へジャンプ
+      _CALL ev_c03p09_waitress_call_01
+
+    ELSE    //いいえ
+
+      //行列：そうかー　こんでるしな▼
+      _BALLOONWIN_OBJMSG_POS( msg_c03p09_customer_05_03, C03P09_CUSTOMER_05, POS_DEFAULT )
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //アイスは売り切れ
+  ELSE
+
+    //行列：ぼくで　うりきれ　みたいだ▼
+    _BALLOONWIN_OBJMSG_POS( msg_c03p09_customer_05_04, C03P09_CUSTOMER_05, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //アニメ：向きを直す
+  _OBJ_ANIME( C03P09_CUSTOMER_05, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+}
+EVENT_END
+
+/**************************************************************/
+/*  ヒウンアイス屋台（殿堂入り後・CALL呼び出し用）            */
+/**************************************************************/
+ev_c03p09_waitress_call_01:
+
+  //アイスが買える状態か（アイスを購入できるのは１日１回）
+  IF FLAG_OFF( TMFLG_C03P09_ICEBUY ) THEN
+
+    //殿堂入りした状態で始めて話しかけたか
+    IF FLAG_OFF( FE_C03P09_WAITRESS_02 ) THEN
+      //店員：はわわわわ！▼
+      _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_10, C03P09_WAITRESS_01, POS_DEFAULT )
+
+      //========================================//
+      //２度目以降から下のセリフに
+      _FLAG_SET( FE_C03P09_WAITRESS_02 )
+      //========================================//
+
+    //殿堂入りした状態で話しかけるのは２度目以降
+    ELSE
+      //店員：チャンピオンも　ごあいよう！
+      _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_03, C03P09_WAITRESS_01, POS_DEFAULT )
+
+    ENDIF
+
+    //所持金の表示
+    _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+    //買う・買わない選択画面作成【仮】現在は１２個までいっぺんに買えます
+    _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_ICE_NUM_SELECT )
+
+    _BMPMENU_MAKE_LIST( msg_c03p09_waitress_11_01, 0 ) //１こ
+    _BMPMENU_MAKE_LIST( msg_c03p09_waitress_11_02, 1 ) //１２こ
+    _BMPMENU_MAKE_LIST( msg_c03p09_waitress_11_03, 2 ) //やめる
+
+    _BMPMENU_START()
+
+    //１こを選択
+    IF $LWK_ICE_NUM_SELECT == 0 THEN
+
+      $LWK_ICE_NUM = 1
+      $LWK_ICE_GOLD  = 100
+
+    //１２こ（１ダース）を選択
+    ELSIF $LWK_ICE_NUM_SELECT == 1 THEN
+
+      //１ダース
+      $LWK_ICE_NUM = 12
+      $LWK_ICE_GOLD  = 1200
+
+    //いらないを選択
+    ELSE
+
+    ENDIF
+
+    //ヒウンアイスを買う場合の処理
+    IF $LWK_ICE_NUM_SELECT == 0 || $LWK_ICE_NUM_SELECT == 1 THEN
+
+      //バッグ空きチェック
+      _ADD_ITEM_CHK( ITEM_HIUNAISU, 1, LWK_BAG_CHK )
+      //金額チェック
+      _CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD )
+
+      //お金が足りない
+      IF $LWK_GOLD_CHK == 0 THEN
+        _GOLD_WIN_CLOSE()
+
+        //店員：おかねが　たりないみたいですね▽
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_04, C03P09_WAITRESS_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+      //バッグがいっぱい
+      ELSIF $LWK_BAG_CHK == 0 THEN
+        _GOLD_WIN_CLOSE()
+
+        //店員：バッグが　いっぱいみたいですね▽
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_05, C03P09_WAITRESS_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+      //購入条件は満たしている
+      ELSE
+
+        //レジ音再生
+        _SE_PLAY( SEQ_SE_SYS_22 )
+        _SUBTRACT_GOLD( LWK_ICE_GOLD )
+        _GOLD_WIN_UPDATE()
+        _SE_WAIT()
+
+        //店員：おかいあげ
+        _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_08, C03P09_WAITRESS_01, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //金額ウィンドウを消す
+        _GOLD_WIN_CLOSE()
+
+        //アイス入手（指定数）
+        _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_HIUNAISU, LWK_ICE_NUM )
+
+        //========================================//
+        //今日の分は売り切れ
+        _FLAG_SET( TMFLG_C03P09_ICEBUY )
+        //========================================//
+
+      ENDIF
+
+    //アイスを買わない場合の処理
+    ELSE
+
+      //金額ウィンドウを消す
+      _GOLD_WIN_CLOSE()
+
+      //店員：せっかく　ならんでくれたのに……
+      _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_06, C03P09_WAITRESS_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //アイス売り切れ
+  ELSE
+
+    //店員：きょうは　おきゃくさんが
+    _BALLOONWIN_OBJMSG_POS( msg_c03p09_waitress_09, C03P09_WAITRESS_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+  //行列からこのイベントを起こした時の後処理
+  IF $WK_SCENE_C03P09 == 2 THEN
+
+    //主人公列から抜ける
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
+
+    //後ろの列が動く
+    _OBJ_ANIME( C03P09_CUSTOMER_01, anm_customer_icebuy ) //２週目の人
+    _OBJ_ANIME( C03P09_CUSTOMER_02, anm_customer_walk_u ) //２週目の人
+    _OBJ_ANIME( C03P09_CUSTOMER_03, anm_customer_walk_u ) //２週目の人
+    _OBJ_ANIME( C03P09_CUSTOMER_04, anm_customer_walk_u ) //２週目の人
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( C03P09_CUSTOMER_05, anm_customer_come_01 )  //列に並びなおす
+    _OBJ_ANIME_WAIT()
+
+    //行列に並び、アイスも買った
+    IF FLAG_ON( TMFLG_C03P09_ICEBUY ) THEN
+      //========================================//
+      //POSイベント進行（行列POS停止）
+      $WK_SCENE_C03P09 = 0
+      //========================================//
+    ELSE
+      //========================================//
+      //POSイベント進行（行列POS再配置）
+      $WK_SCENE_C03P09 = 1
+      //========================================//
+    ENDIF
+
+  ENDIF
+
+_RET
+
+
+//--------------------------------------------------------------------
+//	ビジネスマン：「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_business_guide01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	行列：アイスを買い列から出る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_customer_back_01
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	行列：アイスを買う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_customer_icebuy
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	行列：列が進む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_customer_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	行列：行列に並ぶ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_customer_come_01
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+
