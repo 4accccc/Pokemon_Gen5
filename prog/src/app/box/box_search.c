@@ -159,15 +159,10 @@ enum
   PLTID_BG_BACK_S       = 0,
 
   //メインOBJ
-  PLTID_OBJ_TOUCHBAR_M  = 0, // 3本使用
-  PLTID_OBJ_TYPEICON_M  = 3, // 3本使用
-  PLTID_OBJ_OAM_MAPMODEL_M = 6, // 1本使用
-  PLTID_OBJ_POKEICON_M = 7,     // 3本使用
-  PLTID_OBJ_POKEITEM_M = 10,    // 1本使用
-  PLTID_OBJ_ITEMICON_M = 11,
-  PLTID_OBJ_POKE_M = 12,
-  PLTID_OBJ_BALLICON_M = 13, // 1本使用
-  PLTID_OBJ_TOWNMAP_M = 14,   
+  PLTID_OBJ_TOUCHBAR_M = 0,		// 3本使用
+	PLTID_OBJ_BOXSEARCH_M = 3,	// 6本使用
+	PLTID_OBJ_MARK_M = 9,				// 1本使用
+	PLTID_OBJ_ARROW_M = 10,			// 3本使用
   //サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 5本使用
 };
@@ -208,6 +203,8 @@ enum{
   BOXSEARCH_OBJID_MARK1_3,
   BOXSEARCH_OBJID_MARK1_4,
   BOXSEARCH_OBJID_MARK1_5,
+	BOXSEARCH_OBJID_ARROW_L,
+	BOXSEARCH_OBJID_ARROW_R,
   BOXSEARCH_OBJ_NUM,
 };
 
@@ -288,6 +285,7 @@ enum{
 enum{
   BOXSEARCH_OBJRES_NORMAL=0,
   BOXSEARCH_OBJRES_MARK,
+	BOXSEARCH_OBJRES_ARROW,
   BOXSEARCH_OBJRES_NUM,
 };
 
@@ -365,10 +363,6 @@ typedef struct
 #ifdef BOX_SEARCH_TOUCHBAR
   //タッチバー
   TOUCHBAR_WORK             *touchbar;
-  //以下カスタムボタン使用する場合のサンプルリソース
-  u32                       ncg_btn;
-  u32                       ncl_btn;
-  u32                       nce_btn;
 #endif //BOX_SEARCH_TOUCHBAR
 
 
@@ -444,6 +438,7 @@ typedef struct
   int main_func_pos;  // トップメニューから選んだ項目
 
 	int	buttonID;		// アニメ中のボタンID
+	int	flscroll;		// フレームリストのスクロールシーケンス
 
 } BOX_SEARCH_MAIN_WORK;
 
@@ -474,7 +469,7 @@ static const UI_EASY_CLWK_RES_PARAM objres_prm={
   NARC_box_gra_boxsearch_obj_NCGR,   ///< キャラクタリソースNO
   NARC_box_gra_boxsearch_obj_NCER,  ///< セルリソースNO
   NARC_box_gra_boxsearch_obj_NANR,   ///< セルアニメリソースNO
-  3, ///< パレット転送先NO
+  PLTID_OBJ_BOXSEARCH_M, ///< パレット転送先NO
   0,  ///< パレットデータ読み出し開始位置（パレット何本目から転送するか？ 1本=16色）
   6,  ///< パレット転送本数（何本分転送するか？ 1本=16色／0だと全て転送）
 };
@@ -517,6 +512,9 @@ static const CLACT_INIT_DAT obj_init_dat[]={
   { 22*8, (1+ 9)*8,  APP_COMMON_POKE_MARK_HEART_WHITE,    0, 1, BOXSEARCH_OBJRES_MARK },
   { 22*8, (1+12)*8,  APP_COMMON_POKE_MARK_STAR_WHITE,     0, 1, BOXSEARCH_OBJRES_MARK },
   { 22*8, (1+15)*8,  APP_COMMON_POKE_MARK_DIAMOND_WHITE,  0, 1, BOXSEARCH_OBJRES_MARK },
+
+	{ TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y, APP_COMMON_BARICON_CURSOR_LEFT,  0, 1, BOXSEARCH_OBJRES_ARROW },
+	{ TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y, APP_COMMON_BARICON_CURSOR_RIGHT,  0, 1, BOXSEARCH_OBJRES_ARROW },
 };
 
 
@@ -543,8 +541,6 @@ static void BOXSEARCH_BG_LoadResource( BOX_SEARCH_BG_WORK* wk, HEAPID heapID );
 //-------------------------------------
 /// タッチバー
 //=====================================
-static TOUCHBAR_WORK * BOXSEARCH_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void BOXSEARCH_TOUCHBAR_Exit( TOUCHBAR_WORK  *touchbar );
 static void BOXSEARCH_TOUCHBAR_Main( TOUCHBAR_WORK  *touchbar );
 //以下カスタムボタン使用サンプル用
 static TOUCHBAR_WORK * BOXSEARCH_TOUCHBAR_InitEx( BOX_SEARCH_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
@@ -619,6 +615,7 @@ static void _set_search_data_mark( BOX_SEARCH_MAIN_WORK *wk, int mark, int param
 static BOOL _get_search_data_mark( BOX_SEARCH_MAIN_WORK *wk, int mark );
 static void _strbuf_print( BOX_SEARCH_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param );
 static void PrintStrBuf( BOX_SEARCH_MAIN_WORK * wk, PRINT_UTIL * print_util, PRINT_QUE * que, GFL_MSGDATA * mman, int strIdx, PRINTSYS_LSB col, int y );
+static void SetObjAutoAnime( BOX_SEARCH_MAIN_WORK * wk, u32 id, u32 anm );
 static void SetMarkDataObj( BOX_SEARCH_MAIN_WORK *wk, int objpos );
 static void PutMarkDataObj( BOX_SEARCH_MAIN_WORK * wk, int id );
 static void SetMarkDataObjDrawEnable( BOX_SEARCH_MAIN_WORK * wk, int id, BOOL flg );
@@ -632,9 +629,11 @@ static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK * wk, BOOL flag );
 static void SubTextPrint( BOX_SEARCH_MAIN_WORK *wk, int subseq );
 static void BmpWinTransScreen( GFL_BMPWIN * bmpwin );
 static int SetButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next );
+static int SetFrameListScroll( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next );
 static void PutListCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, s16 y );
 static void PutCheckObj( BOX_SEARCH_MAIN_WORK * wk, int id, int pos );
 static void ScrollListCheckObj( BOX_SEARCH_MAIN_WORK * wk, s8 mv );
+static void SetListPageArrowAnime( BOX_SEARCH_MAIN_WORK * wk, BOOL anm );
 static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk );
 static int HitCheckListBox( BOX_SEARCH_MAIN_WORK * wk );
 
@@ -677,6 +676,7 @@ static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_FramelistInitWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
+static int Subseq_FrameListScroll( BOX_SEARCH_MAIN_WORK * wk, int seq );
 static int Subseq_SearchExit(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_ButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int seq );
 static int Subseq_SelectSet( BOX_SEARCH_MAIN_WORK * wk, int seq );
@@ -725,9 +725,10 @@ enum{
   SUBSEQ_SEARCHRESET,         // 36: 検索条件リセット
   SUBSEQ_ANIMEWAIT,           // 
   SUBSEQ_FRAMELISTINITWAIT,   //
-  SUBSEQ_SEARCHEXIT,          //39
-	SUBSEQ_BUTTON_ANIME,				// 40: ボタンアニメ終了待ち
-	SUBSEQ_SELECT_SET,					// 41: 各検索条件選択へ
+  SUBSEQ_FRAMELISTSCROLL,		  //
+  SUBSEQ_SEARCHEXIT,          // 40
+	SUBSEQ_BUTTON_ANIME,				// 41: ボタンアニメ終了待ち
+	SUBSEQ_SELECT_SET,					// 42: 各検索条件選択へ
 };
 
 //=============================================================================
@@ -776,6 +777,7 @@ static int (* const FuncTable[])(BOX_SEARCH_MAIN_WORK *wk, int seq)={
   Subseq_SearchReset,           // 
   Subseq_AnimeWait,             // 
   Subseq_FramelistInitWait,     // 
+	Subseq_FrameListScroll,
   Subseq_SearchExit,            // 
 	Subseq_ButtonAnime,
 	Subseq_SelectSet,
@@ -1361,62 +1363,6 @@ static void BOXSEARCH_BG_LoadResource( BOX_SEARCH_BG_WORK* wk, HEAPID heapID )
  *  TOUCHBAR
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *  @brief  TOUCHBAR初期化
- *
- *  @param  GFL_CLUNIT *clunit  CLUNIT
- *  @param  heapID              ヒープID
- *
- *  @return TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * BOXSEARCH_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
-{ 
-  //アイコンの設定
-  //数分作る
-  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]  =
-  { 
-    { 
-      TOUCHBAR_ICON_RETURN,
-      { TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-    },
-    { 
-      TOUCHBAR_ICON_CLOSE,
-      { TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-    },
-    { 
-      TOUCHBAR_ICON_CHECK,
-      { TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
-    },
-  };
-
-  //設定構造体
-  //さきほどの窓情報＋リソース情報をいれる
-  TOUCHBAR_SETUP  touchbar_setup;
-  GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-  touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
-  touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-  touchbar_setup.p_unit   = clunit;                   //OBJ読み込みのためのCLUNIT
-  touchbar_setup.bar_frm  = BG_FRAME_BAR_M;           //BG読み込みのためのBG面
-  touchbar_setup.bg_plt   = PLTID_BG_TOUCHBAR_M;      //BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt  = PLTID_OBJ_TOUCHBAR_M;     //OBJﾊﾟﾚｯﾄ
-  touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
-
-  return TOUCHBAR_Init( &touchbar_setup, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *  @brief  TOUCHBAR破棄
- *
- *  @param  TOUCHBAR_WORK *touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void BOXSEARCH_TOUCHBAR_Exit( TOUCHBAR_WORK  *touchbar )
-{ 
-  TOUCHBAR_Exit( touchbar );
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -1430,59 +1376,24 @@ static void BOXSEARCH_TOUCHBAR_Exit( TOUCHBAR_WORK  *touchbar )
  */
 //-----------------------------------------------------------------------------
 static TOUCHBAR_WORK * BOXSEARCH_TOUCHBAR_InitEx( BOX_SEARCH_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID )
-{ 
+{
+	TOUCHBAR_SETUP	touchbar_setup;
+	TOUCHBAR_ITEM_ICON	touchbar_icon_tbl[] =
+	{
+		{ TOUCHBAR_ICON_RETURN,	{ TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y } },
+	};
 
-  //リソース読みこみ
-  //サンプルとしてタウンマップの拡大縮小アイコンをカスタムボタンに登録する
-  { 
-    ARCHANDLE *handle;
-    //ハンドル
-    handle  = GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, heapID );
-    //リソース読みこみ
-    wk->ncg_btn = GFL_CLGRP_CGR_Register( handle,
-          NARC_townmap_gra_tmap_obj_d_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
-    wk->ncl_btn = GFL_CLGRP_PLTT_RegisterEx( handle,
-        NARC_townmap_gra_tmap_bg_d_NCLR, CLSYS_DRAW_MAIN, PLTID_OBJ_TOWNMAP_M*0x20,
-        2, 2, heapID ); 
-    wk->nce_btn = GFL_CLGRP_CELLANIM_Register( handle,
-          NARC_townmap_gra_tmap_obj_d_NCER,
-          NARC_townmap_gra_tmap_obj_d_NANR, heapID );
-  
-    GFL_ARC_CloseDataHandle( handle ) ;
-  }
+	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
 
-  //タッチバーの設定
-  { 
-  //アイコンの設定
-  //数分作る
-  TOUCHBAR_SETUP  touchbar_setup;
-  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]  =
-  { 
-    { 
-      TOUCHBAR_ICON_RETURN,
-      { TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-    },
-//    { 
-//      TOUCHBAR_ICON_CLOSE,
-//      { TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-//    },
-  };
+	touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
+	touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
+	touchbar_setup.p_unit   = clunit;                   //OBJ読み込みのためのCLUNIT
+	touchbar_setup.bar_frm  = BG_FRAME_BAR_M;           //BG読み込みのためのBG面
+	touchbar_setup.bg_plt   = PLTID_BG_TOUCHBAR_M;      //BGﾊﾟﾚｯﾄ
+	touchbar_setup.obj_plt  = PLTID_OBJ_TOUCHBAR_M;     //OBJﾊﾟﾚｯﾄ
+	touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
 
-  //設定構造体
-  //さきほどの窓情報＋リソース情報をいれる
-  GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-  touchbar_setup.p_item   = touchbar_icon_tbl;        //上の窓情報
-  touchbar_setup.item_num = NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-  touchbar_setup.p_unit   = clunit;                   //OBJ読み込みのためのCLUNIT
-  touchbar_setup.bar_frm  = BG_FRAME_BAR_M;           //BG読み込みのためのBG面
-  touchbar_setup.bg_plt   = PLTID_BG_TOUCHBAR_M;      //BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt  = PLTID_OBJ_TOUCHBAR_M;     //OBJﾊﾟﾚｯﾄ
-  touchbar_setup.mapping  = APP_COMMON_MAPPING_128K;  //マッピングモード
-
-  return TOUCHBAR_Init( &touchbar_setup, heapID );
-  }
-
+	return TOUCHBAR_Init( &touchbar_setup, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1495,13 +1406,6 @@ static void BOXSEARCH_TOUCHBAR_ExitEx( BOX_SEARCH_MAIN_WORK *wk )
 { 
   //タッチバー破棄
   TOUCHBAR_Exit( wk->touchbar );
-
-  //リソース破棄
-  { 
-    GFL_CLGRP_PLTT_Release( wk->ncl_btn );
-    GFL_CLGRP_CGR_Release( wk->ncg_btn );
-    GFL_CLGRP_CELLANIM_Release( wk->nce_btn );
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -2039,10 +1943,21 @@ static void ObjInit( BOX_SEARCH_MAIN_WORK *wk, GFL_CLUNIT *unit, HEAPID heapID )
   param.ncg_id    = APP_COMMON_GetPokeMarkCharArcIdx(APP_COMMON_MAPPING_128K);   ///< キャラクタリソースNO
   param.cell_id   = APP_COMMON_GetPokeMarkCellArcIdx(APP_COMMON_MAPPING_128K);  ///< セルリソースNO
   param.anm_id    = APP_COMMON_GetPokeMarkAnimeArcIdx(APP_COMMON_MAPPING_128K);   ///< セルアニメリソースNO
-  param.pltt_line = 3+6;   ///< パレット転送先NO
+  param.pltt_line = PLTID_OBJ_MARK_M;   ///< パレット転送先NO
   param.pltt_src_ofs = 0;  ///< パレットデータ読み出し開始位置（パレット何本目から転送するか？ 1本=16色）
   param.pltt_src_num = 1;  ///< パレット転送本数（何本分転送するか？ 1本=16色／0だと全て転送）
   UI_EASY_CLWK_LoadResource( &wk->clres[BOXSEARCH_OBJRES_MARK], &param, unit, heapID );
+
+  // 矢印OBJリソース転送
+	// タッチバーのリソースを参照できないので新規に読み込む
+  param.pltt_id   = APP_COMMON_GetBarIconPltArcIdx();
+  param.ncg_id    = APP_COMMON_GetBarIconCharArcIdx();
+  param.cell_id   = APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_128K);
+  param.anm_id    = APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_128K);
+  param.pltt_line = PLTID_OBJ_ARROW_M;		///< パレット転送先NO
+  param.pltt_src_ofs = 0;		///< パレットデータ読み出し開始位置（パレット何本目から転送するか？ 1本=16色）
+  param.pltt_src_num = 3;		///< パレット転送本数（何本分転送するか？ 1本=16色／0だと全て転送）
+  UI_EASY_CLWK_LoadResource( &wk->clres[BOXSEARCH_OBJRES_ARROW], &param, unit, heapID );
 
   // ボタンOBJとマーキングOBJ表示登録
   for(i=0;i<BOXSEARCH_OBJ_NUM;i++){
@@ -2058,7 +1973,6 @@ static void ObjInit( BOX_SEARCH_MAIN_WORK *wk, GFL_CLUNIT *unit, HEAPID heapID )
   // マーキングのパレットを上書きする
   GFL_ARC_UTIL_TransVramPalette( ARCID_BOX2_GRA, NARC_box_gra_poke_mark_NCLR, 
                                  PALTYPE_MAIN_OBJ, 9*32, 32, heapID );
-
 }
 
 //----------------------------------------------------------------------------------
@@ -2171,7 +2085,7 @@ static void PrintNowCategory( BOX_SEARCH_MAIN_WORK * wk, u32 id )
 static void PrintNowSelect( BOX_SEARCH_MAIN_WORK * wk, GFL_MSGDATA * msg, u32 id )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_OLD_SELECT] ), 0 );
-	PrintStrBuf( wk, &wk->print_util[BOXSEARCH_BMPID_OLD_SELECT], wk->print_que, msg, id, PRINTSYS_MACRO_LSB(1,2,0), 0 );
+	PrintStrBuf( wk, &wk->print_util[BOXSEARCH_BMPID_OLD_SELECT], wk->print_que, msg, id, PRINTSYS_MACRO_LSB(15,2,0), 0 );
 	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_OLD_SELECT] );
 }
 
@@ -2678,6 +2592,7 @@ static int Subseq_SelectSeikakuInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	ClearMainDisp( wk );
 
 	FrameListInit( wk, BOXSEARCH_LISTID_SEIKAKU );
+	SetListPageArrowAnime( wk, FALSE );
 
 	SubTextPrint( wk, SUBSEQ_SELECTSEIKAKUINIT );
 
@@ -2722,6 +2637,20 @@ static int Subseq_SelectSeikaku(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PrintNowSelect( wk, wk->seikaku_msg, wk->param->syswk->search_data.seikaku-1 );
 		}
 		break;
+
+
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		SetListPageArrowAnime( wk, FALSE );
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTSEIKAKU );
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, SUBSEQ_SELECTSEIKAKU );
 
 	case FRAMELIST_RET_NONE:
 		if( CheckCancelButton( wk ) == TRUE ){
@@ -3122,6 +3051,26 @@ static int Subseq_FramelistInitWait(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	return seq;
 }
 
+static int Subseq_FrameListScroll( BOX_SEARCH_MAIN_WORK * wk, int seq )
+{
+	switch( wk->flscroll ){
+	case 0:
+		if( FRAMELIST_Main( wk->frame_list_work ) == FRAMELIST_RET_NONE ){
+			wk->flscroll++;
+		}
+		break;
+	case 1:
+		if( GFL_CLACT_WK_CheckAnmActive( wk->clwk[wk->buttonID] ) == FALSE ){
+			wk->flscroll = 0;
+			SetListPageArrowAnime( wk, FALSE );
+			return wk->next_subseq;
+		}
+		break;
+	}
+	return SUBSEQ_FRAMELISTSCROLL;
+}
+
+
 static int Subseq_SearchExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
   return seq;
@@ -3160,11 +3109,21 @@ static void _set_subseq_nextseq( BOX_SEARCH_MAIN_WORK *wk, int next )
 static int SetButtonAnime( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next )
 {
 	if( buttonID != BUTTON_ID_TB_RETURN ){
-		GFL_CLACT_WK_SetAnmSeq( wk->clwk[buttonID], anmID );
+		SetObjAutoAnime( wk, buttonID, anmID );
 	}
 	wk->buttonID = buttonID;
 	_set_subseq_nextseq( wk, next );
 	return SUBSEQ_BUTTON_ANIME;
+}
+
+// フレームリストスクロールセット
+static int SetFrameListScroll( BOX_SEARCH_MAIN_WORK * wk, int buttonID, int anmID, int next )
+{
+	SetObjAutoAnime( wk, buttonID, anmID );
+	wk->buttonID = buttonID;
+	wk->flscroll = 0;
+	_set_subseq_nextseq( wk, next );
+	return SUBSEQ_FRAMELISTSCROLL;
 }
 
 
@@ -3466,8 +3425,8 @@ static const FRAMELIST_TOUCH_DATA FrameListTouchTbl[] =
 
   { {   0, 168, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
-  { { 168, 191, 136, 159 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
-  { { 168, 191, 160, 183 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
+  { { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+23, TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_X_05+23 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
+  { { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+23, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+23 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
 
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
@@ -3705,6 +3664,7 @@ static void ListCallBackSeikaku_Scroll( void * work, s8 mv )
   GFL_CLACT_WK_SetWldPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &cp_pos );
 */
 	ScrollListCheckObj( wk, mv*-1 );
+	SetListPageArrowAnime( wk, TRUE );
 }
 
 
@@ -3979,6 +3939,9 @@ static void FrameListClear( BOX_SEARCH_MAIN_WORK * wk )
 
 	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK0_0, FALSE );
 	SetMarkDataObjDrawEnable( wk, BOXSEARCH_OBJID_MARK1_0, FALSE );
+
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_ARROW_L], FALSE );
+	GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_ARROW_R], FALSE );
 }
 
 
@@ -4322,6 +4285,14 @@ static int _get_search_data( BOX_SEARCH_MAIN_WORK *wk, int type )
 }
 
 
+
+static void SetObjAutoAnime( BOX_SEARCH_MAIN_WORK * wk, u32 id, u32 anm )
+{
+	GFL_CLACT_WK_SetAnmFrame( wk->clwk[id], 0 );
+	GFL_CLACT_WK_SetAnmSeq( wk->clwk[id], anm );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[id], TRUE );
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief マーキングOBJのON/OFFを反映させる
@@ -4389,6 +4360,33 @@ static void PutScrollBarObj( BOX_SEARCH_MAIN_WORK * wk )
   GFL_CLACT_WK_SetWldPos( wk->clwk[BOXSEARCH_OBJID_SCROL], &cp_pos );
 }
 
+static void SetListPageArrowAnime( BOX_SEARCH_MAIN_WORK * wk, BOOL anm )
+{
+	u32	pos = FRAMELIST_GetCursorPos( wk->frame_list_work );
+
+	if( anm == FALSE ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_ARROW_L], TRUE );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_ARROW_R], TRUE );
+	}
+
+	if( GFL_CLACT_WK_GetAnmSeq( wk->clwk[BOXSEARCH_OBJID_ARROW_L] ) != APP_COMMON_BARICON_CURSOR_LEFT_ON ||
+			anm == FALSE ){
+		if( FRAMELIST_GetScrollCount( wk->frame_list_work ) == 0 && pos == 0 ){
+			SetObjAutoAnime( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_OFF );
+		}else{
+			SetObjAutoAnime( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT );
+		}
+	}
+	if( GFL_CLACT_WK_GetAnmSeq( wk->clwk[BOXSEARCH_OBJID_ARROW_R] ) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
+			anm == FALSE ){
+		if( FRAMELIST_CheckScrollMax( wk->frame_list_work ) == FALSE && pos == (wk->flist_pos_max-1) ){
+			SetObjAutoAnime( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
+		}else{
+			SetObjAutoAnime( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT );
+		}
+	}
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -4414,7 +4412,12 @@ static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk )
 	if( TOUCHBAR_GetTouch( wk->touchbar ) == TOUCHBAR_ICON_RETURN ){
 		return TRUE;
 	}
+/*
 	if( TOUCHBAR_IsDecide( wk->touchbar ) == TRUE ){
+		return TRUE;
+	}
+*/
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		return TRUE;
 	}
 	return FALSE;
