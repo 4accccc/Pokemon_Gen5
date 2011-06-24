@@ -10,11 +10,11 @@
 ちちを　とめないでおくれ▼
 わたしは　じぶんの　かのうせいを
 さぐるため　ポケウッドに　いきます！▼
-えいがも　とれる
+ムービースター　でもある
 せんちょうを　めざすのです！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:14:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26,11 +26,11 @@
 父を　とめないでおくれ▼
 わたしは　自分の　可能性を
 探るため　ポケウッドに　行きます！▼
-映画も　撮れる
+ムービースター　でもある
 船長を　めざすのです！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:14:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -483,10 +483,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・メッセージ表示後、ライブキャスター画面へ</Comment>
+			<Comment>・メッセージ表示後、ライブキャスター画面へ
+・0＝主人公名</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:15:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -829,12 +830,12 @@
 			Language="JPN">
 			<Text>プラズマだん『まあ　いいさ▼
 こいつら　ボコボコにして
-ポケモンを　うばえば　いいだけさ▼
+ポケモンを　うばうだけ！▼
 ボーイ　アンド　ガール
 じゅんびが　できたら　かかってきな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T12:28:58" />
+				Time="2011-06-24T05:15:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -844,12 +845,12 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団『まあ　いいさ▼
 こいつら　ボコボコにして
-ポケモンを　奪えば　いいだけさ▼
+ポケモンを　奪うだけ！▼
 ボーイ　アンド　ガール
 準備が　できたら　かかってきな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T12:29:10" />
+				Time="2011-06-24T05:15:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1249,11 +1250,11 @@
 			Language="JPN">
 			<Text>プラズマだん『まさか！　こんな
 こどもたちに　ふかくを　とるとは……▼
-クッ……　ヒウンシティに　もどり▽
+クッ……　ヒウンシティに　もどり
 たいせいを　たてなおすぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:15:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1263,11 +1264,11 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団『まさか！　こんな
 こどもたちに　不覚を　とるとは……▼
-クッ……　ヒウンシティに　戻り▽
+クッ……　ヒウンシティに　戻り
 体勢を　たてなおすぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T12:29:29" />
+				Time="2011-06-24T05:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1502,16 +1503,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『それ……
-ひでんマシン　だな▼
-しかも　なかみは　いあいぎり！
-それを　おぼえた　ポケモンは▼
-たたかって　いないときでも
+ひでんマシン　だな▽
+なかみは　いあいぎり　か！▼
+いあいぎりを　おぼえた　ポケモンは
+たたかって　いないときでも▽
 みちの　ほそい　きを　きれる！▼
 それはそうと
 プラズマだんを　おいかけるぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:17:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1520,16 +1521,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『それ……
-ひでんマシン　だな▼
-しかも　中は　いあいぎり！
-いあいぎりを　覚えた　ポケモンは▼
-戦って　いないときでも
+ひでんマシン　だな▽
+中は　いあいぎり　か！▼
+いあいぎりを　覚えた　ポケモンは
+戦って　いないときでも▽
 道路の　細い木を　切れる！▼
 それはそうと
 プラズマ団を　追いかけるぞ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1597,11 +1598,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX=00、GRIDZ=00
-・仮メッセージ</Comment>
+・GRIDX=00、GRIDZ=00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1623,11 +1623,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コンビナートに　いる　れんちゅうは
-ポケモンと　はたらいているんだ！</Text>
+			<Text>コンビナートでは　ポケモンも　ひとも
+なかよく　あせして　はたらいとるよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1635,11 +1635,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コンビナートに　いる　連中は
-ポケモンと　働いているんだ！</Text>
+			<Text>コンビナートでは　ポケモンも　人も
+仲良く　汗して　働いとるよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1648,11 +1648,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX=00、GRIDZ=00
-・仮メッセージ</Comment>
+・GRIDX=00、GRIDZ=00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1677,10 +1676,10 @@
 			<Text>ヒウンシティは　すごいらしいぞ
 とにかく　ひとが　おおくって！▼
 まあ　ワシは　いったことないけどな
-ふねが　にがて　だからよ</Text>
+なみのうえが　にがて　だからよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1691,10 +1690,10 @@
 			<Text>ヒウンシティは　すごいらしいぞ
 とにかく　人が　多くって！▼
 まあ　ワシは　行ったことないけどな
-船が　苦手だからよ</Text>
+波の上が　苦手だからよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1703,11 +1702,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・GRIDX=00、GRIDZ=00
-・仮メッセージ</Comment>
+・GRIDX=00、GRIDZ=00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1729,12 +1727,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンと　ともに　そだつ……▼
-それいがいの　いきかたって
-なんていうか　そうぞう　できないわ</Text>
+			<Text>あたし　うまれたときから
+この　ミルホッグと　いっしょ　なの！▼
+うーん　ポケモンの　いない
+せいかつ　なんて　そうぞう　できないな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:22:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1742,12 +1741,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンと　共に　育つ……▼
-それ以外の　生き方って
-なんていうか　想像できないわ</Text>
+			<Text>あたし　生まれたときから
+この　ミルホッグと　一緒なの！▼
+うーん　ポケモンの　いない
+生活なんて　想像できないな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:22:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1756,11 +1756,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・GRIDX=00、GRIDZ=00
-・仮メッセージ</Comment>
+・GRIDX=00、GRIDZ=00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1778,15 +1777,57 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c13_poke29_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホグー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:22:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:22:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホグー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:22:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:22:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:23:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE29
+ポケモン･ミルホッグ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:21:33" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c13_guitarw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンも　がっきも
-うまくなりたいって　よくばり　かな？</Text>
+			<Text>オレは　よくばり♪　ポケモンも
+ギターも　さくしも　うまくなりたい♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1794,11 +1835,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンも　楽器も
-上達したいなんて　欲張り　かな？</Text>
+			<Text>オレは　欲張り♪　ポケモンも
+ギターも　作詞も　うまくなりたい♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:28:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1807,11 +1848,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・GRIDX=00、GRIDZ=00
-・仮メッセージ</Comment>
+・GRIDX=00、GRIDZ=00</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:30:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1913,11 +1953,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>案内看板
-・pos（local 22、2）</Comment>
+			<Comment>案内看板</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:23:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

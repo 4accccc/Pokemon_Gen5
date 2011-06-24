@@ -134,12 +134,11 @@
 			Language="JPN">
 			<Text>ボクね　おおきくなったら
 ゼクロムと　ともだちに　なる！▼
-ゼクロムって
-ポケモンのこと　しってる？▽
+ゼクロムは　でんせつポケモン！
 ボクは　よく　しらないんだけど……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:37:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -149,12 +148,11 @@
 			Language="JPN_KANJI">
 			<Text>ボクね　おおきくなったら
 ゼクロムと　ともだちに　なる！▼
-ゼクロムって
-ポケモンのこと　しってる？▽
+ゼクロムは　でんせつポケモン！
 ボクは　よく　しらないんだけど……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -197,12 +195,11 @@
 			Language="JPN">
 			<Text>ボクね　おおきくなったら
 レシラムと　ともだちに　なる！▼
-レシラムって
-ポケモンのこと　しってる？▽
+レシラムは　でんせつポケモン！
 ボクは　よく　しらないんだけど……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -212,12 +209,11 @@
 			Language="JPN_KANJI">
 			<Text>ボクね　おおきくなったら
 レシラムと　ともだちに　なる！▼
-レシラムって
-ポケモンのこと　しってる？▽
+レシラムは　でんせつポケモン！
 ボクは　よく　しらないんだけど……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -258,14 +254,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おや　ポケモントレーナー　かい▼
-ポケモンと　ともに　かくちの
-ポケモンジムを　めぐり▼
-バッジを　あつめ　めざすは
-ポケモンリーグ　かい？</Text>
+			<Text>おや？
+ポケモントレーナー　かい▼
+あたしの　まごも
+ポケモンと　ともに　かくちの▽
+ポケモンジムを　めぐり▽
+バッジを　あつめてたねえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:35:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -273,14 +270,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おや　ポケモントレーナー　かい▼
-ポケモンと　ともに　各地の
-ポケモンジムを　巡り▼
-バッジを　集め　目指すは
-ポケモンリーグ　かい？</Text>
+			<Text>おや？
+ポケモントレーナー　かい▼
+あたしの　孫も
+ポケモンと　ともに　各地の▽
+ポケモンジムを　巡り▽
+バッジを　集めてたねえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T05:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
