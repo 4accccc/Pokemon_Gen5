@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2011-06-20T22:50:39" source="hero_dra_03.mb"/>
+	<create user="unno" host="W00199" date="2011-06-24T10:31:10" source="hero_dra_06.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,36 +11,14 @@
 <body>
 
 <mat_color_info
-	frame_size="1000"
+	frame_size="1070"
 	tool_start_frame="1"
-	tool_end_frame="1000"
+	tool_end_frame="1070"
 	interpolation="frame"
-	compress_material="off" material_size="6 6"
+	compress_material="off" material_size="9 9"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
-
-<mat_color_data size="3">
-	25 0 31
-</mat_color_data>
-
-<mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="yaji_up">
-		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
-		<ambient_r frame_step="1" data_size="1" data_head="1"/>
-		<ambient_g frame_step="1" data_size="1" data_head="1"/>
-		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="1"/>
-		<specular_g frame_step="1" data_size="1" data_head="1"/>
-		<specular_b frame_step="1" data_size="1" data_head="1"/>
-		<emission_r frame_step="1" data_size="1" data_head="1"/>
-		<emission_g frame_step="1" data_size="1" data_head="1"/>
-		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="2"/>
-	</mat_color_anm>
-</mat_color_anm_array>
 
 </body>
 

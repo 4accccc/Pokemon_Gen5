@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2011-06-20T22:58:16" source="map_test02.mb"/>
+	<create user="unno" host="W00199" date="2011-06-24T10:34:28" source="hero_dra_06.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,13 +11,13 @@
 <body>
 
 <node_anm_info
-	frame_size="301"
+	frame_size="1070"
 	scaling_rule="standard"
 	magnify="1.000000"
-	tool_start_frame="0"
-	tool_end_frame="300"
+	tool_start_frame="1"
+	tool_end_frame="1070"
 	interpolation="frame"
-	compress_node="merge" node_size="1 1"
+	compress_node="none" node_size="1 1"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
@@ -33,7 +33,7 @@
 </node_rotate_data>
 
 <node_translate_data size="3">
-	-8.000000 256.000000 -264.000000
+	-8.000000 88.000000 -152.000000
 </node_translate_data>
 
 <node_anm_array size="1">

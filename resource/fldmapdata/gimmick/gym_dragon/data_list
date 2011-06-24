@@ -15,8 +15,9 @@ DATA_LIST = \
     hero_dra_move.nsbva \
     hero_dra_sign.nsbtp \
     hero_move.bin \
-    emy_dra_body01.bin \
-    emy_dra_body02.bin \
-    emy_dra_body03.bin \
-    emy_dra_body04.bin
+    emy_move02.bin \
+    emy_move03.bin \
+    emy_move04.bin \
+    emy_move05.bin \
+    emy_move06.bin
     

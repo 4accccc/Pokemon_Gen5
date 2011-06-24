@@ -100,6 +100,7 @@ typedef struct {
   MODEL         *p_model; 
   const GYM_DRAGON_TRACE_DATA *p_trace_data;
   BOOL          is_move_end;
+  BOOL          is_reverse_move;
 } TRACE_MOVE_DATA;
 
 //-------------------------------------
@@ -120,6 +121,8 @@ typedef struct PLAYER_MOVE_WORK_tag
   u16           event_seq;
   const BUTTON_EVENT_DATA *p_button_evdata;
   GYM_DRAGON_SV_WORK  *p_sv_work;
+  u32           event_frame;
+  BOOL          is_bark;
 
   TRACE_MOVE_DATA move_data[ICA_MOVE_ID_MAX];
 
@@ -168,6 +171,7 @@ static void SetWorkValue( EVENTWORK* p_event_wk ,u16 work_no ,u16 value );
 static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
 static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk );
+static void UpdateFrame( TRACE_MOVE_DATA *p_md );
 
 #ifdef PM_DEBUG
 #define DEBUGMENU_GYM_DRAGON (2)
@@ -178,6 +182,7 @@ static void DEBUGMENU_Exit( void );
 static s32 debug_fog_slope_value  = FOG_SLOPE;
 static s32 debug_fog_offset_value = FOG_OFFSET;
 static s32 debug_fog_color_a_value  = FOG_COLOR_A;
+static s32 debug_dragon_bark_value  = DRA_BARK_FRAME;
 #endif
 
 //-------------------------------------
@@ -866,6 +871,9 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
     {
       int i;
 
+      // フレームの加算
+      p_wk->event_frame++;
+
       // トレーナー位置のアップデート
       MOVE_Event_UpdatePlayerPos( p_wk );
       MOVE_Event_UpdateEnemyTrainerPos( p_wk );
@@ -952,6 +960,8 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
   p_wk->p_player      = FIELDMAP_GetFieldPlayer( p_wk->p_fld_wk );
   p_wk->p_ex_obj      = p_wk->p_gmkwk->p_ex_obj;
   p_wk->p_mmdl_sys    = GAMEDATA_GetMMdlSys( p_gamedata );
+  p_wk->event_frame = 0;
+  p_wk->is_bark     = FALSE;
   
   // 自機ドラゴン用ITPを設定する
   SetHeroDragonITPSeq( p_wk->p_gmkwk );
@@ -972,6 +982,18 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
     p_md->p_mmdl              = FIELD_PLAYER_GetMMdl( p_wk->p_player );
     p_md->is_move_end         = FALSE;
 
+    // 逆再生を調べる
+    if( p_md->p_trace_data->start_frame < p_md->p_trace_data->end_frame )
+    {
+      p_md->is_reverse_move = FALSE;
+      FLD_EXP_OBJ_SetUnitAddFrame( p_md->p_model->p_ex_obj ,GYM_DRAGON_UNIT_IDX ,FX32_ONE );
+    }
+    else
+    {
+      p_md->is_reverse_move = TRUE;
+      FLD_EXP_OBJ_SetUnitAddFrame( p_md->p_model->p_ex_obj ,GYM_DRAGON_UNIT_IDX ,-FX32_ONE );
+    }
+
     // 自機アニメーション再生
     for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
     {
@@ -983,6 +1005,7 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
         FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i ,FX32_CONST(p_md->move_data_frame) );
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+
       }
     }
   }
@@ -1006,6 +1029,20 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       p_md->move_data_frame     = p_md->p_trace_data->start_frame;
       p_md->p_mmdl              = MMDLSYS_SearchOBJID( p_wk->p_mmdl_sys ,p_bev->en_obj_id );
       p_md->is_move_end         = FALSE;
+
+      // 逆再生を調べる
+      if( p_md->p_trace_data->start_frame < p_md->p_trace_data->end_frame )
+      {
+        p_md->is_reverse_move = FALSE;
+        FLD_EXP_OBJ_SetUnitAddFrame( p_md->p_model->p_ex_obj ,GYM_DRAGON_UNIT_IDX ,FX32_ONE );
+        OS_Printf("てきどらんごん再生\n");
+      }
+      else
+      {
+        p_md->is_reverse_move = TRUE;
+        FLD_EXP_OBJ_SetUnitAddFrame( p_md->p_model->p_ex_obj ,GYM_DRAGON_UNIT_IDX ,-FX32_ONE );
+        OS_Printf("てきどらんごん逆再生\n");
+      }
  
       // 敵アニメーション再生
       for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
@@ -1018,7 +1055,6 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
         
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
-        OS_Printf("敵アニメーション再生\n");
       }      
     }
     else{
@@ -1083,17 +1119,9 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
       
       FIELD_PLAYER_SetPos( p_wk->p_player, &vec );
-      p_md->move_data_frame++;
 
-      // 終了フレームチェック
-      if(  p_md->move_data_frame_max <= p_md->move_data_frame )
-      {
-        p_md->is_move_end = TRUE;
-      }
-      else if(  p_md->p_trace_data->end_frame <= p_md->move_data_frame )
-      {
-        p_md->is_move_end = TRUE;
-      }
+      // フレームの更新
+      UpdateFrame( p_md );
 
       // アニメーション停止
       if( p_md->is_move_end == TRUE )
@@ -1105,6 +1133,60 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
         }
         OS_Printf("アニメーション停止\n");
       }
+    }
+
+    // ドラゴンの咆哮音
+    if( (p_wk->event_seq == GYM_DRAGON_EVENT_SEQ_UP_BUTTON) && 
+        (p_wk->p_sv_work->now_floor_layer ==  FLOOR_LAYER_ARM))
+    {
+#ifdef PM_DEBUG
+      if( p_md->p_trace_data->end_frame == (p_wk->event_frame + debug_dragon_bark_value) )
+#else
+      if( p_md->p_trace_data->end_frame == (p_wk->event_frame + DRA_BARK_FRAME) )
+#endif
+      {
+        PMSND_PlaySE( SEQ_SE_SW_DRGGYM_04 );
+        p_wk->is_bark = TRUE;
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーションフレームの更新
+ *
+ *	@param	*p_md 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void UpdateFrame( TRACE_MOVE_DATA *p_md )
+{
+  if( p_md->is_reverse_move == FALSE )
+  {
+    // 通常再生
+    p_md->move_data_frame++;
+    if(  p_md->move_data_frame_max <= p_md->move_data_frame )
+    {
+      p_md->is_move_end = TRUE;
+    }
+    else if(  p_md->p_trace_data->end_frame <= p_md->move_data_frame )
+    {
+      p_md->is_move_end = TRUE;
+    }
+  }
+  else
+  {
+    // 逆再生
+    p_md->move_data_frame--;
+    if(  p_md->move_data_frame_max <= p_md->move_data_frame )
+    {
+      p_md->is_move_end = TRUE;
+    }
+    else if(  p_md->p_trace_data->end_frame >= p_md->move_data_frame )
+    {
+      p_md->is_move_end = TRUE;
     }
   }
 }
@@ -1135,20 +1217,11 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
       vec.x += sc_mdl_offset_table[p_md->model_id].x;
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
-      
       //MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
-      p_md->move_data_frame++;
-      
-      // 終了フレームチェック
-      if(  p_md->move_data_frame_max <= p_md->move_data_frame )
-      {
-        p_md->is_move_end = TRUE;
-      }
-      else if(  p_md->p_trace_data->end_frame <= p_md->move_data_frame )
-      {
-        p_md->is_move_end = TRUE;
-      }
 
+      // フレームの更新
+      UpdateFrame( p_md );
+      
       // アニメーション停止
       if( p_md->is_move_end == TRUE )
       {
@@ -1343,6 +1416,43 @@ static BOOL DebugWin_ValueUpdate( s32* p_value ,s32 min, s32 max ,s32 add_value1
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ドラゴンの咆哮タイミングを描画
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Draw_DragonBarkFrame( void *userWork, DEBUGWIN_ITEM *item )
+{
+  DEBUGWIN_ITEM_SetNameV( item ,"DRA_BARK_FRAME[%d]" ,debug_dragon_bark_value );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  咆哮音再生タイミングを調節
+ *
+ *	@param	*userWork
+ *	@param	*item 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DebugWin_Update_DragonBarkFrame( void *userWork, DEBUGWIN_ITEM *item )
+{
+  s32 *p_value = &debug_dragon_bark_value;
+  FIELDMAP_WORK *p_fld_wk = userWork;
+
+  if( DebugWin_ValueUpdate( p_value, 0, 9999 ,1 ) )
+  {
+    // 描画更新
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  フォグのカラーAを描画
  *
  *	@param	*userWork
@@ -1512,6 +1622,14 @@ static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fld_wk, HEAPID heapID )
                               p_fld_wk,
                               DEBUGMENU_GYM_DRAGON,
                               heapID );
+
+  // ドラゴンの泣き声
+  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_DragonBarkFrame,
+                              DebugWin_Draw_DragonBarkFrame,
+                              p_fld_wk,
+                              DEBUGMENU_GYM_DRAGON,
+                              heapID );
+
 }
 
 //----------------------------------------------------------------------------

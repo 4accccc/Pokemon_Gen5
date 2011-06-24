@@ -12,3 +12,4 @@
 #define  FOG_COLOR_A (31) // フォグカラーA
 #define  FOG_SLOPE (6) // フォグのかかり具合
 #define  FOG_OFFSET (32495) // フォグオフセット
+#define  DRA_BARK_FRAME (20) // ドラゴンがほえるタイミング（アニメーション終了タイミングから値分さかのぼったタイミングでなく）
