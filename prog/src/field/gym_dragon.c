@@ -334,6 +334,10 @@ static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk )
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, TRUE);
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, FALSE);
   }
+
+  ONOUE_Printf("//======================================//\n\n");
+  ONOUE_Printf("アニメーション用ITP設定\n\n");
+  ONOUE_Printf("//======================================//\n\n");
 }
 
 //----------------------------------------------------------------------------
@@ -354,10 +358,6 @@ static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk )
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, TRUE);
   }
 
-   
-  OS_Printf("現在のレイヤー：%u\n",p_wk->p_sv_work->now_floor_layer);
-  OS_Printf("現在のロケーション：%u\n",p_wk->p_sv_work->now_location);
-
   // IPTのシーケンスを設定する
   {
     FLOOR_LAYER   now_layer = p_wk->p_sv_work->now_floor_layer;
@@ -365,7 +365,11 @@ static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk )
     GYM_BUTTON_SEQ button_seq = GetNowButtonType( p_wk->p_event_wk, now_layer, now_loc );
 
     // フレーム
-    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,button_seq );
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,FX32_CONST(button_seq) );
+
+    ONOUE_Printf("//======================================//\n\n");
+    ONOUE_Printf("ボタンITPシーケンス[%u]設定\n\n",button_seq);
+    ONOUE_Printf("//======================================//\n\n");
   }
 
 }
@@ -928,13 +932,13 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
     break;
   case MOVE_EVENT_SEQ_BUTTON_SET:
     {
+      MOVE_EVENT_UpdateDragonGymData( p_wk );
       SetButtonITPSeq( p_wk->p_gmkwk );
       (*p_seq) = MOVE_EVENT_SEQ_EXIT;
     }
     break;
   case MOVE_EVENT_SEQ_EXIT:
     {
-      MOVE_EVENT_UpdateDragonGymData( p_wk );
       MOVE_EVENT_Exit(p_wk);
       return GMEVENT_RES_FINISH;
     }
@@ -1307,7 +1311,8 @@ static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk )
 static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
 {
   BUTTON_TURN_ON_EVENT_WK *p_wk = p_wk_adrs;
-  MODEL *p_model    = &p_wk->p_gmkwk->model[MODELID_HERO_DRAGON];
+  MODEL *p_model                = &p_wk->p_gmkwk->model[MODELID_HERO_DRAGON];
+  EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP );
 
   switch( (*p_seq) )
   {
@@ -1318,17 +1323,16 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
 
       // ボタンの点灯する音
       PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
-      
-      if( p_wk->layer == 0 )
+
+      // アニメーションを有効に
       {
-        // 1階
-        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,GYM_BUTTON_EVENT1 );
+        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, FALSE);
+        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, TRUE);
       }
-      else
-      {
-        // 2階、3回
-        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,GYM_BUTTON_EVENT2 );
-      }
+
+      // 点灯アニメーションの再生
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,FX32_CONST(GYM_BUTTON_EVENT) );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
 
       (*p_seq) = TURNON_EVENT_SEQ_SE_START_WAIT;
     }
@@ -1338,36 +1342,32 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
       p_wk->wait_frame++;
       if( p_wk->wait_frame >= TURNON_EVENT_WAIT_FRAME )
       {
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
         (*p_seq) = TURNON_EVENT_SEQ_TURON_NOW_BUTTON;
       }
-      OS_Printf("待ちフレーム%u\n",p_wk->wait_frame);
     }
     break;
   case TURNON_EVENT_SEQ_TURON_NOW_BUTTON:
     {
+      // シーンワークを2(イベント再生済み)に設定
+      switch(p_wk->layer)
+      {
+      case 0:
+        SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_01 ,2);
+        break;
+      case 1:
+        SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_02 ,2);
+        break;
+      case 2:
+        SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_03 ,2);
+        break;
+      }
+
       // IPTのシーケンスを設定する
-      FLOOR_LAYER   now_layer = p_wk->p_gmkwk->p_sv_work->now_floor_layer;
-      GYM_LOCATION  now_loc   = p_wk->p_gmkwk->p_sv_work->now_location;
-      GYM_BUTTON_SEQ button_seq = GetNowButtonType( p_wk->p_event_wk, now_layer, now_loc );
+      SetButtonITPSeq( p_wk->p_gmkwk );
 
-      // フレーム
-      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,button_seq );
+      return GMEVENT_RES_FINISH;
     }
-
-    // シーンワークを2(イベント再生済み)に設定
-    switch(p_wk->layer)
-    {
-    case 0:
-      SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_01 ,2);
-      break;
-    case 1:
-      SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_02 ,2);
-      break;
-    case 2:
-      SetWorkValue( p_wk->p_event_wk ,WK_SCENE_C08GYM_TURN_BTN_03 ,2);
-      break;
-    }
-    return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
