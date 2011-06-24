@@ -56,12 +56,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょいと　コンビナートで
-ブーバーを　つかまえようかな！▽
-ほのおポケモン　かっこいいよね！</Text>
+			<Text>ちょいと　コンビナートに　いって
+ほのおポケモンを　つかまえようかな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:18:32" />
+				Time="2011-06-24T05:52:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -69,12 +68,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょいと　コンビナートで
-ブーバーを　捕まえようかな！▽
-ほのおポケモン　かっこいいよね！</Text>
+			<Text>ちょいと　コンビナートに　行って
+ほのおポケモンを　捕まえようかな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:18:37" />
+				Time="2011-06-24T05:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82,10 +80,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・重複情報</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T05:18:12" />
+				Time="2011-06-24T05:52:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
