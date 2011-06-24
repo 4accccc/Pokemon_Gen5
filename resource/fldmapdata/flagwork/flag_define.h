@@ -311,8 +311,8 @@
 #define FE_T04PC0101_ITEMGET_01            295 /* 0x0127 サザナミタウン：アイテム入手フラグ */
 #define FE_D06R0201_ITEMGET_01             296 /* 0x0128 電気石の洞穴：アイテム入手フラグ */
 #define FE_R08_ITEMGET_01                  297 /* 0x0129 ８番道路：アイテム入手フラグ */
-		/* not used   298(0x012a) */
-		/* not used   299(0x012b) */
+#define FE_H04R0301_FISHING_TALK_01        298 /* 0x012a ビレッジブリッジ：ツリーズ初回話しかけ */
+#define FE_H04R0301_FISHING_RECEPT_01      299 /* 0x012b ビレッジブリッジ：ツリーズイベント発生フラグ */
 		/* not used   300(0x012c) */
 		/* not used   301(0x012d) */
 		/* not used   302(0x012e) */
@@ -607,6 +607,7 @@
 #define FV_D06R0101_BOSS_01                689 /* 0x02b1 電気石の洞穴：N */
 #define FV_D06R0201_SWBELL_01              690 /* 0x02b2 電気石の洞穴：ベル */
 #define FV_R08_FISING_01                   691 /* 0x02b3 8番道路：ツリーズ */
+#define FV_H04R0301_FISING_01              692 /* 0x02b4 ビレッジブリッジ：ツリーズ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2202,8 +2203,8 @@
 #define TMFLG_R05_KINOMI                  2750 /* 0x0abe スワン：5番道路：木の実購入イベント確定フラグ */
 #define TMFLG_R05_KINOMI_BUY              2751 /* 0x0abf スワン：5番道路：木の実購入イベント済みフラグ */
 #define TMFLG_C03P09_ICEBUY               2752 /* 0x0ac0 ヒウンアイス：一日一回購入フラグ */
-		/* not used  2753(0x0ac1) */
-		/* not used  2754(0x0ac2) */
+#define TMFLG_H04R0301_FISHING            2753 /* 0x0ac1 ビレッジブリッジ：ツリーズ選定フラグ */
+#define TMFLG_H04R0501_PEOPLE             2754 /* 0x0ac2 ビレッジブリッジ：空き家住民選定フラグ */
 		/* not used  2755(0x0ac3) */
 		/* not used  2756(0x0ac4) */
 		/* not used  2757(0x0ac5) */

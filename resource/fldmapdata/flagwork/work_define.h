@@ -205,6 +205,7 @@
 #define WK_SCENE_C08GYM_TURN_BTN_03      16593 /* 0x40d1 ソウリュウジム：3階用イベント用（POSイベントの起動制御に使用） */
 #define WK_SCENE_D06R0101_SWBELL_01      16594 /* 0x40d2 電気石の洞穴：ベルイベントPOS制御用ワーク */
 #define WK_SCENE_D06R0101_BOSS_01        16595 /* 0x40d3 電気石の洞穴：NイベントPOS */
+#define WK_SCENE_H04_STOP_01             16596 /* 0x40d4 ビレッジブリッジ：ストッパー制御POS */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -255,7 +256,7 @@
 #define WK_OTHER_DISCOVER_EGG            16695 /* 0x4137 ３番道路：育て屋でタマゴが発見されたときに教えてくれるPOSイベント用のワーク 00 なし 01 POSイベント有効。「おーい！」と声をかけてくれる。 */
 #define WK_OTHER_C05R0701_WAZA           16696 /* 0x4138 日替わり指定わざ見せ用ワーク */
 #define WK_OTHER_C12_RIVAL_PAIR          16697 /* 0x4139 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
-		/* not used 16698(0x413a) */
+#define WK_OTHER_FISHING_MONSNUM         16698 /* 0x413a ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
 		/* not used 16699(0x413b) */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
