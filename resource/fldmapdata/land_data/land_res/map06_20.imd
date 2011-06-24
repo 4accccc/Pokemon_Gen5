@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-03-03T15:40:48" source="map06_20_s_all.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-06-24T21:01:25" source="map06_20_s_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-03-03T15:40:48" source="map06_20_s_all.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-06-24T21:01:25" source="map06_20_s_all.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -735,14 +735,14 @@
 		path="C:/home/swan_data3d/field/out55/chip/tex/c13kaidan.tga"
 	>
 		<bitmap size="128">
-			4445 8854 9999 9999 9999 9999 0028 1000
-			4445 8854 bb99 bbbb bbbb abbb 0279 1000
-			4445 9854 bbb9 bbbb bbbb abbb 2789 1000
-			4445 9854 bbbb bbbb bbbb abbb 7889 1002
-			4445 9954 bbbb bbbb bbbb abbb 8889 1027
+			4445 8854 9999 9999 9999 9999 7778 1002
+			4445 8854 bb99 bbbb bbbb abbb 8889 1002
+			4445 9854 bbb9 bbbb bbbb abbb 8889 1027
+			4445 9854 bbbb bbbb bbbb abbb 8889 1028
+			4445 9954 bbbb bbbb bbbb abbb 8889 1028
 			4445 a954 aaaa aaaa aaaa aaaa 8889 1278
-			4445 8854 8888 8888 8888 8888 8888 1788
-			4445 6654 6666 6666 6666 6666 6666 1666
+			4445 8854 8888 8888 8888 8888 8888 1288
+			4445 6654 6666 6666 6666 6666 6666 1266
 			4445 3354 3333 3333 3333 3333 3333 1233
 			4445 2254 2222 2222 2222 2222 2222 1022
 			4445 2254 2222 2222 2222 2222 2222 1022
@@ -3069,10 +3069,10 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="12">
 					<mtx idx="0"/>
-					<tex st="0.187500 15.812500"/>
+					<tex st="0.187500 48.000000"/>
 					<nrm xyz="0.707031 0.707031 0.000000"/>
 					<pos_s xyz="4.000000 -0.750000 -0.250000"/>
-					<tex st="31.812500 15.812500"/>
+					<tex st="31.812500 48.000000"/>
 					<pos_xz xz="4.000000 -0.625000"/>
 					<tex st="31.812500 -80.000000"/>
 					<pos_xy xy="3.250000 0.000000"/>
@@ -3082,17 +3082,17 @@
 					<pos_s xyz="-2.250000 -0.750000 1.500000"/>
 					<tex st="5.625000 111.812500"/>
 					<pos_xz xz="-2.250000 1.250000"/>
-					<tex st="5.625000 16.000000"/>
+					<tex st="5.625000 -16.000000"/>
 					<pos_xy xy="-3.000000 0.000000"/>
-					<tex st="-25.625000 16.000000"/>
+					<tex st="-25.625000 -16.000000"/>
 					<pos_xz xz="-3.000000 1.500000"/>
 					<tex st="31.812500 -80.000000"/>
 					<pos_xz xz="-1.500000 -3.375000"/>
 					<tex st="0.187500 -80.000000"/>
 					<pos_xz xz="-1.500000 -2.875000"/>
-					<tex st="0.187500 15.812500"/>
+					<tex st="0.187500 48.000000"/>
 					<pos_xy xy="-0.750000 -0.750000"/>
-					<tex st="31.812500 15.812500"/>
+					<tex st="31.812500 48.000000"/>
 					<pos_xz xz="-0.750000 -3.375000"/>
 				</primitive>
 			</primitive_array>
