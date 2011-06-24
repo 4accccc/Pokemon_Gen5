@@ -5150,6 +5150,54 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="mes_box_search_text_03_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　えらんでください。
+
+なまえ：[Name:PokemonName Idx="0" ]
+タイプ１：[Name:Type Idx="1" ]
+タイプ２：ー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-06-24T12:26:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-06-24T12:26:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　選択してください。
+
+なまえ：[Name:PokemonName Idx="0" ]
+タイプ１：[Name:Type Idx="1" ]
+タイプ２：ー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-06-24T12:27:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-06-24T12:26:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>絞込みサブ画面ガイド：
+種族名チェック
+0：種族名
+1：タイプ１
+
+・swanで追加
+
+※タイプ１種類用</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-06-24T12:27:44" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="mes_box_search_text_04_01"
 		Style="Large">
 		<LanguageCell
