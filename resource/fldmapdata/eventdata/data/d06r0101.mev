@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/19 17:18:22
+#save date:2011/06/23 17:52:29
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d06r0101.wms
 #hold event type:
 1
 #hold event number:
-12
+14
 #event number: 0
 #type
 1
@@ -382,6 +382,68 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 552 16 8
+#event number: 12
+#type
+1
+#ID name
+D06R0101_SWBELL_01
+#OBJ CODE Number
+SWBELL
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D06R0101_SWBELL_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -520
+#event number: 13
+#type
+1
+#ID name
+D06R0101_BOSS_01
+#OBJ CODE Number
+BOSS
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D06R0101_BOSS_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+632 0 -408
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -440,7 +502,41 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#Pos Event Label
+POS_D06R0101_SWBELL_01
+#Pos Script Name
+SCRID_POS_D06R0101_SWBELL_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D06R0101_SWBELL_01
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 -552
+#size
+4 1
+#event number: 1
+#Pos Event Label
+POS_D06R0101_BOSS_01
+#Pos Script Name
+SCRID_POS_D06R0101_BOSS_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D06R0101_BOSS_01
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+504 0 -408
+#size
+1 2
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

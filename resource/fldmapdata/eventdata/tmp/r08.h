@@ -11,6 +11,8 @@
 #define ZONE_R08_EVC_H
 
 #define R08_AMBRELLA_02                    0
+#define R08_FISING_01                      1
+#define R08_AMBRELLA_01                    2
 
 #endif //ZONE_R08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

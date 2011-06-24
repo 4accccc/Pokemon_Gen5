@@ -19,37 +19,39 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_r08_sign1_01
-_EVENT_DATA		ev_bg_r08_sign2_01
-_EVENT_DATA		ev_bg_r08_sign3_01
-_EVENT_DATA    ev_r08_ambrella_02
+_EVENT_DATA   ev_bg_r08_sign1_01
+_EVENT_DATA   ev_bg_r08_sign2_01
+_EVENT_DATA   ev_bg_r08_sign3_01
+_EVENT_DATA   ev_r08_ambrella_02
+_EVENT_DATA   ev_r08_ambrella_01
+_EVENT_DATA   ev_r08_fising_01
 _EVENT_DATA_END
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
 
 /**************************************************************/
 /*  R08 看板のイベントスクリプト                     		  */
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign1_01
-
   _EASY_BGWIN_MSG(msg_r08_sign1_01, TYPE_ROAD) 
-
 EVENT_END
 
 /**************************************************************/
 /*  R08 看板のイベントスクリプト                      		  */
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign2_01
-
   _EASY_BGWIN_MSG(msg_r08_sign4_01, TYPE_POST) 
-
 EVENT_END
 
 /**************************************************************/
 /*  R08 看板のイベントスクリプト                      		  */
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign3_01
-
   _EASY_BGWIN_MSG(msg_r08_sign3_01, TYPE_INFO) 
-
 EVENT_END
 
 /**************************************************************/
@@ -57,45 +59,88 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r08_ambrella_02
 
-	_GET_TIMEZONE( SCWK_ANSWER )
-	_TALK_OBJ_START()
-	
-	IF FLAG_OFF(TMFLG_R08_STONE_GET) THEN	
-		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_01)
-		
-		IF $SCWK_ANSWER == TIMEZONE_MORNING THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_02)
-			_MSGWIN_CLOSE()
-			
-			_ITEM_EVENT_KEYWAIT(ITEM_SIMETTAIWA,1)
-		ELSIF $SCWK_ANSWER == TIMEZONE_NOON THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_03)
-			_MSGWIN_CLOSE()
-			_ITEM_EVENT_KEYWAIT(ITEM_ATUIIWA,1)
-			
-		ELSIF $SCWK_ANSWER == TIMEZONE_EVENING THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_04)
-			_MSGWIN_CLOSE()
-			_ITEM_EVENT_KEYWAIT(ITEM_SARASARAIWA,1)
-			
-		ELSE
-			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_05)
-			_MSGWIN_CLOSE()
-			_ITEM_EVENT_KEYWAIT(ITEM_TUMETAIIWA,1)	
-			
-		ENDIF
-		
-		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-		//-----------------------------//
-		_FLAG_SET(TMFLG_R08_STONE_GET)
-		//-----------------------------//
-	ELSE
-		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-	ENDIF
-	
+  _GET_TIMEZONE( SCWK_ANSWER )
+  _TALK_OBJ_START()
+  
+  IF FLAG_OFF(TMFLG_R08_STONE_GET) THEN	
+    _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_01)
+
+    IF $SCWK_ANSWER == TIMEZONE_MORNING THEN
+      _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_02)
+      _MSGWIN_CLOSE()
+
+      _ITEM_EVENT_KEYWAIT(ITEM_SIMETTAIWA,1)
+    ELSIF $SCWK_ANSWER == TIMEZONE_NOON THEN
+      _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_03)
+      _MSGWIN_CLOSE()
+      _ITEM_EVENT_KEYWAIT(ITEM_ATUIIWA,1)
+
+    ELSIF $SCWK_ANSWER == TIMEZONE_EVENING THEN
+      _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_04)
+      _MSGWIN_CLOSE()
+      _ITEM_EVENT_KEYWAIT(ITEM_SARASARAIWA,1)
+
+    ELSE
+      _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_05)
+      _MSGWIN_CLOSE()
+      _ITEM_EVENT_KEYWAIT(ITEM_TUMETAIIWA,1)	
+
+    ENDIF
+
+    _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //-----------------------------//
+    _FLAG_SET(TMFLG_R08_STONE_GET)
+    //-----------------------------//
+
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*  パラソルおねえさん（アイテム入手処理）                    */
+/**************************************************************/
+EVENT_START   ev_r08_ambrella_01
+  //アイテム：わざマシン「からげんき」入手
+  _EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN42, 1, FE_R08_ITEMGET_01, msg_r08_ambrella_01, msg_r08_ambrella_02, msg_r08_ambrella_02 )
+EVENT_END
+
+/**************************************************************/
+/*  ツリーズメンバー：話しかけ                                */
+/**************************************************************/
+EVENT_START   ev_r08_fising_01
+
+  _TALK_OBJ_START()
+  //ツリーズ：オー！　トレーナー！▼
+  _BALLOONWIN_OBJMSG( msg_r08_fising_01, R08_FISING_01 )
+  _MSGWIN_CLOSE()
+
+  //主人公座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //アニメ：ツリーズ退場
+  IF $LCW_POSZ == 183 THEN
+    _OBJ_ANIME_AUTO( R08_FISING_01, 243, 180, FORCE_TYPE_NPC, 8, DIR_UD )
+  ELSE
+    _OBJ_ANIME_AUTO( R08_FISING_01, 243, 180, FORCE_TYPE_NPC, 8, DIR_LR )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( R08_FISING_01 )
+
+  //========================================//
+  //ツリーズメンバーを非表示
+  _FLAG_SET( FV_R08_FISING_01 )
+  //========================================//
+  //POSイベント進行
+  //
+  //========================================//
+
+EVENT_END
+
+

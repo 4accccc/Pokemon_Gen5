@@ -12,6 +12,9 @@
 #ifndef ZONE_D06R0201_EVC_H
 #define ZONE_D06R0201_EVC_H
 
+#define D06R0201_SWBELL_01                 0
+#define D06R0201_SWGOLD2_01                1
+#define D06R0201_SWGOLD1_01                2
 
 #endif //ZONE_D06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -21,8 +21,15 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_init_d06r0101
 _EVENT_DATA    ev_zone_d06r0101
-
+_EVENT_DATA    ev_pos_d06r0101_swbell_01
+_EVENT_DATA    ev_pos_d06r0101_boss_01
 _EVENT_DATA_END 
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
 
 /**************************************************************/
 /*            FIELD_INIT_LABEL                              　 */
@@ -40,32 +47,154 @@ INIT_EVENT_START  ev_zone_d06r0101
 }
 INIT_EVENT_END
 
+/**************************************************************/
+/*  POS：ベルイベント01
+/**************************************************************/
+EVENT_START   ev_pos_d06r0101_swbell_01
+
+  //アニメ：ベル「！」振り向き
+  _OBJ_ANIME( D06R0101_SWBELL_01, anm_swbell_guide01 )
+  _OBJ_ANIME_WAIT()
+
+  //ベル：おうい（主人公の性別でセリフが異なる）
+  _BALLOONWIN_OBJMSG_MF( msg_d06r0101_swbell_01, msg_d06r0101_swbell_02, D06R0101_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //主人公座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //アニメ：ベル接近
+  IF $LCW_POSX == 11 THEN
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( D06R0101_SWBELL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSZ -= 1
+    _OBJ_ANIME_AUTO( D06R0101_SWBELL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( D06R0101_SWBELL_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //ベル：主人公　しってる？▼
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0101_swbell_03, D06R0101_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //間（ベルがきょろきょろする）
+  _OBJ_ANIME( D06R0101_SWBELL_01, anm_meet )
+  _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( D06R0101_SWBELL_01, anm_common_turn_d )
+  _OBJ_ANIME_WAIT()
+
+  //ベル：それにしても　ここ　あいかわらず
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0101_swbell_04, D06R0101_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：ベル「！」
+  _OBJ_ANIME( D06R0101_SWBELL_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //ベル：そうだった！
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0101_swbell_05, D06R0101_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //ベル退場
+  _OBJ_ANIME_AUTO( D06R0101_SWBELL_01, 14, 45, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME_AUTO( D06R0101_SWBELL_01, 15, 40, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( D06R0101_SWBELL_01 )
+
+  //========================================//
+  //ベルを非表示
+  _FLAG_SET( FV_D06R0101_SWBELL_01 )
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_D06R0101_SWBELL_01 = 1
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：Nイベント01
+/**************************************************************/
+EVENT_START   ev_pos_d06r0101_boss_01
+
+  //N：でんきいしの　ほらあな……
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_01, D06R0101_BOSS_01, POS_DEFAULT )
+
+  //N：ボクは　いかねば　ならない
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_02, D06R0101_BOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //遠ざかっていく演出
+  _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
+  _OBJ_DEL( D06R0101_BOSS_01 )
+
+  //========================================//
+  //Nを非表示
+  _FLAG_SET( FV_D06R0101_BOSS_01 )
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_D06R0101_BOSS_01 = 1
+  //========================================//
+
+EVENT_END
+
 
 //--------------------------------------------------------------------
-//共通スクリプト：上を向く                   
+//共通：ターン右                 
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_up
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//共通スクリプト：下を向く                   
+//共通：ターン左                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_down
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：きょろきょろする
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_meet
+  _ANIME_DATA	AC_WAIT_2F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+  _ANIME_DATA	AC_WAIT_2F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ベル：「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swbell_guide01
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//共通スクリプト：右を向く                  
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_right
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//共通スクリプト：左を向く                  
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_left
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 

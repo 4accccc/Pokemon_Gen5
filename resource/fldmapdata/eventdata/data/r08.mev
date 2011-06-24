@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/23 15:50:06
+#save date:2011/06/23 19:27:50
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r08.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r08.wms
 #hold event type:
 1
 #hold event number:
-1
+3
 #event number: 0
 #type
 1
@@ -41,6 +41,68 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 472 0 -8
+#event number: 1
+#type
+1
+#ID name
+R08_FISING_01
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R08_FISING_01
+#Event Script Name
+SCRID_R08_FISING_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 -120
+#event number: 2
+#type
+1
+#ID name
+R08_AMBRELLA_01
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R08_AMBRELLA_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

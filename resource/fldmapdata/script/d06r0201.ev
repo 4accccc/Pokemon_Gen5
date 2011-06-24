@@ -19,4 +19,168 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_d06r0201_swbell_01
+_EVENT_DATA    ev_d06r0201_swgold1_01
+_EVENT_DATA    ev_d06r0201_swgold2_01
+_EVENT_DATA    ev_d06r0201_swgold_get_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  ベル：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_d06r0201_swbell_01
+
+  _TALK_OBJ_START()
+  //ベル：あたしね
+  _BALLOONWIN_OBJMSG( msg_d06r0201_swbell_01, D06R0201_SWBELL_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //【仮】ポケモンバトルの可能性を検討中
+  //OBJ削除条件未定
+
+EVENT_END
+
+/**************************************************************/
+/*  きんのたまおじさん：話しかけ                              */
+/**************************************************************/
+EVENT_START   ev_d06r0201_swgold1_01
+
+  //アイテム入手済みか？
+  IF FLAG_OFF( FE_D06R0201_ITEMGET_01 ) THEN
+
+    //きんのたま入手イベントへジャンプ
+    _CALL ev_d06r0201_swgold_get_01
+
+  ELSE
+
+    _TALK_OBJ_START()
+    //きんのたまおじさん：それは　おじさんの　きんのたま！
+    _BALLOONWIN_OBJMSG( msg_d06r0201_swgold1_03, D06R0201_SWGOLD1_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  きんのたまボーイ：話しかけ                                */
+/**************************************************************/
+EVENT_START   ev_d06r0201_swgold2_01
+
+  //アイテム入手済みか？
+  IF FLAG_OFF( FE_D06R0201_ITEMGET_01 ) THEN
+
+    //きんのたま入手イベントへジャンプ
+    _CALL ev_d06r0201_swgold_get_01
+
+  ELSE
+
+    _TALK_OBJ_START()
+    //きんのたまボーイ：それは　ボクが　みつけた
+    _BALLOONWIN_OBJMSG( msg_d06r0201_swgold2_03, D06R0201_SWGOLD2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  きんのたま入手イベント                                    */
+/**************************************************************/
+ev_d06r0201_swgold_get_01:
+
+  _TALK_START_SE_PLAY()
+
+  //主人公の方向取得
+  _PLAYER_DIR_GET( SCWK_ANSWER )
+
+  //アニメ：きんのたまおじさん振り向き
+  SWITCH $SCWK_ANSWER
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( D06R0201_SWGOLD1_01, anm_common_turn_r )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( D06R0201_SWGOLD1_01, anm_common_turn_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT() //アニメ待ち
+
+  //きんのたまおじさん：やあやあ　わたしは
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0201_swgold1_01, D06R0201_SWGOLD1_01, POS_UR )
+  _MSGWIN_CLOSE()
+
+  //アニメ：きんのたまボーイ振り向き
+  SWITCH $SCWK_ANSWER
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( D06R0201_SWGOLD2_01, anm_common_turn_r )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( D06R0201_SWGOLD2_01, anm_common_turn_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT() //アニメ待ち
+
+  //きんのたまボーイ：そして　ボクは
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0201_swgold2_01, D06R0201_SWGOLD2_01, POS_UL )
+  _MSGWIN_CLOSE()
+
+  //きんのたまおじさん：やってきたね　よくきたね！
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0201_swgold1_02, D06R0201_SWGOLD1_01, POS_UR )
+  _MSGWIN_CLOSE()
+
+  //アイテム入手：きんのたま
+  _ITEM_EVENT_KEYWAIT( ITEM_KINNOTAMA, 1 )
+
+  //きんのたまボーイ：ボクも　これを　あげる！
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0201_swgold2_02, D06R0201_SWGOLD2_01, POS_UL )
+  _MSGWIN_CLOSE()
+
+  //アイテム入手：でかいきんのたま
+  _ITEM_EVENT_KEYWAIT( ITEM_DEKAIKINNOTAMA, 1 )
+
+  //きんのたまおじさん：それは　おじさんの　きんのたま！
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0201_swgold1_03, D06R0201_SWGOLD1_01, POS_UR )
+  _AB_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //きんのたまボーイ：それは　ボクが　みつけた
+  _BALLOONWIN_OBJMSG_POS( msg_d06r0201_swgold2_03, D06R0201_SWGOLD2_01, POS_UL )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //きんのたまとでかいきんのたま入手
+  _FLAG_SET( FE_D06R0201_ITEMGET_01 )
+  //========================================//
+
+_RET
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+

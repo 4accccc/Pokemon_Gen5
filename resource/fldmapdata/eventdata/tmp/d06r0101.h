@@ -25,6 +25,8 @@
 #define D05R0101_FLD_ITEM_05               9
 #define D05R0101_FLD_ITEM_06              10
 #define TR_SCIENTISTM_04                  11
+#define D06R0101_SWBELL_01                12
+#define D06R0101_BOSS_01                  13
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
