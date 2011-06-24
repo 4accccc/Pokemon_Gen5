@@ -27,6 +27,11 @@
 
 #include "fourkings_evil.h"
 
+#include "rail_line/c09r0101.h" //for RAIL
+#include "rail_line/c09r0201.h" //for RAIL
+#include "rail_line/c09r0301.h" //for RAIL
+#include "rail_line/c09r0401.h" //for RAIL
+
 //-----------------------------------------------------------------------------
 /**
  *					íËêîêÈåæ
@@ -137,11 +142,9 @@ static void FOURKINGS_RailOff( FIELDMAP_WORK *p_fieldmap, u32 fourkings_no )
 
   GF_ASSERT( fourkings_no < FIELD_EVENT_FOURKINGS_MAX );
 
-  // ÉâÉCÉìêîÇÕàÍíË
-  for( i=0; i<RAIL_NUM; i++ )
-  {
-    FLDNOGRID_MAPPER_SetLineActive( p_mapper, i, FALSE );
-  }
+  // í∏è„ÇÃÉåÅ[ÉãÇ…ÇÕPOSÇíuÇ¢ÇƒÇ¢ÇÈÇÃÇ≈OFFÇ…ÇµÇ»Ç¢
+  FLDNOGRID_MAPPER_SetLineActive( p_mapper, div_1_RE_LINE_0, FALSE );
+  FLDNOGRID_MAPPER_SetLineActive( p_mapper, div_2_RE_LINE_0, FALSE );
 }
 
 //----------------------------------------------------------------------------
