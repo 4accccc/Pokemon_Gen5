@@ -1393,6 +1393,18 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
     return ChgSeqSelectButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_INIT );
   }
 
+	// STARTボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+			syswk->get_tray = syswk->tray;
+			syswk->get_pos  = CURSORMOVE_PosGet( syswk->app->cmwk );
+			syswk->subProcMode = SUB_PROC_MODE_TB_BOX;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
+			BOX2MAIN_ChgCursorButton( syswk );
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+	}
+
   ret = BOX2UI_HitCheckTrgTrayPoke();
   if( ret != GFL_UI_TP_HIT_NONE ){
     CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
@@ -1733,6 +1745,22 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_EXIT );
     }
   }
+
+	// スタートボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( syswk->poke_get_key == 0 ){
+      u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+      syswk->get_tray = syswk->tray;
+      syswk->get_pos  = pos;
+      syswk->subProcMode = SUB_PROC_MODE_TB_BOX;
+    }else{
+      syswk->subProcMode = SUB_PROC_MODE_TB_BOX_GET;
+      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+    }
+    PMSND_PlaySE( SE_BOX2_DECIDE );
+		BOX2MAIN_ChgCursorButton( syswk );
+    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+	}
 
   // ポケモンドラッグチェック
   if( syswk->poke_get_key == 0 ){
@@ -2388,53 +2416,6 @@ static int MainSeq_ArrangeMultiPokeGetInit( BOX2_SYS_WORK * syswk )
   return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_INIT;
 }
 
-
-static void _debug_multipokemain( BOX2_SYS_WORK *syswk )
-{
-  if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_START){
-    int y,x;
-    for(y=0;y<5;y++){
-      for(x=0;x<6;x++){
-        OS_Printf("%3d ", syswk->app->pokeicon_id[y*6+x]);
-      }
-      OS_Printf("\n");
-    }
-
-    OS_Printf("\n");
-    for(y=0;y<5;y++){
-      for(x=0;x<6;x++){
-        OS_Printf("%3d ", syswk->app->pokeicon_id[y*6+x+36]);
-      }
-      OS_Printf("\n");
-    }
-  }
-}
-#if 0
-  // ポケモンドラッグチェック
-  if( syswk->poke_get_key == 0 ){
-    ret = BOX2UI_HitCheckTrgTrayPoke();
-    if( ret != GFL_UI_TP_HIT_NONE ){
-      CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
-      BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
-      // ポケモンがいる
-      if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
-        PMSND_PlaySE( SE_BOX2_POKE_CATCH );
-        GFL_UI_TP_GetPointTrg( &syswk->app->tpx, &syswk->app->tpy );
-        BOX2MAIN_PokeInfoPut( syswk, ret );
-        CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-        return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN );
-      }else{
-      // いない
-        CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-        BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
-        syswk->app->old_cur_pos = ret;
-        BOX2UI_PutHandCursor( syswk, ret );
-        BOX2MAIN_PokeInfoOff( syswk );
-      }
-      return BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_MAIN;
-    }
-  }
-#endif
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   メインシーケンス：「つかむ」メイン処理
@@ -2468,9 +2449,18 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     }
   }
 
-#ifdef PM_DEBUG
-//  _debug_multipokemain(syswk);
-#endif
+	// STARTボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		if( syswk->poke_get_key == 0 ){
+			u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			syswk->get_tray = syswk->tray;
+			syswk->get_pos  = pos;
+			syswk->subProcMode = SUB_PROC_MODE_TB_BOX;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
+			BOX2MAIN_ChgCursorButton( syswk );
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+	}
 
   // ポケモンドラッグチェック
   if( syswk->poke_get_key == 0 ){
@@ -2623,26 +2613,6 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 						ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_PARTY_CHANGE) );
 
   case BOX2UI_ARRANGE_PGT_STATUS: // 40: ステータス
-/*
-    if( syswk->poke_get_key == 0 ){
-      u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-      if( pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-        break;
-      }else{
-        if( BOX2MAIN_PokeParaGet( syswk, pos, syswk->tray, ID_PARA_poke_exist, NULL ) == 0 ){
-          break;
-        }
-      }
-      syswk->get_tray = syswk->tray;
-      syswk->get_pos  = pos;
-      syswk->subProcMode = SUB_PROC_MODE_TB_BOX;
-    }else{
-      syswk->subProcMode = SUB_PROC_MODE_TB_BOX_GET;
-      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-    }
-    PMSND_PlaySE( SE_BOX2_DECIDE );
-    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_STATUS, 1, BOX2SEQ_MAINSEQ_STATUS_CALL );
-*/
 		// 選択中は飛ばさない
 		if( syswk->poke_get_key == 0 ){
 			u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
@@ -3322,6 +3292,22 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		}
 	}
 
+	// STARTボタン
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( syswk->poke_get_key == 0 ){
+      u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+      syswk->get_tray = syswk->tray;
+      syswk->get_pos  = pos;
+      syswk->subProcMode = SUB_PROC_MODE_TB_PARTY;
+    }else{
+      syswk->subProcMode = SUB_PROC_MODE_TB_PARTY_GET;
+      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+    }
+    PMSND_PlaySE( SE_BOX2_DECIDE );
+		BOX2MAIN_ChgCursorButton( syswk );
+    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+	}
+
 	// ポケモンドラッグチェック
 	if( syswk->poke_get_key == 0 ){
 		// トレイ
@@ -3913,6 +3899,18 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
     return ChgSeqSelectButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
   }
 
+	// スタートボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( BOX2BGWFRM_PokeMenuPutCheck( syswk->app->wfrm ) == FALSE ){
+			syswk->get_tray = syswk->tray;
+			syswk->get_pos  = CURSORMOVE_PosGet(syswk->app->cmwk) + BOX2OBJ_POKEICON_TRAY_MAX;
+			syswk->subProcMode = SUB_PROC_MODE_TB_PARTY;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
+			BOX2MAIN_ChgCursorButton( syswk );
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+	}
+
   // タッチ取得チェック
   ret = BOX2UI_HitCheckTrgPartyPokeLeft();
   if( ret != GFL_UI_TP_HIT_NONE ){
@@ -4297,6 +4295,22 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
     }
   }
 
+	// STARTボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( syswk->poke_get_key == 0 ){
+      u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+      syswk->get_tray = syswk->tray;
+      syswk->get_pos  = pos;
+      syswk->subProcMode = SUB_PROC_MODE_TB_PARTY;
+    }else{
+      syswk->subProcMode = SUB_PROC_MODE_TB_PARTY_GET;
+      syswk->tb_status_pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+    }
+    PMSND_PlaySE( SE_BOX2_DECIDE );
+		BOX2MAIN_ChgCursorButton( syswk );
+    return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+	}
+
   // ポケモンドラッグチェック
   if( syswk->poke_get_key == 0 ){
     // トレイのポケモン
@@ -4675,6 +4689,18 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
     return ChgSeqSelectButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
   }
 
+	// STARTボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+			syswk->get_tray = syswk->tray;
+			syswk->get_pos  = CURSORMOVE_PosGet( syswk->app->cmwk );
+			syswk->subProcMode = SUB_PROC_MODE_TB_BOX;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
+			BOX2MAIN_ChgCursorButton( syswk );
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+	}
+
   ret = BOX2UI_HitCheckTrgTrayPoke();
   if( ret != GFL_UI_TP_HIT_NONE ){
     CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, FALSE );
@@ -4969,6 +4995,18 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
     syswk->get_start_mode = 1;
     return ChgSeqSelectButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
   }
+
+	// STARTボタン
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    if( BOX2BGWFRM_PokeMenuPutCheck( syswk->app->wfrm ) == FALSE ){
+			syswk->get_tray = syswk->tray;
+			syswk->get_pos  = CURSORMOVE_PosGet(syswk->app->cmwk) + BOX2OBJ_POKEICON_TRAY_MAX;
+			syswk->subProcMode = SUB_PROC_MODE_TB_PARTY;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
+			BOX2MAIN_ChgCursorButton( syswk );
+			return ObjButtonAnmSet( syswk, BOX2OBJ_ID_SEARCH, 1, BOX2SEQ_MAINSEQ_SEARCH_CALL );
+		}
+	}
 
   // タッチ取得チェック
   ret = BOX2UI_HitCheckTrgPartyPokeLeft();
