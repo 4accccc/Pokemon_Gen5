@@ -143,12 +143,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たびの　りゆうは　ひとそれぞれ
-プレゼントする　りゆうも　おなじ[Ctrl2:PageClear ]
+プレゼントする　りゆうも　おなじ▼
 あたしゃあ　あんたとの　であいを
-きねんして　これを　あげようかね[Ctrl2:PageClear ]</Text>
+きねんして　これを　あげようかね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T07:27:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -157,12 +157,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>旅の理由は　人それぞれ
-プレゼントする理由も　同じ[Ctrl2:PageClear ]
+プレゼントする理由も　同じ▼
 あたしゃあ　あんたとの　出会いを
-記念して　これを　あげようかね[Ctrl2:PageClear ]</Text>
+記念して　これを　あげようかね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T07:27:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
