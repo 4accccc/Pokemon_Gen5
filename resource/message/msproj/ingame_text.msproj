@@ -1719,6 +1719,8 @@
 			<ContentItem
 				Name="itempocket.mstxt" />
 			<ContentItem
+				Name="key_system.mstxt" />
+			<ContentItem
 				Name="leader_board.mstxt" />
 			<ContentItem
 				Name="live_match.mstxt" />
