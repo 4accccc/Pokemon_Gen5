@@ -24,10 +24,6 @@
 // arc
 #include "arc/fieldmap/fourkings_evil.naix"
 
-// script
-#include "script_def.h"
-#include "../../../resource/fldmapdata/flagwork/work_define.h"
-
 // mine
 #include "fourkings_sv.h"
 #include "fourkings_evil.h"
@@ -349,36 +345,6 @@ void FOURKINGS_EVIL_Move(FIELDMAP_WORK *p_fieldmap)
     }
   }
 #endif
-
-  // 頂上チェック
-  {
-    GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-    GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
-    EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
-
-
-    u16 *local_wk1 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK1 );
-    BOOL pos_flag = FALSE;
-
-    const FIELD_PLAYER *cp_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
-    s16 gx, gy, gz;
-    // 自機グリッド位置
-    FIELD_PLAYER_GetGridPos( cp_player, &gx, &gy, &gz );
-
-    // 頂上かつPOSイベントふんでいない
-    if( gx == 15 && gz == 12 && 
-        *local_wk1 == 0 )
-    {
-      // カメラの状態が頂上に変更してなかったら変更
-      FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-
-      if( FIELD_CAMERA_GetCameraType(p_camera) != 29 )
-      {
-        FIELD_CAMERA_SetCameraType( p_camera, 29 );
-        OS_Printf("カメラ頂上に変更\n");
-      }
-    }
-  }
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
