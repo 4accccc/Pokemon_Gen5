@@ -497,12 +497,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジムリーダーが　たしかめるのは
-ちょうせんしゃと　ポケモンとの▽
-きずな……　むすびつき　だな！</Text>
+			<Text>じぶんの　ポケモンたちを　あいする
+きもちは　だれにも　まけたくないッ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -510,12 +509,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジムリーダーが　確かめるのは
-挑戦者と　ポケモンとの▽
-きずな……　結びつき　だな！</Text>
+			<Text>自分の　ポケモンたちを　愛する
+気持ちは　だれにも　負けたくないッ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -549,12 +547,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジムに　チャレンジする　まえに
-キズぐすりの　かずは　たりているか▽
-たしかめて　おかないとね</Text>
+			<Text>キズぐすりの　かずは　ばっちり！
+これなら　ジムリーダーに　かてそうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:48:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -562,12 +559,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジムに　チャレンジする前に
-キズぐすりの　数は　足りているか▽
-確認して　おかないとね</Text>
+			<Text>キズぐすりの　数は　ばっちり！
+これなら　ジムリーダーに　勝てそうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:48:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -576,10 +572,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:47:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -601,14 +597,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だれもが　ポケモントレーナーとして
-つよくなれる　わけじゃないよ▼
-だけど　ポケモンを　あいしたり
-いっしょに　あそんだりは▽
-みんなに　できることだよね</Text>
+			<Text>ポケモントレーナーとして
+つよさを　もとめるのも　よし！▼
+なかよく　あそんだり
+かたをくむのも　これまた　よし！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -616,14 +611,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だれもが　ポケモントレーナーとして
-強くなれる　わけじゃないよ▼
-だけど　ポケモンを　愛したり
-一緒に　遊んだりは▽
-みんなに　できることだよね</Text>
+			<Text>ポケモントレーナーとして
+強さを　求めるのも　よし！▼
+仲良く　遊んだり
+肩を組むのも　これまた　よし！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:56:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -632,10 +626,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:56:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -658,15 +652,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしの　バッグには　６コ
-モンスターボールが　はいってます！▼
-ほんとうは　スーパーボールや
-ハイパーボールが　ほしいのですが……▼
-ジムバッジを　あつめないと
-フレンドリィショップで　かえないんだ</Text>
+			<Text>むぅ！　ジムバッジが　５つ　あれば
+ハイパーボールを　かえるんだがな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:51:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -674,15 +664,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　バッグには　６個
-モンスターボールが　入ってます！▼
-本当は　スーパーボールや
-ハイパーボールが　欲しいのですが……▼
-ジムバッジを　集めないと
-フレンドリィショップで　買えないんだ</Text>
+			<Text>むぅ！　ジムバッジが　５つ　あれば
+ハイパーボールを　買えるんだがな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:51:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -691,10 +677,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:51:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -717,12 +703,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしの　ポケモン　かわいーの！▼
+			<Text>あたしの　タブンネちゃん！
+めちゃめちゃ　かわいーの！▼
 くたびれて　おうちに　かえった
 あたしを　いやしてくれるの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:53:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -730,12 +717,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしの　ポケモン　かわいーの！▼
+			<Text>あたしの　タブンネちゃん！
+めちゃめちゃ　かわいーの！▼
 くたびれて　おうちに　帰った
 あたしを　癒してくれるの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:53:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -744,10 +732,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T06:53:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
