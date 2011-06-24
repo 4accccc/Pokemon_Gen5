@@ -1030,11 +1030,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コジョフーは　[Name:TrainerName ]と
-もっと　あるきたい　みたい！</Text>
+			<Text>[Name:TrainerName ]と　あるく　コジョフーの
+ステップは　とても　かろやかだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:38:27" />
+				Time="2011-06-24T01:58:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1042,11 +1042,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コジョフーは　[Name:TrainerName ]と
-もっと　あるきたい　みたい！</Text>
+			<Text>[Name:TrainerName ]と　歩く　コジョフーの
+ステップは　とても　軽やかだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:30" />
+				Time="2011-06-24T01:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1083,11 +1083,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コジョフーは　[Name:TrainerName ]と
-あるくのが　たのしそうだ！</Text>
+			<Text>[Name:TrainerName ]と　あるく　コジョフーの
+ステップは　かろやかだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:38:27" />
+				Time="2011-06-24T01:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1095,11 +1095,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コジョフーは　[Name:TrainerName ]と
-あるくのが　たのしそうだ！</Text>
+			<Text>[Name:TrainerName ]と　歩く　コジョフーの
+ステップは　軽やかだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:38" />
+				Time="2011-06-24T01:59:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1136,11 +1136,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コジョフーは　[Name:TrainerName ]とのことを
-すこし　きにいってきた　みたい</Text>
+			<Text>[Name:TrainerName ]と　あるく　コジョフーの
+ステップが　スムーズに　なってきた</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:38:27" />
+				Time="2011-06-24T01:58:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1148,11 +1148,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コジョフーは　[Name:TrainerName ]とのことを
-すこし　きにいってきた　みたい</Text>
+			<Text>[Name:TrainerName ]と　歩く　コジョフーの
+ステップが　スムーズに　なってきた</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:48" />
+				Time="2011-06-24T01:59:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1189,11 +1189,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コジョフーは　[Name:TrainerName ]に
-なんとなく　ついてきている……</Text>
+			<Text>[Name:TrainerName ]と　あるく　コジョフーの
+ステップは　まだ　ぎこちない</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:38:27" />
+				Time="2011-06-24T01:58:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1201,11 +1201,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コジョフーは　[Name:TrainerName ]に
-なんとなく　ついてきている……</Text>
+			<Text>[Name:TrainerName ]と　歩く　コジョフーの
+ステップは　まだ　ぎこちない</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:31:55" />
+				Time="2011-06-24T01:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1242,11 +1242,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コジョフーは　[Name:TrainerName ]と
-あるくのが　めんどう　みたい……</Text>
+			<Text>[Name:TrainerName ]と　あるく　コジョフーの
+ステップは　なんだか　ぎこちない……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:38:27" />
+				Time="2011-06-24T01:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1254,11 +1254,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コジョフーは　[Name:TrainerName ]と
-あるくのが　めんどう　みたい……</Text>
+			<Text>[Name:TrainerName ]と　歩く　コジョフーの
+ステップは　なんだか　ぎこちない……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:32:00" />
+				Time="2011-06-24T01:59:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
