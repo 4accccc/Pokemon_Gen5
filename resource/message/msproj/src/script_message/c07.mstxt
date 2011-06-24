@@ -398,11 +398,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おどれ！　おどれ！
+			<Text>しんじつ！　りそう！
 ２ひきの　ドラゴン！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -410,11 +410,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おどれ！　おどれ！
+			<Text>しんじつ！　りそう！
 ２ひきの　ドラゴン！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -429,10 +429,11 @@
 　GRIDX=210、GRIDZ=222
 　GRIDX=210、GRIDZ=220の
 　四点を経由して右回りに移動
-・初期配置はGRIDX=212、GRIDZ=220</Comment>
+・初期配置はGRIDX=212、GRIDZ=220
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -461,11 +462,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まわる♪　まわる♪
-まわって　ねじれて♪</Text>
+			<Text>ひとつが　わかれ♪
+せかいは　ひろがる♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:16:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -473,11 +474,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まわる♪　まわる♪
-まわって　ねじれて♪</Text>
+			<Text>ひとつが　わかれ♪
+せかいは　ひろがる♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -487,10 +488,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ISS用
-・初期配置はGRIDX=212、GRIDZ=222</Comment>
+・初期配置はGRIDX=212、GRIDZ=222
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -519,11 +521,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぐるぐる　わかれて
-ぐるぐる　まざって</Text>
+			<Text>くさびで　まざって
+くさびで　わかれて</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -531,11 +533,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぐるぐる　わかれて
-ぐるぐる　まざって</Text>
+			<Text>くさびで　まざって
+くさびで　わかれて</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -545,10 +547,11 @@
 			Language="JPN">
 			<Comment>♀
 ・ISS用
-・初期配置はGRIDX=210、GRIDZ=222</Comment>
+・初期配置はGRIDX=210、GRIDZ=222
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -577,11 +580,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あさも　よるも　まざり
-すべてが　ゆるされる♪</Text>
+			<Text>しんじつ　りそう
+ともに　てをとり　あゆめ♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -589,11 +592,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あさも　よるも　まざり
-すべてが　ゆるされる♪</Text>
+			<Text>しんじつ　りそう
+ともに　てをとり　あゆめ♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -603,10 +606,11 @@
 			Language="JPN">
 			<Comment>♂
 ・ISS用
-・初期配置はGRIDX=212、GRIDZ=220</Comment>
+・初期配置はGRIDX=212、GRIDZ=220
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-24T02:21:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
