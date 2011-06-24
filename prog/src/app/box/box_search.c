@@ -441,6 +441,8 @@ typedef struct
 	int	buttonID;		// アニメ中のボタンID
 	int	flscroll;		// フレームリストのスクロールシーケンス
 
+	int	pokelibMax[50];		// 図鑑の見た数
+
 } BOX_SEARCH_MAIN_WORK;
 
 
@@ -610,7 +612,6 @@ static void put_search_checkbox( BOX_SEARCH_MAIN_WORK *wk );
 static void _set_subseq_nextseq( BOX_SEARCH_MAIN_WORK *wk,  int next );
 static u16* ZukanSortDataGet( int heap, int* p_arry_num );
 static void TransMainBGScreen( BOX_SEARCH_MAIN_WORK *wk, int type );
-static void SetupScreen( BOX_SEARCH_MAIN_WORK *wk, int type, int category );
 static int  _get_search_data( BOX_SEARCH_MAIN_WORK *wk, int type );
 static void _set_search_data( BOX_SEARCH_MAIN_WORK *wk, int type, int param );
 static void _set_search_data_mark( BOX_SEARCH_MAIN_WORK *wk, int mark, int param );
@@ -638,8 +639,12 @@ static void ScrollListCheckObj( BOX_SEARCH_MAIN_WORK * wk, s8 mv );
 static void SetListPageArrowAnime( BOX_SEARCH_MAIN_WORK * wk, BOOL anm );
 static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk );
 static int HitCheckListBox( BOX_SEARCH_MAIN_WORK * wk );
+static int get_sort_pokename_num( int head, int child );
 static int get_sort_tokusei_num( int head, int child );
+static void SetPokeLibMax( BOX_SEARCH_MAIN_WORK * wk );
+static int GetPokeLibMax( BOX_SEARCH_MAIN_WORK * wk, int head, int child );
 static void PrintTokuseiInfo( BOX_SEARCH_MAIN_WORK * wk, u32 id );
+static void PrintPokemonInfo( BOX_SEARCH_MAIN_WORK * wk, u32 id );
 
 static int Subseq_Start(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq);
@@ -1121,7 +1126,8 @@ static GFL_PROC_RESULT BOXSEARCHProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
   BOXSEARCH_PMSDRAW_Init( wk );
 #endif //BOX_SEARCH_PMSDRAW
 
-  
+	SetPokeLibMax( wk );
+
   // 初期状態描画
 //  SetupMainMode( wk );
 	PrintDefautltSubDisp( wk );
@@ -2023,7 +2029,7 @@ static void SubTextPrint( BOX_SEARCH_MAIN_WORK *wk, int subseq )
     PrintMessage( wk, BOXSEARCH_BMPID_TEXT, mes_box_search_text_03, 0 );
     break;
   case SUBSEQ_SELECTPOKEMON3INIT:
-//    PrintMessage( wk, BOXSEARCH_BMPID_TEXT, mes_box_search_text_03_01, 0 );
+		PrintPokemonInfo( wk, FRAMELIST_GetItemParam(wk->frame_list_work,0) );
     break;
   case SUBSEQ_SELECTTOKUSEIINIT:
     PrintMessage( wk, BOXSEARCH_BMPID_TEXT, mes_box_search_text_05, 0 );
@@ -2110,24 +2116,14 @@ static void SetupMainMode( BOX_SEARCH_MAIN_WORK *wk )
 {
 	u32	i;
 
-/*
-  // 左選択情報BMPWINの消去
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] ), 0 );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] );
-*/
-
   // 「じょうほうを　えらび　…」
 	SubTextPrint( wk, SUBSEQ_START );
   
-  // BG・BMPWIN転送
-//  SetupScreen( wk, 0, 0 );
-
 	TransMainBGScreen( wk, 0 );
 
 	// 項目表示
 	for( i=0; i<6; i++ ){
 		BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TOPIC0+i] );
-//		GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TOPIC0+i] );
 	}
 	DecideInfoPrint( wk, TRUE );
 
@@ -2135,14 +2131,6 @@ static void SetupMainMode( BOX_SEARCH_MAIN_WORK *wk )
 	SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );	// マーク反映
 	PutMarkDataObj( wk, 0 );
 	SetDrawEnableMainItemObj( wk, TRUE );
-
-
-//    ObjOnOff( wk, 0, 0 );
-    // マーキング反映
-    // 各種BG設定・転送
-//    GFL_BG_ClearScreen( BG_FRAME_BUTTON_M );
-    // 入力済情報を描画
-
 }
 
 // 初期画面表示をクリアする
@@ -2264,10 +2252,7 @@ static int Subseq_Start(BOX_SEARCH_MAIN_WORK *wk, int seq)
 }
 
 static int func_table[]={
-/*
 	SUBSEQ_SELECTPOKEMONINIT,		// 名前
-*/
-	SUBSEQ_START,								// 名前
 	SUBSEQ_SELECTSEIKAKUINIT,		// 性格
 	SUBSEQ_SELECTTOKUSEIINIT,		// 特性
 	SUBSEQ_SELECTSEXINIT,				// 性別
@@ -2373,11 +2358,11 @@ static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	return seq;
 }
 
-
 static int Subseq_Return(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
   return seq;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * @brief ポケモン母音選択初期化
@@ -2390,16 +2375,28 @@ static int Subseq_Return(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemonInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  OS_Printf("touch or key=%d\n", GFL_UI_CheckTouchOrKey());
+	ClearMainDisp( wk );
 
-  FrameListInit(wk, BOXSEARCH_LISTID_NAME_TOPWORD);
-  SetupScreen( wk, 1, BOXSEARCH_LISTID_NAME_TOPWORD );
+	FrameListInit( wk, BOXSEARCH_LISTID_NAME_TOPWORD );
+	SetListPageArrowAnime( wk, FALSE );
 
-  // FRAMELIST初期化待ちの後ポケモン母音選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTPOKEMON1 );
-  SubTextPrint( wk, SUBSEQ_SELECTPOKEMONINIT );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  return seq;
+	SubTextPrint( wk, SUBSEQ_SELECTPOKEMONINIT );
+
+	TransMainBGScreen( wk, 1 );
+
+	PrintNowCategory( wk, BOXSEARCH_LISTID_NAME_TOPWORD );
+	if( wk->param->syswk->search_data.pokemon_id == 0 ){
+		PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+	}else{
+		PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
+	}
+
+	// スクロールバー
+	InitScrollBarObj( wk );
+
+  _set_subseq_nextseq( wk, SUBSEQ_SELECTPOKEMON1 );
+
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 
 //----------------------------------------------------------------------------------
@@ -2414,22 +2411,70 @@ static int Subseq_SelectPokemonInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    wk->topword = -1;
-    seq = SUBSEQ_SELECTPOKEMON1EXIT;
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      wk->topword = FRAMELIST_GetListPos( wk->frame_list_work );
-      if(wk->topword==0){
-        _set_search_data( wk, SEARCH_DATAID_POKEMON, 0);
-      }
-      seq = SUBSEQ_SELECTPOKEMON1EXIT;
-    }
-  }
-  return seq;
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
+
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+		{
+			u32	pos = FRAMELIST_GetListPos( wk->frame_list_work );
+			if( pos == 0 ){
+				_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
+				PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			}else{
+				wk->topword = pos;
+				GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+				return SUBSEQ_SELECTPOKEMON1EXIT;
+			}
+		}
+		break;
+
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		SetListPageArrowAnime( wk, FALSE );
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTPOKEMON1 );
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, SUBSEQ_SELECTPOKEMON1 );
+
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			wk->topword = 0;
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON1EXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 6 ){
+				u32	pos = FRAMELIST_GetScrollCount( wk->frame_list_work ) + ret;
+				if( pos == 0 ){
+					_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
+					PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
+					PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+				}else{
+					wk->topword = pos;
+					GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+					return SUBSEQ_SELECTPOKEMON1EXIT;
+				}
+			}
+		}
+		break;
+	}
+
+	PutScrollBarObj( wk );
+
+	return seq;
 }
 
 //----------------------------------------------------------------------------------
@@ -2444,14 +2489,11 @@ static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon1Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  if(wk->topword==-1 || wk->topword==0){
-    TransMainBGScreen( wk, 0 );
-    seq = SUBSEQ_START;
-  }else{
-    seq = SUBSEQ_SELECTPOKEMON2INIT;
-  }
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	if( wk->topword != 0 ){
+		return SUBSEQ_SELECTPOKEMON2INIT;
+	}
+	return SUBSEQ_START;
 }
 
 
@@ -2467,15 +2509,17 @@ static int Subseq_SelectPokemon1Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon2Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FrameListInit(wk, BOXSEARCH_LISTID_NAME_NEXTWORD);
-  SetupScreen( wk, 2, BOXSEARCH_LISTID_NAME_NEXTWORD );
-  SubTextPrint( wk, SUBSEQ_SELECTPOKEMON2INIT );
+	FrameListChangeClear( wk );
 
-  // FRAMELIST初期化待ちの後ポケモン子音選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTPOKEMON2 );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  
-  return seq;
+	FrameListInit( wk, BOXSEARCH_LISTID_NAME_NEXTWORD );
+
+	SubTextPrint( wk, SUBSEQ_SELECTPOKEMON2INIT );
+
+	TransMainBGScreen( wk, 2 );
+
+  _set_subseq_nextseq( wk, SUBSEQ_SELECTPOKEMON2 );
+
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 
 //----------------------------------------------------------------------------------
@@ -2490,19 +2534,40 @@ static int Subseq_SelectPokemon2Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
 
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    wk->nextword = -1;
-    seq = SUBSEQ_SELECTPOKEMON2EXIT;
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      wk->nextword = FRAMELIST_GetListPos( wk->frame_list_work );
-      seq = SUBSEQ_SELECTPOKEMON2EXIT;
-    }
-  }
-  return seq;
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+		if( GetPokeLibMax(wk,wk->topword-1,result) != 0 ){
+			wk->nextword = result;
+			return SUBSEQ_SELECTPOKEMON2EXIT;
+		}
+		break;
+
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			wk->nextword = -1;
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON2EXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 4 ){
+				if( GetPokeLibMax(wk,wk->topword-1,ret) != 0 ){
+					wk->nextword = ret;
+					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+					return SUBSEQ_SELECTPOKEMON2EXIT;
+				}else{
+					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+				}
+			}
+		}
+		break;
+	}
+
+	return seq;
 }
 
 //----------------------------------------------------------------------------------
@@ -2517,14 +2582,11 @@ static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon2Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  if(wk->nextword==-1){
-    TransMainBGScreen( wk, 0 );
-    seq = SUBSEQ_START;
-  }else{
-    seq = SUBSEQ_SELECTPOKEMON3INIT;
-  }
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	if( wk->nextword != -1 ){
+		return SUBSEQ_SELECTPOKEMON3INIT;
+	}
+	return SUBSEQ_START;
 }
 
 //----------------------------------------------------------------------------------
@@ -2539,14 +2601,35 @@ static int Subseq_SelectPokemon2Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon3Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FrameListInit(wk, BOXSEARCH_LISTID_POKEMON);
-  SetupScreen( wk, 1, BOXSEARCH_LISTID_POKEMON );
-  SubTextPrint( wk, SUBSEQ_SELECTPOKEMON3INIT );
+	u16	i, max;
 
-  // FRAMELIST初期化待ちの後ポケモン名選択へ
-  _set_subseq_nextseq( wk,  SUBSEQ_SELECTPOKEMON3 );
-  seq = SUBSEQ_FRAMELISTINITWAIT;
-  return seq;
+	FrameListChangeClear( wk );
+
+	FrameListInit( wk, BOXSEARCH_LISTID_POKEMON );
+
+	SubTextPrint( wk, SUBSEQ_SELECTPOKEMON3INIT );
+
+	max = GetPokeLibMax( wk, wk->topword-1, wk->nextword );
+	if( max <= 7 ){
+		TransMainBGScreen( wk, 2 );
+	}else{
+		TransMainBGScreen( wk, 1 );
+		SetListPageArrowAnime( wk, FALSE );
+		InitScrollBarObj( wk );
+		max = 7;
+	}
+
+	// チェックボックス表示
+	for( i=0; i<max; i++ ){
+		if( wk->param->syswk->search_data.pokemon_id == FRAMELIST_GetItemParam(wk->frame_list_work,i) ){
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, i );
+			break;
+		}
+	}
+
+	_set_subseq_nextseq( wk, SUBSEQ_SELECTPOKEMON3 );
+
+	return SUBSEQ_FRAMELISTINITWAIT;
 }
 
 //----------------------------------------------------------------------------------
@@ -2561,19 +2644,66 @@ static int Subseq_SelectPokemon3Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  u32 result =  FRAMELIST_Main( wk->frame_list_work );
-  if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_RETURN){
-    //_set_search_data( wk, SEARCH_DATAID_POKEMON, 0);
-    seq = SUBSEQ_SELECTPOKEMON3EXIT;
-  }else if(TOUCHBAR_IsDecide(wk->touchbar)==FALSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      int pos = FRAMELIST_GetListPos( wk->frame_list_work );
-      _set_search_data( wk, SEARCH_DATAID_POKEMON, FRAMELIST_GetItemParam( wk->frame_list_work, pos ));
-      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-      seq = SUBSEQ_SELECTPOKEMON3EXIT;
-    }
-  }
-  return seq;
+	u32	result = FRAMELIST_Main( wk->frame_list_work );
+
+	switch( result ){
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+		_set_search_data(
+			wk, SEARCH_DATAID_POKEMON,
+			FRAMELIST_GetItemParam( wk->frame_list_work, FRAMELIST_GetListPos(wk->frame_list_work) ) );
+		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+		PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
+		break;
+
+	case FRAMELIST_RET_MOVE:				// カーソル移動
+	case FRAMELIST_RET_SCROLL:			// スクロール通常
+	case FRAMELIST_RET_RAIL:				// レールスクロール
+	case FRAMELIST_RET_SLIDE:				// スライドスクロール
+		if( GetPokeLibMax(wk,wk->topword-1,wk->nextword) > 7 ){
+			SetListPageArrowAnime( wk, FALSE );
+		}
+		break;
+
+	case FRAMELIST_RET_PAGE_UP:			// １ページ上へ
+		if( GetPokeLibMax(wk,wk->topword-1,wk->nextword) > 7 ){
+			return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, SUBSEQ_SELECTPOKEMON3 );
+		}
+		break;
+
+	case FRAMELIST_RET_PAGE_DOWN:		// １ページ下へ
+		if( GetPokeLibMax(wk,wk->topword-1,wk->nextword) > 7 ){
+			return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, SUBSEQ_SELECTPOKEMON3 );
+		}
+		break;
+
+	case FRAMELIST_RET_NONE:
+		if( CheckCancelButton( wk ) == TRUE ){
+			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON3EXIT );
+		}else{
+			int	ret = HitCheckListBox( wk );
+			if( ret >= 0 && ret <= 6 ){
+				_set_search_data(
+					wk, SEARCH_DATAID_POKEMON,
+					FRAMELIST_GetItemParam( wk->frame_list_work, ret+FRAMELIST_GetScrollCount(wk->frame_list_work) ) );
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
+				PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
+				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
+			}
+		}
+		break;
+	}
+
+	if( GetPokeLibMax(wk,wk->topword-1,wk->nextword) > 7 ){
+		PutScrollBarObj( wk );
+	}
+
+	return seq;
 }
 
 //----------------------------------------------------------------------------------
@@ -2588,10 +2718,8 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 //----------------------------------------------------------------------------------
 static int Subseq_SelectPokemon3Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
-  FRAMELIST_Exit( wk->frame_list_work );
-  TransMainBGScreen( wk, 0 );
-  seq = SUBSEQ_START;
-  return seq;
+	FRAMELIST_Exit( wk->frame_list_work );
+	return SUBSEQ_START;
 }
 
 static int Subseq_SelectSeikakuInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
@@ -3625,6 +3753,7 @@ static void ListCallBackHeadword_Draw( void *work, u32 pos, PRINT_UTIL *print_ut
 static void ListCallBackHeadword_Move( void *work, u32 pos, BOOL flag);
 static void ListCallBackHeadword_Scroll( void *work, s8 mv );
 static void ListCallBackHeadword2_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
+static void ListCallBackHeadword2Pokemon_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackHeadword2_Move( void *work, u32 pos, BOOL flag);
 static void ListCallBackHeadword2_Scroll( void *work, s8 mv );
 
@@ -3636,9 +3765,11 @@ static void ListCallBackTokusei_Draw( void *work, u32 pos, PRINT_UTIL *print_uti
 static void ListCallBackTokusei_Move( void *work, u32 pos, BOOL flag);
 static void ListCallBackTokusei_Scroll( void * work, s8 mv );
 
-static void ListCallBackMark_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackPokemon_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackPokemon_Move(void *work, u32 pos, BOOL flag);
+static void ListCallBackPokemon_Scroll( void *work, s8 mv );
+
+static void ListCallBackMark_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackSex_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void ListCallBackItemHave_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 
@@ -3656,10 +3787,15 @@ static const FRAMELIST_CALLBACK FrameListHeadword2Callback = {
   ListCallBackHeadword2_Move,
   ListCallBackHeadword2_Scroll,
 };
+static const FRAMELIST_CALLBACK FrameListHeadword2PokemonCallback = {
+  ListCallBackHeadword2Pokemon_Draw,
+  ListCallBackHeadword2_Move,
+  ListCallBackHeadword2_Scroll,
+};
 static const FRAMELIST_CALLBACK FrameListPokemonCallback = {
   ListCallBackPokemon_Draw,
   ListCallBackPokemon_Move,
-  ListCallBackHeadword_Scroll,
+  ListCallBackPokemon_Scroll,
 };
 static const FRAMELIST_CALLBACK FrameListSeikakuCallback = {
   ListCallBackSeikaku_Draw,
@@ -3729,6 +3865,16 @@ static void ListCallBackHeadword2_Draw( void *work, u32 pos, PRINT_UTIL *print_u
 		_liststr_print_null( wk, pos, print_util, wk->msg );
 	}
 }
+static void ListCallBackHeadword2Pokemon_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp )
+{
+  BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK *)work;
+
+	if( GetPokeLibMax(wk,wk->topword-1,pos) != 0 ){
+		_liststr_print( wk, pos, print_util, wk->msg );
+	}else{
+		_liststr_print_null( wk, pos, print_util, wk->msg );
+	}
+}
 static void ListCallBackHeadword2_Move( void *work, u32 pos, BOOL flag)
 {
   BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK *)work;
@@ -3738,45 +3884,32 @@ static void ListCallBackHeadword2_Scroll( void *work, s8 mv )
 	BOX_SEARCH_MAIN_WORK * wk = (BOX_SEARCH_MAIN_WORK *)work;
 }
 
-
-static void ListCallBackPokemon_Move(void *work, u32 pos, BOOL flag)
-{
-  BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK *)work;
-  STRBUF *strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_03_01 );
-  int poke = FRAMELIST_GetItemParam( wk->frame_list_work, pos );
-
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_TEXT] ), 0 );
-  WORDSET_RegisterPokeMonsNameNo( wk->wordset, 0, poke);
-  {
-    int type1,type2;
-    POKEMON_PERSONAL_DATA *personal =  POKE_PERSONAL_OpenHandle( poke, 0, wk->heapID );
-    type1 = POKE_PERSONAL_GetParam( personal, POKEPER_ID_type1 );
-    type2 = POKE_PERSONAL_GetParam( personal, POKEPER_ID_type2 );
-    WORDSET_RegisterPokeTypeName( wk->wordset, 1, type1 );
-    WORDSET_RegisterPokeTypeName( wk->wordset, 2, type2 );
-    POKE_PERSONAL_CloseHandle( personal );
-  }
-  WORDSET_ExpandStr( wk->wordset, wk->expand_buf, strbuf );
-  PRINT_UTIL_PrintColor( &wk->print_util[BOXSEARCH_BMPID_TEXT], wk->print_que, 
-                     0, 0, wk->expand_buf, wk->font, Window0BmpDataTable[BOXSEARCH_BMPID_TEXT]->chr );
-  GFL_STR_DeleteBuffer( strbuf );
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
-}
-
 static void ListCallBackPokemon_Draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp )
 {
-  BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK *)work;
-  int param = FRAMELIST_GetItemParam( wk->frame_list_work, pos );
-  if(param==wk->param->syswk->search_data.pokemon_id){
-    GFL_CLACTPOS cp_pos = { 127, 0 };
-    cp_pos.y = y+13;
-    GFL_CLACT_WK_SetWldPos( wk->clwk[ BOXSEARCH_OBJID_CHECK0 ], &cp_pos );
-    OS_Printf("checkbox hit =%d\n", wk->param->syswk->search_data.pokemon_id);
-  }
+	BOX_SEARCH_MAIN_WORK * wk = (BOX_SEARCH_MAIN_WORK *)work;
 
-  _liststr_print( wk, pos, print_util, wk->mons_msg );
-  
+	_liststr_print( wk, pos, print_util, wk->mons_msg );
+
+	if( wk->param->syswk->search_data.pokemon_id == FRAMELIST_GetItemParam(wk->frame_list_work,pos) ){
+		PutListCheckObj( wk, BOXSEARCH_OBJID_CHECK0, y+12 );
+	}
 }
+static void ListCallBackPokemon_Move(void *work, u32 pos, BOOL flag)
+{
+	BOX_SEARCH_MAIN_WORK *wk = (BOX_SEARCH_MAIN_WORK *)work;
+
+	PrintPokemonInfo( wk, FRAMELIST_GetItemParam(wk->frame_list_work,pos) );
+}
+static void ListCallBackPokemon_Scroll( void *work, s8 mv )
+{
+	BOX_SEARCH_MAIN_WORK * wk = (BOX_SEARCH_MAIN_WORK *)work;
+
+	if( GetPokeLibMax(wk,wk->topword-1,wk->nextword) > 7 ){
+		ScrollListCheckObj( wk, mv*-1 );
+		SetListPageArrowAnime( wk, TRUE );
+	}
+}
+
 
 
 
@@ -3941,9 +4074,43 @@ static void _liststr_print_null( BOX_SEARCH_MAIN_WORK *wk, int pos, PRINT_UTIL *
 static int get_sort_pokename_num( int head, int child )
 {
   int decide = head2pokename[head]+child;
-  OS_Printf("topword=%d, nextword=%d\n", head, child);
+//  OS_Printf("topword=%d, nextword=%d\n", head, child);
   return sort_pokename_end_index[decide] - sort_pokename_start_index[decide];
 }
+
+static void SetPokeLibMax( BOX_SEARCH_MAIN_WORK * wk )
+{
+	int max, start, siz;
+	int * buf;
+	u16 * dat;
+	u32	i, j, k;
+
+	GFL_STD_MemClear( wk->pokelibMax, sizeof(int)*50 );
+
+	dat = ZukanSortDataGet( wk->heapID, &siz );
+
+	for( i=0; i<NELEMS(head2pokename); i++ ){
+		for( j=0; j<childword_num[i]; j++ ){
+			max   = get_sort_pokename_num( i, j );
+      start = sort_pokename_start_index[ head2pokename[i]+j ];
+			buf   = &wk->pokelibMax[ head2pokename[i] + j ];
+			*buf  = 0;
+      for( k=0; k<max; k++ ){
+        if( ZUKANSAVE_GetPokeSeeFlag(wk->zukan,dat[start+k]) ){
+					*buf += 1;
+        }
+      }
+		}
+	}
+
+	GFL_HEAP_FreeMemory( dat );
+}
+
+static int GetPokeLibMax( BOX_SEARCH_MAIN_WORK * wk, int head, int child )
+{
+	return wk->pokelibMax[ head2pokename[head] + child ];
+}
+
 
 static int get_sort_tokusei_num( int head, int child )
 {
@@ -3976,6 +4143,32 @@ static void PrintTokuseiInfo( BOX_SEARCH_MAIN_WORK * wk, u32 id )
 	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
 }
 
+// 上画面にポケモン情報表示
+static void PrintPokemonInfo( BOX_SEARCH_MAIN_WORK * wk, u32 id )
+{
+	POKEMON_PERSONAL_DATA * personal;
+	STRBUF * strbuf;
+	int type1,type2;
+
+	personal =  POKE_PERSONAL_OpenHandle( id, 0, wk->heapID );
+	type1 = POKE_PERSONAL_GetParam( personal, POKEPER_ID_type1 );
+	type2 = POKE_PERSONAL_GetParam( personal, POKEPER_ID_type2 );
+	POKE_PERSONAL_CloseHandle( personal );
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmp_win[BOXSEARCH_BMPID_TEXT]), 0 );
+
+	strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_03_01 );
+	WORDSET_RegisterPokeMonsNameNo( wk->wordset, 0, id );
+	WORDSET_RegisterPokeTypeName( wk->wordset, 1, type1 );
+	WORDSET_RegisterPokeTypeName( wk->wordset, 2, type2 );
+	WORDSET_ExpandStr( wk->wordset, wk->expand_buf, strbuf );
+	PRINT_UTIL_PrintColor(
+		&wk->print_util[BOXSEARCH_BMPID_TEXT], wk->print_que, 
+		0, 0, wk->expand_buf, wk->font, Window0BmpDataTable[BOXSEARCH_BMPID_TEXT]->chr );
+	GFL_STR_DeleteBuffer( strbuf );
+
+	BmpWinTransScreen( wk->bmp_win[BOXSEARCH_BMPID_TEXT] );
+}
 
 
 static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
@@ -3996,24 +4189,11 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
     break;
   case BOXSEARCH_LISTID_NAME_NEXTWORD:  // 「ポケモン」子音指定
     header.itemMax = childword_num[wk->topword-1];
-    header.cbFunc  = &FrameListHeadword2Callback;
+    header.cbFunc  = &FrameListHeadword2PokemonCallback;
     break;
   case BOXSEARCH_LISTID_POKEMON:        // 「ポケモン」
-    {
-      int size,count=0,i;
-      u16 *sort_data;
-      int max   = get_sort_pokename_num(wk->topword-1, wk->nextword);
-      int start = sort_pokename_start_index[head2pokename[wk->topword-1]+wk->nextword];
-      sort_data = ZukanSortDataGet( wk->heapID, &size );
-      for(i=0;i<max;i++){
-        if(ZUKANSAVE_GetPokeSeeFlag( wk->zukan, sort_data[start+i])){
-          count++;
-        }
-      }
-      GFL_HEAP_FreeMemory( sort_data );
-      header.itemMax = count;
-      header.cbFunc  = &FrameListPokemonCallback;
-    }
+		header.itemMax = GetPokeLibMax( wk, wk->topword-1, wk->nextword );
+		header.cbFunc  = &FrameListPokemonCallback;
     break;
   case BOXSEARCH_LISTID_SEIKAKU:        // 「せいかく」
     header.cbFunc  = &FrameListSeikakuCallback;
@@ -4082,7 +4262,7 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
       u16 *sort_data; 
       int start = sort_pokename_start_index[head2pokename[wk->topword-1]+wk->nextword];
       sort_data = ZukanSortDataGet( wk->heapID, &size );
-      for(i=0;i<header.itemMax;i++){
+      for( i=0; i<get_sort_pokename_num(wk->topword-1,wk->nextword); i++ ){
         if(ZUKANSAVE_GetPokeSeeFlag( wk->zukan, sort_data[start+i])){
           FRAMELIST_AddItem( wk->frame_list_work, 0, sort_data[start+i] );
         }
@@ -4243,14 +4423,6 @@ static u16* ZukanSortDataGet( int heap, int* p_arry_num )
 //----------------------------------------------------------------------------------
 static void TransMainBGScreen( BOX_SEARCH_MAIN_WORK *wk, int type )
 {
-/*
-  ARCHANDLE *handle;
-  GF_ASSERT(type<3);
-  
-  handle  = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, wk->heapID );
-  GFL_ARCHDL_UTIL_TransVramScreen(  handle, main_scr_bg_table[type],  BG_FRAME_BACK_M,  0, 0, 0, wk->heapID );   
-  GFL_ARC_CloseDataHandle( handle );
-*/
 	NNSG2dScreenData * scrn;
 	void * buf;
 
@@ -4260,42 +4432,6 @@ static void TransMainBGScreen( BOX_SEARCH_MAIN_WORK *wk, int type )
 	GFL_BG_LoadScreenV_Req( BG_FRAME_BACK_M );
 }
 
-static void ObjOnOff( BOX_SEARCH_MAIN_WORK *wk, int type, int category )
-{
-  int i;
-  // メイン画面
-  if(type==0){
-    // プレート表示
-    for(i=0;i<11;i++){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_PLATE0+i],TRUE);
-    }
-    // チェックボックス表示
-    for(i=0;i<10;i++){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0+i],FALSE);
-    }
-    // 選択肢のマーキング非表示
-    for(i=0;i<6;i++){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_MARK0_0+i], TRUE );
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_MARK1_0+i], FALSE );
-    }
-    // スクロールつまみ非表示
-    GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_SCROL], FALSE );
-  }else{
-    // プレート非表示
-    for(i=0;i<11;i++){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_PLATE0+i],FALSE);
-    }
-    // チェックボックス1個表示
-    GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0],TRUE);
-    // マーキング表示・非表示
-    for(i=0;i<6;i++){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_MARK0_0+i], onoff_tbl[category][0] );
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_MARK1_0+i], onoff_tbl[category][1] );
-    }
-    // スクロールつまみ表示
-    GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_SCROL], onoff_tbl[category][2] );
-  }
-}
 
 
 //----------------------------------------------------------------------------------
@@ -4343,7 +4479,6 @@ static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK * wk, BOOL flag )
 
 		// BMPWIN転送
 		for( i=BOXSEARCH_BMPID_ANSWER0; i<=BOXSEARCH_BMPID_ANSWER4; i++ ){
-//			GFL_BMPWIN_TransVramCharacter( wk->bmp_win[i] );
 			GFL_BMPWIN_MakeScreen( wk->bmp_win[i] );
 		}
 	}
@@ -4351,60 +4486,6 @@ static void DecideInfoPrint( BOX_SEARCH_MAIN_WORK * wk, BOOL flag )
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->bmp_win[BOXSEARCH_BMPID_ANSWER0]) );
 }
 
-
-//----------------------------------------------------------------------------------
-/**
- * @brief BG面セットアップ（BG転送・BMPWIN描画・OBJ ON/OFF)
- *
- * @param   wk    
- * @param   type    
- * @param   category    
- */
-//----------------------------------------------------------------------------------
-static void SetupScreen( BOX_SEARCH_MAIN_WORK *wk, int type, int category )
-{
-  int i;
-  switch(type){
-  case 0:
-    // 項目描画
-    for(i=0;i<6;i++){
-      PrintStrbuf( wk, BOXSEARCH_BMPID_TOPIC0+i, i, TOPIC_NAME_OFFSET_Y );
-      GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_TOPIC0+i] );
-    }
-    
-    ObjOnOff( wk, 0, 0 );
-    // マーキング反映
-    SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
-    // 各種BG設定・転送
-    TransMainBGScreen( wk, 0 );
-    GFL_BG_ClearScreen( BG_FRAME_BUTTON_M );
-    // 入力済情報を描画
-    DecideInfoPrint( wk, 1 );    
-
-    break;
-  case 1:
-  case 2:
-    // マーキング反映
-    SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
-    // 入力済情報を隠す
-    DecideInfoPrint( wk, 0 );
-    // トップ画面の６つの項目名非表示
-    for(i=0;i<6;i++){
-      PrintStrbuf( wk, BOXSEARCH_BMPID_TOPIC0+i, i, TOPIC_NAME_OFFSET_Y );
-      GFL_BMPWIN_ClearScreen( wk->bmp_win[BOXSEARCH_BMPID_TOPIC0+i] );
-    }
-    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->bmp_win[BOXSEARCH_BMPID_TOPIC0]) );
-    // 項目名を１つだけ左中央に表示
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] ), 0 );
-    PrintStrbuf( wk, BOXSEARCH_BMPID_NOW_CATEGORY, now_category_tbl[category], 0 );
-    GFL_BMPWIN_MakeTransWindow_VBlank( wk->bmp_win[BOXSEARCH_BMPID_NOW_CATEGORY] );
-    ObjOnOff( wk, type, category );
-    TransMainBGScreen( wk, type );
-    break;
-  case 3:
-    break;
-  }
-}
 
 
 //----------------------------------------------------------------------------------
