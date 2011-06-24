@@ -57,6 +57,7 @@ SUBDIRS	=	wmi \
 			encount \
 			encount_ex \
 			rebattle_trainer \
+			fld3d_ci_effect \
 			fld3d_ci \
 			fldmapdata\
 			pokegra\
@@ -175,7 +176,6 @@ SUBDIRS	=	wmi \
 			btl_subway \
 			infinity_dungeon \
 			dendou_demo \
-			fld3d_ci_effect \
 			profanity_word \
 			symbol \
 			manual_image \
