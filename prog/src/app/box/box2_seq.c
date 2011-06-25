@@ -4182,7 +4182,7 @@ static int MainSeq_ArrangePartyPokeChgEnd( BOX2_SYS_WORK * syswk )
   CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PARTY_GET );
   BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PARTY_GET );
   BOX2OBJ_SetHandCursorOnOff( syswk, TRUE );
-  BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
+  BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_ON );
   BOX2BMP_PokeSelectMsgPut( syswk, syswk->get_pos, BOX2BMP_MSGID_PARTYIN_MENU, BOX2BMPWIN_ID_MSG1 );
   return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
 }
@@ -9657,6 +9657,7 @@ static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
     POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
     BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
+		BOX2OBJ_PokeIconPaletteReset( syswk, syswk->tray, syswk->get_pos );
     if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
       BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
       BOX2OBJ_PokeIconChange(
@@ -9797,6 +9798,7 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
     POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
     BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
+		BOX2OBJ_PokeIconPaletteReset( syswk, syswk->tray, syswk->get_pos );
     if( BOX2MAIN_PokeItemFormChange( syswk, ppp ) == TRUE ){
       BOX2MAIN_FormChangeRenew( syswk, syswk->get_pos );
       BOX2OBJ_PokeIconChange(
