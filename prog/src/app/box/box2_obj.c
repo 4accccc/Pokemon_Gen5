@@ -4113,7 +4113,7 @@ void BOX2OBJ_VanishMultiSelectIcon( BOX2_APP_WORK * appwk, BOOL flg )
 void BOX2OBJ_PutMultiSelectIcon( BOX2_APP_WORK * appwk, s16 x, s16 y )
 {
 	BOX2OBJ_SetPos( appwk, BOX2OBJ_ID_EZ_MULTI, x, y, CLSYS_DEFREND_MAIN );
-	BmpOam_ActorSetPos( appwk->fobj[BOX2MAIN_FNTOAM_MULTI_NUM].oam, x-8, y-4 );
+	BmpOam_ActorSetPos( appwk->fobj[BOX2MAIN_FNTOAM_MULTI_NUM].oam, x-16, y );
 }
 void BOX2OBJ_ChangeMultiSelectIcon( BOX2_SYS_WORK * syswk, BOOL flg )
 {
