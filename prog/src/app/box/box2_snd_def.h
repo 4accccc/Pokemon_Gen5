@@ -36,3 +36,11 @@
 #define  SE_BOX2_MOVE_ERROR       ( SEQ_SE_BEEP )       // 移動できなかったエラー音
 
 #define  SE_BOX2_WARNING          ( SEQ_SE_BEEP )   // 警告音(最後の1匹を逃がそうとした時)
+
+
+//--------------------------------------------------------------------------------------------
+//	絞込みリスト
+//--------------------------------------------------------------------------------------------
+#define  SE_BOX2_SEARCH_MOVE			( SEQ_SE_SELECT1 )		// カーソル移動
+#define  SE_BOX2_SEARCH_DECIDE		( SEQ_SE_DECIDE1 )		// 決定音
+#define  SE_BOX2_SEARCH_WARNING		( SEQ_SE_BEEP )				// 警告音
