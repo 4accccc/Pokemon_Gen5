@@ -581,12 +581,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・画面下から登場
-　所定の位置に到達するとメッセージ表示
-・続けてhakaim3_04</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T10:09:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -605,7 +603,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -651,11 +649,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・プラズマ団と向き合いながら
-・続けてsage5_03</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T10:10:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -674,7 +671,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -714,11 +711,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・主人公を見ながら
-・続けてleader3_06</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T10:10:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -737,7 +733,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -775,10 +771,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:39:53" />
+				Time="2011-06-25T10:10:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -827,10 +823,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:39:55" />
+				Time="2011-06-25T10:10:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -881,10 +877,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:40:01" />
+				Time="2011-06-25T10:10:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
