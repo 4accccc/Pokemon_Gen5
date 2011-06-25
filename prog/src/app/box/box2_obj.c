@@ -2022,6 +2022,13 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
 	}
 }
 
+// ポケモンアイコンのパレット再設定
+void BOX2OBJ_PokeIconPaletteReset( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
+{
+	POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, tray, pos );
+	BOX2OBJ_ChgPltt( syswk->app, syswk->app->pokeicon_id[pos], PokeIconPalOfsGet(syswk,ppp) );
+}
+
 
 //============================================================================================
 //  ポケモングラフィック

@@ -8066,6 +8066,7 @@ static int MainSeq_MarkingMain( BOX2_SYS_WORK * syswk )
       u8  mark = syswk->app->pokeMark;
       BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_mark, mark );
       BOX2MAIN_SubDispMarkingChange( syswk, mark );
+			BOX2OBJ_PokeIconPaletteReset( syswk, syswk->tray, syswk->get_pos );
     }
     PMSND_PlaySE( SE_BOX2_DECIDE );
     return MarkingButtonAnmSet( syswk, 0, BOX2SEQ_MAINSEQ_MARKING_END );
@@ -9218,6 +9219,7 @@ static int BoxArg_ItemGetYes( BOX2_SYS_WORK * syswk )
         syswk->app->pokeicon_id[syswk->get_pos] );
     }
     BOX2MAIN_PokeInfoRewrite( syswk, syswk->get_pos );
+		BOX2OBJ_PokeIconPaletteReset( syswk, syswk->tray, syswk->get_pos );
   }else{
     PMSND_PlaySE( SE_BOX2_WARNING );
     BOX2BMP_ItemGetErrorPut( syswk, BOX2BMPWIN_ID_MSG1 );

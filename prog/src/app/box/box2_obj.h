@@ -600,6 +600,8 @@ extern void BOX2OBJ_PutPokeIcon( BOX2_APP_WORK * appwk, u32 pos, int w, int h );
 //--------------------------------------------------------------------------------------------
 extern void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk );
 
+extern void BOX2OBJ_PokeIconPaletteReset( BOX2_SYS_WORK * syswk, u32 tray, u32 pos );
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   ポケモングラフィック切り替え
