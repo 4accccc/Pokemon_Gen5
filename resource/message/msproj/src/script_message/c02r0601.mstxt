@@ -31,10 +31,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・水曜日と土曜日以外</Comment>
+・水曜日と土曜日以外
+※swanで処理変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:11:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -316,16 +317,1467 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c02r0601_waitress1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハンカチを　ひろったけど　どうやら
+じょうれんの　おきゃくさんの▽
+おとしもの　みたい……▼
+いかりのまえばが　つかえる
+ちゃいろの　ポケモンを　つれた▽
+おきゃくさん　だった　きがする……▼
+あたし　ハンカチとか　すぐに
+わすれちゃう　ひと　だから……▼
+あなた　よければ
+おとしぬしを　さがして　くれない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:42:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:13:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハンカチを　拾ったけど　どうやら
+常連の　お客さんの▽
+落し物　みたい……▼
+いかりのまえばが　使える
+茶色の　ポケモンを　連れた▽
+お客さん　だった　気がする……▼
+あたし　ハンカチとか　すぐに
+忘れちゃう　人だから……▼
+あなた　よければ
+落とし主を　捜して　くれない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:43:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:17:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・日曜日
+　イベント起動前
+・はい/いいえ選択肢表示
+　はい　→waitress1_02
+　いいえ→waitress1_03
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウエートレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:12:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_waitress1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありがとう！
+ハンカチを　あずけて　おくわね▼
+まいにち　いろんな　おきゃくさんが
+いれかわりで　いらっしゃるから▽
+どんどん　きくと　いいんじゃない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:47:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ありがとう！
+ハンカチを　預けて　おくわね▼
+毎日　いろんな　お客さんが
+入れ替わりで　いらっしゃるから▽
+どんどん　きくと　いいんじゃない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:47:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:17:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・アイテム入手処理
+　No000「ハンカチ（仮）」未発注、たいせつなもの
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:40:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウエートレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:12:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_waitress1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐっすん▼
+もちぬしに　おとしものの
+ハンカチを　かえして　あげたいな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:44:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐっすん▼
+持ち主に　落し物の
+ハンカチを　返して　あげたいな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:44:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:17:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウエートレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:12:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_waitress1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハンカチを　おとした　ひとは
+いかりのまえばが　つかえる▽
+ちゃいろの　ポケモンを　つれた▽
+おきゃくさん　だった　きがする……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:44:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハンカチを　落とした　人は
+いかりのまえばが　使える▽
+茶色の　ポケモンを　連れた▽
+お客さん　だった　気がする……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:17:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント起動中
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウエートレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:12:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_waitress1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっ！　おとしものを　した
+おきゃくさんを　みつけた！？▼
+ミネズミが　パートナーの
+おきゃくさん　だったのねー▼
+よかったわ！　ほんとうに　ありがと！
+これは　みつけてくれた　おれいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:48:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっ！　落とし物を　した
+お客さんを　みつけた！？▼
+ミネズミが　パートナーの
+お客さん　だったのねー▼
+よかったわ！　本当に　ありがと！
+これは　みつけてくれた　お礼よ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:48:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:17:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・条件達成時
+・アイテム入手処理
+　No000「？？？」
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウエートレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:12:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_waitress1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おしごと　おしごと　たのしいな！▼
+だって　いろんな
+ポケモンと　おきゃくさんに　あえるの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:57:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お仕事　お仕事　楽しいな！▼
+だって　いろんな
+ポケモンと　お客さんに　あえるの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:57:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:17:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベントクリア後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウエートレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:12:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_bussines_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>げつようび！　いっしゅうかんの
+やるきを　だすために　のむ▽
+いっぱいの　モーモーミルク……▼
+ワルビルと　いっしょに　こんしゅうも
+がんばるぞ！　って　おもえるねー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:22:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:20:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>月曜日！　一週間の
+やるきを　だすために　飲む▽
+一杯の　モーモーミルク……▼
+ワルビルと　一緒に　今週も
+がんばるぞ！　って　思えるねー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:49:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:22:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・通常時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSSINES</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_bussines_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん？　おとしもの？
+ぼく　じゃないなあ……▼
+べつの　ひに　くる
+おきゃくさん　かもよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:21:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:21:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん？　落し物？
+ぼく　じゃないなあ……▼
+別の　日に　来る
+お客さん　かもよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:50:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:22:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・イベント起動時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSSINES</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_lady_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたくし　はくぶつかんで
+うつくしい　カセキを　みたあと▼
+ヨーテリーちゃんと　こちらで
+くつろぐのが　しゅうかん　なの▼
+ちなみに　ウチの　ヨーテリーちゃん
+とくいわざは　ほえる　ですわよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:50:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたくし　博物館で
+うつくしい　カセキを　みたあと▼
+ヨーテリーちゃんと　こちらで
+くつろぐのが　習慣なの▼
+ちなみに　ウチの　ヨーテリーちゃん
+得意技は　ほえる　ですわよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:50:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・通常時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:24:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:24:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_lady_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？　あたくし　は
+おとしものは　してなくてよ？▼
+あたくしの　ヨーテリーちゃん　は
+いかりのまえば　は　つかえないし▼
+べつの　おきゃくさん　かしら？
+きまった　ようびだけに　くるひとも▽
+おおいんでしょ？　この　おみせって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:23:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？　あたくし　は
+落し物は　してなくてよ？▼
+あたくしの　ヨーテリーちゃん　は
+いかりのまえば　は　使えないし▼
+別の　お客さん　かしら？
+決まった　曜日だけに　来る人も▽
+多いんでしょ？　この　おみせって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:50:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント起動時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:24:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LADY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:24:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_girl3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　ムンナ　ライモンシティの
+ミュージカルに　しゅつえん　したら▽
+スーパースターに　ならないかな？▼
+トレーナーの　あたしに　にて
+けっこう　いいセン　いってるから……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:51:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　ムンナ　ライモンシティの
+ミュージカルに　出演したら▽
+スーパースターに　ならないかな？▼
+トレーナーの　あたしに　似て
+けっこう　いいセン　いってるから……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:51:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:28:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・通常時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_girl3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとしものの　もちぬしを
+さがしてるの！　やさしいんだね！▼
+ムンナは　ちゃいろ　じゃないから
+べつの　おきゃくさん　よね▼
+ちゃいろい　コを　つれた
+ひとを　もくように　みたような……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:27:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>落し物の　持ち主を
+捜してるの！　優しいんだね！▼
+ムンナは　茶色じゃないから
+別の　お客さん　よね▼
+茶色い　コを　連れた
+人を　木曜に　みたような……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:51:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:28:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント起動時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:26:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_man3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤグルマのもり　で
+ミネズミと　ジョギングの　あと▽
+カフェソーコで　くつろぐんだ▼
+うんどうして　のむ　いっぱいは
+サイッコー！　だね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:52:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤグルマの森で
+ミネズミと　ジョギングの　あと▽
+カフェソーコで　くつろぐんだ▼
+運動して　飲む　一杯は
+サイッコー！　だね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:52:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・通常時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:31:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:28:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_man3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっ？
+おとしもの……？▼
+それ！　その　ハンカチ！
+ぼくのだッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:53:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっ？
+落し物……？▼
+それ！　その　ハンカチ！
+ぼくのだッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:53:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・イベント起動時
+・続けてsys_01
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:34:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:28:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_sys_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+ハンカチを　てわたした！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:32:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:32:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+ハンカチを　手渡した！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:53:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:32:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・アイテム削除処理
+　No000「ハンカチ（仮）」未発注</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:40:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:31:58" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_man3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おとしもの　みつけてくれて
+ほんとうに　ありがとう！▼
+ミネズミが　きのみを　たべたあと
+ほっぺを　ふくのは▽
+この　ハンカチでないと　ダメなんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:33:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>落し物　みつけてくれて
+本当に　ありがとう！▼
+ミネズミが　きのみを　食べたあと
+ほっぺを　ふくのは▽
+この　ハンカチでないと　ダメなんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:53:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・イベント起動時
+・アイテムを渡してからイベントが終了するまで
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:34:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:28:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_mountain_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わはは！　わしの　ミルホッグは
+けなみが　よくて　かっこいいだろ！▼
+こうして　カフェソーコに　きて
+まいしゅう　じまん　してるんだ▼
+こいつの　いかりのまえば　は
+ちょっとした　もんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:34:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わはは！　わしの　ミルホッグは
+毛並みが　よくて　かっこいいだろ！▼
+こうして　カフェソーコに　来て
+毎週　自慢してるんだ▼
+こいつの　いかりのまえば　は
+ちょっとした　もんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:54:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・通常時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:30:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_mountain_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わしは　おとしものは　してないぞ
+ミルホッグが　みおとさんからな▼
+ほかの　おきゃくさんの
+おとしもの　だな　きっと</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:34:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わしは　落し物は　してないぞ
+ミルホッグが　みおとさんからな▼
+他の　おきゃくさんの
+落し物だな　きっと</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:54:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・イベント起動時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_ol_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しゅうまつに　こうして
+パートナーの　ズルッグと▼
+カフェで　のんびり　していると
+しごとの　つかれも　いやされちゃう～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>週末に　こうして
+パートナーの　ズルッグと▼
+カフェで　のんびり　していると
+仕事の　つかれも　癒されちゃう～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:55:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・通常時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_ol_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら！　その　ハンカチ
+わたしの　ものに　そっくり　だけど▽
+べつの　おきゃくさん　の　ものね▼
+……なんだか　その　ハンカチ
+ちょっと　ミネズミの　フレグランスね▼
+あっ　フレグランスって
+かおりの　ことよ　かおり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:55:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら！　その　ハンカチ
+わたしの　ものに　そっくり　だけど▽
+別の　お客さん　の　ものね▼
+……なんだか　その　ハンカチ
+ちょっと　ミネズミの　フレグランスね▼
+あっ　フレグランスって
+香りの　ことよ　香り</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:55:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:37:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント起動時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:29:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:30:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke33_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なっぷう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なっぷう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・日曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE33
+ポケモン・ヤナップ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:23" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke20_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぬはあ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぬはあ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・月曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE20
+ポケモン・ワルビル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:00:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke30_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゃうん♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きゃうん♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・火曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE30
+ポケモン・ヨーテリー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:00:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke15_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むうううううううううううううううん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:01:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むうううううううううううううううん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・水曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE15
+ポケモン・ムンナ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:00:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke17_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けけー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>けけー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・木曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE17
+ポケモン・ミネズミ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:00:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke29_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みるっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みるっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・金曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE29
+ポケモン・ミルホッグ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:52" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0601_poke39_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ずっぐぉー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ずっぐぉー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・土曜日</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE39
+ポケモン・ズルッグ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:59:40" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c02r0601_middleman2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じぶんが　まんぞく　できるなら
-だれも　しらないような[Ctrl2:LineFeed ]
+だれも　しらないような▽
 いなかの　みせでも　いいじゃないか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:10:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -334,11 +1786,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自分が　満足できるなら
-だれも　知らないような[Ctrl2:LineFeed ]
+だれも　知らないような▽
 田舎の　店でも　いいじゃないか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:10:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -346,10 +1798,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ変更予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:20:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -399,10 +1852,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:32:14" />
+				Time="2011-06-25T06:08:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -426,18 +1879,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>サンヨウシティ　ジムリーダー
-みつごの　コンビネーション[Ctrl2:PageClear ]
+みつごの　コンビネーション▼
 くさポケモンつかいの　デントが
-いい　ちゃばを　えらぶ[Ctrl2:PageClear ]
+いい　ちゃばを　えらぶ▼
 みずポケモンつかいの　コーンが
-さいこうの　みずを　よういする[Ctrl2:PageClear ]
+さいこうの　みずを　よういする▼
 ほのおポケモンつかいの　ポッドが
-ベストの　ひかげんで　おゆをそそぐ[Ctrl2:PageClear ]
+ベストの　ひかげんで　おゆをそそぐ▼
 なるほど
 さいこうの　ティーが　できるわけだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:11:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -446,18 +1899,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サンヨウシティ　ジムリーダー
-三つ子の　コンビネーション[Ctrl2:PageClear ]
+三つ子の　コンビネーション▼
 くさポケモン使いの　デントが
-いい　茶葉を　選ぶ[Ctrl2:PageClear ]
+いい　茶葉を　選ぶ▼
 みずポケモン使いの　コーンが
-最高の　水を　用意する[Ctrl2:PageClear ]
+最高の　水を　用意する▼
 ほのおポケモン使いの　ポッドが
-ベストの　火加減で　お湯を注ぐ[Ctrl2:PageClear ]
+ベストの　火加減で　お湯を注ぐ▼
 なるほど
 最高の　ティーが　できるわけだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T06:11:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -466,10 +1919,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:32:15" />
+				Time="2011-06-25T06:08:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -487,129 +1940,5 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c02r0601_trainaerm_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ともだちと　つうしん　しながら
-ポケモンしょうぶを　するときはさ▼
-ミラクルシューターで
-どうぐが　つかえるように　なるよね！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ともだちと　通信で
-ポケモン勝負を　するときはさ▼
-ミラクルシューターで
-道具が　使えるように　なるよね！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・ミラクルシューター説明
-※SWANでメッセージ変更予定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T10:32:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>TRAINERM</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c02r0601_trainaerw_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>そうそう　しってる！▼
-ミラクルシューターが　あると
-エネルギーが　チャージされていって▽
-いろんな　どうぐが　つかえるんだよね</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>そうそう　知ってる！▼
-ミラクルシューターが　あると
-エネルギーが　チャージされていって▽
-いろんな　道具が　使えるんだよね</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ミラクルシューター説明
-※SWANでメッセージ変更予定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T10:32:19" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>TRAINERW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
