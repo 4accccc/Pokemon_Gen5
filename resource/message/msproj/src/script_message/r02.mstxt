@@ -65,10 +65,10 @@ TVトランシーバー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+ライブキャスターを　つなげた▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:23:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,10 +77,10 @@ TVトランシーバー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+ライブキャスターを　つなげた▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:24:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -124,10 +124,10 @@ TVトランシーバー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]</Text>
+			<Text>ママ『[Name:TrainerName Idx="0" ]▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,10 +135,10 @@ TVトランシーバー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『[Name:TrainerName Idx="0" ][Ctrl2:PageClear ]</Text>
+			<Text>ママ『[Name:TrainerName Idx="0" ]▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:24:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -185,15 +185,15 @@ TVトランシーバー</Text>
 			<Text>やっと　おいついた……
 もう　ここまで　きたのね▼
 「おそらく　いまごろは
-　サンヨウシティに　むかってます」って[Ctrl2:LineFeed ]
-アララギはかせに　きいてね[Ctrl2:PageClear ]
+　サンヨウシティに　むかってます」って▽
+アララギはかせに　きいてね▼
 で　ママから
-また　プレゼント！[Ctrl2:PageClear ]
+また　プレゼント！▼
 [Name:TrainerName Idx="0" ]！
-これを　はいて　いきなさい[Ctrl2:PageClear ]</Text>
+これを　はいて　いきなさい▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:25:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -204,15 +204,15 @@ TVトランシーバー</Text>
 			<Text>やっと　追いついた……
 もう　ここまで　来たのね▼
 「おそらく　今ごろは
-　サンヨウシティに　むかってます」って[Ctrl2:LineFeed ]
-アララギ博士に　聞いてね[Ctrl2:PageClear ]
+　サンヨウシティに　むかってます」って▽
+アララギ博士に　聞いてね▼
 で　ママから
-また　プレゼント！[Ctrl2:PageClear ]
+また　プレゼント！▼
 [Name:TrainerName Idx="0" ]！
-これを　履いて　いきなさい[Ctrl2:PageClear ]</Text>
+これを　履いて　いきなさい▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:25:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -313,21 +313,21 @@ TVトランシーバー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ランニングシューズを　はいていれば
-どこにいくのも　あっ　というま！[Ctrl2:PageClear ]
+どこにいくのも　あっ　というま！▼
 では　とりあつかい　せつめいしょを
-よむから　きいてなさいね[Ctrl2:PageClear ]
+よむから　きいてなさいね▼
 「ランニングシューズは
- Ｂボタンを　おすことで　いままでより[Ctrl2:LineFeed ]
- はやく　はしれるように　なります！[Ctrl2:PageClear ]
+ Ｂボタンを　おすことで　いままでより▽
+ はやく　はしれるように　なります！▼
  ランニングシューズを　はいて
- おもいっきり　はしりまくろう！」[Ctrl2:PageClear ]
-ですって[Ctrl2:PageClear ]
+ おもいっきり　はしりまくろう！」▼
+ですって▼
 かったまま　しまっておいたのを
 かたづけを　していて　みつけたの▽
 ……たまには　かたづけも　するものね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:25:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -336,21 +336,21 @@ TVトランシーバー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ランニングシューズを　履いていれば
-どこに行くのも　あっ　というま！[Ctrl2:PageClear ]
+どこに行くのも　あっ　というま！▼
 では　取り扱い説明書を
-読むから　聞いてなさいね[Ctrl2:PageClear ]
+読むから　聞いてなさいね▼
 「ランニングシューズは
- Ｂボタンを　押すことで　今までより[Ctrl2:LineFeed ]
- 速く　走れるように　なります！[Ctrl2:PageClear ]
+ Ｂボタンを　押すことで　今までより▽
+ 速く　走れるように　なります！▼
  ランニングシューズを　履いて
- おもいっきり　走りまくろう！」[Ctrl2:PageClear ]
-ですって[Ctrl2:PageClear ]
+ おもいっきり　走りまくろう！」▼
+ですって▼
 ……買ったまま　しまっておいたのを
 かたづけを　していて　みつけたの▼
 ……たまには　かたづけも　するものね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:25:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -392,17 +392,17 @@ TVトランシーバー</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]
-あなたは　ひとりじゃないの[Ctrl2:LineFeed ]
-わかっているでしょ？[Ctrl2:PageClear ]
+あなたは　ひとりじゃないの▽
+わかっているでしょ？▼
 いつも　ポケモンと　いっしょだし
-ともだちも　いる[Ctrl2:PageClear ]
+ともだちも　いる▼
 それに　ママだって　いつも
-あなたのことを　おもっているから[Ctrl2:PageClear ]
+あなたのことを　おもっているから▼
 それじゃあ
-たびを　たのしんでね！[Ctrl2:PageClear ]</Text>
+たびを　たのしんでね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -411,17 +411,17 @@ TVトランシーバー</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]
-あなたは　一人じゃないの[Ctrl2:LineFeed ]
-わかっているでしょ？[Ctrl2:PageClear ]
+あなたは　一人じゃないの▽
+わかっているでしょ？▼
 いつも　ポケモンと　一緒だし
-友達も　いる[Ctrl2:PageClear ]
+友達も　いる▼
 それに　ママだって　いつも
-あなたのことを　想っているから[Ctrl2:PageClear ]
+あなたのことを　想っているから▼
 それじゃあ
-旅を　楽しんでね！[Ctrl2:PageClear ]</Text>
+旅を　楽しんでね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:25:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -710,12 +710,12 @@ TVトランシーバー</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねーねー[Ctrl2:PageClear ]
+			<Text>ねーねー▼
 いまから　すごいことするから
 みててくれない？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -723,12 +723,12 @@ TVトランシーバー</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねーねー[Ctrl2:PageClear ]
+			<Text>ねーねー▼
 いまから　すごいことするから
 みててくれない？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:26:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
