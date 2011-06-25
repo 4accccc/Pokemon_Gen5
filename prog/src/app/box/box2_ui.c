@@ -1625,10 +1625,12 @@ u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
     }
     if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
       BOX2MAIN_ChgCursorButton( syswk );
+			BOX2MAIN_ChangeMultiSelectIconKey( syswk, BOX2UI_ARRANGE_PGT_NAME );
       return BOX2UI_ARRANGE_PGT_LEFT;
     }
     if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
       BOX2MAIN_ChgCursorButton( syswk );
+			BOX2MAIN_ChangeMultiSelectIconKey( syswk, BOX2UI_ARRANGE_PGT_NAME );
       return BOX2UI_ARRANGE_PGT_RIGHT;
     }
   }
@@ -1763,10 +1765,12 @@ u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
     }
     if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
       BOX2MAIN_ChgCursorButton( syswk );
+			BOX2MAIN_ChangeMultiSelectIconKey( syswk, BOX2UI_ARRANGE_PTGT_NAME );
       return BOX2UI_ARRANGE_PTGT_LEFT;
     }
     if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
       BOX2MAIN_ChgCursorButton( syswk );
+			BOX2MAIN_ChangeMultiSelectIconKey( syswk, BOX2UI_ARRANGE_PTGT_NAME );
       return BOX2UI_ARRANGE_PTGT_RIGHT;
     }
   }
