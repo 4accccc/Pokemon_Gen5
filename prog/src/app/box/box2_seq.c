@@ -1446,6 +1446,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
     PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
     BOX2MAIN_PokeSelectOff( syswk );
     CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_MAIN_NAME;
     BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_MAIN_NAME );
     return TrayLeftScrollSet( syswk, TRUE, BOX2SEQ_MAINSEQ_ARRANGE_MAIN );
 
@@ -1453,6 +1454,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
     PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
     BOX2MAIN_PokeSelectOff( syswk );
     CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_MAIN_NAME;
     BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_MAIN_NAME );
     return TrayRightScrollSet( syswk, TRUE, BOX2SEQ_MAINSEQ_ARRANGE_MAIN );
 
@@ -1507,6 +1509,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_MENU_CLOSE );
 
@@ -1579,6 +1582,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
       return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_MENU_CLOSE );
     }
     syswk->dat->retMode = BOX_END_MODE_MENU;
@@ -4023,6 +4027,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MENU_CLOSE );
 
@@ -4077,6 +4082,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
       return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MENU_CLOSE );
     }
     return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
@@ -4778,6 +4784,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
     PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
     BOX2MAIN_PokeSelectOff( syswk );
     CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_BATTLEBOX_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_BATTLEBOX_MAIN_NAME;
     BOX2UI_PutHandCursor( syswk, BOX2UI_BATTLEBOX_MAIN_NAME );
     return TrayLeftScrollSet( syswk, TRUE, BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN );
 
@@ -4785,6 +4792,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
     PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
     BOX2MAIN_PokeSelectOff( syswk );
     CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_BATTLEBOX_MAIN_NAME );
+		syswk->app->old_cur_pos = BOX2UI_BATTLEBOX_MAIN_NAME;
     BOX2UI_PutHandCursor( syswk, BOX2UI_BATTLEBOX_MAIN_NAME );
     return TrayRightScrollSet( syswk, TRUE, BOX2SEQ_MAINSEQ_BATTLEBOX_MAIN );
 
@@ -4831,6 +4839,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_MENU_CLOSE );
 
@@ -4904,6 +4913,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
       return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_MENU_CLOSE );
     }
     syswk->dat->retMode = BOX_END_MODE_MENU;
@@ -5117,6 +5127,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MENU_CLOSE );
 
@@ -5147,6 +5158,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
       u8  pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
       BOX2UI_CursorMoveVFuncWorkSet( syswk->app, pos, CURSORMOVE_PosGet(syswk->app->cmwk) );
       CURSORMOVE_PosSet( syswk->app->cmwk, pos );
+			syswk->app->old_cur_pos = pos;
       return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MENU_CLOSE );
     }
     return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
@@ -9903,11 +9915,14 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
     return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
 
   case SUB_PROC_MODE_TB_BOX_GET:    // ボックスのポケモンのタッチバーから（掴んでいる時）
+		syswk->app->multi_h = 1;
+		syswk->app->multi_w = 1;
     // 手持ち取得時は他の手持ちアイコンを右フレームイン前の位置に移動
     if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
       BOX2OBJ_PartyPokeIconFrmInSetRight( syswk );
       BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, 1, 1 );
     }else if( syswk->tray == syswk->get_tray ){
+			OS_Printf( "get_pos = %d\n", syswk->get_pos );
       BOX2OBJ_GetPokeIcon( syswk, syswk->get_pos, 1, 1 );
     }else{
       BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
@@ -9939,6 +9954,8 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
     return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 
   case SUB_PROC_MODE_TB_PARTY_GET:  // 手持ちのポケモンのタッチバーから（掴んでいる時）
+		syswk->app->multi_h = 1;
+		syswk->app->multi_w = 1;
     PartyFrmSetRight( syswk );
     if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
       BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
@@ -10001,6 +10018,8 @@ static int RcvStatus_ModeBattleBox( BOX2_SYS_WORK * syswk )
     return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 
   case SUB_PROC_MODE_TB_PARTY_GET:  // 手持ちのポケモンのタッチバーから（掴んでいる時）
+		syswk->app->multi_h = 1;
+		syswk->app->multi_w = 1;
     PartyFrmSetRight( syswk );
     if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
       BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
@@ -10054,6 +10073,8 @@ static int RcvSearch_ModeSeiri( BOX2_SYS_WORK * syswk )
 		}
 
 	case SUB_PROC_MODE_TB_BOX_GET:		// ボックスのポケモンのタッチバーから（掴んでいる時）
+		syswk->app->multi_h = 1;
+		syswk->app->multi_w = 1;
 		// 手持ち取得時は他の手持ちアイコンを右フレームイン前の位置に移動
 		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
 			BOX2OBJ_PartyPokeIconFrmInSetRight( syswk );
@@ -10097,6 +10118,8 @@ static int RcvSearch_ModeSeiri( BOX2_SYS_WORK * syswk )
 		}
 
 	case SUB_PROC_MODE_TB_PARTY_GET:	// 手持ちのポケモンのタッチバーから（掴んでいる時）
+		syswk->app->multi_h = 1;
+		syswk->app->multi_w = 1;
 		PartyFrmSetRight( syswk );
 		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
 			BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
@@ -10153,6 +10176,8 @@ static int RcvSearch_ModeBattleBox( BOX2_SYS_WORK * syswk )
 		}
 
   case SUB_PROC_MODE_TB_PARTY_GET:  // 手持ちのポケモンのタッチバーから（掴んでいる時）
+		syswk->app->multi_h = 1;
+		syswk->app->multi_w = 1;
     PartyFrmSetRight( syswk );
     if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
       BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );

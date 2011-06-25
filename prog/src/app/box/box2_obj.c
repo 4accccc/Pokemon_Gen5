@@ -2025,8 +2025,15 @@ void BOX2OBJ_MovePokeIconHand( BOX2_SYS_WORK * syswk )
 // ポケモンアイコンのパレット再設定
 void BOX2OBJ_PokeIconPaletteReset( BOX2_SYS_WORK * syswk, u32 tray, u32 pos )
 {
-	POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, tray, pos );
-	BOX2OBJ_ChgPltt( syswk->app, syswk->app->pokeicon_id[pos], PokeIconPalOfsGet(syswk,ppp) );
+	POKEMON_PASO_PARAM * ppp;
+	u32	pal;
+
+	ppp = BOX2MAIN_PPPGet( syswk, tray, pos );
+	pal = PokeIconPalOfsGet( syswk, ppp );
+	if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+		syswk->app->pokeicon_pal[pos] = pal;
+	}
+	BOX2OBJ_ChgPltt( syswk->app, syswk->app->pokeicon_id[pos], pal );
 }
 
 

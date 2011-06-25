@@ -6030,6 +6030,7 @@ void BOX2MAIN_HandGetPokeSet( BOX2_SYS_WORK * syswk )
 
   BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_CLOSE );
   BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, &x, &y, CLSYS_DEFREND_MAIN );
+	OS_Printf( "x, y = %d, %d\n", x, y );
 
   icon = syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS ];
   BOX2OBJ_SetPos( syswk->app, icon, x, y+4, CLSYS_DEFREND_MAIN );
