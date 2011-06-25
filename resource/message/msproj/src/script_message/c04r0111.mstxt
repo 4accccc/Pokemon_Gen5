@@ -172,13 +172,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう　ございます！▼
-７れんしょうを　たっせいし
-みごと　サブウェイマスターを▽
-たおしましたので　バトルポイントを▽
+７れんしょうを　たっせいし　みごと
+サブウェイマスターに　かちました！▼
+それを　たたえ　バトルポイントを
 しんてい　いたします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:36:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -187,18 +187,25 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう　ございます！▼
-７連勝を　達成し
-みごと　サブウェイマスターに▽
-勝利しましたので　バトルポイントを▽
+７連勝を　達成し　みごと
+サブウェイマスターに　勝ちました！▼
+それを　称え　バトルポイントを
 進呈いたします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:37:06" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -220,11 +227,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そして　[Name:TrainerName Idx="0" ]さまは
-スーパーシングルトレインに　チャレンジ▽
-する　けんりを　かくとく　しました！▼</Text>
+スーパーシングルトレインに▼
+チャレンジ　する
+けんりを　かくとく　しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:37:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -233,16 +241,25 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そして　[Name:TrainerName Idx="0" ]さまは
-スーパーシングルトレインに　チャレンジ▽
-する　権利を　獲得しました！▼</Text>
+スーパーシングルトレインに▼
+チャレンジ　する
+権利を　獲得しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝主人公名
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:38:40" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -264,11 +281,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そして　[Name:TrainerName Idx="0" ]さまは
-スーパーダブルトレインに　チャレンジ▽
-する　けんりを　かくとく　しました！▼</Text>
+スーパーダブルトレインに▼
+チャレンジ　する
+けんりを　かくとく　しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -277,16 +295,25 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そして　[Name:TrainerName Idx="0" ]さまは
-スーパーダブルトレインに　チャレンジ▽
-する　権利を　獲得しました！▼</Text>
+スーパーダブルトレインに▼
+チャレンジ　する
+権利を　獲得しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:38:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝主人公名
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:38:42" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -308,11 +335,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そして　[Name:TrainerName Idx="0" ]さまは
-スーパーマルチトレインに　チャレンジ▽
-する　けんりを　かくとく　しました！▼</Text>
+スーパーマルチトレインに▼
+チャレンジ　する
+けんりを　かくとく　しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:37:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -321,16 +349,25 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そして　[Name:TrainerName Idx="0" ]さまは
-スーパーマルチトレインに　チャレンジ▽
-する　権利を　獲得しました！▼</Text>
+スーパーマルチトレインに▼
+チャレンジ　する
+権利を　獲得しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝主人公名
+※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:38:42" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -397,11 +434,11 @@
 			Language="JPN">
 			<Text>それでは　ごゆっくり　どうぞ▼
 つづけて　チャレンジしたい　ばあいや
-いったん　ライモンシティに　もどる▽
-ばあいは　おこえを　かけてください</Text>
+ライモンシティに　もどる　ばあいは▽
+おこえを　かけてください</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -411,16 +448,23 @@
 			Language="JPN_KANJI">
 			<Text>それでは　ごゆっくり　どうぞ▼
 続けて　チャレンジしたい　場合や
-いったん　ライモンシティに　もどる▽
-場合は　お声を　かけてください</Text>
+ライモンシティに　もどる　場合は▽
+お声を　かけてください</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:39:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:39:21" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -3306,11 +3350,11 @@ no.051
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたは　どこから　きたんだい？
-そして　どこまで　いくのかな？</Text>
+			<Text>あなたは　どこから　来たんだい？
+そして　どこまで　行くのかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:40:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3536,11 +3580,11 @@ no.051
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>１００連勝　突破ですか……▼
-それが　すべて　実力　でしたら
-チャンピオンにも　匹敵　しますね</Text>
+それが　すべて　実力でしたら
+チャンピオンにも　匹敵しますね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:40:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3754,12 +3798,12 @@ no.051
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレみたいな　エリートの　姿が
-チラホラ　見えてきたな……▼
+チラホラ　みえてきたな……▼
 ここから　先の　勝負は
 簡単には　いきそうにないな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4001,11 +4045,11 @@ no.051
 			<Text>あら　よわそうな　トレーナー……▼
 アナタと　しょうぶ　したところで
 たいくつして　しまいそう……▼
-これを　あげるから　すこしは
-つよくなりなさいな▼</Text>
+これを　あげるから
+すこしは　つよくなりなさいな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:40:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4016,11 +4060,11 @@ no.051
 			<Text>あら　弱そうな　トレーナー……▼
 アナタと　勝負　したところで
 退屈して　しまいそう……▼
-これを　あげるから　少しは
-強くなりなさいな▼</Text>
+これを　あげるから
+少しは　強くなりなさいな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4134,12 +4178,12 @@ no.050
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホームから　人が　へってきた……
+			<Text>ホームから　人が　減ってきた……
 それだけ　バトルサブウェイを▽
 勝ち抜くのは　厳しいって　ことか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4526,12 +4570,12 @@ no.207
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たかが　ポケモン　されど　ポケモン
-ポケモンしょうぶの　せかいは▽
+			<Text>たかが　ポケモン　されど　ポケモン▼
+ポケモンしょうぶの　せかいは
 マジで　とことん　ディープだよな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:41:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4539,12 +4583,12 @@ no.207
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たかが　ポケモン　されど　ポケモン
-ポケモン勝負の　世界は▽
+			<Text>たかが　ポケモン　されど　ポケモン▼
+ポケモン勝負の　世界は
 マジで　とことん　ディープだよな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:41:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4910,12 +4954,12 @@ no.051
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうだい？　トレーナーさんよ
-そろそろ　しんどくなって▽
+			<Text>どうだい？　トレーナーさんよ▼
+そろそろ　しんどくなって
 きたんじゃねーのか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:41:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4923,12 +4967,12 @@ no.051
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうだい？　トレーナーさんよ
-そろそろ　しんどくなって▽
+			<Text>どうだい？　トレーナーさんよ▼
+そろそろ　しんどくなって
 きたんじゃねーのか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:42:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5968,12 +6012,11 @@ no.051
 			Language="JPN">
 			<Comment>♂
 スーパー　105連勝
-
-no.206
-サンのみをくれる人</Comment>
+・no.206
+　サンのみをくれる人</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:42:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6031,14 +6074,12 @@ no.206
 			Language="JPN">
 			<Comment>♂
 スーパー　105連勝
-
-no.206
-サンのみをくれる人
-
-アイテム入手後</Comment>
+・no.206
+　サンのみをくれる人
+・アイテム入手後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:42:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
