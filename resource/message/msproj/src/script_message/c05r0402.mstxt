@@ -7,12 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　きみの　おかあさんって
-もしかして　むかし▽
-ポケモンセンターで　うけつけ　だった？▽
+もしかして　ポケモンセンターで▽
+うけつけを　やっていなかった？▼
 なんか　すごい　そっくりだけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:49:09" />
+				Time="2011-06-25T08:21:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ？　きみの　おかあさんって
-もしかして　むかし▽
-ポケモンセンターで　うけつけ　だった？▽
+			<Text>あれ？　きみの　お母さんって
+もしかして　ポケモンセンターで▽
+受付を　やっていなかった？▼
 なんか　すごい　そっくりだけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:49:13" />
+				Time="2011-06-25T08:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -35,11 +35,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・swanで追加
+・swanで新規作成
 ・３行目1９文字</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:51:32" />
+				Time="2011-06-25T08:21:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -57,7 +57,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c05r0402_poke_01"
+		Label="msg_c05r0402_poke39_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -86,18 +86,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・あわせて鳴き声再生</Comment>
+・あわせて鳴き声再生
+・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:49:53" />
+				Time="2011-06-25T08:21:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>POKEMON
-ズルッグ</Text>
+			<Text>POKE39
+ポケモン・ズルッグ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:52:33" />
+				Time="2011-06-25T08:24:55" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -112,12 +113,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かわれば　まえのままが　いいと　いい
+			<Text>かわれば　まえのままが　よくて
 かわらなければ　たいくつ　という……▽
 そんな　ワガママな　わたし　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:57:37" />
+				Time="2011-06-25T08:22:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -125,12 +126,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かわれば　まえのままが　いいと　いい
-かわらなければ　たいくつ　という……▽
+			<Text>変われば　前のままが　よくて
+変わらなければ　退屈という……▽
 そんな　ワガママな　わたし　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:57:40" />
+				Time="2011-06-25T08:22:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -139,10 +140,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・swanで追加</Comment>
+・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:57:44" />
+				Time="2011-06-25T08:21:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -169,11 +170,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>となりの　へやの　ポケモン……
+			<Text>隣の　部屋の　ポケモン……
 なんだか　いかく　してくるよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:56:13" />
+				Time="2011-06-25T08:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -182,10 +183,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・swanで追加</Comment>
+・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T03:54:02" />
+				Time="2011-06-25T08:21:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -33,10 +33,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・下記動作モデルと一歩あけて配置</Comment>
+・下記動作モデルと一歩あけて配置
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:49:20" />
+				Time="2011-06-25T08:18:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -83,10 +84,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・上記動作モデルと一歩あけて配置</Comment>
+・上記動作モデルと一歩あけて配置
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:49:31" />
+				Time="2011-06-25T08:18:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97,7 +99,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c05r0202_lady_01">
+		Label="msg_c05r0202_lady_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>がいこくに　あそびに　きて
@@ -128,10 +131,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:53:03" />
+				Time="2011-06-25T08:18:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
