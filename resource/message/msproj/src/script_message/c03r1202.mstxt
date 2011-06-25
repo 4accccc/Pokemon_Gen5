@@ -1063,4 +1063,47 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c03r1202_poke31_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グォフッ　グォフッ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T04:57:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T04:52:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グォフッ　グォフッ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T04:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T04:52:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T04:58:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE31
+ポケモン・ハーデリア</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T04:57:10" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
