@@ -154,4 +154,107 @@
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c03r1001_man2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　つかまえようと　したとき
+ボールが　１かいだけ　しか▽
+ゆれなかったことが　あるんです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:43:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　捕まえようと　したとき
+ボールが　１回だけ　しか▽
+揺れなかったことが　あるんです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:52:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:52:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・下記の動作モデルと隣接
+・どちらに話しかけてもこのメッセージから
+　続けてtrainerw_01
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:42:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:40:19" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1001_trainerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ！　たしかに　ときどき　そんな
+げんしょうが　はっせい　するわね！▼
+ほかくクリティカルと　あたしは
+かってに　よんでいるけれどね▼
+ポケモンを　たくさん　つかまえるほど
+はっせい　しやすくなる　げんしょうね▼
+ボールが　１かいしか　ゆれないときは
+いつもより　つかまえやすい　みたい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:54:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:48:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ！　確かに　ときどき　そんな
+現象が　発生するわね！▼
+ほかくクリティカルと　あたしは
+勝手に　呼んでいるけれどね▼
+ポケモンを　たくさん　捕まえるほど
+発生しやすくなる　現象ね！▼
+ボールが　１回しか　ゆれないときは
+いつもより　捕まえやすい　みたい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:53:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:52:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:52:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:40:14" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

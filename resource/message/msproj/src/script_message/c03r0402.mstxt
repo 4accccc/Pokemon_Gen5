@@ -614,10 +614,11 @@
 			Language="JPN">
 			<Comment>♂
 ・クリア後
-　はい/いいえの確認</Comment>
+　はい　→03_03
+　いいえ→03_05</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:12:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -831,10 +832,12 @@
 			<Text>おれ　カビゴン▼
 じゃなくて　プランナー！▼
 いきなりだけど　どうぐの
-たべのこし　って　だいじだよね</Text>
+たべのこし　って　だいじだよね▼
+しょうぶで　かなり　やくだつけど
+じっさいに　たたかって　たしかめる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:11:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -845,10 +848,12 @@
 			<Text>おれ　カビゴン▼
 じゃなくて　プランナー！▼
 いきなりだけど　道具の
-たべのこし　って　大事だよね</Text>
+たべのこし　って　大事だよね▼
+勝負で　かなり　役立つけど
+実際に　戦って　確かめる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -857,10 +862,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア前</Comment>
+・１日１回、ポケモン勝負できる
+・ポケモン勝負前
+・はい/いいえの選択肢表示
+　はい　→04_02
+　いいえ→04_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:21:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -882,11 +891,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おっ　つよくなったね！　わかるよ
-ぼくと　ポケモンしょうぶ　してみる？</Text>
+			<Text>あの　くみあわせが　きまれば
+おもしろい　はず　だけど……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:17:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -894,11 +903,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっ　強くなったね！　わかるよ
-ぼくと　ポケモン勝負　してみる？</Text>
+			<Text>じゃあ　はじめるよー！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:12:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -907,11 +915,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア後
-　はい/いいえの確認</Comment>
+・ポケモン勝負前＋はい選択
+・メッセージ表示後、戦闘に
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:21:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -933,10 +942,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃあ　はじめるよー！▼</Text>
+			<Text>くぅー！　いい　ポケモンだね！▼
+ともに　あるいた　ほすうが
+つよさに　つながっているような……▼
+また　あした
+しょうぶが　できると　いいなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:20:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -944,10 +957,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　はじめるよー！▼</Text>
+			<Text>くぅー！　いい　ポケモンだね！▼
+共に　歩いた　歩数だけ
+強さに　つながっているような……▼
+また　明日
+勝負が　できると　いいなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -956,11 +973,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア後＋はい選択
-・メッセージ表示後、戦闘に</Comment>
+・ポケモン勝負前＋戦闘後
+・日塚が変わるまで繰り返し
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:21:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -982,13 +1000,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろいろ　かんがえてるよね！▼
-まけたけれど　べんきょうになったし
-なにより　おもしろかったよ！▽
-また　あした　おいでよ</Text>
+			<Text>いいえ！？　そっかあ
+かわいい　ポケモン　なのに</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -996,13 +1012,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いろいろ　考えてるよね！▼
-負けたけれど　勉強になったし
-なにより　おもしろかったよ！▽
-また　明日　おいでよ</Text>
+			<Text>いいえ！？　そっかあ
+かわいい　ポケモン　なのに</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:19:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1011,11 +1025,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア後＋戦闘後
-・日塚が変わるまで繰り返し</Comment>
+・ポケモン勝負前＋いいえ選択
+・再度会話は03_02から
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:21:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1033,60 +1048,47 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r0402_04_05"
+		Label="msg_c03r0402_man2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいえ　かー▼
-ポケモンの　とくせいとか
-もたせる　どうぐの　くみあわせとか▽
-いろいろ　かんがえて▽
-そだててたのに　ざんねんだなー</Text>
+			<Text>サウンドデザイナー　ですけど
+みんな　どの　きょくが　いいんだろ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:27:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:27:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいえ　かー▼
-ポケモンの　特性とか
-持たせる　道具の　組み合わせとか▽
-いろいろ　考えて▽
-育ててたのに　残念だなー</Text>
+			<Text>サウンドデザイナー　ですけど
+みんな　どの　きょくが　いいんだろ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:27:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:27:45" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クリア後＋いいえ選択
-・再度会話は03_02から</Comment>
+※swanで新規作成
+※仮メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:27:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MIDDLEMAN2</Text>
+			<Text>MAN2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:23:12" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1124,11 +1126,10 @@
 			Language="JPN">
 			<Comment>♂
 ・クリア前
-
 ※swanでメッセージ調整など</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T05:21:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1146,7 +1147,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1209,7 +1210,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1270,7 +1271,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
