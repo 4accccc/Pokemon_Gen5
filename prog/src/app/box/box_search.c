@@ -2449,6 +2449,15 @@ static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, SUBSEQ_SELECTPOKEMON1 );
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
+			if( FRAMELIST_GetScrollCount(wk->frame_list_work) == 0 ){
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
+			}
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			wk->topword = 0;
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON1EXIT );
@@ -2549,6 +2558,13 @@ static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			wk->nextword = -1;
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON2EXIT );
@@ -2683,6 +2699,13 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON3EXIT );
 		}else{
@@ -2783,6 +2806,17 @@ static int Subseq_SelectSeikaku(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, SUBSEQ_SELECTSEIKAKU );
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_SEIKAKU, 0 );
+			if( FRAMELIST_GetScrollCount(wk->frame_list_work) == 0 ){
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
+			}else{
+				GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+			}
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEIKAKUEXIT );
 		}else{
@@ -2876,6 +2910,15 @@ static int Subseq_SelectTokusei1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		return SetFrameListScroll( wk, BOXSEARCH_OBJID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, SUBSEQ_SELECTTOKUSEI1 );
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_TOKUSEI, 0 );
+			if( FRAMELIST_GetScrollCount(wk->frame_list_work) == 0 ){
+				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
+			}
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			wk->topword = 0;
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTTOKUSEI1EXIT );
@@ -2943,6 +2986,12 @@ static int Subseq_SelectTokusei2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_TOKUSEI, 0 );
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			wk->nextword = -1;
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTTOKUSEI2EXIT );
@@ -3045,6 +3094,13 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_TOKUSEI, 0 );
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
+			PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTTOKUSEI3EXIT );
 		}else{
@@ -3109,6 +3165,13 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_SEX, 0 );
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
+			PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
 		}else{
@@ -3166,6 +3229,13 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			_set_search_data( wk, SEARCH_DATAID_ITEM, 0 );
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
+			PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTITEMHAVEEXIT );
 		}else{
@@ -3240,6 +3310,17 @@ static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
 		break;
 
 	case FRAMELIST_RET_NONE:
+		// リセット
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			u32	i;
+			for( i=0; i<6; i++ ){
+				_set_search_data_mark( wk, i, 0 );
+				GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0+i], FALSE );
+			}
+			SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
+			SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
+			break;
+		}
 		if( CheckCancelButton( wk ) == TRUE ){
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTSEXEXIT );
 		}else{
@@ -4096,7 +4177,7 @@ static void SetPokeLibMax( BOX_SEARCH_MAIN_WORK * wk )
 			buf   = &wk->pokelibMax[ head2pokename[i] + j ];
 			*buf  = 0;
       for( k=0; k<max; k++ ){
-        if( ZUKANSAVE_GetPokeSeeFlag(wk->zukan,dat[start+k]) ){
+        if( ZUKANSAVE_GetPokeGetFlag(wk->zukan,dat[start+k]) ){
 					*buf += 1;
         }
       }
@@ -4157,10 +4238,14 @@ static void PrintPokemonInfo( BOX_SEARCH_MAIN_WORK * wk, u32 id )
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmp_win[BOXSEARCH_BMPID_TEXT]), 0 );
 
-	strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_03_01 );
+	if( type1 != type2 ){
+		strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_03_01 );
+		WORDSET_RegisterPokeTypeName( wk->wordset, 2, type2 );
+	}else{
+		strbuf = GFL_MSG_CreateString( wk->msg, mes_box_search_text_03_02 );
+	}
 	WORDSET_RegisterPokeMonsNameNo( wk->wordset, 0, id );
 	WORDSET_RegisterPokeTypeName( wk->wordset, 1, type1 );
-	WORDSET_RegisterPokeTypeName( wk->wordset, 2, type2 );
 	WORDSET_ExpandStr( wk->wordset, wk->expand_buf, strbuf );
 	PRINT_UTIL_PrintColor(
 		&wk->print_util[BOXSEARCH_BMPID_TEXT], wk->print_que, 
@@ -4263,7 +4348,7 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
       int start = sort_pokename_start_index[head2pokename[wk->topword-1]+wk->nextword];
       sort_data = ZukanSortDataGet( wk->heapID, &size );
       for( i=0; i<get_sort_pokename_num(wk->topword-1,wk->nextword); i++ ){
-        if(ZUKANSAVE_GetPokeSeeFlag( wk->zukan, sort_data[start+i])){
+        if(ZUKANSAVE_GetPokeGetFlag( wk->zukan, sort_data[start+i])){
           FRAMELIST_AddItem( wk->frame_list_work, 0, sort_data[start+i] );
         }
       }
