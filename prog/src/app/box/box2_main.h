@@ -429,6 +429,7 @@ typedef struct {
 
   u8  multi_w,multi_h;  // 複数選択しているときの横・縦
   MULTISELECT_OUTLINE_WORK multiselect_outline; // 複数選択範囲描画用ワーク
+	BOOL	multi_no_drag;	// 複数選択のドラッグ無効 = TRUE
 }BOX2_APP_WORK;
 
 // ボックス画面システムワーク
@@ -1755,6 +1756,7 @@ extern int BOX2MAIN_VFuncTrayIconScrollDownJump( BOX2_SYS_WORK * syswk );
 //--------------------------------------------------------------------------------------------
 extern int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk );
 
+extern void BOX2MAIN_InitMultiSelectTable( BOX2_SYS_WORK * syswk );
 extern void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk );
 extern BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos );
 extern  int BOX2MAIN_GetNowSelectMultiPokeNum( BOX2_APP_WORK * app );

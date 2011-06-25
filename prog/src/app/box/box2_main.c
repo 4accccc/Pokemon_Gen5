@@ -7670,13 +7670,17 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
  * @param syswk
  */
 //=============================================================================================
+void BOX2MAIN_InitMultiSelectTable( BOX2_SYS_WORK * syswk )
+{
+	GFL_STD_MemClear( syswk->app->multi_pokemon_id, BOX2OBJ_POKEICON_TRAY_MAX );
+}
 void BOX2MAIN_StockMultiSelectTable( BOX2_SYS_WORK * syswk )
 {
 	int	i, j;
 	u32	sx;
 	u32	prm;
 
-	GFL_STD_MemClear( syswk->app->multi_pokemon_id, BOX2OBJ_POKEICON_TRAY_MAX );
+	BOX2MAIN_InitMultiSelectTable( syswk );
 
 	sx = BOX2MAIN_GetMultiWidth( syswk, syswk->get_pos );
 
