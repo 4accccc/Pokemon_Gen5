@@ -199,7 +199,7 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
     0, CLSYS_DRAW_MAIN,
   },
   { // トレイ名背景
-    { 128, -40, BOX2OBJ_ANM_TRAY_NAME, 5, 1 },
+    { 128, -40, BOX2OBJ_ANM_TRAY_NAME, 40, 0 },
     BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
     0, CLSYS_DRAW_MAIN,
   },
@@ -347,7 +347,7 @@ static const BOX_CLWK_DATA ClactParamTbl[] =
     0, CLSYS_DRAW_MAIN,
   },
 	{ // 複数選択簡易表示
-		{ 0, 0, BOX2OBJ_ANM_MULTI_TRAY, 1, 0 },
+		{ 0, 0, BOX2OBJ_ANM_MULTI_TRAY, 50, 0 },
 		BOX2MAIN_CHRRES_BOXOBJ, BOX2MAIN_PALRES_BOXOBJ, BOX2MAIN_CELRES_BOXOBJ,
 		0, CLSYS_DRAW_MAIN,
 	},
@@ -3537,8 +3537,8 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
   finit.y = 0;
   finit.pltt_index = appwk->palRes[BOX2MAIN_PALRES_BOXOBJ];
   finit.pal_offset = 0;   // pltt_indexのパレット内でのオフセット
-  finit.soft_pri = 4;     // ソフトプライオリティ
-  finit.bg_pri = 1;       // BGプライオリティ
+  finit.soft_pri = 30;     // ソフトプライオリティ
+  finit.bg_pri = 0;       // BGプライオリティ
   finit.setSerface = CLWK_SETSF_NONE;
   finit.draw_type  = CLSYS_DRAW_MAIN;
 
@@ -3573,7 +3573,7 @@ void BOX2OBJ_FontOamInit( BOX2_APP_WORK * appwk )
 	finit.bmp = fobj->bmp;
 	finit.x = BOX2OBJ_MULTI_NUM_PX;
 	finit.y = BOX2OBJ_MULTI_NUM_PY;
-  finit.soft_pri = 0;     // ソフトプライオリティ
+  finit.soft_pri = 45;     // ソフトプライオリティ
 	finit.bg_pri = 0;       // BGプライオリティ
 	fobj->oam = BmpOam_ActorAdd( appwk->fntoam, &finit );
 	BOX2OBJ_FontOamVanish( appwk, BOX2MAIN_FNTOAM_MULTI_NUM, FALSE );
