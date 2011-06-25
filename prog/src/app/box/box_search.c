@@ -1673,7 +1673,7 @@ static int Subseq_Main(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		return SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_ON, BOXSEARCH_ANM_SEARCHON_DECIDE, SUBSEQ_SEARCHONEND );
 	}
 
-	result = CURSORMOVE_Main( wk->cmwk );
+	result = CURSORMOVE_MainCont( wk->cmwk );
 
 	switch( result ){
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
