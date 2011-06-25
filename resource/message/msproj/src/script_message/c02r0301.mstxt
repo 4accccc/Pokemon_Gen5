@@ -648,11 +648,10 @@
 			<Comment>♀：なつき度チェック
 ・なつき度をチェックして対応したメッセージに続く
 ・0＝先頭のポケモン（タマゴ/ひんし除く）
-
 ※swanで内容変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:04:34" />
+				Time="2011-06-25T07:07:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -707,11 +706,10 @@
 			Language="JPN">
 			<Comment>♀：なつき度チェック
 ・なつき度120～255
-
 ※swanで内容変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:04:38" />
+				Time="2011-06-25T07:07:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -766,11 +764,10 @@
 			Language="JPN">
 			<Comment>♀：なつき度チェック
 ・なつき度70～119
-
 ※swanで内容変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:04:40" />
+				Time="2011-06-25T07:07:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -825,11 +822,10 @@
 			Language="JPN">
 			<Comment>♀：なつき度チェック
 ・なつき度0～69
-
 ※swanで内容変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:04:41" />
+				Time="2011-06-25T07:08:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
