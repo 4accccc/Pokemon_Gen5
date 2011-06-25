@@ -1772,12 +1772,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じぶんが　まんぞく　できるなら
-だれも　しらないような▽
-いなかの　みせでも　いいじゃないか</Text>
+			<Text>ゆうめいで　いいものも　あれば
+そうでもない　ものも　あるだろう▼
+だいじなのは　じぶんが
+それを　すき！　ってことじゃね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:10:51" />
+				Time="2011-06-25T07:17:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1785,12 +1786,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分が　満足できるなら
-だれも　知らないような▽
-田舎の　店でも　いいじゃないか</Text>
+			<Text>有名で　いいものも　あれば
+そうでもない　ものも　あるだろう▼
+大事なのは　自分が
+それを　好き！　ってことじゃね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:10:56" />
+				Time="2011-06-25T07:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1799,10 +1801,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:20:00" />
+				Time="2011-06-25T07:24:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1825,12 +1827,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルボックスって　しってる？▼
-ポケモンセンターの　パソコンで
-つかえる　べんりな　きのう　らしいよ</Text>
+			<Text>たいじゅうが　ふえていくのに
+おかわりを　とめることが　できない……▼
+だれだ？　ぼくに　ポケモンの　わざ
+アンコールを　つかったのは！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1838,12 +1841,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトルボックスって　知ってる？▼
-ポケモンセンターの　パソコンで
-使える　便利な　機能らしいよ</Text>
+			<Text>体重が　増えていくのに
+おかわりを　とめることが　できない……▼
+だれだ？　ぼくに　ポケモンの　技
+アンコールを　使ったのは！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-25T07:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1852,10 +1856,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:08:12" />
+				Time="2011-06-25T07:24:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1878,19 +1882,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンヨウシティ　ジムリーダー
-みつごの　コンビネーション▼
-くさポケモンつかいの　デントが
-いい　ちゃばを　えらぶ▼
-みずポケモンつかいの　コーンが
-さいこうの　みずを　よういする▼
-ほのおポケモンつかいの　ポッドが
-ベストの　ひかげんで　おゆをそそぐ▼
-なるほど
-さいこうの　ティーが　できるわけだよ</Text>
+			<Text>シッポウの　カフェソーコも
+サンヨウの　レストランも　すきさ▼
+それぞれ　ことなる
+おもむきが　あるからね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:11:10" />
+				Time="2011-06-25T07:22:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1898,19 +1896,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンヨウシティ　ジムリーダー
-三つ子の　コンビネーション▼
-くさポケモン使いの　デントが
-いい　茶葉を　選ぶ▼
-みずポケモン使いの　コーンが
-最高の　水を　用意する▼
-ほのおポケモン使いの　ポッドが
-ベストの　火加減で　お湯を注ぐ▼
-なるほど
-最高の　ティーが　できるわけだよ</Text>
+			<Text>シッポウの　カフェソーコも
+サンヨウの　レストランも　好きさ▼
+それぞれ　異なる　趣が　あるからね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:11:19" />
+				Time="2011-06-25T07:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1919,10 +1910,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T06:08:17" />
+				Time="2011-06-25T07:24:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
