@@ -608,6 +608,13 @@
 #define FV_D06R0201_SWBELL_01              690 /* 0x02b2 電気石の洞穴：ベル */
 #define FV_R08_FISING_01                   691 /* 0x02b3 8番道路：ツリーズ */
 #define FV_H04R0301_FISING_01              692 /* 0x02b4 ビレッジブリッジ：ツリーズ */
+#define FV_C08_SWCHAMPION_01               693 /* 0x02b5 ソウリュウシティ：アイリス */
+#define FV_C08_SWLEADER7_01                694 /* 0x02b6 ソウリュウシティ：シャガ */
+#define FV_C08_SWPLAZMA_01                 695 /* 0x02b7 ソウリュウシティ：プラズマ団とヴィオ（SAGE7） */
+#define FV_C08_NINJA_01                    696 /* 0x02b8 ソウリュウシティ：ダークトリニティ（戦闘するやつ） */
+#define FV_C08_NINJA_02                    697 /* 0x02b9 ソウリュウシティ：ダークトリニティ（戦闘しないやつ） */
+#define FV_C08GYM0101_SWLEADER7_01         698 /* 0x02ba ソウリュウジム：シャガ */
+#define FV_C08R0101_SWLEADER7_01           699 /* 0x02bb ソウリュウ民家1：シャガ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

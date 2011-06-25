@@ -204,8 +204,13 @@
 #define WK_SCENE_C08GYM_TURN_BTN_02      16592 /* 0x40d0 ソウリュウジム：2階用イベント用（POSイベントの起動制御に使用） */
 #define WK_SCENE_C08GYM_TURN_BTN_03      16593 /* 0x40d1 ソウリュウジム：3階用イベント用（POSイベントの起動制御に使用） */
 #define WK_SCENE_D06R0101_SWBELL_01      16594 /* 0x40d2 電気石の洞穴：ベルイベントPOS制御用ワーク */
-#define WK_SCENE_D06R0101_BOSS_01        16595 /* 0x40d3 電気石の洞穴：NイベントPOS */
-#define WK_SCENE_H04_STOP_01             16596 /* 0x40d4 ビレッジブリッジ：ストッパー制御POS */
+#define WK_SCENE_D06R0101_BOSS_01        16595 /* 0x40d3 電気石の洞穴：NイベントPOS制御用ワーク */
+#define WK_SCENE_H04_STOP_01             16596 /* 0x40d4 ビレッジブリッジ：ストッパーPOS制御用ワーク */
+#define WK_SCENE_C08_SWCHAMPION          16597 /* 0x40d5 ソウリュウシティ：アイリスイベントPOS制御用ワーク */
+#define WK_SCENE_C08_LEADER7             16598 /* 0x40d6 ソウリュウシティ：シャガ誘導イベントPOS制御用ワーク */
+#define WK_SCENE_C08_SWPLAZMA            16599 /* 0x40d7 ソウリュウシティ：プラズマ団戦制御用ワーク */
+#define WK_SCENE_C08_NINJA               16600 /* 0x40d8 ソウリュウシティ：ダークトリニティPOS制御用ワーク */
+#define WK_SCENE_C08R0101                16601 /* 0x40d9 ソウリュウシティ民家：シャガ家SCENE_CHANGE制御用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
