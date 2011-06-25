@@ -1516,11 +1516,13 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_MAIN_MOVE:      // 43: 移動モード
     syswk->get_start_mode = 0;
 		syswk->mv_cnv_mode    = 1;
+		PMSND_PlaySE( SE_BOX2_DECIDE );
     return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_INIT );
 
   case BOX2UI_ARRANGE_MAIN_MULTI:     // 44: 複数選択モード
     syswk->get_start_mode = 0;
 		syswk->mv_cnv_mode    = 2;
+		PMSND_PlaySE( SE_BOX2_DECIDE );
     return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_INIT );
 
   case BOX2UI_ARRANGE_MAIN_SEARCH: // 45: 絞り込み呼び出し
@@ -1742,6 +1744,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
     if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
       BOX2MAIN_ChgCursorButton( syswk );
       syswk->mv_cnv_mode = 2;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_EXIT );
     }
   }
@@ -1879,6 +1882,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_PGT_NORMAL:   // 42: 通常モード
     if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 0;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_EXIT );
     }
     break;
@@ -1889,6 +1893,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_PGT_MULTI:		// 44: 複数選択モード
     if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 2;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_EXIT );
     }
     break;
@@ -2445,6 +2450,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
       BOX2MAIN_ChgCursorButton( syswk );
       syswk->mv_cnv_mode = 0;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT );
     }
   }
@@ -2643,6 +2649,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_PGT_NORMAL:   // 42: 通常モード
 		if( syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 0;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT );
     }
     break;
@@ -2650,6 +2657,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_PGT_MOVE:   // 43: 移動モード
 		if( syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 1;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_MULTI_POKEGET_EXIT );
     }
     break;
@@ -3288,6 +3296,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		if( syswk->poke_get_key == 0 ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_EXIT );
 		}
 	}
@@ -3549,6 +3558,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PTGT_NORMAL:	// 42: 通常モードボタン
 		if( syswk->poke_get_key == 0 ){
 			syswk->mv_cnv_mode = 0;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_EXIT );
 		}
 		break;
@@ -3556,6 +3566,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PTGT_MOVE:		// 43: 移動モードボタン
 		if( syswk->poke_get_key == 0 ){
 			syswk->mv_cnv_mode = 1;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_EXIT );
 		}
 		break;
@@ -4002,11 +4013,13 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
   case BOX2UI_ARRANGE_PARTY_MOVE:       // 16: 移動モード
     syswk->get_start_mode = 1;
 		syswk->mv_cnv_mode    = 1;
-    return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
+		PMSND_PlaySE( SE_BOX2_DECIDE );
+		return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 
   case BOX2UI_ARRANGE_PARTY_MULTI:      // 17: 複数選択モード
     syswk->get_start_mode = 1;
 		syswk->mv_cnv_mode    = 2;
+		PMSND_PlaySE( SE_BOX2_DECIDE );
     return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_INIT );
 
 	case BOX2UI_ARRANGE_PARTY_SEARCH:			// 18: 絞り込みボタン
@@ -4291,6 +4304,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_ChgCursorButton( syswk );
       syswk->mv_cnv_mode = 2;
 //			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_INIT );
+			PMSND_PlaySE( SE_BOX2_DECIDE );
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT );
     }
   }
@@ -4434,6 +4448,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PTGT_NORMAL:	// 42: 通常モードボタン
 		if( syswk->poke_get_key == 0 ){
 			syswk->mv_cnv_mode = 0;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT );
 		}
 		break;
@@ -4445,6 +4460,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PTGT_MULTI:		// 44: 複数選択モードボタン
 		if( syswk->poke_get_key == 0 ){
 			syswk->mv_cnv_mode = 2;
+			PMSND_PlaySE( SE_BOX2_DECIDE );
 			return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT );
 		}
 		break;
