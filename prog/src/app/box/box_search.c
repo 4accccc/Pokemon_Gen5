@@ -2061,7 +2061,7 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON3EXIT );
 		}else{
 			int	ret = HitCheckListBox( wk );
-			if( ret >= 0 && ret <= 6 ){
+			if( ret >= 0 && ret <= 6 && ret < wk->flist_pos_max ){
 				_set_search_data(
 					wk, SEARCH_DATAID_POKEMON,
 					FRAMELIST_GetItemParam( wk->frame_list_work, ret+FRAMELIST_GetScrollCount(wk->frame_list_work) ) );
@@ -2471,7 +2471,7 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTTOKUSEI3EXIT );
 		}else{
 			int	ret = HitCheckListBox( wk );
-			if( ret >= 0 && ret <= 6 ){
+			if( ret >= 0 && ret <= 6 && ret < wk->flist_pos_max ){
 				_set_search_data(
 					wk, SEARCH_DATAID_TOKUSEI,
 					FRAMELIST_GetItemParam( wk->frame_list_work, ret+FRAMELIST_GetScrollCount(wk->frame_list_work) ) );
@@ -3649,6 +3649,9 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
   case BOXSEARCH_LISTID_POKEMON:        // 「ポケモン」
 		header.itemMax = GetPokeLibMax( wk, wk->topword-1, wk->nextword );
 		header.cbFunc  = &FrameListPokemonCallback;
+		if( header.itemMax < wk->flist_pos_max ){
+			wk->flist_pos_max = header.itemMax;
+		}
     break;
   case BOXSEARCH_LISTID_SEIKAKU:        // 「せいかく」
     header.cbFunc  = &FrameListSeikakuCallback;
@@ -3665,6 +3668,9 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
   case BOXSEARCH_LISTID_TOKUSEI:        // 「とくせい」
     header.cbFunc  = &FrameListTokuseiCallback;
     header.itemMax = get_sort_tokusei_num(wk->topword-1, wk->nextword);
+		if( header.itemMax < wk->flist_pos_max ){
+			wk->flist_pos_max = header.itemMax;
+		}
     break;
   case BOXSEARCH_LISTID_SEIBETU:        // 「せいべつ」
     header.cbFunc  = &FrameListSexCallback;
