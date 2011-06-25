@@ -1116,17 +1116,14 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
     }
   }
   //道具(1オリジン)(0:道具をみない, 1:道具なし 2:道具あり）
-  if( sp->item != 0 ){
-    sp->item--;
-    if(sp->item==TRUE){
-      if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA ){
-        return FALSE;
-      }
-    }else{
-      if( PPP_Get(ppp,ID_PARA_item,NULL) != ITEM_DUMMY_DATA ){
-        return FALSE;
-      }
+	if( sp->item == 1 ){
+		if( PPP_Get(ppp,ID_PARA_item,NULL) != ITEM_DUMMY_DATA ){
+			return FALSE;
     }
+	}else if( sp->item == 2 ){
+		if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA ){
+			return FALSE;
+		}
   }
   //性格(0オリジン)
   if( sp->seikaku != 0 ){
@@ -1147,10 +1144,16 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
     }
   }
   // マーキング
-  if( sp->mark != 0){
-    if( PPP_Get(ppp,ID_PARA_mark,NULL) != sp->mark ){
-      OS_Printf("search_mark=%d, poke_mark=%d\n", sp->mark, PPP_Get(ppp,ID_PARA_mark,NULL));
-      return FALSE;
+  if( sp->mark != 0 ){
+		u32	mark;
+		u32	i;
+		mark = PPP_Get( ppp, ID_PARA_mark, NULL );
+		for( i=0; i<6; i++ ){
+			if( sp->mark & (1<<i) ){
+				if( ( mark & (1<<i) ) == 0 ){
+					return FALSE;
+				}
+			}
     }
   }
 
