@@ -716,6 +716,8 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/white2702_00_00.nsbmd \
 	$(DIR_TEMP)/white2710_00_00.nsbmd \
 	$(DIR_TEMP)/white2710_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun2904_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun2904_01_00.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \

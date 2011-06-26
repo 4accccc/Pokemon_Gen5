@@ -349,3 +349,4 @@
 "DUN2711.bin"
 "white2702.bin"
 "white2710.bin"
+"DUN2904.bin"
