@@ -1929,6 +1929,9 @@ d27r1201_def.h: d27r1201.ev
 d27r1301_def.h: d27r1301.ev
 	$(EV_DEF) d27r1301.ev $(SCR_OFFS_ID_H)
 
+d29r0401_def.h: d29r0401.ev
+	$(EV_DEF) d29r0401.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
