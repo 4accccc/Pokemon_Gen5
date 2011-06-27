@@ -303,25 +303,30 @@ EVENT_START   ev_debug_mizuguchi
 			_FLAG_RESET( FV_R04_BIGROCK_01 )
 			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
 		ELSIF $SCWK_TEMP2 == 4 THEN
-      //========================================//
-       //R20
-       $WK_SCENE_R20 = 1
-       $WK_SCENE_C12GYM_OPEN = 2
-      //========================================//
+		  //C08プラズマ団イベント開始
+      $WK_SCENE_C08_LEADER7 = 1
+		    _MAP_CHANGE( ZONE_ID_C08, 405, 145, DIR_DOWN )
 		ELSIF $SCWK_TEMP2 == 5 THEN
-		    //========================================//
-				$WK_SCENE_T04 = 0
-				//========================================//
+      //C08ヴィオ戦前
+		    $WK_SCENE_C08_NINJA = 0
+		    $WK_SCENE_C08_SWPLAZMA = 5
+		    _FLAG_RESET(FV_C08_SWLEADER7_01)
+		    _FLAG_RESET(FV_C08_SWSAGE7_01)
+		    _FLAG_RESET(FV_C08_SWPLAZMA_01)
+		    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
 		ELSIF $SCWK_TEMP2 == 6 THEN
-		    //C12のSCENE_CHANGE起動
-	      $WK_SCENE_C12_WHITE_MEET = 5
-	      
-	      //C12PC0101のベルを非表示
-	      _FLAG_SET( FV_C12PC0101_SWBELL )
-	      
-	      //C12のママと妹を表示
-	      _FLAG_RESET( FV_C12_SWRIVAL_SISTER )
-	      _FLAG_RESET( FV_C12_SWMAMA )
+		   //C08初期化
+       $WK_SCENE_C08_LEADER7 = 0
+       $WK_SCENE_C08_SWPLAZMA = 0
+       $WK_SCENE_C08_NINJA = 0
+       $WK_SCENE_C08R0101 = 0
+       _FLAG_SET(FV_C08_SWLEADER7_01)  //ソウリュウシティ：シャガ
+       _FLAG_SET(FV_C08_SWSAGE7_01) //ソウリュウシティ：ヴィオ（SAGE7）
+       _FLAG_SET(FV_C08_SWPLAZMA_01) //ソウリュウシティ：プラズマ団
+       _FLAG_SET(FV_C08_NINJA_01)  //ソウリュウシティ：ダークトリニティ（戦うやつ）
+       _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
+       _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
+       _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE ) //マップ復帰
 		ELSIF $SCWK_TEMP2 == 7 THEN
 		    $WK_SCENE_MEDAL_EVENT = 4
 		ELSE

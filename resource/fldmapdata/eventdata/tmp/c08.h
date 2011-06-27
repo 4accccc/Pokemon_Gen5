@@ -18,6 +18,18 @@
 #ifndef ZONE_C08_EVC_H
 #define ZONE_C08_EVC_H
 
+#define C08_SWLEADER7_01                   0
+#define C08_SWSAGE7_01                     1
+#define C08_SWPLAZMAM_01                   2
+#define C08_SWPLAZMAM_02                   3
+#define C08_SWPLAZMAW_01                   4
+#define C08_SWPLAZMAM_03                   5
+#define C08_SWPLAZMAM_04                   6
+#define C08_SWPLAZMAW_02                   7
+#define C08_NINJA_01                       8
+#define C08_NINJA_02                       9
+#define C08_NINJA_03                      10
+#define C08_SWCHAMPION_01                 11
 
 #endif //ZONE_C08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

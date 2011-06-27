@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c08r0101.h"
   .include  "c08r0101.h"
   .include  "skill_teach_scr_def.h"
+  .include  "c08.h" //予約スクリプト用
+  .include  "c08_def.h" //予約スクリプト用
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,13 +21,106 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c08r0101_leader8a_01
+_EVENT_DATA    ev_c08r0101_swleader7_01
+_EVENT_DATA    ev_c08r0101_poke42_01
+_EVENT_DATA    ev_scene_c08r0101_legend_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*   C08：シャガ一言メッセージ                                */
+/*   SCENE_CHANGE：ジムクリア後イベント                                */
 /**************************************************************/
-EVENT_START   ev_c08r0101_leader8a_01
+EVENT_START   ev_scene_c08r0101_legend_01
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()
+  _CAMERA_MOVE( 9688,0,970752,622592,0,430080,50 )
+  
+  //アニメ：主人公シャガの前に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 10, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //シャガ：では話そう
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_01 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
+  
+  //シャガWB分岐：２年前のことだ
+	_BALLOONWIN_OBJMSG_WB( msg_c08_swleader7_02w , msg_c08_swleader7_02b , C08R0101_SWLEADER7_01 , POS_DEFAULT)
+	
+  //シャガWB分岐：なぜ分かたれたか
+  _BALLOONWIN_OBJMSG_WB( msg_c08_swleader7_03w , msg_c08_swleader7_03b , C08R0101_SWLEADER7_01 , POS_DEFAULT)
+  
+  //シャガ：実は
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
+  
+  //シャガ：ああ　遺伝子の
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //プレーンギザウィン：どこおおっおっ！
+  _GIZAPLAINWIN_MSG_POS( msg_c08_event_01, POS_DOWN )
+  
+  //【仮】氷が降ってくる効果音
+  _SE_PLAY( SEQ_SE_KOUKA_H )
+  //画面を揺らすデモを入れる
+  //_SHAKE_CAMERA(0,1,3,6,0,0,0,0)
+  _OBJ_ANIME_WAIT()
+  _SE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //シャガ：なにごと　だ？
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //カメラを下に移動
+  _CAMERA_DEF_MOVE (32)
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //アニメ：シャガ退場・主人公退室準備
+  _OBJ_ANIME_AUTO( C08R0101_SWLEADER7_01, 10, 14, FORCE_TYPE_NOT, 8, DIR_LR)
+  _TIME_WAIT(2)
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 12, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+  
+  //シャガ動作モデル非表示
+  _OBJ_DEL(C08R0101_SWLEADER7_01)
+  
+  //アニメ：主人公シャガの前に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 14, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  //C08R0101伝説解説イベント終了
+  $WK_SCENE_C08R0101 = 2
+  //C08R0101シャガ非表示
+  _FLAG_SET( FV_C08R0101_SWLEADER7_01 )
+  //C08プラズマ団襲来イベント開始
+  $WK_SCENE_C08_SWPLAZMA = 1
+  //C08プラズマ団表示
+  _FLAG_RESET( FV_C08_SWPLAZMA_01 )
+  _FLAG_RESET( FV_C08_SWSAGE7_01 )
+  //C08マップ破壊状態に差し替え
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
+  //========================================//
+  
+  //予約スクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_C08_PLAZMA_COMMING_01 )
+  //C08マップチェンジ
+  _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_DOWN )
+
+EVENT_END
+
+/**************************************************************/
+/*   C08R0101：シャガ一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_c08r0101_swleader7_01
 
 	//ゲームクリアしていたらドラゴン技教え
 	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
@@ -37,3 +132,81 @@ EVENT_START   ev_c08r0101_leader8a_01
 	ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*   C08R0101：キバコ一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_c08r0101_poke42_01
+  _EASY_TALK_POKEVOICE( MONSNO_541, msg_c08_poke43_01 )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

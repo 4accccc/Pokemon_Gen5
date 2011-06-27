@@ -24,7 +24,981 @@ _EVENT_DATA    ev_bg_c08_board_02
 _EVENT_DATA    ev_bg_c08_board_03
 _EVENT_DATA    ev_bg_c08_board_04
 _EVENT_DATA    ev_bg_c08_board_05
+_EVENT_DATA    ev_zone_c08
+_EVENT_DATA    ev_init_c08
+_EVENT_DATA    ev_pos_c08_swchampion_01
+_EVENT_DATA    ev_scene_c08_guide_01
+_EVENT_DATA    ev_pos_c08_guide_02
+_EVENT_DATA    ev_pos_c08_guide_03
+_EVENT_DATA    ev_pos_c08_ninja_01
+_EVENT_DATA    ev_c08_swleader7_01
+_EVENT_DATA    ev_c08_swsage7_01
+_EVENT_DATA    ev_c08_swplazmam_01
+_EVENT_DATA    ev_c08_swplazmam_02
+_EVENT_DATA    ev_c08_swplazmam_03
+_EVENT_DATA    ev_c08_swplazmam_04
+_EVENT_DATA    ev_c08_swplazmaw_01
+_EVENT_DATA    ev_c08_swplazmaw_02
+_EVENT_DATA    ev_reserve_c08_plazma_comming_01
+
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c08
+  
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c08
+{
+  
+  DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+
+
+  //シャガイベントごとに配置変更
+  
+  //誘導イベント起動（１）
+  IF $WK_SCENE_C08_LEADER7 == 2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 175, DIR_DOWN )
+  //誘導イベント起動（２）ホワイトver
+  ELSIF $WK_SCENE_C08_LEADER7 == 3 && $LCWK_VERSION == VERSION_W2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, -1, 164, DIR_DOWN )
+  //誘導イベント起動（２）ブラックver
+  ELSIF $WK_SCENE_C08_LEADER7 == 3 && $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 164, DIR_DOWN )
+  //プラズマ団襲来　ホワイトver
+  ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_W2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, -1, 162, DIR_DOWN )
+   //プラズマ団襲来　ブラックver
+  ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, 0, 162, DIR_DOWN )
+  //ヴィオ戦前
+  ELSIF $WK_SCENE_C08_SWPLAZMA != 0 && $WK_SCENE_C08_SWPLAZMA < 6 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 424, 0, 176, DIR_UP )
+  //ダークトリニティイベント起動時（ダークトリニティはゴール地点に配置）
+  ELSIF $WK_SCENE_C08_NINJA == 1 THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 398, 0, 167, DIR_UP )
+    //_MOVE_CODE_CHANGE( C08_SWLEADER7_01, MV_RND_H )
+    _OBJ_POS_CHANGE( C08_NINJA_01, 391, 0, 175, DIR_RIGHT )
+  //クリア前・プラズマ団イベント終了時
+  ELSIF $WK_SCENE_C08_NINJA >= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 167, DIR_DOWN )
+  ENDIF
+}
+INIT_EVENT_END
+
+/**************************************************************/
+/* POS：街到着でアイリス解説                                   */
+/**************************************************************/
+EVENT_START   ev_pos_c08_swchampion_01
+  //ハイリンク通信ブロック処理
+  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  $LCW_POSX -=2 
+  //アニメ：アイリス隣接
+  _OBJ_ANIME_AUTO( C08_SWCHAMPION_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：やっほー！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swchampion_01 , C08_SWCHAMPION_01 , POS_DEFAULT)
+  
+  //アイリス：ひょっとして
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swchampion_02 , C08_SWCHAMPION_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アイリス左を向く
+  _OBJ_ANIME( C08_SWCHAMPION_01, anm_staystep_l)
+  _OBJ_ANIME_WAIT()
+  
+  //アイリス：あっ！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swchampion_03 , C08_SWCHAMPION_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アイリス主人公の方を向く
+  _OBJ_ANIME( C08_SWCHAMPION_01, anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //それにしても
+  _BALLOONWIN_OBJMSG_MF( msg_c08_swchampion_04, msg_c08_swchampion_05, C08_SWCHAMPION_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アイリス退場
+  _OBJ_ANIME_AUTO( C08_SWCHAMPION_01, 431, 166, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_DEL( C08_SWCHAMPION_01 )
+  
+  //========================================//
+  //C08：アイリスイベントPOS無効
+  $WK_SCENE_C08_SWCHAMPION = 1
+  //C08アイリス非表示
+  _FLAG_SET( FV_C08_SWCHAMPION_01 )
+  //========================================//
+  
+  //ハイリンク通信ブロック処理終了
+  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+EVENT_END
+
+/**************************************************************/
+/* SCENE_CHANGE：シャガ誘導（１）                                   */
+/**************************************************************/
+EVENT_START   ev_scene_c08_guide_01
+
+  //ハイリンク通信ブロック処理
+  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+
+  //アニメ：主人公ジムから出る
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 405, 147, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()
+  _CAMERA_MOVE( 9688,0,970752,26574848,0,9535488,24 )
+  
+  //========================================//
+  //C08シャガ表示
+  _FLAG_RESET( FV_C08_SWLEADER7_01 )
+  //========================================//
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  //シャガ動作OBJ表示
+  _OBJ_ADD( C08_SWLEADER7_01 )
+  _SE_WAIT()
+  
+  //アニメ：シャガジムから出る
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 405, 145, FORCE_TYPE_NOT, 8, DIR_LR)
+  _TIME_WAIT(8)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //シャガ：いえまで
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_01 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シャガ自宅方面へ
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 406, 158, FORCE_TYPE_NOT, 8, DIR_LR)
+  _TIME_WAIT(24)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (24)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  _OBJ_POS_CHANGE( C08_SWLEADER7_01, 418, 0, 175, DIR_DOWN )
+  
+  //========================================//
+  //C08：誘導イベントPOS起動（１）
+  $WK_SCENE_C08_LEADER7 = 2
+  //========================================//
+  //ハイリンク通信ブロック処理終了
+  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+EVENT_END
+
+/**************************************************************/
+/*  POS：シャガ誘導（２）                                   */
+/**************************************************************/
+EVENT_START   ev_pos_c08_guide_02
+  
+  //ハイリンク通信ブロック処理
+  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：シャガ主人公の方を向く
+  IF $LCW_POSX < 419 THEN
+  //アニメ：主人公接近
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_l )
+  ELSE
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_staystep_r)
+    
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ：コチラだ
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_02 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シャガ退場
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 418, 164, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C08_SWLEADER7_01,anm_dir_d )
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  //C08：誘導イベントPOS起動（２）
+  $WK_SCENE_C08_LEADER7 = 3
+  //C08R0101伝説解説SCENE_CHANGEイベント起動
+  $WK_SCENE_C08R0101 = 1
+  //C08R0101シャガ表示
+  _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+  //========================================//
+  //ハイリンク通信ブロック処理終了
+  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+EVENT_END
+
+/**************************************************************/
+/*  POS：シャガ誘導（３）                                   */
+/**************************************************************/
+EVENT_START   ev_pos_c08_guide_03
+
+  //ハイリンク通信ブロック処理
+  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
+  //シャガ：着いたぞ
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_03 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シャガドア手前へ移動
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 418, 160, FORCE_TYPE_NOT, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //ドア開ける
+  DEFINE_LOCAL	DOOR_ANIME_ID
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 418, 159 )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  //アニメ：シャガ上に進む
+  _OBJ_ANIME( C08_SWLEADER7_01,anm_walk_u )
+  _OBJ_ANIME_WAIT()
+	
+  _OBJ_DEL( C08_SWLEADER7_01 )
+  
+  //ドア閉じる
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //========================================//
+  //C08：誘導イベントPOS無効
+  $WK_SCENE_C08_LEADER7 = 4
+  //========================================//
+  //ハイリンク通信ブロック処理終了
+  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+EVENT_END
+
+/**************************************************************/
+/*  RESERVE：プラズマ団イベント開始（C08R0101から予約）       */
+/**************************************************************/
+EVENT_START   ev_reserve_c08_plazma_comming_01
+  //ハイリンク通信ブロック処理
+  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
+  //シャガ：こおり……　だと？
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //オノノクス動作OBJ表示
+  _OBJ_ADD_EX( 419, 163, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
+  
+  //シャガ：ドラゴンテールだ
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //オノノクスの鳴き声を鳴らす
+  _VOICE_PLAY(MONSNO_509,0)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_poke47_01 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //アニメ：オノノクス技を出した的な演出（移動＋カメラゆれ＋破壊音再生）
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 419, 164, FORCE_TYPE_ALL, 8, DIR_UD)
+  _TIME_WAIT(16)
+  _SE_PLAY( SEQ_SE_KOUKA_H )
+  _SHAKE_CAMERA(0,1,3,6,0,0,0,0)
+  _OBJ_ANIME_WAIT()
+  _SE_WAIT()
+  
+  //アニメ：主人公「！」シャガ「？」
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_common_gyoe )
+  _OBJ_ANIME( C08_SWLEADER7_01,anm_common_hatena )
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ：よくやった！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08_SWLEADER7_01 , POS_DEFAULT)
+  
+  //オノノクス動作OBJ非表示
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  
+  //シャガ：それにしても
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_07 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //？？？：そうでしょうとも
+  _PLAINWIN_MSG_DOWN( msg_c08_sage7_01 )
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ配置変更
+  _OBJ_POS_CHANGE( C08_SWSAGE7_01, 418, 0, 172, DIR_UP )
+  
+  //アニメ：ヴィオ接近
+  _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 418, 165, FORCE_TYPE_ALL, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ：おまえは
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_08 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ：それにしても
+  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_02 , C08_SWSAGE7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヴィオ1歩上へ
+  _OBJ_ANIME( C08_SWSAGE7_01, anm_walk_u)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：ようけんを
+  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_03 , C08_SWSAGE7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //シャガ：2年前
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_09 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //ヴィオ：想像通りの
+  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_04 , C08_SWSAGE7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヴィオ退場
+  _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 418, 172, FORCE_TYPE_ALL, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ動作OBJ削除
+  _OBJ_DEL( C08_SWSAGE7_01 )
+  
+  //アニメ：主人公とシャガ向き合う
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_r )
+  _OBJ_ANIME( C08_SWLEADER7_01,anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ：2年前
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_10 , C08_SWLEADER7_01 , POS_DEFAULT)
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  //シャガ：（主人公名）！きみの
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_11 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シャガ退場
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 420, 171, FORCE_TYPE_ALL, 8, DIR_UD)
+  _TIME_WAIT( 16 )
+  //アニメ：主人公見送り
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ配置変更
+  _OBJ_POS_CHANGE( C08_SWLEADER7_01, 424, 0, 176, DIR_UP )
+  
+  //========================================//
+  //C08プラズマ団襲来イベント進行
+  $WK_SCENE_C08_SWPLAZMA = 2
+  //C08ヴィオ非表示
+  _FLAG_SET( FV_C08_SWSAGE7_01 )
+  //========================================//
+  
+  //ハイリンク通信ブロック処理終了
+  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+EVENT_END
+
+/**************************************************************/
+/*  CALL：ダークトリニティ（１）                                  */
+/**************************************************************/
+ev_c08_ninja_comming:
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+
+  //シャガ：さすがだな
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_13 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //【仮】回復処理（メッセージが必要かも）
+  _SE_PLAY( SEQ_SE_RECOVERY )
+  _SE_WAIT()
+	//回復処理
+	_TEMOTI_POKEMON_KAIFUKU()
+	
+	//シャガ：ここで
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_14 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：シャガジム方面へ移動
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 410, 175, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：シャガジム方面から戻る
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 406, 175, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー名格納
+  _PLAYER_NAME( 0 )
+  
+  //シャガ：ふむ…！
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15 , C08_SWLEADER7_01 , POS_DEFAULT)
+  //_MSGWIN_CLOSE()
+  
+  //【仮】いでんしのくさびデモ
+  
+  //シャガ：これがあいつら
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_16 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //ダークトリニティ登場
+	_OBJ_ADD( C08_NINJA_01 )
+	//登場アニメーション
+	_OBJ_ANIME( C08_NINJA_01 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+	
+	//アニメ：シャガ・主人公「！」
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_look_ninja_gyoe )
+	_OBJ_ANIME( C08_SWLEADER7_01 , anm_look_ninja_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//？？？：ジムがかくしばしょか
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_01 , C08_NINJA_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //シャガ：まさか
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_17 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //？？？：おっしゃるとおり
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_02 , C08_NINJA_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //ダークトリニティ2～3登場
+	_OBJ_ADD( C08_NINJA_02 )
+	_OBJ_ADD( C08_NINJA_03 )
+	//登場アニメーション
+	_OBJ_ANIME( C08_NINJA_02 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME( C08_NINJA_03 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 50 )
+	
+	//【仮】ダークトリニティ移動（配置箇所等がFIX次第退場の演出を見直す／水口）
+  _OBJ_ANIME_AUTO( C08_NINJA_01, 396, 177, FORCE_TYPE_NOT, 4, DIR_UD)
+  
+  //退場アニメーション
+	_OBJ_ANIME( C08_NINJA_02 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME( C08_NINJA_03 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ2～3削除
+	_OBJ_DEL( C08_NINJA_02 )
+	_OBJ_DEL( C08_NINJA_03 )
+	
+	_OBJ_ANIME_WAIT()
+	
+	//シャガ：うばわれたら
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_18 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+	
+	//アニメ：シャガ追いかける
+	_OBJ_ANIME_AUTO( C08_SWLEADER7_01, 396, 177, FORCE_TYPE_NOT, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //シャガ・ダークトリニティ配置変更
+  _OBJ_POS_CHANGE( C08_SWLEADER7_01, 398, 0, 167, DIR_UP )
+  _MOVE_CODE_CHANGE( C08_SWLEADER7_01, MV_RND_H )
+  _OBJ_POS_CHANGE( C08_NINJA_01, 391, 0, 175, DIR_RIGHT )
+  
+  //BGM終了
+  _END_EVENT_BGM()
+  
+  //========================================//
+  //C08：ダークトリニティ戦起動
+  $WK_SCENE_C08_NINJA = 1
+  //C08：戦闘しないダークトリニティ非表示
+  _FLAG_SET( FV_C08_NINJA_02 )
+  //========================================//
+  
+_RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_look_ninja_gyoe
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ダークトリニティ登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ダークトリニティ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  POS：ダークトリニティ戦                                  */
+/**************************************************************/
+EVENT_START   ev_pos_c08_ninja_01
+  //ハイリンク通信ブロック処理
+  _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
+  //？？？：おっしゃるとおり
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_03 , C08_NINJA_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //【仮】トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+    
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //？？？：……ざんねん
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_04 , C08_NINJA_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //シャガ近くに配置
+  _OBJ_POS_CHANGE( C08_SWLEADER7_01, 405, 0, 175, DIR_LEFT )
+  _MOVE_CODE_CHANGE( C08_SWLEADER7_01, MV_DMY )
+  
+  //シャガ隣接
+  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 394, 175, FORCE_TYPE_ALL, 4, DIR_UD)
+  
+  _TIME_WAIT( 16)
+  
+  //アニメ：ダークトリニティ退場
+	_OBJ_ANIME( C08_NINJA_01 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME_WAIT()
+	//ダークトリニティ動作OBJ削除
+	_OBJ_DEL( C08_NINJA_01 )
+	
+	//シャガ：なんたること！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_20 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+	
+	//システムメッセージ：ライブキャスター着信
+	_ME_PLAY( SEQ_ME_CALL )
+  _SYSWIN_MSG( msg_c08_tvt_01, POS_DOWN )
+  _ME_WAIT()//仮
+  _SYSWIN_CLOSE()
+  
+  //システムメッセージ：ライブキャスターをつなげた
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG( msg_c08_tvt_02, POS_DOWN )
+  _SYSWIN_CLOSE()
+  
+  //【仮】ライブキャスターデモ
+  
+  //シャガ：ぐぬう！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_21 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //フィールド上にチェレン配置
+  _OBJ_ADD_EX( 385, 175, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
+  
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 391, 175, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  //チェレン：（主人公名）！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader1_01 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //シャガ：チェレンではないか
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_22 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  //チェレン：（主人公名）！
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader1_02 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //シャガ：そういってくれるか
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_23 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //チェレン：（主人公名）！きみのはんだんに
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader1_03 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン退場
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 385, 175, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  //シャガ：プラズマだん　から
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_24 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //チェレン動作OBJ削除
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  
+  //========================================//
+  //C08：ダークトリニティ戦POS無効
+  $WK_SCENE_C08_NINJA = 2
+  //C08：ダークトリニティ非表示
+  _FLAG_SET( FV_C08_NINJA_01 )
+  //========================================//
+    
+  //ハイリンク通信ブロック処理終了
+  _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+EVENT_END
+
+/**************************************************************/
+/*  シャガ：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c08_swleader7_01
+  
+  //主人公名格納
+  _PLAYER_NAME( 0 )
+
+  //ヴィオ戦前（振り向きなし一言メッセージ）
+  IF $WK_SCENE_C08_SWPLAZMA <= 5 THEN
+    _TALK_START_TURN_NOT()
+    _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_12 , C08_SWLEADER7_01 , POS_DEFAULT)
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  //【仮】D10クリア前（参照条件が仮）
+  //ELSIF $WK_SCENE_D10 == 0 THEN
+    //_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_25 )
+  //【仮】ヴィオ戦条件を満たしている
+  ELSIF $WK_SCENE_C08_SWPLAZMA == 6 && $WK_SCENE_C08_NINJA == 0 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_poke47_01 )
+  //ダークトリニティイベント起動時
+  ELSIF $WK_SCENE_C08_NINJA == 1 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_19 )
+  //プラズマ団イベント終了時
+  ELSIF $WK_SCENE_C08_NINJA >= 2 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_24 )
+  ENDIF
+  
+  
+  
+EVENT_END
+
+/**************************************************************/
+/*  ヴィオ（SAGE7）：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c08_swsage7_01
+  
+  //プラズマ団全員に勝利した
+  IF $WK_SCENE_C08_SWPLAZMA == 5 THEN
+  
+    //ハイリンク通信ブロック処理
+    _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+    
+    _TALK_OBJ_START()
+    
+    //ヴィオ：やれやれ
+    _BALLOONWIN_OBJMSG( msg_c08_sage7_05 , C08_SWSAGE7_01 )
+    _BALLOONWIN_CLOSE()
+    
+    //【仮】トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+    
+    //結果チェック
+    _CALL ev_battle_check
+    
+    //ヴィオ：強いトレーナーです
+    _BALLOONWIN_OBJMSG( msg_c08_sage7_06 , C08_SWSAGE7_01 )
+    _BALLOONWIN_CLOSE()
+    
+    //暗転処理
+    _BLACK_OUT_SLOW()
+    _DISP_FADE_END_CHECK()
+    
+    //シャガ配置変更
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 406, 0, 175, DIR_LEFT )
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 405, 0, 175, DIR_UP )
+    
+    //========================================//
+    //プラズマ団動作OBJ削除
+    _OBJ_DEL(C08_SWSAGE7_01)
+    _OBJ_DEL(C08_SWPLAZMAM_01)
+    _OBJ_DEL(C08_SWPLAZMAM_02)
+    _OBJ_DEL(C08_SWPLAZMAM_03)
+    _OBJ_DEL(C08_SWPLAZMAM_04)
+    _OBJ_DEL(C08_SWPLAZMAW_01)
+    _OBJ_DEL(C08_SWPLAZMAW_02)
+    //C08プラズマ団非表示
+    _FLAG_SET( FV_C08_SWPLAZMA_01 )
+    //C08ダークトリニティ（１）（２）表示
+    _FLAG_RESET( FV_C08_NINJA_01 )
+    _FLAG_RESET( FV_C08_NINJA_02 )
+    
+    //プラズマ団進行状況にプラス1
+     $WK_SCENE_C08_SWPLAZMA += 1
+    //========================================//
+    
+    //暗転復帰
+    _BLACK_IN_SLOW()
+    _DISP_FADE_END_CHECK()
+    
+    //ダークトリニティイベント（１）起動
+    _CALL ev_c08_ninja_comming
+    
+    //ハイリンク通信ブロック処理終了
+    _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+  
+  //【仮】プラズマ団全員にまだ勝利していない
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_poke47_01 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団♂（１）：話しかけ／戦闘あり                     */
+/**************************************************************/
+EVENT_START   ev_c08_swplazmam_01
+  
+  _TALK_OBJ_START()
+  
+  //【仮】既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_TANPAN_19, SCWK_ANSWER )
+  
+  //まだ勝利していない
+  IF $SCWK_ANSWER ==  FALSE THEN
+
+    //戦闘前メッセージ
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam1_01 , C08_SWPLAZMAM_01 )
+    _AB_KEYWAIT_MARK()
+    _BALLOONWIN_CLOSE()
+    
+    //【仮】トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_TANPAN_19, 0 )
+    
+    //結果チェック
+    _CALL ev_battle_check
+      
+    //========================================/
+    //プラズマ団進行状況にプラス1
+     $WK_SCENE_C08_SWPLAZMA += 1
+     
+    //【仮】トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_TANPAN_19 )
+    
+    //========================================/
+    
+    //プラズマ団全員に勝利した
+    IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+      //========================================//
+      //C08ヴィオ表示
+      _FLAG_RESET( FV_C08_SWSAGE7_01 )
+      _OBJ_ADD(C08_SWSAGE7_01)
+      //========================================//
+    ENDIF
+    
+  ENDIF
+      
+  //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
+  IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+    _BALLOONWIN_OBJMSG( msg_c08_poke47_01 , C08_SWPLAZMAM_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+ 
+  //まだ全員倒していない（戦闘後メッセージ）
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam1_02 , C08_SWPLAZMAM_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団♂（２）：話しかけ／戦闘あり                     */
+/**************************************************************/
+EVENT_START   ev_c08_swplazmam_02
+  
+  _TALK_OBJ_START()
+  
+  //【仮】既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SCHOOLB_11, SCWK_ANSWER )
+  
+  //まだ勝利していない
+  IF $SCWK_ANSWER ==  FALSE THEN
+
+    //戦闘前メッセージ
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam2_01 , C08_SWPLAZMAM_02 )
+    _AB_KEYWAIT_MARK()
+    _BALLOONWIN_CLOSE()
+    
+    //【仮】トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SCHOOLB_11, 0 )
+    
+    //結果チェック
+    _CALL ev_battle_check
+      
+    //========================================/
+    //プラズマ団進行状況にプラス1
+     $WK_SCENE_C08_SWPLAZMA += 1
+     
+    //【仮】トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SCHOOLB_11 )
+    
+    //========================================/
+    
+    //プラズマ団全員に勝利した
+    IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+      //========================================//
+      //C08ヴィオ表示
+      _FLAG_RESET( FV_C08_SWSAGE7_01 )
+      _OBJ_ADD(C08_SWSAGE7_01)
+      //========================================//
+    ENDIF
+    
+  ENDIF
+      
+  //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
+  IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+    _BALLOONWIN_OBJMSG( msg_c08_poke47_01 , C08_SWPLAZMAM_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+ 
+  //まだ全員倒していない（戦闘後メッセージ）
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam2_02 , C08_SWPLAZMAM_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団♀（１）：話しかけ／戦闘あり                     */
+/**************************************************************/
+EVENT_START   ev_c08_swplazmaw_01
+
+  _TALK_OBJ_START()
+
+  //【仮】既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SCHOOLG_09, SCWK_ANSWER )
+  
+  //まだ勝利していない
+  IF $SCWK_ANSWER ==  FALSE THEN
+
+    //戦闘前メッセージ
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmaw1_01 , C08_SWPLAZMAW_01 )
+    _AB_KEYWAIT_MARK()
+    _BALLOONWIN_CLOSE()
+    
+    //【仮】トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SCHOOLG_09, 0 )
+    
+    //結果チェック
+    _CALL ev_battle_check
+      
+    //========================================/
+    //プラズマ団進行状況にプラス1
+     $WK_SCENE_C08_SWPLAZMA += 1
+     
+    //【仮】トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SCHOOLG_09 )
+    
+    //========================================/
+    
+    //プラズマ団全員に勝利した
+    IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+      //========================================//
+      //C08ヴィオ表示
+      _FLAG_RESET( FV_C08_SWSAGE7_01 )
+      _OBJ_ADD(C08_SWSAGE7_01)
+      //========================================//
+    ENDIF
+      
+    
+  ENDIF
+      
+  //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
+  IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+    _BALLOONWIN_OBJMSG( msg_c08_poke47_01 , C08_SWPLAZMAW_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+ 
+  //まだ全員倒していない（戦闘後メッセージ）
+  ELSE
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmaw1_02 , C08_SWPLAZMAW_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+ 
+EVENT_END
+
+/**************************************************************/
+/*  CALL：戦闘チェック                     */
+/**************************************************************/
+ev_battle_check:	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
+
+/**************************************************************/
+/*  プラズマ団♂（３）：話しかけ                     */
+/**************************************************************/
+EVENT_START   ev_c08_swplazmam_03
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団♂（４）：話しかけ                     */
+/**************************************************************/
+EVENT_START   ev_c08_swplazmam_04
+  _TALK_START_TURN_NOT()
+  _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam4_01 , C08_SWPLAZMAM_04 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団♀（２）：話しかけ                     */
+/**************************************************************/
+EVENT_START   ev_c08_swplazmaw_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmaw2_01 )
+EVENT_END
+
 
 /**************************************************************/
 /* 町看板                                                       */
@@ -82,3 +1056,74 @@ EVENT_START   ev_bg_c08_board_05
 		_EASY_BGWIN_MSG( msg_c08_gymsign_01w, TYPE_POST )
 	ENDIF
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

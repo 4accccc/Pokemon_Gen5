@@ -332,7 +332,7 @@ EVENT_START ev_c12gym0201_boy2_01
       
       //
       _BALLOONWIN_OBJMSG( msg_c12gym0201_boy2_01 , C12GYM0201_BOY2_01 )
-      _LAST_KEYWAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
       
       //トレーナー戦呼び出し
@@ -405,7 +405,7 @@ EVENT_START ev_c12gym0201_girl2_01
       
       //
       _BALLOONWIN_OBJMSG( msg_c12gym0201_girl2_01 , C12GYM0201_GIRL2_01 )
-      _LAST_KEYWAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
       
       //トレーナー戦呼び出し
