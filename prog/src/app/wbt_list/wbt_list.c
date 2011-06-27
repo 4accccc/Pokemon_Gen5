@@ -765,12 +765,12 @@ static GFL_PROC_RESULT WBTListProc_Init( GFL_PROC *proc, int *seq, void *pwk, vo
 	param	= pwk;
 	
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_UI_DEBUG, UI_TEMPLATE_HEAP_SIZE );
-	wk = GFL_PROC_AllocWork( proc, sizeof(WBTLIST_MAIN_WORK), HEAPID_UI_DEBUG );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WBT, UI_TEMPLATE_HEAP_SIZE );
+	wk = GFL_PROC_AllocWork( proc, sizeof(WBTLIST_MAIN_WORK), HEAPID_WBT );
 	GFL_STD_MemClear( wk, sizeof(WBTLIST_MAIN_WORK) );
 	
 	// 初期化
-	wk->heapID = HEAPID_UI_DEBUG;
+	wk->heapID = HEAPID_WBT;
 	
 	// 参照用
 	wk->Param = pwk;

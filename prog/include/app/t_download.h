@@ -48,6 +48,8 @@ extern const GFL_PROC_DATA TDownloadProcData;
 typedef enum {
 	T_DOWNLOAD_STATUS_VIEW = 0,		///<見るだけ
 	T_DOWNLOAD_STATUS_SELECT,		///<選択
+	T_DOWNLOAD_STATUS_JOIN,			///<参加
+	T_DOWNLOAD_STATUS_INFO,			///<詳細
 }T_DOWNLOAD_STATUS;
 
 // トーナメントダウンロード
@@ -56,6 +58,7 @@ typedef struct{
 	//
 	T_DOWNLOAD_STATUS	status;
 	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)
+	u16 *				curpos;			///<カーソル位置
 }T_DOWNLOAD_PARAM;
 
 
