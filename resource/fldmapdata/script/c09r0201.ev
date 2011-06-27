@@ -78,13 +78,11 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c09r0201_enter_01
 
-  _TIME_WAIT(5)
-
   // 炎点火
   _FOURKINGS_EVIL_FIRE(0)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_01 )    // 火がつく音
 
-  _TIME_WAIT(12)
+  _TIME_WAIT(20)
 
   // 爪開く
   _FOURKINGS_EVIL_CLAW(0)
@@ -110,19 +108,17 @@ EVENT_START	ev_pos_c09r0201_enter_02
 	// カメラ設定を変更
 	_FOURKINGS_SET_TOP_CAMERA(2)
 
-  _TIME_WAIT(5)
+  _TIME_WAIT(10)
 
   // 爪閉じる
   _FOURKINGS_EVIL_CLAW(1)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_03 )    // 爪が一気に閉じる音
 
-  _TIME_WAIT(18)
+  _TIME_WAIT(35)
 
   // 炎点火
   _FOURKINGS_EVIL_FIRE(1)
 	_SE_PLAY( SEQ_SE_SW_GEEMA_01 )    // 火がつく音
-
-  _TIME_WAIT(20)
 
   //=====================================
   //このPOSの起動をさせなくする
