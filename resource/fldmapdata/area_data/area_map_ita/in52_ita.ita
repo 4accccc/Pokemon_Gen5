@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2011-06-25T15:42:59" source="in52.ita.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="16"
+	tool_start_frame="1"
+	tool_end_frame="16"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="20 20"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="48">
+	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.360107 0.360107 0.360107 0.360107
+	0.360107 0.699951 0.699951 0.699951 0.699951 0.699951 0.012451 0.024902 0.037598 0.050049
+	0.024902 0.000000 0.000000 0.000000 0.010010 0.020020 0.030029 0.040039 0.050049 0.024902
+	0.000000 0.000000 0.500000 0.497314 0.492676 0.489990 0.493164 0.500000 0.506836 0.510010
+	0.506836 0.500000 0.493164 0.489990 0.491455 0.495117 0.498535 0.500000
+</tex_translate_data>
+
+<tex_srt_anm_array size="3">
+	<tex_srt_anm index="0" material_name="so_rousoku">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="16" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="16" data_head="16"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="so_light_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="16" data_head="32"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="2" material_name="so_light">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="16" data_head="32"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
