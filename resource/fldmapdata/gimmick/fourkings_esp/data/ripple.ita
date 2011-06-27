@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2011-06-23T17:22:06" source="ripple.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="90"
+	tool_start_frame="1"
+	tool_end_frame="90"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="2 2"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="90">
+	0.000000 -0.011230 -0.022217 -0.033447 -0.044678 -0.055664 -0.066895 -0.078125 -0.089111 -0.100342
+	-0.111572 -0.122559 -0.133789 -0.145020 -0.156250 -0.167236 -0.178467 -0.189697 -0.200684 -0.211914
+	-0.223145 -0.234131 -0.245361 -0.256592 -0.267578 -0.278809 -0.290039 -0.301025 -0.312256 -0.323486
+	-0.334473 -0.345703 -0.356934 -0.367920 -0.379150 -0.390381 -0.401367 -0.412598 -0.423828 -0.435059
+	-0.446045 -0.457275 -0.468506 -0.479492 -0.490723 -0.501953 -0.512939 -0.524170 -0.535400 -0.546387
+	-0.557617 -0.568848 -0.579834 -0.591064 -0.602295 -0.613281 -0.624512 -0.635742 -0.646729 -0.657959
+	-0.669189 -0.680176 -0.691406 -0.702637 -0.713867 -0.724854 -0.736084 -0.747314 -0.758301 -0.769531
+	-0.780762 -0.791748 -0.802979 -0.814209 -0.825195 -0.836426 -0.847656 -0.858643 -0.869873 -0.881104
+	-0.892090 -0.903320 -0.914551 -0.925537 -0.936768 -0.947998 -0.959229 -0.970215 -0.981445 -0.992676
+</tex_translate_data>
+
+<tex_srt_anm_array size="2">
+	<tex_srt_anm index="0" material_name="esp_stage01_2">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="90" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="esp_stage01_3">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="90" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>

@@ -1,0 +1,38 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fourkings_esp.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FOURKINGS_ESP_NAIX_
+#define NARC_FOURKINGS_ESP_NAIX_
+
+enum {
+	NARC_fourkings_esp_cube01_nsbmd = 0,
+	NARC_fourkings_esp_cube01_nsbca = 1,
+	NARC_fourkings_esp_cube01_nsbta = 2,
+	NARC_fourkings_esp_cube02_nsbma = 3,
+	NARC_fourkings_esp_flower_nsbmd = 4,
+	NARC_fourkings_esp_flower_nsbca = 5,
+	NARC_fourkings_esp_flower_nsbma = 6,
+	NARC_fourkings_esp_flower_nsbta = 7,
+	NARC_fourkings_esp_flower_nsbtp = 8,
+	NARC_fourkings_esp_ripple_nsbmd = 9,
+	NARC_fourkings_esp_ripple_nsbta = 10,
+	NARC_fourkings_esp_stairs01_nsbmd = 11,
+	NARC_fourkings_esp_stairs01_nsbta = 12,
+	NARC_fourkings_esp_stairs02_nsbca = 13,
+	NARC_fourkings_esp_stairs02_nsbma = 14,
+	NARC_fourkings_esp_stairs03_nsbmd = 15,
+	NARC_fourkings_esp_stairs03_nsbca = 16,
+	NARC_fourkings_esp_stairs03_nsbta = 17,
+	NARC_fourkings_esp_stairs04_nsbmd = 18,
+	NARC_fourkings_esp_stairs04_nsbta = 19,
+	NARC_fourkings_esp_stairs05_nsbma = 20
+};
+
+/* NARC_FOURKINGS_ESP_NAIX_ */
+#endif

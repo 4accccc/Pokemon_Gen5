@@ -340,4 +340,5 @@
   ARCID_POKEWOOD_CUTIN_SCR "pokewood_cutin_scr.narc"  #ポケウッドカットインスクリプトデータ
   ARCID_GYM_WATER "fieldmap/gym_water.narc"  #水ジム
   ARCID_FOURKINGS_EVIL "fieldmap/fourkings_evil.narc"  #四天王部屋（悪）
+  ARCID_FOURKINGS_ESP "fieldmap/fourkings_esp.narc"  #四天王部屋（エスパー）
   

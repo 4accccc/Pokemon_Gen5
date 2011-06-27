@@ -1,0 +1,23 @@
+DATA_LIST = \
+    cube01.nsbmd \
+    cube01.nsbca \
+    cube01.nsbta \
+    cube02.nsbma \
+    flower.nsbmd \
+    flower.nsbca \
+    flower.nsbma \
+    flower.nsbta \
+    flower.nsbtp \
+    ripple.nsbmd \
+    ripple.nsbta \
+    stairs01.nsbmd \
+    stairs01.nsbta \
+    stairs02.nsbca \
+    stairs02.nsbma \
+    stairs03.nsbmd \
+    stairs03.nsbca \
+    stairs03.nsbta \
+    stairs04.nsbmd \
+    stairs04.nsbta \
+    stairs05.nsbma
+
