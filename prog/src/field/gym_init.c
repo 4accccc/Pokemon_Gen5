@@ -131,6 +131,7 @@ void GYM_INIT_Insect(GAMESYS_WORK *gsys, u16 **sw_work)
 //--------------------------------------------------------------
 void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
 {
+  int i;
   GYM_DRAGON_SV_WORK *gmk_sv_work;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
@@ -139,6 +140,12 @@ void GYM_INIT_Dragon(GAMESYS_WORK *gsys)
   // レイヤーとローケーションを設定
   gmk_sv_work->now_floor_layer  = 0;
   gmk_sv_work->now_location     = GYM_LOCATION_CENTER;
+
+  // アニメーションフレームの初期化
+  for( i= 0; i < GYM_DRAGON_MODELID_MAX; i++ )
+  {
+    gmk_sv_work->model_frame[i] = 0;
+  }
 }
 
 

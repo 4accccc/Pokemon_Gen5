@@ -23,10 +23,10 @@ typedef struct {
 static const ARCDATID sc_hero_move_data[] =
 {
  NARC_gym_dragon_hero_move_bin,
- NARC_gym_dragon_emy_move03_bin,
  NARC_gym_dragon_emy_move02_bin,
- NARC_gym_dragon_emy_move05_bin,
+ NARC_gym_dragon_emy_move03_bin,
  NARC_gym_dragon_emy_move04_bin,
+ NARC_gym_dragon_emy_move05_bin,
  NARC_gym_dragon_emy_move06_bin,
 };
 #define HERO_MOVE_DATA_MAX  (NELEMS(sc_hero_move_data))

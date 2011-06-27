@@ -84,7 +84,7 @@ typedef struct GYM_DRAGON_TMP_tag
 
   // data
   GYM_DRAGON_SV_WORK  *p_sv_work;
-  MODEL       model[MODELID_MAX]; // モデル
+  MODEL       model[GYM_DRAGON_MODELID_MAX]; // モデル
   
 }GYM_DRAGON_TMP;
 
@@ -242,7 +242,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   //モデル初期化
   {
     int i;
-    for( i = 0; i < MODELID_MAX; i++ )
+    for( i = 0; i < GYM_DRAGON_MODELID_MAX; i++ )
     {
       MODEL *p_model    = &p_wk->model[i];
       p_model->unitID   = GYM_DRAGON_UNIT_IDX;
@@ -257,7 +257,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     int i,n;
     EXP_OBJ_ANM_CNT_PTR exobj_anm;
     GFL_G3D_OBJSTATUS *p_status;
-    for( i = 0 ; i < MODELID_MAX ; i++ )
+    for( i = 0 ; i < GYM_DRAGON_MODELID_MAX ; i++ )
     {
       MODEL *p_model    = &p_wk->model[i];
 
@@ -278,14 +278,21 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
       {
         // 有効にする
         FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n, TRUE);
-        // フレーム
-        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n , 0);
+        
+
+        // ICAアニメーションのフレームを復帰
+        {
+          fx32 frame  = p_wk->p_sv_work->model_frame[p_model->modelID];
+          FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n ,frame );
+        }
+        //FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n , 0);
 
         // ループ、再生設定
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n );
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
         FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
       }
+
     }
   }
 
@@ -304,7 +311,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     FIELD_FOG_Reflect( fog );
   }
 
-  // ボタンを点灯状態にする
+  // ボタンを点灯状態にする(ボタンITPのシーケンスはここで設定される)
   SetButtonITPSeq( p_wk );
 
 #ifdef PM_DEBUG
@@ -329,7 +336,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk )
 {
   // アニメーションの有効状態を設定する
-  MODEL *p_model    = &p_wk->model[MODELID_HERO_DRAGON];
+  MODEL *p_model    = &p_wk->model[GYM_DRAGON_MODELID_HERO_DRAGON];
   {
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, TRUE);
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, FALSE);
@@ -352,7 +359,7 @@ static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk )
 static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk )
 {
   // アニメーションの有効状態を設定する
-  MODEL *p_model    = &p_wk->model[MODELID_HERO_DRAGON];
+  MODEL *p_model    = &p_wk->model[GYM_DRAGON_MODELID_HERO_DRAGON];
   {
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, FALSE);
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, TRUE);
@@ -452,7 +459,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     if( (cont & PAD_BUTTON_DEBUG) && (trg & PAD_BUTTON_START) )
     {
       int i;
-      for( i = 0; i < MODELID_MAX; i++ )
+      for( i = 0; i < GYM_DRAGON_MODELID_MAX; i++ )
       {
         MODEL *p_model    = &p_wk->model[i];
         FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,  p_model->unitID, p_model->modelID, FALSE );
@@ -463,7 +470,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     if( (cont & PAD_BUTTON_DEBUG) && (trg & PAD_BUTTON_SELECT) )
     {
       int i;
-      for( i = 0; i < MODELID_MAX; i++ )
+      for( i = 0; i < GYM_DRAGON_MODELID_MAX; i++ )
       {
         MODEL *p_model    = &p_wk->model[i];
         FLD_EXP_OBJ_SetVanish( p_model->p_ex_obj,  p_model->unitID, p_model->modelID, TRUE );
@@ -1084,6 +1091,13 @@ static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk )
 {
   int i;
 
+  // ICAアニメーションのフレーム保存
+  for( i = 0; i < GYM_DRAGON_MODELID_MAX ; i++ )
+  {
+    MODEL *p_model  = &p_wk->p_gmkwk->model[i];
+    fx32 frame = FLD_EXP_OBJ_GetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, 0 , 0);
+    p_wk->p_sv_work->model_frame[p_model->modelID] = frame;
+  }
   
   // ICAアニメの開放
   for( i = 0; i < ICA_MOVE_ID_MAX ; i++ )
@@ -1221,7 +1235,7 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
       vec.x += sc_mdl_offset_table[p_md->model_id].x;
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
-      //MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
+      MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
 
       // フレームの更新
       UpdateFrame( p_md );
@@ -1310,8 +1324,9 @@ static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
 {
+  fx32 anm_start_frame;
   BUTTON_TURN_ON_EVENT_WK *p_wk = p_wk_adrs;
-  MODEL *p_model                = &p_wk->p_gmkwk->model[MODELID_HERO_DRAGON];
+  MODEL *p_model                = &p_wk->p_gmkwk->model[GYM_DRAGON_MODELID_HERO_DRAGON];
   EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP );
 
   switch( (*p_seq) )
@@ -1330,8 +1345,16 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
         FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, TRUE);
       }
 
+      // 点灯アニメーション格納アニメーションを取得
+      anm_start_frame = FX32_CONST(GYM_BUTTON_EVENT);
+      if( p_wk->layer != FLOOR_LAYER_TAIL )
+      {
+        // 1階以外はパターン２のアニメーションを使用する
+        anm_start_frame += FX32_CONST( TURNON_EVENT_WAIT_FRAME );
+      }
+
       // 点灯アニメーションの再生
-      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,FX32_CONST(GYM_BUTTON_EVENT) );
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,anm_start_frame );
       FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
 
       (*p_seq) = TURNON_EVENT_SEQ_SE_START_WAIT;

@@ -46,11 +46,25 @@ typedef enum{
   GYM_LOCATION_MAX,
 }GYM_LOCATION;
 
+//-------------------------------------
+///	モデル管理ID
+//=====================================
+typedef enum
+{
+  GYM_DRAGON_MODELID_HERO_DRAGON,
+  GYM_DRAGON_MODELID_ENEMY_DRAGON_TAIL,
+  GYM_DRAGON_MODELID_ENEMY_DRAGON_FOOT_D,
+  GYM_DRAGON_MODELID_ENEMY_DRAGON_FOOT_U,
+  GYM_DRAGON_MODELID_ENEMY_DRAGON_HEAD,
+  GYM_DRAGON_MODELID_MAX,
+}MODELID;
+
 //ドラゴンジムセーブワーク
 typedef struct GYM_DRAGON_SV_WORK_tag
 {
   u8 now_location;
   u8 now_floor_layer;
+  fx32 model_frame[GYM_DRAGON_MODELID_MAX];
 }GYM_DRAGON_SV_WORK;
 
 #endif //__ASM_NO_DEF_
