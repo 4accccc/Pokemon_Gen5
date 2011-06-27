@@ -513,8 +513,8 @@ EVENT_START   ev_pos_t03_swrival_01
 
     ENDIF
 
-    //【仮】ライバル名代入
-    _NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
     //ライバル：なんだ
     _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_01, T03_SWRIVAL_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
@@ -542,8 +542,8 @@ EVENT_START   ev_pos_t03_swrival_01
 
     //主人公名代入
     _PLAYER_NAME( 0 )
-    //【仮】ライバル名代入
-    _NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
     //ライバル：オマエら　のつごうなんて
     _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_02, T03_SWRIVAL_01, POS_DEFAULT )
 
@@ -572,8 +572,8 @@ EVENT_START   ev_pos_t03_swrival_01
   //イベント起動が２度目以降
   ELSE
 
-    //【仮】ライバル名代入
-    _NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
     //ライバル：オマエの　ちからを
     _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_05, T03_SWRIVAL_01, POS_DEFAULT )
 
@@ -677,8 +677,8 @@ ev_pos_t03_swrival_02:  //ライバルイベント01からのみ起動可能
     _OBJ_ANIME_WAIT()
   ENDIF
 
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345, 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   //ライバル：にげたか……
   _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_06, T03_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()

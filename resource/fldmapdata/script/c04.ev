@@ -195,8 +195,8 @@ EVENT_START   ev_pos_c04_swrival_01
   $WK_SCENE_C04_SWRIVAL = 2
   //==================================//
 
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   //ライバル：まてよ！　オマエら
   _BALLOONWIN_OBJMSG_POS( msg_c04_swrival_01, C04_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -544,8 +544,8 @@ EVENT_START   ev_pos_c04_swrival_02
 
   _TIME_WAIT( 45 )
 
-  //【仮】ライバル名代入
-  _NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
   //ライバル：オレさ　プラズマだんに
   _BALLOONWIN_OBJMSG_POS( msg_c04_swrival_05, C04_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
