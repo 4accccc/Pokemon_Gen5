@@ -610,11 +610,12 @@
 #define FV_H04R0301_FISING_01              692 /* 0x02b4 ビレッジブリッジ：ツリーズ */
 #define FV_C08_SWCHAMPION_01               693 /* 0x02b5 ソウリュウシティ：アイリス */
 #define FV_C08_SWLEADER7_01                694 /* 0x02b6 ソウリュウシティ：シャガ */
-#define FV_C08_SWPLAZMA_01                 695 /* 0x02b7 ソウリュウシティ：プラズマ団とヴィオ（SAGE7） */
-#define FV_C08_NINJA_01                    696 /* 0x02b8 ソウリュウシティ：ダークトリニティ（戦闘するやつ） */
-#define FV_C08_NINJA_02                    697 /* 0x02b9 ソウリュウシティ：ダークトリニティ（戦闘しないやつ） */
-#define FV_C08GYM0101_SWLEADER7_01         698 /* 0x02ba ソウリュウジム：シャガ */
-#define FV_C08R0101_SWLEADER7_01           699 /* 0x02bb ソウリュウ民家1：シャガ */
+#define FV_C08_SWSAGE7_01                  695 /* 0x02b7 ソウリュウシティ：ヴィオ（SAGE7） */
+#define FV_C08_SWPLAZMA_01                 696 /* 0x02b8 ソウリュウシティ：プラズマ団とヴィオ（SAGE7） */
+#define FV_C08_NINJA_01                    697 /* 0x02b9 ソウリュウシティ：ダークトリニティ（戦闘するやつ） */
+#define FV_C08_NINJA_02                    698 /* 0x02ba ソウリュウシティ：ダークトリニティ（戦闘しないやつ） */
+#define FV_C08GYM0101_SWLEADER7_01         699 /* 0x02bb ソウリュウジム：シャガ */
+#define FV_C08R0101_SWLEADER7_01           700 /* 0x02bc ソウリュウ民家1：シャガ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2211,9 +2212,9 @@
 #define TMFLG_R05_KINOMI_BUY              2751 /* 0x0abf スワン：5番道路：木の実購入イベント済みフラグ */
 #define TMFLG_C03P09_ICEBUY               2752 /* 0x0ac0 ヒウンアイス：一日一回購入フラグ */
 #define TMFLG_H04R0301_FISHING            2753 /* 0x0ac1 ビレッジブリッジ：ツリーズ選定フラグ */
-#define TMFLG_H04R0501_PEOPLE             2754 /* 0x0ac2 ビレッジブリッジ：空き家住民選定フラグ */
-		/* not used  2755(0x0ac3) */
-		/* not used  2756(0x0ac4) */
+#define TMFLG_H04R0501_PEOPLE_01          2754 /* 0x0ac2 ビレッジブリッジ：空き家住民選定フラグ */
+#define TMFLG_H04R0501_PEOPLE_02          2755 /* 0x0ac3 ビレッジブリッジ：空き家住民選定フラグ */
+#define TMFLG_H04R0501_PEOPLE_03          2756 /* 0x0ac4 ビレッジブリッジ：空き家住民選定フラグ */
 		/* not used  2757(0x0ac5) */
 		/* not used  2758(0x0ac6) */
 		/* not used  2759(0x0ac7) */
@@ -2225,7 +2226,6 @@
 		/* not used  2765(0x0acd) */
 		/* not used  2766(0x0ace) */
 		/* not used  2767(0x0acf) */
-		/* not used  2768(0x0ad0) */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
