@@ -18,27 +18,16 @@
 //-------------------------------------
 ///	セーブサイズ
 //=====================================
-#define KEY_SYSTEM_SAVE_WORK_SIZE (48)
+#define KEY_SYSTEM_SAVE_WORK_SIZE (36)
 
 //-------------------------------------
 ///	キーシステム種類
 //=====================================
 typedef enum
 {
-  //本来は黒キー、白キーだが、バージョンによって扱いが変わるので、
-  //自分キー、もらうキーとする
-  //自分の持っているキー
-  KEY_SYSTEM_TYPE_SELF_DIFFICULT,     //難易度変更
-  KEY_SYSTEM_TYPE_SELF_CLOSEDOOR,     //開かずの扉
-  KEY_SYSTEM_TYPE_SELF_CELEBRATION,   //祭り
-  KEY_SYSTEM_TYPE_SELF_BGMCHANGE,     //BGM変更
-  KEY_SYSTEM_TYPE_SELF_INFINITYDUNGEON, //無限ダンジョン
-  //貰うキー
-  KEY_SYSTEM_TYPE_RECV_DIFFICULT,     //難易度変更
-  KEY_SYSTEM_TYPE_RECV_CLOSEDOOR,     //開かずの扉
-  KEY_SYSTEM_TYPE_RECV_CELEBRATION,   //祭り
-  KEY_SYSTEM_TYPE_RECV_BGMCHANGE,     //BGM変更
-  KEY_SYSTEM_TYPE_RECV_INFINITYDUNGEON, //無限ダンジョン
+  KEY_SYSTEM_TYPE_DIFFICULT_EASY,     //難易度変更
+  KEY_SYSTEM_TYPE_DIFFICULT_HARD,     //難易度変更
+  KEY_SYSTEM_TYPE_CITY_WFBC,          //反対の街開放キー
 
   KEY_SYSTEM_TYPE_MAX
 } KEY_SYSTEM_TYPE;
@@ -48,12 +37,23 @@ typedef enum
 //=====================================
 typedef enum
 {
-  KEY_SYSTEM_DIFFICULT_NORMAL,  //通常
   KEY_SYSTEM_DIFFICULT_EASY,    //簡単
+  KEY_SYSTEM_DIFFICULT_NORMAL,  //通常
   KEY_SYSTEM_DIFFICULT_HARD,    //難しい
 
   KEY_SYSTEM_DIFFICULT_MAX
 } KEY_SYSTEM_DIFFICULT;
+
+//-------------------------------------
+///	WFBC
+//=====================================
+typedef enum
+{
+  KEY_SYSTEM_WFBC_SELF,       //自分のバージョンの街
+  KEY_SYSTEM_WFBC_REVERSE,    //反対バージョンの街
+
+  KEY_SYSTEM_WFBC_MAX
+} KEY_SYSTEM_WFBC;
 
 //=============================================================================
 /**
@@ -76,13 +76,22 @@ extern void KEY_SYSTEM_SAVE_Init( KEY_SYSTEM_SAVE *p_wk );
 //extern KEY_SYSTEM_SAVE * SAVE_CONTROL_GetKeySystem( SAVE_CONTROL_WORK *p_sv );
 //outside_permanent.hから取得できます
 
-//キーシステムのデータ
-extern void KEY_SYSTEM_SAVE_SetKey( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type );
-extern BOOL KEY_SYSTEM_SAVE_IsExits( const KEY_SYSTEM_SAVE *cp_wk, KEY_SYSTEM_TYPE type );
+//所持キー設定
+extern void KEY_SYSTEM_SAVE_SetHave( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type );
+extern BOOL KEY_SYSTEM_SAVE_IsHave( const KEY_SYSTEM_SAVE *cp_wk, KEY_SYSTEM_TYPE type );
 
+//項目開放
+extern void KEY_SYSTEM_SAVE_SetUse( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type );
+extern BOOL KEY_SYSTEM_SAVE_IsUse( const KEY_SYSTEM_SAVE *cp_wk, KEY_SYSTEM_TYPE type );
+
+//設定項目
 extern void KEY_SYSTEM_SAVE_SetDifficult( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_DIFFICULT diffcult );
 extern KEY_SYSTEM_DIFFICULT KEY_SYSTEM_SAVE_GetDifficult( const KEY_SYSTEM_SAVE *cp_wk );
 
+extern void KEY_SYSTEM_SAVE_SetWfbc( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_WFBC wfbc );
+extern KEY_SYSTEM_WFBC KEY_SYSTEM_SAVE_GetWfbc( const KEY_SYSTEM_SAVE *cp_wk );
+
 #ifdef PM_DEBUG
-extern void KEY_SYSTEM_SAVE_SetKeyExits( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type, BOOL is_exits );
+extern void KEY_SYSTEM_SAVE_DEBUG_SetHave( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type, BOOL is_exits );
+extern void KEY_SYSTEM_SAVE_DEBUG_SetUse( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type, BOOL is_exits );
 #endif 

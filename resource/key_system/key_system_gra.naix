@@ -1,0 +1,26 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: key_system_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_KEY_SYSTEM_GRA_NAIX_
+#define NARC_KEY_SYSTEM_GRA_NAIX_
+
+enum {
+	NARC_key_system_gra_back00_NCLR = 0,
+	NARC_key_system_gra_menu_frame_NCLR = 1,
+	NARC_key_system_gra_obj_NCLR = 2,
+	NARC_key_system_gra_back00_NCGR = 3,
+	NARC_key_system_gra_menu_frame_NCGR = 4,
+	NARC_key_system_gra_obj_NCGR = 5,
+	NARC_key_system_gra_back00_NSCR = 6,
+	NARC_key_system_gra_obj_NCER = 7,
+	NARC_key_system_gra_obj_NANR = 8
+};
+
+/* NARC_KEY_SYSTEM_GRA_NAIX_ */
+#endif

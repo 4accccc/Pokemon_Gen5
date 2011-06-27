@@ -47,6 +47,7 @@
 #include "debug_snd_strm.h"
 #include "debug_common_net.h"
 #include "debug_outside.h"
+#include "net_app/key_system.h"
 
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
@@ -201,6 +202,7 @@ typedef struct
   WIFIBATTLEMATCH_PARAM wifibattlematch_param;
   WIFILOGOUT_PARAM      wifilogout_param;
   WBT_DOWNLOAD_SYS_PARAM wbt_download_param;
+  KEY_SYSTEM_PARAM      key_sys_param;
   };
   NAMEIN_PARAM          *p_namein_param;
 } DEBUG_NAGI_MAIN_WORK;
@@ -286,6 +288,7 @@ static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallCommonDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallOutside( DEBUG_NAGI_MAIN_WORK *p_wk );
+static void LISTDATA_CallKeySys( DEBUG_NAGI_MAIN_WORK *p_wk );
 //3d
 static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID );
 static void GRAPHIC_3D_Exit( GRAPHIC_3D_WORK *p_wk );
@@ -371,6 +374,7 @@ enum
   LISTDATA_SEQ_PROC_COMMON_DOWNLOAD,
   LISTDATA_SEQ_PROC_WBT_DOWNLOAD,
   LISTDATA_SEQ_PROC_OUTSIDE_SAVE,
+  LISTDATA_SEQ_PROC_KEY_SYS,
 
   LISTDATA_SEQ_MAX,
 };
@@ -405,6 +409,7 @@ static const LISTDATA_FUNCTION  sc_list_funciton[LISTDATA_SEQ_MAX]  =
   LISTDATA_CallCommonDownload,
   LISTDATA_CallWbtDownload,
   LISTDATA_CallOutside,
+  LISTDATA_CallKeySys,
 };
 
 //-------------------------------------
@@ -412,37 +417,36 @@ static const LISTDATA_FUNCTION  sc_list_funciton[LISTDATA_SEQ_MAX]  =
 //=====================================
 static const LIST_SETUP_TBL sc_list_data_home[] =
 { 
-#if 0
   { 
-    L"バトルレコーダー", LISTDATA_SEQ_PROC_BTLRECORDER,
+    L"キーシステム", LISTDATA_SEQ_PROC_KEY_SYS,
   },
-#endif
   {
     L"共通ダウンロード", LISTDATA_SEQ_PROC_COMMON_DOWNLOAD
   },
   {
     L"WBTダウンロード", LISTDATA_SEQ_PROC_WBT_DOWNLOAD
   },
-  { 
-    L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
-  },
   {
     L"管理外セーブ", LISTDATA_SEQ_PROC_OUTSIDE_SAVE
   },
 #if 0
   { 
+    L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
+  },
+  { 
     L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
   },
-#endif
   { 
     L"ランクデータ１",  LISTDATA_SEQ_RANKDATA_ONE,
   },
   { 
     L"ランクデータフル",  LISTDATA_SEQ_RANKDATA_FULL,
   },
+#endif
   { 
     L"ポケモン２Dチェック", LISTDATA_SEQ_PROC_POKE2DCHECK,
   },
+#if 0
   { 
     L"レギュレーション赤外線送信", LISTDATA_SEQ_SEND_IRC_REGULATION,
   },
@@ -455,7 +459,6 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   { 
     L"テンプレート", LISTDATA_SEQ_PROC_TEMPLATE,
   },
-#if 0
   { 
     L"GTS", LISTDATA_SEQ_PROC_GTS
   },
@@ -463,8 +466,6 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
     L"結果", LISTDATA_SEQ_PROC_RESULT,
   },
 
-#endif
-#if 0
   { 
     L"相性診断（ひとり）", LISTDATA_SEQ_PROC_COMPATIBLE_DEBUG
   },
@@ -477,8 +478,6 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   { 
     L"運命値チェック", LISTDATA_SEQ_PROC_NAME_DEBUG,
   },
-#endif
-#if 0
   { 
     L"ランキング", LISTDATA_SEQ_PROC_RANKING_DEBUG,
   },
@@ -488,8 +487,6 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   { 
     L"ランクデータフル",  LISTDATA_SEQ_RANKDATA_FULL,
   },
-#endif
-#if 0
   { 
     L"タウンマップ", LISTDATA_SEQ_PROC_TOWNMAP,
   },
@@ -1518,6 +1515,25 @@ static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallOutside( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
   DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_OUTSIDE_ProcData, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キーシステム
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LISTDATA_CallKeySys( DEBUG_NAGI_MAIN_WORK *p_wk )
+{
+  p_wk->key_sys_param.mode = KEY_SYSTEM_MODE_APP;
+  p_wk->key_sys_param.p_gamedata = p_wk->p_gamedata;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
+  {
+    p_wk->key_sys_param.mode = KEY_SYSTEM_MODE_GET;
+  }
+
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(key_system), &KEY_SYSTEM_ProcData, &p_wk->key_sys_param );
 }
 //=============================================================================
 /**

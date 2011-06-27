@@ -188,7 +188,8 @@ SUBDIRS	=	wmi \
 			pkwd_announce \
 			animal_trail \
 			pokewood_party \
-			pokewood_cutin
+			pokewood_cutin \
+			key_system
 
 
 include $(RESOURCE_MACRO)
