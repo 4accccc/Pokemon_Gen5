@@ -33,6 +33,7 @@ _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSI
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
@@ -42,7 +43,7 @@ DEFINE_LOCAL  LCW_POSZ
 EVENT_START		ev_scene_c03_macomomeet_01
   
   //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _GET_PLAYER_RAIL_LOC(LCW_POSI,LCW_POSX,LCW_POSZ ) 
   
   //カメラ移動
   //_CAMERA_START()		//カメラ操作開始
@@ -103,7 +104,7 @@ EVENT_START		ev_scene_c03_macomomeet_01
     _TIME_WAIT( 48 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
     //_CAMERA_MOVE( 2303,1504,2670381,3145728,12288,3112960,40 )
-	CASE DIR_DOWN THEN  //本来ここにはこないが念のため
+	DEFAULT  //本来ここにはこないが念のため
     _OBJ_ANIME( C03_MACOMO_01, anm_macomo_to_pl_x47 )
     _TIME_WAIT( 48 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
