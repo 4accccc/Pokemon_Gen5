@@ -36,6 +36,7 @@
 #include "savedata/battle_rec.h"
 #include "savedata/pokewood_rec.h"
 #include "app/pkwd_count.h"
+#include "app/pkwd_book.h"
 
 //デバッグ
 #include "event_debug_menu.h"
@@ -91,6 +92,7 @@ static BOOL debugMenuCallProc_PokewoodShow2( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShowRom( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
+static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk );
 
 //-----------------------------------------------------------------------------
 ///リスト メニューヘッダー
@@ -131,6 +133,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
 //  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShowRom, GFL_OVERLAY_BLANK_ID },
 //  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShowRom, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -349,6 +352,29 @@ static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk )
 	return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用ポケウッド台本アプリ呼び出し
+ *
+ *  @param  POKEWOOD_FUNC_WORK *p_wk   ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
+{
+  GMEVENT *event = wk->gmEvent;
+	GMEVENT *new_event;
+	PKWD_BOOK_PARAM 	*pkwd_param = PKWD_BOOK_PARAM_Create( HEAPID_PROC, wk->gmSys, NULL );
+
+	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BOOK_EVENT_Show, (void *)pkwd_param );
+	GMEVENT_ChangeEvent( event, new_event );
+
+	OS_Printf( "Pkwd Book Start\n" );
+	return TRUE;
+}
+
 
 
 //============================================================================================
@@ -395,3 +421,35 @@ void PKWD_COUNT_PARAM_Setup_Debug( GAMESYS_WORK * gsys, PKWD_COUNT_PARAM * pkwd_
 	
 }
 #endif
+
+//============================================================================================
+//
+//  PKWD BOOK画面関連
+//
+//============================================================================================
+//------------------------------------------------------------------
+///  PKWD_BOOK用パラメータOBJECT生成
+//------------------------------------------------------------------
+PKWD_BOOK_PARAM * PKWD_BOOK_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	PKWD_BOOK_PARAM 	*pkwd_param;
+	
+	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_BOOK_PARAM) );
+	// 初期化
+//	pkwd_param->title_no	  = 0;
+//	pkwd_param->scenario_no = 0;
+//	pkwd_param->message		  = 0;
+	//
+	return pkwd_param;
+}
+
+//------------------------------------------------------------------
+///  PKWD BOOK用パラメータOBJECT削除
+//------------------------------------------------------------------
+void PKWD_BOOK_PARAM_Delete( PKWD_BOOK_PARAM * pkwd_param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( pkwd_param );
+}
+

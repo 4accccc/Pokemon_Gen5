@@ -286,4 +286,30 @@
 				Time="2011-05-26T03:44:56" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_BOOK"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>台本アプリ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-24T03:33:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-24T03:33:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>台本アプリ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-24T03:34:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-06-24T03:33:34" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

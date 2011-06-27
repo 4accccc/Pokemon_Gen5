@@ -2615,6 +2615,10 @@ SRCS_OVERLAY_WBTLIST = app/wbt_list/wbt_list.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_PKWD_ANNOUNCE = app/pkwd_announce/pkwd_count.c \
                       app/pkwd_announce/pkwd_count_graphic.c
+# ポケウッド台本アプリ
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PKWD_BOOK = app/pkwd_book/pkwd_book.c \
+                      app/pkwd_book/pkwd_book_graphic.c
 
 # エントリーチェッカー
 #===> SRCS_OVERLAY_UI_COMMON

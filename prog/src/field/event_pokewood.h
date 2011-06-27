@@ -31,3 +31,5 @@ extern GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work );
 
 
 extern GMEVENT * PKWD_COUNT_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work );
+extern GMEVENT * PKWD_BOOK_EVENT_Show(  GAMESYS_WORK * gsys, void * parent_work );
+

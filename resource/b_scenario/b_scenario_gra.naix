@@ -20,7 +20,8 @@ enum {
 	NARC_b_scenario_gra_pkwd_scenario_NSCR = 6,
 	NARC_b_scenario_gra_pkwd_scenario_NANR = 7,
 	NARC_b_scenario_gra_pkwd_scenario_arrow_NANR = 8,
-	NARC_b_scenario_gra_b_scenario_pos_tblbin = 9
+	NARC_b_scenario_gra_b_scenario_pos_tblbin = 9,
+	NARC_b_scenario_gra_pkwd_book_pos_tblbin = 10
 };
 
 /* NARC_B_SCENARIO_GRA_NAIX_ */

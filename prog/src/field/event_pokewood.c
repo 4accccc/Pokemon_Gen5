@@ -21,6 +21,7 @@
 #include "poke_tool/poke_memo.h"
 #include "battle/battle.h"
 #include "app/pkwd_count.h"
+#include "app/pkwd_book.h"
 #include "field_sound_system.h"
 #include "message.naix"
 
@@ -833,6 +834,96 @@ static GMEVENT_RESULT eventPkwdCount( GMEVENT *p_event, int *p_seq, void *p_wk_a
 
   case SEQ_EXIT:
     PKWD_COUNT_PARAM_Delete( &p_wk->pkwd_param );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
+//============================================================================================
+//
+//    PKWD_BOOK画面呼び出し
+//
+//============================================================================================
+extern void PKWD_BOOK_PARAM_Delete( PKWD_BOOK_PARAM * pkwd_param );
+//-------------------------------------
+///   PKWD_BOOK_PARAM定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK        *gsys;
+  FIELDMAP_WORK       *fieldmap;
+  PKWD_BOOK_PARAM    pkwd_param;
+} PKWD_BOOK_EVENT_WORK;
+
+static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PKWD_BOOK呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * PKWD_BOOK_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
+{
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PKWD_BOOK_PARAM *param = (PKWD_BOOK_PARAM *)parent_work;
+  PKWD_BOOK_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イヴェント
+  new_event = GMEVENT_Create( gsys, NULL, eventPkwdBook, sizeof(PKWD_BOOK_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(PKWD_BOOK_EVENT_WORK) );
+
+  p_param->gsys      = gsys;
+  p_param->fieldmap  = fieldmap;
+//  p_param->pkwd_param.scenario_no = param->scenario_no;
+
+  // デバッグメニューからもらった引数としてのPOKEWOOD_EVENT_PARAMは解放
+  PKWD_BOOK_PARAM_Delete( param );
+
+  OS_Printf( "PKWD BOOK Start\n" );
+
+  return new_event;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PkwdBook呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  PKWD_BOOK_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID( pkwd_book ), &PkwdBookProcData, &p_wk->pkwd_param );
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    PKWD_BOOK_PARAM_Delete( &p_wk->pkwd_param );
     return GMEVENT_RES_FINISH;
   }
 
