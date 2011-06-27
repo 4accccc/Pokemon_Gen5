@@ -65,6 +65,11 @@
   u32   machine4;       //技マシンフラグ２
 
   u32   waza_oshie;     //技教え
+
+  u32   waza_oshie_red;     // 技教え swan追加
+  u32   waza_oshie_blue;    // 技教え swan追加
+  u32   waza_oshie_yellow;  // 技教え swan追加
+  u32   waza_oshie_green;   // 技教え swan追加
 =end
 
 class PARA
@@ -178,6 +183,10 @@ class PARA
     WEIGHT
     WAZA_OSHIE
     NO_JUMP
+    WAZA_OSHIE_RED
+    WAZA_OSHIE_BLUE
+    WAZA_OSHIE_YELLOW
+    WAZA_OSHIE_GREEN
     MAX
   ]
 end
@@ -382,6 +391,31 @@ def get_tokusei( tokusei )
   return result
 end
 
+# 技教えデータを取得(swan追加版)
+def get_waza_oshie( waza_oshie_tmp )
+  result = Array.new
+  result[ 0 ] = 0
+
+  flag = 1
+  flag_cnt = 32
+  oshie_index = 0
+
+  waza_oshie_tmp.size.times {|i|
+    if waza_oshie_tmp[ i ] == "●"
+      result[ oshie_index ] |= flag
+    end
+    flag = flag << 1
+    flag_cnt -= 1
+    if flag_cnt == 0
+      flag = 1
+      flag_cnt = 32
+      oshie_index += 1
+    end
+  }
+
+  return result[ 0 ] 
+end
+
 #データテーブル
   type_table = {
     "ノーマル"=>0,
@@ -566,6 +600,7 @@ end
   form = []
   machine = []
   oshie = []
+  oshie2 = []   #技教え swan追加
   pokelist = []
   chihou_zukan = []
   chihou_zukan << 999
@@ -1049,7 +1084,7 @@ end
   print "per_000.bin 生成中\n"
   fp_per = open( "per_000.bin", "wb" )
 
-  data = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ].pack( "C10 S4 C10 S2 C2 S3 L4" )
+  data = [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ].pack( "C10 S4 C10 S2 C2 S3 L5 L4" )
 
 	data.size.times{ |c|
 		fp_per.printf("%c",data[ c ])
@@ -1284,7 +1319,18 @@ end
         end
       }
 
-      data = [ hp,pow,defe,agi,spepow,spedef,type1,type2,get,rank,exp_value,item1,item2,item3,gender,birth,friend,grow,egg1,egg2,speabi1,speabi2,speabi3,escape,form_per_start,form_gra_start,form_max,col_rev,exp,height,weight,machine[0],machine[1],machine[2],machine[3],oshie[0] ].pack( "C10 S4 C10 S2 C2 S3 L5" )
+
+      #技教え SWAN追加
+      waza_oshie_red = split_data[ PARA::WAZA_OSHIE_RED ].split(//)
+      oshie2[0] = get_waza_oshie( waza_oshie_red )
+      waza_oshie_blue = split_data[ PARA::WAZA_OSHIE_BLUE ].split(//)
+      oshie2[1] = get_waza_oshie( waza_oshie_blue )
+      waza_oshie_yellow = split_data[ PARA::WAZA_OSHIE_YELLOW ].split(//)
+      oshie2[2] = get_waza_oshie( waza_oshie_yellow )
+      waza_oshie_green = split_data[ PARA::WAZA_OSHIE_GREEN ].split(//)
+      oshie2[3] = get_waza_oshie( waza_oshie_green )
+
+      data = [ hp,pow,defe,agi,spepow,spedef,type1,type2,get,rank,exp_value,item1,item2,item3,gender,birth,friend,grow,egg1,egg2,speabi1,speabi2,speabi3,escape,form_per_start,form_gra_start,form_max,col_rev,exp,height,weight,machine[0],machine[1],machine[2],machine[3],oshie[0],oshie2[0],oshie2[1],oshie2[2],oshie2[3] ].pack( "C10 S4 C10 S2 C2 S3 L5 L4" )
 
 	    data.size.times{ |c|
 		    fp_per.printf("%c",data[ c ])
