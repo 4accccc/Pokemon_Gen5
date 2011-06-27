@@ -1212,35 +1212,50 @@ static void PokeDataChangeBoxParty(
 //--------------------------------------------------------------------------------------------
 static void PokeDataMoveBOXtoPARTY( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA * box )
 {
-  POKEMON_PARAM * pp;
-  int tate,yoko;
+	POKEMON_PARAM * pp;
 
-  if(syswk->app->multi_w==1 && syswk->app->multi_h==1){
-    // ボックスデータ準備
-    pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray, box->gt_pos), HEAPID_BOX_APP_L );
-    // 手持ちへ
-    PokeParty_Add( syswk->dat->pokeparty, pp );
-    // ボックスデータを削除
-    BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, box->gt_pos );
-    GFL_HEAP_FreeMemory( pp );
+	if(syswk->app->multi_w==1 && syswk->app->multi_h==1){
+		// ボックスデータ準備
+		pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray, box->gt_pos), HEAPID_BOX_APP_L );
+		// 手持ちへ
+		PokeParty_Add( syswk->dat->pokeparty, pp );
+		// ボックスデータを削除
+		BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, box->gt_pos );
+		GFL_HEAP_FreeMemory( pp );
 	}else{
-	  for(tate=0;tate<syswk->app->multi_h;tate++){
-	    for(yoko=0;yoko<syswk->app->multi_w;yoko++){
-	      int index = tate*6+yoko;
-	      if(syswk->app->multi_pokemon_id[index]){
-	        // ボックスデータ準備
-	        pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray, box->gt_pos+index), HEAPID_BOX_APP_L );
-	        // 手持ちへ
-	        PokeParty_Add( syswk->dat->pokeparty, pp );
-	        // ボックスデータを削除
-	        BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, box->gt_pos+index );
-	        GFL_HEAP_FreeMemory( pp );
-	      }
-	    }
-	  }
+		int	def;
+		int	i, j;
+
+		// 基準位置を取得
+		for( i=0; i<syswk->app->multi_h; i++ ){
+			for( j=0; j<syswk->app->multi_w; j++ ){
+				if( syswk->app->multi_pokemon_id[i*6+j] == 1 ){
+					def = box->gt_pos - ( i*6+j );
+					break;
+				}
+			}
+			if( j != syswk->app->multi_w ){
+				break;
+			}
+		}
+
+		for( i=0; i<syswk->app->multi_h; i++ ){
+			for( j=0; j<syswk->app->multi_w; j++ ){
+				int	index = i*6+j;
+				if(syswk->app->multi_pokemon_id[index]){
+					// ボックスデータ準備
+					pp = PP_CreateByPPP( BOX2MAIN_PPPGet(syswk,syswk->get_tray,def+index), HEAPID_BOX_APP_L );
+					// 手持ちへ
+					PokeParty_Add( syswk->dat->pokeparty, pp );
+					// ボックスデータを削除
+					BOX2MAIN_PokeDataClear( syswk, syswk->get_tray, def+index );
+					GFL_HEAP_FreeMemory( pp );
+				}
+			}
+		}
 	}
-  // トレイアイコン更新
-  BOX2OBJ_TrayIconCgxMake( syswk, syswk->get_tray );
+	// トレイアイコン更新
+	BOX2OBJ_TrayIconCgxMake( syswk, syswk->get_tray );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2293,21 +2308,27 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
   }else{
     // 手持ちといれかえ
     if( put_pos >= BOX2OBJ_POKEICON_TRAY_MAX && exist != 0 ){
-      POKEMON_PARAM * pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, put_pos-BOX2OBJ_POKEICON_TRAY_MAX );
-      // 配置位置のポケモンがメールを持っている
-      if( ITEM_CheckMail(PP_Get(pp,ID_PARA_item,NULL)) == TRUE ){
-        syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MAIL;
-        return FALSE;
-      }
-      // 取得ポケモンがタマゴで、戦えるポケモンが配置位置のポケモンのみ
-      if( BOX2MAIN_PokeParaGet( syswk, get_pos, syswk->get_tray, ID_PARA_tamago_flag, NULL ) != 0 &&
-        BOX2MAIN_BattlePokeCheck( syswk, put_pos-BOX2OBJ_POKEICON_TRAY_MAX ) == FALSE ){
-        if( syswk->dat->callMode != BOX_MODE_BATTLE ){
-          syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_BATTLE;
-          return FALSE;
-        }
-      }
-    }
+			// 複数選択時は配置位置にポケモンがいたらエラー
+			if( syswk->mv_cnv_mode == 2 ){
+				syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MULTI;
+				return FALSE;
+			}else{
+				POKEMON_PARAM * pp = PokeParty_GetMemberPointer( syswk->dat->pokeparty, put_pos-BOX2OBJ_POKEICON_TRAY_MAX );
+				// 配置位置のポケモンがメールを持っている
+				if( ITEM_CheckMail(PP_Get(pp,ID_PARA_item,NULL)) == TRUE ){
+					syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_MAIL;
+					return FALSE;
+				}
+				// 取得ポケモンがタマゴで、戦えるポケモンが配置位置のポケモンのみ
+				if( BOX2MAIN_PokeParaGet( syswk, get_pos, syswk->get_tray, ID_PARA_tamago_flag, NULL ) != 0 &&
+						BOX2MAIN_BattlePokeCheck( syswk, put_pos-BOX2OBJ_POKEICON_TRAY_MAX ) == FALSE ){
+					if( syswk->dat->callMode != BOX_MODE_BATTLE ){
+						syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_BATTLE;
+						return FALSE;
+					}
+				}
+			}
+		}
   }
 
 	// 複数選択用
