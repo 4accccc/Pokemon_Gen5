@@ -320,7 +320,8 @@ typedef struct
   GFL_BMPWIN      *bmp_win[BOX_SEARCH_BMPWIN_NUM];
   PRINT_UTIL      print_util[BOX_SEARCH_BMPWIN_NUM];
   FRAMELIST_WORK  *frame_list_work;
-	u32	flist_pos_max;
+	u16	flist_pos_max;
+	u16	flist_item_max;
   
   UI_EASY_CLWK_RES      clres[BOXSEARCH_OBJRES_NUM];
   GFL_CLWK              *clwk[BOXSEARCH_OBJ_NUM];
@@ -1894,12 +1895,14 @@ static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 2:
 	case 3:
 	case 4:
-		if( GetPokeLibMax(wk,wk->topword-1,result) != 0 ){
-			wk->nextword = result;
-			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
-			return SUBSEQ_SELECTPOKEMON2EXIT;
-		}else{
-			PMSND_PlaySE( SE_BOX2_SEARCH_WARNING );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			if( GetPokeLibMax(wk,wk->topword-1,result) != 0 ){
+				wk->nextword = result;
+				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				return SUBSEQ_SELECTPOKEMON2EXIT;
+			}else{
+				PMSND_PlaySE( SE_BOX2_SEARCH_WARNING );
+			}
 		}
 		break;
 
@@ -2019,12 +2022,14 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 4:
 	case 5:
 	case 6:
-		_set_search_data(
-			wk, SEARCH_DATAID_POKEMON,
-			FRAMELIST_GetItemParam( wk->frame_list_work, FRAMELIST_GetListPos(wk->frame_list_work) ) );
-		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
-		PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
-		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		if( wk->flist_item_max > 7 || GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			_set_search_data(
+				wk, SEARCH_DATAID_POKEMON,
+				FRAMELIST_GetItemParam( wk->frame_list_work, FRAMELIST_GetListPos(wk->frame_list_work) ) );
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+			PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
+			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		}
 		break;
 
 	case FRAMELIST_RET_MOVE:				// カーソル移動
@@ -2337,12 +2342,14 @@ static int Subseq_SelectTokusei2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 2:
 	case 3:
 	case 4:
-		if( get_sort_tokusei_num(wk->topword-1,result) != 0 ){
-			wk->nextword = result;
-			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
-			return SUBSEQ_SELECTTOKUSEI2EXIT;
-		}else{
-			PMSND_PlaySE( SE_BOX2_SEARCH_WARNING );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			if( get_sort_tokusei_num(wk->topword-1,result) != 0 ){
+				wk->nextword = result;
+				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				return SUBSEQ_SELECTTOKUSEI2EXIT;
+			}else{
+				PMSND_PlaySE( SE_BOX2_SEARCH_WARNING );
+			}
 		}
 		break;
 
@@ -2429,12 +2436,14 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 4:
 	case 5:
 	case 6:
-		_set_search_data(
-			wk, SEARCH_DATAID_TOKUSEI,
-			FRAMELIST_GetItemParam( wk->frame_list_work, FRAMELIST_GetListPos(wk->frame_list_work) ) );
-		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
-		PrintNowSelect( wk, wk->tokusei_msg, wk->param->syswk->search_data.tokusei );
-		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		if( wk->flist_item_max > 7 || GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			_set_search_data(
+				wk, SEARCH_DATAID_TOKUSEI,
+				FRAMELIST_GetItemParam( wk->frame_list_work, FRAMELIST_GetListPos(wk->frame_list_work) ) );
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+			PrintNowSelect( wk, wk->tokusei_msg, wk->param->syswk->search_data.tokusei );
+			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		}
 		break;
 
 	case FRAMELIST_RET_MOVE:				// カーソル移動
@@ -2526,10 +2535,12 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 1:
 	case 2:
 	case 3:
-		_set_search_data( wk, SEARCH_DATAID_SEX, result );
-		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
-		PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
-		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			_set_search_data( wk, SEARCH_DATAID_SEX, result );
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+			PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
+			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		}
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -2593,10 +2604,12 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 0:
 	case 1:
 	case 2:
-		_set_search_data( wk, SEARCH_DATAID_ITEM, result );
-		PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
-		PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
-		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+			_set_search_data( wk, SEARCH_DATAID_ITEM, result );
+			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
+			PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
+			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		}
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -2673,14 +2686,14 @@ static int Subseq_SelectMark( BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 3:
 	case 4:
 	case 5:
-		{
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
 			int	prm = _get_search_data_mark(wk,result) ^ 1;
 			_set_search_data_mark( wk, result, prm );
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0+result], prm );
+			SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
+			SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
+			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 		}
-		SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK0_0 );
-		SetMarkDataObj( wk, BOXSEARCH_OBJID_MARK1_0 );
-		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 		break;
 
 	case FRAMELIST_RET_NONE:
@@ -3144,13 +3157,13 @@ static const FRAMELIST_TOUCH_DATA FrameListTouchTbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA FrameListTouchNoScrollTbl[] =
 {
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
+  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
+  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
+  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
+  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
+  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
@@ -3693,7 +3706,7 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
 		header.touch   = FrameListTouchNoScrollTbl;
 	}
   wk->frame_list_work = FRAMELIST_Create( &header, wk->heapID );
-//  FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+	wk->flist_item_max  = header.itemMax;
 
   // 項目背景設定
   FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_box_gra_boxsearch_frame_2_NSCR, FALSE, 0 );
