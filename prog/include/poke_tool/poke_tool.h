@@ -764,6 +764,9 @@ extern  BOOL  POKETOOL_CheckWazaMachine( u16 mons_no, u16 form_no, int machine_n
 extern BOOL PP_CheckWazaOshie( const POKEMON_PARAM * pp, int waza_oshie_no );
 extern BOOL  POKETOOL_CheckWazaOshie( u16 mons_no, u16 form_no, int waza_oshie_no );
 
+extern BOOL PP_CheckWazaOshieSW( const POKEMON_PARAM *pp, int waza_oshie_no, int color_type );
+extern BOOL POKETOOL_CheckWazaOshieSW( u16 mons_no, u16 form_no, int waza_oshie_no, int color_type );
+
 //なにか１つでもリボンをもっているかチェック
 extern BOOL PP_CheckRibbon( const POKEMON_PARAM *pp );
 

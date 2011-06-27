@@ -71,6 +71,11 @@ typedef enum {
 
   POKEPER_ID_waza_oshie1,     //‹Z‹³‚¦‚P
 
+  POKEPER_ID_waza_oshie_red,    //‹Z‹³‚¦ (‚ ‚©‚¢‚©‚¯‚ç)
+  POKEPER_ID_waza_oshie_blue,   //‹Z‹³‚¦ (‚ ‚¨‚¢‚©‚¯‚ç)
+  POKEPER_ID_waza_oshie_yellow, //‹Z‹³‚¦ (‚«‚¢‚ë‚¢‚©‚¯‚ç)
+  POKEPER_ID_waza_oshie_green,  //‹Z‹³‚¦ (‚Ý‚Ç‚è‚Ì‚©‚¯‚ç)
+
 }PokePersonalParamID;
 
 

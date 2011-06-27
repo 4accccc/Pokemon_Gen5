@@ -77,6 +77,11 @@ struct  pokemon_personal_data
   u32   machine4;       //‹Zƒ}ƒVƒ“ƒtƒ‰ƒO‚Q
 
   u32   waza_oshie1;    //‹Z‹³‚¦‚P
+
+  u32   waza_oshie_red;     // ‹Z‹³‚¦ swan’Ç‰Á
+  u32   waza_oshie_blue;    // ‹Z‹³‚¦ swan’Ç‰Á
+  u32   waza_oshie_yellow;  // ‹Z‹³‚¦ swan’Ç‰Á
+  u32   waza_oshie_green;   // ‹Z‹³‚¦ swan’Ç‰Á
 };
 
 

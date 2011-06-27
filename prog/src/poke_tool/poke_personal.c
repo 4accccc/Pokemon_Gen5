@@ -282,6 +282,18 @@ u32 POKE_PERSONAL_GetParam( POKEMON_PERSONAL_DATA *ppd, PokePersonalParamID para
   case POKEPER_ID_waza_oshie1:      //‹Z‹³‚¦‚P
     ret = ppd->waza_oshie1;
     break;
+  case POKEPER_ID_waza_oshie_red:    //‹Z‹³‚¦ (‚ ‚©‚¢‚©‚¯‚ç)
+    ret = ppd->waza_oshie_red;
+    break;
+  case POKEPER_ID_waza_oshie_blue:   //‹Z‹³‚¦ (‚ ‚¨‚¢‚©‚¯‚ç)
+    ret = ppd->waza_oshie_blue;
+    break;
+  case POKEPER_ID_waza_oshie_yellow: //‹Z‹³‚¦ (‚«‚¢‚ë‚¢‚©‚¯‚ç)
+    ret = ppd->waza_oshie_yellow;
+    break;
+  case POKEPER_ID_waza_oshie_green:  //‹Z‹³‚¦ (‚Ý‚Ç‚è‚Ì‚©‚¯‚ç)
+    ret = ppd->waza_oshie_green;
+    break;
   default:
     GF_ASSERT(0);
     ret = 0;
