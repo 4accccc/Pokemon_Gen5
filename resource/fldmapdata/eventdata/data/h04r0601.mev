@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/23 16:41:07
+#save date:2011/06/27 17:52:14
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\h04r0601.wms
 #SECTION START:OBJ_EVENT
@@ -9,8 +9,39 @@ C:\home\swan\resource\fldmapdata\eventdata\data\h04r0601.wms
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
+#type
+1
+#ID name
+H04R0601_POKE39_01
+#OBJ CODE Number
+POKE39
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04R0601_POKE39_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 168
+#event number: 1
 #type
 1
 #ID name
@@ -18,7 +49,7 @@ H04R0601_WOMAN3_01
 #OBJ CODE Number
 WOMAN3
 #MOVE CODE Number
-MV_DMY
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -40,7 +71,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 0 168
+-104 0 168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

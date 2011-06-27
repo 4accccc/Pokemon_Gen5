@@ -9,6 +9,8 @@
 #ifndef ZONE_H04R0501_EVC_H
 #define ZONE_H04R0501_EVC_H
 
+#define H04R0501_MAN2_01                   0
+#define H04R0501_WOMAN3_01                 1
 
 #endif //ZONE_H04R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

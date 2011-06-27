@@ -9,7 +9,8 @@
 #ifndef ZONE_H04R0601_EVC_H
 #define ZONE_H04R0601_EVC_H
 
-#define H04R0601_WOMAN3_01                 0
+#define H04R0601_POKE39_01                 0
+#define H04R0601_WOMAN3_01                 1
 
 #endif //ZONE_H04R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

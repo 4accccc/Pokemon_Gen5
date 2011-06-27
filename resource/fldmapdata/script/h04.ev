@@ -19,235 +19,617 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-//看板
-_EVENT_DATA		ev_bg_h04_sign_01
-_EVENT_DATA		ev_bg_h04_sign_02
-_EVENT_DATA		ev_bg_h04_sign_03
-//ISS
+
+_EVENT_DATA    ev_bg_h04_sign_01
+_EVENT_DATA    ev_bg_h04_sign_02
+_EVENT_DATA    ev_bg_h04_sign_03
 _EVENT_DATA    ev_h04_grasssound_01
 _EVENT_DATA    ev_h04_guitar_01
 _EVENT_DATA    ev_h04_voice_01
 _EVENT_DATA    ev_h04_leadsinger_01
+_EVENT_DATA    ev_h04_stop_01
+_EVENT_DATA    ev_pos_h04_stop_01
+_EVENT_DATA    ev_h04_boy1_01
+_EVENT_DATA    ev_h04_oldman1_01
+_EVENT_DATA    ev_h04_backpackerw_01
 _EVENT_DATA_END
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+DEFINE_LOCAL  LCW_INDEX
+DEFINE_LOCAL  LCW_FRONT
+DEFINE_LOCAL  LCW_SIDE
+
 
 /**************************************************************/
 /*  h04 SIGN1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_bg_h04_sign_01
-  _EASY_BGWIN_MSG( msg_h04_sign_01, TYPE_ROAD)	//簡易メッセージＢＧ用
+  _EASY_BGWIN_MSG( msg_h04_sign_01, TYPE_ROAD)  //簡易メッセージＢＧ用
 EVENT_END
+
 /**************************************************************/
 /*  h04 SIGN1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_bg_h04_sign_02
-  _EASY_BGWIN_MSG( msg_h04_sign_01, TYPE_ROAD)	//簡易メッセージＢＧ用
+  _EASY_BGWIN_MSG( msg_h04_sign_01, TYPE_ROAD)  //簡易メッセージＢＧ用
 EVENT_END
+
 /**************************************************************/
 /*  h04 SIGN1の会話用イベントスクリプト                      */
 /**************************************************************/
 EVENT_START   ev_bg_h04_sign_03
-  _EASY_BGWIN_MSG( msg_h04_sign_02, TYPE_POST)	//簡易メッセージＢＧ用
+  _EASY_BGWIN_MSG( msg_h04_sign_02, TYPE_POST)  //簡易メッセージＢＧ用
 EVENT_END
 
 /************************************************************/
-/*		ISS 草笛				*/
+/*  ISS 草笛                                                */
 /************************************************************/ 
 EVENT_START   ev_h04_grasssound_01
 
-	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
+  //再生状態かチェック
+  _ISS_SWITCH_CHECK( SCWK_ANSWER, 1 )
 
-	//演奏していない
-	IF $SCWK_ANSWER == FALSE THEN
-	
-		//１回目
-		IF $LOCALWORK10 == 0 THEN
-		
-			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 1 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_01 )
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 1 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_03 )
-		
-		ENDIF
-	
-	//演奏している
-	ELSE
+  //演奏していない
+  IF $SCWK_ANSWER == FALSE THEN
 
-		//１回目
-		IF $LOCALWORK10 == 0 THEN
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 1 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_02 )
-			$LOCALWORK10 = 1
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 1 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_04 )
-		
-		ENDIF
-	
-	ENDIF
+    //１回目
+    IF $LOCALWORK10 == 0 THEN
+
+      //ISSスイッチをオンに
+      _ISS_SWITCH_ON( 1 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_01 )
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオンに
+      _ISS_SWITCH_ON( 1 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_03 )
+
+    ENDIF
+
+  //演奏している
+  ELSE
+
+    //１回目
+    IF $LOCALWORK10 == 0 THEN
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 1 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_02 )
+      $LOCALWORK10 = 1
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 1 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_whistle_04 )
+
+    ENDIF
+
+  ENDIF
+
 EVENT_END
 
 /************************************************************/
-/*		ISS ギター											*/
+/*  ISS ギター                                              */
 /************************************************************/
 EVENT_START   ev_h04_guitar_01
-	
-	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
 
-	//演奏していない
-	IF $SCWK_ANSWER == FALSE THEN
-	
-		//１回目
-		IF $LOCALWORK11 == 0 THEN
-		
-			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 3 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_01 )
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 3 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_03 )
-		
-		ENDIF
-	
-	//演奏している
-	ELSE
+  //再生状態かチェック
+  _ISS_SWITCH_CHECK( SCWK_ANSWER, 3 )
 
-		//１回目
-		IF $LOCALWORK11 == 0 THEN
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 3 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_02 )
-			$LOCALWORK11 = 1
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 3 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_04 )
-		
-		ENDIF
-	
-	ENDIF
-	
+  //演奏していない
+  IF $SCWK_ANSWER == FALSE THEN
+
+    //１回目
+    IF $LOCALWORK11 == 0 THEN
+
+      //ISSスイッチをオンに
+      _ISS_SWITCH_ON( 3 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_01 )
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオンに
+      _ISS_SWITCH_ON( 3 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_03 )
+
+    ENDIF
+
+  //演奏している
+  ELSE
+
+    //１回目
+    IF $LOCALWORK11 == 0 THEN
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 3 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_02 )
+      $LOCALWORK11 = 1
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 3 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_guitar_04 )
+
+    ENDIF
+
+  ENDIF
+
 EVENT_END
 
 /************************************************************/
-/*		ISS ボイスパーカッション							*/
+/*  ISS ボイスパーカッション                                */
 /************************************************************/
 EVENT_START   ev_h04_voice_01
 
-	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
+  //再生状態かチェック
+  _ISS_SWITCH_CHECK( SCWK_ANSWER, 2 )
 
-	//演奏していない
-	IF $SCWK_ANSWER == FALSE THEN
-	
-		//１回目
-		IF $LOCALWORK12 == 0 THEN
-		
-			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 2 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_01 )
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオンに
-			_ISS_SWITCH_ON( 2 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_03 )
-		
-		ENDIF
-	
-	//演奏している
-	ELSE
+  //演奏していない
+  IF $SCWK_ANSWER == FALSE THEN
 
-		//１回目
-		IF $LOCALWORK12 == 0 THEN
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 2 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_02 )
-			$LOCALWORK12 = 1
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 2 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_04 )
-		
-		ENDIF
-	
-	ENDIF
+    //１回目
+    IF $LOCALWORK12 == 0 THEN
+
+      //ISSスイッチをオンに
+      _ISS_SWITCH_ON( 2 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_01 )
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオンに
+      _ISS_SWITCH_ON( 2 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_03 )
+
+    ENDIF
+
+  //演奏している
+  ELSE
+
+    //１回目
+    IF $LOCALWORK12 == 0 THEN
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 2 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_02 )
+      $LOCALWORK12 = 1
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 2 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_voice_04 )
+
+    ENDIF
+
+  ENDIF
 
 EVENT_END
 
 /************************************************************/
-/*		ISS メインボーカル									*/
+/*  ISS メインボーカル                                      */
 /************************************************************/
 EVENT_START   ev_h04_leadsinger_01
 
-	//再生状態かチェック
-	_ISS_SWITCH_CHECK( SCWK_ANSWER,4 )
+  //再生状態かチェック
+  _ISS_SWITCH_CHECK( SCWK_ANSWER, 4 )
 
-	//演奏していない
-	IF $SCWK_ANSWER == FALSE THEN
-	
-		//１回目
-		IF $LOCALWORK13 == 0 THEN
-		
-			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_01 )
-			_ISS_SWITCH_ON( 4 )
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオンに
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_03 )
-			_ISS_SWITCH_ON( 4 )
-		
-		ENDIF
-	
-	//演奏している
-	ELSE
+  //演奏していない
+  IF $SCWK_ANSWER == FALSE THEN
 
-		//１回目
-		IF $LOCALWORK13 == 0 THEN
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 4 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_02 )
-			$LOCALWORK13 = 1
-		
-		//2回目以降
-		ELSE
-		
-			//ISSスイッチをオフに
-			_ISS_SWITCH_OFF( 4 )
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_04 )
-		
-		ENDIF
-	
-	ENDIF
-	
+    //１回目
+    IF $LOCALWORK13 == 0 THEN
+
+      //ISSスイッチをオンに
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_01 )
+      _ISS_SWITCH_ON( 4 )
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオンに
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_03 )
+      _ISS_SWITCH_ON( 4 )
+
+    ENDIF
+
+  //演奏している
+  ELSE
+
+    //１回目
+    IF $LOCALWORK13 == 0 THEN
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 4 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_02 )
+      $LOCALWORK13 = 1
+
+    //2回目以降
+    ELSE
+
+      //ISSスイッチをオフに
+      _ISS_SWITCH_OFF( 4 )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_leadsinger_04 )
+
+    ENDIF
+
+  ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*  ストッパー：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_h04_stop_01
+{
+
+  _TALK_OBJ_START()
+
+  //ストッパーとの勝負に勝った後か
+  IF $WK_SCENE_H04_STOP_01 == 1 THEN
+    //ストッパー：２ねんかん　コツコツと　のばした
+    _BALLOONWIN_OBJMSG( msg_h04_stop_05, H04_STOP_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+
+    //ストッパー：まてーい！▼
+    _BALLOONWIN_OBJMSG( msg_h04_stop_01, H04_STOP_01 )
+
+    //ストッパーと戦う？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+      //ストッパー：がははは！　おぬしの　ような
+      _BALLOONWIN_OBJMSG( msg_h04_stop_03, H04_STOP_01 )
+      _MSGWIN_CLOSE()
+
+      //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+      //結果チェック
+      _CALL ev_battle_check
+
+      //勝利時
+      //========================================//
+      //POSイベント進行
+      $WK_SCENE_H04_STOP_01 = 1
+      //========================================//
+
+      //ストッパー：２ねんかん　コツコツと　のばした
+      _BALLOONWIN_OBJMSG( msg_h04_stop_05, H04_STOP_01 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE    //いいえ
+      //ストッパー：そうであろう！　９９９れんしょうの
+      _BALLOONWIN_OBJMSG( msg_h04_stop_03, H04_STOP_01 )
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+}
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+/**************************************************************/
+/*  POS：ストッパー接近                                       */
+/**************************************************************/
+EVENT_START   ev_pos_h04_stop_01
+{
+
+  //アニメ：ストッパー「！」振り向き
+  _OBJ_ANIME( H04_STOP_01, anm_stop_guide01 )
+  _OBJ_ANIME_WAIT()
+
+  //主人公座標取得
+  //_PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //主人公座標取得（レールロケーション取得）
+  _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
+
+  //アニメ：ストッパー接近
+  IF $LCW_SIDE == 5 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_a )
+  ELSIF $LCW_SIDE == 6 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_b )
+  ELSIF $LCW_SIDE == 7 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_c )
+  ELSIF $LCW_SIDE == 8 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_d )
+  ELSIF $LCW_SIDE == 9 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_e )
+  ELSIF $LCW_SIDE == 10 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_f )
+  ELSIF $LCW_SIDE == 11 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_come_g )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+  //ストッパー：ちょっと　まてーい！▼
+  _BALLOONWIN_OBJMSG( msg_h04_stop_01, H04_STOP_01 )
+
+  //ストッパーと戦う？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+    //ストッパー：がははは！　おぬしの　ような
+    _BALLOONWIN_OBJMSG( msg_h04_stop_03, H04_STOP_01 )
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //勝利時
+    //========================================//
+    //POSイベント進行
+    $WK_SCENE_H04_STOP_01 = 1
+    //========================================//
+
+    //ストッパー：２ねんかん　コツコツと　のばした
+    _BALLOONWIN_OBJMSG( msg_h04_stop_05, H04_STOP_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+
+  ELSE    //いいえ
+    //ストッパー：そうであろう！　９９９れんしょうの
+    _BALLOONWIN_OBJMSG( msg_h04_stop_04, H04_STOP_01 )
+    _MSGWIN_CLOSE()
+
+    //アニメ：主人公押しのけられる
+    _OBJ_ANIME( H04_STOP_01, anm_walk_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+    _OBJ_ANIME_WAIT()
+
+  ENDIF
+
+  //主人公座標取得（レールロケーション取得）
+  _GET_PLAYER_RAIL_LOC( LCW_INDEX, LCW_FRONT, LCW_SIDE )
+
+  //アニメ：ストッパー元居た場所へ
+  IF $LCW_SIDE == 5 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_a )
+  ELSIF $LCW_SIDE == 6 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_b )
+  ELSIF $LCW_SIDE == 7 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_c )
+  ELSIF $LCW_SIDE == 8 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_d )
+  ELSIF $LCW_SIDE == 9 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_e )
+  ELSIF $LCW_SIDE == 10 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_f )
+  ELSIF $LCW_SIDE == 11 THEN
+    _OBJ_ANIME( H04_STOP_01, anm_stop_back_g )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+}
+EVENT_END
+
+//一時しのぎ
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Aパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_a
+  _ANIME_DATA AC_WALK_U_8F,6
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Aパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_a
+  _ANIME_DATA AC_WALK_D_8F,7
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Bパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_b
+  _ANIME_DATA AC_WALK_U_8F,5
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Bパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_b
+  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Cパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_c
+  _ANIME_DATA AC_WALK_U_8F,4
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Cパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_c
+  _ANIME_DATA AC_WALK_D_8F,5
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Dパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_d
+  _ANIME_DATA AC_WALK_U_8F,3
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Dパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_d
+  _ANIME_DATA AC_WALK_D_8F,4
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Eパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_e
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Eパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_e
+  _ANIME_DATA AC_WALK_D_8F,3
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Fパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_f
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Fパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_f
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：主人公前にやってくる（Gパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_come_g
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  ストッパー：定位置へ（Gパターン）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stop_back_g
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_h04_boy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_boy1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじいさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_h04_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_oldman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  バックパッカー♀：話しかけ                                */
+/**************************************************************/
+EVENT_START   ev_h04_backpackerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_backpackerw_01 )
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ストッパー：「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stop_guide01
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+

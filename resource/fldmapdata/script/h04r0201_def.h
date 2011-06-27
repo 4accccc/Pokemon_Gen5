@@ -5,5 +5,7 @@
 #define _H04R0201_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_H04R0201_BAKER_01 (1)
+#define SCRID_H04R0201_MAN3_01 (2)
 
 #endif //_H04R0201_DEF_H_

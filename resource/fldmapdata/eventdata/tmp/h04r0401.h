@@ -9,6 +9,11 @@
 #ifndef ZONE_H04R0401_EVC_H
 #define ZONE_H04R0401_EVC_H
 
+#define H04R0401_BREEDERW_01               0
+#define H04R0401_POKE20_01                 1
+#define H04R0401_BABYGIRL_01               2
+#define H04R0401_POKE41_01                 3
+#define H04R0401_BREEDERM_01               4
 
 #endif //ZONE_H04R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

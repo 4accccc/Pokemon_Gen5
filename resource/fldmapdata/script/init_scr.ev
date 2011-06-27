@@ -171,6 +171,9 @@ init_flags:
   _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
   _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
 
+  //H04R0301：ビレッジブリッジの民家のツリーズ
+  _FLAG_SET( FV_H04R0301_FISING_01 )
+
 }
 _RET
 

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/03 16:27:40
+#save date:2011/06/24 19:08:50
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\h04.wms
 #hold event type:
 1
 #hold event number:
-11
+15
 #event number: 0
 #type
 1
@@ -351,6 +351,130 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 744 0 -24
+#event number: 11
+#type
+1
+#ID name
+H04_STOP_01
+#OBJ CODE Number
+GENTLEMAN
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_STOP_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+8 1 3
+#event number: 12
+#type
+1
+#ID name
+H04_OLDMAN1_01
+#OBJ CODE Number
+OLDMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_OLDMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 40
+#event number: 13
+#type
+1
+#ID name
+H04_BOY1_01
+#OBJ CODE Number
+BOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_BOY1_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+840 0 -440
+#event number: 14
+#type
+1
+#ID name
+H04_BACKPACKERW_01
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RAIL_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_BACKPACKERW_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+10 3 -2
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -448,7 +572,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_H04_STOP_01
+#Pos Script Name
+SCRID_POS_H04_STOP_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_H04_STOP_01
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+8 1 -4
+#size
+1 9
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

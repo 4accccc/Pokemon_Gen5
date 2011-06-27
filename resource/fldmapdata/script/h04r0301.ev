@@ -19,4 +19,206 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_h04r0301_fishing_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/*  ツリーズイベント                                          */
+/**************************************************************/
+EVENT_START   ev_h04r0301_fishing_01
+
+//ツリーズ変数一式
+DEFINE_LOCAL LWK_TALK_AGAIN
+DEFINE_LOCAL LWK_POKE_SELECT
+DEFINE_LOCAL LWK_POKE_SELECT_CHK
+DEFINE_LOCAL LWK_MONSNUM
+
+DEFINE_LOCAL LWK_DAY1
+DEFINE_LOCAL LWK_DAY2
+DEFINE_LOCAL LWK_MONTH1
+DEFINE_LOCAL LWK_MONTH2
+DEFINE_LOCAL LWK_YEAR1
+DEFINE_LOCAL LWK_YEAR2
+
+  _TALK_OBJ_START()
+
+  //ツリーズメンバーに参加してない
+  IF FLAG_OFF( TMFLG_H04R0301_FISHING ) && FLAG_OFF( FE_H04R0301_FISHING_RECEPT_01 ) THEN
+
+    //ツリーズメンバー加入イベントへ
+    _CALL   ev_poke_select
+
+  //イベント中
+  ELSIF FLAG_ON( TMFLG_H04R0301_FISHING ) &&  $WK_OTHER_FISHING_MONSNUM != 0 THEN
+
+    //ポケモン名をタグにセット
+    _MONS_NAME( 0, WK_OTHER_FISHING_MONSNUM )
+    //ツリーズ：ほんじつの　テーマの　ポケモンは
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_06 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    //ポケモンがオーダーと合っているか調べる処理へ
+    _CALL   ev_poke_chk
+
+  //イベント再開（次の目標ポケモンの発表）
+  ELSIF FLAG_OFF( TMFLG_H04R0301_FISHING ) &&  FLAG_ON( FE_H04R0301_FISHING_RECEPT_01 ) THEN
+
+    //ツリーズ：よう！　メンバー　だい２ごう
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_13 )
+
+    //次のオーダーのポケモンを抽選
+    _GET_FISHING_ENCOUNT_MONSNO( WK_OTHER_FISHING_MONSNUM )
+
+    //ポケモン名をタグにセット
+    _MONS_NAME( 0, WK_OTHER_FISHING_MONSNUM )
+    //ツリーズ：さっそく　チーム　ツリーズの
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //タイムフラグと、イベント中フラグをON
+    _FLAG_SET( TMFLG_H04R0301_FISHING )
+    _FLAG_SET( FE_H04R0301_FISHING_RECEPT_01 )
+    //========================================//
+
+  //イベントをクリアしている（日付が変わるまで）
+  ELSIF FLAG_ON( TMFLG_H04R0301_FISHING ) &&  $WK_OTHER_FISHING_MONSNUM == 0 THEN
+
+    //ツリーズ：つりの　みりょく……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_12 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE() 
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  ツリーズメンバー加入イベント（ポケモン抽選）              */
+/**************************************************************/
+ev_poke_select:
+
+  //２回目以降の会話か
+  IF FLAG_ON( FE_H04R0301_FISHING_TALK_01 ) THEN
+    //ツリーズ：キミも　チーム　ツリーズに　はいって
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_02 )
+  ELSE
+    //ツリーズ：さっそく　きたねー！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_01 )
+  ENDIF
+
+  //ツリーズメンバーに入る？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+    //ポケモンを抽選
+    _GET_FISHING_ENCOUNT_MONSNO( WK_OTHER_FISHING_MONSNUM )
+
+    //ポケモン名をタグにセット
+    _MONS_NAME( 0, WK_OTHER_FISHING_MONSNUM )
+    //ツリーズ：よーし！　これで　キミも
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_04 )
+    //ツリーズ：さっそく　チーム　ツリーズの
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //タイムフラグと、イベント中フラグをON
+    _FLAG_SET( TMFLG_H04R0301_FISHING )
+    _FLAG_SET( FE_H04R0301_FISHING_RECEPT_01 )
+    //========================================//
+
+  ELSE    //いいえ
+    //ツリーズ：オー！　なんてこったい！
+    _BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_03)
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //会話済みフラグON
+    _FLAG_SET( FE_H04R0301_FISHING_TALK_01 )
+    //========================================//
+
+  ENDIF
+
+_RET
+
+/**************************************************************/
+/*  選択ポケモンのオーダーとのチェック                        */
+/**************************************************************/
+ev_poke_chk:
+
+  //ポケモンを選択して、イベント主に見せる？に「はい」と答える
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //ツリーズ：どの　どの　どの　ポケモンか
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_07 )
+    _MSGWIN_CLOSE()
+
+    //日付を保存
+    _GET_DATE( LWK_MONTH1, LWK_DAY1 )
+
+    //手持ちのポケモンを選択する
+    _SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK , LWK_POKE_SELECT , 0 )
+
+    IF $LWK_POKE_SELECT_CHK == TRUE THEN
+
+      //選んだポケモンのナンバーを取得する
+      _GET_PARTY_POKE_MONSNO( LWK_MONSNUM, LWK_POKE_SELECT )
+
+      //ポケモン名をタグにセット
+      _MONS_NAME( 0, LWK_MONSNUM )
+
+      //捕獲日を取得する
+      _GET_TEMOTI_GETDATE( LWK_YEAR2, LWK_MONTH2, LWK_DAY2, LWK_POKE_SELECT )
+
+      //ポケモンの種類、捕獲日がオーダーとあっている場合
+      IF $WK_OTHER_FISHING_MONSNUM == $LWK_MONSNUM && $LWK_MONTH1 == $LWK_MONTH2 && $LWK_DAY1  == $LWK_DAY2 THEN
+        //ツリーズ：さすが　チーム　ツリーズ
+        _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_08 )
+        _MSGWIN_CLOSE()
+
+        //アイテム（ダイブボール）を取得【仮】数は前回と同じ状態のまま
+        _ITEM_EVENT_NOWAIT( ITEM_DAIBUBOORU, 5 )
+
+        //========================================//
+        //抽選されたポケモンを初期化する
+        $WK_OTHER_FISHING_MONSNUM = 0
+        //========================================//
+
+      //ポケモンの種類がオーダーと違う場合
+      ELSIF $WK_OTHER_FISHING_MONSNUM  !=  $LWK_MONSNUM THEN
+        //ツリーズ：だけどよ　オレが　テーマにえらんだ
+        _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_10 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      //ポケモンの種類がオーダーと違う場合
+      ELSIF $LWK_MONTH1 != $LWK_MONTH2 || $LWK_DAY1  != $LWK_DAY2  THEN
+        //ツリーズ：ほんじつ　つった　ポケモンじゃない▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_09 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE
+      //ほんじつ　つりたい　ポケモンは
+      _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_11 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE() 
+    ENDIF
+
+  //ポケモンを選択して、イベント主に見せる？に「いいえ」と答える
+  ELSE
+    //ほんじつ　つりたい　ポケモンは
+    _BALLOONWIN_TALKOBJ_MSG( msg_h01r0301_fising_11 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE() 
+  ENDIF
+
+_RET
+
+

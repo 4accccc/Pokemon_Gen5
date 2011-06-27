@@ -19,8 +19,108 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
-
-
-
+_EVENT_DATA   ev_zone_h04r0501
+_EVENT_DATA   ev_h04r0501_wkobjcode00_01
+_EVENT_DATA   ev_h04r0501_wkobjcode01_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                        */
+/**************************************************************/
+INIT_EVENT_START  ev_zone_h04r0501
+
+  DEFINE_LOCAL LWK_NUM
+  _GET_RND( LWK_NUM, 3 )
+
+  //日付が変わったら、引越し客を変化させる
+  IF FLAG_OFF( TMFLG_H04R0501_PEOPLE_01 ) && FLAG_OFF( TMFLG_H04R0501_PEOPLE_02 ) && FLAG_OFF( TMFLG_H04R0501_PEOPLE_03 ) THEN
+
+    //乱数によって、出現させる引越し客を変化させる
+    IF $LWK_NUM == 0 THEN
+      //========================================//
+      //１日の間、引越し客01を固定
+      _FLAG_SET( TMFLG_H04R0501_PEOPLE_01 )
+      //========================================//
+    ELSIF $LWK_NUM == 1 THEN
+      //========================================//
+      //１日の間、引越し客02を固定
+      _FLAG_SET( TMFLG_H04R0501_PEOPLE_02 )
+      //========================================//
+    ELSIF $LWK_NUM == 2 THEN
+      //========================================//
+      //１日の間、引越し客03を固定
+      _FLAG_SET( TMFLG_H04R0501_PEOPLE_03 )
+      //========================================//
+    ENDIF
+
+/*
+    //乱数によって、出現させる引越し客を変化させる
+    IF $LWK_NUM == 0 THEN
+      $OBJCHRWORK0 = MAN1
+      $OBJCHRWORK1 = WOMAN1
+      $LOCALWORK0 = 0
+    ELSIF $LWK_NUM == 1 THEN
+      $OBJCHRWORK0 = MAN2
+      $OBJCHRWORK1 = WOMAN2
+      $LOCALWORK0 = 1
+    ELSIF $LWK_NUM == 2 THEN
+      $OBJCHRWORK0 = MAN3
+      $OBJCHRWORK1 = WOMAN3
+      $LOCALWORK0 = 2
+    ENDIF
+*/
+
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  可変OBJ01                                                 */
+/**************************************************************/
+EVENT_START   ev_h04r0501_wkobjcode00_01
+
+  _TALK_OBJ_START()
+
+  IF FLAG_ON( TMFLG_H04R0501_PEOPLE_01 ) THEN
+    //男性：ここに　いた　ミネズミたちと
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0501_man2_01 )
+    _LAST_KEYWAIT()
+  ELSIF FLAG_ON( TMFLG_H04R0501_PEOPLE_02 ) THEN
+    //男性：この　いえに　ひっこし　しない？
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0501_man2_02 )
+    _LAST_KEYWAIT()
+  ELSIF FLAG_ON( TMFLG_H04R0501_PEOPLE_03 ) THEN
+    //男性：どうする？　２ねんかん　ずっと
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0501_man2_03 )
+    _LAST_KEYWAIT()
+  ENDIF
+    _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  可変OBJその2                                              */
+/**************************************************************/
+EVENT_START   ev_h04r0501_wkobjcode01_01
+
+  _TALK_OBJ_START()
+
+  IF FLAG_ON( TMFLG_H04R0501_PEOPLE_01 ) THEN
+    //女性：テレビの　ミルホッくんを　みると
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0501_woman3_01 )
+    _LAST_KEYWAIT()
+  ELSIF FLAG_ON( TMFLG_H04R0501_PEOPLE_02 ) THEN
+    //女性：みんなの　なまえ　おぼえちゃった！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0501_woman3_02 )
+    _LAST_KEYWAIT()
+  ELSIF FLAG_ON( TMFLG_H04R0501_PEOPLE_03 ) THEN
+    //女性：そうね……　サザナミの　べっそうも
+    _BALLOONWIN_TALKOBJ_MSG( msg_h04r0501_woman3_03 )
+    _LAST_KEYWAIT()
+  ENDIF
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+

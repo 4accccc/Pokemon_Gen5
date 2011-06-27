@@ -28,6 +28,10 @@
 #define TR_FISHING_21                      8
 #define TR_BACKPACKERW_17                  9
 #define TR_BACKPACKERM_22                 10
+#define H04_STOP_01                       11
+#define H04_OLDMAN1_01                    12
+#define H04_BOY1_01                       13
+#define H04_BACKPACKERW_01                14
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
