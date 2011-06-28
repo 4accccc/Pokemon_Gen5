@@ -877,20 +877,7 @@ enum {
 	NARC_fldmmdl_mdlres_tsure_518_phyc_nsbtx = 863,
 	NARC_fldmmdl_mdlres_tsure_518_ice_nsbtx = 864,
 	NARC_fldmmdl_mdlres_tsure_518_dra_nsbtx = 865,
-	NARC_fldmmdl_mdlres_tsure_518_dark_nsbtx = 866,
-	NARC_fldmmdl_mdlres_tsure_519_nsbtx = 867,
-	NARC_fldmmdl_mdlres_tsure_520_nsbtx = 868,
-	NARC_fldmmdl_mdlres_tsure_521_nsbtx = 869,
-	NARC_fldmmdl_mdlres_tsure_522_nsbtx = 870,
-	NARC_fldmmdl_mdlres_tsure_523_nsbtx = 871,
-	NARC_fldmmdl_mdlres_tsure_524_nsbtx = 872,
-	NARC_fldmmdl_mdlres_tsure_525_nsbtx = 873,
-	NARC_fldmmdl_mdlres_tsure_526_nsbtx = 874,
-	NARC_fldmmdl_mdlres_tsure_527_nsbtx = 875,
-	NARC_fldmmdl_mdlres_tsure_528_nsbtx = 876,
-	NARC_fldmmdl_mdlres_tsure_529_nsbtx = 877,
-	NARC_fldmmdl_mdlres_tsure_530_nsbtx = 878,
-	NARC_fldmmdl_mdlres_tsure_531_nsbtx = 879
+	NARC_fldmmdl_mdlres_tsure_518_dark_nsbtx = 866
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */
