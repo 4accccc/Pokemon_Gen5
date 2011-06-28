@@ -700,4 +700,462 @@
 				Time="2011-06-10T09:13:07" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ハッ！
+きみの　メダルボックス……！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:45:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ハッ！
+きみの　メダルボックス……！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:45:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:45:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダルリストランクで分岐
+　ビギナー→man3_03
+　ルーキー→man3_04
+　エリート→man3_05
+　マスター→man3_06
+　レジェンド（黒）→man3_07
+　レジェンド（白）→man3_08
+・氷のないとき
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:56:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>な　なんだよ……
+どうして　まちが　こおりつい……▼
+……ハッ！
+きみの　メダルボックス……！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:45:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>な　なんだよ……
+どうして　街が　凍りつい……▼
+……ハッ！
+きみの　メダルボックス……！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:45:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:45:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダルリストランクで分岐
+　ビギナー→man3_03
+　ルーキー→man3_04
+　エリート→man3_05
+　マスター→man3_06
+　レジェンド（黒）→man3_07
+　レジェンド（白）→man3_08
+・氷のあるとき
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:56:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あおぞらのように　さわやかな
+ブルーの　ボディ……▼
+ビギナーランクの　メダリスト
+せんようの　とそう　ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>青空のように　さわやかな
+ブルーの　ボディ……▼
+ビギナーランクの
+メダリスト専用の　塗装ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:48:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:46:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ビギナー
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:41:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうひんに　かがやく
+カッパーの　ボディ……▼
+ルーキーランクの　メダリスト
+せんようの　とそう　ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>上品に　輝く
+カッパーの　ボディ……▼
+ルーキーランクの
+メダリスト専用の　塗装ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:49:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:46:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ルーキー
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:41:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シブさ　あふれる　シックな
+シルバーの　ボディ……▼
+エリートランクの　メダリスト
+せんようの　とそう　ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シブさ　あふれる　シックな
+シルバーの　ボディ……▼
+エリートランクの
+メダリスト専用の　塗装ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:48:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:46:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・エリート
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴージャスで　ラグジュアリーな
+ゴールドの　ボディ……▼
+マスターランクの　メダリスト
+せんようの　とそう　ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:43:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:43:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴージャスで　ラグジュアリーな
+ゴールドの　ボディ……▼
+マスターランクの
+メダリスト専用の　塗装ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:46:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・マスター
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんせつの　ドラゴンポケモン
+ゼクロムを　モチーフとした　という▼
+しっこくの　ボディに
+あおい　さしいろが　スタイリッシュな▼
+レジェンドランクの　メダリスト
+せんようの　とそう　ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:51:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:43:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>伝説の　ドラゴンポケモン
+ゼクロムを　モチーフとした　という▼
+漆黒の　ボディに
+青い　挿し色が　スタイリッシュな▼
+レジェンドランクの
+メダリスト専用の　塗装ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:51:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:47:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・レジェンド（黒）
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08pc0101_man3_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でんせつの　ドラゴンポケモン
+レシラムを　モチーフとした　という▼
+じゅんぱくの　ボディに
+あかい　さしいろが　エレガントな▼
+レジェンドランクの　メダリスト
+せんようの　とそう　ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:51:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:43:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>伝説の　ドラゴンポケモン
+レシラムを　モチーフとした　という▼
+純白の　ボディに
+紅い　挿し色が　エレガントな▼
+レジェンドランクの
+メダリスト専用の　塗装ですな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:51:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:47:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・レジェンド（白）
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:42:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:39:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

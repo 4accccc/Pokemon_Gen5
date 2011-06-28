@@ -2,6 +2,464 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c03r0401_boy3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあ！　きみ　メダルラリーに
+さんか　してるんだね▼
+どれどれ
+もっている　メダルは……▽
+[Digit:3digits ]コ　か！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:58:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やあ！　きみ　メダルラリーに
+参加してるんだね▼
+どれどれ
+持っている　メダルは……▽
+[Digit:3digits ]コ　か！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:58:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数で分岐
+　1～9　→boy3_02
+　10～29　→boy3_03
+　30～49　→boy3_04
+　50～99　→boy3_05
+　100～199　→boy3_06
+　200～254　→boy3_07
+　255　→boy3_08
+・0＝メダル所有数
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:52:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくは　１０コ　もってるんだ！
+きみよりは　せんぱい　だね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくは　１０コ　持ってるんだ！
+きみよりは　先輩だね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:58:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が1～9
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:56:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくは　３０コ　もってるよ！
+きみも　けっこう　あつめてるけど▽
+ぼくも　まけないよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくは　３０コ　持ってるよ！
+きみも　結構　集めてるけど▽
+ぼくも　負けないよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が10～29
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくは　５０コ　もってるよ！▼
+しってるかい？　メダルを　５０コ
+あつめると　いいこと　あるんだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくは　５０コ　持ってるよ！▼
+知ってるかい？　メダルを　５０コ
+集めると　いいこと　あるんだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が30～49
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！　きみも
+ゴールイン　したんだね？▼
+ぼく　かい？▼
+ぼくは　１００コ　もってるよ！
+ヘヘン！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！　きみも
+ゴールイン　したんだね？▼
+ぼく　かい？▼
+ぼくは　１００コ　持ってるよ！
+ヘヘン！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が50～99
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごい！
+そんなに　あつめたの！？▼
+おいつかれちゃった！▼
+ぼくは　１００コで
+のびなやんでるんだー……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:58:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すごい！
+そんなに　集めたの！？▼
+おいつかれちゃった！▼
+ぼくは　１００コで
+のびなやんでるんだー……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が100～199
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きっと　きみなら　すべての
+メダルを　あつめられるよ！▼
+ぜんぶで　なんコかは
+しらないけど……▼
+ぼく？　ぼくは　まだ
+１５０コ　なんだ……▼
+がんばるぞー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きっと　きみなら　すべての
+メダルを　集められるよ！▼
+全部で　なんコかは
+知らないけど……▼
+ぼく？　ぼくは　まだ
+１５０コ　なんだ……▼
+がんばるぞー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が200～254
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy3_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うおー！▼
+ぜんぶの　メダルを　あつめたの！？
+す　すごい！　すごすぎるよ……！▼
+ぼくも　ようやく
+２００コ　あつめたんだ▼
+きみを　もくひょうにして
+パーフェクト　めざして　がんばるよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:59:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うおー！▼
+全部の　メダルを　集めたの！？
+す　すごい！　すごすぎるよ……！▼
+ぼくも　ようやく
+２００コ　集めたんだ▼
+きみを　目標にして
+パーフェクト　めざして　がんばるよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T13:00:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:54:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル個数が255
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:57:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:53:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r0401_boy1_01"
 		Style="Large">
 		<LanguageCell
