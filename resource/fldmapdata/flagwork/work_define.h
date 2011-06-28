@@ -211,6 +211,8 @@
 #define WK_SCENE_C08_SWPLAZMA            16599 /* 0x40d7 ソウリュウシティ：プラズマ団戦制御用ワーク */
 #define WK_SCENE_C08_NINJA               16600 /* 0x40d8 ソウリュウシティ：ダークトリニティPOS制御用ワーク */
 #define WK_SCENE_C08R0101                16601 /* 0x40d9 ソウリュウシティ民家：シャガ家SCENE_CHANGE制御用ワーク */
+#define WK_SCENE_R11_POKE6               16602 /* 0x40da 11番道路：ビリジオン遭遇イベントPOS制御ワーク */
+#define WK_SCENE_R13_POKE4               16603 /* 0x40db 13番道路：コバルオン遭遇イベントPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

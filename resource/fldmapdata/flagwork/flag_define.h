@@ -313,11 +313,11 @@
 #define FE_R08_ITEMGET_01                  297 /* 0x0129 ８番道路：アイテム入手フラグ */
 #define FE_H04R0301_FISHING_TALK_01        298 /* 0x012a ビレッジブリッジ：ツリーズ初回話しかけ */
 #define FE_H04R0301_FISHING_RECEPT_01      299 /* 0x012b ビレッジブリッジ：ツリーズイベント発生フラグ */
-		/* not used   300(0x012c) */
-		/* not used   301(0x012d) */
-		/* not used   302(0x012e) */
-		/* not used   303(0x012f) */
-		/* not used   304(0x0130) */
+#define FE_R11_POKE6_MEET_01               300 /* 0x012c 11番道路：ビリジオンに会った */
+#define FE_R11_POKE6_GET_01                301 /* 0x012d 11番道路：ビリジオンを捕まえた */
+#define FE_R13_POKE4_MEET_01               302 /* 0x012e 13番道路：コバルオンに会った */
+#define FE_R13_POKE4_GET_01                303 /* 0x012f 13番道路：コバルオンを捕まえた */
+#define FE_R13R0101_ITEMGET_01             304 /* 0x0130 13番道路民家：アイテム入手フラグ */
 		/* not used   305(0x0131) */
 		/* not used   306(0x0132) */
 		/* not used   307(0x0133) */
@@ -616,6 +616,8 @@
 #define FV_C08_NINJA_02                    698 /* 0x02ba ソウリュウシティ：ダークトリニティ（戦闘しないやつ） */
 #define FV_C08GYM0101_SWLEADER7_01         699 /* 0x02bb ソウリュウジム：シャガ */
 #define FV_C08R0101_SWLEADER7_01           700 /* 0x02bc ソウリュウ民家1：シャガ */
+#define FV_R11_POKE6_01                    701 /* 0x02bd 11番道路：ビリジオン */
+#define FV_R13_POKE4_01                    702 /* 0x02be 13番道路：コバルオン */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
