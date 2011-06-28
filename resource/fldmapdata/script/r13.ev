@@ -19,28 +19,290 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_r13_sign1_01
-_EVENT_DATA		ev_bg_r13_sign2_01
-_EVENT_DATA		ev_bg_r13_sign3_01
+_EVENT_DATA   ev_bg_r13_sign1_01
+_EVENT_DATA   ev_bg_r13_sign2_01
+_EVENT_DATA   ev_bg_r13_sign3_01
+_EVENT_DATA   ev_pos_r13_poke4_01
+_EVENT_DATA   ev_r13_sunglasses_01
 _EVENT_DATA_END
 
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
 /**************************************************************/
-/*			R13		看板１									  */
+/*  看板01                                                    */
 /**************************************************************/
-EVENT_START		ev_bg_r13_sign1_01
-	_EASY_BGWIN_MSG( msg_r13_sign1_01, TYPE_ROAD )
+EVENT_START   ev_bg_r13_sign1_01
+  _EASY_BGWIN_MSG( msg_r13_sign1_01, TYPE_ROAD )
 EVENT_END
 
 /**************************************************************/
-/*			R13		看板１									  */
+/*  看板02                                                    */
 /**************************************************************/
-EVENT_START		ev_bg_r13_sign2_01
-	_EASY_BGWIN_MSG( msg_r13_sign2_01, TYPE_ROAD )
+EVENT_START   ev_bg_r13_sign2_01
+  _EASY_BGWIN_MSG( msg_r13_sign2_01, TYPE_ROAD )
 EVENT_END
 
 /**************************************************************/
-/*			R13		看板１									  */
+/*  看板03                                                    */
 /**************************************************************/
-EVENT_START		ev_bg_r13_sign3_01
-	_EASY_BGWIN_MSG( msg_r13_sign3_01, TYPE_INFO )
+EVENT_START   ev_bg_r13_sign3_01
+  _EASY_BGWIN_MSG( msg_r13_sign3_01, TYPE_INFO )
 EVENT_END
+
+/**************************************************************/
+/*POS：コバルオン登場                                         */
+/**************************************************************/
+EVENT_START   ev_pos_r13_poke4_01
+
+  //アニメ：主人公「！」
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //アニメ：コバルオン主人公の前に
+  IF $LCW_POSX == 684 THEN
+    $LCW_POSZ -= 2
+    _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSZ -= 2
+    _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  //コバルオン：こふおおおおーっ！
+  _VOICE_PLAY( MONSNO_645, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_r13_poke4_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //戦闘開始
+  {
+    DEFINE_LOCAL flag
+    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+    _WILD_BTL_SET_EX( MONSNO_645, 45, flag ) // Lv45 コバルオン
+  }
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //コバルオン非表示
+    _FLAG_SET( FV_R13_POKE4_01 )
+    //==================================//
+    _OBJ_DEL( R13_POKE4_01 )   //コバルオンを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //コバルオンを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //ビリジオンを捕獲した
+    _FLAG_SET( FE_R13_POKE4_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+  //ビリジオンを捕獲できなかった場合の分岐
+  IF FLAG_OFF( FE_R13_POKE4_GET_01 ) THEN
+
+    //システム：ポケモンは　どうろの　さきへ
+    _SYSWIN_MSG( msg_r13_poke4_02, POS_DOWN )
+    _SYSWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //POS無効
+  $WK_SCENE_R13_POKE4 = 1
+  //ビリジオン発見
+  _FLAG_SET( FE_R13_POKE4_MEET_01 )
+  //==================================//
+
+EVENT_END
+
+
+/**************************************************************/
+/*  黒服：話しかけ（海辺のお宝イベント）                      */
+/**************************************************************/
+EVENT_START   ev_r13_sunglasses_01
+
+  _TALK_OBJ_START()
+
+  //初めて会話する場合
+  IF FLAG_OFF( FE_R13_TREASURE_FIRSTTALK ) THEN
+
+    //黒服：なにを　しているか　だって？
+    _BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_01 )
+    _MSGWIN_CLOSE()
+
+    //アイテム入手処理へ
+    _CALL ev_treasure
+
+    //黒服：あしたも　ここで　たからさがし
+    _BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //========================================/
+    //一日フラグセット
+    _FLAG_SET( TMFLG_R13_TREASURE )
+    //初回会話フラグセット
+    _FLAG_SET( FE_R13_TREASURE_FIRSTTALK )
+    //========================================/
+
+  //２回目以降の場合
+  ELSE
+
+    //１日フラグが立っていない場合
+    IF FLAG_OFF( TMFLG_R13_TREASURE ) THEN
+
+      //黒服：さっき　おたからを　みつけたんだ▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_02 )
+      _MSGWIN_CLOSE()
+
+      //アイテム入手処理へ
+      _CALL ev_treasure
+
+      //黒服：あしたも　ここで　たからさがし
+      _BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================/
+      //一日フラグセット
+      _FLAG_SET( TMFLG_R13_TREASURE )
+      //========================================/
+
+    //１日フラグが立っている場合
+    ELSE
+
+      //黒服：あしたも　ここで　たからさがし
+      _BALLOONWIN_TALKOBJ_MSG( msg_r13_salvage_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+ev_treasure:    //入手アイテム【仮】BW版のものを流用
+
+DEFINE_LOCAL  LWK_TREASURE
+
+_GET_RND( LWK_TREASURE, 27 )
+
+SWITCH $LWK_TREASURE
+CASE 0 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_AOIBIIDORO, 1 )
+CASE 1 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_KIIROBIIDORO, 1 )
+CASE 2 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_AKAIBIIDORO, 1 )
+CASE 3 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_KUROIBIIDORO, 1 )
+CASE 4 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_SIROIBIIDORO, 1 )
+CASE 5 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_ASASENOSIO, 1 )
+CASE 6 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_ASASENOKAIGARA, 1 )
+CASE 7 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_OOKINASINZYU, 1 )
+CASE 8 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_HAATONOUROKO, 1 )
+CASE 9 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_SINKAINOKIBA, 1 )
+CASE 10 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_SINKAINOUROKO, 1 )
+CASE 11 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_SIAWASETAMAGO, 1 )
+CASE 12 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_METARUKOOTO, 1 )
+CASE 13 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_RYUUNOUROKO, 1 )
+CASE 14 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_APPUGUREEDO, 1 )
+CASE 15 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_RAKKIIPANTI, 1 )
+CASE 16 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_METARUPAUDAA, 1 )
+CASE 17 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_HUTOIHONE, 1 )
+CASE 18 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_NAGANEGI, 1 )
+CASE 19 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_PUROTEKUTAA, 1 )
+CASE 20 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_EREKIBUUSUTAA, 1 )
+CASE 21 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_REIKAINONUNO, 1 )
+CASE 22 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_MAGUMABUUSUTAA, 1 )
+CASE 23 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_SURUDOIKIBA, 1 )
+CASE 24 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_SURUDOITUME, 1 )
+CASE 25 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_OUZYANOSIRUSI, 1 )
+CASE 26 THEN
+  _ITEM_EVENT_KEYWAIT( ITEM_AYASIIPATTI, 1 )
+ENDSWITCH
+
+_RET
+
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+

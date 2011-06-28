@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r13r0301.h"
-  //.include  "r13r0301.h"
+  .include  "r13r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,15 +19,80 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r13r0301_oldwoman1_01
+_EVENT_DATA    ev_r13r0301_badman_01
+_EVENT_DATA    ev_r13r0301_poke_01
 _EVENT_DATA_END
 
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 /************************************************************/
-/*						おばあさん							*/
+/*  スキンヘッド：話しかけ                                  */
 /************************************************************/
-EVENT_START	ev_r13r0301_oldwoman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r13r0301_oldwoman1_01 )
+EVENT_START   ev_r13r0301_badman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r13r0301_badman_01 )
 EVENT_END
 
+/**************************************************************/
+/*  コマタナ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r13r0301_poke_01
+
+  _TALK_OBJ_START()
+ _OBJ_ANIME_WAIT()
+
+  //自機方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+
+  //アニメ：コマタナそっぽを向く
+  SWITCH $LWK_DIR
+  CASE DIR_UP THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_r )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_d )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_l )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_u )
+  ENDSWITCH
+ _OBJ_ANIME_WAIT()
+
+  //コマタナ：シュパッ！！    //【仮】モデル、鳴き声はチラーミィ
+  _VOICE_PLAY( MONSNO_533, 0 ) 
+  _BALLOONWIN_TALKOBJ_MSG( msg_r13r0301_pokemon_01 )
+  _VOICE_WAIT()
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/05/23 12:30:53
+#save date:2011/06/28 19:14:17
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r13.wms
 #hold event type:
 1
 #hold event number:
-16
+18
 #event number: 0
 #type
 1
@@ -506,6 +506,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 696 -80 -1032
+#event number: 16
+#type
+1
+#ID name
+R13_SUNGLASSES_01
+#OBJ CODE Number
+SUNGLASSES
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R13_SUNGLASSES_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+440 -88 -984
+#event number: 17
+#type
+1
+#ID name
+R13_POKE4_01
+#OBJ CODE Number
+POKE4
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R13_POKE4_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 0 -312
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -668,7 +730,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_R13_POKE4_01
+#Pos Script Name
+SCRID_POS_R13_POKE4_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R13_POKE4
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 0 -360
+#size
+4 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

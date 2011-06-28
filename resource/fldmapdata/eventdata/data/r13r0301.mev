@@ -1,7 +1,7 @@
 #event data
-#save date:2010/04/28 15:12:08
+#save date:2011/06/28 18:36:19
 # linked worldmap file name
-C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13r0301.wms
+C:\home\swan\resource\fldmapdata\eventdata\data\r13r0301.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
 #save date:
@@ -14,19 +14,19 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13r0301.wms
 #type
 1
 #ID name
-R13R0301_OLDMAN1_01
+R13R0301_BADMAN_01
 #OBJ CODE Number
-OLDMAN1
+BADMAN
 #MOVE CODE Number
-MV_DMY
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_WAZA_TEACHER_POWERFUL
+SCRID_R13R0301_BADMAN_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,22 +40,22 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--200 16 200
+-152 16 200
 #event number: 1
 #type
 1
 #ID name
-R13R0301_OLDWOMAN1_01
+R13R0301_POKE_01
 #OBJ CODE Number
-OLDWOMAN1
+POKE19
 #MOVE CODE Number
-MV_RND
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_R13R0301_OLDWOMAN1_01
+SCRID_R13R0301_POKE_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -65,13 +65,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 16 136
+-184 16 200
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

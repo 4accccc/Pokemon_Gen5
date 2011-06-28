@@ -9,8 +9,8 @@
 #ifndef ZONE_R13R0301_EVC_H
 #define ZONE_R13R0301_EVC_H
 
-#define R13R0301_OLDMAN1_01                0
-#define R13R0301_OLDWOMAN1_01              1
+#define R13R0301_BADMAN_01                 0
+#define R13R0301_POKE_01                   1
 
 #endif //ZONE_R13R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

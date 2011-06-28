@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/03 14:55:24
+#save date:2011/06/28 16:17:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r11.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+R11_POKE6_01
+#OBJ CODE Number
+POKE6
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R11_POKE6_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 80 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -81,7 +112,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_R11_POKE6_01
+#Pos Script Name
+SCRID_POS_R11_POKE6_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R11_POKE6
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 40
+#size
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

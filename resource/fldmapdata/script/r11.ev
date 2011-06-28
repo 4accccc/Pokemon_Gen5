@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r11.h"
-  //.include  "r11.h"
+  .include  "r11.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,18 +21,182 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_r11_sign_01
 _EVENT_DATA    ev_bg_r11_sign_02
+_EVENT_DATA    ev_pos_r11_poke6_01
 _EVENT_DATA_END
+
+//主人公方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 /**************************************************************/
 /*  R02 看板1のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_r11_sign_01
-	_EASY_BGWIN_MSG(msg_r11_sign1_01, TYPE_ROAD) 
+  _EASY_BGWIN_MSG(msg_r11_sign1_01, TYPE_ROAD) 
 EVENT_END
 
 /**************************************************************/
 /*  R02 看板2のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_r11_sign_02
-	_EASY_BGWIN_MSG(msg_r11_sign2_01, TYPE_POST) 
+  _EASY_BGWIN_MSG(msg_r11_sign2_01, TYPE_POST) 
 EVENT_END
+
+/**************************************************************/
+/*POS：ビリジオン登場                                         */
+/**************************************************************/
+EVENT_START   ev_pos_r11_poke6_01
+
+  //アニメ：主人公「！」
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //カメラ操作　ビリジオン追従
+  _CAMERA_START()   //カメラ操作開始
+  _CAMERA_PURGE()   //カメラのバインドを解く
+
+  _CAMERA_MOVE( 9688, 0, 970752, 30748672, 0, 11112448, 32 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  _CAMERA_WAIT_MOVE()  //カメラ移動待ち
+
+  //間（ビリジオン見せ）
+  _TIME_WAIT ( 32 )
+
+  //ビリジオンジャンプ
+  _OBJ_HIGH_JUMP( R11_POKE6_01, 468, 0, 173 )
+
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE ( 52 )
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //アニメ：ビリジオン主人公の前に
+  IF $LCW_POSZ == 173 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSX -= 2
+    _OBJ_ANIME_AUTO( R11_POKE6_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+    _TIME_WAIT ( 8 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+
+  _OBJ_ANIME( R11_POKE6_01, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()    //カメラバインド
+  _CAMERA_END()   //カメラ操作終了
+
+  _TIME_WAIT ( 8 )  //間
+
+  //ビリジオン：ききゅああああーっ！
+  _VOICE_PLAY( MONSNO_647, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_r11_poke6_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //戦闘開始
+  {
+    DEFINE_LOCAL flag
+    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+    _WILD_BTL_SET_EX( MONSNO_647, 45, flag ) // Lv45 ビリジオン
+  }
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //ビリジオン非表示
+    _FLAG_SET( FV_R11_POKE6_01 )
+    //==================================//
+    _OBJ_DEL( R11_POKE6_01 )   //ビリジオンを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //ビリジオンを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //ビリジオンを捕獲した
+    _FLAG_SET( FE_R11_POKE6_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+  //ビリジオンを捕獲できなかった場合の分岐
+  IF FLAG_OFF( FE_R11_POKE6_GET_01 ) THEN
+
+    //システム：ポケモンは　どうろの　さきへ
+    _SYSWIN_MSG( msg_r11_poke6_02, POS_DOWN )
+    _SYSWIN_CLOSE()
+
+  ENDIF
+
+  //==================================//
+  //POS無効
+  $WK_SCENE_R11_POKE6 = 1
+  //ビリジオン発見
+  _FLAG_SET( FE_R11_POKE6_MEET_01 )
+  //==================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	主人公：「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_guide01
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+

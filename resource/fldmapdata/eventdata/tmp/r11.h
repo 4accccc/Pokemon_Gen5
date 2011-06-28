@@ -11,6 +11,7 @@
 #ifndef ZONE_R11_EVC_H
 #define ZONE_R11_EVC_H
 
+#define R11_POKE6_01                       0
 
 #endif //ZONE_R11_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r11.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r13r0101.h"
-  //.include  "r13r0101.h"
+  .include  "r13r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +19,62 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_r13r0101_veteranm_01
+_EVENT_DATA    ev_r13r0101_girl1_01
+_EVENT_DATA    ev_r13r0101_poke_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  ベテラン♂：話しかけ（アイテム入手）                      */
+/**************************************************************/
+EVENT_START   ev_r13r0101_veteranm_01
+
+  _TALK_OBJ_START()
+
+  //アイテム入手前か
+  IF FLAG_OFF( FE_R13R0101_ITEMGET_01 ) THEN
+
+    //ベテラン♂：……この　プレートは
+    _BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_01 )
+    _MSGWIN_CLOSE()
+
+    //アイテム入手：しずくプレート
+    _ITEM_EVENT_KEYWAIT( ITEM_SIZUKUPUREETO, 1 )
+
+    //ベテラン♂：もうひとつ　あるんだが
+    _BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_02 )
+    _MSGWIN_CLOSE()
+
+    //アイテム入手：りゅうのプレート
+    _ITEM_EVENT_KEYWAIT( ITEM_RYUUNOPUREETO, 1 )
+
+    //========================================/
+    //アイテム入手フラグセット
+    _FLAG_SET( FE_R13R0101_ITEMGET_01 )
+    //========================================/
+
+  ENDIF
+
+  //ベテラン♂：サザナミタウンの　海には
+  _BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_veteranm_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/**************************************************************/
+/*  女の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r13r0101_girl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r13r0101_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  キャモメ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r13r0101_poke_01
+  _EASY_TALK_POKEVOICE( MONSNO_533, msg_r13_poke_01 ) //【仮】鳴き声はチラーミィ
+EVENT_END
+

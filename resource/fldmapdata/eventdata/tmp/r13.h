@@ -27,6 +27,8 @@
 #define TR_PRINCE_09                      13
 #define TR_PRINCESS_09                    14
 #define TR_PARASOL_11                     15
+#define R13_SUNGLASSES_01                 16
+#define R13_POKE4_01                      17
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

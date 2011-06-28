@@ -5,5 +5,8 @@
 #define _R13R0101_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_R13R0101_VETERANM_01 (1)
+#define SCRID_R13R0101_GIRL1_01 (2)
+#define SCRID_R13R0101_POKE_01 (3)
 
 #endif //_R13R0101_DEF_H_
