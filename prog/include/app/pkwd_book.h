@@ -54,10 +54,8 @@ enum{
 
 // PKWD_BOOK
 typedef struct{
-//	int					title_no;		  ///< タイトル番号
-//	int					scenario_no;	///< シナリオ番号
-//	STRBUF*				message;		///< メッセージ
-//  int         sex;          ///< 主人公性別
-    int*		result;		///< 結果
+	GAMESYS_WORK*	gamesys;	///< MyStatus参照用
+	//
+    int*			result;		///< 結果
 }PKWD_BOOK_PARAM;
 

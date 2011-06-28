@@ -29,6 +29,8 @@
 #include "print/gf_font.h"
 #include "font/font.naix"
 
+#include "system/bmp_oam.h"
+
 //PRINT_QUE
 #include "print/printsys.h"
 #include "app/app_menu_common.h"
@@ -38,6 +40,8 @@
 #include "system/tr2dgra.h"
 
 #include "app/pkwd_book.h"
+
+#include "field/event_pokewood.h"
 
 #include "pkwd_book_graphic.h"
 #include "b_scenario_gra.naix"
@@ -110,21 +114,23 @@ enum{
 // 上(MAIN)：OBJ ()
 //
 // 下(SUB) ：BG  (0-7:下地、8:cmn)
-// 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-10:type),(11:trainer)
+// 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-10:type),(11:trainer),(12:font)
 enum{
 	// 何本目か(bg)
-	PLTID_SUB_BG_CMN	= 8,		// cmnのBG
-	PLTID_SUB_OBJ_CMN	= 4,		// cmn
-	PLTID_SUB_OBJ_TYPE	= 8,		// type
-	PLTID_SUB_OBJ_TRAINER = 11,		// trainer
+	PLTID_SUB_BG_CMN		= 8,		// cmnのBG
+	//
+	PLTID_SUB_OBJ_CMN		= 4,		// cmn
+	PLTID_SUB_OBJ_TYPE		= 8,		// type
+	PLTID_SUB_OBJ_TRAINER 	= 11,		// trainer
+	PLTID_SUB_OBJ_FONT		= 12,		// font
 	//
 	// 何番目か
-	MES_CLEAR_COLOR		= 0,		// クリアカラー
+	MES_CLEAR_COLOR			= 0,		// クリアカラー
 };
 
 // 最大値
 enum{
-	PKWD_BOOK_EMPTY_MAXNUM		= 18*2,	// empty
+	PKWD_BOOK_EMPTY_MAXNUM = 23*2,		// empty
 	//
 	PKWD_BOOK_TRAINER_OBJ_MAXNUM = 1,	// obj(trainer)
 	PKWD_BOOK_CMN_OBJ_MAXNUM	= 3,	// obj(cmn)
@@ -136,12 +142,19 @@ enum{
 	PKWD_BOOK_CANVAS_MAXNUM		= 16,	// canvas
 	//
 	PKWD_BOOK_MES_MAX			= 2,
+	//
+	PKWD_BOOK_BMPOAM_MAXNUM		= 9,	// bmpoam
+	//
+	PKWD_POKE_MAX				= 6,	// pokemon max
 };
 
+//-------------
+// obj関連
+//-------------
 // OBJのリソースのインデックス
 enum{
 	// cmn
-	RESID_CMN_OBJ_PLT,					// パレット
+	RESID_CMN_OBJ_PLT = 0,				// パレット
 	RESID_CMN_OBJ_CHR,					// キャラ
 	RESID_CMN_OBJ_CEL,					// セルアニメ
 	// ポケモン
@@ -168,10 +181,12 @@ enum{
 	RESID_TRAINER_CHR,					// キャラ
 	RESID_TRAINER_CEL,					// セルアニメ
 	//
+	RESID_FONT_PLT,						// bmpoam用
+	//
 	RESID_OBJ_MAX,
 };
 
-//
+// clwkのグループ
 enum{
 	CLWKMODE_CMN	= 0,				// 通常
 	CLWKMODE_POKE,						// ポケモン
@@ -180,20 +195,30 @@ enum{
 };
 
 
-// CLWK
+// CLWK(CMN)
 enum{
 	CLWK_CMN_BACK		= 0,			// 戻る
 	CLWK_CMN_LEFT,						// 左
 	CLWK_CMN_RIGHT,						// 右
 };
 
-// SEQ
+// SEQ(CMN)
 enum{
-	SEQ_CMN_BACK_ANIM	= 0,			// 戻る
-	SEQ_CMN_LEFT_ANIM,					// 左
-	SEQ_CMN_RIGHT_ANIM,					// 右
+	SEQ_CMN_BACK 		= 1,			// 戻る(通常)
+	SEQ_CMN_LEFT		= 4,			// 左
+	SEQ_CMN_RIGHT		= 5,			// 右
+	//
+	SEQ_CMN_BACK_ANIM	= 9,			// 戻る(on)
+	SEQ_CMN_LEFT_ANIM	= 12,			// 左(on)
+	SEQ_CMN_RIGHT_ANIM	= 13,			// 右(on)
+	//
+	SEQ_CMN_LEFT_OFF	= 18,			// 左(off)
+	SEQ_CMN_RIGHT_OFF	= 19,			// 右(off)
 };
 
+//-------------
+// フラグ
+//-------------
 // OBJのフラグ(PKWD_BOOK_OBJ_DATA.dispflag)
 enum{
 	FLG_OBJ_ANIM		= (1<<0),		// アニメあり
@@ -206,17 +231,21 @@ enum{
 	FLG_WIPE_IN_END		= (1<<0),		// wipe(in)終了
 	FLG_SET_INIT		= (1<<1),		// 初期化済み
 	FLG_CHG_TITLE		= (1<<2),		// 変更
+	FLG_MODE_SUB		= (1<<3),		// サブ画面に移行した
 };
 
+//-------------
+// 文字列
+//-------------
 // 固定文字列(pwb_fix_mestbl)と対応
 enum{
-	MES_ID_TOP_01		= 0,		// タイトル名
-	MES_ID_TOP_02,					// あらすじ
-	MES_ID_TOP_03,					// クリア目標
+	MES_ID_TOP_01		= 0,			// タイトル名
+	MES_ID_TOP_02,						// あらすじ
+	MES_ID_TOP_03,						// クリア目標
 	//
-	MES_ID_INFO_01,					// キャスト
-	MES_ID_INFO_02,					// もちもの
-	MES_ID_INFO_03,					// とくせい
+	MES_ID_INFO_01,						// キャスト
+	MES_ID_INFO_02,						// もちもの
+	MES_ID_INFO_03,						// とくせい
 };
 
 // canvasの番号
@@ -258,6 +287,23 @@ enum{
  *								構造体定義
  */
 //=============================================================================
+//----------------------
+// ポケモンの情報(1体)
+//----------------------
+// PP_Getを初期化時にまとめて処理するために作成
+// (すべてが)u32でなくてもよいはずが、
+// 返り値を直接セットするため以下のようにした
+typedef struct{
+	u32					id;				// id
+	u32					sex;			// 性別
+	u32					level;			// レベル
+	u32					item;			// もちもの
+	u32					stat;			// 特性
+	u32					poke_type[2];	// タイプ
+	u32					skill[4];		// 技
+	u32					skill_type[4];	// 技対応
+} PKWD_BOOK_POKE_WORK;
+
 //-------------------------------------
 /// OBJ管理ワーク
 //-------------------------------------
@@ -289,11 +335,16 @@ typedef struct
 	PKWD_BOOK_PARAM 		*Param;						// 参照用として保存
 	//
 	GFL_FONT				*font;									///< フォント
+	GFL_FONT				*sfont;									///< フォント
 	PRINT_QUE				*print_que;								///< que
 	PRINT_UTIL				PrintUtil[PKWD_BOOK_CANVAS_MAXNUM];		///< 文字表示用(下画面:切り替える)
 	PRINT_UTIL				PrintUtil2[PKWD_BOOK_CANVAS_MAXNUM];	///< 文字表示用(上画面)
-	GFL_MSGDATA				*MsgData[PKWD_BOOK_MES_MAX];			///< 
-	WORDSET					*Wordset;		///< wordset
+	GFL_MSGDATA				*MsgData[PKWD_BOOK_MES_MAX];			///< メッセージ
+	WORDSET					*Wordset;								///< wordset
+	//
+	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
+	GFL_BMP_DATA			*BmpData[PKWD_BOOK_BMPOAM_MAXNUM];		// Bmp
+	BMPOAM_ACT_PTR			BmpOamWork[PKWD_BOOK_BMPOAM_MAXNUM];	// BMPOAM用Work
 	//
 	s32						Step;						// ステップ
 	s32						Mode;						// モード
@@ -303,8 +354,16 @@ typedef struct
 	u32						Flag;						// フラグ
 	u32						PFlag;						// フラグ
 	u32						PFlag2;						// フラグ(要整理)
+	s32						ScenarioCurPos;				// 台本カーソル(0-47)
+	s32						ScenarioNum;				// シナリオ番号
+	s32						InfoCurPos;					///< 詳細用のカーソル(PokeMax+1)
 	//
 	s16						*EmptyBuffer;				// 座標用のバッファ(必ず破棄すること)
+	//
+	s32						PokeMax;					///< ポケモン最大
+	s32						PokePageNum;				///< ポケモンページ番号(0-max-1)
+	POKEPARTY				*Party;						///< パーティ情報
+	PKWD_BOOK_POKE_WORK		PokeWork[PKWD_POKE_MAX];	///< ポケモン情報
 } PKWD_BOOK_MAIN_WORK;
 
 //-----------------------------------------
@@ -318,7 +377,7 @@ typedef struct{
 	u8				palnum;			// パレット番号(現在未使用だが、しばらく残し)
 	u8				dispflag;		// 表示フラグ
 	u8				empty_num;		// empty番号(これから座標を参照)
-	u8				res_cnum;		// リソース番号
+	u8				res_cnum;		// リソース番号(注意)
 }PKWD_BOOK_OBJ_DATA;
 
 //-----------------------------------------
@@ -350,6 +409,20 @@ typedef struct{
 	u8				offset;			// オフセット
 	u8				poff;			// パレットのオフセット
 }PKWD_BOOK_BGSCN_DATA;
+
+//-----------------------------------------
+// BMPOAMの定義
+//------------------------------------------
+typedef struct{
+	u8				width;			// サイズ(8x8単位)(0xffの場合は終了判定)
+	u8				height;
+	u8				softpri;		// プライオリティ(obj)
+	u8				bgpri;			// プライオリティ(bg)
+	u8				visible;		// 表示/非表示
+	u8				paloffset;		// パレットオフセット(nclの何番目か)
+	u8				empty_num;		// empty番号
+	u8				pad;
+}PKWD_BOOK_BMPOAM_DATA;
 
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
@@ -411,8 +484,8 @@ static const s16 pwb_obj_cmn_itbl[] = {
 // OBJのテーブルデータ
 static const PKWD_BOOK_OBJ_DATA pwb_obj_cmn_tbl[] = {
 	{  1,	0x30,	1,	1,	0,	1,	3,	RESID_CMN_OBJ_CHR,},		// 戻る
-	{ 12,	0x30,	1,	1,	0,	1,	0,	RESID_CMN_OBJ_CHR,},		// 左矢印
-	{ 13,	0x30,	1,	1,	0,	1,	1,	RESID_CMN_OBJ_CHR,},		// 右矢印
+	{  4,	0x30,	1,	1,	0,	1,	0,	RESID_CMN_OBJ_CHR,},		// 左矢印
+	{  5,	0x30,	1,	1,	0,	1,	1,	RESID_CMN_OBJ_CHR,},		// 右矢印
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -439,7 +512,7 @@ const PKWD_BOOK_OBJ_DATA pwb_obj_poke_tbl[] = {
 	{ 1,	0x28,	1,	0,	0,	0,	8, RESID_POKE_CHR_04,},		// ポケモン04
 	{ 1,	0x28,	1,	0,	0,	0,	9, RESID_POKE_CHR_05,},		// ポケモン05
 	//
-	{ 1,	0x28,	1,	0,	0,	0,	10, RESID_POKE_CHR_10,},		// ポケモン10
+	{ 1,	0x28,	1,	0,	0,	0,	10, RESID_POKE_CHR_10,},	// ポケモン10
 	
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -489,6 +562,23 @@ const PKWD_BOOK_OBJ_DATA pwb_obj_trainer_tbl[] = {
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
+//------------------
+// BMPOAMの情報
+//------------------
+static const PKWD_BOOK_BMPOAM_DATA pwb_bmpoam_tbl[] = {
+	{ 2,	2,	0x38,	1,	1,	0,	4,	0,},		// ポケモン00
+	{ 2,	2,	0x38,	1,	1,	0,	5,	0,},
+	{ 2,	2,	0x38,	1,	1,	0,	6,	0,},
+	{ 2,	2,	0x38,	1,	1,	0,	7,	0,},
+	{ 2,	2,	0x38,	1,	1,	0,	8,	0,},
+	{ 2,	2,	0x38,	1,	1,	0,	9,	0,},
+	
+	{ 2,	2,	0x38,	1,	1,	0,	20,	0,},
+	{ 2,	2,	0x38,	1,	1,	0,	21,	0,},
+	{ 2,	2,	0x38,	1,	1,	0,	22,	0,},
+
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
 
 //---------------
 // CANVASの設定
@@ -624,6 +714,8 @@ static const s16 pwb_info_tbl[] = {
 	pw_castindex_13,		// 技01
 	pw_castindex_14,		// 技02
 	pw_castindex_15,		// 技03
+	//
+	pw_castindex_16,		// slash
 };
 
 //--------------
@@ -633,6 +725,14 @@ static const s16 pwb_mes_tbl[] = {
 	pw_title_00,			// タイトル
 	pw_plot_000,			// プロット
 	pw_goal_00,				// ゴール
+};
+
+//--------------
+// カーソル情報
+//--------------
+static const s16 pwb_curpos_tbl[] = {
+	0, 1,			// 通常
+	18,19,			// ポケモン情報時
 };
 
 //=============================================================================
@@ -664,19 +764,25 @@ static void pwb_init_bg( PKWD_BOOK_MAIN_WORK* wk );
 static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnum );
 //
 // objの設定
+static void pwb_init_obj_res_font( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype );
 static void pwb_init_obj_res_cmn( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype );
 static void pwb_init_obj_res_poke( PKWD_BOOK_MAIN_WORK * wk );
+static void pwb_chg_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 wnum, const s32 id, const s32 sex );
 static void pwb_init_obj_res_type( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_chg_type_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 wnum, const s32 mode, const u32 type );
 static void pwb_init_obj_res_trainer( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, const s32 id );
-
-//
+// 
 static void pwb_init_obj_clwk( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, const PKWD_BOOK_OBJ_DATA *obj_adr, const s16 *info_adr );
 static void pwb_init_obj( PKWD_BOOK_MAIN_WORK* wk );
 static void pwb_exit_obj( PKWD_BOOK_MAIN_WORK* wk );
 static void pwb_set_obj_visible( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
 static void pwb_chg_objseq( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
 static BOOL pwb_is_anime_end( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
+//
+static void pwb_init_obj_bmpoam( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, const PKWD_BOOK_BMPOAM_DATA *bmp_adr, const u32 resid );
+static void pwb_disp_bmpoam( PKWD_BOOK_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf );
+static void pwb_set_bmpoam_visible( PKWD_BOOK_MAIN_WORK* wk, const s32 wnum, const BOOL bflg );
+
 //
 // 文字列表示
 static void pwb_init_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 mode );
@@ -689,24 +795,27 @@ static void pwb_clear_canvas( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32
 static void pwb_disp_title_string( PKWD_BOOK_MAIN_WORK* wk );
 static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const s32 mode );
 static void pwb_chk_canvas( PKWD_BOOK_MAIN_WORK * wk );
-
-//
+// bgスクロール
 static void pwb_set_bgscroll( PKWD_BOOK_MAIN_WORK* wk, const s32 mode );
-//
+//----------------
+// 以下、各アプリ
+//----------------
+// 台本選択
 static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 //
+// トレーナー
 static void pwb_init_trainer( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_main_trainer( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_trainer( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 static void pwb_disp_trainer_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
-
 //
+// ポケモン詳細
 static void pwb_init_poke( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_main_poke( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_poke( PKWD_BOOK_MAIN_WORK * wk );
@@ -714,11 +823,22 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 //
-static void pwb_clear_obj( PKWD_BOOK_MAIN_WORK * wk );
+// クリア(共通)
+static void pwb_clear_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 
 //
+// main処理
 static BOOL pwb_main_loop( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_chk_end( PKWD_BOOK_MAIN_WORK * wk );
+//
+static void pwb_chk_infocurpos( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
+static void pwb_disp_infocurpos( PKWD_BOOK_MAIN_WORK * wk );
+static void pwb_chg_cmn_cursor( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
+
+// party情報
+static void pwb_make_party( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario_id );
+static void pwb_delete_party( PKWD_BOOK_MAIN_WORK * wk );
+static void pwb_set_pokework( PKWD_BOOK_MAIN_WORK * wk );
 
 
 //=============================================================================
@@ -790,6 +910,7 @@ static GFL_PROC_RESULT PkwdBookProc_Init( GFL_PROC *proc, int *seq, void *pwk, v
 	//
 	// フォント作成
 	wk->font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+	wk->sfont = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr,   GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	//
 	// PRINT_QUE作成
 	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
@@ -837,6 +958,7 @@ static GFL_PROC_RESULT PkwdBookProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 	PRINTSYS_QUE_Delete( wk->print_que );
 	// FONT
 	GFL_FONT_Delete( wk->font );
+	GFL_FONT_Delete( wk->sfont );
 	
 	//描画設定破棄
 	PKWD_BOOK_GRAPHIC_Exit( wk->graphic );
@@ -940,15 +1062,23 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	wk->Step 		= STEP_INIT;
 	wk->Mode		= MODE_INIT_BOOK;
 	wk->SubMode		= STEP_INIT;
+	wk->TitleMode	= 0;
+	wk->NextMode	= 0;
 	wk->Flag		= 0;
 	wk->PFlag		= 0;
 	wk->PFlag2		= 0;
+	wk->ScenarioCurPos = 0;
+	wk->ScenarioNum	= 0;
+	wk->InfoCurPos	= 0;
+	wk->Party		= 0;
+	wk->PokeMax		= 1;
+	wk->PokePageNum	= 0;
 	//
+	// canvas
 	for(i=0;i<PKWD_BOOK_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 		wk->PrintUtil2[i].win = 0;
 	}
-	
 	//---------------------
 	// empty用バッファ取得
 	//(必ず破棄すること)
@@ -960,6 +1090,11 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------------
 	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->heapID );
 	wk->MsgData[1] = 0;
+	
+	//---------------------
+	// パーティ情報セット(test)
+	//---------------------
+	pwb_make_party( wk, wk->ScenarioNum );
 	
 	//---------------
 	// bgの初期化
@@ -985,7 +1120,6 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	pwb_init_string( wk, STR_SUB,  TMODE_BOOK );
 	
 	// fix文字列
-	// 固定文字列
 	pwb_disp_fix_string( wk, STR_MAIN, 0 );
 	//
 	pwb_disp_book_string( wk, 0 );
@@ -994,7 +1128,6 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// OBJ初期化
 	//------------
 	pwb_init_obj( wk );
-	//
 	//
 	//------------
 	// パレット
@@ -1030,12 +1163,15 @@ static void pwb_exit( PKWD_BOOK_MAIN_WORK* wk )
 {
 	s32		i;
 	
+	// party情報の破棄
+	pwb_delete_party( wk );
+	
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
 	
 	// stringの破棄
-	pwb_exit_string( wk, 0 );
-	pwb_exit_string( wk, 1 );
+	pwb_exit_string( wk, STR_MAIN );
+	pwb_exit_string( wk, STR_SUB );
 	
 	//メッセージ破棄
 	for(i=0;i<PKWD_BOOK_MES_MAX;i++){
@@ -1249,6 +1385,24 @@ static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnu
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  font
+ *
+ *	@param	PKWD_BOOK_MAIN_WORK* wk
+ *	@param	const s32			drawtype
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwb_init_obj_res_font( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype )
+{
+	// フォントのパレットは圧縮しているので注意
+	ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
+	wk->wk_obj.res[ RESID_FONT_PLT ] = GFL_CLGRP_PLTT_RegisterComp( p_handle, NARC_font_talkwin_nclr, drawtype, 0x20*PLTID_SUB_OBJ_FONT, wk->heapID );
+	GFL_ARC_CloseDataHandle( p_handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  OBJ初期化(cmn res)
  *
  *	@param	PKWD_BOOK_MAIN_WORK* wk
@@ -1267,8 +1421,6 @@ static void pwb_init_obj_res_cmn( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype )
 	//
 	idx[0] = APP_COMMON_GetBarIconPltArcIdx();		// pal
 	idx[1] = APP_COMMON_GetBarIconCharArcIdx();		// ncg
-//	idx[2] = APP_COMMON_GetBarIconCellArcIdx(  APP_COMMON_MAPPING_32K );	// cell
-//	idx[3] = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_32K );	// anim
 	idx[2] = APP_COMMON_GetBarIconCellArcIdx(  APP_COMMON_MAPPING_128K );	// cell
 	idx[3] = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_128K );	// anim
 	//
@@ -1313,22 +1465,55 @@ static void pwb_init_obj_res_poke( PKWD_BOOK_MAIN_WORK * wk )
 //			pp = PokeParty_GetMemberPointer( wk->dat->party, i );
 			// id
 //			buf[0] = wk->PokeWork[i].id;
-			buf[0] = 498;
+//			buf[0] = 498;
 			// sex
 //			buf[1] = wk->PokeWork[i].sex;
-			buf[1] = 0;
+//			buf[1] = 0;
 			//
-			wk->wk_obj.res[RESID_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
-												POKEICON_GetCgxArcIndexByMonsNumber( buf[0], 1, buf[1], FALSE ),
-												FALSE, CLSYS_DRAW_SUB, wk->heapID );
+//			wk->wk_obj.res[RESID_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
+//												POKEICON_GetCgxArcIndexByMonsNumber( buf[0], 1, buf[1], FALSE ),
+//												FALSE, CLSYS_DRAW_SUB, wk->heapID );
 //		}else{
-//			wk->ResChr[BS_RES_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
-//												POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0, 0 ),
-//												FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
+			wk->wk_obj.res[RESID_POKE_CHR_00+i] = GFL_CLGRP_CGR_Register( ah,
+												POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0, 0 ),
+												FALSE, CLSYS_DRAW_SUB, wk->heapID );
 //		}
 	}
 	//
 	GFL_ARC_CloseDataHandle( ah );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	ポケモンアイコン切り替え
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ * @param	const s32			ワーク番号(reschrと対応)
+ * @param	const s32			id
+ * @param	const s32			性別
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_chg_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 wnum, const s32 id, const s32 sex )
+{
+	NNSG2dCharacterData * dat;
+	void * buf;
+	ARCHANDLE * ah;
+	u8 pal_num = POKEICON_GetPalNum( id, 0, sex, FALSE );
+	
+	ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(wk->heapID) );
+	//
+	// CGRを置き換える方法
+	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( ah, POKEICON_GetCgxArcIndexByMonsNumber( id, 1, sex, FALSE ), FALSE, &dat, GFL_HEAP_LOWID(wk->heapID) );
+	//
+	GFL_CLGRP_CGR_Replace( wk->wk_obj.res[RESID_POKE_CHR_00+wnum], dat );
+	GFL_HEAP_FreeMemory( buf );
+	//
+	GFL_ARC_CloseDataHandle( ah );
+	//
+	// パレット変更(転送した番号(読み込ませた際にセットされる) + offset)
+	GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk_poke[wnum], pal_num, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1352,8 +1537,6 @@ static void pwb_init_obj_res_type( PKWD_BOOK_MAIN_WORK * wk )
 												CLSYS_DRAW_SUB, PLTID_SUB_OBJ_TYPE*0x20, 0, 3, wk->heapID );
 	// セル・アニメ
 	wk->wk_obj.res[RESID_TYPE_CEL] = GFL_CLGRP_CELLANIM_Register( ah,
-//												NARC_app_menu_common_p_st_type_32k_NCER,
-//												NARC_app_menu_common_p_st_type_32k_NANR,
 												NARC_app_menu_common_p_st_type_128k_NCER,
 												NARC_app_menu_common_p_st_type_128k_NANR,
 												wk->heapID );
@@ -1414,7 +1597,6 @@ static void pwb_init_obj_res_trainer( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtyp
 	//
 	wk->wk_obj.res[ RESID_TRAINER_PLT ] = TR2DGRA_OBJ_PLTT_Register( p_handle, id, drawtype, PLTID_SUB_OBJ_TRAINER*0x20, wk->heapID );
 	wk->wk_obj.res[ RESID_TRAINER_CHR ] = TR2DGRA_OBJ_CGR_Register(  p_handle, id, drawtype, wk->heapID );
-//	wk->wk_obj.res[ RESID_TRAINER_CEL ] = TR2DGRA_OBJ_CELLANM_Register( id, APP_COMMON_MAPPING_32K, drawtype, wk->heapID );
 	wk->wk_obj.res[ RESID_TRAINER_CEL ] = TR2DGRA_OBJ_CELLANM_Register( id, APP_COMMON_MAPPING_128K, drawtype, wk->heapID );
 	//
 	GFL_ARC_CloseDataHandle( p_handle );
@@ -1453,7 +1635,7 @@ static void pwb_init_obj_clwk( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, cons
 	buf[1] = iadr[1];		// chr(未使用)
 	buf[2] = iadr[2];		// cel
 	buf[3] = iadr[3];		// max
-	buf[4] = iadr[4];		// mode(0:通常、1:cmn)
+	buf[4] = iadr[4];		// mode
 	//
 	// アドレスセット
 	// アドレスセット
@@ -1486,7 +1668,7 @@ static void pwb_init_obj_clwk( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, cons
 		cldata.bgpri	= adr->bgpri;
 		//
 		clwk[i] =   GFL_CLACT_WK_Create( p_clunit, 
-											wk->wk_obj.res[ adr->res_cnum ],			// chr
+											wk->wk_obj.res[ adr->res_cnum ],	// chr
 											wk->wk_obj.res[ buf[0] ],			// plt
 											wk->wk_obj.res[ buf[2] ],			// cel
 											&cldata,
@@ -1547,6 +1729,8 @@ static void pwb_init_obj( PKWD_BOOK_MAIN_WORK* wk )
 	pwb_init_obj_res_type( wk );
 	// リソース読み込み(trainer)
 	pwb_init_obj_res_trainer( wk, CLSYS_DRAW_SUB, 1 );
+	// font
+	pwb_init_obj_res_font( wk, CLSYS_DRAW_SUB );
 	//
 	// CLWK登録(cmn)
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_cmn_tbl[0], &pwb_obj_cmn_itbl[0] );
@@ -1559,6 +1743,11 @@ static void pwb_init_obj( PKWD_BOOK_MAIN_WORK* wk )
 	//
 	// 通信アイコンセット(上画面)
 	GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
+	//
+	// BmpOAM初期化
+	wk->BmpOamSys = BmpOam_Init( wk->heapID, p_clunit );
+	// BMPOAM登録
+	pwb_init_obj_bmpoam( wk, CLSYS_DRAW_SUB, &pwb_bmpoam_tbl[0], RESID_FONT_PLT );
 }
 
 //-----------------------------------------------------------------------------
@@ -1609,10 +1798,21 @@ static void pwb_exit_obj( PKWD_BOOK_MAIN_WORK* wk )
 		GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_TYPE_CHR_00+i] );
 	}
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_TYPE_CEL] );
+	//
 	//リソース破棄(trainer)
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_TRAINER_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_TRAINER_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_TRAINER_CEL] );
+	//
+	//リソース破棄(font)
+	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_FONT_PLT] );
+	//
+	// BmpOAM後処理
+	for(i=0;i<PKWD_BOOK_BMPOAM_MAXNUM;i++){
+		BmpOam_ActorDel( wk->BmpOamWork[i] );
+		GFL_BMP_Delete( wk->BmpData[i] );
+	}
+	BmpOam_Exit( wk->BmpOamSys );
 }
 
 //-----------------------------------------------------------------------------
@@ -1620,7 +1820,7 @@ static void pwb_exit_obj( PKWD_BOOK_MAIN_WORK* wk )
  *	@brief  objのシーケンスの切り替え
  *
  *	@param	PKWD_BOOK_MAIN_WORK* wk
- *	@param	const s32			(0:通常、1:ロゴ)
+ *	@param	const s32			(CLWKMODE_*)
  *	@param	const s32			objワーク番号
  *	@param	const s32			シーケンス番号
  *
@@ -1672,7 +1872,7 @@ static void pwb_chg_objseq( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const s32 
  *	@brief  OBJの表示/非表示
  *
  *	@param	PKWD_BOOK_MAIN_WORK* wk
- *	@param	const s32			(0:通常、1:cmn)
+ *	@param	const s32			(CLWKMODE_*)
  *	@param	const s32			objワーク番号
  *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
@@ -1724,7 +1924,7 @@ static void pwb_set_obj_visible( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const
  *	@brief  OBJのアニメの終了待ち
  *
  *	@param	PKWD_BOOK_MAIN_WORK* wk
- *	@param	const s32			(0:通常、1:ロゴ)
+ *	@param	const s32			(CLWKMODE_*)
  *	@param	const s32			objワーク番号
  *
  *	@retval	const BOOL			(TRUE:再生中、FALSE:停止、終了)
@@ -1781,6 +1981,114 @@ static BOOL pwb_is_anime_end( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const s3
 	return( bflg );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ初期化(bmpoam)
+ *
+ *	@param	PKWD_BOOK_MAIN_WORK* wk
+ *	@param	const s32						drawtype
+ *	@param	const PKWD_BOOK_BMPOAM_DATA*	アドレス
+ *	@param	const u32						resid
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwb_init_obj_bmpoam( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, const PKWD_BOOK_BMPOAM_DATA *bmp_adr, const u32 resid )
+{
+	s16							tmp;
+	s32							i;
+	s32							buf[2];
+	BMPOAM_ACT_DATA				actdata;
+	const PKWD_BOOK_BMPOAM_DATA	*adr  = bmp_adr;
+	GFL_CLACTPOS				cpos;
+	//
+	for(i=0;i<PKWD_BOOK_BMPOAM_MAXNUM;i++){
+		// 終了判定
+		if(adr->width == 0xff){
+			break;
+		}
+		// サイズ(colormodeは16で大丈夫だろう)
+		buf[0] = (s32)(adr->width);
+		buf[1] = (s32)(adr->height);
+		wk->BmpData[i] = GFL_BMP_Create( buf[0], buf[1], GFL_BMP_16_COLOR, wk->heapID );
+		// 左側
+		tmp = adr->empty_num;
+		cpos.x = pwb_get_empty( wk, tmp*2 );
+		cpos.y = pwb_get_empty( wk, tmp*2+1 );
+		//
+		GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
+		actdata.bmp			= wk->BmpData[i];
+		actdata.x 			= cpos.x;
+		actdata.y 			= cpos.y;
+		actdata.pltt_index	= wk->wk_obj.res[ resid ];		// plt
+		actdata.soft_pri	= adr->softpri;
+		actdata.bg_pri		= adr->bgpri;
+		actdata.pal_offset	= adr->paloffset;
+		actdata.setSerface	= drawtype;
+		actdata.draw_type	= drawtype;		// ?
+		// 作成
+		wk->BmpOamWork[i]	= BmpOam_ActorAdd( wk->BmpOamSys, &actdata );
+		// visible
+		if(adr->visible == 0){
+			BmpOam_ActorSetDrawEnable( wk->BmpOamWork[i], FALSE );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OB文字列表示(bmpoam)
+ *
+ *	@param	PKWD_BOOK_MAIN_WORK* wk
+ *	@param	const s32				ワーク番号
+ *	@param	const STRBUF*			表示文字列
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwb_disp_bmpoam( PKWD_BOOK_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf )
+{
+	if(wnum >= PKWD_BOOK_BMPOAM_MAXNUM){
+		OS_Printf("bmpoamj max error:%d\n",wnum);
+		return;
+	}
+	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
+	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->sfont, PRINTSYS_LSB_Make(15,2,0) );
+	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
+	//
+	// 座標も再セットしておく
+	{
+		s16	buf[2];
+		s16	tmp;
+		const PKWD_BOOK_BMPOAM_DATA *adr = &pwb_bmpoam_tbl[wnum];
+		//
+		tmp = adr->empty_num;
+		buf[0] = pwb_get_empty( wk, tmp*2 );
+		buf[1] = pwb_get_empty( wk, tmp*2+1 );
+		buf[0] -= 32;
+		buf[1] -= 8;
+		BmpOam_ActorSetPos( wk->BmpOamWork[wnum], buf[0], buf[1] );
+	}
+	// 表示
+	BmpOam_ActorSetDrawEnable( wk->BmpOamWork[wnum], TRUE );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OB文字列表示(bmpoam)
+ *
+ *	@param	PKWD_BOOK_MAIN_WORK* wk
+ *	@param	const s32				ワーク番号
+ *	@param	const BOOL				(表示/非表示)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwb_set_bmpoam_visible( PKWD_BOOK_MAIN_WORK* wk, const s32 wnum, const BOOL bflg )
+{
+	BmpOam_ActorSetDrawEnable( wk->BmpOamWork[wnum], bflg );
+}
+
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
@@ -1788,7 +2096,8 @@ static BOOL pwb_is_anime_end( PKWD_BOOK_MAIN_WORK *wk, const s32 wmode, const s3
  *	@brief  文字表示準備(Canvasの作成)
  *
  *	@param	PKWD_BOOK_MAIN_WORK*		wk
- *	@param	const s32					(0:main、1:sub)
+ *	@param	const s32					(STR_MAIN or STR_SUB)
+ *	@param	const s32					(SUBの(0-2)、MAINでは無視)
  *
  *	@retval
  */
@@ -1832,7 +2141,8 @@ static void pwb_init_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 
 /**
  *	@brief  文字列破棄
  *
- *	@param	PKWD_BOOK_MAIN_WORK* 			wk
+ *	@param	PKWD_BOOK_MAIN_WORK* 		wk
+ *	@param	const s32					(STR_MAIN or STR_SUB)
  *
  *	@retval
  */
@@ -1925,6 +2235,7 @@ static void pwb_main_print( PKWD_BOOK_MAIN_WORK *wk )
  *	@brief  文字表示
  *
  *	@param	PKWD_BOOK_MAIN_WORK* 			wk
+ *	@param	const s32				(STR_MAIN or STR_SUB)
  *	@param	const s32				Canvasの番号
  *	@param	const s32				表示座標(x)
  *	@param	const s32				表示座標(y)
@@ -1976,12 +2287,12 @@ static u16 pwb_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode )
 	return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 /**
  *	@brief  ウインドウクリア
  *
  *	@param	BSCENARIO_WORK*		wk
+ *	@param	const s32			(STR_MAIN or STR_SUB)
  *	@param	const s32			キャンバスの番号
  *
  *	@retval
@@ -2029,9 +2340,9 @@ static void pwb_set_bgscroll( PKWD_BOOK_MAIN_WORK* wk, const s32 mode )
 /**
  * @brief	fix文字表示
  *
- * @param	PKWD_BOOK_MAIN_WORK*		wk
- * @param	const s32			type(0:main,1:sub)
- * @param	const s32			モード(0-3)
+ * @param	PKWD_BOOK_MAIN_WORK*	wk
+ * @param	const s32				(STR_MAIN or STR_SUB)
+ * @param	const s32				モード(0-2)
  *
  * @return  none
  */
@@ -2044,7 +2355,7 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 	s32		i;
 	STRBUF	*strbuf;
 	
-	// 指定の方法注意
+	// 指定の方法注意(要修正)
 	adr = pwb_fmes_tbl[type+mode];
 	for(i=0;i<PKWD_BOOK_CANVAS_MAXNUM;i++){
 		// 終了判定
@@ -2132,9 +2443,11 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 		// fix文字列
 		pwb_disp_book_string( wk, 0 );
 		wk->Flag |= FLG_CHG_TITLE;
+		// 矢印位置
+		pwb_chg_cmn_cursor( wk, 0 );
 	}
 	// objの初期化
-	pwb_clear_obj( wk );
+	pwb_clear_obj( wk, 0 );
 	//
 	wk->Flag |= FLG_SET_INIT;
 }
@@ -2162,7 +2475,34 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 			pwb_key_book( wk );
 			break;
 		//
+		// 待ち(戻る)
 		case STEP_LV2:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_BACK);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->NextMode = MODE_END;
+			}
+			break;
+		//
+		// アニメ待ち(右)
+		case STEP_LV2+10:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->SubMode = STEP_LV1;
+				wk->Mode++;
+			}
+			break;
+		//
+		// アニメ待ち(左)
+		case STEP_LV2+20:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->SubMode = STEP_LV1;
+				wk->Mode++;
+			}
 			break;
 		//
 		case STEP_END:
@@ -2199,19 +2539,53 @@ static void pwb_exit_book( PKWD_BOOK_MAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 {
+	s32		flg=0;
+	
 	// debug(終了)
 	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		wk->NextMode = MODE_END;
+//		wk->NextMode = MODE_END;
+		// 戻るシーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
+		wk->SubMode = STEP_LV2;
+	}
+	// 上
+	if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+		wk->ScenarioCurPos--;
+		if(wk->ScenarioCurPos < 0){
+			wk->ScenarioCurPos = 0;
+		}
+		OS_Printf("scenario :%d\n",wk->ScenarioCurPos);
+		flg = 1;
+		// test
+		wk->ScenarioNum = wk->ScenarioCurPos;
+	}
+	// 下
+	else if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+		wk->ScenarioCurPos++;
+		if(wk->ScenarioCurPos > 2){
+			wk->ScenarioCurPos = 2;
+		}
+		OS_Printf("scenario :%d\n",wk->ScenarioCurPos);
+		flg = 1;
+		// test
+		wk->ScenarioNum = wk->ScenarioCurPos;
 	}
 	//
-//	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-	if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		wk->NextMode = MODE_INIT_TRAINER;
 		wk->Mode++;
+		wk->Flag |= FLG_MODE_SUB;
+		//
+		//-----------------------------------
+		// シナリオに応じたパーティ情報変更
+		//-----------------------------------
+		pwb_make_party( wk, wk->ScenarioNum );
+		wk->InfoCurPos = 0;
 	}
-	else if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
-		wk->NextMode = MODE_INIT_POKE;
-		wk->Mode++;
+	//
+	// 上文字列更新
+	if(flg == 1){
+		pwb_disp_book_string( wk, 1 );
 	}
 }
 
@@ -2228,8 +2602,8 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 {
 	s32			i;
-//	s32			id = wk->TopNum;
-	s32			id = 0;
+	s32			id = wk->ScenarioNum;
+//	s32			id = 0;
 	STRBUF		*strbuf;
 	
 	// 初期のみでよいはず
@@ -2237,12 +2611,12 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		// 固定文字列
 		pwb_disp_fix_string( wk, STR_SUB, TMODE_BOOK );
 		//
-		// タイトル、あらすじ、クリア目標
-		for(i=0;i<3;i++){
-			strbuf = GFL_MSG_CreateString( wk->MsgData[0], pwb_mes_tbl[i]+id );
-			pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
-			GFL_STR_DeleteBuffer( strbuf );
-		}
+	}
+	// タイトル、あらすじ、クリア目標
+	for(i=0;i<3;i++){
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], pwb_mes_tbl[i]+id );
+		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
 
@@ -2271,8 +2645,10 @@ static void pwb_init_trainer( PKWD_BOOK_MAIN_WORK * wk )
 	// 表示まとめ
 	pwb_disp_trainer_string( wk, 0 );
 	// objの初期化
-	pwb_clear_obj( wk );
+	pwb_clear_obj( wk, 1 );
 	pwb_disp_trainer_obj( wk, 0 );
+	// 矢印位置
+	pwb_chg_cmn_cursor( wk, 1 );
 	//
 	wk->Flag |= FLG_CHG_TITLE;
 }
@@ -2300,7 +2676,39 @@ static void pwb_main_trainer( PKWD_BOOK_MAIN_WORK * wk )
 			pwb_key_trainer( wk );
 			break;
 		//
+		// 待ち(戻る)
 		case STEP_LV2:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_BACK);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->SubMode = STEP_LV1;
+				wk->Flag &= ~FLG_MODE_SUB;
+			}
+			break;
+		//
+		// 右シーケンス変更
+		case STEP_LV2+10:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->SubMode = STEP_LV1;
+				wk->Mode++;
+				// カーソル処理
+				pwb_chk_infocurpos( wk, 0 );
+			}
+			break;
+		//
+		// 左シーケンス変更
+		case STEP_LV2+20:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->SubMode = STEP_LV1;
+				wk->Mode++;
+				// カーソル処理
+				pwb_chk_infocurpos( wk, 1 );
+			}
 			break;
 		//
 		case STEP_END:
@@ -2337,22 +2745,29 @@ static void pwb_exit_trainer( PKWD_BOOK_MAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk )
 {
-	// debug(終了)
-	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		wk->NextMode = MODE_END;
-		wk->Mode++;
-	}
-	//
-//	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-	if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
-		wk->NextMode = MODE_INIT_POKE;
-		wk->Mode++;
-	}
-	else if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+	// 戻る(book)
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		wk->NextMode = MODE_INIT_BOOK;
-		wk->Mode++;
+		// 戻るシーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
+		wk->SubMode = STEP_LV2;
+	}
+	// 右
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+		wk->NextMode = MODE_INIT_POKE;
+		// 右シーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
+		wk->SubMode = STEP_LV2+10;
+	}
+	// 左
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+		wk->NextMode = MODE_INIT_POKE;
+		// 左シーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
+		wk->SubMode = STEP_LV2+20;
 	}
 }
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief	文字列表示(book)
@@ -2377,7 +2792,7 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
  * @brief	obj表示(trainer)
  *
  * @param	PKWD_BOOK_MAIN_WORK*		wk
- * @param	const s32			(0:初期化、1:更新)
+ * @param	const s32					(0:初期化、1:更新)
  *
  * @return  none
  */
@@ -2385,12 +2800,34 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 static void pwb_disp_trainer_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 {
 	s32		i;
+	BOOL	bflg;
+	STRBUF	*strbuf;
 	
-	for(i=0;i<6;i++){
-		pwb_set_obj_visible( wk, CLWKMODE_POKE, i, TRUE );
+	for(i=0;i<PKWD_POKE_MAX;i++){
+		if(i < wk->PokeMax){
+			pwb_chg_poke_obj( wk, i, wk->PokeWork[i].id, wk->PokeWork[i].sex );
+			bflg = TRUE;
+		}else{
+			bflg = FALSE;
+		}
+		pwb_set_obj_visible( wk, CLWKMODE_POKE, i, bflg );
 	}
 	// trainer
 	pwb_set_obj_visible( wk, CLWKMODE_TRAINER, 0, TRUE );
+	//
+	strbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
+	//
+	// ポケモン数字
+	for(i=0;i<wk->PokeMax;i++){
+		// 1はじまり
+		STRTOOL_SetNumber( strbuf, (i+1), 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		pwb_disp_bmpoam( wk, i, strbuf );
+	}
+	// 破棄
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// カーソル数
+	pwb_disp_infocurpos( wk );
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -2418,7 +2855,7 @@ static void pwb_init_poke( PKWD_BOOK_MAIN_WORK * wk )
 	// 表示まとめ
 	pwb_disp_poke_string( wk, 0 );
 	// objの初期化
-	pwb_clear_obj( wk );
+	pwb_clear_obj( wk, 1 );
 	pwb_disp_poke_obj( wk, 0 );
 	//
 	wk->Flag |= FLG_CHG_TITLE;
@@ -2447,7 +2884,45 @@ static void pwb_main_poke( PKWD_BOOK_MAIN_WORK * wk )
 			pwb_key_poke( wk );
 			break;
 		//
+		// 待ち(戻る)
 		case STEP_LV2:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_BACK);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->Mode++;
+				wk->SubMode = STEP_LV1;
+				wk->Flag &= ~FLG_MODE_SUB;
+			}
+			break;
+		//
+		// 右シーケンス
+		case STEP_LV2+10:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_RIGHT);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->SubMode = STEP_LV1;
+				wk->Mode++;
+				// カーソル処理
+				pwb_chk_infocurpos( wk, 0 );
+				if(wk->InfoCurPos != 0){
+					wk->NextMode = MODE_INIT_POKE;
+				}
+			}
+			break;
+		//
+		// 左シーケンス
+		case STEP_LV2+20:
+			bflg = pwb_is_anime_end(wk, CLWKMODE_CMN, CLWK_CMN_LEFT);
+			if(bflg == FALSE){
+				// 終了内容
+				wk->SubMode = STEP_LV1;
+				wk->Mode++;
+				// カーソル処理
+				pwb_chk_infocurpos( wk, 1 );
+				if(wk->InfoCurPos != 0){
+					wk->NextMode = MODE_INIT_POKE;
+				}
+			}
 			break;
 		//
 		case STEP_END:
@@ -2485,19 +2960,25 @@ static void pwb_exit_poke( PKWD_BOOK_MAIN_WORK * wk )
 static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 {
 	// debug(終了)
-	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		wk->NextMode = MODE_END;
-		wk->Mode++;
-	}
-	//
-//	if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-	if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		wk->NextMode = MODE_INIT_BOOK;
-		wk->Mode++;
+		// 戻るシーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
+		wk->SubMode = STEP_LV2;
 	}
-	else if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+	// 右
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
 		wk->NextMode = MODE_INIT_TRAINER;
-		wk->Mode++;
+		// 右シーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
+		wk->SubMode = STEP_LV2+10;
+	}
+	// 左
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+		wk->NextMode = MODE_INIT_TRAINER;
+		// 左シーケンス変更
+		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
+		wk->SubMode = STEP_LV2+20;
 	}
 }
 
@@ -2530,14 +3011,13 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// 更新
 	//--------
 	// ポケモン情報
-//	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->PokePageNum );
+	pp = PokeParty_GetMemberPointer( wk->Party, wk->PokePageNum );
 	//
 	// 1回だけ確保
 	exp = GFL_STR_CreateBuffer( 128, wk->heapID );
 	//
 	// 名前
-//	buf[0] = wk->PokeWork[wk->PokePageNum].id;
-	buf[0] = 498;		// test
+	buf[0] = wk->PokeWork[wk->PokePageNum].id;
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[0] );
 	WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
@@ -2547,8 +3027,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// 性別
 	tmp = 1;
 	pcol   = PRINTSYS_LSB_Make(6,5,0);
-//	buf[0] = wk->PokeWork[wk->PokePageNum].sex;
-	buf[0] = 0;
+	buf[0] = wk->PokeWork[wk->PokePageNum].sex;
 	if(buf[0] == PTL_SEX_FEMALE){
 		tmp  = 2;
 		pcol = PRINTSYS_LSB_Make(4,3,0);
@@ -2558,8 +3037,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	GFL_STR_DeleteBuffer( str );
 	//
 	// レベル
-//	buf[0] = wk->PokeWork[wk->PokePageNum].level;
-	buf[0] = 88;
+	buf[0] = wk->PokeWork[wk->PokePageNum].level;
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[3] );
 	WORDSET_RegisterNumber( wk->Wordset, 0, buf[0], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
@@ -2567,8 +3045,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	GFL_STR_DeleteBuffer( str );
 	//
 	// もちもの
-//	buf[0] = wk->PokeWork[wk->PokePageNum].item;
-	buf[1] = 1;
+	buf[0] = wk->PokeWork[wk->PokePageNum].item;
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[4] );
 	WORDSET_RegisterItemName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
@@ -2577,8 +3054,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	//
 	// 技
 	for(i=0;i<4;i++){
-//		buf[0] = wk->PokeWork[wk->PokePageNum].skill[i];
-		buf[0] = 1+i;
+		buf[0] = wk->PokeWork[wk->PokePageNum].skill[i];
 		if(buf[0] != 0){
 			str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[6+i] );
 			WORDSET_RegisterWazaName( wk->Wordset, 0, buf[0] );
@@ -2592,8 +3068,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	}
 	//
 	// 特性
-//	buf[0] = wk->PokeWork[wk->PokePageNum].stat;
-	buf[0] = 1;
+	buf[0] = wk->PokeWork[wk->PokePageNum].stat;
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[5] );
 	WORDSET_RegisterTokuseiName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
@@ -2603,7 +3078,6 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// 破棄
 	GFL_STR_DeleteBuffer( exp );
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2623,35 +3097,24 @@ static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	BOOL			bflg;
 	
 	// ポケモン情報
-//	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->PokePageNum );
+	pp = PokeParty_GetMemberPointer( wk->Party, wk->PokePageNum );
 	//
 	//--------
 	// ポケモン
 	//--------
-//	for(i=0;i<BS_POKE_MAX;i++){
-//		if(i == wk->PokePageNum){
-//			BsCmn_ChgTypePoke( wk, i, wk->PokeWork[i].id, wk->PokeWork[i].sex );
-//			bflg = TRUE;
-//		}else{
-//			bflg = FALSE;
-//		}
-//		BsCmn_ObjVisible( wk, BS_CLWKMODE_POKE, i, bflg );
-//	}
-	// ポケモン
+	pwb_chg_poke_obj( wk, 6, wk->PokeWork[wk->PokePageNum].id, wk->PokeWork[wk->PokePageNum].sex );
 	pwb_set_obj_visible( wk, CLWKMODE_POKE, 6, TRUE );
 	//
 	//--------
 	// タイプ
 	//--------
 	// type1
-//	buf[0] = wk->PokeWork[wk->PokePageNum].poke_type[0];
-	buf[0] = 1;
+	buf[0] = wk->PokeWork[wk->PokePageNum].poke_type[0];
 	pwb_chg_type_obj( wk, 0, 0, buf[0] );
 	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 0, TRUE );
 	//
 	// type2(違う場合のみ表示)
-	buf[1] = 2;
-//	buf[1] = wk->PokeWork[wk->PokePageNum].poke_type[1];
+	buf[1] = wk->PokeWork[wk->PokePageNum].poke_type[1];
 	if(buf[0] != buf[1]){
 		pwb_chg_type_obj( wk, 1, 0, buf[1] );
 		bflg = TRUE;
@@ -2659,7 +3122,6 @@ static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		bflg = FALSE;
 	}
 	pwb_set_obj_visible( wk, CLWKMODE_TYPE, 1, TRUE );
-
 	
 //	OS_Printf("type :%d,%d\n",buf[0],buf[1]);
 	
@@ -2668,19 +3130,19 @@ static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	//--------
 	for(i=0;i<4;i++){
 		// 技
-//		buf[0] = wk->PokeWork[wk->PokePageNum].skill[i];
-		buf[0] = 1;
+		buf[0] = wk->PokeWork[wk->PokePageNum].skill[i];
 		if(buf[0] != 0){
 			// 技のタイプ
-			buf[1] = 2;
-//			BsCmn_ChgTypeObj( wk, 2+i, 1, wk->PokeWork[wk->PokePageNum].skill_type[i] );
-			pwb_chg_type_obj( wk, 2+i, 1, buf[1] );
+			pwb_chg_type_obj( wk, 2+i, 1, wk->PokeWork[wk->PokePageNum].skill_type[i] );
 			bflg = TRUE;
 		}else{
 			bflg = FALSE;
 		}
 		pwb_set_obj_visible( wk, CLWKMODE_TYPE, 2+i, bflg );
 	}
+	//
+	// カーソル数
+	pwb_disp_infocurpos( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2692,7 +3154,7 @@ static void pwb_disp_poke_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
  * @return
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_clear_obj( PKWD_BOOK_MAIN_WORK * wk )
+static void pwb_clear_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 {
 	s32		i;
 	
@@ -2707,6 +3169,19 @@ static void pwb_clear_obj( PKWD_BOOK_MAIN_WORK * wk )
 	}
 	// trainer
 	pwb_set_obj_visible( wk, CLWKMODE_TRAINER, 0, FALSE );
+	//
+	// bmpoam
+	for(i=0;i<6;i++){
+		pwb_set_bmpoam_visible( wk, i, FALSE );
+	}
+	//
+	// カーソル情報のon/off
+	if(mode == 0){
+		// bmpoam
+		for(i=0;i<3;i++){
+			pwb_set_bmpoam_visible( wk, 6+i, FALSE );
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -2758,4 +3233,219 @@ static void pwb_chk_end( PKWD_BOOK_MAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	keyまとめ
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_chk_infocurpos( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
+{
+	// 右
+	if(mode == 0){
+		wk->InfoCurPos++;
+		if(wk->InfoCurPos >= wk->PokeMax+1){
+			wk->InfoCurPos = 0;
+		}
+	}
+	// 左
+	else{
+		wk->InfoCurPos--;
+		if(wk->InfoCurPos < 0){
+			wk->InfoCurPos = wk->PokeMax;
+		}
+	}
+	// トレーナー画面の場合
+	if(wk->InfoCurPos == 0){
+		wk->PokePageNum = 0;
+	}
+	// ポケモン画面の場合
+	else{
+		wk->PokePageNum = wk->InfoCurPos-1;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	ページ数表示
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_disp_infocurpos( PKWD_BOOK_MAIN_WORK * wk )
+{
+	STRBUF	*strbuf;
+	STRBUF	*strbuf2;
+	//
+	strbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
+	// 現在
+	STRTOOL_SetNumber( strbuf, (wk->InfoCurPos+1), 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	pwb_disp_bmpoam( wk, 6, strbuf );
+	// 最大
+	STRTOOL_SetNumber( strbuf, (wk->PokeMax+1), 1, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	pwb_disp_bmpoam( wk, 8, strbuf );
+	// 破棄
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// slash
+	strbuf2 = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[10] );
+	pwb_disp_bmpoam( wk, 7, strbuf2 );
+	// 破棄
+	GFL_STR_DeleteBuffer( strbuf2 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	カーソル位置修正
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ * @param	const s32					(0:通常、1:ポケモン情報時)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_chg_cmn_cursor( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
+{
+	s16				i;
+	s16				buf[2];
+	GFL_CLACTPOS	pos;
+	//
+	// emptyを取得する
+	buf[0] = pwb_curpos_tbl[2*mode+0];
+	buf[1] = pwb_curpos_tbl[2*mode+1];
+	//
+	for(i=0;i<2;i++){
+		pos.x = pwb_get_empty( wk, buf[i]*2 );
+		pos.y = pwb_get_empty( wk, buf[i]*2+1 );
+		// 設定
+		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_cmn[CLWK_CMN_LEFT+i], &pos, CLSYS_DEFREND_SUB );
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	パーティを作成(event_pokewood.cのsetupPokemonから持ってきた)
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ * @param	const s32					台本番号
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_make_party( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario_id )
+{
+	// ポケウッドのpartyの作成
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
+	const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
+	//
+	// データを破棄
+	pwb_delete_party( wk );
+	//
+	// newされたデータがwk->Partyに格納されるはず
+	wk->Party = PokeParty_AllocPartyWork( wk->heapID );
+	POKEWOOD_EVENT_setupPokemon( mystatus, wk->Party, wk->heapID, scenario_id, 1 );
+	//
+	// パラメータセット
+	pwb_set_pokework( wk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	パーティを破棄
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_delete_party( PKWD_BOOK_MAIN_WORK * wk )
+{
+	if(wk->Party != 0){
+		GFL_HEAP_FreeMemory( wk->Party );
+		wk->Party = 0;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	ポケモンパラメータセット
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_set_pokework( PKWD_BOOK_MAIN_WORK * wk )
+{
+	s32				i;
+	s32				j;
+	POKEMON_PARAM	*pp;
+	
+	// 最大数をセット
+	wk->PokeMax		= PokeParty_GetPokeCount( wk->Party );
+	
+	// 初期化(なくてもよいはず)
+	for(i=0;i<PKWD_POKE_MAX;i++){
+		wk->PokeWork[i].id		= 0;
+		wk->PokeWork[i].sex		= 0;
+		wk->PokeWork[i].level	= 0;
+		wk->PokeWork[i].item	= 0;
+		wk->PokeWork[i].poke_type[0] = 0;
+		wk->PokeWork[i].poke_type[1] = 0;
+		//
+		for(j=0;j<4;j++){
+			wk->PokeWork[i].skill[j] = 0;
+			wk->PokeWork[i].skill_type[j] = 0;
+		}
+	}
+	
+	// PP_Get関連は重たい(?)ようなので、
+	// 初期化時にあらかじめ取得しておく
+	// セット
+	for(i=0;i<wk->PokeMax;i++){
+		// ポケモン情報
+		pp = PokeParty_GetMemberPointer( wk->Party, i );
+		// 名前
+		wk->PokeWork[i].id = PP_Get( pp, ID_PARA_monsno, 0 );
+		// 性別
+		wk->PokeWork[i].sex = PP_GetSex( pp );
+		// レベル
+		wk->PokeWork[i].level = PP_Get( pp, ID_PARA_level, 0 );
+		// もちもの
+		wk->PokeWork[i].item = PP_Get( pp, ID_PARA_item, 0 );
+		// もちもの
+		wk->PokeWork[i].stat = PP_Get( pp, ID_PARA_speabino, 0 );
+		// タイプ
+		wk->PokeWork[i].poke_type[0] = PP_Get( pp, ID_PARA_type1, 0 );
+		wk->PokeWork[i].poke_type[1] = PP_Get( pp, ID_PARA_type2, 0 );
+		// 技、技タイプ
+		for(j=0;j<4;j++){
+			wk->PokeWork[i].skill[j] = PP_Get( pp, ID_PARA_waza1+j, 0 );
+			if(wk->PokeWork[i].skill[j] != 0){
+				wk->PokeWork[i].skill_type[j] = WAZADATA_GetParam( wk->PokeWork[i].skill[j], WAZAPARAM_TYPE );
+			}
+		}
+	}
+#if 0
+	// debug表示
+	for(i=0;i<PKWD_POKE_MAX;i++){
+		OS_Printf("id, sex, level, item, stat, poke_type[0], poke_type[1] :%d,%d,%d,%d,%d,%d,%d\n",
+			wk->PokeWork[i].id, wk->PokeWork[i].sex, wk->PokeWork[i].level, 
+			wk->PokeWork[i].item, wk->PokeWork[i].stat, wk->PokeWork[i].poke_type[0], wk->PokeWork[i].poke_type[1] );
+		OS_Printf("skill :%d,%d,%d,%d\n",
+			wk->PokeWork[i].skill[0], wk->PokeWork[i].skill[1], wk->PokeWork[i].skill[2], wk->PokeWork[i].skill[3] );
+		OS_Printf("skill type :%d,%d,%d,%d\n",
+			wk->PokeWork[i].skill_type[0], wk->PokeWork[i].skill_type[1], wk->PokeWork[i].skill_type[2], wk->PokeWork[i].skill_type[3] );
+		
+	}
+#endif
+}
 

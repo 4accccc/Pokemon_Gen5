@@ -238,6 +238,14 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
   GFL_HEAP_FreeMemory( add_party );
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void POKEWOOD_EVENT_setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const s32 scenario_id, const s32 mode )
+{
+	setupPokemon( mystat, party, heapID, scenario_id, mode );
+}
+
+
 #include  "tr_tool/tr_tool.h"
 
 
@@ -880,6 +888,7 @@ GMEVENT * PKWD_BOOK_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 
   p_param->gsys      = gsys;
   p_param->fieldmap  = fieldmap;
+  p_param->pkwd_param.gamesys = gsys;
 //  p_param->pkwd_param.scenario_no = param->scenario_no;
 
   // デバッグメニューからもらった引数としてのPOKEWOOD_EVENT_PARAMは解放

@@ -26,6 +26,8 @@ typedef struct{
 //======================================================================
 FS_EXTERN_OVERLAY( notwifi_event_pokewood );
 
+extern void POKEWOOD_EVENT_setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID heapID, const s32 scenario_id, const s32 mode );
+
 extern GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * parent_work );
 extern GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work );
 
