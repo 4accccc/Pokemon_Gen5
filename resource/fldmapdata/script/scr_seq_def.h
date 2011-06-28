@@ -9557,6 +9557,67 @@
   .short  \id
   .endm
 
+// エスパー部屋
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_ESP_STAIRS
+ * @brief 四天王  エスパー  階段演出
+ * @param id  0:表示  1:消滅
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_ESP_STAIRS( id ) _ASM_FOURKINGS_ESP_STAIRS id
+
+  .macro  _ASM_FOURKINGS_ESP_STAIRS id
+  .short  EV_SEQ_FOURKINGS_ESP_STAIRS
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_ESP_FLOWER
+ * @brief 四天王  エスパー  花開く演出
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_ESP_FLOWER() _ASM_FOURKINGS_ESP_FLOWER
+
+  .macro  _ASM_FOURKINGS_ESP_FLOWER
+  .short  EV_SEQ_FOURKINGS_ESP_FLOWER
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_ESP_CUBE
+ * @brief 四天王  エスパー  キューブ演出
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_ESP_CUBE() _ASM_FOURKINGS_ESP_CUBE
+
+  .macro  _ASM_FOURKINGS_ESP_CUBE
+  .short  EV_SEQ_FOURKINGS_ESP_CUBE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_ESP_CATTLEYA
+ * @brief 四天王  エスパー  カトレア演出
+ * @param obj_id  カトレアのOBJID
+ * @param fall_spd  下降のスピード(1:遅い ～ :早い)
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_ESP_CATTLEYA( obj_id, fall_spd ) \
+    _ASM_FOURKINGS_ESP_CATTLEYA obj_id, fall_spd
+
+  .macro  _ASM_FOURKINGS_ESP_CATTLEYA obj_id, fall_spd
+  .short  EV_SEQ_FOURKINGS_ESP_CATTLEYA
+  .short  \obj_id
+  .short  \fall_spd
+  .endm
+
+
 
 //======================================================================
 //

@@ -47,6 +47,12 @@ extern VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Evil_Fire( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Evil_Claw( VMHANDLE *core, void *wk );
 
+// エスパー
+extern VMCMD_RESULT EvCmdFourKings_Esp_Stairs( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Esp_Flower( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Esp_Cube( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Esp_Cattleya( VMHANDLE *core, void *wk );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

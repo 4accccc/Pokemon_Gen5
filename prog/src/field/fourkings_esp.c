@@ -23,6 +23,7 @@
 
 // arc
 #include "arc/fieldmap/fourkings_esp.naix"
+#include "../../../resource/fldmapdata/eventdata/tmp/c09r0401.h"
 
 // mine
 #include "fourkings_sv.h"
@@ -52,6 +53,17 @@ typedef struct {
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
   FOURKINGS_SV_WORK   *p_sv_wk;       // セーブワーク
 } FOURKINGS_ESP_TMP;
+
+//-------------------------------------
+///	POSイベントワーク
+//=====================================
+typedef struct {
+  GAMESYS_WORK    *gsys;        // ゲームシステム
+  FIELDMAP_WORK   *p_fieldmap;  // フィールドマップ
+  FIELD_PLAYER    *player;      // 自機
+
+  u32             wait;         // ウェイト
+} POS_EVENT_WORK;
 
 
 //=============================================================================
@@ -266,6 +278,27 @@ static BOOL ANM_CURTAIN_CheckEnd( FOURKINGS_ESP_TMP *p_wk );
 static void ANM_STAIRS_PlayLoop( FOURKINGS_ESP_TMP *p_wk );
 static void ANM_STAIRS_Play( FOURKINGS_ESP_TMP *p_wk );
 
+// task(カトレア)
+static void CATTLEYA_TASK_Add( FOURKINGS_ESP_TMP *p_wk, MMDL* mmdl, const fx32 fall_spd );
+// タスクワーク
+typedef struct {
+  fx32        end_y;  // 最終Y位置
+  fx32        fall_spd; // 下降スピード
+  MMDL        *mmdl;  // 対象モデル
+  FOURKINGS_ESP_TMP *p_parent;
+} TASK_WORK;
+#define FALL_BASIC    (0x100)   // 降りる速さ基準
+static FIELD_TASK_RETVAL TaskFunc( void* wk );
+
+#ifdef PM_DEBUG
+// 演出確かめ用デバッグ
+// 階段下
+static GMEVENT* POS_UNDER_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
+static GMEVENT_RESULT PosUnderEvent( GMEVENT* event, int* seq, void* wk );
+// 階段上
+static GMEVENT* POS_TOP_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
+static GMEVENT_RESULT PosTopEvent( GMEVENT* event, int* seq, void* wk );
+#endif
 
 //=============================================================================
 /**
@@ -295,10 +328,19 @@ void FOURKINGS_ESP_Setup(FIELDMAP_WORK *p_fieldmap)
   EXPOBJ_ObjSet( p_wk );
 
   // 初期設定
+  // 【仮】セーブ状況で初期状態をきめる
   ANM_WATERFALL_PlayLoop( p_wk );
   ANM_STAIRS_PlayLoop( p_wk );
-  // 幕表示
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_CURTAIN, FALSE );
+
+  // カトレア非表示
+  // 【仮】セーブ状況で初期状態をきめる
+  {
+    const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0401_BIGFOUR4_01 );  // カトレア
+    MMDL_SetStatusBitVanish( mmdl, TRUE );
+  }
+
 }
 
 //--------------------------------------------------------------
@@ -335,44 +377,106 @@ void FOURKINGS_ESP_Move(FIELDMAP_WORK *p_fieldmap)
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      ANM_FLOWER_Play( p_wk );
-      OS_Printf("花再生\n");
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GMEVENT *event;
+      event = POS_UNDER_CreateEvent( NULL, gsys);
+      GAMESYSTEM_SetEvent(gsys, event);
+      OS_Printf("階段下イベント\n");
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
-      ANM_RIPPLE_Play( p_wk );
-      OS_Printf("波紋再生\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      ANM_CURTAIN_Play( p_wk );
-      OS_Printf("幕再生\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      ANM_CUBE_Play( p_wk );
-      OS_Printf("キューブ再生\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      ANM_CUBE_PlayLoop( p_wk );
-      OS_Printf("キューブ再生ループ\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      ANM_WATERFALL_Play( p_wk );
-      OS_Printf("滝開く再生\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      ANM_STAIRS_Play( p_wk );
-      OS_Printf("階段消える再生\n");
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GMEVENT *event;
+      event = POS_TOP_CreateEvent( NULL, gsys);
+      GAMESYSTEM_SetEvent(gsys, event);
+      OS_Printf("階段上イベント\n");
     }
   }
 #endif
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段アニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id  0:表示  1:消滅
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_ESP_StairsAnm( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_ESP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID );
+
+  GF_ASSERT_MSG( id<2, "_FOURKINGS_ESP_STAIRS 引数の指定が間違っている");
+
+  if( id == 0 )
+  {
+    ANM_WATERFALL_Play( p_wk );
+    ANM_CURTAIN_Play( p_wk );
+  }
+  else
+  {
+    ANM_STAIRS_Play( p_wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  花演出
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_ESP_FlowerAnm( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_ESP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID );
+
+  ANM_FLOWER_Play( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キューブ再生アニメ
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_ESP_CubeAnm( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_ESP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID );
+
+  ANM_CUBE_Play( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カトレアの演出再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	obj_id    カトレアのOBJID
+ *	@param  down_spd  下降のスピード( 1:遅い ～
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_ESP_Cattleya( GAMESYS_WORK *gsys, int obj_id, int fall_spd )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_ESP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID );
+  const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+
+  MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );  // カトレア
+  GF_ASSERT( mmdl );
+
+  // モデル表示
+  MMDL_SetStatusBitVanish( mmdl, FALSE );
+
+  // タスク追加
+  CATTLEYA_TASK_Add( p_wk, mmdl, ( fall_spd * FALL_BASIC ) );
 }
 
 //=============================================================================
@@ -558,9 +662,9 @@ static void ANM_CUBE_Play( FOURKINGS_ESP_TMP *p_wk )
   // 1 回転アニメ
   // 2 登場アニメ
   {
+    ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
+    ANM_Play( p_wk->exp_obj, obj_idx, 1, TRUE );
     ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
-    ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
-    ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
   }
 }
 
@@ -820,3 +924,338 @@ static void ANM_STAIRS_Play( FOURKINGS_ESP_TMP *p_wk )
   ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
   ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
 }
+
+//=============================================================================
+/**
+ *          カトレア演出
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カトレア演出タスク追加
+ */
+//-----------------------------------------------------------------------------
+static void CATTLEYA_TASK_Add( FOURKINGS_ESP_TMP *p_wk, MMDL* mmdl, const fx32 fall_spd )
+{
+  FIELD_TASK      *task;
+  FIELD_TASK_MAN  *taskMan;
+  TASK_WORK       *work;
+  HEAPID heap_id  = FIELDMAP_GetHeapID( p_wk->p_fieldmap );
+  FIELD_PLAYER *player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+  VecFx32 pos;
+
+  FIELD_PLAYER_GetPos( player, &pos );
+
+  taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), TaskFunc );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->mmdl     = mmdl;
+  work->end_y    = pos.y;
+  work->fall_spd = fall_spd;
+  work->p_parent = p_wk;
+
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+}
+
+// タスク関数
+static FIELD_TASK_RETVAL TaskFunc( void* wk )
+{
+  TASK_WORK* work = (TASK_WORK*)wk;
+  VecFx32 pos;
+
+  // 下降処理
+  {
+    MMDL_GetVectorPos( work->mmdl, &pos );
+    pos.y -= work->fall_spd;
+    MMDL_SetVectorPos( work->mmdl, &pos );
+  }
+
+  // 終了チェック
+  if( pos.y <= work->end_y )
+  {
+    MMDL_UpdateCurrentHeight( work->mmdl );   // 接地
+    ANM_RIPPLE_Play( work->p_parent );        // 波紋アニメ再生
+    return FIELD_TASK_RETVAL_FINISH;
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
+}
+
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段下のPOSイベント作成
+ *
+ *	@param	parent    親イベント
+ *	@param	gsys      ゲームシステム
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* POS_UNDER_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
+{
+  GMEVENT*          event;
+  POS_EVENT_WORK*   work;
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_PLAYER      *player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+
+  // イベント生成
+  event = GMEVENT_Create( gsys, parent, PosUnderEvent, sizeof(POS_EVENT_WORK) );
+
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gsys        = gsys;
+  work->p_fieldmap  = p_fieldmap;
+  work->player      = player;
+
+  return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段下のPOSイベント関数
+ *
+ *	@param	event イベントポインタ
+ *	@param	seq   シーケンス
+ *	@param	wk    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT PosUnderEvent( GMEVENT* event, int* seq, void* wk )
+{
+  POS_EVENT_WORK *p_wk = (POS_EVENT_WORK*)wk;
+  FOURKINGS_ESP_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID);
+
+  // 演出の流れ
+  // ①「滝(流れてるアニメ)」
+  //   「幕 表示」
+  //   「階段(流れてるアニメ)」
+  //   いっせいに表示
+  // ↓
+  // ②主人公が一歩前へ
+  // ↓
+  // ③「滝」「幕」を開くアニメスタート
+  // ↓
+  // ④アニメ終了後、フリームーブ
+
+  // 処理シーケンス
+  enum {
+    SEQ_START,          // イベント開始
+    SEQ_PLAYER_STEP,    // 一歩前
+    SEQ_PLAYER_STEP_WAIT,// 一歩前待ち
+    SEQ_ANIME_OPEN,     // 開くアニメ再生
+    SEQ_ANIME_OPEN_WAIT,// 開くアニメ再生待ち
+    SEQ_END,            // イベント終了
+  };
+
+  switch( *seq ){
+  // イベント開始
+  case SEQ_START:
+    {
+      ANM_WATERFALL_PlayLoop( p_gmk_wk );
+      ANM_STAIRS_PlayLoop( p_gmk_wk );
+      FLD_EXP_OBJ_SetVanish( p_gmk_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_CURTAIN, FALSE );
+      *seq = SEQ_PLAYER_STEP;
+    }
+    break;
+
+  // 一歩前
+  case SEQ_PLAYER_STEP:
+    {
+      // アニメ終了待ち
+      if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
+      {
+        MMDL  *mmdl = FIELD_PLAYER_GetMMdl( p_wk->player );
+        MMDL_SetAcmd( mmdl, AC_WALK_U_16F ); 
+
+        *seq = SEQ_PLAYER_STEP_WAIT;
+      }
+    }
+    break;
+
+  // 一歩前待ち
+  case SEQ_PLAYER_STEP_WAIT:
+    {
+      // アニメ終了待ち
+      if( FIELD_PLAYER_CheckAnimeEnd(p_wk->player) )
+      {
+        *seq = SEQ_ANIME_OPEN;
+      }
+    }
+    break;
+
+  // 開くアニメ再生
+  case SEQ_ANIME_OPEN:
+    {
+      ANM_WATERFALL_Play( p_gmk_wk );
+      ANM_CURTAIN_Play( p_gmk_wk );
+
+      *seq = SEQ_ANIME_OPEN_WAIT;
+    }
+    break;
+
+  // 開くアニメ再生待ち
+  case SEQ_ANIME_OPEN_WAIT:
+    {
+      if( ANM_WATERFALL_CheckEnd( p_gmk_wk ) == TRUE &&
+          ANM_CURTAIN_CheckEnd( p_gmk_wk ) == TRUE )
+      {
+        *seq = SEQ_END;
+      }
+    }
+    break;
+
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段上のPOSイベント作成
+ *
+ *	@param	parent    親イベント
+ *	@param	gsys      ゲームシステム
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* POS_TOP_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys )
+{
+  GMEVENT*          event;
+  POS_EVENT_WORK*   work;
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_PLAYER      *player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+
+  // イベント生成
+  event = GMEVENT_Create( gsys, parent, PosTopEvent, sizeof(POS_EVENT_WORK) );
+
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gsys        = gsys;
+  work->p_fieldmap  = p_fieldmap;
+  work->player      = player;
+  work->wait        = 0;
+
+  // カトレア上に
+  {
+    const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0401_BIGFOUR4_01 );  // カトレア
+    VecFx32 pos;
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos.y += ( 3 * FIELD_CONST_GRID_FX32_SIZE );  // ５グリッド上
+    MMDL_SetVectorPos( mmdl, &pos );
+  }
+
+  return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段上のPOSイベント関数
+ *
+ *	@param	event イベントポインタ
+ *	@param	seq   シーケンス
+ *	@param	wk    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT PosTopEvent( GMEVENT* event, int* seq, void* wk )
+{
+  POS_EVENT_WORK *p_wk = (POS_EVENT_WORK*)wk;
+  FOURKINGS_ESP_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID);
+
+  // 演出の流れ
+  // ①「階段消滅アニメ」
+  // ↓
+  // ②終了後、
+  // 　「花のアニメスタート」
+  // ↓
+  // ③「キューブ再生」
+  // ↓
+  // ④カトレアが降りてくる
+  // ↓
+  // ⑤降りたところで「波紋アニメ」
+  // 
+
+  // 処理シーケンス
+  enum {
+    SEQ_START,          // イベント開始
+    SEQ_STAIRS_VANISH,  // 階段消滅
+    SEQ_FLOWER_1,       // 花のアニメ開始
+    SEQ_CUBE,           // キューブ再生
+    SEQ_FLOWER_2,       // カトレアが降りてくる
+    SEQ_END,            // イベント終了
+  };
+
+  // wait
+  if( p_wk->wait > 0 )
+  {
+    p_wk->wait--;
+    return GMEVENT_RES_CONTINUE;
+  }
+
+  switch( *seq ){
+  // イベント開始
+  case SEQ_START:
+    {
+      *seq = SEQ_STAIRS_VANISH;
+    }
+    break;
+
+  case SEQ_STAIRS_VANISH:  // 階段消滅
+    {
+      ANM_STAIRS_Play( p_gmk_wk );
+      p_wk->wait = 10;
+      *seq = SEQ_FLOWER_1;
+    }
+    break;
+
+  case SEQ_FLOWER_1:       // 花のアニメ開始
+    {
+      ANM_FLOWER_Play( p_gmk_wk );
+      p_wk->wait = 20;
+      *seq = SEQ_CUBE;
+    }
+    break;
+
+  case SEQ_CUBE:           // キューブ再生
+    {
+      ANM_CUBE_Play( p_gmk_wk );
+      p_wk->wait = 5;
+      *seq = SEQ_FLOWER_2;
+    }
+    break;
+
+  case SEQ_FLOWER_2:       // カトレアが降りてくる
+    {
+      const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+      MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0401_BIGFOUR4_01 );  // カトレア
+      CATTLEYA_TASK_Add( p_gmk_wk, mmdl, 0x800 );
+      *seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+#endif
+

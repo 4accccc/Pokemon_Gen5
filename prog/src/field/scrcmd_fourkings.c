@@ -26,6 +26,7 @@
 #include "scrcmd_fourkings.h"
 
 #include "fourkings_evil.h"
+#include "fourkings_esp.h"
 
 #include "rail_line/c09r0101.h" //for RAIL
 #include "rail_line/c09r0201.h" //for RAIL
@@ -200,6 +201,78 @@ VMCMD_RESULT EvCmdFourKings_Evil_Claw( VMHANDLE *core, void *wk )
   id  = VMGetU16( core );
 
   FOURKINGS_EVIL_ClawAnm( gsys, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//==== エスパー =====
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段演出
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Esp_Stairs( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // 0:表示
+  // 1:消滅
+  id  = VMGetU16( core );
+
+  FOURKINGS_ESP_StairsAnm( gsys, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  花演出
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Esp_Flower( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  FOURKINGS_ESP_FlowerAnm( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キューブアニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Esp_Cube( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  FOURKINGS_ESP_CubeAnm( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カトレア演出
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdFourKings_Esp_Cattleya( VMHANDLE *core, void *wk )
+{
+  int obj_id;
+  int fall_spd;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // カトレアのOBJID
+  obj_id  = VMGetU16( core );
+  // 下降のスピード
+  fall_spd  = VMGetU16( core );
+
+  FOURKINGS_ESP_Cattleya( gsys, obj_id, fall_spd );
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -22,6 +22,12 @@
   // 悪
   DEF_CMD( EvCmdFourKings_Evil_Fire, EV_SEQ_FOURKINGS_EVIL_FIRE )
   DEF_CMD( EvCmdFourKings_Evil_Claw, EV_SEQ_FOURKINGS_EVIL_CLAW )
+
+  // エスパー
+  DEF_CMD( EvCmdFourKings_Esp_Stairs, EV_SEQ_FOURKINGS_ESP_STAIRS )
+  DEF_CMD( EvCmdFourKings_Esp_Flower, EV_SEQ_FOURKINGS_ESP_FLOWER )
+  DEF_CMD( EvCmdFourKings_Esp_Cube, EV_SEQ_FOURKINGS_ESP_CUBE )
+  DEF_CMD( EvCmdFourKings_Esp_Cattleya, EV_SEQ_FOURKINGS_ESP_CATTLEYA )
   
   END_CMD
   //スクリプトコマンドテーブル終了
