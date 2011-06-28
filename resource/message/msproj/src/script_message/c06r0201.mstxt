@@ -974,15 +974,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めじるしの　ない　そらを
-あんしんして　とべるのは▽
-この　かんせいとうの　おかげさ▼
-だから　おれは　しっている！
-トレーナーが　ただしく　みちびけば▽
-ポケモンは　あんしんして　たたかえる</Text>
+			<Text>ムムッ！　きみは……▼
+『エースパイロット』の
+メダルを　もっていないのかい！？▼
+そうか……　ぼくたち　パイロットが
+あこがれて　やまない　メダル▽
+きみなら　もっているかと　おもったが</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -990,15 +990,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目印の　ない　空を
-安心して　飛べるのは▽
-この　管制塔の　おかげさ▼
-だから　おれは　知っている！
-トレーナーが　正しく　導けば▽
-ポケモンは　安心して　戦える！</Text>
+			<Text>ムムッ！　きみは……▼
+『エースパイロット』の
+メダルを　持っていないのかい！？▼
+そうか……　ぼくたち　パイロットが
+あこがれて　やまない　メダル▽
+きみなら　持っているかと　思ったが</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1007,10 +1007,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・仮メッセージ</Comment>
+・初回＋エースパイロットメダル未所有
+・swanでイベント作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:01:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1026,6 +1027,190 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_pilot_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もし　『エースパイロット』の
+メダルを　てにいれたら▽
+ぜひ　ぼくに　みせに　きてね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:00:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T11:56:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もし　『エースパイロット』の
+メダルを　手に入れたら▽
+ぜひ　ぼくに　みせに　きてね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:00:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・２回目以降＋エースパイロットメダル未所有
+・swanでイベント作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:01:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パイロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T11:55:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_pilot_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おおッ！　キミは！▼
+『エースパイロット』の
+メダルを　もっているんだね！？▼
+こ　これが……▼
+おおぞらの　ロマンに　あふれた
+『エースパイロット』の　メダル！▽
+カッコイイ……▼
+ハッ！　みせて　くれて
+どうも　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T11:56:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おおッ！　キミは！▼
+『エースパイロット』の
+メダルを　持っているんだね！？▼
+こ　これが……▼
+大空の　ロマンに　あふれた
+『エースパイロット』の　メダル！▽
+カッコイイ……▼
+ハッ！　みせて　くれて
+どうも　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:03:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・エースパイロットメダル所有＋ほめられていない
+・swanでイベント作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パイロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T11:55:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06r0201_pilot_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『エースパイロット』……
+あまい　ひびき　だ……▼
+そらを　じゆうに　とびまわった
+キミの　ポケモンに　カンパイ！▼
+ぼくも　ひこうきの
+そうじゅう　がんばるぞー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T11:56:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『エースパイロット』……
+甘い　響き　だ……▼
+空を　自由に　飛びまわった
+キミの　ポケモンに　カンパイ！▼
+ぼくも　飛行機の
+操縦　がんばるぞー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:03:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・エースパイロットメダル所有＋ほめられてた
+・swanでイベント作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:02:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>パイロット</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T11:55:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06r0201_middleman2_01"
