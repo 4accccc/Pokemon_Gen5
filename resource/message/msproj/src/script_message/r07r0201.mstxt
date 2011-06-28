@@ -373,10 +373,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ポケモンどうしが　あそんでいるのを
+ながめているだけで　シアワセ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:09:14" />
+				Time="2011-06-28T03:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -384,10 +385,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ポケモン同士が　遊んでいるのを
+ながめているだけで　シアワセ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:09:19" />
+				Time="2011-06-28T03:20:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -396,10 +398,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:08:27" />
+				Time="2011-06-28T03:12:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -421,10 +423,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぷっふふー</Text>
+			<Text>ちゅりゅりゅ♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:07:02" />
+				Time="2011-06-28T03:13:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -432,10 +434,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぷっふふー</Text>
+			<Text>ちゅりゅりゅ♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:07:02" />
+				Time="2011-06-28T03:13:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -460,14 +462,58 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r07r0201_poke18a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チュチュー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:14:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チュチュー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:14:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・WHITEver
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE18
+ポケモン・チュリネ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r07r0201_poke24_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちゅりゅりゅ♪</Text>
+			<Text>ぷっふふー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:07:02" />
+				Time="2011-06-28T03:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -475,10 +521,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちゅりゅりゅ♪</Text>
+			<Text>ぷっふふー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T03:07:02" />
+				Time="2011-06-28T03:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -500,6 +546,50 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-28T03:07:02" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0201_poke24b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もふう♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もふう♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・BLACKver
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE24
+ポケモン・モンメン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T03:13:18" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
