@@ -630,8 +630,9 @@ EVENT_START   ev_pos_c08_ninja_01
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 391, 175, FORCE_TYPE_ALL, 4, DIR_UD)
   _OBJ_ANIME_WAIT()
   
-  //プレイヤー名代入
+  //プレイヤー・ライバル名代入
   _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //チェレン：（主人公名）！
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader1_01 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
@@ -641,8 +642,9 @@ EVENT_START   ev_pos_c08_ninja_01
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_22 , C08_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
-  //プレイヤー名代入
+  //プレイヤー・ライバル名代入
   _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //チェレン：（主人公名）！
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader1_02 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
@@ -652,6 +654,10 @@ EVENT_START   ev_pos_c08_ninja_01
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_23 , C08_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
+  //プレイヤー・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
   //チェレン：（主人公名）！きみのはんだんに
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader1_03 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
   _MSGWIN_CLOSE()
@@ -660,8 +666,9 @@ EVENT_START   ev_pos_c08_ninja_01
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 385, 175, FORCE_TYPE_ALL, 4, DIR_UD)
   _OBJ_ANIME_WAIT()
   
-  //プレイヤー名代入
+  //プレイヤー・ライバル名代入
   _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
   
   //シャガ：プラズマだん　から
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_24 , C08_SWLEADER7_01 , POS_DEFAULT)
@@ -829,7 +836,7 @@ EVENT_START   ev_c08_swplazmam_01
       
   //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
-    _BALLOONWIN_OBJMSG( msg_c08_poke47_01 , C08_SWPLAZMAM_01 )
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam1_03 , C08_SWPLAZMAM_01 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
  
@@ -888,7 +895,7 @@ EVENT_START   ev_c08_swplazmam_02
       
   //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
-    _BALLOONWIN_OBJMSG( msg_c08_poke47_01 , C08_SWPLAZMAM_02 )
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam2_03 , C08_SWPLAZMAM_02 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
  
@@ -948,7 +955,7 @@ EVENT_START   ev_c08_swplazmaw_01
       
   //【仮】プラズマ団全員に勝利した（ヴィオ誘導メッセージ）
   IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
-    _BALLOONWIN_OBJMSG( msg_c08_poke47_01 , C08_SWPLAZMAW_01 )
+    _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmaw1_03 , C08_SWPLAZMAW_01 )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
  
@@ -979,7 +986,11 @@ _RET
 /*  プラズマ団♂（３）：話しかけ                     */
 /**************************************************************/
 EVENT_START   ev_c08_swplazmam_03
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam3_01 )
+  IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam3_02 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam3_01 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
@@ -996,7 +1007,11 @@ EVENT_END
 /*  プラズマ団♀（２）：話しかけ                     */
 /**************************************************************/
 EVENT_START   ev_c08_swplazmaw_02
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmaw2_01 )
+  IF $WK_SCENE_C08_SWPLAZMA >= 5 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmaw2_02 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmaw2_01 )
+  ENDIF
 EVENT_END
 
 
