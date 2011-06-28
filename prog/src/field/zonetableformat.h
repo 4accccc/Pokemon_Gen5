@@ -46,7 +46,8 @@ typedef struct{
   u16 palace_ok_flag:1;       ///<パレスへゴーが使えるか？
 
   u16 camera_area;           ///<カメラエリア指定のID
-  u16 place_icon;             ///<場所アイコンのリソース番号
+  u16 place_icon:13;             ///<場所アイコンのリソース番号
+  u16 difficuluty:3;            ///<難易度範囲
 
 	s32 sx, sy, sz;			///<デフォルトスタート位置（デバッグ用）
 }ZONEDATA;

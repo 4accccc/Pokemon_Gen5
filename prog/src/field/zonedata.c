@@ -1117,6 +1117,20 @@ ZONEDATA_PLACENAME_FLAG ZONEDATA_GetPlaceNameFlag(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief  ゾーンID別の難易度取得
+ * @param  zoneid ゾーン指定ID
+ * @return  難易度
+ */
+//------------------------------------------------------------------
+u16 ZONEDATA_GetDifficulty(u16 zone_id)
+{
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->difficuluty;
+}
+
+//------------------------------------------------------------------
 //  @brief 場所アイコンインデックス取得
 //  @param  zone_id ゾーン指定ID
 //  @retval +0 NANRのARCDATID

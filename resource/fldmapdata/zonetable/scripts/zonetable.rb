@@ -55,6 +55,7 @@ class ColumnID
 	attr :cNAME, true
 	attr :cPLACENAMEFLAG, true
   attr :cPLACEICON, true
+  attr :cDIFFICULTY, true
 	attr :cCOMMENT, true
 
 	def initialize( column )
@@ -119,6 +120,8 @@ class ColumnID
 				@cPLACENAMEFLAG = c_count
       when "PLACE_ICON"
         @cPLACEICON = c_count
+      when "DIFFICULTY"
+        @cDIFFICULTY = c_count;
 			when "îıçl"
 				@cCOMMENT = c_count
 			end
@@ -339,6 +342,12 @@ class ZoneDataFile < OutputFile
       exit(1)
     end
 
+    difficulty = column[@cl.cDIFFICULTY]
+    if !( 0 <= difficulty.to_i && difficulty.to_i <= 5) then
+      STDERR.puts "ìÔà’ìxÇÃîÕàÕÇ™Ç®Ç©ÇµÇ¢#{difficulty}"
+      exit(1)
+    end
+
 	@fp.puts <<DOCUMENT
 	{//ZONE_ID_#{id.upcase} = #{linecount}
 		#{maprsc.upcase},
@@ -370,6 +379,7 @@ class ZoneDataFile < OutputFile
     #{palace_ok_flag},
 		#{camera_area}, // camera_area
 		#{placeicon_idx},   // padding > placeicon
+    #{difficulty},
 		#{column[@cl.cSX]},
 		#{column[@cl.cSY]},
 		#{column[@cl.cSZ]},
