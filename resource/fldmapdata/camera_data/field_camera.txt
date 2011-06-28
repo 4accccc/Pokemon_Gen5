@@ -41,6 +41,7 @@ CameraNo,Length,Pitch,Yow,Roll,ViewType,depth,fovy,Near,Far,Player Link ›or~,
 39,e4,b92,0,0,PER,WBUF,eb8,1,cd0,›,0,38000,28000,H06,
 40,156,11aa,0,0,PER,ZBUF,af8,1,400,›,0,0,0,C03 ƒXƒƒ“’ƒWƒ€1F,
 41,ed,dd8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,WBT‰ïê,
+42,ed,35d8,0,0,PER,ZBUF,e38,1,400,›,0,4000,0,C08ƒhƒ‰ƒSƒ“ƒWƒ€’¸ã,
 
 
 CameraNo,,ƒiƒ“ƒo[w’è,
