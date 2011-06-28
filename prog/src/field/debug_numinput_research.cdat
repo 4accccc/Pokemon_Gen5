@@ -11,7 +11,6 @@
 #include "field/research_team_def.h"
 #include "../../../resource/research_radar/data/question_id.h"// for QUESTION_ID_xxxx
 #include "../../../resource/research_radar/data/answer_id.h"// for ANSWER_ID_xxxx
-#include "../../../resource/research_radar/data/answer_num_question.cdat"// for AnswerNum_question[]
 
 //----------------------------------------------------------------
 // ”’l“ü—Í ¨ ‚·‚êˆá‚¢’²¸‘à ¨ ‘àˆõƒ‰ƒ“ƒN
