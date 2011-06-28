@@ -114,6 +114,216 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c02r0501_poke37a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE37
+ポケモン・オタマロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:07:58" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0501_poke37b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE37
+ポケモン・オタマロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0501_poke37c_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE37
+ポケモン・オタマロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0501_poke37d_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE37
+ポケモン・オタマロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02r0501_poke37e_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE37
+ポケモン・オタマロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:08:21" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c02r0501_trainerw_01"
 		Style="Large">
 		<LanguageCell

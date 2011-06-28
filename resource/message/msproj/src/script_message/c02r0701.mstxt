@@ -6,13 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！
-トレーナーさん▼
-たびのおともに　キズぐすりは
-だいじ　だと　おもいまーす！</Text>
+			<Text>さて　イッシュちほう　には
+ゲートが　いくつ　あるでしょう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:14:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！
-トレーナーさん▼
-旅のお供に　キズぐすりは
-大事だと　思いまーす！</Text>
+			<Text>さて　イッシュ地方　には
+ゲートが　いくつ　あるでしょう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:14:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -35,11 +31,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T07:17:08" />
+				Time="2011-06-28T10:10:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -62,13 +57,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっと　モンスターボールを
-かっておけば　よかった！▼
-さっき　つかまえたい
-ポケモンが　とびだしてきたのに！</Text>
+			<Text>３ばんどうろの　そだてやさん▼
+ときどき　ポケモンの　タマゴが
+みつかるって　ウワサの　ウワサ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:13:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76,13 +70,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっと　モンスターボールを
-買っておけば　よかった！▼
-さっき　捕まえたい
-ポケモンが　飛びだしてきたのに！</Text>
+			<Text>３ばんどうろの　そだてやさん▼
+ときどき　ポケモンの　タマゴが
+みつかるって　ウワサの　ウワサ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-28T10:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91,11 +84,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T07:17:05" />
+				Time="2011-06-28T10:10:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
