@@ -1180,5 +1180,11 @@ SCRIPTFILES += \
 	sp_d27r1301.ev \
 	d29r0401.ev \
 	sp_d29r0401.ev \
+	c15.ev \
+	sp_c15.ev \
+	c15r0101.ev \
+	sp_c15r0101.ev \
+	c15r0201.ev \
+	sp_c15r0201.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö

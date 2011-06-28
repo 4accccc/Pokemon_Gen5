@@ -1932,6 +1932,15 @@ d27r1301_def.h: d27r1301.ev
 d29r0401_def.h: d29r0401.ev
 	$(EV_DEF) d29r0401.ev $(SCR_OFFS_ID_H)
 
+c15_def.h: c15.ev
+	$(EV_DEF) c15.ev $(SCR_OFFS_ID_H)
+
+c15r0101_def.h: c15r0101.ev
+	$(EV_DEF) c15r0101.ev $(SCR_OFFS_ID_H)
+
+c15r0201_def.h: c15r0201.ev
+	$(EV_DEF) c15r0201.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
