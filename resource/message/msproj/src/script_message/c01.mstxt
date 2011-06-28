@@ -1168,6 +1168,309 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c01_woman3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら！？
+あなたの　メダルボックス……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:20:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら！？
+あなたの　メダルボックス……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケセン近くに配置
+・メダルの比率でメッセージ分岐
+　ぼうけん→woman3_02
+　おたのしみ→woman3_03
+　せんとう→woman3_04
+　ちょうせん→woman3_05
+　とくべつ→woman3_06
+・割合が同じ場合
+　とくべつ→ちょうせん→せんとう→おたのしみ→ぼうけん
+　の優先度順
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:23:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:18:54" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_woman3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレンジの　『ぼうけん』メダルが
+ひときわ　かがやいているわ▼
+じんせいは　アドベンチャー！▼
+いくつに　なっても
+ぼうけんしんを　わすれずにね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:27:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレンジの　『ぼうけん』メダルが
+ひときわ　輝いているわ▼
+人生は　アドベンチャー！▼
+いくつに　なっても
+冒険心を　忘れずにね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:29:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ぼうけんの比率が高い
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_woman3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あおい　『せんとう』メダルが
+ひときわ　かがやいているわ▼
+じんせいは　くろしろを　つけるもの！▼
+きそいあい　たかめあって
+おたがい　せいちょう　するのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:27:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>青い　『せんとう』メダルが
+ひときわ　輝いているわ▼
+人生は　黒白を　つけるもの！▼
+競いあい　高めあって
+お互い　成長するのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:30:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・おたのしみの比率が高い
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:29:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_woman3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ピンクの　『おたのしみ』メダルが
+ひときわ　かがやいているわ▼
+じんせいは　エンターテインメント！▼
+つねに　よろこび　えがおになって
+たのしんだ　ものが　かちよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ピンクの　『おたのしみ』メダルが
+ひときわ　輝いているわ▼
+人生は　エンターテインメント！▼
+常に　喜び　笑顔になって
+楽しんだ　ものが　勝ちよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:30:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・せんとうの比率が高い
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:29:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_woman3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>むらさきの　『ちょうせん』メダルが
+ひときわ　かがやいているわ▼
+じんせいは　チャレンジ！▼
+むずかしいほど　やりがいが　あるし
+たっせい　したとき　よろこべるの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:31:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:20:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>紫の　『ちょうせん』メダルが
+ひときわ　輝いているわ▼
+人生は　チャレンジ！▼
+難しいほど　やりがいが　あるし
+達成したとき　喜べるの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:31:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ちょうせんの比率が高い
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:29:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_woman3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きんいろの　『とくべつ』メダルが
+ひときわ　かがやいているわ！▼
+じんせいは　スペシャル！▼
+おなじ　ひは　くりかえさない……
+まいにちが　とくべつな　たからもの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:20:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>金色の　『とくべつ』メダルが
+ひときわ　輝いているわ！▼
+人生は　スペシャル！▼
+同じ日は　繰り返さない……
+毎日が　特別な　宝物！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:31:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:28:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・とくべつの比率が高い
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:29:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T12:19:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c01_sign1_01"
 		Style="Large">
 		<LanguageCell
