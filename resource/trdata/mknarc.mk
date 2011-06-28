@@ -30,11 +30,6 @@ SUBDIRS	=
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
-#MWAS,MWLD
-include	$(NITROSYSTEM_ROOT)/build/buildtools/commondefs
-include	$(COMMONDEFS_CCTYPE_CW)
-#Moduleルール
-include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
@@ -74,4 +69,8 @@ $(TARGETDIR)/$(NARCNAME1):	$(NARCNAME1)
 
 $(TARGETDIR)/$(NARCNAME2):	$(NARCNAME2)
 	$(COPY)	$(NARCNAME2) $(TARGETDIR)
+
+
+clean:
+		@rm -f $(LDIRT_CLEAN)
 

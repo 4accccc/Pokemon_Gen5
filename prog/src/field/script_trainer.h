@@ -125,3 +125,10 @@ extern void SCRIPT_TRAINER_SetHitData(
 extern SCR_TRAINER_HITDATA * SCRIPT_GetTrainerHitData( SCRIPT_WORK * sc, u32 tr_no );
 
 
+//------------------------------------------------------------------
+/**
+ * @brief ブリーダートレーナーのフラグをすべてリセットする
+ */
+//------------------------------------------------------------------
+extern void SCRIPT_ResetBreederTrainerFlag( EVENTWORK *ev );
+

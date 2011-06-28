@@ -127,6 +127,7 @@
 
 #include "pleasure_boat.h"    //for PL_BOAT_
 #include "field_goout_data.h" //for FIELD_GOOUT_ROOM_COUNT_MAX
+#include "script_trainer.h"   // for SCRIPT_ResetBreederTrainerFlag
 
 #include "scrcmd_overlay.h"
 
@@ -3080,6 +3081,11 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
+
+  { //ブリーダーとは再戦可能なようにクリア
+    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
+    SCRIPT_ResetBreederTrainerFlag( evwork );
+  }
 
   SET_CHECK("zonechange:set mmdl");
 	//新規ゾーンに配置する動作モデルセット 1200 micro sec程度削減

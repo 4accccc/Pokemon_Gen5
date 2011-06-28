@@ -79,6 +79,7 @@
 #include "../../../resource/fldmapdata/script/pokecen_scr_def.h"  // SCRID_POKECEN_ELEVATOR_OUT
 #include "sheimi_normalform.h"    //for SHEIMI_NFORM_ChangeNormal
 #include "pair_sys.h"
+#include "script_trainer.h"       // for SCRIPT_ResetBreederTrainerFlag
 
 #ifdef PM_DEBUG
 #include "../gamesystem/debug_data.h"
@@ -2938,6 +2939,11 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   //特殊スクリプト呼び出し：ゾーン切り替え
   SCRIPT_CallZoneChangeScript( gsys, HEAPID_PROC );
+
+  { //ブリーダーとは再戦可能なようにクリア
+    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
+    SCRIPT_ResetBreederTrainerFlag( evwork );
+  }
 
   //新規ゾーンに配置する動作モデルを追加
   MAPCHG_loadMMdl( gamedata, loc_req );

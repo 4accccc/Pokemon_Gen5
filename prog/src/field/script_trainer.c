@@ -208,3 +208,32 @@ void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id )
 }
 
 
+//============================================================================================
+//============================================================================================
+#include "..\..\..\resource\trdata\breeder_id_list.cdat"
+
+//------------------------------------------------------------------
+/**
+ * @brief ブリーダートレーナーのフラグをすべてリセットする
+ * @param ev    EVENTWORKへのポインタ
+ *
+ * swanではtrainer_typeがBREEDERW/BREEDERMのトレーナーはすべて
+ * 再戦トレーナーなので、マップ遷移の度にフラグをリセットする
+ */
+//------------------------------------------------------------------
+void SCRIPT_ResetBreederTrainerFlag( EVENTWORK *ev )
+{
+  const int max = NELEMS(breeder_id_list);
+  int i;
+  OSTick start = OS_GetTick();
+  for ( i = 0; i < max; i ++ )
+  {
+    EVENTWORK_ResetEventFlag( ev, GET_TRAINER_FLAG(breeder_id_list[i]) );
+  }
+  {
+    OSTick end = OS_GetTick();
+    OSTick diff = end - start;
+    OS_TPrintf("BREEDER COST %8ld\n", diff );
+  }
+}
+
