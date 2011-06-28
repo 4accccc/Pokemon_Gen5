@@ -52,6 +52,7 @@ typedef struct {
   u16   en_trace_data_id;   // NULL追従用データID
   u16   en_obj_id;          // 敵トレーナーのOBJID
   BOOL  is_enemy_move;      // 敵も移動するかどうか
+  BOOL  is_bump;            // 衝突パターンかどうか
 }BUTTON_EVENT_DATA;
 
 //-------------------------------------
@@ -62,7 +63,7 @@ typedef enum{
   MOVE_EVENT_SEQ_START_SE_WAIT,
   MOVE_EVENT_SEQ_INIT,
   MOVE_EVENT_SEQ_MOVE,
-  MOVE_EVENT_SEQ_END_SE_WAIT,
+  MOVE_EVENT_SEQ_CALL_BUTTON_EVENT,
   MOVE_EVENT_SEQ_BUTTON_SET,
   MOVE_EVENT_SEQ_EXIT,
 }MOVE_EVENT_SEQ;
@@ -94,8 +95,20 @@ typedef enum{
   ICA_MOVE_ID_MAX,
 }ICA_MOVE_ID;
 
+//-------------------------------------
+///	SEシーケンス定義
+//=====================================
+typedef enum{
+  GYM_DRAGON_SE_SEQ_MOVE_START      = SEQ_SE_SW_DRGGYM_01,
+  GYM_DRAGON_SE_SEQ_MOVE            = SEQ_SE_SW_DRGGYM_02,
+  GYM_DRAGON_SE_SEQ_MOVE_STOP       = SEQ_SE_SW_DRGGYM_03,
+  GYM_DRAGON_SE_SEQ_BARK            = SEQ_SE_SW_DRGGYM_04,
+  GYM_DRAGON_SE_SEQ_BUMP            = SEQ_SE_SW_DRGGYM_05,
+  GYM_DRAGON_SE_SEQ_SWITCH_ON       = SEQ_SE_SW_DRGGYM_06,  // スクリプトで鳴らしている
+  GYM_DRAGON_SE_SEQ_SWITCH_TURNON   = SEQ_SE_SW_DRGGYM_07,
+}GYM_DRAGON_SE_SEQ;
+
 // 拡張高さ用アトリビュート
 #define EX_HEIGHT_ATTRIBUTE     (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
-#define TURNON_EVENT_WAIT_FRAME (20)
 
 

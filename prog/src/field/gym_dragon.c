@@ -84,7 +84,7 @@ typedef struct GYM_DRAGON_TMP_tag
 
   // data
   GYM_DRAGON_SV_WORK  *p_sv_work;
-  MODEL       model[GYM_DRAGON_MODELID_MAX]; // モデル
+  MODEL               model[GYM_DRAGON_MODELID_MAX]; // モデル
   
 }GYM_DRAGON_TMP;
 
@@ -114,7 +114,7 @@ typedef struct PLAYER_MOVE_WORK_tag
   EVENTWORK         *p_event_wk;
   MMDLSYS           *p_mmdl_sys;
   FLD_EXP_OBJ_CNT_PTR p_ex_obj;
-  MODEL *p_en_dra_model; 
+  MODEL *p_en_dra_model;
 
   // data
   FIELD_PLAYER  *p_player;
@@ -122,7 +122,7 @@ typedef struct PLAYER_MOVE_WORK_tag
   const BUTTON_EVENT_DATA *p_button_evdata;
   GYM_DRAGON_SV_WORK  *p_sv_work;
   u32           event_frame;
-  BOOL          is_bark;
+  s32           bark_seq;
 
   TRACE_MOVE_DATA move_data[ICA_MOVE_ID_MAX];
 
@@ -166,6 +166,8 @@ static void MOVE_EVENT_Exit( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_StopSeMain( PLAYER_MOVE_WORK *p_wk );
 static void UpdateButtonStatus( GYM_BUTTON_SEQ button_seq ,EVENTWORK* p_event_wk );
 static void SetWorkValue( EVENTWORK* p_event_wk ,u16 work_no ,u16 value );
 static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
@@ -182,7 +184,7 @@ static void DEBUGMENU_Exit( void );
 static s32 debug_fog_slope_value  = FOG_SLOPE;
 static s32 debug_fog_offset_value = FOG_OFFSET;
 static s32 debug_fog_color_a_value  = FOG_COLOR_A;
-static s32 debug_dragon_bark_value  = DRA_BARK_FRAME;
+static s32 debug_dragon_bark_value  = DRA_BARK_FRAME_HERO;
 #endif
 
 //-------------------------------------
@@ -224,12 +226,12 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   // アニメーション用ヒープ生成
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_GYM_DRAGON_ANM, GYM_DRAGON_ANM_HEAP_SIZE );
 
-  p_wk->heapID      = HEAPID_FIELDMAP;
-  p_wk->heapAnmID   = HEAPID_GYM_DRAGON_ANM;
-  p_wk->p_fld_wk    = fieldWork;
-  p_wk->p_sv_work   = GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_GYM_DRAGON );
-  p_wk->p_ex_obj    = FIELDMAP_GetExpObjCntPtr( fieldWork );
-  p_wk->p_event_wk  = GAMEDATA_GetEventWork( p_gamedata );
+  p_wk->heapID          = HEAPID_FIELDMAP;
+  p_wk->heapAnmID       = HEAPID_GYM_DRAGON_ANM;
+  p_wk->p_fld_wk        = fieldWork;
+  p_wk->p_sv_work       = GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_GYM_DRAGON );
+  p_wk->p_ex_obj        = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  p_wk->p_event_wk      = GAMEDATA_GetEventWork( p_gamedata );
 
 #ifdef PM_DEBUG
   // Rデバッグメニューの初期化
@@ -341,10 +343,6 @@ static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk )
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_ITP, TRUE);
     FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP, FALSE);
   }
-
-  ONOUE_Printf("//======================================//\n\n");
-  ONOUE_Printf("アニメーション用ITP設定\n\n");
-  ONOUE_Printf("//======================================//\n\n");
 }
 
 //----------------------------------------------------------------------------
@@ -373,10 +371,6 @@ static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk )
 
     // フレーム
     FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,FX32_CONST(button_seq) );
-
-    ONOUE_Printf("//======================================//\n\n");
-    ONOUE_Printf("ボタンITPシーケンス[%u]設定\n\n",button_seq);
-    ONOUE_Printf("//======================================//\n\n");
   }
 
 }
@@ -443,10 +437,15 @@ void GYM_DRAGON_End(FIELDMAP_WORK *fieldWork)
 void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
 {
   GYM_DRAGON_TMP *p_wk = GMK_TMP_WK_GetWork(fieldWork, GYM_DRAGON_TMP_ASSIGN_ID);
- 
+
   // アニメーション再生
   FLD_EXP_OBJ_PlayAnime( p_wk->p_ex_obj );
 
+  {
+    fx32 frame;
+    frame = FLD_EXP_OBJ_GetObjAnmFrm(p_wk->p_ex_obj,GYM_DRAGON_UNIT_IDX,0,0);
+  }
+ 
 #ifdef PM_DEBUG
   {
     // 強制ボタンイベント生成
@@ -856,28 +855,34 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
   PLAYER_MOVE_WORK *p_wk = p_wk_adrs;
   switch( (*p_seq) )
   {
+  // 移動開始音
   case MOVE_EVENT_SEQ_START_SE:
     {
-      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_01 );
+      PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_START );
       (*p_seq) = MOVE_EVENT_SEQ_START_SE_WAIT;
     }
     break;
+
+  // 移動中音再生
   case MOVE_EVENT_SEQ_START_SE_WAIT:
     {
       if( PMSND_CheckPlaySE() == FALSE )
       {
-        // 移動中音を再生
-        PMSND_PlaySE( SEQ_SE_SW_DRGGYM_02 );
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE );
         (*p_seq) = MOVE_EVENT_SEQ_INIT;
       }
     }
     break;
+
+  // ギミックの初期化
   case MOVE_EVENT_SEQ_INIT:
     {
       MOVE_EVENT_Init( p_wk );
       (*p_seq) = MOVE_EVENT_SEQ_MOVE;
     }
-    break;
+    // through break;
+
+  // 移動シーケンスメイン
   case MOVE_EVENT_SEQ_MOVE:
     {
       int i;
@@ -888,8 +893,10 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
       // トレーナー位置のアップデート
       MOVE_Event_UpdatePlayerPos( p_wk );
       MOVE_Event_UpdateEnemyTrainerPos( p_wk );
+      MOVE_Event_DragonBarkMain( p_wk );
+      MOVE_Event_StopSeMain( p_wk );
 
-      // 終了チェック
+      // アニメーション終了チェック
       for( i = 0; i < ICA_MOVE_ID_MAX ; i++ )
       {
         TRACE_MOVE_DATA *p_md = &p_wk->move_data[i];
@@ -898,45 +905,50 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
           return GMEVENT_RES_CONTINUE;
         }
       }
-      // 全て終わっていたら移動音を止め、停止音を再生
-      PMSND_StopSE();
-      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_03 );
-      (*p_seq) = MOVE_EVENT_SEQ_END_SE_WAIT;
+
+      // SE終了チェック
+      if( PMSND_CheckPlaySE() == TRUE )
+      {
+        return GMEVENT_RES_CONTINUE;
+      }
+
+      (*p_seq) = MOVE_EVENT_SEQ_CALL_BUTTON_EVENT;
     }
     break;
-  case MOVE_EVENT_SEQ_END_SE_WAIT:
+  
+  // ボタン点灯イベント開始シーケンス
+  case MOVE_EVENT_SEQ_CALL_BUTTON_EVENT:
     {
-      if( PMSND_CheckPlaySE() == FALSE )
-      {
-        u16 layer2_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_02 );
-        u16 layer3_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_03 );
+      u16 layer2_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_02 );
+      u16 layer3_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_03 );
 
-        // ボタン起動イベントありの場合
-        if( layer2_value == 1 )
-        {
-          GMEVENT *call_event;
-          GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
-          call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,1);
-          GMEVENT_CallEvent( p_event, call_event );
-          (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
-        }
-        else if( layer3_value == 1 )
-        {
-          GMEVENT *call_event;
-          GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
-          call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,2);
-          GMEVENT_CallEvent( p_event, call_event );
-          (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
-        }
-        // イベントなしの場合
-        else
-        {
-          PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
-          (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
-        }
+      // ボタン起動イベントありの場合
+      if( layer2_value == 1 )
+      {
+        GMEVENT *call_event;
+        GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
+        call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,1);
+        GMEVENT_CallEvent( p_event, call_event );
+        (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+      }
+      else if( layer3_value == 1 )
+      {
+        GMEVENT *call_event;
+        GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
+        call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,2);
+        GMEVENT_CallEvent( p_event, call_event );
+        (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
+      }
+      // イベントなしの場合
+      else
+      {
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_SWITCH_TURNON );
+        (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
       }
     }
     break;
+
+  // ボタン設定シーケンス
   case MOVE_EVENT_SEQ_BUTTON_SET:
     {
       MOVE_EVENT_UpdateDragonGymData( p_wk );
@@ -944,6 +956,8 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
       (*p_seq) = MOVE_EVENT_SEQ_EXIT;
     }
     break;
+
+  // 移動イベント終了シーケンス
   case MOVE_EVENT_SEQ_EXIT:
     {
       MOVE_EVENT_Exit(p_wk);
@@ -971,8 +985,8 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
   p_wk->p_player      = FIELDMAP_GetFieldPlayer( p_wk->p_fld_wk );
   p_wk->p_ex_obj      = p_wk->p_gmkwk->p_ex_obj;
   p_wk->p_mmdl_sys    = GAMEDATA_GetMMdlSys( p_gamedata );
-  p_wk->event_frame = 0;
-  p_wk->is_bark     = FALSE;
+  p_wk->event_frame   = 0;
+  p_wk->bark_seq      = 0;
   
   // 自機ドラゴン用ITPを設定する
   SetHeroDragonITPSeq( p_wk->p_gmkwk );
@@ -988,7 +1002,7 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
     move_data_index           = p_md->p_trace_data->data_index;
     p_md->p_ica_move_data     = ICA_ANIME_CreateAlloc( p_wk->p_gmkwk->heapAnmID, ARCID_GYM_DRAGON,sc_hero_move_data[move_data_index] );
     p_md->p_model             = &p_wk->p_gmkwk->model[p_md->model_id];
-    p_md->move_data_frame_max = ICA_ANIME_GetMaxFrame( p_md->p_ica_move_data );
+    p_md->move_data_frame_max = ICA_ANIME_GetMaxFrame( p_md->p_ica_move_data ) - 1;
     p_md->move_data_frame     = p_md->p_trace_data->start_frame;
     p_md->p_mmdl              = FIELD_PLAYER_GetMMdl( p_wk->p_player );
     p_md->is_move_end         = FALSE;
@@ -1036,7 +1050,7 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       p_md->p_ica_move_data     = ICA_ANIME_CreateAlloc( p_wk->p_gmkwk->heapAnmID,
           ARCID_GYM_DRAGON,sc_hero_move_data[move_data_index] );
       p_md->p_model             = &p_wk->p_gmkwk->model[p_md->model_id];
-      p_md->move_data_frame_max = ICA_ANIME_GetMaxFrame( p_md->p_ica_move_data );
+      p_md->move_data_frame_max = ICA_ANIME_GetMaxFrame( p_md->p_ica_move_data ) - 1;
       p_md->move_data_frame     = p_md->p_trace_data->start_frame;
       p_md->p_mmdl              = MMDLSYS_SearchOBJID( p_wk->p_mmdl_sys ,p_bev->en_obj_id );
       p_md->is_move_end         = FALSE;
@@ -1046,13 +1060,11 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       {
         p_md->is_reverse_move = FALSE;
         FLD_EXP_OBJ_SetUnitAddFrame( p_md->p_model->p_ex_obj ,GYM_DRAGON_UNIT_IDX ,FX32_ONE );
-        OS_Printf("てきどらんごん再生\n");
       }
       else
       {
         p_md->is_reverse_move = TRUE;
         FLD_EXP_OBJ_SetUnitAddFrame( p_md->p_model->p_ex_obj ,GYM_DRAGON_UNIT_IDX ,-FX32_ONE );
-        OS_Printf("てきどらんごん逆再生\n");
       }
  
       // 敵アニメーション再生
@@ -1123,49 +1135,186 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
   int i;
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_PLAYER];
+  fx32 frame;
+  
+  frame = FLD_EXP_OBJ_GetObjAnmFrm(p_md->p_model->p_ex_obj,GYM_DRAGON_UNIT_IDX,0,0);
+
+ 
+  // アニメーション停止
+  if( p_md->is_move_end == TRUE )
+  {
+    for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
+    {
+      exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_md->p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_md->p_model->modelID, i );
+      FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    }
+  }
 
   // 移動処理
   if( p_md->is_move_end == FALSE )
   {
     VecFx32 vec = {0,0,0};
-    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame ) )
+    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) )
     {
       MtxFx43 trans;
       MODEL *p_model    = p_md->p_model;
+      
       vec.x += sc_mdl_offset_table[p_md->model_id].x;
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
-      
+
       FIELD_PLAYER_SetPos( p_wk->p_player, &vec );
 
       // フレームの更新
       UpdateFrame( p_md );
+    }
+  }
+ 
+}
 
-      // アニメーション停止
-      if( p_md->is_move_end == TRUE )
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドラゴン咆哮音処理
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
+{
+  // 自機の追従フレームを基準にする
+  TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_PLAYER];
+  s32 end_frame;
+
+  // 最上階に移動するときのみ処理を行う
+  if( (p_wk->event_seq != GYM_DRAGON_EVENT_SEQ_UP_BUTTON) || 
+      (p_wk->p_sv_work->now_floor_layer !=  FLOOR_LAYER_ARM))
+  {
+    return;
+  }
+  
+  // 終了フレームの計算
+  if( p_md->is_reverse_move == FALSE )
+  {
+    end_frame = p_md->p_trace_data->end_frame - p_md->p_trace_data->start_frame;
+  }
+  else
+  {
+    end_frame =  p_md->p_trace_data->start_frame - p_md->p_trace_data->end_frame;
+  }
+  GF_ASSERT( end_frame > 0 );
+
+  switch( p_wk->bark_seq )
+  {
+  case 0:
+    {
+      // 移動音の停止シーケンス
+      if( end_frame == (p_wk->event_frame + DRA_BARK_MOVE_STOP_SE_FRAME) )
       {
-        for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
-        {
-          exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
-          FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-        }
-        OS_Printf("アニメーション停止\n");
+        // 移動音の停止
+        PMSND_StopSE();
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_STOP );
+        p_wk->bark_seq++;
+        ONOUE_Printf("ドラゴン咆哮：移動停止音の再生\n");
       }
     }
-
-    // ドラゴンの咆哮音
-    if( (p_wk->event_seq == GYM_DRAGON_EVENT_SEQ_UP_BUTTON) && 
-        (p_wk->p_sv_work->now_floor_layer ==  FLOOR_LAYER_ARM))
+    break;
+  case 1: // 自機ドラゴンと敵ドラゴンが咆哮するまでこのシーケンスを行う
+  case 2:
     {
+      // 自機ドラゴンの咆哮
 #ifdef PM_DEBUG
-      if( p_md->p_trace_data->end_frame == (p_wk->event_frame + debug_dragon_bark_value) )
+      if( end_frame == (p_wk->event_frame + debug_dragon_bark_value) )
 #else
-      if( p_md->p_trace_data->end_frame == (p_wk->event_frame + DRA_BARK_FRAME) )
+      if( end_frame == (p_wk->event_frame + DRA_BARK_FRAME_HERO) )
 #endif
       {
-        PMSND_PlaySE( SEQ_SE_SW_DRGGYM_04 );
-        p_wk->is_bark = TRUE;
+        // 咆える音再生
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BARK );
+        p_wk->bark_seq++;
+        ONOUE_Printf("ドラゴン咆哮：自機ドラゴン咆哮音の再生\n");
       }
+
+      // 敵ドラゴンの咆哮
+      if( end_frame == (p_wk->event_frame + DRA_BARK_FRAME_ENEMY) )
+      {
+        // 咆える音再生
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BARK );
+        p_wk->bark_seq++;
+        ONOUE_Printf("ドラゴン咆哮：敵ドラゴン咆哮音の再生\n");
+      }
+    }
+    break;
+  case 3:
+    {
+      // 移動開始音再生
+      if( end_frame == (p_wk->event_frame + DRA_BARK_MOVE_START_SE_FRAME) )
+      {
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_START );
+        p_wk->bark_seq++;
+        ONOUE_Printf("ドラゴン咆哮：移動開始音の再生\n");
+      }
+    }
+    break;
+  case 4:
+    {
+      if( PMSND_CheckPlaySE() == FALSE )
+      {
+        // 移動中音を再生
+        PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE );
+        p_wk->bark_seq++;
+        ONOUE_Printf("ドラゴン咆哮：移動中音の再生\n");
+      }
+    }
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動終了音再生メイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_Event_StopSeMain( PLAYER_MOVE_WORK *p_wk )
+{
+  // 自機の追従フレームを基準にする
+  u32 end_frame;
+  TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_PLAYER];
+  const BUTTON_EVENT_DATA *p_bev = p_wk->p_button_evdata;
+
+
+  if( p_md->is_reverse_move == FALSE )
+  {
+    end_frame = p_md->p_trace_data->end_frame - p_md->p_trace_data->start_frame;
+  }
+  else
+  {
+    end_frame =  p_md->p_trace_data->start_frame - p_md->p_trace_data->end_frame;
+  }
+
+  if( p_bev->is_bump == FALSE )
+  {
+    // 移動停止音
+    if( end_frame == ( p_wk->event_frame + DRA_STOP_SE_FRAME ) )
+    {
+      PMSND_StopSE();
+      PMSND_PlaySE( GYM_DRAGON_SE_SEQ_MOVE_STOP );
+      ONOUE_Printf("停止音の再生\n");
+    }
+  }
+  else
+  {
+    // 衝突音再生
+    if( end_frame == ( p_wk->event_frame + DRA_BUMP_SE_FRAME ) )
+    {
+      PMSND_StopSE();
+      PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BUMP );
+      ONOUE_Printf("衝突音の再生\n");
     }
   }
 }
@@ -1185,11 +1334,7 @@ static void UpdateFrame( TRACE_MOVE_DATA *p_md )
   {
     // 通常再生
     p_md->move_data_frame++;
-    if(  p_md->move_data_frame_max <= p_md->move_data_frame )
-    {
-      p_md->is_move_end = TRUE;
-    }
-    else if(  p_md->p_trace_data->end_frame <= p_md->move_data_frame )
+    if(  p_md->p_trace_data->end_frame <= p_md->move_data_frame )
     {
       p_md->is_move_end = TRUE;
     }
@@ -1198,11 +1343,7 @@ static void UpdateFrame( TRACE_MOVE_DATA *p_md )
   {
     // 逆再生
     p_md->move_data_frame--;
-    if(  p_md->move_data_frame_max <= p_md->move_data_frame )
-    {
-      p_md->is_move_end = TRUE;
-    }
-    else if(  p_md->p_trace_data->end_frame >= p_md->move_data_frame )
+    if(  p_md->p_trace_data->end_frame >= p_md->move_data_frame )
     {
       p_md->is_move_end = TRUE;
     }
@@ -1223,32 +1364,35 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
   int i;
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_ENEMY];
+  const BUTTON_EVENT_DATA *p_bev = p_wk->p_button_evdata;
 
-  // 移動処理
-  if( p_md->is_move_end == FALSE )
+  if( p_bev->is_enemy_move == TRUE )
   {
-    VecFx32 vec = {0,0,0};
-    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame ) )
+    // アニメーション停止
+    if( p_md->is_move_end == TRUE )
     {
-      MtxFx43 trans;
-      MODEL *p_model    = p_md->p_model;
-      vec.x += sc_mdl_offset_table[p_md->model_id].x;
-      vec.y += sc_mdl_offset_table[p_md->model_id].y;
-      vec.z += sc_mdl_offset_table[p_md->model_id].z;
-      MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
-
-      // フレームの更新
-      UpdateFrame( p_md );
-      
-      // アニメーション停止
-      if( p_md->is_move_end == TRUE )
+      for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
       {
-        for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
-        {
-          exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
-          FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-        }
-        OS_Printf("敵アニメーション停止\n");
+        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_md->p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_md->p_model->modelID, i );
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+      }
+    }
+
+    // 移動処理
+    if( p_md->is_move_end == FALSE )
+    {
+      VecFx32 vec = {0,0,0};
+      if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) )
+      {
+        MtxFx43 trans;
+        MODEL *p_model    = p_md->p_model;
+        vec.x += sc_mdl_offset_table[p_md->model_id].x;
+        vec.y += sc_mdl_offset_table[p_md->model_id].y;
+        vec.z += sc_mdl_offset_table[p_md->model_id].z;
+        MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
+
+        // フレームの更新
+        UpdateFrame( p_md );
       }
     }
   }
@@ -1299,9 +1443,6 @@ static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk )
     }
   }
 
-  OS_Printf("現在のレイヤー：%u\n",p_wk->p_sv_work->now_floor_layer);
-  OS_Printf("現在のロケーション：%u\n",p_wk->p_sv_work->now_location);
-
   // 表示するべきボタン状況を取得し、その状況に合わせてフラグを操作
   {
     FLOOR_LAYER   now_layer = p_wk->p_sv_work->now_floor_layer;
@@ -1337,7 +1478,7 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
       p_wk->wait_frame = 0;
 
       // ボタンの点灯する音
-      PMSND_PlaySE( SEQ_SE_SW_DRGGYM_07 );
+      PMSND_PlaySE( GYM_DRAGON_SE_SEQ_SWITCH_TURNON );
 
       // アニメーションを有効に
       {
@@ -1449,7 +1590,7 @@ static BOOL DebugWin_ValueUpdate( s32* p_value ,s32 min, s32 max ,s32 add_value1
 //-----------------------------------------------------------------------------
 static void DebugWin_Draw_DragonBarkFrame( void *userWork, DEBUGWIN_ITEM *item )
 {
-  DEBUGWIN_ITEM_SetNameV( item ,"DRA_BARK_FRAME[%d]" ,debug_dragon_bark_value );
+  DEBUGWIN_ITEM_SetNameV( item ,"DRA_BARK_FRAME_HERO[%d]" ,debug_dragon_bark_value );
 }
 
 //----------------------------------------------------------------------------
