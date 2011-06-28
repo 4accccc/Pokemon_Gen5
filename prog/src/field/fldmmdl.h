@@ -309,46 +309,6 @@ typedef enum
 	MMDL_REFLECT_BLACT,			///<ビルボード映りこみ
 }MMDL_REFLECTTYPE;
 
-#if 0
-//--------------------------------------------------------------
-///	ビルボードアクターアニメーション種類
-//--------------------------------------------------------------
-typedef enum
-{
-	MMDL_BLACT_ANMTBLNO_NON,		///<アニメ無し
-	MMDL_BLACT_ANMTBLNO_HERO,	///<自機専用
-	MMDL_BLACT_ANMTBLNO_BLACT,	///<汎用アニメ
-  MMDL_BLACT_ANMTBLNO_CYCLEHERO_OLD, ///<自転車自機専用 旧
-  MMDL_BLACT_ANMTBLNO_SWIMHERO, ///<波乗り自機専用
-  MMDL_BLACT_ANMTBLNO_FLIP, ///<人物汎用 フリップ使用
-  MMDL_BLACT_ANMTBLNO_NONFLIP, ///<人物汎用 フリップ未使用
-  MMDL_BLACT_ANMTBLNO_CYCLEHERO, ///<自転車自機専用
-  MMDL_BLACT_ANMTBLNO_ONECELL, ///<一パターンのみ
-  MMDL_BLACT_ANMTBLNO_ITEMGET, ///<自機アイテムゲット
-  MMDL_BLACT_ANMTBLNO_PCAZUKE, ///<自機ポケセン預け
-  MMDL_BLACT_ANMTBLNO_SAVE, ///<自機レポート
-  MMDL_BLACT_ANMTBLNO_PCWOMAN, ///<PC姉
-  MMDL_BLACT_ANMTBLNO_POKE_FLIP, ///<ポケモン　反転使用
-  MMDL_BLACT_ANMTBLNO_POKE_NONFLIP, ///<ポケモン反転未使用
-  MMDL_BLACT_ANMTBLNO_FISHINGHERO, ///<釣り自機 new
-  MMDL_BLACT_ANMTBLNO_CUTINHERO, ///<カットイン自機 new
-  MMDL_BLACT_ANMTBLNO_YUREHERO, ///<尾瀬揺れ自機 new
-  MMDL_BLACT_ANMTBLNO_SHIN_MU_A, ///<ポケモン シン・ム その１
-  MMDL_BLACT_ANMTBLNO_SPIDER, ///<くもの巣
-  MMDL_BLACT_ANMTBLNO_NFLIP_ACT0, ///<人物汎用　フリップ未使用 演技3Pあり
-  MMDL_BLACT_ANMTBLNO_MELODYER, ///<ポケモン メロディア専用
-  MMDL_BLACT_ANMTBLNO_SHIN_MU_B, ///<ポケモン シン・ム その２
-  MMDL_BLACT_ANMTBLNO_RIVEL, ///<ライバル
-  MMDL_BLACT_ANMTBLNO_SUPPORT, ///<サポート
-  MMDL_BLACT_ANMTBLNO_BOSS_N, ////<N
-  MMDL_BLACT_ANMTBLNO_SAGE1, ///<SAGE1
-  MMDL_BLACT_ANMTBLNO_NINJA, ///<NINJA
-  MMDL_BLACT_ANMTBLNO_CHAMPION, ///<CHAMPION
-  MMDL_BLACT_ANMTBLNO_SHIN_MU_C, ///<ポケモン シン・ム その３
-	MMDL_BLACT_ANMTBLNO_MAX,		///<最大
-}MMDL_BLACT_ANMTBLNO;
-#endif
-
 //--------------------------------------------------------------
 /// ビルボードアクターモデルサイズ
 //--------------------------------------------------------------
