@@ -39,6 +39,7 @@
 #include "app/app_keycursor.h"
 #include "gamesystem/msgspeed.h"
 #include "multiboot/mb_parent_sys.h"  //転送マシン
+#include "net_app/key_system.h"
 
 #include "title/title.h"
 #include "title/game_start.h"
@@ -295,6 +296,7 @@ static const LIST_ITEM_DATA ListItemData[] =
 	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_WIFI_SET_SY },
 	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_MIC_TEST_SY },
 	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_MACHINE_SY },
+	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_KEYSYSTEM_SY },
 };
 
 // BMPWINデータ
@@ -352,6 +354,10 @@ static const u8 BmpWinData[][6] =
 		BMPWIN_LIST_FRM, BMPWIN_MACHINE_PX, BMPWIN_MACHINE_PY,
 		BMPWIN_MACHINE_SX, BMPWIN_MACHINE_SY, BMPWIN_LIST_PAL
 	},
+  { //「キーシステム」
+		BMPWIN_LIST_FRM, BMPWIN_KEYSYSTEM_PX, BMPWIN_KEYSYSTEM_PY,
+		BMPWIN_KEYSYSTEM_SX, BMPWIN_KEYSYSTEM_SY, BMPWIN_LIST_PAL
+  },
 
 	{	// メッセージ
 		BMPWIN_MSG_FRM, BMPWIN_MSG_PX, BMPWIN_MSG_PY,
@@ -544,6 +550,11 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
   		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(multiboot), &MultiBoot_ProcData, initWork);
   	}
 		break;
+  case LIST_ITEM_KEYSYSTEM:      // キーシステム
+    {
+		  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(key_system), &KEY_SYSTEM_ProcData, NULL);
+    }
+    break;
 
 	default:		// キャンセル
 		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
@@ -820,6 +831,10 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 			return SetButtonAnm( wk, MAINSEQ_WIFISET );
 
 		case LIST_ITEM_MIC_TEST:		// マイクテスト
+			wk->listResult = wk->list[wk->listPos];
+			return SetButtonAnm( wk, MAINSEQ_END_SET );
+
+		case LIST_ITEM_KEYSYSTEM:			// キーシステム
 			wk->listResult = wk->list[wk->listPos];
 			return SetButtonAnm( wk, MAINSEQ_END_SET );
 		}
@@ -1691,6 +1706,10 @@ static void InitBmp( START_MENU_WORK * wk )
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_07 );
 	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_MACHINE], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
+	// キーシステムを使う
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_09 );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_KEYSYSTEM], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
+	GFL_STR_DeleteBuffer( str );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1908,6 +1927,7 @@ static void InitBgWinFrame( START_MENU_WORK * wk )
 	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_WIFI_SET, wk->util[BMPWIN_WIFI].win );
 	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_MIC_TEST, wk->util[BMPWIN_MIC].win );
 	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_MACHINE, wk->util[BMPWIN_MACHINE].win );
+	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_KEYSYSTEM, wk->util[BMPWIN_KEYSYSTEM].win );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1992,6 +2012,9 @@ static void InitList( START_MENU_WORK * wk )
 		wk->list[i] = LIST_ITEM_MACHINE;
 		i++;
 	}
+  //キーシステム
+	wk->list[i] = LIST_ITEM_KEYSYSTEM;
+	i++;
 
 	// ダミーを入れておく
 	for( i=i; i<LIST_ITEM_MAX; i++ ){

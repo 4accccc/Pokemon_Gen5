@@ -32,6 +32,9 @@
 #include "savedata/save_outside.h"
 #include "savedata/outside_permanent.h"
 
+//デバッグ
+#include "test/nagihashi/debugwin_keysystem.h"
+
 //外部公開
 #include "net_app/key_system.h"
 
@@ -595,6 +598,12 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1,0,14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
 
+#ifdef PM_DEBUG
+  //デバッグウィンドウ
+  DEBUGWIN_InitProc( KEYSYS_BG_FRAME_TEXT_M, p_wk->p_font );
+  DEBUGWIN_KEY_SYSTEM_Init( p_wk->p_key_sv, HEAPID_KEY_SYSTEM );
+#endif //PM_DEBUG
+
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -613,6 +622,12 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
   ( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+#ifdef PM_DEBUG
+  //デバッグウィンドウ
+  DEBUGWIN_KEY_SYSTEM_Exit();
+  DEBUGWIN_ExitProc();
+#endif //PM_DEBUG
 
   //テキスト破棄
   if( p_wk->p_title )

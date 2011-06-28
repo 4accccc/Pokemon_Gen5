@@ -308,6 +308,39 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="START_MENU_STR_ITEM_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キーシステム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-28T08:24:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キーシステム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-28T08:24:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="START_MENU_STR_ITEM_01_02"
 		Style="Large">
 		<LanguageCell

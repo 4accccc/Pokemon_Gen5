@@ -30,6 +30,7 @@
 #include "debug_graphic.h"
 #include "debug_util.h"
 #include "debug/debugwin_sys.h"
+#include "debugwin_keysystem.h"
 
 //外部公開
 #include "debug_outside.h"
@@ -59,17 +60,6 @@ enum
   BG_FRAME_TEXT_M = GFL_BG_FRAME0_M,
 
   BG_FRAME_BACK_S = GFL_BG_FRAME0_S,
-};
-
-//-------------------------------------
-///	デバッグ番号
-//=====================================
-enum
-{
-  OUTSIDE_DEBUGWIN_GROUP    = 0,
-  KEYSYSTEM_DEBUGWIN_GROUP  = 1,
-  KEYSYSTEM_SELF_DEBUGWIN_GROUP  = 2,
-  KEYSYSTEM_RECV_DEBUGWIN_GROUP  = 3,
 };
 
 //=============================================================================
@@ -114,36 +104,9 @@ static void Seqfunc_Main( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 static void Seqfunc_FadeOut( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
-/// デバッグウィンドウ関数
-//=====================================
-static void DebugWin_U_Key_Addr( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Addr( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-
-static void DebugWin_U_Key_Have_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Have_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_U_Key_Have_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Have_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_U_Key_Have_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Have_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-
-static void DebugWin_U_Key_Use_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Use_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_U_Key_Use_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Use_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_U_Key_Use_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Use_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-
-static void DebugWin_U_Key_Difficult( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Difficult( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_U_Key_Wfbc( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Wfbc( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_U_Key_Init( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-static void DebugWin_D_Key_Init( void* p_wk_adrs, DEBUGWIN_ITEM* p_item );
-//-------------------------------------
 /// その他
 //=====================================
 static void Util_LoadBg( HEAPID heapID );
-static void Util_KeySystem_SetDebugWin( DEBUG_OUTSIDE_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -205,8 +168,11 @@ static GFL_PROC_RESULT Debug_Outside_Proc_Init( GFL_PROC *p_proc, int *p_seq, vo
 
     //デバッグウィンドウ
     DEBUGWIN_InitProc( BG_FRAME_TEXT_M, p_wk->p_font );
-    DEBUGWIN_AddGroupToTop( OUTSIDE_DEBUGWIN_GROUP , "かんりがいデータ", HEAPID_NAGI_DEBUG_SUB );
-    Util_KeySystem_SetDebugWin( p_wk );
+    {
+      OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr(p_wk->p_outside_sv);
+      KEY_SYSTEM_SAVE *p_key_system = OUTSIDE_PERMANENT_GetKeySystem(p_per);
+      DEBUGWIN_KEY_SYSTEM_Init( p_key_system, HEAPID_NAGI_DEBUG_SUB );
+    }
   }
 
 
@@ -232,7 +198,7 @@ static GFL_PROC_RESULT Debug_Outside_Proc_Exit( GFL_PROC *p_proc, int *p_seq, vo
   OS_ResetSystem(0);
 
   //デバッグウィンドウ
-  DEBUGWIN_RemoveGroup( OUTSIDE_DEBUGWIN_GROUP );
+  DEBUGWIN_KEY_SYSTEM_Exit();
   DEBUGWIN_ExitProc();
 
   //メッセージ
@@ -454,255 +420,5 @@ static void Util_LoadBg( HEAPID heapID )
   GFL_BG_LoadScreenReq( BG_FRAME_TEXT_M );
   GFL_BG_LoadScreenReq( BG_FRAME_BACK_S );
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  キーシステムのデバッグウィンドウ
- *
- *	@param	DEBUG_OUTSIDE_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void Util_KeySystem_SetDebugWin( DEBUG_OUTSIDE_WORK *p_wk )
-{
-  OUTSIDE_PERMANENT *p_permanent = OutsideSave_GetPermanentPtr( p_wk->p_outside_sv );
-  KEY_SYSTEM_SAVE *p_key_system = OUTSIDE_PERMANENT_GetKeySystem( p_permanent );
 
-  DEBUGWIN_AddGroupToGroup( KEYSYSTEM_DEBUGWIN_GROUP , "キーシステム", OUTSIDE_DEBUGWIN_GROUP, HEAPID_NAGI_DEBUG_SUB );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Addr, 
-                              DebugWin_D_Key_Addr, 
-                              p_permanent, 
-                              KEYSYSTEM_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Difficult, 
-                              DebugWin_D_Key_Difficult, 
-                              p_key_system, 
-                              KEYSYSTEM_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Wfbc, 
-                              DebugWin_D_Key_Wfbc, 
-                              p_key_system, 
-                              KEYSYSTEM_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Init, 
-                              DebugWin_D_Key_Init, 
-                              p_key_system, 
-                              KEYSYSTEM_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-
-  DEBUGWIN_AddGroupToGroup( KEYSYSTEM_SELF_DEBUGWIN_GROUP, "しょじキー", KEYSYSTEM_DEBUGWIN_GROUP , HEAPID_NAGI_DEBUG_SUB );
-
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Have_00, 
-                              DebugWin_D_Key_Have_00, 
-                              p_key_system, 
-                              KEYSYSTEM_SELF_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Have_01, 
-                              DebugWin_D_Key_Have_01, 
-                              p_key_system, 
-                              KEYSYSTEM_SELF_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Have_02, 
-                              DebugWin_D_Key_Have_02, 
-                              p_key_system, 
-                              KEYSYSTEM_SELF_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-
-  DEBUGWIN_AddGroupToGroup( KEYSYSTEM_RECV_DEBUGWIN_GROUP, "こうもくかいほう", KEYSYSTEM_DEBUGWIN_GROUP , HEAPID_NAGI_DEBUG_SUB );
-
-
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Use_00, 
-                              DebugWin_D_Key_Use_00, 
-                              p_key_system, 
-                              KEYSYSTEM_RECV_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Use_01, 
-                              DebugWin_D_Key_Use_01, 
-                              p_key_system, 
-                              KEYSYSTEM_RECV_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_U_Key_Use_02, 
-                              DebugWin_D_Key_Use_02, 
-                              p_key_system, 
-                              KEYSYSTEM_RECV_DEBUGWIN_GROUP, 
-                              HEAPID_NAGI_DEBUG_SUB );
-}
-//=============================================================================
-/**
- *          デバッグウィンドウ関数
- */
-//=============================================================================
-static void DebugWin_U_Key_Addr( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-}
-static void DebugWin_D_Key_Addr( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  OUTSIDE_PERMANENT *p_permanent = p_wk_adrs;
-  KEY_SYSTEM_SAVE *p_key_system = OUTSIDE_PERMANENT_GetKeySystem( p_permanent );
-  DEBUGWIN_ITEM_SetNameV( p_item , "アドレス=0x%x", OUTSIDE_MM_PERMANENT + (u32)p_permanent - (u32)p_key_system );
-}
-static void DebugWin_U_Key_Have_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_EASY );
-    KEY_SYSTEM_SAVE_DEBUG_SetHave( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_EASY, !is_exits );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Have_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_EASY );
- DEBUGWIN_ITEM_SetNameV( p_item , "かんたんキー=%d", is_exits );
-}
-static void DebugWin_U_Key_Have_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_HARD );
-    KEY_SYSTEM_SAVE_DEBUG_SetHave( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_HARD, !is_exits );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Have_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_HARD );
-  DEBUGWIN_ITEM_SetNameV( p_item , "むずいキー=%d", is_exits );
-}
-static void DebugWin_U_Key_Have_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC );
-    KEY_SYSTEM_SAVE_DEBUG_SetHave( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC, !is_exits );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Have_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  BOOL is_exits = KEY_SYSTEM_SAVE_IsHave( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC );
-  DEBUGWIN_ITEM_SetNameV( p_item , "まちキー=%d", is_exits );
-}
-static void DebugWin_U_Key_Use_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_EASY );
-    KEY_SYSTEM_SAVE_DEBUG_SetUse( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_EASY, !is_exits );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Use_00( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_EASY );
-  DEBUGWIN_ITEM_SetNameV( p_item , "かんたんキー=%d", is_exits );
-}
-static void DebugWin_U_Key_Use_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_HARD );
-    KEY_SYSTEM_SAVE_DEBUG_SetUse( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_HARD, !is_exits );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Use_01( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_DIFFICULT_HARD );
-  DEBUGWIN_ITEM_SetNameV( p_item , "むずいキー=%d", is_exits );
-}
-static void DebugWin_U_Key_Use_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC);
-    KEY_SYSTEM_SAVE_DEBUG_SetUse( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC, !is_exits );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Use_02( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  BOOL is_exits = KEY_SYSTEM_SAVE_IsUse( p_key_system, KEY_SYSTEM_TYPE_CITY_WFBC );
-  DEBUGWIN_ITEM_SetNameV( p_item , "まちキー=%d", is_exits );
-}
-static void DebugWin_U_Key_Difficult( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    KEY_SYSTEM_DIFFICULT dif = KEY_SYSTEM_SAVE_GetDifficult( p_key_system );
-    dif++;
-    dif %= KEY_SYSTEM_DIFFICULT_MAX;
-    KEY_SYSTEM_SAVE_SetDifficult( p_key_system, dif );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Difficult( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  static const char *sc_difficult[] =
-  {
-    "かんたん",
-    "つうじょう",
-    "むずかしい",
-  };
-
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-
-  KEY_SYSTEM_DIFFICULT dif = KEY_SYSTEM_SAVE_GetDifficult( p_key_system );
-
-  DEBUGWIN_ITEM_SetNameV( p_item , "なんいど=%s", sc_difficult[dif] );
-}
-static void DebugWin_U_Key_Init( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    KEY_SYSTEM_SAVE_Init( p_key_system );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Init( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  DEBUGWIN_ITEM_SetName( p_item , "しょきか" );
-}
-static void DebugWin_U_Key_Wfbc( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    KEY_SYSTEM_WFBC wfbc = KEY_SYSTEM_SAVE_GetWfbc( p_key_system );
-    wfbc++;
-    wfbc %= KEY_SYSTEM_WFBC_MAX;
-    KEY_SYSTEM_SAVE_SetWfbc( p_key_system, wfbc );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-static void DebugWin_D_Key_Wfbc( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
-{
-  static const char *sc_wfbc[] =
-  {
-    "つうじょうのまち",
-    "はんたいのまち",
-  };
-
-  KEY_SYSTEM_SAVE *p_key_system = p_wk_adrs;
-
-  KEY_SYSTEM_WFBC wfbc = KEY_SYSTEM_SAVE_GetWfbc( p_key_system );
-
-  DEBUGWIN_ITEM_SetNameV( p_item , "まち=%s", sc_wfbc[wfbc] );
-}
 #endif

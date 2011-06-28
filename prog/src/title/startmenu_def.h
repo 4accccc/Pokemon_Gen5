@@ -23,6 +23,7 @@ enum {
 	LIST_ITEM_WIFI_SET,				// Wi-Fi設定
 	LIST_ITEM_MIC_TEST,				// マイクテスト
 	LIST_ITEM_MACHINE,				// 転送マシンを使う
+  LIST_ITEM_KEYSYSTEM,      // キーシステム
 	LIST_ITEM_MAX
 };
 
@@ -42,6 +43,7 @@ enum {
 	BMPWIN_WIFI,
 	BMPWIN_MIC,
 	BMPWIN_MACHINE,
+	BMPWIN_KEYSYSTEM,
 
 	BMPWIN_MSG,
 
@@ -126,6 +128,11 @@ enum {
 #define	BMPWIN_MACHINE_PY		( 0 )
 #define	BMPWIN_MACHINE_SX		( 19 )
 #define	BMPWIN_MACHINE_SY		( 3 )
+//「キーシステム」
+#define	BMPWIN_KEYSYSTEM_PX		( 2 )
+#define	BMPWIN_KEYSYSTEM_PY		( 0 )
+#define	BMPWIN_KEYSYSTEM_SX		( 19 )
+#define	BMPWIN_KEYSYSTEM_SY		( 3 )
 // メッセージ
 #define	BMPWIN_MSG_FRM			( GFL_BG_FRAME0_M )
 #define	BMPWIN_MSG_PX				( 1 )
@@ -192,6 +199,7 @@ enum {
 #define	LIST_FRAME_WIFI_SET_SY	( 3 )
 #define	LIST_FRAME_MIC_TEST_SY	( 3 )
 #define	LIST_FRAME_MACHINE_SY		( 3 )
+#define	LIST_FRAME_KEYSYSTEM_SY		( 3 )
 
 // リストを表示するエリアサイズ
 //define	LIST_SCRN_SX			( 32 )
