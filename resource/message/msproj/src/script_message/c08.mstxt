@@ -1152,10 +1152,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『せんとうまえ▼</Text>
+			<Text>プラズマだん『ポケモンは　どうぐ！
+おれは　そう　おそわっている▼
+よけいな　おもいが　ないほうが
+うまく　どうぐを　あつかえるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:57:57" />
+				Time="2011-06-28T05:54:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1163,10 +1166,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『戦闘前▼</Text>
+			<Text>プラズマだん『ポケモンは　道具！
+おれは　そう　教わっている▼
+余計な　思いが　ないほうが
+うまく　道具を　扱えるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:57:53" />
+				Time="2011-06-28T05:55:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1201,10 +1207,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『せんとうご</Text>
+			<Text>プラズマだん『なんだと……？▼
+ポケモンを　こきつかわずに
+その　じつりょくを　だせるのか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:02" />
+				Time="2011-06-28T06:07:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1212,10 +1220,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『戦闘後</Text>
+			<Text>プラズマだん『なんだと……？▼
+ポケモンを　こきつかわずに
+その　実力を　だせるのか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:09" />
+				Time="2011-06-28T06:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1246,14 +1256,69 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r0101_swplazmam1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『なかまが　いっていた▼
+あと　さがしていないのは
+ポケモンジム　だけ　だと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:27:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:34:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『仲間が　いっていた▼
+あと　探していないのは
+ポケモンジム　だけ　だと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:27:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:34:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ戦のヒントメッセージ
+・戦えるしたっぱを全員倒したとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:19:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:34:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#004080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r0101_swplazmam2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『せんとうまえ▼</Text>
+			<Text>プラズマだん『こんどこそ　おれらが
+イッシュちほうを　しはい　する！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:12" />
+				Time="2011-06-28T06:37:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1261,10 +1326,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『戦闘前▼</Text>
+			<Text>プラズマだん『今度こそ　おれらが
+イッシュ地方を　支配する！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:12" />
+				Time="2011-06-28T06:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1299,10 +1365,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『せんとうご</Text>
+			<Text>プラズマだん『まだだ！　ほかの
+メンバーが　いんでしのくさびを▽
+さがしだし　イッシュを　しはい　だぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:12" />
+				Time="2011-06-28T06:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1310,10 +1378,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『戦闘後</Text>
+			<Text>プラズマだん『まだだ！　他の
+メンバーが　いんでしのくさびを▽
+探しだし　イッシュを　支配だぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:12" />
+				Time="2011-06-28T06:42:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1337,14 +1407,62 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r0101_swplazmam2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『……そういえば▼
+ポケモンジムを　じゅうてんてきに
+さがせと　めいれい　されていたっけ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:42:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:34:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『……そういえば▼
+ポケモンジムを　重点的に
+洗え！　と　命令されていたっけ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:42:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:34:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ戦のヒントメッセージ
+・戦えるしたっぱを全員倒したとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:19:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:34:52" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r0101_swplazmaw1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『せんとうまえ▼</Text>
+			<Text>プラズマだん『ジャマを　しないでよ！
+この　オジャマムシ!▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:13" />
+				Time="2011-06-28T05:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1352,10 +1470,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『戦闘前▼</Text>
+			<Text>プラズマだん『ジャマを　しないでよ！
+この　オジャマムシ!▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:13" />
+				Time="2011-06-28T05:46:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1390,10 +1509,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『せんとうご</Text>
+			<Text>プラズマだん『オジャマムシに
+ジャマされるなんて　くつじょく……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:13" />
+				Time="2011-06-28T06:26:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1401,10 +1521,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『戦闘後</Text>
+			<Text>プラズマ団『オジャマムシに
+ジャマされるなんて　屈辱……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T09:58:13" />
+				Time="2011-06-28T06:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1425,6 +1546,60 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:43:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#004080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmaw1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『ヴィオさまは　いっていた
+シャガが　まもろうとする　ばしょ▽
+そこに　たいせつなものが　あるって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:26:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:35:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『ヴィオさまは　いっていた
+シャガが　守ろうとする　場所▽
+そこに　大切なものが　あるって</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:26:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:35:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ戦のヒントメッセージ
+・戦えるしたっぱを全員倒したとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:19:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:35:10" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1476,6 +1651,51 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:43:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『たしか　ヴィオさまは
+ポケモンジムを　しらべようと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:41:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:37:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『確か　ヴィオさまは
+ポケモンジムを　調べようと……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:41:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:37:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ戦のヒントメッセージ
+・戦えるしたっぱを全員倒したとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:19:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:37:48" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1535,12 +1755,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>シャガ『こいつら……！
-てごわくなっている！▼
+てごわく　なっている！▼
 [Name:TrainerName ]！
 この　まちの　ジムを　まもってくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:16:40" />
+				Time="2011-06-28T05:44:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1627,6 +1847,53 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-17T02:44:04" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmaw2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『シャガってば　どこに
+いでんしのくさびを　かくしたの？▽
+やはり　なじんだ　ばしょ　かな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:43:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:38:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『シャガってば　どこに
+いでんしのくさびを　隠したの？▽
+やはり　なじんだ　場所かな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:43:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:38:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ戦のヒントメッセージ
+・戦えるしたっぱを全員倒したとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T06:19:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-28T05:38:13" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -2713,7 +2980,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『ありがとうございます▼
-……いや　挨拶は　また　今度で▼
+……いや　あいさつは　また　今度で▼
 さきほどの　氷が
 飛来した　方向から　計算して▽
 プラズマ団の　所在が　わかります▼
@@ -2723,7 +2990,7 @@
 ソウリュウを　守ってください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:23:36" />
+				Time="2011-06-28T05:27:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2808,7 +3075,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swleader1_03">
+		Label="msg_c08_swleader1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『[Name:TrainerName ]！▼
