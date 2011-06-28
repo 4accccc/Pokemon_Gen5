@@ -688,6 +688,8 @@ static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 //----------------------------------------------------------------------------------
 void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result )
 {
+
+  const BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSPConst( wk->mainModule );
   u32 baseExp = BTL_CALC_CalcBaseExp( deadPoke );
   u16 memberCount  = BTL_PARTY_GetMemberCount( party );
   u16 gakusyuCount = 0;
@@ -795,6 +797,12 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
       // 倒したポケとのレベル差によって経験値が増減する（WBから追加された仕様）
       myLv = BPP_GetValue( bpp, BPP_LEVEL );
       enemyLv = BPP_GetValue( deadPoke, BPP_LEVEL );
+
+      //もし難易度が簡単（マイナス補正）ならば、敵のレベルをノーマルに戻した値で計算する
+      if( bsp->difficulty_lv < 0 )
+      {
+        enemyLv += MATH_IAbs( bsp->difficulty_lv );
+      }
 
       result[i].exp = getexp_calc_adjust_level( bpp, result[i].exp, myLv, enemyLv );
 

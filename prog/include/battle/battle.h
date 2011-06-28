@@ -374,8 +374,10 @@ typedef struct {
   // [io] ポケウッドデータ  撮影モードのときはoutput 上映モードのときはinput
   u8 pokewoodChoiceTbl[BTL_POKEWOOD_CHOICE_MAX];
   u8 pokewoodSuccessFlag;
-  u8 dummy[3];  
+  u8 dummy[2];  
 
+  //難易度調整値
+  s8 difficulty_lv;
 
 }BATTLE_SETUP_PARAM;
 

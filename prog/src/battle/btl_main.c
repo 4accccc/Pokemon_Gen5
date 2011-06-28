@@ -6286,6 +6286,10 @@ BATTLE_SETUP_PARAM *BTL_MAIN_GetBSP( BTL_MAIN_MODULE *wk )
 {
   return wk->setupParam;
 }
+extern const BATTLE_SETUP_PARAM *BTL_MAIN_GetBSPConst( const BTL_MAIN_MODULE *wk )
+{
+  return wk->setupParam;
+}
 
 //=============================================================================================
 /**

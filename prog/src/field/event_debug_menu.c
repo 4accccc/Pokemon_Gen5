@@ -258,6 +258,9 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_tsuruta_saya
 #define QuickJumpStart   DEBUG_FIELD_STR13
 #define QuickJumpSelect  DEBUG_FIELD_STR13
+#elif defined DEBUG_ONLY_FOR_nakatsui
+#define QuickJumpStart   DEBUG_FIELD_POKEWOOD
+#define QuickJumpSelect  DEBUG_FIELD_POKEWOOD
 
 #endif
 

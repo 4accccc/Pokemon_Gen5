@@ -22,6 +22,8 @@
 #include "gamesystem/btl_setup.h"
 #include "field/seasonpoke_form.h"
 #include "savedata/key_system_save.h"
+#include "savedata/outside_permanent.h"
+#include "field/zonedata.h"
 
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -948,32 +950,55 @@ void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
  *	@param	gameData  ゲームデータ
  */
 //-----------------------------------------------------------------------------
-void BTL_SETUP_SetDifficulty( BATTLE_SETUP_PARAM* bsp, GAMEDATA* gameData )
+void BTL_SETUP_SetDifficulty( BATTLE_SETUP_PARAM* bsp, GAMEDATA* gameData, u16 zoneID )
 {
-  //TODO 本来はセーブデータからGetしてくる
-  KEY_SYSTEM_DIFFICULT difficulty = KEY_SYSTEM_DIFFICULT_NORMAL;
 
-  OS_TPrintf( "難易度%d\n",difficulty );
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gameData);
+  OUTSIDE_PERMANENT *p_outside = SaveControl_GetOutsidePermanent( p_sv );
+  KEY_SYSTEM_SAVE *p_key = OUTSIDE_PERMANENT_GetKeySystem( p_outside );
+  KEY_SYSTEM_DIFFICULT difficulty = KEY_SYSTEM_SAVE_GetDifficult( p_key );
+  s16 difficulty_lv = ZONEDATA_GetDifficulty(zoneID);
 
+  //まずはクリア
+  bsp->difficulty_lv = 0;
 
-  //if(  )
-  if(1)
+  //簡単ならばマイナス
+  if( difficulty == KEY_SYSTEM_DIFFICULT_EASY )
   {
+    difficulty_lv *= -1;
   }
-  else
+
+  OS_TPrintf( "難易度%d zoneID%d レベル%d\n",difficulty, zoneID, difficulty_lv );
+
+
   //レベル変更
+  if( difficulty != KEY_SYSTEM_DIFFICULT_NORMAL )
   {
-    int i, j;
-    for( i = BTL_CLIENT_ENEMY1; i < BTL_CLIENT_NUM; i++ )
+    static const BTL_CLIENT_ID sc_target_client[] =
     {
-      POKEPARTY*  p_party = bsp->party[i];
+      BTL_CLIENT_ENEMY1, BTL_CLIENT_ENEMY2
+    };
+    int i, j;
+
+    bsp->difficulty_lv = difficulty_lv;
+
+  
+    //各敵クライアントの手持ちポケへ補正をかける
+    for( i = 0; i < NELEMS(sc_target_client); i++ )
+    {
+      POKEPARTY*  p_party = bsp->party[ sc_target_client[i] ];
       if( p_party )
       {
         for( j = 0; j < PokeParty_GetPokeCount(p_party); j++ )
         {
           POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party,j);
-          u16 lv = PP_Get( p_pp, ID_PARA_level, NULL );
-          PP_Put( p_pp, ID_PARA_level, lv/2 );
+          s16 lv = PP_Get( p_pp, ID_PARA_level, NULL );
+          lv += difficulty_lv;
+          if( lv <= 0 )
+          {
+            lv = 1;
+          }
+          PP_Put( p_pp, ID_PARA_level, lv );
         }
       }
     }

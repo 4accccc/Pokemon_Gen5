@@ -314,6 +314,7 @@ extern BTL_FIELD_WORK* BTL_MAIN_GetFieldSimWork( BTL_MAIN_MODULE* wk );
  */
 //----------------------------------------------------------------------------------------------
 extern BATTLE_SETUP_PARAM *BTL_MAIN_GetBSP( BTL_MAIN_MODULE *wk );
+extern const BATTLE_SETUP_PARAM *BTL_MAIN_GetBSPConst( const BTL_MAIN_MODULE *wk );
 
 
 //----------------------------------------------------------------------------------------------

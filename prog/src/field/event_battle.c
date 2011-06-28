@@ -358,6 +358,7 @@ GMEVENT * EVENT_TrainerBattle(
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, rule, partner_id, tr_id0, tr_id1, HEAPID_PROC );
+    BTL_SETUP_SetDifficulty( bp, gdata, FIELDMAP_GetZoneID( fieldmap ) );
 
     BeaconReq_BtlTrainer( tr_id0, BTL_BEACON_ST_START );
     RECORD_Inc( record, RECID_BTL_TRAINER);
