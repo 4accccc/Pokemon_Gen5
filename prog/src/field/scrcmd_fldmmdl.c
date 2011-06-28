@@ -907,6 +907,15 @@ VMCMD_RESULT EvCmdObjPosGet( VMHANDLE *core, void *wk )
   z = SCRCMD_GetVMWork( core, work );
   *x = MMDL_GetGridPosX( mmdl );
   *z = MMDL_GetGridPosZ( mmdl );
+#ifdef PM_DEBUG
+  //レール上では使用不可(正確な値が取れない)
+  {
+    SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( SCRCMD_WORK_GetScriptWork( work ) );
+    if( FIELDMAP_GetBaseSystemType( fparam->fieldMap ) == FLDMAP_BASESYS_RAIL ){
+      GF_ASSERT_MSG(0,"_OBJ_POS_GET:Can't use on rail\n");
+    }
+  }
+#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -930,6 +939,14 @@ VMCMD_RESULT EvCmdPlayerPosGet( VMHANDLE *core, void *wk )
   z = SCRCMD_GetVMWork( core, work );
   *x = MMDL_GetGridPosX( mmdl );
   *z = MMDL_GetGridPosZ( mmdl );
+
+#ifdef PM_DEBUG
+  //レール上では使用不可(正確な値が取れない)
+  if( FIELDMAP_GetBaseSystemType( fparam->fieldMap ) == FLDMAP_BASESYS_RAIL ){
+    GF_ASSERT_MSG(0,"_PLAYER_POS_GET:Can't use on rail\n");
+  }
+#endif
+  IWASAWA_Printf("PlayerPosGet (%d,%d)\n",*x,*z);
   return VMCMD_RESULT_CONTINUE;
 }
 

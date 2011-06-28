@@ -1595,6 +1595,9 @@
  * @param obj_id 取得するOBJ ID
  * @param x X座標格納先
  * @param z Z座標格納先
+ *
+ * レール上では使用不可(正確な値が取れません)
+ * レール上では_GET_OBJ_RAIL_LOC()を使用してください
  */
 //--------------------------------------------------------------
 #define _OBJ_POS_GET( obj_id,x,z ) _ASM_OBJ_POS_GET obj_id, x, z
@@ -1612,6 +1615,9 @@
  * @brief 主人公の位置取得
  * @param x X座標格納先
  * @param z Z座標格納先
+ *
+ * レール上では使用不可(正確な値が取れません)
+ * レール上では_GET_PLAYER_RAIL_LOC()を使用してください
  */
 //--------------------------------------------------------------
 #define _PLAYER_POS_GET( x, z ) _ASM_PLAYER_POS_GET x, z
