@@ -174,7 +174,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swchampion_04">
+		Label="msg_c08_swchampion_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それにしても　おにーちゃん　って
@@ -233,7 +234,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_swchampion_05">
+		Label="msg_c08_swchampion_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それにしても　おねーちゃん　って

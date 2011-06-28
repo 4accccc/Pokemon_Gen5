@@ -142,11 +142,11 @@
 			Language="JPN">
 			<Comment>♂
 ・c06ジムバッジ入手前
-※swanでメッセージ変更
+※swanでメッセージ修正
 ※動作モデルを変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T08:06:35" />
+				Time="2011-06-28T02:36:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -203,10 +203,10 @@
 			<Comment>♂
 ・c06ジムバッジ入手後
 　アイテム入手前
-※swanでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T08:06:39" />
+				Time="2011-06-28T02:36:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -266,10 +266,10 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手後
-※swanでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-24T08:06:37" />
+				Time="2011-06-28T02:36:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
