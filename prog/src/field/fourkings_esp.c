@@ -518,11 +518,14 @@ static void INIT_FieldRecover( FOURKINGS_ESP_TMP *p_wk )
       MMDL_SetStatusBitVanish( mmdl, TRUE );
     }
     ANM_STAIRS_PlayLoop( p_wk );    // 階段
+    // 花表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_FLOWER, FALSE );
 
     // POS1(=階段下)が起動していない
     if( pos1_flag == FALSE )
     {
       ANM_WATERFALL_PlayLoop( p_wk ); // 滝
+      // 幕表示
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_CURTAIN, FALSE );
     }
   }
