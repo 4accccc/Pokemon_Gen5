@@ -434,9 +434,12 @@ EVENT_START ev_tr_c08gym0101_guide
 			_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_glasses_01 )
 			_BALLOONWIN_CLOSE()
 			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_glasses_02 )
+
+      _CALL move_camera_start
+			_PLAINWIN_MSG_DOWN( msg_c08gym0101_glasses_02 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
+      _CALL move_camera_end
 
 			_FLAG_SET( FE_C08GYM_ITEM )			//アイテム入手フラグをセット
 
@@ -456,6 +459,28 @@ EVENT_START ev_tr_c08gym0101_guide
 	ENDIF
 }
 EVENT_END
+
+/************************************************************/
+/*				カメラ操作				*/
+/************************************************************/
+move_camera_start:
+{
+  _CAMERA_START()       // カメラ操作開始
+  _CAMERA_PURGE()		    // カメラのバインドを解く
+
+  _CAMERA_MOVE( 4056,0,970752,753664,0,1323008,90 )
+}
+_RET
+
+move_camera_end:
+{
+  _CAMERA_WAIT_MOVE()   // カメラ移動待ち
+  _CAMERA_DEF_MOVE( 60 )
+  _CAMERA_WAIT_MOVE()   // カメラ移動待ち
+  _CAMERA_BIND()        // カメラバインド
+  _CAMERA_END()         // カメラ操作終了
+}
+_RET
 
 ///**************************************************************/
 ///*                    シャガ                                  */
