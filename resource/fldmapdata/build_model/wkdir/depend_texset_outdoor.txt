@@ -2283,7 +2283,8 @@ DEP_TEXSET_IMD_OUTDOOR056 = \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/c13_ship_01.imd \
-	$(SRCDIR)/c5_wbt_01.imd
+	$(SRCDIR)/c5_wbt_01.imd \
+	$(SRCDIR)/wbt_fountain.imd
 
 texset/outdoor056.imd: $(DEP_TEXSET_IMD_OUTDOOR056) texset/tmp/outdoor056.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor056.list

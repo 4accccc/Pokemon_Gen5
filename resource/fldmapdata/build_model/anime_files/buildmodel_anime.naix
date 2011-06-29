@@ -245,8 +245,9 @@ enum {
 	NARC_buildmodel_anime_warp01_nsbta = 231,
 	NARC_buildmodel_anime_warp02_nsbta = 232,
 	NARC_buildmodel_anime_warp04_nsbta = 233,
-	NARC_buildmodel_anime_wf_lake01_nsbta = 234,
-	NARC_buildmodel_anime_wf_tree_anim01_nsbta = 235
+	NARC_buildmodel_anime_wbt_fountain_nsbta = 234,
+	NARC_buildmodel_anime_wf_lake01_nsbta = 235,
+	NARC_buildmodel_anime_wf_tree_anim01_nsbta = 236
 };
 
 /* NARC_BUILDMODEL_ANIME_NAIX_ */

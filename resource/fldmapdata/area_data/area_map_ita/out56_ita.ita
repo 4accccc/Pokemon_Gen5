@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-15T23:24:32" source="out56_ita_002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-06-21T19:29:35" source="out56_ita_002.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="240"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="off" material_size="6 6"
+	compress_material="off" material_size="10 10"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,7 +31,7 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="961">
+<tex_translate_data size="1201">
 	0.000000 0.000000 0.002686 0.005371 0.008057 0.010742 0.013672 0.016602 0.019775 0.022705
 	0.025879 0.029053 0.032227 0.035400 0.038818 0.041992 0.045410 0.048828 0.052002 0.055420
 	0.058838 0.062256 0.065674 0.069092 0.072266 0.075684 0.079102 0.082275 0.085693 0.088867
@@ -128,10 +128,34 @@
 	0.858154 0.861816 0.865234 0.868896 0.872559 0.876221 0.880127 0.884033 0.887939 0.892090
 	0.896240 0.900391 0.904785 0.909180 0.913574 0.918213 0.922852 0.927490 0.932373 0.937500
 	0.942627 0.947754 0.953125 0.958496 0.964111 0.969727 0.975586 0.981445 0.987549 0.993652
-	1.000000
+	1.000000 0.000000 0.083740 0.167480 0.250977 0.334717 0.418457 0.502197 0.585693 0.669434
+	0.753174 0.836914 0.920410 1.004150 1.087891 1.171631 1.255127 1.338867 1.422607 1.506348
+	1.589844 1.673584 1.757324 1.841064 1.924805 2.008301 2.092041 2.175781 2.259521 2.343018
+	2.426758 2.510498 2.594238 2.677734 2.761475 2.845215 2.928955 3.012451 3.096191 3.179932
+	3.263672 3.347168 3.430908 3.514648 3.598389 3.682129 3.765625 3.849365 3.933105 4.016846
+	4.100342 4.184082 4.267822 4.351563 4.435059 4.518799 4.602539 4.686279 4.769775 4.853516
+	4.937256 5.020996 5.104492 5.188232 5.271973 5.355713 5.439209 5.522949 5.606689 5.690430
+	5.774170 5.857666 5.941406 6.025146 6.108887 6.192383 6.276123 6.359863 6.443604 6.527100
+	6.610840 6.694580 6.778320 6.861816 6.945557 7.029297 7.113037 7.196533 7.280273 7.364014
+	7.447754 7.531494 7.614990 7.698730 7.782471 7.866211 7.949707 8.033447 8.117188 8.200928
+	8.284424 8.368164 8.451904 8.535645 8.619141 8.702881 8.786621 8.870361 8.953857 9.037598
+	9.121338 9.205078 9.288818 9.372314 9.456055 9.539795 9.623535 9.707031 9.790771 9.874512
+	9.958252 10.041748 10.125488 10.209229 10.292969 10.376465 10.460205 10.543945 10.627686 10.711182
+	10.794922 10.878662 10.962402 11.046143 11.129639 11.213379 11.297119 11.380859 11.464355 11.548096
+	11.631836 11.715576 11.799072 11.882813 11.966553 12.050293 12.133789 12.217529 12.301270 12.385010
+	12.468506 12.552246 12.635986 12.719727 12.803467 12.886963 12.970703 13.054443 13.138184 13.221680
+	13.305420 13.389160 13.472900 13.556396 13.640137 13.723877 13.807617 13.891113 13.974854 14.058594
+	14.142334 14.225830 14.309570 14.393311 14.477051 14.560791 14.644287 14.728027 14.811768 14.895508
+	14.979004 15.062744 15.146484 15.230225 15.313721 15.397461 15.481201 15.564941 15.648438 15.732178
+	15.815918 15.899658 15.983154 16.066895 16.150635 16.234375 16.317871 16.401611 16.485352 16.569092
+	16.652832 16.736328 16.820068 16.903809 16.987549 17.071045 17.154785 17.238525 17.322266 17.405762
+	17.489502 17.573242 17.656982 17.740479 17.824219 17.907959 17.991699 18.075195 18.158936 18.242676
+	18.326416 18.410156 18.493652 18.577393 18.661133 18.744873 18.828369 18.912109 18.995850 19.079590
+	19.163086 19.246826 19.330566 19.414307 19.497803 19.581543 19.665283 19.749023 19.832520 19.916260
+	20.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="6">
+<tex_srt_anm_array size="8">
 	<tex_srt_anm index="0" material_name="sea_gake02">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
@@ -160,19 +184,33 @@
 		<tex_translate_s frame_step="1" data_size="240" data_head="481"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="4" material_name="sea_mizu1_1">
+	<tex_srt_anm index="4" material_name="sea_mizu1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="721"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="721"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="5" material_name="sea_mizu1">
+	<tex_srt_anm index="5" material_name="sea_mizu1_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="240" data_head="721"/>
 		<tex_translate_t frame_step="1" data_size="240" data_head="721"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="6" material_name="out56_gate06">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="240" data_head="961"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="7" material_name="out56_gate06_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="240" data_head="961"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 

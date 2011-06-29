@@ -402,3 +402,4 @@
 "nsbmdfiles/door_c05_hotel.nsbmd"
 "nsbmdfiles/d7_inaba_02.nsbmd"
 "nsbmdfiles/d23_obj_04.nsbmd"
+"nsbmdfiles/wbt_fountain.nsbmd"
