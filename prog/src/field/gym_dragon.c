@@ -17,24 +17,22 @@
 #include "savedata/gimmickwork.h"
 #include "gmk_tmp_wk.h"
 
-#include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
+#include "field/field_const.h"          //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/fieldmap/gym_dragon.naix"
-#include "system/main.h"    //for HEAPID_FIELDMAP
-#include "script.h"     //for SCRIPT_CallScript
+#include "system/main.h"                //for HEAPID_FIELDMAP
+#include "script.h"                     //for SCRIPT_CallScript
 
 #include "sound/pm_sndsys.h"
 #include "gym_dragon_se_def.h"
-
-#include "rail_line/c08gym0101.h" //for RAIL
 #include "system/ica_anime.h"
 
-#include "../../../resource/fldmapdata/eventdata/tmp/c08gym0101.h"  // obj_id
-#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data_id.h"  // データID
-#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data.cdat"  // sc_hero_move_data
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"  // SYS_FLAG_C08GYM_BUTTON_～
+#include "../../../resource/fldmapdata/eventdata/tmp/c08gym0101.h"                      // obj_id
+#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data_id.h"   // データID
+#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_trace_data.cdat"   // sc_hero_move_data
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"                          // SYS_FLAG_C08GYM_BUTTON_～
 #include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_height_data.cdat"  // sc_ex_height_data
-#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_gym_data_def.h"  // 
+#include "../../../resource/fldmapdata/gimmick/gym_dragon/gym_dragon_gym_data_def.h"    // 外部指定パラメータ
 #include "gym_dragon.cdat"
 
 #include "eventwork_def.h"  // LOCALWORK*
@@ -157,6 +155,7 @@ static BOOL CheckUpLayerFoot(EVENTWORK* p_wk);
 static BOOL CheckUpLayerArm(EVENTWORK* p_wk);
 static BOOL CheckUpLayerHead(EVENTWORK* p_wk);
 
+static void setup_model_data( GYM_DRAGON_TMP *p_wk );
 static GYM_BUTTON_SEQ GetNowButtonType( EVENTWORK* p_event_wk ,u16 layer ,u16 loc );
 static GMEVENT * CreateButtonTurnOnEvent( GAMESYS_WORK *p_gamesys, u16 layer );
 static GMEVENT * CreateButtonEvent_UDLR( GAMESYS_WORK *p_gamesys, u16 event_seq );
@@ -178,6 +177,7 @@ static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void UpdateFrame( TRACE_MOVE_DATA *p_md );
 static void CallShakeCamera_Bark( FIELDMAP_WORK *p_fld_wk );
 static void CallShakeCamera_Bump( FIELDMAP_WORK *p_fld_wk );
+static u32 get_anmend_frame( TRACE_MOVE_DATA *p_md );
 
 #ifdef PM_DEBUG
 #define DEBUGMENU_GYM_DRAGON (2)
@@ -230,6 +230,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
   // アニメーション用ヒープ生成
   GFL_HEAP_CreateHeap( HEAPID_FIELDMAP, HEAPID_GYM_DRAGON_ANM, GYM_DRAGON_ANM_HEAP_SIZE );
 
+  // パラメータの初期化
   p_wk->heapID          = HEAPID_FIELDMAP;
   p_wk->heapAnmID       = HEAPID_GYM_DRAGON_ANM;
   p_wk->p_fld_wk        = fieldWork;
@@ -244,7 +245,49 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
  
   // 3D拡張オブジェクトユニットの追加
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, GYM_DRAGON_UNIT_IDX );
-  
+ 
+  // 拡張高さの設定
+  SetExHeight( p_wk->p_fld_wk );
+
+  // モデルデータのセットアップ
+  setup_model_data( p_wk );
+
+  // フォグの設定
+  {
+    FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_wk->p_fld_wk );
+    FIELD_FOG_SetBlendMode( fog, FIELD_FOG_BLEND_COLOR_ALPHA );
+    FIELD_FOG_SetColorA( fog, FOG_COLOR_A );
+    FIELD_FOG_SetTblAll( fog, DATA_FogTable );
+    FIELD_FOG_SetSlope( fog, FOG_SLOPE );
+    FIELD_FOG_SetOffset( fog, FOG_OFFSET );
+    FIELD_FOG_SetFlag( fog, TRUE );
+    FIELD_FOG_Reflect( fog );
+  }
+
+  // ボタンを点灯状態にする(ボタンITPのシーケンスはここで設定される)
+  SetButtonITPSeq( p_wk );
+
+#ifdef PM_DEBUG
+  // 空きヒープサイズ
+  {
+    u32 heap_size = GFI_HEAP_GetHeapFreeSize( p_wk->heapID );
+    OS_Printf("開始後残りヒープサイズ:%x\n",heap_size);
+  }
+#endif
+
+}
+ 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデルデータのセットアップ
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void setup_model_data( GYM_DRAGON_TMP *p_wk )
+{
   //モデル初期化
   {
     int i;
@@ -258,7 +301,7 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
     }
   }
 
-  
+  // モデルステータス設定
   {
     int i,n;
     EXP_OBJ_ANM_CNT_PTR exobj_anm;
@@ -284,7 +327,6 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
       {
         // 有効にする
         FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n, TRUE);
-        
 
         // ICAアニメーションのフレームを復帰
         {
@@ -300,33 +342,6 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
 
     }
   }
-
-  // 拡張高さの設定
-  SetExHeight( p_wk->p_fld_wk );
-
-  // フォグの設定
-  {
-    FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_wk->p_fld_wk );
-    FIELD_FOG_SetBlendMode( fog, FIELD_FOG_BLEND_COLOR_ALPHA );
-    FIELD_FOG_SetColorA( fog, FOG_COLOR_A );
-    FIELD_FOG_SetTblAll( fog, DATA_FogTable );
-    FIELD_FOG_SetSlope( fog, FOG_SLOPE );
-    FIELD_FOG_SetOffset( fog, FOG_OFFSET );
-    FIELD_FOG_SetFlag( fog, TRUE );
-    FIELD_FOG_Reflect( fog );
-  }
-
-  // ボタンを点灯状態にする(ボタンITPのシーケンスはここで設定される)
-  SetButtonITPSeq( p_wk );
-
-#ifdef PM_DEBUG
-  // 空きヒープサイズ
-  {
-    u32 heap_size = GFI_HEAP_GetHeapFreeSize( p_wk->heapID );
-    OS_Printf("開始後残りヒープサイズ:%x\n",heap_size);
-  }
-#endif
-
 }
 
 //----------------------------------------------------------------------------
@@ -443,11 +458,6 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
   // アニメーション再生
   FLD_EXP_OBJ_PlayAnime( p_wk->p_ex_obj );
 
-  {
-    fx32 frame;
-    frame = FLD_EXP_OBJ_GetObjAnmFrm(p_wk->p_ex_obj,GYM_DRAGON_UNIT_IDX,0,0);
-  }
- 
 #ifdef PM_DEBUG
   {
     // 強制ボタンイベント生成
@@ -894,8 +904,14 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
 
       // トレーナー位置のアップデート
       MOVE_Event_UpdatePlayerPos( p_wk );
+
+      // 敵トレーナー位置のアップデート
       MOVE_Event_UpdateEnemyTrainerPos( p_wk );
+
+      // ドラゴンのほえる処理
       MOVE_Event_DragonBarkMain( p_wk );
+
+      // 停止演出
       MOVE_Event_StopEffectMain( p_wk );
 
       // アニメーション終了チェック
@@ -921,22 +937,22 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
   // ボタン点灯イベント開始シーケンス
   case MOVE_EVENT_SEQ_CALL_BUTTON_EVENT:
     {
+      // ボタン起動イベント設定
       u16 layer2_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_02 );
       u16 layer3_value = *EVENTWORK_GetEventWorkAdrs( p_wk->p_event_wk, WK_SCENE_C08GYM_TURN_BTN_03 );
+      GMEVENT       *call_event;
+      GAMESYS_WORK  *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
 
-      // ボタン起動イベントありの場合
+      // 2階のボタンイ点灯イベント
       if( layer2_value == 1 )
       {
-        GMEVENT *call_event;
-        GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
         call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,1);
         GMEVENT_CallEvent( p_event, call_event );
         (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
       }
+      // 3階のボタンイ点灯イベント
       else if( layer3_value == 1 )
       {
-        GMEVENT *call_event;
-        GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fld_wk );
         call_event = GYM_DRAGON_CreateButtonTurnOnEvent(gsys,2);
         GMEVENT_CallEvent( p_event, call_event );
         (*p_seq) = MOVE_EVENT_SEQ_BUTTON_SET;
@@ -1027,8 +1043,7 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       // ボタン用ITPは再生しない
       if( i != HERO_DRA_ANM_BUTTON_ITP )
       {
-        MODEL *p_model    = p_md->p_model;
-        // フレーム
+        MODEL *p_model  = p_md->p_model;
         FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i ,FX32_CONST(p_md->move_data_frame) );
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
@@ -1073,12 +1088,10 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       for( i = 0 ; i < sc_g3d_util_obj[p_md->model_id].anmCount ; i++ )
       {
         EXP_OBJ_ANM_CNT_PTR exobj_anm;
-        
         MODEL *p_model    = p_md->p_model;
-        // フレーム
+
         FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i ,FX32_CONST(p_md->move_data_frame) );
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, i );
-        
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
       }      
     }
@@ -1089,7 +1102,6 @@ static void MOVE_EVENT_Init( PLAYER_MOVE_WORK *p_wk )
       p_md->p_ica_move_data     = NULL;
     }
   }
-
 }
 
 //----------------------------------------------------------------------------
@@ -1139,6 +1151,7 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_PLAYER];
   fx32 frame;
   
+  // アニメーションフレームの初期化
   frame = FLD_EXP_OBJ_GetObjAnmFrm(p_md->p_model->p_ex_obj,GYM_DRAGON_UNIT_IDX,0,0);
 
  
@@ -1161,12 +1174,11 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
       MtxFx43 trans;
       MODEL *p_model    = p_md->p_model;
         
-      //OS_Printf("p->%u:%x %x %x\n",p_md->move_data_frame + 1,vec.x,vec.y,vec.z);
-      
       vec.x += sc_mdl_offset_table[p_md->model_id].x;
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
 
+      // プレイヤー位置を設定
       FIELD_PLAYER_SetPos( p_wk->p_player, &vec );
 
       // フレームの更新
@@ -1197,17 +1209,9 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
   {
     return;
   }
-  
-  // 終了フレームの計算
-  if( p_md->is_reverse_move == FALSE )
-  {
-    end_frame = p_md->p_trace_data->end_frame - p_md->p_trace_data->start_frame;
-  }
-  else
-  {
-    end_frame =  p_md->p_trace_data->start_frame - p_md->p_trace_data->end_frame;
-  }
-  GF_ASSERT( end_frame > 0 );
+ 
+  // 終了フレームの取得
+  end_frame = get_anmend_frame( p_md );
 
   // 画面ゆれ
   if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE_HERO) )
@@ -1307,6 +1311,31 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
     break;
   }
 }
+ 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了フレームの取得
+ *
+ *	@param	*p_md 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 get_anmend_frame( TRACE_MOVE_DATA *p_md )
+{
+  // 逆再生を考慮する
+  if( p_md->is_reverse_move == FALSE )
+  {
+    return p_md->p_trace_data->end_frame - p_md->p_trace_data->start_frame;
+  }
+  else
+  {
+    return p_md->p_trace_data->start_frame - p_md->p_trace_data->end_frame;
+  }
+
+  GF_ASSERT(0);
+  return 0;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1382,16 +1411,10 @@ static void MOVE_Event_StopEffectMain( PLAYER_MOVE_WORK *p_wk )
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_PLAYER];
   const BUTTON_EVENT_DATA *p_bev = p_wk->p_button_evdata;
 
+  // アニメーション終了フレームの取得
+  end_frame = get_anmend_frame( p_md );
 
-  if( p_md->is_reverse_move == FALSE )
-  {
-    end_frame = p_md->p_trace_data->end_frame - p_md->p_trace_data->start_frame;
-  }
-  else
-  {
-    end_frame =  p_md->p_trace_data->start_frame - p_md->p_trace_data->end_frame;
-  }
-
+  // 衝突判定
   if( p_bev->is_bump == FALSE )
   {
     // 移動停止音
