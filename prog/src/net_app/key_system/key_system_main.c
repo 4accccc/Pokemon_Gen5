@@ -15,6 +15,7 @@
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
 #include "print/wordset.h"
+#include "field/zonedata.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -118,9 +119,11 @@ enum
 
 typedef enum
 {
+  KEYSYS_SELECT_MENU_RET_NONE,
   KEYSYS_SELECT_MENU_RET_SELECTED,  //現在選択中
   KEYSYS_SELECT_MENU_RET_UNSELECT,  //選択できない
   KEYSYS_SELECT_MENU_RET_DECIDE,  //決定
+  KEYSYS_SELECT_MENU_RET_SP_UNSELECT,  //特殊な状態で選択できない
 } KEYSYS_SELECT_MENU_RET;
 
 //=============================================================================
@@ -161,6 +164,7 @@ typedef struct
 //=====================================
 typedef struct _KEYSYS_SELECT_MENU
 {
+  GAMEDATA *p_gamedata;
   KEYSYS_MENU_WORK        **pp_menu;
   KEYSYS_OBJ_WORK         *p_obj;
   KEY_SYSTEM_SAVE         *p_key_sv;
@@ -168,7 +172,7 @@ typedef struct _KEYSYS_SELECT_MENU
   void (*Init)( struct _KEYSYS_SELECT_MENU *p_wk, KEYSYS_MENU_PARAM *p_param );
   KEYSYS_SELECT_MENU_RET (*DecideCallBack)( int index, void *p_wk_adrs );
 
-  BOOL is_unselected;
+  KEYSYS_SELECT_MENU_RET unselected;
   int unselected_index;
 
 } KEYSYS_SELECT_MENU;
@@ -381,15 +385,15 @@ typedef enum
   KEYSYS_SELMENU_TYPE_DIFFICULTY,
   KEYSYS_SELMENU_TYPE_WFBC,
 }KEYSYS_SELMENU_TYPE;
-static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE type, KEYSYS_OBJ_WORK *p_obj, KEYSYS_MENU_WORK **pp_menu, GFL_MSGDATA *p_msg, GFL_FONT *p_font, KEY_SYSTEM_SAVE *p_sv, HEAPID heapID );
+static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE type, KEYSYS_OBJ_WORK *p_obj, KEYSYS_MENU_WORK **pp_menu, GFL_MSGDATA *p_msg, GFL_FONT *p_font, KEY_SYSTEM_SAVE *p_sv, GAMEDATA *p_gamedata, HEAPID heapID );
 static void KeySys_SelMenu_Exit( KEYSYS_SELECT_MENU *p_wk );
 static void KeySys_SelMenu_Main( KEYSYS_SELECT_MENU *p_wk );
 static BOOL KeySys_SelMenu_IsDrawEnd( const KEYSYS_SELECT_MENU *cp_wk );
 static s32 KeySys_SelMenu_GetSelect( const KEYSYS_SELECT_MENU *cp_wk );
 static BOOL KeySys_SelMenu_IsDecide( const KEYSYS_SELECT_MENU *cp_wk );
 static void KeySys_SelMenu_ReStart( KEYSYS_SELECT_MENU *p_wk );
-static BOOL KeySys_SelMenu_IsUnSelected( const KEYSYS_SELECT_MENU *cp_wk );
-static s32  KeySys_SelMenu_GetUnSelected( const KEYSYS_SELECT_MENU *cp_wk );
+static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_GetUnSelected( const KEYSYS_SELECT_MENU *cp_wk );
+static s32  KeySys_SelMenu_GetUnSelectedIndex( const KEYSYS_SELECT_MENU *cp_wk );
 static BOOL KeySys_SelMenu_DecideCallBack( int index, void *p_wk_adrs );
 
 static void KeySys_SelMenu_Difficulty_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_MENU_PARAM *p_param );
@@ -532,6 +536,7 @@ static GFL_PROC_RESULT Key_System_Proc_Init
     p_wk->p_param = GFL_HEAP_AllocClearMemory(HEAPID_KEY_SYSTEM,sizeof(KEY_SYSTEM_PARAM) );
     p_wk->p_param->mode = KEY_SYSTEM_MODE_APP;
     p_wk->p_param->p_gamedata    = GAMEDATA_Create( HEAPID_KEY_SYSTEM );
+    ZONEDATA_Open( HEAPID_KEY_SYSTEM );
   }
 
   //管理外セーブシステム
@@ -671,6 +676,7 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
   //もし引数がNULLならばタイトルから呼び出された＝APPモード
   if( p_param_adrs == NULL )
   {
+    ZONEDATA_Close();
     GAMEDATA_Delete( p_wk->p_param->p_gamedata );
     GFL_HEAP_FreeMemory( p_wk->p_param );
 
@@ -1359,7 +1365,7 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
         (*p_seq) = SEQ_SAVE_MSG;
       }
     }
-    else if( KeySys_SelMenu_IsUnSelected( &p_wk->selmenu ) )
+    else if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_UNSELECT )
     {
       (*p_seq ) = SEQ_UNSELECT_MSG_START;
     }
@@ -1404,7 +1410,7 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
     break;
 
   case SEQ_UNSELECT_MSG_START:
-    switch( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) )
+    switch( KeySys_SelMenu_GetUnSelectedIndex( &p_wk->selmenu ) )
     {
     case KEY_SYSTEM_DIFFICULT_EASY:
       KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_54, KEYSYS_TEXT_TYPE_QUE );
@@ -1489,7 +1495,7 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         (*p_seq) = SEQ_SAVE_MSG;
       }
     }
-    else if( KeySys_SelMenu_IsUnSelected( &p_wk->selmenu ) )
+    else if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_UNSELECT || KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_SP_UNSELECT )
     {
       (*p_seq ) = SEQ_UNSELECT_MSG_START;
     }
@@ -1535,18 +1541,25 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_UNSELECT_MSG_START:
-    if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEY_SYSTEM_WFBC_REVERSE )
+    if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_SP_UNSELECT )
     {
-      if( GET_VERSION() == VERSION_W2 )
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_61, KEYSYS_TEXT_TYPE_QUE );
+    }
+    else
+    {
+      if( KeySys_SelMenu_GetUnSelectedIndex( &p_wk->selmenu ) == KEY_SYSTEM_WFBC_REVERSE )
       {
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_57, KEYSYS_TEXT_TYPE_QUE );
-      }
-      else
-      {
-        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_56, KEYSYS_TEXT_TYPE_QUE );
+        if( GET_VERSION() == VERSION_W2 )
+        {
+          KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_57, KEYSYS_TEXT_TYPE_QUE );
+        }
+        else
+        {
+          KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_56, KEYSYS_TEXT_TYPE_QUE );
+        }
       }
     }
-    (*p_seq)++;
+      (*p_seq)++;
     break;
 
   case SEQ_UNSELECT_MSG_WAIT:
@@ -2562,7 +2575,7 @@ static void KeySys_Display_CreateDifficulty( void *p_wk_adrs, HEAPID heapID )
 
 
   //メニュー追加
-  KeySys_SelMenu_Init( &p_wk->selmenu, KEYSYS_SELMENU_TYPE_DIFFICULTY, &p_wk->obj, &p_wk->p_menu, p_wk->p_msg, p_wk->p_font, p_wk->p_key_sv, heapID );
+  KeySys_SelMenu_Init( &p_wk->selmenu, KEYSYS_SELMENU_TYPE_DIFFICULTY, &p_wk->obj, &p_wk->p_menu, p_wk->p_msg, p_wk->p_font, p_wk->p_key_sv, p_wk->p_param->p_gamedata, heapID );
 
 }
 //----------------------------------------------------------------------------
@@ -2621,7 +2634,7 @@ static void KeySys_Display_CreateWfbc( void *p_wk_adrs, HEAPID heapID )
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetWfbcInfoMessage(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_QUE );
 
   //メニュー追加
-  KeySys_SelMenu_Init( &p_wk->selmenu, KEYSYS_SELMENU_TYPE_WFBC, &p_wk->obj, &p_wk->p_menu, p_wk->p_msg, p_wk->p_font, p_wk->p_key_sv, heapID );
+  KeySys_SelMenu_Init( &p_wk->selmenu, KEYSYS_SELMENU_TYPE_WFBC, &p_wk->obj, &p_wk->p_menu, p_wk->p_msg, p_wk->p_font, p_wk->p_key_sv, p_wk->p_param->p_gamedata, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -3370,12 +3383,13 @@ static void KeySys_PlayerData_Init( KEYSYS_PLAYER_DATA *p_wk, GAMEDATA *p_gameda
  *	@param	heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
-static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE type, KEYSYS_OBJ_WORK *p_obj, KEYSYS_MENU_WORK **pp_menu, GFL_MSGDATA *p_msg, GFL_FONT *p_font, KEY_SYSTEM_SAVE *p_sv, HEAPID heapID )
+static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE type, KEYSYS_OBJ_WORK *p_obj, KEYSYS_MENU_WORK **pp_menu, GFL_MSGDATA *p_msg, GFL_FONT *p_font, KEY_SYSTEM_SAVE *p_sv, GAMEDATA *p_gamedata, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(KEYSYS_SELECT_MENU) );
   p_wk->p_obj = p_obj;
   p_wk->pp_menu = pp_menu;
   p_wk->p_key_sv = p_sv;
+  p_wk->p_gamedata = p_gamedata;
 
 
   switch( type )
@@ -3518,8 +3532,8 @@ static BOOL KeySys_SelMenu_IsDecide( const KEYSYS_SELECT_MENU *cp_wk )
 //-----------------------------------------------------------------------------
 static void KeySys_SelMenu_ReStart( KEYSYS_SELECT_MENU *p_wk )
 {
-  p_wk->is_unselected = FALSE;
-  p_wk->unselected_index = 0;
+  p_wk->unselected        = KEYSYS_SELECT_MENU_RET_NONE;
+  p_wk->unselected_index  = 0;
   KEYSYS_MENU_ReStart( *p_wk->pp_menu );
 }
 //----------------------------------------------------------------------------
@@ -3531,9 +3545,9 @@ static void KeySys_SelMenu_ReStart( KEYSYS_SELECT_MENU *p_wk )
  *	@return TRUEならば押した。  FALSE押していない
  */
 //-----------------------------------------------------------------------------
-static BOOL KeySys_SelMenu_IsUnSelected( const KEYSYS_SELECT_MENU *cp_wk )
+static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_GetUnSelected( const KEYSYS_SELECT_MENU *cp_wk )
 {
-  return cp_wk->is_unselected;
+  return cp_wk->unselected;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3544,7 +3558,7 @@ static BOOL KeySys_SelMenu_IsUnSelected( const KEYSYS_SELECT_MENU *cp_wk )
  *	@return インデックス
  */
 //-----------------------------------------------------------------------------
-static s32  KeySys_SelMenu_GetUnSelected( const KEYSYS_SELECT_MENU *cp_wk )
+static s32  KeySys_SelMenu_GetUnSelectedIndex( const KEYSYS_SELECT_MENU *cp_wk )
 {
   return cp_wk->unselected_index;
 }
@@ -3566,8 +3580,9 @@ static BOOL KeySys_SelMenu_DecideCallBack( int index, void *p_wk_adrs )
   {
   case KEYSYS_SELECT_MENU_RET_SELECTED:
     return FALSE;
+  case KEYSYS_SELECT_MENU_RET_SP_UNSELECT:
   case KEYSYS_SELECT_MENU_RET_UNSELECT:
-    p_wk->is_unselected = TRUE;
+    p_wk->unselected = ret;
     p_wk->unselected_index = index;
     return FALSE;
   default:
@@ -3735,6 +3750,14 @@ static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, voi
   }
   else if( index < KEY_SYSTEM_WFBC_MAX )
   {
+    const LOCATION *cp_locate = GAMEDATA_GetStartLocation(p_wk->p_gamedata);
+
+    //今WFBCにいるなら押せない
+    if( ZONEDATA_IsWfbc( ZONEDATA_GetGroupID(cp_locate->zone_id) ) )
+    {
+      return KEYSYS_SELECT_MENU_RET_SP_UNSELECT;
+    }
+
     //決定
     if( index == KEY_SYSTEM_WFBC_REVERSE
     && !KEY_SYSTEM_SAVE_IsUse( p_wk->p_key_sv, KEY_SYSTEM_TYPE_CITY_WFBC ) )

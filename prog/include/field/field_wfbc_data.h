@@ -100,6 +100,7 @@ typedef enum {
 //-------------------------------------
 ///	街の種類
 //=====================================
+//src/field/scrcmd_keysystem.hで同じ並びでDeFINEしているので順番かえちゃダメ
 typedef enum
 {
   FIELD_WFBC_CORE_TYPE_BLACK_CITY,    // ブラックシティ
@@ -192,6 +193,7 @@ typedef struct
 //----------------------------------------------------------
 extern FIELD_WFBC_CORE* GAMEDATA_GetMyWFBCCoreData( GAMEDATA * gamedata );
 extern FIELD_WFBC_CORE* GAMEDATA_GetWFBCCoreData( GAMEDATA * gamedata, GAMEDATA_WFBC_ID id );
+extern FIELD_WFBC_CORE_TYPE GAMEDATA_GetMyWFBCType( const GAMEDATA * gamedata );
 
 // WFBC パレス　開始
 extern void GAMEDATA_SetUpPalaceWFBCCoreData( GAMEDATA * gamedata, const FIELD_WFBC_CORE* cp_core );
@@ -224,7 +226,7 @@ extern void FIELD_WFBC_CORE_Clear( FIELD_WFBC_CORE* p_wk ); // 『常駐』
 extern void FIELD_WFBC_CORE_ClearNormal( FIELD_WFBC_CORE* p_wk );
 extern void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk );
 //街の情報をセットアップ
-extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, HEAPID tmp_heapID );
+extern void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, SAVE_CONTROL_WORK *p_sv, HEAPID tmp_heapID );
 //整合性チェック
 extern BOOL FIELD_WFBC_CORE_IsConfomity( const FIELD_WFBC_CORE* cp_wk );
 //データの調整  不正データの場合、正常な情報に書き換えます。

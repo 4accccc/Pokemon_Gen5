@@ -111,6 +111,7 @@
 #include "scrcmd_fmission.h"
 #include "scrcmd_animal_trail.h"
 #include "scrcmd_ochiba.h"
+#include "scrcmd_keysystem.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

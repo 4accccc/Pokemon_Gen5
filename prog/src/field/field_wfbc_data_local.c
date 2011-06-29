@@ -29,7 +29,7 @@
 #include "eventwork_def.h"
 
 #include "field_comm/intrude_work.h"
-
+#include "savedata/outside_permanent.h"
 
 #include "net/dwc_tool.h"
 
@@ -181,7 +181,7 @@ void FIELD_WFBC_CORE_ClearBack( FIELD_WFBC_CORE* p_wk )
  *	@param  heapID        テンポラリバッファ用ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, HEAPID tmp_heapID )
+void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, SAVE_CONTROL_WORK *p_sv, HEAPID tmp_heapID )
 {
   int i;
   int pos_idx;
@@ -193,6 +193,10 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   u32 mood;
   BOOL parent_set;
   int hit_percent_total_num = FIELD_WFBC_HIT_PERCENT_MAX;
+  OUTSIDE_PERMANENT *p_per =  SaveControl_GetOutsidePermanent( p_sv );
+  KEY_SYSTEM_SAVE *p_key = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+  KEY_SYSTEM_WFBC wfbc_type = KEY_SYSTEM_SAVE_GetWfbc( p_key );
+
   GF_ASSERT( p_wk );
 
 #ifdef PM_DEBUG
@@ -203,9 +207,23 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   
   p_wk->data_in = TRUE;
 #if PM_VERSION == VERSION_B2
-  p_wk->type    = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+  if( wfbc_type == KEY_SYSTEM_WFBC_SELF )
+  {
+    p_wk->type    = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+  }
+  else
+  {
+    p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
+  }
 #else   // PM_VERSION == VERSION_B2
-  p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
+  if( wfbc_type == KEY_SYSTEM_WFBC_SELF )
+  {
+    p_wk->type    = FIELD_WFBC_CORE_TYPE_WHITE_FOREST; 
+  }
+  else
+  {
+    p_wk->type    = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
+  }
 #endif  // PM_VERSION == VERSION_B2
 
   p_wk->random_no = MyStatus_GetID( cp_mystatus );
@@ -214,6 +232,7 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   cp_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_loader );
 
   // 人を設定する
+#if 0
   for( i=0; i<FIELD_WFBC_INIT_PEOPLE_NUM; i++ )
   {
     // 設定位置と人を選ぶ
@@ -253,6 +272,7 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
     hit_percent_total_num -= cp_data->hit_percent;
     GF_ASSERT( hit_percent_total_num > 0 );
   }
+#endif
 
   FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
 

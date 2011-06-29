@@ -682,4 +682,8 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (679)
   { TRUE, FALSE, FALSE }, // _OCHIBA_FALL (680)
   { FALSE, FALSE, FALSE }, // NO_CMD (681)
+  { TRUE, TRUE, TRUE }, // _KEYSYS_GET_WFBC (682)
+  { TRUE, TRUE, TRUE }, // _KEYSYS_GET_DIFFICULTY (683)
+  { FALSE, FALSE, FALSE }, // NO_CMD (684)
+  { FALSE, FALSE, FALSE }, // NO_CMD (685)
 };

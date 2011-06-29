@@ -13876,5 +13876,42 @@
   .short  \flags
   .endm
 
+
+//======================================================================
+//
+//  キーシステム
+//
+//======================================================================
+.include "../../../prog/src/field/scrcmd_keysystem.h"
+//--------------------------------------------------------------
+/**
+ * _KEYSYS_GET_WFBC 現在のWFBCの街タイプを取得 
+ * @param ret_wk    取得したデータ　KEYSYS_WFBC_BLACKCITY orKEYSYS_WFBC_WHITEFOREST
+ */
+//--------------------------------------------------------------
+#define _KEYSYS_GET_WFBC( ret_wk ) \
+      _ASM_KEYSYS_GET_WFBC ret_wk
+
+  .macro  _ASM_KEYSYS_GET_WFBC ret_wk
+  .short  EV_SEQ_KEYSYS_GET_WFBC
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _KEYSYS_GET_DIFFICULTY 現在の難易度を取得 
+ * @param ret_wk    取得したデータ以下
+ *                  KEY_SYSTEM_DIFFICULT_EASY    (0)   //簡単
+ *                  KEY_SYSTEM_DIFFICULT_NORMAL  (1)   //通常
+ *                  KEY_SYSTEM_DIFFICULT_HARD    (2)   //難しい
+ */
+//--------------------------------------------------------------
+#define _KEYSYS_GET_DIFFICULTY( ret_wk ) \
+      _ASM_KEYSYS_GET_DIFFICULTY ret_wk
+
+  .macro  _ASM_KEYSYS_GET_DIFFICULTY ret_wk
+  .short  EV_SEQ_KEYSYS_GET_DIFFICULTY
+  .short  \ret_wk
+  .endm
 //======================================================================
 //======================================================================

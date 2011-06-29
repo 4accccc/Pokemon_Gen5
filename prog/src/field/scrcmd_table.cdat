@@ -1045,6 +1045,12 @@
   DEF_CMD( EvCmdOchiba_Fall, EV_SEQ_OCHIBA_FALL )
   NO_CMD()
 
+  // キーシステム
+  DEF_CMD( EvCmdKeySys_GetWfbc, EV_SEQ_KEYSYS_GET_WFBC )
+  DEF_CMD( EvCmdKeySys_GetDifficulty, EV_SEQ_KEYSYS_GET_DIFFICULTY )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

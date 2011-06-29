@@ -497,7 +497,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_pair.c \
         field/scrcmd_person.c \
         gamesystem/fest_mission_nw.c \
-        gamesystem/fest_mission_data.c
+        gamesystem/fest_mission_data.c \
+        field/scrcmd_keysystem.c
 
 ###########################################################
 # アンチWIFIプログラム 並列化イベントグループ

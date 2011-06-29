@@ -382,6 +382,21 @@ FIELD_WFBC_CORE* GAMEDATA_GetMyWFBCCoreData( GAMEDATA * gamedata )
 {
   return GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_MINE );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のWFBC街のタイプを取得
+ *
+ *	@param	const GAMEDATA * gamedata ゲームデータ
+ *
+ *	@return 街タイプ
+ */
+//-----------------------------------------------------------------------------
+FIELD_WFBC_CORE_TYPE GAMEDATA_GetMyWFBCType( const GAMEDATA * gamedata )
+{
+  FIELD_WFBC_CORE*p_core =  GAMEDATA_GetMyWFBCCoreData( (GAMEDATA*)gamedata );
+  GF_ASSERT( p_core->data_in );
+  return p_core->type;
+}
 
 //----------------------------------------------------------------------------
 /**

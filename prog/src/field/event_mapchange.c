@@ -322,7 +322,7 @@ static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
   GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
 
   // WFBC街自分の場所初期化
-  FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GFL_HEAPID_APP ); //heap はテンポラリ用
+  FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GAMEDATA_GetSaveControlWork(gamedata),GFL_HEAPID_APP ); //heap はテンポラリ用
   FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
   //WFBCイベント情報の初期化
   FIELD_WFBC_EVENT_Init( GAMEDATA_GetWFBCEventData( gamedata ), GAMEDATA_GetMyWFBCCoreData(gamedata), GFL_HEAPID_APP );
@@ -487,6 +487,10 @@ static void GAME_FieldContinueInit( GAMESYS_WORK * gsys )
 {
   GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
 
+  //TODO あとでいろんな街の機能がなくなるのでSetUpしている
+  //SetUpしてまずい場合はここをかえる
+  // WFBC街自分の場所初期化
+  FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GAMEDATA_GetSaveControlWork(gamedata),GFL_HEAPID_APP ); //heap はテンポラリ用
   // WFBCのZONE書き換え処理
   FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
 }

@@ -201,7 +201,7 @@ static GMEVENT_RESULT ev_DEBUG_WFBC_100SetUp( GMEVENT* p_event, int* p_seq, void
 
   for( i=0; i<100; i++ ){
     FIELD_WFBC_CORE_Clear( p_wk->p_wfbc_data );
-    FIELD_WFBC_CORE_SetUp( p_wk->p_wfbc_data, cp_mystatus, heapID );
+    FIELD_WFBC_CORE_SetUp( p_wk->p_wfbc_data, cp_mystatus, GAMEDATA_GetSaveControlWork(p_gdata), heapID );
   }
 
   return GMEVENT_RES_FINISH;
