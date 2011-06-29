@@ -1071,10 +1071,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『どうする？
-オレと　たたかうかい？</Text>
+オレに　かてるつもり　なのか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1083,10 +1083,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『どうする？
-オレと　戦うかい？</Text>
+オレに　勝てるつもり　なのか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:14:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1623,11 +1623,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コンビナートでは　ポケモンも　ひとも
-なかよく　あせして　はたらいとるよ！</Text>
+			<Text>コンビナートでの　ちからしごとは
+ポケモンが　いないと　ガタガタだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:19" />
+				Time="2011-06-29T06:05:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1635,11 +1635,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コンビナートでは　ポケモンも　人も
-仲良く　汗して　働いとるよ！</Text>
+			<Text>コンビナートでの　力仕事は
+ポケモンが　いないと　ガタガタだな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:14" />
+				Time="2011-06-29T06:05:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1729,11 +1729,11 @@
 			Language="JPN">
 			<Text>あたし　うまれたときから
 この　ミルホッグと　いっしょ　なの！▼
-うーん　ポケモンの　いない
-せいかつ　なんて　そうぞう　できないな</Text>
+するどいめ　という　とくせいで
+なんども　たすけてくれたんだから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:22:22" />
+				Time="2011-06-29T06:10:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1743,11 +1743,11 @@
 			Language="JPN_KANJI">
 			<Text>あたし　生まれたときから
 この　ミルホッグと　一緒なの！▼
-うーん　ポケモンの　いない
-生活なんて　想像できないな</Text>
+するどいめ　という　特性で
+何度も　助けてくれたんだから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:22:38" />
+				Time="2011-06-29T06:10:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1824,10 +1824,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オレは　よくばり♪　ポケモンも
-ギターも　さくしも　うまくなりたい♪</Text>
+ギターも　テニスも　うまくなりたい♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:28:30" />
+				Time="2011-06-29T06:12:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1836,10 +1836,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレは　欲張り♪　ポケモンも
-ギターも　作詞も　うまくなりたい♪</Text>
+ギターも　テニスも　うまくなりたい♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:28:40" />
+				Time="2011-06-29T06:12:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

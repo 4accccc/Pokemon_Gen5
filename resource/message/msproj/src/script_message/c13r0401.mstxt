@@ -35,10 +35,11 @@
 　カウンター前に配置
 ・はい/いいえの選択肢表示
 　はい　→swrival_02
-　いいえ→swrival_04</Comment>
+　いいえ→swrival_04
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:48:27" />
+				Time="2011-06-29T04:06:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -471,14 +472,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんちょうなら　ポケウッド！▼
+			<Text>せんちょうサンなら　ポケウッド！▼
 なんでも　むすめの　ホミカちゃんが
 ジムリーダーと　バンドリーダーの▽
 かけもち　だから　まけないよう▽
 せんちょうと　やくしゃを　するってさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T04:06:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -486,14 +487,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>船長なら　ポケウッド！▼
+			<Text>船長サンなら　ポケウッド！▼
 なんでも　娘の　ホミカちゃんが
 ジムリーダーと　バンドリーダーの▽
 掛け持ち　だから　負けないよう▽
 自分は　船長と　役者を　するってさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T04:06:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
