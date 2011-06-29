@@ -195,12 +195,11 @@
 ちかごろの　トレーナーは　ぶっそうだ▼
 あれか？　ポケモンの　つよさを
 じぶんの　つよさと　かんちがい　か？▼
-まあ　おまえなんかの
-きもちなんか　どうでもいいが▽
+まあ　おまえなんか　どうでもいいが
 ジャマされたく　ないのでな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:37:38" />
+				Time="2011-06-29T06:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -212,12 +211,11 @@
 近ごろの　トレーナーは　物騒だ▼
 あれか？　ポケモンの　強さを
 自分の　強さと　勘違い　か？▼
-まあ　おまえなんかの
-気持ちなんか　どうでもいいが▽
+まあ　おまえなんか　どうでもいいが
 ジャマされたく　ないのでな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:37:44" />
+				Time="2011-06-29T06:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -956,15 +954,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たすかったよ
-プラズマだんを　たおしてくれて▼
-だけどさ　オマエは
-ポケモンずかんを　あつめてろよ！▽
-たびを　はじめた　りゆうだろ▼
-さて　ポケモンを
-げんきに　してやらないとな！▼</Text>
+プラズマだんと　たたかってくれて▼
+さてと……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:40:35" />
+				Time="2011-06-29T06:24:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -973,15 +967,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>たすかったよ
-プラズマ団を　倒してくれて▼
-だけどさ　オマエは
-ポケモン図鑑を　集めてろよ！▽
-旅を　始めた　理由だろ▼
-さて　ポケモンを
-元気に　してやらないとな！▼</Text>
+プラズマ団と　戦ってくれて▼
+さてと……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T09:40:52" />
+				Time="2011-06-29T06:24:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -991,11 +981,10 @@
 			Language="JPN">
 			<Comment>♂
 ・主人公と向き合ってメッセージ表示
-・メッセージ表示後、ポケセンのほうへ移動
-・画面外に消えると主人公操作可能に</Comment>
+・続けてmsg_c04_swrival_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:21:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1011,6 +1000,101 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04_swrival_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]は
+[Name:TrainerName ]の　ポケモンを▽
+かいふく　してくれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:19:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]は
+[Name:TrainerName ]の　ポケモンを▽
+回復してくれた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:23:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:19:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・回復処理
+・0＝主人公名前
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:22:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04_swrival_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『だけどさ　オマエは
+ポケモンずかんを　あつめてろよ！▽
+それが　たびの　りゆう　なんだろ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:25:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:22:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『だけどさ　オマエは
+ポケモン図鑑を　集めてろよ！▽
+それが　旅の　理由なんだろ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:25:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:22:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、ポケセンのほうへ移動
+・画面外に消えると主人公操作可能に
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:22:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:21:27" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1815,10 +1899,10 @@
 もっと　きたえて　いつか　ほんきの
 サブウェイマスターに　いどむ！▼
 ありがとう　[Name:TrainerName Idx="0" ]！
-これは　ぼくの　きもち！　あげる！▼</Text>
+これは　ぼくの　きもち！　ほら！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1831,10 +1915,10 @@
 もっと　鍛えて　いつか　本気の
 サブウェイマスターに　挑む！▼
 ありがとう　[Name:TrainerName Idx="0" ]！
-これは　ぼくの　気持ち！　あげる！▼</Text>
+これは　ぼくの　気持ち！　ほら！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:30:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
