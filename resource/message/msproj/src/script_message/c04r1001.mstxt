@@ -30,10 +30,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:34:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -81,10 +82,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:34:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -137,10 +139,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>POKE20
-ワルビル</Text>
+ポケモン・ワルビル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:34:29" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

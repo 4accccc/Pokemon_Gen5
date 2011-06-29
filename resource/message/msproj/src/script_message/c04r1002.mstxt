@@ -223,11 +223,10 @@
 			<Comment>♀
 ・先頭のポケモンのなつき度で
 　メッセージが分岐
-・0＝先頭のポケモン（タマゴ/ひんし除く）
-※SWANで仕様変更</Comment>
+・0＝先頭のポケモン（タマゴ/ひんし除く）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:39:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -427,14 +426,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　しんか　させると
-みためが　おおきく　かわり▽
-きほんてきに　ちからづよく　なる▼
-しんかさせないと　そのぶん
-わざを　はやく　おぼえたりするぞ！</Text>
+			<Text>ポケモンの　しんかには　いろいろある▼
+つよくなって　しんかするもの
+どうぐで　しんかするもの▽
+はたまた　つうしんで　しんかするもの▼
+アララギはかせに　きけば
+ばっちり　おしえてくれるだろうて</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -442,14 +442,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　進化させると
-見た目が　大きく　変わり▽
-基本的に　力強くなる▼
-進化させないときは　そのぶん
-わざを　早く　覚えたりするぞ！</Text>
+			<Text>ポケモンの　進化には　いろいろある▼
+強くなって　進化するもの
+道具で　進化するもの▽
+はたまた　通信で　進化するもの▼
+アララギ博士に　きけば
+ばっちり　教えてくれるだろうて</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:38:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -458,11 +459,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c03p17と重複メッセージ
-・c13r0101に移植</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:38:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
