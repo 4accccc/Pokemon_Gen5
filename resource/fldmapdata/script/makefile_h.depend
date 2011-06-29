@@ -1941,6 +1941,18 @@ c15r0101_def.h: c15r0101.ev
 c15r0201_def.h: c15r0201.ev
 	$(EV_DEF) c15r0201.ev $(SCR_OFFS_ID_H)
 
+d25r0701_def.h: d25r0701.ev
+	$(EV_DEF) d25r0701.ev $(SCR_OFFS_ID_H)
+
+d25r0801_def.h: d25r0801.ev
+	$(EV_DEF) d25r0801.ev $(SCR_OFFS_ID_H)
+
+d25r0901_def.h: d25r0901.ev
+	$(EV_DEF) d25r0901.ev $(SCR_OFFS_ID_H)
+
+d25r1001_def.h: d25r1001.ev
+	$(EV_DEF) d25r1001.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
