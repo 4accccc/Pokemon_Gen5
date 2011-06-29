@@ -75,7 +75,7 @@
 
 #define LIFT_NUM      (36)      // リフト数     
 
-#define BELT_ANM_SPD  (0x3700)  // ベルトコンベアのアニメ速度
+#define BELT_ANM_SPD  (0x6500)  // ベルトコンベアのアニメ速度
 
 // 最初のリフトの位置
 // 最初のみ、歩いてライトが光る
