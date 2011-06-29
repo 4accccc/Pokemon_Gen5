@@ -2218,7 +2218,7 @@
 #define TMFLG_H04R0501_PEOPLE_01          2754 /* 0x0ac2 ビレッジブリッジ：空き家住民選定フラグ */
 #define TMFLG_H04R0501_PEOPLE_02          2755 /* 0x0ac3 ビレッジブリッジ：空き家住民選定フラグ */
 #define TMFLG_H04R0501_PEOPLE_03          2756 /* 0x0ac4 ビレッジブリッジ：空き家住民選定フラグ */
-		/* not used  2757(0x0ac5) */
+#define TMFLG_C07R0201_QUIZ               2757 /* 0x0ac5 セッカシティ：一日一回クイズ一家 */
 		/* not used  2758(0x0ac6) */
 		/* not used  2759(0x0ac7) */
 		/* not used  2760(0x0ac8) */
