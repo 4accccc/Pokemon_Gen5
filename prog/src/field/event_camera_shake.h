@@ -10,27 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-
-//===============================================================================
-// ■カメラ振動パラメータ
-//===============================================================================
-typedef struct CAM_SHAKE_PARAM_tag {
-
-  s16 Width;
-  s16 Height;
-  u16 SubW;
-  u16 SubH;
-  u16 SubStartTime;
-  u16 SubMargineCount;
-  u16 SubMargine;
-  u8  TimeMax;
-  u8  Time;
-
-  u32 Sync;
-  u32 NowSync;
-
-} CAM_SHAKE_PARAM;
-
+#include "field_task_camera_shake.h"  // for CAM_SHAKE_PARAM;
 
 //-------------------------------------------------------------------------------
 /**
@@ -43,4 +23,5 @@ typedef struct CAM_SHAKE_PARAM_tag {
  */
 //-------------------------------------------------------------------------------
 extern GMEVENT* EVENT_ShakeCamera( 
-    GAMESYS_WORK* gameSystem, const CAM_SHAKE_PARAM* shakeParam );
+    GAMESYS_WORK* gameSystem, CAM_SHAKE_PARAM* shakeParam );
+

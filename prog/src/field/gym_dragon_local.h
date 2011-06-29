@@ -111,4 +111,6 @@ typedef enum{
 // 拡張高さ用アトリビュート
 #define EX_HEIGHT_ATTRIBUTE     (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL)
 
+// 演出用カメラNO
+#define GYM_DRAGON_EFFECT_CAM_NO  (42)
 

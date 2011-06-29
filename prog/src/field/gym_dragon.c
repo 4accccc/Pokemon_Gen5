@@ -41,6 +41,7 @@
 
 #include "tr_tool/trno_def.h" // TRID_*
 #include "script_trainer.h"
+#include "field_task_camera_shake.h"
 
 //=============================================================================
 /**
@@ -123,6 +124,7 @@ typedef struct PLAYER_MOVE_WORK_tag
   GYM_DRAGON_SV_WORK  *p_sv_work;
   u32           event_frame;
   s32           bark_seq;
+  u32           cam_type_tmp;
 
   TRACE_MOVE_DATA move_data[ICA_MOVE_ID_MAX];
 
@@ -167,13 +169,15 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk );
 static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk );
-static void MOVE_Event_StopSeMain( PLAYER_MOVE_WORK *p_wk );
+static void MOVE_Event_StopEffectMain( PLAYER_MOVE_WORK *p_wk );
 static void UpdateButtonStatus( GYM_BUTTON_SEQ button_seq ,EVENTWORK* p_event_wk );
 static void SetWorkValue( EVENTWORK* p_event_wk ,u16 work_no ,u16 value );
 static void SetExHeight( FIELDMAP_WORK* p_fld_wk );
 static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void SetHeroDragonITPSeq( GYM_DRAGON_TMP *p_wk );
 static void UpdateFrame( TRACE_MOVE_DATA *p_md );
+static void CallShakeCamera_Bark( FIELDMAP_WORK *p_fld_wk );
+static void CallShakeCamera_Bump( FIELDMAP_WORK *p_fld_wk );
 
 #ifdef PM_DEBUG
 #define DEBUGMENU_GYM_DRAGON (2)
@@ -287,7 +291,6 @@ void GYM_DRAGON_Setup(FIELDMAP_WORK *fieldWork)
           fx32 frame  = p_wk->p_sv_work->model_frame[p_model->modelID];
           FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n ,frame );
         }
-        //FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n , 0);
 
         // ループ、再生設定
         exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, n );
@@ -372,7 +375,6 @@ static void SetButtonITPSeq( GYM_DRAGON_TMP *p_wk )
     // フレーム
     FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP ,FX32_CONST(button_seq) );
   }
-
 }
 
 //-----------------------------------------------------
@@ -453,7 +455,7 @@ void GYM_DRAGON_Move(FIELDMAP_WORK *fieldWork)
     int trg = GFL_UI_KEY_GetTrg();
     GMEVENT *call_event;
     GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldWork );
-
+    
     // モデル非表示
     if( (cont & PAD_BUTTON_DEBUG) && (trg & PAD_BUTTON_START) )
     {
@@ -894,7 +896,7 @@ static GMEVENT_RESULT PlayerMove_Event( GMEVENT* p_event, int* p_seq, void* p_wk
       MOVE_Event_UpdatePlayerPos( p_wk );
       MOVE_Event_UpdateEnemyTrainerPos( p_wk );
       MOVE_Event_DragonBarkMain( p_wk );
-      MOVE_Event_StopSeMain( p_wk );
+      MOVE_Event_StopEffectMain( p_wk );
 
       // アニメーション終了チェック
       for( i = 0; i < ICA_MOVE_ID_MAX ; i++ )
@@ -1154,10 +1156,12 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
   if( p_md->is_move_end == FALSE )
   {
     VecFx32 vec = {0,0,0};
-    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) )
+    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) ) // 0フレーム目はスタート位置なのでスキップ
     {
       MtxFx43 trans;
       MODEL *p_model    = p_md->p_model;
+        
+      //OS_Printf("p->%u:%x %x %x\n",p_md->move_data_frame + 1,vec.x,vec.y,vec.z);
       
       vec.x += sc_mdl_offset_table[p_md->model_id].x;
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
@@ -1205,6 +1209,39 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
   }
   GF_ASSERT( end_frame > 0 );
 
+  // 画面ゆれ
+  if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE_HERO) )
+  {
+    CallShakeCamera_Bark( p_wk->p_fld_wk );
+  }
+  if( end_frame == (p_wk->event_frame + DRA_BARK_CAMERA_SHAKE_ENEMY) )
+  {
+    CallShakeCamera_Bark( p_wk->p_fld_wk );
+  }
+
+  // カメラ切り替え
+  if( end_frame == (p_wk->event_frame + DRA_BARK_EFFECT_CAM_START) )
+  {
+    // 演出用カメラに切り替え
+    FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fld_wk );
+    p_wk->cam_type_tmp = FIELD_CAMERA_GetCameraType( p_cam );
+  
+    // デフォルトカメラを切り替え
+    FIELD_CAMERA_SetCameraType( p_cam, GYM_DRAGON_EFFECT_CAM_NO );  // デフォルトカメラの切り替え
+    FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
+
+    ONOUE_Printf("カメラを演出用に変更\n");
+  }
+  if( end_frame == (p_wk->event_frame + DRA_BARK_EFFECT_CAM_END) )
+  {
+    // 演出用カメラから通常カメラに戻す
+    FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fld_wk );
+    FIELD_CAMERA_SetCameraType( p_cam, p_wk->cam_type_tmp );        // カメラタイプを復帰
+    FIELD_CAMERA_RestartTrace(p_cam);                               // トレース配列をクリア
+    ONOUE_Printf("カメラを元に戻す\n");
+  }
+
+  // SE再生
   switch( p_wk->bark_seq )
   {
   case 0:
@@ -1273,14 +1310,72 @@ static void MOVE_Event_DragonBarkMain( PLAYER_MOVE_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  移動終了音再生メイン
+ *	@brief  カメラ振動イベント呼び出し(ドラゴン咆哮時)
+ *
+ *	@param	*p_fld_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CallShakeCamera_Bark( FIELDMAP_WORK *p_fld_wk )
+{
+  FIELD_TASK* cam;
+  FIELD_TASK_MAN* taskMan;
+
+  CAM_SHAKE_PARAM shakeParam;
+  GFL_STD_MemFill(&shakeParam, 0, sizeof(shakeParam)); // パラメータの初期化
+  shakeParam.Width           = DRA_BARK_CAMERA_SHAKE_W;
+  shakeParam.Height          = DRA_BARK_CAMERA_SHAKE_H;
+  shakeParam.Sync            = DRA_BARK_CAMERA_SHAKE_SYNC;
+  shakeParam.Time            = DRA_BARK_CAMERA_SHAKE_TIME;
+  shakeParam.ShakeType       = CAM_SHAKE_TYPE_TARGET_POS;
+
+  cam = FIELD_TASK_ShakeCamera( p_fld_wk, &shakeParam );
+  taskMan = FIELDMAP_GetTaskManager( p_fld_wk );
+  FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
+
+  ONOUE_Printf("カメラゆれ再生（ドラゴン咆哮）\n");
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ振動イベント呼び出し(衝突時)
+ *
+ *	@param	*p_fld_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void CallShakeCamera_Bump( FIELDMAP_WORK *p_fld_wk )
+{
+  FIELD_TASK* cam;
+  FIELD_TASK_MAN* taskMan;
+
+  CAM_SHAKE_PARAM shakeParam;
+  GFL_STD_MemFill(&shakeParam, 0, sizeof(shakeParam)); // パラメータの初期化
+  shakeParam.Width           = DRA_BUMP_CAMERA_SHAKE_W;
+  shakeParam.Height          = DRA_BUMP_CAMERA_SHAKE_H;
+  shakeParam.Sync            = DRA_BUMP_CAMERA_SHAKE_SYNC;
+  shakeParam.Time            = DRA_BUMP_CAMERA_SHAKE_TIME;
+  shakeParam.ShakeType       = CAM_SHAKE_TYPE_TARGET_POS;
+
+  cam = FIELD_TASK_ShakeCamera( p_fld_wk, &shakeParam );
+  taskMan = FIELDMAP_GetTaskManager( p_fld_wk );
+  FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
+  
+  ONOUE_Printf("カメラゆれ再生（ドラゴン衝突）\n");
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動終了エフェクト再生メイン
  *
  *	@param	*p_wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void MOVE_Event_StopSeMain( PLAYER_MOVE_WORK *p_wk )
+static void MOVE_Event_StopEffectMain( PLAYER_MOVE_WORK *p_wk )
 {
   // 自機の追従フレームを基準にする
   u32 end_frame;
@@ -1315,6 +1410,12 @@ static void MOVE_Event_StopSeMain( PLAYER_MOVE_WORK *p_wk )
       PMSND_StopSE();
       PMSND_PlaySE( GYM_DRAGON_SE_SEQ_BUMP );
       ONOUE_Printf("衝突音の再生\n");
+    }
+
+    // カメラゆれ
+    if( end_frame == ( p_wk->event_frame + DRA_BUMP_CAMERA_SHAKE_FRAME ) )
+    {
+      CallShakeCamera_Bump( p_wk->p_fld_wk );
     }
   }
 }
@@ -1382,14 +1483,21 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
     if( p_md->is_move_end == FALSE )
     {
       VecFx32 vec = {0,0,0};
-      if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) )
+      if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) ) // 0フレーム目はスタート位置なのでスキップ
       {
         MtxFx43 trans;
         MODEL *p_model    = p_md->p_model;
+
+        // 実座標の設定
         vec.x += sc_mdl_offset_table[p_md->model_id].x;
         vec.y += sc_mdl_offset_table[p_md->model_id].y;
         vec.z += sc_mdl_offset_table[p_md->model_id].z;
         MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
+
+        // グリッド座標の設定
+        MMDL_SetGridPosX( p_md->p_mmdl ,FX32_TO_GRID(vec.x) );
+        MMDL_SetGridPosY( p_md->p_mmdl ,FX32_TO_GRID(vec.y) );
+        MMDL_SetGridPosZ( p_md->p_mmdl ,FX32_TO_GRID(vec.z) );
 
         // フレームの更新
         UpdateFrame( p_md );

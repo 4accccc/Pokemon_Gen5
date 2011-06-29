@@ -22,6 +22,7 @@
 //===============================================================================
 typedef struct CAM_SHAKE_WORK_tag {
 
+  FIELD_TASK* task;
   CAM_SHAKE_PARAM shakeParam;
   const VecFx32 *WatchTarget;
 
@@ -48,10 +49,14 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* wk );
  */
 //-------------------------------------------------------------------------------
 GMEVENT* EVENT_ShakeCamera( 
-    GAMESYS_WORK* gameSystem, const CAM_SHAKE_PARAM* shakeParam )
+    GAMESYS_WORK* gameSystem, CAM_SHAKE_PARAM* shakeParam )
 {
   GMEVENT* event;
   CAM_SHAKE_WORK* work;
+
+  // デフォルトパラメータを設定
+  shakeParam->WaitStartFrame = 0;
+  shakeParam->ShakeType      = CAM_SHAKE_TYPE_ALL;
 
   // イベントを生成
   event = GMEVENT_Create( gameSystem, NULL, CameraShakeEvt, sizeof(CAM_SHAKE_WORK) );
@@ -79,104 +84,33 @@ GMEVENT* EVENT_ShakeCamera(
 //-------------------------------------------------------------------------------
 static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* wk )
 { 
-  FIELD_CAMERA * camera;
-  BOOL end = FALSE;
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   CAM_SHAKE_WORK *work = GMEVENT_GetEventWork(event);
-  CAM_SHAKE_PARAM* param = &(work->shakeParam);
+  CAM_SHAKE_PARAM* p_param = &(work->shakeParam);
 
-  camera = FIELDMAP_GetFieldCamera( fieldmap );
   switch(*seq){
+  // フィールドタスク呼び出し
   case 0:
-    //トレース終了
-    FIELD_CAMERA_StopTraceRequest(camera);
-    (*seq)++;
+    {
+      FIELD_TASK_MAN* taskMan;
+      work->task = FIELD_TASK_ShakeCamera( fieldmap, p_param );
+      taskMan = FIELDMAP_GetTaskManager( fieldmap );
+      FIELD_TASK_MAN_AddTask( taskMan, work->task, NULL );
+      (*seq)++; // フィールドタスク終了待ちへ
+    }
     break;
   case 1:
-    if ( !FIELD_CAMERA_CheckTrace(camera) )
     {
-      //カメラのターゲットを取得
-      work->WatchTarget = FIELD_CAMERA_GetWatchTarget(camera);
-      //バインド解除
-      FIELD_CAMERA_FreeTarget(camera);
-      
-      (*seq)++;
-    }
-    break;
-  case 2:
-    {
-      //ターゲットを動かす
-      int tmp;
-      u16 rad;
-      param->NowSync++;
-      tmp = (param->NowSync * 0x10000) / param->Sync;
-      rad = tmp;
-
-      if ( param->SubStartTime != 0)
+      if( FIELD_TASK_IsEnd( work->task ) == TRUE )
       {
-        if ( param->TimeMax-param->Time >= param->SubStartTime )
-        {
-          param->SubMargineCount++;
-          if (param->SubMargineCount>=param->SubMargine)
-          {
-            param->SubMargineCount = 0;
-            param->Height -= param->SubH;
-            param->Width -= param->SubW;
-            if (param->Height <= 0) param->Height = 1;
-            if (param->Width <= 0) param->Width = 1;
-          }
-        }
-      }
-
-      if (param->NowSync >= param->Sync)
-      {
-        param->Time--;
-        param->NowSync = 0;
-      }
-      if (param->Time == 0)
-      {
-        param->NowSync = 0;
-        end = TRUE;
-      }
-
-      if (end)
-      {
-        //カメラオフセットクリア
-        {
-          VecFx32 cam_ofs = {0,0,0};
-          FIELD_CAMERA_SetCamPosOffset( camera, &cam_ofs );
-        }
-        //際バインド
-        FIELD_CAMERA_BindTarget(camera, work->WatchTarget);
-        //トレース再開
-        FIELD_CAMERA_RestartTrace(camera);
-        (*seq)++;
-      }
-      else
-      {
-        fx32 w, h;
-        VecFx32 target;
-        VecFx32 cam_ofs;
-        w = param->Width * FX_SinIdx(rad);
-        h = param->Height * FX_SinIdx(rad);
-        target = *work->WatchTarget;
-        target.x += w;
-        target.y += h;
-        cam_ofs.x = w;
-        cam_ofs.y = h;
-        cam_ofs.z = 0;
-
-        //座標セット
-        FIELD_CAMERA_SetTargetPos( camera, &target );
-        FIELD_CAMERA_SetCamPosOffset( camera, &cam_ofs );
+        // カメラ振動タスクが終了していたらイベント終了
+        return GMEVENT_RES_FINISH;
       }
     }
     break;
-  case 3:
-    return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
-
 }
+
