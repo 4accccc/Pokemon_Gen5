@@ -618,6 +618,7 @@
 #define FV_C08R0101_SWLEADER7_01           700 /* 0x02bc ソウリュウ民家1：シャガ */
 #define FV_R11_POKE6_01                    701 /* 0x02bd 11番道路：ビリジオン */
 #define FV_R13_POKE4_01                    702 /* 0x02be 13番道路：コバルオン */
+#define FV_C12R0202_RIVALSISTER_01         703 /* 0x02bf ヒオウギシティ：ライバル宅2Fの妹 */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
