@@ -483,7 +483,7 @@ move_camera_end:
 _RET
 
 ///**************************************************************/
-///*                    シャガ                                  */
+///*                    【仮】シャガ                                  */
 ///**************************************************************/
 EVENT_START ev_tr_c08gym0101_swleader7
 {
@@ -571,6 +571,9 @@ EVENT_START ev_tr_c08gym0101_swleader7
     
     //電光掲示板フラグセット
     _FLAG_SET( SYS_FLAG_ELBOARD_C08GYMWIN )
+
+    //C08プラズマ団イベント開始
+    $WK_SCENE_C08_LEADER7 = 1
 
   ELSE
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_07 )
