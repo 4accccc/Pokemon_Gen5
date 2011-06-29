@@ -1,3 +1,13 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		misc_local.h
+ *	@brief	未分類セーブデータアクセス用ローカル定義
+ *	@author	Toru=Nagihashi
+ *	@data		2011.06.27
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include "pm_define.h"
 #include "field/research_team_def.h"
@@ -9,6 +19,8 @@
 
 #define GYM_MAX     (8)
 #define EVT_ROCK_MAX     (8)
+
+#define POKEWOOD_ARRAY_NUM (( POKEWOOD_SENARIO_MAX/32 )+1)
 
 //=============================================================================
 /**
@@ -69,5 +81,8 @@ struct _MISC
   u16 champ_news_minutes; // チャンピオン情報を流す残り時間[min]
   
   u8 player_trainer_data[10];  ///< プレイヤー自身のトレーナーデータ(使用方未定)
+
+  u32 pokewood_flag[POKEWOOD_ARRAY_NUM];          ///< ポケウッド解放フラグ
+  u32 pokewood_newcome_flag[POKEWOOD_ARRAY_NUM];  ///< ポケウッド新着フラグ
 };
 

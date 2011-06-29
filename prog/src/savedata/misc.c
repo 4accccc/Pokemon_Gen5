@@ -113,6 +113,10 @@ void MISC_Init( MISC *p_msc )
   p_msc->research_question_id[0] = QUESTION_ID_DUMMY;
   p_msc->research_question_id[1] = QUESTION_ID_DUMMY;
   p_msc->research_question_id[2] = QUESTION_ID_DUMMY;
+
+  MISC_SetPokewoodOpenFlag( p_msc, 0 );   /// ポケウッド初期状態
+  MISC_SetPokewoodOpenFlag( p_msc, 1 );
+  MISC_SetPokewoodOpenFlag( p_msc, 2 );
 }
 
 //=============================================================================
@@ -902,4 +906,82 @@ u8 MISC_GetBattleRecorderColor( const MISC * misc )
 void MISC_SetBattleRecorderColor( MISC * misc, u8 color )
 { 
   misc->battle_recorder_flag  = color;
+}
+
+/// ポケウッドのフラグデータはu32に1bitずつ割り当てられる
+#define POKEWOOD_SHIFT_MAX  ( 32 )
+//----------------------------------------------------------------------------------
+/**
+ * @brief	noから配列の場所とシフト数を取得
+ * @param   no		[in]入力値
+ * @param   offset	[out]配列の添え字
+ * @param   shift		[out]シフト数
+ */
+//----------------------------------------------------------------------------------
+static void _get_shift_offset( int no, int *offset, int *shift )
+{
+  GF_ASSERT_MSG(no<POKEWOOD_SENARIO_MAX, "シナリオ%dは最大を超えた指定です\n", no);
+  *offset = no / POKEWOOD_SHIFT_MAX;
+  *shift  = no-*offset*POKEWOOD_SHIFT_MAX;
+}
+
+//=============================================================================================
+/**
+ * @brief	ポケウッドシナリオ解放状態を取得
+ * @param   misc	MISC
+ * @param   no		シナリオＮＯ
+ * @retval  BOOL	TRUE:解放済み FALSEまだ
+ */
+//=============================================================================================
+BOOL MISC_GetPokewoodOpenFlag( const MISC *misc, int no )
+{
+  int offset, shift;
+  _get_shift_offset( no, &offset, &shift );
+
+  return (misc->pokewood_flag[offset]>>shift)&1;
+}
+//=============================================================================================
+/**
+ * @brief	ポケウッドシナリオ解放状態を設定
+ * @param   misc	MISC
+ * @param   no		シナリオＮＯ
+ */
+//=============================================================================================
+void MISC_SetPokewoodOpenFlag( MISC *misc, int no )
+{
+  int offset, shift;
+  _get_shift_offset( no, &offset, &shift );
+
+  misc->pokewood_flag[offset] |= (1<<shift);
+}
+//=============================================================================================
+/**
+ * @brief	ポケウッドシナリオ新着状態を取得
+ * @param   misc	MISC
+ * @param   no		シナリオＮＯ
+ * @retval  BOOL	TRUE:未撮影 FALSE:撮影済み
+ */
+//=============================================================================================
+BOOL MISC_GetPokewoodNewcomeFlag( const MISC *misc, int no )
+{
+  int offset, shift;
+  _get_shift_offset( no, &offset, &shift );
+
+  return (misc->pokewood_newcome_flag[offset]>>shift)&1;
+  
+}
+//=============================================================================================
+/**
+ * @brief	ポケウッドシナリオ新着状態を設定（撮影済みに書き換える）
+ * @param   misc	MISC
+ * @param   no		シナリオＮＯ
+ */
+//=============================================================================================
+void MISC_SetPokewoodNewcomeFlag( MISC *misc, int no )
+{
+  int offset, shift;
+  _get_shift_offset( no, &offset, &shift );
+
+  misc->pokewood_newcome_flag[offset] |= (1<<shift);
+  
 }
