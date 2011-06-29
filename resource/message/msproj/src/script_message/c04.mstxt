@@ -131,11 +131,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なにも　していない
-だけど　プラズマだんは　ゆるさないッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なにも　していない▼
+だが　ひとの　ポケモンを　うばう
+プラズマだんは　ゆるさないッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -143,11 +144,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なにも　していない
-だけど　プラズマ団は　許さないッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なにも　していない▼
+だが　人の　ポケモンを　奪う
+プラズマ団は　許さないッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -750,10 +752,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『これでは　２ねんまえと
-おなじ　しっぱいを　くりかえすわ！▼</Text>
+おなじ　しっぱいを　くりかえす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +764,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『これでは　２年前と
-同じ　失敗を　繰り返すわ！▼</Text>
+同じ　失敗を　繰り返す！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2490,13 +2492,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレたち　スポーツマンの
-ポケモンとの　チームプレイ！▼
-ビッグスタジアムや　リトルコートで
-おみせするから　ぜひ　きてくれよ！</Text>
+			<Text>ポケモンとの　コンビネーションは
+まさに　スーパープレイ！▼
+どこで　みれるか？　きになるなら
+ビッグスタジアムや　リトルコートだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2504,13 +2506,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレたち　スポーツマンの
-ポケモンとの　チームプレイ！▼
-ビッグスタジアムや　リトルコートで
-披露するから　ぜひ　来てくれよ！</Text>
+			<Text>ポケモンとの　コンビネーションは
+まさに　スーパープレイ！▼
+どこで　みれるか？　気になるなら
+ビッグスタジアムや　リトルコートだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:54:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2520,10 +2522,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ビッグスタジアム、リトルコートへの誘導
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:54:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2546,13 +2548,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……じつは　ライモンシティって
-ポケモンしょうぶの　メッカですよ▼
-そこいらの　しせつに
-ポケモントレーナーが　いますから</Text>
+			<Text>ライモンの　あちこちで
+ポケモン　そだてーる♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:53:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2560,13 +2560,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……実は　ライモンシティって
-ポケモン勝負の　メッカですよ▼
-そこいらの　施設に
-ポケモントレーナーが　いますから</Text>
+			<Text>ライモンの　あちこちで
+ポケモン　そだてーる♪</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:53:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2575,10 +2573,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:47:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2601,13 +2599,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぶらり　でんしゃの　たび……▼
-ギアステーションから
-カナワタウンいきに　のれば▽
-ちょいとした　ゆめ　きぶんだぜ</Text>
+			<Text>きみは　カナワタウンを　しってるか？▼
+しっているなら　それで　いいし
+しらなければ　ギアステーションだ！
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:50:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2615,13 +2613,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぶらり　電車の　旅……▼
-ギアステーションから
-カナワタウン行きに　乗れば▽
-ちょいとした　夢気分だぜ</Text>
+			<Text>きみは　カナワタウンを　知ってるか？▼
+知っているなら　それで　いいし
+知らなければ　ギアステーションだ！
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:50:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2630,10 +2628,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:50:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2656,12 +2654,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はではで　ライモンシティに　くると
-まるで　ふうせんを　もったみたいに▽
-からだが　フワフワした　かんじ！</Text>
+			<Text>レゾナンスストリート（かり）に
+あたらしい　おみせが　できるのを▽
+こころまちにして　すれちがうのだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:02:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2669,12 +2667,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はではで　ライモンシティに　来ると
-まるで　ふうせんを　持ったみたいに▽
-体が　フワフワした　感じ！</Text>
+			<Text>レゾナンスストリート（かり）に
+あたらしい　おみせが　できるのを▽
+こころまちにして　すれちがうのだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:02:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2683,10 +2681,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージで仮修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:02:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2709,14 +2707,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５ばんどうろで　ひしめく
-パフォーマーたち……▼
-ポケモンと　トレーナーの
-たのしそうな　ようすを　みると▽
-こころに　エネルギーが　たまります！</Text>
+			<Text>ポケモン　３びきで　いどむ
+トリプルバトルに▽
+ローテーションバトル！▼
+３びき　つよい　ポケモンが　いると
+あんしんして　いどめる　ってわけね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2724,14 +2722,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５番道路で　ひしめく
-パフォーマーたち……▼
-ポケモンと　トレーナーの
-楽しそうな　様子を　みると▽
-心に　エネルギーが　たまります！</Text>
+			<Text>ポケモン　３匹で　挑む
+トリプルバトルに▽
+ローテーションバトル！▼
+３匹　強い　ポケモンが　いると
+安心して　挑める　ってわけね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:52:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2740,11 +2738,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・５番道路への誘導
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T08:52:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2767,11 +2764,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おりこうにしてた　ごほうびに
-ゆうえんちに　つれてきてもらったの！</Text>
+			<Text>おりこうにしてた　ごほうびに　また
+ゆうえんちに　つれてきてもらったの！▽
+こんどは　バオップも　いっしょ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:11:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2779,11 +2777,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おりこうにしてた　ごほうびに
-遊園地に　連れてきてもらったの！</Text>
+			<Text>お利口にしてた　ごほうびに　また
+遊園地に　連れてきてもらったの！▽
+今度は　バオップも　一緒！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2793,10 +2792,10 @@
 			Language="JPN">
 			<Comment>♀
 ・babygirl1、middlewoman1とセット
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2815,15 +2814,60 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c04_poke34_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プオバ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プオバ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声
+・上記girl3の近く</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:12:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE34
+ポケモン・バオップ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:13:22" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04_babygirl1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんらんしゃ！　かんらんしゃ！
-あたし　かんらんしゃ　だいすきッ！！</Text>
+			<Text>あのね　ジェットコースターでね
+ビューン！　って　いくのってね▼
+ポケモンの　わざのね
+でんこうせっかを　つかったみたいだね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:59:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2831,11 +2875,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんらんしゃ！　かんらんしゃ！
-あたし　かんらんしゃ　だいすきッ！！</Text>
+			<Text>あのね　ジェットコースターでね
+ビューン！　って　いくのってね▼
+ポケモンの　わざのね
+でんこうせっかを　つかったみたいだね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2844,10 +2890,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T06:59:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2870,13 +2916,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライモンの　ポケモンジムは
-ゆうえんちの　なか　ですって！▼
-さぞかし　おどろきの
-ギミックが　あるんでしょうね！</Text>
+			<Text>ライモンの　ジムリーダー
+カミツレさんは　ファッションモデル！▼
+キャットウォークを　かろやかに
+すすむ　ようすを　みたいものだわ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:07:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2884,13 +2930,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライモンの　ポケモンジムは
-遊園地の　中ですって！▼
-さぞかし　驚きの
-ギミックが　あるんでしょうね！</Text>
+			<Text>ライモンの　ジムリーダー
+カミツレさんは　ファッションモデル！▼
+キャットウォークを　軽やかに
+進む　様子を　みたいものだわ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2900,10 +2946,10 @@
 			Language="JPN">
 			<Comment>♀
 ・ポケモンジムへの誘導
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T07:07:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
