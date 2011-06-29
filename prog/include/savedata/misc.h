@@ -140,6 +140,7 @@ extern void MISC_DecChampNewsMinutes( MISC* misc, u16 minutes );
 extern u8 MISC_GetBattleRecorderColor( const MISC * misc );
 extern void MISC_SetBattleRecorderColor( MISC * misc, u8 color );
 
+//ポケウッドシナリオ解放・新着フラグ
 extern BOOL MISC_GetPokewoodOpenFlag( const MISC *misc, int no );
 extern void MISC_SetPokewoodOpenFlag( MISC *misc, int no );
 extern BOOL MISC_GetPokewoodNewcomeFlag( const MISC *misc, int no );
