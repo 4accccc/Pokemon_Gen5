@@ -69,10 +69,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
 プラズマだん　だよな？▼
 さっきの　プラズマだんと
-なにが　ちがうか　おしえろよ！▼</Text>
+なにが　ちがうか　おしえてくれよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:21:22" />
+				Time="2011-06-29T10:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83,10 +83,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
 プラズマ団　だよな？▼
 さっきの　プラズマ団と
-なにが　違うか　教えろよ！▼</Text>
+なにが　違うか　教えてくれよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T05:52:11" />
+				Time="2011-06-29T10:08:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -190,8 +190,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　ヒュウ！
-ヒオウギシティの　ヒュウだ！▼
+			<Text>オレは　[Name:TrainerName Idx="1" ]！
+ヒオウギシティの　[Name:TrainerName Idx="1" ]だ！▼
 すうねんまえ　オマエら　プラズマだんに
 だいじな　ポケモンを　うばわれた▽
 なさけない　トレーナー　だよ！▼
@@ -199,7 +199,7 @@
 そうしたのは　オマエらだろ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:52:40" />
+				Time="2011-06-29T10:08:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -207,8 +207,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　ヒュウ！
-ヒオウギシティの　ヒュウだ！▼
+			<Text>オレは　[Name:TrainerName Idx="1" ]！
+ヒオウギシティの　[Name:TrainerName Idx="1" ]だ！▼
 数年前　オマエら　プラズマ団に
 大事な　ポケモンを　奪われた▽
 情けない　トレーナー　だよ！▼
@@ -216,7 +216,7 @@
 そうしたのは　オマエらだろ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:52:49" />
+				Time="2011-06-29T10:09:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1106,10 +1106,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・愛の女神</Comment>
+・愛の女神
+・クリア前まで</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:40:28" />
+				Time="2011-06-29T10:14:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1162,10 +1163,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・愛の女神</Comment>
+・愛の女神
+・クリア後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:51:03" />
+				Time="2011-06-29T10:14:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1234,10 +1236,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・平和の女神</Comment>
+・平和の女神
+・クリア前まで</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:40:33" />
+				Time="2011-06-29T10:14:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1290,10 +1293,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・平和の女神</Comment>
+・平和の女神
+・クリア後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:51:05" />
+				Time="2011-06-29T10:14:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1572,11 +1576,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-？？？</Text>
+			<Text>POKE31
+ポケモン・ハーデリア</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:45:49" />
+				Time="2011-06-29T10:12:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1623,11 +1627,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-？？？</Text>
+			<Text>POKE42
+ポケモン・デンチュラ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:45:50" />
+				Time="2011-06-29T10:12:59" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1674,11 +1678,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-？？？</Text>
+			<Text>POKE39
+ポケモン・ズルッグ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:45:50" />
+				Time="2011-06-29T10:13:16" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1724,11 +1728,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-ミネズミ</Text>
+			<Text>POKE17
+ポケモン・ミネズミ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:04:01" />
+				Time="2011-06-29T10:14:28" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -1774,11 +1778,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-ゾロア</Text>
+			<Text>POKE22
+ポケモン・ゾロア</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:04:03" />
+				Time="2011-06-29T10:13:47" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
