@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……すみません
-せいふくを　なくしちゃって</Text>
+ついに　せいふくを　なくしちゃって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:26:14" />
+				Time="2011-06-29T13:12:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……すみません
-制服を　失くしちゃって</Text>
+ついに　制服を　失くしちゃって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:26:22" />
+				Time="2011-06-29T13:12:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,10 +32,10 @@
 			Language="JPN">
 			<Comment>♀
 ・カウンター内に配置
-・swanでメッセージ変更予定</Comment>
+・swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T12:52:31" />
+				Time="2011-06-29T13:08:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
