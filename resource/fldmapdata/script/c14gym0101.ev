@@ -40,7 +40,7 @@ sub_leader_return:
   _OBJ_ANIME_WAIT()
 
   //ŠC‚ÉƒWƒƒƒ“ƒv
-  _OBJ_HIGH_JUMP( C14GYM0101_SWLEADER8_01, 16, -2, 0 )
+  _OBJ_HIGH_JUMP( C14GYM0101_SWLEADER8_01, 16, -4, 1 )
 
   //…‚µ‚Ô‚«
   _GYM_WATER_SPLASH_ANIME()
