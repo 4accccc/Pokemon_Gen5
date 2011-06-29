@@ -1022,10 +1022,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>AIマルチOBJ 男
-７連勝～１４連勝</Comment>
+７連勝～１４連勝
+※swanで修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:20:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1072,10 +1073,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>AIマルチOBJ 女
-７連勝～１４連勝</Comment>
+７連勝～１４連勝
+※swanで修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:20:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1124,10 +1126,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>AIマルチOBJ 男
-２１連勝～４２連勝</Comment>
+２１連勝～４２連勝
+※swanで修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:20:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1176,10 +1179,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>AIマルチOBJ 女
-２１連勝～４２連勝</Comment>
+２１連勝～４２連勝
+※swanで修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:20:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1228,10 +1232,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>AIマルチOBJ 男
-４９連勝～</Comment>
+４９連勝～
+※swanで修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:20:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1280,10 +1285,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>AIマルチOBJ 女
-４９連勝～</Comment>
+４９連勝～
+※swanで修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:20:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
