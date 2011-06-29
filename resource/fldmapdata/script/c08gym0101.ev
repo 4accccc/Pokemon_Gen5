@@ -472,7 +472,7 @@ move_camera_start:
   _CAMERA_START()       // カメラ操作開始
   _CAMERA_PURGE()		    // カメラのバインドを解く
 
-  _CAMERA_MOVE( 4056,0,970752,753664,0,1323008,90 )
+  _CAMERA_MOVE(5976,3840,970752,1212416,3940352,1503232,150 )
 }
 _RET
 
