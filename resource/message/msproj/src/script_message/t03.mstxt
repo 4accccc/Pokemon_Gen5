@@ -1696,13 +1696,13 @@
 			Language="JPN">
 			<Comment>♂
 ・posイベント
-　GRIDX＝671、GRIDZ＝174～179
+　マップの左下
 ・下向きで配置
 ・続けてswrival_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:44:22" />
+				Time="2011-06-29T12:45:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1785,11 +1785,11 @@
 どうでも　いいんだよ▼
 オレは　オレの　うばわれた
 ポケモンを　とりもどすだけさ！▼
-[Name:TrainerName ]！　オマエの　ちからを
-かりるけど　じゅんびは　いいか？</Text>
+[Name:TrainerName ]！　ちからを　かせ！
+じゅんびは　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:02:24" />
+				Time="2011-06-29T12:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1801,11 +1801,11 @@
 どうでも　いいんだよ▼
 オレは　オレの　奪われた
 ポケモンを　取り戻すだけさ！▼
-[Name:TrainerName ]！　オマエの　力を
-借りるけど　準備は　いいか？</Text>
+[Name:TrainerName ]！　力を　貸せ！
+準備は　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T06:05:39" />
+				Time="2011-06-29T12:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2074,7 +2074,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『この　トレーナーども
-２年前を　おもいださせます▼
+２年前を　思い出させます▼
 が　それよりも
 アレを　探さねば！▼
 あの　科学者が　いうように
@@ -2083,7 +2083,7 @@
 また　相手してやるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T06:06:44" />
+				Time="2011-06-29T12:47:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2114,7 +2114,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t03_swrival_06">
+		Label="msg_t03_swrival_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『にげたか……▼
@@ -2132,14 +2133,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『にげたか……▼
-オレ　こころあたりが　あるから
-そっちを　さがす！▼
-オマエは　ポケモンずかん　だよな
+			<Text>[Name:TrainerName Idx="1" ]『逃げたか……▼
+オレ　心当たりが　あるから
+そっちを　探す！▼
+オマエは　ポケモン図鑑　だよな
 じゃあな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:24:59" />
+				Time="2011-06-29T12:47:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2806,10 +2807,10 @@
 ・夜になるといなくなる
 ・消すタイミングはzoneチェンジ＋時間参照
 ・GRIDX=６６１、GRIDZ=１８９辺り
-※swanで追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T06:20:05" />
+				Time="2011-06-29T12:48:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
