@@ -247,6 +247,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
  *					static関数宣言
 */
 //=============================================================================
+// INIT
+// フィールド入りなおすたびに、セーブ状態による初期化
+static void INIT_FieldRecover( FOURKINGS_ESP_TMP *p_wk );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( FOURKINGS_ESP_TMP *p_wk );
 static void EXPOBJ_ObjDell( FOURKINGS_ESP_TMP *p_wk );
@@ -261,7 +265,6 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
 
 // CUBE
 static void ANM_CUBE_Play( FOURKINGS_ESP_TMP *p_wk );
-static BOOL ANM_CUBE_CheckEnd( FOURKINGS_ESP_TMP *p_wk );
 static void ANM_CUBE_PlayLoop( FOURKINGS_ESP_TMP *p_wk );
 // FLOWER
 static void ANM_FLOWER_Play( FOURKINGS_ESP_TMP *p_wk );
@@ -289,6 +292,14 @@ typedef struct {
 } TASK_WORK;
 #define FALL_BASIC    (0x100)   // 降りる速さ基準
 static FIELD_TASK_RETVAL TaskFunc( void* wk );
+
+//-------------------------------------
+///	セーブ情報
+//=====================================
+static void SAVE_SetPos1Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPos1Flag( const FOURKINGS_SV_WORK *p_wk );
+static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk );
 
 #ifdef PM_DEBUG
 // 演出確かめ用デバッグ
@@ -327,20 +338,8 @@ void FOURKINGS_ESP_Setup(FIELDMAP_WORK *p_fieldmap)
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
-  // 初期設定
-  // 【仮】セーブ状況で初期状態をきめる
-  ANM_WATERFALL_PlayLoop( p_wk );
-  ANM_STAIRS_PlayLoop( p_wk );
-  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_CURTAIN, FALSE );
-
-  // カトレア非表示
-  // 【仮】セーブ状況で初期状態をきめる
-  {
-    const MMDLSYS     *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0401_BIGFOUR4_01 );  // カトレア
-    MMDL_SetStatusBitVanish( mmdl, TRUE );
-  }
-
+  // セーブ状態別初期化
+  INIT_FieldRecover( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -422,6 +421,10 @@ void FOURKINGS_ESP_StairsAnm( GAMESYS_WORK *gsys, int id )
   {
     ANM_STAIRS_Play( p_wk );
   }
+
+  // POSイベントを踏んだことをセーブする
+  if( id == 0 ) { SAVE_SetPos1Flag( p_wk->p_sv_wk, TRUE ); }
+  else          { SAVE_SetPos2Flag( p_wk->p_sv_wk, TRUE ); }
 }
 
 //----------------------------------------------------------------------------
@@ -484,6 +487,52 @@ void FOURKINGS_ESP_Cattleya( GAMESYS_WORK *gsys, int obj_id, int fall_spd )
  *					static関数
 */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ状態による初期化
+ *
+ *	@param	FOURKINGS_ESP_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void INIT_FieldRecover( FOURKINGS_ESP_TMP *p_wk )
+{
+  const BOOL pos1_flag = SAVE_GetPos1Flag( p_wk->p_sv_wk );
+  const BOOL pos2_flag = SAVE_GetPos2Flag( p_wk->p_sv_wk );
+
+  // セーブ状況別状態
+  // 何もPOS起動していない
+  // ⇒滝・階段・幕 表示 カトレア非表示
+  // POS1起動
+  // ⇒階段 表示 カトレア非表示
+  // POS2起動
+  // ⇒キューブ 表示
+
+
+  // POS2(=階段上)が起動していない
+  if( pos2_flag == FALSE )
+  {
+    // カトレア非表示
+    {
+      const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+      MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0401_BIGFOUR4_01 );  // カトレア
+      MMDL_SetStatusBitVanish( mmdl, TRUE );
+    }
+    ANM_STAIRS_PlayLoop( p_wk );    // 階段
+
+    // POS1(=階段下)が起動していない
+    if( pos1_flag == FALSE )
+    {
+      ANM_WATERFALL_PlayLoop( p_wk ); // 滝
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_CURTAIN, FALSE );
+    }
+  }
+  else
+  {
+    ANM_CUBE_PlayLoop( p_wk );  // キューブ
+  }
+  
+
+}
 //=============================================================================
 /**
  *          EXPOBJ
@@ -670,25 +719,6 @@ static void ANM_CUBE_Play( FOURKINGS_ESP_TMP *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  キューブ登場アニメ終了チェック
- *
- *	@param	*p_wk   ギミックワーク
- *
- *	@return TRUEで終了
- */
-//-----------------------------------------------------------------------------
-static BOOL ANM_CUBE_CheckEnd( FOURKINGS_ESP_TMP *p_wk )
-{
-  u16 obj_idx = OBJ_CUBE;
-
-  EXP_OBJ_ANM_CNT_PTR exp_anm;
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, obj_idx, 2 );
-
-  return FLD_EXP_OBJ_ChkAnmEnd(exp_anm);
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  キューブ回転(ループ)アニメ再生
  *
  *	@param	*p_wk   ギミックワーク
@@ -697,6 +727,9 @@ static BOOL ANM_CUBE_CheckEnd( FOURKINGS_ESP_TMP *p_wk )
 static void ANM_CUBE_PlayLoop( FOURKINGS_ESP_TMP *p_wk )
 {
   u16 obj_idx = OBJ_CUBE;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, obj_idx, FALSE );
 
   // アニメ
   // 0 回転アニメ
@@ -854,6 +887,10 @@ static void ANM_CURTAIN_Play( FOURKINGS_ESP_TMP *p_wk )
   {
     ANM_Play( p_wk->exp_obj, obj_idx, i, FALSE );
   }
+
+  // 階段下のPOSを踏んだのでセーブ
+
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -983,6 +1020,62 @@ static FIELD_TASK_RETVAL TaskFunc( void* wk )
   }
 
   return FIELD_TASK_RETVAL_CONTINUE;
+}
+
+//=============================================================================
+/**
+ *          セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント1起動フラグを設定
+ *
+ *	@param	p_wk  セーブワーク
+ *	@param	flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPos1Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos1_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント1起動フラグを取得
+ *
+ *	@param	p_wk  セーブワーク
+ *
+ *	@return flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPos1Flag( const FOURKINGS_SV_WORK *p_wk )
+{
+  return p_wk->pos1_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント2起動フラグを設定
+ *
+ *	@param	p_wk  セーブワーク
+ *	@param	flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos2_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント2起動フラグを取得
+ *
+ *	@param	p_wk  セーブワーク
+ *
+ *	@return flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk )
+{
+  return p_wk->pos2_flag;
 }
 
 

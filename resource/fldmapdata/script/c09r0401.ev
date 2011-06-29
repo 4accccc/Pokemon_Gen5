@@ -53,7 +53,7 @@ INIT_EVENT_END
 INIT_EVENT_START	ev_init_c09r0401
 
   // 頂上のPOSを踏んでいない時の処理
-  // (=必ず通るはず)
+  // カトレアを花の場所まで移動
   IF $LOCALWORK1 == 0 THEN
     _OBJ_POS_CHANGE( C09R0401_BIGFOUR4_01, 15, 15, 7, DIR_DOWN )
   ENDIF
@@ -70,6 +70,11 @@ INIT_EVENT_START	ev_recover_c09r0401
     _FOURKINGS_RAIL_OFF( 4 )
 		// カメラ設定を変更
 		_FOURKINGS_SET_TOP_CAMERA( 4 )
+
+  ELSE
+    // 頂上のPOSを踏んでいない時の処理
+    // カトレアを花の場所まで移動
+    _OBJ_POS_CHANGE( C09R0401_BIGFOUR4_01, 15, 15, 7, DIR_DOWN )
   ENDIF
 
 INIT_EVENT_END
@@ -96,13 +101,13 @@ EVENT_START	ev_pos_c09r0401_enter_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_tr_up )
   _OBJ_ANIME_WAIT()
 
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 20 )
 
   // 階段表示演出
   _FOURKINGS_ESP_STAIRS( 0 )
 	_SE_PLAY( SEQ_SE_SW_CATTLEYA_01 )    // キラキラした水が流れる音
 
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 60 )
 
   //--------------------------------------
   // 演出終了
@@ -141,19 +146,19 @@ EVENT_START	ev_pos_c09r0401_enter_02
   _FOURKINGS_ESP_FLOWER()
 	_SE_PLAY( SEQ_SE_SW_CATTLEYA_02 )    // 花が開いた後、飛び散る音
 
-  _TIME_WAIT( 5 )
+  _TIME_WAIT( 8 )
 
   // キューブ再生
   _FOURKINGS_ESP_CUBE()
 
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 15 )
 
   // カトレア降りてくる
   // 第２引数 = 降りるスピード
   // 1が遅い ～ 増やすと早くなる
-  _FOURKINGS_ESP_CATTLEYA( C09R0401_BIGFOUR4_01, 3 )
+  _FOURKINGS_ESP_CATTLEYA( C09R0401_BIGFOUR4_01, 8 )
 
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 60 )
 
   //--------------------------------------
   // 演出終了
@@ -185,6 +190,6 @@ EVENT_END
 //	1歩進む
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_tr_up
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_16F,1
 	_ANIME_DATA	ACMD_END,0
 
