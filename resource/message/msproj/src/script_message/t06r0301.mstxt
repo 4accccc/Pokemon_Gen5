@@ -6,12 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　まちの　ぼくじょうは
-もともと　くさむら　だったからな▽
-やせいポケモンが　わんさか　いるぞ！</Text>
+			<Text>ポケモンを　さがしもとめる　うちに
+ひとは　くらす　ばしょを　ふやした▼
+ぼくじょうも　もともとは
+ただの　くさむら　だったが▼
+いまでは　ポケモンと　ひとが
+ともに　くらす　エリアに　なったよな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　まちの　ぼくじょうは
-もともと　くさむら　だったからな▽
-やせいポケモンが　わんさか　いるぞ！</Text>
+			<Text>ポケモンを　探し求める　うちに
+人々は　暮らす　場所を　増やした▼
+牧場も　元々は
+ただの　草むら　だったが▼
+今では　ポケモンと　人が
+共に　暮らす　エリアに　なったよな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -32,11 +38,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・仮メッセージ</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:16:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,11 +63,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もっと　たくさんの　ポケモンと
-いっしょなのも　たのしいかもね</Text>
+			<Text>あたし　ポケモンの　タイプとか
+あんまり　くわしくないから▼
+１ひきだけを　がんがん　そだてて
+どんどん　さきに　すすんじゃうのよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70,11 +77,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もっと　たくさんの　ポケモンと
-いっしょなのも　たのしいかもね</Text>
+			<Text>あたし　ポケモンの　タイプとか
+あんまり　詳しくないから▼
+１匹だけを　がんがん　育てて
+どんどん　先に　進んじゃうのよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,11 +92,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・仮メッセージ
 ・連れているポケモンが３匹以下</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:04:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -116,13 +124,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら？　たくさんの　ポケモン！
-どのコも　だいじに　してあげてね▼
-このコたちの　めんどうを　みるのは
-あなたしか　いないんだから</Text>
+			<Text>あら？　たくさんの　ポケモン！▼
+どのコを　どんなふうに　そだてるか
+かんがえるのって　たのしそうねえ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -130,13 +137,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら？　たくさんの　ポケモン！
-どのコも　だいじに　してあげてね▼
-このコたちの　めんどうを　みるのは
-あなたしか　いないんだから</Text>
+			<Text>あら？　たくさんの　ポケモン！▼
+どのコを　どんな風に　育てるか
+考えるのって　楽しそうねえ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -145,11 +151,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・仮メッセージ
 ・連れているポケモンが４匹以上</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:04:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -208,11 +213,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ポケモン
-ヨーテリー</Text>
+			<Text>POKE30
+ポケモン・ヨーテリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T02:05:35" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">

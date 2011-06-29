@@ -632,10 +632,11 @@
 ・メダルボックス入手イベント後
 　t06r0101方面から出現してメッセージ表示
 ・表示後、t06r0101方面に戻る
-　画面外に消えると主人公操作可能</Comment>
+　画面外に消えると主人公操作可能
+・0＝主人公名前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:10:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -665,11 +666,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　ポケモンと　のんびり
-くらすだけで　みたされてるんだ！</Text>
+			<Text>あさは　おなかが　へったと
+ポケモンが　おこしに　くる▼
+よるは　あそびつかれた
+ポケモンが　ベッドを　ひとりじめ▼
+ことばに　してみると　ひどいけど
+おれは　これが　うれしいんだよなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:46:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -677,11 +682,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　ポケモンと　のんびり
-暮らすだけで　満たされてるんだ！</Text>
+			<Text>朝は　おなかが　減ったと
+ポケモンが　起こしに　くる▼
+夜は　遊びつかれた
+ポケモンが　ベッドを　独り占め▼
+言葉に　してみると　ひどいけど
+おれは　これが　うれしいんだよなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:46:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -715,10 +724,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？？？ぼくじょう　だがな
-やせいポケモンも　とびだすんじゃぞ！</Text>
+やせいポケモンも　とびだすんじゃぞ！▼
+そりゃもう　じぶんの　ポケモンだけが
+たより　っちゅー　ぐらいにな！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:24:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -727,10 +738,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？？？牧場　だがな
-野生のポケモンも　飛びだすんじゃぞ！</Text>
+野生のポケモンも　飛びだすんじゃぞ！▼
+そりゃもう　自分の　ポケモンだけが
+頼り　っちゅー　ぐらいにな！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:24:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -739,11 +752,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・pos（local 21、24）
 ・仮メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:18:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -765,11 +777,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>これまでのことを　きろくするため
+			<Text>これまでに　やったことを
+わすれないように　きろくするため▽
 レポートを　かいているの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:17:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -777,11 +790,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>これまでのことを　記録するため
+			<Text>これまでに　やったことを
+忘れないように　記録するため
 レポートを　書いているの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:18:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -789,11 +803,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・仮メッセージ</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:18:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -815,13 +828,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンと　ひとが
-おなじ　じかんを　すごせること……▼
-それを　わすれないように
-とけいだいを　つくったんだって！</Text>
+			<Text>どんなときでも　かこと　みらいは
+すてきに　おもえるけどー▼
+ポケモンと　あそんでいる　じかんは
+いま　なんだよねー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:33:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -829,13 +842,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンと　人が
-同じ　時間を　すごせること……▼
-それを　忘れないように
-時計台を　造ったんだって！</Text>
+			<Text>どんなときでも　過去と　未来は
+ステキに　思えるけどー▼
+ポケモンと　遊んでいる　時間は
+今　なんだよねー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -844,11 +857,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・時計台について
-・仮メッセージ</Comment>
+・時計台について</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:33:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -896,10 +908,11 @@
 			Language="JPN">
 			<Comment>♀
 ・はい/いいえの選択肢表示
-　はいだと文字モード切替</Comment>
+　はいだと文字モード切替
+・BWでt01にいた女性</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T03:22:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
