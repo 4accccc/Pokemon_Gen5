@@ -6,11 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホドモエめいぶつの
-こいする　おとこと　はなしたかい？</Text>
+			<Text>ホドモエに　ならびたった
+ホテルの　かずかず……▼
+こいする　おとこ　チャールズも
+もう　ホドモエめいぶつ　ではないねえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエ名物の
-恋する男と　話したかい？</Text>
+			<Text>ホドモエに　並びたった
+ホテルの　数々……▼
+恋する　男　チャールズも
+もう　ホドモエ名物　ではないねえ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:54:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:28:00" />
+				Time="2011-06-29T09:54:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -84,11 +88,11 @@
 			<Comment>♀
 ・メッセージ表示後
 　アイテム入手処理
-・No009「リピートボール」×３
+・No011「ゴージャスボール」×３
 ※swanで内容修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:28:16" />
+				Time="2011-06-29T09:59:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -118,12 +122,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リピートボールはね
-いちど　つかまえたことの　ある▽
-ポケモンが　つかまえやすいのよ！</Text>
+			<Text>ゴージャスボールはね
+つかまえた　ポケモンが▽
+とても　なつきやすくなるのよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T09:59:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -131,12 +135,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リピートボールはね
-一度　捕まえたことの　ある▽
-ポケモンが　捕まえやすいのよ！</Text>
+			<Text>ゴージャスボールはね
+捕まえた　ポケモンが▽
+とても　なつきやすくなるのよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-06-29T10:00:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,10 +150,11 @@
 			Language="JPN">
 			<Comment>♀
 ・入手後、自動で表示
-・以降、繰り返し</Comment>
+・以降、繰り返し
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:28:11" />
+				Time="2011-06-29T09:59:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
