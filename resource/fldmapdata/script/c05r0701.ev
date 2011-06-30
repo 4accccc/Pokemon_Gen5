@@ -78,6 +78,8 @@ EVENT_START		ev_pos_c05r0701_stopper_01
   //主人公1歩戻る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
   //ストッパー元の位置に戻る
   IF $LCW_POSX >= 6 || $LCW_POSX <= 2 THEN
     _OBJ_ANIME_AUTO( C05R0701_STOPPER_01, 4, 8, FORCE_TYPE_NPC, 8, DIR_LR)
