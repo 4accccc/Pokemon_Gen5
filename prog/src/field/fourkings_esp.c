@@ -844,7 +844,6 @@ static void ANM_WATERFALL_Play( FOURKINGS_ESP_TMP *p_wk )
   {
     ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
     ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
-    ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
   }
 }
 //----------------------------------------------------------------------------
