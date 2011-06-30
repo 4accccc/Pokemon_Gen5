@@ -150,9 +150,9 @@ static const s16 bs_scene_tbl[] = {
 	pw_scriptindex_01,		// タイトル(数字の開始)(1-20)
 	//
 	// 以下に、ヒントを追加
-	pw_movie01_hint_00,		// movie01
-	pw_movie01_hint_00,		// movie02
-	pw_movie01_hint_00,		// movie03
+	pw_movie_hint_00,		// movie01
+	pw_movie_hint_00,		// movie02
+	pw_movie_hint_00,		// movie03
 };
 
 // メッセージ(要修正)

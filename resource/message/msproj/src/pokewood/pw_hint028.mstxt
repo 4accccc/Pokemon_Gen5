@@ -1,0 +1,1486 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MessageStudioText
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="pw_scriptindex_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＡＲＩＯ　きゃくほん</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:04:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T03:51:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＡＲＩＯ　きゃくほん</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:04:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T03:58:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+脚本見出し
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:04:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:07:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:03:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:07:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:03:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:13" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０２</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０２</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０３</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０３</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０４</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０４</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０５</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０５</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０６</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０６</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:23" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０７</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０７</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０８</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０８</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　０９</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　０９</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１０</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１０</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１２</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１２</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１３</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１３</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１４</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１４</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１５</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１５</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１６</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１６</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１７</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１７</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１８</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１８</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　１９</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:26:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　１９</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:29" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_scriptindex_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＳＣＥＮＥ　シーン　２０</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＥＮＥ　シーン　２０</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:25:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本脚本画面
+
+シーン見出し　
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:27:31" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてタイプの　じゃくてんを　つけ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T03:55:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手タイプの　弱点を　つけ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T03:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:40:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてタイプの　じゃくてんを　つけ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手タイプの　弱点を　つけ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン２
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン３
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン４
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン５
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン６
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン７
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン８
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン９
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１０
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１１
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１２
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１３
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１４
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１５
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１６
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１７
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１８
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン１９
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_movie_hint_19">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-03T02:19:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T12:37:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>movie01のシーン２０
+
+ヒントテキスト
+</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-02T13:13:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_index_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:59:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プログラム判定用ラベル</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-06-10T01:58:29" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>
