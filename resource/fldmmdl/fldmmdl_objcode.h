@@ -901,25 +901,78 @@
 #define TPOKE_0553 (0x1233) //4659(563,total 888) アルセウス・こおり
 #define TPOKE_0554 (0x1234) //4660(564,total 889) アルセウス・ドラゴン
 #define TPOKE_0555 (0x1235) //4661(565,total 890) アルセウス・あく
-#define OBJCODEEND_TPOKE (0x1236) //4662(total 891) ポケモンコード終端
-#define OBJCODECOUNT_TPOKE (0x236) //566 ポケモンコード数
+#define TPOKE_ISH_001 (0x1236) //4662(566,total 891) ミルホッグ
+#define TPOKE_ISH_002 (0x1237) //4663(567,total 892) ハーデリア
+#define TPOKE_ISH_003 (0x1238) //4664(568,total 893) レパルダス
+#define TPOKE_ISH_004 (0x1239) //4665(569,total 894) ヤナップ
+#define TPOKE_ISH_005 (0x123a) //4666(570,total 895) バオップ
+#define TPOKE_ISH_006 (0x123b) //4667(571,total 896) ヒヤップ
+#define TPOKE_ISH_007 (0x123c) //4668(572,total 897) マメパト
+#define TPOKE_ISH_008 (0x123d) //4669(573,total 898) ゼブライカ
+#define TPOKE_ISH_009 (0x123e) //4670(574,total 899) ガントル
+#define TPOKE_ISH_010 (0x123f) //4671(575,total 900) コロモリ
+#define TPOKE_ISH_011 (0x1240) //4672(576,total 901) モグリュー
+#define TPOKE_ISH_012 (0x1241) //4673(577,total 902) タブンネ
+#define TPOKE_ISH_013 (0x1242) //4674(578,total 903) ドテッコツ
+#define TPOKE_ISH_014 (0x1243) //4675(579,total 904) オタマロ
+#define TPOKE_ISH_015 (0x1244) //4676(580,total 905) ナゲキ
+#define TPOKE_ISH_016 (0x1245) //4677(581,total 906) ダゲキ
+#define TPOKE_ISH_017 (0x1246) //4678(582,total 907) ハハコモリ
+#define TPOKE_ISH_018 (0x1247) //4679(583,total 908) ペンドラー
+#define TPOKE_ISH_019 (0x1248) //4680(584,total 909) モンメン
+#define TPOKE_ISH_020 (0x1249) //4681(585,total 910) チュリネ
+#define TPOKE_ISH_021 (0x124a) //4682(586,total 911) バスラオ
+#define TPOKE_ISH_022 (0x124b) //4683(587,total 912) ワルビアル
+#define TPOKE_ISH_023 (0x124c) //4684(588,total 913) マラカッチ
+#define TPOKE_ISH_024 (0x124d) //4685(589,total 914) イワパレス
+#define TPOKE_ISH_025 (0x124e) //4686(590,total 915) ズルッグ
+#define TPOKE_ISH_026 (0x124f) //4687(591,total 916) シンボラー
+#define TPOKE_ISH_027 (0x1250) //4688(592,total 917) プロトーガ
+#define TPOKE_ISH_028 (0x1251) //4689(593,total 918) ダストダス
+#define TPOKE_ISH_029 (0x1252) //4690(594,total 919) チラーミィ
+#define TPOKE_ISH_030 (0x1253) //4691(595,total 920) ゴチミル
+#define TPOKE_ISH_031 (0x1254) //4692(596,total 921) ダブラン
+#define TPOKE_ISH_032 (0x1255) //4693(597,total 922) コアルヒー
+#define TPOKE_ISH_033 (0x1256) //4694(598,total 923) バニリッチ
+#define TPOKE_ISH_034 (0x1257) //4695(599,total 924) エモンガ
+#define TPOKE_ISH_035 (0x1258) //4696(600,total 925) カブルモ
+#define TPOKE_ISH_036 (0x1259) //4697(601,total 926) ママンボウ
+#define TPOKE_ISH_037 (0x125a) //4698(602,total 927) デンチュラ
+#define TPOKE_ISH_038 (0x125b) //4699(603,total 928) ギギアル
+#define TPOKE_ISH_039 (0x125c) //4700(604,total 929) リグレー
+#define TPOKE_ISH_040 (0x125d) //4701(605,total 930) ヒトモシ
+#define TPOKE_ISH_041 (0x125e) //4702(606,total 931) キバゴ
+#define TPOKE_ISH_042 (0x125f) //4703(607,total 932) クマシュン
+#define TPOKE_ISH_043 (0x1260) //4704(608,total 933) チョボマキ
+#define TPOKE_ISH_044 (0x1261) //4705(609,total 934) マッギョ
+#define TPOKE_ISH_045 (0x1262) //4706(610,total 935) コジョフー
+#define TPOKE_ISH_046 (0x1263) //4707(611,total 936) クリムガン
+#define TPOKE_ISH_047 (0x1264) //4708(612,total 937) ゴビット
+#define TPOKE_ISH_048 (0x1265) //4709(613,total 938) コマタナ
+#define TPOKE_ISH_049 (0x1266) //4710(614,total 939) バッフロン
+#define TPOKE_ISH_050 (0x1267) //4711(615,total 940) ウォーグル
+#define TPOKE_ISH_051 (0x1268) //4712(616,total 941) バルジーナ
+#define TPOKE_ISH_052 (0x1269) //4713(617,total 942) クイタラン
+#define TPOKE_ISH_053 (0x126a) //4714(618,total 943) アイアント
+#define OBJCODEEND_TPOKE (0x126b) //4715(total 944) ポケモンコード終端
+#define OBJCODECOUNT_TPOKE (0x26b) //619 ポケモンコード数
 
 //モデル
 #define OBJCODESTART_MDL (0x2000)
-#define TESTMODEL (0x2000) //8192(0,total 891) テスト
-#define BLACKMONO (0x2001) //8193(1,total 892) モノリス（黒）
-#define WHITEMONO (0x2002) //8194(2,total 893) モノリス（白）
-#define BIGROCK (0x2003) //8195(3,total 894) かいりきの岩
-#define JUNK (0x2004) //8196(4,total 895) 機械
-#define BIGROCK2 (0x2005) //8197(5,total 896) かいりきの岩２
-#define DRAGONBONE (0x2006) //8198(6,total 897) カイリューの頭骨
-#define TR_GRASS (0x2007) //8199(7,total 898) 盛り草
-#define TR_GROUND (0x2008) //8200(8,total 899) 盛り土
-#define CUBE (0x2009) //8201(9,total 900) キューブ
-#define OBJCODEEND_MDL (0x200a) //8202(total 901) モデルコード終端
+#define TESTMODEL (0x2000) //8192(0,total 944) テスト
+#define BLACKMONO (0x2001) //8193(1,total 945) モノリス（黒）
+#define WHITEMONO (0x2002) //8194(2,total 946) モノリス（白）
+#define BIGROCK (0x2003) //8195(3,total 947) かいりきの岩
+#define JUNK (0x2004) //8196(4,total 948) 機械
+#define BIGROCK2 (0x2005) //8197(5,total 949) かいりきの岩２
+#define DRAGONBONE (0x2006) //8198(6,total 950) カイリューの頭骨
+#define TR_GRASS (0x2007) //8199(7,total 951) 盛り草
+#define TR_GROUND (0x2008) //8200(8,total 952) 盛り土
+#define CUBE (0x2009) //8201(9,total 953) キューブ
+#define OBJCODEEND_MDL (0x200a) //8202(total 954) モデルコード終端
 #define OBJCODECOUNT_MDL (0xa) //10 モデルコード数
 
-#define OBJCODETOTAL (0x385) //901 コード総数
+#define OBJCODETOTAL (0x3ba) //954 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
