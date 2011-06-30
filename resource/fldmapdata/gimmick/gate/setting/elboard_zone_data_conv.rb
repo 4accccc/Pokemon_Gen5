@@ -154,6 +154,15 @@ file.close
   filename = ARGV[1] + "/elboard_zone_data_" + 
              in_data[ROW_ZONE_ID].downcase + "_" + 
              in_data[ROW_VERSION].downcase + ".bin"
+
+  cnt = 1;
+  while File.exist?(filename)
+    filename = ARGV[1] + "/elboard_zone_data_" + 
+            in_data[ROW_ZONE_ID].downcase + "_" + 
+            in_data[ROW_VERSION].downcase + "_#{cnt}_" + ".bin"
+    cnt+=1
+  end
+
   file = File.open( filename, "wb" )
   file.write( out_data.pack("I*") )
   file.close

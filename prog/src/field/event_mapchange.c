@@ -325,7 +325,7 @@ static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
   FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GAMEDATA_GetSaveControlWork(gamedata),GFL_HEAPID_APP ); //heap はテンポラリ用
   FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
   //WFBCイベント情報の初期化
-  FIELD_WFBC_EVENT_Init( GAMEDATA_GetWFBCEventData( gamedata ), GAMEDATA_GetMyWFBCCoreData(gamedata), GFL_HEAPID_APP );
+  //FIELD_WFBC_EVENT_Init( GAMEDATA_GetWFBCEventData( gamedata ), GAMEDATA_GetMyWFBCCoreData(gamedata), GFL_HEAPID_APP );
 }
 
 //------------------------------------------------------------------

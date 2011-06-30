@@ -38,6 +38,7 @@
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
 #include "move_pokemon.h"
+#include "field/field_wfbc_data.h"
 
 #include "arc/arc_def.h" 
 #include "arc/gate.naix"
@@ -921,10 +922,31 @@ static void LoadGateData( GATEWORK* work )
   {
     // “Ç‚İ‚İ
     ELBOARD_ZONE_DATA_Load( &data, ARCID_ELBOARD_ZONE, datID ); 
+    OS_TPrintf( "zoneID%d version%d\n", data.zoneID, data.version );
 
     // ”­Œ©( ƒ][ƒ“ˆê’v and ƒo[ƒWƒ‡ƒ“ˆê’v )
     if( data.zoneID == zoneID ) {
       if( (data.version == 0) || (data.version == GetVersion()) ) {
+
+        if( zoneID == ZONE_ID_R14R0101
+          || zoneID == ZONE_ID_R15R0101 )
+        {
+          switch( GAMEDATA_GetMyWFBCType( work->gameData ) )
+          {
+          case FIELD_WFBC_CORE_TYPE_WHITE_FOREST:
+            /* ‚»‚Ì‚Ü‚Ü */
+            OS_TPrintf( "wf\n" );
+            break;
+          case FIELD_WFBC_CORE_TYPE_BLACK_CITY:
+            OS_TPrintf( "bc continue\n" );
+            ELBOARD_ZONE_DATA_Load( &data, ARCID_ELBOARD_ZONE, datID+1 ); 
+            GF_ASSERT( data.zoneID == zoneID && data.version == 0 );
+            break;
+          default:
+            GF_ASSERT(0);
+          }
+        }
+
         *(work->gateData) = data;
         return;
       }

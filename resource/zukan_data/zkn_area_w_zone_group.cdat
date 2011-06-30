@@ -12,7 +12,7 @@
 //============================================================================
 #pragma once
 
-#define ZKN_AREA_ZONE_GROUP_MAX (80)
+#define ZKN_AREA_ZONE_GROUP_MAX (81)
 
 static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
 {
@@ -30,6 +30,7 @@ static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
   ZONE_ID_T03,  // 406
   ZONE_ID_T04,  // 412
   ZONE_ID_T05,  // 418
+  ZONE_ID_BC10,  // 0
   ZONE_ID_WC10,  // 424
   ZONE_ID_C11,  // 147
   ZONE_ID_PALACE01,  // 279

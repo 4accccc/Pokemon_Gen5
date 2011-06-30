@@ -14,6 +14,7 @@
 //	constant
 #include "system/main.h"	//HEAPID
 #include "system/gfl_use.h"
+#include "fieldmap/zone_id.h"
 
 //	archive
 #include "arc_def.h"
@@ -30,6 +31,7 @@
 #include "field/zonedata.h"
 #include "app/townmap_data_sys.h"
 #include "ui/touchbar.h"	//タッチバー
+#include "field/field_wfbc_data.h"
 
 //mine
 #include "townmap_grh.h"
@@ -2238,7 +2240,7 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, cons
 
 	//作成するCLWKの数を計算
 	{	
-		p_wk->data_num	= TOWNMAP_DATA_MAX;
+		p_wk->data_num	= TOWNMAP_DATA_MAX-1; //WFBCが同一箇所なので－１
 	}
 	
 	//設定されている数分CLWKを出すため、バッファ作成
@@ -2248,14 +2250,37 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, cons
 	//場所作成
 	{	
 		int i;
+    int cnt;
 		u32 chr, cel, plt;
 
 		//リソース取得
 		TOWNMAP_GRAPHIC_GetObjResource( cp_grh, &chr, &cel, &plt );
 		//初期化
-		for( i = 0; i < p_wk->data_num; i++ )
+    cnt = 0;
+		for( i = 0; i < TOWNMAP_DATA_MAX; i++ )
 		{	
-			PlaceData_Init( &p_wk->p_place[i], cp_data, i, p_clunit, chr, cel, plt, p_gamedata, heapID, is_debug );
+      int ofs = 0;
+      u16 zoneID =  TOWNMAP_DATA_GetParam( cp_data, i, TOWNMAP_DATA_PARAM_ZONE_ID );
+      if( zoneID == ZONE_ID_BC10 )
+      {
+        //現在のタイプによって読み先を帰る
+        switch( GAMEDATA_GetMyWFBCType( p_gamedata ) )
+        {
+        case FIELD_WFBC_CORE_TYPE_WHITE_FOREST:
+          ofs = 1;
+          break;
+        case FIELD_WFBC_CORE_TYPE_BLACK_CITY:
+          ofs = 0;
+          break;
+        }
+      }
+
+      if( zoneID != ZONE_ID_WC10 )
+      {
+        GF_ASSERT( cnt < p_wk->data_num );
+        PlaceData_Init( &p_wk->p_place[cnt], cp_data, i+ofs, p_clunit, chr, cel, plt, p_gamedata, heapID, is_debug );
+        cnt++;
+      }
 		}
 	}
 
@@ -2743,7 +2768,6 @@ static BOOL PLACEDATA_IsVisiblePlaceName( const PLACE_DATA *cp_wk )
 //-----------------------------------------------------------------------------
 static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug )
 {	
-	GF_ASSERT( data_idx < TOWNMAP_DATA_MAX );
 
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_DATA) );
@@ -4783,7 +4807,7 @@ static void DEBUGMENU_UPDATE_CheckPosNum( void* p_wk_adrs, DEBUGWIN_ITEM* p_item
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {	
 		p_wk->checkpos_num_debug++;
-		p_wk->checkpos_num_debug	%= TOWNMAP_DATA_MAX;
+		p_wk->checkpos_num_debug	%= (TOWNMAP_DATA_MAX-1);
 		DEBUGWIN_RefreshScreen();
 
 		if( p_wk->is_checkpos_debug == TRUE )
