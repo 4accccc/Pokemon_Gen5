@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　こちら
-サンヨウシティ　ポケモンジムです[Ctrl2:PageClear ]</Text>
+サンヨウシティ　ポケモンジムです▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:56:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ようこそ　こちら
-サンヨウシティ　ポケモンジムです[Ctrl2:PageClear ]</Text>
+サンヨウシティ　ポケモンジムです▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -107,10 +107,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オレは　ほのおタイプの
-ポケモンで　あばれる　ポッド！[Ctrl2:PageClear ]</Text>
+ポケモンで　あばれる　ポッド！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:56:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -119,10 +119,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オレは　ほのおタイプの
-ポケモンで　暴れる　ポッド！[Ctrl2:PageClear ]</Text>
+ポケモンで　暴れる　ポッド！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -160,10 +160,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>みずタイプを　つかいこなす　コーンです
-いご　おみしりおき　を[Ctrl2:PageClear ]</Text>
+いご　おみしりおき　を▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:56:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -172,10 +172,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みずタイプを　使いこなす　コーンです
-以後　お見知りおき　を[Ctrl2:PageClear ]</Text>
+以後　お見知りおき　を▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -213,11 +213,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そして　ぼくはですね
-くさタイプの　ポケモンが　すきな[Ctrl2:LineFeed ]
-デントと　もうします[Ctrl2:PageClear ]</Text>
+くさタイプの　ポケモンが　すきな▽
+デントと　もうします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -227,10 +227,10 @@
 			Language="JPN_KANJI">
 			<Text>そして　ぼくはですね
 くさタイプの　ポケモンが　好きな[Ctrl2:LineFeed ]
-デントと　申します[Ctrl2:PageClear ]</Text>
+デントと　申します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -267,12 +267,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デント『あのですね……[Ctrl2:PageClear ]
+			<Text>デント『あのですね……▼
 ぼくたちは　ですね　どうして
-３にん　いるかと　いいますと……[Ctrl2:PageClear ]</Text>
+３にん　いるかと　いいますと……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:56:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -280,12 +280,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デント『あのですね……[Ctrl2:PageClear ]
+			<Text>デント『あのですね……▼
 ぼくたちは　ですね　どうして
-３人　いるかと　いいますと……[Ctrl2:PageClear ]</Text>
+３人　いるかと　いいますと……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -321,14 +321,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポッド『もう！
-オレが　せつめい　するッ！[Ctrl2:PageClear ]
+オレが　せつめい　するッ！▼
 オレたち　３にんはッ！
-あいてが　さいしょに　えらんだ[Ctrl2:PageClear ]
+あいてが　さいしょに　えらんだ▼
 ポケモンの　タイプに　あわせて
-だれが　たたかうか　きめるんだッ！[Ctrl2:PageClear ]</Text>
+だれが　たたかうか　きめるんだッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:56:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -337,14 +337,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポッド『もう！
-オレが　説明するッ！[Ctrl2:PageClear ]
+オレが　説明するッ！▼
 オレたち　３人はッ！
-相手が　最初に　選んだ[Ctrl2:PageClear ]
+相手が　最初に　選んだ▼
 ポケモンの　タイプに　あわせて
-だれが　戦うか　決めるんだッ！[Ctrl2:PageClear ]</Text>
+だれが　戦うか　決めるんだッ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -386,13 +386,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コーン『そうなんだよね[Ctrl2:PageClear ]
+			<Text>コーン『そうなんだよね▼
 そして　あなたが　さいしょに
-えらんだ　パートナーは[Ctrl2:LineFeed ]
-[Name:Type Idx="0" ]タイプ　なんだよね[Ctrl2:PageClear ]</Text>
+えらんだ　パートナーは▽
+[Name:Type Idx="0" ]タイプ　なんだよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -400,13 +400,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コーン『そうなんだよね[Ctrl2:PageClear ]
+			<Text>コーン『そうなんだよね▼
 そして　あなたが　最初に
-選んだ　パートナーは[Ctrl2:LineFeed ]
-[Name:Type Idx="0" ]タイプ　なんだよね[Ctrl2:PageClear ]</Text>
+選んだ　パートナーは▽
+[Name:Type Idx="0" ]タイプ　なんだよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:34:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -453,11 +453,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ということで
-ほのおタイプで　もやしまくる[Ctrl2:LineFeed ]
-オレ　ポッドが　あいてをするぜ！[Ctrl2:PageClear ]</Text>
+ほのおタイプで　もやしまくる▽
+オレ　ポッドが　あいてをするぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:01:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -466,11 +466,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ということで
-ほのおタイプで　燃やしまくる[Ctrl2:LineFeed ]
-オレ　ポッドが　相手をするぜ！[Ctrl2:PageClear ]</Text>
+ほのおタイプで　燃やしまくる▽
+オレ　ポッドが　相手をするぜ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -508,10 +508,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そう！みずタイプを　あいする
-この　コーンが　おあいてします[Ctrl2:PageClear ]</Text>
+この　コーンが　おあいてします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -520,10 +520,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そう！みずタイプを　愛する
-この　コーンが　お相手します[Ctrl2:PageClear ]</Text>
+この　コーンが　お相手します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -560,11 +560,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はい……　というわけで
-くさタイプの　ポケモンが　すきな[Ctrl2:LineFeed ]
-ぼく　デントが　おあいてします[Ctrl2:PageClear ]</Text>
+くさタイプの　ポケモンが　すきな▽
+ぼく　デントが　おあいてします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:01:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -573,11 +573,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はい……　というわけで
-くさタイプの　ポケモンが　好きな[Ctrl2:LineFeed ]
-ぼく　デントが　お相手します[Ctrl2:PageClear ]</Text>
+くさタイプの　ポケモンが　好きな▽
+ぼく　デントが　お相手します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -613,12 +613,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イヤッホー！[Ctrl2:PageClear ]
+			<Text>イヤッホー！▼
 きょうだいで　いちばん　つよい
-オレさまと　あそぼうぜ！！[Ctrl2:PageClear ]</Text>
+オレさまと　あそぼうぜ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -626,12 +626,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イヤッホー！[Ctrl2:PageClear ]
+			<Text>イヤッホー！▼
 兄弟で　一番　強い
-オレさまと　遊ぼうぜ！！[Ctrl2:PageClear ]</Text>
+オレさまと　遊ぼうぜ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -668,10 +668,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よかったね！　３にんの
-トップと　たたかうことが　できて[Ctrl2:PageClear ]</Text>
+トップと　たたかうことが　できて▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -680,10 +680,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よかったね！　３人の
-トップと　戦うことが　できて[Ctrl2:PageClear ]</Text>
+トップと　戦うことが　できて▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -720,11 +720,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はい　ぼくで　よろしければ
-まごころを　こめて[Ctrl2:LineFeed ]
-おあいて　させていただきます[Ctrl2:PageClear ]</Text>
+まごころを　こめて▽
+おあいて　させていただきます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -733,11 +733,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　はい　ぼくで　よろしければ
-真心を　こめて[Ctrl2:LineFeed ]
-お相手させて　いただきます[Ctrl2:PageClear ]</Text>
+真心を　こめて▽
+お相手させて　いただきます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -878,12 +878,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……うーん　どうしても
-ダンスの　タイミングが　ずれるんです[Ctrl2:PageClear ]
+ダンスの　タイミングが　ずれるんです▼
 ああ　そうですよね　きみと
 ポケモンしょうぶ　してみたかったです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,12 +892,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……うーん　どうしても
-ダンスの　タイミングが　ずれるんです[Ctrl2:PageClear ]
+ダンスの　タイミングが　ずれるんです▼
 ああ　そうですよね　きみと
 ポケモン勝負　してみたかったです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -933,12 +933,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うわーッ！　オマエ　すげえ！！[Ctrl2:PageClear ]
+			<Text>うわーッ！　オマエ　すげえ！！▼
 ポケモンリーグの　きまりだ
-この　ジムバッジを　うけとってくれ[Ctrl2:PageClear ]</Text>
+この　ジムバッジを　うけとってくれ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -946,12 +946,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うわーッ！　オマエ　すげえ！！[Ctrl2:PageClear ]
+			<Text>うわーッ！　オマエ　すげえ！！▼
 ポケモンリーグの　決まりだ
-この　ジムバッジを　受け取ってくれ[Ctrl2:PageClear ]</Text>
+この　ジムバッジを　受け取ってくれ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -997,12 +997,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごいですね！[Ctrl2:PageClear ]
+			<Text>すごいですね！▼
 ポケモンリーグの　きまりです
-この　バッジを　どうぞ[Ctrl2:PageClear ]</Text>
+この　バッジを　どうぞ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1010,12 +1010,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごいですね！[Ctrl2:PageClear ]
+			<Text>すごいですね！▼
 ポケモンリーグの　決まりです
-この　バッジを　どうぞ[Ctrl2:PageClear ]</Text>
+この　バッジを　どうぞ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1062,12 +1062,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……おどろいた
-きみ　すっごく　つよいんだね[Ctrl2:PageClear ]
+きみ　すっごく　つよいんだね▼
 ポッドや　コーンでも
-かてない　あいて　だったみたい……[Ctrl2:PageClear ]</Text>
+かてない　あいて　だったみたい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1076,12 +1076,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……おどろいた
-きみ　すっごく　強いんだね[Ctrl2:PageClear ]
+きみ　すっごく　強いんだね▼
 ポッドや　コーンでも
-勝てない　相手だったみたい……[Ctrl2:PageClear ]</Text>
+勝てない　相手だったみたい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1128,10 +1128,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は　ポッドから
-トライバッジを　もらった！[Ctrl2:PageClear ]</Text>
+トライバッジを　もらった！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1140,10 +1140,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は　ポッドから
-トライバッジを　もらった！[Ctrl2:PageClear ]</Text>
+トライバッジを　もらった！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1190,10 +1190,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は　コーンから
-トライバッジを　もらった！[Ctrl2:PageClear ]</Text>
+トライバッジを　もらった！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:57:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1202,10 +1202,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は　コーンから
-トライバッジを　もらった！[Ctrl2:PageClear ]</Text>
+トライバッジを　もらった！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1252,10 +1252,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は　デントから
-トライバッジを　もらった！[Ctrl2:PageClear ]</Text>
+トライバッジを　もらった！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1264,10 +1264,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は　デントから
-トライバッジを　もらった！[Ctrl2:PageClear ]</Text>
+トライバッジを　もらった！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1314,15 +1314,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ジムバッジは
-トレーナーの　つよさの　あかしです[Ctrl2:PageClear ]
+トレーナーの　つよさの　あかしです▼
 バッジを　ひとつ　もっていれば
 ひとと　こうかんした▽
 ポケモンでも　レベル２０までなら▽
 めいれいを　きいてくれます▼
-あと　これも　もらってください[Ctrl2:PageClear ]</Text>
+あと　これも　もらってください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1331,15 +1331,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジムバッジは
-トレーナーの　強さの　証です[Ctrl2:PageClear ]
+トレーナーの　強さの　証です▼
 バッジを　１つ　持っていれば
 人と　交換した▽
 ポケモンでも　レベル２０までなら▽
 命令を　きいてくれます▼
-あと　これも　もらってください[Ctrl2:PageClear ]</Text>
+あと　これも　もらってください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1376,14 +1376,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その　[Name:Item Idx="0" ]の　なかみは
-「ふるいたてる」と　いいます[Ctrl2:PageClear ]
+「ふるいたてる」と　いいます▼
 「ふるいたてる」を　つかえば
-こうげきと　とくこうが　あがります！[Ctrl2:PageClear ]
+こうげきと　とくこうが　あがります！▼
 ちなみに　わざマシンは
 なんどでも　つかえるんですよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1392,14 +1392,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　[Name:Item Idx="0" ]の　中身は
-「ふるいたてる」と　いいます[Ctrl2:PageClear ]
+「ふるいたてる」と　いいます▼
 「ふるいたてる」を　使えば
-攻撃と　特攻が　あがります！[Ctrl2:PageClear ]
+攻撃と　特攻が　あがります！▼
 ちなみに　わざマシンは
 何度でも　使えるんですよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1437,13 +1437,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼくたち　イッシュちほう　では
-まだ　かけだしの　ジムリーダーです[Ctrl2:PageClear ]
+まだ　かけだしの　ジムリーダーです▼
 ということは　ほかの　ジムリーダーは
-もっと　つよいって　ことですよね[Ctrl2:LineFeed ]
+もっと　つよいって　ことですよね▽
 ふう　がんばらないと……　ですね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1452,13 +1452,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぼくたち　イッシュ地方　では
-まだ　駆けだしの　ジムリーダーです[Ctrl2:PageClear ]
+まだ　駆けだしの　ジムリーダーです▼
 ということは　他の　ジムリーダーは
-もっと　強いって　ことですよね[Ctrl2:LineFeed ]
+もっと　強いって　ことですよね▽
 ふう　がんばらないと……　ですね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1494,13 +1494,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざマシンは　なんどだって
-つかえると　いうことはッ！[Ctrl2:PageClear ]
+つかえると　いうことはッ！▼
 つれている　ポケモン
-すべてに　おなじ　わざを[Ctrl2:LineFeed ]
+すべてに　おなじ　わざを▽
 おしえることだって　できるんだぜッ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1509,13 +1509,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざマシンは　何度だって
-使えると　いうことはッ！[Ctrl2:PageClear ]
+使えると　いうことはッ！▼
 連れている　ポケモン
-すべてに　同じ　技を[Ctrl2:LineFeed ]
+すべてに　同じ　技を▽
 教えることだって　できるんだぜッ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1551,12 +1551,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もし　サンヨウシティの　ジムリーダーが
-１７にん　きょうだい　だったら[Ctrl2:PageClear ]
+１７にん　きょうだい　だったら▼
 それぞれが　タイプごとの
 スペシャリストに　なってるのかもね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T01:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1565,12 +1565,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もし　サンヨウシティの　ジムリーダーが
-１７人兄弟　だったら[Ctrl2:PageClear ]
+１７人兄弟　だったら▼
 それぞれが　タイプごとの
 スペシャリストに　なってるのかもね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1869,10 +1869,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンしょうぶの　きほんは
-タイプの　あいしょう　なんですよね[Ctrl2:PageClear ]
+タイプの　あいしょう　なんですよね▼
 あいてのポケモンに　たいして
-ゆうりなタイプの　ポケモン[Ctrl2:LineFeed ]
-ゆうりなタイプの　わざをえらべば[Ctrl2:LineFeed ]
+ゆうりなタイプの　ポケモン▽
+ゆうりなタイプの　わざをえらべば▽
 しょうりは　めのまえ　っすよね▼
 ということで　この　ジムは
 カーテンに　かかれた▽
@@ -1881,8 +1881,8 @@
 タイプの　スイッチを　ふめば▽
 さきに　すすめるっす！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1891,10 +1891,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモン勝負の　基本は
-タイプの　相性　なんですよね[Ctrl2:PageClear ]
+タイプの　相性　なんですよね▼
 相手のポケモンに　対して
-有利なタイプの　ポケモン[Ctrl2:LineFeed ]
-有利なタイプの　技を　選べば[Ctrl2:LineFeed ]
+有利なタイプの　ポケモン▽
+有利なタイプの　技を　選べば▽
 勝利は　目前っすよね▼
 ということで　この　ジムは
 カーテンに　かかれた▽
@@ -1903,8 +1903,8 @@
 スイッチを　踏めば▽
 先に　進めるっす！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1948,11 +1948,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ジムバッジを　てにいれた
-その　すばらしい　しゅんかんを[Ctrl2:LineFeed ]
+その　すばらしい　しゅんかんを▽
 いつまでも　おぼえていてほしいっすね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1961,11 +1961,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ジムバッジを　手に入れた
-その　素晴らしい　瞬間を[Ctrl2:LineFeed ]
+その　素晴らしい　瞬間を▽
 いつまでも　覚えていてほしいっすね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-06-30T02:35:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

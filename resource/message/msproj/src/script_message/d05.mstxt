@@ -1312,7 +1312,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d05_woman2_01">
+		Label="msg_d05_woman2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>みずのちかい
