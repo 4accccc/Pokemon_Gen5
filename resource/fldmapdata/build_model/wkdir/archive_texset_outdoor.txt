@@ -66,5 +66,6 @@
 "texset/outdoor066.nsbtx"
 "texset/outdoor067.nsbtx"
 "texset/outdoor068.nsbtx"
+"texset/outdoor069.nsbtx"
 
 

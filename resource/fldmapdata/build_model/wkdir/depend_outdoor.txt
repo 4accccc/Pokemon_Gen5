@@ -413,4 +413,11 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/swanbg_07.nsbmd \
 	$(RESDIR)/swanbg_08.nsbmd \
 	$(RESDIR)/swanbg_09.nsbmd \
+	$(RESDIR)/bc_build_s1.nsbmd \
+	$(RESDIR)/bc_house_s1.nsbmd \
+	$(RESDIR)/bc_shop_s1.nsbmd \
+	$(RESDIR)/bc_mugen_s1.nsbmd \
+	$(RESDIR)/wf_tree_s1.nsbmd \
+	$(RESDIR)/wf_shop_s1.nsbmd \
+	$(RESDIR)/wf_mugen_s1.nsbmd \
 
