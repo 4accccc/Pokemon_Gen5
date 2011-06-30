@@ -15,6 +15,15 @@
 #ifndef ZONE_C07_EVC_H
 #define ZONE_C07_EVC_H
 
+#define C07_GIRL2_01                       0
+#define C07_AMBRELLA_01                    1
+#define C07_MAN3_01                        2
+#define C07_FIGHTERM_01                    3
+#define C07_ISS1_01                        4
+#define C07_ISS2_01                        5
+#define C07_ISS3_01                        6
+#define C07_ISS4_01                        7
+#define C07_AMBRELLA_02                    8
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

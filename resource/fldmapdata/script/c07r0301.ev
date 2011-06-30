@@ -19,4 +19,82 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_c07r0301_badman_01
+_EVENT_DATA    ev_c07r0301_rangerw_01
+_EVENT_DATA    ev_c07r0301_trainerm_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  スキンヘッド：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c07r0301_badman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_badman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  レンジャー♀：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c07r0301_rangerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_rangerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  サウンドデザイナー：話しかけ                              */
+/**************************************************************/
+EVENT_START   ev_c07r0301_trainerm_01
+{
+//  LOCALWORK0⇒イベント分岐に使用
+
+  //BGM再生中か
+  IF $LOCALWORK0 == 0 THEN
+
+    _TALK_OBJ_START()
+    //サウンド：あんなあ　ぼく
+    _BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_trainerm_01 )
+
+    //ミュージックを聴く？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+        //サウンド：ほな　はじめるさかい
+        _BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_trainerm_02 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //ローカルワーク進行
+        $LOCALWORK0 = 1
+
+        //BGM再生【仮】10番道路の予定
+        _BGM_PLAY( SEQ_BGM_R_F )
+
+      //いいえ
+      ELSE
+
+        //サウンド：ちょ！　そない　えんりょ　せんでも
+        _BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_trainerm_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+  ELSE
+
+    _TALK_START_SE_PLAY()
+    //システム：……おんがくに　むちゅう　だ！
+    _SYSWIN_MSG( msg_c07r0301_trainerm_03, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+/*
+    //サウンド：……おんがくに　むちゅう　だ！
+    _BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_trainerm_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+*/
+  ENDIF
+
+}
+EVENT_END
+
+

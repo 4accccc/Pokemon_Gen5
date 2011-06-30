@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12r0402.h"
-  //.include  "c12r0402.h"
+  .include  "c12r0402.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12r0402
+_EVENT_DATA    ev_c12r0402_woman2_01
+_EVENT_DATA    ev_c12r0402_boy1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,58 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  女性：話しかけ                                            */
 /**************************************************************/
-ev_c12r0402:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c12r0402_woman2_01
+
+  _TALK_OBJ_START()
+
+  //アイテム入手前か
+  IF FLAG_OFF( FE_C12R0402_ITEMGET_01 ) THEN
+
+    //ジムバッジ入手後か
+    IF $WK_SCENE_C12GYM_OPEN >= 3 THEN
+
+      //女性：おっ！　もう　ジムバッジを
+      _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_02 )
+      _MSGWIN_CLOSE()
+
+      //アイテム入手：ハイパーボール
+      _ITEM_EVENT_KEYWAIT( ITEM_HAIPAABOORU, 1 )
+
+      //女性：ハイパーボールは
+      _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_03 )
+      _MSGWIN_CLOSE()
+
+      //========================================/
+      //アイテム入手フラグセット
+      _FLAG_SET( FE_C12R0402_ITEMGET_01 )
+      //========================================/
+
+    ELSE
+
+      //女性：となりまちに　いくのも
+      _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_01 )
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //アイテム入手済みの場合
+  ELSE
+
+    //女性：ハイパーボールは
+    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_03 )
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c12r0402_boy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_boy1_01 )
+EVENT_END
+
 

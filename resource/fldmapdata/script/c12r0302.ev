@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12r0302.h"
-  //.include  "c12r0302.h"
+  .include  "c12r0302.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12r0302
+_EVENT_DATA    ev_c12r0302_woman3_01
+_EVENT_DATA    ev_c12r0302_babyboy1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,41 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  女性：話しかけ                                            */
 /**************************************************************/
-ev_c12r0302:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c12r0302_woman3_01
+
+  //最初のポケモン入手後か
+  IF FLAG_ON( SYS_FLAG_FIRST_POKE_GET ) THEN
+    //女性：ポケモンと　ポケモントレーナー▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0302_woman3_02 )
+
+  ELSE
+    //女性：ポケモンは　ともだち　って……
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0302_woman3_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c12r0302_babyboy1_01
+
+  _TALK_OBJ_START()
+
+  //最初のポケモン入手後か
+  IF FLAG_ON( SYS_FLAG_FIRST_POKE_GET ) THEN
+    //男の子：あっ！　そいつって
+    _BALLOONWIN_OBJMSG_MF( msg_c12r0302_babyboy1_02, msg_c12r0302_babyboy1_03, C12R0302_BABYBOY1_01, POS_DOWN )
+
+  ELSE
+    //男の子：ボクも　はやく　ポケモンと
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0302_babyboy1_01 )
+
+  ENDIF
+
+EVENT_END
+
 

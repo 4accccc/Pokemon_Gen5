@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12r0202.h"
-  //.include  "c12r0202.h"
+  .include  "c12r0202.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,91 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12r0202
+_EVENT_DATA    ev_zone_c12r0202
+_EVENT_DATA    ev_c12r0202_rivalsister_01
 _EVENT_DATA_END
 
+//先頭のポケモン名取得
+DEFINE_LOCAL LWK_FRONT
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_zone_c12r0202:
-//  _END
+INIT_EVENT_START   ev_zone_c12r0202
+
+  //ヒオウギジムクリア後からタウンマップ入手まで不在状態？
+  //タウンマップをライバルに届けるまで不在状態
+  IF $WK_SCENE_D22R0101 == 0 && $WK_SCENE_C12_WHITE_MEET == 6 THEN
+
+    //========================================//
+    //ライバル妹非表示
+    _FLAG_SET( FV_C12R0202_RIVALSISTER_01 )
+    //========================================//
+
+  ELSE
+
+    //========================================//
+    //ライバル妹表示
+    _FLAG_RESET( FV_C12R0202_RIVALSISTER_01 )
+    //========================================//
+
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*  ライバルの妹：話しかけ                                    */
 /**************************************************************/
-ev_c12r0202:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c12r0202_rivalsister_01
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //先頭ポケモンの名前を取得
+  _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
+
+  _TALK_OBJ_START()
+
+  //ポケモン入手後から、ヒオウギジムクリアまで
+  IF $WK_SCENE_C12GYM_OPEN <= 2 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ライバル妹：あ、主人公さん！
+    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_01a )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //タウンマップをライバルに渡すまで
+  ELSIF $WK_SCENE_D22R0101 == 0 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ライバル妹：
+    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    _DEBUG_PRINT_WK( 0 )  //【仮】デバッグ用：ワーク値の出力
+
+  //タウンマップをライバルに渡してからクリアまで
+  //ELSIF $WK_SCENE_D22R0101 >= 1 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+  //ジムクリアからクリアまで
+  ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+    //ライバル妹：
+    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    _DEBUG_PRINT_WK( 1 )  //【仮】デバッグ用：ワーク値の出力
+
+  //クリア後
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ライバル妹：
+    _BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    _DEBUG_PRINT_WK( 2 )  //【仮】デバッグ用：ワーク値の出力
+
+  ENDIF
+
+EVENT_END
+
 

@@ -13,14 +13,15 @@
 
 #define C07PC0101_PCWOMAN                  0
 #define C07PC0101_SHOPM_01                 1
-#define C07PC0101_OLDWOMAN1_01             2
-#define C07PC0101_CONNECT_00               3
-#define C07PC0101_CONNECT_01               4
-#define C07PC0101_CONNECT_02               5
-#define C07PC0101_SHOPM_02                 6
-#define C07PC0101_DELIVERY                 7
-#define C07PC0101_GENTLEMAN_01             8
-#define C07PC0101_MEDALOYAJI               9
+#define C07PC0101_CONNECT_00               2
+#define C07PC0101_CONNECT_01               3
+#define C07PC0101_CONNECT_02               4
+#define C07PC0101_SHOPM_02                 5
+#define C07PC0101_DELIVERY                 6
+#define C07PC0101_GENTLEMAN_01             7
+#define C07PC0101_MEDALOYAJI               8
+#define C07PC0101_FIGHTERW_01              9
+#define C07PC0101_POKE44_01               10
 
 #endif //ZONE_C07PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

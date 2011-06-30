@@ -9,6 +9,7 @@
 #ifndef ZONE_C12R0202_EVC_H
 #define ZONE_C12R0202_EVC_H
 
+#define C12R0202_RIVALSISTER_01            0
 
 #endif //ZONE_C12R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/02 11:28:06
+#save date:2011/06/30 11:57:02
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t06pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\t06pc0101.wms
 #hold event type:
 1
 #hold event number:
-10
+11
 #event number: 0
 #type
 1
@@ -297,7 +297,7 @@ T06PC0101_GIRL3_01
 #OBJ CODE Number
 GIRL3
 #MOVE CODE Number
-MV_RND
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -320,6 +320,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 56
+#event number: 10
+#type
+1
+#ID name
+T06PC0101_MAN3_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_T06PC0101_MAN2_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 0 40
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -5,6 +5,7 @@
 #define _C12R0302_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C12R0302 (1)
+#define SCRID_C12R0302_WOMAN3_01 (1)
+#define SCRID_C12R0302_BABYBOY1_01 (2)
 
 #endif //_C12R0302_DEF_H_

@@ -9,6 +9,8 @@
 #ifndef ZONE_C12R0402_EVC_H
 #define ZONE_C12R0402_EVC_H
 
+#define C12R0402_WOMAN2_01                 0
+#define C12R0402_BOY1_01                   1
 
 #endif //ZONE_C12R0402_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

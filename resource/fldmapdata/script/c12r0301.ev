@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c12r0301.h"
-  //.include  "c12r0301.h"
+  .include  "c12r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c12r0301
+_EVENT_DATA    ev_c12r0301_oldman1_01
+_EVENT_DATA    ev_c12r0301_oldwoman1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,48 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  おじいさん：話しかけ                                      */
 /**************************************************************/
-ev_c12r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c12r0301_oldman1_01
+
+  _TALK_OBJ_START()
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //最初のポケモン入手後か
+  IF FLAG_ON( SYS_FLAG_FIRST_POKE_GET ) THEN
+    //おじいさん：おおう！　ポケモンと　いっしょか
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0301_01_02 )
+
+  ELSE
+    //おじいさん：今日も　ライバルに
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0301_01_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  おばあさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c12r0301_oldwoman1_01
+
+  _TALK_OBJ_START()
+
+  //最初のポケモン入手後か
+  IF FLAG_ON( SYS_FLAG_FIRST_POKE_GET ) THEN
+    //おばあさん：その　ポケモンを　だいじにするんだよ▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0301_02_02 )
+
+  ELSE
+    //おばあさん：あんたも　ポケモンが　いれば
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0301_02_01 )
+
+  ENDIF
+
+EVENT_END
+
 

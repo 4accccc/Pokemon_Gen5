@@ -20,15 +20,18 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c06pc0101_shop
-_EVENT_DATA		ev_c06pc0101_fix_shop
+_EVENT_DATA    ev_c06pc0101_fix_shop
+_EVENT_DATA    ev_c06pc0101_pilot_01
+_EVENT_DATA    ev_c06pc0101_poke41_01
 _EVENT_DATA_END
 
+
 /************************************************************/
-/*						ショップ店員						*/
+/*  ショップ店員                                            */
 /************************************************************/
-EVENT_START	ev_c06pc0101_shop
-	_TALK_OBJ_START()
-	_SHOP_CALL()
+EVENT_START ev_c06pc0101_shop
+  _TALK_OBJ_START()
+  _SHOP_CALL()
 EVENT_END
 
 //=============================================================
@@ -38,3 +41,19 @@ EVENT_START ev_c06pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL_GREETING_WAZA( C06_FS )
 EVENT_END
+
+/**************************************************************/
+/*  PILOT:話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c06pc0101_pilot_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06pc0101_pilot_01 )
+EVENT_END
+
+/**************************************************************/
+/*  POKE41：話しかけ（コアルヒー）                            */
+/**************************************************************/
+EVENT_START   ev_c06pc0101_poke41_01   //【仮】ミネズミの声で代用
+  _EASY_TALK_POKEVOICE( MONSNO_537, msg_c06pc0101_poke41_01 )
+EVENT_END
+
+

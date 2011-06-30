@@ -10,6 +10,8 @@
 #ifndef ZONE_C12R0201_EVC_H
 #define ZONE_C12R0201_EVC_H
 
+#define C12R0201_WOMAN3_01                 0
+#define C12R0201_FIGHTERM_01               1
 
 #endif //ZONE_C12R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

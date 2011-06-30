@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c07pc0101.h"
-  //.include  "c07pc0101.h"
+  .include  "c07pc0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,31 +20,41 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07pc0101_shop
-_EVENT_DATA    ev_c07pc0101_oldwoman1_01
-_EVENT_DATA		ev_c07pc0101_fix_shop
+_EVENT_DATA    ev_c07pc0101_fix_shop
+_EVENT_DATA    ev_c07pc0101_fighterw_01
+_EVENT_DATA    ev_c07pc0101_poke44_01
 _EVENT_DATA_END
 
 
 /************************************************************/
-/*						ショップ店員						*/
+/*  ショップ店員                                            */
 /************************************************************/
-EVENT_START	ev_c07pc0101_shop
-	_TALK_OBJ_START()
-	_SHOP_CALL()
+EVENT_START  ev_c07pc0101_shop
+  _TALK_OBJ_START()
+  _SHOP_CALL()
 EVENT_END
 
 //=============================================================
 //ショップカウンター 固定ショップ
 //=============================================================
-EVENT_START ev_c07pc0101_fix_shop
+EVENT_START  ev_c07pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL_GREETING_WAZA( C07_FS )
 EVENT_END
 
 /**************************************************************/
-/* プレゼントくれるおばあさん                           */
+/*  バトルガール：話しかけ（アイテム入手）                    */
 /**************************************************************/
-EVENT_START   ev_c07pc0101_oldwoman1_01
-  //【仮】配置箇所を変更
-  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN31, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_oldwoman1_01, msg_c07pc0101_oldwoman1_02, msg_c07pc0101_oldwoman1_02 )
+EVENT_START   ev_c07pc0101_fighterw_01
+  //【仮】アイテム未定　ひとまず技マシン「かわらわり」のまま
+  _EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN31, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_fighterw_01, msg_c07pc0101_fighterw_02, msg_c07pc0101_fighterw_02 )
 EVENT_END
+
+/**************************************************************/
+/*  クマシュン：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c07pc0101_poke44_01    //【仮】鳴き声がチラーミィ
+  _EASY_TALK_POKEVOICE( MONSNO_505, msg_c07pc0101_poke44_01 )
+EVENT_END
+
+

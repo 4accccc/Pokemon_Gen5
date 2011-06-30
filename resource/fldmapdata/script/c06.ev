@@ -299,7 +299,7 @@ EVENT_START   ev_scene_c06_swleader6_01
   //【仮】階段SE（SEは仮です）
   _SE_PLAY( SEQ_SE_KAIDAN )   //【仮】階段SE再生？
   //フウロと博士再配置（表示）
-  _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 269, DIR_DOWN )
+  _OBJ_POS_CHANGE( C06_SWLEADER6_01, 78, 0, 268, DIR_DOWN )
   _OBJ_POS_CHANGE( C06_HAKASE2_01, 84, 0, 279, DIR_UP )
 
   _TIME_WAIT( 15 )
