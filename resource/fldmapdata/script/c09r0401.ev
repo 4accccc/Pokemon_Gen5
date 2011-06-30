@@ -95,12 +95,6 @@ EVENT_START	ev_pos_c09r0401_enter_01
   // 演出開始
   //--------------------------------------
 
-  _TIME_WAIT( 10 )
-
-  // 1歩進む
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_tr_up )
-  _OBJ_ANIME_WAIT()
-
   _TIME_WAIT( 20 )
 
   // 階段表示演出
@@ -185,11 +179,4 @@ EVENT_START	ev_pos_c09r0401_warp_01
 	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 31, 48, DIR_UP )
 	
 EVENT_END
-
-//--------------------------------------------------------------
-//	1歩進む
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_tr_up
-	_ANIME_DATA	AC_WALK_U_16F,1
-	_ANIME_DATA	ACMD_END,0
 
