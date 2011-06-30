@@ -6272,6 +6272,11 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
   }
 }
 
+int BTL_MAIN_GetPlayerClientSelectWaza( const BTL_MAIN_MODULE *wk )
+{
+  return BTL_CLIENT_GetSelectWaza( wk->client[ BTL_CLIENT_PLAYER] );
+}
+
 
 //=============================================================================================
 /**
@@ -6303,7 +6308,7 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
 {
   wk->pokewood_senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, senario_no, HEAPID_BTL_SYSTEM);
   wk->pokewood_work = GFL_HEAP_AllocMemory( HEAPID_BTL_SYSTEM, sizeof(POKEWOOD_WORK) );
-  OS_Printf("pokewood senario size=%d\n", sizeof(POKEWOOD_SENARIO));
+  OS_Printf("pokewood senario no=%d, size=%d\n", senario_no, sizeof(POKEWOOD_SENARIO));
   _print_pokewood_senario( wk->pokewood_senario );
   wk->pokewood_work->enemy_waza[0]=-1;
 
@@ -6327,7 +6332,7 @@ void POKEWOOD_Exit( BTL_MAIN_MODULE* wk )
   
 }
 
-POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( BTL_MAIN_MODULE *wk )
+POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE *wk )
 {
   if(wk->pokewood_senario!=NULL){
     return wk->pokewood_senario;
@@ -6387,6 +6392,11 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   OS_Printf("pokenum_limit=%d", senario->pokenum_limit);
   OS_Printf("item_ok=%d\n", senario->item_ok);
   OS_Printf("turn_max=%d\n", senario->turn_max);
+
+  OS_Printf("win_provision=%d\n", senario->win_provision);
+  OS_Printf("rec_poke=%d\n",  senario->poke_provision[0]);
+  OS_Printf("show_poke=%d\n", senario->poke_provision[1]);
+  OS_Printf("target_waza=%d\n", senario->waza_provision);
   
   OS_Printf("bg_change0: turn=%d, change_no=%d\n", senario->bg_change[0][0], senario->bg_change[0][1]  );
   OS_Printf("bg_change1: turn=%d, change_no=%d\n", senario->bg_change[1][0], senario->bg_change[1][1]  );

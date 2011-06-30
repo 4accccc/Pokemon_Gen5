@@ -9,6 +9,9 @@
 require 'csv'
 require 'kconv'
 require "jcode"
+require "../../tools/hash/monsno_hash.rb"
+require "../../tools/hash/wazano_hash.rb"
+require "../trtype/trtype_hash.rb"
 
 $KECODE = 'SJIS'
 
@@ -62,6 +65,10 @@ $gmmtag_hash   = {"%MYPOKE"=>"[1:02:ポケモンニックネーム:@]",
 $success_event = {"イベント１"=>0, "イベント２"=>1,"イベント３"=>2,"イベント４"=>3,"イベント５"=>4,
                   "イベント６"=>5,"イベント７"=>6,"イベント８"=>7,"イベント９"=>8,"イベント１０"=>9,
                  }
+$winprov_hash  = {"毎ターン倒す"=>0, "ターン内に相手を全滅"=>1,"特定の技を使用して全滅"=>2,
+                  "特定の相手を倒す１"=>3,"特定の相手を倒す２"=>4, "特定の相手以外を倒す"=>5,
+                  "生き残る１"=>6, "生き残る２"=>7, "自滅する"=>8 }
+
 #----------------------------------------------------
 # ポケモンデータクラス
 #----------------------------------------------------
@@ -173,12 +180,66 @@ class POKEWOOD_SENARIO
     @bg_change    = [-1,-1, -1,-1, -1,-1]
   end
   attr_accessor :title, :trainer_id, :explain, :hint, :batt_bg, :bg_change, :success_flag
+
+  # 勝利条件情報セット
+  def set_win_provision( win_prov, rec_poke, show_poke, waza )
+    @win_prov       = hash2no( $winprov_hash, win_prov )
+    @rec_poke_prov  = hash2no( $monsno_hash, rec_poke  )
+    @show_poke_prov = hash2no( $monsno_hash, show_poke )
+    @waza_prov      = hash2no( $wazano_hash, waza )
+    
+    if @win_prov==-1 then
+      printf("D2の勝利条件入力は必須です!\n")
+      exit(1)
+    end
+  end
+  attr_accessor :win_prov, :rec_poke, :show_poke, :waza
+
+  def error_trainer( type )
+    printf("「%s」の敵トレーナータイプが取得できません\nD5～G5の敵トレーナータイプ指定は必須です\nresource/trtype/trtype_def.hを参照してください\n",type)
+  end
+
+  # トレーナー情報セット
+  def set_trainer_info( rec_m, show_m, rec_f, show_f )
+    @rec_trtype_m  = hash2no( $trtype_hash, rec_m )
+    @show_trtype_m = hash2no( $trtype_hash, show_m )
+    @rec_trtype_f  = hash2no( $trtype_hash, rec_f )
+    @show_trtype_f = hash2no( $trtype_hash, show_f )
+    if @rec_trtype_m==-1 then
+      error_trainer(rec_m)
+      exit(1)
+    end
+    if @show_trtype_m==-1 then
+      error_trainer(show_m)
+      exit(1)
+    end
+    if @rec_trtype_f==-1 then
+      error_trainer(rec_f)
+      exit(1)
+    end
+    if @show_trtype_f==-1 then
+      error_trainer(show_f)
+      exit(1)
+    end
+  end
+  attr_accessor :rec_trtype_m, :show_trtyp_m, :rec_trtype_f, :show_trtyp_f
+
+  # 自分の姿情報
+  def set_mytype_info( rec, show )
+    @rec_mytype  = hash2no( $trtype_hash, rec )
+    @show_mytype = hash2no( $trtype_hash, show )
+    if @rec_trtype==-1 || @show_trtype==-1 then
+      printf("「%s」,「%s」の自分トレーナータイプが取得できません\nD7,E7の自分トレーナータイプ指定は必須です\nresource/trtype/trtype_def.hを参照してください\n",rec, show)
+      exit(1)
+    end
+  end
   
   # BG切り替えターン指定
   def set_bg_change( index, turn, change )
     @bg_change[index*2]   = turn.to_i
     @bg_change[index*2+1] = hash2no( $bg_hash, change)
   end
+  attr_accessor :rec_mytype, :show_mytyp
   
   # 敵トレーナーポケモン情報セット
   def set_enemy_poke( index, pokeno, sex, level )
@@ -186,6 +247,7 @@ class POKEWOOD_SENARIO
     @enemy_poke[index].sex    = hash2no($sex_hash, sex)
     @enemy_poke[index].level  = level.to_i
   end
+
 
   def set_select_msg( index, msg )
     @select_msg[index] = msg2id( msg )
@@ -231,7 +293,7 @@ class POKEWOOD_SENARIO
   end
 
   # バイナリデータ用に配列に連結してエンコード
-  # s16(2*8 + 2*4*3 + 9*2*2 + 6*2*2 + 20*2*2 + 78*5) = 500
+  # s16(2*12 + 2*4*3 + 9*2*2 + 6*2*2 + 20*2*2 + 78*5) = 500
   def pack
     array = Array.new
     array << @senario
@@ -242,12 +304,20 @@ class POKEWOOD_SENARIO
     array << @turn_max
     array << @success_flag
     array << 0
+    array << @win_prov
+    array << @rec_poke_prov
+    array << @show_poke_prov
+    array << @waza_prov
+    array << @rec_trtype_m
+    array << @show_trtype_m
+    array << @rec_trtype_f
+    array << @show_trtype_f
+    array << @rec_mytype
+    array << @show_mytype
     
     6.times{|i|
       array << @bg_change[i]
     }
-    array << 0
-    array << 0
     
     ENEMY_POKE_NUM.times{|i|
       array = array+@enemy_poke[i].pack
@@ -435,6 +505,15 @@ hint    = gmm.write_both( "pw_scene_hint", datas[12][1], datas[12][2] )
 
 #タイトル情報入力
 pokewood.top_info( title, datas[10][1], mission, hint, datas[13][1], datas[6][1] )
+
+#勝利条件情報入力
+pokewood.set_win_provision( datas[1][3], datas[2][3], datas[2][4], datas[3][3] )
+
+#敵トレーナー情報セット
+pokewood.set_trainer_info( datas[4][3], datas[4][4], datas[4][5], datas[4][6] )
+
+#自分トレーナー情報セット
+pokewood.set_mytype_info( datas[6][3], datas[6][4] )
 
 
 # BG切り替え情報入力

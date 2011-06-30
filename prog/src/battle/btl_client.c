@@ -793,6 +793,12 @@ BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk )
   return (wk->mainProc == ClientMain_ChapterSkip);
 }
 
+int BTL_CLIENT_GetSelectWaza( const BTL_CLIENT* wk )
+{
+  return wk->actionParam[ 0 ].fight.waza;
+}
+
+
 
 //=============================================================================================
 /**

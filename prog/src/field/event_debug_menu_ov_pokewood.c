@@ -16,7 +16,7 @@
 #include "arc_def.h"
 #include "system/main.h" //for HEAPID_FIELDMAP
 //#include "system/bmp_winframe.h"
-
+#include "savedata/misc.h"
 #include "font/font.naix"
 #include "sound/pm_sndsys.h"
 
@@ -372,6 +372,31 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
 	GMEVENT_ChangeEvent( event, new_event );
 
 	OS_Printf( "Pkwd Book Start\n" );
+
+  {
+    int i,count=0,newcount=0;
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+    MISC *misc = GAMEDATA_GetMiscWork(gamedata);
+    
+    for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
+      if(MISC_GetPokewoodOpenFlag(misc,i)){
+        count ++;
+      }
+      if(MISC_GetPokewoodOpenFlag(misc,i)){
+      }
+    }
+    OS_Printf(" pokewood senario open num = %d\n ", count);
+
+    MISC_SetPokewoodOpenFlag(misc,10);
+    MISC_SetPokewoodOpenFlag(misc,20);
+    MISC_SetPokewoodOpenFlag(misc,30);
+    MISC_SetPokewoodOpenFlag(misc,40);
+
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      newcount = MISC_GetPokewoodNewcomeFlag(misc,50);
+    }
+  }
+  
 	return TRUE;
 }
 

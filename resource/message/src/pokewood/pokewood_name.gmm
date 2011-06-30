@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00269" date="2011-06-14T18:36:35"/>
+	<create user="mori" host="W00269" date="2011-06-30T01:01:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -417,13 +417,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1912" top="199" right="2491" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="262" top="213" right="975" bottom="846" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="542" visible="no"/>
-		<band id="0" index="0" style="0000" width="563"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="396"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -545,6 +545,106 @@
 		<language name="JPN_KANJI" width="256">ななしさん</language>
 	</row>
 
+	<row id="pw_rec_trainername_21">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_22">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_23">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_24">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_25">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_26">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_27">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_28">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_29">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_30">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_31">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_32">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_33">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_34">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_35">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_36">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_37">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_38">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_39">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_rec_trainername_40">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
 	<row id="pw_show_trainername_01">
 		<language name="JPN" width="256">サトミ</language>
 		<language name="JPN_KANJI" width="256">サトミ</language>
@@ -641,6 +741,106 @@
 	</row>
 
 	<row id="pw_show_trainername_20">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_21">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_22">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_23">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_24">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_25">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_26">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_27">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_28">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_29">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_30">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_31">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_32">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_33">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_34">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_35">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_36">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_37">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_38">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_39">
+		<language name="JPN" width="256">ななしさん</language>
+		<language name="JPN_KANJI" width="256">ななしさん</language>
+	</row>
+
+	<row id="pw_show_trainername_40">
 		<language name="JPN" width="256">ななしさん</language>
 		<language name="JPN_KANJI" width="256">ななしさん</language>
 	</row>

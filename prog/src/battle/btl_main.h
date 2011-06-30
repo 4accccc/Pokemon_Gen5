@@ -57,6 +57,7 @@ extern u16 BTL_MAIN_GetWinBGMNo( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientUseItem( const BTL_MAIN_MODULE* wk, u8 clientID, u8 itemIdx );
 extern int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk );
 extern int BTL_MAIN_GetPokewoodSenarioNo( const BTL_MAIN_MODULE* wk );
+extern int BTL_MAIN_GetPlayerClientSelectWaza( const BTL_MAIN_MODULE *wk );
 
 
 /*------------------------------------------------------------------------------*/

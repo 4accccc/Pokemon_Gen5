@@ -19,7 +19,7 @@
 #define POKEWOOD_TALK_MSG_MAX   ( 20 )  ///< ターン毎会話の最大数
 #define POKEWOOD_NORMAL_VFX_MAX (  3 )  ///< ターン開始時に背景チェンジを行う最大回数
 #define POKEWOOD_CHOICE_STR_MAX ( 20*2 )///< 選択肢文字列の最大長
-
+#define POKEWOOD_SENARIO_HEADER_SIZE  ( 18 ) ///< 台本画面が参照するシナリオデータの最小バイト数
 
 // 立ち位置AAとBBの状態(PWS_はPOKEWOOD_STAGEの頭文字)
 #define PWS_A_POKE    ( 0 ) ///< AAお盆の上にポケモン
@@ -48,6 +48,19 @@ enum{
   POKEWOOD_STAGE_COND_MAX,
 };
 
+// 勝利条件の数値定義
+enum{
+  PW_PROV_EVERY_TURN=0,     ///< 毎ターン倒す
+  PW_PROV_ALL_DEAD,         ///< ターン内に相手を全滅
+  PW_PROV_USE_WAZA_DEAD,    ///< 特定の技を使用して全滅
+  PW_PROV_TARGET_DEAD1,     ///< 特定の相手を倒す１
+  PW_PROV_TARGET_DEAD2,     ///< 特定の相手を倒す２
+  PW_PROV_NOT_TARGET_DEAD,  ///< 特定の相手以外を倒す
+  PW_PROV_SURVIVE1,         ///< 生き残る１
+  PW_PROV_SURVIVE2,         ///< 生き残る２
+  PW_PROV_SUCIDE,           ///< 自滅する
+
+};
 
 // ポケウッド敵トレーナー所持ポケモン情報
 typedef struct {
@@ -86,8 +99,12 @@ typedef struct{
   s16 success_event;  ///< 撮影条件イベント
   s16 etc1;           ///< パディング
   
+  s16 win_provision;  ///< 勝利条件パターン
+  s16 poke_provision[2];   ///< 勝利条件にポケモン指定がある時に参照する（0:撮影 1:上映）
+  s16 waza_provision; ///< 勝利条件に技指定がある時に参照する
+  s16 trtype[4];      ///< 敵トレーナータイプ（0:男で撮影 1:男で上映 2:女で撮影 3:女で上映）
+  s16 mytype[2];      ///< 自分トレーナータイプ（ 0:撮影 1:上映）
   s16 bg_change[POKEWOOD_NORMAL_VFX_MAX][2];  ///< 背景チェンジターン
-  s16 etc2,etc3;
   
   POKEWOOD_ENEMY_POKE enemy_poke[ENEMY_POKE_MAX]; ///< 敵トレーナーのポケモンの最大数
   s16 select_msg[2][SELECT_MSG_NUM];              ///< メッセージ選択時の会話ID(自分・敵）
@@ -96,7 +113,7 @@ typedef struct{
   POKEWOOD_EVENT_DATA event[EVENT_DATA_MAX];      ///< イベントデータ
 }POKEWOOD_SENARIO;
 
-extern POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( BTL_MAIN_MODULE *wk );
+extern POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE *wk );
 
 
 #endif

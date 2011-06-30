@@ -203,7 +203,8 @@ static void setupPokemon( const MYSTATUS * mystat, POKEPARTY * party, HEAPID hea
   {
     POKEWOOD_POKE_DATA *poke = &(ppd->data[off+i]);
     u64 rnd;
-    OS_Printf("%d: monsno=%d, form=%d, sex=%d, tokusei=%d\n", i, poke->rec_monsno, poke->form, poke->sex, poke->tokusei);
+    OS_Printf("%d: monsno=%d, form=%d, sex=%d, tokusei=%d item=%d\n", i, poke->rec_monsno, poke->form, poke->sex, 
+                                                              poke->tokusei, poke->item);
 
     //
     PP_Clear( pp );
@@ -323,6 +324,8 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
   GFL_HEAP_FreeMemory( pp );
   bsp->PokewoodMode = BTL_POKEWOOD_REC;
   bsp->pokewoodSenario = senario_no; //‰¼
+
+  OS_Printf("create BSP pokewood senario = %d\n", bsp->pokewoodSenario);
 
   TAMADA_Printf(" POKEWOOD BSP %08x\n", bsp );
   return bsp;
@@ -721,7 +724,7 @@ GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * parent_work )
 
   event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
-  prew->gsys = gsys;
+  prew->gsys      = gsys;
   prew->rec_id    = param->type; // ˜^‰æNO
   prew->SenarioNo = param->senario_no;
   prew->heapID    = HEAPID_PROC;

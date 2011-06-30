@@ -120,7 +120,7 @@ extern BOOL BTL_CLIENT_IsChapterSkipMode( const BTL_CLIENT* wk );
 extern void BTL_CLIENT_ChargeShooterEnergy( BTL_CLIENT* wk, u8 chargeVolume );
 extern BOOL BTL_CLIENT_IsRecPlayerMode( const BTL_CLIENT* wk );
 extern u32 BTL_CLIENT_GetRecPlayerMaxChapter( const BTL_CLIENT* wk );
-
+extern int BTL_CLIENT_GetSelectWaza( const BTL_CLIENT* wk );
 
 
 #endif

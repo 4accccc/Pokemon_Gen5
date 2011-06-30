@@ -1993,128 +1993,310 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   return SHOOTER_REACTION_ENABLE;
 }
 
-#if 0
-static int _check_only_poke( BTL_PARTY *party, int mons_no )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	  指定のポケモンだけ倒れているかチェック
+ * @retval  int		TRUE:指定のポケモンが瀕死  FALSE:瀕死じゃない
+ */
+//----------------------------------------------------------------------------------
+static BOOL _check_dead_only_poke( BTL_PARTY *party, int mons_no )
 {
-  
+  int i;
+  const BTL_POKEPARAM* bpp; 
+
+  // mons_noは倒れているか(同じポケモンが２匹いたら誤動作します）
+  for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if(BPP_GetMonsNo( bpp )==mons_no){
+      if(BPP_IsDead(bpp)){
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
 }
 
-static int _get_dead_pokenum( BTL_PARTY *party )
-#endif
+//----------------------------------------------------------------------------------
+/**
+ * @brief	  指定のポケモン以外が倒れていないかチェック
+ * @retval  int		TRUE:指定のポケモン以外が瀕死 FALSE:誰も瀕死じゃない
+ */
+//----------------------------------------------------------------------------------
+static int _check_dead_except_poke( BTL_PARTY *party, int mons_no )
+{
+  int i;
+  const BTL_POKEPARAM* bpp; 
+  // mons_no以外が倒れていないか(同じポケモンが２匹いたら誤動作します）
+  for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if(BPP_GetMonsNo( bpp )!=mons_no){
+      if(BPP_IsDead(bpp)){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+
+//===============================================================
+// 倒れたポケモンの数
+//===============================================================
+static int _get_dead_poke( BTL_PARTY *party )
+{
+  int i, dead=0;
+  const BTL_POKEPARAM* bpp; 
+  for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if(BPP_IsDead(bpp)){
+      dead++;
+    }
+  }
+  return dead;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	  全滅チェック
+ * @retval  int		TRUE:全滅 FALSE:全滅してない
+ */
+//----------------------------------------------------------------------------------
+static int _check_all_dead( BTL_PARTY *party )
+{
+  int i,num=BTL_PARTY_GetMemberCount(party);
+  int dead = _get_dead_poke(party);
+
+  // 瀕死数確認
+  if(num==dead){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 最終ターンに勝利していなかったら負け
+ * @retval  BOOL  TRUE:敗北 FALSE:負けてはいない
+ */
+//----------------------------------------------------------------------------------
+static BOOL _check_maxturn( const BTL_MAIN_MODULE *mainModule, int win_flag )
+{
+  BTL_SVFLOW_WORK  *svflow_work = BTL_MAIN_GetSVFWorkForAI( mainModule );
+  POKEWOOD_SENARIO *senario     = BTL_MAIN_GetPokewoodSenario( (BTL_MAIN_MODULE*)mainModule );
+  if(svflow_work->turnCount >= senario->turn_max){
+    if(!win_flag){    // 規定ターンに勝利していなかったら負け
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief   勝利条件に使うポケモンを撮影・上映で別々に取得する
+ * @retval  int MONS_NO
+ */
+//----------------------------------------------------------------------------------
+static int _get_prov_pokemon( const BTL_MAIN_MODULE *mainModule, POKEWOOD_SENARIO *senario )
+{
+  if(BTL_MAIN_GetPokewoodMode(mainModule)==BTL_POKEWOOD_REC){
+    return senario->poke_provision[0];
+  }
+  return senario->poke_provision[1];
+}
 
 /*====================================================================================================*/
 /*                                                                                                    */
-/*  勝敗判定                                                                                          */
+/*    ポケウッド勝敗判定                                                                              */
 /*                                                                                                    */
 /*====================================================================================================*/
 int BTL_SVSUB_CheckPokewoodSenario( const BTL_MAIN_MODULE *mainModule, BTL_POKE_CONTAINER *pokeCon )
 {
   int senario_no = BTL_MAIN_GetPokewoodSenarioNo( mainModule );
   int win_flag =0, lose_flag=0;
-
-
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(mainModule);
+  BTL_PARTY* myparty = BTL_POKECON_GetPartyData( pokeCon, 0 ); //自分のPOKEPARTY取得
+  int mydead = _check_all_dead(myparty);
 
 //  OS_Printf("ポケウッドシナリオ %d\n", senario_no);
-  switch(senario_no){
-  case 0:   // UFOが倒れればOK、ワシボンが落ちると負け
-    { 
-      int ufo_index,i;
-      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 1 );
-      const BTL_POKEPARAM* bpp; 
+  switch(senario->win_provision){
+  case PW_PROV_USE_WAZA_DEAD:    ///< 特定の技を使用して全滅
+    {
+      BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      int monsno = _get_prov_pokemon( mainModule, senario );
+      int except = _check_dead_except_poke( e_party, monsno );
+      int target = _check_dead_only_poke( e_party, monsno );
+      int waza = BTL_MAIN_GetPlayerClientSelectWaza(mainModule);
 
-      // UFOは倒れているか
-      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        if(BPP_GetMonsNo( bpp )==MONSNO_ufo){
-          if(BPP_IsDead(bpp)){
-            ufo_index=i;
-            win_flag = 1;
-          }
+      // 目標ポケモンが死んでいるか？
+      if(target){
+        if( waza==senario->waza_provision ){
+          win_flag = 1;
+        }else{
+          lose_flag = 1;
+        }
+      }else{
+        // 目標ポケモンが死んでいない時にその他のポケモンが死んだか
+        if(except){
+          lose_flag = 1;
         }
       }
-
-      // UFO以外が倒れていないか
-      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        if(i!=ufo_index){
-          if(BPP_IsDead(bpp)){
-            lose_flag = 1;
-          }
-        }
-      }
+      OS_Printf("waza select = %d\n", waza);
+      OS_Printf("except dead num = %d target=%d\n", except, target);
     }
     break;
-  case 1:
+  case PW_PROV_TARGET_DEAD2:   // 特定ポケモンが倒れればOK、敵のその他ポケが落ちると負け
+    { 
+      int monsno = _get_prov_pokemon( mainModule, senario );
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 1 ); //敵のPOKEPARTY取得
+      BOOL target = _check_dead_only_poke( party,  monsno ); //senario->target_poke
+      BOOL except = _check_dead_except_poke( party, monsno );
+      GF_ASSERT_MSG( monsno>0, "勝利条件に正しいポケモンＮＯが入っていない %d\n", monsno );
+    
+      if(target){ // 特定のポケモンが倒れた
+        win_flag  = 1;
+      }
+      if(except||mydead){ // 特定のポケモン以外が倒れた
+        lose_flag = 1;
+      }
+    }
+    lose_flag |= _check_maxturn( mainModule, win_flag ); //規定ターンチェック
+    break;
+  case PW_PROV_EVERY_TURN:  // 毎ターン倒す
     {
-      int i,dead=0;
       BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 1 );
       const BTL_POKEPARAM* bpp; 
       int turncount = BTL_POKECON_GetTurnCount(mainModule);
-      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        if(BPP_IsDead(bpp)){
-          dead++;
-        }
-      }
-      if(turncount==1 && dead==0){
+      int dead  = _get_dead_poke( party );
+      int e_all = _check_all_dead( party );
+
+      // 現在のターンよりも倒した数が少なかったら敗北
+      if((turncount>dead)||mydead){
         lose_flag = 1;
       }
-      if(turncount==2){
-        if(dead==2){
+      // ターン規定数・相手全滅時に倒している数で勝利が決まる
+      if(e_all){
+        if(dead>=senario->turn_max){
           win_flag = 1;
         }else{
           lose_flag = 1;
         }
       }
-      OS_Printf("turncount=%d, dead=%d\n", turncount,dead);
+      lose_flag |= _check_maxturn( mainModule, win_flag ); //規定ターンチェック
+      OS_Printf("e_dead=%d, turncount=%d, turn_max=%d\n", dead,turncount,senario->turn_max);
     }
+
     break;
-  case 2:
+  case PW_PROV_ALL_DEAD: // 相手が全滅なら勝ち、こっちの全滅は負け
     {
-      int i,mydead=0,e_dead=0;
-      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 0 );
-      const BTL_POKEPARAM* bpp; 
-      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        if(BPP_IsDead(bpp)){
-          mydead++;
-        }
-      }
-      party = BTL_POKECON_GetPartyData( pokeCon, 1 );
-      for(i=0;i<BTL_PARTY_GetMemberCount(party);i++){
-        bpp = BTL_PARTY_GetMemberDataConst( party, i );
-        if(BPP_IsDead(bpp)){
-          e_dead++;
-        }
-      }
+      BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      int e_dead = _check_all_dead( e_party );
+
       if(mydead){
         lose_flag = 1;
       }
       if(e_dead){
         win_flag = 1;
       }
+      lose_flag |= _check_maxturn( mainModule, win_flag ); //規定ターンチェック
+    }
+    break;
+  case PW_PROV_TARGET_DEAD1: // 特定の相手が倒れればOK（他のポケモンも倒して良い）
+    { 
+      int monsno = _get_prov_pokemon( mainModule, senario );
+      BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 ); //敵のPOKEPARTY取得
+      BOOL target = _check_dead_only_poke( e_party,  monsno ); 
+      GF_ASSERT_MSG( monsno>0, "勝利条件に正しいポケモンＮＯが入っていない %d\n", monsno );
+
+      if(target){ // 特定のポケモンが倒れた
+        win_flag  = 1;
+      }
+      if(mydead){
+        lose_flag = 1;
+      }
+    }
+    lose_flag |= _check_maxturn( mainModule, win_flag ); //規定ターンチェック
+    break;
+  case PW_PROV_NOT_TARGET_DEAD: // 特定の相手以外を全て倒す
+    {
+      int monsno = _get_prov_pokemon( mainModule, senario );
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( pokeCon, 1 ); //敵のPOKEPARTY取得
+      BOOL target = _check_dead_only_poke( party,  monsno ); 
+      int dead = _get_dead_poke( party );
+      int partynum = BTL_PARTY_GetMemberCount(party);
+
+      GF_ASSERT_MSG( monsno>0, "勝利条件に正しいポケモンＮＯが入っていない %d\n", monsno );
+      
+      // 相手の特定のポケモン以外が全滅なら勝利
+      if(target==0 && dead==(partynum-1)){
+        win_flag = 1;
+      }
+      if(target==1 || mydead){ // 特定のポケモンを倒してはいけない
+        lose_flag = 1;
+      }
+
+      lose_flag |= _check_maxturn( mainModule, win_flag ); //規定ターンチェック
+    }
+    break;
+  case PW_PROV_SURVIVE1: // 規定ターン内生き残る１（相手を倒してもOK)
+    {
+      BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      int e_all  = _check_all_dead( e_party );
+      
+      // どちらも全滅してはいけない
+      if(mydead || e_all){
+        lose_flag = 1;
+      }
+      
+      // 規定ターンまで耐えられれば勝利
+      win_flag |= _check_maxturn( mainModule, win_flag ); 
+    }
+    break;
+  case PW_PROV_SURVIVE2:// 規定ターン内生き残る１（相手を倒してはNG)
+    {
+      BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      int e_dead  = _get_dead_poke( e_party );
+      
+      // 自分が全滅しない
+      if(mydead){
+        lose_flag = 1;
+      }
+      // 相手を倒してもいけない
+      if(e_dead){
+        lose_flag = 1;
+      }
+      
+      // 規定ターンまで耐えられれば勝利
+      win_flag |= _check_maxturn( mainModule, win_flag ); 
+    }
+    break;
+  case PW_PROV_SUCIDE:  // 規定ターンまでに自滅する
+    {
+      BTL_PARTY* e_party = BTL_POKECON_GetPartyData( pokeCon, 1 );
+      int e_all  = _check_all_dead( e_party );
+      // 自分が全滅したら勝利
+      if(mydead){
+        win_flag = 1;
+      }
+      // 相手が全滅したら敗北
+      if(e_all){
+        lose_flag = 1;
+      }
+      //規定ターンチェック(実行できなかったら敗北)
+      lose_flag |= _check_maxturn( mainModule, win_flag ); 
     }
     break;
   }
 
-  // 規定ターンチェック
-  {
-    BTL_SVFLOW_WORK  *svflow_work = BTL_MAIN_GetSVFWorkForAI( mainModule );
-    POKEWOOD_SENARIO *senario     = BTL_MAIN_GetPokewoodSenario( (BTL_MAIN_MODULE*)mainModule );
-    if(svflow_work->turnCount >= senario->turn_max){
-      if(!win_flag){    // 規定ターンに勝利していなかったら負け
-        lose_flag = 1;
-      }
-    }
-  }
-
   OS_Printf(" win_flag=%d, lose_flag=%d\n", win_flag, lose_flag);
-  if(win_flag && lose_flag==0){
-    return 1;   // 勝ち目的達成
+  if(win_flag && lose_flag==0){ //敗北条件は勝利条件を上回る
+    return 1;   // 勝利条件達成
   }
   
   if(lose_flag){
-    return -1;  // 負け条件達成
+    return -1;  // 敗北条件達成
   }
   
   return 0; //勝敗無し
@@ -2156,6 +2338,8 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
   }
   BTL_N_Printf( DBGSTR_SVFS_Result_RestCnt, alivePokeCnt[0], alivePokeCnt[1] );
 
+  // ポケウッドじゃなかったら通常勝敗判定
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE ) 
   {
     u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
     u8 playerSide = BTL_MAIN_GetClientSide( wk->mainModule, playerClientID );
@@ -2169,19 +2353,6 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
     if( (alivePokeCnt[enemySide] == 0) && (alivePokeCnt[playerSide] != 0) )
     {
       return BTL_RESULT_WIN;
-    }
-
-    // ポケウッド専用勝敗判定
-    if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC || 
-       BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
-      int win_lose;
-      OS_Printf("ポケウッド ENDチェック\n");
-      win_lose = BTL_SVSUB_CheckPokewoodSenario( wk->mainModule, wk->pokeCon );
-      if(win_lose>0){
-        return BTL_RESULT_WIN;
-      }else if(win_lose<0){
-        return BTL_RESULT_LOSE;
-      }
     }
 
     // 厳密判定が不要ならこの時点で引き分け
@@ -2220,6 +2391,18 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
       return CheckResult_AliveBoth( wk, alivePokeCnt, totalPokeCnt, playerSide );
     }
   }
+  {
+    // ポケウッド専用勝敗判定( REC/SHOWともに）
+    int win_lose;
+    OS_Printf("ポケウッド ENDチェック\n");
+    win_lose = BTL_SVSUB_CheckPokewoodSenario( wk->mainModule, wk->pokeCon );
+    if(win_lose>0){
+      return BTL_RESULT_WIN;
+    }else if(win_lose<0){
+      return BTL_RESULT_LOSE;
+    }
+  }
+  return BTL_RESULT_LOSE;
 }
 //----------------------------------------------------------------------------------
 /**
