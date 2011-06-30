@@ -147,12 +147,12 @@ static const s16 bs_mes_tbl[] = {
 // ヒント関連メッセージ
 //-------------------
 static const s16 bs_scene_tbl[] = {
-	pw_scriptindex_01,		// タイトル(数字の開始)(1-20)
+	pw_scriptindex_01,		// タイトル(数字の開始)(1-20)(共通)
 	//
 	// 以下に、ヒントを追加
-	pw_movie_hint_00,		// movie01
-	pw_movie_hint_00,		// movie02
-	pw_movie_hint_00,		// movie03
+	pw_movie_hint_00,		// movie01(1-20)(共通)
+//	pw_movie_hint_00,		// movie02
+//	pw_movie_hint_00,		// movie03
 };
 
 // メッセージ(要修正)
@@ -582,7 +582,7 @@ static void bs_init_seq( BSCENARIO_WORK * wk )
 	//
 	// 入らなければ、要修正
 	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->dat->heap );
-	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_hint001_dat, wk->dat->heap );
+	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_hint001_dat+wk->TopNum, wk->dat->heap );	// ファイル切り替え
 	//
 	// bg設定
 	bs_init_graphics( wk );
@@ -1671,7 +1671,8 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		//-------
 		// 先頭のidをセット(そこから連番のはず)
 		topid = bs_scene_tbl[0];
-		mesid = bs_scene_tbl[1+wk->TopNum];		// 本当はこれ
+//		mesid = bs_scene_tbl[1+wk->TopNum];		// 本当はこれ
+		mesid = bs_scene_tbl[1];		// 本当はこれ
 		//
 		//-----------
 		// シーン00
@@ -2512,7 +2513,8 @@ static void bs_calc_hintnum( BSCENARIO_WORK * wk )
 	STRBUF	*strbuf2;		// 比較するもの(読み替え)
 	
 	// 先頭のid
-	mesid = bs_scene_tbl[1+wk->TopNum];
+//	mesid = bs_scene_tbl[1+wk->TopNum];
+	mesid = bs_scene_tbl[1];
 	//
 	// 判定のメッセージを取得
 	strbuf = GFL_MSG_CreateString( wk->MsgData[1], MES_END_ID );
