@@ -17747,7 +17747,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_C03P19 = 507
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_OUT47,
+		AREA_ID_OUT69,
 		MATRIX_ID_C03_N,
 		NARC_script_seq_c03p19_bin,
 		NARC_script_seq_sp_c03p19_bin,	//NARC_script_seq_sp_c03p19_bin,
