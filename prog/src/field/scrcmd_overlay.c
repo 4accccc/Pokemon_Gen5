@@ -29,6 +29,7 @@
 #include "scrcmd_wbt_table.h"
 #include "scrcmd_resort_table.h"
 #include "scrcmd_infinity_dungeon_table.h"
+#include "scrcmd_pokewood_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -49,6 +50,7 @@ FS_EXTERN_OVERLAY( scrcmd_seatemple );
 FS_EXTERN_OVERLAY( scrcmd_wbt );
 FS_EXTERN_OVERLAY( scrcmd_resort );
 FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
+FS_EXTERN_OVERLAY( scrcmd_pokewood );
 
 //=============================================================================
 /**
@@ -174,6 +176,16 @@ static const ZONEID UseZoneIDTbl_infinitydungeon[] =
   ZONE_ID_D31R1101,
   ZONE_ID_D31R1201,
 };
+//-------------------------------------
+///	無限ダンジョン
+//=====================================
+static const ZONEID UseZoneIDTbl_pokewood[] = 
+{
+  ZONE_ID_C15,
+  ZONE_ID_C15R0101,
+  ZONE_ID_C15R0201,
+};
+
 
 //=============================================================================
 /**
@@ -259,6 +271,13 @@ static const struct
     NELEMS(UseZoneIDTbl_infinitydungeon),
     FS_OVERLAY_ID( scrcmd_infinity_dungeon ),
   },
+  //POKEWOOD
+  {
+    ScriptCmdTbl_pokewood,
+    UseZoneIDTbl_pokewood,
+    NELEMS(UseZoneIDTbl_pokewood),
+    FS_OVERLAY_ID( scrcmd_pokewood ),
+  }
 };
 //=============================================================================
 /**

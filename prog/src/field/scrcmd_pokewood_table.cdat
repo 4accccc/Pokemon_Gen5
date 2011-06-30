@@ -1,0 +1,22 @@
+//======================================================================
+/**
+ *  @file   scrcmd_pokewood_table.cdat
+ *  @brief  ポケウッド用スクリプトコマンド定義
+ *  @date   2011.06.30
+ *  @author	tamada  GAME FREAK inc.
+ *
+ */
+//======================================================================
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( pokewood )
+
+  DEF_CMD( EvCmdPokewoodRec,    EV_SEQ_POKEWOOD_REC )   // ポケウッド　再生
+  DEF_CMD( EvCmdPokewoodShow,   EV_SEQ_POKEWOOD_SHOW )  // ポケウッド　録画
+  DEF_CMD( EvCmdPokewoodBook,   EV_SEQ_POKEWOOD_BOOK )  // ポケウッド　台本
+  
+  END_CMD
+  //スクリプトコマンドテーブル終了
