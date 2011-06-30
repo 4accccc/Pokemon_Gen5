@@ -60,8 +60,8 @@ INIT_EVENT_START ev_init_d05
     _OBJ_POS_CHANGE( D05_SWBOSS_01, 197, 0, 469, DIR_DOWN )
   //アジト船イベント後
   ELSIF $WK_SCENE_D05 == 4 THEN
-    _OBJ_POS_CHANGE( D05_SWRIVAL_01, 196, 0, 490, DIR_RIGHT )
-    _OBJ_POS_CHANGE( D05_SWLEADER1_01, 198, 0, 490, DIR_LEFT )
+    _OBJ_POS_CHANGE( D05_SWRIVAL_01, 196, -1, 490, DIR_RIGHT )
+    _OBJ_POS_CHANGE( D05_SWLEADER1_01, 198, -1, 490, DIR_LEFT )
   ENDIF
 
 INIT_EVENT_END
@@ -135,7 +135,7 @@ EVENT_START		ev_pos_d05_swleader5_01
 
   //========================================//
   //D05WBT誘導イベントPOS無効
-  $WK_SCENE_C05 = 1
+  $WK_SCENE_D05 = 1
   //D05ライバル非表示
   _FLAG_SET( FV_D05_SWRIVAL_01 )
   //D05ヤーコン非表示
