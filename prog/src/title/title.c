@@ -304,7 +304,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
   DEBUG_PerformanceSetActive(TRUE); //デバッグ：パフォーマンスメーター有効
 #endif
 
-  SND_STRM_Init( HEAPID_TITLE_DEMO );
+  //SND_STRM_Init( HEAPID_TITLE_DEMO );
   //SND_STRM_Load( STRM_TITLE );
 
   return GFL_PROC_RES_FINISH;
@@ -389,8 +389,8 @@ static void _key_check( TITLE_WORK *tw )
     GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
-    //PMSND_FadeOutBGM( 4 );
-    SND_STRM_FadeOut( 4 );
+    PMSND_FadeOutBGM( 4 );
+    //SND_STRM_FadeOut( 4 );
 
     // モーションブラー係数を変更
     setSystemMbParam( &tw->CSys, VOICE_MOTION_BL_A, VOICE_MOTION_BL_B );
@@ -473,7 +473,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
   TITLE_WORK* tw = mywk;
   u8 test_buff;
 
-  SND_STRM_Main();
+  //SND_STRM_Main();
 
   switch(tw->seq){
   case SEQ_INIT:
@@ -496,8 +496,8 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
     tw->totalWait = 0;
     tw->seq = SEQ_FADEIN;
-    //PMSND_PlayBGM_WideChannel( SEQ_BGM_POKEMON_THEME );
-    SND_STRM_Play( STRM_TITLE );
+    PMSND_PlayBGM_WideChannel( SEQ_BGM_POKEMON_THEME );
+    //SND_STRM_Play( STRM_TITLE );
 
     tw->bef_vcnt  = OS_GetVBlankCount();
     break;
@@ -532,17 +532,16 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 2);
     tw->seq = SEQ_FADEOUT;
     MainFunc(tw);
-    //PMSND_FadeOutBGM( 16 );
-    SND_STRM_FadeOut( 16 );
+    PMSND_FadeOutBGM( 16 );
+    //SND_STRM_FadeOut( 16 );
     break;
 
   case SEQ_FADEOUT:
     if( GFL_FADE_CheckFade() == FALSE && 
-        SND_STRM_CheckPlay() == FALSE ){
-        /*&&
-        PMSND_CheckFadeOnBGM() == FALSE ){ */
-      //PMSND_StopBGM();
-      SND_STRM_Stop();
+//        SND_STRM_CheckPlay() == FALSE ){
+        PMSND_CheckFadeOnBGM() == FALSE ){
+      PMSND_StopBGM();
+      //SND_STRM_Stop();
       tw->seq = SEQ_END;
     }
     MainFunc(tw);
@@ -592,7 +591,7 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 
 
   mode = tw->mode;
-  SND_STRM_Exit();
+  //SND_STRM_Exit();
 
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap(HEAPID_TITLE_DEMO);
