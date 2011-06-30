@@ -709,6 +709,12 @@
 				<ContentItem
 					Name="c14r0601.mstxt" />
 				<ContentItem
+					Name="c15.mstxt" />
+				<ContentItem
+					Name="c15r0101.mstxt" />
+				<ContentItem
+					Name="c15r0201.mstxt" />
+				<ContentItem
 					Name="c16.mstxt" />
 				<ContentItem
 					Name="c16r0101.mstxt" />
@@ -1008,6 +1014,14 @@
 					Name="d25r0501.mstxt" />
 				<ContentItem
 					Name="d25r0601.mstxt" />
+				<ContentItem
+					Name="d25r0701.mstxt" />
+				<ContentItem
+					Name="d25r0801.mstxt" />
+				<ContentItem
+					Name="d25r0901.mstxt" />
+				<ContentItem
+					Name="d25r1001.mstxt" />
 				<ContentItem
 					Name="d26.mstxt" />
 				<ContentItem
