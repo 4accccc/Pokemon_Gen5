@@ -1597,6 +1597,7 @@ static void MOVE_EVENT_UpdateDragonGymData( PLAYER_MOVE_WORK *p_wk )
 static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
 {
   fx32 anm_start_frame;
+  fx32 anm_end_frame;
   BUTTON_TURN_ON_EVENT_WK *p_wk = p_wk_adrs;
   MODEL *p_model                = &p_wk->p_gmkwk->model[GYM_DRAGON_MODELID_HERO_DRAGON];
   EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, GYM_DRAGON_UNIT_IDX, p_model->modelID, HERO_DRA_ANM_BUTTON_ITP );
@@ -1622,7 +1623,7 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
       if( p_wk->layer != FLOOR_LAYER_TAIL )
       {
         // 1階以外はパターン２のアニメーションを使用する
-        anm_start_frame += FX32_CONST( TURNON_EVENT_WAIT_FRAME );
+        anm_start_frame += FX32_CONST( TURNON_EVENT_WAIT_FRAME1 );
       }
 
       // 点灯アニメーションの再生
@@ -1635,7 +1636,19 @@ static GMEVENT_RESULT ButtonTurnOn_Event( GMEVENT* p_event, int* p_seq, void* p_
   case TURNON_EVENT_SEQ_SE_START_WAIT:
     {
       p_wk->wait_frame++;
-      if( p_wk->wait_frame >= TURNON_EVENT_WAIT_FRAME )
+      
+      // アニメーション終了フレームの取得
+      if( p_wk->layer != FLOOR_LAYER_TAIL )
+      {
+        anm_end_frame = TURNON_EVENT_WAIT_FRAME1;
+      }
+      else
+      {
+        anm_end_frame = TURNON_EVENT_WAIT_FRAME2;
+      }
+
+      // アニメーション終了判定
+      if( p_wk->wait_frame >= anm_end_frame )
       {
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
         (*p_seq) = TURNON_EVENT_SEQ_TURON_NOW_BUTTON;

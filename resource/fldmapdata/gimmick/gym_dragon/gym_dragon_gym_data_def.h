@@ -18,7 +18,8 @@
 #define  DRA_BARK_MOVE_START_SE_FRAME (60) // 咆えた後の移動開始音再生タイミング
 #define  DRA_BUMP_SE_FRAME (5) // 衝突音の再生タイミング
 #define  DRA_STOP_SE_FRAME (5) // ドラゴン停止音の再生タイミング
-#define  TURNON_EVENT_WAIT_FRAME (20) // 初回ボタン点灯アニメーションのフレーム数
+#define  TURNON_EVENT_WAIT_FRAME1 (20) // 初回ボタン点灯アニメーションのフレーム数（1階用）
+#define  TURNON_EVENT_WAIT_FRAME2 (16) // 初回ボタン点灯アニメーションのフレーム数（2
 #define  DRA_BARK_CAMERA_SHAKE_HERO (180) // ドラゴンが咆えたときのカメラゆれタイミング（自機ドラゴン）
 #define  DRA_BARK_CAMERA_SHAKE_ENEMY (120) // ドラゴンが咆えたときのカメラゆれタイミング（敵ドラゴン）
 #define  DRA_BARK_CAMERA_SHAKE_W (1) // 揺れ幅(ドラゴン咆哮時)
