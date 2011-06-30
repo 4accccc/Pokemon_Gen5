@@ -226,10 +226,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_suginaka_katsunori
 #define QuickJumpStart   DEBUG_FIELD_STR03
 #define QuickJumpSelect  DEBUG_FIELD_STR17_01
-#elif defined DEBUG_ONLY_FOR_mizuguchi_mai || defined DEBUG_ONLY_FOR_mai_ando
-#define QuickJumpStart   DEBUG_FIELD_STR03
-#define QuickJumpSelect  DEBUG_FIELD_STR17_01
-#elif defined DEBUG_ONLY_FOR_murakami_naoto
+#elif defined DEBUG_ONLY_FOR_mizuguchi_mai
 #define QuickJumpStart   DEBUG_FIELD_STR03
 #define QuickJumpSelect  DEBUG_FIELD_STR17_01
 #elif defined DEBUG_ONLY_FOR_ohno
@@ -258,10 +255,13 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_tsuruta_saya
 #define QuickJumpStart   DEBUG_FIELD_STR13
 #define QuickJumpSelect  DEBUG_FIELD_STR13
-#elif defined DEBUG_ONLY_FOR_nakatsui
+#elif defined DEBUG_ONLY_FOR_nakatsui || defined DEBUG_ONLY_FOR_mori || defined DEBUG_ONLY_FOR_yoshida
 #define QuickJumpStart   DEBUG_FIELD_POKEWOOD
 #define QuickJumpSelect  DEBUG_FIELD_POKEWOOD
 
+#elif defined DEBUG_ONLY_FOR_tamada
+#define QuickJumpStart   DEBUG_FIELD_WBT
+#define QuickJumpSelect  DEBUG_FIELD_POKEWOOD
 #endif
 
 //--------------------------------------------------------------
