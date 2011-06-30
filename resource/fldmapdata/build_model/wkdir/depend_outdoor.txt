@@ -404,4 +404,13 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/d7_inaba_02.nsbmd \
 	$(RESDIR)/d23_obj_04.nsbmd \
 	$(RESDIR)/wbt_fountain.nsbmd \
+	$(RESDIR)/swanbg_01.nsbmd \
+	$(RESDIR)/swanbg_02.nsbmd \
+	$(RESDIR)/swanbg_03.nsbmd \
+	$(RESDIR)/swanbg_04.nsbmd \
+	$(RESDIR)/swanbg_05.nsbmd \
+	$(RESDIR)/swanbg_06.nsbmd \
+	$(RESDIR)/swanbg_07.nsbmd \
+	$(RESDIR)/swanbg_08.nsbmd \
+	$(RESDIR)/swanbg_09.nsbmd \
 

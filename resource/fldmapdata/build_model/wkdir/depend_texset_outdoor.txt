@@ -1605,7 +1605,16 @@ DEP_TEXSET_IMD_OUTDOOR038 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/swanbg_01.imd \
+	$(SRCDIR)/swanbg_02.imd \
+	$(SRCDIR)/swanbg_03.imd \
+	$(SRCDIR)/swanbg_04.imd \
+	$(SRCDIR)/swanbg_05.imd \
+	$(SRCDIR)/swanbg_06.imd \
+	$(SRCDIR)/swanbg_07.imd \
+	$(SRCDIR)/swanbg_08.imd \
+	$(SRCDIR)/swanbg_09.imd
 
 texset/outdoor038.imd: $(DEP_TEXSET_IMD_OUTDOOR038) texset/tmp/outdoor038.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor038.list
