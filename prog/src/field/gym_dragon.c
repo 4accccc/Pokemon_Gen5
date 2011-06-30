@@ -1150,6 +1150,7 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_PLAYER];
   fx32 frame;
+  s32  frame_offset;
   
   // アニメーションフレームの初期化
   frame = FLD_EXP_OBJ_GetObjAnmFrm(p_md->p_model->p_ex_obj,GYM_DRAGON_UNIT_IDX,0,0);
@@ -1165,11 +1166,20 @@ static void MOVE_Event_UpdatePlayerPos( PLAYER_MOVE_WORK *p_wk )
     }
   }
 
+  // 移動開始アニメーションのオフセットを設定（0フレーム目はスタート位置なのでスキップ）
+  if( p_md->is_reverse_move == FALSE )
+  {
+    frame_offset = 1;
+  }else
+  {
+    frame_offset = -1;
+  }
+
   // 移動処理
   if( p_md->is_move_end == FALSE )
   {
     VecFx32 vec = {0,0,0};
-    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) ) // 0フレーム目はスタート位置なのでスキップ
+    if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + frame_offset ) )
     {
       MtxFx43 trans;
       MODEL *p_model    = p_md->p_model;
@@ -1486,6 +1496,7 @@ static void UpdateFrame( TRACE_MOVE_DATA *p_md )
 static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
 {
   int i;
+  s32  frame_offset;
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
   TRACE_MOVE_DATA *p_md = &p_wk->move_data[ICA_MOVE_ID_ENEMY];
   const BUTTON_EVENT_DATA *p_bev = p_wk->p_button_evdata;
@@ -1502,11 +1513,20 @@ static void MOVE_Event_UpdateEnemyTrainerPos( PLAYER_MOVE_WORK *p_wk )
       }
     }
 
+    // 移動開始アニメーションのオフセットを設定（0フレーム目はスタート位置なのでスキップ）
+    if( p_md->is_reverse_move == FALSE )
+    {
+      frame_offset = 1;
+    }else
+    {
+      frame_offset = -1;
+    }
+
     // 移動処理
     if( p_md->is_move_end == FALSE )
     {
       VecFx32 vec = {0,0,0};
-      if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + 1 ) ) // 0フレーム目はスタート位置なのでスキップ
+      if ( ICA_ANIME_GetTranslateAt( p_md->p_ica_move_data, &vec, p_md->move_data_frame + frame_offset ) )
       {
         MtxFx43 trans;
         MODEL *p_model    = p_md->p_model;
