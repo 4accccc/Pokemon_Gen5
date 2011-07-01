@@ -487,7 +487,7 @@ void POKEWOOD_CUTIN_AttachViewCore( POKEWOOD_CUTIN *p_wk, BTLV_CORE* p_core )
  *	@return TRUEÇ≈ë∂ç›  FALSEÇ≈ë∂ç›ÇµÇƒÇ¢Ç»Ç¢
  */
 //-----------------------------------------------------------------------------
-BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOOL success_flag )
+BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOOL success_flag, BOOL is_fource )
 {
   int i;
   for( i = 0; i < NELEMS(sc_pw_cutin_dat_search); i++ )
@@ -510,6 +510,13 @@ BOOL POKEWOOD_CUTIN_IsExits( const POKEWOOD_SENARIO * cp_senario, u16 event, BOO
       default:
         GF_ASSERT(0);
       }
+
+#ifdef PM_DEBUG
+      if( is_fource )
+      {
+        is_ok = TRUE;
+      }
+#endif
 
       if( is_ok )
       {
