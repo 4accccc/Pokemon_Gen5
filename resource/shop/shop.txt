@@ -2,6 +2,7 @@
 "shop_bg.NCLR"
 "shop_bg1.NSCR"
 "shop_bg2.NSCR"
+"shop_bg3.NSCR"
 "shop_arw.NCGR"
 "shop_arw.NCER"
 "shop_arw.NANR"

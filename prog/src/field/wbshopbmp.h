@@ -70,6 +70,21 @@
 #define WINDOW8_WIN_PAL     (11)
 #define WINDOW8_WIN_CHR     (38)
 
+// ÇÌÇ¥ê‡ñæ
+#define WINDOW9_WIN_X     (1)
+#define WINDOW9_WIN_Y     (18)
+#define WINDOW9_WIN_W     (30)
+#define WINDOW9_WIN_H     (6)
+#define WINDOW9_WIN_PAL     (11)
+#define WINDOW9_WIN_CHR     (469)
+
+// Ç©ÇØÇÁêî
+#define WINDOW10_WIN_X     (5)
+#define WINDOW10_WIN_Y     (2)
+#define WINDOW10_WIN_W     (5)
+#define WINDOW10_WIN_H     (2)
+#define WINDOW10_WIN_PAL     (11)
+#define WINDOW10_WIN_CHR     (38)
 
 
 
@@ -130,6 +145,19 @@ const BMPWIN_DAT Window8BmpData={
   WINDOW8_WIN_PAL,  WINDOW8_WIN_CHR,
 };
 
+const BMPWIN_DAT Window9BmpData={
+  GFL_BG_FRAME1_M,
+  WINDOW9_WIN_X,  WINDOW9_WIN_Y,
+  WINDOW9_WIN_W,  WINDOW9_WIN_H,
+  WINDOW9_WIN_PAL,  WINDOW9_WIN_CHR,
+};
+
+const BMPWIN_DAT Window10BmpData={
+  GFL_BG_FRAME1_M,
+  WINDOW10_WIN_X,  WINDOW10_WIN_Y,
+  WINDOW10_WIN_W,  WINDOW10_WIN_H,
+  WINDOW10_WIN_PAL,  WINDOW10_WIN_CHR,
+};
 
 const BMPWIN_DAT* Window0BmpDataTable[]={
   &Window0BmpData,
@@ -149,6 +177,16 @@ const BMPWIN_DAT* Window1BmpDataTable[]={
   &Window3BmpData,
   &Window5BmpData,
   &Window6BmpData,
+  &Window7BmpData,
+};
+
+const BMPWIN_DAT* Window2BmpDataTable[]={
+  &Window0BmpData,
+  &Window10BmpData,
+  &Window2BmpData,
+  &Window3BmpData,
+  &Window5BmpData,
+  &Window9BmpData,
   &Window7BmpData,
 };
 

@@ -48,11 +48,15 @@ ev_shop_counter:
     _BALLOONWIN_OBJMSG_POS( msg_shop_greeting, SCWK_TARGET_OBJID, POS_DOWN )
   ENDIF
 
-  IF $lwk_shop_id == SCR_SHOPID_BP_ITEM || $lwk_shop_id == SCR_SHOPID_BP_WAZA THEN
+  SWITCH $lwk_shop_id
+  CASE SCR_SHOPID_WAZA_OSHIE_RED, SCR_SHOPID_WAZA_OSHIE_BLUE, SCR_SHOPID_WAZA_OSHIE_YELLOW, SCR_SHOPID_WAZA_OSHIE_GREEN THEN
+    _CALL sub_waza_oshie_shop_main
+  CASE SCR_SHOPID_BP_ITEM,SCR_SHOPID_BP_WAZA THEN
     _CALL sub_bpshop_main
-  ELSE
+  DEFAULT
     _CALL sub_shop_main
-  ENDIF
+  ENDSWITCH
+
 }
 _CHG_LOCAL_SCR
 
@@ -126,6 +130,29 @@ sub_bpshop_main:
   _BALLOONWIN_CLOSE()
 }
 _RET
+
+//==============================================================
+//サブルーチン：技教えショップメイン
+//==============================================================
+sub_waza_oshie_shop_main:
+{
+  DEFINE_LOCAL  i_ret
+
+  //ようこそ ポイント引き換えコーナーへ 景品を交換しますか？
+  //_BALLOONWIN_OBJMSG_POS( msg_bp_shop_01 , SCWK_TARGET_OBJID, POS_DOWN )
+
+  //はい/いいえ
+ 	//_YES_NO_WIN( i_ret )
+  //IF $i_ret == SCR_YES THEN
+    _CALL sub_shop_buy
+  //ENDIF
+
+  //_BALLOONWIN_OBJMSG_POS( msg_bp_shop_02 , SCWK_TARGET_OBJID, POS_DOWN ) //BPをためてまたお越しください
+  //_LAST_KEYWAIT()
+  //_BALLOONWIN_CLOSE()
+}
+_RET
+
 
 //==============================================================
 //サブルーチン：メニュー表示

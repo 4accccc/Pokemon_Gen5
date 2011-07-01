@@ -40,9 +40,11 @@
 #include "field_camera.h"
 #include "field/field_msgbg.h"
 #include "msg/script/msg_shop.h"
+#include "event_poke_status.h" // for EVENT_CreatePokeSelectWazaOboe
 
 #include "shop_data.cdat" // shop_data_table,    shop_itemnum_table
 #include "bpshop.cdat"    // bp_shop_data_table, bp_shop_itemnum_table
+#include "waza_oshie.cdat"// waza_oshie_data_table, waza_oshie_datanum_table
 
 #include "arc/shop_gra.naix"
 
@@ -97,10 +99,31 @@ enum{
 #define SCREEN_SUBMENU_ONLY         ( 1 )
 
 
-#define SHOP_TYPE_NORMAL  ( 0 )   // どうぐを扱う
-#define SHOP_TYPE_WAZA    ( 1 )   // 技マシンを扱う
+#define SHOP_TYPE_NORMAL      ( 0 )   // どうぐを扱う
+#define SHOP_TYPE_WAZA        ( 1 )   // 技マシンを扱う
+#define SHOP_TYPE_WAZA_OSHIE  ( 2 )   // 技教えを扱う
+
 #define SHOP_PAYMENT_MONEY    ( 0 )   // お金で払う
 #define SHOP_PAYMENT_BP       ( 1 )   // BPで払う
+#define SHOP_PAYMENT_FRAGMENT ( 2 )   // かけらではらう(技教え)
+
+//-------------------------------------
+///	わざおしえ種類定義
+//=====================================
+typedef enum {
+  WAZA_OSHIE_TYPE_RED,      // 赤
+  WAZA_OSHIE_TYPE_BLUE,     // 青
+  WAZA_OSHIE_TYPE_YELLOW,   // 黄
+  WAZA_OSHIE_TYPE_GREEN,    // 緑
+} WAZA_OSHIE_TYPE;
+
+// かけらのITEMNo定義
+static const u16 item_fragment_tbl[] = {
+  ITEM_AKAIKAKERA,      // あかいかけら
+  ITEM_AOIKAKERA,       // あおいかけら
+  ITEM_KIIROIKAKERA,    // きいろいかけら
+  ITEM_MIDORINOKAKERA,  // みどりのかけら
+};
 
 
 #ifdef BUGFIX_AF_SYSTEM92_20110208
@@ -164,6 +187,10 @@ typedef struct{
   s16               item_multi;       // 購入する数
   u16               FirstTrans;       // リストBMPWINの転送をおこなっているか？
 
+  WAZA_OSHIE_TYPE   waza_oshie_type;  // わざおしえの種類
+  GFL_MSGDATA       *wazaInfoMsgData; // わざ説明MSGDATA
+  BOOL              waza_select_flag; // 技を選択したフラグ
+  u16               select_waza_no;   // 選択した技No
 
 } SHOP_BUY_APP_WORK;
 
@@ -176,6 +203,9 @@ typedef struct {
   int camera_flag_push; // カメラの範囲制限フラグをPUSHするためのワーク
   SHOP_BUY_APP_WORK wk; // ショップ画面ワーク
   
+  // add 技教え
+  u16     retDecide;
+  u16     retPos;
 } SHOP_BUY_CALL_WORK;
 
 // BMP登録用情報構造体
@@ -222,6 +252,11 @@ static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type );
 static void ShopTypeDecideMsg( SHOP_BUY_APP_WORK *wk, int type );
 static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment );  
 static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type );
+
+// 技教え
+static void woshie_item_set( SHOP_BUY_APP_WORK *wk, int color );
+static void ShopDecideWazaOshieMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price );
+static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit );
 
 
 // BMPWIN定義テーブル
@@ -281,10 +316,37 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:  
     sbw->shopType = shop_id;
     break;
+  case SCR_SHOPID_WAZA_OSHIE_RED:     // わざおしえショップ
+  case SCR_SHOPID_WAZA_OSHIE_BLUE:
+  case SCR_SHOPID_WAZA_OSHIE_YELLOW:
+  case SCR_SHOPID_WAZA_OSHIE_GREEN:
+    sbw->wk.waza_oshie_type =  WAZA_OSHIE_TYPE_RED;
+    sbw->shopType = shop_id;
+    break;
   default:                    //固定ショップ呼び出し
     sbw->shopType = shop_id;
     sbw->shopId   = shop_id;
-  } 
+  }
+
+  // わざおしえ種類設定
+  switch(shop_id){
+  case SCR_SHOPID_WAZA_OSHIE_RED:
+    sbw->wk.waza_oshie_type =  WAZA_OSHIE_TYPE_RED;
+    break;
+  case SCR_SHOPID_WAZA_OSHIE_BLUE:
+    sbw->wk.waza_oshie_type =  WAZA_OSHIE_TYPE_BLUE;
+    break;
+  case SCR_SHOPID_WAZA_OSHIE_YELLOW:
+    sbw->wk.waza_oshie_type =  WAZA_OSHIE_TYPE_YELLOW;
+    break;
+  case SCR_SHOPID_WAZA_OSHIE_GREEN:
+    sbw->wk.waza_oshie_type =  WAZA_OSHIE_TYPE_GREEN;
+    break;
+  default:
+    sbw->wk.waza_oshie_type =  0;
+    break;
+  }
+
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
 
@@ -310,6 +372,9 @@ enum{
   SHOP_BUY_CALL_CAMERA_RETURN,
   SHOP_BUY_CALL_CAMERA_RETURN_WAIT,
   SHOP_BUY_CALL_END,
+  // add 技教え
+  SHOP_BUY_CALL_POKELIST,
+  SHOP_BUY_CALL_POKELIST_WAIT,
 };
 
 // ショップで買い物を開始するときのカメラ移動のオフセットデータ
@@ -414,7 +479,14 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL:
       // ショップメイン処理
       if(ShopCallFunc( gsys, &sbw->wk, sbw->shopType, sbw->shopId  )){
-        sbw->seq++;
+        if( sbw->wk.waza_select_flag == TRUE )
+        {
+          // 技教えの場合はポケモンリストに飛ぶ
+          sbw->seq = SHOP_BUY_CALL_POKELIST;
+        }else
+        {
+          sbw->seq++;
+        }
       }
       break;
     case SHOP_BUY_CALL_CAMERA_RETURN:
@@ -437,10 +509,54 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
         sbw->seq++;
       }
       break;
+    
     // イベント終了
     case SHOP_BUY_CALL_END:
       GFL_HEAP_FreeMemory(*scr_subproc_work);
       return TRUE;
+      break;
+    // ポケモン選択呼出し
+    case SHOP_BUY_CALL_POKELIST:
+      {
+        GMEVENT *event = SCRIPT_GetEvent( sc );
+        GMEVENT *call_event;
+        EVENT_POKESEL_PARAM_WOBOE prm;
+        prm.retDecide = &sbw->retDecide;
+        prm.retPos    = &sbw->retPos;
+        checkSkillTeach( gsys, &prm.learnBit );
+        prm.wazano    = sbw->wk.select_waza_no;
+        call_event = GMEVENT_CreateOverlayEventCall( gsys,
+            FS_OVERLAY_ID( notwifi_event_poke_status ), EVENT_CreatePokeSelectWazaOboe, (void*)&prm );
+        GMEVENT_CallEvent( event, call_event );
+        sbw->seq++;
+      }
+      break;
+    // ポケモン選択待ち
+    case SHOP_BUY_CALL_POKELIST_WAIT:
+      OS_Printf("retDecide %d\t", sbw->retDecide);
+      OS_Printf("retPos %d\n", sbw->retPos);
+
+      if( sbw->retDecide )
+      {
+        u8 bit;
+        checkSkillTeach( gsys, &bit );
+
+        // 選択したポケモンが技教え可能かチェック
+        // 可能ならかけらを消費する
+        if( bit & (1<<sbw->retPos))
+        {
+          BOOL ret;
+          u16 item_no = item_fragment_tbl[ sbw->wk.waza_oshie_type ];
+          ret = MYITEM_SubItem( sbw->wk.myitem, item_no, sbw->wk.price, sbw->wk.heapId);
+          GF_ASSERT( ret );
+
+          OS_Printf("選択したポケモンは覚えれる\n");
+        }else{
+          OS_Printf("選択したポケモンは覚えられない\n");
+        }
+      }
+
+      sbw->seq = SHOP_BUY_CALL_END;
       break;
   }
   
@@ -514,6 +630,8 @@ enum{
   SHOPBUY_SEQ_YESNO,
   SHOPBUY_SEQ_SELECT_YESNO_WAIT,
   SHOPBUY_SEQ_BUY,
+  SHOPBUY_SEQ_WAZA_SELECT,
+  SHOPBUY_SEQ_POKELIST_CALL,
   SHOPBUY_SEQ_JUDGE_PREMIER_BALL,
   SHOPBUY_SEQ_MSG_WAIT,
   SHOPBUY_SEQ_END,
@@ -572,6 +690,17 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
   case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:
     blackcity_shop_item_set( wk, type );
     break;
+  case SCR_SHOPID_WAZA_OSHIE_RED:
+  case SCR_SHOPID_WAZA_OSHIE_BLUE:
+  case SCR_SHOPID_WAZA_OSHIE_YELLOW:
+  case SCR_SHOPID_WAZA_OSHIE_GREEN:
+    {
+      wk->payment = SHOP_PAYMENT_FRAGMENT;
+      wk->type    = SHOP_TYPE_WAZA_OSHIE;
+      woshie_item_set( wk, wk->waza_oshie_type );
+      OS_Printf("わざおしえショップ起動 色:%d\n", wk->waza_oshie_type);
+    }
+    break;
   default: 
     shop_item_set( wk, type, id, 0 );
     break;
@@ -585,6 +714,12 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
 
   bmpwin_list_init( wk ); // 商品リスト表示
  
+  // 技教えの場合は左上にアイテムアイコンを表示する
+  if( wk->type == SHOP_TYPE_WAZA_OSHIE )
+  {
+    u16 item_no = item_fragment_tbl[ wk->waza_oshie_type ];
+    itemicon_resource_change( wk, item_no );
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -617,8 +752,11 @@ static int get_item_max( int item )
 //----------------------------------------------------------------------------------
 static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment )
 {
-  // ○○○円　か　○○ＢＰ
-  if(payment==SHOP_PAYMENT_BP){
+  // ○○○円　か　○○ＢＰ か ○○コ
+  if(payment==SHOP_PAYMENT_FRAGMENT){
+    wk->priceStr = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_10_02 );
+  }
+  else if(payment==SHOP_PAYMENT_BP){
     wk->priceStr = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_02_07_01 );
   }else{
     wk->priceStr = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_02_07 );
@@ -638,12 +776,17 @@ static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment )
 //----------------------------------------------------------------------------------
 static int _get_gold( SHOP_BUY_APP_WORK *wk )
 {
-  // お金か？
-  if(wk->payment==SHOP_PAYMENT_MONEY){
+  if(wk->payment==SHOP_PAYMENT_FRAGMENT){
+    // かけらか？
+    u16 item_no = item_fragment_tbl[ wk->waza_oshie_type ];
+    return MYITEM_GetItemNum(wk->myitem, item_no, wk->heapId);
+  }else if(wk->payment==SHOP_PAYMENT_BP){
+    // BPか
+    return BSUBWAY_SCOREDATA_GetBattlePoint( wk->BpData );
+  }else{
+    // お金か？
     return MISC_GetGold(wk->misc);
   }
-  // BPか
-  return BSUBWAY_SCOREDATA_GetBattlePoint( wk->BpData );
 }
 
 //----------------------------------------------------------------------------------
@@ -712,6 +855,40 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief 技選択時に、道具が足りてるかで処理を分岐させる
+ *
+ * @param   wk    SHOP_BUY_APP_WORK
+ *
+ * @retval  none
+ */
+//----------------------------------------------------------------------------------
+static void can_player_waza_oshie( SHOP_BUY_APP_WORK *wk )
+{
+  int gold = _get_gold(wk);
+
+  ICHI_Printf("かけらの数 %d", gold );
+
+  // 「かけらが たりないですよ！」
+  if(gold<wk->price)
+  {
+    // かけらが足りない
+    u16 item_no = item_fragment_tbl[ wk->waza_oshie_type ];
+    ShopPrintMsg( wk, mes_shop_10_03, item_no );
+
+    wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+    wk->next = SHOPBUY_SEQ_BACK;
+
+  // そのまま「はい・いいえ」
+  }else
+  {
+    ShopTypeDecideMsg( wk, wk->type );
+    wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+    wk->next = SHOPBUY_SEQ_YESNO;
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief 買う画面どうぐ選択時メイン処理
  *
  * @param   wk    SHOP_BUY_APP_WORK
@@ -744,8 +921,17 @@ static void shop_main( SHOP_BUY_APP_WORK *wk )
       wk->selectitem = wk->lineup[ret].id;
       wk->price      = wk->lineup[ret].price; //ITEM_GetParam( ret, ITEM_PRM_PRICE, wk->heapId );
       wk->item_multi = 1;
+
+      // 技おしえ判定
+      if( wk->payment == SHOP_PAYMENT_FRAGMENT )
+      {
+        can_player_waza_oshie( wk );
+      }
       // 購入できるか判定（買えない・一個買える・複数買える）
-      can_player_buy_item( wk );
+      else
+      {
+        can_player_buy_item( wk );
+      }
     }
   }
 
@@ -882,7 +1068,14 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     ret = BmpMenu_YesNoSelectMain( wk->yesnoWork );
     if(ret!=BMPMENU_NULL){
       if(ret==0){
-        wk->seq = SHOPBUY_SEQ_BUY;
+        // 次シーケンス判定
+        if( wk->type == SHOP_TYPE_WAZA_OSHIE )
+        {
+          // 技教えの場合
+          wk->seq = SHOPBUY_SEQ_WAZA_SELECT;
+        }else{
+          wk->seq = SHOPBUY_SEQ_BUY;
+        }
         submenu_screen_clear( SCREEN_SUBMENU_ONLY );
         BmpMenuList_Rewrite( wk->menuList );
         GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
@@ -901,6 +1094,20 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     MYITEM_AddItem( wk->myitem, wk->selectitem, wk->item_multi, wk->heapId);
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_JUDGE_PREMIER_BALL;
+    break;
+
+  case SHOPBUY_SEQ_WAZA_SELECT:
+    PMSND_PlaySE( SEQ_SE_SYS_22 );
+    ShopPrintMsg( wk, mes_shop_10_04, wk->selectitem );
+    wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
+    wk->next = SHOPBUY_SEQ_POKELIST_CALL;
+    break;
+
+  case SHOPBUY_SEQ_POKELIST_CALL:
+    wk->waza_select_flag = TRUE;
+    wk->select_waza_no   = wk->selectitem;
+    wk->seq = SHOPBUY_SEQ_END;
+    ICHI_Printf("ポケモンリスト呼び出し\n");
     break;
 
   // プレミアボール判定
@@ -990,8 +1197,15 @@ static int _lineup_check( SHOP_ITEM *list, int num )
 static void _add_menuitem( SHOP_BUY_APP_WORK *wk, int i, int type, int id, GFL_MSGDATA *itemMsgData )
 {
 
+  // わざおしえの場合は技名をセット
+  if(type==SHOP_TYPE_WAZA_OSHIE){
+    // バッファの1に技名を入れておく必要がある
+    WORDSET_RegisterWazaName( wk->wordSet, 1, id );
+    WORDSET_ExpandStr( wk->wordSet, wk->expandBuf, wk->wazaStr );
+    BmpMenuWork_ListAddString( &wk->list[i], wk->expandBuf, i, wk->heapId  );
+
   // 技マシンショップの場合は技名をセット
-  if(type==SHOP_TYPE_WAZA){
+  }else if(type==SHOP_TYPE_WAZA){
     WORDSET_RegisterNumber( wk->wordSet, 0, id-ITEM_WAZAMASIN01+1, 2, 
                             STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
     WORDSET_RegisterWazaName( wk->wordSet, 1, ITEM_GetWazaNo(id) );
@@ -1178,6 +1392,54 @@ static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  わざおしえショップアイテム登録
+ *
+ *	@param	SHOP_BUY_APP_WORK *wk
+ *	@param	color かけらの色( 4色
+ */
+//-----------------------------------------------------------------------------
+static void woshie_item_set( SHOP_BUY_APP_WORK *wk, int color )
+{
+  int i,itemnum;
+  GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                             NARC_message_itemname_dat, wk->heapId );
+  const  SHOP_ITEM *itemlist;
+
+  // 変動ショップ
+  itemlist = waza_oshie_data_table[color];
+
+  // どうぐ名登録・BMPMENULISTデータ作成
+  itemnum = waza_oshie_datanum_table[color];
+
+  wk->list = BmpMenuWork_ListCreate( itemnum+1, wk->heapId );
+  OS_Printf("type=%d, itemnum=%d\n", color, itemnum);
+  GF_ASSERT_MSG( itemnum<SHOP_ITEM_MAX, "ショップに一度に並べられる最大数を超えています\n" )
+
+
+  for(i=0;i<itemnum;i++)
+  {
+      int id = itemlist[i].id;
+      OS_Printf("strId=%d\n", id);
+      
+      // 技名を文字列登録
+      _add_menuitem( wk, i, wk->type, itemlist[i].id, itemMsgData );
+      
+      // 商品ラインナップテーブルにIDと値段を登録
+      wk->lineup[i].id    = itemlist[i].id;
+      wk->lineup[i].price = itemlist[i].price;
+  }
+  wk->lineup_num = i;
+  
+  // 「やめる」登録
+  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
+                                    mes_shop_02_06, 
+                                    BMPMENULIST_CANCEL, 
+                                    wk->heapId );
+
+  GFL_MSG_Delete( itemMsgData );
+}
 
 
 //----------------------------------------------------------------------------------
@@ -1210,6 +1472,8 @@ static int init_work( SHOP_BUY_APP_WORK *wk, int type )
                                              NARC_script_message_shop_dat, wk->heapId );
   wk->itemInfoMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                              NARC_message_iteminfo_dat, wk->heapId );
+  wk->wazaInfoMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                             NARC_message_wazainfo_dat, wk->heapId );
 
   wk->wordSet   = WORDSET_Create( wk->heapId );
 
@@ -1265,6 +1529,7 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
   // メッセージデータ解放
   GFL_MSG_Delete( wk->shopMsgData );
   GFL_MSG_Delete( wk->itemInfoMsgData );
+  GFL_MSG_Delete( wk->wazaInfoMsgData );
 
 }
 
@@ -1297,10 +1562,21 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
                                       0, SHOP_BG_PLTT_NUM, wk->heapId );
     // BG2面Char(背景）
     GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_shop_gra_shop_bg_NCGR, GFL_BG_FRAME2_M, 
-                                      100, 0, 0, wk->heapId);
+        100, 0, 0, wk->heapId);
+
     // BG2面Screen(背景）
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( handle, NARC_shop_gra_shop_bg1_NSCR, GFL_BG_FRAME2_M, 
-                                            0, 100, 0, 0, wk->heapId);
+    if( wk->type == SHOP_TYPE_WAZA_OSHIE )
+    {
+      // 技教えの場合はアイテムアイコンの下地がない
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs( handle, NARC_shop_gra_shop_bg3_NSCR, GFL_BG_FRAME2_M, 
+          0, 100, 0, 0, wk->heapId);
+    }
+    else
+    {
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs( handle, NARC_shop_gra_shop_bg1_NSCR, GFL_BG_FRAME2_M, 
+          0, 100, 0, 0, wk->heapId);
+    }
+
     GFL_ARC_CloseDataHandle( handle );
   }
   
@@ -1310,7 +1586,6 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
 
   // テキスト面消去
   GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
-
 
 
   // BG2面のプライオリティを１に変更
@@ -1446,6 +1721,18 @@ static void itemicon_resource_change( SHOP_BUY_APP_WORK *wk, u16 itemno )
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ITEM], FALSE );
    
   }
+
+
+  // わざおしえショップの場合はアイテムアイコンを
+  // 左上に表示する
+  if( wk->type == SHOP_TYPE_WAZA_OSHIE )
+  {
+    GFL_CLACTPOS clpos;
+    clpos.x = 22;
+    clpos.y = 28;
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ITEM], TRUE );
+    GFL_CLACT_WK_SetPos( wk->ClactWork[SHOP_OBJ_ITEM], &clpos, CLSYS_DEFREND_MAIN );
+  }
 }
 
 
@@ -1577,11 +1864,12 @@ static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
   const BMPWIN_DAT **tbl;
   const BMPWIN_DAT *dat;
 
-  if(wk->payment == SHOP_PAYMENT_BP){
+  if(wk->payment == SHOP_PAYMENT_FRAGMENT){
+    tbl = Window2BmpDataTable;
+  }else if(wk->payment == SHOP_PAYMENT_BP){
     tbl = Window1BmpDataTable;
   }else{
     tbl = Window0BmpDataTable;
-  
   }
 
   for(i=0;i<SHOP_BUY_BMPWIN_MAX;i++){
@@ -1603,7 +1891,7 @@ static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
   PRINT_UTIL_Setup( &wk->printUtil, wk->win[SHOP_BUY_BMPWIN_LIST] );
   wk->printQue = PRINTSYS_QUE_Create( wk->heapId );
 
-  if(wk->payment == SHOP_PAYMENT_BP){
+  if(wk->payment == SHOP_PAYMENT_BP || wk->payment == SHOP_PAYMENT_FRAGMENT){
     GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_MONEY] );
   }else{
     GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_OKODUKAI] );
@@ -1644,7 +1932,18 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
   STRBUF *str;
   STRBUF *expand;
   
-  if(wk->payment == SHOP_PAYMENT_BP){
+  if(wk->payment == SHOP_PAYMENT_FRAGMENT){
+    str    = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_10_05 );
+    expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
+
+    // 残かけら取得
+    {
+      u16 item_no = item_fragment_tbl[ wk->waza_oshie_type ];
+      WORDSET_RegisterNumber( wk->wordSet, 0, MYITEM_GetItemNum(wk->myitem, item_no, wk->heapId), 3, 
+          STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+    }
+
+  }else if(wk->payment == SHOP_PAYMENT_BP){
     str    = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_05_03 );
     expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
   
@@ -1733,9 +2032,21 @@ static void print_iteminfo( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
   // 描画(存在しない場合はクリア)
   if(itemno<=ITEM_DATA_MAX){
-    str = GFL_MSG_CreateString( wk->itemInfoMsgData, itemno );
-    PRINTSYS_PrintColor( bmp,  0, 0, str, wk->font, WHITE_TEXT_B_COL );
-    GFL_STR_DeleteBuffer( str );
+
+    // わざの場合
+    if( wk->type == SHOP_TYPE_WAZA_OSHIE )
+    {
+      str = GFL_MSG_CreateString( wk->wazaInfoMsgData, itemno );
+      PRINTSYS_PrintColor( bmp,  0, 0, str, wk->font, WHITE_TEXT_B_COL );
+      GFL_STR_DeleteBuffer( str );
+    }
+    else
+    // どうぐの場合
+    {
+      str = GFL_MSG_CreateString( wk->itemInfoMsgData, itemno );
+      PRINTSYS_PrintColor( bmp,  0, 0, str, wk->font, WHITE_TEXT_B_COL );
+      GFL_STR_DeleteBuffer( str );
+    }
   }
 
   GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_ITEMINFO] );
@@ -1817,7 +2128,7 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
                             //カーソル移動ごとのコールバック関数
   header.call_back = move_callback;  // void  (*call_back)(BMPMENULIST_WORK * wk,u32 param,u8 mode);
                             //一列表示ごとのコールバック関数
-  if(wk->type==SHOP_TYPE_NORMAL){
+  if(wk->type==SHOP_TYPE_NORMAL || wk->type==SHOP_TYPE_WAZA_OSHIE){
     header.icon      = line_callback;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
   }else{
     header.icon      = line_callback_waza;  // void  (*icon)(BMPMENULIST_WORK * wk,u32 param,u8 y);
@@ -1982,16 +2293,29 @@ static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
   if (param < SHOP_ITEM_MAX)
   {
     print_iteminfo( sbw, sbw->lineup[param].id );
-    itemicon_resource_change( sbw, sbw->lineup[param].id );
+
+    // アイテムアイコンが技教えの時はアイコンを変更する必要がない
+    if( sbw->type != SHOP_TYPE_WAZA_OSHIE )
+    {
+      itemicon_resource_change( sbw, sbw->lineup[param].id );
+    }
   }
   else
   {
     print_iteminfo( sbw, SHOP_ITEMID_NONE );
-    itemicon_resource_change( sbw, SHOP_ITEMID_NONE );
+    // アイテムアイコンが技教えの時はアイコンを変更する必要がない
+    if( sbw->type != SHOP_TYPE_WAZA_OSHIE )
+    {
+      itemicon_resource_change( sbw, SHOP_ITEMID_NONE );
+    }
   }
 #else
   print_iteminfo( sbw, sbw->lineup[param].id );
-  itemicon_resource_change( sbw, sbw->lineup[param].id );
+  // アイテムアイコンが技教えの時はアイコンを変更する必要がない
+  if( sbw->type != SHOP_TYPE_WAZA_OSHIE )
+  {
+    itemicon_resource_change( sbw, sbw->lineup[param].id );
+  }
 #endif
 
 }
@@ -2088,8 +2412,11 @@ static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 //----------------------------------------------------------------------------------
 static void ShopTypeDecideMsg( SHOP_BUY_APP_WORK *wk, int type )
 {
+  // わざおしえをえらんだときのメッセージ
+  if(wk->type==SHOP_TYPE_WAZA_OSHIE){
+      ShopDecideWazaOshieMsg( wk, mes_shop_10_01, wk->selectitem, wk->price );
   // わざマシン購入の時のメッセージ
-  if(wk->type==SHOP_TYPE_WAZA){
+  }else if(wk->type==SHOP_TYPE_WAZA){
     if(wk->payment == SHOP_PAYMENT_BP){
       ShopDecideWazaMsg( wk, mes_shop_02_03_03, wk->selectitem, wk->price );
     }else{
@@ -2199,6 +2526,34 @@ static void ShopDecideWazaMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32
   _expand_and_print_msg( wk, strId );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 技おしえで技を選んだ時のメッセージ表示
+ *
+ * @param   wk      SHOP_BUY_APP_WORK
+ * @param   strId   メッセージID
+ * @param   itemno  技No
+ * @param   price   コスト
+ */
+//----------------------------------------------------------------------------------
+static void ShopDecideWazaOshieMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price )
+{
+  // BMPWINクリア
+  _clear_msg_bmpwin( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
+  
+  // 表示文字列登録
+  WORDSET_RegisterWazaName( wk->wordSet, 0, itemno );
+  {
+    u16 item_no = item_fragment_tbl[ wk->waza_oshie_type ];
+    WORDSET_RegisterItemName( wk->wordSet, 1, item_no );
+  }
+
+  WORDSET_RegisterNumber( wk->wordSet, 2, price,
+                          2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
+
+  // ウインドウ描画
+  _expand_and_print_msg( wk, strId );
+}
 
 #define APP_NUMSEL_NONE ( 0 )
 #define APP_NUMSEL_UP   ( 1 )
@@ -2319,4 +2674,35 @@ static void submenu_screen_clear( int type )
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  手持ちに技教えが可能か判定
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	*oboeBit    ビット単位でどのポケモンに教えられるか？を返す
+ */
+//-----------------------------------------------------------------------------
+static void checkSkillTeach( GAMESYS_WORK *gsys, u8 *oboeBit )
+{
+  GAMEDATA *    gdata = GAMESYSTEM_GetGameData( gsys );
+  POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
+  int           max = PokeParty_GetPokeCount( party );
+
+  int pos;
+  int i;
+
+  *oboeBit = 0;
+  
+  for ( pos = 0; pos < max; pos++ )
+  {
+    int waza_no = 0;
+    int color = 0;
+    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, pos );
+    if( PP_CheckWazaOshieSW( pp, waza_no, color) == TRUE )
+    {
+      *oboeBit |= ( 1 << pos );
+    }
+  }
+  OS_Printf("覚えビット %x\n", *oboeBit);
+}
 

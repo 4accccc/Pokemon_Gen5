@@ -95,6 +95,10 @@
 #define SCR_SHOPID_BLACK_CITY2 ( 0xF9 )  //ブラックシティショップ呼び出しID:2
 #define SCR_SHOPID_BLACK_CITY1 ( 0xF8 )  //ブラックシティショップ呼び出しID:3
 #define SCR_SHOPID_BLACK_CITY0 ( 0xF7 )  //ブラックシティショップ呼び出しID:4
+#define SCR_SHOPID_WAZA_OSHIE_RED     ( 0xF6 )  //技教え用
+#define SCR_SHOPID_WAZA_OSHIE_BLUE    ( 0xF5 )  //技教え用
+#define SCR_SHOPID_WAZA_OSHIE_YELLOW  ( 0xF4 )  //技教え用
+#define SCR_SHOPID_WAZA_OSHIE_GREEN   ( 0xF3 )  //技教え用
 
 //サブプロセス(アプリ)の終了コード定義
 #define SCR_PROC_RETMODE_EXIT    (0) //一発終了

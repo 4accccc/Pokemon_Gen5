@@ -15,6 +15,12 @@ typedef struct {
   u16 id;       // どうぐID
   u32 price;    // 値段 or BPポイント
 }SHOP_ITEM;
+/* ※技教えデータの場合は
+typedef struct {
+  u16 id;       // 技No
+  u32 price;    // コスト
+}SHOP_ITEM;
+が入る */
 
 // 一度に並べることができる商品数
 #define SHOP_ITEM_MAX   ( 40 )

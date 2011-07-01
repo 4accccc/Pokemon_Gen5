@@ -10,6 +10,7 @@ del *.narc
 echo g2dコンバート
 g2dcvtr shop_bg1.nsc
 g2dcvtr shop_bg2.nsc
+g2dcvtr shop_bg3.nsc
 g2dcvtr shop_bg.ncg -bg
 g2dcvtr shop_bg.ncl
 g2dcvtr shop_sel.nce -br

@@ -927,6 +927,8 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_2,   2 ) // 捕獲デモ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_3,   3 ) // ライバル名入力
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_4,   4 ) // ライバル名表示
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_5,   5 ) // ぎょえ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_6,   6 ) // わざおしえショップ
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -964,9 +966,22 @@ EVENT_START   ev_debug_ichiraku
     _PLAINWIN_MSG_DOWN( msg_debug_ichiraku_4_a )
 	  _LAST_KEYWAIT()	
 	  _PLAINWIN_CLOSE()
+  CASE 5 THEN
+    // !アイコン表示
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_tr_gyoe )
+		_OBJ_ANIME_WAIT()
+  CASE 6 THEN
+    _WAZA_OSHIE_RED_SHOP_CALL_GREETING_LESS()
+    
   ENDSWITCH
 
 EVENT_END
+//--------------------------------------------------------------
+//	トレーナー[!]マーク
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_tr_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*                                                            */

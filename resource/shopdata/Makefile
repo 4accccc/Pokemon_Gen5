@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= mori tetsuji_ohta iwao_kazumasa
+USERS	= mori tetsuji_ohta iwao_kazumasa ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -47,27 +47,31 @@ CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out.rb
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).cdat $(TARGETDIR)/bpshop.cdat
+do-build:	subdir $(TARGETDIR)/$(targetname).cdat $(TARGETDIR)/bpshop.cdat $(TARGETDIR)/waza_oshie.cdat
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # cdat のコピーだけ実行する
-$(TARGETDIR)/$(targetname).cdat: $(targetname).cdat bpshop.cdat
+$(TARGETDIR)/$(targetname).cdat: $(targetname).cdat bpshop.cdat waza_oshie.cdat
 	$(COPY) $(targetname).cdat $(TARGETDIR)
 
 $(TARGETDIR)/bpshop.cdat: bpshop.cdat
 	$(COPY) bpshop.cdat $(TARGETDIR)
 
+$(TARGETDIR)/waza_oshie.cdat: waza_oshie.cdat
+	$(COPY) waza_oshie.cdat $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).cdat: fs_item.xls bp_item.xls
+$(targetname).cdat: fs_item.xls bp_item.xls waza_oshie.xls
 	$(COPY) $(PROJECT_PROGDIR)include/item/itemsym.h ./itemsym.h
 	ruby $(CSVCVTR) -c fs_item.xls >fs_item.csv
 	ruby shopdata.rb fs_item.csv itemsym.h $(targetname).cdat $(targetname)_index.h
 	ruby $(CSVCVTR) -c bp_item.xls >bp_item.csv
 	ruby bpshopdata.rb bp_item.csv itemsym.h bpshop.cdat bpshop_index.h
+	ruby $(CSVCVTR) -c waza_oshie.xls >waza_oshie.csv
+	ruby waza_oshie.rb waza_oshie.csv waza_oshie.cdat
 endif
 
 #------------------------------------------------------------------------------

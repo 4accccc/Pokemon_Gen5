@@ -15,13 +15,14 @@ enum {
 	NARC_shop_gra_shop_bg_NCLR = 1,
 	NARC_shop_gra_shop_bg1_NSCR = 2,
 	NARC_shop_gra_shop_bg2_NSCR = 3,
-	NARC_shop_gra_shop_arw_NCGR = 4,
-	NARC_shop_gra_shop_arw_NCER = 5,
-	NARC_shop_gra_shop_arw_NANR = 6,
-	NARC_shop_gra_shop_sel_NCGR = 7,
-	NARC_shop_gra_shop_sel_NCER = 8,
-	NARC_shop_gra_shop_sel_NANR = 9,
-	NARC_shop_gra_shop_obj_NCLR = 10
+	NARC_shop_gra_shop_bg3_NSCR = 4,
+	NARC_shop_gra_shop_arw_NCGR = 5,
+	NARC_shop_gra_shop_arw_NCER = 6,
+	NARC_shop_gra_shop_arw_NANR = 7,
+	NARC_shop_gra_shop_sel_NCGR = 8,
+	NARC_shop_gra_shop_sel_NCER = 9,
+	NARC_shop_gra_shop_sel_NANR = 10,
+	NARC_shop_gra_shop_obj_NCLR = 11
 };
 
 /* NARC_SHOP_GRA_NAIX_ */
