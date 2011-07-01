@@ -22,7 +22,7 @@ extern void FOURKINGS_ESP_Move(FIELDMAP_WORK *p_fieldmap);
 
 // スクリプトコマンドで呼ばれる関数
 extern void FOURKINGS_ESP_StairsAnm( GAMESYS_WORK *gsys, int id );
-extern void FOURKINGS_ESP_FlowerAnm( GAMESYS_WORK *gsys );
+extern GMEVENT* FOURKINGS_ESP_FlowerAnm( GAMESYS_WORK *gsys );
 extern void FOURKINGS_ESP_CubeAnm( GAMESYS_WORK *gsys );
 extern void FOURKINGS_ESP_Cattleya( GAMESYS_WORK *gsys, int obj_id, int fall_spd );
 

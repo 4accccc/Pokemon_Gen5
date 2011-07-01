@@ -20,18 +20,19 @@ enum {
 	NARC_fourkings_esp_flower_nsbma = 6,
 	NARC_fourkings_esp_flower_nsbta = 7,
 	NARC_fourkings_esp_flower_nsbtp = 8,
-	NARC_fourkings_esp_ripple_nsbmd = 9,
-	NARC_fourkings_esp_ripple_nsbta = 10,
-	NARC_fourkings_esp_stairs01_nsbmd = 11,
-	NARC_fourkings_esp_stairs01_nsbta = 12,
-	NARC_fourkings_esp_stairs02_nsbca = 13,
-	NARC_fourkings_esp_stairs02_nsbma = 14,
-	NARC_fourkings_esp_stairs03_nsbmd = 15,
-	NARC_fourkings_esp_stairs03_nsbca = 16,
-	NARC_fourkings_esp_stairs03_nsbta = 17,
-	NARC_fourkings_esp_stairs04_nsbmd = 18,
-	NARC_fourkings_esp_stairs04_nsbta = 19,
-	NARC_fourkings_esp_stairs05_nsbma = 20
+	NARC_fourkings_esp_flower_ud_nsbca = 9,
+	NARC_fourkings_esp_ripple_nsbmd = 10,
+	NARC_fourkings_esp_ripple_nsbta = 11,
+	NARC_fourkings_esp_stairs01_nsbmd = 12,
+	NARC_fourkings_esp_stairs01_nsbta = 13,
+	NARC_fourkings_esp_stairs02_nsbca = 14,
+	NARC_fourkings_esp_stairs02_nsbma = 15,
+	NARC_fourkings_esp_stairs03_nsbmd = 16,
+	NARC_fourkings_esp_stairs03_nsbca = 17,
+	NARC_fourkings_esp_stairs03_nsbta = 18,
+	NARC_fourkings_esp_stairs04_nsbmd = 19,
+	NARC_fourkings_esp_stairs04_nsbta = 20,
+	NARC_fourkings_esp_stairs05_nsbma = 21
 };
 
 /* NARC_FOURKINGS_ESP_NAIX_ */

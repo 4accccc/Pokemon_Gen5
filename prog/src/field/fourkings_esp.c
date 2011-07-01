@@ -82,6 +82,7 @@ enum {
   RESID_FLOWER_ANM_IMA,       // 花
   RESID_FLOWER_ANM_ITA,       // 花
   RESID_FLOWER_ANM_ITP,       // 花
+  RESID_FLOWER_ANM_ICA_UD,    // 花上下するアニメ(ループ)
   RESID_RIPPLE_MDL,           // 波紋
   RESID_RIPPLE_ANM_ITA,       // 波紋
   RESID_STAIRS_01_MDL,        // 滝
@@ -120,6 +121,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_flower_nsbma, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_flower_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_flower_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_flower_ud_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_ripple_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_ripple_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_ESP, NARC_fourkings_esp_stairs01_nsbmd, GFL_G3D_UTIL_RESARC },
@@ -149,6 +151,7 @@ static const GFL_G3D_UTIL_ANM anm_flower[] =
   { RESID_FLOWER_ANM_IMA, 0 },
   { RESID_FLOWER_ANM_ITA, 0 },
   { RESID_FLOWER_ANM_ITP, 0 },
+  { RESID_FLOWER_ANM_ICA_UD, 0 },
 };
 #define FLOWER_ANM_NUM  ( NELEMS(anm_flower) )
 
@@ -268,6 +271,8 @@ static void ANM_CUBE_Play( FOURKINGS_ESP_TMP *p_wk );
 static void ANM_CUBE_PlayLoop( FOURKINGS_ESP_TMP *p_wk );
 // FLOWER
 static void ANM_FLOWER_Play( FOURKINGS_ESP_TMP *p_wk );
+static void ANM_FLOWER_PlayLoop( FOURKINGS_ESP_TMP *p_wk );
+static BOOL ANM_FLOWER_CheckEnd( FOURKINGS_ESP_TMP *p_wk );
 // RIPPLE
 static void ANM_RIPPLE_Play( FOURKINGS_ESP_TMP *p_wk );
 // WATERFALL
@@ -280,6 +285,9 @@ static BOOL ANM_CURTAIN_CheckEnd( FOURKINGS_ESP_TMP *p_wk );
 // STAIRS
 static void ANM_STAIRS_PlayLoop( FOURKINGS_ESP_TMP *p_wk );
 static void ANM_STAIRS_Play( FOURKINGS_ESP_TMP *p_wk );
+
+// イベント関数
+static GMEVENT_RESULT FlowerEvent( GMEVENT* event, int* seq, void* work );
 
 // task(カトレア)
 static void CATTLEYA_TASK_Add( FOURKINGS_ESP_TMP *p_wk, MMDL* mmdl, const fx32 fall_spd );
@@ -434,12 +442,16 @@ void FOURKINGS_ESP_StairsAnm( GAMESYS_WORK *gsys, int id )
  *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
  */
 //-----------------------------------------------------------------------------
-void FOURKINGS_ESP_FlowerAnm( GAMESYS_WORK *gsys )
+GMEVENT* FOURKINGS_ESP_FlowerAnm( GAMESYS_WORK *gsys )
 {
+  GMEVENT *event;
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FOURKINGS_ESP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID );
 
-  ANM_FLOWER_Play( p_wk );
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, FlowerEvent, 0 );
+
+  return event;
 }
 
 //----------------------------------------------------------------------------
@@ -518,8 +530,7 @@ static void INIT_FieldRecover( FOURKINGS_ESP_TMP *p_wk )
       MMDL_SetStatusBitVanish( mmdl, TRUE );
     }
     ANM_STAIRS_PlayLoop( p_wk );    // 階段
-    // 花表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, OBJ_FLOWER, FALSE );
+    ANM_FLOWER_PlayLoop( p_wk );    // 花上下ゆれ
 
     // POS1(=階段下)が起動していない
     if( pos1_flag == FALSE )
@@ -765,10 +776,54 @@ static void ANM_FLOWER_Play( FOURKINGS_ESP_TMP *p_wk )
   // 表示
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, obj_idx, FALSE );
   
-  for( i=0; i<FLOWER_ANM_NUM; i++ )
+  // 最後のICAアニメは適用しない
+  for( i=0; i<FLOWER_ANM_NUM-1; i++ )
   {
     ANM_Play( p_wk->exp_obj, obj_idx, i, FALSE );
   }
+  ANM_Stop( p_wk->exp_obj, obj_idx, FLOWER_ANM_NUM-1 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  花アニメ再生(上下揺れのループ)
+ *
+ *	@param	FOURKINGS_ESP_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANM_FLOWER_PlayLoop( FOURKINGS_ESP_TMP *p_wk )
+{
+  int i;
+  u16 obj_idx = OBJ_FLOWER;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, obj_idx, FALSE );
+  
+  // 最後のICAアニメは適用しない
+  for( i=0; i<FLOWER_ANM_NUM-1; i++ )
+  {
+    ANM_Stop( p_wk->exp_obj, obj_idx, i );
+  }
+  ANM_Play( p_wk->exp_obj, obj_idx, FLOWER_ANM_NUM-1, TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  花アニメ終了チェック
+ *
+ *	@param	FOURKINGS_ESP_TMP *p_wk 
+ *
+ *	@return TRUEで終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL ANM_FLOWER_CheckEnd( FOURKINGS_ESP_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_FLOWER;
+
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_ESP_UNIT_IDX, obj_idx, FLOWER_ANM_NUM-1 );
+
+  return FLD_EXP_OBJ_ChkAnmEnd(exp_anm);
 }
 
 //=============================================================================
@@ -964,6 +1019,40 @@ static void ANM_STAIRS_Play( FOURKINGS_ESP_TMP *p_wk )
   ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  花開くイベント
+ *
+ *	@param	*event  イベントポインタ
+ *	@param	seq     シーケンス
+ *	@param	work    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT FlowerEvent( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  FOURKINGS_ESP_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_ESP_TMP_ASSIGN_ID);
+
+  switch(*seq){
+  case 0:
+    // 花の上下ゆれアニメ待ち
+    if( ANM_FLOWER_CheckEnd(p_gmk_wk) )
+    {
+      (*seq)++;
+    }
+    break;
+  case 1:
+    // 花の開くアニメ
+    ANM_FLOWER_Play( p_gmk_wk );
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
 //=============================================================================
 /**
  *          カトレア演出
@@ -1018,6 +1107,7 @@ static FIELD_TASK_RETVAL TaskFunc( void* wk )
   {
     MMDL_UpdateCurrentHeight( work->mmdl );   // 接地
     ANM_RIPPLE_Play( work->p_parent );        // 波紋アニメ再生
+    ICHI_Printf("カトレアタスク終了\n");
     return FIELD_TASK_RETVAL_FINISH;
   }
 

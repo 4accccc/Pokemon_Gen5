@@ -232,13 +232,22 @@ VMCMD_RESULT EvCmdFourKings_Esp_Stairs( VMHANDLE *core, void *wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdFourKings_Esp_Flower( VMHANDLE *core, void *wk )
 {
-  int id;
+  GMEVENT *event;
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  FOURKINGS_ESP_FlowerAnm( gsys );
+  event = FOURKINGS_ESP_FlowerAnm( gsys );
 
-  return VMCMD_RESULT_CONTINUE;
+  if( event == NULL )
+  {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
 }
 //----------------------------------------------------------------------------
 /**

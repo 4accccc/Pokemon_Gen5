@@ -8,6 +8,7 @@ DATA_LIST = \
     flower.nsbma \
     flower.nsbta \
     flower.nsbtp \
+    flower_ud.nsbca \
     ripple.nsbmd \
     ripple.nsbta \
     stairs01.nsbmd \
