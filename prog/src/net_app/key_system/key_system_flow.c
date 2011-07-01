@@ -2987,11 +2987,13 @@ static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE 
       //ブラックの場合はインデックスをひとつずらしてやる
       if( GET_VERSION() == VERSION_W2 )
       {
-        index = 2;
+        //W2の場合受信するのはブラックキー　送信するのはホワイトキー
+        index = recv_or_send ? 2: 3;
       }
       else
       {
-        index = 3;
+        //B2の場合受信するのはホワイトキー  送信するのはブラックキー
+        index = recv_or_send ? 3: 2;
       }
     }
 
