@@ -680,7 +680,8 @@ KEYSYS_LIST_WORK * KEYSYS_LIST_InitEx( const KEYSYS_LIST_SETUP *cp_setup, u8 x, 
   { 
     p_wk->p_bmpwin  = GFL_BMPWIN_Create( cp_setup->frm, x, y, w, h, cp_setup->font_plt, GFL_BMP_CHRAREA_GET_B );
     BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF, cp_setup->frm_chr, cp_setup->frm_plt );
-    GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+	  GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+	  GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
 
     PRINT_UTIL_Setup( &p_wk->print_util, p_wk->p_bmpwin );
   }
@@ -785,6 +786,7 @@ u32 KEYSYS_LIST_Main( KEYSYS_LIST_WORK *p_wk )
 { 
   u32 ret;
 
+  KEYSYS_LIST_Draw( p_wk );
 
   ret = BmpMenuList_Main( p_wk->p_list );
 

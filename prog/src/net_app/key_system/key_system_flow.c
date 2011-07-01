@@ -474,6 +474,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   enum
   {
     SEQ_YESNO_START,
+    SEQ_YESNO_DRAW_WAIT,
     SEQ_YESNO_WAIT,
 
     SEQ_DISPLAY_CREATE,
@@ -523,8 +524,14 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       (*p_seq)++;
     }
     break;
+  case SEQ_YESNO_DRAW_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) && KEYSYS_LIST_Draw( p_wk->p_list ) )
+    {
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+      (*p_seq)++;
+    }
+    break;
   case SEQ_YESNO_WAIT:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
     {
       u32 ret = KEYSYS_LIST_Main(p_wk->p_list );
       if( ret != KEYSYS_LIST_SELECT_NULL )
