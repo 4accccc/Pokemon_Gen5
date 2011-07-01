@@ -940,7 +940,7 @@ static void LoadGateData( GATEWORK* work )
           case FIELD_WFBC_CORE_TYPE_BLACK_CITY:
             OS_TPrintf( "bc continue\n" );
             ELBOARD_ZONE_DATA_Load( &data, ARCID_ELBOARD_ZONE, datID+1 ); 
-            GF_ASSERT( data.zoneID == zoneID && data.version == 0 );
+            GF_ASSERT_MSG( data.zoneID == zoneID && data.version == 0, "BC のデータがありません　zoneID%d ver%d\n", data.zoneID, data.version );
             break;
           default:
             GF_ASSERT(0);

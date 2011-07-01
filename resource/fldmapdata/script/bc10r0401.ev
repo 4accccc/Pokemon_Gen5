@@ -45,7 +45,7 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_01
 	_TALK_OBJ_START()
-	_BLACK_CITY_SHOP0_CALL( )
+//	_BLACK_CITY_SHOP0_CALL( )
 EVENT_END
 
 /**************************************************************/
@@ -53,7 +53,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_02
 	_TALK_OBJ_START()
-	_BLACK_CITY_SHOP1_CALL( )
+//	_BLACK_CITY_SHOP1_CALL( )
 EVENT_END
 
 /**************************************************************/
@@ -61,7 +61,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_03
 	_TALK_OBJ_START()
-	_BLACK_CITY_SHOP2_CALL( )
+//	_BLACK_CITY_SHOP2_CALL( )
 EVENT_END
 
 /**************************************************************/
@@ -69,7 +69,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_04
 	_TALK_OBJ_START()
-	_BLACK_CITY_SHOP3_CALL( )
+//	_BLACK_CITY_SHOP3_CALL( )
 EVENT_END
 
 /**************************************************************/
@@ -77,5 +77,5 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_05
 	_TALK_OBJ_START()
-	_BLACK_CITY_SHOP4_CALL( )
+//	_BLACK_CITY_SHOP4_CALL( )
 EVENT_END

@@ -982,6 +982,38 @@ $(DIR_WBTMP)/c03_g00_01.tbl: $(DIR_RES)/c03_g00_01.bin
 	@echo create_bintbl c03_g00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/c03_g00_01.bin
 
+$(DIR_WBTMP)/wf_00_00.tbl: $(DIR_RES)/wf_00_00.bin
+	@echo create_bintbl wf_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/wf_00_00.bin
+
+$(DIR_WBTMP)/wf_01_00.tbl: $(DIR_RES)/wf_01_00.bin
+	@echo create_bintbl wf_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/wf_01_00.bin
+
+$(DIR_WBTMP)/wf_00_01.tbl: $(DIR_RES)/wf_00_01.bin
+	@echo create_bintbl wf_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/wf_00_01.bin
+
+$(DIR_WBTMP)/wf_01_01.tbl: $(DIR_RES)/wf_01_01.bin
+	@echo create_bintbl wf_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/wf_01_01.bin
+
+$(DIR_WBTMP)/bc_00_00.tbl: $(DIR_RES)/bc_00_00.bin
+	@echo create_bintbl bc_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/bc_00_00.bin
+
+$(DIR_WBTMP)/bc_01_00.tbl: $(DIR_RES)/bc_01_00.bin
+	@echo create_bintbl bc_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/bc_01_00.bin
+
+$(DIR_WBTMP)/bc_00_01.tbl: $(DIR_RES)/bc_00_01.bin
+	@echo create_bintbl bc_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/bc_00_01.bin
+
+$(DIR_WBTMP)/bc_01_01.tbl: $(DIR_RES)/bc_01_01.bin
+	@echo create_bintbl bc_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/bc_01_01.bin
+
 $(DIR_WBTMP)/palace04_00_00.tbl: $(DIR_RES)/palace04_00_00.bin
 	@echo create_bintbl palace04_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/palace04_00_00.bin

@@ -52,18 +52,6 @@ extern void RANDOMMAP_SAVE_SetCoreWork( RANDOMMAP_SAVE* sv, const FIELD_WFBC_COR
 //----------------------------------------------------------
 extern void RANDOMMAP_SAVE_GetCoreWork( const RANDOMMAP_SAVE* sv, FIELD_WFBC_CORE* p_buff );
 
-
-//----------------------------------------------------------
-// 街のアイテム情報を設定
-//----------------------------------------------------------
-extern FIELD_WFBC_CORE_ITEM* RANDOMMAP_SAVE_GetItemData( RANDOMMAP_SAVE* sv );
-
-
-//----------------------------------------------------------
-// イベント用データ
-//----------------------------------------------------------
-extern FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv );
-
 //----------------------------------------------------------
 // キュレム合体相手のデータ
 //----------------------------------------------------------

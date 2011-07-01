@@ -3285,8 +3285,6 @@ static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapI
 static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
 {
   FIELD_WFBC_CORE* p_core;
-  FIELD_WFBC* p_wfbc;
-  EVENTDATA_SYSTEM* p_evdata;
   FIELD_STATUS* p_fs =  GAMEDATA_GetFieldStatus( gdata );
   MAPMODE mapmode = 0;
   
@@ -3305,19 +3303,6 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
       p_core = GAMEDATA_GetWFBCCoreData( fieldWork->gamedata, GAMEDATA_WFBC_ID_COMM );
     }
     FLDMAPPER_SetWfbcData( fieldWork->g3Dmapper, p_core, mapmode );
-
-    // 
-    p_wfbc = FLDMAPPER_GetWfbcWork( fieldWork->g3Dmapper );
-    p_evdata = GAMEDATA_GetEventData( gdata );
-
-    // イベントの設定
-    FILED_WFBC_EventDataOverwrite( p_wfbc, p_evdata, mapmode, fieldWork->heapID );
-    
-    // カメラのセットアップ
-    FIELD_WFBC_SetUpCamera( p_wfbc, fieldWork->camera_control, fieldWork->heapID );
-
-    // MMDLSYSのセットアップ
-    FIELD_WFBC_SetUpMmdlSys( p_wfbc, GAMEDATA_GetMMdlSys( fieldWork->gamedata ) );
   }
 }
 

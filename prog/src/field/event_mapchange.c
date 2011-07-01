@@ -118,10 +118,8 @@ static void MAPCHG_releaseMapTools( GAMESYS_WORK * gsys );
 static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req );
 
 static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req );
-static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc );
 static void MAPCHG_releaseMMdl( GAMEDATA * gamedata );
 
-static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc );
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id );
 
 
@@ -2955,9 +2953,6 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   //フィールド技　マップ効果
   MAPCHG_setupFieldSkillMapEff( gamedata, loc.zone_id );
 
-  // WFBCの設定
-  MAPCHG_SetUpWfbc( gamedata, &loc );
-
   // 天気更新
   PM_WEATHER_UpdateZoneChangeWeatherNo( gsys, loc.zone_id );
 
@@ -2988,75 +2983,6 @@ static void MAPCHG_loadMMdl( GAMEDATA * gamedata, const LOCATION *loc_req )
   }
 }
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  WFBCのモデルを読み込む
- */
-//-----------------------------------------------------------------------------
-static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
-{
-  if( ZONEDATA_IsWfbc( loc->zone_id ) )
-  {
-    const FIELD_STATUS* cp_fs = GAMEDATA_GetFieldStatus( gamedata );
-    MAPMODE mapmode = FIELD_STATUS_GetMapMode( cp_fs );
-    MMDLSYS *fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
-    EVENTWORK *evwork =  GAMEDATA_GetEventWork( gamedata );
-    MMDL_HEADER*p_header;
-    const FIELD_WFBC_CORE* cp_wfbc;
-    u32  count;
-
-    if( mapmode == MAPMODE_NORMAL )
-    {
-      cp_wfbc = GAMEDATA_GetMyWFBCCoreData( gamedata );
-    }
-    else
-    {
-      // 通信相手のデータに変更
-      cp_wfbc = GAMEDATA_GetWFBCCoreData( gamedata, GAMEDATA_WFBC_ID_COMM );
-    }
-
-    // 人物
-    {
-      p_header = FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( cp_wfbc, mapmode, GFL_HEAPID_APP );
-
-      count = FIELD_WFBC_CORE_GetPeopleNum( cp_wfbc, mapmode );
-
-
-      // 
-      if( p_header && (count > 0) )
-      {
-        TOMOYA_Printf( "WFBC MMDL SetUp\n" );
-        MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
-      }
-      if( p_header ){
-        GFL_HEAP_FreeMemory( p_header );
-      }
-    }
-
-    // アイテム
-    {
-      const FIELD_WFBC_CORE_ITEM* cp_item;
-
-      cp_item = GAMEDATA_GetWFBCItemData( gamedata );
-
-      // アイテム数取得
-      count = WFBC_CORE_ITEM_GetNum( cp_item );
-
-      // 配置モデル作成
-      p_header = FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( cp_item, mapmode, cp_wfbc->type, GFL_HEAPID_APP );
-      
-      // 
-      if( p_header && (count > 0) )
-      {
-        TOMOYA_Printf( "WFBC ITEM SetUp\n" );
-        MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
-      }
-      if( p_header ){
-        GFL_HEAP_FreeMemory( p_header );
-      }
-    }
-  }
-}
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -3065,45 +2991,6 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
     MMDLSYS_DeleteMMdl( GAMEDATA_GetMMdlSys(gamedata) );
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  WFBCのセットアップ処理
- *
- *  @param  gamedata
- *  @param  loc 
- */
-//-----------------------------------------------------------------------------
-static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
-{
-  // ここから下は、常に行う処理
-  FIELD_WFBC_CORE_CalcZoneChange( gamedata );
-  
-  
-  // ここから下は、ＷＦＢＣＺＯＮＥでの処理
-  if( !ZONEDATA_IsWfbc( loc->zone_id ) )
-  {
-    return ;
-  }
-
-  MAPCHG_loadMMdlWFBC( gamedata, loc );
-
-  // まちに入った！加算
-  {
-    FIELD_WFBC_CORE* p_wfbc;
-    const FIELD_STATUS* cp_fs = GAMEDATA_GetFieldStatus( gamedata );
-    MAPMODE mapmode = FIELD_STATUS_GetMapMode( cp_fs );
-
-
-    if( mapmode == MAPMODE_NORMAL )
-    {
-      p_wfbc = GAMEDATA_GetMyWFBCCoreData( gamedata );
-
-      // 街に入った加算
-      FIELD_WFBC_CORE_CalcMoodInTown( p_wfbc );
-    }
-  }
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  レゾナンスリゾートのセットアップ処理

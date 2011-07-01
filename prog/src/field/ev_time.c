@@ -301,11 +301,6 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 //    SysWorkUpdatePokeLot(gdata->savedata, diff_days);
   }
 
-  // WFBC人物、アイテム
-  {
-    // HEAPID_PROC　テンポラリとして使用
-    FIELD_WFBC_CORE_CalcOneDataStart( gdata, diff_days, HEAPID_PROC );
-  }
 
   //WIFI通信履歴データの更新処理
 //  WIFIHISTORY_Update(SaveData_GetWifiHistory(gdata->savedata));

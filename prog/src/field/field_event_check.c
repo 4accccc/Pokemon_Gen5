@@ -2709,13 +2709,6 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
     return NULL;
   }
   
-  // WFBC
-  if( ZONEDATA_IsWfbc( req->map_id ) )
-  {
-    FLDMAPPER * p_mapper = FIELDMAP_GetFieldG3Dmapper( fieldWork );
-    FIELD_WFBC * p_wfbc = FLDMAPPER_GetWfbcWork( p_mapper );
-    return (GMEVENT*)FIELD_ENCOUNT_CheckWfbcEncount(encount, p_wfbc );
-  }
   return (GMEVENT*)FIELD_ENCOUNT_CheckEncount(encount, ENC_TYPE_NORMAL );
 }
 

@@ -35,9 +35,6 @@
 struct _RANDOMMAP_SAVE
 {
   FIELD_WFBC_CORE mapdata;
-  FIELD_WFBC_CORE_ITEM item;
-
-  FIELD_WFBC_EVENT event;
   
   ///合体ポケモン：将来用に確保(空きブロックが無いのでアライメントが多いここに確保)
   POKEMON_PARAM united_pokepara;
@@ -57,9 +54,6 @@ void RANDOMMAP_SAVE_InitWork(RANDOMMAP_SAVE *randomMapSave)
 {
   // クリア
   FIELD_WFBC_CORE_Clear( &randomMapSave->mapdata );
-  WFBC_CORE_ITEM_ClaerAll( &randomMapSave->item );
-  FIELD_WFBC_EVENT_Clear( &randomMapSave->event );
-
 }
 
 //----------------------------------------------------------
@@ -100,36 +94,6 @@ void RANDOMMAP_SAVE_GetCoreWork( const RANDOMMAP_SAVE* sv, FIELD_WFBC_CORE* p_bu
   GF_ASSERT( p_buff );
   
   GFL_STD_MemCopy( &sv->mapdata, p_buff, sizeof(FIELD_WFBC_CORE) );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  アイテム配置情報を取得
- *
- *	@param	sv        ワーク
- *	@param	p_buff    格納バッファ
- */
-//-----------------------------------------------------------------------------
-FIELD_WFBC_CORE_ITEM* RANDOMMAP_SAVE_GetItemData( RANDOMMAP_SAVE* sv )
-{
-  GF_ASSERT( sv );
-  return &sv->item;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  WFBCイベントセーブデータを取得
- *
- *	@param	sv  セーブワーク
- *
- *	@return セーブデータ
- */
-//-----------------------------------------------------------------------------
-FIELD_WFBC_EVENT* RANDOMMAP_SAVE_GetEventData( RANDOMMAP_SAVE* sv )
-{
-  GF_ASSERT( sv );
-  return &sv->event;
 }
 
 //----------------------------------------------------------------------------

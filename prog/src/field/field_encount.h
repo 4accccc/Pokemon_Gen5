@@ -61,7 +61,6 @@ extern void FIELD_ENCOUNT_EncountProbCalc( FIELD_ENCOUNT* enc, BOOL move_f, BOOL
 extern void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
 extern void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv, u8 formno ,u16 flags );
 extern void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type );
-extern void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_wfbcdata );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
     FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int rule, int partner_id, int tr_id0, int tr_id1, HEAPID heapID );

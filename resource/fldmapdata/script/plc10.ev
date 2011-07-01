@@ -22,7 +22,6 @@
 _EVENT_DATA    ev_plc10
 _EVENT_DATA    ev_init_plc10      //裏フィールド共通処理
 _EVENT_DATA    ev_plc10_minimono  //裏フィールド全てminimonoのイベント位置を同じにする事！！
-_EVENT_DATA    ev_plc_npc
 _EVENT_DATA_END
 
 
@@ -53,14 +52,3 @@ EVENT_END
 EVENT_START ev_plc10_minimono
   //_INTRUDE_MISSION_START()
 EVENT_END
-
-/**************************************************************/
-/*  WFBCにいる人の会話処理                                    */
-/**************************************************************/
-EVENT_START ev_plc_npc
-	_TALK_OBJ_START()
-
-  _WFBC_PALACE_TALK()
-EVENT_END
-
-

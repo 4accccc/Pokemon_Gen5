@@ -1150,8 +1150,9 @@ static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
 
   // BLACKCITY用の商品ラインナップをセット
   // BLACKCITY_SetShopItem( wk->lineup, &wk->lineup_num );
-  FIELD_WFBC_CORE_SetShopData( wk->wfbc, wk->lineup, &wk->lineup_num, 
-                               type-SCR_SHOPID_BLACK_CITY0, wk->heapId );
+  //TODO
+  //FIELD_WFBC_CORE_SetShopData( wk->wfbc, wk->lineup, &wk->lineup_num, 
+  //                             type-SCR_SHOPID_BLACK_CITY0, wk->heapId );
 
 
   GF_ASSERT_MSG( wk->lineup_num, "ショップの品物がひとつもありません\n" );

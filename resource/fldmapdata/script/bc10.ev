@@ -21,7 +21,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bc10
-_EVENT_DATA    ev_bc_npc
 _EVENT_DATA    ev_bg_bc10_board_01
 _EVENT_DATA_END
 
@@ -38,82 +37,6 @@ _EVENT_DATA_END
 ev_bc10:
   //とりあえず最初のラベルだけ生成している
   _END
-
-/**************************************************************/
-/*   BlackCyty                                                */
-/**************************************************************/
-EVENT_START ev_bc_npc
-	// WFBC 会話前処理
-	_WFBC_TALKSTART()
-	_TALK_OBJ_START()
-	
-	//既に戦闘しているか状態を取得
-	DEFINE_LOCAL LWK_BATTLE_FG
-	_WFBC_GET_DATA( WFBC_GET_PARAM_BC_CHECK_BATTLE, LWK_BATTLE_FG )
-	
-	//OBJIDを取得
-	DEFINE_LOCAL LWK_OBJ_ID
-	_WFBC_GET_DATA( WFBC_GET_PARAM_MMDL_ID, LWK_OBJ_ID )
-	
-	//トレーナーIDを取得
-	DEFINE_LOCAL LWK_TRAINER_ID
-	_WFBC_GET_DATA( WFBC_GET_PARAM_BATTLE_TRAINER_ID, LWK_TRAINER_ID )
-	
-	//機嫌値を取得
-	DEFINE_LOCAL LWK_MOOD
-	_WFBC_GET_DATA( WFBC_GET_PARAM_IS_TAKES_ID, LWK_MOOD )
-	
-	//メッセージ格納ワークを定義
-	DEFINE_LOCAL LWK_MSG_NO
-	
-	//既に戦闘を行った
-	IF $LWK_BATTLE_FG == 0 THEN
-	
-		//BCを気に入っている
-		IF $LWK_MOOD == 0 THEN  // <-MOOD==0でBCを気に入っている状態。
-			_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MSG_NO , 4 )
-			_BALLOONWIN_OBJMSG( LWK_MSG_NO , LWK_OBJ_ID )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		
-		//WFに行きたがっている
-		ELSE
-			_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MSG_NO , 3 )
-			_BALLOONWIN_OBJMSG( LWK_MSG_NO , LWK_OBJ_ID )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		
-		ENDIF
-	
-	
-	//戦闘がまだである
-	ELSE
-	
-		//戦闘前メッセージ
-		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MSG_NO , 1 )
-		_BALLOONWIN_OBJMSG( LWK_MSG_NO , LWK_OBJ_ID )
-		_BALLOONWIN_CLOSE()
-		
-		// 戦闘処理
-		_TRAINER_BTL_SET( LWK_TRAINER_ID, 0 )
-		//結果チェック
-		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()
-		ELSE
-			_TRAINER_LOSE()
-		ENDIF
-		
-		//戦闘後メッセージ
-		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MSG_NO , 2 )
-		_BALLOONWIN_OBJMSG( LWK_MSG_NO , LWK_OBJ_ID )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	ENDIF
-	
-	// WFBC　会話後処理
-	_WFBC_TALKEND()
-EVENT_END
 
 /**************************************************************/
 /*看板01                                                 */

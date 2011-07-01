@@ -119,67 +119,6 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
     }
   }
 
-  //ホワイトフォレスト・ブラックシティのときのチェック
-  if ( (zone_id == ZONE_ID_BC10)||(zone_id == ZONE_ID_WC10)  )
-  {
-    int i;
-    FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
-    FIELD_WFBC_CORE_TYPE type;
-    HEAPID heap_id;
-    FIELD_WFBC_CORE_PEOPLE_POS* ppos;
-    
-    heap_id = HEAPID_FIELDMAP;
-    FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
-    //読み込み
-    // ローダー生成
-    p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID(heap_id) );
-
-    // @todo ホワイトフォレスト・ブラックシティどちらもZONEID_BC10で遷移する。
-    // 　　　本来は、修正を行うべきなのだが、ホワイトフォレスト・ブラックシティでは、
-    // 　　　ハイリンクジャンプ後、ポケモンセンター前に戻るため、ここが間違っていても
-    // 　　　はまりの症状は発生しない。　よって次のVERSIONで修正を行う。
-    // 　　　
-    // 　　　zone_id == ZONE_ID_BC10ではなく、ROMVERSIONでタイプを変更する。
-    // 　　　
-    //type =   FIELD_WFBC_CORE_TYPE_BLACK_CITY,    // ブラックシティ
-    //         FIELD_WFBC_CORE_TYPE_WHITE_FOREST,  // ホワイトフォレスト
-    if (zone_id == ZONE_ID_BC10) type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
-    else type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
-    
-    ppos = FIELD_WFBC_PEOPLE_POS_Create( p_loader, type, GFL_HEAP_LOWID(heap_id) );
-
-    //データ取得 indexの最大値＝FIELD_WFBC_PEOPLE_MAX
-    for (i=0;i<FIELD_WFBC_PEOPLE_MAX;i++)
-    {
-      const FIELD_WFBC_CORE_PEOPLE_POS* pos;
-      pos = FIELD_WFBC_PEOPLE_POS_GetIndexData( ppos, i );
-      if ( (pos->gx == x)&&(pos->gz == z) )
-      {
-        NOZOMU_Printf( "Dont warp\n");
-        //破棄
-        FIELD_WFBC_PEOPLE_POS_Delete( ppos );
-        FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
-        return FALSE;
-      }
-    }
-    for (i=0;i<FIELD_WFBC_PEOPLE_MAX;i++)
-    {
-      const FIELD_WFBC_CORE_PEOPLE_POS* pos;
-      pos = FIELD_WFBC_PEOPLE_POS_GetIndexItemPos( ppos, i );
-      if ( (pos->gx == x)&&(pos->gz == z) )
-      {
-        NOZOMU_Printf( "Dont warp\n");
-        //破棄
-        FIELD_WFBC_PEOPLE_POS_Delete( ppos );
-        FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
-        return FALSE;
-      }
-    }
-    //破棄
-    FIELD_WFBC_PEOPLE_POS_Delete( ppos );
-    FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
-  }
-
   return TRUE;
 }
 
@@ -292,43 +231,5 @@ void PLC_WP_CHK_CheckDebugPrint(GAMESYS_WORK * gsys)
     }
   }
 
-  //ホワイトフォレスト・ブラックシティのときのチェック
-  if ( (zone_id == ZONE_ID_BC10)||(zone_id == ZONE_ID_WC10)  )
-  {
-    int i;
-    FIELD_WFBC_PEOPLE_DATA_LOAD* p_loader;
-    FIELD_WFBC_CORE_TYPE type;
-    HEAPID heap_id;
-    FIELD_WFBC_CORE_PEOPLE_POS* ppos;
-    
-    heap_id = HEAPID_FIELDMAP;
-    FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
-    //読み込み
-    // ローダー生成
-    p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID(heap_id) );
-    //type =   FIELD_WFBC_CORE_TYPE_BLACK_CITY,    // ブラックシティ
-    //         FIELD_WFBC_CORE_TYPE_WHITE_FOREST,  // ホワイトフォレスト
-    if (zone_id == ZONE_ID_BC10) type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
-    else type = FIELD_WFBC_CORE_TYPE_WHITE_FOREST;
-    ppos = FIELD_WFBC_PEOPLE_POS_Create( p_loader, type, GFL_HEAP_LOWID(heap_id) );
-
-    //データ取得 indexの最大値＝FIELD_WFBC_PEOPLE_MAX
-    for (i=0;i<FIELD_WFBC_PEOPLE_MAX;i++)
-    {
-      const FIELD_WFBC_CORE_PEOPLE_POS* pos;
-      pos = FIELD_WFBC_PEOPLE_POS_GetIndexData( ppos, i );
-      OS_FPrintf( 2,"WB %d,%d\n",pos->gx, pos->gz);
-    }
-    for (i=0;i<FIELD_WFBC_PEOPLE_MAX;i++)
-    {
-      const FIELD_WFBC_CORE_PEOPLE_POS* pos;
-      pos = FIELD_WFBC_PEOPLE_POS_GetIndexItemPos( ppos, i );
-      OS_FPrintf( 2,"WB %d,%d\n",pos->gx, pos->gz);
-    }
-    //破棄
-    FIELD_WFBC_PEOPLE_POS_Delete( ppos );
-
-    FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
-  }
 }
 #endif

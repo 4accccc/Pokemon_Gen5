@@ -21,74 +21,11 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_wc10
-_EVENT_DATA    ev_wf_npc
 _EVENT_DATA    ev_bg_wc10_board_01
 _EVENT_DATA_END
 
 
 
-/**************************************************************/
-/*   WhiteForest                                        */
-/**************************************************************/
-EVENT_START ev_wf_npc
-	// WFBC　会話前処理
-	_WFBC_TALKSTART()
-	_TALK_OBJ_START()
-	
-	//BCからの移民かどうかチェック
-	DEFINE_LOCAL LWK_EMIG
-	_WFBC_GET_DATA( WFBC_GET_PARAM_IS_RIREKI, LWK_EMIG )
-	
-	//OBJIDを取得
-	DEFINE_LOCAL LWK_OBJ_ID
-	_WFBC_GET_DATA( WFBC_GET_PARAM_MMDL_ID, LWK_OBJ_ID )
-	
-	//機嫌値を取得
-	DEFINE_LOCAL LWK_MOOD
-	_WFBC_GET_DATA( WFBC_GET_PARAM_IS_TAKES_ID, LWK_MOOD )
-	
-	//移民判別メッセージ定義
-	DEFINE_LOCAL LWK_EMIG_MSG
-	$LWK_EMIG_MSG = $LWK_OBJ_ID
-	
-	//機嫌判別メッセージ定義
-	DEFINE_LOCAL LWK_MOOD_MSG
-	
-	//移民ではない場合
-	IF $LWK_EMIG == 0 THEN
-
-		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_EMIG_MSG , 2 )
-		_BALLOONWIN_OBJMSG( LWK_EMIG_MSG , LWK_OBJ_ID )
-	
-	//移民である場合
-	ELSE
-		//名前をセット
-		_WFBC_SET_WORDSET_RIREKI_PLAYER_NAME( 0 ) 
-	
-		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_EMIG_MSG , 1 )
-		_BALLOONWIN_OBJMSG( LWK_EMIG_MSG , LWK_OBJ_ID )
-	
-	ENDIF
-	
-	//WFを気に入っている
-	IF $LWK_MOOD == 0 THEN // <-MOOD==0でBCを気に入っている状態。
-		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MOOD_MSG , 4 )
-		_BALLOONWIN_OBJMSG( LWK_MOOD_MSG, LWK_OBJ_ID )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	
-	//BCに行きたがっている
-	ELSE
-		_WFBC_GET_AUTO_NPC_MESSAGE( LWK_MOOD_MSG , 3 )
-		_BALLOONWIN_OBJMSG( LWK_MOOD_MSG, LWK_OBJ_ID )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	
-	ENDIF
-
-	// WFBC　会話後処理
-	_WFBC_TALKEND()
-EVENT_END
 
 
 /**************************************************************/
