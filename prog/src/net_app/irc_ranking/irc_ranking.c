@@ -891,7 +891,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
       cldata.pos_y  = sc_bmpoam_pos[i].y;
 
       p_wk->p_msgoam[i]  = RANKING_MSGOAM_Init( &cldata, sc_bmpoam_pos[i].w, sc_bmpoam_pos[i].h,
-          p_wk->font_plt, 3, CLSYS_DRAW_MAIN, p_wk->p_bmpoam_sys, p_wk->p_que, HEAPID_IRCRANKING );
+          p_wk->font_plt, 0, CLSYS_DRAW_MAIN, p_wk->p_bmpoam_sys, p_wk->p_que, HEAPID_IRCRANKING );
       RANKING_MSGOAM_SetStrColor( p_wk->p_msgoam[i], PRINTSYS_LSB_Make( 1, 2, 0) );
       RANKING_MSGOAM_SetStrPos( p_wk->p_msgoam[i], 0, 0, RANKING_MSGOAM_POS_WH_CENTER );
       RANKING_MSGOAM_Print( p_wk->p_msgoam[i], p_wk->p_msg, RANKING_CAPTION_000+i, p_wk->p_font );
