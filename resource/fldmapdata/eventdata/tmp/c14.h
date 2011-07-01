@@ -2,6 +2,14 @@
 #ifndef ZONE_C14_EVD_H
 #define ZONE_C14_EVD_H
 
+#define DOOR_ID_C14_C14PC0101_EXIT01      0
+#define DOOR_ID_C14_C14GYM0101_EXIT01     1
+#define DOOR_ID_C14_C14R0101_EXIT01       2
+#define DOOR_ID_C14_C14R0201_EXIT01       3
+#define DOOR_ID_C14_C14R0301_EXIT01       4
+#define DOOR_ID_C14_C14R0401_EXIT01       5
+#define DOOR_ID_C14_C14R0501_EXIT01       6
+#define DOOR_ID_C14_C14R0601_EXIT01       7
 
 #endif //ZONE_C14_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

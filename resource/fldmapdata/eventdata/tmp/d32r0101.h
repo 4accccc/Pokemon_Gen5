@@ -2,6 +2,10 @@
 #ifndef ZONE_D32R0101_EVD_H
 #define ZONE_D32R0101_EVD_H
 
+#define DOOR_ID_D32R0101_D20_EXIT01       0
+#define DOOR_ID_D32R0101_W21_EXIT01       1
+#define DOOR_ID_D32R0101_D32R0201_EXIT01  2
+#define DOOR_ID_D32R0101_D32R0201_EXIT02  3
 
 #endif //ZONE_D32R0101_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d32r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

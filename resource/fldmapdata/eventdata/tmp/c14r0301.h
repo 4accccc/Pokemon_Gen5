@@ -2,6 +2,7 @@
 #ifndef ZONE_C14R0301_EVD_H
 #define ZONE_C14R0301_EVD_H
 
+#define DOOR_ID_C14R0301_C14_EXIT01       0
 
 #endif //ZONE_C14R0301_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

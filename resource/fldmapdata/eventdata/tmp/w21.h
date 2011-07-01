@@ -2,6 +2,7 @@
 #ifndef ZONE_W21_EVD_H
 #define ZONE_W21_EVD_H
 
+#define DOOR_ID_W21_D32R0101_EXIT01       0
 
 #endif //ZONE_W21_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/w21.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
