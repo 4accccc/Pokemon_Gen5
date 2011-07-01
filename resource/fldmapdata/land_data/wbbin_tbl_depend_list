@@ -1522,6 +1522,38 @@ $(DIR_WBTMP)/swbcgate01_02_01.tbl: $(DIR_RES)/swbcgate01_02_01.bin
 	@echo create_bintbl swbcgate01_02_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbcgate01_02_01.bin
 
+$(DIR_WBTMP)/swwf_00_00.tbl: $(DIR_RES)/swwf_00_00.bin
+	@echo create_bintbl swwf_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swwf_00_00.bin
+
+$(DIR_WBTMP)/swwf_01_00.tbl: $(DIR_RES)/swwf_01_00.bin
+	@echo create_bintbl swwf_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swwf_01_00.bin
+
+$(DIR_WBTMP)/swwf_00_01.tbl: $(DIR_RES)/swwf_00_01.bin
+	@echo create_bintbl swwf_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swwf_00_01.bin
+
+$(DIR_WBTMP)/swwf_01_01.tbl: $(DIR_RES)/swwf_01_01.bin
+	@echo create_bintbl swwf_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swwf_01_01.bin
+
+$(DIR_WBTMP)/swbc_00_00.tbl: $(DIR_RES)/swbc_00_00.bin
+	@echo create_bintbl swbc_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbc_00_00.bin
+
+$(DIR_WBTMP)/swbc_01_00.tbl: $(DIR_RES)/swbc_01_00.bin
+	@echo create_bintbl swbc_01_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbc_01_00.bin
+
+$(DIR_WBTMP)/swbc_00_01.tbl: $(DIR_RES)/swbc_00_01.bin
+	@echo create_bintbl swbc_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbc_00_01.bin
+
+$(DIR_WBTMP)/swbc_01_01.tbl: $(DIR_RES)/swbc_01_01.bin
+	@echo create_bintbl swbc_01_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/swbc_01_01.bin
+
 $(DIR_WBTMP)/m_dun0101_00_00.tbl: $(DIR_RES)/m_dun0101_00_00.bin
 	@echo create_bintbl m_dun0101_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun0101_00_00.bin

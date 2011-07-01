@@ -366,6 +366,14 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/swbcgate01_00_01.3dppack \
 	$(DIR_OUTPUT)/swbcgate01_01_01.3dppack \
 	$(DIR_OUTPUT)/swbcgate01_02_01.3dppack \
+	$(DIR_OUTPUT)/swwf_00_00.3dppack \
+	$(DIR_OUTPUT)/swwf_01_00.3dppack \
+	$(DIR_OUTPUT)/swwf_00_01.3dppack \
+	$(DIR_OUTPUT)/swwf_01_01.3dppack \
+	$(DIR_OUTPUT)/swbc_00_00.3dppack \
+	$(DIR_OUTPUT)/swbc_01_00.3dppack \
+	$(DIR_OUTPUT)/swbc_00_01.3dppack \
+	$(DIR_OUTPUT)/swbc_01_01.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_01_00.3dppack \
 	$(DIR_OUTPUT)/m_dun0101_00_01.3dppack \

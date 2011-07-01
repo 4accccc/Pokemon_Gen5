@@ -354,3 +354,5 @@
 "DUN2508.bin"
 "DUN2509.bin"
 "DUN2510.bin"
+"SWWF.bin"
+"SWBC.bin"
