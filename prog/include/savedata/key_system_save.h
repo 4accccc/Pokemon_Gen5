@@ -36,6 +36,7 @@ typedef enum
 //-------------------------------------
 ///	難易度
 //=====================================
+//順番かえちゃダメ  prog/src/field/scrcmd_keysystem.hでDEFINE再定義している
 typedef enum
 {
   KEY_SYSTEM_DIFFICULT_EASY,    //簡単

@@ -2672,7 +2672,8 @@ SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 SRCS_OVERLAY_KEY_SYSTEM = net_app/key_system/key_system_main.c \
                           net_app/key_system/key_system_graphic.c \
                           net_app/key_system/key_system_util.c \
-                          net_app/key_system/key_system_net.c
+                          net_app/key_system/key_system_net.c \
+                          net_app/key_system/key_system_flow.c
 
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_DEV_WIFI

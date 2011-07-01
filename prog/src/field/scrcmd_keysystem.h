@@ -20,9 +20,14 @@
 #define KEYSYS_WFBC_WHITEFOREST (1)
 
 //include/savedata/key_system_saveのKEY_SYSTEM_DIFFICULTの順番と対応
-#define  KEY_SYSTEM_DIFFICULT_EASY    (0)   //簡単
-#define  KEY_SYSTEM_DIFFICULT_NORMAL  (1)   //通常
-#define  KEY_SYSTEM_DIFFICULT_HARD    (2)   //難しい
+#define  KEYSYS_DIFFICULT_EASY    (0)   //簡単
+#define  KEYSYS_DIFFICULT_NORMAL  (1)   //通常
+#define  KEYSYS_DIFFICULT_HARD    (2)   //難しい
+
+//include/savedata/key_system_saveのKEYSYSTEM_TYPEの順番と対応
+#define  KEYSYS_TYPE_DIFFICULT_EASY (0)     //難易度変更
+#define  KEYSYS_TYPE_DIFFICULT_HARD (1)     //難易度変更
+#define  KEYSYS_TYPE_CITY_WFBC      (2)     //反対の街開放キー
 
 //=============================================================================
 /**
@@ -33,4 +38,5 @@
 #ifndef	ASM_CPP
 extern VMCMD_RESULT EvCmdKeySys_GetWfbc( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdKeySys_GetDifficulty( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdKeySys_CallKeyGetDemo( VMHANDLE *p_core, void *p_wk_adrs );
 #endif //ASM_CPP

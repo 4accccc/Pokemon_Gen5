@@ -9,6 +9,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
+#include "savedata/key_system_save.h"
 
 FS_EXTERN_OVERLAY(key_system);
 //=============================================================================
@@ -39,6 +40,7 @@ typedef struct
 {
   KEY_SYSTEM_MODE mode;
   GAMEDATA        *p_gamedata;
+  KEY_SYSTEM_TYPE get_key;  //mode‚ªKEY_SYSTEM_MODE_GET‚Ì‚Æ‚«‚¾‚¯—LŒø
 } KEY_SYSTEM_PARAM;
 
 //=============================================================================
