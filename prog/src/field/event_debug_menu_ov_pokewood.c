@@ -393,7 +393,7 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
     MISC_SetPokewoodOpenFlag(misc,40);
 
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
-      newcount = MISC_GetPokewoodNewcomeFlag(misc,50);
+      newcount = MISC_GetPokewoodPlayedFlag(misc,50);
     }
   }
   

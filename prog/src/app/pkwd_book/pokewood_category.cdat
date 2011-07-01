@@ -1,0 +1,75 @@
+
+//============================================================================================
+/**
+ * @file	pokewood_category.cdat
+ * @brief	ポケウッドシナリオカテゴリーデータ
+ * @author	mori
+ * @date	2011.07.01
+ */
+//============================================================================================
+
+#pragma once
+
+/// ポケウッドシナリオカテゴリー表
+static const u8 PokewoodCategoryData[] ={
+  /// 1-4  ハチクマン1-4
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+
+  /// 5-8   ???1-4
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+
+  /// 9-12  ???1-4
+  PKWD_CATEGORY_SF,    
+  PKWD_CATEGORY_SF,    
+  PKWD_CATEGORY_SF,    
+  PKWD_CATEGORY_SF,    
+
+  /// 13-16  ???1-4
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+
+  /// 17-20  ???1-4
+  PKWD_CATEGORY_HORROR,
+  PKWD_CATEGORY_HORROR,
+  PKWD_CATEGORY_HORROR,
+  PKWD_CATEGORY_HORROR,
+
+  /// 21-24  ???1-4
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+
+  /// 25-28  ???1-4
+  PKWD_CATEGORY_SF,    
+  PKWD_CATEGORY_SF,    
+  PKWD_CATEGORY_SF,    
+  PKWD_CATEGORY_SF,    
+
+  /// 29-32  ???1-4
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+
+  /// 33-36   ???1-4
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+  PKWD_CATEGORY_HUMAN, 
+
+  /// 37-40  ???1-4
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+  PKWD_CATEGORY_ACTION,
+
+};

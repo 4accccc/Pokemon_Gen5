@@ -845,6 +845,8 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp2_tbl[] =
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
 
+#include "pokewood_category.cdat"
+
 static const FRAMELIST_HEADER pwb_frame_list_header = {
   GFL_BG_FRAME2_S,			// 上
   FRAMELIST_SUB_BG_NONE,	// 下
@@ -3897,7 +3899,7 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 			wk->FlagBuffer[j].openid = i;
 			//
 			// newチェック
-			bflg = MISC_GetPokewoodNewcomeFlag(misc, i);
+			bflg = MISC_GetPokewoodPlayedFlag(misc, i);
 			if(bflg == FALSE){
 				wk->FlagBuffer[j].newflag = 1;
 			}

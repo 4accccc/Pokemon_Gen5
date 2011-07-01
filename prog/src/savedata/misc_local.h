@@ -82,7 +82,7 @@ struct _MISC
   
   u8 player_trainer_data[10];  ///< プレイヤー自身のトレーナーデータ(使用方未定)
 
-  u32 pokewood_flag[POKEWOOD_ARRAY_NUM];          ///< ポケウッド解放フラグ
-  u32 pokewood_newcome_flag[POKEWOOD_ARRAY_NUM];  ///< ポケウッド新着フラグ
+  u32 pokewood_flag[POKEWOOD_ARRAY_NUM];         ///< ポケウッド解放フラグ
+  u32 pokewood_played_flag[POKEWOOD_ARRAY_NUM];  ///< ポケウッド撮影済みフラグ
 };
 

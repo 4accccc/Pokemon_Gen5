@@ -10,6 +10,8 @@
 #ifndef __POKEWOOD_SENARIO_H__
 #define __POKEWOOD_SENARIO_H__
 
+#include "battle/pokewood.h"
+
 #define EVENT_TALK_TURN_MAX     (  7 )  ///< イベント中の会話の最大数
 #define EVENT_REACTION_MAX      (  4 )  ///< 選択肢リアクションの最大数
 #define ENEMY_POKE_MAX          (  6 )  ///< 敵トレーナーの最大数

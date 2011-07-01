@@ -12,6 +12,7 @@
 
 #include "savedata/save_control.h"
 #include "system/pms_data.h"
+#include "battle/pokewood.h"
 
 //=============================================================================
 /**
@@ -43,10 +44,6 @@ typedef enum {
   MISC_STARTMENU_TYPE_MACHINE,      ///<「転送マシンを使う」メニュー表示
 }MISC_STARTMENU_TYPE;
 
-/// ポケウッドシナリオ定義
-enum{
-  POKEWOOD_SENARIO_MAX = 48,  ///< ポケウッドのシナリオ最大数
-};
 
 //=============================================================================
 /**
@@ -143,5 +140,5 @@ extern void MISC_SetBattleRecorderColor( MISC * misc, u8 color );
 //ポケウッドシナリオ解放・新着フラグ
 extern BOOL MISC_GetPokewoodOpenFlag( const MISC *misc, int no );
 extern void MISC_SetPokewoodOpenFlag( MISC *misc, int no );
-extern BOOL MISC_GetPokewoodNewcomeFlag( const MISC *misc, int no );
-extern void MISC_SetPokewoodNewcomeFlag( MISC *misc, int no );
+extern BOOL MISC_GetPokewoodPlayedFlag( const MISC *misc, int no );
+extern void MISC_SetPokewoodPlayedFlag( MISC *misc, int no );
