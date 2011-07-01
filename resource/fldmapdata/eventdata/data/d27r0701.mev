@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/30 19:02:01
+#save date:2011/07/01 12:49:35
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #SECTION START:OBJ_EVENT
@@ -54,7 +54,7 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -136
+-8 0 -104
 #size
 3 1
 #event number: 1
@@ -71,7 +71,7 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -440
+-8 0 -472
 #size
 3 1
 #event number: 2
@@ -88,7 +88,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -24
+-72 0 8
 #size
 1 1
 #event number: 3
@@ -105,7 +105,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -120
+-72 0 -88
 #size
 1 1
 #event number: 4
@@ -122,7 +122,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -216
+-72 0 -184
 #size
 1 1
 #event number: 5
@@ -139,7 +139,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -24
+88 0 8
 #size
 1 1
 #event number: 6
@@ -156,7 +156,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -120
+88 0 -88
 #size
 1 1
 #event number: 7
@@ -173,7 +173,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -216
+88 0 -184
 #size
 1 1
 #event number: 8
@@ -190,7 +190,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -344
+-72 0 -376
 #size
 1 1
 #event number: 9
@@ -207,7 +207,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -440
+-72 0 -472
 #size
 1 1
 #event number: 10
@@ -224,7 +224,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -536
+-72 0 -568
 #size
 1 1
 #event number: 11
@@ -241,7 +241,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -344
+88 0 -376
 #size
 1 1
 #event number: 12
@@ -258,7 +258,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -440
+88 0 -472
 #size
 1 1
 #event number: 13
@@ -275,7 +275,7 @@ EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -536
+88 0 -568
 #size
 1 1
 #Map Event List Data End
