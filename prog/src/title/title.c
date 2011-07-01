@@ -35,7 +35,6 @@
 
 #include "demo3d.naix"
 #include "title/title.h"
-#include "sound/snd_strm.h"
 
 #ifdef PM_DEBUG
 #include "corporate.h"

@@ -44,7 +44,6 @@
 #include "title/title.h"
 #include "net_app/wifi_logout.h"
 #include "net_app/mystery.h"
-#include "debug_snd_strm.h"
 #include "debug_common_net.h"
 #include "debug_outside.h"
 #include "net_app/key_system.h"
@@ -284,7 +283,6 @@ static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk );
-static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallCommonDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk );
 static void LISTDATA_CallOutside( DEBUG_NAGI_MAIN_WORK *p_wk );
@@ -370,7 +368,6 @@ enum
   LISTDATA_SEQ_PROC_WIFILOGOUT,
   LISTDATA_SEQ_PROC_MYSTERY,
   LISTDATA_SEQ_SEND_IRC_REGULATION,
-  LISTDATA_SEQ_PROC_SND_STRM,
   LISTDATA_SEQ_PROC_COMMON_DOWNLOAD,
   LISTDATA_SEQ_PROC_WBT_DOWNLOAD,
   LISTDATA_SEQ_PROC_OUTSIDE_SAVE,
@@ -405,7 +402,6 @@ static const LISTDATA_FUNCTION  sc_list_funciton[LISTDATA_SEQ_MAX]  =
   LISTDATA_CallWifiLogout,
   LISTDATA_CallMystery,
   LISTDATA_CallIrcRegulation,
-  LISTDATA_CallSndStrm,
   LISTDATA_CallCommonDownload,
   LISTDATA_CallWbtDownload,
   LISTDATA_CallOutside,
@@ -1470,17 +1466,6 @@ static void LISTDATA_CallMystery( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallIrcRegulation( DEBUG_NAGI_MAIN_WORK *p_wk )
 { 
   DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_NAGI_IRC_REGULATION_ProcData, NULL );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  サウンドストリーム
- *
- *	@param	DEBUG_NAGI_MAIN_WORK *p_wk  ワーク
- */
-//-----------------------------------------------------------------------------
-static void LISTDATA_CallSndStrm( DEBUG_NAGI_MAIN_WORK *p_wk )
-{
-  DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &DEBUG_SND_STRM_ProcData, NULL );
 }
 //----------------------------------------------------------------------------
 /**
