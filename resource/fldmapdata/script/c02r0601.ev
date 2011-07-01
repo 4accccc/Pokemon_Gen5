@@ -18,51 +18,375 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_c02r0601
 _EVENT_DATA    ev_c02r0601_waitress_01
+_EVENT_DATA    ev_c02r0601_wkobjcode00_01
+_EVENT_DATA    ev_c02r0601_wkobjcode01_01
+_EVENT_DATA    ev_c02r0601_middleman2_01
+_EVENT_DATA    ev_c02r0601_bigman_01
+_EVENT_DATA    ev_c02r0601_man2_01
 _EVENT_DATA_END
+
+//曜日取得変数
+DEFINE_LOCAL LWK_WEEKCK
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c02r0601
+
+  //曜日を取得
+  _GET_WEEK( LWK_WEEKCK )
+
+  SWITCH $LWK_WEEKCK
+  CASE RTC_WEEK_SUNDAY THEN     //日曜日
+    $OBJCHRWORK0 = WAITRESS     //可変OBJ01の見た目をウェイトレスに
+    $OBJCHRWORK1 = POKE33       //可変OBJ02の見た目をヤナップに
+
+  CASE RTC_WEEK_MONDAY THEN     //月曜日
+    $OBJCHRWORK0 = BUSINESSMAN  //可変OBJ01の見た目をビジネスマンに
+    $OBJCHRWORK1 = POKE20       //可変OBJ02の見た目をワルビルに
+
+  CASE RTC_WEEK_TUESDAY THEN    //火曜日
+    $OBJCHRWORK0 = LADY         //可変OBJ01の見た目をレディに
+    $OBJCHRWORK1 = POKE30       //可変OBJ02の見た目をヨーテリーに
+
+  CASE RTC_WEEK_WEDNESDAY THEN  //水曜日
+    $OBJCHRWORK0 = GIRL3        //可変OBJ01の見た目を女の子に
+    $OBJCHRWORK1 = POKE15       //可変OBJ02の見た目をムンナに
+
+  CASE RTC_WEEK_THURSDAY THEN   //木曜日
+    $OBJCHRWORK0 = MAN3         //可変OBJ01の見た目を男性に
+    $OBJCHRWORK1 = POKE17       //可変OBJ02の見た目をミネズミに
+
+  CASE RTC_WEEK_FRIDAY THEN     //金曜日
+    $OBJCHRWORK0 = MOUNTMAN     //可変OBJ01の見た目を山男に
+    $OBJCHRWORK1 = POKE29       //可変OBJ02の見た目をミルホッグに
+
+  CASE RTC_WEEK_SATURDAY THEN   //土曜日
+    $OBJCHRWORK0 = OL           //可変OBJ01の見た目をOLに
+    $OBJCHRWORK1 = POKE38       //可変OBJ02の見た目をズルッグに
+
+  ENDSWITCH
+
+INIT_EVENT_END
 
 
 /**************************************************************/
-/*  C02R0601 WAITRESSの会話用イベントスクリプト*/
+/*  ウェイトレス01：話しかけ                                  */
 /**************************************************************/
 EVENT_START   ev_c02r0601_waitress_01
 
-	
+  //今日既にサービスデーイベントを終えたかチェック
+  IF FLAG_ON( TMFLG_C02R0601_ITEM ) THEN
 
-	//今日既にイベントを終えたかチェック
-	IF FLAG_ON( TMFLG_C02R0601_ITEM ) THEN
-		
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_03 )
-		
-	//イベントを終えていない
-	ELSE
+    //ウェイトレス：とうてん　じまんの
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_03 )
 
-		//曜日チェック
-		DEFINE_LOCAL LWK_WEEKCK
-		_GET_WEEK( LWK_WEEKCK )
-		
-		//水曜日である
-		//【仮】入手条件が仮
-		IF $LWK_WEEKCK == RTC_WEEK_WEDNESDAY THEN
-			_TALK_OBJ_START()
-			_BALLOONWIN_OBJMSG( msg_c02r0601_waitress_02 , C02R0601_WAITRESS_01 )
-			_BALLOONWIN_CLOSE()
-			
-			_ITEM_EVENT_NOWAIT(ITEM_SAIKOSOODA, 1)
-			
-			//==================================//
-			
-			//無料サービスは１日１個なので、タイムフラグを立てる
-			_FLAG_SET ( TMFLG_C02R0601_ITEM )
-			
-			//==================================//
-		
-		//水曜日ではない
-		ELSE
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_01 )
-			
-		ENDIF
-	
-	ENDIF
- 
+  //イベントを終えていない
+  ELSE
+
+    //曜日チェック
+    _GET_WEEK( LWK_WEEKCK )
+
+    //水曜日である
+    IF $LWK_WEEKCK == RTC_WEEK_WEDNESDAY THEN
+
+      _TALK_OBJ_START()
+      //ウェイトレス：こちらの　サイコソーダを　どうぞ！▼
+      _BALLOONWIN_OBJMSG( msg_c02r0601_waitress_02 , C02R0601_WAITRESS_01 )
+      _BALLOONWIN_CLOSE()
+
+      _ITEM_EVENT_NOWAIT( ITEM_SAIKOSOODA, 1 )  //アイテム入手：サイコソーダ
+
+      //==================================//
+      //無料サービス終了（１日１回）
+      _FLAG_SET ( TMFLG_C02R0601_ITEM )
+      //==================================//
+
+    //土曜日である
+    ELSIF $LWK_WEEKCK == RTC_WEEK_SATURDAY THEN
+
+      _TALK_OBJ_START()
+      //ウェイトレス：こちらの　ミックスオレを　どうぞ！▼
+      _BALLOONWIN_OBJMSG( msg_c02r0601_waitress_04 , C02R0601_WAITRESS_01 )
+      _BALLOONWIN_CLOSE()
+
+      _ITEM_EVENT_NOWAIT( ITEM_MIKKUSUORE, 1 )  //アイテム入手：ミックスオレ
+
+      //==================================//
+      //無料サービス終了（１日１回）
+      _FLAG_SET ( TMFLG_C02R0601_ITEM )
+      //==================================//
+
+    //サービスデー（水曜日、土曜日）ではない
+    ELSE
+      //いなかの　ちょっと　オシャレな
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress_01 )
+
+    ENDIF
+
+  ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*  可変OBJ01（日替わり客）：話しかけ                         */
+/**************************************************************/
+EVENT_START   ev_c02r0601_wkobjcode00_01
+{
+
+  _TALK_OBJ_START()
+
+  //曜日チェック
+  _GET_WEEK( LWK_WEEKCK )
+
+  SWITCH $LWK_WEEKCK
+  CASE RTC_WEEK_SUNDAY THEN     //日曜日
+
+    IF $WK_SCENE_C02R0601_LOSTITEM == 0 THEN    //落し物を引き受けていない
+      //ウェイトレス：ハンカチを　ひろったけど　どうやら
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_01 )
+
+      //落し物の持ち主探しを引き受ける？
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN  //はい
+        //ウェイトレス：ありがとう！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_02 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //アイテム入手【仮】落し物は仮です
+        _ITEM_EVENT_NOWAIT( ITEM_DUMMY_DATA, 1 )
+
+        //========================================//
+        //イベント進行
+        $WK_SCENE_C02R0601_LOSTITEM = 1
+        //========================================//
+
+      ELSE    //いいえ
+        //ウェイトレス：ぐっすん▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSIF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN    //落し物を引き受けている
+      //ウェイトレス：ハンカチを　おとした　ひとは
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSIF $WK_SCENE_C02R0601_LOSTITEM == 2 THEN    //落し物を落とし主に届けている
+      //ウェイトレス：えっ！　おとしものを　した
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_05 )
+      _MSGWIN_CLOSE()
+
+      //アイテム入手【仮】アイテム（きのみジュース）は仮です
+      _ITEM_EVENT_NOWAIT( ITEM_KINOMIZYUUSU, 1 )
+
+      //========================================//
+      //イベント進行
+      $WK_SCENE_C02R0601_LOSTITEM = 3
+      //========================================//
+
+    ELSIF $WK_SCENE_C02R0601_LOSTITEM == 3 THEN    //イベント終了
+      //ウェイトレス：おしごと　おしごと　たのしいな！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_waitress1_06 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  CASE RTC_WEEK_MONDAY THEN     //月曜日
+
+    //落し物を持っている？
+    IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
+      //ビジネスマン：ん？　おとしもの？
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_bussines_02 )
+      _LAST_KEYWAIT()
+    ELSE
+      //ビジネスマン：げつようび！　いっしゅうかんの
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_bussines_01 )
+      _LAST_KEYWAIT()
+    ENDIF
+   _MSGWIN_CLOSE()
+
+  CASE RTC_WEEK_TUESDAY THEN    //火曜日
+
+    //落し物を持っている？
+    IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
+      //レディ：あら？　あたくし　は
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_lady_02 )
+      _LAST_KEYWAIT()
+    ELSE
+      //レディ：あたくし　はつぶつかんで
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_lady_01 )
+      _LAST_KEYWAIT()
+    ENDIF
+   _MSGWIN_CLOSE()
+
+  CASE RTC_WEEK_WEDNESDAY THEN  //水曜日
+
+    //落し物を持っている？
+    IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
+      //女の子：おとしものの　もちぬしを
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_girl3_02 )
+      _LAST_KEYWAIT()
+    ELSE
+      //女の子：あたしの　ムンナ　ライモンシティの
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_girl3_01 )
+      _LAST_KEYWAIT()
+    ENDIF
+   _MSGWIN_CLOSE()
+
+  CASE RTC_WEEK_THURSDAY THEN   //木曜日
+
+    //落し物を持っている？
+    IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
+      //男性：それ！　その　ハンカチ！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man3_02 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //システム：ハンカチを　てわたした！
+      _PLAYER_NAME( 0 )
+      _SE_PLAY( SEQ_SE_ARDEMO_01 )
+      _SYSWIN_MSG( msg_c02r0601_sys_01, POS_DEFAULT )
+      _AB_KEYWAIT_MARK()
+      _SYSWIN_CLOSE()
+      _SE_WAIT()
+
+      //アイテム減算処理【仮】落し物アイテムは仮です
+      DEFINE_LOCAL LWK_REDUCE
+      _SUB_ITEM( ITEM_DUMMY_DATA, 1, LWK_REDUCE )
+
+      //男性：おとしもの　みつけてくれて
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man3_03 )
+      _LAST_KEYWAIT()
+
+      //========================================//
+      //イベント進行
+      $WK_SCENE_C02R0601_LOSTITEM = 2
+      //========================================//
+
+    ELSIF $WK_SCENE_C02R0601_LOSTITEM == 2 THEN  //イベントが終了するまで
+      //男性：おとしもの　みつけてくれて
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man3_03 )
+      _LAST_KEYWAIT()
+
+    ELSE
+      //男性：ヤグルマのもり　で
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man3_01 )
+      _LAST_KEYWAIT()
+    ENDIF
+   _MSGWIN_CLOSE()
+
+  CASE RTC_WEEK_FRIDAY THEN     //金曜日
+
+    //落し物を持っている？
+    IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
+      //山男：わしは　おとしものは　してないぞ
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_mountain_02 )
+      _LAST_KEYWAIT()
+    ELSE
+      //山男：わはは！　わしの　ミルホッグは
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_mountain_01 )
+      _LAST_KEYWAIT()
+    ENDIF
+   _MSGWIN_CLOSE()
+
+  CASE RTC_WEEK_SATURDAY THEN   //土曜日
+
+    //落し物を持っている？
+    IF $WK_SCENE_C02R0601_LOSTITEM == 1 THEN
+      //OL：あら！　その　ハンカチ
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_ol_02 )
+      _LAST_KEYWAIT()
+    ELSE
+      //OL：しゅうまつに　こうして
+      _BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_ol_01 )
+      _LAST_KEYWAIT()
+    ENDIF
+   _MSGWIN_CLOSE()
+
+  ENDSWITCH
+
+}
+EVENT_END
+
+/**************************************************************/
+/*  可変OBJ02（日替わり客のポケモン）：話しかけ               */
+/**************************************************************/
+EVENT_START   ev_c02r0601_wkobjcode01_01
+
+  _TALK_OBJ_START()
+
+  //曜日チェック
+  _GET_WEEK( LWK_WEEKCK )
+
+  SWITCH $LWK_WEEKCK
+  CASE RTC_WEEK_SUNDAY THEN     //日曜日
+
+    //ヤナップ：なっぷう！
+    _EASY_TALK_POKEVOICE( MONSNO_593, msg_c02r0601_poke33_01 )
+
+  CASE RTC_WEEK_MONDAY THEN     //月曜日
+
+    //ワルビル：ぬはあ！
+    _EASY_TALK_POKEVOICE( MONSNO_505, msg_c02r0601_poke20_01 )
+
+  CASE RTC_WEEK_TUESDAY THEN    //火曜日
+
+    //ヨーテリー：きゃうん♪
+    _EASY_TALK_POKEVOICE( MONSNO_590, msg_c02r0601_poke30_01 )
+
+  CASE RTC_WEEK_WEDNESDAY THEN  //水曜日
+
+    //ムンナ：むうううううううううううううううん！
+    _EASY_TALK_POKEVOICE( MONSNO_540, msg_c02r0601_poke15_01 )
+
+  CASE RTC_WEEK_THURSDAY THEN   //木曜日
+
+    //ミネズミ：けけー！
+    _EASY_TALK_POKEVOICE( MONSNO_537, msg_c02r0601_poke17_01 )
+
+  CASE RTC_WEEK_FRIDAY THEN     //金曜日
+
+    //ミルホッグ：みるっ！
+    _EASY_TALK_POKEVOICE( MONSNO_538, msg_c02r0601_poke29_01 )
+
+  CASE RTC_WEEK_SATURDAY THEN   //土曜日
+
+    //ズルッグ：ずっぐぉー！【仮】鳴き声は仮です
+    _EASY_TALK_POKEVOICE( MONSNO_637, msg_c02r0601_poke39_01 )
+
+  ENDSWITCH
+
+EVENT_END
+
+/**************************************************************/
+/*  太ったおじさん：話しかけ                                  */
+/**************************************************************/
+EVENT_START   ev_c02r0601_middleman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_middleman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  太った兄さん：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c02r0601_bigman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_bigman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  金髪兄さん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c02r0601_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0601_man2_01 )
+EVENT_END
+
+

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/22 18:34:01
+#save date:2011/07/01 17:23:28
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c02R0601.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c02R0601.wms
 #hold event type:
 1
 #hold event number:
-1
+6
 #event number: 0
 #type
 1
@@ -41,6 +41,161 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -104 32 56
+#event number: 1
+#type
+1
+#ID name
+C02R0601_WKOBJCODE00_01
+#OBJ CODE Number
+WKOBJCODE00
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0601_WKOBJCODE00_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 152
+#event number: 2
+#type
+1
+#ID name
+C02R0601_WKOBJCODE01_01
+#OBJ CODE Number
+WKOBJCODE01
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0601_WKOBJCODE01_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 136
+#event number: 3
+#type
+1
+#ID name
+C02R0601_MIDDLEMAN2_01
+#OBJ CODE Number
+MIDDLEWOMAN2
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0601_MIDDLEMAN2_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 32 200
+#event number: 4
+#type
+1
+#ID name
+C02R0601_BIGMAN_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0601_BIGMAN_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 32 168
+#event number: 5
+#type
+1
+#ID name
+C02R0601_MAN2_01
+#OBJ CODE Number
+MAN2
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0601_MAN2_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 32 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

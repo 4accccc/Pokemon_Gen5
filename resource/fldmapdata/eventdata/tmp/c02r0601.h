@@ -10,6 +10,11 @@
 #define ZONE_C02R0601_EVC_H
 
 #define C02R0601_WAITRESS_01               0
+#define C02R0601_WKOBJCODE00_01            1
+#define C02R0601_WKOBJCODE01_01            2
+#define C02R0601_MIDDLEMAN2_01             3
+#define C02R0601_BIGMAN_01                 4
+#define C02R0601_MAN2_01                   5
 
 #endif //ZONE_C02R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
