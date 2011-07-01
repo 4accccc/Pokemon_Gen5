@@ -885,7 +885,11 @@ DEP_TEXSET_IMD_OUTDOOR019 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/door_auto01.imd
+	$(SRCDIR)/door_auto01.imd \
+	$(SRCDIR)/bc_build_s1.imd \
+	$(SRCDIR)/bc_house_s1.imd \
+	$(SRCDIR)/bc_shop_s1.imd \
+	$(SRCDIR)/bc_mugen_s1.imd
 
 texset/outdoor019.imd: $(DEP_TEXSET_IMD_OUTDOOR019) texset/tmp/outdoor019.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor019.list
@@ -1989,7 +1993,10 @@ DEP_TEXSET_IMD_OUTDOOR048 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/wf_tree_s1.imd \
+	$(SRCDIR)/wf_shop_s1.imd \
+	$(SRCDIR)/wf_mugen_s1.imd
 
 texset/outdoor048.imd: $(DEP_TEXSET_IMD_OUTDOOR048) texset/tmp/outdoor048.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor048.list
