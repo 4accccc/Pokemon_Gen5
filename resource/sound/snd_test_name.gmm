@@ -5589,9 +5589,9 @@
 		<language name="JPN" width="256">BGM-VS-DP-CHAMP</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-DP-CHAMP</language>
 	</row>
-	<row id="msg_seq_bgm_vs_bw_leader">
-		<language name="JPN" width="256">BGM-VS-BW-LEADER</language>
-		<language name="JPN_KANJI" width="256">BGM-VS-BW-LEADER</language>
+	<row id="msg_seq_bgm_vs_bw_champ">
+		<language name="JPN" width="256">BGM-VS-BW-CHAMP</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-BW-CHAMP</language>
 	</row>
 	<row id="msg_seq_bgm_vs_wbt">
 		<language name="JPN" width="256">BGM-VS-WBT</language>
