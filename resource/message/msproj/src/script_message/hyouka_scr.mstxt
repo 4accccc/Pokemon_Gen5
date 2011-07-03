@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンずかんの　ようすを
-わたしが　チェック　しましょうか？</Text>
+チェック　しましょうか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:02:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモン図鑑の　様子を
-わたしが　チェック　しましょうか？</Text>
+チェック　しましょうか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -35,11 +35,10 @@
 　はい　→hakase2_02
 　　　　　→hakase2_02a
 　いいえ→hakase2_03
-
-※SWANで調整予定</Comment>
+※swanで調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:00:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97,13 +96,13 @@
 			<Comment>アララギ博士：娘
 ・はい選択時
 ・みつけた匹数に応じてメッセージ分岐
-・0＝３桁の数字（001～150）
+・0＝３桁の数字
 
 ・メッセージ表示後にME再生
 ・みつけた匹数に応じて再生MEを分岐</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:03:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -159,16 +158,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>アララギ博士：娘
-※msg_hyouka_i09表示後
+※msg_hyouka_i14表示後
 ・はい選択時
 ・つかまえた匹数に応じてメッセージ分岐
-・0＝３桁の数字（001～150）
+・0＝３桁の数字
 
 ・メッセージ表示後にME再生
 ・捕まえた匹数に応じて再生MEを分岐</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:20:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -340,10 +339,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　15～24匹</Comment>
+　15～29匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -398,10 +397,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　25～39匹</Comment>
+　30～44匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -430,13 +429,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きまった　ほらあなにしか　いない
-ポケモンも　いるのよ！▼
-とおりぬけた　ほらあなを
-もういちど　さがすのも　いいかもね▼</Text>
+			<Text>あちこちにいる　トレーナーも
+さまざまな　ポケモンを　もっているわ▼
+かれらと　しょうぶすることで
+ポケモンずかんも　うまっていくわね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -444,13 +443,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>決まった　洞穴にしか　いない
-ポケモンも　いるのよ！▼
-通り抜けた　洞穴を
-もう一度　探すのも　いいかもね▼</Text>
+			<Text>あちこちにいる　トレーナーも
+さまざまな　ポケモンを　持っているわ▼
+彼らと　勝負することで
+ポケモン図鑑も　埋まっていくわね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -460,10 +459,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　40～59匹</Comment>
+　45～64匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:17:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -492,13 +491,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あちこちにいる　トレーナーも
-さまざまな　ポケモンを　もっているわ▼
-かれらと　しょうぶすることで
-ポケモンずかんも　うまっていくわね！▼</Text>
+			<Text>きまった　ほらあなにしか　いない
+ポケモンも　いるのよ！▼
+とおりぬけた　ほらあなを
+もういちど　さがすのも　いいかもね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -506,13 +505,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あちこちにいる　トレーナーも
-さまざまな　ポケモンを　持っているわ▼
-彼らと　勝負することで
-ポケモン図鑑も　埋まっていくわね！▼</Text>
+			<Text>決まった　洞穴にしか　いない
+ポケモンも　いるのよ！▼
+通り抜けた　洞穴を
+もう一度　探すのも　いいかもね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -522,10 +521,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　60～89匹</Comment>
+　65～84匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:17:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -582,10 +581,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　90～114匹</Comment>
+　85～104匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:17:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -642,10 +641,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　115～134匹</Comment>
+　105～124匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:17:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -674,11 +673,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいぶ　りっぱな　ポケモンずかんね！
-あとひといきで　ページが　うまりそう▼</Text>
+			<Text>ベルから　きいたと　おもうけれど
+ゆれる　くさむらも　しらべてる？▼
+あるくほどに　ゆれる　くさむらを
+みつける　かくりつが　たかまるわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:39:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -686,11 +687,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だいぶ　立派な　ポケモン図鑑ね！
-あとひといきで　ページが　埋まりそう▼</Text>
+			<Text>ベルから　きいたと　思うけれど
+揺れる　草むらも　調べてる？▼
+歩くほどに　揺れる　草むらを
+みつける　確率が　高まるわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:52:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -700,10 +703,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　135～144匹</Comment>
+　125～144匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:17:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -732,12 +735,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばらしい　ポケモンずかんね！
-もうすこしで　かんせい　しそう！▼
-おねがいして　ほんとうに　よかった！▼</Text>
+			<Text>さまざまな　とくせい　だけど
+きちんと　りかい　している？▼
+とくせいに　よっては　やせいの
+ポケモンが　よく　とびだしてくるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -745,12 +749,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばらしい　ポケモン図鑑ね！
-もうすこしで　完成しそう！▼
-お願いして　本当に　よかった！▼</Text>
+			<Text>ポケモンの　様々な　特性だけど
+理解して　使いこなせている？▼
+特性に　よっては　野生の
+ポケモンが　よく　飛びだしてくるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:59:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +765,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　145～149匹</Comment>
+　145～164匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:17:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -792,17 +797,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すごい！　すごいわ！▼
-イッシュちほうにいる　すべての
-ポケモンと　であったのね！▼
-ほんとうに　おめでとう！！▼
-じゃあ　つぎからは
-イッシュちほうの　ポケモンを▽
-どれだけ　つかまえたか▽
-ひょうか　していくわね！！▼</Text>
+			<Text>きの　いりぐちが　みつけにくいけれど
+けものみちは　さがしている？▼
+あそこを　すみかと　する
+ポケモンの　とくせいは　なぜだか▽
+めずらしい　もの　ばかりなの！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -810,17 +812,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すごい！　すごいわ！▼
-イッシュ地方にいる　すべての
-ポケモンと　出会ったのね！▼
-本当に　おめでとう！！▼
-じゃあ　次からは
-イッシュ地方の　ポケモンを▽
-どれだけ　捕まえたか▽
-評価していくわね！！▼</Text>
+			<Text>木の入り口が　みつけにくいけれど
+けものみちは　探している？▼
+あそこを　すみかと　する
+ポケモンの　特性は　なぜだか▽
+珍しい　もの　ばかりなの！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -830,10 +829,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　150匹</Comment>
+　165～184匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:20:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -852,6 +851,1088 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しばらくの　じかんに　これだけの
+しゅるいの　ポケモンが　ふえたなんて▼
+ポケモンの　てきおうりょくの　たかさ
+しょうさんに　あたいする　ものね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:01:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わずかな　時間で　これだけの
+種類の　ポケモンが　増えたなんて▼
+ポケモンの　適応力の　高さ
+称賛に　値する　ものね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:01:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・みた数が
+　185～204匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:19:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２００しゅるい　いじょう……！▼
+これだけ　おおくの　ポケモンが
+ほかの　ポケモンと　かんけいしあい▽
+せかいを　つくっているのね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:42:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２００種類　以上……！▼
+これだけ　多様な　ポケモンが
+他の　ポケモンと　関係しあい▽
+世界を　構築しているのね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:03:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・みた数が
+　205～224匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:19:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいぶ　りっぱな　ポケモンずかんね！
+あとひといきで　ページが　うまりそう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:31:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいぶ　立派な　ポケモン図鑑ね！
+あとひといきで　ページが　埋まりそう▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:31:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・みた数が
+　225～239匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:19:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すばらしい　ポケモンずかんね！
+もうすこしで　かんせい　しそう！▼
+おねがいして　ほんとうに　よかった！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:19:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すばらしい　ポケモン図鑑ね！
+もうすこしで　完成しそう！▼
+お願いして　本当に　よかった！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:19:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:18:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・みた数が
+　240～249匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:19:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごい！　すごいわ！▼
+イッシュちほうにいる　すべての
+ポケモンと　であったのね！▼
+ほんとうに　おめでとう！！▼
+じゃあ　つぎからは
+イッシュちほうの　ポケモンを▽
+どれだけ　つかまえたか▽
+ひょうか　していくわね！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すごい！　すごいわ！▼
+イッシュ地方にいる　すべての
+ポケモンと　出会ったのね！▼
+本当に　おめでとう！！▼
+じゃあ　次からは
+イッシュ地方の　ポケモンを▽
+どれだけ　捕まえたか▽
+評価していくわね！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・みた数が
+　250匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:16:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すこしずつ……　だけど　かくじつに
+ポケモンずかんに　くわしい　データが▽
+かきこまれているわね！　がんばって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すこしずつ……　だけど　確実に
+ポケモン図鑑に　詳しいデータが▽
+書き込まれているわね！　がんばって！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　0～14匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>モンスターボールは　つかいわけてる？▼
+さまざまな　しゅるいが　あるから
+じょうきょうに　おうじて　つかってね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モンスターボールは　使い分けてる？▼
+さまざまな　種類が　あるから
+状況に　応じて　使ってね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　15～29匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ずかんの　かいせつを　よめば
+ポケモンの　いがいな　いちめんを▽
+うかがうことが　できて　たのしいわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>図鑑の　解説を　読めば
+ポケモンの　意外な　一面を▽
+うかがうことが　できて　楽しいわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　30～44匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つかまえるだけ　ではなく
+ポケモンを　しんか　させて▽
+ずかんを　うめるのも　だいじよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>捕まえるだけ　ではなく
+ポケモンを　進化させて▽
+図鑑を　埋めるのも　大事よ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　45～64匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ともだちと　こうかん　することでも
+ポケモンを　つかまえたことに　なるわ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>友達と　交換することでも
+ポケモンを　捕まえたことに　なるわ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　65～84匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>これだけの　ポケモンと　ふれあえば
+どの　ポケモンと　いっしょに▽
+たびをすれば　いいか　まよわない？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これだけの　ポケモンと　ふれあえば
+どの　ポケモンと　一緒に▽
+旅をすれば　いいか　迷わない？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　85～104匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>１００しゅるい　いじょう！　すごい！▼
+せいそくちリストで　もくひょうを
+めいかくに　することで　さらなる▽
+モチベーションを　うみだせるかも▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:30:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>１００種類以上！　すごい！▼
+せいそくちリストで　目標を
+明確に　することで　更なる▽
+モチベーションを　生みだせるかも▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:29:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　105～124匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンを　つかまえるとき
+べんりな　わざが　あるでしょ？▼
+みねうちを　おぼえさせるのも
+ひとつの　アプローチと　いえるわね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:07:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンを　捕まえるとき
+便利な　技が　あるでしょ？▼
+みねうちを　覚えさせるのも
+ひとつの　アプローチと　いえるわね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:24:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　125～144匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タマゴを　みつけないと
+であえない　ポケモンも　いるわね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:12:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タマゴを　みつけないと
+出会えない　ポケモンも　いるわね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:23:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　145～164匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きせつに　よっては
+であいにくい　ポケモン▽
+であいやすい　ポケモンも　いるわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:19:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>季節に　よっては
+出会いにくい　ポケモン▽
+出会いやすい　ポケモンも　いるわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:23:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　165～184匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:21:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>これだけの　おおくの　ポケモンを
+しらべても　かれらの　きげん……▼
+いつ　どこで　うまれたのか
+わからないこと　ばかり　なのよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:34:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これだけの　多くの　ポケモンを
+調べても　彼らの　起源……▼
+いつ　どこで　生まれたのか
+わからないこと　ばかり　なのよね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:34:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　185～204匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ついに　２００しゅるい　いじょうの
+ポケモンを　ほかく　したのね……！▼
+すばらしい　トレーナーに
+ポケモンずかんを　たくせて　よかった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:28:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ついに　２００種類　以上の
+ポケモンを　捕獲したのね……！▼
+すばらしい　トレーナーに
+ポケモン図鑑を　託せて　よかった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:30:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　205～224匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>これだけ　ポケモンを　つかまえたら
+わたしよりも　くわしくなったかも？▼
+ポケモンずかんの　かんせいを
+わたしも　おうえん　しています▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:18:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>これだけ　ポケモンを　捕まえたら
+わたしよりも　詳しくなったかも？▼
+ポケモン図鑑の　完成を
+わたしも　応援しています▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:18:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　225～239匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もうすこしで　パーフェクトな
+ポケモンずかんの　かんせいね！▼
+ここまで　きたんだから　くじけず……
+ううん　おもいっきり　たのしんで！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:22:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もうすこしで　パーフェクトな
+ポケモン図鑑の　完成ね！▼
+ここまで　きたんだから　くじけず……
+ううん　思いっきり　楽しんで！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T07:22:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　240～249匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hyouka_i29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごい！　すごいわ！▼
+イッシュちほうに　いる　すべての
+ポケモンを　つかまえたのね！▼
+ほんとうに　おめでとう！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すごい！　すごいわ！▼
+イッシュ地方にいる　すべての
+ポケモンを　捕まえたのね！▼
+本当に　おめでとう！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>図鑑評価：イッシュ図鑑
+・捕まえた数が
+　250匹</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:22:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>アララギ博士：娘</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:23:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -913,7 +1994,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -980,7 +2061,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1043,7 +2124,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1106,7 +2187,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1166,7 +2247,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1225,7 +2306,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1280,607 +2361,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すこしずつ……　だけど　かくじつに
-ポケモンずかんに　くわしい　データが▽
-かきこまれているわね！　がんばって！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すこしずつ……　だけど　確実に
-ポケモン図鑑に　詳しいデータが▽
-書き込まれているわね！　がんばって！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　1～29匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>モンスターボールは　つかいわけてる？▼
-さまざまな　しゅるいが　あるから
-じょうきょうに　おうじて　つかってね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>モンスターボールは　使い分けてる？▼
-さまざまな　種類が　あるから
-状況に　応じて　使ってね▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　30～49匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ずかんの　かいせつを　よめば
-ポケモンの　いがいな　いちめんを▽
-うかがうことが　できて　たのしいわ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>図鑑の　解説を　読めば
-ポケモンの　意外な　一面を▽
-うかがうことが　できて　楽しいわ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　50～69匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i13"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>つかまえるだけ　ではなく
-ポケモンを　しんか　させて▽
-ずかんを　うめるのも　だいじよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>捕まえるだけ　ではなく
-ポケモンを　進化させて▽
-図鑑を　埋めるのも　大事よ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　70～89匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i14"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ともだちと　こうかん　することでも
-ポケモンを　つかまえたことに　なるわ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>友達と　交換することでも
-ポケモンを　捕まえたことに　なるわ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　90～104匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i15"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これだけの　ポケモンと　ふれあえば
-どの　ポケモンと　いっしょに▽
-たびをすれば　いいか　まよわない？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これだけの　ポケモンと　ふれあえば
-どの　ポケモンと　一緒に▽
-旅をすれば　いいか　迷わない？▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　105～119匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i16"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>じゅうじつした　ポケモンずかんね
-わたしの　けんきゅうも　はかどります▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>充実した　ポケモン図鑑ね
-わたしの　研究も　はかどります▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　120～134匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i17"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これだけ　ポケモンを　つかまえたら
-わたしよりも　くわしくなったかも？▼
-ポケモンずかんの　かんせいを
-わたしも　おうえん　しています▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これだけ　ポケモンを　捕まえたら
-わたしよりも　詳しくなったかも？▼
-ポケモン図鑑の　完成を
-わたしも　応援しています▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　1135～144匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i18"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>もうすこしで　パーフェクトな
-ポケモンずかんの　かんせいね！▽
-ここまで　きたんだから　がんばって！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>もうすこしで　パーフェクトな
-ポケモン図鑑の　完成ね！▽
-ここまで　きたんだから　がんばって！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　145～149匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hyouka_i19"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すごい！　すごいわ！▼
-イッシュちほうに　いる　すべての
-ポケモンを　つかまえたのね！▼
-ほんとうに　おめでとう！！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すごい！　すごいわ！▼
-イッシュ地方にいる　すべての
-ポケモンを　捕まえたのね！▼
-本当に　おめでとう！！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>図鑑評価：イッシュ図鑑
-・捕まえた数が
-　150匹</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>アララギ博士：娘</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1892,10 +2373,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンずかんの　ようすを
-みせにきて　くれたのだな！？</Text>
+みせに　きてくれたのかね！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:24:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1903,11 +2384,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン図鑑の　ようすを
-みせにきて　くれたのだな！？</Text>
+			<Text>ポケモン図鑑の　様子を
+みせに　きてくれたのかね！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2103,10 +2584,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　0～39匹</Comment>
+　0～49匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:25:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2163,10 +2644,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　40～79匹</Comment>
+　50～104匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:25:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2225,10 +2706,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　80～119匹</Comment>
+　105～164匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:25:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2287,11 +2768,11 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　120～159匹
+　165～229匹
 ・要メッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:26:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2350,10 +2831,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　160～199匹</Comment>
+　230～289匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:26:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2412,10 +2893,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　200～249匹</Comment>
+　290～344匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:26:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2474,10 +2955,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　250～299匹</Comment>
+　345～444匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:26:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2536,10 +3017,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　300～349匹</Comment>
+　445～494匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:26:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2600,10 +3081,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　350～399匹</Comment>
+　495～529匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:27:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2662,10 +3143,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　400～449匹</Comment>
+　530～559匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:27:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2722,10 +3203,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　450～499匹</Comment>
+　560～579匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:27:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2788,10 +3269,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　500～549匹</Comment>
+　580～599匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:27:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2850,10 +3331,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　550～599匹</Comment>
+　580～599匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-03T06:27:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
