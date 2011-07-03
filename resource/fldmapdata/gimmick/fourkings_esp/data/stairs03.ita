@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-06-30T17:51:16" source="stairs03.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-07-01T18:37:04" source="stairs03.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,12 +11,12 @@
 <body>
 
 <tex_srt_info
-	frame_size="60"
+	frame_size="80"
 	tool_start_frame="1"
-	tool_end_frame="60"
+	tool_end_frame="80"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="1 1"
+	compress_material="on" material_size="2 2"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,23 +31,32 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="61">
-	0.000000 -0.010254 -0.020264 -0.030518 -0.040771 -0.050781 -0.061035 -0.071289 -0.081299 -0.091553
-	-0.101807 -0.111816 -0.122070 -0.132324 -0.142334 -0.152588 -0.162598 -0.172852 -0.183105 -0.193115
-	-0.203369 -0.213623 -0.223633 -0.233887 -0.244141 -0.254150 -0.264404 -0.274658 -0.284668 -0.294922
-	-0.305176 -0.315186 -0.325439 -0.335693 -0.345703 -0.355957 -0.366211 -0.376221 -0.386475 -0.396729
-	-0.406738 -0.416992 -0.427002 -0.437256 -0.447510 -0.457520 -0.467773 -0.478027 -0.488037 -0.498291
-	-0.508545 -0.518555 -0.528809 -0.539063 -0.549072 -0.559326 -0.569580 -0.579590 -0.589844 -0.600098
+<tex_translate_data size="81">
+	0.000000 -0.007568 -0.015137 -0.022705 -0.030273 -0.038086 -0.045654 -0.053223 -0.060791 -0.068359
+	-0.075928 -0.083496 -0.091064 -0.098633 -0.106445 -0.114014 -0.121582 -0.129150 -0.136719 -0.144287
+	-0.151855 -0.159424 -0.166992 -0.174805 -0.182373 -0.189941 -0.197510 -0.205078 -0.212646 -0.220215
+	-0.227783 -0.235352 -0.242920 -0.250732 -0.258301 -0.265869 -0.273438 -0.281006 -0.288574 -0.296143
+	-0.303711 -0.311279 -0.319092 -0.326660 -0.334229 -0.341797 -0.349365 -0.356934 -0.364502 -0.372070
+	-0.379639 -0.387451 -0.395020 -0.402588 -0.410156 -0.417725 -0.425293 -0.432861 -0.440430 -0.447998
+	-0.455811 -0.463379 -0.470947 -0.478516 -0.486084 -0.493652 -0.501221 -0.508789 -0.516357 -0.524170
+	-0.531738 -0.539307 -0.546875 -0.554443 -0.562012 -0.569580 -0.577148 -0.584717 -0.592285 -0.600098
 	-0.600098
 </tex_translate_data>
 
-<tex_srt_anm_array size="1">
+<tex_srt_anm_array size="2">
 	<tex_srt_anm index="0" material_name="esp_kuro1_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="60" data_head="1"/>
+		<tex_translate_t frame_step="1" data_size="80" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="esp_kuro01_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="80" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
