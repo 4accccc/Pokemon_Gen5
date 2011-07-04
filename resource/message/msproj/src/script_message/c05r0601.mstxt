@@ -1437,10 +1437,13 @@
 			<Comment>♂
 ・GRIDX=4、GRIDZ=9
 ・続けて、道具屋の処理（shop_okou）へ
-・クリア前から出現</Comment>
+・クリア前から出現
+　ただしアイテムは調整
+　地方図鑑に登録されていない
+　ポケモンのタマゴができないように</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-30T08:50:51" />
+				Time="2011-07-04T12:03:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
