@@ -142,6 +142,7 @@ typedef struct{
   int  choice;        ///<  ポケウッドイベントの選択肢で選択した番号
   int  vfx;           ///<  背景チェンジ指定用ワーク
   s8   flagwork[EVENT_DATA_MAX];   ///<  フラグ管理用配列
+  int  my_msg, enemy_msg; ///< 撮影終了時のメッセージラベル取得用
 
   int  stage_cond;    ///< お盆の上の状態（ポケモン・トレーナー・無人など,pokewood_senario.hに記述）
   STRBUF *choice_str[EVENT_REACTION_MAX]; ///< 選択肢文字列
@@ -2524,6 +2525,88 @@ static BOOL SubSeq_POKEWOOD_Vfx_Effect( BTL_CLIENT *wk )
 }
 
 
+
+enum{
+  PWEND_REC_SEQ_INIT=0,
+  PWEND_REC_SEQ_ENEMY_APPEAR,
+  PWEND_REC_SEQ_HERO_APPEAR,
+  PWEND_REC_SEQ_MY_MSG,
+  PWEND_REC_SEQ_ENEMY_MSG,
+  PWEND_REC_SEQ_MSG_WAIT,
+  PWEND_REC_SEQ_EFFECT_WAIT,
+  PWEND_REC_SEQ_END,
+
+};
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ポケウッド撮影終了時に条件達成か失敗かを伝えるシーケンス処理
+ *
+ * @param   wk		BTL_CLIENT
+ *
+ * @retval  BOOL	TRUE:終了 FALSE:実行中
+ */
+//----------------------------------------------------------------------------------
+static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
+{
+  switch(wk->pokewoodSeqWork.seq){
+  case PWEND_REC_SEQ_INIT:
+    {
+      POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+      BtlResult resultCode = expandServerResult( wk );
+      if(resultCode==BTL_RESULT_WIN){     // 条件を達成
+        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][2];
+        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][2];
+      }else{                              // 条件を未達成
+        wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][3];
+        wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][3];
+      }
+    }
+    wk->pokewoodSeqWork.seq = PWEND_REC_SEQ_ENEMY_APPEAR;
+    break;
+  case PWEND_REC_SEQ_ENEMY_APPEAR:
+    TrainerGraphicIn( wk, 1, TRUE );
+    _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_EFFECT_WAIT, PWEND_REC_SEQ_HERO_APPEAR);
+    break;
+  case PWEND_REC_SEQ_HERO_APPEAR:
+    BTLV_EFFECT_Add( BTLEFF_HERO_APPEAR );
+    _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_EFFECT_WAIT, PWEND_REC_SEQ_MY_MSG);
+    break;
+  case PWEND_REC_SEQ_MY_MSG:
+    if(wk->pokewoodSeqWork.my_msg>=0){
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, wk->pokewoodSeqWork.my_msg);
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_MSG_WAIT, PWEND_REC_SEQ_ENEMY_MSG);
+    }else{
+      wk->pokewoodSeqWork.seq = PWEND_REC_SEQ_ENEMY_MSG;
+    }
+    break;
+  case PWEND_REC_SEQ_ENEMY_MSG:
+    if(wk->pokewoodSeqWork.enemy_msg>=0){
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_POKEWOOD_TURNTALK, wk->pokewoodSeqWork.enemy_msg);
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_MSG_WAIT, PWEND_REC_SEQ_END);
+    }else{
+      wk->pokewoodSeqWork.seq = PWEND_REC_SEQ_END;
+    }
+    break;
+  case PWEND_REC_SEQ_MSG_WAIT:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      wk->pokewoodSeqWork.seq=wk->pokewoodSeqWork.next_seq;
+    }
+    break;
+  case PWEND_REC_SEQ_EFFECT_WAIT:
+    if( !BTLV_EFFECT_CheckExecute() ){
+      wk->pokewoodSeqWork.seq=wk->pokewoodSeqWork.next_seq;
+    }
+    break;
+  case PWEND_REC_SEQ_END:
+    return TRUE;
+    break;
+  }
+  return FALSE;
+}
+
+
 enum{
   SUBSEQ_REC_S_START,     // 録画データ読み込み処理
   SUBSEQ_REC_S_TIMEOVER,  // タイムオーバー検出時
@@ -2533,7 +2616,6 @@ enum{
   SUBSEQ_REC_S_POKEWOOD_VFX,
   SUBSEQ_REC_S_POKEWOOD_REACTION, // SWANで追加：ポケウッドリアクション処理
 };
-
 
 //----------------------------------------------------------------------------------
 /**
@@ -6438,19 +6520,19 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     SEQ_LOSE_WAIT_MSG1,
 
     SEQ_POKEWOOD_END_EVENT,
-
+    SEQ_POKEWOOD_REC_END_MSG,
+    
     SEQ_END,
   };
 
 
   switch( *seq ){
   case SEQ_INIT:
+    if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE )  // 通常戦闘の終了
     {
       BtlResult resultCode = expandServerResult( wk );
-
       if( resultCode == BTL_RESULT_WIN )
       {
-        //PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
         BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
         MsgWinningTrainerStart( wk );
         (*seq) = SEQ_WIN_START;
@@ -6458,36 +6540,36 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       else if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_NO_LOSE) == FALSE )
       {
         u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-        // ポケウッド以外の時は通常の負け終了イベント
-        if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE ){
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseStart );
           BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
           BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
           (*seq) = SEQ_LOSE_START;
-        }else{
-          wk->pokewoodSeqWork.seq = 0;
-          wk->clientTurnCount=101;
-          (*seq) = SEQ_POKEWOOD_END_EVENT;
-        }
       }
       else{
         return TRUE;
       }
+    }else if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){  // ポケウッド上映END
+      BtlResult resultCode = expandServerResult( wk );
+      if(resultCode==BTL_RESULT_WIN){ // 勝利ENDか？
+        wk->pokewoodSeqWork.seq = 0;
+        wk->clientTurnCount=100;
+        (*seq) = SEQ_POKEWOOD_END_EVENT;
+      }else{  // 敗北END
+        wk->pokewoodSeqWork.seq = 0;
+        wk->clientTurnCount=101;
+        (*seq) = SEQ_POKEWOOD_END_EVENT;
+      }
+    }else if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_REC){   // ポケウッド撮影END
+      wk->pokewoodSeqWork.seq = 0;
+      (*seq) = SEQ_POKEWOOD_REC_END_MSG;
     }
     break;
   case SEQ_WIN_START:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      // ポケウッド以外の時は通常の終了イベント
-      if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE ){
-        TrainerGraphicIn( wk, 0, FALSE );
-        (*seq) = SEQ_WIN_WAIT_TR1_IN;
-      }else{
-        wk->pokewoodSeqWork.seq = 0;
-        wk->clientTurnCount=100;
-        (*seq) = SEQ_POKEWOOD_END_EVENT;
-      }
+      TrainerGraphicIn( wk, 0, FALSE );
+      (*seq) = SEQ_WIN_WAIT_TR1_IN;
     }
     break;
   case SEQ_WIN_WAIT_TR1_IN:
@@ -6596,21 +6678,20 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     }
     break;
 
+  // ポケウッド上映時に終了イベントを実行する
   case SEQ_POKEWOOD_END_EVENT:  
-    {
-      int pokewood_mode = BTL_MAIN_GetPokewoodMode(wk->mainModule);
-      if( pokewood_mode==BTL_POKEWOOD_SHOW ){
-        if(SubSeq_POKEWOOD_Event_Sequence(wk)){
-          return TRUE;
-        }
-      }else if(pokewood_mode==BTL_POKEWOOD_REC){
-        POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
-        int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
-        _check_pokewood_success( wk, senario, event_no );
-        return TRUE;
-      }else{
-        return TRUE;
-      }
+    if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+      return TRUE;
+    }
+    break;
+
+  // ポケウッド撮影時に条件達成・未達成を伝える
+  case SEQ_POKEWOOD_REC_END_MSG:
+    if(SubSeq_POKEWOOD_RecEnd_Sequence(wk)){
+      POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
+      int event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount);
+      _check_pokewood_success( wk, senario, event_no );
+      return TRUE;
     }
     break;
 
