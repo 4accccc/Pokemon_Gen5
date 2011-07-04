@@ -12,6 +12,11 @@
 #define TR_WORKER2_19                      0
 #define TR_WORKER2_20                      1
 #define TR_WORKER2_18                      2
+#define D23R0101_MIDDLEMAN2_01             3
+#define D23R0101_WORKMAN2_01               4
+#define D23R0101_WORKMAN2_02               5
+#define D23R0101_WORKMAN2_03               6
+#define D23R0101_ASSISTANTM_01             7
 
 #endif //ZONE_D23R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d23r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

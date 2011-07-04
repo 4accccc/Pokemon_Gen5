@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d23r0101.h"
-  //.include  "d23r0101.h"
+  .include  "d23r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,9 +19,18 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d23r0101
+_EVENT_DATA		ev_d23r0101_middleman2_01
+_EVENT_DATA		ev_d23r0101_workman2_01
+_EVENT_DATA		ev_d23r0101_workman2_02
+_EVENT_DATA		ev_d23r0101_workman2_03
+_EVENT_DATA		ev_d23r0101_assistantm_01
+_EVENT_DATA		ev_init_d23r0101
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LWK_POSX
+DEFINE_LOCAL  LWK_POSZ
 
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
@@ -30,9 +39,515 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*				FIELD INIT SCRIPT							  */
 /**************************************************************/
-ev_d23r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+INIT_EVENT_START	ev_init_d23r0101
 
+	SWITCH $WK_SCENE_D23R0101_ASSISTANTM
+	CASE 0 THEN
+		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 29, 0, 32, DIR_UP )
+	CASE 1 THEN
+		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 8, 0, 47, DIR_LEFT )
+	CASE 2 THEN
+		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 20, -1, 58, DIR_RIGHT )
+	ENDSWITCH
+	
+INIT_EVENT_END
+
+/**************************************************************/
+/*		D23R0101	MIDDLEMAN2		現場監督イベント		  */
+/**************************************************************/
+EVENT_START		ev_d23r0101_middleman2_01
+_TALK_OBJ_START()
+	//依頼を請けていない場合
+	IF FLAG_OFF ( FE_D23R0101_MANAGER_TALK) THEN
+		
+		_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_01 )
+		
+		//はい・いいえ分岐
+		_YES_NO_WIN( SCWK_ANSWER )
+		//はいの場合
+		IF $SCWK_ANSWER == SCR_YES THEN 
+		
+			_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_02 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//========================================/
+			
+			//依頼請けフラグを建てる
+			_FLAG_SET(FE_D23R0101_MANAGER_TALK)
+		
+			//========================================/
+		
+		//いいえの場合
+		ELSE
+		
+			_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	//依頼を請けている場合
+	ELSE
+		
+		//依頼を達成した場合
+		IF FLAG_ON(FE_D23R0101_WORKMAN2A_BTL) && FLAG_ON(FE_D23R0101_WORKMAN2B_BTL) && FLAG_ON(FE_D23R0101_WORKMAN2C_BTL) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_04 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		
+		//依頼を達成していない場合
+		ELSE
+		
+			_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		D23R0101	WORKMAN2		作業員１				  */
+/**************************************************************/
+EVENT_START		ev_d23r0101_workman2_01
+_TALK_OBJ_START()
+
+	//依頼を請けていない場合
+	IF FLAG_OFF( FE_D23R0101_MANAGER_TALK ) THEN
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2a_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//依頼を請けている場合
+	ELSE
+		
+		//既に戦闘済みの場合
+		IF FLAG_ON( FE_D23R0101_WORKMAN2A_BTL ) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2a_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		//まだ戦闘をしていない場合
+		ELSE
+		
+			//メッセージ表示
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2a_02 )
+			_MSGWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_WORKER2_21, 0 )
+	
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+	
+			//メッセージ表示
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2a_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+	
+			//========================================/
+			
+			//戦闘済みのフラグをたてる
+			_FLAG_SET(FE_D23R0101_WORKMAN2A_BTL)
+			
+			//========================================/
+			
+		
+		ENDIF
+
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*		D23R0101	WORKMAN2		作業員２				  */
+/**************************************************************/
+EVENT_START		ev_d23r0101_workman2_02
+_TALK_OBJ_START()
+
+	//依頼を請けていない場合
+	IF FLAG_OFF( FE_D23R0101_MANAGER_TALK ) THEN
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2b_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//依頼を請けている場合
+	ELSE
+		
+		//既に戦闘済みの場合
+		IF FLAG_ON( FE_D23R0101_WORKMAN2B_BTL ) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2b_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		//まだ戦闘をしていない場合
+		ELSE
+		
+			//メッセージ表示
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2b_02 )
+			_MSGWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_WORKER2_22, 0 )
+	
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+	
+			//メッセージ表示
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2b_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+	
+			//========================================/
+			
+			//戦闘済みのフラグをたてる
+			_FLAG_SET(FE_D23R0101_WORKMAN2B_BTL)
+			
+			//========================================/
+			
+		
+		ENDIF
+
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/*		D23R0101	WORKMAN2		作業員３				  */
+/**************************************************************/
+EVENT_START		ev_d23r0101_workman2_03
+_TALK_OBJ_START()
+
+	//依頼を請けていない場合
+	IF FLAG_OFF( FE_D23R0101_MANAGER_TALK ) THEN
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2c_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//依頼を請けている場合
+	ELSE
+		
+		//既に戦闘済みの場合
+		IF FLAG_ON( FE_D23R0101_WORKMAN2C_BTL ) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2c_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		//まだ戦闘をしていない場合
+		ELSE
+		
+			//メッセージ表示
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2c_02 )
+			_MSGWIN_CLOSE()
+		
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_WORKER2_23, 0 )
+	
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+	
+			//メッセージ表示
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_workman2c_03 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+	
+			//========================================/
+			
+			//戦闘済みのフラグをたてる
+			_FLAG_SET(FE_D23R0101_WORKMAN2C_BTL)
+			
+			//========================================/
+			
+		
+		ENDIF
+
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/*		D23R0101	ASSISTANTM		マニアイベント			  */
+/**************************************************************/
+EVENT_START		ev_d23r0101_assistantm_01
+_TALK_START_TURN_NOT()
+	//場所によってメッセージを変更する
+	
+	//蒸留塔の前
+	SWITCH $WK_SCENE_D23R0101_ASSISTANTM
+	CASE 0 THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_01 )
+		_MSGWIN_CLOSE()
+		
+		//主人公と向き合って
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		SWITCH $SCWK_ANSWER
+		CASE DIR_UP THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_d )
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_l )
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_r )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_02 )
+		_MSGWIN_CLOSE()
+	
+		//煙突に移動する
+		SWITCH $SCWK_ANSWER
+		CASE DIR_UP THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave1_u )
+		CASE DIR_RIGHT,DIR_LEFT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave1_rl )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+		
+		//煙突へ移動する
+		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 8, 0, 47, DIR_LEFT )
+		
+		//========================================/
+		
+		//ワークを変更する
+		$WK_SCENE_D23R0101_ASSISTANTM = 1
+		
+		//========================================/
+	
+	//煙突の前
+	CASE 1 THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_03 )
+		_MSGWIN_CLOSE()
+		
+		//主人公と向き合って
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		SWITCH $SCWK_ANSWER
+		CASE DIR_UP THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_d )
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_l )
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_u )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_04 )
+		_MSGWIN_CLOSE()
+
+		//煙突に移動する
+		SWITCH $SCWK_ANSWER
+		CASE DIR_UP THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave2_u )
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave2_l )
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave2_d )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+
+		//ガスホルダーに移動する
+		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 20, -1, 58, DIR_RIGHT )
+		
+		//========================================/
+		
+		//ワークを変更する
+		$WK_SCENE_D23R0101_ASSISTANTM = 2
+		
+		//========================================/
+	
+	//ガスホルダーの前
+	CASE 2 THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_05 )
+		_MSGWIN_CLOSE()
+		
+		//主人公と向き合って
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		SWITCH $SCWK_ANSWER
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_l )
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_dir_u )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+		
+		IF FLAG_OFF( FE_D23R0101_ITEMGET_01 ) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_06 )
+			_MSGWIN_CLOSE()
+			
+			//【仮】とりあえず、きずぐすりにしています。
+			_ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+			
+			//========================================/
+			
+			//アイテム入手フラグをセット
+			_FLAG_SET(FE_D23R0101_ITEMGET_01)
+		
+		ELSE
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_07 )
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+		
+		SWITCH $SCWK_ANSWER
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave3_r )
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( D23R0101_ASSISTANTM_01, anm_assistantm_leave3_d )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+		
+		//蒸留塔に移動する
+		_OBJ_POS_CHANGE( D23R0101_ASSISTANTM_01, 29, 0, 32, DIR_UP )
+		
+		//========================================/
+		
+		//ワークを変更する
+		$WK_SCENE_D23R0101_ASSISTANTM = 0
+		
+		//========================================/
+
+	ENDSWITCH
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		蒸留塔：マニア退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_assistantm_leave1_u
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,7
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_assistantm_leave1_rl
+	_ANIME_DATA		AC_WALK_D_8F,7
+	_ANIME_DATA		ACMD_END,0
+	
+//--------------------------------------------------------------------
+//		煙突：マニア退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_assistantm_leave2_u
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_assistantm_leave2_l
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_assistantm_leave2_d
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_R_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//		ガスホルダー：マニア退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_assistantm_leave3_d
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_assistantm_leave3_r
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,4
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
