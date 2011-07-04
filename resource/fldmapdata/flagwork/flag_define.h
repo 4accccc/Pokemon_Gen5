@@ -318,7 +318,7 @@
 #define FE_R13_POKE4_MEET_01               302 /* 0x012e 13番道路：コバルオンに会った */
 #define FE_R13_POKE4_GET_01                303 /* 0x012f 13番道路：コバルオンを捕まえた */
 #define FE_R13R0101_ITEMGET_01             304 /* 0x0130 13番道路民家：アイテム入手フラグ */
-		/* not used   305(0x0131) */
+#define FE_C04PC0101_ITEMGET_01            305 /* 0x0131 ライモンシティPC：アイテム入手フラグ */
 		/* not used   306(0x0132) */
 		/* not used   307(0x0133) */
 		/* not used   308(0x0134) */
