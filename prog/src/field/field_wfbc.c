@@ -14,7 +14,6 @@
 #include "gflib.h"
 
 #include "arc/arc_def.h"
-#include "arc/field_wfbc_data.naix"
 #include "arc/fieldmap/eventdata.naix"
 
 #include "savedata/mystatus.h"

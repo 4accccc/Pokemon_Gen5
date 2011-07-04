@@ -17,7 +17,6 @@
 #include "system/main.h"
 
 #include "arc/arc_def.h"
-#include "arc/field_wfbc_data.naix"
 
 #include "system/gfl_use.h"
 
