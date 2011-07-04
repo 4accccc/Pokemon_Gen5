@@ -165,3 +165,5 @@
 "nsbmdfiles/door_c13gym.nsbmd"
 "nsbmdfiles/c13gym_kabe1.nsbmd"
 "nsbmdfiles/mado_c5hs.nsbmd"
+"nsbmdfiles/d25_obj01.nsbmd"
+"nsbmdfiles/d25_obj02.nsbmd"
