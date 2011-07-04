@@ -1097,7 +1097,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     break;
 
   case SHOPBUY_SEQ_WAZA_SELECT:
-    PMSND_PlaySE( SEQ_SE_SYS_22 );
+    PMSND_PlaySE( SEQ_SE_DECIDE1 );
     ShopPrintMsg( wk, mes_shop_10_04, wk->selectitem );
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_POKELIST_CALL;
