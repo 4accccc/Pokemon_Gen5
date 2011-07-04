@@ -47,6 +47,8 @@
 #include "waza_oshie.cdat"// waza_oshie_data_table, waza_oshie_datanum_table
 
 #include "arc/shop_gra.naix"
+#include "savedata/infinity_dungeon_save.h"
+#include "../resource/shopdata/shop_data_index.h"
 
 #ifdef PM_DEBUG
 #define SHOP_DEBUG_COMMAND  // LRでお金が手に入る。SELECTでバッジ８つのショップになる
@@ -152,7 +154,7 @@ typedef struct{
   MYITEM    *myitem;  // 手持ちの道具アクセス
   RECORD    *record;  // レコードデータ
   BSUBWAY_SCOREDATA *BpData; // バトルポイントにアクセスするため
-  FIELD_WFBC_CORE   *wfbc;    // WFBCワークへのポインタ
+  INFINITYDUNGEON_SAVE *infinityDungeonSave;    // WFBCワークへのポインタ
   
   SHOP_ITEM lineup[SHOP_ITEM_MAX];  // ショップで購入できるデータを格納するワーク
   u16       lineup_num;             // 購入できる商品の数
@@ -251,7 +253,7 @@ static  int shop_buy_printwait( SHOP_BUY_APP_WORK *wk );
 static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type );
 static void ShopTypeDecideMsg( SHOP_BUY_APP_WORK *wk, int type );
 static void string_alloc( SHOP_BUY_APP_WORK *wk, int payment );  
-static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type );
+static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type );
 
 // 技教え
 static void woshie_item_set( SHOP_BUY_APP_WORK *wk, int color );
@@ -283,7 +285,6 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
   void** scr_subproc_work = SCRIPT_SetSubProcWorkPointerAdrs( sc );
   FLDMSGBG *     fldmsg   = FIELDMAP_GetFldMsgBG( fieldmap );
-  FIELD_WFBC_CORE *wfbc   = GAMEDATA_GetMyWFBCCoreData( gamedata );
 
   // ショップ用ワーク確保
   SHOP_BUY_CALL_WORK* sbw = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(SHOP_BUY_CALL_WORK));
@@ -298,7 +299,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   sbw->wk.BpData    = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata),
                                                      GMDATA_ID_BSUBWAY_SCOREDATA);
   sbw->wk.record    = GAMEDATA_GetRecordPtr( gamedata );
-  sbw->wk.wfbc      = wfbc;
+  sbw->wk.infinityDungeonSave   = SaveData_GetINFINITYDUNGEON(GAMEDATA_GetSaveControlWork(gamedata));
 
   // スクリプトからのパラメータで分岐
   switch(shop_id){
@@ -311,9 +312,10 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   case SCR_SHOPID_BP_WAZA:    // BP技マシンショップ
     sbw->shopType = shop_id;
     break;
-                              // 通信データから生成されるブラックシティショップ
-  case SCR_SHOPID_BLACK_CITY0:  case SCR_SHOPID_BLACK_CITY1:  case SCR_SHOPID_BLACK_CITY2:  
-  case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:  
+  case SCR_SHOPID_BLACK_CITY0: case SCR_SHOPID_BLACK_CITY1:
+  case SCR_SHOPID_BLACK_CITY2: case SCR_SHOPID_BLACK_CITY3:
+  case SCR_SHOPID_WHITE_FOREST0: case SCR_SHOPID_WHITE_FOREST1:
+  case SCR_SHOPID_WHITE_FOREST2: case SCR_SHOPID_WHITE_FOREST3:
     sbw->shopType = shop_id;
     break;
   case SCR_SHOPID_WAZA_OSHIE_RED:     // わざおしえショップ
@@ -686,9 +688,11 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
     wk->type = SHOP_TYPE_WAZA;
     bp_item_set( wk, SHOP_TYPE_WAZA  );
     break;
-  case SCR_SHOPID_BLACK_CITY0:  case SCR_SHOPID_BLACK_CITY1:  case SCR_SHOPID_BLACK_CITY2:
-  case SCR_SHOPID_BLACK_CITY3:  case SCR_SHOPID_BLACK_CITY4:
-    blackcity_shop_item_set( wk, type );
+  case SCR_SHOPID_BLACK_CITY0: case SCR_SHOPID_BLACK_CITY1:
+  case SCR_SHOPID_BLACK_CITY2: case SCR_SHOPID_BLACK_CITY3:
+  case SCR_SHOPID_WHITE_FOREST0: case SCR_SHOPID_WHITE_FOREST1:
+  case SCR_SHOPID_WHITE_FOREST2: case SCR_SHOPID_WHITE_FOREST3:
+    wfbc_shop_item_set( wk, type );
     break;
   case SCR_SHOPID_WAZA_OSHIE_RED:
   case SCR_SHOPID_WAZA_OSHIE_BLUE:
@@ -1354,41 +1358,124 @@ static void bp_item_set( SHOP_BUY_APP_WORK *wk, int type )
  * @param   type  ショップタイプ(SCR_SHOPID_BP_ITEM,SCR_SHOPID_BP_WAZA)
  */
 //----------------------------------------------------------------------------------
-static void blackcity_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
+static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
 {
-  int i;
-  GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-                                             NARC_message_itemname_dat, wk->heapId );
-  GF_ASSERT_MSG( type>=SCR_SHOPID_BLACK_CITY0 && type<=SCR_SHOPID_BLACK_CITY4, 
-             "BLACKCITYショップ指定0-4(0xf7-0xfb)の値になっていません\n");
-
-  // BLACKCITY用の商品ラインナップをセット
-  // BLACKCITY_SetShopItem( wk->lineup, &wk->lineup_num );
-  //TODO
-  //FIELD_WFBC_CORE_SetShopData( wk->wfbc, wk->lineup, &wk->lineup_num, 
-  //                             type-SCR_SHOPID_BLACK_CITY0, wk->heapId );
-
-
-  GF_ASSERT_MSG( wk->lineup_num, "ショップの品物がひとつもありません\n" );
-
-  wk->list = BmpMenuWork_ListCreate( wk->lineup_num+1, wk->heapId );
-  for(i=0;i<wk->lineup_num;i++)
+  enum
   {
-      int id = wk->lineup[i].id;
-      OS_Printf("strId=%d\n", id);
-      
-      // どうぐしか入らないはず
-      _add_menuitem( wk, i, wk->type, wk->lineup[i].id, itemMsgData );
-      
-  }
-  
-  // 「やめる」登録
-  BmpMenuWork_ListAddArchiveString( &wk->list[i], wk->shopMsgData, 
-                                    mes_shop_02_06, 
-                                    BMPMENULIST_CANCEL, 
-                                    wk->heapId );
+    WFBC_SHOP_RANK_MAX  = 6,
+  };
 
-  GFL_MSG_Delete( itemMsgData );
+  static const struct
+  {
+    u16 type;
+    u8 rank[WFBC_SHOP_RANK_MAX];
+  } sc_wfbc_shop_data[] = 
+  {
+    {
+      SCR_SHOPID_BLACK_CITY0,
+      {
+        BC_A_DEFAULT,BC_A_RANK_01,BC_A_RANK_02,BC_A_RANK_03,BC_A_RANK_04,BC_A_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_BLACK_CITY1,
+      {
+        BC_B_DEFAULT,BC_B_RANK_01,BC_B_RANK_02,BC_B_RANK_03,BC_B_RANK_04,BC_B_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_BLACK_CITY2,
+      {
+        BC_C_DEFAULT,BC_C_RANK_01,BC_C_RANK_02,BC_C_RANK_03,BC_C_RANK_04,BC_C_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_BLACK_CITY3,
+      {
+        BC_D_DEFAULT,BC_D_RANK_01,BC_D_RANK_02,BC_D_RANK_03,BC_D_RANK_04,BC_D_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_WHITE_FOREST0,
+      {
+        WF_A_DEFAULT,WF_A_RANK_01,WF_A_RANK_02,WF_A_RANK_03,WF_A_RANK_04,WF_A_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_WHITE_FOREST1,
+      {
+        WF_B_DEFAULT,WF_B_RANK_01,WF_B_RANK_02,WF_B_RANK_03,WF_B_RANK_04,WF_B_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_WHITE_FOREST2,
+      {
+        WF_C_DEFAULT,WF_C_RANK_01,WF_C_RANK_02,WF_C_RANK_03,WF_C_RANK_04,WF_C_RANK_05,
+      }
+    },
+    {
+      SCR_SHOPID_WHITE_FOREST3,
+      {
+        WF_D_DEFAULT,WF_D_RANK_01,WF_D_RANK_02,WF_D_RANK_03,WF_D_RANK_04,WF_D_RANK_05,
+      }
+    },
+  };
+
+  //TODO ?
+  static const int sc_rank_clear_area[WFBC_SHOP_RANK_MAX] =
+  {
+    0,2,4,6,8,10,
+  };
+
+  int id = 0;
+  int rank = 0;
+
+  //ランクをチェック
+  {
+    int i;
+    if( SCR_SHOPID_BLACK_CITY0 <= type && type <=  SCR_SHOPID_BLACK_CITY3 )
+    {
+      //TODO
+      rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave );
+      OS_TPrintf( "BCSHOP" );
+    }
+    else
+    {
+      //TODO
+      rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave );
+      OS_TPrintf( "WFSHOP" );
+    }
+    
+    for( i = 0; i < NELEMS(sc_rank_clear_area); i++ )
+    {
+      if( rank >= sc_rank_clear_area[i] )
+      {
+        rank = i;
+      }
+    }
+
+    GF_ASSERT( rank < WFBC_SHOP_RANK_MAX );
+  }
+
+  //タイプを検索
+  {
+    int i;
+    for( i = 0; i < NELEMS(sc_wfbc_shop_data); i++ )
+    {
+      if( sc_wfbc_shop_data[i].type == type )
+      {
+        id = sc_wfbc_shop_data[i].rank[rank];
+        break;
+      }
+    }
+  }
+
+  GF_ASSERT( id != 0 );
+
+  OS_TPrintf( "rank=%d id=%d type=%d\n", rank, id, type );
+
+  //通常のお店と同じ
+  shop_item_set( wk, type, id, 8 );
 }
 
 

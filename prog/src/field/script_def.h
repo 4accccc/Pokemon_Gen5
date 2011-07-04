@@ -89,16 +89,20 @@
 #define SCR_SHOPID_NULL        ( 0xFF )  //変動ショップ呼び出しID
 #define SCR_SHOPID_BP_ITEM     ( 0xFE )  //BPアイテムショップ呼び出しID
 #define SCR_SHOPID_BP_WAZA     ( 0xFD )  //BP技マシンショップ呼び出しID
-#define SCR_SHOPID_BLACK_CITY  ( 0xFC )  //ブラックシティショップ <---未使用になります
-#define SCR_SHOPID_BLACK_CITY4 ( 0xFB )  //ブラックシティショップ呼び出しID:0
 #define SCR_SHOPID_BLACK_CITY3 ( 0xFA )  //ブラックシティショップ呼び出しID:1
 #define SCR_SHOPID_BLACK_CITY2 ( 0xF9 )  //ブラックシティショップ呼び出しID:2
 #define SCR_SHOPID_BLACK_CITY1 ( 0xF8 )  //ブラックシティショップ呼び出しID:3
 #define SCR_SHOPID_BLACK_CITY0 ( 0xF7 )  //ブラックシティショップ呼び出しID:4
+
 #define SCR_SHOPID_WAZA_OSHIE_RED     ( 0xF6 )  //技教え用
 #define SCR_SHOPID_WAZA_OSHIE_BLUE    ( 0xF5 )  //技教え用
 #define SCR_SHOPID_WAZA_OSHIE_YELLOW  ( 0xF4 )  //技教え用
 #define SCR_SHOPID_WAZA_OSHIE_GREEN   ( 0xF3 )  //技教え用
+
+#define SCR_SHOPID_WHITE_FOREST3 ( 0xF2 )  //ホワイトフォレストショップ呼び出しID:1
+#define SCR_SHOPID_WHITE_FOREST2 ( 0xF1 )  //ホワイトフォレストショップ呼び出しID:2
+#define SCR_SHOPID_WHITE_FOREST1 ( 0xF0 )  //ホワイトフォレストショップ呼び出しID:3
+#define SCR_SHOPID_WHITE_FOREST0 ( 0xEF )  //ホワイトフォレストショップ呼び出しID:4
 
 //サブプロセス(アプリ)の終了コード定義
 #define SCR_PROC_RETMODE_EXIT    (0) //一発終了
