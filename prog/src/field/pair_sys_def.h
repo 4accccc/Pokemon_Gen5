@@ -14,7 +14,8 @@
 #define PAIR_ID_NATURAL               (PAIR_ID_01+1)          //Nの連れ歩き
 #define PAIR_ID_C12_SWRIVAL           (PAIR_ID_NATURAL+1)     //C12ライバル
 #define PAIR_ID_D11R0101_SWCHAMPION   (PAIR_ID_C12_SWRIVAL+1) //D11R0101チャンピオン
-#define PAIR_ID_MAX                   (PAIR_ID_D11R0101_SWCHAMPION+1)
+#define PAIR_ID_C14R0501_POKE45       (PAIR_ID_D11R0101_SWCHAMPION+1) //C14R0501 コジョフー
+#define PAIR_ID_MAX                   (PAIR_ID_C14R0501_POKE45+1)
 #define PAIR_ID_NONE                  (0xFFFF)
 
 #define PAIR_TYPE_ONE_ZONE   (0) //クローズマップ(1ゾーン内のみの移動の場合)
