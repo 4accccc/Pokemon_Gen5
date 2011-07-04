@@ -452,16 +452,20 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
 	</row>
 	<row id="pw_situ_hero_2">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
+		<language name="JPN" width="256">かんとく『はい！　カーット！
+おつかれさま！　さいこうだったよ！</language>
+		<language name="JPN_KANJI" width="256">監督『はい！　カーット！
+お疲れ様！　ぃやあ！　最高だったよ！</language>
 	</row>
 	<row id="pw_situ_enemy_2">
 		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
 	</row>
 	<row id="pw_situ_hero_3">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
+		<language name="JPN" width="256">かんとく『はいはい！　カットカット！
+さつえいしゅうりょう！　オシマイだよ！</language>
+		<language name="JPN_KANJI" width="256">監督『はいはい！　カットカット！
+撮影終了！　オシマイだよ！</language>
 	</row>
 	<row id="pw_situ_enemy_3">
 		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
@@ -520,15 +524,15 @@
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">？？？『しんじつと　りそうの　ししゃ
-[1:02:ポケモンニックネーム:0]ガール　とうじょう！▽
-ハチクマン　さん！
-アナタの　イタズラ▽
-ほっとけ　ないのよ！</language>
-		<language name="JPN_KANJI" width="256">？？？『真実と　理想の　使者
-[1:02:ポケモンニックネーム:0]ガール　登場！▽
-ハチクマン　さん！
-アナタの　イタズラ▽
-ほっとけ　ないのよ！</language>
+[1:02:ポケモンニックネーム:0]ガール　とうじょう！▼
+ちょっと　ハチクマンさん！
+アナタの　イタズラ！▽
+ほっとけ　ないよ！</language>
+		<language name="JPN_KANJI" width="256">？？？『しんじつと　りそうの　ししゃ
+[1:02:ポケモンニックネーム:0]ガール　とうじょう！▼
+ちょっと　ハチクマンさん！
+アナタの　イタズラ！▽
+ほっとけ　ないよ！</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">ゆうえんちのきゃく『わー！　なんだ！
@@ -856,7 +860,7 @@
 わすれるものは　いないだろう▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]ガール！▼
-さらば！
+バイバイ！
 [1:02:ポケモンニックネーム:0]ガール！
 </language>
 		<language name="JPN_KANJI" width="256">怪人ハチクマンの　前に
@@ -868,7 +872,7 @@
 忘れる者は　いないだろう▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]ガール！▼
-さらば！
+バイバイ！
 [1:02:ポケモンニックネーム:0]ガール！
 </language>
 	</row>

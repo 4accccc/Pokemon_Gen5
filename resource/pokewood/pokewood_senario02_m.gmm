@@ -470,16 +470,20 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
 	</row>
 	<row id="pw_situ_hero_2">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
+		<language name="JPN" width="256">かんとく『はい！　カーット！
+おつかれさま！　さいこうだったよ！</language>
+		<language name="JPN_KANJI" width="256">監督『はい！　カーット！
+お疲れ様！　ぃやあ！　最高だったよ！</language>
 	</row>
 	<row id="pw_situ_enemy_2">
 		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
 	</row>
 	<row id="pw_situ_hero_3">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
+		<language name="JPN" width="256">かんとく『はいはい！　カットカット！
+さつえいしゅうりょう！　おしまいだよ！</language>
+		<language name="JPN_KANJI" width="256">かんとく『はいはい！　カットカット！
+撮影終了！　オシマイだよ！</language>
 	</row>
 	<row id="pw_situ_enemy_3">
 		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
