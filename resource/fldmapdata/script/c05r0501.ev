@@ -27,9 +27,9 @@ _EVENT_DATA    ev_c05r0501_hakaim_01
 _EVENT_DATA    ev_c05r0501_hakaim_02
 _EVENT_DATA    ev_c05r0501_hakaim_03
 _EVENT_DATA    ev_c05r0501_hakaiw_01
-_EVENT_DATA    ev_c05r0501_pikachu_01
-_EVENT_DATA    ev_c05r0501_poke19_01
-_EVENT_DATA    ev_c05r0501_poke20_01
+_EVENT_DATA    ev_c05r0501_poke31_01
+_EVENT_DATA    ev_c05r0501_poke41_01
+_EVENT_DATA    ev_c05r0501_poke38_01
 _EVENT_DATA    ev_c05r0501_poke17_01
 _EVENT_DATA    ev_c05r0501_poke22_01
 _EVENT_DATA_END
@@ -65,9 +65,11 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   //ロット：あらためて
   _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_01,C05R0501_SAGE6_01, POS_DEFAULT ) 
   _MSGWIN_CLOSE()
-  
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
   //ライバル名タグに代入
-  _RIVAL_NAME(1)
+  _RIVAL_NAME( 1 )
   
   //ライバル：なあ、おまえも
   _BALLOONWIN_OBJMSG_POS( msg_c05r0501_swrival_01,MMDL_ID_EVENTOBJ_00, POS_DEFAULT ) 
@@ -336,30 +338,24 @@ EVENT_START		ev_c05r0501_hakaiw_01
 EVENT_END
 
 /**************************************************************/
-/* 			PIKACHU：話しかけ			  */
+/*  ハーデリア：話しかけ                                      */
 /**************************************************************/
-EVENT_START		ev_c05r0501_pikachu_01
-  
-  _EASY_TALK_POKEVOICE( MONSNO_025, msg_c05r0501_poke1_01 )
-  
+EVENT_START   ev_c05r0501_poke31_01
+  _EASY_TALK_POKEVOICE( MONSNO_591, msg_c05r0501_poke1_01 )
 EVENT_END
 
 /**************************************************************/
-/* 			POKE19：話しかけ			  */
+/*  デンチュラ：話しかけ                                      */
 /**************************************************************/
-EVENT_START		ev_c05r0501_poke19_01
-  
-  _EASY_TALK_POKEVOICE( MONSNO_533, msg_c05r0501_poke2_01 )
-  
+EVENT_START   ev_c05r0501_poke41_01
+  _EASY_TALK_POKEVOICE( MONSNO_578, msg_c05r0501_poke2_01 )
 EVENT_END
 
 /**************************************************************/
-/* 			POKE20：話しかけ			  */
+/*  ズルッグ：話しかけ                                        */
 /**************************************************************/
-EVENT_START		ev_c05r0501_poke20_01
-  
-  _EASY_TALK_POKEVOICE( MONSNO_505, msg_c05r0501_poke3_01 )
-  
+EVENT_START   ev_c05r0501_poke38_01
+  _EASY_TALK_POKEVOICE( MONSNO_637, msg_c05r0501_poke3_01 )
 EVENT_END
 
 /**************************************************************/

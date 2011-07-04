@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/30 11:57:02
+#save date:2011/07/01 19:26:49
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t06pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -334,7 +334,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_T06PC0101_MAN2_01
+SCRID_T06PC0101_MAN3_01
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number

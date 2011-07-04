@@ -6,9 +6,9 @@
 //
 //======================================================================
   .text
+
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0301.h"
-  
   .include  "c02r0301.h"
 
 //--------------------------------------------------------------
@@ -18,5 +18,60 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
+_EVENT_DATA   ev_c02r0301_girl1_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  女の子：話しかけ（なつき度チェック）                      */
+/**************************************************************/
+EVENT_START   ev_c02r0301_girl1_01
+
+  _TALK_OBJ_START()
+  //女の子：まあ　すてきな　トレーナーさん
+  _TEMOTI_MONS_NAME( 0, SCWK_TEMP0 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_01 )
+
+  //先頭ポケモンの位置チェック→なつき度チェック
+  _GET_PARTY_FRONT_POKEMON( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+  _GET_TEMOTI_NATSUKI( SCWK_TEMP1, SCWK_TEMP0 )
+
+  IF $SCWK_TEMP1 == 255 THEN     //なつき度255（最高）
+    //女の子：ものすごーく　なついているのね！
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_02 )
+
+  ELSIF $SCWK_TEMP1 >= 200 && $SCWK_TEMP1 <= 254 THEN     //なつき度200～254
+    //女の子：あなたは　《ポケモン》のことが　すきで
+    _TEMOTI_MONS_NAME( 0, SCWK_TEMP0 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_03 )
+
+  ELSIF $SCWK_TEMP1 >= 150 && $SCWK_TEMP1 <= 199 THEN     //なつき度150～199
+    //女の子：あなたと　《ポケモン》
+    _TEMOTI_MONS_NAME( 0, SCWK_TEMP0 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_04 )
+
+  ELSIF $SCWK_TEMP1 >= 100 && $SCWK_TEMP1 <= 149 THEN     //なつき度100～149
+    //女の子：ちょっぴり　なついている……
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_05 )
+
+  ELSIF $SCWK_TEMP1 >= 50 && $SCWK_TEMP1 <= 99 THEN     //なつき度50～99
+    //女の子：うーん……
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_06 )
+
+  ELSIF $SCWK_TEMP1 >= 1 && $SCWK_TEMP1 <= 49 THEN     //なつき度1～49
+    //女の子：ひょっとして　ポケモンしょうぶで
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_07 )
+
+  ELSIF $SCWK_TEMP1 == 0 THEN     //なつき度0（最低）
+    //女の子：あらま？　スパルタ？　それとも
+    _BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_girl1_08 )
+
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+
+
+

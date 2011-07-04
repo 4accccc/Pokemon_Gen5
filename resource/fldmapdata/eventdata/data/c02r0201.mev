@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/19 14:04:45
+#save date:2011/07/04 12:39:33
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c02R0201.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,100 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c02R0201.wms
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#type
+1
+#ID name
+C02R0201_MUSICIAN_01
+#OBJ CODE Number
+MUSICIAN
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C02R0201_MUSICIAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 48 216
+#event number: 1
+#type
+1
+#ID name
+C02R0201_BOY3_01
+#OBJ CODE Number
+BOY3
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0201_BOY3_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 48 200
+#event number: 2
+#type
+1
+#ID name
+C02R0201_MAN1_01
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C02R0201_MAN1_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

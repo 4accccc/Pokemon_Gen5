@@ -10,6 +10,9 @@
 #ifndef ZONE_C02R0201_EVC_H
 #define ZONE_C02R0201_EVC_H
 
+#define C02R0201_MUSICIAN_01               0
+#define C02R0201_BOY3_01                   1
+#define C02R0201_MAN1_01                   2
 
 #endif //ZONE_C02R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
