@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2011-07-03T15:39:35" source="light01.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<original_create user="ibe_mana" host="W00191" date="2011-07-03T15:39:35" source="light01.mb"/>
+<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+
+<model_info
+	pos_scale="1"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="merge" node_size="2 1"
+	compress_material="on" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="5" xyz="-0.750000 1.000000 2.250000" whd="1.000000 5.000000 3.250000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="gos_mist01_01"
+		width="8" height="64" original_width="8" original_height="64"
+		format="a5i3"
+		palette_name="gos_mist01_01_pl"
+		path="C:/home/swan_data3d/field/in34/chip/tex/gos_mist01_01.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0808 0808 0008
+			0808 0808 0808 0808 0808 0808 0808 0808
+			1010 1010 1010 1010 1010 1010 1010 1010
+			1818 1818 1818 1818 1818 1818 1818 1818
+			2020 2020 2020 2020 2020 2020 2020 2020
+			2828 2828 2828 2828 2828 2828 2828 2828
+			3030 3030 3030 3030 3838 3838 3838 3838
+			3838 3838 3838 3838 4040 4040 4040 4040
+			4848 4048 4048 4848 4848 4848 4848 4848
+			5050 5050 5050 5050 5850 5058 5050 5050
+			5858 5858 5858 5858 6060 6060 6060 6060
+			6868 6068 6868 6068 6868 6868 6868 6868
+			7070 7070 7070 7070 7878 7878 7878 7878
+			7878 7878 7878 7878 8080 8080 8080 8080
+			8888 8888 8888 8888 8888 8888 8888 8888
+			9090 9090 9090 9090 9898 9898 9898 9898
+			9898 9898 9898 9898 a0a0 a0a0 a0a0 a0a0
+			a8a8 a8a8 a8a8 a8a8 a8a8 a8a8 a8a8 a8a8
+			b0b0 b0b0 b0b0 b0b0 b0b0 b0b0 b0b0 b0b0
+			b8b8 b8b8 b8b8 b8b8 c0c0 c0c0 c0c0 c0c0
+			c0c0 c0c0 c0c0 c0c0 c8c8 c8c8 c8c8 c8c8
+			c8c8 c8c8 c8c8 c8c8 d0d0 d0d0 d0d0 d0d0
+			d0d0 d0d0 d0d0 d0d0 d8d0 d0d8 d8d0 d0d0
+			d8d8 d8d8 d8d8 d8d8 d8d8 d8d8 d8d8 d8d8
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="gos_mist01_01_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="gos_mist01_01_1"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.446777 1.979248 -0.478516"
+		volume_max="0.417969 4.596924 3.964600"
+		volume_r="6.086670"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="8.000000 32.562500"/>
+					<clr rgb="0 0 0"/>
+					<nrm xyz="0.000000 0.861328 -0.507813"/>
+					<pos_xyz xyz="-0.446777 4.596924 3.964600"/>
+					<tex st="0.000000 32.562500"/>
+					<pos_xy xy="0.417969 4.596924"/>
+					<tex st="0.000000 64.000000"/>
+					<pos_yz yz="1.979248 -0.478516"/>
+					<tex st="8.000000 64.000000"/>
+					<pos_xy xy="-0.446777 1.979248"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="pPlane2" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="18.502686 18.502686 18.502686"
+		rotate="87.479980 0.000000 0.000000"
+		translate="-7.465576 171.087402 -0.392578"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.446777 1.979248 -0.478516"
+		volume_max="0.417969 4.596924 3.964600"
+		volume_r="6.086670"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

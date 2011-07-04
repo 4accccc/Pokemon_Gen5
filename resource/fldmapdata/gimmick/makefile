@@ -29,7 +29,8 @@ SUBDIRS	=	gym_denki \
 					gym_poison \
 					gym_water \
 					fourkings_evil \
-					fourkings_esp
+					fourkings_esp \
+					fourkings_ghost
 
 .PHONY:	do-build clean
 

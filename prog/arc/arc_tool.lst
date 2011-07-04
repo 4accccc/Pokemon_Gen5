@@ -341,4 +341,5 @@
   ARCID_KEY_SYSTEM "key_system_gra.narc"  #キーシステム
   ARCID_FOURKINGS_EVIL "fieldmap/fourkings_evil.narc"  #四天王部屋（悪）
   ARCID_FOURKINGS_ESP "fieldmap/fourkings_esp.narc"  #四天王部屋（エスパー）
+  ARCID_FOURKINGS_GHOST "fieldmap/fourkings_ghost.narc"  #四天王部屋（ゴースト）
   
