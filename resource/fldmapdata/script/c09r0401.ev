@@ -95,13 +95,13 @@ EVENT_START	ev_pos_c09r0401_enter_01
   // 演出開始
   //--------------------------------------
 
-  _TIME_WAIT( 20 )
+  _TIME_WAIT( 10 )
 
   // 階段表示演出
   _FOURKINGS_ESP_STAIRS( 0 )
 	_SE_PLAY( SEQ_SE_SW_CATTLEYA_01 )    // キラキラした水が流れる音
 
-  _TIME_WAIT( 60 )
+  _TIME_WAIT( 40 )
 
   //--------------------------------------
   // 演出終了
@@ -134,23 +134,23 @@ EVENT_START	ev_pos_c09r0401_enter_02
   // 階段消滅
   _FOURKINGS_ESP_STAIRS( 1 )
 
-  _TIME_WAIT( 5 )
+  _TIME_WAIT( 40 )
 
   // 花のアニメ開始
   _FOURKINGS_ESP_FLOWER()
 	_SE_PLAY( SEQ_SE_SW_CATTLEYA_02 )    // 花が開いた後、飛び散る音
 
-  _TIME_WAIT( 8 )
+  _TIME_WAIT( 30 )
 
   // キューブ再生
   _FOURKINGS_ESP_CUBE()
 
-  _TIME_WAIT( 15 )
+  _TIME_WAIT( 30 )
 
   // カトレア降りてくる
   // 第２引数 = 降りるスピード
   // 1が遅い ～ 増やすと早くなる
-  _FOURKINGS_ESP_CATTLEYA( C09R0401_BIGFOUR4_01, 8 )
+  _FOURKINGS_ESP_CATTLEYA( C09R0401_BIGFOUR4_01, 15 )
 
   _TIME_WAIT( 60 )
 
