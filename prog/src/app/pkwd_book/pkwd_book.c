@@ -166,6 +166,8 @@ enum{
 	PKWD_POKE_MAX				= 6,	// pokemon max
 	//
 	PKWD_BOOK_COLOR_NUM			= 4,	// 色変え
+	//
+	PKWD_BOOK_LIST_MAX			= 7,	// 1画面の最大数
 };
 
 //-------------
@@ -280,6 +282,8 @@ enum{
 	MES_ID_INFO_01,						// キャスト
 	MES_ID_INFO_02,						// もちもの
 	MES_ID_INFO_03,						// とくせい
+	//
+	MES_ID_TRAINER,						// やくめい
 	//
 	MES_ID_DUMMY,						// dummy
 };
@@ -745,8 +749,9 @@ static const s16 pwb_fix_mestbl[] = {
 	pw_castindex_03,		// INFO:キャスト共演者
 	pw_castindex_04,		// INFO:もちもの
 	pw_castindex_05,		// INFO:とくせい
+	pw_castindex_20,		// TRAINER:やくめい
 	//
-	pw_castindex_06,		// dummy
+	pw_castindex_06,		// dummy(なにも表示しないため)
 };
 
 //-------------
@@ -770,7 +775,7 @@ static const u16 pwb_fmes10_tbl[] = {
 static const u16 pwb_fmes11_tbl[] = {
 	MES_ID_INFO_01,	PWB_CVS_TRAINER_TITLE, 0, 0,	// キャスト
 	//
-	MES_ID_INFO_01, PWB_CVS_TRAINER_NAME,  1, 0,	// キャスト、やくめい(test)
+	MES_ID_TRAINER, PWB_CVS_TRAINER_NAME,  1, 0,	// やくめい
 	//
 	0xffff, 0, 0, 0,		// end
 };
@@ -936,11 +941,16 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
 // 選択肢画面
 //---------------------
 static const s16 pwb_winmes_tbl[] = {
-	pw_plot_000,			// ちょうせんしますか(仮)
+//	pw_plot_000,			// ちょうせんしますか(仮)
+//	//
+//	pw_topbutton_01,		// ちょうせんする(仮)
+//	pw_topbutton_02,		// くわしくみる(仮)
+//	pw_castindex_04,		// やめる(仮)
 	//
-	pw_topbutton_01,		// ちょうせんする(仮)
-	pw_topbutton_02,		// くわしくみる(仮)
-	pw_castindex_04,		// やめる(仮)
+	pw_castindex_21,		// ちょうせんしますか
+	pw_castindex_22,		// ちょうせんする
+	pw_castindex_23,		// くわしくみる
+	pw_castindex_24,		// やめる
 };
 
 // 上画面のパレット
@@ -4689,7 +4699,7 @@ static void pwb_init_scrollbar( PKWD_BOOK_MAIN_WORK * wk )
 {
 	BOOL	bflg=TRUE;
 	//
-	if(wk->ScenarioMax <= 7){
+	if(wk->ScenarioMax <= PKWD_BOOK_LIST_MAX){
 		bflg = FALSE;
 	}
 	// 表示
@@ -4710,7 +4720,7 @@ static void pwb_main_scrollbar( PKWD_BOOK_MAIN_WORK * wk )
 	// 表示
 	GFL_CLACTPOS cp_pos;
 	
-	if(wk->ScenarioMax <= 7){
+	if(wk->ScenarioMax <= PKWD_BOOK_LIST_MAX){
 		return;
 	}
 	

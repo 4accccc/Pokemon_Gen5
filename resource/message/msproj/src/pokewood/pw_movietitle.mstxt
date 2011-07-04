@@ -11894,4 +11894,131 @@
 				Time="2011-06-19T10:54:23" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="pw_castindex_20">
+		<LanguageCell
+			Language="JPN">
+			<Text>やくめい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:05:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:05:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やくめい</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:05:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:05:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_21">
+		<LanguageCell
+			Language="JPN">
+			<Text>このだいほんの　さつえいに
+ちょうせん　しますか？</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:06:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:05:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このだいほんの　さつえいに
+ちょうせん　しますか？</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:06:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:06:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_22">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょうせんする</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょうせんする</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_23">
+		<LanguageCell
+			Language="JPN">
+			<Text>くわしく　みる</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くわしく　みる</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_castindex_24">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-04T03:07:59" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
