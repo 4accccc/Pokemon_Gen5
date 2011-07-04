@@ -2,14 +2,17 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_c05r0203_girl4_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>かわり　つづけるからこそ
+かわらずに　いきてられるのよ▼
+ポケモンだって　しんか　するけれど
+ほんしつは　おなじ　ままよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:12:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>変わり続けるからこそ
+変わらずに　生きてられるのよ▼
+ポケモンだって　進化するけれど
+本質は　同じ　ままよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +34,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀
+・GRIDX＝3、GRIDZ＝8</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:53:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>GIRL4</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:55:45" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -47,5 +54,153 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0203_boy4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくの　きおくに　のこる
+ホドモエは　どこか　やぼったい▽
+ふんいき　だったのになあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:50:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:48:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくの　記憶に　残る
+ホドモエは　どこか　野暮ったい▽
+雰囲気だったのになあ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:50:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:48:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝1、GRIDZ＝9</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:48:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:55:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0203_poke42_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おや？　ポケモンは
+なにかを　くわえている▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:39:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:48:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おや？　ポケモンは
+なにかを　くわえている▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:39:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T10:48:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・ベッドの上？　はムリだけどね
+・アイテム入手処理
+　No000「」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:38:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE42
+ポケモン・キバゴ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:34:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05r0203_poke42_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぎゃおお！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:37:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:37:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぎゃおお！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:37:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:37:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・アイテム入手処理後、続けて
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:37:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE42
+ポケモン・キバゴ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T11:37:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
