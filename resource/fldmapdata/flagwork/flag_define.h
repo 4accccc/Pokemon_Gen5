@@ -319,11 +319,11 @@
 #define FE_R13_POKE4_GET_01                303 /* 0x012f 13番道路：コバルオンを捕まえた */
 #define FE_R13R0101_ITEMGET_01             304 /* 0x0130 13番道路民家：アイテム入手フラグ */
 #define FE_C04PC0101_ITEMGET_01            305 /* 0x0131 ライモンシティPC：アイテム入手フラグ */
-		/* not used   306(0x0132) */
-		/* not used   307(0x0133) */
-		/* not used   308(0x0134) */
-		/* not used   309(0x0135) */
-		/* not used   310(0x0136) */
+#define FE_D23R0101_MANAGER_TALK           306 /* 0x0132 コンビナート：現場監督の依頼フラグ */
+#define FE_D23R0101_WORKMAN2A_BTL          307 /* 0x0133 コンビナート：作業員２Ａの戦闘フラグ */
+#define FE_D23R0101_WORKMAN2B_BTL          308 /* 0x0134 コンビナート：作業員２Ｂの戦闘フラグ */
+#define FE_D23R0101_WORKMAN2C_BTL          309 /* 0x0135 コンビナート：作業員２Ｃの戦闘フラグ */
+#define FE_D23R0101_ITEMGET_01             310 /* 0x0136 コンビナート：コンビナートマニアのアイテム入手フラグ */
 		/* not used   311(0x0137) */
 		/* not used   312(0x0138) */
 		/* not used   313(0x0139) */
