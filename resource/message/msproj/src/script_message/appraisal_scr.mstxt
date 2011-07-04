@@ -179,12 +179,12 @@ MAID</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>●鑑定アイテム：グルメ
-・はい／いいえ表示
+・はい/いいえ表示
 ・はい→msg_appraisal_g_04
 ・いいえ→msg_appraisal_g_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -689,12 +689,12 @@ GENTLEMAN</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>●鑑定アイテム：鉱物
-・はい／いいえ表示
+・はい/いいえ表示
 ・はい→msg_appraisal_m_04
 　いいえ→msg_appraisalm_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1193,12 +1193,12 @@ FIGHTERM</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>●鑑定アイテム：大富豪
-・はい／いいえ表示
+・はい/いいえ表示
 ・はい→msg_appraisal_r_04
 　いいえ→msg_appraisalr_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1500,12 +1500,12 @@ FIGHTERM</Text>
 			<Comment>●鑑定アイテム：大富豪
 ・No634「こだいのおうかん」を持っているとき
 　1回のみ発生
-・はい／いいえ表示
+・はい/いいえ表示
 ・はい→msg_appraisal_r_04
 　いいえ→msg_appraisalr_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1784,12 +1784,12 @@ SUNGLASSES</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>●鑑定アイテム：鉱物２
-・はい／いいえ表示
+・はい/いいえ表示
 ・はい→msg_appraisal_m2_04
 ・いいえ→msg_appraisal_m2_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2028,11 +2028,11 @@ SUNGLASSES</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●鑑定アイテム：鉱物２　
+			<Comment>●鑑定アイテム：鉱物２
 ・イベント終了</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2092,11 +2092,11 @@ SUNGLASSES</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>●鑑定アイテム：鉱物２　
+			<Comment>●鑑定アイテム：鉱物２
 ・買い取れる道具が一つもない</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2116,6 +2116,463 @@ SUNGLASSES</Text>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フンフンフン……！▼
+フキヨセで　はたけしごとを　しています
+そう　ぼくには　こやしが　いるんだよ！▼
+フンフンフン……！▼
+きみは　ポケモントレーナー　だね！
+じゃあ　けものみちは　しっているかな▼
+けものみちの　おくで
+こやしが　たまに　みつかるだろ▽
+ぼくは　それが　だいすき　なのさ！▼
+フンフンフン……！
+じゃあ　よろしくね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:31:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フンフンフン……！▼
+フキヨセで　畑仕事を　しています
+そう　ぼくには　こやしが　いるんだよ！▼
+フンフンフン……！▼
+きみは　ポケモントレーナー　だね！
+じゃあ　けものみちは　知っているかな▼
+けものみちの　奥で
+こやしが　たまに　みつかるだろ▽
+ぼくは　それが　大好き　なのさ！▼
+フンフンフン……！
+じゃあ　よろしくね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:32:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※進行フローは共通
+※swanで新規作成
+●鑑定アイテム：こやし
+・話しかけメッセージ１　初回のみ
+・話しかけ後→msg_appraisal_k_02
+・話しかけ後、買い取れるものがない
+　→msg_appraisal_k_08</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:22:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:19:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こやしを　もっているんだろ？
+よかったら　みせてくれないかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こやしを　持っているんだろ？
+よかったら　みせてくれないかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:28:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・話しかけメッセージ２　初回以降はここから
+　話しかけ後道具選択画面へ
+・該当する道具※の場合→msg_appraisal_k_03
+　※別途リスト参照
+・該当しない道具の場合→msg_appraisal_k_06
+・キャンセル→msg_appraisal_k_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:22:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フンフンフン……！　このにおいは
+[Name:Item Idx="0" ]だね！▼
+その　こやしなら
+[Digit:8digits Idx="1" ]円で　かいとるよ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:24:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フンフンフン……！　このにおいは
+[Name:Item Idx="0" ]だね！▼
+その　こやしなら
+[Digit:8digits Idx="1" ]円で　かいとるよ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:24:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・はい/いいえ表示
+・はい→msg_appraisal_k_04
+・いいえ→msg_appraisal_k_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:22:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="0" ]　を　わたして
+[Digit:8digits Idx="1" ]円を　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="0" ]　を　わたして
+[Digit:8digits Idx="1" ]円を　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・メッセージ終了時取得ＳＥ
+・終了後→msg_appraisal_g_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フンフンフン……！　じつに
+かぐわしい　いい　こやし　だね！▽
+のうかとしての　ちが　さわぐよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:25:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フンフンフン……！　じつに
+かぐわしい　いい　こやし　だね！▽
+農家としての　血が　騒ぐよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:29:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フンフンフン……！▼
+こいつは　こやし　じゃないね
+ということは　かえないよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:26:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フンフンフン……！▼
+こいつは　こやし　じゃないね
+ということは　買えないよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:29:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フンフンフン……！
+ポケモンの　フンである　こやし！▼
+のうぎょうには　だいじな　もの　だよ
+ぜひ　みつけたら　もってきてね！
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:27:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フンフンフン……！
+ポケモンの　フンである　こやし！▼
+農業には　大事な　もの　だよ
+ぜひ　みつけたら　持ってきてね！
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:29:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_appraisal_k_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フンフンフン……！
+なにも　においが　しない▼
+どうやら　こやしは　もってないようだね
+また　こんど　もってきてください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:28:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フンフンフン……！
+なにも　においが　しない▼
+どうやら　こやしは　持ってないようだね
+また　今度　持ってきてください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:29:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:23:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●鑑定アイテム：こやし
+・買い取れる道具が一つもない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:21:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ブリーダー
+BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-04T12:20:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
