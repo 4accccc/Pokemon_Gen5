@@ -324,7 +324,7 @@
 #define FE_D23R0101_WORKMAN2B_BTL          308 /* 0x0134 コンビナート：作業員２Ｂの戦闘フラグ */
 #define FE_D23R0101_WORKMAN2C_BTL          309 /* 0x0135 コンビナート：作業員２Ｃの戦闘フラグ */
 #define FE_D23R0101_ITEMGET_01             310 /* 0x0136 コンビナート：コンビナートマニアのアイテム入手フラグ */
-		/* not used   311(0x0137) */
+#define FE_C14_BOY4_TALK_01                311 /* 0x0137 セイガイハシティ：初回話しかけフラグ */
 		/* not used   312(0x0138) */
 		/* not used   313(0x0139) */
 		/* not used   314(0x013a) */
@@ -619,6 +619,9 @@
 #define FV_R11_POKE6_01                    701 /* 0x02bd 11番道路：ビリジオン */
 #define FV_R13_POKE4_01                    702 /* 0x02be 13番道路：コバルオン */
 #define FV_C12R0202_RIVALSISTER_01         703 /* 0x02bf ヒオウギシティ：ライバル宅2Fの妹 */
+#define FV_C14_SWRIVAL_01                  704 /* 0x02c0 セイガイハシティ：ライバル */
+#define FV_C14_SWLEADER8_01                705 /* 0x02c1 セイガイハシティ：ジムリーダー */
+#define FV_C14_GIRL4_01                    706 /* 0x02c2 セイガイハシティ：おいかけっこカップル（女） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

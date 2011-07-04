@@ -215,6 +215,8 @@
 #define WK_SCENE_R13_POKE4               16603 /* 0x40db 13番道路：コバルオン遭遇イベントPOS制御ワーク */
 #define WK_SCENE_C02R0601_LOSTITEM       16604 /* 0x40dc シッポウシティ：カフェソーコ落し物イベント進行制御ワーク */
 #define WK_SCENE_D23R0101_ASSISTANTM     16605 /* 0x40dd コンビナート：マニアイベントのワーク */
+#define WK_SCENE_C14_SWRIVAL_01          16606 /* 0x40de セイガイハシティ：到着時のライバルイベントPOS制御ワーク */
+#define WK_SCENE_C14_SWLEADER8_01        16607 /* 0x40df セイガイハシティ：ジムクリア後のジムリーダーイベント POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
