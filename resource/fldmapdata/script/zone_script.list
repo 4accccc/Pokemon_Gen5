@@ -1194,5 +1194,7 @@ SCRIPTFILES += \
 	sp_d25r0901.ev \
 	d25r1001.ev \
 	sp_d25r1001.ev \
+	d26r0101.ev \
+	sp_d26r0101.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
