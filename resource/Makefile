@@ -134,7 +134,6 @@ SUBDIRS	=	wmi \
 			monolith \
 			fourkings_scene \
 			multiboot \
-			field_wfbc_data/after \
 			mail \
 			season_display \
 			zukan_gra \
