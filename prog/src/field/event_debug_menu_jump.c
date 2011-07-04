@@ -164,6 +164,7 @@ static const u16 JumpZoneID_ListTbl[] = {
   ZONE_ID_D09,
   
   ZONE_ID_D05R0101,
+  ZONE_ID_C15R0101,
 #if defined(DEBUG_ONLY_FOR_fuchino_hiroki) | defined(DEBUG_ONLY_FOR_ohkubo_tomohiko) | defined(DEBUG_ONLY_FOR_nakatsui) | defined(DEBUG_ONLY_FOR_tamada)
   ZONE_ID_H06,
 #endif

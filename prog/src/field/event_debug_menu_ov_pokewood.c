@@ -162,6 +162,16 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_POKEWOOD_WORK *work;
 
+  u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
+  if (
+      ( zone_id != ZONE_ID_C15 ) && ( zone_id != ZONE_ID_C15R0101 ) && ( zone_id != ZONE_ID_C15R0201 )
+     )
+  {
+    //オーバーレイがないものを呼び出さないように使用箇所を制限
+    OS_Printf("デバッグメニューPOKEWOODはC15以外では呼べません\n");
+    return FALSE;
+  }
+
   GMEVENT_Change( event, debugMenuPokewoodEvent, sizeof(DEBUG_POKEWOOD_WORK) );
 
   work = GMEVENT_GetEventWork( event );
