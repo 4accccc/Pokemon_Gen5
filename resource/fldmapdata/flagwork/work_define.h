@@ -217,6 +217,8 @@
 #define WK_SCENE_D23R0101_ASSISTANTM     16605 /* 0x40dd コンビナート：マニアイベントのワーク */
 #define WK_SCENE_C14_SWRIVAL_01          16606 /* 0x40de セイガイハシティ：到着時のライバルイベントPOS制御ワーク */
 #define WK_SCENE_C14_SWLEADER8_01        16607 /* 0x40df セイガイハシティ：ジムクリア後のジムリーダーイベント POS制御ワーク */
+#define WK_SCENE_R19R0101_INFOW_01       16608 /* 0x40e0 19番道路：ストッパーPOS制御ワーク */
+#define WK_SCENE_H01R0201_STOP_01        16609 /* 0x40e1 スカイアローブリッジ：ヒウン側ゲートストッパーPOS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
