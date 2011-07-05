@@ -25,6 +25,7 @@
 #include "savedata/situation.h"
 #include "savedata/misc.h"
 #include "savedata/c_gear_data.h"
+#include "savedata/outside_permanent.h"
 #include "sound/pm_sndsys.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -69,6 +70,7 @@ typedef struct {
 	MISC * misc;
 	CGEAR_SAVEDATA * cgear;
 	EVENTWORK * evwk;
+  KEY_SYSTEM_SAVE * keysys;
 
 	GFL_TCB * vtask;					// TCB ( VBLANK )
 
@@ -207,6 +209,9 @@ static void PutListItem( START_MENU_WORK * wk, u8 item, s8 py );
 static void ChangeListItemPalette( START_MENU_WORK * wk, u8 item, s8 py, u8 pal );
 static s8 GetListPutY( START_MENU_WORK * wk, s8 py );
 
+static void PutReportInfo( START_MENU_WORK * wk );
+static void ClearReportInfo( START_MENU_WORK * wk );
+
 static void ScrollObj( START_MENU_WORK * wk, int val );
 static void SetBlendAlpha(void);
 static int SetFadeIn( START_MENU_WORK * wk, int next );
@@ -288,7 +293,7 @@ static const pSTARTMENU_FUNC MainSeq[] = {
 // リスト項目データ
 static const LIST_ITEM_DATA ListItemData[] =
 {
-	{ NARC_startmenu_list_frame1_lz_NSCR, LIST_FRAME_CONTINUE_SY },
+	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_CONTINUE_SY },
 	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_NEW_GAME_SY },
 	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_HUSHIGI_SY },
 	{ NARC_startmenu_list_frame2_lz_NSCR, LIST_FRAME_BATTLE_SY },
@@ -305,26 +310,6 @@ static const u8 BmpWinData[][6] =
 	{	//「続きから始める」
 		BMPWIN_LIST_FRM, BMPWIN_TITLE_PX, BMPWIN_TITLE_PY,
 		BMPWIN_TITLE_SX, BMPWIN_TITLE_SY, BMPWIN_LIST_PAL
-	},
-	{	// プレイヤー名
-		BMPWIN_LIST_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_LIST_PAL
-	},
-	{	// セーブ場所
-		BMPWIN_LIST_FRM, BMPWIN_PLACE_PX, BMPWIN_PLACE_PY,
-		BMPWIN_PLACE_SX, BMPWIN_PLACE_SY, BMPWIN_LIST_PAL
-	},
-	{	// プレイ時間
-		BMPWIN_LIST_FRM, BMPWIN_TIME_PX, BMPWIN_TIME_PY,
-		BMPWIN_TIME_SX, BMPWIN_TIME_SY, BMPWIN_LIST_PAL
-	},
-	{	// 図鑑
-		BMPWIN_LIST_FRM, BMPWIN_ZUKAN_PX, BMPWIN_ZUKAN_PY,
-		BMPWIN_ZUKAN_SX, BMPWIN_ZUKAN_SY, BMPWIN_LIST_PAL
-	},
-	{	// バッジ
-		BMPWIN_LIST_FRM, BMPWIN_BADGE_PX, BMPWIN_BADGE_PY,
-		BMPWIN_BADGE_SX, BMPWIN_BADGE_SY, BMPWIN_LIST_PAL
 	},
 	{	//「最初から始める」
 		BMPWIN_LIST_FRM, BMPWIN_START_PX, BMPWIN_START_PY,
@@ -363,12 +348,51 @@ static const u8 BmpWinData[][6] =
 		BMPWIN_MSG_FRM, BMPWIN_MSG_PX, BMPWIN_MSG_PY,
 		BMPWIN_MSG_SX, BMPWIN_MSG_SY, BMPWIN_MSG_PAL
 	},
+
+	{	//「レポート情報」
+		BMPWIN_REPORT_FRM, BMPWIN_REPORT_PX, BMPWIN_REPORT_PY,
+		BMPWIN_REPORT_SX, BMPWIN_REPORT_SY, BMPWIN_LIST_PAL
+	},
+	{	// プレイヤー名
+		BMPWIN_REPORT_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
+		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_LIST_PAL
+	},
+	{	// セーブ場所
+		BMPWIN_REPORT_FRM, BMPWIN_PLACE_PX, BMPWIN_PLACE_PY,
+		BMPWIN_PLACE_SX, BMPWIN_PLACE_SY, BMPWIN_LIST_PAL
+	},
+	{	// プレイ時間
+		BMPWIN_REPORT_FRM, BMPWIN_TIME_PX, BMPWIN_TIME_PY,
+		BMPWIN_TIME_SX, BMPWIN_TIME_SY, BMPWIN_LIST_PAL
+	},
+	{	// 図鑑
+		BMPWIN_REPORT_FRM, BMPWIN_ZUKAN_PX, BMPWIN_ZUKAN_PY,
+		BMPWIN_ZUKAN_SX, BMPWIN_ZUKAN_SY, BMPWIN_LIST_PAL
+	},
+	{	// バッジ
+		BMPWIN_REPORT_FRM, BMPWIN_BADGE_PX, BMPWIN_BADGE_PY,
+		BMPWIN_BADGE_SX, BMPWIN_BADGE_SY, BMPWIN_LIST_PAL
+	},
+	{	// キーシステム設定
+		BMPWIN_REPORT_FRM, BMPWIN_KEYINFO_PX, BMPWIN_KEYINFO_PY,
+		BMPWIN_KEYINFO_SX, BMPWIN_KEYINFO_SY, BMPWIN_LIST_PAL
+	},
+	{	// なんいど
+		BMPWIN_REPORT_FRM, BMPWIN_DIFFICULTY_PX, BMPWIN_DIFFICULTY_PY,
+		BMPWIN_DIFFICULTY_SX, BMPWIN_DIFFICULTY_SY, BMPWIN_LIST_PAL
+	},
+	{	// WFBC
+		BMPWIN_REPORT_FRM, BMPWIN_WFBC_PX, BMPWIN_WFBC_PY,
+		BMPWIN_WFBC_SX, BMPWIN_WFBC_SY, BMPWIN_LIST_PAL
+	},
 };
 
 // OBJ
 static const GFL_CLWK_DATA PlayerObjData = { PLAYER_OBJ_PX, PLAYER_OBJ_PY, 1, 0, 1 };
 static const GFL_CLWK_DATA NewObjData = { NEW_OBJ_PX, 0, 0, 0, 1 };
 static const GFL_CLWK_DATA WiconObjData = { WICON_OBJ_PX, 0, 1, 0, 1 };
+static const GFL_CLWK_DATA KeyObjData00 = { KEY_00_OBJ_PX, KEY_00_OBJ_PY, 0, 0, 0 };
+static const GFL_CLWK_DATA KeyObjData01 = { KEY_01_OBJ_PX, KEY_01_OBJ_PY, 0, 0, 0 };
 
 #define	SAVE_BREAK_MESSAGE_MAX		( 11 )		// セーブデータ破損メッセージ数
 
@@ -443,6 +467,11 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
 	wk->misc     = SaveData_GetMisc( wk->savedata );
 	wk->cgear    = CGEAR_SV_GetCGearSaveData( wk->savedata );
 	wk->evwk     = SaveData_GetEventWork( wk->savedata );
+
+  {
+    OUTSIDE_PERMANENT *p_out =  SaveControl_GetOutsidePermanent( wk->savedata );
+    wk->keysys = OUTSIDE_PERMANENT_GetKeySystem( p_out );
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -636,6 +665,10 @@ static int MainSeq_Init( START_MENU_WORK * wk )
 //	InitHushigiCheck( wk );
 
 	InitVBlank( wk );
+
+  if( SaveData_GetExistFlag( wk->savedata ) == TRUE ){
+    PutReportInfo( wk );
+  }
 
 	return MAINSEQ_INIT_WAIT;
 }
@@ -930,6 +963,8 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 			wk->wait--;
 			break;
 		}
+    ClearReportInfo( wk );
+
 		// メッセージ表示
 		StartMessage( wk, START_MENU_STR_CONTINUE_01 );
 		PutContinueInfo( wk );
@@ -1474,10 +1509,10 @@ static void LoadBgGraphic(void)
 		GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STARTMENU );
 
 	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_startmenu_bgd_NCLR, PALTYPE_SUB_BG, 0, 0x20*6, HEAPID_STARTMENU );
+		ah, NARC_startmenu_bgu_NCLR, PALTYPE_SUB_BG, 0, 0x20*6, HEAPID_STARTMENU );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_startmenu_bgd_lz_NCGR, GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
-	GFL_ARCHDL_UTIL_TransVramScreen(
+  GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_startmenu_base_bgd_lz_NSCR,
 		GFL_BG_FRAME2_S, 0, 0, TRUE, HEAPID_STARTMENU );
 
@@ -1599,6 +1634,7 @@ static void InitBmp( START_MENU_WORK * wk )
 	const u8 * dat;
 	STRBUF * str;
 	u32	i;
+  ;
 
 	GFL_BMPWIN_Init( HEAPID_STARTMENU );
 
@@ -1612,6 +1648,10 @@ static void InitBmp( START_MENU_WORK * wk )
 	// 続きから始める
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_01 );
 	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_TITLE], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
+	GFL_STR_DeleteBuffer( str );
+  //　レポート設定
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_11 );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_REPORT], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
 	// 主人公名
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_06 );
@@ -1677,6 +1717,65 @@ static void InitBmp( START_MENU_WORK * wk )
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
 	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_BADGE], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
+  //　キーシステム設定
+	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_12 );
+	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_KEYINFO], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
+	GFL_STR_DeleteBuffer( str );
+  {
+    PRINT_UTIL  *p_wfbc_util = &wk->util[BMPWIN_WFBC];
+	  //　なんいど
+	  {
+	    KEY_SYSTEM_DIFFICULT diffcult = KEY_SYSTEM_SAVE_GetDifficult( wk->keysys );
+	    int strID = 0;
+	    if( diffcult == KEY_SYSTEM_DIFFICULT_EASY )
+	    {
+	      strID = START_MENU_STR_ITEM_01_13;
+	    }
+	    else if( diffcult == KEY_SYSTEM_DIFFICULT_HARD )
+	    {
+	      strID = START_MENU_STR_ITEM_01_14;
+	    }
+	    else
+	    {
+        p_wfbc_util = &wk->util[BMPWIN_DIFFICULTY];
+	    }
+		  str = GFL_MSG_CreateString( wk->mman, strID );
+		  PRINT_UTIL_PrintColor( &wk->util[BMPWIN_DIFFICULTY], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+		  GFL_STR_DeleteBuffer( str );
+	  }
+	  //　まち設定
+	  {
+	    KEY_SYSTEM_WFBC wfbc = KEY_SYSTEM_SAVE_GetWfbc( wk->keysys );
+	    int strID = 0;
+	
+	    if( wfbc == KEY_SYSTEM_WFBC_SELF )
+	    {
+	      if( GET_VERSION() == VERSION_W2 )
+	      {
+	        strID = START_MENU_STR_ITEM_01_15;
+	      }
+	      else
+	      {
+	        strID = START_MENU_STR_ITEM_01_16;
+	      }
+	    }
+	    else
+	    {
+	      if( GET_VERSION() == VERSION_W2 )
+	      {
+	        strID = START_MENU_STR_ITEM_01_16;
+	      }
+	      else
+	      {
+	        strID = START_MENU_STR_ITEM_01_15;
+	      }
+	    }
+	
+		  str = GFL_MSG_CreateString( wk->mman, strID );
+		  PRINT_UTIL_PrintColor( p_wfbc_util, wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+		  GFL_STR_DeleteBuffer( str );
+	  }
+  }
 
 	// 最初から始める
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_02 );
@@ -1773,10 +1872,10 @@ static void InitObj( START_MENU_WORK * wk )
 		if( MyStatus_GetMySex( wk->mystatus ) == PM_MALE ){
 			wk->chrRes[CHRRES_PLAYER] = GFL_CLGRP_CGR_Register(
 																		ah, NARC_wifileadingchar_hero_NCGR,
-																		FALSE, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
+																		FALSE, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
 		  wk->palRes[PALRES_PLAYER] = GFL_CLGRP_PLTT_Register(
 																		ah, NARC_wifileadingchar_hero_NCLR,
-																		CLSYS_DRAW_MAIN, PALNUM_PLAYER*0x20, HEAPID_STARTMENU );
+																		CLSYS_DRAW_SUB, PALNUM_PLAYER*0x20, HEAPID_STARTMENU );
 	    wk->celRes[CELRES_PLAYER] = GFL_CLGRP_CELLANIM_Register(
 																		ah,
 																		NARC_wifileadingchar_hero_NCER,
@@ -1785,10 +1884,10 @@ static void InitObj( START_MENU_WORK * wk )
 		}else{
 			wk->chrRes[CHRRES_PLAYER] = GFL_CLGRP_CGR_Register(
 																		ah, NARC_wifileadingchar_heroine_NCGR,
-																		FALSE, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
+																		FALSE, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
 		  wk->palRes[PALRES_PLAYER] = GFL_CLGRP_PLTT_Register(
 																		ah, NARC_wifileadingchar_heroine_NCLR,
-																		CLSYS_DRAW_MAIN, PALNUM_PLAYER*0x20, HEAPID_STARTMENU );
+																		CLSYS_DRAW_SUB, PALNUM_PLAYER*0x20, HEAPID_STARTMENU );
 	    wk->celRes[CELRES_PLAYER] = GFL_CLGRP_CELLANIM_Register(
 																		ah,
 																		NARC_wifileadingchar_heroine_NCER,
@@ -1822,6 +1921,17 @@ static void InitObj( START_MENU_WORK * wk )
 																NARC_startmenu_wicon_NCER,
 																NARC_startmenu_wicon_NANR,
 																HEAPID_STARTMENU );
+		wk->chrRes[CHRRES_OBJ_D] = GFL_CLGRP_CGR_Register(
+																ah, NARC_startmenu_objd_lz_NCGR,
+																TRUE, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
+	  wk->palRes[PALRES_OBJ_D] = GFL_CLGRP_PLTT_Register(
+																ah, NARC_startmenu_objd_NCLR,
+																CLSYS_DRAW_SUB, PALNUM_OBJ_D*0x20, HEAPID_STARTMENU );
+    wk->celRes[CELRES_OBJ_D] = GFL_CLGRP_CELLANIM_Register(
+																ah,
+																NARC_startmenu_objd_NCER,
+																NARC_startmenu_objd_NANR,
+																HEAPID_STARTMENU );
 		GFL_ARC_CloseDataHandle( ah );
 	}
 
@@ -1835,7 +1945,7 @@ static void InitObj( START_MENU_WORK * wk )
 																wk->chrRes[CHRRES_PLAYER],
 																wk->palRes[PALRES_PLAYER],
 																wk->celRes[CELRES_PLAYER],
-																&PlayerObjData, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
+																&PlayerObjData, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], FALSE );
 
 		for( i=OBJ_ID_NEW_HUSHIGI; i<=OBJ_ID_NEW_MACHINE; i++ ){
@@ -1855,7 +1965,22 @@ static void InitObj( START_MENU_WORK * wk )
 															wk->palRes[PALRES_WICON],
 															wk->celRes[CELRES_WICON],
 															&WiconObjData, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
-	}
+
+		wk->clwk[OBJ_ID_KEY_00] = GFL_CLACT_WK_Create(
+															wk->clunit,
+															wk->chrRes[CHRRES_OBJ_D],
+															wk->palRes[PALRES_OBJ_D],
+															wk->celRes[CELRES_OBJ_D],
+															&KeyObjData00, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
+		wk->clwk[OBJ_ID_KEY_01] = GFL_CLACT_WK_Create(
+															wk->clunit,
+															wk->chrRes[CHRRES_OBJ_D],
+															wk->palRes[PALRES_OBJ_D],
+															wk->celRes[CELRES_OBJ_D],
+															&KeyObjData01, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_01], FALSE );
+  }
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// MAIN DISP OBJ ON
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
@@ -1913,11 +2038,6 @@ static void InitBgWinFrame( START_MENU_WORK * wk )
 
 	// 続きから
 	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_CONTINUE, wk->util[BMPWIN_TITLE].win );
-	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_CONTINUE, wk->util[BMPWIN_NAME].win );
-	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_CONTINUE, wk->util[BMPWIN_PLACE].win );
-	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_CONTINUE, wk->util[BMPWIN_TIME].win );
-	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_CONTINUE, wk->util[BMPWIN_ZUKAN].win );
-	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_CONTINUE, wk->util[BMPWIN_BADGE].win );
 
 	// それ以外の項目
 	BGWINFRM_BmpWinOn( wk->wfrm, LIST_ITEM_NEW_GAME, wk->util[BMPWIN_START].win );
@@ -1991,6 +2111,11 @@ static void InitList( START_MENU_WORK * wk )
 		wk->list[i] = LIST_ITEM_HUSHIGI;
 		i++;
 //	}
+
+  //キーシステム
+	wk->list[i] = LIST_ITEM_KEYSYSTEM;
+	i++;
+
 	// バトル大会
 	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_BATTLE ) != 0 ){
 		wk->list[i] = LIST_ITEM_BATTLE;
@@ -2008,13 +2133,12 @@ static void InitList( START_MENU_WORK * wk )
 	wk->list[i] = LIST_ITEM_MIC_TEST;
 	i++;
 	// 転送マシンを使う
+#if 0
 	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_MACHINE ) != 0 ){
 		wk->list[i] = LIST_ITEM_MACHINE;
 		i++;
 	}
-  //キーシステム
-	wk->list[i] = LIST_ITEM_KEYSYSTEM;
-	i++;
+#endif
 
 	// ダミーを入れておく
 	for( i=i; i<LIST_ITEM_MAX; i++ ){
@@ -2123,7 +2247,7 @@ static void InitListPut( START_MENU_WORK * wk )
 		PutListItem( wk, wk->list[i], py );
 
 		if( wk->list[i] == LIST_ITEM_CONTINUE ){
-			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
+//			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
 /*
 		}else if( wk->list[i] == LIST_ITEM_HUSHIGI ){
 			if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_HUSHIGI) == MISC_STARTMENU_FLAG_OPEN ){
@@ -2154,7 +2278,7 @@ static void InitListPut( START_MENU_WORK * wk )
 		py += ListItemData[wk->list[i]].sy;
 	}
 
-	PutListObj( wk, OBJ_ID_PLAYER, PLAYER_OBJ_PY );
+	//PutListObj( wk, OBJ_ID_PLAYER, PLAYER_OBJ_PY );
 
 	ChangeListItemPalette( wk, wk->list[0], wk->cursorPutPos, CURSOR_PALETTE );
 }
@@ -2223,6 +2347,87 @@ static s8 GetListPutY( START_MENU_WORK * wk, s8 py )
 	return ( py + ( wk->bgScroll / 8 ) );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レポート描画処理
+ *
+ *	@param	START_MENU_WORK * wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PutReportInfo( START_MENU_WORK * wk )
+{
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
+
+	GFL_ARC_UTIL_TransVramScreen(
+		ARCID_STARTMENU, NARC_startmenu_report_lz_NSCR,
+		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_STARTMENU );
+
+  {
+    int i;
+    BOOL is_change = FALSE;
+
+    for( i = BMPWIN_REPORT; i <= BMPWIN_BADGE; i++ )
+    {
+	    GFL_BMPWIN_MakeScreen( wk->util[i].win );
+    }
+
+
+    if( KEY_SYSTEM_DIFFICULT_NORMAL != KEY_SYSTEM_SAVE_GetDifficult( wk->keysys ) )
+    {
+	    GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_DIFFICULTY].win );
+      GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], TRUE );
+      is_change = TRUE;
+    }
+
+    if( KEY_SYSTEM_SAVE_GetWfbc( wk->keysys ) == KEY_SYSTEM_WFBC_REVERSE )
+    {
+      if( is_change )
+      {
+        GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_WFBC].win );
+        GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_01], TRUE );
+      }
+      else
+      {
+	      GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_DIFFICULTY].win );
+        GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], TRUE );
+      }
+      is_change = TRUE;
+    }
+
+    if( is_change )
+    {
+	    GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_KEYINFO].win );
+    }
+
+	  GFL_BG_LoadScreenV_Req( BMPWIN_REPORT_FRM );
+	  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レポート情報を削除
+ *
+ *	@param	START_MENU_WORK * wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ClearReportInfo( START_MENU_WORK * wk )
+{
+  {
+    int i;
+
+    for( i = BMPWIN_REPORT; i <= BMPWIN_WFBC; i++ )
+    {
+	    GFL_BMPWIN_ClearScreen( wk->util[i].win );
+    }
+  }
+
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_01], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], FALSE );
+  GFL_BG_LoadScreenV_Req( BMPWIN_REPORT_FRM );
+  GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		リスト上のＯＢＪをスクロール
@@ -2238,7 +2443,7 @@ static void ScrollObj( START_MENU_WORK * wk, int val )
 	GFL_CLACTPOS	pos;
 	u32	i;
 
-	for( i=0; i<OBJ_ID_MAX; i++ ){
+	for( i=0; i<OBJ_ID_SCROLL_OBJ_MAX; i++ ){
 		GFL_CLACT_WK_GetPos( wk->clwk[i], &pos, CLSYS_DRAW_MAIN );
 		pos.y += val;
 		GFL_CLACT_WK_SetPos( wk->clwk[i], &pos, CLSYS_DRAW_MAIN );
@@ -2345,12 +2550,12 @@ static void VanishListObj( START_MENU_WORK * wk, BOOL flg )
 
 	// 非表示
 	if( flg == FALSE ){
-		for( i=OBJ_ID_PLAYER; i<=OBJ_ID_WICON; i++ ){
+		for( i=OBJ_ID_NEW_HUSHIGI; i<=OBJ_ID_WICON; i++ ){
 			GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], flg );
 		}
 	// 表示
 	}else{
-		GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
+		//GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
 
 		for( i=0; i<LIST_ITEM_MAX; i++ ){
 			if( wk->list[i] == LIST_ITEM_MAX ){

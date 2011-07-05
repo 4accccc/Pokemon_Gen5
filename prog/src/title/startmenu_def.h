@@ -30,12 +30,6 @@ enum {
 // BMPWIN
 enum {
 	BMPWIN_TITLE = 0,
-	BMPWIN_NAME,
-	BMPWIN_PLACE,
-	BMPWIN_TIME,
-	BMPWIN_ZUKAN,
-	BMPWIN_BADGE,
-
 	BMPWIN_START,
 	BMPWIN_HUSHIGI,
 	BMPWIN_BATTLE,
@@ -46,6 +40,16 @@ enum {
 	BMPWIN_KEYSYSTEM,
 
 	BMPWIN_MSG,
+
+  BMPWIN_REPORT,
+	BMPWIN_NAME,
+	BMPWIN_PLACE,
+	BMPWIN_TIME,
+	BMPWIN_ZUKAN,
+	BMPWIN_BADGE,
+  BMPWIN_KEYINFO,
+  BMPWIN_DIFFICULTY,
+  BMPWIN_WFBC,
 
 	BMPWIN_MAX
 };
@@ -63,36 +67,57 @@ enum {
 // BMPWIN定義
 #define	BMPWIN_LIST_PAL			( WIN_PALETTE_M )
 #define	BMPWIN_LIST_FRM			( GFL_BG_FRAME1_M )
+#define	BMPWIN_REPORT_FRM	  ( GFL_BG_FRAME0_S )
 //「続きから始める」
 #define	BMPWIN_TITLE_PX			( 2 )
 #define	BMPWIN_TITLE_PY			( 0 )
-#define	BMPWIN_TITLE_SX			( 18 )
+#define	BMPWIN_TITLE_SX			( 19 )
 #define	BMPWIN_TITLE_SY			( 3 )
+//「レポート情報」
+#define	BMPWIN_REPORT_PX		( 5 )
+#define	BMPWIN_REPORT_PY		( 3 )
+#define	BMPWIN_REPORT_SX		( 18 )
+#define	BMPWIN_REPORT_SY		( 3 )
 // プレイヤー名
-#define	BMPWIN_NAME_PX			( 7 )
-#define	BMPWIN_NAME_PY			( 4 )
+#define	BMPWIN_NAME_PX			( 10 )
+#define	BMPWIN_NAME_PY			( 6 )
 #define	BMPWIN_NAME_SX			( 8 )
 #define	BMPWIN_NAME_SY			( 2 )
 // セーブ場所
-#define	BMPWIN_PLACE_PX			( 7 )
-#define	BMPWIN_PLACE_PY			( 6 )
+#define	BMPWIN_PLACE_PX			( 10 )
+#define	BMPWIN_PLACE_PY			( 8 )
 #define	BMPWIN_PLACE_SX			( 15 )
 #define	BMPWIN_PLACE_SY			( 2 )
 // プレイ時間
-#define	BMPWIN_TIME_PX			( 2 )
-#define	BMPWIN_TIME_PY			( 11 )
+#define	BMPWIN_TIME_PX			( 5 )
+#define	BMPWIN_TIME_PY			( 13 )
 #define	BMPWIN_TIME_SX			( 18 )
 #define	BMPWIN_TIME_SY			( 2 )
 // 図鑑
-#define	BMPWIN_ZUKAN_PX			( 12 )
-#define	BMPWIN_ZUKAN_PY			( 9 )
+#define	BMPWIN_ZUKAN_PX			( 15 )
+#define	BMPWIN_ZUKAN_PY			( 11 )
 #define	BMPWIN_ZUKAN_SX			( 13 )
 #define	BMPWIN_ZUKAN_SY			( 2 )
 // バッジ
-#define	BMPWIN_BADGE_PX			( 2 )
-#define	BMPWIN_BADGE_PY			( 9 )
+#define	BMPWIN_BADGE_PX			( 5 )
+#define	BMPWIN_BADGE_PY			( 11 )
 #define	BMPWIN_BADGE_SX			( 10 )
 #define	BMPWIN_BADGE_SY			( 2 )
+//キーシステムせってい
+#define	BMPWIN_KEYINFO_PX			( 5 )
+#define	BMPWIN_KEYINFO_PY			( 15 )
+#define	BMPWIN_KEYINFO_SX			( 19 )
+#define	BMPWIN_KEYINFO_SY			( 3 )
+//なんいど
+#define	BMPWIN_DIFFICULTY_PX			( 7 )
+#define	BMPWIN_DIFFICULTY_PY			( 18 )
+#define	BMPWIN_DIFFICULTY_SX			( 19 )
+#define	BMPWIN_DIFFICULTY_SY			( 2 )
+//WFBC
+#define	BMPWIN_WFBC_PX			( 7 )
+#define	BMPWIN_WFBC_PY			( 20 )
+#define	BMPWIN_WFBC_SX			( 19 )
+#define	BMPWIN_WFBC_SY			( 2 )
 //「最初から始める」
 #define	BMPWIN_START_PX			( 2 )
 #define	BMPWIN_START_PY			( 0 )
@@ -191,7 +216,7 @@ enum {
 
 // リストフレームデータ
 #define	LIST_FRAME_SX						( 26 )
-#define	LIST_FRAME_CONTINUE_SY	( 14 )
+#define	LIST_FRAME_CONTINUE_SY	( 3 )
 #define	LIST_FRAME_NEW_GAME_SY	( 3 )
 #define	LIST_FRAME_HUSHIGI_SY		( 3 )
 #define	LIST_FRAME_BATTLE_SY		( 3 )
@@ -222,12 +247,16 @@ enum {
 
 // OBJ INDEX
 enum {
-	OBJ_ID_PLAYER = 0,
 	OBJ_ID_NEW_HUSHIGI,
 	OBJ_ID_NEW_BATTLE,
 	OBJ_ID_NEW_GAMESYNC,
 	OBJ_ID_NEW_MACHINE,
 	OBJ_ID_WICON,
+
+  OBJ_ID_SCROLL_OBJ_MAX,
+	OBJ_ID_PLAYER = OBJ_ID_SCROLL_OBJ_MAX,
+  OBJ_ID_KEY_00,
+  OBJ_ID_KEY_01,
 	OBJ_ID_MAX
 };
 
@@ -237,18 +266,21 @@ enum {
 	CHRRES_PLAYER = 0,
 	CHRRES_OBJ_U,
 	CHRRES_WICON,
+	CHRRES_OBJ_D,
 	CHRRES_MAX,
 
 	// パレット
 	PALRES_PLAYER = 0,
 	PALRES_OBJ_U,
 	PALRES_WICON,
+	PALRES_OBJ_D,
 	PALRES_MAX,
 
 	// セル
 	CELRES_PLAYER = 0,
 	CELRES_OBJ_U,
 	CELRES_WICON,
+	CELRES_OBJ_D,
 	CELRES_MAX,
 };
 
@@ -259,9 +291,15 @@ enum {
 #define	PALSIZ_OBJ_U		( 1 )
 #define	PALNUM_WICON		( PALNUM_OBJ_U+PALSIZ_OBJ_U )
 #define	PALSIZ_WICON		( 1 )
+#define	PALNUM_OBJ_D		( 1 )
+#define	PALSIZ_OBJ_D		( 1 )
 
 // 座標
 #define	PLAYER_OBJ_PX		( 48 )
-#define	PLAYER_OBJ_PY		( 64 )
+#define	PLAYER_OBJ_PY		( 60 )
 #define	NEW_OBJ_PX			( 208 )
 #define	WICON_OBJ_PX		( 208 )
+#define	KEY_00_OBJ_PX		( 48 )
+#define	KEY_00_OBJ_PY		( 152 )
+#define	KEY_01_OBJ_PX		( 48 )
+#define	KEY_01_OBJ_PY		( 168 )
