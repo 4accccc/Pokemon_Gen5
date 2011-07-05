@@ -8,10 +8,10 @@
 			Language="JPN">
 			<Text>わたしは　あいの　めがみ……▼
 Ｎと　ことを　かまえる　トレーナーよ
-さあ　やすみなさい……[Ctrl2:PageClear ]</Text>
+さあ　やすみなさい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T06:07:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,10 +21,10 @@
 			Language="JPN_KANJI">
 			<Text>わたしは　愛の女神……▼
 Ｎと　事を構える　トレーナーよ
-さあ　やすみなさい……[Ctrl2:PageClear ]</Text>
+さあ　やすみなさい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T06:07:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52,6 +52,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_n01r0203_goddess1_02"
@@ -112,46 +119,6 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0203_goddess2_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>未使用</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -247,6 +214,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_n01r0203_goddess2_01b"
@@ -328,5 +302,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
