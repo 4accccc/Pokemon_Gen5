@@ -1000,7 +1000,8 @@ SRCS_OVERLAY_SCRCMD_INFINITY_DUNGEON  = field/scrcmd_infinity_dungeon.c \
 #===> GROUP_OVERLAY_DEBUGMENU
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_POKEWOOD  =  field/scrcmd_pokewood.c \
-                            field/scrcmd_pokewood_table.c
+                            field/scrcmd_pokewood_table.c \
+                            field/pokewood_setup.c
 
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置

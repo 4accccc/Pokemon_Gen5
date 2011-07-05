@@ -856,7 +856,6 @@ static GMEVENT_RESULT eventPkwdCount( GMEVENT *p_event, int *p_seq, void *p_wk_a
 //    PKWD_BOOK画面呼び出し
 //
 //============================================================================================
-extern void PKWD_BOOK_PARAM_Delete( PKWD_BOOK_PARAM * pkwd_param );
 //-------------------------------------
 ///   PKWD_BOOK_PARAM定義
 //=====================================
@@ -893,9 +892,6 @@ GMEVENT * PKWD_BOOK_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
   p_param->fieldmap  = fieldmap;
   p_param->pkwd_param.gamesys = gsys;
   p_param->pkwd_param.result = 0;
-
-  // デバッグメニューからもらった引数としてのPOKEWOOD_EVENT_PARAMは解放
-  PKWD_BOOK_PARAM_Delete( param );
 
   OS_Printf( "PKWD BOOK Start\n" );
 
@@ -935,7 +931,6 @@ static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_ad
     break;
 
   case SEQ_EXIT:
-    PKWD_BOOK_PARAM_Delete( &p_wk->pkwd_param );
     return GMEVENT_RES_FINISH;
   }
 
