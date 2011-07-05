@@ -957,11 +957,10 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
   
   {24,12,8,6,4,3,},    // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
 //   5,   // 選択項目のパレット
-   2,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
-//  20,   // スクロールバーのＹサイズ（キャラ単位）
+   4,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
    8,   // スクロールバーのＹサイズ
    7,   // 項目登録数(●初期化前に変更すればよい)
-   1,   // 背景登録数
+   4,   // 背景登録数
    0,   // 初期カーソル位置
    7,   // カーソル移動範囲
    0,   // 初期スクロール値
@@ -1105,6 +1104,7 @@ static s32  pwb_get_scenario_curpos( PKWD_BOOK_MAIN_WORK * wk, const s32 num );
 static void pwb_chg_up_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 num );
 static void pwb_init_up_pal( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_up_pal( PKWD_BOOK_MAIN_WORK * wk );
+static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk );
 
 //
 static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk );
@@ -1500,6 +1500,11 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	
 	// スクロール切り替え
 	pwb_set_bgscroll( wk, 0 );
+	
+	//------------
+	// 上画面表示
+	//------------
+	pwb_disp_up_bg( wk );
 	
 	//--------------
 	// 半透明設定
@@ -2927,6 +2932,9 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 	pwb_chk_newmark( wk, 1 );
 	pwb_scroll_newmark( wk, 0 );
 	//
+	// 上画面表示
+	pwb_disp_up_bg( wk );
+	//
 	wk->Flag |= FLG_SET_INIT;
 }
 
@@ -4263,6 +4271,31 @@ static void pwb_exit_up_pal( PKWD_BOOK_MAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	上画面のBGのon/off
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk )
+{
+	u8		vflg = VISIBLE_ON;
+	int		mode;
+	//
+	// 限定で大丈夫なはずなのでここで判定
+	mode = GFL_UI_CheckTouchOrKey();
+	//
+	// タッチはoff
+	if(mode == GFL_APP_END_TOUCH){
+		vflg = VISIBLE_OFF;
+	}
+	// フォント面のみを考慮にいれる
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, vflg );
+}
+
 //-----------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------
@@ -4294,8 +4327,8 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	// オリジナルデータの読み込み
 	//----------------------------
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( arc_handle, NARC_b_scenario_gra_pkwd_list_NCGR, GFL_BG_FRAME2_S, 0, 0, 0, wk->heapID );
-//	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, PALTYPE_SUB_BG,  0, 6*0x20, wk->heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, PALTYPE_SUB_BG,  0, 2*0x20, wk->heapID );
+//	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, PALTYPE_SUB_BG,  0, 2*0x20, wk->heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, PALTYPE_SUB_BG,  0, 4*0x20, wk->heapID );
 	
 	//---------------
 	// FrameListの設定
@@ -4313,19 +4346,24 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	wk->frame_list_work = FRAMELIST_Create( &header, wk->heapID );
 	
 	// 項目背景設定
-	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_NSCR, FALSE, 0 );		// 通常
+//	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_NSCR, FALSE, 0 );		// 通常
+	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p1_NSCR, FALSE, 0 );		// 通常
+	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p2_NSCR, FALSE, 1 );		// 通常
+	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p3_NSCR, FALSE, 2 );		// 通常
+	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p4_NSCR, FALSE, 3 );		// 通常
 	// 点滅アニメパレット設定
 	// (NARC_b_scenario_gra_pkwd_list_NCLR)の1番パレット(16色)と5番パレット(16色)間を補間してくれる
 	// 補間後のパレットはFRAMELIST_HEADERのselPalの指定で可能
-	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, 1, 5 );
+//	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, 1, 5 );
+	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, 0, 4 );
 	//
 	GFL_ARC_CloseDataHandle( arc_handle );
 	//
 	// 項目追加(タイトル文字をセット)
 	// ここではセットだけのようだ
 	for(i=0;i<header.itemMax;i++){
-//		FRAMELIST_AddItem( wk->frame_list_work, 0, pw_title_00+i );
-		FRAMELIST_AddItem( wk->frame_list_work, 0, pw_title_00+wk->FlagBuffer[i].openid );
+//		FRAMELIST_AddItem( wk->frame_list_work, 0, pw_title_00+wk->FlagBuffer[i].openid );
+		FRAMELIST_AddItem( wk->frame_list_work, wk->FlagBuffer[i].color, pw_title_00+wk->FlagBuffer[i].openid );
 	}
 	// 初期化
 	FRAMELIST_Init( wk->frame_list_work );
@@ -4435,6 +4473,10 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		pwb_init_selectwin( wk );
 		wk->SubMode = STEP_LV4;
 	}
+	//
+	// ここでなくてもいいはず
+	// 上画面表示
+	pwb_disp_up_bg( wk );
 	return( flg );
 }
 
@@ -4567,6 +4609,9 @@ static void _liststr_print( PKWD_BOOK_MAIN_WORK *wk, int pos, PRINT_UTIL *print_
 	int param = FRAMELIST_GetItemParam( wk->frame_list_work, pos );
 	//
 	_strbuf_print( wk, print_util, que, msg, param );
+	//
+//	FRAMELIST_ChangePosPalette( wk->frame_list_work, pos, wk->FlagBuffer[pos].color );
+//	FRAMELIST_ChangePosPalette( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work ), wk->FlagBuffer[pos].color );
 }
 
 static void _liststr_print_null( PKWD_BOOK_MAIN_WORK *wk, int pos, PRINT_UTIL *print_util, GFL_MSGDATA *msg )
