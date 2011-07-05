@@ -348,7 +348,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど！　それも　ありでしょう！▼
+			<Text>なるほど！
+それも　ありでしょう！▼
 あなたと　あなたの　ポケモンは
 すきな　みちを　ゆけば　いいのです！▼
 あなたが　すべきことは
@@ -358,7 +359,7 @@
 たびの　ぶじを　いのって！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T11:00:29" />
+				Time="2011-07-05T06:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -366,7 +367,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど！　それも　ありでしょう！▼
+			<Text>なるほど！
+それも　ありでしょう！▼
 あなたと　あなたの　ポケモンは
 好きな　道を　行けば　いいのです！▼
 あなたが　すべきことは
@@ -376,7 +378,7 @@
 旅の　無事を　祈って！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T11:00:41" />
+				Time="2011-07-05T06:51:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
