@@ -10,6 +10,8 @@
 			<Directory
 				Name="battle">
 				<ContentItem
+					Name="btl_pw_std.mstxt" />
+				<ContentItem
 					Name="btl_std.mstxt" />
 				<ContentItem
 					Name="btl_ui.mstxt" />
@@ -1366,6 +1368,8 @@
 					Name="poke_waza.mstxt" />
 				<ContentItem
 					Name="pokecen_scr.mstxt" />
+				<ContentItem
+					Name="pokewood_scr.mstxt" />
 				<ContentItem
 					Name="postman.mstxt" />
 				<ContentItem
