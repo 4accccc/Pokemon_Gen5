@@ -565,6 +565,7 @@ EVENT_START ev_tr_c08gym0101_swleader7
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_06 )
 		_BALLOONWIN_TALKOBJ_MSG( msg_c08gym0101_swleader7_07 )
 	  _LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
     
     //ジムトレーナーの視線無効
     _TRAINER_FLAG_SET( TRID_VETERANM_09 )
