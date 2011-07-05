@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まっすぐ　すすめば　あっ　というま
-わきにそれれば　しぜんのめいろ▼
-あなたにとって　ヤグルマのもりは
-みちか　めいろか　どっちかしら？</Text>
+			<Text>ポケモンたちが　あるきつづけて
+いつのまにか　できたのが　もりのみち▼
+そっちを　あるけば　なんだか
+ポケモンきぶんを　あじわえるでしょ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まっすぐ　進めば　あっ　というま
-わきにそれれば　自然の迷路▼
-あなたにとって　ヤグルマの森は
-道か　迷路か　どっちかしら？</Text>
+			<Text>ポケモンたちが　歩き続けて
+いつのまにか　できたのが　森の道▼
+そっちを　歩けば　なんだか
+ポケモン気分を　味わえるでしょ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:49:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,10 +34,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:35:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -59,12 +60,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よう！　たびの　トレーナー！
-ポケモン　そだっているの？▽
-よければ　これを　つかってみて！▼</Text>
+			<Text>よう！　たびの　トレーナー！▼
+きみも　たのもしい　ポケモンに
+ためしのいわを　くだかせてみな！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:51:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,12 +73,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よう！　旅の　トレーナー！
-ポケモン　育っているの？▽
-よければ　これを　使ってみて！▼</Text>
+			<Text>よう！　旅の　トレーナー！▼
+きみも　頼もしい　ポケモンに
+試しの岩を　砕かせてみな！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:51:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,11 +87,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手処理
-　No625「いわくだき」</Comment>
+※swanでイベント変更</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:36:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -150,11 +150,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手後
-※swanではメッセージ変更予定</Comment>
+・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:38:46" />
+				Time="2011-07-05T07:36:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -172,7 +171,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -212,10 +211,10 @@
 			<Comment>BGメッセージ
 ・手持ちリストに格闘ポケモンがいるとき
 ・はい/いいえの選択肢
-※swanでは壊せなくする？</Comment>
+・0＝ポケモンニックネーム</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T10:38:48" />
+				Time="2011-07-05T07:37:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -404,6 +403,61 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d02_sign1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かんばんの　あいさつは
+かんばんは！▼
+……かんばんの　うらまで　みる
+ひまじん　こんばんは！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:52:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:52:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かんばんの　あいさつは
+かんばんは！▼
+……かんばんの　うらまで　みる
+ひまじん　こんばんは！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:52:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:52:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・上記看板を裏から読んだとき用
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:37:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>道路看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:36:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
