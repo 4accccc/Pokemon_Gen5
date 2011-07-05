@@ -54,11 +54,8 @@
 #include "pkwd_book_graphic.h"
 #include "b_scenario_gra.naix"
 #include "msg/msg_pw_movietitle.h"
-#include "msg/msg_pw_hint001.h"		// test
 
 #include "msg/msg_pokewood_name.h"
-
-#include "arc/box_gra.naix"
 
 // メッセージ
 #include "message.naix"
@@ -124,16 +121,16 @@ enum{
 
 // パレット
 // 上(MAIN)：BG  (0-4:下地),(10:font)
-// 上(MAIN)：OBJ ()
+// 上(MAIN)：OBJ (14:通信アイコン)
 //
-// 下(SUB) ：BG  (6,7:下地、0-5:リストパネル、8:cmn, 9:win, 10:font,11,12:selwin)
+// 下(SUB) ：BG  (0-4:リストパネル),(6,7:下地),(8:cmn), (9:win), (10:font),(11,12:selwin)
 // 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-10:type),(11:trainer),(12:font),(13,14:obj)
 enum{
 	// 何本目か(bg)
 	PLTID_MAIN_FONT			= 10,		// font
 	//
-	PLTID_SUB_BG_BASE		= 6,
-	PLTID_SUB_BG_CMN		= 8,		// cmnのBG
+	PLTID_SUB_BG_BASE		= 6,		// 通常bg
+	PLTID_SUB_BG_CMN		= 8,		// cmn
 	PLTID_SUB_MESWIN		= 9,		// meswin
 	PLTID_SUB_FONT			= 10,		// font
 	PLTID_SUB_SELWIN		= 11,		// selwin
@@ -142,6 +139,7 @@ enum{
 	PLTID_SUB_OBJ_TYPE		= 8,		// type
 	PLTID_SUB_OBJ_TRAINER 	= 11,		// trainer
 	PLTID_SUB_OBJ_FONT		= 12,		// font
+	PLTID_SUB_OBJ_LIST		= 13,		// list
 	//
 	// 何番目か
 	MES_CLEAR_COLOR			= 0,		// クリアカラー
@@ -161,15 +159,15 @@ enum{
 	//
 	PKWD_BOOK_CANVAS_MAXNUM		= 16,	// canvas
 	//
-	PKWD_BOOK_MES_MAX			= 4,
+	PKWD_BOOK_MES_MAX			= 4,	// message
 	//
 	PKWD_BOOK_BMPOAM_MAXNUM		= 9,	// bmpoam
 	//
-	PKWD_POKE_MAX				= 6,	// pokemon max
+	PKWD_BOOK_POKE_MAX			= 6,	// pokemon max
 	//
-	PKWD_BOOK_COLOR_NUM			= 4,	// 色変え
+	PKWD_BOOK_COLOR_NUM			= 4,	// 上画面(色変えの本数)
 	//
-	PKWD_BOOK_LIST_MAX			= 7,	// 1画面の最大数
+	PKWD_BOOK_LIST_MAX			= 7,	// 1画面のリスト最大数
 };
 
 //-------------
@@ -223,7 +221,6 @@ enum{
 	CLWKMODE_LIST,						// リスト
 };
 
-
 // CLWK(CMN)
 enum{
 	CLWK_CMN_BACK		= 0,			// 戻る
@@ -245,6 +242,7 @@ enum{
 	SEQ_CMN_RIGHT_OFF	= 19,			// 右(off)
 };
 
+// CLWK(List)
 enum{
 	CLWK_LIST_PANEL		= 0,			// パネル
 	CLWK_LIST_BALL,						// スクロールバーの玉
@@ -277,11 +275,9 @@ enum{
 	FLG_CHG_TITLE		= (1<<2),		// 変更
 	FLG_MODE_SUB		= (1<<3),		// サブ画面に移行した
 	//
-	FLG_SEL_KEY			= (1<<4),		// キーで選択
-	FLG_LEFT_ANIM		= (1<<5),		// 左アニメ
-	FLG_RIGHT_ANIM		= (1<<6),		// 右アニメ
-	//
-	FLG_UPDATE			= (1<<8),		// 更新
+	FLG_LEFT_ANIM		= (1<<4),		// 左アニメ
+	FLG_RIGHT_ANIM		= (1<<5),		// 右アニメ
+	FLG_UPDATE			= (1<<6),		// 更新
 };
 
 //-------------
@@ -299,7 +295,7 @@ enum{
 	//
 	MES_ID_TRAINER,						// やくめい
 	//
-	MES_ID_DUMMY,						// dummy
+	MES_ID_DUMMY,						// dummy(空白を表示)
 };
 
 // canvasの番号
@@ -362,9 +358,9 @@ typedef struct{
 /// シナリオ開放状況
 //-------------------------------------
 typedef struct{
-	u16					openid:8;		// 開放の番号
-	u16					color:7;		// カラー
-	u16					newflag:1;		// newマーク
+	u16					openid:8;		// 開放のシナリオ番号(0-47)(0xff:初期値)
+	u16					color:7;		// カラー(0-3)
+	u16					newflag:1;		// newマーク(0:なし,1:あり)
 } PKWD_BOOK_FLAG_BUFFER;
 
 //-------------------------------------
@@ -400,7 +396,7 @@ typedef struct
 	PKWD_BOOK_PARAM 		*Param;						// 参照用として保存
 	//
 	GFL_FONT				*font;									///< フォント
-	GFL_FONT				*sfont;									///< フォント
+	GFL_FONT				*sfont;									///< フォント(小文字)
 	PRINT_QUE				*print_que;								///< que
 	PRINT_UTIL				PrintUtil[PKWD_BOOK_CANVAS_MAXNUM];		///< 文字表示用(下画面:切り替える)
 	PRINT_UTIL				PrintUtil2[PKWD_BOOK_CANVAS_MAXNUM];	///< 文字表示用(上画面)
@@ -414,7 +410,7 @@ typedef struct
 	FRAMELIST_WORK			*frame_list_work;			///< リスト
 	//
 	APP_TASKMENU_WORK		*pAppTask;					///< 選択肢
-	APP_TASKMENU_ITEMWORK	appitem[3];
+	APP_TASKMENU_ITEMWORK	appitem[3];					///< 3項目あり
 	APP_TASKMENU_RES		*pAppTaskRes;
 	//
 	s32						Step;						// ステップ
@@ -440,7 +436,7 @@ typedef struct
 	s32						PokeMax;					///< ポケモン最大
 	s32						PokePageNum;				///< ポケモンページ番号(0-max-1)
 	POKEPARTY				*Party;						///< パーティ情報
-	PKWD_BOOK_POKE_WORK		PokeWork[PKWD_POKE_MAX];	///< ポケモン情報
+	PKWD_BOOK_POKE_WORK		PokeWork[PKWD_BOOK_POKE_MAX];	///< ポケモン情報
 	//
 	PKWD_BOOK_FLAG_BUFFER	FlagBuffer[POKEWOOD_SENARIO_MAX];	///< フラグのバッファ
 	//
@@ -649,10 +645,10 @@ const PKWD_BOOK_OBJ_DATA pwb_obj_trainer_tbl[] = {
 //----------------
 // narc, resid, paloffset, palnum
 static const s16 pwb_obj_list_info_tbl[] = {
-	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, 13*0x20, 2, // NCL
+	NARC_b_scenario_gra_pkwd_list_obj_NCLR, RESID_LIST_PLT, PLTID_SUB_OBJ_LIST*0x20, 2, // NCL
 	NARC_b_scenario_gra_pkwd_list_obj_NCGR, RESID_LIST_CHR, 0, 0,	// NCG
-	NARC_b_scenario_gra_pkwd_list_obj_NCER, RESID_LIST_CEL, 0, 0, // NCE
-	NARC_b_scenario_gra_pkwd_list_obj_NANR, -1, 0, 0,			// NAR?
+	NARC_b_scenario_gra_pkwd_list_obj_NCER, RESID_LIST_CEL, 0, 0,	// NCE
+	NARC_b_scenario_gra_pkwd_list_obj_NANR, -1, 0, 0,				// NAR?
 };
 
 // 情報
@@ -776,7 +772,7 @@ static const s16 pwb_fix_mestbl[] = {
 	pw_castindex_05,		// INFO:とくせい
 	pw_castindex_20,		// TRAINER:やくめい
 	//
-	pw_castindex_06,		// dummy(なにも表示しないため)
+	pw_castindex_06,		// dummy(空白を表示)
 };
 
 //-------------
@@ -1125,6 +1121,9 @@ static void _liststr_print_null( PKWD_BOOK_MAIN_WORK *wk, int pos, PRINT_UTIL *p
 static void PrintStrBuf(    PKWD_BOOK_MAIN_WORK* wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int strIdx, PRINTSYS_LSB col, int y );
 static void _strbuf_print(  PKWD_BOOK_MAIN_WORK* wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param );
 //
+static void pwb_chg_framelist_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 pnum );
+
+//
 static void pwb_init_meswin( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_clear_meswin( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_init_selectwin( PKWD_BOOK_MAIN_WORK * wk );
@@ -1413,7 +1412,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	wk->frame_list_work = 0;
 	//
 	for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
-		wk->FlagBuffer[i].openid   = 0x7f;
+		wk->FlagBuffer[i].openid   = 0xff;
 		wk->FlagBuffer[i].color    = 0;
 		wk->FlagBuffer[i].newflag  = 0;
 	}
@@ -1436,11 +1435,10 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------------
 	// メッセージバッファ取得
 	//---------------------
-	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->heapID );
-//	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_hint001_dat, wk->heapID );	// debug
+	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pw_movietitle_dat, wk->heapID );	// いろいろ
 	wk->MsgData[1] = 0;
-	wk->MsgData[2] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, 		 wk->heapID );		// 役職名
-	wk->MsgData[3] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pokewood_name_dat, wk->heapID );		// 役名
+	wk->MsgData[2] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, 		 wk->heapID );	// 役職名
+	wk->MsgData[3] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_pokewood_name_dat, wk->heapID );	// 役名
 	
 	//---------------------
 	// パーティ情報セット(test)
@@ -1487,6 +1485,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// パレット
 	//------------
 //	pwb_init_pal_fade( wk );
+	// 上画面のカラー
 	pwb_init_up_pal( wk );
 	
 	// (初期)カラーの変更
@@ -1498,17 +1497,21 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//------------
 	pwb_init_framelist( wk );
 	
+	//--------------------
 	// スクロール切り替え
+	//--------------------
 	pwb_set_bgscroll( wk, 0 );
+	// フレームのパレット変更(test)
+	pwb_chg_framelist_pal( wk, tmp );
 	
 	//------------
 	// 上画面表示
 	//------------
 	pwb_disp_up_bg( wk );
 	
-	//--------------
-	// 半透明設定
-	//--------------
+	//---------------------------
+	// 半透明設定(フィルムのobj)
+	//---------------------------
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
 		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
 		10, 6 );
@@ -1723,6 +1726,7 @@ static void pwb_init_bg( PKWD_BOOK_MAIN_WORK* wk )
 	adr = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME3_S );
 	
 	// 3画面分修正
+	// 1枚のスクリーン(512x512)に3画面分のデータを入れているため
 	for(k=0;k<3;k++){
 		for(i=0;i<32;i++){
 			for(j=0;j<32;j++){
@@ -1786,7 +1790,7 @@ static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnu
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  font
+ *	@brief  font(パレットのみ)
  *
  *	@param	PKWD_BOOK_MAIN_WORK* wk
  *	@param	const s32			drawtype
@@ -1826,7 +1830,7 @@ static void pwb_init_obj_res_cmn( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype )
 	idx[3] = APP_COMMON_GetBarIconAnimeArcIdx( APP_COMMON_MAPPING_128K );	// anim
 	//
 	// セルアニメ用の処理
-	wk->wk_obj.res[ RESID_CMN_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, idx[0], drawtype, 0x20*4, 0, 4, wk->heapID );
+	wk->wk_obj.res[ RESID_CMN_OBJ_PLT ] = GFL_CLGRP_PLTT_RegisterEx(   p_handle, idx[0], drawtype, 0x20*PLTID_SUB_OBJ_CMN, 0, 4, wk->heapID );
 	wk->wk_obj.res[ RESID_CMN_OBJ_CHR ] = GFL_CLGRP_CGR_Register(      p_handle, idx[1], FALSE, drawtype, wk->heapID );
 	wk->wk_obj.res[ RESID_CMN_OBJ_CEL ] = GFL_CLGRP_CELLANIM_Register( p_handle, idx[2], idx[3], wk->heapID );
 	//
@@ -1869,7 +1873,7 @@ static void pwb_init_obj_res_poke( PKWD_BOOK_MAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	ポケモンアイコン切り替え
+ * @brief	ポケモンアイコン切り替え(cgrの置き換え)
  *
  * @param	PKWD_BOOK_MAIN_WORK*		wk
  * @param	const s32			ワーク番号(reschrと対応)
@@ -1935,7 +1939,7 @@ static void pwb_init_obj_res_type( PKWD_BOOK_MAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	タイプアイコン切り替え(技タイプも同じでよいらしい)
+ * @brief	タイプアイコン切り替え(技タイプも同じでよいらしい)(cgrの置き換え)
  *
  * @param	PKWD_BOOK_MAIN_WORK*		wk
  * @param	const s32			ワーク番号(reschrと対応)
@@ -2159,14 +2163,14 @@ static void pwb_init_obj( PKWD_BOOK_MAIN_WORK* wk )
 	pwb_init_obj_res_type( wk );
 	// リソース読み込み(trainer)
 	pwb_init_obj_res_trainer( wk, CLSYS_DRAW_SUB, 1 );
-	// font
+	// リソース読み込み(font)
 	pwb_init_obj_res_font( wk, CLSYS_DRAW_SUB );
-	// list
+	// リソース読み込み(list)
 	pwb_init_obj_res( wk, CLSYS_DRAW_SUB, &pwb_obj_list_info_tbl[0]);
 	//
 	// CLWK登録(cmn)
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_cmn_tbl[0], &pwb_obj_cmn_itbl[0] );
-	// CLWK登録(cmn)
+	// CLWK登録(poke)
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_poke_tbl[0], &pwb_obj_poke_itbl[0] );
 	// CLWK登録(type)
 	pwb_init_obj_clwk( wk, CLSYS_DRAW_SUB, &pwb_obj_type_tbl[0], &pwb_obj_type_itbl[0] );
@@ -2517,6 +2521,7 @@ static void pwb_init_obj_bmpoam( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype, co
  *	@param	PKWD_BOOK_MAIN_WORK* wk
  *	@param	const s32				ワーク番号
  *	@param	const STRBUF*			表示文字列
+ *	@param	const s32,s32			表示オフセット
  *
  *	@retval
  */
@@ -2582,10 +2587,10 @@ static void pwb_init_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 
 	s32		i;
 	const PKWD_BOOK_CANVAS_DATA *adr;
 	
-	if(type == STR_MAIN){	// main
+	if(type == STR_MAIN){	// main(基本1回)
 		adr = &pwb_canvas_00_tbl[0];
 		wk->PFlag2 = 0;
-	}else{					// sub
+	}else{					// sub(何度も書き換えがある)
 		adr = pwb_canvas_tbl[mode];
 		wk->PFlag = 0;
 		// 破棄
@@ -2600,7 +2605,7 @@ static void pwb_init_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 
 		// セット
 		if(type == STR_MAIN){		// main
 			wk->PrintUtil2[i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
-		}else{				// sub
+		}else{						// sub
 			wk->PrintUtil[i].win  = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
 		}
 		// clear
@@ -2731,7 +2736,7 @@ static void pwb_disp_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 
 	siz = pwb_get_putsize( strbuf, wk->font, pmode );
 	if(type == STR_MAIN){		// main
 		PRINT_UTIL_PrintColor( &wk->PrintUtil2[mode], wk->print_que, x-siz, y, strbuf, wk->font, col );
-	}else{				// sub
+	}else{						// sub
 		PRINT_UTIL_PrintColor( &wk->PrintUtil[mode],  wk->print_que, x-siz, y, strbuf, wk->font, col );
 	}
 }
@@ -3139,6 +3144,8 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		// カラーの変更
 		tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
 		pwb_chg_up_pal( wk, tmp );
+		// フレームのパレット変更(test)
+		pwb_chg_framelist_pal( wk, tmp );
 	}
 	//
 	// スクロールバー処理(要検討)
@@ -3413,7 +3420,7 @@ static void pwb_disp_trainer_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	STRBUF	*strbuf;
 	
 	// ポケモン表示(max6体分)
-	for(i=0;i<PKWD_POKE_MAX;i++){
+	for(i=0;i<PKWD_BOOK_POKE_MAX;i++){
 		if(i < wk->PokeMax){
 			pwb_chg_poke_obj( wk, i, wk->PokeWork[i].id, wk->PokeWork[i].sex );
 			bflg = TRUE;
@@ -3622,7 +3629,7 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
 		wk->SubMode = STEP_LV2+10;
 	}
-	// debug(終了)
+	// 戻る
 	else if(mflg == 3){
 		wk->NextMode = MODE_INIT_BOOK;
 		// 戻るシーケンス変更
@@ -4074,7 +4081,7 @@ static void pwb_set_pokework( PKWD_BOOK_MAIN_WORK * wk )
 	wk->PokeMax		= PokeParty_GetPokeCount( wk->Party );
 	
 	// 初期化(なくてもよいはず)
-	for(i=0;i<PKWD_POKE_MAX;i++){
+	for(i=0;i<PKWD_BOOK_POKE_MAX;i++){
 		wk->PokeWork[i].id		= 0;
 		wk->PokeWork[i].sex		= 0;
 		wk->PokeWork[i].level	= 0;
@@ -4117,7 +4124,7 @@ static void pwb_set_pokework( PKWD_BOOK_MAIN_WORK * wk )
 	}
 #if 0
 	// debug表示
-	for(i=0;i<PKWD_POKE_MAX;i++){
+	for(i=0;i<PKWD_BOOK_POKE_MAX;i++){
 		OS_Printf("id, sex, level, item, stat, poke_type[0], poke_type[1] :%d,%d,%d,%d,%d,%d,%d\n",
 			wk->PokeWork[i].id, wk->PokeWork[i].sex, wk->PokeWork[i].level, 
 			wk->PokeWork[i].item, wk->PokeWork[i].stat, wk->PokeWork[i].poke_type[0], wk->PokeWork[i].poke_type[1] );
@@ -4174,7 +4181,7 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 			j++;
 		}
 	}
-	// 開放フラグが、シナリオ最大数になるはず
+	// シナリオ最大数が求まるはず
 	wk->ScenarioMax = j;
 	//
 	// 結果
@@ -4327,7 +4334,6 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	// オリジナルデータの読み込み
 	//----------------------------
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( arc_handle, NARC_b_scenario_gra_pkwd_list_NCGR, GFL_BG_FRAME2_S, 0, 0, 0, wk->heapID );
-//	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, PALTYPE_SUB_BG,  0, 2*0x20, wk->heapID );
 	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, PALTYPE_SUB_BG,  0, 4*0x20, wk->heapID );
 	
 	//---------------
@@ -4573,7 +4579,6 @@ static void pwb_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, 
 	PKWD_BOOK_MAIN_WORK * wk = (PKWD_BOOK_MAIN_WORK *)work;
 	// タイトル表示
 	_liststr_print( wk, pos, print_util, wk->MsgData[0] );
-//	_liststr_print( wk, pos, print_util, wk->MsgData[1] );	// debug
 }
 
 // move
@@ -4638,6 +4643,25 @@ static void PrintStrBuf( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_
 static void _strbuf_print( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param )
 {
 	PrintStrBuf( wk, print_util, que, msg, param, PRINTSYS_MACRO_LSB(15,14,0), 4 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	フレームのパレットアニメ変更(予定)
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_chg_framelist_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 pnum )
+{
+#if 0
+	// 一括で読み込んでおいてもいいかもしれない..
+	ARCHANDLE* arc_handle = GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
+	FRAMELIST_LoadBlinkPalette( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, pnum, 4 );
+	GFL_ARC_CloseDataHandle( arc_handle );
+#endif
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -4801,7 +4825,8 @@ static void pwb_init_pkwd_scenario( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario
 	
 	// シナリオ情報の取得
 	pkwd_scenario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, scenario_id, wk->heapID );
-	// ここで情報をセットしてしまう
+	// ここで情報をセットしてしまう(上映なので[1]?)
+//	wk->TrainerID = pkwd_scenario->trtype[1];
 	wk->TrainerID = pkwd_scenario->trtype[0];
 	//
 //	for(i=0;i<4;i++){
@@ -4901,7 +4926,9 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	if(buf[0] == wk->OldPos){
 		return;
 	}
-	// 補正
+	// 補正=>
+	// スクロール値を参照しているため、
+	// 方向によっては座標をずらす必要があったので、こう処理した
 	if(buf[0] > wk->OldPos){	// 下方向
 		off = 1;
 	}else{						// 上方向
@@ -4912,8 +4939,8 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		off = 0;
 	}
 	//
-	// (0-7),(-1),(8)の順番
-	for(i=0;i<7;i++){
+	// (0-6),(-1),(7)の順番
+	for(i=0;i<PKWD_BOOK_LIST_MAX;i++){
 		if(wk->FlagBuffer[buf[0]+i].newflag != 0){
 			wk->NewFlag |= (1<<i);
 		}
@@ -4922,12 +4949,14 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// 0でない場合=>上側がある
 	if(buf[0] > 0){
 		if(wk->FlagBuffer[buf[0]-1].newflag != 0){
-			wk->NewFlag |= (1<<7);
+			wk->NewFlag |= (1<<PKWD_BOOK_LIST_MAX);
 		}
 	}
 	// 下側にデータがある場合
-	if(wk->FlagBuffer[7+1].newflag != 0){
-		wk->NewFlag |= (1<<8);
+	if((buf[0]+PKWD_BOOK_LIST_MAX) < wk->ScenarioMax){
+		if(wk->FlagBuffer[buf[0]+PKWD_BOOK_LIST_MAX].newflag != 0){
+			wk->NewFlag |= (1<<(PKWD_BOOK_LIST_MAX+1));
+		}
 	}
 	//
 	// ここまでで、NewFlagがセットされる
@@ -4954,9 +4983,10 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	NEWマーク
+ * @brief	NEWマーク(使い方注意)
  *
  * @param	PKWD_BOOK_MAIN_WORK*		wk
+ * @param	const s8					BGのスクロール値
  *
  * @return  none
  */
