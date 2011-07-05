@@ -754,7 +754,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="c03p07_sightseeing_01"
+		Label="msg_c03p07_sightseeing_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -785,6 +785,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:07:50" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-05T02:27:49" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -794,7 +801,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p07_sightseeing_02"
+		Label="msg_c03p07_sightseeing_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -825,6 +832,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:07:51" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-05T02:27:51" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -834,7 +848,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p07_sightseeing_03"
+		Label="msg_c03p07_sightseeing_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -865,6 +879,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:07:52" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-05T02:27:51" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -874,7 +895,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p07_sightseeing_04"
+		Label="msg_c03p07_sightseeing_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -908,6 +929,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:07:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-05T02:27:51" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -917,7 +945,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p07_sightseeing_05"
+		Label="msg_c03p07_sightseeing_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -951,6 +979,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:08:01" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-05T02:27:51" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
@@ -960,7 +995,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="c03p07_sightseeing_06"
+		Label="msg_c03p07_sightseeing_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -994,6 +1029,13 @@
 				User="mizuguchi_mai:W00226"
 				Time="2011-05-31T02:08:03" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00226"
+				Time="2011-07-05T02:27:51" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff80ff</CellData>
