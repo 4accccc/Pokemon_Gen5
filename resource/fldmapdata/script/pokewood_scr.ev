@@ -1,0 +1,84 @@
+
+//======================================================================
+//                pokewood_scr.ev
+//
+//    スクリプトファイル：ポケウッド用
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_pokewood_scr.h"
+  //.include  "pokewood_scr.h"
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_pokewood_rec
+_EVENT_DATA   ev_pokewood_show
+_EVENT_DATA_END
+
+
+DEFINE_LOCAL  LWK_REC_RESULT
+/**************************************************************/
+/*            ZONE_CHANGE_LABEL                               */
+/**************************************************************/
+//ev_zone_pokewood_scr:
+//  _END
+
+
+
+/**************************************************************/
+//    ポケウッド：撮影の人（仮）
+/**************************************************************/
+EVENT_START ev_pokewood_rec
+
+  $LWK_REC_RESULT = FALSE
+
+  _TALK_OBJ_START()
+
+  //どの脚本を～？
+  _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_01, SCWK_TARGET_OBJID, POS_DEFAULT )
+  IF $SCWK_ANSWER == SCR_YES THEN
+
+  ENDIF
+
+  //またの機会をお待ちしています！
+  _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_02, SCWK_TARGET_OBJID, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+sub_select_scenario:
+  //台本選択アプリを呼び出し
+  //結果を取得する
+  // バッファ０に台本のタイトルを埋め込み
+  //「～」でいいですか？
+  _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_03, SCWK_TARGET_OBJID, POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //じゃあ撮影開始！▼
+    _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_04, SCWK_TARGET_OBJID, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    //撮影アプリへ遷移
+    IF $SCWK_ANSWER != 0 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_05, SCWK_TARGET_OBJID, POS_DEFAULT )
+    ELSE
+    ENDIF
+    
+  ENDIF
+
+_RET
+
+/**************************************************************/
+//    ポケウッド：上映の人（仮）
+/**************************************************************/
+EVENT_START ev_pokewood_show
+EVENT_END
+

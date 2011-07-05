@@ -15,7 +15,7 @@ require ENV["PROJECT_ROOT"] + 'tools/constant'
 
 SCRIPT_GMM_DIR  = "script_message"
 DEBUG_GMM_DIR = "debug"
-DEFAULT_GMM_PATH = ENV["PROJECT_RSCDIR"] + "message/src/"
+DEFAULT_MSTXT_PATH = ENV["PROJECT_RSCDIR"] + "message/msproj/src/"
 #SCRIPT_GMM_PATH = ENV["PROJECT_RSCDIR"] + "message/src/script_message/"
 SCRIPT_PATH = ENV["PROJECT_RSCDIR"] + "fldmapdata/script/"
 
@@ -130,8 +130,9 @@ class ScrOfsData
         msgarc = ""
       end
       if msgfile != "×"
-        unless FileTest.exist?(DEFAULT_GMM_PATH + msgarc + "/" + msgfile) then
-          raiseError("指定されたgmmファイル#{msgfile}が存在しません", linecount)
+        filepath = DEFAULT_MSTXT_PATH + msgarc + "/" + msgfile
+        unless FileTest.exist?(filepath) then
+          raiseError("指定されたmsgファイル#{filepath}が存在しません", linecount)
         end
       else
         msgfile = nil
@@ -262,10 +263,10 @@ scrData.ofsdatas.reverse_each{|data|
     scridx = "NARC_script_seq_#{data.scriptfile.sub(/\.ev$/,"_bin")}"
     if data.msgarc == "debug" then
       msgarc = "ARCID_DEBUG_MESSAGE"
-      msgidx = "NARC_debug_message_#{data.msgfile.sub(/\.gmm/,"_dat")}"
+      msgidx = "NARC_debug_message_#{data.msgfile.sub(/\.mstxt/,"_dat")}"
     else
       msgarc = "ARCID_#{data.msgarc.upcase}"
-      msgidx = "NARC_#{data.msgarc}_#{data.msgfile.sub(/\.gmm/,"_dat")}"
+      msgidx = "NARC_#{data.msgarc}_#{data.msgfile.sub(/\.mstxt/,"_dat")}"
     end
     if data.debuguse == true then
       output += sprintf("#ifdef PM_DEBUG\n")

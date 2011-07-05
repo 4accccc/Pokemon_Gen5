@@ -162,6 +162,9 @@ fmission_scr_def.h: fmission_scr.ev
 animal_trail_scr_def.h: animal_trail_scr.ev
 	$(EV_DEF) animal_trail_scr.ev $(SCR_OFFS_ID_H)
 
+pokewood_scr_def.h: pokewood_scr.ev
+	$(EV_DEF) pokewood_scr.ev $(SCR_OFFS_ID_H)
+
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 
