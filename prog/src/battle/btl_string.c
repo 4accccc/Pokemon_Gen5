@@ -167,8 +167,9 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
     NARC_message_wbt_trmsg_dat,
     // ポケウッドの分がMSGDATA_MAXから一つ足りません
   };
-
   int i;
+  int pokewood = BTL_MAIN_GetPokewoodMode(mainModule);
+
 
   SysWork.mainModule = mainModule;
   SysWork.pokeCon = pokeCon;
@@ -183,10 +184,15 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, u8 playerClientID, c
   // 指定のメッセージデータを読み込み
   for(i=0; i<MSGDATA_MAX-1; i++)
   {
-    SysWork.msg[i] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgDataID[i], heapID );
+    int msgid = msgDataID[i];
+    if(pokewood==BTL_POKEWOOD_REC && msgid==NARC_message_btl_std_dat){  // POKEWOOD撮影の場合はbtl_pw_strに切り替える
+      msgid = NARC_message_btl_pw_std_dat;
+    }
+    SysWork.msg[i] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msgid, heapID );
   }
 
-  if(BTL_MAIN_GetPokewoodMode(mainModule)!=BTL_POKEWOOD_NONE){
+  // ポケウッド専用文字列を読み込む
+  if(pokewood!=BTL_POKEWOOD_NONE){
 
     const MYSTATUS*cp_mystatus = BTL_MAIN_GetPlayerStatus( mainModule );
     u8 sex_ofs = (MyStatus_GetMySex(cp_mystatus) == PM_MALE? 1: 0);
