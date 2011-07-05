@@ -205,10 +205,10 @@
 		Label="msg_pw_studio_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>○○○○○○　スタジオへ　ようこそ！</Text>
+			<Text>○○○○○○　スタジオへ　ようこそ！▼</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-07-04T12:13:38" />
+				Time="2011-07-05T09:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -216,10 +216,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>○○○○○○　スタジオへ　ようこそ！</Text>
+			<Text>○○○○○○　スタジオへ　ようこそ！▼</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-07-04T12:13:41" />
+				Time="2011-07-05T09:19:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
