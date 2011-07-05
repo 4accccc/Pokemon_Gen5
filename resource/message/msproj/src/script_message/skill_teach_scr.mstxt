@@ -2835,4 +2835,333 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わしは　わざおしえ　しょくにん▼
+そして　むるいの
+[Name:Item ]　マニア！▼
+[Name:Item ]を　くれるなら
+おかえしに　おまえさんの▽
+ポケモンに　わざを▽
+おしえて　あげるよ▼
+</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:45:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:44:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わしは　技教え職人▼
+そして　無類の
+[Name:Item ]　マニア！▼
+[Name:Item ]を　くれるなら
+お返しに　おまえさんの▽
+ポケモンに　技を▽
+教えて　あげるよ▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:46:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:46:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・初回　話しかけ
+・0＝色のかけら
+・続いてmsg_skillteach_kakera_03</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:08:49" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！　おまえさんか▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:48:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:48:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！　おまえさんか▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:49:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:48:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・二回目以降　話しかけ
+・続いてmsg_skillteach_kakera_03</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:50:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンに　わざを
+おぼえさせるかい？▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:49:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンに　技を
+覚えさせるかい？▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:49:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:49:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・はい/いいえの選択肢表示
+　はい→msg_skillteach_kakera_04
+　いいえ→msg_skillteach_kakera_05</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:52:11" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほい　きた！▼
+じゃあ　おぼえさせる
+わざを　えらんどくれ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:11:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:52:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほい　きた！▼
+じゃあ　覚えさせる
+技を　選んどくれ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:10:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:52:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・続いてショップアプリへ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:53:01" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item ]が　あつまったら
+また　いつでも　おいで</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:53:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:53:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item ]が　集まったら
+また　いつでも　おいで</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:53:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:53:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・0＝色のかけら
+・ショップアプリを中断したとき、
+　フィールドに戻されて。</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:08:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は　おれいに
+[Name:Item Idx="1" ]を　[Digit:2digits Idx="2" ]コ　わたした</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:08:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:55:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は　お礼に
+[Name:Item Idx="1" ]を　[Digit:2digits Idx="2" ]コ　渡した</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T03:55:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・0＝プレイヤー名
+・1＝色のかけら
+・2＝支払う数
+・技教え完了後、
+　フィールドに戻されて。
+※システムウィンドウ</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T06:14:03" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_skillteach_kakera_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うーん　わるいんだけど
+その　ポケモンに　この　わざは
+おぼえさせられないよ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T05:41:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T05:38:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うーん　悪いんだけど
+その　ポケモンに　この　技は
+覚えさせられないよ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T05:41:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T05:41:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWANわざ教え（かけら）
+・ポケリストで
+　技を覚えられないポケモンを選択したとき、
+　フィールドに戻されて。
+・続いてmsg_skillteach_kakera_05</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-07-05T05:45:39" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
