@@ -42,7 +42,6 @@
 #include "msg/script/msg_shop.h"
 #include "event_poke_status.h" // for EVENT_CreatePokeSelectWazaOboe
 
-#include "shop_data.cdat" // shop_data_table,    shop_itemnum_table
 #include "bpshop.cdat"    // bp_shop_data_table, bp_shop_itemnum_table
 #include "waza_oshie.cdat"// waza_oshie_data_table, waza_oshie_datanum_table
 
@@ -1251,6 +1250,8 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
   GFL_MSGDATA *itemMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                              NARC_message_itemname_dat, wk->heapId );
 
+  u8 *shop_itemnum_table = GFL_ARC_LoadDataAlloc(ARCID_SHOP_NUM, 0, GFL_HEAP_LOWID(wk->heapId));
+  u16 *shop_data_table;
 
   // •Ï“®ƒVƒ‡ƒbƒv
   if(type==SCR_SHOPID_NULL)
@@ -1261,8 +1262,10 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
     offset = id+FIXSHOP_START_NUMBER;
   }
 
+  shop_data_table = GFL_ARC_LoadDataAlloc(ARCID_SHOP_LIST, offset, GFL_HEAP_LOWID(wk->heapId));
+
   // ‹Zƒ}ƒVƒ“‚ª“ü‚Á‚Ä‚¢‚é‚Ì‚Å‚ ‚ê‚ÎƒƒUƒVƒ‡ƒbƒv‚Å“o˜^‚·‚é‚½‚ß‚ÌÝ’è‚ÉØ‚è‘Ö‚¦‚é
-  if(ITEM_CheckWazaMachine(shop_data_table[offset][0])){
+  if(ITEM_CheckWazaMachine(shop_data_table[0])){
     wk->type = SHOP_TYPE_WAZA;
   }
 
@@ -1275,7 +1278,7 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
 
   for(i=0;i<itemnum;i++)
   {
-    int id = shop_data_table[offset][i];
+    int id = shop_data_table[i];
     OS_Printf("strId=%d\n", id);
 
     // ‹Zƒ}ƒVƒ“‚©‚Ç‚¤‚®–¼‚©‚Å•¶Žš—ñ“o˜^•û–@‚ªˆá‚¤
@@ -1297,6 +1300,10 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
                                     mes_shop_02_06, 
                                     BMPMENULIST_CANCEL, 
                                     wk->heapId );
+
+  GFL_HEAP_FreeMemory( shop_data_table );
+  GFL_HEAP_FreeMemory( shop_itemnum_table );
+
   GFL_MSG_Delete( itemMsgData );
 }
 

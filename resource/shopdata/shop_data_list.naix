@@ -1,0 +1,96 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: shop_data_list.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2011-07-05T12:48:10
+ *****************************************************************************/
+
+#ifndef NARC_SHOP_DATA_LIST_NAIX_
+#define NARC_SHOP_DATA_LIST_NAIX_
+
+enum {
+	NARC_shop_data_list_000_shop_data_fs_stage1_dat = 0,
+	NARC_shop_data_list_001_shop_data_fs_stage2_dat = 1,
+	NARC_shop_data_list_002_shop_data_fs_stage3_dat = 2,
+	NARC_shop_data_list_003_shop_data_fs_stage4_dat = 3,
+	NARC_shop_data_list_004_shop_data_fs_stage5_dat = 4,
+	NARC_shop_data_list_005_shop_data_fs_stage6_dat = 5,
+	NARC_shop_data_list_006_shop_data_t02_fs_dat = 6,
+	NARC_shop_data_list_007_shop_data_c01_fs_dat = 7,
+	NARC_shop_data_list_008_shop_data_c02_fs_dat = 8,
+	NARC_shop_data_list_009_shop_data_c03_fs_dat = 9,
+	NARC_shop_data_list_010_shop_data_c04_fs_dat = 10,
+	NARC_shop_data_list_011_shop_data_c05_fs_dat = 11,
+	NARC_shop_data_list_012_shop_data_c06_fs_dat = 12,
+	NARC_shop_data_list_013_shop_data_c07_fs_dat = 13,
+	NARC_shop_data_list_014_shop_data_c08_fs_dat = 14,
+	NARC_shop_data_list_015_shop_data_c09_fs_dat = 15,
+	NARC_shop_data_list_016_shop_data_t03_fs_dat = 16,
+	NARC_shop_data_list_017_shop_data_t04_fs_dat = 17,
+	NARC_shop_data_list_018_shop_data_c10_fs_dat = 18,
+	NARC_shop_data_list_019_shop_data_shop_up_dat = 19,
+	NARC_shop_data_list_020_shop_data_shop_kanpo_dat = 20,
+	NARC_shop_data_list_021_shop_data_shop_okou_dat = 21,
+	NARC_shop_data_list_022_shop_data_shop_mall1_dat = 22,
+	NARC_shop_data_list_023_shop_data_shop_mall2_dat = 23,
+	NARC_shop_data_list_024_shop_data_shop_mall3_dat = 24,
+	NARC_shop_data_list_025_shop_data_shop_mall4_dat = 25,
+	NARC_shop_data_list_026_shop_data_c12_fs_dat = 26,
+	NARC_shop_data_list_027_shop_data_c13_fs_dat = 27,
+	NARC_shop_data_list_028_shop_data_c14_fs_dat = 28,
+	NARC_shop_data_list_029_shop_data_t06_fs_dat = 29,
+	NARC_shop_data_list_030_shop_data_t07_fs_dat = 30,
+	NARC_shop_data_list_031_shop_data_bc_a_default_dat = 31,
+	NARC_shop_data_list_032_shop_data_bc_a_rank_01_dat = 32,
+	NARC_shop_data_list_033_shop_data_bc_a_rank_02_dat = 33,
+	NARC_shop_data_list_034_shop_data_bc_a_rank_03_dat = 34,
+	NARC_shop_data_list_035_shop_data_bc_a_rank_04_dat = 35,
+	NARC_shop_data_list_036_shop_data_bc_a_rank_05_dat = 36,
+	NARC_shop_data_list_037_shop_data_bc_b_default_dat = 37,
+	NARC_shop_data_list_038_shop_data_bc_b_rank_01_dat = 38,
+	NARC_shop_data_list_039_shop_data_bc_b_rank_02_dat = 39,
+	NARC_shop_data_list_040_shop_data_bc_b_rank_03_dat = 40,
+	NARC_shop_data_list_041_shop_data_bc_b_rank_04_dat = 41,
+	NARC_shop_data_list_042_shop_data_bc_b_rank_05_dat = 42,
+	NARC_shop_data_list_043_shop_data_bc_c_default_dat = 43,
+	NARC_shop_data_list_044_shop_data_bc_c_rank_01_dat = 44,
+	NARC_shop_data_list_045_shop_data_bc_c_rank_02_dat = 45,
+	NARC_shop_data_list_046_shop_data_bc_c_rank_03_dat = 46,
+	NARC_shop_data_list_047_shop_data_bc_c_rank_04_dat = 47,
+	NARC_shop_data_list_048_shop_data_bc_c_rank_05_dat = 48,
+	NARC_shop_data_list_049_shop_data_bc_d_default_dat = 49,
+	NARC_shop_data_list_050_shop_data_bc_d_rank_01_dat = 50,
+	NARC_shop_data_list_051_shop_data_bc_d_rank_02_dat = 51,
+	NARC_shop_data_list_052_shop_data_bc_d_rank_03_dat = 52,
+	NARC_shop_data_list_053_shop_data_bc_d_rank_04_dat = 53,
+	NARC_shop_data_list_054_shop_data_bc_d_rank_05_dat = 54,
+	NARC_shop_data_list_055_shop_data_wf_a_default_dat = 55,
+	NARC_shop_data_list_056_shop_data_wf_a_rank_01_dat = 56,
+	NARC_shop_data_list_057_shop_data_wf_a_rank_02_dat = 57,
+	NARC_shop_data_list_058_shop_data_wf_a_rank_03_dat = 58,
+	NARC_shop_data_list_059_shop_data_wf_a_rank_04_dat = 59,
+	NARC_shop_data_list_060_shop_data_wf_a_rank_05_dat = 60,
+	NARC_shop_data_list_061_shop_data_wf_b_default_dat = 61,
+	NARC_shop_data_list_062_shop_data_wf_b_rank_01_dat = 62,
+	NARC_shop_data_list_063_shop_data_wf_b_rank_02_dat = 63,
+	NARC_shop_data_list_064_shop_data_wf_b_rank_03_dat = 64,
+	NARC_shop_data_list_065_shop_data_wf_b_rank_04_dat = 65,
+	NARC_shop_data_list_066_shop_data_wf_b_rank_05_dat = 66,
+	NARC_shop_data_list_067_shop_data_wf_c_default_dat = 67,
+	NARC_shop_data_list_068_shop_data_wf_c_rank_01_dat = 68,
+	NARC_shop_data_list_069_shop_data_wf_c_rank_02_dat = 69,
+	NARC_shop_data_list_070_shop_data_wf_c_rank_03_dat = 70,
+	NARC_shop_data_list_071_shop_data_wf_c_rank_04_dat = 71,
+	NARC_shop_data_list_072_shop_data_wf_c_rank_05_dat = 72,
+	NARC_shop_data_list_073_shop_data_wf_d_default_dat = 73,
+	NARC_shop_data_list_074_shop_data_wf_d_rank_01_dat = 74,
+	NARC_shop_data_list_075_shop_data_wf_d_rank_02_dat = 75,
+	NARC_shop_data_list_076_shop_data_wf_d_rank_03_dat = 76,
+	NARC_shop_data_list_077_shop_data_wf_d_rank_04_dat = 77,
+	NARC_shop_data_list_078_shop_data_wf_d_rank_05_dat = 78
+};
+
+/* NARC_SHOP_DATA_LIST_NAIX_ */
+#endif

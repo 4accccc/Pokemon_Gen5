@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: shop_data_num.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2011-07-05T12:48:10
+ *****************************************************************************/
+
+#ifndef NARC_SHOP_DATA_NUM_NAIX_
+#define NARC_SHOP_DATA_NUM_NAIX_
+
+enum {
+	NARC_shop_data_num_shop_data_num_dat = 0
+};
+
+/* NARC_SHOP_DATA_NUM_NAIX_ */
+#endif
