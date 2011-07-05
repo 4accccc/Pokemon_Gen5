@@ -26,6 +26,7 @@
   .include "../../../prog/src/field/scrcmd_wbt_table.cdat"
   .include "../../../prog/src/field/scrcmd_resort_table.cdat"
   .include "../../../prog/src/field/scrcmd_infinity_dungeon_table.cdat"
+  .include "../../../prog/src/field/scrcmd_pokewood_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -13789,5 +13790,140 @@
   .short  EV_SEQ_KEYSYS_GET_DIFFICULTY
   .short  \ret_wk
   .endm
+
+//======================================================================
+//
+//  ポケウッド
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * _PKWD_REC
+ * @brief ポケウッド録画呼び出し
+ * @param[in] rec_pos
+ * @param[in] scenario_no
+ * @param[out] ret_wk
+ */
+//--------------------------------------------------------------
+#define _PKWD_REC( rec_pos, scenario_no, ret_wk ) \
+    _ASM_PKWD_REC rec_pos, scenario_no, ret_wk
+
+    .macro  _ASM_PKWD_REC rec_pos, scenario_no, ret_wk
+    .short  EV_SEQ_PKWD_REC
+    .short  \rec_pos
+    .short  \scenario_no
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * _PKWD_SHOW
+ * @brief ポケウッド上映呼び出し
+ * @param[in]   rec_pos
+ */
+//--------------------------------------------------------------
+#define _PKWD_SHOW( rec_pos ) \
+    _ASM_PKWD_SHOW rec_pos
+
+    .macro  _ASM_PKWD_SHOW rec_pos
+    .short  EV_SEQ_PKWD_SHOW
+    .short  \rec_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：シナリオ選択
+ */
+//--------------------------------------------------------------
+#define _PKWD_SELECT_SCENARIO( scenario_no )  \
+    _ASM_PKWD_SELECT_SCENARIO scenario_no
+    .macro  _ASM_PKWD_SELECT_SCENARIO scenario_no
+    .short  EV_SEQ_PKWD_SELECT_SCENARIO
+    .short  \scenario_no
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：上映データ選択
+ */
+//--------------------------------------------------------------
+#define _PKWD_SELECT_MOVIE( rec_pos )  \
+    _ASM_PKWD_SELECT_MOVIE rec_pos
+    .macro  _ASM_PKWD_SELECT_MOVIE rec_pos
+    .short  EV_SEQ_PKWD_SELECT_MOVIE
+    .short  \rec_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：シナリオ名セット
+ */
+//--------------------------------------------------------------
+#define _PKWD_SET_SCENARIO_NAME( idx, scenario_no ) \
+    _ASM_PKWD_SET_SCENARIO_NAME idx, scenario_no
+
+    .macro  _ASM_PKWD_SET_SCENARIO_NAME idx, scenario_no
+    .short  EV_SEQ_PKWD_SET_SCENARIO_NAME
+    .byte   \idx
+    .short  \scenario_no
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：シナリオ追加状態取得
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_SCENARIO_STATUS( ret_wk ) \
+    _ASM_PKWD_GET_SCENARIO_STATUS ret_wk
+
+    .macro  _ASM_PKWD_GET_SCENARIO_STATUS ret_wk
+    .short  EV_SEQ_PKWD_GET_SCENARIO_STATUS
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：録画本数を取得
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_MOVIE_COUNT( ret_wk ) \
+    _ASM_PKWD_GET_MOVIE_COUNT ret_wk
+
+    .macro  _ASM_PKWD_GET_MOVIE_COUNT ret_wk
+    .short  EV_SEQ_PKWD_GET_MOVIE_COUNT
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：上映データ削除
+ */
+//--------------------------------------------------------------
+#define _PKWD_DELETE_MOVIE( rec_pos )  \
+    _ASM_PKWD_DELETE_MOVIE rec_pos
+    .macro  _ASM_PKWD_DELETE_MOVIE rec_pos
+    .short  EV_SEQ_PKWD_DELETE_MOVIE
+    .short  \rec_pos
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：初回視聴チェック
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_1ST_TIME_SEE_FLAG( ret_wk )  \
+    _ASM_PKWD_GET_1ST_TIME_SEE_FLAG ret_wk
+    .macro  _ASM_PKWD_GET_1ST_TIME_SEE_FLAG ret_wk
+    .short  EV_SEQ_PKWD_GET_1ST_TIME_SEE_FLAG
+    .short  \ret_wk
+    .endm
+
+
+
+
+
+
+
+
 //======================================================================
 //======================================================================

@@ -715,3 +715,13 @@
 #define SCR_PALACE_MISSION_ENTRY_NORMAL   (1) ///<ハイリンクミッションにエントリーしている
 #define SCR_PALACE_MISSION_ENTRY_FEST     (2) ///<フェスミッションにエントリーしている
 
+//--------------------------------------------------------------
+//  scrcmd_pokewood.c
+//  ポケウッド関連
+//--------------------------------------------------------------
+///最大録画本数
+#define   SCR_PKWD_MOVIE_MAX        (4)
+
+///最大シナリオナンバー
+#define   SCR_PKWD_SCENARIO_MAX     (40)
+

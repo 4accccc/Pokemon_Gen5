@@ -12,6 +12,8 @@
   .include  "msg_pokewood_scr.h"
   //.include  "pokewood_scr.h"
 
+  .include  "pkwd_scr_define.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -24,7 +26,11 @@ _EVENT_DATA   ev_pokewood_show
 _EVENT_DATA_END
 
 
-DEFINE_LOCAL  LWK_REC_RESULT
+DEFINE_LOCAL  LWK_PKWD_SEQ
+DEFINE_LOCAL  LWK_PKWD_MENU
+DEFINE_LOCAL  LWK_PKWD_SCENARIO
+DEFINE_LOCAL  LWK_PKWD_REC_POS
+
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
@@ -38,42 +44,168 @@ DEFINE_LOCAL  LWK_REC_RESULT
 /**************************************************************/
 EVENT_START ev_pokewood_rec
 
-  $LWK_REC_RESULT = FALSE
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_FIRST_MENU
 
   _TALK_OBJ_START()
 
-  //どの脚本を～？
-  _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_01, SCWK_TARGET_OBJID, POS_DEFAULT )
-  IF $SCWK_ANSWER == SCR_YES THEN
+  //ようこそ！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_01, SCWK_TARGET_OBJID, POS_DOWN )
 
+  //仮：本当はコマンドから結果を受け取る
+  $SCWK_ANSWER = FALSE
+  _PKWD_GET_SCENARIO_STATUS( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_02, SCWK_TARGET_OBJID, POS_DOWN )
   ENDIF
 
-  //またの機会をお待ちしています！
-  _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_02, SCWK_TARGET_OBJID, POS_DEFAULT )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
+  WHILE $LWK_PKWD_SEQ != PKWD_REC_SEQ_END
+
+    SWITCH $LWK_PKWD_SEQ
+    CASE PKWD_REC_SEQ_FIRST_MENU      THEN
+      _CALL ev_pkwd_rec_first_menu
+
+    CASE PKWD_REC_SEQ_ERASE_MOVIE     THEN
+      _CALL ev_pkwd_rec_erase_movie
+
+    CASE PKWD_REC_SEQ_SELECT_SCENARIO THEN
+      _CALL ev_pkwd_rec_select_scenario
+
+    CASE PKWD_REC_SEQ_SELECT_POKE     THEN
+      _CALL ev_pkwd_rec_select_poke
+
+    CASE PKWD_REC_SEQ_SHOOTING        THEN
+      _CALL ev_pkwd_rec_shooting
+
+    CASE PKWD_REC_SEQ_GOODBYE         THEN
+      //またの機会をお待ちしています！
+      _BALLOONWIN_OBJMSG_POS( msg_pw_studio_11, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //シーケンス終了
+      $LWK_PKWD_SEQ = PKWD_REC_SEQ_END
+
+    DEFAULT
+      //なにか問題があった場合、とりあえず終了させる
+      $LWK_PKWD_SEQ = PKWD_REC_SEQ_END
+    ENDSWITCH
+
+  ENDWHILE
+
 
 EVENT_END
 
-sub_select_scenario:
-  //台本選択アプリを呼び出し
-  //結果を取得する
-  // バッファ０に台本のタイトルを埋め込み
-  //「～」でいいですか？
-  _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_03, SCWK_TARGET_OBJID, POS_DEFAULT )
-  _YES_NO_WIN( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_YES THEN
-    //じゃあ撮影開始！▼
-    _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_04, SCWK_TARGET_OBJID, POS_DEFAULT )
+
+/**************************************************************/
+/**************************************************************/
+ev_pkwd_rec_first_menu:
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_03, SCWK_TARGET_OBJID, POS_DOWN )
+  _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_PKWD_MENU )
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_01, 0 )  //ちょうせんする
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_02, 1 )  //せつめいをきく
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_03, 2 )  //やめる
+
+  _BMPMENU_START()
+  SWITCH $LWK_PKWD_MENU
+  CASE 0 THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_ERASE_MOVIE
+
+  CASE 1 THEN
+    //説明
+    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_04, SCWK_TARGET_OBJID, POS_DOWN )
     _MSGWIN_CLOSE()
-    //撮影アプリへ遷移
-    IF $SCWK_ANSWER != 0 THEN
-      _BALLOONWIN_OBJMSG_POS( msg_pokewood_rec_05, SCWK_TARGET_OBJID, POS_DEFAULT )
-    ELSE
+
+  DEFAULT
+    //じゃあ、また
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+  ENDSWITCH
+
+_RET
+
+/**************************************************************/
+/**************************************************************/
+ev_pkwd_rec_erase_movie:
+  $LWK_PKWD_REC_POS = 0
+  //仮：本当は上映可能な録画データの数を取得する
+  _PKWD_GET_MOVIE_COUNT( LWK_PKWD_REC_POS )
+  IF $LWK_PKWD_REC_POS == SCR_PKWD_MOVIE_MAX THEN
+    //映画が一杯！
+    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_05, SCWK_TARGET_OBJID, POS_DOWN )
+    _YES_NO_WIN( SCWK_ANSWER )
+    IF $SCWK_ANSWER != SCR_YES THEN
+      //消さない→じゃあ、また
+      $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+      _RET
     ENDIF
-    
+    //上映終了を選んで！
+    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_06, SCWK_TARGET_OBJID, POS_DOWN )
+    _MSGWIN_CLOSE()
+    //仮：本当は上映選択アプリを呼び出し
+    _PKWD_SELECT_MOVIE( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_PKWD_MOVIE_MAX THEN
+      //キャンセル→じゃあ、また
+      $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+      _RET
+    ENDIF
+    //仮：本当は録画削除を呼び出し
+    _PKWD_DELETE_MOVIE( SCWK_ANSWER )
+  ENDIF
+  //シーケンス：シナリオ選択へ
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SELECT_SCENARIO
+_RET
+
+
+/**************************************************************/
+/**************************************************************/
+ev_pkwd_rec_select_scenario:
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_07, SCWK_TARGET_OBJID, POS_DOWN )
+  _MSGWIN_CLOSE()
+  $LWK_PKWD_SCENARIO = SCR_PKWD_SCENARIO_MAX
+  //仮：本当は台本選択アプリを呼び出し
+  _PKWD_SELECT_SCENARIO( LWK_PKWD_SCENARIO )
+
+  _DEBUG_PRINT_WK( LWK_PKWD_SCENARIO )
+  IF $LWK_PKWD_SCENARIO >= SCR_PKWD_SCENARIO_MAX THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+    _RET
   ENDIF
 
+  //シーケンス：出演ポケモン選択へ
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SELECT_POKE
+_RET
+
+
+/**************************************************************/
+/**************************************************************/
+ev_pkwd_rec_select_poke:
+
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_08, SCWK_TARGET_OBJID, POS_DOWN )
+  _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_PKWD_MENU )
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_04, 0 ) //自分のポケモン
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_05, 1 ) //レンタルポケモン
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_03, 2 ) //やめる
+  _BMPMENU_START()
+
+  SWITCH $LWK_PKWD_MENU
+  CASE 0 THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+  CASE 1 THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
+  DEFAULT
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+  ENDSWITCH
+  
+_RET
+
+/**************************************************************/
+/**************************************************************/
+ev_pkwd_rec_shooting:
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_12, SCWK_TARGET_OBJID, POS_DOWN )
+  _MSGWIN_CLOSE()
+  //仮：ここで録画アプリ呼び出し
+  _PKWD_REC( LWK_PKWD_REC_POS, LWK_PKWD_SCENARIO, SCWK_ANSWER )
+  
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
 _RET
 
 /**************************************************************/

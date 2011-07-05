@@ -60,14 +60,6 @@ typedef enum {
   DEBUG_SHOW_ROM,
 }DEBUG_SHOW_TYPE;
 
-typedef enum {
-  DEBUG_REC_01 = LOADDATA_POKEWOOD0,
-  DEBUG_REC_02 = LOADDATA_POKEWOOD1,
-  DEBUG_REC_03 = LOADDATA_POKEWOOD3,
-
-  DEBUG_REC_TYPE_NUM,
-}DEBUG_REC_TYPE;
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 typedef struct {
@@ -269,9 +261,9 @@ static BOOL callShowProc( POKEWOOD_FUNC_WORK * wk, DEBUG_SHOW_TYPE type )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type, int senario_no )
+static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, PKWD_REC_POS rec_pos, int scenario_no )
 {
-  if ( type >= DEBUG_REC_TYPE_NUM )
+  if ( rec_pos >= PKWD_REC_POS_MAX )
   { //対応するシナリオデータが存在しないときにはなにもせずに戻る
     PMSND_PlaySE( SEQ_SE_BEEP );
     return FALSE;
@@ -282,11 +274,11 @@ static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type, int senar
     FIELDMAP_WORK *fieldWork = wk->fieldWork;
     GAMESYS_WORK  *gameSys  = wk->gmSys;
     GMEVENT *next_event;
-    POKEWOOD_EVENT_PARAM param;
-    param.type       = type;
-    param.senario_no = senario_no;
+    PKWD_REC_EVENT_PARAM rec_param;
+    rec_param.rec_pos       = rec_pos;
+    rec_param.scenario_no = scenario_no;
     next_event = GMEVENT_CreateOverlayEventCall( gameSys,
-        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Rec, (void*)&param );
+        FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Rec, (void*)&rec_param );
     GMEVENT_ChangeEvent( event, next_event );
 
     return TRUE;
@@ -296,20 +288,20 @@ static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, DEBUG_REC_TYPE type, int senar
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec1( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, DEBUG_REC_01, 0 );
+  return callRecProc( wk, PKWD_REC_POS_00, 0 );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec2( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, DEBUG_REC_02, 1 );
+  return callRecProc( wk, PKWD_REC_POS_02, 1 );
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec3( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, DEBUG_REC_03, 2 );
+  return callRecProc( wk, PKWD_REC_POS_03, 2 );
 }
 
 //-----------------------------------------------------------------------------
@@ -380,7 +372,7 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
 
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BOOK_EVENT_Show, (void *)pkwd_param );
-  // デバッグメニューから渡した引数としてのPOKEWOOD_EVENT_PARAMは解放
+
   PKWD_BOOK_PARAM_Delete( pkwd_param );
 
 	GMEVENT_ChangeEvent( event, new_event );

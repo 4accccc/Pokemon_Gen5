@@ -14,9 +14,17 @@
   //スクリプトコマンドテーブル開始
   INIT_OVERLAY_CMD( pokewood )
 
-  DEF_CMD( EvCmdPokewoodRec,    EV_SEQ_POKEWOOD_REC )   // ポケウッド　再生
-  DEF_CMD( EvCmdPokewoodShow,   EV_SEQ_POKEWOOD_SHOW )  // ポケウッド　録画
-  DEF_CMD( EvCmdPokewoodBook,   EV_SEQ_POKEWOOD_BOOK )  // ポケウッド　台本
+  DEF_CMD( EvCmdPokewoodRec,                    EV_SEQ_PKWD_REC )     // ポケウッド　再生
+  DEF_CMD( EvCmdPokewoodShow,                   EV_SEQ_PKWD_SHOW )    // ポケウッド　録画
+  DEF_CMD( EvCmdPokewoodSelectScenario,         EV_SEQ_PKWD_SELECT_SCENARIO )    // ポケウッド　台本
+  DEF_CMD( EvCmdPokewoodMovies,                 EV_SEQ_PKWD_SELECT_MOVIE )
+
+  DEF_CMD( EvCmdPokewoodSetScenarioName,        EV_SEQ_PKWD_SET_SCENARIO_NAME )
+  DEF_CMD( EvCmdPokewoodGetScenarioStatus,      EV_SEQ_PKWD_GET_SCENARIO_STATUS )
+  DEF_CMD( EvCmdPokewoodGetMoviesCount,         EV_SEQ_PKWD_GET_MOVIE_COUNT )
+  DEF_CMD( EvCmdPokewoodDeleteMovie,            EV_SEQ_PKWD_DELETE_MOVIE )
+  DEF_CMD( EvCmdPokewoodGetFirstTimeSeeingFlag, EV_SEQ_PKWD_GET_1ST_TIME_SEE_FLAG )
+
   
   END_CMD
   //スクリプトコマンドテーブル終了

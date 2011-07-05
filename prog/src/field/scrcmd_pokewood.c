@@ -31,6 +31,12 @@
 #include "app/pkwd_book.h"  //PKWD_BOOK_PARAM
 #include "pokewood_setup.h" //PKWD_BOOK_PARAM_Create
 
+#include "battle/pokewood.h"
+
+
+//SDK_COMPILER_ASSERT( SCR_PKWD_SCENARIO_MAX == POKEWOOD_SENARIO_MAX );
+//SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == 4 );
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -62,8 +68,10 @@ VMCMD_RESULT EvCmdPokewoodRec( VMHANDLE *core, void *wk )
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   GMEVENT * next_event;
   POKEWOOD_EVENT_PARAM pw_param;
+  u16* ret_wk;
   pw_param.type       = SCRCMD_GetVMWorkValue( core, work );
   pw_param.senario_no = SCRCMD_GetVMWorkValue( core, work );
+  ret_wk = SCRCMD_GetVMWork(core,work);  
 
   next_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Rec, (void*)&pw_param );
@@ -117,17 +125,17 @@ static GMEVENT * createDummyEvent( void * wk )
  *	@todo 戻り値を受け取る処理を書き換える
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdPokewoodBook( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdPokewoodSelectScenario( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
-  u16* ret_wk = SCRCMD_GetVMWork(core,work);  
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  u16* ret_wk = SCRCMD_GetVMWork(core,work);  
 
 	GMEVENT *new_event;
-	PKWD_BOOK_PARAM 	*pkwd_param = PKWD_BOOK_PARAM_Create( heapID, gsys, NULL );
+	PKWD_BOOK_PARAM 	*pkwd_param = PKWD_BOOK_PARAM_Create( heapID, gsys, ret_wk );
 
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_BOOK_EVENT_Show, (void *)pkwd_param );
@@ -135,7 +143,7 @@ VMCMD_RESULT EvCmdPokewoodBook( VMHANDLE *core, void *wk )
   PKWD_BOOK_PARAM_Delete( pkwd_param );
 	SCRIPT_CallEvent( scw, new_event );
 
-  *ret_wk = 0;  /* 仮：本当はアプリから結果を受け取る */
+  //*ret_wk = 0;  /* 仮：本当はアプリから結果を受け取る */
 
   return VMCMD_RESULT_SUSPEND;
 }
@@ -149,8 +157,13 @@ VMCMD_RESULT EvCmdPokewoodMovies( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  u16* ret_wk = SCRCMD_GetVMWork(core,work);  
+
   GMEVENT * new_event = createDummyEvent( wk );
 	SCRIPT_CallEvent( scw, new_event );
+
+  *ret_wk = 0;  /* 仮：本当はアプリから結果を受け取る */
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -186,6 +199,19 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
 
 //-----------------------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：ポケウッド  台本追加条件チェック
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodGetScenarioStatus( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*    work = wk;
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  /* 仮：シナリオ追加状態を入れる */
+  *ret_wk = 0;
+  return VMCMD_RESULT_CONTINUE;
+}
+//-----------------------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：ポケウッド　上映データ数取得
  */
 //-----------------------------------------------------------------------------
@@ -217,15 +243,10 @@ VMCMD_RESULT EvCmdPokewoodDeleteMovie( VMHANDLE * core, void * wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodGetFirstTimeSeeingFlag( VMHANDLE * core, void * wk )
 {
-  return VMCMD_RESULT_CONTINUE;
-}
-//-----------------------------------------------------------------------------
-/**
- * @brief スクリプトコマンド：ポケウッド  台本追加条件チェック
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdPokewoodGetScenarioAddFlag( VMHANDLE * core, void * wk )
-{
+  SCRCMD_WORK*    work = wk;
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
+  /* 仮： */
+  *ret_wk = 0;
   return VMCMD_RESULT_CONTINUE;
 }
 

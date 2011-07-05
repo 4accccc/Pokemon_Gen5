@@ -720,20 +720,21 @@ static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work 
  * @return  ¶¬ƒCƒxƒ“ƒg
  */
 //-----------------------------------------------------------------------------
-GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * parent_work )
+GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * param )
 {
   GMEVENT * event;
   PREW * prew;
-  POKEWOOD_EVENT_PARAM *param = (POKEWOOD_EVENT_PARAM*)parent_work;
+  const PKWD_REC_EVENT_PARAM * rec_param = (const PKWD_REC_EVENT_PARAM *)param;
   //POKEWOOD_WORK * pokewood_work = (POKEWOOD_WORK*)parent_work;
 
+  GF_ASSERT( rec_param->rec_pos < PKWD_REC_POS_MAX );
   event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
   prew->gsys      = gsys;
-  prew->rec_id    = param->type; // ˜^‰æNO
-  prew->SenarioNo = param->senario_no;
+  prew->rec_id    = rec_param->rec_pos + LOADDATA_POKEWOOD0; // ˜^‰æNO
+  prew->SenarioNo = rec_param->scenario_no;
   prew->heapID    = HEAPID_PROC;
-  OS_Printf(" POKEWOOD EVENT rec_id = %x, senario = %d\n", param->type, param->senario_no );
+  OS_Printf(" POKEWOOD EVENT rec_id = %x, senario = %d\n", rec_param->rec_pos, rec_param->scenario_no );
   prew->PokewoodMode = BTL_POKEWOOD_REC;
 
   return event;
@@ -895,8 +896,7 @@ GMEVENT * PKWD_BOOK_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 
   p_param->gsys      = gsys;
   p_param->fieldmap  = fieldmap;
-  p_param->book_param.gamesys = gsys;
-  p_param->book_param.result = 0;
+  p_param->book_param = *param;
 
   OS_Printf( "PKWD BOOK Start\n" );
 
@@ -936,6 +936,7 @@ static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_ad
     break;
 
   case SEQ_EXIT:
+    OS_Printf( "p_wk = %08x\n", p_wk );
     if ( p_wk->book_param.result != NULL && *(p_wk->book_param.result) == PKWD_BOOK_NOSELECT )
     {
       *(p_wk->book_param.result) = POKEWOOD_SCENEARIO_MAX;
