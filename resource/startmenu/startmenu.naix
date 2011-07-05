@@ -19,14 +19,19 @@ enum {
 	NARC_startmenu_bgd_NCLR = 5,
 	NARC_startmenu_list_frame1_lz_NSCR = 6,
 	NARC_startmenu_list_frame2_lz_NSCR = 7,
-	NARC_startmenu_obj_u_lz_NCGR = 8,
-	NARC_startmenu_obj_u_NCLR = 9,
-	NARC_startmenu_obj_u_NCER = 10,
-	NARC_startmenu_obj_u_NANR = 11,
-	NARC_startmenu_wicon_lz_NCGR = 12,
-	NARC_startmenu_wicon_NCLR = 13,
-	NARC_startmenu_wicon_NCER = 14,
-	NARC_startmenu_wicon_NANR = 15
+	NARC_startmenu_report_lz_NSCR = 8,
+	NARC_startmenu_obj_u_lz_NCGR = 9,
+	NARC_startmenu_obj_u_NCLR = 10,
+	NARC_startmenu_obj_u_NCER = 11,
+	NARC_startmenu_obj_u_NANR = 12,
+	NARC_startmenu_objd_lz_NCGR = 13,
+	NARC_startmenu_objd_NCLR = 14,
+	NARC_startmenu_objd_NCER = 15,
+	NARC_startmenu_objd_NANR = 16,
+	NARC_startmenu_wicon_lz_NCGR = 17,
+	NARC_startmenu_wicon_NCLR = 18,
+	NARC_startmenu_wicon_NCER = 19,
+	NARC_startmenu_wicon_NANR = 20
 };
 
 /* NARC_STARTMENU_NAIX_ */

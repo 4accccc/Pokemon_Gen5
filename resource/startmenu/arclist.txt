@@ -9,11 +9,17 @@
 
 "list_frame1_lz.NSCR"
 "list_frame2_lz.NSCR"
+"report_lz.NSCR"
 
 "obj_u_lz.NCGR"
 "obj_u.NCLR"
 "obj_u.NCER"
 "obj_u.NANR"
+
+"objd_lz.NCGR"
+"objd.NCLR"
+"objd.NCER"
+"objd.NANR"
 
 "wicon_lz.NCGR"
 "wicon.NCLR"
