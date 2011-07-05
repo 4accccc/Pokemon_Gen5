@@ -6,10 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>チェレン『ああ！　きみか
+ちょうど　よかったよ▼
+てつだってもらいたい　ことが　ある
+ヤグルマのもりの　なかで
+プラズマだんを　みかけた……
+そんな　じょうほうが　あってね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:02" />
+				Time="2011-07-05T11:51:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29,13 +34,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・posイベント
+　GRIDX＝71～76、GRIDZ＝61
 ・連れ歩き確認
 ・はい/いいえの選択肢表示
 　はい　→swchampion_03
 　いいえ→swchampion_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:04:35" />
+				Time="2011-07-05T09:24:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,10 +65,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>じょうほうが　あいまい　だからね
+なんにん　いるかも　わからないし
+できれば　いっしょに　こうどう　したい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T11:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -82,10 +91,12 @@
 			Language="JPN">
 			<Comment>♂
 ・いいえ選択
-　押し戻される？</Comment>
+
+
+・アニメ（愛踏み：未発注）の可能性検討</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:04:37" />
+				Time="2011-07-05T11:41:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -108,10 +119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ありがとう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T09:26:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -158,10 +169,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>チェレン『ストップ！
+このまますすむと森から出るよ
+・まだ目的は果たしていない</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T09:42:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -182,12 +195,16 @@
 			Language="JPN">
 			<Comment>♂
 ・連れ歩き終了確認（出入り口のpos）
+・スカイアロー側
+・シッポウ側
 ・はい/いいえの選択肢表示
-　はい　→swchampion_02
-　いいえ→swchampion_03</Comment>
+　はい　→swchampion_05
+　いいえ→swchampion_06
+
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:04:39" />
+				Time="2011-07-05T11:39:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -210,10 +227,115 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>ありがとう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:41:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
 			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T11:39:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:38:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d02r0101_swleader1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:39:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択
+・離脱？
+・マップチェンジまでその場待機？　連れ歩き？
+・七賢人登場しなくなる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:45:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:38:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d02r0101_swleader1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとも　ポケモンも
+それぞれの　つよさを　もっている▼
+ゆめを　かなえる　つよさや
+なにかを　まもる　つよさ……▼
+Ｎも　みつけたんだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T11:53:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -221,10 +343,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ひとも　ポケモンも
+それぞれの　つよさを　もっている▼
+ゆめを　かなえる　つよさや
+なにかを　まもる　つよさ……▼
+Ｎも　みつけたんだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -255,14 +381,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d02r0101_swleader1_06"
+		Label="msg_d02r0101_swleader1_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>プラズマだん……
+というか　ゲーチス……▼
+あの　ひとに　とって　じぶんいがいの
+そんざいは　ない　ものだったんだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -270,10 +399,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>プラズマだん……
+というか　ゲーチス……▼
+あの　ひとに　とって　じぶんいがいの
+そんざいは　ない　ものだったんだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -304,14 +436,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d02r0101_swleader1_07"
+		Label="msg_d02r0101_swleader1_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>こうして　きみの　じつりょくを
+まぢかで　はいけん　したい▽
+そんな　おもいも　あったけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:09:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -319,10 +453,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>こうして　きみの　じつりょくを
+まぢかで　はいけん　したい▽
+そんな　おもいも　あったけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -353,14 +489,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d02r0101_swleader1_08"
+		Label="msg_d02r0101_swleader1_10"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>きみを　みていると
+ともだちを　おもいだすんだ▽
+おおきな　つよさを　もっていたよ▼
+……いま　どこに　いるんだろうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -368,10 +507,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>きみを　みていると
+ともだちを　おもいだすんだ▽
+おおきな　つよさを　もっていたよ▼
+……いま　どこに　いるんだろうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -402,14 +544,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d02r0101_swleader1_09"
+		Label="msg_d02r0101_swleader1_11"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>それにしても　プラズマだん　いないね
+もっと　おくを　さがさないとね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -417,10 +560,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>それにしても　プラズマだん　いないね
+もっと　おくを　さがさないとね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:13:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -452,14 +596,18 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d02r0101_swleader1_10"
+		Label="msg_d02r0101_swleader1_12"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>チェレン『それは　あなぬけのヒモ▼
+こうかは　いっしゅんで　どうくつの
+いりぐちに　とべる　どうぐ　だね▼
+ということは　いま　つかわれると
+ぼくたち　ばらばらに　なっちゃうよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:01:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -467,10 +615,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>チェレン『それは　あなぬけのヒモ▼
+こうかは　いっしゅんで　どうくつの
+いりぐちに　とべる　どうぐ　だね▼
+ということは　いま　つかわれると
+ぼくたち　ばらばらに　なっちゃうよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:01:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -501,14 +653,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d02r0101_swleader1_11"
+		Label="msg_d02r0101_swleader1_13"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>チェレン『あなをほるは　いっしゅんで
+どうくつの　いりぐちに　とべる　わざ▼
+ということは　いま　つかわれると
+ぼくたち　ばらばらに　なっちゃうよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T11:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -516,10 +671,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>チェレン『あなをほるは　いっしゅんで
+どうくつの　いりぐちに　とべる　わざ▼
+ということは　いま　つかわれると
+ぼくたち　ばらばらに　なっちゃうよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:05:06" />
+				Time="2011-07-05T12:01:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -554,12 +712,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アスラ『だいじょうぶ　ですか▼
-おうさまに　ちゅうせいを
-ちかった　なかま　よ▼</Text>
+			<Text>アスラ『しょあ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:27:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -567,12 +723,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アスラ『大丈夫ですか▼
-王様に　忠誠を
-誓った　大切な　仲間よ▼</Text>
+			<Text>アスラ『しょあ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T09:04:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -581,10 +735,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・posイベント
+　GRIDX＝GRIDZ＝
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T10:09:55" />
+				Time="2011-07-05T11:25:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -614,16 +770,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アスラ『いいのです▼
-ドラゴンのホネ　ですが
-こんかいは　あきらめましょう▼
-ちょうさの　けっか　われわれ
-プラズマだんが　さがしもとめている▽
-でんせつの　ポケモン　とは▽
-むかんけい　でしたから▼</Text>
+			<Text>おまえは　メガネを　はずしたか？▼
+そんなことは　どうでも　いいか
+むかしの　なかまの　ぼうきょを　きき
+いさめようと　やってきたのだが……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:27:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -631,16 +784,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アスラ『いいのです▼
-ドラゴンのホネ　ですが
-今回は　あきらめましょう▼
-調査の結果　我々
-プラズマ団が　探し求めている▽
-伝説の　ポケモンと▽
-無関係でしたから▼</Text>
+			<Text>アスラ『過ちて 改めざる
+是を 過ちと いう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T09:04:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -682,13 +830,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ですが　われわれ　への
-ぼうがいは　みのがせません▼
-にどと　じゃま　できないよう
-いたいめに　あってもらいましょう▼</Text>
+			<Text>アスラ『過ちて 改めざる
+是を 過ちと いう▼
+わかるか？
+あやまちは　いたしかた　ないが
+あやまりを　おかしても　あらためない▽
+それは　ほんとうに　おろかしいことよ▼
+とはいえ　おまえたちには
+かんけいの　ない　はなし　だな▼
+もう　イッシュに　くることもない
+たっしゃで　くらせよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:29:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -696,13 +850,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ですが　我々への
-妨害は　見逃せません▼
-二度と　ジャマだて　できないよう
-痛い目に　あってもらいましょう▼</Text>
+			<Text>おまえは　Nの城
+メガネをはずしたか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T09:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -734,6 +886,47 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d02r0101_swleader1_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:29:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:29:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:29:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:29:18" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-05T12:29:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
