@@ -195,13 +195,13 @@
 		"SWSAGE3♂プラズマだん"=>191,
 		"NINJA♂プラズマだん"=>192,
 		"SWCHAMPION♀チャンピオン"=>193,
-		"PKWD_VILLAIN♂かいじん"=>194,
+		"PKWD_HERO♂ヒーロー"=>199,
 		"SWBOSS_1♂ポケモントレーナー"=>195,
 		"MOUNT_2♂ゲームフリーク"=>196,
 		"SWLEADER1_1♂ポケモントレーナー"=>197,
 		"SWCHAMPION_1♀ポケモントレーナー"=>198,
-		"PKWD_HERO♂ヒーロー"=>199,
 		"PKWD_HEROINE♀ヒーロー"=>200,
+		"PKWD_VILLAIN♂かいじん"=>194,
 	}
 #
 	$trtype_id_hash = {
@@ -399,11 +399,11 @@
 		"TRTYPE_SWSAGE3" =>191,
 		"TRTYPE_NINJA" =>192,
 		"TRTYPE_SWCHAMPION" =>193,
-		"TRTYPE_PKWD_VILLAIN" =>194,
+		"TRTYPE_PKWD_HERO" =>199,
 		"TRTYPE_SWBOSS_1" =>195,
 		"TRTYPE_MOUNT_2" =>196,
 		"TRTYPE_SWLEADER1_1" =>197,
 		"TRTYPE_SWCHAMPION_1" =>198,
-		"TRTYPE_PKWD_HERO" =>199,
 		"TRTYPE_PKWD_HEROINE" =>200,
+		"TRTYPE_PKWD_VILLAIN" =>194,
 	}

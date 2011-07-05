@@ -941,6 +941,7 @@ _EVENT_DATA ev_TRID_RANGERM_18
 _EVENT_DATA ev_TRID_RANGERW_18
 _EVENT_DATA ev_TRID_BACKPACKERM_23
 _EVENT_DATA ev_TRID_ESPW_08
+_EVENT_DATA ev_TRID_TANPAN_24
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1872,6 +1873,7 @@ ev_TRID_RANGERM_18:
 ev_TRID_RANGERW_18:
 ev_TRID_BACKPACKERM_23:
 ev_TRID_ESPW_08:
+ev_TRID_TANPAN_24:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------

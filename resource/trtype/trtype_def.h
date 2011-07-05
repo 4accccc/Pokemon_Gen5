@@ -204,11 +204,11 @@
 #define	TRTYPE_SWSAGE3    ( 191 )    //SWSAGE3♂プラズマだん
 #define	TRTYPE_NINJA    ( 192 )    //NINJA♂プラズマだん
 #define	TRTYPE_SWCHAMPION    ( 193 )    //SWCHAMPION♀チャンピオン
-#define	TRTYPE_PKWD_VILLAIN    ( 194 )    //PKWD_VILLAIN♂かいじん
+#define	TRTYPE_PKWD_HERO    ( 199 )    //PKWD_HERO♂ヒーロー
 #define	TRTYPE_SWBOSS_1    ( 195 )    //SWBOSS_1♂ポケモントレーナー
 #define	TRTYPE_MOUNT_2    ( 196 )    //MOUNT_2♂ゲームフリーク
 #define	TRTYPE_SWLEADER1_1    ( 197 )    //SWLEADER1_1♂ポケモントレーナー
 #define	TRTYPE_SWCHAMPION_1    ( 198 )    //SWCHAMPION_1♀ポケモントレーナー
-#define	TRTYPE_PKWD_HERO    ( 199 )    //PKWD_HERO♂ヒーロー
 #define	TRTYPE_PKWD_HEROINE    ( 200 )    //PKWD_HEROINE♀ヒーロー
+#define	TRTYPE_PKWD_VILLAIN    ( 194 )    //PKWD_VILLAIN♂かいじん
 #define	TRTYPE_MAX	( 201 )

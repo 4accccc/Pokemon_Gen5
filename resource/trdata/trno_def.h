@@ -936,7 +936,8 @@
 #define	TRID_RANGERW_18   ( 923 ) 
 #define	TRID_BACKPACKERM_23   ( 924 ) 
 #define	TRID_ESPW_08   ( 925 ) 
-#define TRID_MAX  ( 926 )
+#define	TRID_TANPAN_24   ( 926 ) 
+#define TRID_MAX  ( 927 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;

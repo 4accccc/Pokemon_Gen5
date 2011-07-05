@@ -1415,9 +1415,9 @@
 		<language name="JPN_KANJI" width="216">チャンピオン</language>
 	</row>
 
-	<row id="MSG_TRTYPE_PKWD_VILLAIN">
-		<language name="JPN" width="216">かいじん</language>
-		<language name="JPN_KANJI" width="216">かいじん</language>
+	<row id="MSG_TRTYPE_PKWD_HERO">
+		<language name="JPN" width="216">ヒーロー</language>
+		<language name="JPN_KANJI" width="216">ヒーロー</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SWBOSS_1">
@@ -1440,14 +1440,14 @@
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
-	<row id="MSG_TRTYPE_PKWD_HERO">
+	<row id="MSG_TRTYPE_PKWD_HEROINE">
 		<language name="JPN" width="216">ヒーロー</language>
 		<language name="JPN_KANJI" width="216">ヒーロー</language>
 	</row>
 
-	<row id="MSG_TRTYPE_PKWD_HEROINE">
-		<language name="JPN" width="216">ヒーロー</language>
-		<language name="JPN_KANJI" width="216">ヒーロー</language>
+	<row id="MSG_TRTYPE_PKWD_VILLAIN">
+		<language name="JPN" width="216">かいじん</language>
+		<language name="JPN_KANJI" width="216">かいじん</language>
 	</row>
 
 	<flowchart-group-list>
