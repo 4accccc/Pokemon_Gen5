@@ -2843,14 +2843,12 @@
 			<Text>わしは　わざおしえ　しょくにん▼
 そして　むるいの
 [Name:Item ]　マニア！▼
-[Name:Item ]を　くれるなら
-おかえしに　おまえさんの▽
-ポケモンに　わざを▽
-おしえて　あげるよ▼
-</Text>
+[Name:Item ]を　くれたら　おれいに
+おまえさんの　ポケモンに▽
+わざを　おしえて　あげるよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T03:45:50" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T06:59:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2861,13 +2859,12 @@
 			<Text>わしは　技教え職人▼
 そして　無類の
 [Name:Item ]　マニア！▼
-[Name:Item ]を　くれるなら
-お返しに　おまえさんの▽
-ポケモンに　技を▽
-教えて　あげるよ▼</Text>
+[Name:Item ]を　くれたら　お礼に
+おまえさんの　ポケモンに▽
+技を　教えて　あげるよ▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T03:46:40" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2938,11 +2935,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンに　わざを
-おぼえさせるかい？▼</Text>
+			<Text>ポケモンに
+わざを　おしえるかい？▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T03:49:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:01:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2950,11 +2947,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンに　技を
-覚えさせるかい？▼</Text>
+			<Text>ポケモンに
+技を　教えるかい？▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T03:49:26" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2984,11 +2981,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほい　きた！▼
-じゃあ　おぼえさせる
+じゃあ　おしせる
 わざを　えらんどくれ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T06:11:01" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2997,11 +2994,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほい　きた！▼
-じゃあ　覚えさせる
+じゃあ　教える
 技を　選んどくれ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T06:10:50" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -3122,11 +3119,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーん　わるいんだけど
-その　ポケモンに　この　わざは
-おぼえさせられないよ</Text>
+その　ポケモンに▽
+この　わざは　おしえられないよ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T05:41:00" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:03:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -3135,11 +3132,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん　悪いんだけど
-その　ポケモンに　この　技は
-覚えさせられないよ</Text>
+その　ポケモンに▽
+この技は　教えられないよ……</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-07-05T05:41:55" />
+				User="matsumiya:W00224"
+				Time="2011-07-05T07:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
