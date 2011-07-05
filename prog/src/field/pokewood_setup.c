@@ -72,7 +72,7 @@ PKWD_BOOK_PARAM * PKWD_BOOK_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u1
 	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_BOOK_PARAM) );
 	// ‰Šú‰»
   pkwd_param->gamesys = gsys;
-  pkwd_param->result = res_work;
+  pkwd_param->result = (s16*)res_work;
 	//
 	return pkwd_param;
 }

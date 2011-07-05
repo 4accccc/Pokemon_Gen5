@@ -35,6 +35,11 @@
 
 #include "fieldmap.h"
 
+#include "battle/pokewood.h"  //POKEWOOD_SCENEARIO_MAX
+#ifndef POKEWOOD_SCENEARIO_MAX
+#define POKEWOOD_SCENEARIO_MAX POKEWOOD_SENARIO_MAX
+#endif
+
 #include "event_pokewood.h"
 //#include "event_debug_menu_ov_pokewood.h"
 
@@ -863,7 +868,7 @@ typedef struct
 {
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK       *fieldmap;
-  PKWD_BOOK_PARAM    pkwd_param;
+  PKWD_BOOK_PARAM    book_param;
 } PKWD_BOOK_EVENT_WORK;
 
 static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
@@ -890,8 +895,8 @@ GMEVENT * PKWD_BOOK_EVENT_Show( GAMESYS_WORK * gsys, void * parent_work )
 
   p_param->gsys      = gsys;
   p_param->fieldmap  = fieldmap;
-  p_param->pkwd_param.gamesys = gsys;
-  p_param->pkwd_param.result = 0;
+  p_param->book_param.gamesys = gsys;
+  p_param->book_param.result = 0;
 
   OS_Printf( "PKWD BOOK Start\n" );
 
@@ -925,12 +930,16 @@ static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_ad
   {
   case SEQ_CALL_PROC:
     call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
-        FS_OVERLAY_ID( pkwd_book ), &PkwdBookProcData, &p_wk->pkwd_param );
+        FS_OVERLAY_ID( pkwd_book ), &PkwdBookProcData, &p_wk->book_param );
     GMEVENT_CallEvent( p_event, call_event );
     *p_seq  = SEQ_EXIT;
     break;
 
   case SEQ_EXIT:
+    if ( p_wk->book_param.result != NULL && *(p_wk->book_param.result) == PKWD_BOOK_NOSELECT )
+    {
+      *(p_wk->book_param.result) = POKEWOOD_SCENEARIO_MAX;
+    }
     return GMEVENT_RES_FINISH;
   }
 

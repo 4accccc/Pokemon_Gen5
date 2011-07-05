@@ -48,7 +48,7 @@ extern const GFL_PROC_DATA PkwdBookProcData;
 /// クリア状態
 //-------------------------------------
 enum{
-	PKWD_BOOK_NOSELECT  = 0,
+	PKWD_BOOK_NOSELECT  = -1,   ///<u16の最大値、s16での-1
 	PKWD_BOOK_CHALLENGE,
 };
 
