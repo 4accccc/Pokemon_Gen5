@@ -1739,9 +1739,13 @@ static void InitBmp( START_MENU_WORK * wk )
 	    {
         p_wfbc_util = &wk->util[BMPWIN_DIFFICULTY];
 	    }
-		  str = GFL_MSG_CreateString( wk->mman, strID );
-		  PRINT_UTIL_PrintColor( &wk->util[BMPWIN_DIFFICULTY], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
-		  GFL_STR_DeleteBuffer( str );
+
+      if( strID != 0 )
+      {
+		    str = GFL_MSG_CreateString( wk->mman, strID );
+		    PRINT_UTIL_PrintColor( &wk->util[BMPWIN_DIFFICULTY], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+		    GFL_STR_DeleteBuffer( str );
+      }
 	  }
 	  //@‚Ü‚¿Ý’è
 	  {
@@ -2370,7 +2374,6 @@ static void PutReportInfo( START_MENU_WORK * wk )
     {
 	    GFL_BMPWIN_MakeScreen( wk->util[i].win );
     }
-
 
     if( KEY_SYSTEM_DIFFICULT_NORMAL != KEY_SYSTEM_SAVE_GetDifficult( wk->keysys ) )
     {
