@@ -325,11 +325,11 @@
 #define FE_D23R0101_WORKMAN2C_BTL          309 /* 0x0135 コンビナート：作業員２Ｃの戦闘フラグ */
 #define FE_D23R0101_ITEMGET_01             310 /* 0x0136 コンビナート：コンビナートマニアのアイテム入手フラグ */
 #define FE_C14_BOY4_TALK_01                311 /* 0x0137 セイガイハシティ：初回話しかけフラグ */
-		/* not used   312(0x0138) */
-		/* not used   313(0x0139) */
-		/* not used   314(0x013a) */
-		/* not used   315(0x013b) */
-		/* not used   316(0x013c) */
+#define FE_C03_RALLYPOINT_01               312 /* 0x0138 ヒウンシティ：名所巡りチェックポイントフラグ（スリムストリート） */
+#define FE_C03_RALLYPOINT_02               313 /* 0x0139 ヒウンシティ：名所巡りチェックポイントフラグ（プライムピア） */
+#define FE_C03_RALLYPOINT_03               314 /* 0x013a ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンストリート） */
+#define FE_C03_RALLYPOINT_04               315 /* 0x013b ヒウンシティ：名所巡りチェックポイントフラグ（遊覧船乗り場） */
+#define FE_C03_RALLYPOINT_05               316 /* 0x013c ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンジム前） */
 		/* not used   317(0x013d) */
 		/* not used   318(0x013e) */
 		/* not used   319(0x013f) */
