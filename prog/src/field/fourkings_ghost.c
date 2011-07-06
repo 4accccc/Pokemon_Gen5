@@ -406,6 +406,7 @@ static void ANM_BOOK_PlayLoop( FOURKINGS_GHOST_TMP *p_wk );
 static BOOL ANM_BOOK_CheckEndLoop( FOURKINGS_GHOST_TMP *p_wk );
 static void ANM_BOOK_Play( FOURKINGS_GHOST_TMP *p_wk );
 static BOOL ANM_BOOK_CheckEnd( FOURKINGS_GHOST_TMP *p_wk );
+static void ANM_BOOK_FallDown( FOURKINGS_GHOST_TMP *p_wk );
 // FIRE_A
 static void ANM_FIRE_A_Play( FOURKINGS_GHOST_TMP *p_wk );
 static BOOL ANM_FIRE_A_CheckEnd( FOURKINGS_GHOST_TMP *p_wk );
@@ -443,6 +444,15 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk );
 // ランプアニメイベント
 static GMEVENT * LAMP_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT LampEvent( GMEVENT* event, int* seq, void* wk );
+
+
+//-------------------------------------
+///	セーブ情報
+//=====================================
+static void SAVE_SetPos1Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPos1Flag( const FOURKINGS_SV_WORK *p_wk );
+static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -593,6 +603,12 @@ GMEVENT* FOURKINGS_GHOST_MistAnm( GAMESYS_WORK *gsys )
   // イベント作成
   event = MIST_CreateEvent( NULL, gsys );
 
+  // 下段のPOSイベントを踏んだ
+  if( event != NULL )
+  {
+    SAVE_SetPos1Flag( p_wk->p_sv_wk, TRUE );
+  }
+
   return event;
 }
 
@@ -636,6 +652,12 @@ GMEVENT* FOURKINGS_GHOST_BookFall( GAMESYS_WORK *gsys, int wait )
   // イベント作成
   event = BOOK_FALL_CreateEvent( gsys, wait );
 
+  // 上段のPOSイベントを踏んだ
+  if( event != NULL )
+  {
+    SAVE_SetPos2Flag( p_wk->p_sv_wk, TRUE );
+  }
+
   return event;
 }
 //----------------------------------------------------------------------------
@@ -674,15 +696,46 @@ GMEVENT* FOURKINGS_GHOST_LampAnm( GAMESYS_WORK *gsys )
 //-----------------------------------------------------------------------------
 static void INIT_FieldRecover( FOURKINGS_GHOST_TMP *p_wk )
 {
-  //const BOOL pos1_flag = SAVE_GetPos1Flag( p_wk->p_sv_wk );
-  //const BOOL pos2_flag = SAVE_GetPos2Flag( p_wk->p_sv_wk );
+  const BOOL pos1_flag = SAVE_GetPos1Flag( p_wk->p_sv_wk );
+  const BOOL pos2_flag = SAVE_GetPos2Flag( p_wk->p_sv_wk );
 
-  ANM_MIST_PlayLoop( p_wk );
-  ANM_BOOK_PlayLoop( p_wk );
-  ANM_LAMP_PlayShake( p_wk );
+  // セーブ状況別の状態
+  // 何もPOS踏んでない
+  // ⇒本ループ・炎非表示・ランプゆれ・もや表示・フォグ非表示
+  // 下段POSふんだ
+  // ⇒本ループ・炎表示・ランプゆれ・もや非表示・フォグ非表示
+  // 上段POSふんだ
+  // ⇒本おちてる・炎非表示・ランプ点灯・もや非表示・フォグ表示
+  //
 
-  // FOG無効
-  p_wk->fog_off = TRUE;
+  // 何も踏んでいない
+  if( pos1_flag == FALSE && pos2_flag == FALSE )
+  {
+    ANM_BOOK_PlayLoop( p_wk );      // 本ループ
+    ANM_LAMP_PlayShake( p_wk );     // ランプゆれ
+    ANM_MIST_PlayLoop( p_wk );      // もや表示
+    p_wk->fog_off = TRUE;           // FOG無効
+  }
+  // 下段POS踏んだ
+  else if( pos1_flag == TRUE && pos2_flag == FALSE )
+  {
+    ANM_BOOK_PlayLoop( p_wk );      // 本ループ
+    ANM_LAMP_PlayShake( p_wk );     // ランプゆれ
+   
+    ANM_FIRE_A_PlayLoop( p_wk );    // 炎
+    ANM_FIRE_B_PlayLoop( p_wk, 0 ); // 炎
+    ANM_FIRE_B_PlayLoop( p_wk, 1 ); // 炎
+    ANM_FIRE_B_PlayLoop( p_wk, 2 ); // 炎
+    ANM_FIRE_B_PlayLoop( p_wk, 3 ); // 炎
+    p_wk->fog_off = TRUE;           // FOG無効
+  }
+  // 上段POS踏んだ
+  else if( pos2_flag == TRUE )
+  {
+    ANM_BOOK_FallDown( p_wk );      // 本おちている
+    ANM_LAMP_PlayLoop( p_wk );      // ランプ点灯
+    ANM_NOFOG_PlayLoop( p_wk );     // フォグ表示
+  }
 
 }
 
@@ -943,6 +996,30 @@ static BOOL ANM_BOOK_CheckEnd( FOURKINGS_GHOST_TMP *p_wk )
 
   return FLD_EXP_OBJ_ChkAnmEnd(exp_anm);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  本落ちてる状態で表示
+ *
+ *	@param	FOURKINGS_GHOST_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void ANM_BOOK_FallDown( FOURKINGS_GHOST_TMP *p_wk )
+{
+  fx32 last_frame;
+  u16 obj_idx = OBJ_BOOK;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1 );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1, last_frame );
+}
 //=============================================================================
 /**
  *          炎(１つだけ用)
@@ -1014,6 +1091,9 @@ static void ANM_FIRE_A_PlayLoop( FOURKINGS_GHOST_TMP *p_wk )
 {
   int i;
   u16 obj_idx = OBJ_FIRE_A;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
 
   for( i=0; i<=4; i++ )
   {
@@ -1116,6 +1196,9 @@ static void ANM_FIRE_B_PlayLoop( FOURKINGS_GHOST_TMP *p_wk, const int id )
 
   // どの炎OBJ
   obj_idx = OBJ_FIRE_B_1 + id;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
 
   for( i=0; i<=4; i++ )
   {
@@ -1753,5 +1836,61 @@ static GMEVENT_RESULT LampEvent( GMEVENT* event, int* seq, void* wk )
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+//=============================================================================
+/**
+ *          セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント1起動フラグを設定
+ *
+ *	@param	p_wk  セーブワーク
+ *	@param	flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPos1Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos1_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント1起動フラグを取得
+ *
+ *	@param	p_wk  セーブワーク
+ *
+ *	@return flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPos1Flag( const FOURKINGS_SV_WORK *p_wk )
+{
+  return p_wk->pos1_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント2起動フラグを設定
+ *
+ *	@param	p_wk  セーブワーク
+ *	@param	flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos2_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント2起動フラグを取得
+ *
+ *	@param	p_wk  セーブワーク
+ *
+ *	@return flag  TRUEで起動した
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk )
+{
+  return p_wk->pos2_flag;
 }
 
