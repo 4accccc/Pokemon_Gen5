@@ -98,18 +98,22 @@ typedef enum{
 #define ACT_PAL_LOCALIZE  (15)  //ローカライズ用空きパレット
 
 ///アクターパネル色リロードパレット展開位置
-#define ACT_PANEL_PAL_FRM_V_BLACK (0) //フレーム色(ブラックバージョン)
-#define ACT_PANEL_PAL_FRM_V_WHITE (1) //フレーム色(ホワイトバージョン)
-#define ACT_PANEL_PAL_FRM_V_ELSE  (2) //フレーム色(その他バージョン)
-#define ACT_PANEL_PAL_RANK_MARK   (3) //ランクマークOn/Off切り替え用
+#define ACT_PANEL_COLOR_BLACK (0) //フレーム色(ブラックバージョン)
+#define ACT_PANEL_COLOR_WHITE (1) //フレーム色(ホワイトバージョン)
+#define ACT_PANEL_COLOR_RANK_MARK_B  (2) //ランクマークOn/Off切り替え用(ブラックバージョン)
+#define ACT_PANEL_COLOR_RANK_MARK_W  (3) //ランクマークOn/Off切り替え用(ホワイトバージョン)
 
+///パネルアクター　カラー転送数
+#define ACT_PANEL_COL_CHANGE_NUM  (5) //カラーバージョンで変更される色数
+#define ACT_PANEL_COL_TRANS_NUM   (ACT_PANEL_COL_CHANGE_NUM+2)  //カラーバージョン変更+DSカラー2色
 ///パネルアクター　ランクマーク色転送カラーオフセット
-#define ACT_PANEL_COL_OFS_RANK    (8)
+#define ACT_PANEL_COL_OFS_RANK    (9)
 
 ///フォントカラー
-#define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
-#define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き
-#define FCOL_FNTOAM_G ( PRINTSYS_MACRO_LSB(3,5,0))  ///<Oam灰抜き
+#define	FCOL_FNTOAM_B   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
+#define FCOL_FNTOAM_GB  ( PRINTSYS_MACRO_LSB(2,3,0))  ///<Oam灰抜き
+#define FCOL_FNTOAM_W   ( PRINTSYS_MACRO_LSB(4,5,0))  ///<Oam白抜き
+#define FCOL_FNTOAM_GW  ( PRINTSYS_MACRO_LSB(5,6,0))  ///<Oam灰抜き
 #define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG白抜き
 #define FCOL_POPUP_BASE (9)
 #define FCOL_POPUP_MAIN (1)
@@ -205,12 +209,12 @@ typedef enum{
 #define BMP_MENU_FRM (FRM_MENUMSG)
 #define BMP_MENU_PAL (FONT_PAL)
 //ログ数表示ウィンドウ
-#define BMP_LOGNUM_PX (0)
-#define BMP_LOGNUM_PY (19)
+#define BMP_LOGNUM_PX (8)
+#define BMP_LOGNUM_PY (19*8)
 #define BMP_LOGNUM_SX (6)   //ログ数表示OAM
 #define BMP_LOGNUM_SY (2)
 #define BMP_LOGNUM_FRM (FRM_BACK)
-#define BMP_LOGNUM_PAL (FONT_PAL_LOGNUM)
+
 //ミッション内容表示ウィンドウ
 #define BMP_FMISSION_PX (4)
 #define BMP_FMISSION_PY (2)
@@ -236,10 +240,6 @@ typedef enum{
 enum{
  WIN_POPUP,
  WIN_MENU,
- WIN_LOGNUM,
- WIN_FMISSION,
- WIN_FMSCORE,
- WIN_FMTIME,
  WIN_MAX,
 };
 
@@ -263,15 +263,21 @@ enum{
 #define UNION_CHAR_MAX      (16)  ///<ユニオンキャラクターmax
 #define BEACON_VIEW_OBJ_MAX (64) ///<画面内に表示するOBJの登録max数
 
+#define PANEL_NUM_ACTMAX    (3)       ///<パネルに表示するメダル数OBJの数
+#define PANEL_MEDAL_NONE    (0xFFFF)  ///<メダル数無効値
+
 ///OBJ BGプライオリティ
 #define OBJ_BG_PRI (3)
 #define OBJ_MENU_BG_PRI (1)
 
 ///OBJソフトウェアプライオリティ
 enum{
- OBJ_SPRI_MSG = 0,
- OBJ_SPRI_MENU = 1,
- OBJ_SPRI_ICON = OBJ_SPRI_MSG + PANEL_MAX,
+ OBJ_SPRI_LOGNUM = 0,
+ OBJ_SPRI_MSG = 1,
+ OBJ_SPRI_MENU = 2,
+ OBJ_SPRI_NUM = OBJ_SPRI_MSG + PANEL_MAX,
+ OBJ_SPRI_MEDAL = OBJ_SPRI_NUM + PANEL_MAX,
+ OBJ_SPRI_ICON = OBJ_SPRI_MEDAL + PANEL_MAX,
  OBJ_SPRI_UNION = OBJ_SPRI_ICON + PANEL_MAX,
  OBJ_SPRI_RANK = OBJ_SPRI_UNION + PANEL_MAX,
  OBJ_SPRI_PANEL = OBJ_SPRI_RANK + PANEL_MAX,
@@ -285,6 +291,7 @@ enum{
  ACT_RETURN,
  ACT_UP,
  ACT_DOWN,
+ ACT_LOGNUM_WIN,
  ACT_MAX,
 };
 
@@ -311,18 +318,25 @@ enum{
  ACTANM_DOWN_ANM,
  ACTANM_DOWN_ON,
  ACTANM_DOWN_OFF,
+ ACTANM_BAR,
+ ACTANM_MEDAL_N,
+ ACTANM_MEDAL_ON,
+ ACTANM_MEDAL_OFF,
+ ACTANM_NUM,
+ ACTANM_LOGNUM_WIN,
 };
 
 #define ACT_ANM_SET (3)
 
-#define ACT_PANEL_OX  (13)
-#define ACT_PANEL_OY  (5*8)
-#define ACT_PANEL_PX  (-ACT_PANEL_OX)
+#define ACT_PANEL_SX  (27*8)
+#define ACT_PANEL_SY  (5*8)
+#define ACT_PANEL_OY  (ACT_PANEL_SY)
+#define ACT_PANEL_PX  ( 8 )
 #define ACT_PANEL_PY  (-ACT_PANEL_OY)
-#define ACT_PANEL_SI_SX (-26*8)  //スライドイン時のスタートポジション
+#define ACT_PANEL_SI_SX (-ACT_PANEL_SX)  //スライドイン時のスタートポジション
 #define ACT_PANEL_SI_SY (0)
 
-#define ACT_UNION_OX  (4*8)
+#define ACT_UNION_OX  (3*8)
 #define ACT_UNION_OY  (3*8)
 #define ACT_ICON_OX   (ACT_UNION_OX+28)
 #define ACT_ICON_OY   (ACT_UNION_OY)
@@ -330,6 +344,11 @@ enum{
 #define ACT_MSG_OY    (2*8)
 #define ACT_RANK_OX   (19*8)
 #define ACT_RANK_OY   (4*8)
+#define ACT_MEDAL_OX  (23*8+4)
+#define ACT_MEDAL_OY  (1*8+4)
+#define ACT_NUM_OX    (ACT_MEDAL_OX+12)
+#define ACT_NUM_OY    (ACT_MEDAL_OY+16)
+#define ACT_NUM_OSX   (8)
 
 #define ACT_MENU_PX (16*8+4)
 #define ACT_MENU_PY (21*8+4)
@@ -339,56 +358,33 @@ enum{
 #define ACT_MENU_SX (24)
 #define ACT_MENU_SY (24)
 
-#define ACT_UP_PX (26*8)
-#define ACT_UP_PY (1*8)
-#define ACT_DOWN_PX (27*8)
-#define ACT_DOWN_PY (5*8)
+#define ACT_UPDOWN_SX (16)
+#define ACT_UPDOWN_SY (16)
+#define ACT_UP_PX (29*8)
+#define ACT_UP_PY (3*8)
+#define ACT_DOWN_PX (ACT_UP_PX)
+#define ACT_DOWN_PY (18*8)
 
+#define ACT_LOGNUM_WIN_PX  (0)
+#define ACT_LOGNUM_WIN_PY  (19*8)
 
 /////////////////////////////////////////////
 //タッチパネル
 #define IO_INTERVAL (30*5)
 
 //パネルの矩形 LT,LB,RB,RT
-#define TP_PANEL_X1 (0)
-#define TP_PANEL_Y1 (5)
-#define TP_PANEL_X2 (TP_PANEL_X1+12)
-#define TP_PANEL_Y2 (TP_PANEL_Y1+38)
-#define TP_PANEL_X3 (TP_PANEL_X2+198)
-#define TP_PANEL_Y3 (TP_PANEL_Y2)
-#define TP_PANEL_X4 (TP_PANEL_X1+198)
-#define TP_PANEL_Y4 (TP_PANEL_Y1)
+#define TP_PANEL_TOP    (ACT_PANEL_PY+ACT_PANEL_OY)
+#define TP_PANEL_BOTTOM (TP_PANEL_TOP+ACT_PANEL_SY)
+#define TP_PANEL_LEFT   (ACT_PANEL_PX)
+#define TP_PANEL_RIGHT  (TP_PANEL_LEFT+ACT_PANEL_SX)
 
-/*
-  0
-1   4
- 2 3
-*/
-#define TP_UP_X1  (6 + ACT_UP_PX )
-#define TP_UP_Y1  (3 + ACT_UP_PY )
-#define TP_UP_X2  (1 + ACT_UP_PX )
-#define TP_UP_Y2  (12 + ACT_UP_PY )
-#define TP_UP_X3  (9 + ACT_UP_PX )
-#define TP_UP_Y3  (31 + ACT_UP_PY )
-#define TP_UP_X4  (31 + ACT_UP_PX )
-#define TP_UP_Y4  (TP_UP_Y3 + ACT_UP_PY )
-#define TP_UP_X5  (24 + ACT_UP_PX )
-#define TP_UP_Y5  (10 + ACT_UP_PY )
+#define TP_UP_TOP       (ACT_UP_PY)
+#define TP_UP_BOTTOM    (TP_UP_TOP+ACT_UPDOWN_SY)
+#define TP_UP_LEFT      (ACT_UP_PX)
+#define TP_UP_RIGHT     (TP_UP_LEFT+ACT_UPDOWN_SX)
 
-/*
- 0 4
-1   3 
-  2
-*/
-#define TP_DOWN_X1  (1  + ACT_DOWN_PX )
-#define TP_DOWN_Y1  (1  + ACT_DOWN_PY )
-#define TP_DOWN_X2  (8  + ACT_DOWN_PX )
-#define TP_DOWN_Y2  (22 + ACT_DOWN_PY )
-#define TP_DOWN_X3  (23 + ACT_DOWN_PX )
-#define TP_DOWN_Y3  (30 + ACT_DOWN_PY )
-#define TP_DOWN_X4  (31 + ACT_DOWN_PX )
-#define TP_DOWN_Y4  (22 + ACT_DOWN_PY )
-#define TP_DOWN_X5  (24 + ACT_DOWN_PX )
-#define TP_DOWN_Y5  (1  + ACT_DOWN_PY )
-
+#define TP_DOWN_TOP     (ACT_DOWN_PY)
+#define TP_DOWN_BOTTOM  (TP_DOWN_TOP+ACT_UPDOWN_SY)
+#define TP_DOWN_LEFT    (ACT_DOWN_PX)
+#define TP_DOWN_RIGHT   (TP_DOWN_LEFT+ACT_UPDOWN_SX)
 

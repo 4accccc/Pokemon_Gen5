@@ -834,11 +834,24 @@ static void _sub_BmpWinCreate(BEACON_VIEW_PTR wk)
 {
   bmpwin_Add( wk, &wk->win[WIN_POPUP],
       BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
-  bmpwin_Add( wk, &wk->win[WIN_LOGNUM],
-      BMP_LOGNUM_FRM, BMP_LOGNUM_PAL, BMP_LOGNUM_PX, BMP_LOGNUM_PY,BMP_LOGNUM_SX, BMP_LOGNUM_SY );
  
   bmpwin_Add( wk, &wk->win[WIN_MENU],
       BMP_MENU_FRM, BMP_MENU_PAL, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
+	
+  {
+	  BMPOAM_ACT_DATA	finit;
+
+	  finit.bmp = GFL_BMP_Create( BMP_LOGNUM_SX, BMP_LOGNUM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
+	  finit.x = BMP_LOGNUM_PX;
+	  finit.y = BMP_LOGNUM_PY;
+	  finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
+	  finit.pal_offset = ACT_PAL_FONT;		// pltt_indexのパレット内でのオフセット
+	  finit.soft_pri = OBJ_SPRI_LOGNUM;			// ソフトプライオリティ
+	  finit.bg_pri = OBJ_BG_PRI;				// BGプライオリティ
+	  finit.setSerface = ACT_RENDER_ID;
+	  finit.draw_type  = CLSYS_DRAW_SUB;
+    BVCPrint_FontOamAdd( &wk->foamLogNum, &finit, wk->bmpOam, wk->printQue, wk->fontHandle, wk->pTcbSys );
+  }
 }
 
 //--------------------------------------------------------------
@@ -851,6 +864,8 @@ static void _sub_BmpWinCreate(BEACON_VIEW_PTR wk)
 static void _sub_BmpWinDelete(BEACON_VIEW_PTR wk)
 {
   int i;
+	
+  BVCPrint_FontOamDel( &wk->foamLogNum );
 	
   for(i = 0; i < WIN_MAX; i++){
     if( wk->win[i].win != NULL ){
@@ -957,13 +972,18 @@ static GFL_CLWK* obj_ObjAdd(
 static void act_NormalObjAdd( BEACON_VIEW_PTR wk ) 
 {
   int i;
-  static const u16 pos[ACT_MAX][2] = {
-   { ACT_MENU_PX+ACT_MENU_OX*0 ,ACT_MENU_PY },
-   { ACT_MENU_PX+ACT_MENU_OX*1 ,ACT_MENU_PY },
-   { ACT_MENU_PX+ACT_MENU_OX*2 ,ACT_MENU_PY },
-   { ACT_MENU_PX+ACT_MENU_OX*3 ,ACT_MENU_PY },
-   { ACT_UP_PX ,ACT_UP_PY },
-   { ACT_DOWN_PX ,ACT_DOWN_PY },
+  static const struct{
+    u8  px,py;
+    u8  anm:5;
+    u8  bg_pri:3;
+  }prm[ACT_MAX] = {
+   { ACT_MENU_PX+ACT_MENU_OX*0 ,ACT_MENU_PY, ACTANM_POWER_ON, OBJ_MENU_BG_PRI },
+   { ACT_MENU_PX+ACT_MENU_OX*1 ,ACT_MENU_PY, ACTANM_HELLO_ON, OBJ_MENU_BG_PRI },
+   { ACT_MENU_PX+ACT_MENU_OX*2 ,ACT_MENU_PY, ACTANM_THANKS_ON, OBJ_MENU_BG_PRI },
+   { ACT_MENU_PX+ACT_MENU_OX*3 ,ACT_MENU_PY, ACTANM_RETURN_ON, OBJ_MENU_BG_PRI },
+   { ACT_UP_PX ,ACT_UP_PY, ACTANM_UP_OFF, OBJ_BG_PRI },
+   { ACT_DOWN_PX ,ACT_DOWN_PY, ACTANM_DOWN_OFF, OBJ_BG_PRI },
+   { ACT_LOGNUM_WIN_PX ,ACT_LOGNUM_WIN_PY, ACTANM_LOGNUM_WIN, OBJ_BG_PRI },
   };
 
   for(i = 0;i < ACT_MAX;i++){
@@ -971,20 +991,11 @@ static void act_NormalObjAdd( BEACON_VIEW_PTR wk )
       wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
       wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
       wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
-      pos[i][0], pos[i][1],
-      ACTANM_POWER_ON+(ACT_ANM_SET*i), OBJ_MENU_BG_PRI, OBJ_SPRI_MENU);
+      prm[i].px, prm[i].py,
+      prm[i].anm, prm[i].bg_pri, OBJ_SPRI_MENU);
   
     GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_POWER+i], TRUE );
   }
-  if( wk->mode == VIEW_MODE_NORMAL ){
-    return;
-  }
-  BVCAct_SetPosition( wk->pAct[ACT_POWER], ACT_MENU_PX+ACT_MENU_OX*1, ACT_MENU_PY );
-  BVCAct_SetPosition( wk->pAct[ACT_HELLO], ACT_MENU_PX+ACT_MENU_OX*2, ACT_MENU_PY );
-  BVCAct_SetPosition( wk->pAct[ACT_RETURN], ACT_MENU_PX+ACT_MENU_OX*3, ACT_MENU_PY );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_THANKS], FALSE );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_UP], FALSE );
-  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_DOWN], FALSE );
 }
 
 /*
@@ -1006,6 +1017,8 @@ static void act_NormalObjDel( BEACON_VIEW_PTR wk )
  */
 static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 {
+  int i;
+
 	BMPOAM_ACT_DATA	finit;
   PANEL_WORK* pp = &(wk->panel[idx]);
 
@@ -1016,8 +1029,8 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
   pp->n_line = 0;
   pp->que = wk->printQue;
 
-  pp->px = ACT_PANEL_OX*idx;
-  pp->py = ACT_PANEL_OY*idx;
+  pp->px = ACT_PANEL_PX;
+  pp->py = ACT_PANEL_PY+ACT_PANEL_OY*(idx+1);
 
   //パネルアクター
   pp->cPanel = obj_ObjAdd( wk,
@@ -1041,10 +1054,28 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
     wk->objResIcon.res[OBJ_RES_CELLANIM].tbl[0],
     pp->px+ACT_ICON_OX, pp->py+ACT_ICON_OY, 0, OBJ_BG_PRI, OBJ_SPRI_ICON+idx);
+  
+  //メダルオブジェアクター
+  pp->cMedal = obj_ObjAdd( wk,
+    wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
+    wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
+    wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
+    pp->px+ACT_MEDAL_OX, pp->py+ACT_MEDAL_OY, ACTANM_MEDAL_N, OBJ_BG_PRI, OBJ_SPRI_MEDAL+idx);
 
-	pp->msgOam.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
+  //メダル数アクター
+  for(i = 0;i < PANEL_NUM_ACTMAX;i++){
+    pp->cNum[i] = obj_ObjAdd( wk,
+      wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
+      wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
+      wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
+      pp->px+ACT_NUM_OX-(ACT_NUM_OSX*i), pp->py+ACT_NUM_OY, ACTANM_NUM, OBJ_BG_PRI, OBJ_SPRI_NUM+idx);
+  
+    GFL_CLACT_WK_SetPlttOffs( pp->cNum[i], idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    GFL_CLACT_WK_SetDrawEnable( pp->cNum[i], FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pp->cNum[i], FALSE );
+  }
 
-	finit.bmp = pp->msgOam.bmp;
+	finit.bmp = GFL_BMP_Create( BMP_PANEL_OAM_SX, BMP_PANEL_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
 	finit.x = pp->px + ACT_MSG_OX;
 	finit.y = pp->py + ACT_MSG_OY;
 	finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
@@ -1054,7 +1085,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 	finit.setSerface = ACT_RENDER_ID;
 	finit.draw_type  = CLSYS_DRAW_SUB;
 
-	pp->msgOam.oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
+  BVCPrint_FontOamAdd( &pp->msgOam, &finit, wk->bmpOam, wk->printQue, wk->fontHandle, wk->pTcbSys );
 
   pp->str = GFL_STR_CreateBuffer( BUFLEN_PANEL_MSG, wk->heap_sID );
   pp->name = GFL_STR_CreateBuffer( BUFLEN_TR_NAME, wk->heap_sID );
@@ -1065,6 +1096,7 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( pp->cMedal, FALSE );
 }
 
 /**
@@ -1072,15 +1104,21 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
  */
 static void act_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
 {
+  int i;
+
   PANEL_WORK* pp = &(wk->panel[idx]);
 
   GFL_STR_DeleteBuffer( pp->name );
   GFL_STR_DeleteBuffer( pp->str );
 
-	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
-  BmpOam_ActorDel( pp->msgOam.oam );
-	GFL_BMP_Delete( pp->msgOam.bmp );
+  BVCPrint_FontOamDel( &pp->msgOam );
 
+  for(i = 0;i < PANEL_NUM_ACTMAX;i++){
+    GFL_CLACT_WK_SetDrawEnable( pp->cNum[i], FALSE );
+    GFL_CLACT_WK_Remove( pp->cNum[i] );
+  }
+  GFL_CLACT_WK_SetDrawEnable( pp->cMedal, FALSE );
+  GFL_CLACT_WK_Remove( pp->cMedal );
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
   GFL_CLACT_WK_Remove( pp->cIcon );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );

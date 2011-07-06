@@ -339,6 +339,44 @@ u32 BVCPrint_GetBeaconMsgID(const GAMEBEACON_INFO *info)
   return msg_beacon_001 + action - GAMEBEACON_ACTION_SEARCH;
 }
 
+//------------------------------------------------------------
+/**
+ * FontOam構造体の初期化
+ *
+ * @param FONT_OAM*
+ * @param BMPOAM_ACT_DATA*
+ * @param bsp BMPOAM_SYS_PTR
+ * @param printQue  PRINT_QUE*
+ * @param fontHandle  GFL_FONT*
+ * @param pTcbSys  GFL_TCBLSYS*
+ */
+//------------------------------------------------------------
+void BVCPrint_FontOamAdd( FONT_OAM* foam, BMPOAM_ACT_DATA* finit, BMPOAM_SYS_PTR bsp, PRINT_QUE* que, GFL_FONT* font, GFL_TCBLSYS* tcbsys )
+{
+  foam->bmp = finit->bmp;
+  foam->printQue = que;
+  foam->fontHandle = font;
+  foam->pTcbSys = tcbsys;
+  foam->oam = BmpOam_ActorAdd( bsp, finit );
+}
+
+//------------------------------------------------------------
+/**
+ * FontOam構造体の削除
+ *
+ * @param FONT_OAM*
+ */
+//------------------------------------------------------------
+void BVCPrint_FontOamDel( FONT_OAM* foam )
+{
+  BmpOam_ActorSetDrawEnable( foam->oam, FALSE );
+  BmpOam_ActorDel( foam->oam );
+	GFL_BMP_Delete( foam->bmp );
+
+  MI_CpuClear8( foam, sizeof(FONT_OAM));
+}
+
+
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  BMPウィンドウメッセージ表示キュー処理 
@@ -403,6 +441,76 @@ static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* tcb_wk)
   }
   GFL_BMPWIN_MakeScreen( twk->win->win );
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( twk->win->win ) );
+
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  FontOam BMPウィンドウメッセージ表示キュー処理 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_FOAM_PRINT{
+  u8  seq;
+  FONT_OAM* foam;
+
+  int* task_ct;
+}TASKWK_FOAM_PRINT;
+
+static void taskAdd_FOamPrint( FONT_OAM* foam, int* task_ct );
+static void tcb_FOamPrint( GFL_TCBL *tcb , void* work);
+
+void BVCPrintReq_FOamPrintEx( FONT_OAM* foam, STRBUF* str, PRINTSYS_LSB color, int* task_ct, BOOL direct_f, BOOL clear_f )
+{
+  if( clear_f ){
+    GFL_BMP_Clear( foam->bmp, 0 );
+  }
+  if( direct_f ){
+	  PRINTSYS_PrintColor( foam->bmp, 0, 0, str, foam->fontHandle, color );
+ 	  BmpOam_ActorBmpTrans( foam->oam );
+  }else{
+    PRINTSYS_PrintQueColor( foam->printQue, foam->bmp, 0, 0, str, foam->fontHandle, color );
+    taskAdd_FOamPrint( foam, task_ct );
+  }
+}
+
+void BVCPrintReq_FOamPrint( FONT_OAM* foam, STRBUF* str, PRINTSYS_LSB color, int* task_ct, BOOL direct_f )
+{
+  BVCPrintReq_FOamPrintEx( foam, str, color, task_ct, direct_f, TRUE);
+}
+
+/*
+ *  @brief  メッセージウィンドウ パネルフラッシュタスク登録
+ */
+static void taskAdd_FOamPrint( FONT_OAM* foam,int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_FOAM_PRINT* twk;
+
+  tcb = GFL_TCBL_Create( foam->pTcbSys, tcb_FOamPrint, sizeof(TASKWK_FOAM_PRINT), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_FOAM_PRINT ));
+
+  twk->foam = foam;
+
+  if( task_ct != NULL ){
+    twk->task_ct = task_ct;
+    (*twk->task_ct)++;
+  }
+}
+
+static void tcb_FOamPrint( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_FOAM_PRINT* twk = (TASKWK_FOAM_PRINT*)tcb_wk;
+  
+  if( PRINTSYS_QUE_IsExistTarget( twk->foam->printQue, twk->foam->bmp ) ){
+    return;
+  }
+	BmpOam_ActorBmpTrans( twk->foam->oam );
 
   if( twk->task_ct != NULL ){
     (*twk->task_ct)--;

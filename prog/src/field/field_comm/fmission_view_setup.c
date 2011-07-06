@@ -952,9 +952,7 @@ static void act_PanelFOamAdd( FMISSION_VIEW_PTR wk, FONT_OAM* foam, u16 sx, u16 
 {
 	BMPOAM_ACT_DATA	finit;
 
-	foam->bmp = GFL_BMP_Create( sx, sy, GFL_BMP_16_COLOR, wk->heap_sID );
-
-	finit.bmp = foam->bmp;
+	finit.bmp = GFL_BMP_Create( sx, sy, GFL_BMP_16_COLOR, wk->heap_sID );
 	finit.x = px;
 	finit.y = py;
 	finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
@@ -964,7 +962,7 @@ static void act_PanelFOamAdd( FMISSION_VIEW_PTR wk, FONT_OAM* foam, u16 sx, u16 
 	finit.setSerface = ACT_RENDER_ID;
 	finit.draw_type  = CLSYS_DRAW_SUB;
 
-	foam->oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
+  BVCPrint_FontOamAdd( foam, &finit, wk->bmpOam, wk->printQue, wk->fontHandle, wk->pTcbSys );
   
   GFL_BMP_Clear( foam->bmp, 0 );
 	BmpOam_ActorBmpTrans( foam->oam );
@@ -977,7 +975,6 @@ static void act_PanelFOamAdd( FMISSION_VIEW_PTR wk, FONT_OAM* foam, u16 sx, u16 
  */
 static void act_PanelObjAdd( FMISSION_VIEW_PTR wk, u8 idx )
 {
-	BMPOAM_ACT_DATA	finit;
   PANEL_WORK* pp = &(wk->panel[idx]);
 
   MI_CpuClear8( pp, sizeof(PANEL_WORK));
@@ -1028,9 +1025,7 @@ static void act_PanelObjDel( FMISSION_VIEW_PTR wk, u8 idx )
 
   for(i = 0; i < PANEL_FOAM_MAX; i++){
     GFL_STR_DeleteBuffer( pp->str[i] );
-	  BmpOam_ActorSetDrawEnable( pp->msgOam[i].oam, FALSE );
-    BmpOam_ActorDel( pp->msgOam[i].oam );
-  	GFL_BMP_Delete( pp->msgOam[i].bmp );
+    BVCPrint_FontOamDel( &pp->msgOam[i] );
   }
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_Remove( pp->cUnion );

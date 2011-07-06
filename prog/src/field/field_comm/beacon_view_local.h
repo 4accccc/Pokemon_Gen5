@@ -53,14 +53,19 @@ typedef struct _PANEL_WORK{
 
   u8  n_line; //現在のライン
   u8  rank; //ランク
-  u8  sex;  //性別
+  u8  sex;    //性別
   u8  timeout_f;  //タイムアウトフラグ
+  u8  version;  ///<カセットバージョン
+  u8  color;  //パネルカラー
+  u16 medal;  //メダル数  
   u16 tr_id;  //トレーナーID
   s16 px;
   s16 py;
   GFL_CLWK* cPanel;
   GFL_CLWK* cUnion;
   GFL_CLWK* cIcon;
+  GFL_CLWK* cMedal;
+  GFL_CLWK* cNum[PANEL_NUM_ACTMAX];
   FONT_OAM  msgOam;
 	STRBUF* str;
 	STRBUF* name;
@@ -197,7 +202,8 @@ typedef struct _BEACON_VIEW{
   OBJ_RES_TBL objResUnion;
   OBJ_RES_TBL objResIcon;
   
-  BMP_WIN    win[ WIN_MAX ];
+  BMP_WIN     win[ WIN_MAX ];
+  FONT_OAM    foamLogNum;
  
   PANEL_WORK  panel[PANEL_MAX];
   GFL_CLWK*   pAct[ACT_MAX];

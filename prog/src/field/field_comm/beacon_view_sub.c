@@ -41,6 +41,10 @@ static const DATA_SpGPowerTbl[ SP_GPOWER_REQ_MAX ] = {
   GPOWER_ID_CAPTURE_S,
 };
 
+//パネル描画パレット
+static const PRINTSYS_LSB DATA_PanelFontColor[] = { FCOL_FNTOAM_W, FCOL_FNTOAM_B, FCOL_FNTOAM_GW, FCOL_FNTOAM_GB };
+
+
 //////////////////////////////////////////////////////////////////
 static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 old_log_max );
 static void sp_gpower_RequestSet( BEACON_VIEW_PTR wk, u8 req_id );
@@ -58,6 +62,7 @@ static void draw_LogNumWindow( BEACON_VIEW_PTR wk );
 static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id, int* task_ct );
 static void draw_ClearMenuWindow( BEACON_VIEW_PTR wk );
 static void draw_MenuIconVisibleSet( BEACON_VIEW_PTR wk, BOOL visible_f );
+static void panel_MedalVisibleSet( PANEL_WORK* pp, BOOL visible_f );
 
 static void obj_UpDownViewSet( BEACON_VIEW_PTR wk );
 static void obj_ThanksViewSet( BEACON_VIEW_PTR wk );
@@ -69,7 +74,7 @@ static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line );
 static PANEL_WORK* panel_GetPanelFromDataIndex( BEACON_VIEW_PTR wk, u8 data_idx );
 static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info);
 static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon);
-static u8 panel_FrameColorGet( GAMEBEACON_INFO* info );
+static u8 panel_FrameColorGet( PANEL_WORK* pp );
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info );
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, int* task_ct );
 static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, int* task_ct );
@@ -796,34 +801,19 @@ static BOOL sp_gpower_ZoromeCheck( u32 log_count )
  */
 static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp )
 {
-  int i, ox, oy;
-  TRIANGLE tri;
+  int i;
 
-  for(i = 0; i < wk->ctrl.view_max; i++){
-    ox = ACT_PANEL_OX*i;
-    oy = ACT_PANEL_OY*i;
-    tri.p[0].x = TP_PANEL_X1+ox;  
-    tri.p[0].y = TP_PANEL_Y1+oy;  
-    tri.p[1].x = TP_PANEL_X2+ox;  
-    tri.p[1].y = TP_PANEL_Y2+oy;  
-    tri.p[2].x = TP_PANEL_X3+ox;  
-    tri.p[2].y = TP_PANEL_Y3+oy;  
+  GFL_UI_TP_HITTBL tbl[PANEL_VIEW_MAX+1];
 
-    if( BVCCalc_PointInTriangle( tp, &tri )){
-      return i;
-    }
-    tri.p[0].x = TP_PANEL_X1+ox;  
-    tri.p[0].y = TP_PANEL_Y1+oy;  
-    tri.p[1].x = TP_PANEL_X3+ox;  
-    tri.p[1].y = TP_PANEL_Y3+oy;  
-    tri.p[2].x = TP_PANEL_X4+ox;  
-    tri.p[2].y = TP_PANEL_Y4+oy;  
-
-    if( BVCCalc_PointInTriangle( tp, &tri )){
-      return i;
-    }
+  for(i = 0;i < wk->ctrl.view_max;i++){
+    tbl[i].rect.top = TP_PANEL_TOP+(i*ACT_PANEL_OY);
+    tbl[i].rect.bottom = tbl[i].rect.top+ACT_PANEL_SY;
+    tbl[i].rect.left = TP_PANEL_LEFT;
+    tbl[i].rect.right = TP_PANEL_RIGHT;
   }
-  return GFL_UI_TP_HIT_NONE;
+  tbl[wk->ctrl.view_max].rect.top = GFL_UI_TP_HIT_END;
+
+  return GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
 }
 
 /*
@@ -831,51 +821,19 @@ static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp )
  */
 static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp )
 {
-  int i,j;
-  TRIANGLE tri;
-  u8 enable = 0;
-
-  static const POINT tbl[2][5] = {
-   {
-     { TP_UP_X1, TP_UP_Y1 },
-     { TP_UP_X2, TP_UP_Y2 },
-     { TP_UP_X3, TP_UP_Y3 },
-     { TP_UP_X4, TP_UP_Y4 },
-     { TP_UP_X5, TP_UP_Y5 },
-   },
-   {
-     { TP_DOWN_X1, TP_DOWN_Y1 },
-     { TP_DOWN_X2, TP_DOWN_Y2 },
-     { TP_DOWN_X3, TP_DOWN_Y3 },
-     { TP_DOWN_X4, TP_DOWN_Y4 },
-     { TP_DOWN_X5, TP_DOWN_Y5 },
-   },
+  int ret;
+  static const GFL_UI_TP_HITTBL tbl[3] = {
+    { TP_UP_TOP, TP_UP_BOTTOM, TP_UP_LEFT, TP_UP_RIGHT },
+    { TP_DOWN_TOP, TP_DOWN_BOTTOM, TP_DOWN_LEFT, TP_DOWN_RIGHT },
+    { GFL_UI_TP_HIT_END, 0,0,0 },
   };
-  static const u8 point[][3] = {
-   { 0, 1, 4},
-   { 1, 2, 4},
-   { 2, 3, 4},
-  };
-
-  if( wk->ctrl.view_top > 0 ){  //上キーチェック
-    enable |= 1;
+  ret = GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
+  
+  if( ret == 0 && wk->ctrl.view_top > 0 ){  //上キーチェック
+    return (ret^1);
   }
-  if( (wk->ctrl.view_top+wk->ctrl.view_max) < wk->ctrl.max ){
-    enable |= 2;
-  }
-
-  for(i = 0;i < 2;i++){
-    if( !(enable & (i+1))){
-      continue;
-    }
-    for(j = 0;j < 3;j++){
-      tri.p[0] = tbl[i][point[j][0]];
-      tri.p[1] = tbl[i][point[j][1]];
-      tri.p[2] = tbl[i][point[j][2]];
-      if( BVCCalc_PointInTriangle( tp, &tri )){
-        return (1-i);
-      }
-    }
+  if( ret == 1 && (wk->ctrl.view_top+wk->ctrl.view_max) < wk->ctrl.max ){
+    return (ret^1);
   }
   return GFL_UI_TP_HIT_NONE;
 }
@@ -950,7 +908,7 @@ static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
 {
   WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.max, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   print_GetMsgToBuf( wk, msg_sys_lognum );
-  BVCPrintReq_BmpwinPrint( &wk->win[WIN_LOGNUM], wk->str_expand, 4, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, wk->init_f );
+  BVCPrintReq_FOamPrint( &wk->foamLogNum, wk->str_expand, FCOL_FNTOAM_W, NULL, wk->init_f );
 }
 
 /*
@@ -1022,6 +980,9 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
 
+  if( pp->medal != PANEL_MEDAL_NONE ){
+    panel_MedalVisibleSet( pp, visible_f );
+  }
   if( !visible_f ){ //隠したい時だけ強制
     panel_IconVisibleSet( pp, visible_f );
   }
@@ -1033,6 +994,19 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
 static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f )
 {
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, visible_f );
+}
+
+/*
+ *  @brief  パネルメダルアイコン 表示状態On/Off
+ */
+static void panel_MedalVisibleSet( PANEL_WORK* pp, BOOL visible_f )
+{
+  int i;
+
+  GFL_CLACT_WK_SetDrawEnable( pp->cMedal, visible_f );
+  for(i = 0;i < PANEL_NUM_ACTMAX;i++){
+    GFL_CLACT_WK_SetDrawEnable( pp->cNum[i], visible_f );
+  }
 }
 
 /*
@@ -1126,17 +1100,18 @@ static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon)
 /*
  *  @brief  パネルカラーゲット 
  */
-static u8 panel_FrameColorGet( GAMEBEACON_INFO* info )
+static u8 panel_FrameColorGet( PANEL_WORK* pp )
 {
-  int version = GAMEBEACON_Get_PmVersion(info);
-
-  switch( version ){
+  switch( pp->version ){
   case VERSION_BLACK:
-    return ACT_PANEL_PAL_FRM_V_BLACK;
+  case VERSION_B2:
+    return ACT_PANEL_COLOR_BLACK;
   case VERSION_WHITE:
-    return ACT_PANEL_PAL_FRM_V_WHITE;
+  case VERSION_W2:
+    return ACT_PANEL_COLOR_WHITE;
   }
-  return ACT_PANEL_PAL_FRM_V_ELSE;
+  GF_ASSERT(0);
+  return ACT_PANEL_COLOR_BLACK;
 }
 
 /*
@@ -1144,20 +1119,16 @@ static u8 panel_FrameColorGet( GAMEBEACON_INFO* info )
  */
 static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
-  u16 pal[5];
-  u8  col;
+  u16 pal[ACT_PANEL_COL_TRANS_NUM];
   
   //パネルフレームカラー
-  col = panel_FrameColorGet( info );
-  pal[0] = wk->resPlttPanel.dat[ col*16+0 ];
-  pal[1] = wk->resPlttPanel.dat[ col*16+1 ];
-  pal[2] = wk->resPlttPanel.dat[ col*16+2 ];
+  MI_CpuCopy16( &wk->resPlttPanel.dat[pp->color*16], pal, sizeof(u16)*ACT_PANEL_COL_CHANGE_NUM );
   
   //パネルベースカラー
-  GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[3], info);
-  SoftFade(&pal[3], &pal[4], 1, 3, 0x0000); //補色を作成
+  GAMEBEACON_Get_FavoriteColor((GXRgb*)&pal[ACT_PANEL_COL_CHANGE_NUM], info);
+  SoftFade(&pal[ACT_PANEL_COL_CHANGE_NUM], &pal[ACT_PANEL_COL_CHANGE_NUM+1], 1, 3, 0x0000); //補色を作成
  
-  PaletteWorkSet( wk->pfd, pal, FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+1, 2*5 );
+  PaletteWorkSet( wk->pfd, pal, FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+1, 2*ACT_PANEL_COL_TRANS_NUM );
 }
 
 /*
@@ -1165,7 +1136,7 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
  */
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, int* task_ct )
 {
-  printReq_FOamPrint( wk, pp, str, FCOL_FNTOAM_W, task_ct );
+  printReq_FOamPrint( wk, pp, str, DATA_PanelFontColor[pp->color], task_ct );
 }
 
 /*
@@ -1185,9 +1156,9 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, i
 
   //再描画
   if( flag ){
-    printReq_FOamPrint( wk, pp, pp->name, FCOL_FNTOAM_G, task_ct );
+    printReq_FOamPrint( wk, pp, pp->name, DATA_PanelFontColor[2+pp->color], task_ct );
   }else{
-    printReq_FOamPrint( wk, pp, pp->name, FCOL_FNTOAM_W, task_ct );
+    printReq_FOamPrint( wk, pp, pp->name, DATA_PanelFontColor[pp->color], task_ct );
   }
 }
 
@@ -1197,13 +1168,16 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, i
 static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
   u8 num;
-  u16 pal;
+  u16 pal,pal_ofs;
   pp->rank = GAMEBEACON_Get_ResearchTeamRank(info);
+
+  pal_ofs = ACT_PANEL_COLOR_RANK_MARK_B*16+(pp->color*16);
+
   if(pp->rank == 0){
-    pal = ACT_PANEL_PAL_RANK_MARK*16;
+    pal = pal_ofs;
     num = RESEARCH_TEAM_RANK_5;
   }else{
-    pal = ACT_PANEL_PAL_RANK_MARK*16+RESEARCH_TEAM_RANK_5;
+    pal = pal_ofs+RESEARCH_TEAM_RANK_5;
     num = pp->rank;
   }
 
@@ -1211,12 +1185,34 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
   /*
    *  一度Offカラーで全てクリア
    */
-  PaletteWorkSet( wk->pfd, &wk->resPlttPanel.dat[ ACT_PANEL_PAL_RANK_MARK*16 ],
+  PaletteWorkSet( wk->pfd, &wk->resPlttPanel.dat[ pal_ofs ],
       FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+ACT_PANEL_COL_OFS_RANK, 2*RESEARCH_TEAM_RANK_5 );
 #endif
 
   PaletteWorkSet( wk->pfd, &wk->resPlttPanel.dat[ pal ],
       FADE_SUB_OBJ, (ACT_PAL_PANEL+pp->id)*16+ACT_PANEL_COL_OFS_RANK, 2*num );
+}
+
+/*
+ *  @brief  パネル　メダル描画
+ */
+static void panel_MedalSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
+{
+  int i;
+  u16 num = PANEL_MEDAL_NONE;
+
+  if( pp->version == VERSION_BLACK || pp->version == VERSION_WHITE ){
+    pp->medal = num;
+    panel_MedalVisibleSet( pp, FALSE );
+    return;
+  }
+  pp->medal = 0;
+
+  for(i = 0;i < PANEL_NUM_ACTMAX;i++){
+    static const u16 tbl[] = {1,10,100,1000};
+    int value = ( pp->medal%tbl[(i+1)] ) / tbl[i];
+    GFL_CLACT_WK_SetAnmFrame( pp->cNum[i], FX32_CONST(value) );
+  }
 }
 
 /*
@@ -1228,6 +1224,8 @@ static void panel_Draw( BEACON_VIEW_PTR wk,
   //トレーナーID取得
   pp->tr_id = GAMEBEACON_Get_TrainerID( info );
   pp->sex = GAMEBEACON_Get_Sex( info );
+  pp->version = GAMEBEACON_Get_PmVersion(info);
+  pp->color = panel_FrameColorGet( pp );
 
   //プレイヤー名取得
   GAMEBEACON_Get_PlayerNameToBuf( info, pp->name );
@@ -1238,10 +1236,13 @@ static void panel_Draw( BEACON_VIEW_PTR wk,
   //ランクセット
   panel_RankSet( wk, pp, info);
 
+  //メダルセット
+  panel_MedalSet( wk, pp, info );
+
   //UnionOBJリソース更新
   panel_UnionObjUpdate( wk, pp, info);
 
-  //パネルカラー転送
+  //パネルカラー取得＆転送
   panel_ColorPlttSet( wk, pp, info );
 
   //パネル文字列バッファ転送&アイコン表示リクエスト
@@ -1280,11 +1281,18 @@ static void panel_Draw( BEACON_VIEW_PTR wk,
  */
 static void  panel_SetPos( PANEL_WORK* pp, s16 x, s16 y )
 {
+  int i;
+
   pp->px = x;
   pp->py = y;
   BVCAct_SetPosition( pp->cPanel, x, y );
   BVCAct_SetPosition( pp->cUnion, x+ACT_UNION_OX, y+ACT_UNION_OY );
   BVCAct_SetPosition( pp->cIcon, x+ACT_ICON_OX, y+ACT_ICON_OY );
+  BVCAct_SetPosition( pp->cMedal, x+ACT_MEDAL_OX, y+ACT_MEDAL_OY );
+
+  for(i = 0;i < PANEL_NUM_ACTMAX; i++) {
+    BVCAct_SetPosition( pp->cNum[i], x+ACT_NUM_OX-(ACT_NUM_OSX*i), y+ACT_NUM_OY );
+  }
   BmpOam_ActorSetPos( pp->msgOam.oam, x+ACT_MSG_OX, y+ACT_MSG_OY);
 }
 
@@ -1483,7 +1491,7 @@ static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, PANEL_WORK* new_pp, 
     }else{
       new_pp->n_line = 0;
     }
-    panel_SetPos( new_pp, new_pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX,
+    panel_SetPos( new_pp, ACT_PANEL_PX,
                           new_pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY );
     panel_VisibleSet( new_pp, TRUE );
   }
@@ -1539,7 +1547,7 @@ static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir, u8 
 
   twk->bvp = wk;
   twk->pp = pp;
-  twk->epx = pp->n_line*ACT_PANEL_OX+ACT_PANEL_PX; 
+  twk->epx = ACT_PANEL_PX; 
   twk->epy = pp->n_line*ACT_PANEL_OY+ACT_PANEL_PY; 
   twk->x = FX32_CONST(pp->px);
   twk->y = FX32_CONST(pp->py);

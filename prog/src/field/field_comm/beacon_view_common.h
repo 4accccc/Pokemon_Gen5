@@ -119,6 +119,10 @@ typedef struct{
 typedef struct {
 	BMPOAM_ACT_PTR oam;
 	GFL_BMP_DATA * bmp;
+  
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  GFL_TCBLSYS*  pTcbSys;
 }FONT_OAM;
 
 //TaskMenuワーク
@@ -237,6 +241,30 @@ extern BOOL BVCPrint_PopupWindowTimeWaitCheck( u8* p_wait, u8 frame );
 //------------------------------------------------------------
 extern u32 BVCPrint_GetBeaconMsgID(const GAMEBEACON_INFO *info);
 
+//------------------------------------------------------------
+/**
+ * FontOam構造体の初期化
+ *
+ * @param FONT_OAM*
+ * @param BMPOAM_ACT_DATA*
+ * @param bsp BMPOAM_SYS_PTR
+ * @param printQue  PRINT_QUE*
+ * @param fontHandle  GFL_FONT*
+ * @param pTcbSys  GFL_TCBLSYS*
+ */
+//------------------------------------------------------------
+extern void BVCPrint_FontOamAdd( FONT_OAM* foam, BMPOAM_ACT_DATA* finit, BMPOAM_SYS_PTR bsp, PRINT_QUE* que, GFL_FONT* font, GFL_TCBLSYS* tcbsys );
+
+//------------------------------------------------------------
+/**
+ * FontOam構造体の削除
+ *
+ * @param FONT_OAM*
+ */
+//------------------------------------------------------------
+extern void BVCPrint_FontOamDel( FONT_OAM* foam );
+
+
 /////////////////////////////////////////////////////////////////////
 /*
  *  @brief  BMPウィンドウメッセージ表示キュー処理 
@@ -244,6 +272,8 @@ extern u32 BVCPrint_GetBeaconMsgID(const GAMEBEACON_INFO *info);
 /////////////////////////////////////////////////////////////////////
 extern void BVCPrintReq_BmpwinPrintEx( BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct, BOOL direct_f, BOOL clear_f );
 extern void BVCPrintReq_BmpwinPrint( BMP_WIN* win, STRBUF* str, u8 x, u8 y, u8 clear, PRINTSYS_LSB color, int* task_ct, BOOL direct_f );
+extern void BVCPrintReq_FOamPrintEx( FONT_OAM* foam, STRBUF* str, PRINTSYS_LSB color, int* task_ct, BOOL direct_f, BOOL clear_f );
+extern void BVCPrintReq_FOamPrint( FONT_OAM* foam, STRBUF* str, PRINTSYS_LSB color, int* task_ct, BOOL direct_f );
 
 /////////////////////////////////////////////////////////////////////
 /*
