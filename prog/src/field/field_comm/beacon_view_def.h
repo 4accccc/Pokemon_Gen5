@@ -107,7 +107,7 @@ typedef enum{
 #define ACT_PANEL_COL_CHANGE_NUM  (5) //カラーバージョンで変更される色数
 #define ACT_PANEL_COL_TRANS_NUM   (ACT_PANEL_COL_CHANGE_NUM+2)  //カラーバージョン変更+DSカラー2色
 ///パネルアクター　ランクマーク色転送カラーオフセット
-#define ACT_PANEL_COL_OFS_RANK    (9)
+#define ACT_PANEL_COL_OFS_RANK    (8)
 
 ///フォントカラー
 #define	FCOL_FNTOAM_B   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
