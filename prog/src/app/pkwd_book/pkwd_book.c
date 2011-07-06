@@ -955,8 +955,6 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
   0,    // フレーム内に表示するBMPWINのパレット
   
   {24,12,8,6,4,3,},    // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
-//   5,   // 選択項目のパレット
-//   4,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
    1,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
    8,   // スクロールバーのＹサイズ
    7,   // 項目登録数(●初期化前に変更すればよい)
@@ -1105,8 +1103,8 @@ static void pwb_chg_up_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 num );
 static void pwb_init_up_pal( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_up_pal( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk );
-
 //
+// フレーム関連
 static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_framelist( PKWD_BOOK_MAIN_WORK * wk );
 static u32  pwb_main_framelist( PKWD_BOOK_MAIN_WORK * wk );
@@ -1125,9 +1123,7 @@ static void _liststr_print_null( PKWD_BOOK_MAIN_WORK *wk, int pos, PRINT_UTIL *p
 static void PrintStrBuf(    PKWD_BOOK_MAIN_WORK* wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int strIdx, PRINTSYS_LSB col, int y );
 static void _strbuf_print(  PKWD_BOOK_MAIN_WORK* wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param );
 //
-static void pwb_chg_framelist_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 pnum );
-
-//
+// 選択肢画面
 static void pwb_init_meswin( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_clear_meswin( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_init_selectwin( PKWD_BOOK_MAIN_WORK * wk );
@@ -1136,9 +1132,11 @@ static s32  pwb_update_selectwin( PKWD_BOOK_MAIN_WORK * wk );
 //
 static void pwb_init_pkwd_scenario( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario_id );
 //
+// スクロールバー
 static void pwb_init_scrollbar( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_main_scrollbar( PKWD_BOOK_MAIN_WORK * wk );
 //
+// newマーク
 static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate );
 
@@ -1267,13 +1265,12 @@ static GFL_PROC_RESULT PkwdBookProc_Exit( GFL_PROC *proc, int *seq, void *pwk, v
 	if(wk->Param->result != NULL){
 		*wk->Param->result = wk->Result;
 	}
-#if 1	// 結果
+	// 結果
 	if(wk->Param->result != NULL){
 		OS_Printf("result : %d\n",*wk->Param->result);
 	}else{
 		OS_Printf("result : null(debug), %d\n",wk->Result);
 	}
-#endif
 	
 	//----------------
 	// 処理を記述
@@ -1494,7 +1491,6 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//------------
 	// パレット
 	//------------
-//	pwb_init_pal_fade( wk );
 	// 上画面のカラー
 	pwb_init_up_pal( wk );
 	
@@ -1511,8 +1507,6 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	// スクロール切り替え
 	//--------------------
 	pwb_set_bgscroll( wk, 0 );
-	// フレームのパレット変更(test)
-	pwb_chg_framelist_pal( wk, tmp );
 	
 	//------------
 	// 上画面表示
@@ -1580,8 +1574,6 @@ static void pwb_exit( PKWD_BOOK_MAIN_WORK* wk )
 	
 	// OBJ破棄
 	pwb_exit_obj( wk );
-	// パレット破棄
-//	pwb_exit_pal_fade( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -2895,15 +2887,6 @@ static void pwb_chk_canvas( PKWD_BOOK_MAIN_WORK * wk )
 	if(bflg == TRUE){
 		// スクロール切り替え
 		pwb_set_bgscroll( wk, wk->TitleMode );
-#if 0
-		// obj非表示(?)
-		pwb_clear_obj( wk );
-		if(wk->TitleMode == TMODE_TRAINER){
-			pwb_disp_trainer_obj( wk, 0 );
-		}else if(wk->TitleMode == TMODE_POKE){
-			pwb_disp_poke_obj( wk, 0 );
-		}
-#endif
 		// 切り替え終了
 		wk->Flag &= ~FLG_CHG_TITLE;
 	}
@@ -3158,8 +3141,6 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		// カラーの変更
 		tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
 		pwb_chg_up_pal( wk, tmp );
-		// フレームのパレット変更(test)
-		pwb_chg_framelist_pal( wk, tmp );
 	}
 	//
 	// スクロールバー処理(要検討)
@@ -3193,7 +3174,6 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// タイトル、あらすじ、クリア目標
 	for(i=0;i<3;i++){
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], pwb_mes_tbl[i]+id );
-//		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
 		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make( 15, 14, 0 ) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
@@ -3441,9 +3421,6 @@ static void pwb_disp_trainer_obj( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 			bflg = TRUE;
 		}else{
 			bflg = FALSE;
-			// debug
-//			pwb_chg_poke_obj( wk, i, 498, 0 );
-//			bflg = TRUE;
 		}
 		pwb_set_obj_visible( wk, CLWKMODE_POKE, i, bflg );
 	}
@@ -4045,16 +4022,12 @@ static s32 pwb_chk_tp( PKWD_BOOK_MAIN_WORK *wk, const s32 mode )
 //--------------------------------------------------------------------------------------------
 static void pwb_make_party( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario_id )
 {
-	// ポケウッドのpartyの作成
-//	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
-//	const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
-	//
-	// データを破棄
+	// データを破棄(念のため)
 	pwb_delete_party( wk );
 	//
+	// ポケウッドのpartyの作成
 	// newされたデータがwk->Partyに格納されるはず
 	wk->Party = PokeParty_AllocPartyWork( wk->heapID );
-//	POKEWOOD_EVENT_setupPokemon( mystatus, wk->Party, wk->heapID, scenario_id, 1 );
 	POKEWOOD_EVENT_setupPokemon( wk->Param->mystatus, wk->Party, wk->heapID, scenario_id, 1 );
 	//
 	// パラメータセット
@@ -4167,8 +4140,6 @@ static void pwb_set_pokework( PKWD_BOOK_MAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 {
-//	GAMEDATA *gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
-//	MISC*	misc = GAMEDATA_GetMiscWork( gamedata );
 	s32		i;
 	s32		j;
 	BOOL	bflg;
@@ -4176,7 +4147,6 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 	// openチェック
 	j=0;
 	for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
-//		bflg = MISC_GetPokewoodOpenFlag(misc, i);
 		bflg = MISC_GetPokewoodOpenFlag(wk->Param->misc, i);
 #if 0	// test
 		// debug
@@ -4188,12 +4158,11 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 			wk->FlagBuffer[j].openid = i;
 			//
 			// newチェック
-//			bflg = MISC_GetPokewoodPlayedFlag(misc, i);
 			bflg = MISC_GetPokewoodPlayedFlag(wk->Param->misc, i);
 			if(bflg == FALSE){
 				wk->FlagBuffer[j].newflag = 1;
 			}
-			// colorチェック(test)
+			// colorチェック
 			wk->FlagBuffer[j].color = PokewoodCategoryData[i]&0x03;
 			//
 			j++;
@@ -4550,14 +4519,10 @@ static void pwb_set_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 {
 	// 初期化
 	if(wk->frame_list_work){
-		// FRAMELIST_Initだけでは、カーソル情報が再セットできないため、
+		// FRAMELIST_Initだけでは、カーソル情報が再セットできずに
 		// 復帰させることができない(=>スクロール値がセットできない)
 		// そのため、再度初期化しカーソル情報をセットするようにした
 		pwb_init_framelist( wk );
-		//
-//		FRAMELIST_Init( wk->frame_list_work );
-//		// カーソル設定
-//		FRAMELIST_SetCursorPos( wk->frame_list_work, wk->ScenarioCurPos );
 	}
 }
 
@@ -4600,8 +4565,8 @@ static void pwb_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, 
 // move
 static void pwb_listcallback_move(void *work, u32 pos, BOOL flag)
 {
-	PKWD_BOOK_MAIN_WORK * wk = (PKWD_BOOK_MAIN_WORK *)work;
-	// 再計算
+//	PKWD_BOOK_MAIN_WORK * wk = (PKWD_BOOK_MAIN_WORK *)work;
+//	// 再計算
 //	pwb_calc_framelist( wk );
 }
 
@@ -4630,9 +4595,6 @@ static void _liststr_print( PKWD_BOOK_MAIN_WORK *wk, int pos, PRINT_UTIL *print_
 	int param = FRAMELIST_GetItemParam( wk->frame_list_work, pos );
 	//
 	_strbuf_print( wk, print_util, que, msg, param );
-	//
-//	FRAMELIST_ChangePosPalette( wk->frame_list_work, pos, wk->FlagBuffer[pos].color );
-//	FRAMELIST_ChangePosPalette( wk->frame_list_work, FRAMELIST_GetCursorPos(wk->frame_list_work ), wk->FlagBuffer[pos].color );
 }
 
 static void _liststr_print_null( PKWD_BOOK_MAIN_WORK *wk, int pos, PRINT_UTIL *print_util, GFL_MSGDATA *msg )
@@ -4659,25 +4621,6 @@ static void PrintStrBuf( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_
 static void _strbuf_print( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param )
 {
 	PrintStrBuf( wk, print_util, que, msg, param, PRINTSYS_MACRO_LSB(15,14,0), 4 );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief	フレームのパレットアニメ変更(予定)
- *
- * @param	PKWD_BOOK_MAIN_WORK*		wk
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static void pwb_chg_framelist_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 pnum )
-{
-#if 0
-	// 一括で読み込んでおいてもいいかもしれない..
-	ARCHANDLE* arc_handle = GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
-	FRAMELIST_LoadBlinkPalette( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, pnum, 4 );
-	GFL_ARC_CloseDataHandle( arc_handle );
-#endif
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -4908,7 +4851,6 @@ static void pwb_main_scrollbar( PKWD_BOOK_MAIN_WORK * wk )
 	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_list[CLWK_LIST_BALL], &cp_pos, CLSYS_DEFREND_SUB );
 }
 
-
 //-----------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------
@@ -4990,7 +4932,7 @@ static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		GFL_CLACT_WK_GetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 		pos.x = pwb_get_empty( wk, (25+i)*2 );
 		pos.y = pwb_get_empty( wk, (25+i)*2+1 );
-		pos.y += off*24;		// test
+		pos.y += off*24;
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 	}
 	//
