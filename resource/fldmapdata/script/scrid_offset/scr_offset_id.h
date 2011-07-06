@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2011 07/01 (Fri) 13:33
+ * @date  2011 07/06 (Wed) 17:49
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -122,67 +122,67 @@
 #define ID_VENDING_MACHINE_OFFSET_END    (10404)
 
 #define ID_ELEVATOR_OFFSET               (10405) //エレベーター共通スクリプト
-#define ID_ELEVATOR_OFFSET_END           (10424)
+#define ID_ELEVATOR_OFFSET_END           (10434)
 
-#define ID_GPOWER_SCR_OFFSET             (10425) //Gパワーイベントスクリプト
-#define ID_GPOWER_SCR_OFFSET_END         (10429)
+#define ID_GPOWER_SCR_OFFSET             (10435) //Gパワーイベントスクリプト
+#define ID_GPOWER_SCR_OFFSET_END         (10439)
 
-#define ID_TRIAL_HOUSE_SCR_OFFSET        (10430) //トライアルハウス受付スクリプト
-#define ID_TRIAL_HOUSE_SCR_OFFSET_END    (10434)
+#define ID_TRIAL_HOUSE_SCR_OFFSET        (10440) //トライアルハウス受付スクリプト
+#define ID_TRIAL_HOUSE_SCR_OFFSET_END    (10444)
 
-#define ID_PDW_SCR_OFFSET                (10435) //PDW家具屋用スクリプト
-#define ID_PDW_SCR_OFFSET_END            (10439)
+#define ID_PDW_SCR_OFFSET                (10445) //PDW家具屋用スクリプト
+#define ID_PDW_SCR_OFFSET_END            (10449)
 
-#define ID_MUSICAL_SCR_OFFSET            (10440) //ミュージカル用スクリプト
-#define ID_MUSICAL_SCR_OFFSET_END        (10459)
+#define ID_MUSICAL_SCR_OFFSET            (10450) //ミュージカル用スクリプト
+#define ID_MUSICAL_SCR_OFFSET_END        (10469)
 
-#define ID_SEATEMPLE_SCR_OFFSET          (10460) //海底神殿用スクリプト
-#define ID_SEATEMPLE_SCR_OFFSET_END      (10469)
+#define ID_SEATEMPLE_SCR_OFFSET          (10470) //海底神殿用スクリプト
+#define ID_SEATEMPLE_SCR_OFFSET_END      (10479)
 
-#define ID_APPRAISAL_SCR_OFFSET          (10470) //鑑定士イベント用スクリプト
-#define ID_APPRAISAL_SCR_OFFSET_END      (10479)
+#define ID_APPRAISAL_SCR_OFFSET          (10480) //鑑定士イベント用スクリプト
+#define ID_APPRAISAL_SCR_OFFSET_END      (10489)
 
-#define ID_SYMBOL_ENCOUNT_SCR_OFFSET     (10480) //シンボルエンカウント（パレスの森）用スクリプト
-#define ID_SYMBOL_ENCOUNT_SCR_OFFSET_END (10499)
+#define ID_SYMBOL_ENCOUNT_SCR_OFFSET     (10490) //シンボルエンカウント（パレスの森）用スクリプト
+#define ID_SYMBOL_ENCOUNT_SCR_OFFSET_END (10509)
 
-#define ID_WHEEL_SCR_OFFSET              (10500) //観覧車対戦イベントスクリプト
-#define ID_WHEEL_SCR_OFFSET_END          (10509)
+#define ID_WHEEL_SCR_OFFSET              (10510) //観覧車対戦イベントスクリプト
+#define ID_WHEEL_SCR_OFFSET_END          (10519)
 
-#define ID_TAMAGETAKE_SCR_OFFSET         (10510) //タマゲタケ対戦用スクリプト
-#define ID_TAMAGETAKE_SCR_OFFSET_END     (10519)
+#define ID_TAMAGETAKE_SCR_OFFSET         (10520) //タマゲタケ対戦用スクリプト
+#define ID_TAMAGETAKE_SCR_OFFSET_END     (10529)
 
-#define ID_TV_SCR_OFFSET                 (10520) //
-#define ID_TV_SCR_OFFSET_END             (10524)
+#define ID_TV_SCR_OFFSET                 (10530) //
+#define ID_TV_SCR_OFFSET_END             (10534)
 
-#define ID_PAIR_SCR_OFFSET               (10525) //連れ歩き制御用スクリプト
-#define ID_PAIR_SCR_OFFSET_END           (10624)
+#define ID_PAIR_SCR_OFFSET               (10535) //連れ歩き制御用スクリプト
+#define ID_PAIR_SCR_OFFSET_END           (10634)
 
-#define ID_MEDAL_SCR_OFFSET              (10625) //メダル関連イベント
-#define ID_MEDAL_SCR_OFFSET_END          (10644)
+#define ID_MEDAL_SCR_OFFSET              (10635) //メダル関連イベント
+#define ID_MEDAL_SCR_OFFSET_END          (10654)
 
-#define ID_WBT_LOBBY_OFFSET              (10645) //WBT：受付イベント
-#define ID_WBT_LOBBY_OFFSET_END          (10654)
+#define ID_WBT_LOBBY_OFFSET              (10655) //WBT：受付イベント
+#define ID_WBT_LOBBY_OFFSET_END          (10664)
 
-#define ID_WBT_HALL_OFFSET               (10655) //WBT：ホール内イベント
-#define ID_WBT_HALL_OFFSET_END           (10674)
+#define ID_WBT_HALL_OFFSET               (10665) //WBT：ホール内イベント
+#define ID_WBT_HALL_OFFSET_END           (10684)
 
-#define ID_RESORT_SCR_OFFSET             (10675) //レゾナンスリゾート共通スクリプト
-#define ID_RESORT_SCR_OFFSET_END         (10724)
+#define ID_RESORT_SCR_OFFSET             (10685) //レゾナンスリゾート共通スクリプト
+#define ID_RESORT_SCR_OFFSET_END         (10734)
 
-#define ID_INFINITY_DUNGEON_SCR_OFFSET   (10725) //無限ダンジョン用スクリプト
-#define ID_INFINITY_DUNGEON_SCR_OFFSET_END (10774)
+#define ID_INFINITY_DUNGEON_SCR_OFFSET   (10735) //無限ダンジョン用スクリプト
+#define ID_INFINITY_DUNGEON_SCR_OFFSET_END (10784)
 
-#define ID_FMISSION_SCR_OFFSET           (10775) //フェスミッション用スクリプト
-#define ID_FMISSION_SCR_OFFSET_END       (10784)
+#define ID_FMISSION_SCR_OFFSET           (10785) //フェスミッション用スクリプト
+#define ID_FMISSION_SCR_OFFSET_END       (10794)
 
-#define ID_ANIMAL_TRAIL_SCR_OFFSET       (10785) //けもの道用スクリプト
-#define ID_ANIMAL_TRAIL_SCR_OFFSET_END   (10804)
+#define ID_ANIMAL_TRAIL_SCR_OFFSET       (10795) //けもの道用スクリプト
+#define ID_ANIMAL_TRAIL_SCR_OFFSET_END   (10814)
 
-#define ID_POKEWOOD_SCR_OFFSET           (10805) //ポケウッド用スクリプト
-#define ID_POKEWOOD_SCR_OFFSET_END       (10824)
+#define ID_POKEWOOD_SCR_OFFSET           (10815) //ポケウッド用スクリプト
+#define ID_POKEWOOD_SCR_OFFSET_END       (10834)
 
-#define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
-#define ID_DEBUG_SCR_OFFSET_END          (12199)
+#define ID_DEBUG_SCR_OFFSET              (12010) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
+#define ID_DEBUG_SCR_OFFSET_END          (12209)
 
 
 #endif  /* SCR_OFFSET_ID_H */

@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2011 07/01 (Fri) 13:33
+ * @date  2011 07/06 (Wed) 17:49
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -14,149 +14,149 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
 
 #ifdef PM_DEBUG
     {//デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
-      ID_DEBUG_SCR_OFFSET,            //(12000),
-      ID_DEBUG_SCR_OFFSET_END,        //(12199),
+      ID_DEBUG_SCR_OFFSET,            //(12010),
+      ID_DEBUG_SCR_OFFSET_END,        //(12209),
       NARC_script_seq_debug_scr_bin,
       ARCID_DEBUG_MESSAGE,
       NARC_debug_message_debug_scr_dat
     },
 #endif //PM_DEBUG
     {//ポケウッド用スクリプト
-      ID_POKEWOOD_SCR_OFFSET,         //(10805),
-      ID_POKEWOOD_SCR_OFFSET_END,     //(10824),
+      ID_POKEWOOD_SCR_OFFSET,         //(10815),
+      ID_POKEWOOD_SCR_OFFSET_END,     //(10834),
       NARC_script_seq_pokewood_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pokewood_scr_dat
     },
     {//けもの道用スクリプト
-      ID_ANIMAL_TRAIL_SCR_OFFSET,     //(10785),
-      ID_ANIMAL_TRAIL_SCR_OFFSET_END, //(10804),
+      ID_ANIMAL_TRAIL_SCR_OFFSET,     //(10795),
+      ID_ANIMAL_TRAIL_SCR_OFFSET_END, //(10814),
       NARC_script_seq_animal_trail_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_animal_trail_scr_dat
     },
     {//フェスミッション用スクリプト
-      ID_FMISSION_SCR_OFFSET,         //(10775),
-      ID_FMISSION_SCR_OFFSET_END,     //(10784),
+      ID_FMISSION_SCR_OFFSET,         //(10785),
+      ID_FMISSION_SCR_OFFSET_END,     //(10794),
       NARC_script_seq_fmission_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_fmission_scr_dat
     },
     {//無限ダンジョン用スクリプト
-      ID_INFINITY_DUNGEON_SCR_OFFSET, //(10725),
-      ID_INFINITY_DUNGEON_SCR_OFFSET_END,//(10774),
+      ID_INFINITY_DUNGEON_SCR_OFFSET, //(10735),
+      ID_INFINITY_DUNGEON_SCR_OFFSET_END,//(10784),
       NARC_script_seq_infinity_dungeon_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_infinity_dungeon_scr_dat
     },
     {//レゾナンスリゾート共通スクリプト
-      ID_RESORT_SCR_OFFSET,           //(10675),
-      ID_RESORT_SCR_OFFSET_END,       //(10724),
+      ID_RESORT_SCR_OFFSET,           //(10685),
+      ID_RESORT_SCR_OFFSET_END,       //(10734),
       NARC_script_seq_resort_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_resort_scr_dat
     },
     {//WBT：ホール内イベント
-      ID_WBT_HALL_OFFSET,             //(10655),
-      ID_WBT_HALL_OFFSET_END,         //(10674),
+      ID_WBT_HALL_OFFSET,             //(10665),
+      ID_WBT_HALL_OFFSET_END,         //(10684),
       NARC_script_seq_wbt_hall_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wbt_hall_dat
     },
     {//WBT：受付イベント
-      ID_WBT_LOBBY_OFFSET,            //(10645),
-      ID_WBT_LOBBY_OFFSET_END,        //(10654),
+      ID_WBT_LOBBY_OFFSET,            //(10655),
+      ID_WBT_LOBBY_OFFSET_END,        //(10664),
       NARC_script_seq_wbt_lobby_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wbt_lobby_dat
     },
     {//メダル関連イベント
-      ID_MEDAL_SCR_OFFSET,            //(10625),
-      ID_MEDAL_SCR_OFFSET_END,        //(10644),
+      ID_MEDAL_SCR_OFFSET,            //(10635),
+      ID_MEDAL_SCR_OFFSET_END,        //(10654),
       NARC_script_seq_medal_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_medal_ev_dat
     },
     {//連れ歩き制御用スクリプト
-      ID_PAIR_SCR_OFFSET,             //(10525),
-      ID_PAIR_SCR_OFFSET_END,         //(10624),
+      ID_PAIR_SCR_OFFSET,             //(10535),
+      ID_PAIR_SCR_OFFSET_END,         //(10634),
       NARC_script_seq_pair_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pair_scr_dat
     },
     {//
-      ID_TV_SCR_OFFSET,               //(10520),
-      ID_TV_SCR_OFFSET_END,           //(10524),
+      ID_TV_SCR_OFFSET,               //(10530),
+      ID_TV_SCR_OFFSET_END,           //(10534),
       NARC_script_seq_tv_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_tv_01_scr_dat
     },
     {//タマゲタケ対戦用スクリプト
-      ID_TAMAGETAKE_SCR_OFFSET,       //(10510),
-      ID_TAMAGETAKE_SCR_OFFSET_END,   //(10519),
+      ID_TAMAGETAKE_SCR_OFFSET,       //(10520),
+      ID_TAMAGETAKE_SCR_OFFSET_END,   //(10529),
       NARC_script_seq_tamagetake_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//観覧車対戦イベントスクリプト
-      ID_WHEEL_SCR_OFFSET,            //(10500),
-      ID_WHEEL_SCR_OFFSET_END,        //(10509),
+      ID_WHEEL_SCR_OFFSET,            //(10510),
+      ID_WHEEL_SCR_OFFSET_END,        //(10519),
       NARC_script_seq_wheel_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wheel_scr_dat
     },
     {//シンボルエンカウント（パレスの森）用スクリプト
-      ID_SYMBOL_ENCOUNT_SCR_OFFSET,   //(10480),
-      ID_SYMBOL_ENCOUNT_SCR_OFFSET_END,//(10499),
+      ID_SYMBOL_ENCOUNT_SCR_OFFSET,   //(10490),
+      ID_SYMBOL_ENCOUNT_SCR_OFFSET_END,//(10509),
       NARC_script_seq_symbol_encount_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_symbol_encount_scr_dat
     },
     {//鑑定士イベント用スクリプト
-      ID_APPRAISAL_SCR_OFFSET,        //(10470),
-      ID_APPRAISAL_SCR_OFFSET_END,    //(10479),
+      ID_APPRAISAL_SCR_OFFSET,        //(10480),
+      ID_APPRAISAL_SCR_OFFSET_END,    //(10489),
       NARC_script_seq_appraisal_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_appraisal_scr_dat
     },
     {//海底神殿用スクリプト
-      ID_SEATEMPLE_SCR_OFFSET,        //(10460),
-      ID_SEATEMPLE_SCR_OFFSET_END,    //(10469),
+      ID_SEATEMPLE_SCR_OFFSET,        //(10470),
+      ID_SEATEMPLE_SCR_OFFSET_END,    //(10479),
       NARC_script_seq_seatemple_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_seatemple_scr_dat
     },
     {//ミュージカル用スクリプト
-      ID_MUSICAL_SCR_OFFSET,          //(10440),
-      ID_MUSICAL_SCR_OFFSET_END,      //(10459),
+      ID_MUSICAL_SCR_OFFSET,          //(10450),
+      ID_MUSICAL_SCR_OFFSET_END,      //(10469),
       NARC_script_seq_musical_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_musical_scr_dat
     },
     {//PDW家具屋用スクリプト
-      ID_PDW_SCR_OFFSET,              //(10435),
-      ID_PDW_SCR_OFFSET_END,          //(10439),
+      ID_PDW_SCR_OFFSET,              //(10445),
+      ID_PDW_SCR_OFFSET_END,          //(10449),
       NARC_script_seq_pdw_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pdw_scr_dat
     },
     {//トライアルハウス受付スクリプト
-      ID_TRIAL_HOUSE_SCR_OFFSET,      //(10430),
-      ID_TRIAL_HOUSE_SCR_OFFSET_END,  //(10434),
+      ID_TRIAL_HOUSE_SCR_OFFSET,      //(10440),
+      ID_TRIAL_HOUSE_SCR_OFFSET_END,  //(10444),
       NARC_script_seq_trial_house_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_trialhouse_dat
     },
     {//Gパワーイベントスクリプト
-      ID_GPOWER_SCR_OFFSET,           //(10425),
-      ID_GPOWER_SCR_OFFSET_END,       //(10429),
+      ID_GPOWER_SCR_OFFSET,           //(10435),
+      ID_GPOWER_SCR_OFFSET_END,       //(10439),
       NARC_script_seq_gpower_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_gpower_event_dat
     },
     {//エレベーター共通スクリプト
       ID_ELEVATOR_OFFSET,             //(10405),
-      ID_ELEVATOR_OFFSET_END,         //(10424),
+      ID_ELEVATOR_OFFSET_END,         //(10434),
       NARC_script_seq_elevator_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_elevator_dat
