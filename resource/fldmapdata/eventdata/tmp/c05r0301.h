@@ -15,5 +15,7 @@
 #ifndef ZONE_C05R0301_EVB_H
 #define ZONE_C05R0301_EVB_H
 
+#define BG_ELEVATOR_C05R0301_FRONT        0
+#define BG_ELEVATOR_C05R0301              1
 
 #endif //ZONE_C05R0301_EVB_H

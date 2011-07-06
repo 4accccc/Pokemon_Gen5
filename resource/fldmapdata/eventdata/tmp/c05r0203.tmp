@@ -1,5 +1,5 @@
 #../data/c05r0203.mev
-../tmp/c05r0203.bin:../data/c05r0203.mev ../../script/sp_c05r0203.bin $(UNIQ_SCRIPTHEADER) ../tmp/c05r0203.h 
+../tmp/c05r0203.bin:../data/c05r0203.mev ../../script/sp_c05r0203.bin $(UNIQ_SCRIPTHEADER) ../tmp/c05r0203.h ../../../../prog/include/field/eventdata_type.h ../../script/C05R0203_def.h 
 	@echo ../data/c05r0203.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c05r0203.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/c05r0203.h ../../../../prog/include/field/eventdata_type.h ../../script/C05R0203_def.h 
 

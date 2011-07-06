@@ -32,6 +32,14 @@ _EVENT_DATA   ev_elevator_c03r10_front
 _EVENT_DATA   ev_elevator_c03r11_front
 _EVENT_DATA   ev_elevator_c03r12_front
 _EVENT_DATA   ev_elevator_c03r13_front
+_EVENT_DATA   ev_elevator_c05r01
+_EVENT_DATA   ev_elevator_c05r02
+_EVENT_DATA   ev_elevator_c05r03
+_EVENT_DATA   ev_elevator_c05r04
+_EVENT_DATA   ev_elevator_c05r01_front
+_EVENT_DATA   ev_elevator_c05r02_front
+_EVENT_DATA   ev_elevator_c05r03_front
+_EVENT_DATA   ev_elevator_c05r04_front
 _EVENT_DATA_END
 
 
@@ -40,6 +48,90 @@ DEFINE_LOCAL  TALK_POS
 DEFINE_LOCAL  HEROX
 DEFINE_LOCAL  HEROZ
 DEFINE_LOCAL  ELEVATOR_ID
+
+/**************************************************************/
+/*        C05R010?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c05r01
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c05r01 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c05r01_front
+    $TALK_POS = 1
+    _ELEVATOR_ENTRY_LIST( elevator_c05r01 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c05r01
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C05R0101,3,0,0
+  _ELEVATOR_DATA  msg_elevator_11f, ZONE_ID_C05R0102,3,0,0
+  _ELEVATOR_DATA  msg_elevator_25f, ZONE_ID_C05R0103,3,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C05R020?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c05r02
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c05r02 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c05r02_front
+    $TALK_POS = 1
+    _ELEVATOR_ENTRY_LIST( elevator_c05r02 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c05r02
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C05R0201,3,0,0
+  _ELEVATOR_DATA  msg_elevator_14f, ZONE_ID_C05R0202,3,0,0
+  _ELEVATOR_DATA  msg_elevator_19f, ZONE_ID_C05R0203,3,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C05R030?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c05r03
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c05r03 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c05r03_front
+    $TALK_POS = 1
+    _ELEVATOR_ENTRY_LIST( elevator_c05r03 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c05r03
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C05R0301,3,0,0
+  _ELEVATOR_DATA  msg_elevator_19f, ZONE_ID_C05R0302,3,0,0
+  _ELEVATOR_DATA  msg_elevator_23f, ZONE_ID_C05R0303,3,0,0
+_ELEVATOR_DATA_END
+
+/**************************************************************/
+/*        C05R040?用エレベーター                              */
+/**************************************************************/
+EVENT_START   ev_elevator_c05r04
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c05r04 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c05r04_front
+    $TALK_POS = 1
+    _ELEVATOR_ENTRY_LIST( elevator_c05r04 )
+    _CALL sub_elevator_main
+EVENT_END
+
+_ELEVATOR_LABEL elevator_c05r04
+  _ELEVATOR_DATA  msg_elevator_1f, ZONE_ID_C05R0401,3,0,0
+  _ELEVATOR_DATA  msg_elevator_23f, ZONE_ID_C05R0402,3,0,0
+  _ELEVATOR_DATA  msg_elevator_25f, ZONE_ID_C05R0403,3,0,0
+_ELEVATOR_DATA_END
 
 /**************************************************************/
 /*        C03R030?用エレベーター                              */
