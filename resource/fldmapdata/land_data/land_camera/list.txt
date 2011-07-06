@@ -356,3 +356,5 @@
 "DUN2510.bin"
 "SWWF.bin"
 "SWBC.bin"
+"nschool02.bin"
+"daisuki01.bin"

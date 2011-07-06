@@ -928,6 +928,11 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_gym0901_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gym0901_00_01.3dppack \
 	$(DIR_OUTPUT)/m_gym0901_00_02.3dppack \
+	$(DIR_OUTPUT)/m_nschool02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_daisuki01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_pwood01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_pwood02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_pwood03_00_00.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

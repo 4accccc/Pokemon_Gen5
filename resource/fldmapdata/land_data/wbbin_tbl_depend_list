@@ -3878,3 +3878,23 @@ $(DIR_WBTMP)/m_gym0901_00_02.tbl: $(DIR_RES)/m_gym0901_00_02.bin
 	@echo create_bintbl m_gym0901_00_02
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gym0901_00_02.bin
 
+$(DIR_WBTMP)/m_nschool02_00_00.tbl: $(DIR_RES)/m_nschool02_00_00.bin
+	@echo create_bintbl m_nschool02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_nschool02_00_00.bin
+
+$(DIR_WBTMP)/m_daisuki01_00_00.tbl: $(DIR_RES)/m_daisuki01_00_00.bin
+	@echo create_bintbl m_daisuki01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_daisuki01_00_00.bin
+
+$(DIR_WBTMP)/m_pwood01_00_00.tbl: $(DIR_RES)/m_pwood01_00_00.bin
+	@echo create_bintbl m_pwood01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_pwood01_00_00.bin
+
+$(DIR_WBTMP)/m_pwood02_00_00.tbl: $(DIR_RES)/m_pwood02_00_00.bin
+	@echo create_bintbl m_pwood02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_pwood02_00_00.bin
+
+$(DIR_WBTMP)/m_pwood03_00_00.tbl: $(DIR_RES)/m_pwood03_00_00.bin
+	@echo create_bintbl m_pwood03_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_pwood03_00_00.bin
+

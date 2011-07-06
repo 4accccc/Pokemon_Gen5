@@ -928,6 +928,11 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_gym0901_00_00.nsbmd \
 	$(DIR_TEMP)/m_gym0901_00_01.nsbmd \
 	$(DIR_TEMP)/m_gym0901_00_02.nsbmd \
+	$(DIR_TEMP)/m_nschool02_00_00.nsbmd \
+	$(DIR_TEMP)/m_daisuki01_00_00.nsbmd \
+	$(DIR_TEMP)/m_pwood01_00_00.nsbmd \
+	$(DIR_TEMP)/m_pwood02_00_00.nsbmd \
+	$(DIR_TEMP)/m_pwood03_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
