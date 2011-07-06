@@ -358,3 +358,6 @@
 "SWBC.bin"
 "nschool02.bin"
 "daisuki01.bin"
+"PWOOD01.bin"
+"PWOOD02.bin"
+"PWOOD03.bin"
