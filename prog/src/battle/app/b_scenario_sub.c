@@ -332,12 +332,12 @@ static const s16 bs_obj_01_itbl[] = {
 
 // OBJのテーブルデータ
 const BS_OBJ_DATA bs_obj_01_tbl[] = {
-	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_00,},		// ポケモン00
-	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_01,},		// ポケモン01
-	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_02,},		// ポケモン02
-	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_03,},		// ポケモン03
-	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_04,},		// ポケモン04
-	{ 1,	0x28,	1,	0,	0,	1,	6, BS_RES_POKE_CHR_05,},		// ポケモン05
+	{ 1,	0x28,	1,	0,	0,	0,	6, BS_RES_POKE_CHR_00,},		// ポケモン00
+	{ 1,	0x28,	1,	0,	0,	0,	6, BS_RES_POKE_CHR_01,},		// ポケモン01
+	{ 1,	0x28,	1,	0,	0,	0,	6, BS_RES_POKE_CHR_02,},		// ポケモン02
+	{ 1,	0x28,	1,	0,	0,	0,	6, BS_RES_POKE_CHR_03,},		// ポケモン03
+	{ 1,	0x28,	1,	0,	0,	0,	6, BS_RES_POKE_CHR_04,},		// ポケモン04
+	{ 1,	0x28,	1,	0,	0,	0,	6, BS_RES_POKE_CHR_05,},		// ポケモン05
 	
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -1015,7 +1015,7 @@ void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const
 	u8 pal_num = POKEICON_GetPalNum( id, 0, sex, FALSE );
 	GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke[wnum], pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
 	// アニメON
-	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke[wnum], TRUE );
+//	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke[wnum], TRUE );
 }
 
 //-----------------------------------------------------------------------------
