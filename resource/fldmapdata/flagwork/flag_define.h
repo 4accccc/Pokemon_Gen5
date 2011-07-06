@@ -330,7 +330,7 @@
 #define FE_C03_RALLYPOINT_03               314 /* 0x013a ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンストリート） */
 #define FE_C03_RALLYPOINT_04               315 /* 0x013b ヒウンシティ：名所巡りチェックポイントフラグ（遊覧船乗り場） */
 #define FE_C03_RALLYPOINT_05               316 /* 0x013c ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンジム前） */
-		/* not used   317(0x013d) */
+#define FE_TEACH_WAZA_TALK                 317 /* 0x013d SWAN技教え初回会話フラグ */
 		/* not used   318(0x013e) */
 		/* not used   319(0x013f) */
 		/* not used   320(0x0140) */
