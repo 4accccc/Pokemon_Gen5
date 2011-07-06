@@ -599,6 +599,7 @@
 #define ZONE_ID_D25R0901         (595)
 #define ZONE_ID_D25R1001         (596)
 #define ZONE_ID_D26R0101         (597)
-#define ZONE_ID_MAX	(598)
+#define ZONE_ID_C15R0301         (598)
+#define ZONE_ID_MAX	(599)
 #endif // __ZONE_ID_H__
 
