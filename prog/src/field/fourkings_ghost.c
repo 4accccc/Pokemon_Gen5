@@ -711,6 +711,9 @@ static void INIT_FieldRecover( FOURKINGS_GHOST_TMP *p_wk )
   // 何も踏んでいない
   if( pos1_flag == FALSE && pos2_flag == FALSE )
   {
+    // ライト表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, OBJ_LIGHT, FALSE );
+
     ANM_BOOK_PlayLoop( p_wk );      // 本ループ
     ANM_LAMP_PlayShake( p_wk );     // ランプゆれ
     ANM_MIST_PlayLoop( p_wk );      // もや表示
@@ -719,6 +722,8 @@ static void INIT_FieldRecover( FOURKINGS_GHOST_TMP *p_wk )
   // 下段POS踏んだ
   else if( pos1_flag == TRUE && pos2_flag == FALSE )
   {
+    // ライト表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, OBJ_LIGHT, FALSE );
     ANM_BOOK_PlayLoop( p_wk );      // 本ループ
     ANM_LAMP_PlayShake( p_wk );     // ランプゆれ
    
