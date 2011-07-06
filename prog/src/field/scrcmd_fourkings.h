@@ -53,6 +53,12 @@ extern VMCMD_RESULT EvCmdFourKings_Esp_Flower( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Esp_Cube( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Esp_Cattleya( VMHANDLE *core, void *wk );
 
+// ÉSÅ[ÉXÉg
+extern VMCMD_RESULT EvCmdFourKings_Ghost_Mist( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Ghost_Fire( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Ghost_BookFall( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Ghost_Lamp( VMHANDLE *core, void *wk );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

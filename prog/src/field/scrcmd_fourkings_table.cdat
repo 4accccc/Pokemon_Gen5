@@ -28,6 +28,12 @@
   DEF_CMD( EvCmdFourKings_Esp_Flower, EV_SEQ_FOURKINGS_ESP_FLOWER )
   DEF_CMD( EvCmdFourKings_Esp_Cube, EV_SEQ_FOURKINGS_ESP_CUBE )
   DEF_CMD( EvCmdFourKings_Esp_Cattleya, EV_SEQ_FOURKINGS_ESP_CATTLEYA )
+
+  // ゴースト
+  DEF_CMD( EvCmdFourKings_Ghost_Mist, EV_SEQ_FOURKINGS_GHOST_MIST )
+  DEF_CMD( EvCmdFourKings_Ghost_Fire, EV_SEQ_FOURKINGS_GHOST_FIRE )
+  DEF_CMD( EvCmdFourKings_Ghost_BookFall, EV_SEQ_FOURKINGS_GHOST_BOOK_FALL )
+  DEF_CMD( EvCmdFourKings_Ghost_Lamp, EV_SEQ_FOURKINGS_GHOST_LAMP )
   
   END_CMD
   //スクリプトコマンドテーブル終了

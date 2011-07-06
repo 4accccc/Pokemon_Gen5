@@ -9639,7 +9639,63 @@
   .short  \fall_spd
   .endm
 
+// ゴースト部屋
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_GHOST_MIST
+ * @brief 四天王  ゴースト  もやが晴れる
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_GHOST_MIST() _ASM_FOURKINGS_GHOST_MIST
 
+  .macro  _ASM_FOURKINGS_GHOST_MIST
+  .short  EV_SEQ_FOURKINGS_GHOST_MIST
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_GHOST_FIRE
+ * @brief 四天王  ゴースト  炎アニメ
+ * @param id  0:主人公横の炎
+ *            1～4:階段の炎
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_GHOST_FIRE( id ) _ASM_FOURKINGS_GHOST_FIRE id
+
+  .macro  _ASM_FOURKINGS_GHOST_FIRE id
+  .short  EV_SEQ_FOURKINGS_GHOST_FIRE
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_GHOST_BOOK_FALL
+ * @brief 四天王  ゴースト  本落ちるアニメ
+ * @param wait    本が落ちてから暗転するまでのウェイト
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_GHOST_BOOK_FALL( wait ) _ASM_FOURKINGS_GHOST_BOOK_FALL wait
+
+  .macro  _ASM_FOURKINGS_GHOST_BOOK_FALL wait
+  .short  EV_SEQ_FOURKINGS_GHOST_BOOK_FALL
+  .short  \wait
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_GHOST_LAMP
+ * @brief 四天王  ゴースト  ランプアニメ
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_GHOST_LAMP() _ASM_FOURKINGS_GHOST_LAMP
+
+  .macro  _ASM_FOURKINGS_GHOST_LAMP
+  .short  EV_SEQ_FOURKINGS_GHOST_LAMP
+  .endm
 
 //======================================================================
 //
