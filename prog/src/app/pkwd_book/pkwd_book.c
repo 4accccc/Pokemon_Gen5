@@ -123,7 +123,7 @@ enum{
 // 上(MAIN)：BG  (0-4:下地),(10:font)
 // 上(MAIN)：OBJ (14:通信アイコン)
 //
-// 下(SUB) ：BG  (0-4:リストパネル),(6,7:下地),(8:cmn), (9:win), (10:font),(11,12:selwin)
+// 下(SUB) ：BG  (0-1:リストパネル),(6,7:下地),(8:cmn), (9:win), (10:font),(11,12:selwin)
 // 下(SUB) ：OBJ (0-3:poke),(4-7:cmn),(8-10:type),(11:trainer),(12:font),(13,14:obj)
 enum{
 	// 何本目か(bg)
@@ -931,6 +931,9 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp2_tbl[] =
   { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
   { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 
+  { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
+  { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
+
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
 
@@ -949,11 +952,12 @@ static const FRAMELIST_HEADER pwb_frame_list_header = {
   0,    // フレーム内に表示するBMPWINの表示Ｙ座標
   26,   // フレーム内に表示するBMPWINの表示Ｘサイズ
   3,    // フレーム内に表示するBMPWINの表示Ｙサイズ(itemSizY)
-  1,    // フレーム内に表示するBMPWINのパレット
+  0,    // フレーム内に表示するBMPWINのパレット
   
   {24,12,8,6,4,3,},    // スクロール速度 [0] = 最速 ※itemSizY*8を割り切れる値であること！
 //   5,   // 選択項目のパレット
-   4,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
+//   4,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
+   1,   // 選択項目のパレット(●この番号のパレットが選択中となるようだ)
    8,   // スクロールバーのＹサイズ
    7,   // 項目登録数(●初期化前に変更すればよい)
    4,   // 背景登録数
@@ -1401,7 +1405,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	wk->ListCurPos 		= 0;
 	wk->ListScrollPos 	= 0;
 	wk->InfoCurPos		= 0;
-	wk->Result			= -1;
+	wk->Result			= PKWD_BOOK_NOSELECT;	// 初期値
 	wk->TrainerID		= 0;
 	wk->NewFlag			= 0;
 	wk->OldPos			= -1;
@@ -1461,7 +1465,13 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	{
 		ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_SUB_FONT*0x20,  0x20, wk->heapID );
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_MAIN_FONT*0x20, 0x20, wk->heapID );
+//		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_MAIN_FONT*0x20, 0x20, wk->heapID );
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+	// main
+	{
+		ARCHANDLE* p_handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_b_scenario_gra_pkwd_list_fnt_NCLR, PALTYPE_MAIN_BG, PLTID_MAIN_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 	
@@ -2850,6 +2860,10 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 		if(buf[2] == 1){
 			col = PRINTSYS_LSB_Make(1,2,0);
 		}
+		// 上画面
+		if(type == STR_MAIN){
+			col = PRINTSYS_LSB_Make(3,2,1);
+		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], pwb_fix_mestbl[ buf[0] ] );
 		pwb_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, col );
 		
@@ -3179,7 +3193,8 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	// タイトル、あらすじ、クリア目標
 	for(i=0;i<3;i++){
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], pwb_mes_tbl[i]+id );
-		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
+//		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
+		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make( 15, 14, 0 ) );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
@@ -4031,15 +4046,16 @@ static s32 pwb_chk_tp( PKWD_BOOK_MAIN_WORK *wk, const s32 mode )
 static void pwb_make_party( PKWD_BOOK_MAIN_WORK * wk, const s32 scenario_id )
 {
 	// ポケウッドのpartyの作成
-	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
-	const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
+//	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
+//	const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
 	//
 	// データを破棄
 	pwb_delete_party( wk );
 	//
 	// newされたデータがwk->Partyに格納されるはず
 	wk->Party = PokeParty_AllocPartyWork( wk->heapID );
-	POKEWOOD_EVENT_setupPokemon( mystatus, wk->Party, wk->heapID, scenario_id, 1 );
+//	POKEWOOD_EVENT_setupPokemon( mystatus, wk->Party, wk->heapID, scenario_id, 1 );
+	POKEWOOD_EVENT_setupPokemon( wk->Param->mystatus, wk->Party, wk->heapID, scenario_id, 1 );
 	//
 	// パラメータセット
 	pwb_set_pokework( wk );
@@ -4151,8 +4167,8 @@ static void pwb_set_pokework( PKWD_BOOK_MAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 {
-	GAMEDATA *gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
-	MISC*	misc = GAMEDATA_GetMiscWork( gamedata );
+//	GAMEDATA *gamedata = GAMESYSTEM_GetGameData( wk->Param->gamesys );
+//	MISC*	misc = GAMEDATA_GetMiscWork( gamedata );
 	s32		i;
 	s32		j;
 	BOOL	bflg;
@@ -4160,7 +4176,8 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 	// openチェック
 	j=0;
 	for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
-		bflg = MISC_GetPokewoodOpenFlag(misc, i);
+//		bflg = MISC_GetPokewoodOpenFlag(misc, i);
+		bflg = MISC_GetPokewoodOpenFlag(wk->Param->misc, i);
 #if 0	// test
 		// debug
 		if(i < 20){
@@ -4171,7 +4188,8 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 			wk->FlagBuffer[j].openid = i;
 			//
 			// newチェック
-			bflg = MISC_GetPokewoodPlayedFlag(misc, i);
+//			bflg = MISC_GetPokewoodPlayedFlag(misc, i);
+			bflg = MISC_GetPokewoodPlayedFlag(wk->Param->misc, i);
 			if(bflg == FALSE){
 				wk->FlagBuffer[j].newflag = 1;
 			}
@@ -4207,7 +4225,7 @@ static s32 pwb_get_scenario_curpos( PKWD_BOOK_MAIN_WORK * wk, const s32 num )
 	// リミットチェック
 	if(num >= wk->ScenarioMax){
 		OS_Printf("scenario max error :%d\n",num);
-		return(-1);
+		return( PKWD_BOOK_NOSELECT );
 	}
 	
 	// カーソル位置のidをセット
@@ -4334,7 +4352,7 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	// オリジナルデータの読み込み
 	//----------------------------
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( arc_handle, NARC_b_scenario_gra_pkwd_list_NCGR, GFL_BG_FRAME2_S, 0, 0, 0, wk->heapID );
-	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, PALTYPE_SUB_BG,  0, 4*0x20, wk->heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette(     arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, PALTYPE_SUB_BG,  0, 0x20, wk->heapID );	// 0番
 	
 	//---------------
 	// FrameListの設定
@@ -4352,16 +4370,14 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	wk->frame_list_work = FRAMELIST_Create( &header, wk->heapID );
 	
 	// 項目背景設定
-//	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_NSCR, FALSE, 0 );		// 通常
 	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p1_NSCR, FALSE, 0 );		// 通常
 	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p2_NSCR, FALSE, 1 );		// 通常
 	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p3_NSCR, FALSE, 2 );		// 通常
 	FRAMELIST_LoadFrameGraphicAH( wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_p4_NSCR, FALSE, 3 );		// 通常
 	// 点滅アニメパレット設定
-	// (NARC_b_scenario_gra_pkwd_list_NCLR)の1番パレット(16色)と5番パレット(16色)間を補間してくれる
+	// (NARC_b_scenario_gra_pkwd_list_col_NCLR)の0番パレット(16色)と1番パレット(16色)間を補間してくれる
 	// 補間後のパレットはFRAMELIST_HEADERのselPalの指定で可能
-//	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_NCLR, 1, 5 );
-	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, 0, 4 );
+	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, 0, 1 );
 	//
 	GFL_ARC_CloseDataHandle( arc_handle );
 	//

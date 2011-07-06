@@ -67,11 +67,15 @@ void PKWD_COUNT_PARAM_Setup_Debug( GAMESYS_WORK * gsys, PKWD_COUNT_PARAM * pkwd_
 PKWD_BOOK_PARAM * PKWD_BOOK_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+	MISC * misc         = GAMEDATA_GetMiscWork( gamedata );
 	PKWD_BOOK_PARAM 	*pkwd_param;
 	
 	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_BOOK_PARAM) );
 	// ‰Šú‰»
-  pkwd_param->gamesys = gsys;
+//  pkwd_param->gamesys = gsys;
+  pkwd_param->mystatus = mystatus;
+  pkwd_param->misc     = misc;
   pkwd_param->result = (s16*)res_work;
 	//
 	return pkwd_param;
