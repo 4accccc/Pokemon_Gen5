@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/01 19:08:10
+#save date:2011/07/05 18:19:30
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,162 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+C14_SWRIVAL_01
+#OBJ CODE Number
+SWRIVAL
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_SWRIVAL_01
+#Event Script Name
+SCRID_C14_SWRIVAL_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 -64 -520
+#event number: 1
+#type
+1
+#ID name
+C14_SWLEADER8_01
+#OBJ CODE Number
+SWLEADER8
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_SWLEADER8_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 -84 -728
+#event number: 2
+#type
+1
+#ID name
+C14_GIRL4_01
+#OBJ CODE Number
+GIRL4
+#MOVE CODE Number
+MV_RTDL         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_GIRL4_01
+#Event Script Name
+SCRID_C14_GIRL4_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 -80 -648
+#event number: 3
+#type
+1
+#ID name
+C14_BOY4_01
+#OBJ CODE Number
+BOY4
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_BOY4_01
+#Event Script Name
+SCRID_C14_BOY4_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 -80 -648
+#event number: 4
+#type
+1
+#ID name
+C14_BOY4_02
+#OBJ CODE Number
+BOY4
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_BOY4_02
+#Event Script Name
+SCRID_C14_BOY4_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 -80 -696
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

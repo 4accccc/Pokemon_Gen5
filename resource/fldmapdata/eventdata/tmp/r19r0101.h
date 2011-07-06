@@ -10,6 +10,8 @@
 #ifndef ZONE_R19R0101_EVC_H
 #define ZONE_R19R0101_EVC_H
 
+#define R19R0101_INFORMATIONW_01           0
+#define R19R0101_MAN1_01                   1
 
 #endif //ZONE_R19R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r19r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

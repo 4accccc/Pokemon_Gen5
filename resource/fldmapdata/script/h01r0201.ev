@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_h01r0201.h"
-  //.include  "h01r0201.h"
+  .include  "h01r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,8 +19,17 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_h01r0201_board_01
+_EVENT_DATA   ev_bg_h01r0201_board_01
+_EVENT_DATA   ev_h01r0201_informationw_01
+_EVENT_DATA   ev_h01r0201_woman2_01
+_EVENT_DATA   ev_h01r0201_workman_01
+_EVENT_DATA   ev_pos_h01r0201_workman_01
 _EVENT_DATA_END
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
 
 /**************************************************************/
@@ -30,10 +39,119 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*  電光掲示板のイベントスクリプト*/
+/*  電光掲示板のイベントスクリプト                            */
 /**************************************************************/
 EVENT_START   ev_bg_h01r0201_board_01
+  _LOOK_ELBOARD( ELBOARD_CAMERA_FRAME )
+EVENT_END
 
-	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_h01r0201_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_h01r0201_woman2_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //女性：すっごく　あるいちゃった！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_woman2_02 )
+
+  ELSE
+    //女性:スカイアローブリッジも
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_woman2_01 )
+
+  ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*  ストッパー：話しかけ（クリアまで）                        */
+/**************************************************************/
+EVENT_START   ev_h01r0201_workman_01
+
+  //働くおじさん:スカイアローブリッジ　だがね
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h01r0201_workman_01 )
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ストッパーイベント（クリアまで）                     */
+/**************************************************************/
+EVENT_START   ev_pos_h01r0201_workman_01
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
+  //主人公の位置で振り向き分岐
+  IF $LCW_POSX == 8 THEN
+    //アニメ：主人公とストッパー向かい合う
+    _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_turn_l )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+    _OBJ_ANIME_WAIT()
+
+  ELSIF $LCW_POSX == 10 THEN
+    //アニメ：主人公とストッパー向かい合う
+    _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_turn_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    _OBJ_ANIME_WAIT()
+
+  ENDIF
+
+  _TALK_START_SE_PLAY()
+
+  //働くおじさん:ちょっと　とおるのは　まってよ
+  _BALLOONWIN_OBJMSG_POS( msg_h01r0201_workman_02, H01R0201_WORKMAN_01, POS_DEFAULT )
+  _AB_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公一歩下がり、ストッパー上を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( H01R0201_WORKMAN_01, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

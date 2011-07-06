@@ -174,6 +174,10 @@ init_flags:
   //H04R0301：ビレッジブリッジの民家のツリーズ
   _FLAG_SET( FV_H04R0301_FISING_01 )
 
+  //c14
+  _FLAG_SET( FV_C14_SWLEADER8_01 )  //セイガイハシティ：シズイ
+  _FLAG_SET( FV_C14_BOY4_02 )  //セイガイハシティ：カップル男（独り用）
+
 }
 _RET
 
@@ -283,12 +287,14 @@ ev_first_gameclear:
   
   //スカイアローブリッジのストッパーを非表示
   _FLAG_RESET( FV_H01R0201_STOPPER_01 )
-  
+  _FLAG_SET( FV_H01R0201_STOP_01 )
+  $WK_SCENE_H01R0201_STOP_01 = 1
+
   //【仮】C05,D05の抜け道ストッパーを無効に
   _FLAG_SET( FV_C05_STOPPER_01 )
   _FLAG_SET( FV_D05_STOPPER_01 )
   $WK_SCENE_D05_STOPPER_01 = 1
-  
+
 _RET
 
 

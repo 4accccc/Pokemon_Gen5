@@ -10,6 +10,9 @@
 #ifndef ZONE_R20R0101_EVC_H
 #define ZONE_R20R0101_EVC_H
 
+#define R20R0101_INFORMATIONW_01           0
+#define R20R0101_TRAINERM_01               1
+#define R20R0101_GIRL2_01                  2
 
 #endif //ZONE_R20R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r20r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

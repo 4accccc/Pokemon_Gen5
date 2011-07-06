@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r19r0101.h"
-  //.include  "r19r0101.h"
+  .include  "r19r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r19r0101
+_EVENT_DATA    ev_pos_r19r0101_informationw_01
+_EVENT_DATA    ev_r19r0101_informationw_01
+_EVENT_DATA    ev_r19r0101_man1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,122 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  POS：受付嬢イベント                                       */
 /**************************************************************/
-ev_r19r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_r19r0101_informationw_01
+
+  _TALK_START_SE_PLAY()
+
+  //========================================//
+  //POSイベント進行
+  $WK_SCENE_R19R0101_INFOW_01 = 1
+  //========================================//
+
+  //主人公名代入
+  _PLAYER_NAME( 0 )
+  //受付嬢：あれ？　《主人公》▼
+  _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_01, R19R0101_INFORMATIONW_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _OBJ_ANIME_WAIT()
+
+  //受付嬢：ポケモンと　いっしょなんだ！▼
+  _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_02, R19R0101_INFORMATIONW_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r19r0101_informationw_01
+
+  _TALK_OBJ_START()
+
+  //POSイベントを発生させていない
+  IF $WK_SCENE_R19R0101_INFOW_01 == 0 THEN
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //受付嬢：あれ？　《主人公》▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_01 )
+
+    //受付嬢：ポケモンと　いっしょなんだ！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_02 )
+
+    //========================================//
+    //POSイベント進行
+    $WK_SCENE_R19R0101_INFOW_01 = 1
+    //========================================//
+
+  ELSE
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //受付嬢：たびの　ちょうしは　どう？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_03 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_r19r0101_man1_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //男性：おぼえているかい？▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_man1_03 )
+
+  ELSE
+    //会話済みか（マップを出るまで繰り返し）
+    IF $LOCALWORK0 == 0 THEN
+      //男性：へえ……
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_man1_01 )
+
+      $LOCALWORK0 = 1  //ローカルワーク進行
+    ELSE
+      //男性：かべの　でんこうけいじばん　には
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_man1_02 )
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//共通：ターン右                 
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン上                        
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン下                         
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
 

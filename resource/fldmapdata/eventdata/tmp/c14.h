@@ -16,6 +16,11 @@
 #ifndef ZONE_C14_EVC_H
 #define ZONE_C14_EVC_H
 
+#define C14_SWRIVAL_01                     0
+#define C14_SWLEADER8_01                   1
+#define C14_GIRL4_01                       2
+#define C14_BOY4_01                        3
+#define C14_BOY4_02                        4
 
 #endif //ZONE_C14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

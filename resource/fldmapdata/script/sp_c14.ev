@@ -15,6 +15,14 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_FIELD_INIT_LABEL   SCRID_INIT_C14
+_SCENE_CHANGE_LABEL   sp_c14_tbl
 _SP_EVENT_DATA_END
+
+//テーブル定義
+sp_c14_tbl:
+  _SCENE_CHANGE_DATA    WK_SCENE_C14_SWRIVAL_01, 1, SCRID_SCENE_C14_SWRIVAL_01
+  _SCENE_CHANGE_DATA    WK_SCENE_C14_SWLEADER8_01, 1, SCRID_SCENE_C14_SWLEADER8_01
+  _SCENE_CHANGE_END
 
 
