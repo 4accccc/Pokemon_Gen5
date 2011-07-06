@@ -3277,6 +3277,56 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="DEBUG_FIELD_STR53_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>HEAPID_FIELD　DumpStart</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>HEAPID_FIELD　DumpStart</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:37" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_STR53_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>HEAPID_FIELD　DumpEnd</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>HEAPID_FIELD　DumpEnd</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-06-22T10:25:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DEBUG_FIELD_STR54"
 		Style="Large">
 		<LanguageCell

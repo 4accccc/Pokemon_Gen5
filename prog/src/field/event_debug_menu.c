@@ -138,6 +138,8 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd, FS_OVERLAY_ID(debugmenu_system) },         //ゲーム終了
   { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave, FS_OVERLAY_ID(debugmenu_system) },       //強制セーブ
   { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump, FS_OVERLAY_ID(debugmenu_system) },   //メモリ状況
+  { DEBUG_FIELD_STR53_1, debugMenuCallProc_FieldMemoryDumpStart, FS_OVERLAY_ID(debugmenu_system) },  //メモリダンプ開始
+  { DEBUG_FIELD_STR53_2, debugMenuCallProc_FieldMemoryDumpEnd, FS_OVERLAY_ID(debugmenu_system) },  //メモリダンプ終了
   { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList, FS_OVERLAY_ID(debugmenu_system) },  //時間
   { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList, FS_OVERLAY_ID(debugmenu_system) },     //キャプチャ
   { DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex, FS_OVERLAY_ID(debugmenu_system) },   //主人公性別変更

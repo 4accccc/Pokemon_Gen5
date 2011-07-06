@@ -209,6 +209,28 @@ BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
 
   return( FALSE );
 }
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フィールドメモリ使用情報詳細ダンプ開始
+ */
+//-----------------------------------------------------------------------------
+BOOL debugMenuCallProc_FieldMemoryDumpStart( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GFL_HEAP_DEBUG_StartPrint( HEAPID_FIELDMAP );
+
+  return( FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  フィールドメモリ使用情報詳細ダンプ終了
+ */
+//-----------------------------------------------------------------------------
+BOOL debugMenuCallProc_FieldMemoryDumpEnd( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  GFL_HEAP_DEBUG_EndPrint();
+
+  return( FALSE );
+}
 //======================================================================
 /// デバックメニュー　時間
 //======================================================================
