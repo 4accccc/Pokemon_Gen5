@@ -1415,9 +1415,9 @@
 		<language name="JPN_KANJI" width="216">チャンピオン</language>
 	</row>
 
-	<row id="MSG_TRTYPE_PKWD_HERO">
-		<language name="JPN" width="216">ヒーロー</language>
-		<language name="JPN_KANJI" width="216">ヒーロー</language>
+	<row id="MSG_TRTYPE_PKWD_VILLAIN">
+		<language name="JPN" width="216">かいじん</language>
+		<language name="JPN_KANJI" width="216">かいじん</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SWBOSS_1">
@@ -1440,14 +1440,144 @@
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
+	<row id="MSG_TRTYPE_PKWD_HERO">
+		<language name="JPN" width="216">ヒーロー</language>
+		<language name="JPN_KANJI" width="216">ヒーロー</language>
+	</row>
+
 	<row id="MSG_TRTYPE_PKWD_HEROINE">
 		<language name="JPN" width="216">ヒーロー</language>
 		<language name="JPN_KANJI" width="216">ヒーロー</language>
 	</row>
 
-	<row id="MSG_TRTYPE_PKWD_VILLAIN">
-		<language name="JPN" width="216">かいじん</language>
-		<language name="JPN_KANJI" width="216">かいじん</language>
+	<row id="MSG_TRTYPE_PKWD_NINJA_M">
+		<language name="JPN" width="216">にんじゃ</language>
+		<language name="JPN_KANJI" width="216">にんじゃ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_NINJA_F">
+		<language name="JPN" width="216">にんじゃ</language>
+		<language name="JPN_KANJI" width="216">にんじゃ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_SF_M">
+		<language name="JPN" width="216">ＳＦたいいん</language>
+		<language name="JPN_KANJI" width="216">ＳＦたいいん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_SF_F">
+		<language name="JPN" width="216">ＳＦたいいん</language>
+		<language name="JPN_KANJI" width="216">ＳＦたいいん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_STAFF_M">
+		<language name="JPN" width="216">けんきゅういん</language>
+		<language name="JPN_KANJI" width="216">けんきゅういん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_STAFF_F">
+		<language name="JPN" width="216">けんきゅういん</language>
+		<language name="JPN_KANJI" width="216">けんきゅういん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_BOY">
+		<language name="JPN" width="216">ふだんぎ</language>
+		<language name="JPN_KANJI" width="216">ふだんぎ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_GIRL">
+		<language name="JPN" width="216">ふだんぎ</language>
+		<language name="JPN_KANJI" width="216">ふだんぎ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_PRINCE">
+		<language name="JPN" width="216">おうじさま</language>
+		<language name="JPN_KANJI" width="216">おうじさま</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_PRINCESS">
+		<language name="JPN" width="216">おひめさま</language>
+		<language name="JPN_KANJI" width="216">おひめさま</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_BATTLESHIP">
+		<language name="JPN" width="216">ハチクかん</language>
+		<language name="JPN_KANJI" width="216">ハチクかん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_ROBOPOLICE">
+		<language name="JPN" width="216">ロボハチク</language>
+		<language name="JPN_KANJI" width="216">ロボハチク</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_UFO">
+		<language name="JPN" width="216">ＵＦＯ</language>
+		<language name="JPN_KANJI" width="216">ＵＦＯ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_ALIEN">
+		<language name="JPN" width="216">エイリアン</language>
+		<language name="JPN_KANJI" width="216">エイリアン</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_MIST">
+		<language name="JPN" width="216">あかいきり</language>
+		<language name="JPN_KANJI" width="216">あかいきり</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_CLEANING">
+		<language name="JPN" width="216">のろわれたおじさん</language>
+		<language name="JPN_KANJI" width="216">のろわれたおじさん</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_KINDERGARTENW">
+		<language name="JPN" width="216">のろわれたえんじ</language>
+		<language name="JPN_KANJI" width="216">のろわれたえんじ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_STATUE">
+		<language name="JPN" width="216">こだいぞう</language>
+		<language name="JPN_KANJI" width="216">こだいぞう</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_GENTLE">
+		<language name="JPN" width="216">のろわれたしんし</language>
+		<language name="JPN_KANJI" width="216">のろわれたしんし</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_SHRINE">
+		<language name="JPN" width="216">こうごうしいメイド</language>
+		<language name="JPN_KANJI" width="216">こうごうしいメイド</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_WITCH">
+		<language name="JPN" width="216">まじょ</language>
+		<language name="JPN_KANJI" width="216">まじょ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_DOLL">
+		<language name="JPN" width="216">ぬいぐるみ</language>
+		<language name="JPN_KANJI" width="216">ぬいぐるみ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_MOB_M">
+		<language name="JPN" width="216">ダミースーツ</language>
+		<language name="JPN_KANJI" width="216">ダミースーツ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_MOB_F">
+		<language name="JPN" width="216">ダミースーツ</language>
+		<language name="JPN_KANJI" width="216">ダミースーツ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_PLAYERMOB_M">
+		<language name="JPN" width="216">ダミースーツ</language>
+		<language name="JPN_KANJI" width="216">ダミースーツ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_PKWD_PLAYERMOB_F">
+		<language name="JPN" width="216">ダミースーツ</language>
+		<language name="JPN_KANJI" width="216">ダミースーツ</language>
 	</row>
 
 	<flowchart-group-list>
