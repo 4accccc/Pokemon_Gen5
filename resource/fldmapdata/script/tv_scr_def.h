@@ -5,6 +5,6 @@
 #define _TV_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_TV (10520)
+#define SCRID_TV (10530)
 
 #endif //_TV_SCR_DEF_H_

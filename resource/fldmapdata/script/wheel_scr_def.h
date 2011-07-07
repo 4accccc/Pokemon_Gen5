@@ -5,6 +5,6 @@
 #define _WHEEL_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_WHEEL_RIDE (10500)
+#define SCRID_WHEEL_RIDE (10510)
 
 #endif //_WHEEL_SCR_DEF_H_
