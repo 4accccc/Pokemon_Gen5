@@ -21,6 +21,10 @@
 _EVENT_DATA   ev_waza_teacher_dragon
 _EVENT_DATA   ev_waza_teacher_powerful
 _EVENT_DATA   ev_waza_teacher_coalescence
+_EVENT_DATA   ev_waza_teacher_swan_red
+_EVENT_DATA   ev_waza_teacher_swan_blue
+_EVENT_DATA   ev_waza_teacher_swan_yellow
+_EVENT_DATA   ev_waza_teacher_swan_green
 _EVENT_DATA   ev_bg_waza_teacher_coalescence
 _EVENT_DATA   ev_skill_learn
 _EVENT_DATA_END
@@ -33,6 +37,8 @@ DEFINE_LOCAL select_pos	// 選択ポケモン
 DEFINE_LOCAL teach_waza_id
 DEFINE_LOCAL flag_cancel_abwait
 DEFINE_LOCAL flag_decide_abwait
+// swanわざ教え用
+DEFINE_LOCAL kakera_no  // かけらのアイテムNo
 
 //------------------------------------------------------------------------------
 //※注意
@@ -386,6 +392,210 @@ sub_waza_teacher_coalescence:
     ENDIF
 
     _RET
+
+
+//======================================================================
+//======================================================================
+/************************************************************************/
+/* SWANわざ教えを教えてくれる人                                               */
+/* 内部で SCWK_PARAM2 を使用しますので SCWK_PARAM2 は使用しないで下さい */
+/************************************************************************/
+// 赤いかけら
+EVENT_START   ev_waza_teacher_swan_red
+  _TALK_OBJ_START()
+
+  // かけら判別
+  $kakera_no = ITEM_AKAIKAKERA
+
+  IF FLAG_OFF( FE_TEACH_WAZA_TALK_RED ) THEN
+    // わしは　わざおしえ　しょくにん そして　むるいの　～マニア
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_01 )
+    _FLAG_SET( FE_TEACH_WAZA_TALK_RED )
+  ELSE
+    // おお！　おまえさんか
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_02 )
+  ENDIF
+
+  _CALL sub_waza_teacher_swan
+
+EVENT_END
+
+// 青いかけら
+EVENT_START   ev_waza_teacher_swan_blue
+  _TALK_OBJ_START()
+
+  // かけら判別
+  $kakera_no = ITEM_AOIKAKERA
+
+  IF FLAG_OFF( FE_TEACH_WAZA_TALK_BLUE ) THEN
+    // わしは　わざおしえ　しょくにん そして　むるいの　～マニア
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_01 )
+    _FLAG_SET( FE_TEACH_WAZA_TALK_BLUE )
+  ELSE
+    // おお！　おまえさんか
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_02 )
+  ENDIF
+
+  _CALL sub_waza_teacher_swan
+
+EVENT_END
+
+// 黄色いかけら
+EVENT_START   ev_waza_teacher_swan_yellow
+  _TALK_OBJ_START()
+
+  // かけら判別
+  $kakera_no = ITEM_KIIROIKAKERA
+
+  IF FLAG_OFF( FE_TEACH_WAZA_TALK_YELLOW ) THEN
+    // わしは　わざおしえ　しょくにん そして　むるいの　～マニア
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_01 )
+    _FLAG_SET( FE_TEACH_WAZA_TALK_YELLOW )
+  ELSE
+    // おお！　おまえさんか
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_02 )
+  ENDIF
+
+  _CALL sub_waza_teacher_swan
+
+EVENT_END
+
+// 緑のかけら
+EVENT_START   ev_waza_teacher_swan_green
+  _TALK_OBJ_START()
+
+  // かけら判別
+  $kakera_no = ITEM_MIDORINOKAKERA
+
+  IF FLAG_OFF( FE_TEACH_WAZA_TALK_GREEN ) THEN
+    // わしは　わざおしえ　しょくにん そして　むるいの　～マニア
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_01 )
+    _FLAG_SET( FE_TEACH_WAZA_TALK_GREEN )
+  ELSE
+    // おお！　おまえさんか
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_02 )
+  ENDIF
+
+  _CALL sub_waza_teacher_swan
+
+EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+sub_waza_teacher_swan:
+
+  // ポケモンに　わざを　おしえるかい？
+  _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_03 )
+
+  // はい・いいえ選択
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_NO THEN
+    // かけらが　あつまったら　また　おいで
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+  // ほい　きた！　じゃあ　おしえる　わざを えらんでくれ
+  _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_04 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+
+  // 技教えの戻り値を初期化
+  $LOCALWORK12 = 0
+  $LOCALWORK13 = 0
+  $LOCALWORK14 = 0
+  $LOCALWORK15 = 0
+
+  // わざ教えショップ呼び出し
+  SWITCH $kakera_no
+  CASE ITEM_AKAIKAKERA THEN
+    _WAZA_OSHIE_RED_SHOP_CALL_GREETING_LESS()
+  CASE ITEM_AOIKAKERA THEN
+    _WAZA_OSHIE_BLUE_SHOP_CALL_GREETING_LESS()
+  CASE ITEM_KIIROIKAKERA THEN
+    _WAZA_OSHIE_YELLOW_SHOP_CALL_GREETING_LESS()
+  CASE ITEM_MIDORINOKAKERA THEN
+    _WAZA_OSHIE_GREEN_SHOP_CALL_GREETING_LESS()
+  ENDSWITCH
+
+  // わざ教えショップからもどった
+  // LOCALWORK12 選択の有無 0:キャンセル 1:覚えられないポケモンを選択 2:技を選択した
+  // LOCALWORK13 選択した技NO
+  // LOCALWORK14 選択したポケモンの位置
+  // LOCALWORK15 かけらの支払い数
+
+  _DEBUG_PRINT_WK( LOCALWORK12 )
+  _DEBUG_PRINT_WK( LOCALWORK13 )
+  _DEBUG_PRINT_WK( LOCALWORK14 )
+  _DEBUG_PRINT_WK( LOCALWORK15 )
+  
+  IF $LOCALWORK12 == 0  THEN
+    // かけらが　あつまったら　また　おいで
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+  IF $LOCALWORK12 == 1 THEN
+    // うーん　わるいんだけど　そのポケモンに　この　わざは　おしえられないよ
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_07 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+
+  // すでに技を覚えているかチェック
+  _CHECK_POKE_WAZA( SCWK_ANSWER, LOCALWORK13, LOCALWORK14 )
+  IF $SCWK_ANSWER == 1 THEN     // すでに覚えている
+    // その　ポケモンは　すでに　おなじ　わざを　おぼえとるぞ
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_08 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+  $teach_waza_id = $LOCALWORK13
+  $select_pos   = $LOCALWORK14
+
+  $flag_cancel_abwait = 0      //技をあきらめた場合は_LAST_KEYWAIT
+  $flag_decide_abwait = 1
+  _CALL sub_skillteacher_system
+  
+  IF $SCWK_ANSWER == TRUE THEN
+    
+    // アイテムを減らす
+    DEFINE_LOCAL ret
+    _SUB_ITEM( kakera_no, LOCALWORK15, ret )
+
+    _PLAYER_NAME( 0 )
+    _ITEM_NAME( 1, kakera_no )
+    _NUMBER( 2, LOCALWORK15, 2 )
+
+    // ～は　おれいに　～を ～コ　わたした
+    _SYSWIN_MSG( msg_skillteach_kakera_06, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ELSE
+    // かけらが　あつまったら　また　おいで
+    _ITEM_NAME( 0, kakera_no )
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+  
+_RET
 
 
 /**************************************************************/

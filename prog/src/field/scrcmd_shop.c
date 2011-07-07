@@ -24,6 +24,7 @@
 #include "script_message.naix"
 #include "gamesystem/g_power.h"  //  GPOWER_Calc_Sale
 
+#include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/msgspeed.h"
 #include "savedata/bsubway_savedata.h"
@@ -38,6 +39,7 @@
 #include "fieldmap.h"
 #include "script_def.h"
 #include "field_camera.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
 #include "field/field_msgbg.h"
 #include "msg/script/msg_shop.h"
 #include "event_poke_status.h" // for EVENT_CreatePokeSelectWazaOboe
@@ -534,30 +536,46 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
       break;
     // ポケモン選択待ち
     case SHOP_BUY_CALL_POKELIST_WAIT:
-      OS_Printf("retDecide %d\t", sbw->retDecide);
-      OS_Printf("retPos %d\n", sbw->retPos);
-
-      if( sbw->retDecide )
       {
-        u8 bit;
-        checkSkillTeach( gsys, &bit );
+        GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+        EVENTWORK *p_evwk = GAMEDATA_GetEventWork( gdata );
 
-        // 選択したポケモンが技教え可能かチェック
-        // 可能ならかけらを消費する
-        if( bit & (1<<sbw->retPos))
+        u16 *local_wk12 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK12 );
+        u16 *local_wk13 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK13 );
+        u16 *local_wk14 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK14 );
+        u16 *local_wk15 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK15 );
+
+        OS_Printf("retDecide %d\t", sbw->retDecide);
+        OS_Printf("retPos %d\n", sbw->retPos);
+
+        *local_wk13 = sbw->wk.select_waza_no; // 技No
+        *local_wk14 = sbw->retPos;            // ポケモン位置
+        *local_wk15 = sbw->wk.price;          // かけら支払い数
+
+        if( sbw->retDecide )
         {
-          BOOL ret;
-          u16 item_no = item_fragment_tbl[ sbw->wk.waza_oshie_type ];
-          ret = MYITEM_SubItem( sbw->wk.myitem, item_no, sbw->wk.price, sbw->wk.heapId);
-          GF_ASSERT( ret );
+          u8 bit;
+          checkSkillTeach( gsys, &bit );
 
-          OS_Printf("選択したポケモンは覚えれる\n");
-        }else{
-          OS_Printf("選択したポケモンは覚えられない\n");
+          // 選択したポケモンが技教え可能かチェック
+          // 可能ならかけらを消費する
+          if( bit & (1<<sbw->retPos))
+          {
+            OS_Printf("選択したポケモンは覚えれる\n");
+            *local_wk12 = 2;
+          }else{
+            OS_Printf("選択したポケモンは覚えられない\n");
+            *local_wk12 = 1;
+          }
         }
-      }
+        else
+        {
+          OS_Printf("キャンセルした\n");
+          *local_wk12 = 0;
+        }
 
-      sbw->seq = SHOP_BUY_CALL_END;
+        sbw->seq = SHOP_BUY_CALL_END;
+      }
       break;
   }
   
