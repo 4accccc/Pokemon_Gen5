@@ -168,6 +168,9 @@ enum{
 	PKWD_BOOK_COLOR_NUM			= 4,	// 上画面(色変えの本数)
 	//
 	PKWD_BOOK_LIST_MAX			= 7,	// 1画面のリスト最大数
+	//
+//	PKWD_BOOK_SCENARIO_MAX		= POKEWOOD_SENARIO_MAX,	// シナリオ最大値
+	PKWD_BOOK_SCENARIO_MAX		= 40,	// シナリオ最大値
 };
 
 //-------------
@@ -438,7 +441,7 @@ typedef struct
 	POKEPARTY				*Party;						///< パーティ情報
 	PKWD_BOOK_POKE_WORK		PokeWork[PKWD_BOOK_POKE_MAX];	///< ポケモン情報
 	//
-	PKWD_BOOK_FLAG_BUFFER	FlagBuffer[POKEWOOD_SENARIO_MAX];	///< フラグのバッファ
+	PKWD_BOOK_FLAG_BUFFER	FlagBuffer[PKWD_BOOK_SCENARIO_MAX];	///< フラグのバッファ
 	//
 	void					*PalBuf[PKWD_BOOK_COLOR_NUM];		///< 上画面パレット(4本分)(こちらを破棄)
 	NNSG2dPaletteData		*PalBufData[PKWD_BOOK_COLOR_NUM];	///< 上画面パレット(4本分)
@@ -1140,6 +1143,9 @@ static void pwb_main_scrollbar( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_chk_newmark( PKWD_BOOK_MAIN_WORK * wk, const s32 mode );
 static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate );
 
+// debug
+static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk );
+
 
 //=============================================================================
 /**
@@ -1412,7 +1418,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	wk->Party			= 0;
 	wk->frame_list_work = 0;
 	//
-	for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
+	for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
 		wk->FlagBuffer[i].openid   = 0xff;
 		wk->FlagBuffer[i].color    = 0;
 		wk->FlagBuffer[i].newflag  = 0;
@@ -1534,6 +1540,9 @@ static void pwb_main( PKWD_BOOK_MAIN_WORK* wk )
 {
 	// 下画面
 	pwb_down( wk );
+	
+	// debug
+	pwb_debug( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -4146,7 +4155,7 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 	//
 	// openチェック
 	j=0;
-	for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
+	for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
 		bflg = MISC_GetPokewoodOpenFlag(wk->Param->misc, i);
 #if 0	// test
 		// debug
@@ -4959,5 +4968,42 @@ static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate )
 		pos.y -= rate;		// bgなので反転
 		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk_list[CLWK_LIST_NEW_00+i], &pos, CLSYS_DEFREND_SUB );
 	}
+}
+
+
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	debug
+ *
+ * @param	PKWD_BOOK_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
+{
+#ifdef PM_DEBUG
+	s32		i;
+	s32		tmp;
+	
+	// X:全オープン
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
+			MISC_SetPokewoodOpenFlag(wk->Param->misc, i);
+		}
+		OS_Printf("*** all open ***\n");
+	}
+	// Y:NEW
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
+		tmp = wk->FlagBuffer[wk->ScenarioCurPos].openid;
+		MISC_SetPokewoodPlayedFlag(wk->Param->misc, tmp );
+		//
+		OS_Printf("*** scenario [%d] played ***\n",tmp);
+	}
+#endif
 }
 
