@@ -791,6 +791,8 @@
 				<ContentItem
 					Name="c15r0201.mstxt" />
 				<ContentItem
+					Name="c15r0301.mstxt" />
+				<ContentItem
 					Name="c16.mstxt" />
 				<ContentItem
 					Name="c16r0101.mstxt" />
@@ -1100,6 +1102,8 @@
 					Name="d25r1001.mstxt" />
 				<ContentItem
 					Name="d26.mstxt" />
+				<ContentItem
+					Name="d26r0101.mstxt" />
 				<ContentItem
 					Name="d27.mstxt" />
 				<ContentItem
