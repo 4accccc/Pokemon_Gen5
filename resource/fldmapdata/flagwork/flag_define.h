@@ -221,7 +221,7 @@
 #define FE_RES_QUESTION_FIRSTTALK          205 /* 0x00cd すれ違い調査隊アンケート隊員の初回会話フラグ */
 #define FE_RES_HELLO_FIRSTTALK             206 /* 0x00ce すれ違い調査隊挨拶隊員の初回会話フラグ */
 #define FE_RES_THANKS_FIRSTTALK            207 /* 0x00cf すれ違い調査隊お礼隊員の初回会話フラグ */
-#define FE_C05R0201_ITEMGET_01             208 /* 0x00d0 ホドモエシティ図鑑評価アイテム入手フラグ */
+		/* not used   208(0x00d0) */
 #define FE_C03R1002_ITEMGET_01             209 /* 0x00d1 ヒウンシティR1002：アイテム入手フラグ */
 #define FE_C03R0302_ITEM_02                210 /* 0x00d2 C0３ヒウンシティ：バトルカンパニーアイテム入手フラグ（ボール） */
 #define FE_C04R0201_ITEM_01                211 /* 0x00d3 ミュージカルホール：アイテム入手フラグ（わざマシン：エコーボイス） */
@@ -331,14 +331,14 @@
 #define FE_C03_RALLYPOINT_04               315 /* 0x013b ヒウンシティ：名所巡りチェックポイントフラグ（遊覧船乗り場） */
 #define FE_C03_RALLYPOINT_05               316 /* 0x013c ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンジム前） */
 #define FE_TEACH_WAZA_TALK                 317 /* 0x013d SWAN技教え初回会話フラグ */
-		/* not used   318(0x013e) */
-		/* not used   319(0x013f) */
-		/* not used   320(0x0140) */
-		/* not used   321(0x0141) */
-		/* not used   322(0x0142) */
-		/* not used   323(0x0143) */
-		/* not used   324(0x0144) */
-		/* not used   325(0x0145) */
+#define FE_C05PC0101_ITEMGET_01            318 /* 0x013e ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0103_ITEMGET_01             319 /* 0x013f ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0201_ITEMGET_01             320 /* 0x0140 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0203_ITEMGET_01             321 /* 0x0141 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0301_WAZALADY               322 /* 0x0142 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0303_ITEMGET_01             323 /* 0x0143 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0403_ITEMGET_01             324 /* 0x0144 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0601_ITEMGET_01             325 /* 0x0145 ホドモエシティ：アイテム入手フラグ */
 		/* not used   326(0x0146) */
 		/* not used   327(0x0147) */
 		/* not used   328(0x0148) */
@@ -2225,8 +2225,8 @@
 #define TMFLG_H04R0501_PEOPLE_02          2755 /* 0x0ac3 ビレッジブリッジ：空き家住民選定フラグ */
 #define TMFLG_H04R0501_PEOPLE_03          2756 /* 0x0ac4 ビレッジブリッジ：空き家住民選定フラグ */
 #define TMFLG_C07R0201_QUIZ               2757 /* 0x0ac5 セッカシティ：一日一回クイズ一家 */
-		/* not used  2758(0x0ac6) */
-		/* not used  2759(0x0ac7) */
+#define TMFLG_C05R0301_WAZA_NO            2758 /* 0x0ac6 日替わり技見せ：本日の技ナンバー */
+#define TMFLG_C05R0301_WAZA_CLEAR         2759 /* 0x0ac7 日替わり技見せ：クリア判定 */
 		/* not used  2760(0x0ac8) */
 		/* not used  2761(0x0ac9) */
 		/* not used  2762(0x0aca) */
