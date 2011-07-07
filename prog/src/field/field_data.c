@@ -27,9 +27,9 @@
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 enum {
-  HEAPSIZE_FIELDMAP_NORMAL = 0x130000,
-  HEAPSIZE_FIELDMAP_COMM   = 0x128000,
-  HEAPSIZE_FIELDMAP_MUSICAL = 0xa8000,
+  HEAPSIZE_FIELDMAP_NORMAL = 0x132000,
+  HEAPSIZE_FIELDMAP_COMM   = 0x12a000,
+  HEAPSIZE_FIELDMAP_MUSICAL = 0xaa000,
 };
 
 //------------------------------------------------------------------
@@ -640,6 +640,27 @@ const SCENE_DATA resistMapTbl[] = {
       1,  // topフレームのブロック描画数
 		},
 		&FieldMapCtrl_HybridFunctions,
+		TRUE,
+    HEAPSIZE_FIELDMAP_NORMAL,
+	},
+  //RSC_GRID_WIDE_NOCROSS = 24,
+	{	//横に長い(立体交差禁止 バッジチェックゲートで使用)
+		{
+			MAP_XZ_SIZE, 1024*FX32_ONE, 
+      3,2,
+      FLDMAPPER_MODE_SCROLL_XZ, 
+      ARCID_FLDMAP_LANDDATA,
+
+			1,  1, 1,		//dummy map matrix data
+			NULL, 
+
+			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
+			{0,2},	// 地面アニメーション
+
+			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差不可サイズ)
+      1,  // topフレームのブロック描画数
+		},
+		&FieldMapCtrl_GridFunctions,
 		TRUE,
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
