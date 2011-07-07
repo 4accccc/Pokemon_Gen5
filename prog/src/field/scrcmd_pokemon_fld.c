@@ -926,6 +926,7 @@ VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
 
     prm.retDecide = ret_decide;
     prm.retPos = ret_wk;
+    prm.pokePos = pokePos;
     prm.canSelHiden = ( value == WAZANO_NULL );
     prm.wazano = value;
 
