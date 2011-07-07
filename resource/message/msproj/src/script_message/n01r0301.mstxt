@@ -2,18 +2,14 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_n01r0301_ninja_01w"
+		Label="msg_mapscript_dummy"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎさまが　しんじつの　えいゆうか
-おまえとの　たたかいで　わかる▼
-おまえが　ポケモンと
-ともに　あゆむ　いまの　せかいを▽
-まもりたいのか……　それもわかる▼</Text>
+			<Text>テストメッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T05:27:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎさまが　真実の　英雄か
-おまえとの　戦いで　わかる▼
-おまえが　ポケモンと
-共に　歩む　今の　世界を▽
-守りたいのか……　それもわかる▼</Text>
+			<Text>仮メッセージ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T05:27:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36,21 +28,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
-・pos（GRIDX=3~5、GRIDZ=13）を踏むと
-　登場芝居をして
-　GRIDX=4、GRIDZ=10に出現しメッセージ</Comment>
+			<Comment>？？？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T05:27:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ＮＩＮＪＡ</Text>
+			<Text>？？？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T05:27:34" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61,73 +49,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_n01r0301_ninja_01b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>Ｎさまが　りそうの　えいゆうか
-おまえとの　たたかいで　わかる▼
-おまえが　ポケモンと
-ともに　あゆむ　いまの　せかいを▽
-まもりたいのか……　それもわかる▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>Ｎさまが　理想の　英雄か
-おまえとの　戦いで　わかる▼
-おまえが　ポケモンと
-共に　歩む　今の　世界を▽
-守りたいのか……　それもわかる▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・BLACKver
-・pos（GRIDX=3~5、GRIDZ=13）を踏むと
-　登場芝居をして
-　GRIDX=4、GRIDZ=10に出現しメッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ＮＩＮＪＡ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
