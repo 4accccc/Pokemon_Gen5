@@ -419,3 +419,4 @@
 "nsbmdfiles/wf_tree_s1.nsbmd"
 "nsbmdfiles/wf_shop_s1.nsbmd"
 "nsbmdfiles/wf_mugen_s1.nsbmd"
+"nsbmdfiles/c03_ship_03_01.nsbmd"

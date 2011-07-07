@@ -420,4 +420,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/wf_tree_s1.nsbmd \
 	$(RESDIR)/wf_shop_s1.nsbmd \
 	$(RESDIR)/wf_mugen_s1.nsbmd \
+	$(RESDIR)/c03_ship_03_01.nsbmd \
 
