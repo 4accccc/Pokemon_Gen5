@@ -271,7 +271,7 @@
 #define WK_OTHER_C05R0701_WAZA           16696 /* 0x4138 日替わり指定わざ見せ用ワーク */
 #define WK_OTHER_C12_RIVAL_PAIR          16697 /* 0x4139 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
 #define WK_OTHER_FISHING_MONSNUM         16698 /* 0x413a ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
-		/* not used 16699(0x413b) */
+#define WK_OTHER_C05R0301_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
 
