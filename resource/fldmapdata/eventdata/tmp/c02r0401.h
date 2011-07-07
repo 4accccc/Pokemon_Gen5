@@ -10,6 +10,7 @@
 #ifndef ZONE_C02R0401_EVC_H
 #define ZONE_C02R0401_EVC_H
 
+#define C02R0401_OLDMAN1_01                0
 
 #endif //ZONE_C02R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
