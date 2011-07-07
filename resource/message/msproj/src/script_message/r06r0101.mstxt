@@ -41,10 +41,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader1_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:52:41" />
+				Time="2011-07-07T03:08:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -96,10 +96,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader1_03
+※演出未定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:52:43" />
+				Time="2011-07-07T03:09:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -125,11 +126,12 @@
 			<Text>で　さきほどの　プラズマだんの
 いっけんが　あるだろ？▼
 これは　しらべておかないと
-まずい　きが　するんだよね▼
-……さむいのは　にがて　なんだけどな▼</Text>
+まずい　きが　するんだ▼
+……さむいのは
+にがて　なんだけどな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:52:36" />
+				Time="2011-07-07T03:10:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -137,14 +139,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で　さきほどの　プラズマだんの
+			<Text>で　さきほどの　プラズマ団の
 一件が　あるだろ？▼
 これは　調べておかないと
-まずい　気が　するんだよね▼
-……寒いのは　苦手なんだけどな▼</Text>
+まずい　気が　するんだ▼
+……寒いのは
+苦手なんだけどな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:54:05" />
+				Time="2011-07-07T03:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -153,10 +156,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けて</Comment>
+・続けてswleader1_04
+※演出未定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:52:43" />
+				Time="2011-07-07T03:09:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -179,13 +183,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あしどめ　して　わるかったね▼
-ただ　なにか
-おかしなことが　あるかも　しれない▼
-きをつけて　たびを　つづけてね！</Text>
+			<Text>で　きみに　これを　わたすからさ
+いろんなところを　しらべて　みてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:52:29" />
+				Time="2011-07-07T03:11:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -193,13 +195,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>足止めして　悪かったね▼
-ただ　なにか
-おかしなことが　あるかも　しれない▼
-気をつけて　旅を　つづけてね！</Text>
+			<Text>で　きみに　これを　わたすからさ
+いろんなところを　しらべて　みてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:54:27" />
+				Time="2011-07-07T03:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -208,10 +208,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・？？？まで繰り返し（条件保留）</Comment>
+・アイテム入手処理
+　No000「ひでんマシン０３」
+・続けてswleader1_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:52:55" />
+				Time="2011-07-07T03:09:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -230,16 +232,72 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r06r0101_swleader1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あしどめ　して　わるかったね▼
+ただ　なにか
+おかしなことが　あるかも　しれない▼
+きをつけて　たびを　つづけてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:08:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:08:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>足止めして　悪かったね▼
+ただ　なにか
+おかしなことが　あるかも　しれない▼
+気をつけて　旅を　つづけてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:08:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:08:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・c08到着まで繰り返し
+・c08到着で削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:11:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:08:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r06r0101_assistantm1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こちら　きせつけんきゅうじょ　です[Ctrl2:PageClear ]
+			<Text>こちら　きせつけんきゅうじょ　です▼
 フキヨセのさき　ネジやま　では
 きせつによって　ゆきがつもりますよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -247,12 +305,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちら　季節研究所　です[Ctrl2:PageClear ]
+			<Text>こちら　季節研究所　です▼
 フキヨセの先　ネジ山では
 季節によって　雪が積もりますよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -287,12 +345,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きせつの　えいきょうで
-がいけんが　かわる　ポケモン……[Ctrl2:PageClear ]
+がいけんが　かわる　ポケモン……▼
 これも　しんかの　いっしゅと
 いえるのでしょうか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:13:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -301,12 +359,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>季節の　影響で
-外見が　変わる　ポケモン……[Ctrl2:PageClear ]
+外見が　変わる　ポケモン……▼
 これも　進化の　一種と
 いえるのでしょうか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-07T03:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

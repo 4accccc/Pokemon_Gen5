@@ -363,12 +363,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうして　きみの　じつりょくを
-まぢかで　はいけん　したい▽
-そんな　おもいも　あったけどね</Text>
+			<Text />
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-05T12:09:47" />
+				Time="2011-07-07T03:04:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1020,13 +1018,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それはともかく　ありがとう！▼
-きみの　おかげで　ぶじに
+[Name:TrainerName ]の　おかげで　ぶじに
 ちょうさが　おわったよ▼
 これは　おれい！
 えんりょせずに　うけとってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:16:34" />
+				Time="2011-07-07T03:04:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1035,13 +1033,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それはともかく　ありがとう！▼
-きみの　おかげで　無事に
+[Name:TrainerName ]の　おかげで　無事に
 調査が　終わったよ▼
 これは　お礼！
 遠慮せずに　受け取ってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:30:47" />
+				Time="2011-07-07T03:04:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1052,10 +1050,11 @@
 			<Comment>♂
 ・主人公と向き合って
 ・アイテム入手処理
-　No000「」</Comment>
+　No293「パワーアンクル」仮
+・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:44:39" />
+				Time="2011-07-07T03:07:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
