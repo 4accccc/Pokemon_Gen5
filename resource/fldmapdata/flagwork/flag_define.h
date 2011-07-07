@@ -330,18 +330,18 @@
 #define FE_C03_RALLYPOINT_03               314 /* 0x013a ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンストリート） */
 #define FE_C03_RALLYPOINT_04               315 /* 0x013b ヒウンシティ：名所巡りチェックポイントフラグ（遊覧船乗り場） */
 #define FE_C03_RALLYPOINT_05               316 /* 0x013c ヒウンシティ：名所巡りチェックポイントフラグ（ヒウンジム前） */
-#define FE_TEACH_WAZA_TALK                 317 /* 0x013d SWAN技教え初回会話フラグ */
-#define FE_C05PC0101_ITEMGET_01            318 /* 0x013e ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0103_ITEMGET_01             319 /* 0x013f ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0201_ITEMGET_01             320 /* 0x0140 ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0203_ITEMGET_01             321 /* 0x0141 ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0301_WAZALADY               322 /* 0x0142 ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0303_ITEMGET_01             323 /* 0x0143 ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0403_ITEMGET_01             324 /* 0x0144 ホドモエシティ：アイテム入手フラグ */
-#define FE_C05R0601_ITEMGET_01             325 /* 0x0145 ホドモエシティ：アイテム入手フラグ */
-		/* not used   326(0x0146) */
-		/* not used   327(0x0147) */
-		/* not used   328(0x0148) */
+#define FE_C05PC0101_ITEMGET_01            317 /* 0x013d ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0103_ITEMGET_01             318 /* 0x013e ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0201_ITEMGET_01             319 /* 0x013f ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0203_ITEMGET_01             320 /* 0x0140 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0301_WAZALADY               321 /* 0x0141 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0303_ITEMGET_01             322 /* 0x0142 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0403_ITEMGET_01             323 /* 0x0143 ホドモエシティ：アイテム入手フラグ */
+#define FE_C05R0601_ITEMGET_01             324 /* 0x0144 ホドモエシティ：アイテム入手フラグ */
+#define FE_TEACH_WAZA_TALK_RED             325 /* 0x0145 SWAN技教え初回会話フラグ(あかいかけら） */
+#define FE_TEACH_WAZA_TALK_BLUE            326 /* 0x0146 SWAN技教え初回会話フラグ(あおいかけら） */
+#define FE_TEACH_WAZA_TALK_YELLOW          327 /* 0x0147 SWAN技教え初回会話フラグ(きいろいかけら） */
+#define FE_TEACH_WAZA_TALK_GREEN           328 /* 0x0148 SWAN技教え初回会話フラグ(みどりのかけら） */
 		/* not used   329(0x0149) */
 		/* not used   330(0x014a) */
 		/* not used   331(0x014b) */
