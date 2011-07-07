@@ -20,7 +20,7 @@
 //	define
 //======================================================================
 ///HEAPID_FIELD_SUBSCREENのサイズ
-#define HEAP_FIELD_SUBSCREEN_SIZE   (0xd000)
+#define HEAP_FIELD_SUBSCREEN_SIZE   (0xf000)
 
 #define HEAP_FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
 
