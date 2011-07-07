@@ -1597,11 +1597,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX=00、GRIDZ=00</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:28" />
+				Time="2011-07-07T02:30:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1647,11 +1646,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX=00、GRIDZ=00</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:27" />
+				Time="2011-07-07T02:30:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1673,13 +1671,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティは　すごいらしいぞ
-とにかく　ひとが　おおくって！▼
-まあ　ワシは　いったことないけどな
-なみのうえが　にがて　だからよ</Text>
+			<Text>おぬし！
+バトルボックスを　ぞんじておるか？▼
+ポケモンセンターの　パソコンで
+つかえる　べんりな　きのう　じゃよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:18:11" />
+				Time="2011-07-07T02:31:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1687,13 +1685,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティは　すごいらしいぞ
-とにかく　人が　多くって！▼
-まあ　ワシは　行ったことないけどな
-波の上が　苦手だからよ</Text>
+			<Text>おぬし！
+バトルボックスを　存じておるか？▼
+ポケモンセンターの　パソコンで
+使える　便利な　機能じゃよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:18:20" />
+				Time="2011-07-07T02:31:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1701,11 +1699,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・GRIDX=00、GRIDZ=00</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:30" />
+				Time="2011-07-07T02:30:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1755,11 +1752,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・GRIDX=00、GRIDZ=00</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:31" />
+				Time="2011-07-07T02:29:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1823,11 +1819,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　よくばり♪　ポケモンも
+			<Text>あたし　よくばり♪　ポケモンも
 ギターも　テニスも　うまくなりたい♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:12:16" />
+				Time="2011-07-07T02:32:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1835,11 +1831,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　欲張り♪　ポケモンも
+			<Text>あたし　欲張り♪　ポケモンも
 ギターも　テニスも　うまくなりたい♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T06:12:23" />
+				Time="2011-07-07T02:32:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1847,11 +1843,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・GRIDX=00、GRIDZ=00</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:30:33" />
+				Time="2011-07-07T02:29:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
