@@ -3711,56 +3711,126 @@
 	</row>
 
 	<row id="MONSNAME_653">
-		<language name="JPN" width="216">かいじゅう</language>
-		<language name="JPN_KANJI" width="216">かいじゅう</language>
+		<language name="JPN" width="216">ハチクマン</language>
+		<language name="JPN_KANJI" width="216">ハチクマン</language>
 	</row>
 
 	<row id="MONSNAME_654">
-		<language name="JPN" width="216">おおおとこ</language>
-		<language name="JPN_KANJI" width="216">おおおとこ</language>
+		<language name="JPN" width="216">Ｍ．Ｖ</language>
+		<language name="JPN_KANJI" width="216">Ｍ．Ｖ</language>
 	</row>
 
 	<row id="MONSNAME_655">
-		<language name="JPN" width="216">エイリアン</language>
-		<language name="JPN_KANJI" width="216">エイリアン</language>
+		<language name="JPN" width="216">Ｍ．Ｖ２</language>
+		<language name="JPN_KANJI" width="216">Ｍ．Ｖ２</language>
 	</row>
 
 	<row id="MONSNAME_656">
-		<language name="JPN" width="216">いんせき</language>
-		<language name="JPN_KANJI" width="216">いんせき</language>
+		<language name="JPN" width="216">てんそうき</language>
+		<language name="JPN_KANJI" width="216">てんそうき</language>
 	</row>
 
 	<row id="MONSNAME_657">
-		<language name="JPN" width="216">つなみ</language>
-		<language name="JPN_KANJI" width="216">つなみ</language>
+		<language name="JPN" width="216">だいＯＬ</language>
+		<language name="JPN_KANJI" width="216">だいＯＬ</language>
 	</row>
 
 	<row id="MONSNAME_658">
-		<language name="JPN" width="216">たいふう</language>
-		<language name="JPN_KANJI" width="216">たいふう</language>
+		<language name="JPN" width="216">マネキン</language>
+		<language name="JPN_KANJI" width="216">マネキン</language>
 	</row>
 
 	<row id="MONSNAME_659">
-		<language name="JPN" width="216">ばいきん</language>
-		<language name="JPN_KANJI" width="216">ばいきん</language>
+		<language name="JPN" width="216">せいぶつＸ</language>
+		<language name="JPN_KANJI" width="216">せいぶつＸ</language>
 	</row>
 
 	<row id="MONSNAME_660">
-		<language name="JPN" width="216">ダム</language>
-		<language name="JPN_KANJI" width="216">ダム</language>
+		<language name="JPN" width="216">ははおや</language>
+		<language name="JPN_KANJI" width="216">ははおや</language>
 	</row>
 
 	<row id="MONSNAME_661">
-		<language name="JPN" width="216">おおかじ</language>
-		<language name="JPN_KANJI" width="216">おおかじ</language>
+		<language name="JPN" width="216">あくりょう</language>
+		<language name="JPN_KANJI" width="216">あくりょう</language>
 	</row>
 
 	<row id="MONSNAME_662">
+		<language name="JPN" width="216">しろいかべ</language>
+		<language name="JPN_KANJI" width="216">しろいかべ</language>
+	</row>
+
+	<row id="MONSNAME_663">
+		<language name="JPN" width="216">くろいかべ</language>
+		<language name="JPN_KANJI" width="216">くろいかべ</language>
+	</row>
+
+	<row id="MONSNAME_664">
+		<language name="JPN" width="216">セットＡ</language>
+		<language name="JPN_KANJI" width="216">セットＡ</language>
+	</row>
+
+	<row id="MONSNAME_665">
+		<language name="JPN" width="216">セットＢ</language>
+		<language name="JPN_KANJI" width="216">セットＢ</language>
+	</row>
+
+	<row id="MONSNAME_666">
+		<language name="JPN" width="216">セットＣ</language>
+		<language name="JPN_KANJI" width="216">セットＣ</language>
+	</row>
+
+	<row id="MONSNAME_667">
+		<language name="JPN" width="216">セットＤ</language>
+		<language name="JPN_KANJI" width="216">セットＤ</language>
+	</row>
+
+	<row id="MONSNAME_668">
+		<language name="JPN" width="216">セットＥ</language>
+		<language name="JPN_KANJI" width="216">セットＥ</language>
+	</row>
+
+	<row id="MONSNAME_669">
+		<language name="JPN" width="216">セットＦ</language>
+		<language name="JPN_KANJI" width="216">セットＦ</language>
+	</row>
+
+	<row id="MONSNAME_670">
+		<language name="JPN" width="216">セットＧ</language>
+		<language name="JPN_KANJI" width="216">セットＧ</language>
+	</row>
+
+	<row id="MONSNAME_671">
+		<language name="JPN" width="216">セットＨ</language>
+		<language name="JPN_KANJI" width="216">セットＨ</language>
+	</row>
+
+	<row id="MONSNAME_672">
+		<language name="JPN" width="216">セットＩ</language>
+		<language name="JPN_KANJI" width="216">セットＩ</language>
+	</row>
+
+	<row id="MONSNAME_673">
+		<language name="JPN" width="216">セットＪ</language>
+		<language name="JPN_KANJI" width="216">セットＪ</language>
+	</row>
+
+	<row id="MONSNAME_674">
+		<language name="JPN" width="216">セットＫ</language>
+		<language name="JPN_KANJI" width="216">セットＫ</language>
+	</row>
+
+	<row id="MONSNAME_675">
+		<language name="JPN" width="216">セットＬ</language>
+		<language name="JPN_KANJI" width="216">セットＬ</language>
+	</row>
+
+	<row id="MONSNAME_676">
 		<language name="JPN" width="216">タマゴ</language>
 		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>
 
-	<row id="MONSNAME_663">
+	<row id="MONSNAME_677">
 		<language name="JPN" width="216">タマゴ</language>
 		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>

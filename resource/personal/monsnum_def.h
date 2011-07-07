@@ -658,16 +658,20 @@
 #define		MONSNO_654		( 647 )		//ケルディオ
 #define		MONSNO_655		( 648 )		//メロエッタ
 #define		MONSNO_656		( 649 )		//ゲノセクト
-#define		MONSNO_658		( 652 )		//ＵＦＯ
-#define		MONSNO_659		( 653 )		//かいじゅう
-#define		MONSNO_660		( 654 )		//おおおとこ
-#define		MONSNO_661		( 655 )		//エイリアン
-#define		MONSNO_662		( 656 )		//いんせき
-#define		MONSNO_663		( 657 )		//つなみ
-#define		MONSNO_664		( 658 )		//たいふう
-#define		MONSNO_665		( 659 )		//ばいきん
-#define		MONSNO_666		( 660 )		//ダム
-#define		MONSNO_667		( 661 )		//おおかじ
+#define		MONSNO_660		( 652 )		//ＵＦＯ
+#define		MONSNO_661		( 653 )		//ハチクマン
+#define		MONSNO_662		( 654 )		//Ｍ．Ｖ
+#define		MONSNO_663		( 655 )		//Ｍ．Ｖ２
+#define		MONSNO_664		( 656 )		//てんそうき
+#define		MONSNO_665		( 657 )		//だいＯＬ
+#define		MONSNO_666		( 658 )		//マネキン
+#define		MONSNO_667		( 659 )		//せいぶつＸ
+#define		MONSNO_668		( 660 )		//ははおや
+#define		MONSNO_669		( 661 )		//あくりょう
+#define		MONSNO_670		( 662 )		//しろいかべ
+#define		MONSNO_671		( 663 )		//くろいかべ
+#define		MONSNO_672		( 664 )		//セットＡ
+
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )
