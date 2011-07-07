@@ -3118,12 +3118,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うーん　わるいんだが
-その　ポケモンに▽
-この　わざは　おしえられんぞ……</Text>
+			<Text>その　ポケモンは
+この　わざを　おぼえられないよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-07T07:33:42" />
+				Time="2011-07-07T08:45:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -3131,12 +3130,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うーん　悪いんだが
-その　ポケモンに▽
-この技は　教えられんぞ……</Text>
+			<Text>その　ポケモンは
+この技を　覚えられないよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-07T07:33:46" />
+				Time="2011-07-07T08:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -3167,10 +3165,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その　ポケモンは　すでに
-おなじ　わざを　おぼえとるぞ！</Text>
+おなじ　わざを　おぼえてるよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-07T07:28:06" />
+				Time="2011-07-07T08:45:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -3179,10 +3177,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　ポケモンは　すでに
-同じ技を　覚えとるぞ！</Text>
+同じ技を　覚えてるよ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-07T07:28:16" />
+				Time="2011-07-07T08:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"

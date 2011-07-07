@@ -1325,10 +1325,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item ]が　たりないですよ！▼</Text>
+			<Text>[Name:Item ]が　たりないよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-07-01T03:01:05" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-07T08:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1336,10 +1336,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item ]が　たりないですよ！▼</Text>
+			<Text>[Name:Item ]が　たりないよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-07-01T03:01:14" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-07T08:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
