@@ -1020,6 +1020,21 @@
 		<language name="JPN_KANJI" width="216">未定</language>
 	</row>
 
+	<row id="WBT_TRNAME_115">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="WBT_TRNAME_116">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="WBT_TRNAME_117">
+		<language name="JPN" width="216">アクロマ</language>
+		<language name="JPN_KANJI" width="216">アクロマ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
