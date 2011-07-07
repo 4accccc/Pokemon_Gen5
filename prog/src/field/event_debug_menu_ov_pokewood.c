@@ -392,12 +392,31 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
       }
     }
     OS_Printf(" pokewood senario open num = %d\n ", count);
-
-    MISC_SetPokewoodOpenFlag(misc,10);
+/*
+    MISC_SetPokewoodOpenFlag(misc,4);
+    MISC_SetPokewoodOpenFlag(misc,5);
+    MISC_SetPokewoodOpenFlag(misc,6);
+    MISC_SetPokewoodOpenFlag(misc,7);
+    MISC_SetPokewoodOpenFlag(misc,8);
+    MISC_SetPokewoodOpenFlag(misc,9);
+    MISC_SetPokewoodOpenFlag(misc,11);
+    MISC_SetPokewoodOpenFlag(misc,12);
+    MISC_SetPokewoodOpenFlag(misc,13);
+    MISC_SetPokewoodOpenFlag(misc,14);
+    MISC_SetPokewoodOpenFlag(misc,15);
+    MISC_SetPokewoodOpenFlag(misc,16);
+    MISC_SetPokewoodOpenFlag(misc,11);
+    MISC_SetPokewoodOpenFlag(misc,17);
+    MISC_SetPokewoodOpenFlag(misc,18);
+    MISC_SetPokewoodOpenFlag(misc,19);
     MISC_SetPokewoodOpenFlag(misc,20);
-    MISC_SetPokewoodOpenFlag(misc,30);
+    MISC_SetPokewoodOpenFlag(misc,31);
+    MISC_SetPokewoodOpenFlag(misc,32);
+    MISC_SetPokewoodOpenFlag(misc,33);
+    MISC_SetPokewoodOpenFlag(misc,34);
+    MISC_SetPokewoodOpenFlag(misc,35);
     MISC_SetPokewoodOpenFlag(misc,40);
-
+*/
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
       newcount = MISC_GetPokewoodPlayedFlag(misc,50);
     }
