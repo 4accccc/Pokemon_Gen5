@@ -55,9 +55,10 @@ typedef struct _PANEL_WORK{
   u8  rank; //ランク
   u8  sex;    //性別
   u8  timeout_f;  //タイムアウトフラグ
-  u8  version;  ///<カセットバージョン
-  u8  color;  //パネルカラー
-  u16 medal;  //メダル数  
+  u8  version;    ///<カセットバージョン
+  u8  color;      //パネルカラー
+  u8  medal;      //一押しメダルID
+  u8  medal_num;  //メダル数  
   u16 tr_id;  //トレーナーID
   s16 px;
   s16 py;
@@ -82,7 +83,9 @@ typedef struct _LOG_CTRL{
   u8  max;  //ログ数
   u8  view_top;
   u8  view_max;
+
   u8  target;
+  u8  target_panel;
 
   u8  g_power;
   u8  mine_power_f;

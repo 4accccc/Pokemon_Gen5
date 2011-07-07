@@ -40,6 +40,7 @@ typedef enum{
  EV_RETURN_CGEAR_INTRUDE,     //ハイリンク侵入呼び出し
  EV_RETURN_CGEAR_WIRELESS_TR, //ライブキャスター呼び出し
  EV_CALL_DETAIL_VIEW,
+ EV_CALL_MEDAL_VIEW,
  EV_GPOWER_USE,
  EV_GPOWER_CHECK_TMENU_YN,
  EV_GPOWER_CHECK_TMENU_CHK,
@@ -264,7 +265,7 @@ enum{
 #define BEACON_VIEW_OBJ_MAX (64) ///<画面内に表示するOBJの登録max数
 
 #define PANEL_NUM_ACTMAX    (3)       ///<パネルに表示するメダル数OBJの数
-#define PANEL_MEDAL_NONE    (0xFFFF)  ///<メダル数無効値
+#define PANEL_MEDAL_NONE    (0xFF)    ///<メダル数無効値
 
 ///OBJ BGプライオリティ
 #define OBJ_BG_PRI (3)
@@ -377,6 +378,10 @@ enum{
 #define TP_PANEL_BOTTOM (TP_PANEL_TOP+ACT_PANEL_SY)
 #define TP_PANEL_LEFT   (ACT_PANEL_PX)
 #define TP_PANEL_RIGHT  (TP_PANEL_LEFT+ACT_PANEL_SX)
+
+#define TP_MEDAL_R      (8)
+#define TP_MEDAL_X      (ACT_PANEL_PX+ACT_MEDAL_OX+TP_MEDAL_R)
+#define TP_MEDAL_Y      (ACT_PANEL_PY+ACT_PANEL_OY+ACT_MEDAL_OY+TP_MEDAL_R)
 
 #define TP_UP_TOP       (ACT_UP_PY)
 #define TP_UP_BOTTOM    (TP_UP_TOP+ACT_UPDOWN_SY)

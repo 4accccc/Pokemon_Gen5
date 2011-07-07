@@ -52,6 +52,7 @@ static GPOWER_ID sp_gpower_RequestGet( BEACON_VIEW_PTR wk );
 static BOOL sp_gpower_ZoromeCheck( u32 log_count );
 
 static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp );
+static int touchin_CheckMedal( BEACON_VIEW_PTR wk, POINT* tp );
 static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp );
 static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp );
 
@@ -179,6 +180,30 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
     return SEQ_MAIN;
   }
 
+  //メダルあたり判定
+  ret = touchin_CheckMedal( wk, &tp );
+  if( ret != GFL_UI_TP_HIT_NONE ){
+    PANEL_WORK* pp;
+    u8 idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->ctrl.view_top+ret );
+
+    //NPCデータかどうかチェック
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->ctrl.view_top+ret );
+    if( GAMEBEACON_Check_NPC( wk->tmpInfo ) ){
+      return SEQ_MAIN;  //NPCなら無反応
+    }
+  
+    pp = panel_GetPanelFromDataIndex( wk, idx );
+    if( pp->medal == PANEL_MEDAL_NONE ){
+      return SEQ_MAIN;
+    }
+    wk->ctrl.target = ret;
+    wk->ctrl.target_panel = pp->id;
+    
+    BVCSound_PlaySE( BVIEW_SE_DECIDE );
+    BVSEvent_Reserve( wk, EV_CALL_MEDAL_VIEW );
+    return SEQ_MAIN;
+  }
+  
   //パネルあたり判定
   ret = touchin_CheckPanel( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
@@ -194,7 +219,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
     BVSEvent_Reserve( wk, EV_CALL_DETAIL_VIEW );
     return SEQ_MAIN;
   }
-
+  
   //上下矢印あたり判定
   ret = touchin_CheckUpDown( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
@@ -810,6 +835,26 @@ static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp )
     tbl[i].rect.bottom = tbl[i].rect.top+ACT_PANEL_SY;
     tbl[i].rect.left = TP_PANEL_LEFT;
     tbl[i].rect.right = TP_PANEL_RIGHT;
+  }
+  tbl[wk->ctrl.view_max].rect.top = GFL_UI_TP_HIT_END;
+
+  return GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
+}
+
+/*
+ *  @brief  メダルあたり判定
+ */
+static int touchin_CheckMedal( BEACON_VIEW_PTR wk, POINT* tp )
+{
+  int i;
+
+  GFL_UI_TP_HITTBL tbl[PANEL_VIEW_MAX+1];
+
+  for(i = 0;i < wk->ctrl.view_max;i++){
+    tbl[i].circle.code = GFL_UI_TP_USE_CIRCLE;
+    tbl[i].circle.x = TP_MEDAL_X;
+    tbl[i].circle.y = TP_MEDAL_Y+(i*ACT_PANEL_OY);
+    tbl[i].circle.r = TP_MEDAL_R;
   }
   tbl[wk->ctrl.view_max].rect.top = GFL_UI_TP_HIT_END;
 

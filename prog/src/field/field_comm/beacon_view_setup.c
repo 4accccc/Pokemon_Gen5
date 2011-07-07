@@ -187,6 +187,14 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     }
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
     break;
+  case EV_CALL_MEDAL_VIEW:
+    {
+      u32 target = wk->ctrl.target+wk->ctrl.view_top;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( notwifi_event_beacon_detail ), EVENT_BeaconDetail, &target );
+    }
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_MEDAL_ANM, wk->ctrl.target_panel );
+    break;
   case EV_GPOWER_USE:
     {
       GPOWER_EFFECT_PARAM param;
@@ -256,9 +264,10 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 //アニメウェイトイベント
 ////////////////////////////////////////////////////////////////////////////
 static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * work);
-static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
+static BOOL evsub_WaitTypeMenuAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
 static BOOL evsub_WaitTypeTcb( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
 static BOOL evsub_WaitTypeTMenuAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
+static BOOL evsub_WaitTypeMedalAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk );
 
 /*
  *  @brief  各種イベント起動前に、アニメなどの待ちをするためのイベント
@@ -292,7 +301,7 @@ static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * w
 
   switch( ev_wk->type ){
   case EVWAIT_MENU_ANM:
-    ret = evsub_WaitTypeMenuAnime( wk, ev_wk );
+    ret = evsub_WaitTypeMenuAnm( wk, ev_wk );
     break;
   case EVWAIT_TCB_ANM:
     ret = evsub_WaitTypeTcb( wk, ev_wk );
@@ -300,6 +309,8 @@ static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * w
   case EVWAIT_TMENU_ANM:
     ret = evsub_WaitTypeTMenuAnm( wk, ev_wk );
     break;
+  case EVWAIT_MEDAL_ANM:
+    ret = evsub_WaitTypeMedalAnm( wk, ev_wk );
   }
   if( ret ){
     wk->event_reserve_f = FALSE;
@@ -308,7 +319,7 @@ static GMEVENT_RESULT event_EventStartMain(GMEVENT * event, int *  seq, void * w
   return GMEVENT_RES_CONTINUE;
 }
 
-static BOOL evsub_WaitTypeMenuAnime( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
+static BOOL evsub_WaitTypeMenuAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
 {
   switch( ev_wk->sub_seq ){
   case 0:
@@ -349,6 +360,22 @@ static BOOL evsub_WaitTypeTMenuAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk 
     break;
   }
   return FALSE;
+}
+
+static BOOL evsub_WaitTypeMedalAnm( BEACON_VIEW_PTR wk, EVWK_EVENT_START* ev_wk )
+{
+  switch( ev_wk->sub_seq ){
+  case 0:
+    BVCAct_AnmStart( wk->panel[ev_wk->param].cMedal, ACTANM_MEDAL_ON );
+    ev_wk->sub_seq++;
+    return FALSE;
+  case 1:
+    if( GFL_CLACT_WK_CheckAnmActive( wk->panel[ev_wk->param].cMedal )){;
+      return FALSE;
+    }
+    break;
+  }
+  return TRUE;
 }
 
 //==============================================================================
