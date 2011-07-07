@@ -309,10 +309,13 @@
 			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
 ほんとうなら　ポケモンリーグに
 ちょうせん　できるけど▽
-プラズマだん　たいじに　ちからを　かせ▼</Text>
+プラズマだん　たいじに　ちからを　かせ▼
+チェレンさんから　れんらくが　あって
+２１ばんすいどうに　あいつらの▽
+ふねが　やってきたってよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:39:24" />
+				Time="2011-07-07T03:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -323,10 +326,13 @@
 			<Text>[Name:TrainerName Idx="1" ]『バッジが　そろったか▼
 本当なら　ポケモンリーグに
 挑戦できるけど▽
-プラズマ団　掃討を　手伝え▼</Text>
+プラズマ団　掃討を　手伝え▼
+チェレンさんから　連絡が　あって
+２１番水道に　あいつらの▽
+船が　やってきたってよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T04:56:23" />
+				Time="2011-07-07T03:26:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -365,13 +371,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>シズイ『よう！　おはんら！▼
-あの　くろい　ふね
+２１ばんすいどうに　あらわれた
+あの　くろい　ふね▽
 プラズマだんの　もの　なんね▼
 で　プラズマだん　って
 なにしておる　れんちゅう　よ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:39:35" />
+				Time="2011-07-07T03:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -380,13 +387,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>シズイ『よう！　おはんら！▼
-あの　黒い　帆船
+２１番水道に　現れた
+あの　黒い　帆船▽
 プラズマ団の　もん　なんね▼
 で　プラズマ団　って
 なにしておる　連中よ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:39:50" />
+				Time="2011-07-07T03:24:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
