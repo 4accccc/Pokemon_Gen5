@@ -2,6 +2,198 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c03r0601_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『おうい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『おうい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：主人公＝♂
+・posイベント
+　GRIDX＝2～7、GRIDZ＝9で
+　画面下から登場
+・続けてswbell_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:50:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『ねえねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『ねえねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：主人公＝♀
+・posイベント
+　GRIDX＝2～7、GRIDZ＝9で
+　画面下から登場
+・続けてswbell_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:51:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:39:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_swbell_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちなかを　あるく　あなたを
+みかけたから　おいかけちゃった▼
+これを　もっていって！
+ダウジングマシン！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:42:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>街中を　歩く　あなたを
+みかけたから　追いかけちゃった▼
+これを　持っていって！
+ダウジングマシン！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:49:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:42:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ダウジングマシン機能追加
+・続けてswbell_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:45:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:40:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_swbell_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウジングマシンを　つかえば
+みえないけれど　かくれている▽
+どうぐの　ばしょが　わかるんだよ！▼
+ポケモンを　さがしつつ
+どうぐも　みつかると　うきたつよね！▼
+ということで　がんばってねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:54:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:42:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウジングマシンを　使えば
+みえないけれど　隠れている▽
+道具の　場所が　わかるんだよ！▼
+ポケモンを　探しつつ
+道具も　みつかると　浮き立つよね！▼
+ということで　がんばってねえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:54:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:42:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、画面下へ
+・画面外に消えると主人公、操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:52:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-07T02:40:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r0601_middleman2_01"
 		Style="Large">
 		<LanguageCell
