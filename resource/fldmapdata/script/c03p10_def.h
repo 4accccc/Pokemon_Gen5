@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_C03P10_SIGN_01 (1)
+#define SCRID_C03P10_INFORMATIONW_01 (2)
 
 #endif //_C03P10_DEF_H_

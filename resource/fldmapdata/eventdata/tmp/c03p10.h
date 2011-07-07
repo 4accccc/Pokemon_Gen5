@@ -13,6 +13,7 @@
 #ifndef ZONE_C03P10_EVC_H
 #define ZONE_C03P10_EVC_H
 
+#define C03P10_INFORMATIONW_01             0
 
 #endif //ZONE_C03P10_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

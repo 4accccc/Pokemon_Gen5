@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_C03P15_PILOT_01 (1)
 #define SCRID_SCENE_C03P15_FIRST_01 (2)
+#define SCRID_C03P15_INFORMATIONW_01 (3)
 
 #endif //_C03P15_DEF_H_

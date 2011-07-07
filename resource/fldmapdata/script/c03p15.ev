@@ -18,14 +18,16 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_c03p15_pilot_01
-_EVENT_DATA		ev_scene_c03p15_first_01
+_EVENT_DATA   ev_c03p15_pilot_01
+_EVENT_DATA   ev_scene_c03p15_first_01
+_EVENT_DATA   ev_c03p15_informationw_01
 _EVENT_DATA_END
 
+
 /************************************************************/
-/*				SCENE_CHANGE：船から下りたところ                                */
+/*  SCENE_CHANGE：船から下りたところ                        */
 /************************************************************/
-EVENT_START	ev_scene_c03p15_first_01
+EVENT_START   ev_scene_c03p15_first_01
 
   //【仮】下船演出
 
@@ -60,8 +62,8 @@ EVENT_START	ev_scene_c03p15_first_01
   _OBJ_ANIME( C03P15_SWRIVAL_01, anm_staystep_r )
   
   //カメラ移動
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_START()   //カメラ操作開始
+  _CAMERA_PURGE()   //カメラのバインドを解く
   _CAMERA_MOVE( 9467,0,1552384,1269760,0,622592,56 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
@@ -79,8 +81,8 @@ EVENT_START	ev_scene_c03p15_first_01
    
   //カメラ待ち
   _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
+  _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()   //カメラ操作終了
   
   _OBJ_ANIME_WAIT()
   
@@ -91,32 +93,28 @@ EVENT_START	ev_scene_c03p15_first_01
   _OBJ_DEL( C03P15_SWRIVAL_01 )
   
   //==================================//
-  
   //c03p15のPOS無効
   $WK_SCENE_C03P15 = 2
-  
   //C03のSCENE_CHANGE有効
   $WK_SCENE_C03 = 1
-  
   //C03P15のライバル非表示
   _FLAG_SET( FV_C03P15_SWRIVAL_01 )
-  
   //==================================//
     
 EVENT_END
 
 //--------------------------------------------------------------------
-//	☆ライバル退場
+//☆ライバル退場
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swrival_bye
-  _ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,10
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_swrival_bye
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_U_8F,10
+  _ANIME_DATA ACMD_END,0
+
 /************************************************************/
-/*				船長に話しかけ                                */
+/*  船長：話しかけ                                          */
 /************************************************************/
-EVENT_START	ev_c03p15_pilot_01
+EVENT_START   ev_c03p15_pilot_01
   
   //PILOT：タチワキまで船をだしますよ？
   _BALLOONWIN_OBJMSG_POS( msg_c03p15_pilot_02,C03P15_PILOT_01, POS_DEFAULT )
@@ -143,74 +141,179 @@ EVENT_START	ev_c03p15_pilot_01
   }
 EVENT_END
 
-//--------------------------------------------------------------------
-//	☆共通処理：1歩歩く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+/**************************************************************/
+/*  受付嬢：はなしかけ（ヒウン名所巡りイベント）              */
+/**************************************************************/
+EVENT_START   ev_c03p15_informationw_01
 
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+  _TALK_OBJ_START()
 
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+  //名所巡りイベント前の場合
+  IF $WK_SCENE_C03_RALLY_01 == 0 THEN
 
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
+    //受付嬢：イベント開始前
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //名所巡りイベント中の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 >= 1 && $WK_SCENE_C03_RALLY_01 <= 5 THEN
+
+    //このトレーナーと戦った？
+    IF FLAG_OFF( FE_C03_RALLYPOINT_04 )THEN
+
+      //受付嬢：トレーナー戦前
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_02 )
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
+      _TRAINER_BTL_SET( TRID_TANPAN_20, 0 )
+
+      //結果チェック
+      _CALL ev_battle_check
+
+      //受付嬢：トレーナー戦後
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_03 )
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //名所ご褒美受け取り【仮】アイテムは仮です
+      _ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+
+      //========================================//
+      //トレーナー戦勝利
+      _FLAG_SET( FE_C03_RALLYPOINT_04 )
+      //========================================//
+      //C03イベント進行
+      $WK_SCENE_C03_RALLY_01 += 1
+      //========================================//
+
+      //戦闘後、全てのポイントをめぐっていた場合
+      IF $WK_SCENE_C03_RALLY_01 == 6 THEN
+        //受付嬢：評価前台詞
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+        //受付嬢：イベントクリア前
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE  //戦闘済み
+
+      //受付嬢：イベントクリア前
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //全てのポイントをめぐっていた場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 6 THEN
+
+    //受付嬢：評価前台詞
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //名所巡りイベント後の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 7 THEN
+
+    //受付嬢：イベントクリア後メッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p15_sightseeing_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+
 //--------------------------------------------------------------------
-//	☆共通処理：方向転換
+//☆共通処理：1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_u
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_dir_l
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_dir_r
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆共通処理：方向転換
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------------
-//	☆共通処理：はてな
+//☆共通処理：ギョエ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_hatena
-	_ANIME_DATA	AC_MARK_HATENA,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_hatena
+  _ANIME_DATA AC_MARK_HATENA,1
+  _ANIME_DATA ACMD_END,0
+
+

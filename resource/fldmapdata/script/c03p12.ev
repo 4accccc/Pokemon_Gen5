@@ -19,12 +19,119 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c03p12_sign1_01
+_EVENT_DATA   ev_bg_c03p12_sign1_01
+_EVENT_DATA   ev_c03p12_informationw_01
 _EVENT_DATA_END
 
+
 /**************************************************************/
-/*			BG SIGN1	C03P12								  */
+/*  BG SIGN1  C03P12                                          */
 /**************************************************************/
-EVENT_START		ev_bg_c03p12_sign1_01
-	_EASY_BGWIN_MSG( msg_c03p12_sign1_01,TYPE_POST )
+EVENT_START   ev_bg_c03p12_sign1_01
+  _EASY_BGWIN_MSG( msg_c03p12_sign1_01,TYPE_POST )
 EVENT_END
+
+/**************************************************************/
+/*  受付嬢：はなしかけ（ヒウン名所巡りイベント）              */
+/**************************************************************/
+EVENT_START   ev_c03p12_informationw_01
+
+  _TALK_OBJ_START()
+
+  //名所巡りイベント前の場合
+  IF $WK_SCENE_C03_RALLY_01 == 0 THEN
+
+    //受付嬢：イベント開始前
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //名所巡りイベント中の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 >= 1 && $WK_SCENE_C03_RALLY_01 <= 5 THEN
+
+    //このトレーナーと戦った？
+    IF FLAG_OFF( FE_C03_RALLYPOINT_01 )THEN
+
+      //受付嬢：トレーナー戦前
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_02 )
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
+      _TRAINER_BTL_SET( TRID_TANPAN_20, 0 )
+
+      //結果チェック
+      _CALL ev_battle_check
+
+      //受付嬢：トレーナー戦後
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_03 )
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //名所ご褒美受け取り【仮】アイテムは仮です
+      _ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+
+      //========================================//
+      //トレーナー戦勝利
+      _FLAG_SET( FE_C03_RALLYPOINT_01 )
+      //========================================//
+      //C03イベント進行
+      $WK_SCENE_C03_RALLY_01 += 1
+      //========================================//
+
+      //戦闘後、全てのポイントをめぐっていた場合
+      IF $WK_SCENE_C03_RALLY_01 == 6 THEN
+        //受付嬢：評価前台詞
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+        //受付嬢：イベントクリア前
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE  //戦闘済み
+
+      //受付嬢：イベントクリア前
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //全てのポイントをめぐっていた場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 6 THEN
+
+    //受付嬢：評価前台詞
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //名所巡りイベント後の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 7 THEN
+
+    //受付嬢：イベントクリア後メッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p12_sightseeing_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+

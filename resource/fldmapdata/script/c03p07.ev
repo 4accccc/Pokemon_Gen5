@@ -19,22 +19,23 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c03p07_gymsign_01
-_EVENT_DATA		ev_c03p07_sunglasses_01
+_EVENT_DATA   ev_bg_c03p07_gymsign_01
+_EVENT_DATA   ev_c03p07_sunglasses_01
+_EVENT_DATA   ev_c03p07_informationw_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*	C03P07	ジムストッパー										  */
+/*  C03P07  ジムストッパー                                    */
 /**************************************************************/
-EVENT_START		ev_c03p07_sunglasses_01
+EVENT_START   ev_c03p07_sunglasses_01
   
   //話しかけが初回
   IF $WK_SCENE_C03GYM_STOPPER == 0 THEN
   
     _TALK_OBJ_START()
     //カメラ移動
-    _CAMERA_START()		//カメラ操作開始
-    _CAMERA_PURGE()		//カメラのバインドを解く
+    _CAMERA_START()   //カメラ操作開始
+    _CAMERA_PURGE()   //カメラのバインドを解く
     _CAMERA_MOVE( 6917,0,835584,1540096,0,3178496,40 )
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
     
@@ -47,12 +48,12 @@ EVENT_START		ev_c03p07_sunglasses_01
     
     //？？？：あれ？
     _PLAINWIN_MSG_UP( msg_c03p07_swchampion_01 )
-	  _MSGWIN_CLOSE()
-	  
-	  //アニメ：アイリス隣接
-	  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_comming )
-	  _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_pl_gyoe_up )
-	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_pl_gyoe_up )
+    _MSGWIN_CLOSE()
+    
+    //アニメ：アイリス隣接
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_comming )
+    _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_pl_gyoe_up )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_pl_gyoe_up )
     _OBJ_ANIME_WAIT()
     
     //ダンペイ：おー！アイリスさん
@@ -80,10 +81,10 @@ EVENT_START		ev_c03p07_sunglasses_01
     _MSGWIN_CLOSE()
     
     //アニメ：アイリス退場
-	  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_bye )
-	  _TIME_WAIT(40)
-	  _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_d )
-	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swchampion_bye )
+    _TIME_WAIT(40)
+    _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_d )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME_WAIT()
     
     //アイリスOBJ消す
@@ -91,7 +92,7 @@ EVENT_START		ev_c03p07_sunglasses_01
     
     //アニメ：サングラスと主人公向き合う
     _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_l )
-	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME_WAIT()
     
     //ダンペイ：やれやれ
@@ -102,122 +103,226 @@ EVENT_START		ev_c03p07_sunglasses_01
     _CAMERA_DEF_MOVE (40)
     //カメラ待ち
     _CAMERA_WAIT_MOVE()
-    _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-    _CAMERA_END()		//カメラ操作終了
+    _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
+    _CAMERA_END()   //カメラ操作終了
     
     //==================================//
-    
     //初回会話終わり・C03POS起動
     $WK_SCENE_C03GYM_STOPPER = 1
-    
     //C03のアイリス表示
     _FLAG_RESET( FV_C03_SWCHAMPION_01 )
-    
     //==================================//
-	//二回目以降
-	ELSE
-	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_glasses_03 )
-	ENDIF
+  //二回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p07_glasses_03 )
+  ENDIF
+
+EVENT_END
+
+
+/**************************************************************/
+/*  受付嬢：はなしかけ（ヒウン名所巡りイベント）              */
+/**************************************************************/
+EVENT_START   ev_c03p07_informationw_01
+
+  _TALK_OBJ_START()
+
+  //名所巡りイベント前の場合
+  IF $WK_SCENE_C03_RALLY_01 == 0 THEN
+
+    //受付嬢：イベント開始前
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //名所巡りイベント中の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 >= 1 && $WK_SCENE_C03_RALLY_01 <= 5 THEN
+
+    //このトレーナーと戦った？
+    IF FLAG_OFF( FE_C03_RALLYPOINT_05 )THEN
+
+      //受付嬢：トレーナー戦前
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_02 )
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //トレーナー戦呼び出し【仮】トレーナー戦闘は仮です
+      _TRAINER_BTL_SET( TRID_TANPAN_20, 0 )
+
+      //結果チェック
+      _CALL ev_battle_check
+
+      //受付嬢：トレーナー戦後
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_03 )
+      _AB_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //名所ご褒美受け取り【仮】アイテムは仮です
+      _ITEM_EVENT_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+
+      //========================================//
+      //トレーナー戦勝利
+      _FLAG_SET( FE_C03_RALLYPOINT_05 )
+      //========================================//
+      //C03イベント進行
+      $WK_SCENE_C03_RALLY_01 += 1
+      //========================================//
+
+      //戦闘後、全てのポイントをめぐっていた場合
+      IF $WK_SCENE_C03_RALLY_01 == 6 THEN
+        //受付嬢：評価前台詞
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+        //受付嬢：イベントクリア前
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE  //戦闘済み
+
+      //受付嬢：イベントクリア前
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //全てのポイントをめぐっていた場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 6 THEN
+
+    //受付嬢：評価前台詞
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //名所巡りイベント後の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 7 THEN
+
+    //受付嬢：イベントクリア後メッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p07_sightseeing_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+
+/**************************************************************/
+/*  C03P07  ジム看板                                          */
+/**************************************************************/
+EVENT_START   ev_bg_c03p07_gymsign_01
+  _EASY_BGWIN_MSG( msg_c03p07_gymsign_01, TYPE_POST )
 EVENT_END
 
 //--------------------------------------------------------------------
-//	☆主人公・サングラス驚いて上を見る
+//☆主人公・サングラス驚いて上を見る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_pl_gyoe_up
-  _ANIME_DATA	AC_MARK_GYOE,1
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//	☆アイリス隣接
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swchampion_comming
-	_ANIME_DATA	AC_WALK_D_8F,25
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_pl_gyoe_up
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆アイリス退場
+//☆アイリス隣接
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swchampion_bye
-  _ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,8
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*	C03P07	ジム看板										  */
-/**************************************************************/
-EVENT_START		ev_bg_c03p07_gymsign_01
-	_EASY_BGWIN_MSG( msg_c03p07_gymsign_01, TYPE_POST )
-EVENT_END
+_ANIME_LABEL  anm_swchampion_comming
+  _ANIME_DATA AC_WALK_D_8F,25
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：1歩歩く
+//☆アイリス退場
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//	☆共通処理：方向転換
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_u
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_l
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_r
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swchampion_bye
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_WALK_D_8F,8
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆共通処理：1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：方向転換
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------------
-//	☆共通処理：はてな
+//☆共通処理：その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_hatena
-	_ANIME_DATA	AC_MARK_HATENA,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_hatena
+  _ANIME_DATA AC_MARK_HATENA,1
+  _ANIME_DATA ACMD_END,0
+
+

@@ -11,6 +11,7 @@
 #define ZONE_C03P16_EVC_H
 
 #define C03P16_CABINGUIDE_01               0
+#define C03P16_INFORMATIONW_01             1
 
 #endif //ZONE_C03P16_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p16.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

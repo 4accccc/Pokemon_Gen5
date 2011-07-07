@@ -19,19 +19,22 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c03p01_sign_01
-_EVENT_DATA		ev_bg_c03p01_sign_02
-_EVENT_DATA		ev_pos_c03P01_swboss_01
+_EVENT_DATA   ev_bg_c03p01_sign_01
+_EVENT_DATA   ev_bg_c03p01_sign_02
+_EVENT_DATA   ev_pos_c03P01_swboss_01
+_EVENT_DATA   ev_c03p01_informationw_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+
 /**************************************************************/
-/*				POS：SWBOSS_01								  */
+/*  POS：SWBOSS_01                                            */
 /**************************************************************/
-EVENT_START		ev_pos_c03P01_swboss_01
+EVENT_START   ev_pos_c03P01_swboss_01
 
   //アニメ：向きなおる
    IF $LCW_POSX ==18 THEN
@@ -40,18 +43,18 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //アニメ：アクロマ「！」
   _OBJ_ANIME( C03P01_SWBOSS_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-  
+
   //アクロマ：そこのあなたっ！
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_01, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  
+
   //自機の位置でアクロマの移動を変更
   IF $LCW_POSX ==18 THEN
     $LCW_POSX -= 1
@@ -61,7 +64,7 @@ EVENT_START		ev_pos_c03P01_swboss_01
   //アニメ：アクロマ接近
   _OBJ_ANIME_AUTO( C03P01_SWBOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
-  
+
   //アニメ：向きなおる
    IF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_r)
@@ -69,33 +72,33 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_staystep_l)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  
+
   //アクロマ：さしつかえなければ
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_02, C03P01_SWBOSS_01, POS_DEFAULT )
-  
+
    {
   _YES_NO_WIN( SCWK_ANSWER )
-  
+
   //はい
   IF $SCWK_ANSWER == SCR_YES THEN
     _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_03, C03P01_SWBOSS_01, POS_DEFAULT )
   ELSE
     _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_04, C03P01_SWBOSS_01, POS_DEFAULT )
   ENDIF
-  
+
   //瀕死・タマゴを除くポケモンの先頭を選択
   DEFINE_LOCAL LWK_FRONT
   _GET_PARTY_FRONT_POKEMON  ( LWK_FRONT , POKECOUNT_MODE_BATTLE_ENABLE )
   //先頭ポケモンの名前を取得
   _TEMOTI_MONS_NAME  (  0 , LWK_FRONT  )
-  
+
   //アクロマ：あなたの～
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_05, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
   //アニメ：アクロマ1歩離れる
   IF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_l)
@@ -103,11 +106,11 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_r)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //アクロマ：グレートだ！
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_06, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
   //アニメ：「！」向きなおす
    IF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_ret_x18)
@@ -115,11 +118,11 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_ret_x13)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //アクロマ：しっけい
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_07, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
   //アニメ：思索にふけってゆっくり歩く
    IF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_16fw_x18)
@@ -127,11 +130,11 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_16fw_x13)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //アクロマ：ポケモンのちからを
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_08, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
   //アニメ：戻る
    IF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_r)
@@ -139,16 +142,16 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_walk_l)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //アクロマ：それをあなたと
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_09, C03P01_SWBOSS_01, POS_DEFAULT )
   _YES_NO_WIN( SCWK_ANSWER )
-  
+
   //アクロマ：ではこのさき
   _BALLOONWIN_OBJMSG_POS( msg_c03p01_swboss_10, C03P01_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   }
-  
+
   //アニメ：退場
    IF $LCW_POSX ==18 THEN
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x18)
@@ -156,150 +159,341 @@ EVENT_START		ev_pos_c03P01_swboss_01
     _OBJ_ANIME( C03P01_SWBOSS_01, anm_swboss_bye_x13)
   ENDIF
   _OBJ_ANIME_WAIT()
-  
+
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
-  
+
   //アクロマ動作OBJ非表示
   _OBJ_DEL(C03P01_SWBOSS_01)
-  
+
   //==================================//
-  
   //C03P01のPOS無効
   $WK_SCENE_C03P01 = 2
   //C03P01のSWBOSS非表示
   _FLAG_SET( FV_C03P01_SWBOSS_01 )
-  
   //R04のアクロマ表示
   _FLAG_RESET( FV_R04_SWBOSS_01 )
   //R04のアクロマPOS有効
   $WK_SCENE_R04_SWBOSS = 1
-  
   //==================================//
-EVENT_END
 
-//--------------------------------------------------------------------
-//	☆アクロマ：「！」の後、主人公の方を向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swboss_ret_x13
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_swboss_ret_x18
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//	☆アクロマ：ゆっくり逆に歩く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swboss_16fw_x13
-	_ANIME_DATA	AC_WALK_R_16F,1
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_swboss_16fw_x18
-	_ANIME_DATA	AC_WALK_L_16F,1
-	_ANIME_DATA	ACMD_END,0
-
-
-//--------------------------------------------------------------------
-//	☆アクロマ：退場
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swboss_bye_x13
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,12
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_swboss_bye_x18
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_U_8F,12
-	_ANIME_DATA	ACMD_END,0
-
-/**************************************************************/
-/*				看板1								  */
-/**************************************************************/
-EVENT_START		ev_bg_c03p01_sign_01
-	_EASY_BGWIN_MSG( msg_c03p01_sign_01, TYPE_POST)	//簡易メッセージＢＧ用
 EVENT_END
 
 /**************************************************************/
-/*				看板2									  */
+/*  受付嬢：はなしかけ（ヒウン名所巡りイベント）              */
 /**************************************************************/
-EVENT_START		ev_bg_c03p01_sign_02
-	_EASY_BGWIN_MSG( msg_c03p01_sign2_01, TYPE_POST)	//簡易メッセージＢＧ用
+EVENT_START   ev_c03p01_informationw_01
+{
+
+  _TALK_OBJ_START()
+
+  //名所巡りイベント前の場合
+  IF $WK_SCENE_C03_RALLY_01 == 0 THEN
+    //受付嬢：こちら　ヒウンシティ
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_01, C03P01_INFORMATIONW_01, POS_DOWN )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    //イベントに参加する？
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //ヒウン名所巡りイベントへジャンプ
+      _CALL ev_c03p01_rally_01
+
+    ELSE    //いいえ
+      //受付嬢：ちょうせんを　おまちしております！
+      _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_02, C03P01_INFORMATIONW_01, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //名所巡りイベント中の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 >= 1 && $WK_SCENE_C03_RALLY_01 <= 5 THEN
+
+    //ヒウン名所巡りイベントへジャンプ
+    _CALL ev_c03p01_rally_01
+
+  //全てのポイントをめぐっていた場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 6 THEN
+    //受付嬢：評価メッセージ
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_15, C03P01_INFORMATIONW_01, POS_DOWN )
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //記念品受け取り【仮】記念品アイテムは仮です
+    _ITEM_EVENT_KEYWAIT( ITEM_IIKIZUGUSURI, 1 )
+    //========================================//
+    //クリア後メッセージ表示終了
+    $WK_SCENE_C03_RALLY_01 = 7
+    //========================================//
+
+  //名所巡りイベント後の場合
+  ELSIF $WK_SCENE_C03_RALLY_01 == 7 THEN
+    //受付嬢：イベントクリア後メッセージ
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_16, C03P01_INFORMATIONW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+}
+EVENT_END
+
+
+/**************************************************************/
+/*  ヒウン名所巡りイベント                                    */
+/**************************************************************/
+ev_c03p01_rally_01:
+
+  //初めてヒントを受ける場合
+  IF $WK_SCENE_C03_RALLY_01 == 0 THEN
+
+    //受付嬢：わたくしから　ヒウンの　めいしょの
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_03, C03P01_INFORMATIONW_01, POS_DOWN )
+
+    //========================================//
+    //イベント進行（名所巡りイベント開始）
+    $WK_SCENE_C03_RALLY_01 = 1
+    //========================================//
+
+  ELSE
+    //まだ訪れていない場所を数える用変数定義
+    DEFINE_LOCAL LWK_POINT_NUM  //訪れていないポイントの数
+    DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+
+    //訪れていない場所の確認処理（繰り返し処理）
+    WHILE $LWK_COUNT_NUM < 5
+
+      //スリムストリートにおとずれていない
+      IF $LWK_COUNT_NUM == 0 && FLAG_OFF( FE_C03_RALLYPOINT_01 ) THEN
+        $LWK_POINT_NUM += 1 //ポイント加算
+
+      //プライムピアにおとずれていない
+      ELSIF $LWK_COUNT_NUM == 1 && FLAG_OFF( FE_C03_RALLYPOINT_02 ) THEN
+        $LWK_POINT_NUM += 1 //ポイント加算
+
+      //ヒウンストリートにおとずれていない
+      ELSIF $LWK_COUNT_NUM == 2 && FLAG_OFF( FE_C03_RALLYPOINT_03 ) THEN
+        $LWK_POINT_NUM += 1 //ポイント加算
+
+      //ゆうらんせんのりばにおとずれていない
+      ELSIF $LWK_COUNT_NUM == 3 && FLAG_OFF( FE_C03_RALLYPOINT_04 ) THEN
+        $LWK_POINT_NUM += 1 //ポイント加算
+
+      //ヒウンジムまえにおとずれていない
+      ELSIF $LWK_COUNT_NUM == 4 && FLAG_OFF( FE_C03_RALLYPOINT_05 ) THEN
+        $LWK_POINT_NUM += 1 //ポイント加算
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //訪れていない場所の数値を指定タグにセット
+    _NUMBER( 1, LWK_POINT_NUM, 1 )
+
+    //受付嬢：ヒントを　さしあげます▼
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_04, C03P01_INFORMATIONW_01, POS_DOWN )
+
+  ENDIF
+
+  //メニューセレクト変数
+  DEFINE_LOCAL  LWK_NUM_SELECT
+  //ヒント選択画面作成【仮】項目が仮
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_NUM_SELECT )
+
+  IF FLAG_OFF( FE_C03_RALLYPOINT_01 ) THEN    //スリムストリート
+    _BMPMENU_MAKE_LIST( msg_c03p01_sightseeing_05, 0 ) //メニュー名１
+  ENDIF
+  IF FLAG_OFF( FE_C03_RALLYPOINT_02 ) THEN    //プライムピア
+    _BMPMENU_MAKE_LIST( msg_c03p01_sightseeing_06, 1 ) //メニュー名２
+  ENDIF
+  IF FLAG_OFF( FE_C03_RALLYPOINT_03 ) THEN    //ヒウンストリート
+    _BMPMENU_MAKE_LIST( msg_c03p01_sightseeing_07, 2 ) //メニュー名３
+  ENDIF
+  IF FLAG_OFF( FE_C03_RALLYPOINT_04 ) THEN    //ゆうらんせんのりば
+    _BMPMENU_MAKE_LIST( msg_c03p01_sightseeing_08, 3 ) //メニュー名４
+  ENDIF
+  IF FLAG_OFF( FE_C03_RALLYPOINT_05 ) THEN    //ヒウンジムまえ
+    _BMPMENU_MAKE_LIST( msg_c03p01_sightseeing_09, 4 ) //メニュー名５
+  ENDIF
+
+  _BMPMENU_START()
+
+  //メニュー名１を選択
+  IF $LWK_NUM_SELECT == 0 THEN
+
+    //受付嬢：ヒント１
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_10, C03P01_INFORMATIONW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //メニュー名２を選択
+  ELSIF $LWK_NUM_SELECT == 1 THEN
+
+    //受付嬢：ヒント２
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_11, C03P01_INFORMATIONW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //メニュー名３を選択
+  ELSIF $LWK_NUM_SELECT == 2 THEN
+
+    //受付嬢：ヒント３
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_12, C03P01_INFORMATIONW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //メニュー名４を選択
+  ELSIF $LWK_NUM_SELECT == 3 THEN
+
+    //受付嬢：ヒント４
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_13, C03P01_INFORMATIONW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //メニュー名５を選択
+  ELSIF $LWK_NUM_SELECT == 4 THEN
+
+    //受付嬢：ヒント５
+    _BALLOONWIN_OBJMSG_POS( msg_c03p01_sightseeing_14, C03P01_INFORMATIONW_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE    //【仮】キャンセル用？
+
+  ENDIF
+
+_RET
+
+
+/**************************************************************/
+/*  看板1                                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c03p01_sign_01
+  _EASY_BGWIN_MSG( msg_c03p01_sign_01, TYPE_POST)   //簡易メッセージＢＧ用
+EVENT_END
+
+/**************************************************************/
+/*  看板2                                                     */
+/**************************************************************/
+EVENT_START   ev_bg_c03p01_sign_02
+  _EASY_BGWIN_MSG( msg_c03p01_sign2_01, TYPE_POST)    //簡易メッセージＢＧ用
 EVENT_END
 
 
 //--------------------------------------------------------------------
-//	☆共通処理：1歩歩く
+//☆アクロマ：「！」の後、主人公の方を向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swboss_ret_x13
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//	☆共通処理：方向転換
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_u
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_l
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_r
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swboss_ret_x18
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆アクロマ：ゆっくり逆に歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swboss_16fw_x13
+  _ANIME_DATA AC_WALK_R_16F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swboss_16fw_x18
+  _ANIME_DATA AC_WALK_L_16F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆アクロマ：退場
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_swboss_bye_x13
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA AC_WALK_U_8F,12
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_swboss_bye_x18
+  _ANIME_DATA AC_WALK_L_8F,3
+  _ANIME_DATA AC_WALK_U_8F,12
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------------
-//	☆共通処理：はてな
+//☆共通処理：1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_hatena
-	_ANIME_DATA	AC_MARK_HATENA,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_hatena
+  _ANIME_DATA AC_MARK_HATENA,1
+  _ANIME_DATA ACMD_END,0
+
+
