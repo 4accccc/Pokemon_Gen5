@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="matsuzaki_tsubasa" host="W00193" date="2011-07-05T20:21:28" source="no_2.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="150"
+	tool_start_frame="1"
+	tool_end_frame="150"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="off" material_size="3 3"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="151">
+	0.000000 0.000000 -0.005615 -0.011230 -0.016602 -0.022217 -0.027588 -0.032959 -0.038330 -0.043701
+	-0.049072 -0.054443 -0.059814 -0.064941 -0.070313 -0.075439 -0.080566 -0.085693 -0.090820 -0.095947
+	-0.101074 -0.106201 -0.111328 -0.116455 -0.121582 -0.126465 -0.131592 -0.136719 -0.141602 -0.146729
+	-0.151855 -0.156738 -0.161865 -0.166992 -0.171875 -0.177002 -0.182129 -0.187012 -0.192139 -0.197266
+	-0.202393 -0.207520 -0.212646 -0.217773 -0.222900 -0.228027 -0.233154 -0.238281 -0.243652 -0.248779
+	-0.254150 -0.259521 -0.264648 -0.270020 -0.275391 -0.280762 -0.286377 -0.291748 -0.297363 -0.302734
+	-0.308350 -0.313965 -0.319824 -0.325439 -0.331299 -0.336914 -0.342773 -0.348633 -0.354736 -0.360596
+	-0.366699 -0.372803 -0.378906 -0.385010 -0.391357 -0.397705 -0.404053 -0.410400 -0.416992 -0.423340
+	-0.430176 -0.436768 -0.443604 -0.450195 -0.457275 -0.464111 -0.471191 -0.478271 -0.485352 -0.492676
+	-0.500000 -0.507568 -0.515381 -0.523682 -0.532471 -0.541260 -0.550537 -0.560303 -0.570068 -0.580322
+	-0.590576 -0.601318 -0.612061 -0.623291 -0.634521 -0.645996 -0.657715 -0.669434 -0.681396 -0.693359
+	-0.705566 -0.717773 -0.730225 -0.742676 -0.755127 -0.767578 -0.780029 -0.792725 -0.805176 -0.817627
+	-0.830322 -0.842773 -0.854980 -0.867432 -0.879639 -0.891602 -0.903564 -0.915527 -0.927246 -0.938721
+	-0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951
+	-0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951 -0.949951
+	-0.949951
+</tex_translate_data>
+
+<tex_srt_anm_array size="2">
+	<tex_srt_anm index="0" material_name="trans_red">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="150" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="trans_blue">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="150" data_head="1"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>

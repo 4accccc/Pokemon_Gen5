@@ -30,7 +30,8 @@ SUBDIRS	=	gym_denki \
 					gym_water \
 					fourkings_evil \
 					fourkings_esp \
-					fourkings_ghost
+					fourkings_ghost \
+					badge_gate
 
 .PHONY:	do-build clean
 

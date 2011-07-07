@@ -1,0 +1,53 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: badge_gate_gmk.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_BADGE_GATE_GMK_NAIX_
+#define NARC_BADGE_GATE_GMK_NAIX_
+
+enum {
+	NARC_badge_gate_gmk_swanbg_01_nsbmd = 0,
+	NARC_badge_gate_gmk_swanbg_02_nsbmd = 1,
+	NARC_badge_gate_gmk_swanbg_03_nsbmd = 2,
+	NARC_badge_gate_gmk_swanbg_04_nsbmd = 3,
+	NARC_badge_gate_gmk_swanbg_05_nsbmd = 4,
+	NARC_badge_gate_gmk_swanbg_06_nsbmd = 5,
+	NARC_badge_gate_gmk_swanbg_07_nsbmd = 6,
+	NARC_badge_gate_gmk_swanbg_08_nsbmd = 7,
+	NARC_badge_gate_gmk_swanbg_09_nsbmd = 8,
+	NARC_badge_gate_gmk_swanbg_01_nsbca = 9,
+	NARC_badge_gate_gmk_swanbg_02_nsbca = 10,
+	NARC_badge_gate_gmk_swanbg_03_nsbca = 11,
+	NARC_badge_gate_gmk_swanbg_04_nsbca = 12,
+	NARC_badge_gate_gmk_swanbg_05_nsbca = 13,
+	NARC_badge_gate_gmk_swanbg_06_nsbca = 14,
+	NARC_badge_gate_gmk_swanbg_07_nsbca = 15,
+	NARC_badge_gate_gmk_swanbg_08_nsbca = 16,
+	NARC_badge_gate_gmk_swanbg_09_nsbca = 17,
+	NARC_badge_gate_gmk_swanbg_01_nsbta = 18,
+	NARC_badge_gate_gmk_swanbg_02_nsbta = 19,
+	NARC_badge_gate_gmk_swanbg_03_nsbta = 20,
+	NARC_badge_gate_gmk_swanbg_04_nsbta = 21,
+	NARC_badge_gate_gmk_swanbg_05_nsbta = 22,
+	NARC_badge_gate_gmk_swanbg_06_nsbta = 23,
+	NARC_badge_gate_gmk_swanbg_07_nsbta = 24,
+	NARC_badge_gate_gmk_swanbg_08_nsbta = 25,
+	NARC_badge_gate_gmk_swanbg_09_nsbta = 26,
+	NARC_badge_gate_gmk_swanbg_roop_01_nsbta = 27,
+	NARC_badge_gate_gmk_swanbg_roop_02_nsbta = 28,
+	NARC_badge_gate_gmk_swanbg_roop_03_nsbta = 29,
+	NARC_badge_gate_gmk_swanbg_roop_04_nsbta = 30,
+	NARC_badge_gate_gmk_swanbg_roop_05_nsbta = 31,
+	NARC_badge_gate_gmk_swanbg_roop_06_nsbta = 32,
+	NARC_badge_gate_gmk_swanbg_roop_07_nsbta = 33,
+	NARC_badge_gate_gmk_swanbg_roop_08_nsbta = 34,
+	NARC_badge_gate_gmk_swanbg_roop_09_nsbta = 35
+};
+
+/* NARC_BADGE_GATE_GMK_NAIX_ */
+#endif
