@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-06-28T18:49:37" source="in81_local_texset.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-07-06T16:38:35" source="in81_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-06-28T18:49:37" source="in81_local_texset.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-07-06T16:38:35" source="in81_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1335,69 +1335,69 @@
 		path="C:/home/swan_data3d/field/in81/chip/tex/in81_stair02.tga"
 	>
 		<bitmap size="512">
-			9dee 0bbb 0000 0000 0000 0000 9bbb eeed
+			9aaa 0bbb 0000 0000 0000 0000 cbbb eaaa
 			eeee dddd dddd dddd dddd dddd dddd eeee
-			99ee 0c99 0000 0000 0000 0000 999c eee9
+			9caa 0c99 0000 0000 0000 0000 999c eaac
 			dddd dddd dddd dddd dddd dddd dddd eddd
-			99de a99d 0000 0000 0000 a000 9d99 ded9
+			99aa a99d 0000 0000 0000 a000 9d99 daa9
 			9999 9999 9999 9999 9999 9999 9999 d999
-			d9de a9dd 0000 0000 0000 a000 ddd9 de99
+			d9aa a9dd 0000 0000 0000 a000 ddd9 dac9
 			9455 9999 9999 9999 9999 9999 9999 d554
-			d9de a9dd 0000 0000 0000 a000 ddd9 9eb9
+			d9ca a9dd 0000 0000 0000 a000 ddd9 9ac9
 			8855 8888 8888 8888 8888 8888 8888 9558
-			d99d 0a9d 0000 0000 0000 0000 9d9a 9db9
+			d9ca 0a9d 0000 0000 0000 0000 9d9a 9ac9
 			8455 8888 8888 8888 8888 8888 8888 9554
-			9b99 0ac9 0000 0000 0000 0000 99ca 5dbb
+			9bca 0ac9 0000 0000 0000 0000 99ca 5acb
 			4355 8888 3348 3333 4333 8888 4888 5553
-			cacb 00ac 0000 0000 0000 0000 bca0 5d9b
+			caca 00ac 0000 0000 0000 0000 bca0 5acc
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			aaab 000a 0000 0000 0000 0000 aaa0 5dba
+			aaaa 000a 0000 0000 0000 0000 aaa0 5aca
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			c9cc 00aa 0000 0000 0000 0000 cca0 5dcc
+			c9ca 00aa 0000 0000 0000 0000 cca0 5acc
 			b555 b999 bbbb bbbb bbbb 99bb b999 5555
-			d99c 00ac 0000 0000 0000 0000 9ca0 5bc9
+			d99c 00ac 0000 0000 0000 0000 9ca0 5ac9
 			4555 9444 9999 9999 9999 9999 4449 555b
 			fd9c 0079 0000 0000 0000 0000 d9ca 5c9d
 			4455 4444 4444 4444 4444 4444 8444 5554
 			ff9c 0079 0000 0000 0000 0000 fdc7 5c9f
 			8855 8888 8888 8888 8888 8888 8888 5558
-			fd9b 0079 0000 0000 0000 0000 ffc7 5c9f
+			fd9c 0079 0000 0000 0000 0000 ffc7 5a9f
 			8855 8888 8888 8888 8888 8888 8888 5554
-			d99b 007c 0000 0000 0000 0000 fdc7 5c9f
+			d99c 007c 0000 0000 0000 0000 fdc7 5a9f
 			8455 8888 8888 8888 8888 8888 4888 5553
-			c99b 0007 0000 0000 0000 0000 dc70 5bc9
+			c9cc 0007 0000 0000 0000 0000 dc70 5aa9
 			4355 bb44 bbbb bbbb bbbb bbbb 5555 5555
-			7cbd 0667 0000 0000 0000 0000 ca76 5dbc
+			7cca 0667 0000 0000 0000 0000 ca76 5aaa
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			779d 6777 0000 0000 0000 6600 7cc7 5ddb
+			77ca 6777 0000 0000 0000 6600 7cc7 5aaa
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			9ab9 77c9 0006 0000 0000 7760 999c 5dbc
+			9aca 77c9 0006 0000 0000 7760 999c 5aac
 			5555 999b 9999 9999 9999 9999 5b99 5555
-			f9a9 7c9d 0067 0000 0000 c776 dfd9 5dc9
+			f9ac 7c9d 0067 0000 0000 c776 dfd9 5ac9
 			5555 4499 4444 4444 4444 4444 b994 5555
-			fd9d a9df 0067 6666 0066 9c76 dffd 5dc9
+			fd9c a9df 0067 6666 0066 9c76 dffd 5ac9
 			b555 8884 8888 8888 8888 8888 4888 5555
-			dd9d cdff 666a 7777 0677 99c6 dfff 5dc9
+			dd9c cdff 666a 7777 0677 99c6 dfff 5ac9
 			4555 8888 8888 8888 8888 8888 8888 5555
-			dd9d cddd 767c aaaa 677a 99c6 9ddd 5dc9
+			dd9c cddd 767c aaaa 677a 99c6 9ddd 5ac9
 			8555 8888 8888 8888 8888 8888 8888 5555
-			dd9d cddd a67c ddd9 67a9 9976 9999 5dcb
+			dd9a cddd a67c ddd9 67a9 9976 9999 5acb
 			3555 3444 bbb3 bbbb bbbb 33bb 3444 5555
-			d9bd c9dd b67c dddd 7a9d 9c76 b999 5dbc
+			d9ba c9dd b67c dddd 7a9d 9c76 b999 5acc
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			9bbd cc99 b67c dddd 79dd c766 5bbb 5dd5
+			9bca cc99 b67c dddd 79dd c766 5bbb 5aa5
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			9bde ccc9 b67a dddd 79dd 7767 5555 5ddb
+			9cc7 ccc9 b67a dddd 79dd 7767 5555 5aaa
 			9b55 9999 9999 9999 9999 9999 9999 555b
-			c9de accc 5667 ddd9 79dd 7667 bb55 5edd
+			cca7 accc 5667 ddd9 79dd 7667 aa55 57aa
 			4955 4444 4444 4444 4444 4444 4444 5559
-			ddde 7ab9 6776 dd95 7c9d 5676 ddbc 5edd
+			aaa7 7aaa 6776 dd95 ac9d a676 aaaa 57aa
 			8455 8888 8888 8888 8888 8888 8888 5554
-			ddee 7aab 5aa7 5557 7c55 ccbc dddb 5eed
+			aa77 7aaa aaa7 5557 77a5 aaa7 aaaa 577a
 			8455 8888 8888 8888 8888 8888 8888 5554
-			deee bbbd aaab bbaa cbbb dbbb dddd 5eee
+			a777 aaaa aaaa aaaa 77aa a777 aaaa 5777
 			4355 8888 3334 8843 3488 8433 4888 5553
-			eeee dddd bddd bbbb ddbb dddd eeed 5eee
+			7777 aaaa aaaa aaaa 777a 7777 7777 5777
 			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
 		</bitmap>
 	</tex_image>
@@ -1747,7 +1747,7 @@
 		14a6 18c7 14a5 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="in81_ana02_pl" color_size="8">
-		7fff 14c6 18e7 1084 0c63 0842 7fff 7fff
+		7fff 0c84 10a5 0c63 0842 0421 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="in81_drock1_pl" color_size="16">
 		35ad 0864 0c85 10a6 14c7 0c85 18e8 1557
