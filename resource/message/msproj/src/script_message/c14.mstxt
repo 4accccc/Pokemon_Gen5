@@ -68,14 +68,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『その　プラズマだん　だけど
-２１ばんすいどうに　いる▼
-みはっている　チェレンさんによると
-どうやら　ねんりょうぶそく　らしいな▼
-とはいえ　こちらも　ふねに
-せんにゅう　できないんだけどな</Text>
+どこに　いるのか　つかめていない▽
+てわけして　さがすしか　ないな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:37:56" />
+				Time="2011-07-07T03:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -84,14 +81,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『その　プラズマ団だけど
-２１番水道に　いる▼
-みはっている　チェレンさんによると
-どうやら　燃量不足らしいな▼
-とはいえ　こちらも　船に
-潜入できないんだけどな</Text>
+どこに　いるのか　つかめていない▽
+手分けして　探すしか　ないな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:08:08" />
+				Time="2011-07-07T03:52:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -128,13 +122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オマエの　ミッションは
-ジムバッジを　てにいれること▼
-プラズマだんが　あいてだ
-できるかぎり　つよくならないとな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あの　キュレム
+たすけてやらねーとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:07:19" />
+				Time="2011-07-07T03:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,13 +134,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエの　ミッションは
-ジムバッジを　手に入れること▼
-プラズマ団が　相手だ
-できるかぎり　強くならないとな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あの　キュレム
+助けてやらねーとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T05:07:10" />
+				Time="2011-07-07T03:53:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
