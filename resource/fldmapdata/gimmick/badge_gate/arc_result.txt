@@ -1,7 +1,7 @@
 
 fileID:  byte(s) name
 ----------------------------------------
-     0:     5808 /swanbg_01.nsbmd
+     0:     6096 /swanbg_01.nsbmd
      1:     5808 /swanbg_02.nsbmd
      2:     5808 /swanbg_03.nsbmd
      3:     5808 /swanbg_04.nsbmd
@@ -28,7 +28,7 @@ fileID:  byte(s) name
     24:      324 /swanbg_07.nsbta
     25:      324 /swanbg_08.nsbta
     26:      844 /swanbg_09.nsbta
-    27:      844 /swanbg_roop_01.nsbta
+    27:      764 /swanbg_roop_01.nsbta
     28:      844 /swanbg_roop_02.nsbta
     29:      844 /swanbg_roop_03.nsbta
     30:      844 /swanbg_roop_04.nsbta
