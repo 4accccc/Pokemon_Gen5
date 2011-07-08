@@ -634,11 +634,11 @@
 //  scrcmd_wbt.c
 //  WBT関連定義
 //--------------------------------------------------------------
-#define SCR_WBT_TYPE_NULL             (0) ///<トーナメント未選択
-#define SCR_WBT_TYPE_ALL              (1) ///<オールトーナメント
-#define SCR_WBT_TYPE_CHAMPION         (2) ///<チャンピオントーナメント
-#define SCR_WBT_TYPE_POKETYPE         (3) ///<タイプトーナメント
-#define SCR_WBT_TYPE_DOWNLOAD         (4) ///<ダウンロードトーナメント
+#define SCR_WBT_CUP_NULL             (0) ///<トーナメント未選択
+#define SCR_WBT_CUP_ALL              (1) ///<オールトーナメント
+#define SCR_WBT_CUP_CHAMPION         (2) ///<チャンピオントーナメント
+#define SCR_WBT_CUP_POKETYPE         (3) ///<タイプトーナメント
+#define SCR_WBT_CUP_DOWNLOAD         (4) ///<ダウンロードトーナメント
 
 #define SCR_WBT_RULE_NULL             (0) ///<ルールなし
 #define SCR_WBT_RULE_SINGLE           (1) ///<シングルバトル

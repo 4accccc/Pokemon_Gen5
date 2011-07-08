@@ -55,8 +55,8 @@ extern void WBTSYS_Delete( WBTSYS * wbtsys );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void WBTSYS_SetType( WBTSYS * wbtsys, WBTTYPE type );
-extern WBTTYPE WBTSYS_GetType( const WBTSYS * wbtsys );
+extern void WBTSYS_SetWBTCup( WBTSYS * wbtsys, WBTCUP wbtcup );
+extern WBTCUP WBTSYS_GetWBTCup( const WBTSYS * wbtsys );
 
 extern void WBTSYS_SetRule( WBTSYS * wbtsys, WBTRULE rule );
 extern WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys );

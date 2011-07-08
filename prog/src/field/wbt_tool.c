@@ -68,27 +68,27 @@ void WBTTOOL_GetTrRomData( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data )
  * @todo  ダウンロードデータへの対応（引数がWBTSYSになる）
  */
 //------------------------------------------------------------------
-void WBTTOOL_SetTournamentName( WBTTYPE type, STRBUF * strbuf )
+void WBTTOOL_SetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
 {
   HEAPID heapID = HEAPID_FIELDMAP;
   GFL_MSGDATA     *man;
   u16 msg_id;
 
-  switch ( type )
+  switch ( wbtcup )
   {
   default:
-  case WBTTYPE_DOWNLOAD:
+  case WBTCUP_DOWNLOAD:
     //仮：ダウンロードタイトル名には未対応
-  case WBTTYPE_NULL:
+  case WBTCUP_NULL:
     GF_ASSERT(0);
     /* FALL THROUGH */
-  case WBTTYPE_ALL:
+  case WBTCUP_ALL:
     msg_id = msg_wbtsys_title_01;
     break;
-  case WBTTYPE_CHAMPION:
+  case WBTCUP_CHAMPION:
     msg_id = msg_wbtsys_title_03;
     break;
-  case WBTTYPE_POKETYPE:
+  case WBTCUP_POKETYPE:
     msg_id = msg_wbtsys_title_02;
     break;
   }
@@ -622,19 +622,19 @@ static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list
 //-----------------------------------------------------------------------------
 void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  switch (cond->type)
+  switch (cond->wbtcup)
   {
-  case WBTTYPE_NULL:
-  case WBTTYPE_DOWNLOAD:
+  case WBTCUP_NULL:
+  case WBTCUP_DOWNLOAD:
     GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
     /* FALL THROUGH */
-  case WBTTYPE_ALL:
+  case WBTCUP_ALL:
     entryAllTournament( cond, tr_list );
     break;
-  case WBTTYPE_CHAMPION:
+  case WBTCUP_CHAMPION:
     entryChampTournament( tr_list );
     break;
-  case WBTTYPE_POKETYPE:
+  case WBTCUP_POKETYPE:
     entryTypeTournament( cond, tr_list );
     break;
   }

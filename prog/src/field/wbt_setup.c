@@ -137,7 +137,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
     wbtlist_param->stage = WBTLIST_STAGE_2ND;
     break;
   }
-  WBTTOOL_SetTournamentName( WBTSYS_GetType(wbtsys), wbtlist_param->tournament_name );
+  WBTTOOL_SetTournamentName( WBTSYS_GetWBTCup(wbtsys), wbtlist_param->tournament_name );
   WBTTOOL_SetRuleName( WBTSYS_GetRule(wbtsys), wbtlist_param->tournament_rule );
 }
 
@@ -152,7 +152,7 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
 //------------------------------------------------------------------
 void WBTLIST_PARAM_Setup_Debug(
     GAMESYS_WORK * gsys, WBTLIST_PARAM * wbtlist_param,
-    WBTTYPE wbttype, WBTRULE wbtrule,
+    WBTCUP wbtcup, WBTRULE wbtrule,
     WBTSTAGE stage, const u16 * trid_table, int debug_value )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
@@ -160,7 +160,7 @@ void WBTLIST_PARAM_Setup_Debug(
 
   wbtsys = WBTSYS_Create( HEAPID_FIELDMAP );
   WBTSYS_SetupTrainer( wbtsys, gamedata, trid_table );
-  WBTSYS_SetType( wbtsys, wbttype );
+  WBTSYS_SetWBTCup( wbtsys, wbtcup );
   WBTSYS_SetRule( wbtsys, wbtrule );
   WBTSYS_SetStage( wbtsys, stage );
 

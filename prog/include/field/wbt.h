@@ -32,12 +32,12 @@ enum {
 ///WBTトーナメントの種類
 //------------------------------------------------------------------
 typedef enum {
-  WBTTYPE_NULL,     ///<トーナメント未指定
-  WBTTYPE_ALL,      ///<オールトーナメント
-  WBTTYPE_CHAMPION, ///<チャンピオントーナメント
-  WBTTYPE_POKETYPE, ///<タイプトーナメント
-  WBTTYPE_DOWNLOAD, ///<ダウンロードトーナメント
-}WBTTYPE;
+  WBTCUP_NULL,     ///<トーナメント未指定
+  WBTCUP_ALL,      ///<オールトーナメント
+  WBTCUP_CHAMPION, ///<チャンピオントーナメント
+  WBTCUP_POKETYPE, ///<タイプトーナメント
+  WBTCUP_DOWNLOAD, ///<ダウンロードトーナメント
+}WBTCUP;
 
 //------------------------------------------------------------------
 ///WBT対戦ルール

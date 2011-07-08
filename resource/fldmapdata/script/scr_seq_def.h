@@ -12396,15 +12396,15 @@
 //--------------------------------------------------------------
 /**
  * @brief WBT:トーナメント開催条件をチェック
- * @param[in]   type ※script_def.hのSCR_WBT_TYPE_を参照
+ * @param[in]   type ※script_def.hのSCR_WBT_CUP_を参照
  * @param[out]  ret_wk  TRUEのとき開催できる、FALSEのときは開催できない
  */
 //--------------------------------------------------------------
-#define _WBT_CHECK_TOURNAMENT( type, ret_wk ) \
-    _ASM_WBT_CHECK_TOURNAMENT type, ret_wk
+#define _WBT_CHECK_CUP_ENABLE( type, ret_wk ) \
+    _ASM_WBT_CHECK_CUP_ENABLE type, ret_wk
 
-    .macro  _ASM_WBT_CHECK_TOURNAMENT type, ret_wk
-    .short  EV_SEQ_WBT_CHECK_TOURNAMENT
+    .macro  _ASM_WBT_CHECK_CUP_ENABLE type, ret_wk
+    .short  EV_SEQ_WBT_CHECK_CUP_ENABLE
     .short  \type
     .short  \ret_wk
     .endm
@@ -12459,11 +12459,11 @@
  * @param[in]  type ※script_def.hのSCR_WBT_TYPE_を参照
  */
 //--------------------------------------------------------------
-#define _WBT_SET_TOURNAMENT_TYPE( type )  \
-    _ASM_WBT_SET_TOURNAMENT_TYPE type   
+#define _WBT_SET_WBT_CUP( type )  \
+    _ASM_WBT_SET_WBT_CUP type   
 
-    .macro _ASM_WBT_SET_TOURNAMENT_TYPE type   
-    .short  EV_SEQ_WBT_SET_TOURNAMENT_TYPE
+    .macro _ASM_WBT_SET_WBT_CUP type   
+    .short  EV_SEQ_WBT_SET_WBT_CUP
     .short  \type
     .endm
 
@@ -12473,11 +12473,11 @@
  * @param[out]  ret_wk ※script_def.hのSCR_WBT_TYPE_を参照
  */
 //--------------------------------------------------------------
-#define _WBT_GET_TOURNAMENT_TYPE( ret_wk )   \
-    _ASM_WBT_GET_TOURNAMENT_TYPE ret_wk   
+#define _WBT_GET_WBT_CUP( ret_wk )   \
+    _ASM_WBT_GET_WBT_CUP ret_wk   
 
-    .macro _ASM_WBT_GET_TOURNAMENT_TYPE ret_wk   
-    .short  EV_SEQ_WBT_GET_TOURNAMENT_TYPE
+    .macro _ASM_WBT_GET_WBT_CUP ret_wk   
+    .short  EV_SEQ_WBT_GET_WBT_CUP
     .short  \ret_wk
     .endm
 

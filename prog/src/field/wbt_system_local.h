@@ -80,7 +80,7 @@ struct _WBTRESULT {
 struct _WBT_SYSTEM {
   HEAPID heapID;
   ///トーナメントの種類
-  WBTTYPE type;
+  WBTCUP wbtcup;
   ///バトルルール（シングル、ダブル、トリプル、ローテーション）
   WBTRULE rule;
   ///WBTの進行段階

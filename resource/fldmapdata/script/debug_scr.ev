@@ -365,7 +365,7 @@ EVENT_START   ev_debug_suginaka
 		IF $SCWK_ANSWER == 0 THEN
       //↓↓↓　本当は受付で行う初期化処理をデバッグ用にここで呼び出し
       _WBT_SYSTEM_START()
-      _WBT_SET_TOURNAMENT_TYPE( SCR_WBT_TYPE_ALL )
+      _WBT_SET_WBT_CUP( SCR_WBT_CUP_ALL )
       _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
       _WBT_SYSTEM_ENTRY()
       //↑↑↑　本当は受付で行う初期化処理をデバッグ用にここで呼び出し

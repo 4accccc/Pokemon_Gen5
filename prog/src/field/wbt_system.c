@@ -53,7 +53,7 @@ WBTSYS * WBTSYS_Create( HEAPID heapID )
   WBTSYS * wbtsys = GFL_HEAP_AllocClearMemory( heapID, sizeof(WBTSYS) );
 
   wbtsys->heapID = heapID;
-  wbtsys->type = WBTTYPE_NULL;
+  wbtsys->wbtcup = WBTCUP_NULL;
   wbtsys->rule = WBTRULE_NULL;
   wbtsys->stage = WBTSTAGE_RECEPTION;
   {
@@ -109,15 +109,15 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_l
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void WBTSYS_SetType( WBTSYS * wbtsys, WBTTYPE type )
+void WBTSYS_SetWBTCup( WBTSYS * wbtsys, WBTCUP wbtcup )
 {
-  wbtsys->type = type;
+  wbtsys->wbtcup = wbtcup;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-WBTTYPE WBTSYS_GetType( const WBTSYS * wbtsys )
+WBTCUP WBTSYS_GetWBTCup( const WBTSYS * wbtsys )
 {
-  return wbtsys->type;
+  return wbtsys->wbtcup;
 }
 
 //------------------------------------------------------------------
@@ -370,7 +370,7 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
 
   GFL_STD_MemClear( &cond, sizeof(WBT_MATCH_CONDITION) );
   cond.heapID = wbtsys->heapID;
-  cond.type = wbtsys->type;
+  cond.wbtcup = wbtsys->wbtcup;
   cond.poketype = wbtsys->poketype;
   cond.level = WBTTOOL_GetAllTournamentEntryLevel( gamedata );
   cond.leader_num = WBTTOOL_GetAllTournamentLeaderRate( gamedata, &wbtsys->rand_context );
@@ -437,8 +437,8 @@ void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf )
   u32 pos = WBTSYS_GetOpponentPos( wbtsys );
   const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, pos );
 
-  if ( wbtsys->type == WBTTYPE_DOWNLOAD 
-      || wbtsys->type == WBTTYPE_NULL )
+  if ( wbtsys->wbtcup == WBTCUP_DOWNLOAD 
+      || wbtsys->wbtcup == WBTCUP_NULL )
   {
     GF_ASSERT( 0 );
   }

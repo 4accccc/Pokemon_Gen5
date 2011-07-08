@@ -55,11 +55,11 @@ SDK_COMPILER_ASSERT( SCR_WBT_RULE_DOUBLE == WBTRULE_DOUBLE );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_TRIPLE == WBTRULE_TRIPLE );
 SDK_COMPILER_ASSERT( SCR_WBT_RULE_ROTATION == WBTRULE_ROTATION );
 
-SDK_COMPILER_ASSERT( SCR_WBT_TYPE_NULL == WBTTYPE_NULL );
-SDK_COMPILER_ASSERT( SCR_WBT_TYPE_ALL == WBTTYPE_ALL );
-SDK_COMPILER_ASSERT( SCR_WBT_TYPE_CHAMPION == WBTTYPE_CHAMPION );
-SDK_COMPILER_ASSERT( SCR_WBT_TYPE_POKETYPE == WBTTYPE_POKETYPE );
-SDK_COMPILER_ASSERT( SCR_WBT_TYPE_DOWNLOAD == WBTTYPE_DOWNLOAD );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_ALL == WBTCUP_ALL );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_CHAMPION == WBTCUP_CHAMPION );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_POKETYPE == WBTCUP_POKETYPE );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_DOWNLOAD == WBTCUP_DOWNLOAD );
 
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_RECEPTION == WBTSTAGE_RECEPTION );
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_ENTRY == WBTSTAGE_ENTRY );
@@ -105,19 +105,19 @@ static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
   WBTWIN_COUNT id;
 
-  switch ( WBTSYS_GetType( wbtsys ) )
+  switch ( WBTSYS_GetWBTCup( wbtsys ) )
   {
-  case WBTTYPE_NULL:
-  case WBTTYPE_DOWNLOAD:
+  case WBTCUP_NULL:
+  case WBTCUP_DOWNLOAD:
     //何もしない
     return;
-  case WBTTYPE_ALL:
+  case WBTCUP_ALL:
     id = WBTWIN_COUNT_ALLTOURNAMENT;
     break;
-  case WBTTYPE_CHAMPION:
+  case WBTCUP_CHAMPION:
     id = WBTWIN_COUNT_CHAMPION;
     break;
-  case WBTTYPE_POKETYPE:
+  case WBTCUP_POKETYPE:
     id = WBTSYS_GetPokeType( wbtsys );
     break;
   }
@@ -222,28 +222,28 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
  * @brief スクリプトコマンド：トーナメント開催状態の取得
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTCheckTournament( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk )
 {
   WBTSYS * wbtsys = getWBTSys( wk );
-  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  u16 wbtcup = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   SCRCMD_WORK   *work = wk;
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
 
-  switch ( type )
+  switch ( wbtcup )
   {
-  case WBTTYPE_NULL:
-  case WBTTYPE_ALL:
+  case WBTCUP_NULL:
+  case WBTCUP_ALL:
     *ret_wk = TRUE; //いつだってオールトーナメントは開催する
     break;
-  case WBTTYPE_POKETYPE:
+  case WBTCUP_POKETYPE:
     *ret_wk = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT );
     break;
-  case WBTTYPE_CHAMPION:
+  case WBTCUP_CHAMPION:
     *ret_wk = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT );
     break;
-  case WBTTYPE_DOWNLOAD:
+  case WBTCUP_DOWNLOAD:
     *ret_wk = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT );
     break;
   }
@@ -308,12 +308,12 @@ VMCMD_RESULT EvCmdWBTGetBattleRule( VMHANDLE * core, void * wk )
  * @brief スクリプトコマンド：WBTトーナメントのタイプセット
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTSetTournamentType( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTSetWBTCup( VMHANDLE * core, void * wk )
 {
-  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  u16 wbtcup = SCRCMD_GetVMWorkValue( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
-  WBTSYS_SetType( wbtsys, type );
-  TAMADA_Printf("EvCmdWBTSetTournamentType <= %d\n", type);
+  WBTSYS_SetWBTCup( wbtsys, wbtcup );
+  TAMADA_Printf("EvCmdWBTSetWBTCup <= %d\n", wbtcup);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -322,12 +322,12 @@ VMCMD_RESULT EvCmdWBTSetTournamentType( VMHANDLE * core, void * wk )
  * @brief スクリプトコマンド：WBTトーナメントのタイプ取得
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
+VMCMD_RESULT EvCmdWBTGetWBTCup( VMHANDLE * core, void * wk )
 {
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
-  *ret_wk = WBTSYS_GetType( wbtsys );
-  TAMADA_Printf("EvCmdWBTGetTournamentType == %d\n", *ret_wk);
+  *ret_wk = WBTSYS_GetWBTCup( wbtsys );
+  TAMADA_Printf("EvCmdWBTGetWBTCup == %d\n", *ret_wk);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -338,10 +338,10 @@ VMCMD_RESULT EvCmdWBTGetTournamentType( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSetTournamentPokeType( VMHANDLE * core, void * wk )
 {
-  u16 type = SCRCMD_GetVMWorkValue( core, wk );
+  u16 poketype = SCRCMD_GetVMWorkValue( core, wk );
   WBTSYS * wbtsys = getWBTSys( wk );
-  WBTSYS_SetPokeType( wbtsys, type );
-  TAMADA_Printf("EvCmdWBTSetTournamentPokeType <= %d\n", type);
+  WBTSYS_SetPokeType( wbtsys, poketype );
+  TAMADA_Printf("EvCmdWBTSetTournamentPokeType <= %d\n", poketype);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -601,14 +601,14 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
   WORDSET*     wordset = SCRIPT_GetWordSet( sc );
   WBTSYS * wbtsys = getWBTSys( wk );
   u8 idx = VMGetU8(core);
-  WBTTYPE wbttype;
+  WBTCUP wbtcup;
   u16 msg_id;
 
   TAMADA_Printf("EvCmdWBTSetTournamentName\n");
-  wbttype = WBTSYS_GetType(wbtsys);
+  wbtcup = WBTSYS_GetWBTCup(wbtsys);
   {
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
-    WBTTOOL_SetTournamentName( wbttype, strbuf );
+    WBTTOOL_SetTournamentName( wbtcup, strbuf );
     WORDSET_RegisterWord( wordset, idx, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
   }
   return VMCMD_RESULT_CONTINUE;
@@ -707,7 +707,7 @@ static GMEVENT * createDummyEvent( HEAPID heapID, GAMESYS_WORK * gsys )
     WBTSYS * wbtsys;
 
     wbtsys = WBTSYS_Create( heapID );
-    WBTSYS_SetType( wbtsys, WBTTYPE_ALL );
+    WBTSYS_SetWBTCup( wbtsys, WBTCUP_ALL );
     WBTSYS_SetRule( wbtsys, WBTRULE_SINGLE );
     WBTSYS_SetStage( wbtsys, WBTSTAGE_ENTRY );
     WBTSYS_MakeMatch( wbtsys, gamedata );
