@@ -37,6 +37,16 @@ typedef enum {
   WBTCUP_CHAMPION, ///<チャンピオントーナメント
   WBTCUP_POKETYPE, ///<タイプトーナメント
   WBTCUP_DOWNLOAD, ///<ダウンロードトーナメント
+
+  WBTCUP_HODOMOE,     ///<ホドモエトーナメント           
+  WBTCUP_ISSYU,       ///<イッシュリーダーズトーナメント 
+  WBTCUP_KANTO,       ///<カントーリーダーズトーナメント 
+  WBTCUP_JOUTO,       ///<ジョウトリーダーズトーナメント 
+  WBTCUP_HOUEN,       ///<ホウエンリーダーズトーナメント 
+  WBTCUP_SINOU,       ///<シンオウリーダーズトーナメント 
+  WBTCUP_WORLDBATTLE, ///<ワールドバトルトーナメント     
+
+  WBTCUP_MAX,
 }WBTCUP;
 
 //------------------------------------------------------------------

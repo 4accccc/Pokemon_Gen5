@@ -15,6 +15,7 @@ typedef enum {
 
 #include "../../../prog/include/pm_version.h"
 #include "../../../prog/src/field/wbt_trlist_struct.h"
+#include "../../../prog/include/field/wbt.h"
 
 #include "..\..\sound\swan_sound_data.sadl"
 #include "..\..\trtype\trtype_def.h"

@@ -634,11 +634,19 @@
 //  scrcmd_wbt.c
 //  WBT関連定義
 //--------------------------------------------------------------
-#define SCR_WBT_CUP_NULL             (0) ///<トーナメント未選択
-#define SCR_WBT_CUP_ALL              (1) ///<オールトーナメント
-#define SCR_WBT_CUP_CHAMPION         (2) ///<チャンピオントーナメント
-#define SCR_WBT_CUP_POKETYPE         (3) ///<タイプトーナメント
-#define SCR_WBT_CUP_DOWNLOAD         (4) ///<ダウンロードトーナメント
+#define SCR_WBT_CUP_NULL              (0) ///<トーナメント未選択
+#define SCR_WBT_CUP_ALL               (1) ///<オールトーナメント
+#define SCR_WBT_CUP_CHAMPION          (2) ///<チャンピオントーナメント
+#define SCR_WBT_CUP_POKETYPE          (3) ///<タイプトーナメント
+#define SCR_WBT_CUP_DOWNLOAD          (4) ///<ダウンロードトーナメント
+#define SCR_WBT_CUP_HODOMOE           (5) ///<ホドモエトーナメント
+#define SCR_WBT_CUP_ISSYU             (6) ///<イッシュリーダーズトーナメント
+#define SCR_WBT_CUP_KANTO             (7) ///<カントーリーダーズトーナメント
+#define SCR_WBT_CUP_JOUTO             (8) ///<ジョウトリーダーズトーナメント
+#define SCR_WBT_CUP_HOUEN             (9) ///<ホウエンリーダーズトーナメント
+#define SCR_WBT_CUP_SINOU            (10) ///<シンオウリーダーズトーナメント
+#define SCR_WBT_CUP_WORLDBATTLE      (11) ///<ワールドバトルトーナメント
+
 
 #define SCR_WBT_RULE_NULL             (0) ///<ルールなし
 #define SCR_WBT_RULE_SINGLE           (1) ///<シングルバトル

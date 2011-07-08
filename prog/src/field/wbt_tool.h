@@ -84,6 +84,7 @@ extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+extern BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup );
 extern BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id );
 extern u32 WBTTOOL_GetAllTournamentLeaderRate( GAMEDATA * gamedata, GFL_STD_RandContext * context );
 extern WBT_ALLTOUR_LEVEL WBTTOOL_GetAllTournamentEntryLevel( GAMEDATA * gamedata );

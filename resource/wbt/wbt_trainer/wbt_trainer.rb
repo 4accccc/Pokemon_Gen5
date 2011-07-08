@@ -81,6 +81,16 @@ PROJECT_ROOT = ENV["PROJECT_ROOT"]
     "女" => "PM_FEMALE",
     "可変" => "PM_NEUTRAL"
   }
+
+  $cup_table = {
+    "なし" => "WBTCUP_NULL",
+    "イッシュ" => "WBTCUP_ISSYU",
+    "カントー" => "WBTCUP_KANTO",
+    "ジョウト" => "WBTCUP_JOUTO",
+    "ホウエン" => "WBTCUP_HOUEN",
+    "シンオウ" => "WBTCUP_SINOU",
+    "チャンピオン" => "WBTCUP_CHAMPION",
+  }
 #----------------------------------------------------------------------------
 # エクセルデータの各欄の定義
 #----------------------------------------------------------------------------
@@ -96,7 +106,7 @@ class COL
     ENTRY_TIMING
     TOURNAMENT_COMMENT
     ALL_ENTRY
-    CHAMP_ENTRY
+    REGION_ENTRY
     TYPE_ENTRY
     PRIORITY
     AI
@@ -131,7 +141,7 @@ class WBT_TRDATA
     @entry_timing = column[COL::ENTRY_TIMING]
     @comment_tour = column[COL::TOURNAMENT_COMMENT]
     @all_entry = column[COL::ALL_ENTRY]
-    @champ_entry = column[COL::CHAMP_ENTRY]
+    @region_entry = column[COL::REGION_ENTRY]
     @type_entry = column[COL::TYPE_ENTRY]
     @priority = column[COL::PRIORITY].to_i
     @ai = column[COL::AI]
@@ -183,7 +193,7 @@ class WBT_TRDATA
     str += sprintf("\t\tTRTYPE_%-12s, //トレーナータイプ指定\n", @trtype )
     str += sprintf("\t\t%2d, //エントリタイミング\n", $entry_timing_table[@entry_timing] )
     str += sprintf("\t\t%-5s, //オールトーナメント参加\n", $maru_batu_table[@all_entry] )
-    str += sprintf("\t\t%-5s, //チャンピオントーナメント参加\n", $maru_batu_table[@champ_entry] )
+    str += sprintf("\t\t%-5s, //チャンピオントーナメント参加\n", $cup_table[@region_entry] )
     str += sprintf("\t\t%2d, //タイプトーナメント種別\n", type_def(@type_entry) )
     str += sprintf("\t\t%2d, //優先度\n", @priority )
     str += sprintf("\t\t%2d, //AI\n", @ai.to_i )

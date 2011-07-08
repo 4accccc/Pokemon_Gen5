@@ -53,6 +53,12 @@ typedef enum {
   WBTSAVE_FLAG_ENABLE_TYPE_TOURNAMENT = 0,  ///<タイプトーナメントへ参加できるか？
   WBTSAVE_FLAG_ENABLE_CHAMPION_TOURNAMENT,  ///<チャンピオントーナメントへ参加できるか？
   WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT,     ///<チャンピオントーナメントで優勝したか？
+  WBTSAVE_FLAG_WIN_HODOMOE_EVENT,           ////<ホドモエ初回イベントで優勝したか？
+  WBTSAVE_FLAG_WIN_ISSHU_LEADERS,           ///<イッシュリーダーズトーナメント優勝したか？
+  WBTSAVE_FLAG_WIN_KANTO_LEADERS,           ///<カントーリーダーズトーナメント優勝したか？
+  WBTSAVE_FLAG_WIN_JOUTO_LEADERS,           ///<ジョウトリーダーズトーナメント優勝したか？
+  WBTSAVE_FLAG_WIN_HOUEN_LEADERS,           ///<ホウエンリーダーズトーナメント優勝したか？
+  WBTSAVE_FLAG_WIN_SINOU_LEADERS,           ///<シンオウリーダーズトーナメント優勝したか？
 
   WBTSAVE_FLAG_MAX = 32,
 }WBTSAVE_FLAG;

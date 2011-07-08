@@ -73,23 +73,36 @@ void WBTTOOL_SetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
   HEAPID heapID = HEAPID_FIELDMAP;
   GFL_MSGDATA     *man;
   u16 msg_id;
+  const u16 msg_tbl[] = {
+    //msg_wbtsys_title_00, //WBTCUP_NULL,     ///<トーナメント未指定
+    msg_wbtsys_title_01, //WBTCUP_ALL,      ///<オールトーナメント
+    msg_wbtsys_title_02, //WBTCUP_CHAMPION, ///<チャンピオントーナメント
+    msg_wbtsys_title_03, //WBTCUP_POKETYPE, ///<タイプトーナメント
+    msg_wbtsys_title_04, //WBTCUP_DOWNLOAD, ///<ダウンロードトーナメント
 
+    msg_wbtsys_title_05, //WBTCUP_HODOMOE,     ///<ホドモエトーナメント           
+    msg_wbtsys_title_06, //WBTCUP_ISSYU,       ///<イッシュリーダーズトーナメント 
+    msg_wbtsys_title_07, //WBTCUP_KANTO,       ///<カントーリーダーズトーナメント 
+    msg_wbtsys_title_08, //WBTCUP_JOUTO,       ///<ジョウトリーダーズトーナメント 
+    msg_wbtsys_title_09, //WBTCUP_HOUEN,       ///<ホウエンリーダーズトーナメント 
+    msg_wbtsys_title_10, //WBTCUP_SINOU,       ///<シンオウリーダーズトーナメント 
+    msg_wbtsys_title_11, //WBTCUP_WORLDBATTLE, ///<ワールドバトルトーナメント     
+  };
+
+  if ( wbtcup == WBTCUP_NULL || wbtcup >= WBTCUP_MAX )
+  {
+    GF_ASSERT( 0 );
+    wbtcup = WBTCUP_ALL;
+  }
   switch ( wbtcup )
   {
-  default:
   case WBTCUP_DOWNLOAD:
     //仮：ダウンロードタイトル名には未対応
   case WBTCUP_NULL:
     GF_ASSERT(0);
     /* FALL THROUGH */
-  case WBTCUP_ALL:
-    msg_id = msg_wbtsys_title_01;
-    break;
-  case WBTCUP_CHAMPION:
-    msg_id = msg_wbtsys_title_03;
-    break;
-  case WBTCUP_POKETYPE:
-    msg_id = msg_wbtsys_title_02;
+  default:
+    msg_id = msg_tbl[ wbtcup - 1 ];
     break;
   }
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_system_dat, heapID );
@@ -504,7 +517,7 @@ static void entryChampTournament( u16 * tr_list )
   for ( j = 0, tr_idx = 2; j < WBT_ROM_TRAINER_NUM; j ++ )
   {
     const WBT_TRDATA * rom_data = &WBTTrainerData[ j ];
-    if ( rom_data->entry_champ == FALSE ) continue;
+    if ( rom_data->region_tournament_id != WBTCUP_CHAMPION ) continue;
     tr_list[tr_idx] = j;
     tr_idx ++;
     if ( tr_idx >= WBT_TRAINER_NUM )
@@ -891,7 +904,43 @@ WBT_ALLTOUR_LEVEL WBTTOOL_GetAllTournamentEntryLevel( GAMEDATA * gamedata )
 }
 
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
 
+  switch ( (WBTCUP)wbtcup )
+  {
+  case WBTCUP_NULL:     ///<トーナメント未指定
+  case WBTCUP_ALL:      ///<オールトーナメント
+  case WBTCUP_CHAMPION: ///<チャンピオントーナメント
+    return WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT );
+  case WBTCUP_POKETYPE: ///<タイプトーナメント
+    return WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT );
+  case WBTCUP_DOWNLOAD: ///<ダウンロードトーナメント
+    return WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT );
+
+  case WBTCUP_HODOMOE:     ///<ホドモエトーナメント           
+    return TRUE;        //いつでも
+  case WBTCUP_ISSYU:       ///<イッシュリーダーズトーナメント 
+    //ゲームクリアしていたらタイプトーナメントは開催する
+    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+  case WBTCUP_KANTO:       ///<カントーリーダーズトーナメント 
+    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_ISSHU_LEADERS );
+  case WBTCUP_JOUTO:       ///<ジョウトリーダーズトーナメント 
+    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_KANTO_LEADERS );
+  case WBTCUP_HOUEN:       ///<ホウエンリーダーズトーナメント 
+    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_JOUTO_LEADERS );
+  case WBTCUP_SINOU:       ///<シンオウリーダーズトーナメント 
+    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_HOUEN_LEADERS );
+  case WBTCUP_WORLDBATTLE: ///<ワールドバトルトーナメント     
+    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_SINOU_LEADERS );
+  }
+  //よくわからないものは開催できない
+  return FALSE;
+}
 
 
 
