@@ -57,6 +57,8 @@
 
 #include "msg/msg_pokewood_name.h"
 
+#include "pkwd_book_snd_def.h"
+
 // メッセージ
 #include "message.naix"
 
@@ -3134,6 +3136,8 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 			// 戻るシーケンス変更
 			pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
 			wk->SubMode = STEP_LV2;
+			// SE
+			PMSND_PlaySE( SND_PKWD_BOOK_CANCEL );
 			//
 			// 終了処理
 			if(id == 0){		// タッチで終了
@@ -3351,6 +3355,8 @@ static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk )
 		// 左シーケンス変更
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
 		wk->SubMode = STEP_LV2+20;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_ARROW );
 	}
 	// 右
 	else if(mflg == 2){
@@ -3358,6 +3364,8 @@ static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk )
 		// 右シーケンス変更
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
 		wk->SubMode = STEP_LV2+10;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_ARROW );
 	}
 	// 戻る
 	else if(mflg == 3){
@@ -3365,6 +3373,8 @@ static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk )
 		// 戻るシーケンス変更
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
 		wk->SubMode = STEP_LV2;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_CANCEL );
 		//
 		// 終了処理
 		if(id == 2){		// タッチで終了
@@ -3622,6 +3632,8 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 		// 左シーケンス変更
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
 		wk->SubMode = STEP_LV2+20;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_ARROW );
 	}
 	// 右
 	else if(mflg == 2){
@@ -3629,6 +3641,8 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 		// 右シーケンス変更
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
 		wk->SubMode = STEP_LV2+10;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_ARROW );
 	}
 	// 戻る
 	else if(mflg == 3){
@@ -3636,6 +3650,8 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 		// 戻るシーケンス変更
 		pwb_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_BACK, SEQ_CMN_BACK_ANIM );
 		wk->SubMode = STEP_LV2;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_CANCEL );
 		// 終了処理
 		if(id == 2){		// タッチで終了
 			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
@@ -4472,6 +4488,8 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		pwb_init_meswin( wk );
 		pwb_init_selectwin( wk );
 		wk->SubMode = STEP_LV4;
+		// SE
+		PMSND_PlaySE( SND_PKWD_BOOK_DECIDE );
 	}
 	//
 	// ここでなくてもいいはず
