@@ -282,5 +282,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     FOURKINGS_ESP_End,    // 四天王 エスパー
     FOURKINGS_ESP_Move,   // 四天王 エスパー
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_hide_ship_engine),//D27R1001 D27R1301
+    HIDE_SHIP_Setup,  // アジト船　エンジン
+    HIDE_SHIP_End,    // アジト船　エンジン
+    HIDE_SHIP_Move,   // アジト船　エンジン
+  },
 };
 

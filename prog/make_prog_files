@@ -1188,6 +1188,10 @@ SRCS_OVERLAY_FIELD_GIMMICK_H01 = field/field_gimmick_h01.c
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_GIMMICK_H03 = field/field_gimmick_h03.c
 
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_HIDE_SHIP_ENGINE = field/field_gimmick_hide_ship_engine.c
+
 #群集は、C03の路地＋H03でも使用することになった。
 #H03のギミックと共存するために特別に、OVERLAYをH03とは並列でなくする。
 #この書き方は、まねしないように。
