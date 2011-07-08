@@ -2845,10 +2845,10 @@
 [Name:Item ]　マニア！▼
 [Name:Item ]を　くれたら　おれいに
 おまえさんの　ポケモンに▽
-わざを　おしえて　あげるよ▼</Text>
+わざを　おしえて　あげるよ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-05T06:59:25" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-08T02:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2861,10 +2861,10 @@
 [Name:Item ]　マニア！▼
 [Name:Item ]を　くれたら　お礼に
 おまえさんの　ポケモンに▽
-技を　教えて　あげるよ▼</Text>
+技を　教えて　あげるよ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-05T07:00:45" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-08T02:10:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2893,10 +2893,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おお！　おまえさんか▼</Text>
+			<Text>わしは　わざおしえ　しょくにん！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-05T03:48:12" />
+				Time="2011-07-08T02:15:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2904,10 +2904,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお！　おまえさんか▼</Text>
+			<Text>わしは　技教え職人！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-05T03:49:01" />
+				Time="2011-07-08T02:15:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2936,10 +2936,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンに
-わざを　おしえるかい？▼</Text>
+わざを　おしえるかい？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-05T07:01:29" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-08T02:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2948,10 +2948,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンに
-技を　教えるかい？▼</Text>
+技を　教えるかい？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-05T07:01:57" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-08T02:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
