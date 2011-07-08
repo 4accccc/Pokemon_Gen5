@@ -1198,5 +1198,23 @@ SCRIPTFILES += \
 	sp_d26r0101.ev \
 	c15r0301.ev \
 	sp_c15r0301.ev \
+	d27r1401.ev \
+	sp_d27r1401.ev \
+	d27r1501.ev \
+	sp_d27r1501.ev \
+	d27r1601.ev \
+	sp_d27r1601.ev \
+	d27r1701.ev \
+	sp_d27r1701.ev \
+	d27r1801.ev \
+	sp_d27r1801.ev \
+	d27r1901.ev \
+	sp_d27r1901.ev \
+	d27r2001.ev \
+	sp_d27r2001.ev \
+	d27r2101.ev \
+	sp_d27r2101.ev \
+	d27r2201.ev \
+	sp_d27r2201.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö

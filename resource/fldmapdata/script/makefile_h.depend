@@ -1962,6 +1962,33 @@ d26r0101_def.h: d26r0101.ev
 c15r0301_def.h: c15r0301.ev
 	$(EV_DEF) c15r0301.ev $(SCR_OFFS_ID_H)
 
+d27r1401_def.h: d27r1401.ev
+	$(EV_DEF) d27r1401.ev $(SCR_OFFS_ID_H)
+
+d27r1501_def.h: d27r1501.ev
+	$(EV_DEF) d27r1501.ev $(SCR_OFFS_ID_H)
+
+d27r1601_def.h: d27r1601.ev
+	$(EV_DEF) d27r1601.ev $(SCR_OFFS_ID_H)
+
+d27r1701_def.h: d27r1701.ev
+	$(EV_DEF) d27r1701.ev $(SCR_OFFS_ID_H)
+
+d27r1801_def.h: d27r1801.ev
+	$(EV_DEF) d27r1801.ev $(SCR_OFFS_ID_H)
+
+d27r1901_def.h: d27r1901.ev
+	$(EV_DEF) d27r1901.ev $(SCR_OFFS_ID_H)
+
+d27r2001_def.h: d27r2001.ev
+	$(EV_DEF) d27r2001.ev $(SCR_OFFS_ID_H)
+
+d27r2101_def.h: d27r2101.ev
+	$(EV_DEF) d27r2101.ev $(SCR_OFFS_ID_H)
+
+d27r2201_def.h: d27r2201.ev
+	$(EV_DEF) d27r2201.ev $(SCR_OFFS_ID_H)
+
 ifeq ($(PM_DEBUG),yes)
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
