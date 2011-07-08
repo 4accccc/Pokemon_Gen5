@@ -2,6 +2,138 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_wbtsys_rule_single"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シングルバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シングルバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_rule_double"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダブルバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダブルバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_rule_triple"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トリプルバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トリプルバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_rule_rotation"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ローテーションバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ローテーションバトル</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:25" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_wbtsys_title_01"
 		Style="Large">
 		<LanguageCell
@@ -134,135 +266,328 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_rule_single"
-		Style="Large">
+		Label="msg_wbtsys_title_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>シングルバトル</Text>
+			<Text>ホドモエトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シングルバトル</Text>
+			<Text>ホドモエトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:08" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_rule_double"
-		Style="Large">
+		Label="msg_wbtsys_title_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダブルバトル</Text>
+			<Text>イッシュリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダブルバトル</Text>
+			<Text>イッシュリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:23" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_rule_triple"
-		Style="Large">
+		Label="msg_wbtsys_title_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>トリプルバトル</Text>
+			<Text>カントーリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トリプルバトル</Text>
+			<Text>カントーリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:36" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbtsys_rule_rotation"
-		Style="Large">
+		Label="msg_wbtsys_title_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローテーションバトル</Text>
+			<Text>ジョウトリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ローテーションバトル</Text>
+			<Text>ジョウトリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="tamada:W00253"
+				Time="2011-07-07T10:42:54" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエンリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
-		</AttributeCell>
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエンリーダーズトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>シンオウリーダーズトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シンオウリーダーズトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールドバトルトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールドバトルトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:43:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタルトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:45:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタルトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:20" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタルマスタートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタルマスタートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフルトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフルトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:50" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフルマスタートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフルマスタートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:46:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイプマスタートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイプマスタートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbtsys_title_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>WCS２０１１トーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>WCS２０１１トーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-07T10:47:30" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
