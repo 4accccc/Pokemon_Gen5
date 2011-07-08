@@ -47,6 +47,7 @@
 #include "fourkings_fight.h"
 #include "fourkings_esp.h"
 #include "field_gimmick_hide_ship_engine.h"
+#include "field_gimmick_bgate.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);

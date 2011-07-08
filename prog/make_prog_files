@@ -1003,6 +1003,11 @@ SRCS_OVERLAY_SCRCMD_POKEWOOD  =  field/scrcmd_pokewood.c \
                             field/scrcmd_pokewood_table.c \
                             field/pokewood_setup.c
 
+# スクリプトコマンド並列化  バッジチェックゲート
+#===> GROUP_OVERLAY_DEBUGMENU
+#GROUP_OVERLAY_SCRCMD
+SRCS_OVERLAY_SCRCMD_BGATE  =  field/scrcmd_bgate.c \
+                              field/scrcmd_bgate_table.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -1154,7 +1159,8 @@ SRCS_OVERLAY_FIELD_GYM_WATER = field/gym_water.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
+SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c \
+                                   field/field_gimmick_bgate.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

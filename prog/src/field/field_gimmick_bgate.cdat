@@ -1,0 +1,476 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		field_gimmick_bgate.cdat
+ *	@brief  バッジチェックゲートデータ群
+ *	@author	Masayuki Onoue
+ *	@date		2011.07.06
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
+
+//-------------------------------------
+///	モデル管理ID
+//=====================================
+typedef enum
+{
+  BADGEGATE_MDLID_GATE,
+  BADGEGATE_MDLID_MONUMENT_0,
+  BADGEGATE_MDLID_MONUMENT_1,
+  BADGEGATE_MDLID_MONUMENT_2,
+  BADGEGATE_MDLID_MONUMENT_3,
+  BADGEGATE_MDLID_MONUMENT_4,
+  BADGEGATE_MDLID_MONUMENT_5,
+  BADGEGATE_MDLID_MONUMENT_6,
+  BADGEGATE_MDLID_MONUMENT_7,
+  BADGEGATE_MDLID_MAX,
+}MODELID;
+
+//リソースID
+enum
+{
+  // 門
+  MDL_RESID_GATE_IMD,
+  MDL_RESID_GATE_ICA,
+  MDL_RESID_GATE_ACTION_ITA,
+  MDL_RESID_GATE_LOOP_ITA,
+  // 像0
+  MDL_RESID_MONUMENT_0_IMD,
+  MDL_RESID_MONUMENT_0_ICA,
+  MDL_RESID_MONUMENT_0_ACTION_ITA,
+  MDL_RESID_MONUMENT_0_LOOP_ITA,
+  // 像1
+  MDL_RESID_MONUMENT_1_IMD,
+  MDL_RESID_MONUMENT_1_ICA,
+  MDL_RESID_MONUMENT_1_ACTION_ITA,
+  MDL_RESID_MONUMENT_1_LOOP_ITA,
+  // 像2
+  MDL_RESID_MONUMENT_2_IMD,
+  MDL_RESID_MONUMENT_2_ICA,
+  MDL_RESID_MONUMENT_2_ACTION_ITA,
+  MDL_RESID_MONUMENT_2_LOOP_ITA,
+  // 像3
+  MDL_RESID_MONUMENT_3_IMD,
+  MDL_RESID_MONUMENT_3_ICA,
+  MDL_RESID_MONUMENT_3_ACTION_ITA,
+  MDL_RESID_MONUMENT_3_LOOP_ITA,
+  // 像4
+  MDL_RESID_MONUMENT_4_IMD,
+  MDL_RESID_MONUMENT_4_ICA,
+  MDL_RESID_MONUMENT_4_ACTION_ITA,
+  MDL_RESID_MONUMENT_4_LOOP_ITA,
+  // 像5
+  MDL_RESID_MONUMENT_5_IMD,
+  MDL_RESID_MONUMENT_5_ICA,
+  MDL_RESID_MONUMENT_5_ACTION_ITA,
+  MDL_RESID_MONUMENT_5_LOOP_ITA,
+  // 像6
+  MDL_RESID_MONUMENT_6_IMD,
+  MDL_RESID_MONUMENT_6_ICA,
+  MDL_RESID_MONUMENT_6_ACTION_ITA,
+  MDL_RESID_MONUMENT_6_LOOP_ITA,
+  // 像7
+  MDL_RESID_MONUMENT_7_IMD,
+  MDL_RESID_MONUMENT_7_ICA,
+  MDL_RESID_MONUMENT_7_ACTION_ITA,
+  MDL_RESID_MONUMENT_7_LOOP_ITA,
+
+  MDL_RESID_MAX,
+};
+  
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+
+//リソースデータ
+static const GFL_G3D_UTIL_RES sc_g3d_util_res[MDL_RESID_MAX] =
+{
+  // 門
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_09_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_09_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_09_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_09_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像0
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像1
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像2
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像3
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像4
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像5
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像6
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  // 像7
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+  {
+    ARCID_BADGE_GATE,
+    NARC_badge_gate_gmk_swanbg_roop_01_nsbta,
+    GFL_G3D_UTIL_RESARC,
+  },
+};
+
+
+// アニメ設定
+enum
+{
+  MDL_ANM_ACTION_ICA,
+  MDL_ANM_ACTION_ITA,
+  MDL_ANM_LOOP_ITA,
+};
+
+// 門
+static const GFL_G3D_UTIL_ANM sc_g3d_gate_anm[] = 
+{
+  { MDL_RESID_GATE_ICA, 0 },
+  { MDL_RESID_GATE_ACTION_ITA, 0 },
+  { MDL_RESID_GATE_LOOP_ITA, 0 },
+};
+#define ANMID_GATE_MAX  (NELEMS(sc_g3d_gate_anm))
+
+// 像0
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_00_anm[] = 
+{
+  { MDL_RESID_MONUMENT_0_ICA, 0 },
+  { MDL_RESID_MONUMENT_0_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_0_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_0_MAX  (NELEMS(sc_g3d_monument_00_anm))
+
+// 像1
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_01_anm[] = 
+{
+  { MDL_RESID_MONUMENT_1_ICA, 0 },
+  { MDL_RESID_MONUMENT_1_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_1_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_1_MAX  (NELEMS(sc_g3d_monument_01_anm))
+
+// 像2
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_02_anm[] = 
+{
+  { MDL_RESID_MONUMENT_2_ICA, 0 },
+  { MDL_RESID_MONUMENT_2_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_2_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_2_MAX  (NELEMS(sc_g3d_monument_02_anm))
+
+// 像3
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_03_anm[] = 
+{
+  { MDL_RESID_MONUMENT_3_ICA, 0 },
+  { MDL_RESID_MONUMENT_3_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_3_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_3_MAX  (NELEMS(sc_g3d_monument_03_anm))
+
+// 像4
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_04_anm[] = 
+{
+  { MDL_RESID_MONUMENT_4_ICA, 0 },
+  { MDL_RESID_MONUMENT_4_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_4_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_4_MAX  (NELEMS(sc_g3d_monument_04_anm))
+
+// 像5
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_05_anm[] = 
+{
+  { MDL_RESID_MONUMENT_5_ICA, 0 },
+  { MDL_RESID_MONUMENT_5_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_5_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_5_MAX  (NELEMS(sc_g3d_monument_05_anm))
+
+// 像6
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_06_anm[] = 
+{
+  { MDL_RESID_MONUMENT_6_ICA, 0 },
+  { MDL_RESID_MONUMENT_6_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_6_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_6_MAX  (NELEMS(sc_g3d_monument_06_anm))
+
+// 像7
+static const GFL_G3D_UTIL_ANM sc_g3d_monument_07_anm[] = 
+{
+  { MDL_RESID_MONUMENT_7_ICA, 0 },
+  { MDL_RESID_MONUMENT_7_ACTION_ITA, 0 },
+  { MDL_RESID_MONUMENT_7_LOOP_ITA, 0 },
+};
+#define ANMID_MONUMENT_7_MAX  (NELEMS(sc_g3d_monument_07_anm))
+
+//3Dオブジェクト設定
+static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[BADGEGATE_MDLID_MAX] =
+{
+  // 門
+  {
+    BADGEGATE_MDLID_GATE,   //モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		BADGEGATE_MDLID_GATE,   //テクスチャリソースID
+		sc_g3d_gate_anm,		    //アニメテーブル(複数指定のため)
+		ANMID_GATE_MAX,	        //アニメリソース数
+  },
+  // 像0
+  {
+    MDL_RESID_MONUMENT_0_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_0_IMD, //テクスチャリソースID
+		sc_g3d_monument_00_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_0_MAX,	    //アニメリソース数
+  },
+  // 像1
+  {
+    MDL_RESID_MONUMENT_1_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_1_IMD, //テクスチャリソースID
+		sc_g3d_monument_01_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_1_MAX,	    //アニメリソース数
+  },
+  // 像2
+  {
+    MDL_RESID_MONUMENT_2_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_2_IMD, //テクスチャリソースID
+		sc_g3d_monument_02_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_2_MAX,	    //アニメリソース数
+  },
+  // 像3
+  {
+    MDL_RESID_MONUMENT_3_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_3_IMD, //テクスチャリソースID
+		sc_g3d_monument_03_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_3_MAX,	    //アニメリソース数
+  },
+  // 像4
+  {
+    MDL_RESID_MONUMENT_4_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_4_IMD, //テクスチャリソースID
+		sc_g3d_monument_04_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_4_MAX,	    //アニメリソース数
+  },
+  // 像5
+  {
+    MDL_RESID_MONUMENT_5_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_5_IMD, //テクスチャリソースID
+		sc_g3d_monument_05_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_5_MAX,	    //アニメリソース数
+  },
+  // 像6
+  {
+    MDL_RESID_MONUMENT_6_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_6_IMD, //テクスチャリソースID
+		sc_g3d_monument_06_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_6_MAX,	    //アニメリソース数
+  },
+  // 像7
+  {
+    MDL_RESID_MONUMENT_7_IMD, //モデルリソースID
+		0, 							          //モデルデータID(リソース内部INDEX)
+		MDL_RESID_MONUMENT_7_IMD, //テクスチャリソースID
+		sc_g3d_monument_07_anm,		//アニメテーブル(複数指定のため)
+		ANMID_MONUMENT_7_MAX,	    //アニメリソース数
+  },
+};
+
+// 全情報設定
+static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup =
+{
+  sc_g3d_util_res,        //リソーステーブル
+  MDL_RESID_MAX,          //リソース最大数
+  sc_g3d_util_obj,        //オブジェクトテーブル
+  BADGEGATE_MDLID_MAX, //オブジェクト数
+};
+
+// 配置情報
+static const VecFx32 d3obj_pos_table[] =
+{
+  { GRID_TO_FX32(31), GRID_TO_FX32(6), GRID_TO_FX32(39) },
+  { GRID_TO_FX32(76), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(71), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(66), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(61), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(56), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(51), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(46), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(41), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+};

@@ -12,27 +12,164 @@
   .include  "msg_d26r0101.h"
   //.include  "d26r0101.h"
 
-//--------------------------------------------------------------
-//               スクリプト本体
-//--------------------------------------------------------------
+//------------------------------注意--------------------------------//
+// ローカルワーク、シーンワークをプログラム側で操作しています。
+// 
+// LOCALWORK0~7⇒像の起動フラグ
+//
+//------------------------------------------------------------------/
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d26r0101
+_EVENT_DATA		 ev_zone_d26r0101
+_EVENT_DATA    ev_pos_d26r0101_badge_check_01
+_EVENT_DATA    ev_pos_d26r0101_badge_check_02
+_EVENT_DATA    ev_pos_d26r0101_badge_check_03
+_EVENT_DATA    ev_pos_d26r0101_badge_check_04
+_EVENT_DATA    ev_pos_d26r0101_badge_check_05
+_EVENT_DATA    ev_pos_d26r0101_badge_check_06
+_EVENT_DATA    ev_pos_d26r0101_badge_check_07
+_EVENT_DATA    ev_pos_d26r0101_badge_check_08
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d26r0101:
-//  _END
+/************************************************************/
+/*					ジムギミック初期化						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d26r0101
+{
+  // ジムバッジの取得状態によって、起動できるモニュメントを変更する
+  DEFINE_LOCAL  LWK_BADGE_GET
+ 
+  // バッジ1
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_01 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK0 = TRUE
+  ENDIF
+ 
+  // バッジ2
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_02 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK1 = TRUE
+  ENDIF
+ 
+  // バッジ3
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_03 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK2 = TRUE
+  ENDIF
+ 
+  // バッジ4
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_04 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK3 = TRUE
+  ENDIF
+ 
+  // バッジ5
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_05 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK4 = TRUE
+  ENDIF
+ 
+  // バッジ6
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_06 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK5 = TRUE
+  ENDIF
+ 
+  // バッジ7
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_07 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK6 = TRUE
+  ENDIF
+ 
+  // バッジ8
+  _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_08 )
+  IF $LWK_BADGE_GET == TRUE THEN
+    $LOCALWORK7 = TRUE
+  ENDIF
+
+}
+INIT_EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*                  モニュメント1                             */
 /**************************************************************/
-ev_d26r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_pos_d26r0101_badge_check_01
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 0 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント2                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_02
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 1 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント3                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_03
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 2 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント4                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_04
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 3 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント5                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_05
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 4 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント6                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_06
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 5 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント7                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_07
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 6 )
+}
+EVENT_END
+
+/**************************************************************/
+/*                  モニュメント8                             */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_badge_check_08
+{
+  //ジムバッジを取得している場合のみ起動
+  _BGATE_START_MONUMENT( 7 )
+}
+EVENT_END
 

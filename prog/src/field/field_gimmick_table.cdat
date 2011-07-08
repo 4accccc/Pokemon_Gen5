@@ -288,5 +288,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     HIDE_SHIP_End,    // アジト船　エンジン
     HIDE_SHIP_Move,   // アジト船　エンジン
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_bgate),//D26R0101
+    BADGEGATE_Setup,  // バッジチェックゲート
+    BADGEGATE_End,    // バッジチェックゲート
+    BADGEGATE_Move,   // バッジチェックゲート
+  },
 };
 

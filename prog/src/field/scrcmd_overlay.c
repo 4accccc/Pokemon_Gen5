@@ -30,6 +30,7 @@
 #include "scrcmd_resort_table.h"
 #include "scrcmd_infinity_dungeon_table.h"
 #include "scrcmd_pokewood_table.h"
+#include "scrcmd_bgate_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -51,6 +52,7 @@ FS_EXTERN_OVERLAY( scrcmd_wbt );
 FS_EXTERN_OVERLAY( scrcmd_resort );
 FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
 FS_EXTERN_OVERLAY( scrcmd_pokewood );
+FS_EXTERN_OVERLAY( scrcmd_bgate );
 
 //=============================================================================
 /**
@@ -185,6 +187,13 @@ static const ZONEID UseZoneIDTbl_pokewood[] =
   ZONE_ID_C15R0101,
   ZONE_ID_C15R0201,
 };
+//-------------------------------------
+///	バッジチェックゲート
+//=====================================
+static const ZONEID UseZoneIDTbl_badge_gate[] = 
+{
+  ZONE_ID_D26R0101,
+};
 
 
 //=============================================================================
@@ -277,6 +286,13 @@ static const struct
     UseZoneIDTbl_pokewood,
     NELEMS(UseZoneIDTbl_pokewood),
     FS_OVERLAY_ID( scrcmd_pokewood ),
+  },
+  //BADGE_CHECK_GATE
+  {
+    ScriptCmdTbl_bgate,
+    UseZoneIDTbl_badge_gate,
+    NELEMS(UseZoneIDTbl_badge_gate),
+    FS_OVERLAY_ID( scrcmd_bgate ),
   }
 };
 //=============================================================================
