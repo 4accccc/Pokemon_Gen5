@@ -21,6 +21,7 @@
 #define TR_RANGERM_18                      9
 #define TR_RANGERW_18                     10
 #define TR_RANGERM_17                     11
+#define TR_TANPAN_24                      12
 
 #endif //ZONE_R20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
