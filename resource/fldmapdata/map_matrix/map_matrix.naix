@@ -373,7 +373,16 @@ enum {
 	NARC_map_matrix_daisuki01_mat_bin = 359,
 	NARC_map_matrix_pwood01_mat_bin = 360,
 	NARC_map_matrix_pwood02_mat_bin = 361,
-	NARC_map_matrix_pwood03_mat_bin = 362
+	NARC_map_matrix_pwood03_mat_bin = 362,
+	NARC_map_matrix_dun2712_mat_bin = 363,
+	NARC_map_matrix_dun2713_mat_bin = 364,
+	NARC_map_matrix_dun2714_mat_bin = 365,
+	NARC_map_matrix_dun2715_mat_bin = 366,
+	NARC_map_matrix_dun2716_mat_bin = 367,
+	NARC_map_matrix_dun2717_mat_bin = 368,
+	NARC_map_matrix_dun2718_mat_bin = 369,
+	NARC_map_matrix_dun2719_mat_bin = 370,
+	NARC_map_matrix_dun2720_mat_bin = 371
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */
