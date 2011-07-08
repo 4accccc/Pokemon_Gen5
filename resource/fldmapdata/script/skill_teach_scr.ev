@@ -44,6 +44,11 @@ DEFINE_LOCAL kakera_no  // かけらのアイテムNo
 //※注意
 //技をあきらめたときに内部(sub_skillteacher_system)で SCWK_PARAM2 をキーに処理している箇所がありますので
 //値の受け渡し等に $SCWK_PARAM2 を使用しないで下さい
+//
+//
+// ※注意
+// LOCALWORK12 ～ LOCALWORK15をSWAN技教え用に使用しています。
+// 使用しないように！！！
 //------------------------------------------------------------------------------
 
 
@@ -505,7 +510,6 @@ sub_waza_teacher_swan:
 
   // ほい　きた！　じゃあ　おしえる　わざを えらんでくれ
   _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_04 )
-  _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
 
@@ -573,21 +577,10 @@ sub_waza_teacher_swan:
   $flag_decide_abwait = 1
   _CALL sub_skillteacher_system
   
-  IF $SCWK_ANSWER == TRUE THEN
-    
-    // アイテムを減らす
-    DEFINE_LOCAL ret
-    _SUB_ITEM( kakera_no, LOCALWORK15, ret )
+  // ～は　おれいに　～を ～コ　わたした
+  // のメッセージは上の関数内に記述
 
-    _PLAYER_NAME( 0 )
-    _ITEM_NAME( 1, kakera_no )
-    _NUMBER( 2, LOCALWORK15, 2 )
-
-    // ～は　おれいに　～を ～コ　わたした
-    _SYSWIN_MSG( msg_skillteach_kakera_06, POS_DEFAULT )
-    _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
-  ELSE
+  IF $SCWK_ANSWER == FALSE THEN
     // かけらが　あつまったら　また　おいで
     _ITEM_NAME( 0, kakera_no )
     _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_05 )
@@ -738,11 +731,29 @@ sub_skillteacher_wasure_core:
     _SYSWIN_MSG( msg_skillteach_system_07 , POS_DEFAULT )
     _ME_PLAY( SEQ_ME_LVUP )
     _ME_WAIT()
+
     IF $flag_decide_abwait == 0 THEN
       _LAST_KEYWAIT()
     ELSE
       _AB_KEYWAIT_MARK()
     ENDIF
+
+    //SWANわざ教えの場合はメッセージ追加
+    IF $LOCALWORK12 == 2 && $LOCALWORK15 > 0 THEN
+      // アイテムを減らす
+      DEFINE_LOCAL ret
+      _SUB_ITEM( kakera_no, LOCALWORK15, ret )
+
+      _PLAYER_NAME( 0 )
+      _ITEM_NAME( 1, kakera_no )
+      _NUMBER( 2, LOCALWORK15, 2 )
+
+      // ～は　おれいに　～を ～コ　わたした
+      _SYSWIN_MSG( msg_skillteach_kakera_06, POS_DEFAULT )
+
+      _LAST_KEYWAIT()
+    ENDIF
+
     _SYSWIN_CLOSE()
     
     _SET_TEMOTI_WAZA( select_pos , waza_pos , teach_waza_id )
