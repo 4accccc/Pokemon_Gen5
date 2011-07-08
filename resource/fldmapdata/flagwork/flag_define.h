@@ -342,9 +342,9 @@
 #define FE_TEACH_WAZA_TALK_BLUE            326 /* 0x0146 SWAN技教え初回会話フラグ(あおいかけら） */
 #define FE_TEACH_WAZA_TALK_YELLOW          327 /* 0x0147 SWAN技教え初回会話フラグ(きいろいかけら） */
 #define FE_TEACH_WAZA_TALK_GREEN           328 /* 0x0148 SWAN技教え初回会話フラグ(みどりのかけら） */
-		/* not used   329(0x0149) */
-		/* not used   330(0x014a) */
-		/* not used   331(0x014b) */
+#define FE_R22_POKE5_MEET_01               329 /* 0x0149 22番道路：テラキオンに会った */
+#define FE_R22_POKE5_GET_01                330 /* 0x014a 22番道路：テラキオンを捕まえた */
+#define FE_D02R0201_RANGERM_01             331 /* 0x014b D02R0201：レンジャー初回会話フラグ */
 		/* not used   332(0x014c) */
 		/* not used   333(0x014d) */
 		/* not used   334(0x014e) */
@@ -625,6 +625,10 @@
 #define FV_C14_BOY4_01                     707 /* 0x02c3 セイガイハシティ：おいかけっこカップル（男・クリア前） */
 #define FV_C14_BOY4_02                     708 /* 0x02c4 セイガイハシティ：おいかけっこカップル（男・クリア後） */
 #define FV_H01R0201_STOP_01                709 /* 0x02c5 スカイアローブリッジ：ストッパー */
+#define FV_R22_POKE5_01                    710 /* 0x02c6 22番道路：テラキオン */
+#define FV_R22_SWBOSS_01                   711 /* 0x02c7 22番道路：アクロマ */
+#define FV_D02R0201_POKE6_01               712 /* 0x02c8 思索の原：ビリジオン */
+#define FV_D02R0201_RANGERM_01             713 /* 0x02c9 思索の原：レンジャー */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

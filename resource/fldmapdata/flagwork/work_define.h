@@ -220,6 +220,7 @@
 #define WK_SCENE_R19R0101_INFOW_01       16608 /* 0x40e0 19番道路：ストッパーPOS制御ワーク */
 #define WK_SCENE_H01R0201_STOP_01        16609 /* 0x40e1 スカイアローブリッジ：ヒウン側ゲートストッパーPOS制御ワーク */
 #define WK_SCENE_C03_RALLY_01            16610 /* 0x40e2 ヒウンシティ：名所巡り制御ワーク */
+#define WK_SCENE_R22_POKE5               16611 /* 0x40e3 22番道路：テラキオン遭遇POSイベント制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
