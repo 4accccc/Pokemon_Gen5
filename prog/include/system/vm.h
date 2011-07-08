@@ -189,6 +189,6 @@ extern void * VM_GetContext( VMHANDLE * core );
 extern void VM_SetCheckFunc( VMHANDLE * core, VM_CHECK_FUNC callback, void * work );
 
 #ifdef	__cplusplus
-};	/* extern "C" */
+}	/* extern "C" */
 #endif
 

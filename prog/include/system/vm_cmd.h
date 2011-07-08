@@ -173,6 +173,6 @@ extern u32 VMGetU32( VMHANDLE * core );
 extern void VMCompare(VMHANDLE * core, VM_VALUE r1, VM_VALUE r2 );
 
 #ifdef	__cplusplus
-};	/* extern "C" */
+}	/* extern "C" */
 #endif
 
