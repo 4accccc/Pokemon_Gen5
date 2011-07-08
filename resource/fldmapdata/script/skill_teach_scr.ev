@@ -505,7 +505,7 @@ sub_waza_teacher_swan:
 
   // ほい　きた！　じゃあ　おしえる　わざを えらんでくれ
   _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_kakera_04 )
-  _LAST_KEYWAIT()
+  _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
 
