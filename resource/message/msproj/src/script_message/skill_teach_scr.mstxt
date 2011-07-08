@@ -2845,10 +2845,10 @@
 [Name:Item ]　マニア！▼
 [Name:Item ]を　くれたら　おれいに
 おまえさんの　ポケモンに▽
-わざを　おしえて　あげるよ</Text>
+わざを　おしえて　あげるよ▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-08T02:10:55" />
+				Time="2011-07-08T03:36:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2861,10 +2861,10 @@
 [Name:Item ]　マニア！▼
 [Name:Item ]を　くれたら　お礼に
 おまえさんの　ポケモンに▽
-技を　教えて　あげるよ</Text>
+技を　教えて　あげるよ▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-08T02:10:57" />
+				Time="2011-07-08T03:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2893,10 +2893,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わしは　わざおしえ　しょくにん！</Text>
+			<Text>わしは　わざおしえ　しょくにん！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-08T02:15:34" />
+				Time="2011-07-08T03:36:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2904,10 +2904,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わしは　技教え職人！</Text>
+			<Text>わしは　技教え職人！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-08T02:15:54" />
+				Time="2011-07-08T03:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2982,10 +2982,10 @@
 			Language="JPN">
 			<Text>ほい　きた！▼
 じゃあ　おしえる
-わざを　えらんどくれ</Text>
+わざを　えらんどくれ▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-07T07:15:31" />
+				Time="2011-07-08T03:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2995,10 +2995,10 @@
 			Language="JPN_KANJI">
 			<Text>ほい　きた！▼
 じゃあ　教える
-技を　選んどくれ</Text>
+技を　選んどくれ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-05T07:02:12" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-08T03:41:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
