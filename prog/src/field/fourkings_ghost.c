@@ -101,7 +101,9 @@ typedef struct {
 enum {
   RESID_BOOK_MDL = 0,       // 本モデル
   RESID_BOOK_01_ANM_ICA,    // 本アニメ(動いている)
+  RESID_BOOK_01_ANM_ITP,    // 本アニメ(動いている)
   RESID_BOOK_02_ANM_ICA,    // 本アニメ(落ちる)
+  RESID_BOOK_02_ANM_ITP,    // 本アニメ(動いている)
   RESID_FIRE_A_MDL,         // 炎モデル
   RESID_FIRE_A_01_ANM_ICA,  // 炎アニメ(点火)
   RESID_FIRE_A_01_ANM_IMA,  // 炎アニメ(点火)
@@ -167,7 +169,9 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book02_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_fire_a_01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_fire_a_01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_fire_a_01_nsbma, GFL_G3D_UTIL_RESARC },
@@ -216,7 +220,9 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 static const GFL_G3D_UTIL_ANM anm_book[] =
 {
   { RESID_BOOK_01_ANM_ICA, 0 },
+  { RESID_BOOK_01_ANM_ITP, 0 },
   { RESID_BOOK_02_ANM_ICA, 0 },
+  { RESID_BOOK_02_ANM_ITP, 0 },
 };
 #define ANM_BOOK_NUM  ( NELEMS(anm_book) )
 
@@ -931,7 +937,9 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
  *
  *          アニメインデックス
  *          0 回転アニメ(loop)
- *          1 落ちるアニメ
+ *          1 回転アニメ(loop)
+ *          2 落ちるアニメ
+ *          3 落ちるアニメ
  */
 //=============================================================================
 //----------------------------------------------------------------------------
@@ -949,7 +957,9 @@ static void ANM_BOOK_PlayLoop( FOURKINGS_GHOST_TMP *p_wk )
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
 
   ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
-  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, TRUE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 3 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -981,7 +991,9 @@ static void ANM_BOOK_Play( FOURKINGS_GHOST_TMP *p_wk )
   u16 obj_idx = OBJ_BOOK;
 
   ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
-  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+  ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 3, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -997,7 +1009,7 @@ static BOOL ANM_BOOK_CheckEnd( FOURKINGS_GHOST_TMP *p_wk )
   u16 obj_idx = OBJ_BOOK;
 
   EXP_OBJ_ANM_CNT_PTR exp_anm;
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1 );
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2 );
 
   return FLD_EXP_OBJ_ChkAnmEnd(exp_anm);
 }
@@ -1013,9 +1025,9 @@ static void ANM_BOOK_FallDown( FOURKINGS_GHOST_TMP *p_wk )
   fx32 last_frame;
   u16 obj_idx = OBJ_BOOK;
   EXP_OBJ_ANM_CNT_PTR exp_anm;
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1 );
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2 );
 
-  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1, TRUE );
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2, TRUE );
   // 最終フレーム取得
   last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
 
@@ -1023,7 +1035,7 @@ static void ANM_BOOK_FallDown( FOURKINGS_GHOST_TMP *p_wk )
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
 
   // ラストフレームにする
-  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 1, last_frame );
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2, last_frame );
 }
 //=============================================================================
 /**
