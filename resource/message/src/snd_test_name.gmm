@@ -5457,10 +5457,6 @@
 		<language name="JPN" width="256">BGM-LCG-02</language>
 		<language name="JPN_KANJI" width="256">BGM-LCG-02</language>
 	</row>
-	<row id="msg_seq_bgm_key_sys">
-		<language name="JPN" width="256">BGM-KEY-SYS</language>
-		<language name="JPN_KANJI" width="256">BGM-KEY-SYS</language>
-	</row>
 	<row id="msg_seq_bgm_data_conv">
 		<language name="JPN" width="256">BGM-DATA-CONV</language>
 		<language name="JPN_KANJI" width="256">BGM-DATA-CONV</language>
@@ -5633,14 +5629,18 @@
 		<language name="JPN" width="256">BGM-VS-UMA</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-UMA</language>
 	</row>
+	<row id="msg_seq_bgm_vs_dplegend">
+		<language name="JPN" width="256">BGM-VS-DPLEGEND</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-DPLEGEND</language>
+	</row>
+	<row id="msg_seq_bgm_win_wbt">
+		<language name="JPN" width="256">BGM-WIN-WBT</language>
+		<language name="JPN_KANJI" width="256">BGM-WIN-WBT</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1298">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1299">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
