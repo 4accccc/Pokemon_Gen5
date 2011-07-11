@@ -43,6 +43,7 @@ struct _BTLV_CLACT_WORK
   GFL_CLUNIT*     clunit;
   BTLV_CLACT_CLWK bccl[ BTLV_CLACT_CLWK_MAX ];
   BTLV_CLACT_CLWK rec_meter[ BTLV_CLACT_REC_MAX ];
+  BTLV_CLACT_CLWK rec_turn_bar[2];
   u32             clact_tcb_move_execute;
   u32             clact_tcb_scale_execute;
   int             pokewood;
@@ -67,6 +68,8 @@ static  void  TCB_BTLV_CLACT_Move( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_CLACT_Move_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_CLACT_Scale( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_CLACT_Scale_CB( GFL_TCB *tcb );
+static  void  draw_rec_turn_bar( BTLV_CLACT_WORK *bclw, int no, GFL_FONT *font );
+
 
 //============================================================================================
 /**
@@ -286,6 +289,7 @@ void BTLV_CLACT_AddRecMeter( BTLV_CLACT_WORK *bclw )
     16,16,
     0,0,0,
   };
+  GFL_CLWK_AFFINEDATA AddAffineParam={{0,0,0,0,0},0,0,FX32_ONE, FX32_ONE, 0};
 
   // ポケウッド録画モードじゃなかったら撮影ターンメーターを登録しない
   if(bclw->pokewood!=BTL_POKEWOOD_REC){
@@ -317,6 +321,34 @@ void BTLV_CLACT_AddRecMeter( BTLV_CLACT_WORK *bclw )
   }
   BTLV_CLACT_SetRecMeterAnime( bclw, 10, 0 );
   
+  // 画面中央ターン表示
+  {
+    AddAffineParam.clwkdata.pos_x = 128;
+    AddAffineParam.clwkdata.pos_y = 192/2;
+    AddAffineParam.affine_type = CLSYS_AFFINETYPE_NORMAL;
+    bclw->rec_turn_bar[0].clwk = GFL_CLACT_WK_CreateAffine( bclw->clunit, 
+                                            bclw->rec_meter[ 0 ].charID,
+                                            bclw->rec_meter[ 0 ].plttID,
+                                            bclw->rec_meter[ 0 ].cellID,
+	                                          &AddAffineParam, CLSYS_DEFREND_MAIN, bclw->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( bclw->rec_turn_bar[0].clwk, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( bclw->rec_turn_bar[0].clwk, FALSE );
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_turn_bar[0].clwk, 20 );
+    GFL_CLACT_WK_SetSoftPri( bclw->rec_turn_bar[0].clwk, 1 );
+    AddParam.pos_x = 128;
+    AddParam.pos_y = 192/2;
+    bclw->rec_turn_bar[1].clwk = GFL_CLACT_WK_Create( bclw->clunit,
+                                            bclw->rec_meter[ 0 ].charID,
+                                            bclw->rec_meter[ 0 ].plttID,
+                                            bclw->rec_meter[ 0 ].cellID,
+                                            &AddParam, CLSYS_DEFREND_MAIN, bclw->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( bclw->rec_turn_bar[1].clwk, TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( bclw->rec_turn_bar[1].clwk, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( bclw->rec_turn_bar[1].clwk, FALSE );
+    GFL_CLACT_WK_SetAnmSeq( bclw->rec_turn_bar[1].clwk, 21 );
+
+
+  }
   // ハンドルクローズ
   GFL_ARC_CloseDataHandle( hdl );
   
@@ -396,6 +428,7 @@ void  BTLV_CLACT_Delete( BTLV_CLACT_WORK *bclw, int index )
   }
 }
 
+
 //=============================================================================================
 /**
  * @brief	撮影ターンメーターの破棄
@@ -410,6 +443,12 @@ void BTLV_CLACT_DeleteRecMeter( BTLV_CLACT_WORK *bclw )
   
   // ポケウッド録画モードならメーターを解放
   if(bclw->pokewood==BTL_POKEWOOD_REC){
+
+    for(i=0;i<2;i++){
+      GFL_CLACT_WK_Remove( bclw->rec_turn_bar[i].clwk );
+      bclw->rec_turn_bar[i].clwk = NULL;
+    }
+
     for(i=0;i<BTLV_CLACT_REC_MAX;i++){
       GFL_CLACT_WK_Remove( bclw->rec_meter[ i ].clwk );
       bclw->rec_meter[ i ].clwk = NULL;
@@ -521,6 +560,7 @@ void  BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index, int anm_no )
   GFL_CLACT_WK_SetAnmSeq( bclw->bccl[ index ].clwk, anm_no );
 }
 
+
 //============================================================================================
 /**
  *  パレットフェード
@@ -568,7 +608,19 @@ BOOL  BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index )
            ( GFL_CLACT_WK_CheckAnmActive( bclw->bccl[ index ].clwk ) ) );
 }
 
-
+//=============================================================================================
+/**
+ * @brief	ポケウッド用にTCBチェックのみ返す
+ *
+ * @param   bclw		
+ *
+ * @retval  BOOL		TRUE:動作中 FALSE:終了
+ */
+//=============================================================================================
+BOOL BTLV_CLACT_CheckPokewoodTCBExcecute( BTLV_CLACT_WORK *bclw )
+{
+  return bclw->clact_tcb_move_execute & BTLV_EFFTOOL_No2Bit( BTLV_CLACT_TCB_POKEWOOD_INDEX );
+}
 //============================================================================================
 /**
  *  CLWK操作系タスク初期化処理
@@ -676,3 +728,97 @@ static  void  TCB_BTLV_CLACT_Scale_CB( GFL_TCB *tcb )
   bctw->bclw->clact_tcb_scale_execute &= ( BTLV_EFFTOOL_No2Bit( bctw->index ) ^ 0xffffffff );
 }
 
+
+
+static void TCB_FuncRecTurnBar( GFL_TCB *tcb, void *addr )
+{
+  BTLV_CLACT_TCB_WORK *bctw = (BTLV_CLACT_TCB_WORK *)addr;
+  
+  switch(bctw->emw.count){
+  case 0:
+    if(!GFL_CLACT_WK_CheckAnmActive( bctw->bclw->rec_turn_bar[0].clwk )){
+      bctw->emw.count++;
+    }
+    break;
+  case 1:
+    GFL_CLACT_WK_SetDrawEnable( bctw->bclw->rec_turn_bar[0].clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( bctw->bclw->rec_turn_bar[1].clwk, FALSE );
+    bctw->emw.count++;
+    break;
+  case 2:
+    GFL_HEAP_FreeMemory( addr );  //演出終了につき自殺
+    GFL_TCB_DeleteTask( tcb );
+    bctw->bclw->clact_tcb_move_execute &= ( BTLV_EFFTOOL_No2Bit( BTLV_CLACT_TCB_POKEWOOD_INDEX ) ^ 0xffffffff );
+    break;
+  case 3:
+    break;
+  }
+}
+
+static void BTLV_CLACT_SetRecTurnBarTCB( BTLV_CLACT_WORK *bclw, int no )
+{
+  BTLV_CLACT_TCB_WORK *bctw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bclw->heapID ), sizeof( BTLV_CLACT_TCB_WORK ) );
+
+//  GF_ASSERT( index < BTLV_CLACT_CLWK_MAX );
+
+  bctw->bclw              = bclw;
+  bctw->index             = no;
+  bctw->emw.wait          = 0;
+  bctw->emw.count         = 0;
+
+//extern void GFL_CLGRP_CGR_ReplaceEx( u32 index, const void* cp_buff, u32 size, u32 offs, CLSYS_DRAW_TYPE vramType );
+
+  GFL_TCB_AddTask( bclw->tcb_sys, TCB_FuncRecTurnBar, bctw, 0 );
+  bclw->clact_tcb_move_execute |= BTLV_EFFTOOL_No2Bit( BTLV_CLACT_TCB_POKEWOOD_INDEX );
+
+}
+
+//=============================================================================================
+/**
+ * @brief	ターン切り替え演出開始
+ *
+ * @param   bclw		
+ * @param   no		
+ */
+//=============================================================================================
+void BTLV_CLACT_PutRecTurnBar( BTLV_CLACT_WORK *bclw, int no, GFL_FONT *font)
+{
+  GFL_CLACT_WK_SetDrawEnable( bclw->rec_turn_bar[0].clwk, TRUE );
+  GFL_CLACT_WK_ResetAnm( bclw->rec_turn_bar[0].clwk );
+  GFL_CLACT_WK_SetDrawEnable( bclw->rec_turn_bar[1].clwk, TRUE );
+  GFL_CLACT_WK_ResetAnm( bclw->rec_turn_bar[1].clwk );
+  
+  draw_rec_turn_bar( bclw, no, font );
+  BTLV_CLACT_SetRecTurnBarTCB( bclw, no );
+//  GFL_CLACT_WK_SetAnmFrame(   bclw->rec_turn_bar.clwk, 0 );
+}
+
+#include "print/printsys.h"
+#include "arc_def.h"
+#include "message.naix"
+#include "font/font.naix"
+#include "msg/msg_btl_pw_std.h"
+#include "../btl_string.h"
+
+#define PW_TURN_NUM_STRING_LENGHT ( 10 )
+#define PW_TURN_NUM_BMP_W         (  8 )
+#define PW_TURN_NUM_BMP_H         (  2 )
+
+static void draw_rec_turn_bar( BTLV_CLACT_WORK *bclw, int no, GFL_FONT *font )
+{
+  STRBUF *str = GFL_STR_CreateBuffer( PW_TURN_NUM_STRING_LENGHT, bclw->heapID );
+  GFL_BMP_DATA *bmp = GFL_BMP_Create( PW_TURN_NUM_BMP_W, PW_TURN_NUM_BMP_H, GFL_BMP_16_COLOR, bclw->heapID );
+  int str_length, offset;
+
+  BTL_STR_MakeStringStd( str, BTLPW__STRID_turn_01+no, 0 );
+  str_length = PRINTSYS_GetStrWidth( str, font, 0 );
+  offset = PW_TURN_NUM_BMP_W*8/2 - str_length/2;
+
+  GFL_BMP_Clear( bmp, 0x11 );
+  PRINTSYS_PrintColor( bmp, offset, 0, str, font, PRINTSYS_LSB_Make( 7,8,15 ) );
+  GFL_CLGRP_CGR_ReplaceEx( bclw->rec_meter[ 0 ].charID, GFL_BMP_GetCharacterAdrs(bmp), 
+                           PW_TURN_NUM_BMP_W*PW_TURN_NUM_BMP_H*32, 52*32, CLSYS_DRAW_MAIN );
+//                           PW_TURN_NUM_BMP_W*PW_TURN_NUM_BMP_H*32, 0, CLSYS_DRAW_MAIN );
+  GFL_STR_DeleteBuffer(str);
+  GFL_BMP_Delete( bmp );
+}

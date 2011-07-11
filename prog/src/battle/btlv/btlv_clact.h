@@ -10,8 +10,11 @@
 
 #pragma once
 
-#define BTLV_CLACT_CLWK_MAX ( 3 )    // UNITのMAX. SWANで7から3に減らしました
-#define BTLV_CLACT_REC_MAX  ( 22 )   // ポケウッド録画モードの際に表示する残り撮影ターンメーター
+#include "print\gf_font.h"
+
+#define BTLV_CLACT_CLWK_MAX ( 3 )            // UNITのMAX. SWANで7から3に減らしました
+#define BTLV_CLACT_REC_MAX  ( 22 )           // ポケウッド録画モードの際に表示する残り撮影ターンメーター
+#define BTLV_CLACT_TCB_POKEWOOD_INDEX ( 31 ) // ポケウッドターン告知メーターのタスク終了検知用定義
 
 typedef struct _BTLV_CLACT_WORK BTLV_CLACT_WORK;
 typedef struct _BTLV_CLACT_CLWK BTLV_CLACT_CLWK;
@@ -34,9 +37,13 @@ extern  void              BTLV_CLACT_SetAnime( BTLV_CLACT_WORK *bclw, int index,
 extern  void              BTLV_CLACT_SetPaletteFade( BTLV_CLACT_WORK *bclw, int index,
                                                      u8 start_evy, u8 end_evy, s8 wait, u16 rgb );
 extern  BOOL              BTLV_CLACT_CheckTCBExecute( BTLV_CLACT_WORK *bclw, int index );
+extern  BOOL              BTLV_CLACT_CheckPokewoodTCBExcecute( BTLV_CLACT_WORK *bclw );
+
 
 extern void               BTLV_CLACT_AddRecMeter( BTLV_CLACT_WORK *bclw );
 extern void               BTLV_CLACT_DeleteRecMeter( BTLV_CLACT_WORK *bclw );
 extern void               BTLV_CLACT_SetRecMeterAnime( BTLV_CLACT_WORK *bclw, int max_frame, int now_frame );
+
+extern void               BTLV_CLACT_PutRecTurnBar( BTLV_CLACT_WORK *bclw, int no, GFL_FONT *font );
 
 

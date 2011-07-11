@@ -1554,8 +1554,10 @@ enum{
   SELECT_ACT_SEQ_START=0,
   SELECT_ACT_SEQ_POKEWOOD_EVENT,  // 選択前イベント
   SELECT_ACT_SEQ_POKEWOOD_VFX,    // 背景等特殊エフェクト
-  SELECT_ACT_SEQ_SELECT_START,
-  SELECT_ACT_SEQ_SELECT_WAIT,
+  SELECT_ACT_SEQ_TURN_BAR_ANIME,  // ターン告知アニメ開始
+  SELECT_ACT_SEQ_TURN_BAR_ANIME_WAIT, // ターン告知アニメ終了待ち
+  SELECT_ACT_SEQ_SELECT_START,    // バトル選択開始
+  SELECT_ACT_SEQ_SELECT_WAIT,     // バトル選択待ち
   SELECT_ACT_SEQ_POKEWOOD,        // 選択後ターン毎イベント
 };
 
@@ -1629,15 +1631,25 @@ static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
     if(_check_event_choice( BTL_MAIN_GetPokewoodSenario(wk->mainModule), &wk->pokewoodSeqWork, wk->clientTurnCount) ){
       (*seq)++;
     }else{
-      (*seq)=SELECT_ACT_SEQ_SELECT_START;
+      (*seq)=SELECT_ACT_SEQ_TURN_BAR_ANIME;
     }
     break;
   case SELECT_ACT_SEQ_POKEWOOD_EVENT:
     // ポケウッドイベント
     if(SubSeq_POKEWOOD_Event_Sequence( wk )){
       wk->pokewoodSeqWork.seq=0;
-      (*seq)=SELECT_ACT_SEQ_SELECT_START;
+      (*seq)=SELECT_ACT_SEQ_TURN_BAR_ANIME;
     }
+    break;
+  case SELECT_ACT_SEQ_TURN_BAR_ANIME:
+    BTLV_CORE_StartRecTurnBar( wk->viewCore, wk->clientTurnCount );
+    (*seq)=SELECT_ACT_SEQ_TURN_BAR_ANIME_WAIT;
+    break;
+  case SELECT_ACT_SEQ_TURN_BAR_ANIME_WAIT:
+    if( !BTLC_CORE_CheckRecTurnBarEnd( wk->viewCore )){
+      (*seq) = SELECT_ACT_SEQ_SELECT_START;
+    }
+    
     break;
   case SELECT_ACT_SEQ_SELECT_START:         // さまざまな選択肢処理
     {

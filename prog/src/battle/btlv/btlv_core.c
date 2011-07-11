@@ -3287,6 +3287,35 @@ void BTLV_CORE_SetRecMeterAnime( const BTLV_CORE* core, int maxframe, int nowfra
   }
 }
 
+//=============================================================================================
+/**
+ * @brief	ターン毎告知アニメ開始
+ *
+ * @param   core		
+ * @param   turn_no		
+ */
+//=============================================================================================
+void BTLV_CORE_StartRecTurnBar( const BTLV_CORE* core, int turn_no )
+{
+  if(BTL_MAIN_GetPokewoodMode(core->mainModule)==BTL_POKEWOOD_REC){
+    BTLV_CLACT_PutRecTurnBar( BTLV_EFFECT_GetCLWK(), turn_no, core->largeFontHandle );
+  }
+}
+
+//=============================================================================================
+/**
+ * @brief	ターン毎告知アニメ終了検出
+ *
+ * @param   core		TRUE:稼働中 FALSE:終了
+ */
+//=============================================================================================
+BOOL BTLC_CORE_CheckRecTurnBarEnd( const BTLV_CORE *core )
+{
+  if(BTL_MAIN_GetPokewoodMode(core->mainModule)==BTL_POKEWOOD_REC){
+    return BTLV_CLACT_CheckPokewoodTCBExcecute( BTLV_EFFECT_GetCLWK() );
+  }
+}
+
 #ifdef PM_DEBUG
 //=============================================================================================
 /**

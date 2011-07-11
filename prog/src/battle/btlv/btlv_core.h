@@ -433,7 +433,9 @@ extern void BTLV_RecPlayer_StartQuit( BTLV_CORE* wk, u16 chapter, BTLV_INPUT_BR_
 //=============================================================================================
 // ポケウッド撮影専用処理
 //=============================================================================================
-void BTLV_CORE_SetRecMeterAnime( const BTLV_CORE* core, int maxframe, int nowframe );
+extern void BTLV_CORE_SetRecMeterAnime( const BTLV_CORE* core, int maxframe, int nowframe );
+extern void BTLV_CORE_StartRecTurnBar( const BTLV_CORE* core, int turn_no );
+extern BOOL BTLC_CORE_CheckRecTurnBarEnd( const BTLV_CORE *core );
 
 
 //-----------------------------------------------------------
