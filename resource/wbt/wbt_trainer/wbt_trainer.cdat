@@ -1364,16 +1364,16 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //065 未定
+	{ //065 ライバル
 		 0, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		SWRIVAL         ,// 動作モデル指定
+		TRTYPE_SWRIVAL     , //トレーナータイプ指定
 		 0, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		WBTCUP_NULL, //チャンピオントーナメント参加
 		17, //タイプトーナメント種別
-		 1, //優先度
+		 3, //優先度
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BGM
 		0, //切り札ポケモン
@@ -1385,16 +1385,16 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //066 未定
+	{ //066 チェレン
 		 0, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		SWLEADER1       ,// 動作モデル指定
+		TRTYPE_SWLEADER1   , //トレーナータイプ指定
 		 0, //エントリタイミング
-		TRUE , //オールトーナメント参加
+		FALSE, //オールトーナメント参加
 		WBTCUP_NULL, //チャンピオントーナメント参加
-		17, //タイプトーナメント種別
-		 1, //優先度
+		-1, //タイプトーナメント種別
+		 4, //優先度
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BGM
 		0, //切り札ポケモン
@@ -1406,16 +1406,16 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //067 未定
+	{ //067 アクロマ
 		 0, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		SWBOSS          ,// 動作モデル指定
+		TRTYPE_SWBOSS      , //トレーナータイプ指定
 		 0, //エントリタイミング
-		TRUE , //オールトーナメント参加
+		FALSE, //オールトーナメント参加
 		WBTCUP_NULL, //チャンピオントーナメント参加
-		17, //タイプトーナメント種別
-		 1, //優先度
+		-1, //タイプトーナメント種別
+		 5, //優先度
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BGM
 		0, //切り札ポケモン
@@ -2414,16 +2414,16 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //115 ライバル
+	{ //115 未定
 		 0, //オールマイティ
 		PM_MALE, //男
-		SWRIVAL         ,// 動作モデル指定
-		TRTYPE_SWRIVAL     , //トレーナータイプ指定
+		TRAINERM        ,// 動作モデル指定
+		TRTYPE_HERO        , //トレーナータイプ指定
 		 0, //エントリタイミング
 		TRUE , //オールトーナメント参加
 		WBTCUP_NULL, //チャンピオントーナメント参加
 		17, //タイプトーナメント種別
-		 3, //優先度
+		 1, //優先度
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BGM
 		0, //切り札ポケモン
@@ -2435,16 +2435,16 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //116 チェレン
+	{ //116 未定
 		 0, //オールマイティ
 		PM_MALE, //男
-		SWLEADER1       ,// 動作モデル指定
-		TRTYPE_SWLEADER1   , //トレーナータイプ指定
+		TRAINERM        ,// 動作モデル指定
+		TRTYPE_HERO        , //トレーナータイプ指定
 		 0, //エントリタイミング
-		FALSE, //オールトーナメント参加
+		TRUE , //オールトーナメント参加
 		WBTCUP_NULL, //チャンピオントーナメント参加
-		-1, //タイプトーナメント種別
-		 4, //優先度
+		17, //タイプトーナメント種別
+		 1, //優先度
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BGM
 		0, //切り札ポケモン
@@ -2456,16 +2456,16 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //117 アクロマ
+	{ //117 未定
 		 0, //オールマイティ
 		PM_MALE, //男
-		SWBOSS          ,// 動作モデル指定
-		TRTYPE_SWBOSS      , //トレーナータイプ指定
+		TRAINERM        ,// 動作モデル指定
+		TRTYPE_HERO        , //トレーナータイプ指定
 		 0, //エントリタイミング
-		FALSE, //オールトーナメント参加
+		TRUE , //オールトーナメント参加
 		WBTCUP_NULL, //チャンピオントーナメント参加
-		-1, //タイプトーナメント種別
-		 5, //優先度
+		17, //タイプトーナメント種別
+		 1, //優先度
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BGM
 		0, //切り札ポケモン

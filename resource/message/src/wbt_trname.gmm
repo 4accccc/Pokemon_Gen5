@@ -771,18 +771,18 @@
 	</row>
 
 	<row id="WBT_TRNAME_65">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
 	</row>
 
 	<row id="WBT_TRNAME_66">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
 	</row>
 
 	<row id="WBT_TRNAME_67">
-		<language name="JPN" width="216">未定</language>
-		<language name="JPN_KANJI" width="216">未定</language>
+		<language name="JPN" width="216">アクロマ</language>
+		<language name="JPN_KANJI" width="216">アクロマ</language>
 	</row>
 
 	<row id="WBT_TRNAME_68">
@@ -1021,18 +1021,18 @@
 	</row>
 
 	<row id="WBT_TRNAME_115">
-		<language name="JPN" width="216">ライバル</language>
-		<language name="JPN_KANJI" width="216">ライバル</language>
+		<language name="JPN" width="216">未定</language>
+		<language name="JPN_KANJI" width="216">未定</language>
 	</row>
 
 	<row id="WBT_TRNAME_116">
-		<language name="JPN" width="216">チェレン</language>
-		<language name="JPN_KANJI" width="216">チェレン</language>
+		<language name="JPN" width="216">未定</language>
+		<language name="JPN_KANJI" width="216">未定</language>
 	</row>
 
 	<row id="WBT_TRNAME_117">
-		<language name="JPN" width="216">アクロマ</language>
-		<language name="JPN_KANJI" width="216">アクロマ</language>
+		<language name="JPN" width="216">未定</language>
+		<language name="JPN_KANJI" width="216">未定</language>
 	</row>
 
 	<flowchart-group-list>
