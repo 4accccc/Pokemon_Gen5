@@ -31,10 +31,11 @@
 			<Comment>ポケモン
 ・初期位置（GRIDX=16、GRIDZ=4）
 ・メッセージ表示＋鳴き声再生後に戦闘へ
-※swanでは出現タイミングを調整予定</Comment>
+※swanで新規作成
+※d04r2301から移動</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-11T12:29:15" />
+				Time="2011-07-11T12:51:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
