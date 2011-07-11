@@ -4578,3 +4578,8 @@
 	@echo convert ncg_imd tsure_ish_053
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_ish_053.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
 
+#tsure_ish_054.imd
+./mmdl_res/tsure_ish_054.imd: ./mmdl_nchara/pokemon//tsure_ish_054.ncg ./mmdl_nchara/pokemon//tsure_ish_054.ncl ./mmdl_dmy/t4x4x6.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_flip.csv
+	@echo convert ncg_imd tsure_ish_054
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_ish_054.ncg ./mmdl_res ./mmdl_dmy/t4x4x6.imd 4 4 6
+

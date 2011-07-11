@@ -932,7 +932,8 @@ enum {
 	NARC_fldmmdl_mdlres_tsure_ish_050_nsbtx = 918,
 	NARC_fldmmdl_mdlres_tsure_ish_051_nsbtx = 919,
 	NARC_fldmmdl_mdlres_tsure_ish_052_nsbtx = 920,
-	NARC_fldmmdl_mdlres_tsure_ish_053_nsbtx = 921
+	NARC_fldmmdl_mdlres_tsure_ish_053_nsbtx = 921,
+	NARC_fldmmdl_mdlres_tsure_ish_054_nsbtx = 922
 };
 
 /* NARC_FLDMMDL_MDLRES_NAIX_ */
