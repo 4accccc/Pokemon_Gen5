@@ -18,4 +18,5 @@
 //
 //=============================================================================
 extern VMCMD_RESULT EvCmdBGateMonumentStart( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdBGateGateOpen( VMHANDLE *p_core, void *p_wk_adrs );
 

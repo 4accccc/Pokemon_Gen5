@@ -82,6 +82,15 @@ typedef struct MONUMENT_START_WK_tag
   u16 monument_id;
 }MONUMENT_START_WK;
 
+//-------------------------------------
+///	ゲート起動ワーク
+//=====================================
+typedef struct GATE_START_WK_tag
+{
+  // sys
+  BADGEGATE_WK *p_gmk_wk; 
+}GATE_START_WK;
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -91,7 +100,8 @@ static void setup_model_data( BADGEGATE_WK *p_wk );
 static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
 static void SetAnmStopFlag( MODEL *p_model  ,u16 anmid ,BOOL is_stop );
 static MODEL* GetModelData( BADGEGATE_WK *p_gmk_wk ,u32 model_id );
-static BOOL CheckSynchroTiming( BADGEGATE_WK *p_wk );
+static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
+static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -122,7 +132,6 @@ void BADGEGATE_Setup( FIELDMAP_WORK *p_fieldmap )
   p_wk->p_sv_work       = GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_D26R0101 );
   p_wk->p_ex_obj        = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_event_wk      = GAMEDATA_GetEventWork( p_gamedata );
-  ONOUE_Printf("anm_cnt = %d\n",ANMID_GATE_MAX);
 
   // 3D拡張オブジェクトユニットの追加
   FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup, MMANAGER_FEXPOBJ_UID );
@@ -313,8 +322,9 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
     break;
   case 1:
     {
-      fx32 anm_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_model->p_ex_obj ,MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA);
-      if( 19 <= FX_Whole( anm_frame ) )
+      // モニュメントが開くアニメーション終了待ち
+      EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA );
+      if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE )
       {
         SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, TRUE );
         (*p_seq)++;
@@ -324,10 +334,9 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
     }
     break;
   case 2:
-    // 同期タイミングかどうかを確認する
-    if( CheckSynchroTiming( p_wk->p_gmk_wk ) == TRUE )
     {
       // ループアニメーションにきりかえる
+      FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA ,GetSynchroAnmFrame( p_wk->p_gmk_wk ) );
       FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA, FALSE);
       FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA, TRUE);
       SetAnmStopFlag( p_model ,MDL_ANM_LOOP_ITA, FALSE );
@@ -374,14 +383,14 @@ static void SetAnmStopFlag( MODEL *p_model  ,u16 anmid ,BOOL is_stop )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  同期タイミングを返す
+ *	@brief  同期アニメーションフレームを返す
  *
  *	@param	*p_wk 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static BOOL CheckSynchroTiming( BADGEGATE_WK *p_wk )
+static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk )
 {
   int i;
 
@@ -396,17 +405,99 @@ static BOOL CheckSynchroTiming( BADGEGATE_WK *p_wk )
     if( is_stop == FALSE )
     {
       fx32 anm_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_model->p_ex_obj ,MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA );
-      
-      // フレームが0以外の場合は同期タイミングではない
-      if( anm_frame == 0 )
-      {
-        return TRUE;
-      }
-      return FALSE;
+      return anm_frame;
     }
   }
 
   // 全てのアニメーションが停止している場合はいつでも同期タイミング
-  return TRUE;
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート起動イベント作成
+ *
+ *	@param	*p_gamesys
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys )
+{
+  FIELDMAP_WORK   *p_fld_wk = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+
+  // イベント作成
+  GMEVENT *p_event = GMEVENT_Create( p_gamesys, NULL, GateOpen_Event, sizeof(GATE_START_WK) );
+  GATE_START_WK *p_wk = GMEVENT_GetEventWork(p_event);
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
+
+  // パラメータ設定
+  {
+    p_wk->p_gmk_wk    = GMK_TMP_WK_GetWork( p_fld_wk, BADGEGATE_WORK_ASSIGN_ID);
+  }
+
+  return p_event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート起動イベント
+ *
+ *	@param	p_event
+ *	@param	p_seq
+ *	@param	p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
+{
+  GATE_START_WK *p_wk = p_wk_adrs;
+  MODEL *p_model;
+  
+  // 門のモデルデータを取得
+  p_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_GATE );
+
+  switch( *p_seq )
+  {
+  case 0:
+    {
+        // 発光アニメーションを起動
+        SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ITA, FALSE );
+        (*p_seq)++;
+    }
+    break;
+  case 1:
+    {
+      // 発光アニメーション終了待ち
+      EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA );
+      if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE )
+      {
+        // ループアニメーションにきりかえる
+        SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ITA, TRUE );
+        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA ,GetSynchroAnmFrame( p_wk->p_gmk_wk ) );
+        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA, FALSE);
+        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA, TRUE);
+
+        // 門が開くアニメーション,ループアニメーションを起動
+        SetAnmStopFlag( p_model ,MDL_ANM_LOOP_ITA, FALSE );
+        SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, FALSE );
+        (*p_seq)++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // 門が開くアニメーション終了待ち
+      EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA );
+      if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE )
+      {
+        SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, TRUE );
+        return GMEVENT_RES_FINISH;
+      }
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 

@@ -16,6 +16,7 @@
   INIT_OVERLAY_CMD( bgate )
 
   DEF_CMD( EvCmdBGateMonumentStart, EV_SEQ_BGATE_MONUMENT_START )
+  DEF_CMD( EvCmdBGateGateOpen, EV_SEQ_BGATE_GATE_START )
  
   END_CMD
   //スクリプトコマンドテーブル終了

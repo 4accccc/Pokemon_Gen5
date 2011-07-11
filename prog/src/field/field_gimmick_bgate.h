@@ -36,3 +36,6 @@ extern void BADGEGATE_End( FIELDMAP_WORK *p_fieldmap );
 // モニュメント起動
 extern GMEVENT* BADGEGATE_CreateMonumentStartEvent( GAMESYS_WORK *p_gamesys, u16 monument_id );
 
+// ゲート起動
+extern GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys );
+

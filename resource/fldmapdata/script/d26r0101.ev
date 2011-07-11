@@ -16,6 +16,7 @@
 // ローカルワーク、シーンワークをプログラム側で操作しています。
 // 
 // LOCALWORK0~7⇒像の起動フラグ
+// LOCALWORK8⇒門の起動用フラグ
 //
 //------------------------------------------------------------------/
 
@@ -31,6 +32,7 @@ _EVENT_DATA    ev_pos_d26r0101_badge_check_05
 _EVENT_DATA    ev_pos_d26r0101_badge_check_06
 _EVENT_DATA    ev_pos_d26r0101_badge_check_07
 _EVENT_DATA    ev_pos_d26r0101_badge_check_08
+_EVENT_DATA    ev_pos_d26r0101_open_gate
 _EVENT_DATA_END
 
 
@@ -41,53 +43,72 @@ INIT_EVENT_START	ev_zone_d26r0101
 {
   // ジムバッジの取得状態によって、起動できるモニュメントを変更する
   DEFINE_LOCAL  LWK_BADGE_GET
+
+  // 門起動用ワーク(バッジチェックを一つでも未入手の時は開けない)
+  $LOCALWORK8 = TRUE
  
   // バッジ1
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_01 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK0 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ2
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_02 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK1 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ3
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_03 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK2 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ4
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_04 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK3 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ5
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_05 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK4 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ6
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_06 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK5 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ7
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_07 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK6 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
  
   // バッジ8
   _GET_BADGE_FLAG( LWK_BADGE_GET, BADGE_ID_08 )
   IF $LWK_BADGE_GET == TRUE THEN
     $LOCALWORK7 = TRUE
+  ELSE
+    $LOCALWORK8 = FALSE
   ENDIF
 
 }
@@ -100,6 +121,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_01
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 0 )
+  $LOCALWORK0 = FALSE
 }
 EVENT_END
 
@@ -110,6 +132,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_02
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 1 )
+  $LOCALWORK1 = FALSE
 }
 EVENT_END
 
@@ -120,6 +143,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_03
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 2 )
+  $LOCALWORK2 = FALSE
 }
 EVENT_END
 
@@ -130,6 +154,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_04
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 3 )
+  $LOCALWORK3 = FALSE
 }
 EVENT_END
 
@@ -140,6 +165,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_05
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 4 )
+  $LOCALWORK4 = FALSE
 }
 EVENT_END
 
@@ -150,6 +176,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_06
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 5 )
+  $LOCALWORK5 = FALSE
 }
 EVENT_END
 
@@ -160,6 +187,7 @@ EVENT_START   ev_pos_d26r0101_badge_check_07
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 6 )
+  $LOCALWORK6 = FALSE
 }
 EVENT_END
 
@@ -170,6 +198,77 @@ EVENT_START   ev_pos_d26r0101_badge_check_08
 {
   //ジムバッジを取得している場合のみ起動
   _BGATE_START_MONUMENT( 7 )
+  $LOCALWORK7 = FALSE
 }
 EVENT_END
+
+/**************************************************************/
+/*                  門                                        */
+/**************************************************************/
+EVENT_START   ev_pos_d26r0101_open_gate
+{
+  DEFINE_LOCAL  LWK_X
+  DEFINE_LOCAL  LWK_Y
+
+  // 現在の場所を取得
+  _OBJ_POS_GET( MMDL_ID_PLAYER ,LWK_X ,LWK_Y )
+
+  // カメラ移動
+  _CALL move_camera_start
+ 
+  // すでに中央にいるとき以外は、中央まで歩かせる
+  IF (($LWK_X != 31) || ($LWK_Y != 39)) THEN
+    // オブジェクトの移動待ち
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 39, FORCE_TYPE_NOT, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+
+    // 上に向くアニメーション再生
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_up_dir )
+    _OBJ_ANIME_WAIT()
+  ENDIF 
+
+  // カメラ移動待ち
+  _CAMERA_WAIT_MOVE()
+	
+  // 門が開くイベント起動
+  _BGATE_OPEN_GATE()
+
+  // カメラを戻す
+  _CALL move_camera_end
+
+  // 門イベントを停止
+  $LOCALWORK8 = FALSE
+}
+EVENT_END
+
+
+/************************************************************/
+/*				カメラ操作				*/
+/************************************************************/
+move_camera_start:
+{
+  _CAMERA_START()       // カメラ操作開始
+  _CAMERA_PURGE()		    // カメラのバインドを解く
+
+  _CAMERA_MOVE(5592,0,1069056,2064384,843871,2719744,40 )
+}
+_RET
+
+move_camera_end:
+{
+  _CAMERA_WAIT_MOVE()   // カメラ移動待ち
+  _CAMERA_DEF_MOVE( 30 )
+  _CAMERA_WAIT_MOVE()   // カメラ移動待ち
+  _CAMERA_BIND()        // カメラバインド
+  _CAMERA_END()         // カメラ操作終了
+}
+_RET
+
+//--------------------------------------------------------------------
+// 上に向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_set_up_dir
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
