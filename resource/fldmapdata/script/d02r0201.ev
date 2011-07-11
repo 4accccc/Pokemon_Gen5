@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d02r0201.h"
-  //.include  "d02r0201.h"
+  .include  "d02r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +19,132 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_zone_d02r0201
+_EVENT_DATA   ev_d02r0201_poke6_01
+_EVENT_DATA   ev_d02r0201_rangerm_01
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_d02r0201
+
+  //思索の原の復帰ビリジオンがいない場合はレンジャーを表示
+  IF FLAG_ON( FV_D02R0201_POKE6_01 ) THEN
+
+    //========================================//
+    //レンジャー表示
+    _FLAG_RESET( FV_D02R0201_RANGERM_01 )
+    //========================================//
+
+  ELSIF FLAG_OFF( FV_D02R0201_POKE6_01 ) THEN
+
+    //========================================//
+    //レンジャー表示
+    _FLAG_SET( FV_D02R0201_RANGERM_01 )
+    //========================================//
+
+  ENDIF
+
+INIT_EVENT_END
+
+
+/**************************************************************/
+/*  復帰ビリジオン                                            */
+/**************************************************************/
+EVENT_START   ev_d02r0201_poke6_01
+
+  _TALK_OBJ_START()
+
+  //ビリジオン：ききゅああああーっ！
+  _VOICE_PLAY( MONSNO_647, 0 ) 
+  _GIZAPLAINWIN_MSG_POS( msg_d02r0201_poke6_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //戦闘開始
+  {
+    DEFINE_LOCAL flag
+    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+    _WILD_BTL_SET_EX( MONSNO_647, 45, flag ) // Lv45 ビリジオン
+  }
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+
+    //==================================//
+    //ビリジオン非表示
+    _FLAG_SET( FV_D02R0201_POKE6_01 )
+    //==================================//
+    _OBJ_DEL( D02R0201_POKE6_01 )   //ビリジオンを消す
+
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  //ビリジオンを捕獲した？
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    //==================================//
+    //ビリジオンを捕獲した
+    _FLAG_SET( FE_R11_POKE6_GET_01 )
+    //==================================//
+
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
+
+  ENDSWITCH
+
+  //ビリジオンを捕獲できなかった場合の分岐
+  IF FLAG_OFF( FE_R11_POKE6_GET_01 ) THEN
+
+    //システム：ポケモンは　もりの　おくへ
+    _SYSWIN_MSG( msg_d02r0201_poke6_02, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  レンジャー♂：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_d02r0201_rangerm_01
+
+  _TALK_OBJ_START()
+
+  //会話済みか
+  IF FLAG_ON( FE_D02R0201_RANGERM_01 ) THEN
+    //レンジャー♂：きいたところ　ビリジオンと　いい
+    _BALLOONWIN_TALKOBJ_MSG( msg_d02r0201_rangerm_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+    //レンジャー♂：ソウリュウシティに　でんせつの
+    _BALLOONWIN_TALKOBJ_MSG( msg_d02r0201_rangerm_01 )
+
+    //レンジャー♂：このあたりで　つよく　かなしい
+    _BALLOONWIN_TALKOBJ_MSG( msg_d02r0201_rangerm_02 )
+
+    //レンジャー♂：きいたところ　ビリジオンと　いい
+    _BALLOONWIN_TALKOBJ_MSG( msg_d02r0201_rangerm_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+    //==================================//
+    //初回会話フラグON（以降、会話繰り返し）
+    _FLAG_SET( FE_D02R0201_RANGERM_01 )
+    //==================================//
+
+  ENDIF
+
+EVENT_END
+
+
+

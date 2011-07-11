@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/02 12:49:44
+#save date:2011/07/11 14:25:30
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r22.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r22.wms
 #hold event type:
 1
 #hold event number:
-6
+8
 #event number: 0
 #type
 1
@@ -196,6 +196,68 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 200 -16 -56
+#event number: 6
+#type
+1
+#ID name
+R22_POKE5_01
+#OBJ CODE Number
+POKE5
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R22_POKE5_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 72
+#event number: 7
+#type
+1
+#ID name
+R22_SWBOSS_01
+#OBJ CODE Number
+SWBOSS
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R22_SWBOSS_01
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -215,7 +277,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_R22_POKE5_01
+#Pos Script Name
+SCRID_POS_R22_POKE5_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_R22_POKE5
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 104
+#size
+1 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

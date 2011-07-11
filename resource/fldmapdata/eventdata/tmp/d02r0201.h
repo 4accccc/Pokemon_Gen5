@@ -9,6 +9,8 @@
 #ifndef ZONE_D02R0201_EVC_H
 #define ZONE_D02R0201_EVC_H
 
+#define D02R0201_POKE6_01                  0
+#define D02R0201_RANGERM_01                1
 
 #endif //ZONE_D02R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d02r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

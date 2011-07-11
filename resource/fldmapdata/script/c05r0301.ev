@@ -5,9 +5,10 @@
 //
 //======================================================================
   .text
+
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c05r0301.h"
-  //.include  "c05r0301.h"
+  .include  "c05r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -16,4 +17,216 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_c05r0301_informationw_01
+_EVENT_DATA   ev_c05r0301_girl4_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c05r0301_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0301_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  技を見たいお嬢様：話しかけ（日替わりイベント）            */
+/**************************************************************/
+EVENT_START   ev_c05r0301_girl4_01
+
+  _TALK_OBJ_START()
+
+  //初回話しかけ
+  IF FLAG_OFF( FE_C05R0301_WAZALADY ) THEN
+
+    //わたくしのおねがい きいてくださるかしら？
+    DEFINE_LOCAL SCWK_ANSWER01
+    _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_01, C05R0301_GIRL4_01 )
+    _YES_NO_WIN( SCWK_ANSWER01 )
+
+    //はい
+    IF $SCWK_ANSWER01 == 0 THEN
+      //わざ見せ処理呼び出し
+      _CALL ev_c05r0301_waza_check
+
+    //いいえ
+    ELSE
+      //つれないのね
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_04, C05R0301_GIRL4_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    ENDIF
+
+    //==================================//
+    //初回会話終了
+    _FLAG_SET ( FE_C05R0301_WAZALADY )
+    //==================================//
+
+  //２回目以降
+  ELSE
+
+    //今日の指定ポケモン見せイベントを既に終えたか？
+    //まだ終えていない
+    IF FLAG_OFF( TMFLG_C05R0301_WAZA_CLEAR ) THEN
+
+      //今日のわざは既に決まっているか？
+      //決まっていない
+      IF FLAG_OFF( TMFLG_C05R0301_WAZA_NO ) THEN
+
+        //わたくしのおねがい きいてくださるかしら？
+        DEFINE_LOCAL SCWK_ANSWER02
+        _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_02, C05R0301_GIRL4_01 )
+        _YES_NO_WIN( SCWK_ANSWER02 )
+
+        //はい
+        IF $SCWK_ANSWER02 == 0 THEN
+          //ポケモンチェック処理呼び出し
+          _CALL ev_c05r0301_waza_check
+
+        //いいえ
+        ELSE
+          //つれないのね
+          _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_04, C05R0301_GIRL4_01 )
+          _LAST_KEYWAIT()
+          _BALLOONWIN_CLOSE()
+        ENDIF
+
+      ELSE
+        //ポケモンチェック処理呼び出し
+        _CALL ev_c05r0301_waza_check
+      ENDIF
+
+    //既に終えた
+    ELSE
+
+      //今日の指定わざを台詞内のタグにセット
+      _WAZA_NAME( 0, WK_OTHER_C05R0301_WAZA )
+
+      //(わざ名）ってわざ じっさいにつかうと
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_07, C05R0301_GIRL4_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  CALL：本日のわざチェック                                  */
+/**************************************************************/
+ev_c05r0301_waza_check:
+
+  //今日のわざは既に決まっているか？
+  //決まっていない（その日の初回会話）
+  IF FLAG_OFF( TMFLG_C05R0301_WAZA_NO ) THEN
+  {
+    //手持ちのわざマシンの中からランダムで１つ選出
+    _WAZAMACHINE_LOT( WK_OTHER_C05R0301_WAZA )
+
+    //==================================//
+    //今日のタイプわざは既に決まった
+    _FLAG_SET ( TMFLG_C05R0301_WAZA_NO )
+    //==================================//
+
+    //今日の指定わざを台詞内のタグにセット
+    _WAZA_NAME( 0, WK_OTHER_C05R0301_WAZA )
+
+    //手持ちに指定わざを持ったポケモンがいるかチェック
+    DEFINE_LOCAL LWK_WAZA_RESURT
+    _CHECK_POKE_WAZA_GROUP( LWK_WAZA_RESURT, WK_OTHER_C05R0301_WAZA )
+
+    _DEBUG_PRINT_WK( LWK_WAZA_RESURT )
+    _DEBUG_PRINT_WK( WK_OTHER_C05R0301_WAZA )
+
+    //いない
+    IF $LWK_WAZA_RESURT == 6 THEN
+
+      //（わざ名）というわざを覚えたポケモンがみたいわ！
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_03, C05R0301_GIRL4_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    //いる
+    ELSE
+
+      //指定わざを持ったポケモンの種族名を指定タグにセット
+      _TEMOTI_MONS_NAME( 1, LWK_WAZA_RESURT )
+
+      //あなたの（種族名）（わざ名）が使えるのね！
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_03a, C05R0301_GIRL4_01 )
+      _BALLOONWIN_CLOSE()
+
+      //アイテム入手処理（ハートのうろこ）
+      _ITEM_EVENT_KEYWAIT ( ITEM_HAATONOUROKO, 1  )
+
+      //今日の指定わざを台詞内のタグにセット
+      _WAZA_NAME( 0, WK_OTHER_C05R0301_WAZA )
+
+      //(わざ名）ってわざ じっさいにつかうと
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_07, C05R0301_GIRL4_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      //==================================//
+      //今日の指定タイプ見せイベントは終了
+      _FLAG_SET ( TMFLG_C05R0301_WAZA_CLEAR )
+      //==================================//
+
+    ENDIF
+  }
+  //わざ決定後（その日2回目以降会話）
+  ELSE
+  {
+    //今日の指定わざを台詞内のタグにセット
+    _WAZA_NAME( 0, WK_OTHER_C05R0301_WAZA )
+
+    //手持ちに指定わざを持ったポケモンがいるかチェック
+    DEFINE_LOCAL LWK_WAZA_RESURT
+    _CHECK_POKE_WAZA_GROUP( LWK_WAZA_RESURT, WK_OTHER_C05R0301_WAZA )
+
+    _DEBUG_PRINT_WK( LWK_WAZA_RESURT )
+    _DEBUG_PRINT_WK( WK_OTHER_C05R0301_WAZA )
+
+    //いない
+    IF $LWK_WAZA_RESURT == 6 THEN
+
+      //（わざ名）というわざを覚えたポケモンがみたいわ！
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_03, C05R0301_GIRL4_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    //いる
+    ELSE
+
+      //指定わざを持ったポケモンの種族名を指定タグにセット
+      _TEMOTI_MONS_NAME( 1, LWK_WAZA_RESURT )
+
+      //あなたの（種族名）（わざ名）が使えるのね！ わざわざ覚えさせたの？
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_06, C05R0301_GIRL4_01 )
+      _BALLOONWIN_CLOSE()
+
+      //アイテム入手処理（ハートのうろこ）
+      _ITEM_EVENT_KEYWAIT ( ITEM_HAATONOUROKO, 1 )
+
+      //今日の指定わざを台詞内のタグにセット
+      _WAZA_NAME( 0, WK_OTHER_C05R0301_WAZA )
+
+      //(わざ名）ってわざ じっさいにつかうと
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_07, C05R0301_GIRL4_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      //==================================//
+      //今日の指定タイプ見せイベントは終了
+      _FLAG_SET ( TMFLG_C05R0301_WAZA_CLEAR )
+      //==================================//
+
+    ENDIF
+  }
+  ENDIF
+
+_RET
+
+

@@ -19,54 +19,71 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05r0201_oldman1_01
+_EVENT_DATA   ev_c05r0201_informationw_01
+_EVENT_DATA   ev_c05r0201_oldman1_01
 _EVENT_DATA_END
 
+
 /**************************************************************/
-/*  C05R0201 OLDMAN1の会話用イベントスクリプト*/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c05r0201_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0201_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おじいさん：はなしかけ（アイテム入手）                    */
 /**************************************************************/
 EVENT_START   ev_c05r0201_oldman1_01
-	
-	//捕獲時LV格納変数
-	DEFINE_LOCAL LWK_ZUKAN_RESURT
-	//図鑑で見つけたポケモンの数をカウント
-	_GET_ZUKAN_COUNT ( ZUKANCTRL_MODE_SEE,LWK_ZUKAN_RESURT  )
 
-	_TALK_OBJ_START()
-	
-	//【仮】50匹以上（条件を変更）
-	IF $LWK_ZUKAN_RESURT >= 50 THEN
-		
-		//初回話しかけ
-		IF FLAG_OFF( FE_C05R0201_ITEMGET_01 ) THEN
-			_BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_02 ,C05R0201_OLDMAN1_01)
-			_BALLOONWIN_CLOSE()
-			
-			//アイテム入手
-			_ITEM_EVENT_KEYWAIT ( ITEM_KAIGARANOSUZU , 1  )
-			
-			_BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_03 ,C05R0201_OLDMAN1_01)
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
-			//==================================//
-				
-			//初回話しかけ完了
-			_FLAG_SET ( FE_C05R0201_ITEMGET_01 )
-					
-			//==================================//
-		
-		ELSE
-			
-			_BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_03 ,C05R0201_OLDMAN1_01)
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		
-		ENDIF
-	ELSE
-		_BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_01 ,C05R0201_OLDMAN1_01)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	ENDIF
-	
+  //捕獲時LV格納変数
+  DEFINE_LOCAL LWK_ZUKAN_RESURT
+  //図鑑で見つけたポケモンの数をカウント
+  _GET_ZUKAN_COUNT ( ZUKANCTRL_MODE_SEE, LWK_ZUKAN_RESURT  )
+
+  _TALK_OBJ_START()
+
+  //【仮】50匹以上（条件を変更）
+  IF $LWK_ZUKAN_RESURT >= 50 THEN
+
+    //「かいがらのすず」を過去にあげた事があるか
+    IF FLAG_OFF( FE_C05R0201_ITEMGET_01 ) THEN
+
+      //おじいさん：ほう！　５０ひき　いじょうか！
+      _BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_02, C05R0201_OLDMAN1_01 )
+      _BALLOONWIN_CLOSE()
+
+      //アイテム「かいがらのすず」入手
+      _ITEM_EVENT_KEYWAIT ( ITEM_KAIGARANOSUZU, 1 )
+
+      //おじいさん：かいがらのすずを　みにつけた
+      _BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_03, C05R0201_OLDMAN1_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      //==================================//
+      //かいがらのすず入手完了
+      _FLAG_SET ( FE_C05R0201_ITEMGET_01 )
+      //==================================//
+
+    ELSE
+
+      //おじいさん：かいがらのすずを　みにつけた
+      _BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_03, C05R0201_OLDMAN1_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+
+    //おじいさん：５０ひき　いじょうなら
+    _BALLOONWIN_OBJMSG( msg_c05r0201_oldman1_01, C05R0201_OLDMAN1_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
+
 EVENT_END
+
+

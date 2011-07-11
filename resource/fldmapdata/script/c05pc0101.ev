@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c05pc0101.h"
-  //.include  "c05pc0101.h"
+  .include  "c05pc0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,17 +19,19 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c05pc0101_shop
-_EVENT_DATA		ev_c05pc0101_fix_shop
-_EVENT_DATA    ev_c05pc0101_girl1
+_EVENT_DATA   ev_c05pc0101_shop
+_EVENT_DATA   ev_c05pc0101_fix_shop
+_EVENT_DATA   ev_c05pc0101_girl1_01
+_EVENT_DATA   ev_c05pc0101_middlewoman1_01
 _EVENT_DATA_END
+
 
 /**************************************************************/
 /*  C05PC0101 SHOP呼び出し*/
 /**************************************************************/
 EVENT_START   ev_c05pc0101_shop
-	_TALK_OBJ_START()
-	_SHOP_CALL()
+  _TALK_OBJ_START()
+  _SHOP_CALL()
 EVENT_END
 
 //=============================================================
@@ -41,8 +43,17 @@ EVENT_START ev_c05pc0101_fix_shop
 EVENT_END
 
 /**************************************************************/
-/*  C05PC0101 GIRL1の会話用イベントスクリプト（リピートボール入手）*/
+/*  女の子：話しかけ（アイテム入手）                          */
 /**************************************************************/
-EVENT_START   ev_c05pc0101_girl1
-	_EASY_TALK_ITEM_EVENT(ITEM_RIPIITOBOORU, 3, FE_C05PC0101_ITEM , msg_c05pc0101_girl1_01 , msg_c05pc0101_girl1_02 , msg_c05pc0101_girl1_02 )
+EVENT_START   ev_c05pc0101_girl1_01
+  _EASY_TALK_ITEM_EVENT( ITEM_GOOZYASUBOORU, 3, FE_C05PC0101_ITEM, msg_c05pc0101_girl1_01, msg_c05pc0101_girl1_02, msg_c05pc0101_girl1_02 )
 EVENT_END
+
+/**************************************************************/
+/*  おばさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c05pc0101_middlewoman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05pc0101_middlewoman1_01 )
+EVENT_END
+
+

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/22 18:00:08
+#save date:2011/07/08 11:54:07
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c01pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c01pc0101.wms
 #hold event type:
 1
 #hold event number:
-9
+10
 #event number: 0
 #type
 1
@@ -262,7 +262,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C05PC0101_GIRL1
+C05PC0101_GIRL1_01
 #OBJ CODE Number
 GIRL1
 #MOVE CODE Number
@@ -272,7 +272,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_C05PC0101_GIRL1
+SCRID_C05PC0101_GIRL1_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -289,6 +289,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -232 48 152
+#event number: 9
+#type
+1
+#ID name
+C05PC0101_MIDDLEWOMAN1_01
+#OBJ CODE Number
+MIDDLEWOMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05PC0101_MIDDLEWOMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

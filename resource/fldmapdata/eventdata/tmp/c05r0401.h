@@ -9,6 +9,11 @@
 #ifndef ZONE_C05R0401_EVC_H
 #define ZONE_C05R0401_EVC_H
 
+#define C05R0401_INFORMATIONW_01           0
+#define C05R0401_WAITER_01                 1
+#define C05R0401_GENTLEMAN_01              2
+#define C05R0401_WORKMAN_01                3
+#define C05R0401_MIDDLEWOMAN_01            4
 
 #endif //ZONE_C05R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/05 16:05:03
+#save date:2011/07/07 14:25:58
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05r0102.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,131 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c05r0102.wms
 #hold event type:
 1
 #hold event number:
+4
+#event number: 0
+#type
+1
+#ID name
+C05R0102_WOMAN1_01
+#OBJ CODE Number
+WOMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C05R0102_WOMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 104
+#event number: 1
+#type
+1
+#ID name
+C05R0102_POKE17_01
+#OBJ CODE Number
+POKE17
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0102_POKE17_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 104
+#event number: 2
+#type
+1
+#ID name
+C05R0102_BOY1_01
+#OBJ CODE Number
+BOY1
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0102_BOY1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 200
+#event number: 3
+#type
+1
+#ID name
+C05R0102_ESPW_01
+#OBJ CODE Number
+ESPW
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0102_ESPW_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

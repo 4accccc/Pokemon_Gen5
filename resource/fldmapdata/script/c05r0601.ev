@@ -23,6 +23,7 @@ _EVENT_DATA    ev_c05r0601_man3_01
 _EVENT_DATA    ev_c05r0601_waitress_01
 _EVENT_DATA    ev_c05r0601_hakaim_01
 _EVENT_DATA    ev_c05r0601_woman3_01
+_EVENT_DATA    ev_c05r0601_sunglasses_01
 _EVENT_DATA_END
 
 
@@ -33,130 +34,217 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*  C05R0601 MAN3の会話用イベントスクリプト*/
+/*  C05R0601 MAN3の会話用イベントスクリプト                   */
 /**************************************************************/
 EVENT_START   ev_c05r0601_man3_01
-	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG( msg_c05r0601_man3_01 ,C05R0601_MAN3_01)
-	_FIX_SHOP_CALL_GREETING_LESS( SHOP_KANPO )
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( msg_c05r0601_man3_01 ,C05R0601_MAN3_01 )
+  _FIX_SHOP_CALL_GREETING_LESS( SHOP_KANPO )
 EVENT_END
 
 /**************************************************************/
-/*  R09 ウェートレスの会話用イベントスクリプト                      */
+/*  ウェートレスの会話用イベントスクリプト                    */
 /**************************************************************/
 EVENT_START   ev_c05r0601_waitress_01
-  	_TALK_OBJ_START()
-  	
-  	DEFINE_LOCAL	LWK_MILK_NUM
-   	DEFINE_LOCAL	LWK_MILK_NUM_SELECT
-  	DEFINE_LOCAL	LWK_MILK_GOLD    
-  	DEFINE_LOCAL	LWK_GOLD_CHK
-   	DEFINE_LOCAL	LWK_BAG_CHK
-  	
 
-   	//所持金の表示
-   	_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
-   	
-  	//ウェイトレス：いらっしゃいませ！　モーモーミルクは……
- 	_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_01 , C05R0601_WAITRESS_01, POS_DL )
-   	
- 	//購入本数の選択画面を作成
-  	_BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_MILK_NUM_SELECT  )
-	
-	_BMPMENU_MAKE_LIST( msg_c05r0601_waitress_07, 0 )	//1本
-	_BMPMENU_MAKE_LIST( msg_c05r0601_waitress_08, 1 )	//1ダース
-	_BMPMENU_MAKE_LIST( msg_c05r0601_waitress_09, 2 )	//いらない
-	
-	_BMPMENU_START()
-	
-	//1本を選択
-	IF $LWK_MILK_NUM_SELECT  == 0 THEN
-		
-		$LWK_MILK_NUM = 1
-		$LWK_MILK_GOLD  = 500
-		
-	//1ダースを選択
-	ELSIF $LWK_MILK_NUM_SELECT  == 1 THEN
-		
-		//１ダース
-		$LWK_MILK_NUM = 12
-		$LWK_MILK_GOLD  = 6000
-			
-	//いらないを選択
-	
-	ELSE
-		
-	ENDIF
-	
-	//モーモーミルクを買う場合の処理
-	IF $LWK_MILK_NUM_SELECT == 0 || $LWK_MILK_NUM_SELECT == 1	  THEN	
-		_ADD_ITEM_CHK(ITEM_MOOMOOMIRUKU,LWK_MILK_NUM,LWK_BAG_CHK)
-		_CHECK_GOLD( LWK_GOLD_CHK, LWK_MILK_GOLD  )
+  _TALK_OBJ_START()
 
-		
-		IF $LWK_BAG_CHK == 0 THEN 
-			_GOLD_WIN_CLOSE()
-			
-		 	_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_03 , C05R0601_WAITRESS_01, POS_DL )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-		
-		ELSIF $LWK_GOLD_CHK == 0 THEN
-			_GOLD_WIN_CLOSE()
-			
-		 	_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_04 , C05R0601_WAITRESS_01, POS_DL )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()		
-			
-		//購入できた
-		ELSE
-			//レジ音再生
-			_SE_PLAY( SEQ_SE_SYS_22 )		
-			_SUBTRACT_GOLD( LWK_MILK_GOLD )
-			_GOLD_WIN_UPDATE()
-			_SE_WAIT()
-			
-			IF $LWK_MILK_NUM == 1 THEN
-		 		_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_02 , C05R0601_WAITRESS_01, POS_DL )
-				_MSGWIN_CLOSE()	
-			
-			ELSE
-		 		_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_06  , C05R0601_WAITRESS_01, POS_DL )
-				_MSGWIN_CLOSE()		
+  DEFINE_LOCAL  LWK_MILK_NUM
+  DEFINE_LOCAL  LWK_MILK_NUM_SELECT
+  DEFINE_LOCAL  LWK_MILK_GOLD
+  DEFINE_LOCAL  LWK_GOLD_CHK
+  DEFINE_LOCAL  LWK_BAG_CHK
 
-			ENDIF
-			
-			//金額ウィンドウを消す
-			_GOLD_WIN_CLOSE()
-			
-			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, LWK_MILK_NUM )
 
-		ENDIF
-	
-	//モーモーミルクを買わない場合の処理
-	ELSE
-		_GOLD_WIN_CLOSE()	
-		
-		_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_05  , C05R0601_WAITRESS_01, POS_DL )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-	ENDIF
-	
+  //所持金の表示
+  _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+  //ウェイトレス：いらっしゃいませ！　モーモーミルクは……
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_01, C05R0601_WAITRESS_01, POS_DL )
+
+  //購入本数の選択画面を作成
+  _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_MILK_NUM_SELECT  )
+
+  _BMPMENU_MAKE_LIST( msg_c05r0601_waitress_07, 0 ) //1本
+  _BMPMENU_MAKE_LIST( msg_c05r0601_waitress_08, 1 ) //1ダース
+  _BMPMENU_MAKE_LIST( msg_c05r0601_waitress_09, 2 ) //いらない
+
+  _BMPMENU_START()
+
+  //1本を選択
+  IF $LWK_MILK_NUM_SELECT == 0 THEN
+
+    $LWK_MILK_NUM = 1
+    $LWK_MILK_GOLD = 500
+
+  //1ダースを選択
+  ELSIF $LWK_MILK_NUM_SELECT == 1 THEN
+
+    //１ダース
+    $LWK_MILK_NUM = 12
+    $LWK_MILK_GOLD = 6000
+
+  //いらないを選択
+  ELSE
+
+  ENDIF
+
+  //モーモーミルクを買う場合の処理
+  IF $LWK_MILK_NUM_SELECT == 0 || $LWK_MILK_NUM_SELECT == 1 THEN
+    _ADD_ITEM_CHK( ITEM_MOOMOOMIRUKU, LWK_MILK_NUM, LWK_BAG_CHK )
+    _CHECK_GOLD( LWK_GOLD_CHK, LWK_MILK_GOLD  )
+
+    IF $LWK_BAG_CHK == 0 THEN
+      _GOLD_WIN_CLOSE()
+
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_03, C05R0601_WAITRESS_01, POS_DL )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSIF $LWK_GOLD_CHK == 0 THEN
+      _GOLD_WIN_CLOSE()
+
+      _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_04, C05R0601_WAITRESS_01, POS_DL )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //購入できた
+    ELSE
+      //レジ音再生
+      _SE_PLAY( SEQ_SE_SYS_22 )
+      _SUBTRACT_GOLD( LWK_MILK_GOLD )
+      _GOLD_WIN_UPDATE()
+      _SE_WAIT()
+
+      IF $LWK_MILK_NUM == 1 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_02, C05R0601_WAITRESS_01, POS_DL )
+        _MSGWIN_CLOSE()
+
+      ELSE
+        _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_06, C05R0601_WAITRESS_01, POS_DL )
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+      //金額ウィンドウを消す
+      _GOLD_WIN_CLOSE()
+
+      _ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, LWK_MILK_NUM )
+
+    ENDIF
+
+  //モーモーミルクを買わない場合の処理
+  ELSE
+    _GOLD_WIN_CLOSE()
+
+    _BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_05, C05R0601_WAITRESS_01, POS_DL )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
 EVENT_END
 
 /**************************************************************/
-/*  C05R0601 お香*/
+/*  お香                                                      */
 /**************************************************************/
 EVENT_START   ev_c05r0601_hakaim_01
-	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG( msg_c05r0601_hakaim_end_01 ,C05R0601_HAKAIM_01)
-	_FIX_SHOP_CALL_GREETING_LESS( SHOP_OKOU )
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( msg_c05r0601_hakaim_end_01, C05R0601_HAKAIM_01 )
+  _FIX_SHOP_CALL_GREETING_LESS( SHOP_OKOU )
 EVENT_END
 
 /**************************************************************/
-/*  C05R0601 WOMAN2の会話用イベントスクリプト*/
+/*  C05R0601 WOMAN2の会話用イベントスクリプト                 */
 /**************************************************************/
 EVENT_START   ev_c05r0601_woman3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_woman3_01 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_woman3_01 )
 EVENT_END
+
+/**************************************************************/
+/*  黒服：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c05r0601_sunglasses_01
+
+  //アイテム入手済みか
+  IF FLAG_ON( FE_C05R0601_ITEMGET_01 ) THEN
+
+    //黒服：あなたー　よくきたー！
+    _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_01 )
+
+    //いいもの欲しい？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+      //黒服：だったら　レベル３０いじょうの
+      _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_02 )
+
+      //ポケモンのLv.判定変数定義
+      DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
+      DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
+      DEFINE_LOCAL LWK_CHECK_NOW_LV //ポケモンの現在のLv.
+      DEFINE_LOCAL LWK_CHECK_OK     //条件を満たしたポケモン
+
+      //手持ちのポケモンの数を確認（手持ち全て）
+      _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_TOTAL )
+
+      //手持ちのポケモンの中にLv.30以上のポケモンがいるか確認（繰り返し処理）
+      WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+        //指定POSのポケモンのレベルを取得
+        _GET_PARTY_POKE_PARAM( LWK_CHECK_NOW_LV, LWK_COUNT_NUM, SCR_POKEPARA_LEVEL )
+
+        //チェックしたポケモンのLv.は30以上か
+        IF $LWK_CHECK_NOW_LV >= 30 THEN
+          //条件を見たしたポケモンの数に＋１
+          $LWK_CHECK_OK += 1
+        ENDIF
+
+        //カウント
+        $LWK_COUNT_NUM += 1
+
+      ENDWHILE
+
+      //手持ちにLv.30以上のポケモンがいた場合
+      IF $LWK_CHECK_OK >= 1 THEN
+        //黒服：おー！　もーれつ！▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_03 )
+        _AB_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //アイテム（たつじんのおび）入手
+        _ITEM_EVENT_NOWAIT( ITEM_TATUZINNOOBI, 1 )
+
+        //========================================//
+        //アイテム入手フラグON
+        _FLAG_SET( FE_C05R0601_ITEMGET_01 )
+        //========================================//
+
+      ELSE
+        //黒服：おー！　まだまだ　これからー！▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE
+      //黒服：あなたー　ひかえめー！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_05 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+    //黒服：たつじんのおび　つかいこなせー！▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+

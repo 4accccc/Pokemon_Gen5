@@ -8,6 +8,10 @@
 #ifndef ZONE_C05R0303_EVC_H
 #define ZONE_C05R0303_EVC_H
 
+#define C05R0303_TRAINERW_01               0
+#define C05R0303_POKE44_01                 1
+#define C05R0303_POKE35_01                 2
+#define C05R0303_WAITER_01                 3
 
 #endif //ZONE_C05R0303_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0303.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

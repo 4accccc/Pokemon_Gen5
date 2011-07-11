@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/05 16:16:52
+#save date:2011/07/07 19:26:42
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,162 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c05r0101.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+C05R0401_INFORMATIONW_01
+#OBJ CODE Number
+INFORMATIONW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_C05R0401_INFORMATIONW_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 216
+#event number: 1
+#type
+1
+#ID name
+C05R0401_WAITER_01
+#OBJ CODE Number
+WAITER
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0401_WAITER_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 184
+#event number: 2
+#type
+1
+#ID name
+C05R0401_GENTLEMAN_01
+#OBJ CODE Number
+GENTLEMAN
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0401_GENTLEMAN_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 152
+#event number: 3
+#type
+1
+#ID name
+C05R0401_WORKMAN_01
+#OBJ CODE Number
+WORKMAN
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0401_WORKMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 88
+#event number: 4
+#type
+1
+#ID name
+C05R0401_MIDDLEWOMAN_01
+#OBJ CODE Number
+MIDDLEWOMAN1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C05R0401_MIDDLEWOMAN_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

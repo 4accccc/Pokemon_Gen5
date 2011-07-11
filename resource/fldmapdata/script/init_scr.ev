@@ -178,6 +178,12 @@ init_flags:
   _FLAG_SET( FV_C14_SWLEADER8_01 )  //セイガイハシティ：シズイ
   _FLAG_SET( FV_C14_BOY4_02 )  //セイガイハシティ：カップル男（独り用）
 
+  //R22
+  _FLAG_SET( FV_R22_SWBOSS_01 ) //22番道路：アクロマ
+
+  //D02R0201
+  _FLAG_SET( FV_D02R0201_POKE6_01 ) //思索の原：ビリジオン
+
 }
 _RET
 
@@ -262,11 +268,18 @@ INIT_EVENT_START  ev_init_gameclear_script
     _FLAG_RESET( FV_D10R0401_POKE10 )
   ENDIF
 
-     //ドラー未捕獲時の復活処理
+  //ドラー未捕獲時の復活処理
   IF FLAG_ON(FV_D04R2301_POKE13) && FLAG_OFF(FE_D04R2301_POKE13_GET) THEN
-      //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_D04R2301_POKE13 )
+    //OBJを消していて、捕まえていなければ復活させる
+    _FLAG_RESET( FV_D04R2301_POKE13 )
   ENDIF
+
+  //ビリジオン未捕獲時の復活処理
+  IF FLAG_ON( FV_R11_POKE6_01 ) && FLAG_OFF( FE_R11_POKE6_GET_01 ) THEN
+    //OBJを消していて、捕まえていなければ復活させる（思索の原）
+    _FLAG_RESET( FV_D02R0201_POKE6_01 )
+  ENDIF
+
 
 }
 INIT_EVENT_END

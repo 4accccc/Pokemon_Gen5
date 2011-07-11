@@ -8,6 +8,10 @@
 #ifndef ZONE_C05R0402_EVC_H
 #define ZONE_C05R0402_EVC_H
 
+#define C05R0402_VETERANW_01               0
+#define C05R0402_POKE39_01                 1
+#define C05R0402_WOMAN2_01                 2
+#define C05R0402_BOY2_01                   3
 
 #endif //ZONE_C05R0402_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

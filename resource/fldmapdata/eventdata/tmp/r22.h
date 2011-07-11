@@ -14,6 +14,8 @@
 #define TR_ELITEW_13                       3
 #define TR_BACKPACKERM_21                  4
 #define TR_MOUNT_15                        5
+#define R22_POKE5_01                       6
+#define R22_SWBOSS_01                      7
 
 #endif //ZONE_R22_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r22.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

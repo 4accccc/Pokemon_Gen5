@@ -8,6 +8,8 @@
 #ifndef ZONE_C05R0103_EVC_H
 #define ZONE_C05R0103_EVC_H
 
+#define C05R0103_GENTLEMAN_01              0
+#define C05R0103_BOY4_01                   1
 
 #endif //ZONE_C05R0103_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05r0103.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
