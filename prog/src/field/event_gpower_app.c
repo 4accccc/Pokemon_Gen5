@@ -25,6 +25,7 @@
 #include "sound/pm_sndsys.h"
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 
+#include "item/itemsym.h"
 #include "app/beacon_detail.h"
 #include "app/gpower_app.h"
 
@@ -32,6 +33,7 @@
 //============================================================================================
 
 FS_EXTERN_OVERLAY(beacon_detail);
+FS_EXTERN_OVERLAY(gpower_app);
 FS_EXTERN_OVERLAY(fieldmap);
 
 enum _EVENT_CG_WIRELESS {
@@ -86,12 +88,13 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     //break throw
   case _CALL_GPOWER_APP:
+#if 1
     MI_CpuClear8(&gaw->prm,sizeof(BEACON_DETAIL_PARAM));
     gaw->prm.gsys = gaw->gsys;
     gaw->prm.gdata = gaw->gdata;
     gaw->prm.target = 0;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(beacon_detail), &BeaconDetailProcData, &gaw->prm);
-
+#else
     gaw->param.mode = gaw->mode;
     {
       int i;
@@ -104,8 +107,12 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
           ++gaw->param.gpower_num;
         }
       }
-//      GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(gpower_app), &GPowerAppProcData, &gaw->param );
     }
+    gaw->param.derudama_num = 
+      MYITEM_GetItemNum( GAMEDATA_GetMyItem( gdata ), ITEM_DERUDAMA, GFL_HEAP_LOWID(HEAPID_PROC));
+
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(gpower_app), &GPowerAppProcData, &gaw->param );
+#endif
     (*seq)++;
     break;
   case _WAIT_GPOWER_APP:

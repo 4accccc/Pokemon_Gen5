@@ -33,9 +33,10 @@ typedef enum{
 }GPOWER_APP_MODE;
 
 typedef enum{
-  GPOWER_APP_RET_NULL,    ///<イベント無し
-  GPOWER_APP_RET_GPOWER,  ///<デルパワー使用
-  GPOWER_APP_RET_HILINK,  ///<ハイリンクへジャンプ
+  GPOWER_APP_RET_NULL,      ///<イベント無し
+  GPOWER_APP_RET_GPOWER,    ///<デルパワー使用
+  GPOWER_APP_RET_HILINK,    ///<ハイリンクへジャンプ
+  GPOWER_APP_RET_COMM_OFF,  ///<ホールド中にバッテリーが10%を切ったので通信切断
 }GPOWER_APP_RET_MODE;
 
 //=============================================================================
@@ -53,6 +54,7 @@ typedef struct
   GPOWER_APP_MODE mode; ///<[in]呼び出しモード
   GPOWER_ID       gpower[INTRUDE_EQUIP_GPOWER_MAX]; ///<[in]現在装備中のデルパワー(配列に中抜けは無い)
   u8              gpower_num; ///<[in]現在装備中のパワー数
+  u16             derudama_num; ///<[in]持っているデルダマの数
 
   ///<[out]
   GPOWER_APP_RET_MODE   ret_mode;   ///<リターンモード
