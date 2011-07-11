@@ -89,7 +89,9 @@ $(targetname)_list.narc $(targetname)_num.narc : fs_item.xls
 	find dat -name "*.dat" > $(list_file)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(list_file)
 	nnsarc -r -l -n -i $(targetname)_list -S $(list_file)
+	$(NAIXCUT) $(targetname)_list.naix
 	nnsarc -r -l -n -i $(targetname)_num shop_data_num.dat
+	$(NAIXCUT) $(targetname)_num.naix
 
 endif
 
