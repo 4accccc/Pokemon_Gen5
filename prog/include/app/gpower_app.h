@@ -44,19 +44,33 @@ typedef enum{
  *								構造体定義
  */
 //=============================================================================
+
+//-------------------------------------
+///	発動中のデルパワーリスト
+//-------------------------------------
+typedef struct
+{
+  u8        id;   //GPOWER_ID型のID
+  u16       life; //秒単位の寿命
+}GPOWER_OCCUR_LIST;
+
+#define GPOWER_OCCUR_LIST_MAX (10)  ///重ねがけは10個まで
+
 //-------------------------------------
 ///	PROCに渡す引数
-//=====================================
+//-------------------------------------
 typedef struct
-{	
-//	GAMESYS_WORK		*gsys;	//[in]ゲームシステム
-//	GAMEDATA				*gdata;	//[in]ゲームシステム
+{
+  ///[IN]
+  GAMESYS_WORK*   gsys;   ///<[in]GameSystem ホールド中に通信がOffになったチェック用
   GPOWER_APP_MODE mode; ///<[in]呼び出しモード
   GPOWER_ID       gpower[INTRUDE_EQUIP_GPOWER_MAX]; ///<[in]現在装備中のデルパワー(配列に中抜けは無い)
-  u8              gpower_num; ///<[in]現在装備中のパワー数
+  u8              gpower_num;   ///<[in]現在装備中のパワー数
+  u8              occur_num;    ///<[in]現在発動中のパワー数
   u16             derudama_num; ///<[in]持っているデルダマの数
+  GPOWER_OCCUR_LIST  occur_list[GPOWER_OCCUR_LIST_MAX]; ///<ソート済みの発動中デルパワーリスト
 
-  ///<[out]
+  ///[OUT]
   GPOWER_APP_RET_MODE   ret_mode;   ///<リターンモード
   GPOWER_ID             ret_gpower; ///<使用したデルパワーID
 
