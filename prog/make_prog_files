@@ -2650,6 +2650,10 @@ SRCS_OVERLAY_ENTRY_CHECKER = app/entry_checker/win_record.c \
                              app/entry_checker/win_record_graphic.c \
                              app/entry_checker/t_download.c \
                              app/entry_checker/t_download_graphic.c
+# デルパワー使用画面
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_GPOWER_APP = app/gpower_app/gpower_app.c \
+                          app/gpower_app/gpower_app_graphic.c
 
 # 川田デバッグ
 #===> SRCS_OVERLAY_UI_COMMON

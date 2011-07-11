@@ -1,0 +1,26 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gpower_app_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_GPOWER_APP_GRA_NAIX_
+#define NARC_GPOWER_APP_GRA_NAIX_
+
+enum {
+	NARC_gpower_app_gra_delpow_bg_NCLR = 0,
+	NARC_gpower_app_gra_delpow_obj_NCLR = 1,
+	NARC_gpower_app_gra_delpow_bg_NCGR = 2,
+	NARC_gpower_app_gra_delpow_obj_NCGR = 3,
+	NARC_gpower_app_gra_delpow_obj_NCER = 4,
+	NARC_gpower_app_gra_delpow_bgd_NSCR = 5,
+	NARC_gpower_app_gra_delpow_bgu_NSCR = 6,
+	NARC_gpower_app_gra_delpow_obj_NANR = 7,
+	NARC_gpower_app_gra_gpower_app_pos_tblbin = 8
+};
+
+/* NARC_GPOWER_APP_GRA_NAIX_ */
+#endif

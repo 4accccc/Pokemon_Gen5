@@ -188,6 +188,7 @@ SUBDIRS	=	wmi \
 			animal_trail \
 			pokewood_party \
 			pokewood_cutin \
+			gpower_app \
 			key_system
 
 

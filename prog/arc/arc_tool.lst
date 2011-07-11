@@ -346,4 +346,5 @@
   ARCID_SHOP_LIST "shop_data_list.narc" #お店データリスト
   ARCID_SHOP_NUM "shop_data_num.narc" #お店データリスト数
   ARCID_BADGE_GATE "fieldmap/badge_gate_gmk.narc" #バッジチェックゲート
+  ARCID_GPOWER_APP "gpower_app_gra.narc" #デルパワー使用画面
   

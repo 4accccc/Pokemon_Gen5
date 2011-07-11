@@ -88,7 +88,7 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     //break throw
   case _CALL_GPOWER_APP:
-#if 1
+#if 0
     MI_CpuClear8(&gaw->prm,sizeof(BEACON_DETAIL_PARAM));
     gaw->prm.gsys = gaw->gsys;
     gaw->prm.gdata = gaw->gdata;
