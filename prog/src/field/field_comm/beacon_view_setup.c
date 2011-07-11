@@ -441,9 +441,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv, 0);
-#ifdef DEBUG_ONLY_FOR_iwasawa
+//#ifdef DEBUG_ONLY_FOR_iwasawa
     wk->my_data.power = 1;
-#endif
+//#endif
 //    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
   wk->game_comm = GAMESYSTEM_GetGameCommSysPtr( wk->gsys );
