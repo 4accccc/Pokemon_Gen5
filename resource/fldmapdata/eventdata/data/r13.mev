@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/28 19:14:17
+#save date:2011/07/11 14:54:25
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -102,7 +102,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-392 0 -168
+424 0 -312
 #event number: 3
 #type
 1
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 0 -184
+440 0 -328
 #event number: 4
 #type
 1
@@ -200,37 +200,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_RANGERW_14
-#OBJ CODE Number
-RANGERW
-#MOVE CODE Number
-MV_RT2
-#EVENT TYPE Number
-EV_TYPE_TRAINER_KYORO
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_RANGERW_14
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-1
-#Parameter 1 Number
-4
-#Parameter 2 Number
-0
-#Move Limit X Number
-5
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-504 0 -168
-#event number: 7
-#type
-1
-#ID name
 TR_FISHING_16
 #OBJ CODE Number
 FISHING
@@ -258,7 +227,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 680 -88 -776
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,7 +258,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 632 -88 -824
-#event number: 9
+#event number: 8
 #type
 1
 #ID name
@@ -297,7 +266,7 @@ TR_RANGERM_14
 #OBJ CODE Number
 RANGERM
 #MOVE CODE Number
-MV_RND_UR
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -305,7 +274,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_RANGERM_14
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 4
 #Parameter 1 Number
@@ -319,8 +288,8 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 -80 -552
-#event number: 10
+168 -80 -552
+#event number: 9
 #type
 1
 #ID name
@@ -351,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1144 -88 -968
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -382,7 +351,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 856 -88 -1304
-#event number: 12
+#event number: 11
 #type
 1
 #ID name
@@ -413,7 +382,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 1608 -80 -1464
-#event number: 13
+#event number: 12
 #type
 1
 #ID name
@@ -444,7 +413,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 1176 -64 -1544
-#event number: 14
+#event number: 13
 #type
 1
 #ID name
@@ -475,7 +444,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1096 -64 -1480
-#event number: 15
+#event number: 14
 #type
 1
 #ID name
@@ -506,7 +475,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 696 -80 -1032
-#event number: 16
+#event number: 15
 #type
 1
 #ID name
@@ -537,7 +506,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 440 -88 -984
-#event number: 17
+#event number: 16
 #type
 1
 #ID name
@@ -568,6 +537,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 456 0 -312
+#event number: 17
+#type
+1
+#ID name
+TR_RANGERW_14
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_RTLU         
+#EVENT TYPE Number
+EV_TYPE_TRAINER_SPIN_STOP_R
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERW_14
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+1
+#Parameter 1 Number
+3
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 0 -296
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

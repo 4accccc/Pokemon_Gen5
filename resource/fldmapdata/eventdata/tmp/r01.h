@@ -9,6 +9,8 @@
 #ifndef ZONE_R01_EVC_H
 #define ZONE_R01_EVC_H
 
+#define TR_BACKPACKERW_18                  0
+#define TR_BACKPACKERM_24                  1
 
 #endif //ZONE_R01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
