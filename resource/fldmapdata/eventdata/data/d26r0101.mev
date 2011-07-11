@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/11 15:05:10
+#save date:2011/07/11 16:30:12
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26r0101.wms
 #SECTION START:OBJ_EVENT
@@ -38,7 +38,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK1
+WK_SCENE_D26R0101_GATE_02
 #Event Trigger Work Value
 1
 #Pos Type
@@ -55,7 +55,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_04
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK3
+WK_SCENE_D26R0101_GATE_04
 #Event Trigger Work Value
 1
 #Pos Type
@@ -72,7 +72,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_07
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK6
+WK_SCENE_D26R0101_GATE_07
 #Event Trigger Work Value
 1
 #Pos Type
@@ -89,7 +89,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_08
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK7
+WK_SCENE_D26R0101_GATE_08
 #Event Trigger Work Value
 1
 #Pos Type
@@ -106,7 +106,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_03
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK2
+WK_SCENE_D26R0101_GATE_03
 #Event Trigger Work Value
 1
 #Pos Type
@@ -123,7 +123,7 @@ SCRID_POS_D26R0101_OPEN_GATE
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK8
+WK_SCENE_D26R0101_GATE_09
 #Event Trigger Work Value
 1
 #Pos Type
@@ -140,7 +140,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK0
+WK_SCENE_D26R0101_GATE_01
 #Event Trigger Work Value
 1
 #Pos Type
@@ -157,7 +157,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_05
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK4
+WK_SCENE_D26R0101_GATE_05
 #Event Trigger Work Value
 1
 #Pos Type
@@ -174,7 +174,7 @@ SCRID_POS_D26R0101_BADGE_CHECK_06
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK5
+WK_SCENE_D26R0101_GATE_06
 #Event Trigger Work Value
 1
 #Pos Type

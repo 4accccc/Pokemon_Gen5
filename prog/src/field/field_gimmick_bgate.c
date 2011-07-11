@@ -18,6 +18,7 @@
 #include "field_g3d_mapper.h"
 #include "field_gimmick_bgate.h"
 
+#include "eventwork_def.h"                    // for WK_SCENE_D26R0101_GATE_*
 #include "system/main.h"                      // for HEAPID_FIELDMAP
 #include "field_gimmick_def.h"                // for FLD_GIMMICK_D26R0101
 #include "arc/fieldmap/badge_gate_gmk.naix"   // モデルデータアーカイブ
@@ -36,6 +37,9 @@
 
 // 像の数
 #define MONUMENT_CNT  (8)
+
+// イベントが起動済みの時にワークに設定されている値
+#define IS_ACTION_WK_VALUE  (2)
 
 //=============================================================================
 /**
@@ -102,6 +106,9 @@ static void SetAnmStopFlag( MODEL *p_model  ,u16 anmid ,BOOL is_stop );
 static MODEL* GetModelData( BADGEGATE_WK *p_gmk_wk ,u32 model_id );
 static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
 static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk );
+static void setup_anm_before_action( MODEL *p_model );
+static void setup_anm_after_action( MODEL *p_model );
+static BOOL get_is_action_end( u32 id, EVENTWORK *p_event_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -168,7 +175,6 @@ static void setup_model_data( BADGEGATE_WK *p_wk )
   // モデルステータス設定
   {
     int i;
-    EXP_OBJ_ANM_CNT_PTR exobj_anm;
     GFL_G3D_OBJSTATUS *p_status;
     for( i = 0 ; i < BADGEGATE_MDLID_MAX ; i++ )
     {
@@ -188,40 +194,139 @@ static void setup_model_data( BADGEGATE_WK *p_wk )
       
       //カリングする
       FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, 0, TRUE);
- 
-      // アニメーション有効設定、フレーム初期化
-      {
-        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA, TRUE);
-        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA ,0 );
-      }
-      {
-        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA, TRUE);
-        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA ,0 );
-      }
-      {
-        FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA, FALSE);
-        FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA ,0 );
-      }
 
-      // 通常状態用アニメーション初期化
+      // アニメーション後かどうかを調べて、初期化を行う
+      if( get_is_action_end( i, p_wk->p_event_wk ) == FALSE )
       {
-        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA );
-        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+        // アニメーション後の状態に初期化
+        setup_anm_before_action( p_model );
       }
+      else
       {
-        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA );
-        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
-      }
-      // ループ用アニメーション初期化
-      {
-        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA );
-        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
+        // アニメーション前の状態に初期化
+        setup_anm_after_action( p_model );
       }
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーション前の状態に初期化する
+ *
+ *	@param	*p_model 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void setup_anm_before_action( MODEL *p_model )
+{
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  // アニメーション有効設定、フレーム初期化
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA, TRUE);
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA ,0 );
+  }
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA, TRUE);
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA ,0 );
+  }
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA, FALSE);
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA ,0 );
+  }
+
+  // 通常状態用アニメーション初期化
+  {
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+  }
+  {
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+  }
+  // ループ用アニメーション初期化
+  {
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーション後の状態に初期化する
+ *
+ *	@param	*p_model 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void setup_anm_after_action( MODEL *p_model )
+{
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  // アニメーション有効設定、フレーム初期化
+  {
+    fx32 last_frame;
+    EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA );
+
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA, TRUE);
+    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exobj_anm );
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA ,last_frame );
+  }
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA, FALSE);
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA ,0 );
+  }
+  {
+    FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA, TRUE);
+    FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA ,0 );
+  }
+
+  // 通常状態用アニメーション初期化
+  {
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ICA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+  }
+  {
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_ACTION_ITA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+  }
+  // ループ用アニメーション初期化
+  {
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, MMANAGER_FEXPOBJ_UID, p_model->modelID, MDL_ANM_LOOP_ITA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モニュメントが起動済みかを調べる
+ *
+ *	@param	id
+ *	@param	*p_event_wk 
+ *
+ *	@retval TRUEの時にモニュメントは起動済み
+ */
+//-----------------------------------------------------------------------------
+static BOOL get_is_action_end( u32 id, EVENTWORK *p_event_wk )
+{
+  const u16 scr_wk_id = sc_script_work_id_table[ id ];
+  const u16 value = *EVENTWORK_GetEventWorkAdrs( p_event_wk ,scr_wk_id);
+  
+  // ワーク内容を調べて起動状態を返す
+  if( value == IS_ACTION_WK_VALUE )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
