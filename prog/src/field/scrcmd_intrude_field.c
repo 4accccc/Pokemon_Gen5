@@ -627,7 +627,7 @@ VMCMD_RESULT EvCmdIntrudeCheckEqpGPower( VMHANDLE *core, void *wk )
   INTRUDE_SAVE_WORK * intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
   GPOWER_ID gpower_id;
   
-  gpower_id = ISC_SAVE_GetGPowerID(intsave);
+  gpower_id = ISC_SAVE_GetGPowerID(intsave,0);
   if(gpower_id != GPOWER_ID_NULL){
     *ret_wk = TRUE;
   }

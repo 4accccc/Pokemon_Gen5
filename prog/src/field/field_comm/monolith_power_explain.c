@@ -352,7 +352,7 @@ static void _Write_EqpPower(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
   INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
-  GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(intsave);
+  GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(intsave,0);
   STRBUF *str_name, *str_explain;
   u16 msgid_title;
   

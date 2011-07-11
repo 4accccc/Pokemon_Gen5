@@ -1827,7 +1827,7 @@ static int ninput_GetDebugParam( DMENU_LIVE_COMM* wk, int param )
   case 1:
     {
       INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
-      GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(int_sv);
+      GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(int_sv,0);
       if( gpower_id == GPOWER_ID_NULL ){
         return 0;
       }else{

@@ -26,6 +26,7 @@
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
 #include "field/event_festmission.h"
+#include "field/event_gpower_app.h"
 
 #include "beacon_status.naix"
 #include "script_message.naix"
@@ -194,6 +195,14 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
           FS_OVERLAY_ID( notwifi_event_beacon_detail ), EVENT_BeaconDetail, &target );
     }
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_MEDAL_ANM, wk->ctrl.target_panel );
+    break;
+  case EV_CALL_GPOWER_APP:
+    {
+      u32 mode = GPOWER_APP_MODE_NORMAL;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( notwifi_event_gpower_app ), EVENT_GPowerApp, &mode );
+    }
+    event = BVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_POWER );
     break;
   case EV_GPOWER_USE:
     {
@@ -431,9 +440,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
-    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
+    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv, 0);
 #ifdef DEBUG_ONLY_FOR_iwasawa
-//    wk->my_data.power = 1;
+    wk->my_data.power = 1;
 #endif
 //    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }

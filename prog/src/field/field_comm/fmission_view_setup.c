@@ -392,7 +392,7 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
   save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   {
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
-    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
+    wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv,0);
 #ifdef DEBUG_ONLY_FOR_iwasawa
 //    wk->my_data.power = 1;
 #endif

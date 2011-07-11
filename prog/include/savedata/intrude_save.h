@@ -48,6 +48,8 @@ typedef enum{
 ///ミッションクリアした回数最大値
 #define INTRUDE_MISSION_CLEAR_COUNT_MAX   (99999)
 
+///装備Gパワー数
+#define INTRUDE_EQUIP_GPOWER_MAX  (3)
 
 //==============================================================================
 //  構造体定義
@@ -144,7 +146,7 @@ extern void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_IT
 //  Gパワー
 //--------------------------------------------------------------
 extern void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
-extern GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave);
+extern GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave, int idx);
 extern void ISC_SAVE_SetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
 extern BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
 extern void ISC_SAVE_GetDistributionGPower_Array(INTRUDE_SAVE_WORK *intsave, u8 *dest_array, int array_num);

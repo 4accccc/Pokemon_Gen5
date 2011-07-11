@@ -167,7 +167,8 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     switch( ret ){
     case MENU_POWER:
-      return SEQ_GPOWER_USE;
+      BVSEvent_Reserve( wk, EV_CALL_GPOWER_APP );
+      break;
     case MENU_HELLO:
       BVSEvent_Reserve( wk, EV_CALL_TALKMSG_INPUT );
       break;

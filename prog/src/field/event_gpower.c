@@ -349,7 +349,7 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
   
   //Ý’è‚µ‚Ä‚¢‚éƒfƒ‹ƒpƒ[
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_list01, wk->s_buf );
-  tmp = ISC_SAVE_GetGPowerID(int_sv);
+  tmp = ISC_SAVE_GetGPowerID(int_sv,0);
   if( tmp != GPOWER_ID_NULL ){
     sub_GPowerEnableListLineDraw( wk, wk->s_buf, tmp, 0, 1 );
   }

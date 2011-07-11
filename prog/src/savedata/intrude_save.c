@@ -43,11 +43,16 @@ u32 IntrudeSave_GetWorkSize( void )
 //--------------------------------------------------------------
 void IntrudeSave_WorkInit(void *work)
 {
+  int i;
+
   INTRUDE_SAVE_WORK *intsave = work;
   
   GFL_STD_MemClear(intsave, sizeof(INTRUDE_SAVE_WORK));
   OccupyInfo_WorkInit(&intsave->occupy);
-  intsave->gpower_id = GPOWER_ID_NULL;
+
+  for(i = 0;i < INTRUDE_EQUIP_GPOWER_MAX; i++ ){
+    intsave->gpower_id[i] = GPOWER_ID_NULL;
+  }
 }
 
 
@@ -248,21 +253,25 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
 //==================================================================
 void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id)
 {
-  intsave->gpower_id = gpower_id;
+  intsave->gpower_id[0] = gpower_id;
 }
 
 //==================================================================
 /**
- * 自身が装備しているGパワーIDを取得
+ *  自身が装備しているGパワーIDを取得
  *
- * @param   intsave		
- *
- * @retval  GPOWER_ID		GパワーID (何も装備していない場合はGPOWER_ID_NULL)
+ *  @param  intsave		
+ *  @param  idx (装備スロットの参照インデックス。中抜け状態は作らない)
+ *  @retval GPOWER_ID		GパワーID (何も装備していない場合はGPOWER_ID_NULL)
  */
 //==================================================================
-GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave)
+GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave, int idx)
 {
-  return intsave->gpower_id;
+  if( idx >= INTRUDE_EQUIP_GPOWER_MAX ){
+    GF_ASSERT(0);
+    return GPOWER_ID_NULL;
+  }
+  return intsave->gpower_id[idx];
 }
 
 //==============================================================================
