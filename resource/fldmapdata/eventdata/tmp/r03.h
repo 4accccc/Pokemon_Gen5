@@ -13,6 +13,16 @@
 #define ZONE_R03_EVC_H
 
 #define R03_SODATEYA_GRANDPA               0
+#define TR_SCHOOLG_11                      1
+#define TR_FISHING_22                      2
+#define TR_FISHING_23                      3
+#define TR_ELITEW_29                       4
+#define TR_KINDERGARTENM_08                5
+#define TR_KINDERGARTENM_09                6
+#define TR_KINDERGARTENW_08                7
+#define TR_CHILDCARE_07                    8
+#define TR_ELITEM_29                       9
+#define TR_SCHOOLB_13                     10
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
