@@ -342,6 +342,7 @@
   ARCID_FOURKINGS_EVIL "fieldmap/fourkings_evil.narc"  #四天王部屋（悪）
   ARCID_FOURKINGS_ESP "fieldmap/fourkings_esp.narc"  #四天王部屋（エスパー）
   ARCID_FOURKINGS_GHOST "fieldmap/fourkings_ghost.narc"  #四天王部屋（ゴースト）
+  ARCID_FOURKINGS_FIGHT "fieldmap/fourkings_fight.narc"  #四天王部屋（格闘）
   ARCID_SHOP_LIST "shop_data_list.narc" #お店データリスト
   ARCID_SHOP_NUM "shop_data_num.narc" #お店データリスト数
   ARCID_BADGE_GATE "fieldmap/badge_gate_gmk.narc" #バッジチェックゲート

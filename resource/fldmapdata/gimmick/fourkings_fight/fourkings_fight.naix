@@ -1,0 +1,27 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fourkings_fight.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FOURKINGS_FIGHT_NAIX_
+#define NARC_FOURKINGS_FIGHT_NAIX_
+
+enum {
+	NARC_fourkings_fight_door01_nsbmd = 0,
+	NARC_fourkings_fight_door01_nsbca = 1,
+	NARC_fourkings_fight_light01_nsbmd = 2,
+	NARC_fourkings_fight_light01_nsbca = 3,
+	NARC_fourkings_fight_light01_nsbta = 4,
+	NARC_fourkings_fight_light01_nsbtp = 5,
+	NARC_fourkings_fight_stage_nsbmd = 6,
+	NARC_fourkings_fight_stair01_nsbmd = 7,
+	NARC_fourkings_fight_stair01_nsbca = 8,
+	NARC_fourkings_fight_stair02_nsbca = 9
+};
+
+/* NARC_FOURKINGS_FIGHT_NAIX_ */
+#endif

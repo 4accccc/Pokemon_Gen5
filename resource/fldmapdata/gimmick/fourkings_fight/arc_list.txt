@@ -1,0 +1,11 @@
+"door01.nsbmd"
+"door01.nsbca"
+"light01.nsbmd"
+"light01.nsbca"
+"light01.nsbta"
+"light01.nsbtp"
+"stage.nsbmd"
+"stair01.nsbmd"
+"stair01.nsbca"
+"stair02.nsbca"
+
