@@ -34,6 +34,12 @@
   DEF_CMD( EvCmdFourKings_Ghost_Fire, EV_SEQ_FOURKINGS_GHOST_FIRE )
   DEF_CMD( EvCmdFourKings_Ghost_BookFall, EV_SEQ_FOURKINGS_GHOST_BOOK_FALL )
   DEF_CMD( EvCmdFourKings_Ghost_Lamp, EV_SEQ_FOURKINGS_GHOST_LAMP )
+
+  // 格闘
+  DEF_CMD( EvCmdFourKings_Fight_Door, EV_SEQ_FOURKINGS_FIGHT_DOOR )
+  DEF_CMD( EvCmdFourKings_Fight_Stairs, EV_SEQ_FOURKINGS_FIGHT_STAIRS )
+  DEF_CMD( EvCmdFourKings_Fight_Light, EV_SEQ_FOURKINGS_FIGHT_LIGHT )
+  DEF_CMD( EvCmdFourKings_Fight_Stage, EV_SEQ_FOURKINGS_FIGHT_STAGE )
   
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -53,6 +53,15 @@ typedef struct {
   FOURKINGS_SV_WORK   *p_sv_wk;       // セーブワーク
 } FOURKINGS_FIGHT_TMP;
 
+//-------------------------------------
+///	ステージ落下イベント用ワーク
+//=====================================
+typedef struct {
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+
+} STAGE_FALL_EVENT_WORK;
+
 
 //=============================================================================
 /**
@@ -68,9 +77,9 @@ enum {
   RESID_LIGHT_ANM_ITA,      // ライトアニメ
   RESID_LIGHT_ANM_ITP,      // ライトアニメ
   RESID_STAGE_MDL,          // ステージモデル
-  RESID_STAIR_MDL,          // 階段モデル
-  RESID_STAIR_01_ANM_ICA,   // 階段アニメ
-  RESID_STAIR_02_ANM_ICA,   // 階段アニメ
+  RESID_STAIRS_MDL,          // 階段モデル
+  RESID_STAIRS_01_ANM_ICA,   // 階段アニメ
+  RESID_STAIRS_02_ANM_ICA,   // 階段アニメ
 };
 
 // OBJインデックス
@@ -78,7 +87,7 @@ enum {
   OBJ_DOOR,                 // ドア
   OBJ_LIGHT,                // ライト
   OBJ_STAGE,                // ステージ
-  OBJ_STAIR,                // 階段
+  OBJ_STAIRS,                // 階段
 
   OBJ_NUM,
 };
@@ -116,10 +125,10 @@ static const GFL_G3D_UTIL_ANM anm_light[] =
 
 static const GFL_G3D_UTIL_ANM anm_stair[] =
 {
-  { RESID_STAIR_01_ANM_ICA, 0 },
-  { RESID_STAIR_02_ANM_ICA, 0 },
+  { RESID_STAIRS_01_ANM_ICA, 0 },
+  { RESID_STAIRS_02_ANM_ICA, 0 },
 };
-#define ANM_STAIR_NUM  ( NELEMS(anm_stair) )
+#define ANM_STAIRS_NUM  ( NELEMS(anm_stair) )
 
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
@@ -148,13 +157,13 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     NULL,                 // アニメテーブル(複数指定のため)
     0,                    // アニメリソース数
   },
-  // OBJ_STAIR
+  // OBJ_STAIRS
   {
-    RESID_STAIR_MDL,       // モデルリソースID
+    RESID_STAIRS_MDL,       // モデルリソースID
     0,                     // モデルデータID(リソース内部INDEX)
-    RESID_STAIR_MDL,       // テクスチャリソースID
+    RESID_STAIRS_MDL,       // テクスチャリソースID
     anm_stair,             // アニメテーブル(複数指定のため)
-    ANM_STAIR_NUM,         // アニメリソース数
+    ANM_STAIRS_NUM,         // アニメリソース数
   },
 };
 
@@ -172,11 +181,24 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 */
 //=============================================================================
 
+// INIT
+// フィールド入りなおすたびに、セーブ状態による初期化
+static void INIT_FieldRecover( FOURKINGS_FIGHT_TMP *p_wk );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( FOURKINGS_FIGHT_TMP *p_wk );
 static void EXPOBJ_ObjDell( FOURKINGS_FIGHT_TMP *p_wk );
 static void EXPOBJ_ObjMain( FOURKINGS_FIGHT_TMP *p_wk );
 static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_num );
+
+// アニメ管理
+// 共通
+static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop );
+static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
+
+// ステージ落下イベント
+static GMEVENT * STAGE_FALL_CreateEvent( GAMESYS_WORK* gsys );
+static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk );
 
 //=============================================================================
 /**
@@ -205,6 +227,8 @@ void FOURKINGS_FIGHT_Setup(FIELDMAP_WORK *p_fieldmap)
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
+  // セーブ状態別初期化
+  INIT_FieldRecover( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -239,11 +263,134 @@ void FOURKINGS_FIGHT_Move(FIELDMAP_WORK *p_fieldmap)
   EXPOBJ_ObjMain( p_wk );
 }
 
+//-----------------------------------------------------------------------------
+//          スクリプトコマンド関連
+//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドア開くアニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_FIGHT_DoorAnm( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_FIGHT_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_FIGHT_TMP_ASSIGN_ID );
+
+  // ドアアニメ再生
+  ANM_Play( p_wk->exp_obj, OBJ_DOOR, 0, FALSE );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階段アニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id  0:表示  1:消滅
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_FIGHT_StairsAnm( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_FIGHT_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_FIGHT_TMP_ASSIGN_ID );
+  u16 obj_idx = OBJ_STAIRS;
+
+  GF_ASSERT_MSG( id<2, "_FOURKINGS_FIGHT_STAIRS 引数の指定が間違っている");
+
+  if( id == 0 )
+  {
+    ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+    ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+  }
+  else
+  {
+    ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+    ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ライト点灯アニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ */
+//-----------------------------------------------------------------------------
+void FOURKINGS_FIGHT_LightAnm( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_FIGHT_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_FIGHT_TMP_ASSIGN_ID );
+  int i;
+
+  for( i=0; i<ANM_LIGHT_NUM; i++ )
+  {
+    ANM_Play( p_wk->exp_obj, OBJ_LIGHT, i, FALSE );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ステージ落下イベント
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* FOURKINGS_FIGHT_StageFall( GAMESYS_WORK *gsys )
+{
+  GMEVENT *event;
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FOURKINGS_FIGHT_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_FIGHT_TMP_ASSIGN_ID );
+
+  
+  event = STAGE_FALL_CreateEvent( gsys );
+
+  // 上段のPOSを踏んだ
+  if( event != NULL )
+  {
+
+  }
+
+  return event;
+}
+
 //=============================================================================
 /**
  *					static関数
 */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ状態による初期化
+ *
+ *	@param	FOURKINGS_FIGHT_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void INIT_FieldRecover( FOURKINGS_FIGHT_TMP *p_wk )
+{
+  //const BOOL pos1_flag = SAVE_GetPos1Flag( p_wk->p_sv_wk );
+  //const BOOL pos2_flag = SAVE_GetPos2Flag( p_wk->p_sv_wk );
+
+  // セーブ状況別の状態
+  // 何もPOS踏んでない
+  // ⇒
+  // 下段POSふんだ
+  // ⇒
+  // 上段POSふんだ
+  // ⇒
+  //
+
+  // ドア表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_FIGHT_UNIT_IDX, OBJ_DOOR, FALSE );
+  
+  // ライト表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_FIGHT_UNIT_IDX, OBJ_LIGHT, FALSE );
+
+  // 階段表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_FIGHT_UNIT_IDX, OBJ_STAIRS, FALSE );
+}
+
 //=============================================================================
 /**
  *          EXPOBJ
@@ -275,7 +422,7 @@ static void EXPOBJ_ObjSet( FOURKINGS_FIGHT_TMP *p_wk )
 
   //=====================================
   // 階段
-  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_STAIR, ANM_STAIR_NUM );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_STAIRS, ANM_STAIRS_NUM );
 }
 //----------------------------------------------------------------------------
 /**
@@ -337,4 +484,113 @@ static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_
   }
 }
 
+//=============================================================================
+/**
+ *          アニメ管理
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ再生
+ *
+ *	@param	FLD_EXP_OBJ_CNT_PTR exp_obj
+ *	@param	obj_idx   OBJインデックス
+ *	@param	anm_idx   アニメインデックス
+ *	@param	loop      ループ再生フラグ(TRUEでループ
+ */
+//-----------------------------------------------------------------------------
+static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop )
+{
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, FOURKINGS_FIGHT_UNIT_IDX, obj_idx, anm_idx );
+
+  // 再生
+  FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );
+  FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, loop );
+
+  // 無効化解除
+  FLD_EXP_OBJ_ValidCntAnm( exp_obj, FOURKINGS_FIGHT_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, FOURKINGS_FIGHT_UNIT_IDX, obj_idx, anm_idx, 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ停止
+ *
+ *	@param	FLD_EXP_OBJ_CNT_PTR exp_obj
+ *	@param	obj_idx   OBJインデックス
+ *	@param	anm_idx   アニメインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
+{
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, FOURKINGS_FIGHT_UNIT_IDX, obj_idx, anm_idx );
+  // 停止
+  FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );
+  // 無効化
+  FLD_EXP_OBJ_ValidCntAnm( exp_obj, FOURKINGS_FIGHT_UNIT_IDX, obj_idx, anm_idx, FALSE );
+  // 頭だし
+  FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, FOURKINGS_FIGHT_UNIT_IDX, obj_idx, anm_idx, 0 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ステージ落下イベント作成
+ *
+ *	@param	GAMESYS_WORK* gsys ゲームシステムポインタ
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT * STAGE_FALL_CreateEvent( GAMESYS_WORK* gsys )
+{
+  GMEVENT*          event;
+  STAGE_FALL_EVENT_WORK*  work;
+  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // イベント生成
+  event = GMEVENT_Create( gsys, NULL, StageFallEvent, sizeof(STAGE_FALL_EVENT_WORK) );
+
+  // 初期化
+  work = GMEVENT_GetEventWork( event );
+  work->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  work->p_fieldmap  = p_fieldmap;
+
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ステージ落下イベント関数
+ *
+ *	@param	event イベントポインタ
+ *	@param	seq   シーケンス
+ *	@param	wk    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//----------------------------------------------------------------------------
+static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  STAGE_FALL_EVENT_WORK *p_wk = (STAGE_FALL_EVENT_WORK*)wk;
+  FOURKINGS_FIGHT_TMP *p_gmk_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, FOURKINGS_FIGHT_TMP_ASSIGN_ID );
+
+  // 処理シーケンス
+  enum{
+    SEQ_START,
+    SEQ_END,
+  };
+
+  switch( *seq ){
+  case SEQ_START:
+    *seq = SEQ_END;
+    break;
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
 

@@ -8120,7 +8120,7 @@
 //--------------------------------------------------------------
 /**
  * @def _WAZA_OSHIE_SHOP_CALL
- * @brief 簡易イベントコマンド：BPショップイベント呼び出し
+ * @brief 簡易イベントコマンド：技教えショップイベント呼び出し
  */
 //--------------------------------------------------------------
 #define _WAZA_OSHIE_RED_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_WAZA_OSHIE_RED,SHOP_GREETING_NORMAL
@@ -9696,6 +9696,61 @@
 
   .macro  _ASM_FOURKINGS_GHOST_LAMP
   .short  EV_SEQ_FOURKINGS_GHOST_LAMP
+  .endm
+
+// 格闘部屋
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_FIGHT_DOOR
+ * @brief 四天王  格闘  ドアが開くアニメ
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_FIGHT_DOOR() _ASM_FOURKINGS_FIGHT_DOOR
+
+  .macro  _ASM_FOURKINGS_FIGHT_DOOR
+  .short  EV_SEQ_FOURKINGS_FIGHT_DOOR
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_FIGHT_STAIRS
+ * @brief 四天王  格闘  階段演出
+ * @param id  0:表示  1:消滅
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_FIGHT_STAIRS( id ) _ASM_FOURKINGS_FIGHT_STAIRS id
+
+  .macro  _ASM_FOURKINGS_FIGHT_STAIRS id
+  .short  EV_SEQ_FOURKINGS_FIGHT_STAIRS
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_FIGHT_LIGHT
+ * @brief 四天王  格闘  ライトが点灯するアニメ
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_FIGHT_LIGHT() _ASM_FOURKINGS_FIGHT_LIGHT
+
+  .macro  _ASM_FOURKINGS_FIGHT_LIGHT
+  .short  EV_SEQ_FOURKINGS_FIGHT_LIGHT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _FOURKINGS_FIGHT_STAGE
+ * @brief 四天王  格闘  ステージが落下する演出
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _FOURKINGS_FIGHT_STAGE() _ASM_FOURKINGS_FIGHT_STAGE
+
+  .macro  _ASM_FOURKINGS_FIGHT_STAGE
+  .short  EV_SEQ_FOURKINGS_FIGHT_STAGE
   .endm
 
 //======================================================================

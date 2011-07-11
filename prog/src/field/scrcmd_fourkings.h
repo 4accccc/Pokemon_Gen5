@@ -59,6 +59,12 @@ extern VMCMD_RESULT EvCmdFourKings_Ghost_Fire( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Ghost_BookFall( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Ghost_Lamp( VMHANDLE *core, void *wk );
 
+// Ši“¬
+extern VMCMD_RESULT EvCmdFourKings_Fight_Door( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Fight_Stairs( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Fight_Light( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdFourKings_Fight_Stage( VMHANDLE *core, void *wk );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif
