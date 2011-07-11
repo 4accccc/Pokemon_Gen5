@@ -221,6 +221,15 @@
 #define WK_SCENE_H01R0201_STOP_01        16609 /* 0x40e1 スカイアローブリッジ：ヒウン側ゲートストッパーPOS制御ワーク */
 #define WK_SCENE_C03_RALLY_01            16610 /* 0x40e2 ヒウンシティ：名所巡り制御ワーク */
 #define WK_SCENE_R22_POKE5               16611 /* 0x40e3 22番道路：テラキオン遭遇POSイベント制御ワーク */
+#define WK_SCENE_D26R0101_GATE_01        16612 /* 0x40e4 バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_02        16613 /* 0x40e5 バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_03        16614 /* 0x40e6 バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_04        16615 /* 0x40e7 バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_05        16616 /* 0x40e8 バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_06        16617 /* 0x40e9 バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_07        16618 /* 0x40ea バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_08        16619 /* 0x40eb バッジチェックゲート：POS制御ワーク */
+#define WK_SCENE_D26R0101_GATE_09        16620 /* 0x40ec バッジチェックゲート：POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
