@@ -2,6 +2,46 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d26_boss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:49:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:49:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:49:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:49:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:49:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:49:00" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d26_sppoke3_01"
 		Style="Large">
 		<LanguageCell
