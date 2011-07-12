@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＡＲＩＯ　きゃくほん</Text>
+			<Text>きゃくほん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:04:54" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＡＲＩＯ　きゃくほん</Text>
+			<Text>ＳＣＥＮＡＲＩＯ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:04:58" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -48,10 +48,10 @@
 		Label="pw_scriptindex_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０１</Text>
+			<Text>カット　０１</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:07:05" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -59,10 +59,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０１</Text>
+			<Text>ＣＵＴ　０１</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:07:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -72,21 +72,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:13" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０２</Text>
+			<Text>カット　０２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:09" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -94,10 +94,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０２</Text>
+			<Text>ＣＵＴ　０２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -107,21 +107,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:23" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０３</Text>
+			<Text>カット　０３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:13" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -129,10 +129,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０３</Text>
+			<Text>ＣＵＴ　０３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -142,21 +142,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:23" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０４</Text>
+			<Text>カット　０４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:18" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -164,10 +164,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０４</Text>
+			<Text>ＣＵＴ　０４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -177,21 +177,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:23" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０５</Text>
+			<Text>カット　０５</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:28" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -199,10 +199,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０５</Text>
+			<Text>ＣＵＴ　０５</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -212,21 +212,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:23" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０６</Text>
+			<Text>カット　０６</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:35" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -234,10 +234,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０６</Text>
+			<Text>ＣＵＴ　０６</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -247,21 +247,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:23" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０７</Text>
+			<Text>カット　０７</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:44" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -269,10 +269,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０７</Text>
+			<Text>ＣＵＴ　０７</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -282,21 +282,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０８</Text>
+			<Text>カット　０８</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:50" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -304,10 +304,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０８</Text>
+			<Text>ＣＵＴ　０８</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -317,21 +317,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　０９</Text>
+			<Text>カット　０９</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:25:58" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -339,10 +339,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　０９</Text>
+			<Text>ＣＵＴ　０９</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -352,21 +352,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１０</Text>
+			<Text>カット　１０</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:04" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -374,10 +374,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１０</Text>
+			<Text>ＣＵＴ　１０</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -387,21 +387,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_11">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１１</Text>
+			<Text>カット　１１</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:09" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -409,10 +409,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１１</Text>
+			<Text>ＣＵＴ　１１</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -422,21 +422,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１２</Text>
+			<Text>カット　１２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:14" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -444,10 +444,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１２</Text>
+			<Text>ＣＵＴ　１２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -457,21 +457,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１３</Text>
+			<Text>カット　１３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:22" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -479,10 +479,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１３</Text>
+			<Text>ＣＵＴ　１３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -492,21 +492,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１４</Text>
+			<Text>カット　１４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:27" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -514,10 +514,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１４</Text>
+			<Text>ＣＵＴ　１４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -527,21 +527,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:25" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１５</Text>
+			<Text>カット　１５</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:34" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -549,10 +549,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１５</Text>
+			<Text>ＣＵＴ　１５</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -562,21 +562,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:29" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１６</Text>
+			<Text>カット　１６</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:40" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -584,10 +584,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１６</Text>
+			<Text>ＣＵＴ　１６</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -597,21 +597,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:29" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_17">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１７</Text>
+			<Text>カット　１７</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:44" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -619,10 +619,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１７</Text>
+			<Text>ＣＵＴ　１７</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -632,21 +632,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:29" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_18">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１８</Text>
+			<Text>カット　１８</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:50" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -654,10 +654,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１８</Text>
+			<Text>ＣＵＴ　１８</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -667,21 +667,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:29" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_19">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　１９</Text>
+			<Text>カット　１９</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:26:58" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -689,10 +689,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　１９</Text>
+			<Text>ＣＵＴ　１９</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -702,21 +702,21 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:29" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_scriptindex_20">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＳＣＥＮＥ　シーン　２０</Text>
+			<Text>カット　２０</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:03" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -724,10 +724,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＳＣＥＮＥ　シーン　２０</Text>
+			<Text>ＣＵＴ　２０</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:10" />
+				Time="2011-07-12T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -737,11 +737,11 @@
 			Language="JPN">
 			<Comment>台本脚本画面
 
-シーン見出し　
+カット見出し　
 </Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T12:27:31" />
+				Time="2011-07-12T02:21:07" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

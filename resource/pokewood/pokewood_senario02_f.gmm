@@ -363,129 +363,17 @@
 		<language name="JPN_KANJI" width="256">相手の　タイプの
 弱点を　つけ！</language>
 	</row>
-	<row id="pw_wazasel_hero_0">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_0">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_1">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_1">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_2">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_2">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_3">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_3">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_4">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_4">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_5">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_5">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_6">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_6">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_7">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_7">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_hero_8">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_wazasel_enemy_8">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ</language>
-	</row>
-	<row id="pw_situ_hero_0">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_enemy_0">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_hero_1">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_enemy_1">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
 	<row id="pw_situ_hero_2">
 		<language name="JPN" width="256">かんとく『はい！　カーット！
 おつかれさま！　さいこうだったよ！</language>
 		<language name="JPN_KANJI" width="256">監督『はい！　カーット！
-お疲れ様！　ぃやあ！　最高だったよ！</language>
-	</row>
-	<row id="pw_situ_enemy_2">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
+お疲れ様！　最高だったよ！</language>
 	</row>
 	<row id="pw_situ_hero_3">
 		<language name="JPN" width="256">かんとく『はいはい！　カットカット！
 さつえいしゅうりょう！　オシマイだよ！</language>
 		<language name="JPN_KANJI" width="256">監督『はいはい！　カットカット！
 撮影終了！　オシマイだよ！</language>
-	</row>
-	<row id="pw_situ_enemy_3">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_hero_4">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_enemy_4">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_hero_5">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
-	</row>
-	<row id="pw_situ_enemy_5">
-		<language name="JPN" width="256">ハチクマン『きさま……　なにものだ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『きさま……　なにものだ！</language>
 	</row>
 	<row id="pw_turn_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ゆうえんち……
@@ -528,8 +416,8 @@
 ちょっと　ハチクマンさん！
 アナタの　イタズラ！▽
 ほっとけ　ないよ！</language>
-		<language name="JPN_KANJI" width="256">？？？『しんじつと　りそうの　ししゃ
-[1:02:ポケモンニックネーム:0]ガール　とうじょう！▼
+		<language name="JPN_KANJI" width="256">？？？『真実と　理想の　使者
+[1:02:ポケモンニックネーム:0]ガール　登場！▼
 ちょっと　ハチクマンさん！
 アナタの　イタズラ！▽
 ほっとけ　ないよ！</language>
@@ -542,51 +430,48 @@
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ハチクマン『わがはいの　ポケモンを
-たったの　いちげきで……▽
+たったの　いちげき　だと……▽
 やるな！　[1:02:ポケモンニックネーム:0]ガール！▼
 だが　しかし！　だが　しかし！▼
-きゅうきょくの　ポケモン　タイプ　わざで
+わがはいの　おうぎで
 きさまを　ひざまづかせて　やろう！▼
-さあ！　くらいたい　わざの
-タイプを　さけぶが　いい！</language>
+さあ！　かくごは　よいか？</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『わがはいの　ポケモンを
 たったの　いちげきで……▽
 やるな！　[1:02:ポケモンニックネーム:0]ガール！▼
 だが　しかし！　だが　しかし！▼
 究極の　ポケモン　タイプ　技で
+わがはいの　奥義で
 貴様を　ひざまづかせて　やろう！▼
-さあ！　くらいたい　技の
-タイプを　さけぶが　いい！</language>
+さあ！　覚悟は　よいか？</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『あく　タイプねっ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『あく　タイプねっ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『のぞむところよ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『のぞむところよ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">ハチクマン『いいだろう！▼
-では　わがはいの　ポケモン
-きゅうきょくの　タイプ　わざを▽
+わがはいの　あくの　おうぎ
 くらうが　よいわーっ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『いいだろう！▼
-では　わがはいの　ポケモン
-究極の　タイプ　わざを▽
+わがはいの　あくの　奥義
 くらうが　よいわーっ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『た…　タイプ？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『た…　タイプ？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ひぃ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ひぃ……</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！▼
-タイプも　しらぬとは　おろかなり！
+なさけないぞ！
 [1:02:ポケモンニックネーム:0]ガール！▼
-このわざを　うけ　そのパワー
-ほねみに　きざみつけるが　よいわ！▼</language>
+ならば　この　わざでも
+くらうが　いいわ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！▼
-タイプも　知らぬとは　おろかなり！
+情けないぞ！
 [1:02:ポケモンニックネーム:0]ガール！▼
-この技を　受けて　その　威力
-骨身に　刻みつけるが　よいわ！▼</language>
+ならば　この　技でも
+くらうが　いい！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
@@ -636,23 +521,23 @@
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">ハチクマン『グムムム……▼
-わがはいの　ほこる
-ポケモン　ぐんだんを▽
+わがはいの　おうぎを
+ものともせず　しかも▽
 いちげきで　しずめるとは……▼</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『グムムム……▼
-わがはいの　ほこる
-ポケモン　軍団を▽
-いちげきで　沈めるとは……▼</language>
+わがはいの　奥義を
+ものともせず　しかも▽
+いちげきで　しずめるとは……▼</language>
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ちょっと！
 ハチクマンさん　わかる？▼
-ここは　みんなの　りそうの▽
+ここは　みんなの　りそうが
 つまった　ゆうえんち　なの！▼
 おとなしく　かえりなさいっ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ちょっと！
 ハチクマンさん　わかる？▼
-ここは　みんなの　理想の▽
+ここは　みんなの　理想が
 つまった　遊園地　なの！▼
 おとなしく　帰りなさいっ！</language>
 	</row>
@@ -720,8 +605,7 @@
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
 ざんねん　だったな！▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
-わがはい　きゅうきょくの
-ポケモン　タイプわざを▽
+わがはいの　おうぎを
 うけたのが　うんの　つきよ！▼
 さあ！　そこで　おとなしく
 ゆうえんちが　はかいされる▽
@@ -729,8 +613,7 @@
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！
 残念　だったな！▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
-わがはい　究極の
-ポケモン　タイプわざを▽
+わがはい　奥義を
 うけたのが　運の　尽きよ！▼
 さあ！　そこで　大人しく
 遊園地が　破壊される様を▽
@@ -774,105 +657,103 @@
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ハチクマン『グムムム……▼
-わざの　タイプも　しらぬ
-おろかな　こむすめに▽
-やぶれるとは……▼
+こんな　よわきな　こむすめに
+わがはいが　やぶれるとは……▼
 この　くつじょく……
 いずれ　はらしてやるぞ……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『グムムム……▼
-わざの　タイプも　知らぬ
-無知な　小娘に▽
-敗れるとは……▼
+こんな　弱気な　小娘に
+わがはいが　敗れるとは……▼
 この　くつじょく……
 いずれ　晴らしてやるぞ……</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ハチクマンさん！
-タイプが　どうしたって　いうの！▼
-ヒロインは　つよく　かれんで
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……ハ
+ハチクマンさん！▼
+ヒ　ヒロインは　つよく　かれんで
 まけないって　きまってるでしょ！▼
-ほらほら！
-はやく　どこかへ　いきなさい！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ハチクマンさん！
-タイプが　どうしたって　いうの！▼
-ヒロインは　強く　キュートで
+ほ　ほら！
+はやく　どこかへ　いきなさいっ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……ハ
+ハチクマンさん！
+ヒ　ヒロインは　強く　キュートで
 負けないって　決まってるでしょ！▼
-ほらほら！
+ほ　ほら！
 早く　どこかへ　行きなさい！</language>
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">なぞの　かいじん　ハチクマンを
 こらしめ　ゆうえんちの　ききを▽
 すくった　[1:02:ポケモンニックネーム:0]ガール！▼
-しかし　かのじょには　ポケモンの
-タイプも　しらないという▽
-おおきな　じゃくてんが　あった！▼
+しかし　かのじょには　よわむしという
+ヒロインとして　ちめいてきな
+じゃくてんが　あった！▼
 イッシュの　りそうと　しんじつを
 まもるため！▼
-まなべ！　
+たたかえ！　
 [1:02:ポケモンニックネーム:0]ガール！▼
-おぼえろ！
+びびるな！
 [1:02:ポケモンニックネーム:0]ガール！</language>
 		<language name="JPN_KANJI" width="256">なぞの　怪人　ハチクマンを
 こらしめ　遊園地の　危機を▽
-救った　[1:02:ポケモンニックネーム:0]ガール！▼
-しかし　彼女には　ポケモンの
-タイプも　知らないという▽
-大きな　弱点が　あった！▼
+救った　[1:02:ポケモンニックネーム:0]キッド！▼
+しかし　彼女には　弱虫という
+ヒロインとして　致命的な
+弱点が　あった！▼
 イッシュの　理想と　真実を
 守るため！▼
-学べ！　
+戦え！　
 [1:02:ポケモンニックネーム:0]ガール！▼
-覚えろ！
+ビビるな！
 [1:02:ポケモンニックネーム:0]ガール！</language>
 	</row>
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
-はなしに　ならぬわ！▽
-[1:02:ポケモンニックネーム:0]ガール！！▼
-タイプも　しらずして　わがはいに
-いどんだのが　まちがいよっ！▼
+おしまいだ！　[1:02:ポケモンニックネーム:0]ガール！▼
+わがはいの　おうぎを
+つかうまでも　なかったわ！▼
 さあ！　そこで　おとなしく
 ゆうえんちが　はかいされる▽
 こうけいを　ながめておれ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！
-話に　ならぬわ！▽
-[1:02:ポケモンニックネーム:0]ガール！！▼
-タイプも　知らずして　わがはいに
-いどんだのが　間違いよっ！▼
+おしまいだ！　[1:02:ポケモンニックネーム:0]ガール！▼
+わがはいの　奥義を
+使うまでも　なかったわ！▼
 さあ！　そこで　大人しく
 遊園地が　破壊される　様を▽
 眺めておれ！</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……
-タイプって……　なに……？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……
-タイプって……　何……？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『うう……
+やっぱり　わたしに　ヒロイン▽
+なんて　むりだよ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『うう……
+やっぱり　わたしに　ヒロイン▽
+なんて　無理だよ……</language>
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">かいじんハチクマンの　まえに
 [1:02:ポケモンニックネーム:0]ガールは▽
 おしくも　ちから　つきた……▼
 ……しかし▼
-ポケモンの　タイプも　しらないまま
+おびえながらも　ひっしに
 たたかった　かのじょの　ゆうしを▽
 わすれるものは　いないだろう▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]ガール！▼
-バイバイ！
+さらば！
 [1:02:ポケモンニックネーム:0]ガール！
 </language>
 		<language name="JPN_KANJI" width="256">怪人ハチクマンの　前に
 %MYPOK0Eガールは▽
 おしくも　力　尽きた……▼
 ……しかし▼
-ポケモンの　タイプも　知らないまま
+おびえながらも　必死に
 戦った　彼女の　勇姿を▽
 忘れる者は　いないだろう▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]ガール！▼
-バイバイ！
+さらば！
 [1:02:ポケモンニックネーム:0]ガール！
 </language>
 	</row>

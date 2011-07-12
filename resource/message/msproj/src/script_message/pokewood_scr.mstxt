@@ -294,21 +294,22 @@
 			Language="JPN">
 			<Text>ここ　ポケウッドでは　えいがを
 つくることが　できるんだ！▼
-だいほんで　きめられた　あいてと
-バトルやえんぎを　しながら　さくひんの▽
-かんせいに　ひつような　じょうけんを▽
-みたせば　クランクアップ！▼
-あっというまに　えいがが　できるのさ！▼
+だいほんに　よって　きめられた
+きょうえんしゃと　えんぎを　して▽
+さくひんの　かんせいに▽
+ひつような　じょうけんを▽
+みたせば　クランク　アップ！▼
+あっという　まに　えいがが
+かんせい　するのさ！▼
 さくひん　かんせいに　ひつような
 じょうけんは　だいほんに　よって▽
 ちがうから　きを　つけてくれよ！▼
-
-かんせいした　えいがは　ポケウッドにある
-シアターで　じょうえい　するから▽
-チェックして　くれよな！</Text>
+かんせいした　えいがは　ポケウッドに
+シアターで　じょうえい　されるから▽
+チェック　してくれよな！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:19:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:19:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -318,21 +319,22 @@
 			Language="JPN_KANJI">
 			<Text>ここ　ポケウッドでは　えいがを
 つくることが　できるんだ！▼
-だいほんで　きめられた　あいてと
-バトルやえんぎを　しながら　さくひんの▽
-かんせいに　ひつような　じょうけんを▽
-みたせば　クランクアップ！▼
-あっというまに　えいがが　できるのさ！▼
+だいほんに　よって　きめられた
+きょうえんしゃと　えんぎを　して▽
+さくひんの　かんせいに▽
+ひつような　じょうけんを▽
+みたせば　クランク　アップ！▼
+あっという　まに　えいがが
+かんせい　するのさ！▼
 さくひん　かんせいに　ひつような
 じょうけんは　だいほんに　よって▽
 ちがうから　きを　つけてくれよ！▼
-
-かんせいした　えいがは　ポケウッドにある
-シアターで　じょうえい　するから▽
-チェックして　くれよな！</Text>
+かんせいした　えいがは　ポケウッドに
+シアターで　じょうえい　されるから▽
+チェック　してくれよな！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:19:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -345,13 +347,14 @@
 			Language="JPN">
 			<Text>ＷＡＯ！　いま　こうかいちゅうの
 さくひんで　スクリーンが▽
-いっぱい　だぜ！▽
+いっぱい　だぜ！▼
 あたらしい　さくひんを　とるには
-いま　こうかいしてる　さくひんを
-ひとつ　しゅうりょう　しなきゃ　ならないな！　かまわないか？</Text>
+いま　こうかいしてる　なかから▽
+いっぽん　しゅうりょう　しなきゃ▽
+ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:15:45" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:22:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -361,13 +364,14 @@
 			Language="JPN_KANJI">
 			<Text>ＷＡＯ！　いま　こうかいちゅうの
 さくひんで　スクリーンが▽
-いっぱい　だぜ！▽
+いっぱい　だぜ！▼
 あたらしい　さくひんを　とるには
-いま　こうかいしてる　さくひんを
-ひとつ　しゅうりょう　しなきゃ　ならないな！　かまわないか？</Text>
+いま　こうかいしてる　なかから▽
+いっぽん　しゅうりょう　しなきゃ▽
+ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:15:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:22:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -378,11 +382,12 @@
 		Label="msg_pw_studio_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！　じゃあ　こうかいを　しゅうりょうする
+			<Text>ＯＫ！　じゃあ　こうかいを
+しゅうりょう　する▽
 さくひんを　きめてくれ▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:19:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -390,11 +395,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　じゃあ　こうかいを　しゅうりょうする
+			<Text>ＯＫ！　じゃあ　こうかいを
+しゅうりょう　する▽
 さくひんを　きめてくれ▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:19:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -406,10 +412,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＯＫ！　じゃあ　まず　さつえいする
-さくひんの　だいほんを　えらんでくれ！▼</Text>
+さくひんの　だいほんを▽
+えらんで　くれよ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:19:08" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:23:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -418,10 +425,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＯＫ！　じゃあ　まず　さつえいする
-さくひんの　だいほんを　えらんでくれ！▼</Text>
+さくひんの　だいほんを▽
+えらんで　くれよ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:19:09" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -432,11 +440,11 @@
 		Label="msg_pw_studio_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ！　それじゃあ　さくひんに
+			<Text>ＯＫ！　じゃあ　さくひんに
 しゅつえんする　ポケモンは　どうする？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:16:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -444,11 +452,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　それじゃあ　さくひんに
+			<Text>ＯＫ！　じゃあ　さくひんに
 しゅつえんする　ポケモンは　どうする？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:16:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -688,6 +696,302 @@
 			<StatusModifiedBy
 				User="tamada:W00253"
 				Time="2011-07-04T12:22:35" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしの　しごとは
+えいがの　へんしゅう　！▼
+さつえいが　おわったら
+わたしの　ところへ　きてね！！▼
+とくべつに　あなたが　さつえいした
+さくひんを　みせてあげるよ！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:46:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしの　しごとは
+えいがの　へんしゅう　！▼
+さつえいが　おわったら
+わたしの　ところへ　きてね！！▼
+とくべつに　あなたが　さつえいした
+さくひんを　みせてあげるよ！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:08:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:53:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+未撮影時の初回話しかけ
+
+会話後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:03:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さつえい　おつかれさま　でした！▼
+さっき　さつえいした
+えいが　みてみない？▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:57:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:54:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さつえい　おつかれさま　でした！▼
+さっき　さつえいした
+えいが　みてみない？▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+未撮影時の初回話しかけ
+
+選択肢「はい」↓
+msg_pw_theater_tes_03
+
+選択肢「いいえ」↓
+msg_pw_theater_tes_04</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:04:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>よーし！　それじゃあ
+テストししゃ　スタート！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:57:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:57:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よーし！　それじゃあ
+テストししゃ　スタート！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+会話終了後上映開始</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:05:17" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>そう！　またね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:58:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:58:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そう！　またね！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+会話後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:05:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたの　さくひん　すばらしかった！▼
+いまみたいに　すばらしい　さくひんを
+ヒットしたら　ぞくへんを▽
+とることが　できるように　なるよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T09:58:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたの　さくひん　すばらしかった！▼
+いまみたいに　すばらしい　さくひんを
+ヒットしたら　ぞくへんを▽
+とることが　できるように　なるよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+イベント４で上映終了の
+メッセージ
+
+会話後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>うーん　なかなかの　さくひんね！▼
+でも　もっと　いい　さくひんが
+できれば　ヒットして　ぞくへんが▽
+つくれるように　なるかもよ！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:01:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:00:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うーん　なかなかの　さくひんね！▼
+でも　もっと　いい　さくひんが
+できれば　ヒットして　ぞくへんが▽
+つくれるように　なるかもよ！▼</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+イベント４以外で
+上映終了のメッセージ
+
+会話後イベント終了</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_tes_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

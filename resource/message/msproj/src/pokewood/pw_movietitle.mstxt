@@ -4962,10 +4962,11 @@
 		Label="pw_plot_001">
 		<LanguageCell
 			Language="JPN">
-			<Text>プロット　ダミー</Text>
+			<Text>かいじんに　ねらわれる　ゆうえんち
+そこに　せいぎのみかたが　とうじょう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:52:57" />
+				Time="2011-07-08T04:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4973,10 +4974,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プロット　ダミー</Text>
+			<Text>怪人に　ねらわれる　遊園地
+そこに　正義の味方が　登場</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:23:06" />
+				Time="2011-07-08T04:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4986,10 +4988,10 @@
 			Language="JPN">
 			<Comment>台本トップ画面
 あらすじ
-アクション１－２</Comment>
+アクション１－１</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:00:38" />
+				Time="2011-07-08T04:00:32" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6396,10 +6398,10 @@
 		Label="pw_title_00">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン１</Text>
+			<Text>タイトル　ダミー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
+				Time="2011-07-12T03:08:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6407,14 +6409,51 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン１</Text>
+			<Text>タイトル　ダミー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
+				Time="2011-07-12T03:08:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-06-02T13:15:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>台本トップ画面
+
+映画タイトル
+
+サンプル</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-12T03:08:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_title_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハチクマン　１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-12T03:08:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハチクマン　１</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-12T03:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -6425,44 +6464,7 @@
 アクション１－１</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="pw_title_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>タイトル　ダミー</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>タイトル　ダミー</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>台本トップ画面
-
-映画タイトル
-
-アクション１－２</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
+				Time="2011-07-12T03:08:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6503,10 +6505,10 @@
 
 映画タイトル
 
-アクション１－３</Comment>
+アクション１－２</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
+				Time="2011-07-12T03:08:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6546,10 +6548,10 @@
 
 映画タイトル
 
-アクション１－４</Comment>
+アクション１－３</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:32" />
+				Time="2011-07-12T03:09:00" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -7924,10 +7926,10 @@
 		Label="pw_goal_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>まいターン　あいてを　たおせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:59" />
+				Time="2011-07-08T05:09:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7935,10 +7937,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>クリアじょうけんダミー</Text>
+			<Text>まいターン　あいてを　たおせ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T13:15:59" />
+				Time="2011-07-08T05:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9332,7 +9334,7 @@
 			<Text>ＴＩＴＬＥ　えいがの　なまえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:57:01" />
+				Time="2011-07-06T07:41:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9397,10 +9399,10 @@
 		Label="pw_topindex_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>GOAL　クリアもくひょう</Text>
+			<Text>MISSION　クリアもくひょう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:10:05" />
+				Time="2011-07-06T07:40:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9408,10 +9410,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>GOAL　クリア目標</Text>
+			<Text>MISSION　クリア目標</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:10:15" />
+				Time="2011-07-06T07:40:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
