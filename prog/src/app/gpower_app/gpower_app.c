@@ -40,8 +40,6 @@
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
-#include "system/tr2dgra.h"
-
 // サウンド
 #include "sound/pm_sndsys.h"
 
@@ -56,11 +54,9 @@
 #include "app/gpower_app.h"
 #include "gpower_app_gra.naix"
 
-#include "system/scroll_bar.h"
-
 // メッセージ
 #include "message.naix"
-#include "msg/msg_wbt_wincount.h"
+#include "msg/msg_monolith.h"
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -93,6 +89,9 @@ enum{
 	STEP_END	= 10000,
 };
 
+//--------------
+// パレット
+//--------------
 // (sub)
 // 上：BG  (0-2:BG)
 // 上：OBJ (0:キャラ)
@@ -100,14 +99,16 @@ enum{
 // 下：BG  (0-2:BG)、(6:cmn)
 // 下：OBJ (8-11:cmn)
 enum{
-	// 何本目か(main bg)
+	// (main bg)
 	PLTID_BG_BASE				= 0,
 	PLTID_BG_CMN				= 6,
 	PLTID_BG_FONT				= 8,
+	// (sub bg)
 	PLTID_SUB_BG_BASE			= 0,
-	PLTID_SUB_FONT				= 8,
+	PLTID_SUB_BG_FONT			= 8,
 	//
 	// (main obj)
+	PLTID_OBJ_FONT				= 4,
 	PLTID_OBJ_CMN				= 8,		// cmnのpalのoffset
 	PLTID_OBJ_CMN_NUM			= 4,		// cmnのpalの本数
 	//
@@ -117,23 +118,23 @@ enum{
 
 // 最大値
 enum{
-	GPOWER_APP_CANVAS_MAXNUM 	= 1,		// canvas
-//	GPOWER_APP_BMPOAM_MAXNUM	= 8,		// bmpoam
-	GPOWER_APP_EMPTY_MAXNUM		= 5*2,		// empty
+	GPOWER_APP_CANVAS_MAXNUM 	= 22,		// canvas
+	GPOWER_APP_EMPTY_MAXNUM		= 9*2,		// empty
 	//
 	GPOWER_APP_CMN_OBJ_MAXNUM	= 1,		// common(obj)
 	GPOWER_APP_OBJ_MAXNUM		= 4,		// obj
+	GPOWER_APP_BMPOAM_MAXNUM	= 4,		// bmpoam
 	//
 	GPOWER_APP_BGNUM_MAXNUM		= 8,		// bg
 	//
-//	GPOWER_APP_UP_OBJ_MAXNUM	= 1,		// obj(up)
+	GPOWER_APP_MES_MAXNUM		= 2,		// message
 	//
-//	GPOWER_APP_MAX_COUNT		= 9999,		// 最大数
-	//
-//	DISP_PANEL_MAXNUM			= 4,		// 1画面のpanel最大表示数
+	GPOWER_APP_POWER_MAXNUM		= 10,		// 発動数最大
 };
 
+//-----------------------------
 // OBJのリソースのインデックス
+//-----------------------------
 enum{
 	// common
 	RESID_CMN_OBJ_PLT = 0,					// パレット
@@ -144,36 +145,64 @@ enum{
 	RESID_OBJ_CHR,							// キャラ
 	RESID_OBJ_CEL,							// セルアニメ
 	//
+	RESID_FONT_PLT,							// パレット
+	//
 	RESID_OBJ_MAX,
 };
 
+//----------
 // clwork
+//----------
 enum{
 	CLWKMODE_CMN = 0,						// 共通(cmn)
 	CLWKMODE_NORMAL,						// 通常
 };
 
+//----------
+// cmn
+//----------
 // CLWK(cmn)
 enum {
 	CLWKID_CMN_RETURN = 0,					// 戻る
-	//
-	CLWKID_MAX,
+};
+
+// シーケンス(cmn)
+enum{
+	CMN_RETURN_SEQ 		= 1,				// 戻る
+	CMN_RETURN_ON_SEQ	= 9,				// 戻るオン
+};
+
+//----------
+// normal
+//----------
+// CLWK
+enum {
+	CLWKID_POWER_00 = 0,					// パネル00
+	CLWKID_POWER_01,						// パネル01
+	CLWKID_POWER_02,						// パネル02
+	CLWKID_HILINK,							// パネル03(ハイリンク)
 };
 
 // シーケンス
 enum{
-	CMN_LEFT_SEQ 		= 4,				// 左
-	CMN_RIGHT_SEQ 		= 5,				// 右
-	CMN_CROSS_SEQ 		= 0,				// ×
-	CMN_RETURN_SEQ 		= 1,				// 戻る
+	SEQ_POWER_ON 	= 0,					// デルパワーパネル(on)
+	SEQ_HILINK_ON 	= 1,					// ハイリンクパネル(on)
+	SEQ_POWER_OFF 	= 2,					// デルパワーパネル(off)
+	SEQ_HILINK_OFF 	= 3,					// ハイリンクパネル(off)
+};
+
+//-------------------
+// canvas
+//-------------------
+enum{
+	CVS_UP_TITLE		= 0,				// 上：タイトル
+	CVS_UP_POWER_00		= 1,				// 上：項目(10)
+	CVS_UP_POWER_NUM_00 = 11,				// 上：項目数字(10)
 	//
-	CMN_LEFT_ON_SEQ 	= 12,				// 左オン
-	CMN_LEFT_OFF_SEQ 	= 18,				// 左オフ
-	CMN_RIGHT_ON_SEQ 	= 13,				// 右オン
-	CMN_RIGHT_OFF_SEQ 	= 19,				// 右オフ
+	CVS_DOWN_WIN		= 21,				// 下：win
 	//
-	CMN_CROSS_ON_SEQ	= 8,				// ×オン
-	CMN_RETURN_ON_SEQ	= 9,				// 戻るオン
+	CVS_DOWN_POWER_00 	= 21,				// 下：パネル(0-2)
+	CVS_DOWN_HILINK		= 24,				// 下：ハイリンク
 };
 
 //-------------------
@@ -188,22 +217,9 @@ enum{
 
 // GPOWER_APP_MAIN_WORK.Flag
 enum{
-	FLG_MW_ANM_LEFT		= (1<<0),			// 左矢印アニメ
-	FLG_MW_ANM_RIGHT	= (1<<1),			// 右矢印アニメ
-	FLG_MW_ANM_CROSS	= (1<<2),			// ×アニメ
-	FLG_MW_ANM_RETURN	= (1<<3),			// 戻るアニメ
-	//
-	FLG_MW_UPDATE		= (1<<4),			// 更新
-	FLG_MW_BAR_UPDATE	= (1<<5),			// バー更新
-	FLG_MW_NO_SCROLL	= (1<<6),			// スクロールなし(MODE_LV1と同じ)
-	//
-	FLG_MW_RET_END		= (1<<8),			// RETURNで終了
-	FLG_MW_CROSS_END	= (1<<9),			// ×で終了
-	//
-	FLG_MW_END			= (1<<12),			// 終了
-	//
-	// フラグまとめ(アニメ再生中か)
-	FLG_MW_ANM_ALL		= (FLG_MW_ANM_LEFT|FLG_MW_ANM_RIGHT|FLG_MW_ANM_CROSS|FLG_MW_ANM_RETURN),
+	FLG_MW_UPDATE		= (1<<0),			// 更新
+	FLG_MW_END			= (1<<1),			// 終了
+	FLG_MW_NO_SELECT	= (1<<2),			// ハイリンク選択不可
 };
 
 //=============================================================================
@@ -235,24 +251,25 @@ typedef struct
 	GPOWER_APP_GRAPHIC_WORK		*graphic;
 	//
 	GPOWER_APP_PARAM 			*Param;							// 参照用として保存
-	
 	//フォント
-//	GFL_FONT					*font;
+	GFL_FONT					*font;
 	//プリントキュー
-//	PRINT_QUE					*print_que;
-//	GFL_MSGDATA					*msg[2];								// 0:メッセージ,1:未使用
-//	PRINT_UTIL					PrintUtil[GPOWER_APP_CANVAS_MAXNUM];	// 文字表示用
+	PRINT_QUE					*print_que;
+	GFL_MSGDATA					*MsgData[GPOWER_APP_MES_MAXNUM];		// メッセージ
+	PRINT_UTIL					PrintUtil[GPOWER_APP_CANVAS_MAXNUM];	// 文字表示用
+	WORDSET						*WordSet;
 	//
-//	BMPOAM_SYS_PTR				BmpOamSys;								// BMPOAM
-//	GFL_BMP_DATA				*BmpData[GPOWER_APP_BMPOAM_MAXNUM];		// Bmp
-//	BMPOAM_ACT_PTR				BmpOamWork[GPOWER_APP_BMPOAM_MAXNUM];	// BMPOAM用Work
+	BMPOAM_SYS_PTR				BmpOamSys;								// BMPOAM
+	GFL_BMP_DATA				*BmpData[GPOWER_APP_BMPOAM_MAXNUM];		// Bmp
+	BMPOAM_ACT_PTR				BmpOamWork[GPOWER_APP_BMPOAM_MAXNUM];	// BMPOAM用Work
 	//
 	s32							Step;							// ステップ
 	u32							Flag;							// フラグ
+	s32							CurPos;							// カーソル
+	s32							CurPosMax;						// 最大
+	s32							Result;							// 結果
 	//
 	s16							*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
-//	s16							*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
-//	GFL_UI_TP_HITTBL			HitBuffer[AREA_TP_MAX+1];		// タッチペン用(+1は終了コードを入れるため)
 } GPOWER_APP_MAIN_WORK;
 
 //-----------------------------------------
@@ -269,21 +286,6 @@ typedef struct{
 	u8				pad;
 }GPOWER_APP_OBJ_DATA;
 
-#if 0
-//-----------------------------------------
-// BMPOAMの定義
-//------------------------------------------
-typedef struct{
-	u8				width;			// サイズ(8x8単位)(0xffの場合は終了判定)
-	u8				height;
-	u8				softpri;		// プライオリティ(obj)
-	u8				bgpri;			// プライオリティ(bg)
-	u8				visible;		// 表示/非表示
-	u8				paloffset;		// パレットオフセット(nclの何番目か)
-	u8				empty_num;		// empty番号
-	u8				pad;
-}GPOWER_APP_BMPOAM_DATA;
-
 //-----------------------------------------
 // 文字用の定義(表示領域の設定:CANVAS)
 //------------------------------------------
@@ -295,7 +297,6 @@ typedef struct{
 	u8				height;
 	u8				palnum;			// パレット番号
 }GPOWER_APP_CANVAS_DATA;
-#endif
 
 //-----------------------------------------
 // BGPALの定義
@@ -327,6 +328,20 @@ typedef struct{
 	u8				pad;
 }GPOWER_APP_BGSCN_DATA;
 
+//-----------------------------------------
+// BMPOAMの定義
+//------------------------------------------
+typedef struct{
+	u8				width;			// サイズ(8x8単位)(0xffの場合は終了判定)
+	u8				height;
+	u8				softpri;		// プライオリティ(obj)
+	u8				bgpri;			// プライオリティ(bg)
+	u8				visible;		// 表示/非表示
+	u8				paloffset;		// パレットオフセット(nclの何番目か)
+	u8				empty_num;		// empty番号
+	u8				pad;
+}GPOWER_APP_BMPOAM_DATA;
+
 //=============================================================================
 /**
  *							データ定義(要整理)
@@ -347,6 +362,7 @@ static const GPOWER_APP_BGPAL_DATA gpapp_bgpal_tbl[] = {
 static const GPOWER_APP_BGCHR_DATA gpapp_bgchr_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_gpower_app_gra_delpow_bg_NCGR,	0,	0,},	// 上、BG
 	{ GFL_BG_FRAME3_M,	NARC_gpower_app_gra_delpow_bg_NCGR,	0,	0,},	// 下、BG
+	{ GFL_BG_FRAME1_M,	NARC_gpower_app_gra_delpow_bg_NCGR, 0,	0,},	// 下、BG
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -355,6 +371,7 @@ static const GPOWER_APP_BGCHR_DATA gpapp_bgchr_tbl[] = {
 static const GPOWER_APP_BGSCN_DATA gpapp_bgscn_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_gpower_app_gra_delpow_bgu_NSCR, 0,	0,},	// 上、下地
 	{ GFL_BG_FRAME3_M,	NARC_gpower_app_gra_delpow_bgd_NSCR, 0,	0,},	// 下、下地
+	{ GFL_BG_FRAME1_M,	NARC_gpower_app_gra_delpow_win_NSCR, 0,	0,},	// 下、下地
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -382,10 +399,10 @@ static const s16 gpapp_obj_main_itbl[] = {
 
 // OBJのテーブルデータ(通常)
 static const GPOWER_APP_OBJ_DATA gpapp_obj_tbl[] = {
-	{ 0,	0x30,	2,	1,	0,	1,	0,	0,},		// パネル0
-	{ 0,	0x30,	2,	1,	0,	1,	1,	0,},		// パネル1
-	{ 0,	0x30,	2,	1,	0,	1,	2,	0,},		// パネル2
-	{ 1,	0x30,	2,	1,	0,	1,	3,	0,},		// パネル3
+	{ 0,	0x30,	3,	1,	0,	1,	0,	0,},		// パネル0
+	{ 0,	0x30,	3,	1,	0,	1,	1,	0,},		// パネル1
+	{ 0,	0x30,	3,	1,	0,	1,	2,	0,},		// パネル2
+	{ 1,	0x30,	3,	1,	0,	1,	3,	0,},		// パネル3
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -410,45 +427,75 @@ static const GPOWER_APP_OBJ_DATA gpapp_obj_cmn_tbl[] = {
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
-#if 0
-//------------------
-// BMPOAMの情報
-//------------------
-static const GPOWER_APP_BMPOAM_DATA wr_bmpoam_tbl[] = {
-	{ 12,	2,	0x38,	1,	1,	4,	5,	0,},		// パネル00(チャンピオン名)
-	{ 12,	2,	0x38,	1,	1,	4,	6,	0,},		// パネル00(回数)
-	{ 12,	2,	0x38,	1,	1,	4,	5,	0,},		// パネル01(チャンピオン名)
-	{ 12,	2,	0x38,	1,	1,	4,	6,	0,},		// パネル01(回数)
-	{ 12,	2,	0x38,	1,	1,	4,	5,	0,},		// パネル02(チャンピオン名)
-	{ 12,	2,	0x38,	1,	1,	4,	6,	0,},		// パネル02(回数)
-	{ 12,	2,	0x38,	1,	1,	4,	5,	0,},		// パネル03(チャンピオン名)
-	{ 12,	2,	0x38,	1,	1,	4,	6,	0,},		// パネル03(回数)
-
-	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
-};
-
 //---------------
 // CANVASの設定
 //---------------
 // (printutilと対応)
-static const GPOWER_APP_CANVAS_DATA wr_canvas_tbl[] = {
-	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	8,},		// 上名前
-
+static const GPOWER_APP_CANVAS_DATA gpapp_canvas_tbl[] = {
+	{ GFL_BG_FRAME2_S,	1,	1,	30,	2, PLTID_SUB_BG_FONT,},		// 上タイトル
+	//
+	{ GFL_BG_FRAME2_S,	2,	3,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目0
+	{ GFL_BG_FRAME2_S,	2,	5,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目1
+	{ GFL_BG_FRAME2_S,	2,	7,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目2
+	{ GFL_BG_FRAME2_S,	2,	9,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目3
+	{ GFL_BG_FRAME2_S,	2, 11,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目4
+	{ GFL_BG_FRAME2_S,	2, 13,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目5
+	{ GFL_BG_FRAME2_S,	2, 15,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目6
+	{ GFL_BG_FRAME2_S,	2, 17,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目7
+	{ GFL_BG_FRAME2_S,	2, 19,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目8
+	{ GFL_BG_FRAME2_S,	2, 21,	20,	2, PLTID_SUB_BG_FONT,},		// 上:項目9
+	//
+	{ GFL_BG_FRAME2_S,	22,	3,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目0(数字)
+	{ GFL_BG_FRAME2_S,	22,	5,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目1
+	{ GFL_BG_FRAME2_S,	22,	7,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目2
+	{ GFL_BG_FRAME2_S,	22,	9,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目3
+	{ GFL_BG_FRAME2_S,	22, 11,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目4
+	{ GFL_BG_FRAME2_S,	22, 13,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目5
+	{ GFL_BG_FRAME2_S,	22, 15,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目6
+	{ GFL_BG_FRAME2_S,	22, 17,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目7
+	{ GFL_BG_FRAME2_S,	22, 19,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目8
+	{ GFL_BG_FRAME2_S,	22, 21,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目9
+	//
+	{ GFL_BG_FRAME0_M,	 2,	17,	28,	6, PLTID_BG_FONT,},			// 下:yes/no
+	//
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
 
-//---------------------------------
-// 共通ボタン
-// (通常、オン、オフ(操作不可)、0)
-//---------------------------------
-static const s16 wr_cmn_btn_tbl[] = {
-	CMN_LEFT_SEQ,   CMN_LEFT_ON_SEQ,   CMN_LEFT_OFF_SEQ,  0,	// 左
-	CMN_RIGHT_SEQ,  CMN_RIGHT_ON_SEQ,  CMN_RIGHT_OFF_SEQ, 0,	// 右
-	CMN_CROSS_SEQ,  CMN_CROSS_ON_SEQ,  CMN_CROSS_SEQ,     0,	// ×
-	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ, CMN_RETURN_SEQ,    0,	// 戻る
+//---------------
+// メッセージ
+//---------------
+static const s16 gpapp_mes_tbl[] = {
+	msg_mono_pow_100,			// 「発動中のデルパワー」
+	msg_mono_pow_101,			// 「なし」
+	msg_mono_pow_102,			// 「ハイリンク」
+	msg_mono_pow_103,			// 「分:秒」
+	msg_mono_pow_104,			// 「をつかいますか?」
 };
 
-#endif		// 保留
+//------------------
+// タッチペン領域
+//------------------
+static const GFL_UI_TP_HITTBL gpapp_rect_00_tbl[] = {
+  {  32,  48,  64, 240 }, 			// 0
+  {  64,  80,  40, 216 }, 			// 1
+  {  96, 112,  16, 192 }, 			// 2
+  { 136, 152, 144, 232 }, 			// ハイリンク
+  { 168, 192, 232, 255 }, 			// 戻る
+  //
+  { GFL_UI_TP_HIT_END,0,0,0 }
+};
+
+//------------------
+// BMPOAMの情報
+//------------------
+static const GPOWER_APP_BMPOAM_DATA gpapp_bmpoam_tbl[] = {
+	{ 20,	2,	0x28,	3,	1,	0,	5,	0,},		// パネル00
+	{ 20,	2,	0x28,	3,	1,	0,	6,	0,},		// パネル01
+	{ 20,	2,	0x28,	3,	1,	0,	7,	0,},		// パネル02
+	{ 20,	2,	0x28,	3,	1,	0,	8,	0,},		// パネル03
+	//
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
 
 //=============================================================================
 /**
@@ -476,7 +523,7 @@ static void gpower_app_main_print( GPOWER_APP_MAIN_WORK* wk );
 static s16  gpower_app_get_empty( GPOWER_APP_MAIN_WORK *wk, const s32 num );
 //
 static void gpower_app_init_bg(  GPOWER_APP_MAIN_WORK* wk );
-static void gpower_app_init_bg2( GPOWER_APP_MAIN_WORK* wk, const s32 type, const s32 pnum );
+static void gpower_app_init_bg2( GPOWER_APP_MAIN_WORK* wk, const s32 type, const s32 ptype, const s32 pnum );
 //
 static void gpower_app_init_obj_clwk( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, const GPOWER_APP_OBJ_DATA *obj_adr, const s16 *info_adr );
 static void gpower_app_init_obj_res( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, const s16 *info_adr );
@@ -486,42 +533,33 @@ static void gpower_app_init_obj( GPOWER_APP_MAIN_WORK* wk );
 static void gpower_app_exit_obj( GPOWER_APP_MAIN_WORK* wk );
 static void gpower_app_chg_objseq( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
 static void gpower_app_set_obj_visible( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const BOOL bflg );
+static void gpower_app_set_palnum( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 palnum );
 static BOOL gpower_app_is_anime_end( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
-
-#if 0
-static void wr_init_obj_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, const GPOWER_APP_BMPOAM_DATA *bmp_adr, const s16 *info_adr );
-static void wr_disp_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf );
 //
+static void gpower_app_init_obj_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, const GPOWER_APP_BMPOAM_DATA *bmp_adr, const u32 resid );
+static void gpower_app_disp_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf, const s32 offx, const s32 offy );
+static void gpower_app_set_bmpoam_visible( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const BOOL bflg );
+
+
 // 文字列関連
-static void wr_init_string( GPOWER_APP_MAIN_WORK* wk );
-static void wr_disp_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode );
-static void wr_update_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
-static void wr_exit_string( GPOWER_APP_MAIN_WORK* wk );
-static void wr_clear_canvas( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
-static void wr_disp_playername( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 xpos, const s32 ypos, const u32 dispmode );
-static void wr_disp_string_id( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 mesid, const s32 xpos, const s32 ypos, const u32 dispmode );
+static void gpower_app_init_string( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_disp_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode,
+								const PRINTSYS_LSB col);
+static void gpower_app_exit_string( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_clear_canvas( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const u32 color );
 //
-// パネル表示
-static void wr_set_panel( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL bflg );
-static void wr_set_panel_all( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL dispflg );
+// 入力
+static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_update( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
 //
-// パラメータ関連
-static void wr_init_param( GPOWER_APP_MAIN_WORK* wk );
-static void wr_set_param( GPOWER_APP_MAIN_WORK* wk );
-static void wr_update_param( GPOWER_APP_MAIN_WORK* wk );
-static void wr_set_cmn_anim( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
+static void gpower_app_disp_info( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_disp_use_able( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_disp_hilink( GPOWER_APP_MAIN_WORK* wk );
 //
-// 入力(キー、タッチペン)
-static BOOL wr_chk_key_input( GPOWER_APP_MAIN_WORK* wk );
-static void wr_get_tp_area( GPOWER_APP_MAIN_WORK* wk, const s32 num, GFL_UI_TP_HITTBL *tpbuffer );
-static BOOL wr_chk_tp_input( GPOWER_APP_MAIN_WORK* wk );
-static void wr_chk_anim( GPOWER_APP_MAIN_WORK* wk );
+static s32  gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk );
 //
-// スクロールバーの処理
-static BOOL wr_set_scrollbar( GPOWER_APP_MAIN_WORK* wk );
-//
-
-#endif
+static void gpower_app_disp_win( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_is_visible_win( GPOWER_APP_MAIN_WORK* wk, const BOOL bflg );
 
 //=============================================================================
 /**
@@ -572,17 +610,19 @@ static GFL_PROC_RESULT GPowerAppProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	
 	//描画設定初期化(上:サブ、下:メイン)
 	wk->graphic	= GPOWER_APP_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
-#if 0
+	
 	//フォント作成
 	wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	
 	// メッセージ
-	wk->msg[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wbt_wincount_dat, wk->heapID );
-	wk->msg[1] = 0;
+	wk->MsgData[0] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monolith_dat, wk->heapID );	// いろいろ
+	wk->MsgData[1] = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_power_dat, wk->heapID );		// パワー名
+	
+	// wordset
+	wk->WordSet = WORDSET_Create( wk->heapID );
 	
 	//PRINT_QUE作成
 	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
-#endif
 	//
 	//----------------
 	// 通常はこの中で初期化
@@ -617,22 +657,24 @@ static GFL_PROC_RESULT GPowerAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	// 処理を記述
 	//----------------
 	gpower_app_exit( wk );
-#if 0
+	//
 	//メッセージ破棄
-	for(i=0;i<2;i++){
-		if(wk->msg[i]){
-			GFL_MSG_Delete( wk->msg[i] );
-			wk->msg[i] = 0;
+	for(i=0;i<GPOWER_APP_MES_MAXNUM;i++){
+		if(wk->MsgData[i]){
+			GFL_MSG_Delete( wk->MsgData[i] );
+			wk->MsgData[i] = 0;
 		}
 	}
-#endif
-#if 0
+	
+	// WORDSET破棄
+	WORDSET_Delete( wk->WordSet );
+	
 	//PRINT_QUE
 	PRINTSYS_QUE_Delete( wk->print_que );
-	//
+	
 	//FONT
 	GFL_FONT_Delete( wk->font );
-#endif
+	
 	//描画設定破棄
 	GPOWER_APP_GRAPHIC_Exit( wk->graphic );
 	
@@ -699,10 +741,10 @@ static GFL_PROC_RESULT GPowerAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 	// 処理を追加
 	//----------------
 	gpower_app_main( wk );
-#if 0
+	
 	//PRINT_QUE
 	gpower_app_main_print( wk );
-#endif
+	
 	//2D描画
 	GPOWER_APP_GRAPHIC_2D_Draw( wk->graphic );
 	
@@ -733,39 +775,51 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	// 上、下画面をまとめて処理
 	wk->Step 		= STEP_INIT;
 	wk->Flag		= 0;
+	wk->CurPos		= 0;
+	wk->CurPosMax	= wk->Param->gpower_num;
+	if(wk->CurPosMax <= 0){
+		wk->CurPosMax = 1;
+		OS_Printf("gpower num error\n");
+	}
+	wk->Result		= -1;
+	//
+	// 初期化
+	for(i=0;i<GPOWER_APP_CANVAS_MAXNUM;i++){
+		wk->PrintUtil[i].win = 0;
+	}
 	//
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_GPOWER_APP, NARC_gpower_app_gra_gpower_app_pos_tblbin, wk->heapID );
-	// パラメータ用のバッファ取得(必ず破棄すること)
-//	wk->ParamBuffer = GFL_ARC_LoadDataAlloc( ARCID_GPOWER_APP_GRA, NARC_GPOWER_APP_gra_GPOWER_APP_param_tblbin, wk->heapID );
 	//
-	//------------------
-	// 外部パラメータセット
-	//------------------
-//	wr_set_param( wk );
-	
 	//---------------
 	// bgの初期化
 	//---------------
 	gpower_app_init_bg( wk );
-	gpower_app_init_bg2( wk, GFL_BG_FRAME1_M, PLTID_BG_CMN );
+	gpower_app_init_bg2( wk, GFL_BG_FRAME2_M, PALTYPE_MAIN_BG, PLTID_BG_CMN );
 	
-#if 0
 	//---------------
 	// 文字列関連の初期化
 	//---------------
-	wr_init_string( wk );
-#endif
+	gpower_app_init_string( wk );
+	
 	//------------
 	// OBJ初期化
 	//------------
 	gpower_app_init_obj( wk );
-#if 0
-	//-----------------
-	// 内部パラメータセット
-	//-----------------
-	wr_init_param( wk );
-#endif
+	
+	//------------
+	// 初回更新
+	//------------
+	gpower_app_update( wk, 0 );
+	wk->Flag |= FLG_MW_UPDATE;
+	//
+	// win非表示
+	gpower_app_is_visible_win( wk, FALSE );
+	//
+	// 半透明設定
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		10, 6);
 }
 
 //-----------------------------------------------------------------------------
@@ -779,8 +833,6 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void gpower_app_main( GPOWER_APP_MAIN_WORK* wk )
 {
-	// 上画面
-//	wr_up( wk );
 	// 下画面
 	gpower_app_down( wk );
 }
@@ -796,38 +848,30 @@ static void gpower_app_main( GPOWER_APP_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void gpower_app_exit( GPOWER_APP_MAIN_WORK* wk )
 {
-#if 0
-	//-----------------
-	// 終了パラメータ
-	//------------------
-	// ×で終了 => フリームーブとなる
-	if(wk->Flag & FLG_MW_CROSS_END){
-		if(wk->Param->result_work != NULL){
-			*wk->Param->result_work = TRUE;
-		}
+	// 終了パラメータのセット
+	switch( wk->Result ){
+		case 3:			// ハイリンク
+			wk->Param->ret_mode = GPOWER_APP_RET_HILINK;
+			break;
+		//
+		case 0:			// デルパワー使用
+		case 1:
+		case 2:
+			wk->Param->ret_mode   = GPOWER_APP_RET_GPOWER;
+			wk->Param->ret_gpower = wk->Param->gpower[wk->Result];
+			break;
+		//
+		default:
+			wk->Param->ret_mode = GPOWER_APP_RET_NULL;
+			break;
 	}
-	// RETURNで終了 => パソコン画面へ
-	else{
-		if(wk->Param->result_work != NULL){
-			*wk->Param->result_work = FALSE;
-		}
-	}
-#if 1	// 結果
-	if(wk->Param->result_work != NULL){
-		OS_Printf("result : %d\n",*wk->Param->result_work);
-	}else{
-		OS_Printf("result : null(debug)\n");
-	}
-#endif
-#endif
+	
 	// 上、下画面をまとめて処理
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
-	// paramのバッファクリア
-//	GFL_HEAP_FreeMemory( wk->ParamBuffer );
 	
 	// 文字表示用
-//	wr_exit_string( wk );
+	gpower_app_exit_string( wk );
 	// OBJ破棄
 	gpower_app_exit_obj( wk );
 }
@@ -869,22 +913,36 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 		
 		// LV1
 		case STEP_LV1:
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-				wk->Step = STEP_END;
-			}
-#if 0
-			// アニメ待ち
-			wr_chk_anim( wk );
-			//
-			// キー入力
-			bflg = wr_chk_key_input( wk );
+			// 入力
+			gpower_app_chk_input( wk );
+			break;
+		//
+		// 終了アニメ待ち
+		case STEP_LV2:
+			bflg = gpower_app_is_anime_end( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN );
 			if(bflg == FALSE){
-				// ないときだけタッチペン
-				wr_chk_tp_input( wk );
+				wk->Step = STEP_END;
+				wk->Result = -1;
 			}
-			// パラメータ更新
-			wr_update_param( wk );
-#endif
+			break;
+		//
+		// window表示
+		case STEP_LV3:
+			gpower_app_is_visible_win( wk, TRUE );
+			wk->Step = STEP_LV3+10;
+			break;
+		//
+		// test
+		case STEP_LV3+10:
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+				gpower_app_is_visible_win( wk, FALSE );
+				wk->Step = STEP_END;
+				wk->Result = wk->CurPos;
+			}
+			else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+				gpower_app_is_visible_win( wk, FALSE );
+				wk->Step = STEP_LV1;
+			}
 			break;
 		
 		// END
@@ -907,7 +965,6 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void gpower_app_main_print( GPOWER_APP_MAIN_WORK* wk )
 {
-#if 0
 	s32		i;
 	
 	// Queの処理
@@ -916,7 +973,6 @@ static void gpower_app_main_print( GPOWER_APP_MAIN_WORK* wk )
 	for(i=0;i<GPOWER_APP_CANVAS_MAXNUM;i++){
 		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
 	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1006,12 +1062,13 @@ static void gpower_app_init_bg( GPOWER_APP_MAIN_WORK* wk )
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
  *	@param	const s32			(BG面)
+ *	@param	const s32			(メインorサブ)
  *	@param	const s32			(パレット番号)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void gpower_app_init_bg2( GPOWER_APP_MAIN_WORK* wk, const s32 type, const s32 pnum )
+static void gpower_app_init_bg2( GPOWER_APP_MAIN_WORK* wk, const s32 type, const s32 ptype, const s32 pnum )
 {
 	u16			*adr;
 	s32			i;
@@ -1023,7 +1080,7 @@ static void gpower_app_init_bg2( GPOWER_APP_MAIN_WORK* wk, const s32 type, const
 	
 	// パレット
 	id = APP_COMMON_GetBarPltArcIdx();
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, id, PALTYPE_SUB_BG, pnum*0x20, 0x20, wk->heapID );
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, id, ptype, pnum*0x20, 0x20, wk->heapID );
 	//
 	// キャラクタ
 	id = APP_COMMON_GetBarCharArcIdx();
@@ -1214,24 +1271,24 @@ static void gpower_app_init_obj( GPOWER_APP_MAIN_WORK* wk )
 	gpower_app_init_obj_res( wk, CLSYS_DRAW_MAIN, &gpapp_obj_main_info_tbl[0] );
 	// リソース読み込み(cmn)
 	gpower_app_init_obj_res_cmn( wk, CLSYS_DRAW_MAIN );
-	// リソース読み込み(up)
-//	wr_init_obj_res_up( wk, CLSYS_DRAW_SUB, wk->TrainerId );
 	// CLWK登録(通常)
 	gpower_app_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &gpapp_obj_tbl[0], &gpapp_obj_main_itbl[0] );
 	// CLWK登録(cmn)
 	gpower_app_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &gpapp_obj_cmn_tbl[0], &gpapp_obj_cmn_itbl[0] );
-	// CLWK登録(up)
-//	wr_init_obj_clwk( wk, CLSYS_DRAW_SUB, &wr_obj_up_tbl[0], &wr_obj_up_itbl[0] );
-	//
-#if 0
-	// BmpOAM初期化
-	wk->BmpOamSys = BmpOam_Init( wk->heapID, p_clunit );
-	// BMPOAM登録
-	wr_init_obj_bmpoam( wk, CLSYS_DRAW_MAIN, &wr_bmpoam_tbl[0], &wr_obj_main_info_tbl[0] );
-#endif
 	//
 	// 通信アイコンセット(下画面)
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
+	
+	{
+		// フォントのパレットは圧縮しているので注意
+		ARCHANDLE* p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
+		wk->wk_obj.res[ RESID_FONT_PLT ] = GFL_CLGRP_PLTT_RegisterComp( p_handle, NARC_font_talkwin_nclr, CLSYS_DRAW_MAIN, 0x20*PLTID_OBJ_FONT, wk->heapID );
+		GFL_ARC_CloseDataHandle( p_handle );
+	}
+	// BmpOAM初期化
+	wk->BmpOamSys = BmpOam_Init( wk->heapID, p_clunit );
+	// BMPOAM登録
+	gpower_app_init_obj_bmpoam( wk, CLSYS_DRAW_MAIN, &gpapp_bmpoam_tbl[0], RESID_FONT_PLT );
 }
 
 //-----------------------------------------------------------------------------
@@ -1262,7 +1319,9 @@ static void gpower_app_exit_obj( GPOWER_APP_MAIN_WORK* wk )
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_CMN_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[RESID_CMN_OBJ_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[RESID_CMN_OBJ_CEL] );
-#if 0
+	//
+	//リソース破棄(font)
+	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_FONT_PLT] );
 	//
 	// BmpOAM後処理
 	for(i=0;i<GPOWER_APP_BMPOAM_MAXNUM;i++){
@@ -1270,7 +1329,6 @@ static void gpower_app_exit_obj( GPOWER_APP_MAIN_WORK* wk )
 		GFL_BMP_Delete( wk->BmpData[i] );
 	}
 	BmpOam_Exit( wk->BmpOamSys );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1336,6 +1394,36 @@ static void gpower_app_set_obj_visible( GPOWER_APP_MAIN_WORK *wk, const s32 wmod
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk_cmn[wnum], bflg );
 	}
 }
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  OBJのパレット切り替え
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *	@param	const s32			(0:通常、1:共通、2:上画面)
+ *	@param	const s32			objワーク番号
+ *	@param	const s32			パレット番号
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_set_palnum( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 palnum )
+{
+	// 表示/非表示
+	if(wmode == CLWKMODE_NORMAL){		// 通常
+		if(wnum >= GPOWER_APP_OBJ_MAXNUM){
+			OS_Printf("obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk[wnum], palnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	}
+	else if(wmode == CLWKMODE_CMN){		// 共通
+		if(wnum >= GPOWER_APP_CMN_OBJ_MAXNUM){
+			OS_Printf("cmn obj max error:%d\n",wnum);
+			return;
+		}
+		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk_cmn[wnum], palnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	}
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1374,7 +1462,6 @@ static BOOL gpower_app_is_anime_end( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, 
 	return( bflg );
 }
 
-#if 0
 //-----------------------------------------------------------------------------
 /**
  *	@brief  OBJ初期化(bmpoam)
@@ -1387,14 +1474,14 @@ static BOOL gpower_app_is_anime_end( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, 
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_init_obj_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, const GPOWER_APP_BMPOAM_DATA *bmp_adr, const s16 *info_adr )
+static void gpower_app_init_obj_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, const GPOWER_APP_BMPOAM_DATA *bmp_adr, const u32 resid )
 {
 	s16							tmp;
 	s32							i;
 	s32							buf[2];
 	BMPOAM_ACT_DATA				actdata;
 	const GPOWER_APP_BMPOAM_DATA	*adr  = bmp_adr;
-	const s16					*iadr = info_adr;
+//	const s16					*iadr = info_adr;
 	GFL_CLACTPOS				cpos;
 	//
 	for(i=0;i<GPOWER_APP_BMPOAM_MAXNUM;i++){
@@ -1408,14 +1495,15 @@ static void wr_init_obj_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, co
 		wk->BmpData[i] = GFL_BMP_Create( buf[0], buf[1], GFL_BMP_16_COLOR, wk->heapID );
 		// 左側
 		tmp = adr->empty_num;
-		cpos.x = wr_get_empty( wk, tmp*2 );
-		cpos.y = wr_get_empty( wk, tmp*2+1 );
+		cpos.x = gpower_app_get_empty( wk, tmp*2 );
+		cpos.y = gpower_app_get_empty( wk, tmp*2+1 );
 		//
 		GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
 		actdata.bmp			= wk->BmpData[i];
 		actdata.x 			= cpos.x;
 		actdata.y 			= cpos.y;
-		actdata.pltt_index	= wk->wk_obj.res[ iadr[0+1] ];		// plt
+//		actdata.pltt_index	= wk->wk_obj.res[ iadr[0+1] ];		// plt
+		actdata.pltt_index	= wk->wk_obj.res[ resid ];
 		actdata.soft_pri	= adr->softpri;
 		actdata.bg_pri		= adr->bgpri;
 		actdata.pal_offset	= adr->paloffset;
@@ -1437,35 +1525,68 @@ static void wr_init_obj_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 drawtype, co
  *	@param	GPOWER_APP_MAIN_WORK* wk
  *	@param	const s32				ワーク番号
  *	@param	const STRBUF*			表示文字列
+ *	@param	const s32,s32			表示オフセット
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf )
+static void gpower_app_disp_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf, const s32 offx, const s32 offy )
 {
 	if(wnum >= GPOWER_APP_BMPOAM_MAXNUM){
 		OS_Printf("bmpoamj max error:%d\n",wnum);
 		return;
 	}
 	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
-	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
+	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,2,0) );
 	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
+	//
+	// 座標も再セットしておく
+	{
+		s16	buf[2];
+		s16	tmp;
+		const GPOWER_APP_BMPOAM_DATA *adr = &gpapp_bmpoam_tbl[wnum];
+		//
+		tmp = adr->empty_num;
+		buf[0] = gpower_app_get_empty( wk, tmp*2 );
+		buf[1] = gpower_app_get_empty( wk, tmp*2+1 );
+		buf[0] += offx;
+		buf[1] += offy;
+		BmpOam_ActorSetPos( wk->BmpOamWork[wnum], buf[0], buf[1] );
+	}
+	// 表示
+	BmpOam_ActorSetDrawEnable( wk->BmpOamWork[wnum], TRUE );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  文字表示準備(現在、Canvasの作成)
+ *	@brief  OB文字列表示(bmpoam)
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *	@param	const s32				ワーク番号
+ *	@param	const BOOL				(表示/非表示)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_set_bmpoam_visible( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const BOOL bflg )
+{
+	BmpOam_ActorSetDrawEnable( wk->BmpOamWork[wnum], bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示準備(Canvasの作成)
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_init_string( GPOWER_APP_MAIN_WORK* wk )
+static void gpower_app_init_string( GPOWER_APP_MAIN_WORK* wk )
 {
 	s16		buf[2];
 	s32		i;
-	const GPOWER_APP_CANVAS_DATA	*adr = &wr_canvas_tbl[0];
+	const GPOWER_APP_CANVAS_DATA	*adr = &gpapp_canvas_tbl[0];
 	
 	// Canvasの設定
 	for(i=0;i<GPOWER_APP_CANVAS_MAXNUM;i++){
@@ -1476,6 +1597,7 @@ static void wr_init_string( GPOWER_APP_MAIN_WORK* wk )
 		// セット
 		wk->PrintUtil[i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
 		// スクリーンは一度でよいはず
+		// (初期化時のみでも大丈夫なはず)
 		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
 		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
 		adr++;
@@ -1484,20 +1606,10 @@ static void wr_init_string( GPOWER_APP_MAIN_WORK* wk )
 	// fontパレットの転送
 	{
 		ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
-		//上画面フォントパレット
-		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_BG_FONT*0x20, 0x20, wk->heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_BG_FONT*0x20,     0x20, wk->heapID );
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG,  PLTID_SUB_BG_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
-	// プレイヤ名
-	buf[0] = wr_get_empty( wk, EMPTY_PLAYER_NAME*2 );
-	buf[1] = wr_get_empty( wk, EMPTY_PLAYER_NAME*2+1 );
-	wr_disp_playername( wk, 0, buf[0], buf[1], PRINTTOOL_MODE_LEFT );
-	// ゆうしょう回数
-	buf[0] = wr_get_empty( wk, EMPTY_TITLE_NAME*2 );
-	buf[1] = wr_get_empty( wk, EMPTY_TITLE_NAME*2+1 );
-	wr_disp_string_id( wk, 0, wr_gmm_tbl[1], buf[0], buf[1], PRINTTOOL_MODE_RIGHT );
-	// 更新
-	wr_update_string( wk, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -1510,12 +1622,17 @@ static void wr_init_string( GPOWER_APP_MAIN_WORK* wk )
  *	@param	const s32			表示座標(y)
  *	@param	const STRBUF* 		表示文字列
  *	@param	const u32			表示位置(左、右、中央など)
+ *	@param	const PRINTSYS_LSB	カラー
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode )
+static void gpower_app_disp_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode,
+								const PRINTSYS_LSB col)
 {
+	// 一旦クリア
+	gpower_app_clear_canvas( wk, mode, MES_CLEAR_COLOR );
+	
 	// 表示
 	PRINTTOOL_PrintColor(
 				&wk->PrintUtil[mode],			// プリントユーティル ( BMPWIN )
@@ -1523,33 +1640,8 @@ static void wr_disp_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 
 				x, y,							// 表示基準座標
 				strbuf,							// 文字列
 				wk->font,						// フォント
-				PRINTSYS_LSB_Make(15,2,0),		// カラー
-//				PRINTSYS_LSB_Make(9,8,0),		// カラー
+				col,							// カラー
 				dispmode );						// 位置
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  文字表示更新(clear -> disp -> updateの流れ)
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const s32				Canvasの番号
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_update_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
-{
-#if 0
-	// 転送
-	GFL_BMPWIN * bmpwin = wk->PrintUtil[mode].win;
-	//
-	// これは入れないとだめらしい
-	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
-	//
-	GFL_BMPWIN_TransVramCharacter( bmpwin );					//transfer characters
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );	//transfer screen
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1561,12 +1653,15 @@ static void wr_update_string( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_exit_string( GPOWER_APP_MAIN_WORK* wk )
+static void gpower_app_exit_string( GPOWER_APP_MAIN_WORK* wk )
 {
 	s32		i;
 	
 	for(i=0;i<GPOWER_APP_CANVAS_MAXNUM;i++){
-		GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
+		if(wk->PrintUtil[i].win){
+			GFL_BMPWIN_Delete( wk->PrintUtil[i].win );
+			wk->PrintUtil[i].win = 0;
+		}
 	}
 }
 
@@ -1580,724 +1675,403 @@ static void wr_exit_string( GPOWER_APP_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_clear_canvas( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
+static void gpower_app_clear_canvas( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const u32 color )
 {
 	// clear
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), MES_CLEAR_COLOR );
-//	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), color );
+	wk->PrintUtil[mode].transReq = TRUE;
 }
 
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤ表示
+ *	@brief  キー入力
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const mode				(PrintUtil[mode]のmode)
- *	@param	const s32				x座標
- *	@param	const s32				y座標
- *	@param	const u32				表示位置(左、中央、右)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_playername( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 xpos, const s32 ypos, const u32 dispmode )
+static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 {
-#if 1
-	GFL_BMPWIN 	*bmpwin		= wk->PrintUtil[mode].win;
-	// 名前取得用
-	GAMEDATA 	*gamedata 	= GAMESYSTEM_GetGameData( wk->Param->gamesys );
-	const MYSTATUS *mystat	= GAMEDATA_GetMyStatus( gamedata );
-	WORDSET		*wordset	= WORDSET_Create( wk->heapID );
-	STRBUF 		*strbuf		= GFL_STR_CreateBuffer( 64, wk->heapID );	// src
-	STRBUF		*strbuf2;
-	STRBUF 		*destbuf;
-	//
-	// プレイヤの名前(strbuf)をwordsetに登録
-	MyStatus_CopyNameString( mystat, strbuf );
-	WORDSET_RegisterWord( wordset, 0, strbuf, 0, TRUE, PM_LANG );
-	// 最終セットバッファ
-	destbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
-	// 文字列
-	strbuf2 = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[0] );
-	// パラメータを展開しMsgBufferに再セット
-	WORDSET_ExpandStr( wordset, destbuf, strbuf2 );
-	// 表示
-	wr_disp_string( wk, mode, xpos, ypos, destbuf, dispmode );
-	//
-	// WORDSET破棄
-	WORDSET_Delete( wordset );
-	// 破棄
-	GFL_STR_DeleteBuffer( strbuf );
-	GFL_STR_DeleteBuffer( strbuf2 );
-	GFL_STR_DeleteBuffer( destbuf );
-#else
-	GFL_BMPWIN 	*bmpwin	= wk->PrintUtil[mode].win;
-	STRBUF 	*strbuf		= GFL_STR_CreateBuffer( 64, wk->heapID );
+	s32		id;
+	s32		flg=0;
+	s32		oldpos = wk->CurPos;
 	
-	// 名前取得
-	GAMEDATA 	*gamedata 	= GAMESYSTEM_GetGameData( wk->Param->gamesys );
-	const MYSTATUS *mystat	= GAMEDATA_GetMyStatus( gamedata );
-	MyStatus_CopyNameString( mystat, strbuf );
-	wr_disp_string( wk, mode, xpos, ypos, strbuf, dispmode );
-	// 破棄
-	GFL_STR_DeleteBuffer( strbuf );
-#endif
+	// 更新あり
+	if(wk->Flag & FLG_MW_UPDATE){
+		flg = 1;
+		wk->Flag &= ~FLG_MW_UPDATE;
+	}
+	
+	// タッチペン処理
+	id = gpower_app_chk_tp( wk );
+	// パネル
+	if((id >= 0)&&(id <= 3)){
+		wk->CurPos = id;
+		flg = 1;
+	}
+	// 戻る
+	else if(id == 4){
+		flg = 2;
+		// 戻るアニメ
+		gpower_app_chg_objseq( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, CMN_RETURN_ON_SEQ );
+		wk->Step = STEP_LV2;
+	}
+	//
+	// キー入力
+	if(flg == 0){
+		// 上
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+			// ハイリンクパネル
+			if(wk->CurPos == 3){
+				wk->CurPos = wk->CurPosMax-1;
+			}
+			// 通常
+			else{
+				wk->CurPos--;
+				if(wk->CurPos < 0){
+					// ハイリンク選択不可 => 最大箇所
+					if(wk->Flag & FLG_MW_NO_SELECT){
+						wk->CurPos = wk->CurPosMax-1;
+					}else{
+						wk->CurPos = 3;
+					}
+				}
+			}
+			flg = 1;
+		}
+		// 下
+		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+			// ハイリンクパネル
+			if(wk->CurPos == 3){
+				wk->CurPos = 0;
+			}
+			// 通常
+			else{
+				wk->CurPos++;
+				if(wk->CurPos > (wk->CurPosMax-1)){
+					if(wk->Flag & FLG_MW_NO_SELECT){
+						wk->CurPos = 0;
+					}else{
+						wk->CurPos = 3;
+					}
+				}
+			}
+			flg = 1;
+		}
+		// 戻る
+		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			flg = 2;
+			// 戻るアニメ
+			gpower_app_chg_objseq( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, CMN_RETURN_ON_SEQ );
+			wk->Step = STEP_LV2;
+		}
+		// 決定
+		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+			flg = 2;
+			// test
+			if(wk->CurPos == 3){
+				wk->Step = STEP_END;
+				wk->Result = wk->CurPos;
+			}else{
+				gpower_app_disp_win( wk );
+				wk->Step = STEP_LV3;
+			}
+		}
+	}
+	//
+	// 更新あり
+	if(flg == 1){
+		// 更新
+		gpower_app_update( wk, 1 );
+		// 旧カーソル
+		gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+oldpos, 0 );
+		// 新カーソル
+		gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, 1 );
+	}
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  文字列表示(id参照)
+ *	@brief  更新
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const mode				(PrintUtil[mode]のmode)
- *	@param	const s32				mesid
- *	@param	const s32				x座標
- *	@param	const s32				y座標
- *	@param	const u32				表示位置(左、中央、右)
  *
- *	@retval
+ *	@retval						(TRUE:入力あり、FALSE:なし)
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_string_id( GPOWER_APP_MAIN_WORK* wk, const s32 mode, const s32 mesid, const s32 xpos, const s32 ypos, const u32 dispmode )
+static void gpower_app_update( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
 {
 	STRBUF		*strbuf;
-	//
-	strbuf = GFL_MSG_CreateString( wk->msg[0], mesid );
-	wr_disp_string( wk, mode, xpos, ypos, strbuf, dispmode );
-	// 破棄
-	GFL_STR_DeleteBuffer( strbuf );
+	
+	// 初回のみの更新
+	if(mode == 0){
+		// 上文字列
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[0] );
+		gpower_app_disp_string( wk, CVS_UP_TITLE, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
+		//
+		// 発動中の情報表示
+		gpower_app_disp_info( wk );
+		//
+		// 使用可能(装備可能)のデルパワー情報
+		gpower_app_disp_use_able( wk );
+		//
+		// ハイリンク情報表示(test)
+		gpower_app_disp_hilink( wk );
+	}
 }
 
-//-----------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- *	@brief  パネル表示まとめ
+ *	@brief  上画面(発動中の情報表示)
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const s32			ワーク番号
- *	@param	const s32			直接シーケンス番号(ならびに対応)
- *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_set_panel( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL bflg )
+static void gpower_app_disp_info( GPOWER_APP_MAIN_WORK* wk )
 {
-	s16				tmp;
-	s16				buf[4];
-	GFL_CLACTPOS	pos;
-	STRBUF			*strbuf;
-	STRBUF			*expandbuf;
-	STRBUF			*strbuf2;
-	STRBUF			*strbuf3;
-	WORDSET			*wordset;
+	s32		i;
+	s32		num;
+	s32		buf[2];
+	STRBUF	*strbuf;
+	STRBUF	*strbuf2;
+	STRBUF	*strbuf3;
 	
-	// 表示/非表示
-	wr_set_obj_visible( wk, CLWKMODE_NORMAL, wnum, bflg );
-	// bmpoam
-	BmpOam_ActorSetDrawEnable( wk->BmpOamWork[2*wnum], bflg );
-	
-	// 非表示の時はそのままで終了
-	if(bflg == FALSE){
-		return;
+	// クリア
+	for(i=0;i<GPOWER_APP_POWER_MAXNUM;i++){
+		gpower_app_clear_canvas( wk, CVS_UP_POWER_00+i,     MES_CLEAR_COLOR );
+		gpower_app_clear_canvas( wk, CVS_UP_POWER_NUM_00+i, MES_CLEAR_COLOR );
 	}
-	// wordset取得
-	wordset	= WORDSET_Create( wk->heapID );
+	//
+	// 現在発動中のパワー数
+	num = wk->Param->occur_num;
+	// 項目数
+	OS_Printf("occur num :%d\n",num);
+	//
+	// 「なし」
+	if(num == 0){
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[1] );
+		gpower_app_disp_string( wk, CVS_UP_POWER_00, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
+		GFL_STR_DeleteBuffer( strbuf );
+	}
+	// 「項目の表示」
+	else{
+		for(i=0;i<num;i++){
+			// 項目
+			strbuf = GFL_MSG_CreateString( wk->MsgData[1], wk->Param->occur_list[i].id );
+			gpower_app_disp_string( wk, CVS_UP_POWER_00+i, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(15,2,0) );
+			GFL_STR_DeleteBuffer( strbuf );
+			//
+			// 時間
+			strbuf = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[3] );
+			buf[0] = wk->Param->occur_list[i].life/60;		// 分
+			buf[1] = wk->Param->occur_list[i].life%60;		// 秒
+			strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );		// tmp
+			strbuf3 = GFL_STR_CreateBuffer( 64, wk->heapID );		// dest
+			// 分
+			STRTOOL_SetNumber( strbuf2, buf[0], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+			WORDSET_RegisterWord( wk->WordSet, 0, strbuf2, 0, TRUE, PM_LANG );
+			// 秒
+			STRTOOL_SetNumber( strbuf2, buf[1], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+			WORDSET_RegisterWord( wk->WordSet, 1, strbuf2, 0, TRUE, PM_LANG );
+			// パラメータを展開しstrbuf3にセット
+			WORDSET_ExpandStr( wk->WordSet, strbuf3, strbuf );
+			gpower_app_disp_string( wk, CVS_UP_POWER_NUM_00+i, 0, 0, strbuf3, 0, PRINTSYS_LSB_Make(15,2,0) );
+			GFL_STR_DeleteBuffer( strbuf );
+			GFL_STR_DeleteBuffer( strbuf2 );
+			GFL_STR_DeleteBuffer( strbuf3 );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  下画面(使用可能デルパワー表示)=>(bmpoamを使用)
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_disp_use_able( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		i;
+	s32		seq;
+	s32		num;
+	STRBUF	*strbuf;
 	
-	// シーケンスの変更
-	wr_chg_objseq( wk, CLWKMODE_NORMAL, wnum, num );
+	// クリア
+	for(i=0;i<3;i++){
+		gpower_app_set_bmpoam_visible( wk, i, FALSE );
+	}
+	//
+	// 現在装備中のパワー数
+	num = wk->Param->gpower_num;
+	// 項目数
+	OS_Printf("gpower num :%d\n",num);
+	//
+	// なしの場合はこないはず
+	if(num == 0){
+		// なにもしない
+	}
+	// 「項目の表示」
+	else{
+		for(i=0;i<num;i++){
+			strbuf = GFL_MSG_CreateString( wk->MsgData[1], wk->Param->gpower[i] );
+			gpower_app_disp_bmpoam( wk, i, strbuf, 0, 0 );
+			gpower_app_set_bmpoam_visible( wk, i, TRUE );
+			GFL_STR_DeleteBuffer( strbuf );
+		}
+	}
+	//
+	// ここ限定でもいいはずなので、
+	// パネルも変更してしまう
+	for(i=0;i<3;i++){
+		seq = SEQ_POWER_ON;
+		if(num <= i){
+			seq = SEQ_POWER_OFF;
+		}
+		// シーケンスの切り替え
+		gpower_app_chg_objseq( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+i, seq );
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  下画面(ハイリンクパネル表示)=>(bmpoamを使用)
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_disp_hilink( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		seq;
+	BOOL	bflg=TRUE;		// (TRUE:表示、FALSE:非表示)
+	STRBUF	*strbuf;
 	
-	//-------------------------------------
-	// 対応するbmpoamも文字列は固定なので
-	// ここでセット
-	//-------------------------------------
-	// メッセージバッファセット
-	tmp = wr_tmt_gmm_tbl[num];
-	strbuf = GFL_MSG_CreateString( wk->msg[0], tmp );
+	// 選択不可
+	if(wk->Flag & FLG_MW_NO_SELECT){
+		bflg = FALSE;
+	}
+	
+	// クリア
+	gpower_app_set_bmpoam_visible( wk, 3, FALSE );
+	
 	// 表示
-	wr_disp_bmpoam( wk, 2*wnum, strbuf );
+	if( bflg == TRUE ){
+		// ハイリンク
+		strbuf = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[2] );
+		gpower_app_disp_bmpoam( wk, 3, strbuf, 0, 0 );
+		GFL_STR_DeleteBuffer( strbuf );
+	}
+	//
+	// パネルの変更
+	seq = SEQ_HILINK_ON;
+	if( bflg == FALSE ){
+		seq = SEQ_HILINK_OFF;
+	}
+	// シーケンスの切り替え
+	gpower_app_chg_objseq( wk, CLWKMODE_NORMAL, CLWKID_HILINK, seq );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タッチペンの判定
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *
+ *	@retval s32						(id)
+ */
+//-----------------------------------------------------------------------------
+static s32 gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		ret=-1;
+	s32		id;
 	
-	//----------
-	// 数字表示
-	//----------
-	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-//	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	WORDSET_RegisterWord( wordset, 0, strbuf2, 0, TRUE, PM_LANG );
-	// 最終出力バッファ
-	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
-	// 文字列
-	strbuf3 = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[2] );
-	// パラメータを展開しMsgBufferに再セット
-	WORDSET_ExpandStr( wordset, expandbuf, strbuf3 );
-	// 表示
-	wr_disp_bmpoam( wk, 2*wnum+1, expandbuf );
+	// タッチペン判定
+	id = GFL_UI_TP_HitTrg( gpapp_rect_00_tbl );
 	//
-	// bmpoamは座標も念のため再セットしておく
-	buf[0] = wr_get_empty( wk,  EMPTY_PANEL_OFFSET*2 );
-	buf[1] = wr_get_empty( wk,  EMPTY_PANEL_OFFSET*2+1 );
-	buf[2] = wr_get_empty( wk, (EMPTY_PANEL_OFFSET+1)*2 );
-	buf[3] = wr_get_empty( wk, (EMPTY_PANEL_OFFSET+1)*2+1 );
+	// パネルの場合=>選択可能のものを調べる
+	if((id >= 0)&&(id <= 2)){
+		if(wk->Param->gpower_num > id){
+			ret = id;
+		}
+	}
+	// ハイリンク
+	else if(id == 3){
+		// 選択可能の場合
+		if(!(wk->Flag & FLG_MW_NO_SELECT)){
+			ret = id;
+		}
+	}
+	// 戻る
+	else if(id == 4){
+		ret = id;
+	}
 	//
-	// 座標の取得
-	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[wnum], &pos, CLSYS_DEFREND_MAIN );
-	//
-	// 座標セット
-	// (左側:トーナメント名)
-	BmpOam_ActorSetPos( wk->BmpOamWork[2*wnum],   (pos.x+buf[0]), (pos.y+buf[1]) );
-	// (右側:回数)
-	BmpOam_ActorSetPos( wk->BmpOamWork[2*wnum+1], (pos.x+buf[2]), (pos.y+buf[3]) );
-	//
-	// WORDSET破棄
-	WORDSET_Delete( wordset );
+	return( ret );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  下画面説明パネル
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_disp_win( GPOWER_APP_MAIN_WORK* wk )
+{
+	STRBUF	*strbuf;
+	STRBUF	*strbuf2;
+	STRBUF	*strbuf3;
+	
+	// クリア
+	gpower_app_clear_canvas( wk, CVS_DOWN_WIN, MES_CLEAR_COLOR );
+	
+	// 文章
+	strbuf  = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[4] );		// org
+	strbuf3 = GFL_STR_CreateBuffer( 256, wk->heapID );						// dest
+	// gpower
+	strbuf2 = GFL_MSG_CreateString( wk->MsgData[1], wk->Param->gpower[wk->CurPos] );	// prm
+	WORDSET_RegisterWord( wk->WordSet, 0, strbuf2, 0, TRUE, PM_LANG );
+	// セット
+	WORDSET_ExpandStr( wk->WordSet, strbuf3, strbuf );
+	gpower_app_disp_string( wk, CVS_DOWN_WIN, 0, 0, strbuf3, 0, PRINTSYS_LSB_Make(15,2,0) );
 	// 破棄
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( strbuf3 );
-	GFL_STR_DeleteBuffer( expandbuf );
 }
 
-//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- *	@brief  パネル表示まとめ(呼び出し側)
+ *	@brief  下画面説明パネル
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const s32			ワーク番号
- *	@param	const s32			テーブルの何番目か(注意:直接シーケンス番号ではない)
- *	@param	const BOOL			表示フラグ(通常:TRUE、強制非表示:FALSE)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_set_panel_all( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, const s32 num, const BOOL dispflg )
+static void gpower_app_is_visible_win( GPOWER_APP_MAIN_WORK* wk, const BOOL bflg )
 {
-	s16				tmp=0;
-	BOOL			bflg=FALSE;
-	const u8		*adr = wr_gmm_all_tbl[wk->Mode];
-	
-	// 範囲のチェック
-	if((wr_gmm_max_tbl[wk->Mode] <= num)||(num < 0)){
-		bflg = FALSE;
-	}else{
-		// テーブルから変更するシーケンス番号を求める
-		tmp = adr[num];
-		bflg = TRUE;
-	}
-	// 強制フラグ
-	if(dispflg == FALSE){
-		bflg = FALSE;
-	}
 	// 表示
-	wr_set_panel( wk, wnum, tmp, bflg );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  パラメータ初期化(ここでパラメータを参照)
- *
- *	@param	WIN_ROUND_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_init_param( GPOWER_APP_MAIN_WORK* wk )
-{
-	s16					num;
-	s16					nmax;
-	s16					i;
-	GFL_UI_TP_HITTBL	*adr = &wk->HitBuffer[0];
-	BOOL				bflg;
-	//
-	//-----------------
-	// パネル表示
-	//-----------------
-	// 最大数を調べる
-	num = DISP_PANEL_MAXNUM;			// 表示パネル数
-	nmax = wr_gmm_max_tbl[wk->Mode];
-	if(nmax < DISP_PANEL_MAXNUM){
-		num = nmax;
-	}
-	
-	// 表示/非表示と座標セット
-	for(i=0;i<DISP_PANEL_MAXNUM;i++){
-		bflg = TRUE;
-		// チェック
-		if(i >= num){
-			bflg = FALSE;
-		}
-		wr_set_panel_all( wk, i, wk->TopNum+i, bflg );
-	}
-	
-	//--------------------
-	// タッチペン領域計算
-	//--------------------
-	for(i=0;i<AREA_TP_MAX;i++){
-		wr_get_tp_area( wk, AREA_TP_LEFT+i, adr );
-		adr++;
-	}
-	// 終了コード
-	adr->rect.top		= GFL_UI_TP_HIT_END;
-	adr->rect.bottom	= 0;
-	adr->rect.left		= 0;
-	adr->rect.right		= 0;
-	//
-	//--------------------
-	// スクロール関連
-	//--------------------
-	// フラグも用意しておく
-	if(wk->Mode == MODE_LV1){
-		wk->Flag |= FLG_MW_NO_SCROLL;
-	}
-	//
-	// スクロール関連を非表示
-	if(wk->Flag & FLG_MW_NO_SCROLL){
-		// バー非表示
-		wr_set_obj_visible( wk, CLWKMODE_NORMAL, CLWKID_BAR, FALSE );
-		// 左右矢印非表示
-		wr_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_LEFT,  FALSE );
-		wr_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RIGHT, FALSE );
+	if(bflg == TRUE){
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+	}else{
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+		GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 	}
 }
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  パラメータセット
- *
- *	@param	WIN_ROUND_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_set_param( GPOWER_APP_MAIN_WORK* wk )
-{
-	u16		cnt;
-	s32		i;
-	u32		tmp;
-	
-	//------------
-	// 性別を取得
-	//------------
-	tmp = MyStatus_GetMySex( wk->Param->my_status );
-	wk->TrainerId = 0;			// 男性
-	if(tmp == PM_FEMALE){
-		wk->TrainerId = 1;		// 女性
-	}
-	//-----------
-	// 優勝回数
-	//-----------
-	for(i=0;i<TMT_MAX;i++){
-		cnt = WBTSAVE_GetWinCount( wk->Param->wbtsave, wbtwin_tbl[i] );
-		// 念のため
-		if( cnt >= GPOWER_APP_MAX_COUNT ){
-			cnt = GPOWER_APP_MAX_COUNT;
-		}
-		wk->CountBuffer[i] = cnt;
-	}
-#if 0
-	OS_Printf("boy :%d\n",wk->TrainerId);
-	for(i=0;i<TMT_MAX;i++){
-		OS_Printf("%d, %d: %d\n",i,wbtwin_tbl[i],wk->CountBuffer[i]);
-	}
-#endif
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  更新(主にwk->TopNumが更新したときに呼ばれる)
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_update_param( GPOWER_APP_MAIN_WORK* wk )
-{
-	s16				num;
-	s16				nmax;
-	s32				i;
-	u32				py;
-	GFL_CLACTPOS	pos;
-	BOOL			bflg;
-	
-	// バー更新
-	if(wk->Flag & FLG_MW_BAR_UPDATE){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			py = SCROLLBAR_GetPosY( wr_gmm_max_tbl[wk->Mode]-4, wk->TopNum, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
-			// 座標の更新
-			GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-//			pos.x = 238;	// test
-			pos.y = py;
-			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-			//
-			wk->Flag &= ~FLG_MW_BAR_UPDATE;
-		}
-	}
-	// パネル更新
-	if(wk->Flag & FLG_MW_UPDATE){
-		// 最大数を調べる
-		num = DISP_PANEL_MAXNUM;			// 表示パネル数
-		nmax = wr_gmm_max_tbl[wk->Mode];
-		if(nmax < DISP_PANEL_MAXNUM){
-			num = nmax;
-		}
-		// 表示/非表示と座標セット
-		for(i=0;i<DISP_PANEL_MAXNUM;i++){
-			bflg = TRUE;
-			if(i >= num){
-				bflg = FALSE;
-			}
-			wr_set_panel_all( wk, i, wk->TopNum+i, bflg );
-		}
-		//
-		wk->Flag &= ~FLG_MW_UPDATE;
-	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  アニメのセット
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const s32				(CMNの番号:フラグと対応)
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_set_cmn_anim( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
-{
-	s32		wnum;
-	
-	// アニメ再生
-	wnum = mode;
-	wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4+1] );
-	wk->Flag |= (1<<mode);
-}
-
-//-----------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-/**
- *	@brief  キー入力(上下)
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *
- *	@retval BOOL					(TRUE:入力あり、FALSE:なし)
- */
-//-----------------------------------------------------------------------------
-static BOOL wr_chk_key_input( GPOWER_APP_MAIN_WORK* wk )
-{
-	s16		i;
-	s16		flg=0;
-	s32		wnum;
-	s32		tmp;
-	BOOL	bflg=FALSE;
-	
-	// 終了判定
-	if(wk->Flag & FLG_MW_END){
-		return( bflg );
-	}
-	// アニメ再生中
-	if(wk->Flag & FLG_MW_ANM_ALL){
-		return( bflg );
-	}
-	//
-	// 上
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum--;
-			if(wk->TopNum < 0){
-				wk->TopNum = 0;
-			}
-			flg = 1;
-		}
-	}
-	// 下
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum++;
-			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
-			}
-			flg = 1;
-		}
-	}
-	// 左
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			// 1画面分
-			wk->TopNum -= DISP_PANEL_MAXNUM;
-			if(wk->TopNum < 0){
-				wk->TopNum = 0;
-			}
-			flg = 1;
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_LEFT );
-		}
-	}
-	// 右
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			// 1画面分
-			wk->TopNum += DISP_PANEL_MAXNUM;
-			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
-			}
-			flg = 1;
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
-		}
-	}
-	// 戻る
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		// アニメ再生
-		wr_set_cmn_anim( wk, CLWKID_CMN_RETURN );
-	}
-	//
-	// 更新
-	if(flg == 1){
-		wk->Flag |= FLG_MW_UPDATE;
-		wk->Flag |= FLG_MW_BAR_UPDATE;
-		bflg = TRUE;
-	}
-	return( bflg );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  タッチペン用データセット
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	const s32				領域の番号
- *	@param	GFL_UI_TP_HITTBL*		タッチペン判定用
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_get_tp_area( GPOWER_APP_MAIN_WORK* wk, const s32 num, GFL_UI_TP_HITTBL *tpbuffer )
-{
-	s16		i;
-	s16		buf[4];
-	
-	// 領域を取得
-	// (左上(x,y)、サイズ(w,h)の4個で1つのデータ)
-	for(i=0;i<4;i++){
-		buf[i] = wk->ParamBuffer[4*num+i];
-	}
-	// ParamBufferは、(x,y,width,height)なので加算
-	buf[2] += buf[0];
-	buf[3] += buf[1];
-	
-	// 領域チェック
-	for(i=0;i<4;i++){
-		if(buf[i] < 0){
-			buf[i] = 0;
-		}
-		// 判定はu8なのでmaxを255としておく
-		if(buf[i] > 255){
-			buf[i] = 255;
-		}
-	}
-	// 領域セット
-	tpbuffer[0].rect.left	= (u8)buf[0];
-	tpbuffer[0].rect.top    = (u8)buf[1];
-	tpbuffer[0].rect.right	= (u8)buf[2];
-	tpbuffer[0].rect.bottom	= (u8)buf[3];
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  タッチペン入力
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *	@param	BOOL					(TRUE:タッチあり、FALSE:なし)
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static BOOL wr_chk_tp_input( GPOWER_APP_MAIN_WORK* wk )
-{
-	s16		i;
-	s16		flg=0;
-	s32		wnum;
-	const GFL_UI_TP_HITTBL	*adr = &wk->HitBuffer[0];
-	const int ret  = GFL_UI_TP_HitTrg( adr );
-	const int cret = GFL_UI_TP_HitCont( adr );
-	// なければ、TP_HIT_NONE
-	BOOL	bflg=FALSE;
-	
-	// 終了判定
-	if(wk->Flag & FLG_MW_END){
-		return( bflg );
-	}
-	// アニメ再生中
-	if(wk->Flag & FLG_MW_ANM_ALL){
-		return( bflg );
-	}
-	
-	// 左
-	if(ret == AREA_TP_LEFT){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum -= DISP_PANEL_MAXNUM;
-			if(wk->TopNum < 0){
-				wk->TopNum = 0;
-			}
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_LEFT );
-			flg = 1;
-		}
-	}
-	// 右
-	else if(ret == AREA_TP_RIGHT){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum += DISP_PANEL_MAXNUM;
-			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
-			}
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
-			flg = 1;
-		}
-	}
-	// ×
-	else if(ret == AREA_TP_CROSS){
-		// アニメ再生
-		wr_set_cmn_anim( wk, CLWKID_CMN_CROSS );
-		flg = 2;
-	}
-	// RETURN
-	else if(ret == AREA_TP_RETURN){
-		// アニメ再生
-		wr_set_cmn_anim( wk, CLWKID_CMN_RETURN );
-		flg = 2;
-	}
-	// スクロールバー
-	else{
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			// contで取得
-			if(cret == AREA_TP_SCROLL){
-				wr_set_scrollbar( wk );
-				flg = 3;
-			}
-		}
-	}
-	//
-	// 更新
-	if(flg != 0){
-		// 左右の場合は更新
-		if(flg == 1){
-			wk->Flag |= FLG_MW_BAR_UPDATE;
-		}
-		wk->Flag |= FLG_MW_UPDATE;
-		bflg = TRUE;
-	}
-	return( bflg );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  アニメの終了判定
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_chk_anim( GPOWER_APP_MAIN_WORK* wk )
-{
-	s16		flg=0;
-	s16		wnum=0;
-	BOOL	bflg=FALSE;
-	
-	// 左アニメ再生中
-	if(wk->Flag & FLG_MW_ANM_LEFT){
-		wnum = CLWKID_CMN_LEFT;
-		flg = 1;
-	}
-	// 右アニメ再生中
-	else if(wk->Flag & FLG_MW_ANM_RIGHT){
-		wnum = CLWKID_CMN_RIGHT;
-		flg = 1;
-	}
-	// ×アニメ再生中
-	else if(wk->Flag & FLG_MW_ANM_CROSS){
-		wnum = CLWKID_CMN_CROSS;
-		flg = 1;
-	}
-	// 戻るアニメ再生中
-	else if(wk->Flag & FLG_MW_ANM_RETURN){
-		wnum = CLWKID_CMN_RETURN;
-		flg = 1;
-	}
-	// アニメ終了判定を行う
-	if(flg == 1){
-		bflg = wr_is_anime_end( wk, CLWKMODE_CMN, wnum );
-		if(bflg == FALSE){
-			// アニメの終了
-			// とりあえず通常に戻しておく
-			wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4] );
-			wk->Flag &= ~(1<<wnum);
-			//
-			// 戻るボタン(飛び先変更はある)
-			if((wnum == CLWKID_CMN_CROSS)||(wnum == CLWKID_CMN_RETURN)){
-				wk->Flag |= FLG_MW_END;
-				//
-				// ×ボタン終了
-				if(wnum == CLWKID_CMN_CROSS){
-					wk->Flag |= FLG_MW_CROSS_END;
-				}
-				// RETURNボタン終了
-				else if(wnum == CLWKID_CMN_RETURN){
-					wk->Flag |= FLG_MW_RET_END;
-				}
-				// 終了処理
-				wk->Step = STEP_END;
-			}
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  スクロールバーの処理
- *
- *	@param	GPOWER_APP_MAIN_WORK* wk
- *
- *	@retval BOOL					(TRUE:変更あり、FALSE:なし)
- */
-//-----------------------------------------------------------------------------
-static BOOL wr_set_scrollbar( GPOWER_APP_MAIN_WORK* wk )
-{
-	u32				cnt;
-	u32				buf[2];
-	BOOL			bflg=FALSE;
-	
-	// ここにくるまでにスクロールバーの領域を
-	// タッチしたかの判定は済んでいる
-	// タッチした座標を取得
-	if( GFL_UI_TP_GetPointCont( &buf[0], &buf[1] ) == TRUE ){
-		// どの段階かが求まる
-		cnt = SCROLLBAR_GetCount( wr_gmm_max_tbl[wk->Mode]-4, buf[1], SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
-//		OS_Printf("pos :%d\n",cnt);
-		// 現在の位置をセット
-		wk->TopNum = cnt;
-		wk->Flag |= FLG_MW_UPDATE;
-		wk->Flag |= FLG_MW_BAR_UPDATE;
-		//
-		bflg = TRUE;
-	}
-	return( bflg );
-}
-
-
-#endif
-
 

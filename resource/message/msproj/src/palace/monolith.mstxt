@@ -2451,4 +2451,174 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_100"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はつどうちゅうの　デルパワー</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:32:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:32:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はつどうちゅうの　デルパワー</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:33:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:32:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワー使用画面
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:32:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_101"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:33:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:33:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:33:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:33:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワー使用画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:33:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンク</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:34:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:34:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンク</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:34:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:34:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワー使用画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:34:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_103"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits Idx="0" ]：[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:35:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:35:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits Idx="0" ]：[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:36:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワー使用画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:35:45" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_104"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS Idx="0" ]を
+つかいますか？
+ひつよう／もっている</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:45:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:45:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS Idx="0" ]を
+つかいますか？
+ひつよう／もっている</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:46:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:46:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワー使用画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-12T06:46:17" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

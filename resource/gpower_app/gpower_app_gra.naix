@@ -18,8 +18,9 @@ enum {
 	NARC_gpower_app_gra_delpow_obj_NCER = 4,
 	NARC_gpower_app_gra_delpow_bgd_NSCR = 5,
 	NARC_gpower_app_gra_delpow_bgu_NSCR = 6,
-	NARC_gpower_app_gra_delpow_obj_NANR = 7,
-	NARC_gpower_app_gra_gpower_app_pos_tblbin = 8
+	NARC_gpower_app_gra_delpow_win_NSCR = 7,
+	NARC_gpower_app_gra_delpow_obj_NANR = 8,
+	NARC_gpower_app_gra_gpower_app_pos_tblbin = 9
 };
 
 /* NARC_GPOWER_APP_GRA_NAIX_ */
