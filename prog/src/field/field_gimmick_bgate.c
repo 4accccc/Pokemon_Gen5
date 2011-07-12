@@ -18,6 +18,8 @@
 #include "field_g3d_mapper.h"
 #include "field_gimmick_bgate.h"
 
+#include "../../../resource/fldmapdata/gimmick/badge_gate/bage_gate_def.h"    // 外部指定パラメータ
+
 #include "eventwork_def.h"                    // for WK_SCENE_D26R0101_GATE_*
 #include "system/main.h"                      // for HEAPID_FIELDMAP
 #include "field_gimmick_def.h"                // for FLD_GIMMICK_D26R0101
@@ -87,12 +89,36 @@ typedef struct MONUMENT_START_WK_tag
 }MONUMENT_START_WK;
 
 //-------------------------------------
+///	振動パラメータ
+//=====================================
+typedef struct
+{
+  u32 start_frame;
+  u32 end_frame;
+  u32 loop_sync;
+  u32 w;
+  u32 h;
+} SHAKE_PARAM;
+
+// 門の演出時に再生するカメラ揺れテーブル
+static const SHAKE_PARAM sc_shake_param_table[] =
+{
+  { SHAKE_START_FRAME_0, SHAKE_END_FRAME_0 , SHAKE_LOOP_SYNC_0, SHAKE_W_0, SHAKE_H_0,},
+  { SHAKE_START_FRAME_1, SHAKE_END_FRAME_1 , SHAKE_LOOP_SYNC_1, SHAKE_W_1, SHAKE_H_1,},
+};
+#define SHAKE_PARAM_CNT  (NELEMS(sc_shake_param_table))
+
+//-------------------------------------
 ///	ゲート起動ワーク
 //=====================================
 typedef struct GATE_START_WK_tag
 {
   // sys
-  BADGEGATE_WK *p_gmk_wk; 
+  BADGEGATE_WK  *p_gmk_wk; 
+  FIELD_CAMERA  *p_cam;
+  u32           shake_event_frame;
+  u16           is_shake_end[SHAKE_PARAM_CNT];
+  VecFx32       default_ofs;
 }GATE_START_WK;
 
 //=============================================================================
@@ -105,6 +131,7 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
 static void SetAnmStopFlag( MODEL *p_model  ,u16 anmid ,BOOL is_stop );
 static MODEL* GetModelData( BADGEGATE_WK *p_gmk_wk ,u32 model_id );
 static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs );
+static void GateOpen_CameraShakeMain( GATE_START_WK *p_wk );
 static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk );
 static void setup_anm_before_action( MODEL *p_model );
 static void setup_anm_after_action( MODEL *p_model );
@@ -389,6 +416,7 @@ GMEVENT* BADGEGATE_CreateMonumentStartEvent( GAMESYS_WORK *p_gamesys, u16 monume
 
   // パラメータ設定
   {
+    GFL_STD_MemClear( p_wk, sizeof(MONUMENT_START_WK) );
     p_wk->monument_id = monument_id;
     p_wk->p_gmk_wk    = GMK_TMP_WK_GetWork( p_fld_wk, BADGEGATE_WORK_ASSIGN_ID);
   }
@@ -529,6 +557,7 @@ static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk )
 //-----------------------------------------------------------------------------
 GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys )
 {
+  int i;
   FIELDMAP_WORK   *p_fld_wk = GAMESYSTEM_GetFieldMapWork( p_gamesys );
 
   // イベント作成
@@ -538,7 +567,11 @@ GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys )
 
   // パラメータ設定
   {
+    GFL_STD_MemClear( p_wk, sizeof(GATE_START_WK) );
     p_wk->p_gmk_wk    = GMK_TMP_WK_GetWork( p_fld_wk, BADGEGATE_WORK_ASSIGN_ID);
+    p_wk->p_cam       = FIELDMAP_GetFieldCamera( p_fld_wk );
+    p_wk->shake_event_frame = 0;
+    FIELD_CAMERA_GetCamPosOffset( p_wk->p_cam, &p_wk->default_ofs );
   }
 
   return p_event;
@@ -557,12 +590,20 @@ GMEVENT* BADGEGATE_CreateGateOpenEvent( GAMESYS_WORK *p_gamesys )
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_adrs )
 {
+  int i;
   GATE_START_WK *p_wk = p_wk_adrs;
   MODEL *p_model;
   
   // 門のモデルデータを取得
   p_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_GATE );
 
+  // カメラ揺れの更新
+  GateOpen_CameraShakeMain( p_wk );
+
+  // カメラ揺れフレームの加算
+  p_wk->shake_event_frame++;
+
+  // アニメーション更新メイン
   switch( *p_seq )
   {
   case 0:
@@ -598,11 +639,74 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
       if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE )
       {
         SetAnmStopFlag( p_model ,MDL_ANM_ACTION_ICA, TRUE );
-        return GMEVENT_RES_FINISH;
+        (*p_seq)++;
+        // 振動アニメーション終了待ちにすぐに移行
+        return GMEVENT_RES_CONTINUE_DIRECT;
       }
     }
     break;
+  case 3:
+    {
+      for( i = 0; i < SHAKE_PARAM_CNT ; i++ )
+      {
+        // 振動アニメーション終了待ち
+        if( p_wk->is_shake_end[i] == FALSE )
+        {
+          return GMEVENT_RES_CONTINUE;
+        }
+      }
+      // 全てのアニメーションと、振動が終了
+      return GMEVENT_RES_FINISH;
+    }
+    break;
   }
+
   return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドカメラ揺れを行う
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GateOpen_CameraShakeMain( GATE_START_WK *p_wk )
+{
+  int i;
+
+  for( i = 0; i < SHAKE_PARAM_CNT ; i++ )
+  {
+    fx32 w, h;
+    VecFx32 set_ofs = p_wk->default_ofs;
+    const SHAKE_PARAM *p_sp = &sc_shake_param_table[i];
+
+    // 指定フレーム内の時はゆらす
+    if( (p_wk->shake_event_frame >= p_sp->start_frame) &&
+        (p_wk->shake_event_frame <= p_sp->end_frame) )
+    {
+      u16 rad;
+      s32 tmp;
+      u32 shake_frame = p_wk->shake_event_frame - p_sp->start_frame;
+      tmp = shake_frame * 0x10000 / p_sp->loop_sync;
+      rad = tmp;
+
+      set_ofs.x += p_sp->w * FX_SinIdx(rad);
+      set_ofs.y += p_sp->h * FX_CosIdx(rad);
+
+      FIELD_CAMERA_SetCamPosOffset( p_wk->p_cam, &set_ofs );
+      p_wk->is_shake_end[i] = FALSE;
+
+      // 終了フレームを調べ、振動をリセット
+      if( p_wk->shake_event_frame >= p_sp->end_frame )
+      {
+        FIELD_CAMERA_SetCamPosOffset( p_wk->p_cam, &p_wk->default_ofs );
+        p_wk->is_shake_end[i] = TRUE;
+        ONOUE_Printf("振動終了\n");
+      }
+    }
+  }
 }
 
