@@ -169,7 +169,6 @@ u32 MedalSortList[] = {
     MDLID_SUBWAY_CHALLENGE_LV1,	//‚Î‚Æ‚é‚É‚ã[‚Æ‚ç‚é
     MDLID_ALL_BATTLE_LV1,	//‚Î‚Æ‚é‚à‚ñ‚©‚¹‚¢
     MDLID_SAISEN_LV1,	//‚Î‚Æ‚é‚è‚Ò[‚½[
-    MDLID_C03LOCAL,	//‚Ð‚¤‚ñ‚¶‚¶‚å‚¤‚Â‚¤
     MDLID_COMPLETE_HIKOU,	//‚Ð‚±‚¤‚±‚ê‚­‚½[
     MDLID_CYCLE_LV1,	//‚Ñ‚¬‚È[‚ç‚¢‚¾[
     MDLID_CHAMPION_AKU,	//‚Ñ‚µ‚á‚·‚¿‚á‚ñ‚Õ
@@ -260,6 +259,7 @@ u32 MedalSortList[] = {
     MDLID_BLANK_19,	//‹ó‚«‚ß‚¾‚é‚P‚X
     MDLID_BLANK_2,	//‹ó‚«‚ß‚¾‚é‚Q
     MDLID_BLANK_20,	//‹ó‚«‚ß‚¾‚é‚Q‚O
+    MDLID_BLANK_21,	//‹ó‚«‚ß‚¾‚é‚Q‚P
     MDLID_BLANK_3,	//‹ó‚«‚ß‚¾‚é‚R
     MDLID_BLANK_4,	//‹ó‚«‚ß‚¾‚é‚S
     MDLID_BLANK_5,	//‹ó‚«‚ß‚¾‚é‚T

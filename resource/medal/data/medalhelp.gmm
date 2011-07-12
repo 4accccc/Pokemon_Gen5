@@ -936,10 +936,8 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_078">
-		<language name="JPN" width="216">だいとかい　ヒウンシティを
-すみから　すみまで　たんさくせよ！</language>
-		<language name="JPN_KANJI" width="216">大都会　ヒウンシティを
-隅から　隅まで　探索せよ！</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_079">
@@ -993,11 +991,6 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_089">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_090">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2129,6 +2122,11 @@
 	<row id="MDL_HINT_SPECIAL_007">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_090">
+		<language name="JPN" width="216">あき</language>
+		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_091">

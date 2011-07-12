@@ -1148,15 +1148,6 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_078">
-		<language name="JPN" width="216">だいとかい　ヒウンシティの
-あらゆる　ばしょを　くまなく
-おとずれた　あかしの　メダル。</language>
-		<language name="JPN_KANJI" width="216">大都会　ヒウンシティの
-あらゆる　場所を　くまなく
-訪れた　証しの　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_079">
 		<language name="JPN" width="216">すべての　けものみちを
 はっけんした　やせいを
 ほめたたえる　メダル。</language>
@@ -1164,7 +1155,7 @@
 野性を　褒め称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_080">
+	<row id="MDL_EXP_FIELD_079">
 		<language name="JPN" width="216">めずらしい　じょうけんを　みたし
 ダイヤモンドダストを　みた
 しょうめいの　メダル。</language>
@@ -1173,7 +1164,7 @@
 証明 の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_081">
+	<row id="MDL_EXP_FIELD_080">
 		<language name="JPN" width="216">かいていいせきの
 さいしんぶに　とどりついた
 ぼうけんかに　あたえられる　メダル。</language>
@@ -1181,7 +1172,7 @@
 冒険家に　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_082">
+	<row id="MDL_EXP_FIELD_081">
 		<language name="JPN" width="216">とくべつな　トレーナーが　かつて
 もっていた　ポケモンを
 てにいれた　あかしの　メダル。</language>
@@ -1190,7 +1181,7 @@
 手に入れた　証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_083">
+	<row id="MDL_EXP_FIELD_082">
 		<language name="JPN" width="216">いろちがいの　ポケモンと
 であった　ことのある
 こううんを　たたえる　メダル。</language>
@@ -1199,7 +1190,7 @@
 幸運を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_084">
+	<row id="MDL_EXP_FIELD_083">
 		<language name="JPN" width="216">ポケモンに　くっつく　なぞの
 せいめいたい　ポケルスを　みつけた
 トレーナーに　あたえられる　メダル。</language>
@@ -1208,7 +1199,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_085">
+	<row id="MDL_EXP_FIELD_084">
 		<language name="JPN" width="216">ボックスに　３０ひきの　ポケモンを
 あずけている　かけだしの
 トレーナーに　あたえられる　メダル。</language>
@@ -1217,7 +1208,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_086">
+	<row id="MDL_EXP_FIELD_085">
 		<language name="JPN" width="216">ボックスに　１２０ひきの　ポケモンを
 あずけている　うでのたつ
 トレーナーに　あたえられる　メダル。</language>
@@ -1226,7 +1217,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_087">
+	<row id="MDL_EXP_FIELD_086">
 		<language name="JPN" width="216">ボックスに　３６０ひきの　ポケモンを
 あずけている　すごうでの
 トレーナーに　あたえられる　メダル。</language>
@@ -1235,7 +1226,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_088">
+	<row id="MDL_EXP_FIELD_087">
 		<language name="JPN" width="216">ボックスに　はいりきらない　ほどの
 ポケモンを　つかまえた　うつわの
 おおきさを　たたえる　メダル。</language>
@@ -1244,7 +1235,7 @@
 器の　大きさを　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_089">
+	<row id="MDL_EXP_FIELD_088">
 		<language name="JPN" width="216">イッシュちほうの　すべての　まちを
 おとずれた　さいこうの　たびびとに
 あたえられる　メダル。</language>
@@ -1253,7 +1244,7 @@
 与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_090">
+	<row id="MDL_EXP_FIELD_089">
 		<language name="JPN" width="216">『ぼうけん』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『冒険』メダルを　すべて　
@@ -2526,6 +2517,11 @@
 		<language name="JPN_KANJI" width="216">すべての　メダルを　集め
 メダリストの　頂点に　立った
 栄誉の　証しの　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_090">
+		<language name="JPN" width="216">あき</language>
+		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_091">
