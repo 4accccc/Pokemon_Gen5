@@ -880,7 +880,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/animal_trail.c \
         field/scrcmd_animal_trail.c \
         field/fldeff_ochiba.c \
-        field/scrcmd_ochiba.c
+        field/scrcmd_ochiba.c \
+        field/event_move_hilink.c
 
 # デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP

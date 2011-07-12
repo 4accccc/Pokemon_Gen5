@@ -22,6 +22,7 @@
 #include "./event_fieldmap_control.h"
 #include "./event_cg_wireless.h"
 #include "./event_intrude_subscreen.h"
+#include "./event_move_hilink.h"
 
 #include "sound/pm_sndsys.h"
 #include "system/main.h"      //GFL_HEAPID_APP参照
@@ -144,6 +145,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     {
       GMEVENT* intrude_event;
       if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
+#if 0
         if(dbw->hilinkStateNo == INTRUDE_CONNECT_NULL){ //最初の一人としてパレスへワープ
           //パレスへワープする前に誰とも繋がっていないことが保障されるように通信を終了する
           if(GameCommSys_CheckSystemWaiting(pComm) == FALSE){
@@ -168,6 +170,10 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
           }
           *seq = _FIELD_END;
         }
+#else
+        GMEVENT_ChangeEvent( event, EVENT_MoveHilink( gsys, dbw->hilinkStateNo ) );
+        return GMEVENT_RES_CONTINUE;
+#endif
       }
       else{
         *seq = _FIELD_END;

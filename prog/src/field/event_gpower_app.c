@@ -19,10 +19,11 @@
 
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
-
+#include "field_comm/intrude_work.h"
 #include "./event_fieldmap_control.h"
 #include "./event_gpower_app.h"
 #include "./event_gpower.h"
+#include "./event_move_hilink.h"
 
 #include "sound/pm_sndsys.h"
 #include "system/main.h"      //GFL_HEAPID_APPéQè∆
@@ -194,7 +195,11 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
     return GMEVENT_RES_CONTINUE;
   
   case _HILINK_JUMP:
-    return GMEVENT_RES_FINISH;
+    {
+      u32 state = Intrude_GetIntrudeStatus( GAMESYSTEM_GetGameCommSysPtr(gsys) );
+      GMEVENT_ChangeEvent( event, EVENT_MoveHilink( gsys, state ) );
+    }
+    return GMEVENT_RES_CONTINUE;
 
   case _FIELD_END: 
     return GMEVENT_RES_FINISH;
