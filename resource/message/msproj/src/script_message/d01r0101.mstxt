@@ -2,6 +2,94 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d01r0101_poke1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しゅわーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しゅわーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・所定POSを踏むと近づいてくる
+・あわせて鳴き声再生
+・続けて戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:30:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ラティオス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:27:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d01r0101_poke2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひゅああーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひゅああーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:28:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・所定POSを踏むと近づいてくる
+・あわせて鳴き声再生
+・続けて戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:30:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ラティアス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:31:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d01r0101_girl_01"
 		Style="Large">
 		<LanguageCell
@@ -608,608 +696,6 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_sage5_end_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アスラ『しょあ！！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アスラ『しょあ！！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・GRIDX=55、GRIDZ=53
-・pos（GRIDX=51、GRIDZ=53）を踏むと
- 隣接してメッセージ表示
-・続けてsage5_end_01a</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>七賢人その５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_sage5_end_01a"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おどろきましたか！？▼
-われらの　しろを　ほうかいさせた
-ポケモントレーナーよ▼
-あなたには
-おどろかされましたよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>驚きましたか！？▼
-われらの　城を　崩壊させた
-ポケモントレーナーよ▼
-あなたには
-驚かされましたよ！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてsage5_end_01b</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>七賢人その５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_sage5_end_01b"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おどろけば　ポケモンも　ひとも
-こころに　スキが　できます▼
-そうすれば　ほんらい　もっている
-ちからも　だせないものです▼
-われわれは　しろを　しゅつげんさせ
-でんせつの　ポケモンを　みせつけ▽
-ひとびとを　おどろかせる……▼
-そのスキに　プラズマだんの　すごさを
-あたらしい　せかいの　すばらしさを▼
-ひとびとの　こころに
-ふかくふかく　きざもうとしたのです▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>驚けば　ポケモンも　人も
-心に　スキが　できます▼
-そうすれば　本来　持っている
-力も　だせないものです▼
-われわれは　城を　出現させ
-伝説の　ポケモンを　みせつけ▽
-人々を　驚かせる▼
-そのスキに　プラズマ団の　すごさを
-新しい　世界の　すばらしさを▼
-大衆の　心に　深く深く
-刻み込み　操ろうと　したのです▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてsage5_end_01c</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>七賢人その５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_sage5_end_01c"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ですが　あなたや　ジムリーダーの
-つよき　こころを　みているかぎり▼
-その　さくせんも
-どこまで　ききめが　あったか……？▼
-……その　こころの　つよさこそが
-ポケモンを　つぎの　ステージに▽
-みちびくために　ひつようなのか……？▼
-フム……　くだらない　はなしを
-きかせて　わるかったですね▽
-これでも　もっていきなさい▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ですが　あなたや　ジムリーダーの
-強き　心を　みているかぎり▼
-その作戦も
-どこまで　効果が　あったか……？▼
-……その　心の　強さこそが
-ポケモンを　次の　ステージに▽
-導くために　必要なのか……？▼
-フム……　くだらない　話を
-きかせて　悪かったですね▽
-これでも　もっていきなさい▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・アイテム入手処理
-　No402「つるぎのまい」</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>七賢人その５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_sage5_end_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アスラ『Ｎさまの　ゆめ……
-それを　おわらせたのは　あなたです▽
-それを　わすれぬようにしてください▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アスラ『Ｎさまの　夢……
-それを　終わらせたのは　あなたです▽
-それを　忘れぬようにしてください▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・アイテム入手後自動で表示
-・続けてicpo_end_01</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>七賢人その５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_icpo_end_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『さてと……
-プラズマだんに　ついて▼
-こくさいけいさつの　わたしに
-いろいろ　おしえてもらおう！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『さてと……
-プラズマ団に　ついて▼
-国際警察の　わたしに
-いろいろ　教えてもらおう！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・隣接してメッセージ
-・続けてsage5_end_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_sage5_end_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>アスラ『……ここに　あらわれる
-ムシャーナの　ゆめのけむり▼
-それで　みる　ゆめは　まぼろし
-かなえてこそ　ほんものの　ゆめ……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>アスラ『……ここに　出現するという
-ムシャーナの　ゆめのけむり▼
-それで　みる　夢は　幻……
-自分の力で　かなえてこそ▽
-本物の　夢……▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けて七賢人
-　6人と会っていない→icpo_end_02
-　6人と会っている→icpo_end_03</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>七賢人その５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_icpo_end_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『ありがとう▼
-これで　ゲーチスを　のぞき
-のこる　しちけんじんは▽
-あと　[Digit:1digit Idx="0" ]にんか……▼
-かれらが　なにを　かんがえ
-のぞんでいたか　しりたいものだ……▽
-では　また　あおう！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『ありがとう！▼
-これで　ゲーチスを除き
-残る　七賢人は▽
-あと　[Digit:1digit Idx="0" ]人か……▼
-彼らが　なにを　考え
-望んでいたか　知りたいものだ……▽
-では　また　会おう！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・メッセージ表示後
-　画面暗転して七賢人とハンサムを削除</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d01r0101_icpo_end_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハンサム『ありがとう！▼
-さて　[Name:TrainerName Idx="0" ]……
-きみに　つたえることが　ある▼
-ここより　はるか　とおいところで
-Ｎらしき　じんぶつが▽
-ドラゴンポケモンと　いるのを▽
-みたという　じょうほうが　あった▼
-わたしは　じょうほうが　ただしいか
-たしかめに　いくつもりだよ▽
-では　また　いつか　あおう！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハンサム『ありがとう！▼
-さて　[Name:TrainerName Idx="0" ]……
-きみに　伝えることが　ある▼
-ここより　はるか　遠方で
-Ｎらしき　人物が▽
-ドラゴンポケモンと　いるのを▽
-みたという　情報が　あった▼
-わたしは　情報の　真偽を
-確かめに　いくつもりだよ▽
-では　また　いつか　会おう！▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・6人の七賢人とであったとき
-・メッセージ表示後
-　画面暗転して七賢人とハンサムを削除</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>ICPO
-ハンサム</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
