@@ -49,7 +49,7 @@ EVENT_END
 /*  チョロネコ：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c12r0401_poke_01
-  _EASY_TALK_POKEVOICE( MONSNO_533, msg_c12r0401_poke_01 )   //【仮】チラーミィの見た目と鳴き声
+  _EASY_TALK_POKEVOICE( MONSNO_546, msg_c12r0401_poke_01 )   //【仮】見た目チラーミィ、鳴き声チョロネコ
 EVENT_END
 
 

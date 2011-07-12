@@ -66,7 +66,7 @@ EVENT_START   ev_c07r0301_trainerm_01
         //ローカルワーク進行
         $LOCALWORK0 = 1
 
-        //BGM再生【仮】10番道路の予定
+        //BGM再生:BW10番道路のBGM
         _BGM_PLAY( SEQ_BGM_R_F )
 
       //いいえ
@@ -86,12 +86,7 @@ EVENT_START   ev_c07r0301_trainerm_01
     _SYSWIN_MSG( msg_c07r0301_trainerm_03, POS_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
-/*
-    //サウンド：……おんがくに　むちゅう　だ！
-    _BALLOONWIN_TALKOBJ_MSG( msg_c07r0301_trainerm_03 )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-*/
+
   ENDIF
 
 }

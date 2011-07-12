@@ -57,23 +57,25 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_r13_poke4_01
 
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+
   //アニメ：主人公「！」
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
 
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
-
-  //アニメ：コバルオン主人公の前に
-  IF $LCW_POSX == 684 THEN
-    $LCW_POSZ -= 2
+  //主人公の位置でアニメ分岐
+  IF $LCW_POSZ == 202 THEN
+    //アニメ：コバルオン主人公の前に（＋主人公振り向き）
+    $LCW_POSX -= 2
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    _TIME_WAIT ( 8 )
     _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
     _OBJ_ANIME_WAIT()
   ELSE
-    $LCW_POSZ -= 2
+    //アニメ：コバルオン主人公の前に
+    $LCW_POSX -= 2
     _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_d )
     _OBJ_ANIME_WAIT()
   ENDIF
 
@@ -124,6 +126,7 @@ EVENT_START   ev_pos_r13_poke4_01
 
     //システム：ポケモンは　どうろの　さきへ
     _SYSWIN_MSG( msg_r13_poke4_02, POS_DOWN )
+    _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
 
   ENDIF
@@ -272,7 +275,7 @@ _RET
 
 
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：ギョエ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_common_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
@@ -305,4 +308,13 @@ _ANIME_LABEL  anm_common_turn_u
 _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_gyoe_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
 

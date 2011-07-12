@@ -50,8 +50,8 @@ EVENT_END
 /**************************************************************/
 /*  クマシュン：話しかけ                                      */
 /**************************************************************/
-EVENT_START   ev_c07r0101_poke44_01    //【仮】鳴き声がチラーミィ
-  _EASY_TALK_POKEVOICE( MONSNO_505, msg_c07r0101_poke44_01 )
+EVENT_START   ev_c07r0101_poke44_01
+  _EASY_TALK_POKEVOICE( MONSNO_531, msg_c07r0101_poke44_01 )
 EVENT_END
 
 

@@ -361,7 +361,7 @@ EVENT_START   ev_c02r0601_wkobjcode01_01
 
   CASE RTC_WEEK_SATURDAY THEN   //土曜日
 
-    //ズルッグ：ずっぐぉー！【仮】鳴き声は仮です
+    //ズルッグ：ずっぐぉー！
     _EASY_TALK_POKEVOICE( MONSNO_637, msg_c02r0601_poke39_01 )
 
   ENDSWITCH

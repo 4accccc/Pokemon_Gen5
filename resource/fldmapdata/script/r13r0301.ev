@@ -41,7 +41,13 @@ EVENT_END
 EVENT_START   ev_r13r0301_poke_01
 
   _TALK_OBJ_START()
- _OBJ_ANIME_WAIT()
+
+  //コマタナ：シュパッ！！【仮】モデルはチラーミィ、声のみコマタナ
+  _VOICE_PLAY( MONSNO_634, 0 ) 
+  _BALLOONWIN_TALKOBJ_MSG( msg_r13r0301_pokemon_01 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT()
+  _MSGWIN_CLOSE()
 
   //自機方向取得
   _PLAYER_DIR_GET( LWK_DIR )
@@ -49,22 +55,15 @@ EVENT_START   ev_r13r0301_poke_01
   //アニメ：コマタナそっぽを向く
   SWITCH $LWK_DIR
   CASE DIR_UP THEN
-    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_r )
-  CASE DIR_RIGHT THEN
-    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_d )
-  CASE DIR_DOWN THEN
-    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_l )
-  CASE DIR_LEFT THEN
     _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_u )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_r )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_d )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( R13R0301_POKE_01, anm_common_turn_l )
   ENDSWITCH
  _OBJ_ANIME_WAIT()
-
-  //コマタナ：シュパッ！！    //【仮】モデル、鳴き声はチラーミィ
-  _VOICE_PLAY( MONSNO_533, 0 ) 
-  _BALLOONWIN_TALKOBJ_MSG( msg_r13r0301_pokemon_01 )
-  _VOICE_WAIT()
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
 
 EVENT_END
 

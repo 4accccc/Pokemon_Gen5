@@ -58,8 +58,8 @@ EVENT_END
 /**************************************************************/
 /*  コアルヒー：話しかけ                                      */
 /**************************************************************/
-EVENT_START   ev_h04r0401_poke41_01  //【仮】泣き声がワルビル
-  _EASY_TALK_POKEVOICE( MONSNO_505, msg_h04r0401_poke41_01 )
+EVENT_START   ev_h04r0401_poke41_01
+  _EASY_TALK_POKEVOICE( MONSNO_609, msg_h04r0401_poke41_01 )
 EVENT_END
 
 

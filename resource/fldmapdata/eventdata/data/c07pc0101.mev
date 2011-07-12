@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/29 18:50:58
+#save date:2011/07/11 18:21:11
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c07pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -326,7 +326,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C07PC0101_POKE44_01
 #OBJ CODE Number
-POKE44
+POKE43
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
