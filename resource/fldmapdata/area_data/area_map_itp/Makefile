@@ -8,7 +8,7 @@
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
 USERS	= tomoya_takahashi fuchino_hiroki ohkubo_tomohiko lee_hyunjung fujiwara_maiko \
-	ibe_mana tanoue_reiko unno james_turner ohtani_mayo kawamoto_yuki matsuzaki_tsubasa
+	ibe_mana tanoue_reiko unno james_turner ohtani_mayo kawamoto_yuki matsuzaki_tsubasa swan_3dcg01
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く

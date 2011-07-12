@@ -22,7 +22,7 @@ include ../area_common.def
 #------------------------------------------------------------------------------
 USERS	=	tamada nakatsui fuchino_hiroki lee_hyunjung fujiwara_maiko ibe_mana tanoue_reiko \
 				ohkubo_tomohiko unno james_turner obata_toshihiro tomoya_takahashi iwasawa \
-				matsuzaki_tsubasa ohtani_mayo kawamoto_yuki nagihashi_toru shiiyama_yukiko
+				matsuzaki_tsubasa ohtani_mayo kawamoto_yuki nagihashi_toru shiiyama_yukiko swan_3dcg01
 
 
 #------------------------------------------------------------------------------
