@@ -20,6 +20,8 @@
 #define TR_BACKPACKERW_15                  6
 #define TR_BACKPACKERM_19                  7
 #define TR_RAIL_02                         8
+#define FLD_ITEM_63                        9
+#define FLD_ITEM_64                       10
 
 #endif //ZONE_R16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

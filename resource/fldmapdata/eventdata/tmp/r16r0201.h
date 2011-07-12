@@ -14,6 +14,8 @@
 #define TR_RANGERW_15                      1
 #define TR_RANGERM_15                      2
 #define TR_VETERANM_08                     3
+#define FLD_ITEM_65                        4
+#define FLD_ITEM_66                        5
 
 #endif //ZONE_R16R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

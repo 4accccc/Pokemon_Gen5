@@ -22,6 +22,13 @@
 #define R06_SWLEADER1_01                   8
 #define R06_OLDMAN1_01                     9
 #define R06_SAGE6_01                      10
+#define FLD_ITEM_72                       11
+#define FLD_ITEM_73                       12
+#define FLD_ITEM_74                       13
+#define FLD_ITEM_75                       14
+#define FLD_ITEM_76                       15
+#define FLD_ITEM_77                       16
+#define FLD_ITEM_78                       17
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

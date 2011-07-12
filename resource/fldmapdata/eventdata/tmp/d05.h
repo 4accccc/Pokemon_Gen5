@@ -21,6 +21,7 @@
 #define D05_SWLEADER5_01                   7
 #define D05_SWLEADER1_01                   8
 #define D05_SWBOSS_01                      9
+#define FLD_ITEM_71                       10
 
 #endif //ZONE_D05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -29,6 +29,7 @@
 #define C05_SAGE6_01                       5
 #define C05_SWRIVAL_01                     6
 #define C05_SWLEADER5_01                   7
+#define FLD_ITEM_70                        8
 
 #endif //ZONE_C05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
