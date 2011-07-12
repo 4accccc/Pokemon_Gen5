@@ -9,6 +9,7 @@
 #ifndef ZONE_C03P18_EVC_H
 #define ZONE_C03P18_EVC_H
 
+#define FLD_ITEM_28                        0
 
 #endif //ZONE_C03P18_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

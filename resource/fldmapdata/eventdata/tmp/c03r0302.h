@@ -10,6 +10,7 @@
 
 #define C03R0302_SCIENTISTM_03             0
 #define C03R0302_BUSINESS1_02              1
+#define FLD_ITEM_23                        2
 
 #endif //ZONE_C03R0302_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

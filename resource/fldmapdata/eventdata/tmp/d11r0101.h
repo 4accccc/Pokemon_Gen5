@@ -18,6 +18,15 @@
 #define D11R0101_SWCHAMPION_01             0
 #define D11R0101_PLASMAM_01                1
 #define D11R0101_PLASMAM_02                2
+#define FLD_ITEM_31                        3
+#define FLD_ITEM_32                        4
+#define FLD_ITEM_33                        5
+#define FLD_ITEM_34                        6
+#define FLD_ITEM_35                        7
+#define FLD_ITEM_36                        8
+#define FLD_ITEM_37                        9
+#define FLD_ITEM_38                       10
+#define FLD_ITEM_39                       11
 
 #endif //ZONE_D11R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d11r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

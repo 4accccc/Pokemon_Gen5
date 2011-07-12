@@ -8,6 +8,7 @@
 #ifndef ZONE_C03R0402_EVC_H
 #define ZONE_C03R0402_EVC_H
 
+#define FLD_ITEM_25                        0
 
 #endif //ZONE_C03R0402_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
