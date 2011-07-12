@@ -23,6 +23,7 @@
 #define C12_OLDMAN1_01                     5
 #define C12_BOY2_01                        6
 #define C12_SWLEADER1_01                   7
+#define FLD_ITEM_0                         8
 
 #endif //ZONE_C12_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

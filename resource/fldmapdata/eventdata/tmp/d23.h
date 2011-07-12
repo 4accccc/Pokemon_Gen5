@@ -9,6 +9,9 @@
 #ifndef ZONE_D23_EVC_H
 #define ZONE_D23_EVC_H
 
+#define FLD_ITEM_17                        0
+#define FLD_ITEM_19                        1
+#define FLD_ITEM_18                        2
 
 #endif //ZONE_D23_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d23.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

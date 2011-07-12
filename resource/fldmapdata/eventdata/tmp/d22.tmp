@@ -1,5 +1,5 @@
 #../data/d22.mev
-../tmp/d22.bin:../data/d22.mev ../../script/sp_d22.bin $(UNIQ_SCRIPTHEADER) ../tmp/d22.h ../../zonetable/zone_id.h ../tmp/d22r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
+../tmp/d22.bin:../data/d22.mev ../../script/sp_d22.bin $(UNIQ_SCRIPTHEADER) ../tmp/d22.h ../../zonetable/zone_id.h ../tmp/d22r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D22_def.h 
 	@echo ../data/d22.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d22.h ../../zonetable/zone_id.h ../tmp/d22r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d22.h ../../zonetable/zone_id.h ../tmp/d22r0101.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D22_def.h 
 

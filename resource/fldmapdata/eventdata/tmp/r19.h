@@ -11,6 +11,8 @@
 
 #define R19_BOY2_01                        0
 #define R19_CHAMPION_01                    1
+#define FLD_ITEM_1                         2
+#define FLD_ITEM_2                         3
 
 #endif //ZONE_R19_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r19.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -29,6 +29,7 @@
 #define C13_SWPLAZMAM_01                  10
 #define C13_SWPLAZMAW_01                  11
 #define C13_SWPLAZMAM_02                  12
+#define FLD_ITEM_16                       13
 
 #endif //ZONE_C13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -19,6 +19,7 @@
 #define T06_OLDMAN1_01                     4
 #define T06_GIRL1_01                       5
 #define T06_WOMAN2_01                      6
+#define FLD_ITEM_11                        7
 
 #endif //ZONE_T06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

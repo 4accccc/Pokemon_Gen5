@@ -22,6 +22,14 @@
 #define TR_RANGERW_18                     10
 #define TR_RANGERM_17                     11
 #define TR_TANPAN_24                      12
+#define FLD_ITEM_3                        13
+#define FLD_ITEM_4                        14
+#define FLD_ITEM_5                        15
+#define FLD_ITEM_6                        16
+#define FLD_ITEM_7                        17
+#define FLD_ITEM_8                        18
+#define FLD_ITEM_9                        19
+#define FLD_ITEM_10                       20
 
 #endif //ZONE_R20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

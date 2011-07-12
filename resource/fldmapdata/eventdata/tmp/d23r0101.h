@@ -17,6 +17,8 @@
 #define D23R0101_WORKMAN2_02               5
 #define D23R0101_WORKMAN2_03               6
 #define D23R0101_ASSISTANTM_01             7
+#define FLD_ITEM_20                        8
+#define FLD_ITEM_21                        9
 
 #endif //ZONE_D23R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d23r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
