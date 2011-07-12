@@ -56,7 +56,7 @@
 typedef enum {
   DEBUG_SHOW_01 = LOADDATA_POKEWOOD0,
   DEBUG_SHOW_02 = LOADDATA_POKEWOOD1,
-  DEBUG_SHOW_03 = LOADDATA_POKEWOOD3,
+  DEBUG_SHOW_03 = LOADDATA_POKEWOOD2,
   DEBUG_SHOW_ROM,
 }DEBUG_SHOW_TYPE;
 
@@ -295,13 +295,13 @@ static BOOL debugMenuCallProc_PokewoodRec1( POKEWOOD_FUNC_WORK * wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec2( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, PKWD_REC_POS_02, 1 );
+  return callRecProc( wk, PKWD_REC_POS_01, 1 );
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec3( POKEWOOD_FUNC_WORK * wk )
 {
-  return callRecProc( wk, PKWD_REC_POS_03, 2 );
+  return callRecProc( wk, PKWD_REC_POS_02, 2 );
 }
 
 //-----------------------------------------------------------------------------
