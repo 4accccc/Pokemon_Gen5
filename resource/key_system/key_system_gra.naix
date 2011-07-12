@@ -18,8 +18,11 @@ enum {
 	NARC_key_system_gra_menu_frame_NCGR = 4,
 	NARC_key_system_gra_obj_NCGR = 5,
 	NARC_key_system_gra_back00_NSCR = 6,
-	NARC_key_system_gra_obj_NCER = 7,
-	NARC_key_system_gra_obj_NANR = 8
+	NARC_key_system_gra_back01_NSCR = 7,
+	NARC_key_system_gra_back02_NSCR = 8,
+	NARC_key_system_gra_back03_NSCR = 9,
+	NARC_key_system_gra_obj_NCER = 10,
+	NARC_key_system_gra_obj_NANR = 11
 };
 
 /* NARC_KEY_SYSTEM_GRA_NAIX_ */
