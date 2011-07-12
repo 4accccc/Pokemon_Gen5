@@ -109,13 +109,13 @@ EVENT_START	ev_pos_c09r0101_enter_01
 
   // 階段の炎アニメ(fire_b) 4つ
   _FOURKINGS_GHOST_FIRE( 1 )
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 5 )
   _FOURKINGS_GHOST_FIRE( 2 )
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 5 )
   _FOURKINGS_GHOST_FIRE( 3 )
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 5 )
   _FOURKINGS_GHOST_FIRE( 4 )
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 5 )
 
   //--------------------------------------
   // 演出終了
@@ -194,6 +194,5 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_turn_down
   _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
 

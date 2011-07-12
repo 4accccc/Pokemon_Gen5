@@ -24,6 +24,7 @@
 
 // arc
 #include "arc/fieldmap/fourkings_ghost.naix"
+#include "../../../resource/fldmapdata/eventdata/tmp/c09r0101.h"
 
 // mine
 #include "fourkings_sv.h"
@@ -61,26 +62,13 @@
 */
 //=============================================================================
 //-------------------------------------
-///	ギミック内部中の一時ワーク
-//=====================================
-typedef struct {
-  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
-  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
-  FOURKINGS_SV_WORK   *p_sv_wk;       // セーブワーク
-
-  // FOGを無効にするためだけのフラグ
-  // ギミックの初期化でなく、動作でやらないといけない
-  BOOL                fog_off;        // TRUEでFOG無効にする
-} FOURKINGS_GHOST_TMP;
-
-//-------------------------------------
-///	炎アニメ再生用イベントワーク
+///	炎アニメ再生用タスクワーク
 //=====================================
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
   int                 id;             // 炎IDX
-} FIRE_EVENT_WORK;
+} FIRE_TASK_WORK;
 
 //-------------------------------------
 ///	本落ちるイベント用ワーク
@@ -89,8 +77,23 @@ typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
   int                 wait;           // 暗転までのウェイト値
+  MMDL                *mmdl;          // シキミのモデル
 } BOOK_FALL_EVENT_WORK;
 
+//-------------------------------------
+///	ギミック内部中の一時ワーク
+//=====================================
+typedef struct {
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  FOURKINGS_SV_WORK   *p_sv_wk;       // セーブワーク
+
+  FIRE_TASK_WORK      task_wk[ 5 ];
+
+  // FOGを無効にするためだけのフラグ
+  // ギミックの初期化でなく、動作でやらないといけない
+  BOOL                fog_off;        // TRUEでFOG無効にする
+} FOURKINGS_GHOST_TMP;
 
 //=============================================================================
 /**
@@ -101,8 +104,10 @@ typedef struct {
 enum {
   RESID_BOOK_MDL = 0,       // 本モデル
   RESID_BOOK_01_ANM_ICA,    // 本アニメ(動いている)
+  RESID_BOOK_01_ANM_ITA,    // 本アニメ(動いている)
   RESID_BOOK_01_ANM_ITP,    // 本アニメ(動いている)
   RESID_BOOK_02_ANM_ICA,    // 本アニメ(落ちる)
+  RESID_BOOK_02_ANM_ITA,    // 本アニメ(動いている)
   RESID_BOOK_02_ANM_ITP,    // 本アニメ(動いている)
   RESID_FIRE_A_MDL,         // 炎モデル
   RESID_FIRE_A_01_ANM_ICA,  // 炎アニメ(点火)
@@ -169,8 +174,10 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book01_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book02_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_book02_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_fire_a_01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_GHOST, NARC_fourkings_ghost_fire_a_01_nsbca, GFL_G3D_UTIL_RESARC },
@@ -220,8 +227,10 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 static const GFL_G3D_UTIL_ANM anm_book[] =
 {
   { RESID_BOOK_01_ANM_ICA, 0 },
+  { RESID_BOOK_01_ANM_ITA, 0 },
   { RESID_BOOK_01_ANM_ITP, 0 },
   { RESID_BOOK_02_ANM_ICA, 0 },
+  { RESID_BOOK_02_ANM_ITA, 0 },
   { RESID_BOOK_02_ANM_ITP, 0 },
 };
 #define ANM_BOOK_NUM  ( NELEMS(anm_book) )
@@ -440,10 +449,9 @@ static void ANM_NOFOG_PlayLoop( FOURKINGS_GHOST_TMP *p_wk );
 // 霧アニメイベント
 static GMEVENT * MIST_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys );
 static GMEVENT_RESULT MistEvent( GMEVENT* event, int* seq, void* wk );
-// 炎アニメイベント
-static GMEVENT * FIRE_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int id );
-static GMEVENT_RESULT FireEventA( GMEVENT* event, int* seq, void* wk );
-static GMEVENT_RESULT FireEventB( GMEVENT* event, int* seq, void* wk );
+// 炎アニメ終了監視タスク
+static void FireTcbA( GFL_TCB *tcb, void* work );
+static void FireTcbB( GFL_TCB *tcb, void* work );
 // 本落ちる→暗転イベント
 static GMEVENT * BOOK_FALL_CreateEvent( GAMESYS_WORK* gsys, int wait );
 static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk );
@@ -531,14 +539,6 @@ void FOURKINGS_GHOST_Move(FIELDMAP_WORK *p_fieldmap)
       GAMESYSTEM_SetEvent(gsys, event);
       OS_Printf("霧イベント\n");
     }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = FIRE_CreateEvent( NULL, gsys, 0);
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("炎イベント\n");
-    }
     if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
       GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
@@ -625,19 +625,34 @@ GMEVENT* FOURKINGS_GHOST_MistAnm( GAMESYS_WORK *gsys )
  *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
  *	@param	id  0:fire_aの炎再生
  *	            1～4:fire_bの炎再生
- *	@return イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT* FOURKINGS_GHOST_FireAnm( GAMESYS_WORK *gsys, int id )
+void FOURKINGS_GHOST_FireAnm( GAMESYS_WORK *gsys, int id )
 {
-  GMEVENT *event;
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FOURKINGS_GHOST_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_GHOST_TMP_ASSIGN_ID );
+  GFL_TCBSYS*  tcbsys = FIELDMAP_GetFieldmapTCBSys( p_fieldmap );
+  FIRE_TASK_WORK *task_wk;
 
-  // イベント作成
-  event = FIRE_CreateEvent( NULL, gsys, id );
+  GF_ASSERT( id < 5 );
 
-  return event;
+  task_wk = &p_wk->task_wk[ id ];
+  task_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  task_wk->p_fieldmap  = p_fieldmap;
+  task_wk->id          = id;
+
+  if( id == 0 )
+  {
+    ANM_FIRE_A_Play( p_wk );
+    ANM_LIGHT_Play( p_wk );
+    // 終了タスク関数
+    GFL_TCB_AddTask( tcbsys, FireTcbA, (void*)task_wk, 0 );
+  }
+  else
+  {
+    ANM_FIRE_B_Play( p_wk, id - 1 );
+    GFL_TCB_AddTask( tcbsys, FireTcbB, (void*)task_wk, 0 );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -958,8 +973,10 @@ static void ANM_BOOK_PlayLoop( FOURKINGS_GHOST_TMP *p_wk )
 
   ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
   ANM_Play( p_wk->exp_obj, obj_idx, 1, TRUE );
-  ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
+  ANM_Play( p_wk->exp_obj, obj_idx, 2, TRUE );
   ANM_Stop( p_wk->exp_obj, obj_idx, 3 );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 4 );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 5 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -992,8 +1009,10 @@ static void ANM_BOOK_Play( FOURKINGS_GHOST_TMP *p_wk )
 
   ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
   ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
-  ANM_Play( p_wk->exp_obj, obj_idx, 2, FALSE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
   ANM_Play( p_wk->exp_obj, obj_idx, 3, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 4, FALSE );
+  ANM_Play( p_wk->exp_obj, obj_idx, 5, FALSE );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1009,7 +1028,7 @@ static BOOL ANM_BOOK_CheckEnd( FOURKINGS_GHOST_TMP *p_wk )
   u16 obj_idx = OBJ_BOOK;
 
   EXP_OBJ_ANM_CNT_PTR exp_anm;
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2 );
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 3 );
 
   return FLD_EXP_OBJ_ChkAnmEnd(exp_anm);
 }
@@ -1025,9 +1044,9 @@ static void ANM_BOOK_FallDown( FOURKINGS_GHOST_TMP *p_wk )
   fx32 last_frame;
   u16 obj_idx = OBJ_BOOK;
   EXP_OBJ_ANM_CNT_PTR exp_anm;
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2 );
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 3 );
 
-  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2, TRUE );
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 3, TRUE );
   // 最終フレーム取得
   last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
 
@@ -1035,7 +1054,7 @@ static void ANM_BOOK_FallDown( FOURKINGS_GHOST_TMP *p_wk )
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, FALSE );
 
   // ラストフレームにする
-  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 2, last_frame );
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, FOURKINGS_GHOST_UNIT_IDX, obj_idx, 3, last_frame );
 }
 //=============================================================================
 /**
@@ -1543,114 +1562,48 @@ static GMEVENT_RESULT MistEvent( GMEVENT* event, int* seq, void* wk )
   return GMEVENT_RES_CONTINUE;
 }
 
-
 //----------------------------------------------------------------------------
 /**
- *	@brief  炎アニメ再生イベント作成
- *
- *	@param	GMEVENT* parent 親イベント
- *	@param	gsys            ゲームシステム
- *	@param  id              炎ID
- *
- *	@return イベント
+ *	@brief  炎アニメ終了監視タスク  FIRE_A版
  */
 //-----------------------------------------------------------------------------
-static GMEVENT * FIRE_CreateEvent( GMEVENT* parent, GAMESYS_WORK* gsys, const int id )
+static void FireTcbA( GFL_TCB *tcb, void* work )
 {
-  GMEVENT*          event;
-  FIRE_EVENT_WORK*  work;
-  FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-
-  // イベント生成
-  if( id == 0 )
-  {
-    event = GMEVENT_Create( gsys, parent, FireEventA, sizeof(FIRE_EVENT_WORK) );
-  }
-  else
-  {
-    event = GMEVENT_Create( gsys, parent, FireEventB, sizeof(FIRE_EVENT_WORK) );
-  }
-
-  // 初期化
-  work = GMEVENT_GetEventWork( event );
-  work->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  work->p_fieldmap  = p_fieldmap;
-  work->id          = id;
-
-  return event;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  炎アニメイベント関数  FIRE_A版
- *
- *	@param	event イベントポインタ
- *	@param	seq   シーケンス
- *	@param	wk    ワーク
- *
- *	@return GMEVENT_RESULT
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT FireEventA( GMEVENT* event, int* seq, void* wk )
-{
-  FIRE_EVENT_WORK *p_wk = (FIRE_EVENT_WORK*)wk;
+  FIRE_TASK_WORK *p_wk = (FIRE_TASK_WORK*)work;
   FOURKINGS_GHOST_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, FOURKINGS_GHOST_TMP_ASSIGN_ID);
 
-  switch(*seq){
-  case 0:
-    ANM_FIRE_A_Play( p_gmk_wk );
-    ANM_LIGHT_Play( p_gmk_wk );
-    (*seq)++;
-    break;
-  case 1:
-    // アニメ終了チェック
-    if( ANM_FIRE_A_CheckEnd( p_gmk_wk ) )
-    {
-      (*seq)++;
-    }
-    break;
-  case 2:
-    ANM_FIRE_A_PlayLoop( p_gmk_wk );
-    return GMEVENT_RES_FINISH;
+  // アニメ終了していないなら戻る
+  if( ANM_FIRE_A_CheckEnd( p_gmk_wk ) == FALSE )
+  {
+    return;
   }
 
-  return GMEVENT_RES_CONTINUE;
+  // ループ再生にする
+  ANM_FIRE_A_PlayLoop( p_gmk_wk );
+
+  GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  炎アニメイベント関数  FIRE_B版
- *
- *	@param	event イベントポインタ
- *	@param	seq   シーケンス
- *	@param	wk    ワーク
- *
- *	@return GMEVENT_RESULT
+ *	@brief  炎アニメ終了監視タスク  FIRE_B版
  */
-//----------------------------------------------------------------------------
-static GMEVENT_RESULT FireEventB( GMEVENT* event, int* seq, void* wk )
+//-----------------------------------------------------------------------------
+static void FireTcbB( GFL_TCB *tcb, void* work )
 {
-  FIRE_EVENT_WORK *p_wk = (FIRE_EVENT_WORK*)wk;
+  FIRE_TASK_WORK *p_wk = (FIRE_TASK_WORK*)work;
   FOURKINGS_GHOST_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_wk->p_fieldmap, FOURKINGS_GHOST_TMP_ASSIGN_ID);
 
   // -1 はOBJIDXを0はじまりにするため
-  switch(*seq){
-  case 0:
-    ANM_FIRE_B_Play( p_gmk_wk, p_wk->id - 1 );
-    (*seq)++;
-    break;
-  case 1:
-    // アニメ終了チェック
-    if( ANM_FIRE_B_CheckEnd( p_gmk_wk, p_wk->id - 1 ) )
-    {
-      (*seq)++;
-    }
-    break;
-  case 2:
-    ANM_FIRE_B_PlayLoop( p_gmk_wk, p_wk->id - 1 );
-    return GMEVENT_RES_FINISH;
+  // アニメ終了していないなら戻る
+  if( ANM_FIRE_B_CheckEnd( p_gmk_wk, p_wk->id - 1 ) == FALSE )
+  {
+    return;
   }
 
-  return GMEVENT_RES_CONTINUE;
+  // ループ再生にする
+  ANM_FIRE_B_PlayLoop( p_gmk_wk, p_wk->id - 1 );
+
+  GFL_TCB_DeleteTask( tcb );    // タスクを破棄(自殺)
 }
 
 //----------------------------------------------------------------------------
@@ -1678,6 +1631,12 @@ static GMEVENT * BOOK_FALL_CreateEvent( GAMESYS_WORK* gsys, int wait )
   work->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   work->p_fieldmap  = p_fieldmap;
   work->wait        = wait;
+
+  {
+    const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    work->mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0101_BIGFOUR1_01 );
+    GF_ASSERT_MSG( work->mmdl, "シキミのモデルがみつからない");
+  }
 
   return event;
 }
@@ -1716,13 +1675,19 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_BOOK_FALL:
     if( ANM_BOOK_CheckEndLoop( p_gmk_wk ) )
     {
+      // このタイミングでシキミが振り返る
+      {
+        MMDL_SetAcmd( p_wk->mmdl, AC_STAY_WALK_D_8F ); 
+      }
+
+      // 本が落ちるアニメ再生
       ANM_BOOK_Play( p_gmk_wk );
       *seq = SEQ_BOOK_FALL_WAIT;
     }
     break;
   // 本落ちるアニメ終了待ち
   case SEQ_BOOK_FALL_WAIT:
-    if( ANM_BOOK_CheckEnd( p_gmk_wk ) )
+    if( ANM_BOOK_CheckEnd( p_gmk_wk ) && MMDL_CheckEndAcmd(p_wk->mmdl) )
     {
       *seq = SEQ_WAIT;
     }

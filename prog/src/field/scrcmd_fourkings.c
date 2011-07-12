@@ -317,7 +317,6 @@ VMCMD_RESULT EvCmdFourKings_Ghost_Mist( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdFourKings_Ghost_Fire( VMHANDLE *core, void *wk )
 {
   int fire_id;
-  GMEVENT *event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -325,17 +324,9 @@ VMCMD_RESULT EvCmdFourKings_Ghost_Fire( VMHANDLE *core, void *wk )
   // çƒê∂Ç∑ÇÈâäÇÃID
   fire_id = VMGetU16( core );
 
-  event = FOURKINGS_GHOST_FireAnm( gsys, fire_id );
+  FOURKINGS_GHOST_FireAnm( gsys, fire_id );
 
-  if( event == NULL )
-  {
-    GF_ASSERT(0);
-    return VMCMD_RESULT_CONTINUE;
-  }
-
-  SCRIPT_CallEvent( sc, event );
-
-  return VMCMD_RESULT_SUSPEND;
+  return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
 /*	@brief  ñ{óéÇøÇÈÉAÉjÉÅ */
