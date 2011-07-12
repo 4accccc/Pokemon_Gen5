@@ -55,7 +55,7 @@ INIT_EVENT_START	ev_init_c09r0101
   IF $LOCALWORK1 == 0 THEN
     // 頂上のPOSを踏んでいない時の処理
     // シキミを後ろに向かせて配置
-    _OBJ_POS_CHANGE( C09R0101_BIGFOUR1_01, 15, 12, 8, DIR_UP )
+    _OBJ_POS_CHANGE( C09R0101_BIGFOUR1_01, 15, 12, 7, DIR_UP )
   ENDIF
 
 INIT_EVENT_END
@@ -74,7 +74,7 @@ INIT_EVENT_START	ev_recover_c09r0101
   ELSE
     // 頂上のPOSを踏んでいない時の処理
     // シキミを後ろに向かせて配置
-    _OBJ_POS_CHANGE( C09R0101_BIGFOUR1_01, 15, 12, 8, DIR_UP )
+    _OBJ_POS_CHANGE( C09R0101_BIGFOUR1_01, 15, 12, 7, DIR_UP )
   ENDIF
 
 INIT_EVENT_END
@@ -145,14 +145,8 @@ EVENT_START	ev_pos_c09r0101_enter_02
 
   _TIME_WAIT( 5 )
 
-  // シキミ振り向く
-  _OBJ_ANIME( C09R0101_BIGFOUR1_01, anm_turn_down )
-  _OBJ_ANIME_WAIT()
-
-  _TIME_WAIT( 5 )
-
   // 本が落ちる⇒暗転
-  // 数字は本が落ちるアニメが終了してから暗転までのウェイト
+  // 数字は本が落ちるアニメが再生してから暗転までのウェイト
   _FOURKINGS_GHOST_BOOK_FALL( 10 )
 
   _TIME_WAIT( 5 )
@@ -187,12 +181,4 @@ EVENT_START	ev_pos_c09r0101_warp_01
 	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 31, 48, DIR_UP )
 	
 EVENT_END
-
-
-//--------------------------------------------------------------
-//	下に振り向く
-//--------------------------------------------------------------
-_ANIME_LABEL  anm_turn_down
-  _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA ACMD_END,0
 

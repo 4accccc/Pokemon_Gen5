@@ -3,6 +3,8 @@ DATA_LIST = \
     book01.nsbca \
     book01.nsbta \
     book01.nsbtp \
+    book01_b.nsbca \
+    book01_b.nsbtp \
     book02.nsbca \
     book02.nsbta \
     book02.nsbtp \
