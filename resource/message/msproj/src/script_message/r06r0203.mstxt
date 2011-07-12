@@ -126,7 +126,7 @@
 でんせつの　ポケモン　コバルオン……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T03:48:33" />
+				Time="2011-07-12T12:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -167,13 +167,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとと　ポケモンだけでは　ない…
+			<Text>おお……　おお……！
+コバルオン　ではないか……！▼
+そうか　そうか
+おまえさん　こやつらに……▼
+ひとと　ポケモンだけでは　ない……
 いきものは　おたがいに　みとめあい▼
 しんらいしあって　いきていくことが
 いちばん　なんじゃ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T03:45:14" />
+				Time="2011-07-12T12:43:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -181,13 +185,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人と　ポケモンだけでは　ない…
+			<Text>おお……　おお……！
+コバルオン　ではないか……！▼
+そうか　そうか
+おまえさん　こやつらに……▼
+人と　ポケモンだけでは　ない…
 生きるものは　お互いに　認めあい▼
 信頼しあって　生きていくことが
 一番なんじゃ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T03:45:45" />
+				Time="2011-07-12T12:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -196,10 +204,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・</Comment>
+・いる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T03:45:51" />
+				Time="2011-07-12T12:41:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -207,6 +215,47 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-12T03:47:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0203_oldman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:41:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:41:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:41:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:41:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T12:41:24" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
