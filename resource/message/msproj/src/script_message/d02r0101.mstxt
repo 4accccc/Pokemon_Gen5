@@ -311,10 +311,10 @@
 			<Text>プラズマだん……
 というか　ゲーチス……▼
 かれにとって　じぶんいがいの
-そんざいは　ない　ものだったんだね</Text>
+そんざいは　ない　ものだったんだ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T05:25:08" />
+				Time="2011-07-12T03:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -324,11 +324,11 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団……
 というか　ゲーチス……▼
-彼に　とって　自分以外の　存在は
-ないに　等しい　ものだったんだね</Text>
+彼にとって　自分以外の　存在は
+ないに　等しい　ものだったんだ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T05:24:56" />
+				Time="2011-07-12T03:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -363,10 +363,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ぼくの　りそうは　つよさ……▼
+だけど　よのなかには　さまざまな
+つよさが　あって　ただ　かつだけでは▽
+もとめる　りそうには　たどりつかない</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:04:21" />
+				Time="2011-07-12T03:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,12 +377,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうして　きみの　実力を
-間近で　拝見したい▽
-そんな　思いも　あったけどね</Text>
+			<Text>ぼくの　理想は　強さ……▼
+だけど　世の中には　様々な
+強さが　あって　ただ　勝つだけでは▽
+求める　理想には　たどりつかない</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T05:27:52" />
+				Time="2011-07-12T03:58:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -472,10 +476,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それにしても　プラズマだん　いないね
-もっと　おくを　さがさないとね</Text>
+もっと　おくを　さがそうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-05T12:13:37" />
+				Time="2011-07-12T03:56:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -484,10 +488,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それにしても　プラズマ団　いないね
-もっと　奥を　探さないとね</Text>
+もっと　奥を　探そうか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T05:28:06" />
+				Time="2011-07-12T03:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
