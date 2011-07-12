@@ -43,21 +43,188 @@
 				User="matsumiya:W00224"
 				Time="2011-06-28T06:49:31" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02_sppoke1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふしぎな　けはいが　する……！
+あたりを　しらべますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:01:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:01:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>不思議な　気配が　する……！
+周囲を　調べますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:01:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:01:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・d33イベント後にPOSを踏む
+　GRIDX＝、GRIDZ＝
+・はい/いいえの選択肢表示
+　はい　→poke_02
+　いいえ→終了
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:07:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ユクシー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T06:58:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02_sppoke1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょううん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:00:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:00:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょううん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:00:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:00:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・画面？から飛来して待機
+・会話するとメッセージ表示とあわせて鳴き声再生
+・続けて戦闘に
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:07:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ユクシー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T06:59:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02_sppoke1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユクシーは
+どこかに　とびさっていった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:02:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:01:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユクシーは
+どこかに　飛び去っていった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:02:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:01:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・捕獲以外で戦闘終了した場合
+・殿堂入りで復帰
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:07:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ユクシー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:00:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c02_woman2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だれも　つかっていない　ふるびた
-いふくの　こうじょうや　そうこを▼
-きぼうにあふれた　わかい　ひとたちが
-アトリエとして　つかいだしたの▼
-それが　げいじゅつのまち　とよばれる
-シッポウシティの　はじまりね</Text>
+			<Text>だれも　つかわなくなった　ふるびた
+そうこを　アトリエに　さいりよう！▽
+イノベーション！▼
+あたらしい　アイデアが
+あたらしい　かちかんを　うみだすのね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:09:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65,15 +232,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だれも　使っていない　古びた
-衣服の　工場や　倉庫を▼
-希望にあふれた　若い人たちが
-アトリエとして　使いだしたの▼
-それが　芸術の街と　呼ばれる
-シッポウシティの　始まりね</Text>
+			<Text>だれも　使わなくなった　古びた
+倉庫を　アトリエに　再利用！▽
+イノベーション！▼
+新しい　アイデアが
+新しい　価値観を　生みだすのね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T07:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82,10 +248,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:48:31" />
+				Time="2011-07-12T07:09:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -540,10 +706,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモンジム
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:54:23" />
+				Time="2011-07-12T07:09:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
