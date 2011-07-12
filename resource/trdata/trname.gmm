@@ -5160,6 +5160,101 @@
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
+	<row id="tanpan_26">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="mini_20">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="rangerm_19">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="rangerw_19">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitem_30">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitew_30">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="fishing_24">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="fishing_25">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerm_11">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerm_12">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerw_10">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="swimmerw_11">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="mount_16">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranm_13">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranm_14">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranw_10">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranw_11">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="karate_16">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="battleg_15">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
