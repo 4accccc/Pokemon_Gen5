@@ -2,14 +2,59 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d33r0101_event_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふしぎな　けはいが　する……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:31:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>不思議な　気配が　する……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・条件を満たしているときに洞窟に入ると
+　このメッセージ表示、続けて主人公を
+　所定pos、GRIDX＝？、GRIDZ＝？に誘導
+・続けてsppoke1_01
+※このままだとポケモンの紹介ができない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:37:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>イベント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:31:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d33r0101_sppoke1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょううん！▼</Text>
+			<Text>きょううん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +62,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょううん！▼</Text>
+			<Text>きょううん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29,12 +74,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・クリア後に、３匹そろって出現
-・posを踏むとメッセージ表示
-　続けてsppoke2_01</Comment>
+・続けてsppoke2_01</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:34:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -57,10 +100,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゃううん！▼</Text>
+			<Text>きゃううん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -68,10 +111,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きゃううん！▼</Text>
+			<Text>きゃううん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -106,10 +149,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゅううん！▼</Text>
+			<Text>きゅううん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -117,10 +160,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きゅううん！▼</Text>
+			<Text>きゅううん！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -156,10 +199,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ユクシーは
-どこかに　とびさっていった……▼</Text>
+どこかに　とびさっていった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -168,10 +211,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ユクシーは
-どこかに　とびさっていった……▼</Text>
+どこかに　飛び去っていった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -208,10 +251,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>エムリットは
-どこかに　とびさっていった……▼</Text>
+どこかに　とびさっていった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -220,10 +263,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>エムリットは
-どこかに　とびさっていった……▼</Text>
+どこかに　飛び去っていった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -260,10 +303,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アグノムは
-どこかに　とびさっていった……▼</Text>
+どこかに　とびさっていった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -272,10 +315,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アグノムは
-どこかに　とびさっていった……▼</Text>
+どこかに　飛び去っていった……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:32:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -285,11 +328,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・最後、アグノムが飛び去り、メッセージ表示
-・３匹とも移動ポケモンになる
-　別途、仕様書作成予定</Comment>
+・３匹とも所定のPOSを踏むと
+　出現、戦闘できるようになる（別紙参照）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-12T02:35:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
