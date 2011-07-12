@@ -53,7 +53,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -111,10 +111,102 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0203_oldman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんじゅうねんも　さがしもとめた
+でんせつの　ポケモン　コバルオン……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:48:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:41:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>何十年も　探し求めた
+伝説の　ポケモン　コバルオン……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:41:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・コバルオンが
+　いる
+　いない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:44:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:40:55" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0203_oldman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとと　ポケモンだけでは　ない…
+いきものは　おたがいに　みとめあい▼
+しんらいしあって　いきていくことが
+いちばん　なんじゃ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:45:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:45:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>人と　ポケモンだけでは　ない…
+生きるものは　お互いに　認めあい▼
+信頼しあって　生きていくことが
+一番なんじゃ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:45:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:45:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:45:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T03:47:07" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
