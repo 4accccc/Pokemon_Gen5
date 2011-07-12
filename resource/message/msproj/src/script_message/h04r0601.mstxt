@@ -139,10 +139,10 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・あわせて鳴き声再生
-・swanで新規追加</Comment>
+※swanで新規追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T05:04:33" />
+				Time="2011-07-12T12:25:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
