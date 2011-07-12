@@ -2,6 +2,7 @@
 #ifndef ZONE_D27R2101_EVD_H
 #define ZONE_D27R2101_EVD_H
 
+#define DOOR_ID_D27R2101_D27R0701_EXIT01  0
 
 #endif //ZONE_D27R2101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r2101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
