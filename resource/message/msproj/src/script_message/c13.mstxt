@@ -1864,6 +1864,268 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c13_badman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よぉ！　いい　はなし　だぜ▼
+あんたの　モンスターボールと
+おれの　ハイパーボールを▽
+こうかん　しよーじゃねーか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:55:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:55:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よぉ！　いい　話だぜ▼
+あんたの　モンスターボールと
+おれの　ハイパーボールを▽
+交換しよーじゃねーか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・道具交換前
+・はい/いいえの選択肢表示
+　はい　→
+　はい選択、だけど
+　モンスターボールを持っていない→
+　いいえ→
+※不便なところに配置で</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:55:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_badman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へっへっへ！　きになるだろうが
+ハイパーボール　つかってくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>へっへっへ！　気になるだろうが
+ハイパーボール　使ってくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_badman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！　まじかよ！　うそだろ？
+モンスターボール　もってないのかよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！　まじかよ！　うそだろ？
+モンスターボール　持ってないのかよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択だけど
+　モンスターボールを持っていない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_badman1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ふつー　とりかえっこ　するだろ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ふつー　取り換えっこ　するだろ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:58:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_badman1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なっ！
+いい　はなし　だったろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:56:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なっ！
+いい　話だったろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:58:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:57:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・道具交換後
+・日付が変われば01から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-12T11:54:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c13_sign1_01"
 		Style="Large">
 		<LanguageCell
