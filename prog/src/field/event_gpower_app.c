@@ -77,12 +77,11 @@ static void sub_CallParamSet( GPOWER_APP_PARAM* pp, int mode, GAMESYS_WORK* gsys
     for(i = 0;i < INTRUDE_EQUIP_GPOWER_MAX;i++){
       GPOWER_ID id = ISC_SAVE_GetGPowerID(isave,i);
       if( id != GPOWER_ID_NULL ){
-        pp->gpower[i] = id;
-        ++pp->gpower_num;
+        pp->gpower[ pp->gpower_num++ ] = id;
       }
     }
   }
-  for(i = 0;i < GPOWER_TYPE_MAX; i++, pp->occur_num++){
+  for(i = 0;i < GPOWER_TYPE_MAX; i++){
     GPOWER_ID tmp = GPOWER_Check_OccurType(i);
 
     if( tmp == GPOWER_ID_NULL ){
@@ -92,8 +91,8 @@ static void sub_CallParamSet( GPOWER_APP_PARAM* pp, int mode, GAMESYS_WORK* gsys
       GF_ASSERT(0);
       break;
     }
-    pp->occur_list[i].id = tmp;
-    pp->occur_list[i].life = GPOWER_Check_OccurTypeLife( i );
+    pp->occur_list[pp->occur_num].id = tmp;
+    pp->occur_list[pp->occur_num++].life = GPOWER_Check_OccurTypeLife( i );
   }
   //éıñΩÇÃí∑Ç¢èáÇ…É\Å[Ég
   for( i = 0;i < (pp->occur_num-1); i++ ){
@@ -106,6 +105,7 @@ static void sub_CallParamSet( GPOWER_APP_PARAM* pp, int mode, GAMESYS_WORK* gsys
       }
     }
   }
+  IWASAWA_Printf(" equip = %d, occur = %d\n", pp->gpower_num, pp->occur_num);
 }
 
 //============================================================================================
