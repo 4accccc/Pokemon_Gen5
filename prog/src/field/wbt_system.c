@@ -278,7 +278,7 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   u16 btl_tr_type = TRTYPE_HERO;
   u8 sex = MyStatus_GetMySex( mystat );
   u8 pri = 3;
-  if ( WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT ) == TRUE )
+  if ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_CHAMPION ) != 0 )
   {
     pri = 4;
   }
@@ -372,9 +372,6 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   cond.heapID = wbtsys->heapID;
   cond.wbtcup = wbtsys->wbtcup;
   cond.poketype = wbtsys->poketype;
-  cond.level = WBTTOOL_GetAllTournamentEntryLevel( gamedata );
-  cond.leader_num = WBTTOOL_GetAllTournamentLeaderRate( gamedata, &wbtsys->rand_context );
-  cond.champ_entry = WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENTRY_CHAMP_IN_ALL );
   cond.seed64 = wbtsys->seed64;
 
   WBTTOOL_MakeEntryList( &cond, tr_list );

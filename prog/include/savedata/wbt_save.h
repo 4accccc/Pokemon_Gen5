@@ -40,27 +40,27 @@ typedef enum {
   WBTWIN_COUNT_POKETYPE_DRAGON   = 15,  ///<タイプトーナメント優勝回数：ドラゴン
   WBTWIN_COUNT_POKETYPE_AKU      = 16,  ///<タイプトーナメント優勝回数：悪
 
-  WBTWIN_COUNT_ALLTOURNAMENT     = 17,  ///<オールトーナメント優勝回数
-  WBTWIN_COUNT_CHAMPION          = 18,  ///<チャンピオントーナメント優勝回数
+  WBTWIN_COUNT_CHAMPION          = 17,  ///<チャンピオントーナメント優勝回数
+
+  WBTWIN_COUNT_HODOMOE           = 18,
+  WBTWIN_COUNT_ISSYU             = 19,
+  WBTWIN_COUNT_KANTO             = 20,
+  WBTWIN_COUNT_JOUTO             = 21,
+  WBTWIN_COUNT_HOUEN             = 22,
+  WBTWIN_COUNT_SINOU             = 23,
+  WBTWIN_COUNT_WORLD             = 24,
+  WBTWIN_COUNT_WCS               = 25,
 
   WBTWIN_COUNT_MAX,
+
+  WBTWIN_COUNT_ALLTOURNAMENT     = WBTWIN_COUNT_WCS,  ///<オールトーナメント優勝回数：削除予定
 }WBTWIN_COUNT;
 
 //----------------------------------------------------------
 /// WBT用セーブ：フラグ操作関連
 //----------------------------------------------------------
 typedef enum {
-  WBTSAVE_FLAG_ENABLE_TYPE_TOURNAMENT = 0,  ///<タイプトーナメントへ参加できるか？
-  WBTSAVE_FLAG_ENABLE_CHAMPION_TOURNAMENT,  ///<チャンピオントーナメントへ参加できるか？
-  WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT,     ///<チャンピオントーナメントで優勝したか？
-  WBTSAVE_FLAG_WIN_HODOMOE_EVENT,           ////<ホドモエ初回イベントで優勝したか？
-  WBTSAVE_FLAG_WIN_ISSHU_LEADERS,           ///<イッシュリーダーズトーナメント優勝したか？
-  WBTSAVE_FLAG_WIN_KANTO_LEADERS,           ///<カントーリーダーズトーナメント優勝したか？
-  WBTSAVE_FLAG_WIN_JOUTO_LEADERS,           ///<ジョウトリーダーズトーナメント優勝したか？
-  WBTSAVE_FLAG_WIN_HOUEN_LEADERS,           ///<ホウエンリーダーズトーナメント優勝したか？
-  WBTSAVE_FLAG_WIN_SINOU_LEADERS,           ///<シンオウリーダーズトーナメント優勝したか？
-
-  WBTSAVE_FLAG_MAX = 32,
+  WBTSAVE_FLAG_MAX = 64,
 }WBTSAVE_FLAG;
 
 //======================================================================

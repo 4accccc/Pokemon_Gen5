@@ -43,7 +43,6 @@ enum {
 //-----------------------------------------------------------------------------
 typedef enum {
   WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT,   ///<ダウンロードトーナメント開催可能か？
-  WBT_COND_ID_ENTRY_CHAMP_IN_ALL,           ///<オールトーナメントにチャンピオン参戦するか？
 }WBT_COND_ID;
 
 //-----------------------------------------------------------------------------
@@ -55,10 +54,7 @@ typedef struct {
   WBTCUP wbtcup;
   //WBTRule rule;
   
-  WBT_ALLTOUR_LEVEL level;
   PokeType poketype;              ///<タイプトーナメント用：タイプ指定
-  u8 leader_num;                  ///<オールトーナメント用：リーダー人数
-  BOOL champ_entry;               ///<オールトーナメント用：チャンピオンはエントリーするか？
 
   u64 seed64;
 }WBT_MATCH_CONDITION;
@@ -79,12 +75,12 @@ extern void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_li
 extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 extern u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule );
 extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
+extern WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup );
 extern BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id );
-extern u32 WBTTOOL_GetAllTournamentLeaderRate( GAMEDATA * gamedata, GFL_STD_RandContext * context );
-extern WBT_ALLTOUR_LEVEL WBTTOOL_GetAllTournamentEntryLevel( GAMEDATA * gamedata );
+
 
 

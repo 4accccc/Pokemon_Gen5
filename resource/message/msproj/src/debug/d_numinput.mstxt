@@ -6131,11 +6131,11 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dni_wbtsave_all"
+		Label="dni_wbtsave_champ"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オールトーナメント</Text>
+			<Text>チャンピオン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -6146,7 +6146,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オールトーナメント</Text>
+			<Text>チャンピオン</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
@@ -6171,14 +6171,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dni_wbtsave_champ"
+		Label="dni_wbtsave_hodomoe"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオン</Text>
+			<Text>ホドモエ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="tamada:W00253"
+				Time="2011-07-12T10:44:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6186,10 +6186,290 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオン</Text>
+			<Text>ホドモエ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:44:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_issyu"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:45:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:56:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_kanto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:56:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントー</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:56:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_jouto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョウト</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:56:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョウト</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:56:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_houen"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエン</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:56:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_sinou"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シンオウ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シンオウ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_world"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールドリーダーズ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールドリーダーズ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_wbtsave_wcs"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>WCS</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>WCS</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T10:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

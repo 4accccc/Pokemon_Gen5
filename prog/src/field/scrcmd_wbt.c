@@ -116,33 +116,11 @@ static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
   WBTWIN_COUNT id;
-
-  switch ( WBTSYS_GetWBTCup( wbtsys ) )
+  id = WBTTOOL_WBTCupToWinCount( WBTSYS_GetWBTCup( wbtsys ), WBTSYS_GetPokeType( wbtsys ) );
+  if ( id < WBTWIN_COUNT_MAX )
   {
-  default:
-  case WBTCUP_NULL:
-  case WBTCUP_DOWNLOAD:
-  case WBTCUP_ALL:
-  case WBTCUP_HODOMOE:
-  case WBTCUP_HODOMOE_EVENT:
-  case WBTCUP_ISSYU:
-  case WBTCUP_KANTO:
-  case WBTCUP_JOUTO:
-  case WBTCUP_HOUEN:
-  case WBTCUP_SINOU:
-  case WBTCUP_WORLD:
-  case WBTCUP_WCS:
-    //‰½‚à‚µ‚È‚¢
-    return;
-
-  case WBTCUP_CHAMPION:
-    id = WBTWIN_COUNT_CHAMPION;
-    break;
-  case WBTCUP_POKETYPE:
-    id = WBTSYS_GetPokeType( wbtsys );
-    break;
+    WBTSAVE_IncWinCount( wbtsave, id );
   }
-  WBTSAVE_IncWinCount( wbtsave, id );
 }
 
 //--------------------------------------------------------------

@@ -43,10 +43,11 @@ SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_KOORI == POKETYPE_KOORI );
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_DRAGON == POKETYPE_DRAGON );
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_POKETYPE_AKU == POKETYPE_AKU );
 
-SDK_COMPILER_ASSERT( WBTWIN_COUNT_ALLTOURNAMENT == POKETYPE_MAX );
+//SDK_COMPILER_ASSERT( WBTWIN_COUNT_ALLTOURNAMENT == POKETYPE_MAX );
 
 //include/savedata/wbt_save.h‚Æsrc/savedata/wbt_save_local.h‚Æ‚Å‚Ì’è‹`‚ÉH‚¢ˆá‚¢‚ª‚È‚¢‚æ‚¤‚É
 SDK_COMPILER_ASSERT( WBTWIN_COUNT_MAX == LOCAL_WBTWIN_COUNT_MAX );
+SDK_COMPILER_ASSERT( WBTSAVE_FLAG_MAX == LOCAL_WBTSAVE_FLAG_MAX );
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -78,10 +79,7 @@ WBTSAVE * SAVEDATA_GetWBTSave( SAVE_CONTROL_WORK * sv )
 //------------------------------------------------------------------
 void WBTSAVE_UpdateChampionKey( WBTSAVE * wbtsave )
 {
-  if ( WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_ENABLE_CHAMPION_TOURNAMENT ) == TRUE )
-  {
-    wbtsave->ChampionTournamentFlag = CHAMPION_BATTLE_KEY;
-  }
+  wbtsave->ChampionTournamentFlag = CHAMPION_BATTLE_KEY;
 }
 
 //------------------------------------------------------------------
@@ -126,7 +124,7 @@ void WBTSAVE_IncWinCount( WBTSAVE * wbtsave, WBTWIN_COUNT id )
 BOOL WBTSAVE_GetFlag( const WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
 {
   GF_ASSERT( flag_id < WBTSAVE_FLAG_MAX );
-  return (wbtsave->flag >> flag_id ) & 1;
+  return ( wbtsave->flag[ flag_id / 8 ] & ( 1 << (flag_id % 8) ) != 0 );
 }
 
 //------------------------------------------------------------------
@@ -134,7 +132,7 @@ BOOL WBTSAVE_GetFlag( const WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
 void WBTSAVE_SetFlag( WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
 {
   GF_ASSERT( flag_id < WBTSAVE_FLAG_MAX );
-  wbtsave->flag |= ( 1 << flag_id );
+  wbtsave->flag[ flag_id / 8 ] |= ( 1 << (flag_id % 8) );
 }
 
 //------------------------------------------------------------------
@@ -142,6 +140,6 @@ void WBTSAVE_SetFlag( WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
 void WBTSAVE_ResetFlag( WBTSAVE * wbtsave, WBTSAVE_FLAG flag_id )
 {
   GF_ASSERT( flag_id < WBTSAVE_FLAG_MAX );
-  wbtsave->flag &= ~((u32)( 1 << flag_id ));
+  wbtsave->flag[ flag_id / 8 ] &= ~((u8)( 1 << (flag_id % 8) ));
 }
 

@@ -622,42 +622,6 @@ static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list
   setEntries( tr_list, entry_table );
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-static const u16 presentation_trid[WBT_TRAINER_NUM] = {
-  34,//イブキ
-  27,//ハヤト
-  32,//ミカン
-  35,//アンズ
-
-  29,//アカネ
-  33,//ヤナギ
-  28,//ツクシ
-  WBT_TRCODE_PLAYER//主人公
-};
-//-----------------------------------------------------------------------------
-/**
- * @brief トーナメントリスト例を追加
- */
-//-----------------------------------------------------------------------------
-static void entrySampleTournament( u16 * tr_list )
-{
-#if 1
-  GFL_STD_MemCopy( presentation_trid, tr_list, sizeof(u16) * WBT_TRAINER_NUM );
-#else
-  static const u16 sample_trid[WBT_TRAINER_NUM] = {
-    18,//シロナ
-    55,//モブ
-    13,//ハチク
-    56,//モブ
-    11,//デント
-    53,//モブ
-    12,//アロエ
-    WBT_TRCODE_PLAYER,//プレイヤー
-  };
-  GFL_STD_MemCopy( sample_trid, tr_list, sizeof(u16) * WBT_TRAINER_NUM );
-#endif
-}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -671,7 +635,7 @@ void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
   case WBTCUP_WCS:
     GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
     /* FALL THROUGH */
-    break;
+
   case WBTCUP_HODOMOE:
     entryHodomoeTournament( cond, tr_list );
     break;
@@ -850,9 +814,6 @@ void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID )
 
 #include "field/eventwork.h"  //EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
-  enum {
-    CHAMP_OPEN_COUNT = 10,  ///<仮：オールトーナメント１０回クリアでチャンプトーナメント解除
-  };
 
 //-----------------------------------------------------------------------------
 /**
@@ -872,9 +833,6 @@ BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
   case WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT:
     return FALSE;  //仮：ダウンロードデータには未対応
     break;
-  case WBT_COND_ID_ENTRY_CHAMP_IN_ALL:
-    //ゲームクリアしていたらチャンピオンはオールトーナメントに参戦できる
-    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
   default:
     GF_ASSERT( 0 );
   }
@@ -882,62 +840,12 @@ BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
 }
 
 
-//-----------------------------------------------------------------------------
-/**
- * @brief リーダーの参戦比率を取得する
- * @param gamedata
- * @param context
- * @return リーダーの人数（自分を除く7人のうち占める数）
- */
-//-----------------------------------------------------------------------------
-u32 WBTTOOL_GetAllTournamentLeaderRate( GAMEDATA * gamedata, GFL_STD_RandContext * context )
-{
-  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
-  u32 badge_count = MISC_GetBadgeCount( GAMEDATA_GetMiscWork( gamedata ) );
 
 
-  if (EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR ) == TRUE )
-  {
-    return GFL_STD_Rand( context, 3 ) + 5;
-  }
-  else if ( badge_count >= 7 )
-  {
-    return 5;
-  }
-  else if ( badge_count >= 5 )
-  {
-    return 4;
-  }
-  return 3;
-}
 
-//-----------------------------------------------------------------------------
-/**
- * @brief オールトーナメントでのトレーナー参戦レベルを取得する
- * @param gamedata
- * @return  WBT_ALLTOUR_LEVEL
- */
-//-----------------------------------------------------------------------------
-WBT_ALLTOUR_LEVEL WBTTOOL_GetAllTournamentEntryLevel( GAMEDATA * gamedata )
-{
-  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
-  u32 badge_count = MISC_GetBadgeCount( GAMEDATA_GetMiscWork( gamedata ) );
-
-  if (EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR ) == TRUE )
-  {
-    return WBT_ALLTOUR_LEVEL3;
-  }
-  else if ( badge_count >= 8 )
-  {
-    return WBT_ALLTOUR_LEVEL2;
-  }
-  else if ( badge_count >= 6 )
-  {
-    return WBT_ALLTOUR_LEVEL1;
-  }
-  return WBT_ALLTOUR_LEVEL0;
-}
-
+enum {
+  CHAMP_OPEN_COUNT = 10,  ///<仮：１０回クリアでチャンプトーナメント解除
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -955,37 +863,38 @@ BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup )
   switch ( (WBTCUP)wbtcup )
   {
   case WBTCUP_NULL:     //トーナメント未指定
-    GF_ASSERT( 0 );
   case WBTCUP_ALL:      //オールトーナメント
+    GF_ASSERT( 0 );
+    break;
   case WBTCUP_CHAMPION: //チャンピオントーナメント
-    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_CHAMPION_TOURNAMENT );
+    return ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_WORLD ) >= CHAMP_OPEN_COUNT );
   case WBTCUP_POKETYPE: //タイプトーナメント
-    return TRUE;
+    //ゲームクリアしていたらタイプトーナメントは開催する
+    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+
   case WBTCUP_DOWNLOAD: //ダウンロードトーナメント
     return WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT );
 
   case WBTCUP_HODOMOE_EVENT:  ///ホドモエトーナメント（イベント）           
-    return !WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_HODOMOE_EVENT );
+    return ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HODOMOE ) == 0 );
   case WBTCUP_HODOMOE:     //ホドモエトーナメント           
-    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_HODOMOE_EVENT );
+    return ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HODOMOE ) != 0 );
   case WBTCUP_ISSYU:       //イッシュリーダーズトーナメント 
-    //ゲームクリアしていたらタイプトーナメントは開催する
     return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+
   case WBTCUP_KANTO:       //カントーリーダーズトーナメント 
-    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_ISSHU_LEADERS );
   case WBTCUP_JOUTO:       //ジョウトリーダーズトーナメント 
-    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_ISSHU_LEADERS );
   case WBTCUP_HOUEN:       //ホウエンリーダーズトーナメント 
-    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_ISSHU_LEADERS );
   case WBTCUP_SINOU:       //シンオウリーダーズトーナメント 
-    return WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_ISSHU_LEADERS );
+    return WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU );
+
   case WBTCUP_WORLD:        //ワールドバトルトーナメント     
     return (
-        WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_ISSHU_LEADERS ) &&
-        WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_KANTO_LEADERS ) &&
-        WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_JOUTO_LEADERS ) &&
-        WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_HOUEN_LEADERS ) &&
-        WBTSAVE_GetFlag( wbtsave, WBTSAVE_FLAG_WIN_SINOU_LEADERS ) );
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU ) &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_KANTO ) &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_JOUTO ) &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HOUEN ) &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_SINOU ) );
 
   case WBTCUP_WCS:          //WCSトーナメント
     return FALSE;
@@ -996,6 +905,49 @@ BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief   開催トーナメントIDから優勝回数カウンタの指定IDを取得する
+ * @param wbtcup    開催トーナメント指定
+ * @param poketype  ポケモンタイプ指定（タイプトーナメント用）
+ * @retval  WBTWIN_COUNT  優勝回数カウンタ指定（WBTWIN_COUNT_MAXの場合、該当なし）
+ */
+//-----------------------------------------------------------------------------
+WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype )
+{
+  u32 i;
+  const u8 cup2count[] = {
+    WBTCUP_NULL,          WBTWIN_COUNT_MAX,
+    WBTCUP_DOWNLOAD,      WBTWIN_COUNT_MAX,
+    WBTCUP_ALL,           WBTWIN_COUNT_MAX,
+    WBTCUP_HODOMOE,       WBTWIN_COUNT_HODOMOE,
+    WBTCUP_HODOMOE_EVENT, WBTWIN_COUNT_HODOMOE,
+    WBTCUP_ISSYU,         WBTWIN_COUNT_ISSYU,
+    WBTCUP_KANTO,         WBTWIN_COUNT_KANTO,
+    WBTCUP_JOUTO,         WBTWIN_COUNT_JOUTO,
+    WBTCUP_HOUEN,         WBTWIN_COUNT_HOUEN,
+    WBTCUP_SINOU,         WBTWIN_COUNT_SINOU,
+    WBTCUP_WORLD,         WBTWIN_COUNT_WORLD,
+    WBTCUP_WCS,           WBTWIN_COUNT_WCS,
+    WBTCUP_CHAMPION,      WBTWIN_COUNT_CHAMPION,
+  };
+
+  if ( wbtcup == WBTCUP_POKETYPE )
+  {
+    //PokeTypeとWBTWIN_COUNT_が一致することはAssertで保障
+    return poketype;
+  }
+
+  for ( i = 0; i < NELEMS(cup2count); i += 2 )
+  {
+    if ( cup2count[i + 0] == wbtcup )
+    {
+      return cup2count[ i + 1 ];
+    }
+  }
+
+  return WBTWIN_COUNT_MAX;
+}
 
 
 
