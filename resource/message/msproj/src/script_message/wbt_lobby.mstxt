@@ -557,6 +557,335 @@ msg_wbt_menu_no</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_wbt_menu_explain_hodomoe"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_explain_issyu"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:37:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:37:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_explain_kanto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントートーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:37:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントートーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:37:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_explain_jouto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョウトトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョウトトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_explain_houen"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエントーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエントーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_explain_sinou"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シンオウトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シンオウトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_explain_world"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールドトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールドトーナメントについて</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:38:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:34:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_wbt_menu_explain_rule"
 		Style="Large">
 		<LanguageCell
@@ -887,6 +1216,384 @@ msg_wbt_menu_no</Comment>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_hodomoe"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_issyu"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_kanto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントートーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:43:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントートーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:43:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_jouto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョウトトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:43:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョウトトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:43:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_houen"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエントーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:44:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエントーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:44:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_sinou"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シンオウトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:44:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シンオウトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:44:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_world"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールドトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:44:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールドトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:44:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:42:05" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1504,6 +2211,384 @@ msg_wbt_info_11へ</Comment>
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_hodomoe"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_issyu"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_kanto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントートーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_jouto"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョウトトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョウトトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_houen"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエントーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエントーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_sinou"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シンオウトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シンオウトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢表示</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_world"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールドトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールドトーナメント</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:40:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-12T08:39:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

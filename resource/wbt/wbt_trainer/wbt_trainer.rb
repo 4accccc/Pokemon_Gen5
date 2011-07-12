@@ -22,26 +22,27 @@ PROJECT_ROOT = ENV["PROJECT_ROOT"]
 #----------------------------------------------------------------------------
 #データテーブル
   $type_table = {
-    "ノーマル"=>0,
-    "ノ－マル"=>0,
-    "かくとう"=>1,
-    "ひこう"=>2,
-    "どく"=>3,
-    "じめん"=>4,
-    "いわ"=>5,
-    "むし"=>6,
-    "ゴースト"=>7,
-    "ゴ－スト"=>7,
-    "はがね"=>8,
-    "ほのお"=>9,
-    "みず"=>10,
-    "くさ"=>11,
-    "でんき"=>12,
-    "エスパー"=>13,
-    "エスパ－"=>13,
-    "こおり"=>14,
-    "ドラゴン"=>15,
-    "あく"=>16,
+    "ノーマル"=>"POKETYPE_NORMAL",
+    "ノ－マル"=>"POKETYPE_NORMAL",
+    "かくとう"=>"POKETYPE_KAKUTOU",
+    "ひこう"=>"POKETYPE_HIKOU",
+    "どく"=>"POKETYPE_DOKU",
+    "じめん"=>"POKETYPE_JIMEN",
+    "いわ"=>"POKETYPE_IWA",
+    "むし"=>"POKETYPE_MUSHI",
+    "ゴースト"=>"POKETYPE_GHOST",
+    "ゴ－スト"=>"POKETYPE_GHOST",
+    "はがね"=>"POKETYPE_HAGANE",
+    "ほのお"=>"POKETYPE_HONOO",
+    "みず"=>"POKETYPE_MIZU",
+    "くさ"=>"POKETYPE_KUSA",
+    "でんき"=>"POKETYPE_DENKI",
+    "エスパー"=>"POKETYPE_ESPER",
+    "エスパ－"=>"POKETYPE_ESPER",
+    "こおり"=>"POKETYPE_KOORI",
+    "ドラゴン"=>"POKETYPE_DRAGON",
+    "あく"=>"POKETYPE_AKU",
+    "オールマイティ"=>"POKETYPE_MAX",
   }
 
 
@@ -103,9 +104,9 @@ class COL
     SEX
     MMDL_ID
     TRTYPE
-    ENTRY_TIMING
-    TOURNAMENT_COMMENT
-    ALL_ENTRY
+    HODOMOE_EVENT
+    HODOMOE_ENTRY
+    WORLD_ENTRY
     REGION_ENTRY
     TYPE_ENTRY
     PRIORITY
@@ -138,9 +139,9 @@ class WBT_TRDATA
     @sex = column[COL::SEX]
     @mmdl_id = column[COL::MMDL_ID]
     @trtype = column[COL::TRTYPE]
-    @entry_timing = column[COL::ENTRY_TIMING]
-    @comment_tour = column[COL::TOURNAMENT_COMMENT]
-    @all_entry = column[COL::ALL_ENTRY]
+    @hodomoe_event = column[COL::HODOMOE_EVENT]
+    @hodomoe_entry = column[COL::HODOMOE_ENTRY]
+    @world_entry = column[COL::WORLD_ENTRY]
     @region_entry = column[COL::REGION_ENTRY]
     @type_entry = column[COL::TYPE_ENTRY]
     @priority = column[COL::PRIORITY].to_i
@@ -171,13 +172,20 @@ class WBT_TRDATA
       return $type_table[typename ]
     elsif $maru_batu_table.has_key?( typename )
       if $maru_batu_table[typename] == "TRUE"
-        return 17
+        return "POKETYPE_MAX"
       else
-        return -1
+        return "POKETYPE_MAX + 1"
       end
     else
       raise Exception, "未知のタイプ指定です'#{typename}'"
     end
+  end
+
+  def maru_batu_value( str )
+    if $maru_batu_table.has_key?( str )
+      return $maru_batu_table[ str ]
+    end
+    raise Exception, "○×以外の指定です'#{str}'\n"
   end
 
   def printout(idx)
@@ -187,14 +195,15 @@ class WBT_TRDATA
     end
     str = ""
     str += sprintf("\t{ //%03d %s\n", @no, @name)
-    str += sprintf("\t\t%2d, //%s\n", $type_table[@type], @type)
+    str += sprintf("\t\t%s, //%s\n", $type_table[@type], @type)
     str += sprintf("\t\t%s, //%s\n", $sex_table[@sex], @sex )
     str += sprintf("\t\t%-16s,// 動作モデル指定\n", @mmdl_id )
     str += sprintf("\t\tTRTYPE_%-12s, //トレーナータイプ指定\n", @trtype )
-    str += sprintf("\t\t%2d, //エントリタイミング\n", $entry_timing_table[@entry_timing] )
-    str += sprintf("\t\t%-5s, //オールトーナメント参加\n", $maru_batu_table[@all_entry] )
-    str += sprintf("\t\t%-5s, //チャンピオントーナメント参加\n", $cup_table[@region_entry] )
-    str += sprintf("\t\t%2d, //タイプトーナメント種別\n", type_def(@type_entry) )
+    str += sprintf("\t\t%-5s, //ホドモエイベント参加\n", maru_batu_value(@hodomoe_event) )
+    str += sprintf("\t\t%-5s, //ホドモエトーナメント参加\n", maru_batu_value(@hodomoe_entry) )
+    str += sprintf("\t\t%-5s, //ワールドトーナメント参加\n", maru_batu_value(@world_entry) )
+    str += sprintf("\t\t%-5s, //限定トーナメント種別\n", $cup_table[@region_entry] )
+    str += sprintf("\t\t%2s, //タイプトーナメント種別\n", type_def(@type_entry) )
     str += sprintf("\t\t%2d, //優先度\n", @priority )
     str += sprintf("\t\t%2d, //AI\n", @ai.to_i )
     str += sprintf("\t\t%-40s, // BGM\n", $bgm_table[@bgm] )

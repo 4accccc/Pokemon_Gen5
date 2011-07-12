@@ -44,7 +44,7 @@ typedef enum {
   WBTCUP_JOUTO,       ///<ジョウトリーダーズトーナメント 
   WBTCUP_HOUEN,       ///<ホウエンリーダーズトーナメント 
   WBTCUP_SINOU,       ///<シンオウリーダーズトーナメント 
-  WBTCUP_WORLDBATTLE, ///<ワールドバトルトーナメント     
+  WBTCUP_WORLD,       ///<ワールドトーナメント     
   WBTCUP_WCS,         ///<WCSトーナメント
   WBTCUP_HODOMOE_EVENT, ///<ホドモエトーナメント（イベント）           
 

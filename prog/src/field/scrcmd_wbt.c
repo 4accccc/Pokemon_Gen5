@@ -66,7 +66,9 @@ SDK_COMPILER_ASSERT( SCR_WBT_CUP_KANTO == WBTCUP_KANTO );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_JOUTO == WBTCUP_JOUTO );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_HOUEN == WBTCUP_HOUEN );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_SINOU == WBTCUP_SINOU );
-SDK_COMPILER_ASSERT( SCR_WBT_CUP_WORLDBATTLE == WBTCUP_WORLDBATTLE );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_WORLD == WBTCUP_WORLD );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_WCS == WBTCUP_WCS );
+SDK_COMPILER_ASSERT( SCR_WBT_CUP_HODOMOE_EVENT == WBTCUP_HODOMOE_EVENT );
 
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_RECEPTION == WBTSTAGE_RECEPTION );
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_ENTRY == WBTSTAGE_ENTRY );
@@ -105,6 +107,9 @@ static WBTSYS * getWBTSys( SCRCMD_WORK * work )
 }
 
 //--------------------------------------------------------------
+/**
+ * @todo  トーナメント種別確定次第、正しいものをインクリメントする
+ */
 //--------------------------------------------------------------
 static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
 {
@@ -114,13 +119,22 @@ static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
 
   switch ( WBTSYS_GetWBTCup( wbtsys ) )
   {
+  default:
   case WBTCUP_NULL:
   case WBTCUP_DOWNLOAD:
+  case WBTCUP_ALL:
+  case WBTCUP_HODOMOE:
+  case WBTCUP_HODOMOE_EVENT:
+  case WBTCUP_ISSYU:
+  case WBTCUP_KANTO:
+  case WBTCUP_JOUTO:
+  case WBTCUP_HOUEN:
+  case WBTCUP_SINOU:
+  case WBTCUP_WORLD:
+  case WBTCUP_WCS:
     //何もしない
     return;
-  case WBTCUP_ALL:
-    id = WBTWIN_COUNT_ALLTOURNAMENT;
-    break;
+
   case WBTCUP_CHAMPION:
     id = WBTWIN_COUNT_CHAMPION;
     break;
@@ -699,7 +713,7 @@ static GMEVENT * createDummyEvent( HEAPID heapID, GAMESYS_WORK * gsys )
     WBTSYS * wbtsys;
 
     wbtsys = WBTSYS_Create( heapID );
-    WBTSYS_SetWBTCup( wbtsys, WBTCUP_ALL );
+    WBTSYS_SetWBTCup( wbtsys, WBTCUP_HODOMOE );
     WBTSYS_SetRule( wbtsys, WBTRULE_SINGLE );
     WBTSYS_SetStage( wbtsys, WBTSTAGE_ENTRY );
     WBTSYS_MakeMatch( wbtsys, gamedata );

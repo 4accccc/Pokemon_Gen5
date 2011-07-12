@@ -645,7 +645,7 @@
 #define SCR_WBT_CUP_JOUTO             (8) ///<ジョウトリーダーズトーナメント
 #define SCR_WBT_CUP_HOUEN             (9) ///<ホウエンリーダーズトーナメント
 #define SCR_WBT_CUP_SINOU            (10) ///<シンオウリーダーズトーナメント
-#define SCR_WBT_CUP_WORLDBATTLE      (11) ///<ワールドバトルトーナメント
+#define SCR_WBT_CUP_WORLD            (11) ///<ワールドバトルトーナメント
 #define SCR_WBT_CUP_WCS              (12) ///<WCSトーナメント
 #define SCR_WBT_CUP_HODOMOE_EVENT    (13) ///<ホドモエトーナメント（イベント）
 

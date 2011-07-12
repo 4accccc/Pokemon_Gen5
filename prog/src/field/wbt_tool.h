@@ -42,8 +42,6 @@ enum {
  */
 //-----------------------------------------------------------------------------
 typedef enum {
-  WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT,   ///<タイプトーナメント開催可能か？
-  WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT,   ///<チャンピオントーナメント開催可能か？
   WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT,   ///<ダウンロードトーナメント開催可能か？
   WBT_COND_ID_ENTRY_CHAMP_IN_ALL,           ///<オールトーナメントにチャンピオン参戦するか？
 }WBT_COND_ID;

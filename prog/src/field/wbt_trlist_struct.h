@@ -11,13 +11,22 @@
 //============================================================================================
 #pragma once
 
+enum {
+  WBT_TRENTRY_HODOMOE_EVENT = 0,
+  WBT_TRENTRY_HODOMOE,
+  WBT_TRENTRY_POKETYPE,
+  WBT_TRENTRY_WORLD,
+  WBT_TRENTRY_REGION,
+  WBT_TRENTRY_WCS,
+};
 typedef struct {
   u8  type;               ///< タイプ指定
   u8  sex;                ///< 性別指定
   u16 mmdl_id;            ///< 動作モデル指定
   u8 tr_type;             ///<トレーナータイプ指定
-  u8 entry_timing;        ///<エントリタイミング
-  BOOL entry_all;         ///<オールトーナメント参加
+  u8 entry_hodomoe_event;   ///<ホドモエトーナメント参加
+  u8 entry_hodomoe;         ///<ホドモエトーナメント参加
+  u8 entry_world;        ///<エントリタイミング
   u8 region_tournament_id;       ///<限定トーナメント種別
   u8  type_tournament_id; ///<タイプトーナメント種別
   u8  priority; ///<優先度

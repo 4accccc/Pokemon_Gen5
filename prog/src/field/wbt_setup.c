@@ -345,11 +345,11 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
   wr_param->my_status = GAMEDATA_GetMyStatus( gamedata ); //自分情報
 
 	//  レベルの反映
-  if ( WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_POKETYPE_TOURNAMENT ) == FALSE )
+  if ( WBTTOOL_CheckCupEnable( gamedata, WBTCUP_POKETYPE ) == FALSE )
   { //タイプトーナメントに参戦できない→LV1
     wr_param->status = WIN_RECORD_STATUS_LV1;
   }
-  else if ( WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_CHAMPION_TOURNAMENT ) == FALSE )
+  else if ( WBTTOOL_CheckCupEnable( gamedata, WBTCUP_CHAMPION ) == FALSE )
   { //タイプトーナメントに参戦できるがチャンピオントーナメントに参戦できない→LV2
     wr_param->status = WIN_RECORD_STATUS_LV2;
   }

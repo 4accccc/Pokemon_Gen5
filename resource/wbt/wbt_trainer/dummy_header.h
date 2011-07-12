@@ -14,6 +14,7 @@ typedef enum {
 
 
 #include "../../../prog/include/pm_version.h"
+#include "../../../prog/include/poke_tool/poketype_def.h"
 #include "../../../prog/src/field/wbt_trlist_struct.h"
 #include "../../../prog/include/field/wbt.h"
 
