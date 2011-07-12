@@ -1923,7 +1923,7 @@ static void _set_pokewood_choice_bsp( BTL_CLIENT *wk, int event_no, int choice )
 static BOOL _get_pokewood_success_flag( BTL_CLIENT *wk )
 {
   BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
-  OS_Printf("ポケウッド成功フラグ取得 = %d\n",bsp->pokewoodSuccessFlag );
+  OS_Printf("ポケウッド成功フラグ取得 = %dd\n",bsp->pokewoodSuccessFlag );
   return bsp->pokewoodSuccessFlag;
 }
 
@@ -1944,6 +1944,7 @@ static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, 
     }else{
       _set_pokewood_success_flag( wk, FALSE );   // 逆なら立てない
     }
+    OS_Printf("success check event_no=%d\n", event_no);
   }
 }
 
@@ -2568,9 +2569,11 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
       if(resultCode==BTL_RESULT_WIN){     // 条件を達成
         wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][2];
         wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][2];
+        wk->clientTurnCount=100;
       }else{                              // 条件を未達成
         wk->pokewoodSeqWork.my_msg    = senario->situation_msg[0][3];
         wk->pokewoodSeqWork.enemy_msg = senario->situation_msg[1][3];
+        wk->clientTurnCount=101;
       }
     }
     wk->pokewoodSeqWork.seq = PWEND_REC_SEQ_ENEMY_APPEAR;

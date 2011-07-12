@@ -6392,6 +6392,7 @@ static void _print_pokewood_senario( POKEWOOD_SENARIO *senario )
   OS_Printf("pokenum_limit=%d", senario->pokenum_limit);
   OS_Printf("item_ok=%d\n", senario->item_ok);
   OS_Printf("turn_max=%d\n", senario->turn_max);
+  OS_Printf("success_event=%d\n", senario->success_event);
 
   OS_Printf("win_provision=%d\n", senario->win_provision);
   OS_Printf("rec_poke=%d\n",  senario->poke_provision[0]);
