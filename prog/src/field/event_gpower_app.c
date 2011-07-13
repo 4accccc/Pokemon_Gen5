@@ -67,6 +67,7 @@ static void sub_CallParamSet( GPOWER_APP_PARAM* pp, int mode, GAMESYS_WORK* gsys
   int i,j;
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
 
+  pp->gsys = gsys;
   pp->mode = mode;
   pp->derudama_num = 
     MYITEM_GetItemNum( GAMEDATA_GetMyItem( gdata ), ITEM_DERUDAMA, heapID );

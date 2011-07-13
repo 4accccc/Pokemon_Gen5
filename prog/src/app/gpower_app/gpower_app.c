@@ -39,9 +39,11 @@
 
 //アプリ共通素材
 #include "app/app_menu_common.h"
+#include "app/app_taskmenu.h"
 
 // サウンド
 #include "sound/pm_sndsys.h"
+#include "gpower_app_snd_def.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -96,13 +98,14 @@ enum{
 // 上：BG  (0-2:BG)
 // 上：OBJ (0:キャラ)
 // (main)
-// 下：BG  (0-2:BG)、(6:cmn)
+// 下：BG  (0-2:BG)、(6:cmn)、(8:font)、(10:yesno)
 // 下：OBJ (8-11:cmn)
 enum{
 	// (main bg)
 	PLTID_BG_BASE				= 0,
 	PLTID_BG_CMN				= 6,
 	PLTID_BG_FONT				= 8,
+	PLTID_BG_YESNO				= 10,
 	// (sub bg)
 	PLTID_SUB_BG_BASE			= 0,
 	PLTID_SUB_BG_FONT			= 8,
@@ -218,8 +221,12 @@ enum{
 // GPOWER_APP_MAIN_WORK.Flag
 enum{
 	FLG_MW_UPDATE		= (1<<0),			// 更新
-	FLG_MW_END			= (1<<1),			// 終了
+	FLG_MW_DISP_CURSOR	= (1<<1),			// カーソル表示
 	FLG_MW_NO_SELECT	= (1<<2),			// ハイリンク選択不可
+	FLG_MW_BATTERY_ERR	= (1<<3),			// バッテリーエラー
+	//
+	FLG_MW_PALCHG_ON	= (1<<4),			// パレットチェンジ中
+	FLG_MW_DECIDE_ANIM	= (1<<5),			// 決定アニメ
 };
 
 //=============================================================================
@@ -263,13 +270,25 @@ typedef struct
 	GFL_BMP_DATA				*BmpData[GPOWER_APP_BMPOAM_MAXNUM];		// Bmp
 	BMPOAM_ACT_PTR				BmpOamWork[GPOWER_APP_BMPOAM_MAXNUM];	// BMPOAM用Work
 	//
+	APP_TASKMENU_WIN_WORK		*pAppTask[2];
+	APP_TASKMENU_ITEMWORK		appitem[2];
+	APP_TASKMENU_RES			*pAppTaskRes;
+	//
 	s32							Step;							// ステップ
 	u32							Flag;							// フラグ
 	s32							CurPos;							// カーソル
 	s32							CurPosMax;						// 最大
 	s32							Result;							// 結果
+	s32							Timer;							// タイマ
+	s32							AnimNum;						// アニメ用
+	s32							YesNoCursor;					// yes/no
 	//
 	s16							*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
+	// パレットチェンジ用
+	s32							PCount;							///< カウンタ
+	u16							PBufStart[0x10];				///< 開始
+	u16							PBufEnd[0x10];					///< 終了
+	u16							PBufNow[0x10];					///< 現在
 } GPOWER_APP_MAIN_WORK;
 
 //-----------------------------------------
@@ -422,7 +441,7 @@ static const s16 gpapp_obj_cmn_itbl[] = {
 
 // OBJのテーブルデータ(cmn)
 static const GPOWER_APP_OBJ_DATA gpapp_obj_cmn_tbl[] = {
-	{ 1,	0x30,	1,	1,	0,	1, 4,	0,},		// 戻るマーク
+	{ 1,	0x30,	2,	1,	0,	1, 4,	0,},		// 戻るマーク
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -456,7 +475,7 @@ static const GPOWER_APP_CANVAS_DATA gpapp_canvas_tbl[] = {
 	{ GFL_BG_FRAME2_S,	22, 19,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目8
 	{ GFL_BG_FRAME2_S,	22, 21,	8,	2, PLTID_SUB_BG_FONT,},		// 上:項目9
 	//
-	{ GFL_BG_FRAME0_M,	 2,	17,	28,	6, PLTID_BG_FONT,},			// 下:yes/no
+	{ GFL_BG_FRAME0_M,	 2,	14,	28,	6, PLTID_BG_FONT,},			// 下:yes/no
 	//
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -470,6 +489,9 @@ static const s16 gpapp_mes_tbl[] = {
 	msg_mono_pow_102,			// 「ハイリンク」
 	msg_mono_pow_103,			// 「分:秒」
 	msg_mono_pow_104,			// 「をつかいますか?」
+	//
+	msg_mono_pow_006,			// 「はい」
+	msg_mono_pow_007,			// 「いいえ」
 };
 
 //------------------
@@ -485,6 +507,14 @@ static const GFL_UI_TP_HITTBL gpapp_rect_00_tbl[] = {
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
 
+// yes/no
+static const GFL_UI_TP_HITTBL gpapp_rect_01_tbl[] = {
+  { 168, 192, 128-32, 172-32 }, 			// はい
+  { 168, 192, 192-16, 255-16 }, 			// いいえ
+  //
+  { GFL_UI_TP_HIT_END,0,0,0 }
+};
+
 //------------------
 // BMPOAMの情報
 //------------------
@@ -495,6 +525,23 @@ static const GPOWER_APP_BMPOAM_DATA gpapp_bmpoam_tbl[] = {
 	{ 20,	2,	0x28,	3,	1,	0,	8,	0,},		// パネル03
 	//
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
+//-------------------
+// タイマ
+//-------------------
+// (frame, パレット番号)
+static const s16 gpapp_time_tbl[] = {
+	1, 0,
+	4, 1,
+	8, 0,
+   12, 1,
+   16,-1,	// end
+   -1,-1,
+};
+
+static const s16 gpapp_rate_tbl[] = {
+	10,6,
 };
 
 //=============================================================================
@@ -560,6 +607,22 @@ static s32  gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk );
 //
 static void gpower_app_disp_win( GPOWER_APP_MAIN_WORK* wk );
 static void gpower_app_is_visible_win( GPOWER_APP_MAIN_WORK* wk, const BOOL bflg );
+//
+static BOOL gpower_app_chk_battery( GPOWER_APP_MAIN_WORK* wk );
+//
+static void gpower_app_init_param( GPOWER_APP_MAIN_WORK* wk );
+//
+static void gpower_app_init_chgpal( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_main_chgpal( GPOWER_APP_MAIN_WORK* wk );
+//
+static BOOL gpower_app_set_decide_anim( GPOWER_APP_MAIN_WORK* wk );
+//
+// yes/no
+static void gpower_app_init_yesnowin( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_exit_yesnowin( GPOWER_APP_MAIN_WORK* wk );
+static void gpower_app_main_yesnowin( GPOWER_APP_MAIN_WORK* wk );
+static BOOL gpower_app_chk_yesnowin(  GPOWER_APP_MAIN_WORK* wk );
+static BOOL gpower_app_is_yesnowin_anime_end( GPOWER_APP_MAIN_WORK* wk );
 
 //=============================================================================
 /**
@@ -598,12 +661,12 @@ static GFL_PROC_RESULT GPowerAppProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 	
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ENTRY_CHECKER, UI_TEMPLATE_HEAP_SIZE );
-	wk = GFL_PROC_AllocWork( proc, sizeof(GPOWER_APP_MAIN_WORK), HEAPID_ENTRY_CHECKER );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GPOWER_APP, UI_TEMPLATE_HEAP_SIZE );
+	wk = GFL_PROC_AllocWork( proc, sizeof(GPOWER_APP_MAIN_WORK), HEAPID_GPOWER_APP );
 	GFL_STD_MemClear( wk, sizeof(GPOWER_APP_MAIN_WORK) );
 	
 	// 初期化
-	wk->heapID = HEAPID_ENTRY_CHECKER;
+	wk->heapID = HEAPID_GPOWER_APP;
 	
 	// 参照用
 	wk->Param = pwk;
@@ -624,6 +687,11 @@ static GFL_PROC_RESULT GPowerAppProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 	//PRINT_QUE作成
 	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
 	//
+	// yes/noウインドウ用
+	wk->pAppTask[0] = 0;
+	wk->pAppTask[1] = 0;
+	wk->pAppTaskRes = APP_TASKMENU_RES_Create( GFL_BG_FRAME1_M, PLTID_BG_YESNO, wk->font, wk->print_que, wk->heapID );
+	
 	//----------------
 	// 通常はこの中で初期化
 	//----------------
@@ -674,6 +742,12 @@ static GFL_PROC_RESULT GPowerAppProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	
 	//FONT
 	GFL_FONT_Delete( wk->font );
+	
+	// yes/no
+	gpower_app_exit_yesnowin( wk );
+	
+	// yes/no
+	APP_TASKMENU_RES_Delete( wk->pAppTaskRes );
 	
 	//描画設定破棄
 	GPOWER_APP_GRAPHIC_Exit( wk->graphic );
@@ -783,6 +857,10 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	}
 	wk->Result		= -1;
 	//
+	wk->PCount		= 0;
+	wk->AnimNum		= 0;
+	wk->Timer		= 0;
+	wk->YesNoCursor = 0;
 	// 初期化
 	for(i=0;i<GPOWER_APP_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
@@ -791,6 +869,11 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_GPOWER_APP, NARC_gpower_app_gra_gpower_app_pos_tblbin, wk->heapID );
 	//
+	//---------------
+	// パラメータ初期化
+	//---------------
+	gpower_app_init_param( wk );
+	
 	//---------------
 	// bgの初期化
 	//---------------
@@ -807,6 +890,9 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	//------------
 	gpower_app_init_obj( wk );
 	
+	// パレットチェンジ用
+	gpower_app_init_chgpal( wk );
+	
 	//------------
 	// 初回更新
 	//------------
@@ -817,9 +903,9 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	gpower_app_is_visible_win( wk, FALSE );
 	//
 	// 半透明設定
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1,
 		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-		10, 6);
+		14, 2);
 }
 
 //-----------------------------------------------------------------------------
@@ -831,10 +917,34 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
+//static s16 rate[] = {10,6,};
+
 static void gpower_app_main( GPOWER_APP_MAIN_WORK* wk )
 {
 	// 下画面
 	gpower_app_down( wk );
+#if 0
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		rate[0]++;
+		rate[1]--;
+		//
+		OS_Printf("%d,%d\n",rate[0],rate[1]);
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1,
+		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		rate[0], rate[1]);
+
+	}
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		rate[0]--;
+		rate[1]++;
+		//
+		OS_Printf("%d,%d\n",rate[0],rate[1]);
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1,
+		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		rate[0], rate[1]);
+
+	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -848,22 +958,31 @@ static void gpower_app_main( GPOWER_APP_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void gpower_app_exit( GPOWER_APP_MAIN_WORK* wk )
 {
+	//-------------------------
 	// 終了パラメータのセット
-	switch( wk->Result ){
-		case 3:			// ハイリンク
-			wk->Param->ret_mode = GPOWER_APP_RET_HILINK;
-			break;
-		//
-		case 0:			// デルパワー使用
-		case 1:
-		case 2:
-			wk->Param->ret_mode   = GPOWER_APP_RET_GPOWER;
-			wk->Param->ret_gpower = wk->Param->gpower[wk->Result];
-			break;
-		//
-		default:
-			wk->Param->ret_mode = GPOWER_APP_RET_NULL;
-			break;
+	//-------------------------
+	// バッテリーエラー
+	if(wk->Flag & FLG_MW_BATTERY_ERR){
+		wk->Param->ret_mode = GPOWER_APP_RET_COMM_OFF;
+	}
+	// 通常
+	else{
+		switch( wk->Result ){
+			case 3:			// ハイリンク
+				wk->Param->ret_mode = GPOWER_APP_RET_HILINK;
+				break;
+			//
+			case 0:			// デルパワー使用
+			case 1:
+			case 2:
+				wk->Param->ret_mode   = GPOWER_APP_RET_GPOWER;
+				wk->Param->ret_gpower = wk->Param->gpower[wk->Result];
+				break;
+			//
+			default:
+				wk->Param->ret_mode = GPOWER_APP_RET_NULL;
+				break;
+		}
 	}
 	
 	// 上、下画面をまとめて処理
@@ -888,6 +1007,9 @@ static void gpower_app_exit( GPOWER_APP_MAIN_WORK* wk )
 static void gpower_app_down( GPOWER_APP_MAIN_WORK* wk )
 {
 	gpower_app_key_all( wk );
+	//
+	// パレットチェンジ
+	gpower_app_main_chgpal( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -902,6 +1024,7 @@ static void gpower_app_down( GPOWER_APP_MAIN_WORK* wk )
 static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 {
 	BOOL	bflg;
+	BOOL	bbflg;
 	
 	// 処理
 	switch(wk->Step)
@@ -910,14 +1033,21 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 		case STEP_INIT:
 			wk->Step = STEP_LV1;
 			break;
-		
+		//
 		// LV1
 		case STEP_LV1:
-			// 入力
-			gpower_app_chk_input( wk );
+			// バッテリーチェック
+			bbflg = gpower_app_chk_battery( wk );
+			if(bbflg == TRUE){
+				wk->Flag |= FLG_MW_BATTERY_ERR;
+				wk->Step = STEP_END;
+			}else{
+				// 入力
+				gpower_app_chk_input( wk );
+			}
 			break;
 		//
-		// 終了アニメ待ち
+		// 終了アニメ待ち=>終了
 		case STEP_LV2:
 			bflg = gpower_app_is_anime_end( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN );
 			if(bflg == FALSE){
@@ -926,25 +1056,76 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 			}
 			break;
 		//
-		// window表示
+		// 決定アニメ待ち=>window表示
 		case STEP_LV3:
+			bflg = gpower_app_set_decide_anim( wk );
+			gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, wk->AnimNum );
+			if(bflg == TRUE){
+				if(wk->CurPos == 3){
+					wk->Step = STEP_END;
+					wk->Result = wk->CurPos;
+				}else{
+					gpower_app_disp_win( wk );
+					wk->Step = STEP_LV3+5;
+					// 戻るボタンを消しておく
+					// yes/no表示で見えにくくなるため
+					gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, FALSE );
+				}
+				wk->Flag &= ~FLG_MW_DECIDE_ANIM;
+			}
+			break;
+		//
+		// window+yes/no表示=>yes/no待ち
+		case STEP_LV3+5:
 			gpower_app_is_visible_win( wk, TRUE );
 			wk->Step = STEP_LV3+10;
 			break;
 		//
-		// test
+		// yes/no待ち=>yes/no終了アニメ
 		case STEP_LV3+10:
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-				gpower_app_is_visible_win( wk, FALSE );
+			// バッテリーチェック
+			bbflg = gpower_app_chk_battery( wk );
+			if(bbflg == TRUE){
+				wk->Flag |= FLG_MW_BATTERY_ERR;
 				wk->Step = STEP_END;
-				wk->Result = wk->CurPos;
-			}
-			else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-				gpower_app_is_visible_win( wk, FALSE );
-				wk->Step = STEP_LV1;
+			}else{
+				// yes/noまち
+				gpower_app_main_yesnowin( wk );
+				// 判定
+				bflg = gpower_app_chk_yesnowin( wk );
+				if(bflg == TRUE){
+					wk->Step = STEP_LV3+20;
+				}
 			}
 			break;
-		
+		//
+		// yes/no終了アニメ待ち=>終了など
+		case STEP_LV3+20:
+			// yes/noまち
+			gpower_app_main_yesnowin( wk );
+			// 終了待ち
+			bflg = gpower_app_is_yesnowin_anime_end( wk );
+			if(bflg == TRUE){
+				// 終了したので処理の分岐
+				// yes
+				if(wk->YesNoCursor == 0){
+					gpower_app_is_visible_win( wk, FALSE );
+					wk->Step = STEP_END;
+					wk->Result = wk->CurPos;
+				}
+				// no
+				else{
+					gpower_app_is_visible_win( wk, FALSE );
+					wk->Step = STEP_LV1;
+					// カーソルのアニメを戻す
+					wk->Flag |= FLG_MW_UPDATE;
+				}
+				//
+				// 戻るボタンを戻しておく
+				gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, TRUE );
+			}
+			break;
+		//
 		// END
 		case STEP_END:
 			break;
@@ -1699,6 +1880,7 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 {
 	s32		id;
 	s32		flg=0;
+	s32		dflg=0;		// 決定
 	s32		oldpos = wk->CurPos;
 	
 	// 更新あり
@@ -1711,8 +1893,13 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 	id = gpower_app_chk_tp( wk );
 	// パネル
 	if((id >= 0)&&(id <= 3)){
+		// タッチは決定でもある
 		wk->CurPos = id;
 		flg = 1;
+		dflg = 1;		// 決定
+		wk->Flag |= FLG_MW_DISP_CURSOR;
+		// SE
+		PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
 	}
 	// 戻る
 	else if(id == 4){
@@ -1720,48 +1907,70 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 		// 戻るアニメ
 		gpower_app_chg_objseq( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, CMN_RETURN_ON_SEQ );
 		wk->Step = STEP_LV2;
+		// SE
+		PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
 	}
 	//
 	// キー入力
 	if(flg == 0){
+		// カーソル表示してない場合=>入力を待つ
+		if(!(wk->Flag & FLG_MW_DISP_CURSOR)){
+			// 入力があったときに表示
+			if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE)){
+				flg = 1;
+				wk->Flag |= FLG_MW_DISP_CURSOR;
+				// SE
+				PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
+			}
+		}
 		// 上
 		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-			// ハイリンクパネル
-			if(wk->CurPos == 3){
-				wk->CurPos = wk->CurPosMax-1;
-			}
-			// 通常
-			else{
-				wk->CurPos--;
-				if(wk->CurPos < 0){
-					// ハイリンク選択不可 => 最大箇所
-					if(wk->Flag & FLG_MW_NO_SELECT){
-						wk->CurPos = wk->CurPosMax-1;
-					}else{
-						wk->CurPos = 3;
+			// カーソル表示中のみ反応
+			if((wk->Flag & FLG_MW_DISP_CURSOR)&&(flg == 0)){
+				// ハイリンクパネル
+				if(wk->CurPos == 3){
+					wk->CurPos = wk->CurPosMax-1;
+				}
+				// 通常
+				else{
+					wk->CurPos--;
+					if(wk->CurPos < 0){
+						// ハイリンク選択不可 => 最大箇所
+						if(wk->Flag & FLG_MW_NO_SELECT){
+							wk->CurPos = wk->CurPosMax-1;
+						}else{
+							wk->CurPos = 3;
+						}
 					}
 				}
+				flg = 1;
+				// SE
+				PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
 			}
-			flg = 1;
 		}
 		// 下
 		else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-			// ハイリンクパネル
-			if(wk->CurPos == 3){
-				wk->CurPos = 0;
-			}
-			// 通常
-			else{
-				wk->CurPos++;
-				if(wk->CurPos > (wk->CurPosMax-1)){
-					if(wk->Flag & FLG_MW_NO_SELECT){
-						wk->CurPos = 0;
-					}else{
-						wk->CurPos = 3;
+			// カーソル表示中のみ反応
+			if((wk->Flag & FLG_MW_DISP_CURSOR)&&(flg == 0)){
+				// ハイリンクパネル
+				if(wk->CurPos == 3){
+					wk->CurPos = 0;
+				}
+				// 通常
+				else{
+					wk->CurPos++;
+					if(wk->CurPos > (wk->CurPosMax-1)){
+						if(wk->Flag & FLG_MW_NO_SELECT){
+							wk->CurPos = 0;
+						}else{
+							wk->CurPos = 3;
+						}
 					}
 				}
+				flg = 1;
+				// SE
+				PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
 			}
-			flg = 1;
 		}
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
@@ -1769,19 +1978,27 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 			// 戻るアニメ
 			gpower_app_chg_objseq( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, CMN_RETURN_ON_SEQ );
 			wk->Step = STEP_LV2;
+			// SE
+			PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
-			flg = 2;
-			// test
-			if(wk->CurPos == 3){
-				wk->Step = STEP_END;
-				wk->Result = wk->CurPos;
-			}else{
-				gpower_app_disp_win( wk );
-				wk->Step = STEP_LV3;
+			if((wk->Flag & FLG_MW_DISP_CURSOR)&&(flg == 0)){
+				flg = 2;
+				dflg = 1;	// 決定
+				// SE
+				PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
 			}
 		}
+	}
+	//
+	// 決定
+	if(dflg == 1){
+		wk->Flag |= FLG_MW_DECIDE_ANIM;
+		wk->Timer = 0;
+		wk->Step = STEP_LV3;
+		// yes/no
+		gpower_app_init_yesnowin( wk );
 	}
 	//
 	// 更新あり
@@ -1791,7 +2008,9 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 		// 旧カーソル
 		gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+oldpos, 0 );
 		// 新カーソル
-		gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, 1 );
+		if(wk->Flag & FLG_MW_DISP_CURSOR){
+			gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, 2 );
+		}
 	}
 }
 
@@ -1913,7 +2132,8 @@ static void gpower_app_disp_use_able( GPOWER_APP_MAIN_WORK* wk )
 	}
 	//
 	// 現在装備中のパワー数
-	num = wk->Param->gpower_num;
+//	num = wk->Param->gpower_num;
+	num = wk->CurPosMax;
 	// 項目数
 	OS_Printf("gpower num :%d\n",num);
 	//
@@ -2002,8 +2222,13 @@ static s32 gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk )
 	//
 	// パネルの場合=>選択可能のものを調べる
 	if((id >= 0)&&(id <= 2)){
-		if(wk->Param->gpower_num > id){
+//		if(wk->Param->gpower_num > id){
+		if(wk->CurPosMax > id){
 			ret = id;
+		}else{
+			// 項目外のタッチはカーソル非表示
+			wk->Flag &= ~FLG_MW_DISP_CURSOR;
+			wk->Flag |= FLG_MW_UPDATE;
 		}
 	}
 	// ハイリンク
@@ -2011,6 +2236,10 @@ static s32 gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk )
 		// 選択可能の場合
 		if(!(wk->Flag & FLG_MW_NO_SELECT)){
 			ret = id;
+		}else{
+			// 項目外のタッチはカーソル非表示
+			wk->Flag &= ~FLG_MW_DISP_CURSOR;
+			wk->Flag |= FLG_MW_UPDATE;
 		}
 	}
 	// 戻る
@@ -2073,5 +2302,369 @@ static void gpower_app_is_visible_win( GPOWER_APP_MAIN_WORK* wk, const BOOL bflg
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
 		GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  バッテリーチェック
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL gpower_app_chk_battery( GPOWER_APP_MAIN_WORK* wk )
+{
+	BOOL bflg;
+	
+	// 判定
+	bflg = GAMESYSTEM_IsBatt10Sleep( wk->Param->gsys );
+	//
+#if 0	// test
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		bflg = TRUE;
+	}
+#endif
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パラメータ初期化(必要に応じて)
+ *
+ *	@param	GPOWER_APP_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_init_param( GPOWER_APP_MAIN_WORK* wk )
+{
+	// フェスミッション
+	// =>ハイリンク非表示
+	if(wk->Param->mode == GPOWER_APP_MODE_FMISSION){
+		wk->Flag |= FLG_MW_NO_SELECT;
+	}
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ初期化
+ *
+ * @param	GPOWER_APP_MAIN_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void gpower_app_init_chgpal( GPOWER_APP_MAIN_WORK* wk )
+{
+	// パレット取得
+	NNSG2dPaletteData* pal_data;
+	void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_GPOWER_APP, NARC_gpower_app_gra_delpow_obj_NCLR, &pal_data, wk->heapID );
+	u16* raw_data = pal_data->pRawData;
+	//
+	// パレットをコピー
+	GFL_STD_MemCopy( &raw_data[0x10], wk->PBufStart, 0x20 );		// 1番
+	GFL_STD_MemCopy( &raw_data[0x20], wk->PBufEnd,   0x20 );		// 2番
+	// 破棄
+	GFL_HEAP_FreeMemory( buf );
+	//
+	wk->PCount = 0;
+	// test
+	wk->Flag |= FLG_MW_PALCHG_ON;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ(main)
+ *
+ * @param	GPOWER_APP_MAIN_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void gpower_app_main_chgpal( GPOWER_APP_MAIN_WORK* wk )
+{
+	u8			cbuf[10];
+	s32			i;
+	s32			rate;
+	fx16		cos;
+	
+	// 変更中かどうか
+	if(!(wk->Flag & FLG_MW_PALCHG_ON)){
+		return;
+	}
+	// 速度
+	rate = 0x400;
+	
+	// 加算(0 .. 1.0)にするようだ
+	wk->PCount += rate;
+	if(wk->PCount >= 0x10000){
+		wk->PCount -= 0x10000;
+	}
+	cos = ( FX_CosIdx(wk->PCount) + FX16_ONE )/2;
+	//
+	// カラーの計算
+	for(i=0;i<16;i++){
+		// 開始
+		cbuf[0] = ( wk->PBufStart[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[1] = ( wk->PBufStart[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[2] = ( wk->PBufStart[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// 終了
+		cbuf[3] = ( wk->PBufEnd[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[4] = ( wk->PBufEnd[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[5] = ( wk->PBufEnd[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// RGBを求める
+		cbuf[6] = cbuf[0] + (((cbuf[3]-cbuf[0])*cos)>>FX16_SHIFT);
+		cbuf[7] = cbuf[1] + (((cbuf[4]-cbuf[1])*cos)>>FX16_SHIFT);
+		cbuf[8] = cbuf[2] + (((cbuf[5]-cbuf[2])*cos)>>FX16_SHIFT);
+		//
+		wk->PBufNow[i] = GX_RGB( cbuf[6], cbuf[7], cbuf[8] );
+	}
+	// Main(2番に転送決めうち)
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN , 0x20*2, wk->PBufNow, 0x20 );
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	決定タイマ
+ *
+ * @param	GPOWER_APP_MAIN_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static BOOL gpower_app_set_decide_anim( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		i;
+	s32		num;
+	s32		buf[2];
+	
+	// 決定してない
+	if(!(wk->Flag & FLG_MW_DECIDE_ANIM)){
+		return( FALSE );
+	}
+	// 加算
+	wk->Timer++;
+	//
+	for(i=0;i<10;i++){
+		buf[0] = gpapp_time_tbl[2*i];		// time
+		buf[1] = gpapp_time_tbl[2*i+1];		// frame
+		//
+		// 終了条件(そのフレームでは見つからなかった)
+		if( buf[0] == -1){
+			break;
+		}
+		// 見つかった
+		if( buf[0] == wk->Timer ){
+			// 終了のframeだった
+			if(buf[1] == -1){
+				return( TRUE );
+			}
+			else{
+				// 番号切り替え
+				wk->AnimNum = buf[1];
+			}
+			break;
+		}
+	}
+	//
+	return( FALSE );
+}
+
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *  @brief   はい/いいえウインドウ 開始
+ *
+ *  @param  GPOWER_APP_MAIN_WORK *wk
+ *
+ *  @retval none
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_init_yesnowin( GPOWER_APP_MAIN_WORK* wk )
+{
+	// 念のため破棄
+	gpower_app_exit_yesnowin( wk );
+	
+	// はい
+	wk->appitem[0].str      = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[5] ); //メニューに表示する文字列
+	wk->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+	wk->appitem[0].type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
+	// いいえ
+	wk->appitem[1].str      = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[6] );
+	wk->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+	wk->appitem[1].type     = APP_TASKMENU_WIN_TYPE_RETURN;
+	// メニュー作成
+	wk->pAppTask[0] = APP_TASKMENU_WIN_Create( wk->pAppTaskRes, &wk->appitem[0], 16-4, 21, APP_TASKMENU_PLATE_WIDTH_YN_WIN+2, wk->heapID );
+	wk->pAppTask[1] = APP_TASKMENU_WIN_Create( wk->pAppTaskRes, &wk->appitem[1], 24-2, 21, APP_TASKMENU_PLATE_WIDTH_YN_WIN+2, wk->heapID );
+	//
+	GFL_STR_DeleteBuffer( wk->appitem[0].str );
+	GFL_STR_DeleteBuffer( wk->appitem[1].str );
+	//
+	// カレント
+	APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], TRUE );
+	APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], FALSE );
+	//
+	wk->YesNoCursor = 0;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  はい/いいえウィンドウ終了
+ *
+ *  @param  GPOWER_APP_MAIN_WORK	*wk
+ *
+ *  @retval none
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_exit_yesnowin( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	// 終了処理
+	for(i=0;i<2;i++){
+		if(wk->pAppTask[i]){
+			APP_TASKMENU_WIN_Delete( wk->pAppTask[i] );
+			wk->pAppTask[i] = 0;
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  はい/いいえウィンドウ実行
+ *
+ *  @param  GPOWER_APP_MAIN_WORK	*wk
+ *
+ *  @retval none
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_main_yesnowin( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	// 実行
+	for(i=0;i<2;i++){
+		if(wk->pAppTask[i]){
+			APP_TASKMENU_WIN_Update( wk->pAppTask[i] );
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  はい/いいえウィンドウ処理待ち
+ *
+ *  @param  GPOWER_APP_MAIN_WORK	*wk
+ *
+ *  @retval BOOL					(TRUE:選択、FALSE:非選択)
+ */
+//-----------------------------------------------------------------------------
+static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
+{
+	s32		flg=0;
+	s32		id;
+	BOOL	bflg=FALSE;
+	
+	// 念のため
+	if((wk->pAppTask[0] == 0)||(wk->pAppTask[1] == 0)){
+		return( bflg );
+	}
+	//
+	// タッチペン判定
+	id = GFL_UI_TP_HitTrg( gpapp_rect_01_tbl );
+	// はい
+	if(id == 0){
+		APP_TASKMENU_WIN_SetDecide( wk->pAppTask[0], TRUE );
+		APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], FALSE );
+		wk->YesNoCursor = 0;
+		bflg = TRUE;
+		flg = 1;
+		// SE
+		PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
+	}
+	// いいえ
+	else if(id == 1){
+		APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], FALSE );
+		APP_TASKMENU_WIN_SetDecide( wk->pAppTask[1], TRUE );
+		wk->YesNoCursor = 1;
+		bflg = TRUE;
+		flg = 1;
+		// SE
+		PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+	}
+	//
+	// キーの判定
+	if(flg == 0){
+		// 左
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+			APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], TRUE );
+			APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], FALSE );
+			wk->YesNoCursor = 0;
+			// SE
+			PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
+		}
+		// 右
+		else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+			APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], FALSE );
+			APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], TRUE );
+			wk->YesNoCursor = 1;
+			// SE
+			PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
+		}
+		// 決定
+		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+			// yes
+			if(wk->YesNoCursor == 0){
+				APP_TASKMENU_WIN_SetDecide( wk->pAppTask[0], TRUE );
+				APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], FALSE );
+				// SE
+				PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
+			}
+			// no
+			else{
+				APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], FALSE );
+				APP_TASKMENU_WIN_SetDecide( wk->pAppTask[1], TRUE );
+				// SE
+				PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+			}
+			bflg = TRUE;
+		}
+		// cancel
+		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], FALSE );
+			APP_TASKMENU_WIN_SetDecide( wk->pAppTask[1], TRUE );
+			wk->YesNoCursor = 1;
+			bflg = TRUE;
+			// SE
+			PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+		}
+	}
+	//
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  はい/いいえ決定アニメ待ち
+ *
+ *  @param  GPOWER_APP_MAIN_WORK	*wk
+ *
+ *  @retval BOOL					(TRUE:終了、FALSE:まだ)
+ */
+//-----------------------------------------------------------------------------
+static BOOL gpower_app_is_yesnowin_anime_end( GPOWER_APP_MAIN_WORK* wk )
+{
+	// 念のため
+	if( wk->pAppTask[wk->YesNoCursor] == 0){
+		return( TRUE );
+	}
+	//
+	if( APP_TASKMENU_WIN_IsFinish( wk->pAppTask[wk->YesNoCursor] ) ){
+		return( TRUE );
+	}
+	return( FALSE );
 }
 
