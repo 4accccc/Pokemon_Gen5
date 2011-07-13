@@ -8,5 +8,13 @@ DATA_LIST = \
     as_pipe01.nsbmd \
     as_pipe01_in.nsbca \
     as_pipe01_on.nsbta \
-    as_pipe01_out.nsbca
+    as_pipe01_out.nsbca \
+    as_p_effect01.nsbmd \
+    as_p_effect01.nsbca \
+    as_p_effect01.nsbma \
+    as_p_effect01.nsbta \
+    as_p_effect02.nsbmd \
+    as_p_effect02.nsbca \
+    as_p_effect02.nsbma \
+    as_p_effect02.nsbta
  

@@ -62,6 +62,10 @@
 // パイプ
 #define PIPE_NUM        ( 16 )  // パイプ数
 #define PIPE_Y          (-3 * FIELD_CONST_GRID_FX32_SIZE ) // パイプ Y座標
+
+#define EFFECT_01_NUM      (4)
+#define EFFECT_02_NUM      (4)
+
 //-------------------------------------
 ///	パイプ初期設定データ
 //=====================================
@@ -187,6 +191,14 @@ enum{
   RESID_PIPE_ANM_IN,            // パイプアニメ(引っ込む)
   RESID_PIPE_ANM_ON,            // パイプアニメ(くっついたとき)
   RESID_PIPE_ANM_OUT,           // パイプアニメ(突き出る)
+  RESID_EFFECT_01_MDL,          // パイプのスチームエフェクト
+  RESID_EFFECT_01_ANM_ICA,      // パイプのスチームエフェクト
+  RESID_EFFECT_01_ANM_IMA,      // パイプのスチームエフェクト
+  RESID_EFFECT_01_ANM_ITA,      // パイプのスチームエフェクト
+  RESID_EFFECT_02_MDL,          // パイプ同士がつながったエフェクト
+  RESID_EFFECT_02_ANM_ICA,      // パイプ同士がつながったエフェクト
+  RESID_EFFECT_02_ANM_IMA,      // パイプ同士がつながったエフェクト
+  RESID_EFFECT_02_ANM_ITA,      // パイプ同士がつながったエフェクト
 };
 
 // OBJインデックス
@@ -216,6 +228,15 @@ enum{
   OBJ_PIPE_15,                  // パイプ
   OBJ_PIPE_16,                  // パイプ
 
+  OBJ_EFFECT_01_1,              // エフェクト
+  OBJ_EFFECT_01_2,              // エフェクト
+  OBJ_EFFECT_01_3,              // エフェクト
+  OBJ_EFFECT_01_4,              // エフェクト
+  OBJ_EFFECT_02_1,              // エフェクト
+  OBJ_EFFECT_02_2,              // エフェクト
+  OBJ_EFFECT_02_3,              // エフェクト
+  OBJ_EFFECT_02_4,              // エフェクト
+
   OBJ_NUM,
 };
 
@@ -233,6 +254,15 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_pipe01_in_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_pipe01_on_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_pipe01_out_nsbca, GFL_G3D_UTIL_RESARC },
+  // effect
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect01_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect01_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect02_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_HIDE_SHIP_ENGINE, NARC_hide_ship_engine_as_p_effect02_nsbta, GFL_G3D_UTIL_RESARC },
 };
 
 // ANIME
@@ -257,6 +287,22 @@ static const GFL_G3D_UTIL_ANM anm_pipe[] =
   { RESID_PIPE_ANM_OUT, 0 },
 };
 #define ANM_PIPE_NUM  ( NELEMS(anm_pipe) )
+
+static const GFL_G3D_UTIL_ANM anm_effect_01[] =
+{
+  { RESID_EFFECT_01_ANM_ICA, 0 },
+  { RESID_EFFECT_01_ANM_IMA, 0 },
+  { RESID_EFFECT_01_ANM_ITA, 0 },
+};
+#define ANM_EFFECT_01_NUM  ( NELEMS(anm_effect_01) )
+
+static const GFL_G3D_UTIL_ANM anm_effect_02[] =
+{
+  { RESID_EFFECT_02_ANM_ICA, 0 },
+  { RESID_EFFECT_02_ANM_IMA, 0 },
+  { RESID_EFFECT_02_ANM_ITA, 0 },
+};
+#define ANM_EFFECT_02_NUM  ( NELEMS(anm_effect_02) )
 
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
@@ -453,6 +499,70 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_pipe,               // アニメテーブル(複数指定のため)
     ANM_PIPE_NUM,           // アニメリソース数
   },
+  // OBJ_EFFECT_01_1
+  {
+    RESID_EFFECT_01_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_01_MDL,    // テクスチャリソースID
+    anm_effect_01,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_01_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_01_2
+  {
+    RESID_EFFECT_01_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_01_MDL,    // テクスチャリソースID
+    anm_effect_01,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_01_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_01_3
+  {
+    RESID_EFFECT_01_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_01_MDL,    // テクスチャリソースID
+    anm_effect_01,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_01_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_01_4
+  {
+    RESID_EFFECT_01_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_01_MDL,    // テクスチャリソースID
+    anm_effect_01,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_01_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_02_1
+  {
+    RESID_EFFECT_02_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_02_MDL,    // テクスチャリソースID
+    anm_effect_02,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_02_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_02_2
+  {
+    RESID_EFFECT_02_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_02_MDL,    // テクスチャリソースID
+    anm_effect_02,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_02_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_02_3
+  {
+    RESID_EFFECT_02_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_02_MDL,    // テクスチャリソースID
+    anm_effect_02,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_02_NUM,      // アニメリソース数
+  },
+  // OBJ_EFFECT_02_4
+  {
+    RESID_EFFECT_02_MDL,    // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_EFFECT_02_MDL,    // テクスチャリソースID
+    anm_effect_02,          // アニメテーブル(複数指定のため)
+    ANM_EFFECT_02_NUM,      // アニメリソース数
+  },
 };
 
 // セットアップデータ
@@ -486,6 +596,14 @@ static BOOL ANM_PIPE_IN_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_OUT_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static BOOL ANM_PIPE_OUT_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+
+// BUTTONアニメ
+static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+
+// EFFECT
+static void ANM_EFFECT_01_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx );
+static void ANM_EFFECT_02_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx );
 
 // ボタンイベント
 static GMEVENT * BUTTON_CreateEvent( GAMESYS_WORK* gsys, int idx );
@@ -684,6 +802,32 @@ static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
         GFL_CALC3D_MTX_CreateRot( rot[0], rot[1], rot[2], &status->rotate );
       }
 
+    }
+  }
+
+  //=====================================
+  // エフェクト
+  {
+    int i;
+    VecFx32 pos = { 0,0,0 };
+
+    for( i=0; i<EFFECT_01_NUM; i++ )
+    {
+      int obj_idx = OBJ_EFFECT_01_1 + i;
+
+      // 汎用設定
+      EXPOBJ_ObjSetOne( p_wk->exp_obj, obj_idx, ANM_EFFECT_01_NUM, pos );
+      // 非表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, TRUE );
+    }
+    for( i=0; i<EFFECT_02_NUM; i++ )
+    {
+      int obj_idx = OBJ_EFFECT_02_1 + i;
+
+      // 汎用設定
+      EXPOBJ_ObjSetOne( p_wk->exp_obj, obj_idx, ANM_EFFECT_02_NUM, pos );
+      // 非表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, TRUE );
     }
   }
 }
@@ -888,6 +1032,131 @@ static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
 
 //=============================================================================
 /**
+ *          BUTTONアニメ
+ *
+ *          アニメインデックス
+ *          0:OFFアニメ(ボタン凸)
+ *          1:ONアニメ(ボタン凹)
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オフアニメ再生
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 obj_idx   OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+{
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オンアニメ再生
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 obj_idx   OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+{
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
+}
+
+//=============================================================================
+/**
+ *          EFFECT
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプが突き出す時のスチームエフェクト再生
+ *
+ *	        引数として、パイプのOBJインデックスを渡します。
+ *	        その引数を4でまるめる
+ *	        パイプは最大4方向で4つ分のエフェクトが出せればよい。
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	pipe_obj_idx  パイプのOBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_EFFECT_01_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx )
+{
+  int i;
+  u16 obj_idx;
+
+  obj_idx = OBJ_EFFECT_01_1 + ( pipe_obj_idx % 4 );    // 最大4つなので
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, FALSE );
+
+  // 座標設定
+  {
+    GFL_G3D_OBJSTATUS *status;
+    GFL_G3D_OBJSTATUS *tmp_status;
+
+    status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx );
+    tmp_status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, pipe_obj_idx );
+
+    status->trans   = tmp_status->trans;
+    status->rotate  = tmp_status->rotate;
+    status->scale   = tmp_status->scale;
+  }
+
+  // アニメ再生
+  for( i=0; i<ANM_EFFECT_01_NUM; i++ )
+  {
+    ANM_Play( p_wk->exp_obj, obj_idx, i, FALSE );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプが突き出す時のスチームエフェクト再生
+ *
+ *	        引数として、パイプのOBJインデックスを渡します。
+ *	        その引数を4でまるめる
+ *	        パイプは最大4方向で4つ分のエフェクトが出せればよい。
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	pipe_obj_idx  パイプのOBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_EFFECT_02_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx )
+{
+  int i;
+  u16 obj_idx;
+
+  obj_idx = OBJ_EFFECT_02_1 + ( pipe_obj_idx % 4 );    // 最大4つなので
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, FALSE );
+
+  // 座標設定
+  {
+    GFL_G3D_OBJSTATUS *status;
+    GFL_G3D_OBJSTATUS *tmp_status;
+
+    status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx );
+    tmp_status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, pipe_obj_idx );
+
+    status->trans   = tmp_status->trans;
+    status->rotate  = tmp_status->rotate;
+    status->scale   = tmp_status->scale;
+  }
+
+  // アニメ再生
+  for( i=0; i<ANM_EFFECT_02_NUM; i++ )
+  {
+    ANM_Play( p_wk->exp_obj, obj_idx, i, FALSE );
+  }
+}
+
+
+//=============================================================================
+/**
  *          ボタンイベント
  */
 //=============================================================================
@@ -940,6 +1209,7 @@ static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum {
     SEQ_START,      // 
+    SEQ_WAIT,       // 
     SEQ_END,        // 
   };
 
@@ -950,16 +1220,20 @@ static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk )
     // ボタンの押したチェック
     BUTTON_EVENT_PosCheck( p_gmk_wk, p_wk->idx );
 
-    *seq = SEQ_END;
+    *seq = SEQ_WAIT;
     break;
-  case SEQ_END:
+
+  case SEQ_WAIT:
     {
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( p_fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) == FALSE ) {
-        break;
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) == TRUE ) {
+        *seq = SEQ_END;
       }
     }
+    break;
+
+  case SEQ_END:
     return GMEVENT_RES_FINISH;
   }
 
@@ -1113,6 +1387,12 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
   // 突き出るアニメ再生
   case 0:
     ANM_PIPE_OUT_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
+
+    // エフェクトも表示
+    {
+      ANM_EFFECT_01_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
+    }
+
     p_wk->seq++;
     break;
   // アニメ終了チェック
@@ -1125,6 +1405,12 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
   // くっつくアニメ
   case 2:
     ANM_PIPE_ON_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
+
+    // エフェクトも表示
+    {
+      ANM_EFFECT_02_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
+    }
+
     p_wk->seq++;
     break;
   // 終了

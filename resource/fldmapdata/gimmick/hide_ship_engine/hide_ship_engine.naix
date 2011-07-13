@@ -20,7 +20,15 @@ enum {
 	NARC_hide_ship_engine_as_pipe01_nsbmd = 6,
 	NARC_hide_ship_engine_as_pipe01_in_nsbca = 7,
 	NARC_hide_ship_engine_as_pipe01_on_nsbta = 8,
-	NARC_hide_ship_engine_as_pipe01_out_nsbca = 9
+	NARC_hide_ship_engine_as_pipe01_out_nsbca = 9,
+	NARC_hide_ship_engine_as_p_effect01_nsbmd = 10,
+	NARC_hide_ship_engine_as_p_effect01_nsbca = 11,
+	NARC_hide_ship_engine_as_p_effect01_nsbma = 12,
+	NARC_hide_ship_engine_as_p_effect01_nsbta = 13,
+	NARC_hide_ship_engine_as_p_effect02_nsbmd = 14,
+	NARC_hide_ship_engine_as_p_effect02_nsbca = 15,
+	NARC_hide_ship_engine_as_p_effect02_nsbma = 16,
+	NARC_hide_ship_engine_as_p_effect02_nsbta = 17
 };
 
 /* NARC_HIDE_SHIP_ENGINE_NAIX_ */
