@@ -40,7 +40,7 @@ enum{
   BTLEFF_SINGLE_ENCOUNT_3,
   BTLEFF_CAMERA_WORK,
   BTLEFF_CAMERA_INIT,
-  BTLEFF_SINGLE_TRAINER_ENCOUNT_1,
+  BTLEFF_SINGLE_TRAINER_ENCOUNT_1,            // トレーナーデータを表示しながらカメラが引く
   BTLEFF_SINGLE_TRAINER_ENCOUNT_2,
   BTLEFF_SINGLE_TRAINER_ENCOUNT_3,
   BTLEFF_BALL_THROW,                          //570
@@ -154,6 +154,8 @@ enum{
   BTLEFF_AA_POKE_VANISH,                      // 自分ポケモン消える
   BTLEFF_BB_POKE_VANISH_2_APPEAR,             // 敵ポケモンいないところから登場
   BTLEFF_AA_POKE_VANISH_2_APPEAR,             // 自分ポケモンいないところから登場
+
+  BTLEFF_CLAPPER_BOARD,                        // 撮影終了のカチンコ演出
   
   BTLEFF_STATUS_EFFECT_END,
 };

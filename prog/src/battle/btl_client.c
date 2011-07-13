@@ -2541,6 +2541,8 @@ static BOOL SubSeq_POKEWOOD_Vfx_Effect( BTL_CLIENT *wk )
 
 enum{
   PWEND_REC_SEQ_INIT=0,
+  PWEND_REC_SEQ_CLAPPER_BOARD,
+  PWEND_REC_SEQ_CLAPPER_BOARD_WAIT,
   PWEND_REC_SEQ_ENEMY_APPEAR,
   PWEND_REC_SEQ_HERO_APPEAR,
   PWEND_REC_SEQ_MY_MSG,
@@ -2576,7 +2578,11 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
         wk->clientTurnCount=101;
       }
     }
-    wk->pokewoodSeqWork.seq = PWEND_REC_SEQ_ENEMY_APPEAR;
+    wk->pokewoodSeqWork.seq =PWEND_REC_SEQ_CLAPPER_BOARD;
+    break;
+  case PWEND_REC_SEQ_CLAPPER_BOARD:
+    BTLV_EFFECT_Add( BTLEFF_CLAPPER_BOARD );
+    _set_next_seq(&wk->pokewoodSeqWork, PWEND_REC_SEQ_EFFECT_WAIT, PWEND_REC_SEQ_ENEMY_APPEAR);
     break;
   case PWEND_REC_SEQ_ENEMY_APPEAR:
     TrainerGraphicIn( wk, 1, TRUE );

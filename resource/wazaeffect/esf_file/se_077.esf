@@ -1,0 +1,26 @@
+EFFSEQ
+$0002
+C:\home\swan\resource\particle\wazaeffect\be_pkwd_eff02a.spa
+C:\home\swan\resource\particle\wazaeffect\be_pkwd_eff02a.spa
+#001
+%00
+制御モード変更	継続
+SE再生	SEQ_SE_W003_01	デフォルト	真ん中	16:0:127	0:0:0
+パーティクルデータロード	be_pkwd_eff02a
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02A	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02B	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02C	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02D	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02A2	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02B2	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF02C2	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03A	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03B	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03C	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03D	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03A2	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03B2	0:5:0	0:0:0	0:0:0	1:1:1	1
+パーティクル再生（座標指定）	be_pkwd_eff02a	BE_PKWD_EFF02A_PKWD_EFF03C2	0:5:0	0:0:0	0:0:0	1:1:1	1
+エフェクト終了待ち	すべて
+エフェクト終了
+&
