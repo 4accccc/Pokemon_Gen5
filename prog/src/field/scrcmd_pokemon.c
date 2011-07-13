@@ -1364,6 +1364,12 @@ SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_LEVEL == ID_PARA_get_level );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_OYA_SEX == ID_PARA_oyasex );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_LEVEL == ID_PARA_level );
 
+SDK_COMPILER_ASSERT( SCR_POKEPARA_POW == ID_PARA_pow );                //çUåÇóÕ
+SDK_COMPILER_ASSERT( SCR_POKEPARA_DEF == ID_PARA_def );                //ñhå‰óÕ
+SDK_COMPILER_ASSERT( SCR_POKEPARA_AGI == ID_PARA_agi );                //ëfëÅÇ≥
+SDK_COMPILER_ASSERT( SCR_POKEPARA_SPEPOW == ID_PARA_spepow );               //ì¡çU
+SDK_COMPILER_ASSERT( SCR_POKEPARA_SPEDEF == ID_PARA_spedef );               //ì¡ñh
+
 //--------------------------------------------------------------
 /**
  * @brief éËéùÇøÉ|ÉPÉÇÉìÇÃÉpÉâÉÅÅ[É^ÉZÉbÉg
@@ -1440,7 +1446,12 @@ VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk )
     //SCR_POKEPARA_BIRTH_PLACE,
     SCR_POKEPARA_GET_LEVEL,
     SCR_POKEPARA_OYA_SEX,
-    SCR_POKEPARA_LEVEL
+    SCR_POKEPARA_LEVEL,
+    SCR_POKEPARA_POW,                //çUåÇóÕ
+    SCR_POKEPARA_DEF,                //ñhå‰óÕ
+    SCR_POKEPARA_AGI,                //ëfëÅÇ≥
+    SCR_POKEPARA_SPEPOW,               //ì¡çU
+    SCR_POKEPARA_SPEDEF,               //ì¡ñh
   };
   int i;
   for ( i = 0; i < NELEMS(id_tbl); i++ )

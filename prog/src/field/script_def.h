@@ -217,6 +217,11 @@
 #define SCR_POKEPARA_GET_LEVEL        (153) ///<RO 捕獲した時のレベル
 #define SCR_POKEPARA_OYA_SEX          (154) ///<RO 親の性別
 #define SCR_POKEPARA_LEVEL            (158) ///<RO 現在のレベル
+#define SCR_POKEPARA_POW              (162) ///<RO 攻撃
+#define SCR_POKEPARA_DEF              (163) ///<RO 防御
+#define SCR_POKEPARA_AGI              (164) ///<RO すばやさ
+#define SCR_POKEPARA_SPEPOW           (165) ///<RO とくこう
+#define SCR_POKEPARA_SPEDEF           (166) ///<RO とくぼう
 
 //--------------------------------------------------------------
 // ポケモン捕獲場所　チェック
