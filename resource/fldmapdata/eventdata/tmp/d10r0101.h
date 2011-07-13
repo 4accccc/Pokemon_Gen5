@@ -15,6 +15,8 @@
 #define D10R0101_ROCK_02                   1
 #define D10R0101_ROCK_04                   2
 #define D10R0101_ROCK_03                   3
+#define FLD_ITEM_177                       4
+#define FLD_ITEM_178                       5
 
 #endif //ZONE_D10R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -22,7 +24,6 @@
 #define ZONE_D10R0101_EVB_H
 
 #define D10R0101_HIDE_ITEM_01             0
-#define D10R0101_HIDE_ITEM_02             1
-#define D10R0101_HIDE_ITEM_03             2
+#define D10R0101_HIDE_ITEM_03             1
 
 #endif //ZONE_D10R0101_EVB_H
