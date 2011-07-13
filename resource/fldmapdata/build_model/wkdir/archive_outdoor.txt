@@ -421,3 +421,5 @@
 "nsbmdfiles/wf_mugen_s1.nsbmd"
 "nsbmdfiles/c03_ship_03_01.nsbmd"
 "nsbmdfiles/bg_pc_01.nsbmd"
+"nsbmdfiles/c03_ship_03_02.nsbmd"
+"nsbmdfiles/c03_ship_03_03.nsbmd"
