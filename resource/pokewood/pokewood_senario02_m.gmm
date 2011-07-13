@@ -370,9 +370,9 @@
 お疲れ様！　最高だったよ！</language>
 	</row>
 	<row id="pw_situ_hero_3">
-		<language name="JPN" width="256">かんとく『はい！　カ-ット！
+		<language name="JPN" width="256">かんとく『はい！　カーット！
 さつえい しゅうりょう！！</language>
-		<language name="JPN_KANJI" width="256">監督『はい！　カ-ット！
+		<language name="JPN_KANJI" width="256">監督『はい！　カーット！
 撮影 終了！！</language>
 	</row>
 	<row id="pw_turn_enemy_0">
@@ -465,13 +465,13 @@
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！▼
 なさけないぞ！
 [1:02:ポケモンニックネーム:0]キッド！▼
-ならば　この　わざでも
-くらうが　いいわ！</language>
+きさまのような　なさけない　やつは
+この　わざでも　くらうが　いいわ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！▼
 情けないぞ！
 [1:02:ポケモンニックネーム:0]キッド！▼
-ならば　この　技でも
-くらうが　いい！</language>
+貴様のような　情けない　やつは
+この　技でも　くらうが　いいわ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
@@ -604,7 +604,7 @@
 ざんねん　だったな！▽
 [1:02:ポケモンニックネーム:0]キッド！！▼
 わがはいの　おうぎを
-うけたのが　うんの　つきよ！▼
+うけたのが　うんの　つき！▼
 さあ！　そこで　おとなしく
 ゆうえんちが　はかいされる▽
 こうけいを　ながめておれ！</language>
@@ -618,9 +618,9 @@
 眺めておれ！</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『くっ……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『えっ……
 ぼくは　なにか　まちがったのか……？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『くっ……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『えっ……
 僕は　何か　間違ったのか……？</language>
 	</row>
 	<row id="pw_event4_hero_2">

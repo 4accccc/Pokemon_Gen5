@@ -370,10 +370,10 @@
 お疲れ様！　最高だったよ！</language>
 	</row>
 	<row id="pw_situ_hero_3">
-		<language name="JPN" width="256">かんとく『はいはい！　カットカット！
-さつえいしゅうりょう！　オシマイだよ！</language>
-		<language name="JPN_KANJI" width="256">監督『はいはい！　カットカット！
-撮影終了！　オシマイだよ！</language>
+		<language name="JPN" width="256">かんとく『はい！　カーット！
+さつえい しゅうりょう！！</language>
+		<language name="JPN_KANJI" width="256">監督『はい！　カーット！
+撮影 終了！！</language>
 	</row>
 	<row id="pw_turn_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ゆうえんち……
@@ -465,13 +465,13 @@
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！▼
 なさけないぞ！
 [1:02:ポケモンニックネーム:0]ガール！▼
-ならば　この　わざでも
-くらうが　いいわ！</language>
+きさまのような　なさけない　やつは
+この　わざでも　くらうが　いいわ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファー　ファファファ！▼
 情けないぞ！
 [1:02:ポケモンニックネーム:0]ガール！▼
-ならば　この　技でも
-くらうが　いい！</language>
+貴様のような　情けない　やつは
+この　技でも　くらうが　いいわ！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！
@@ -620,9 +620,9 @@
 眺めておれ！</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『くっ……
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『えっ……
 あたし　なにか　まちがったの……？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『くっ……
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『えっ……
 あたし　何か　間違ったの……？</language>
 	</row>
 	<row id="pw_event4_hero_2">
@@ -675,7 +675,7 @@
 ほ　ほら！
 はやく　どこかへ　いきなさいっ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……ハ
-ハチクマンさん！
+ハチクマンさん！▼
 ヒ　ヒロインは　強く　キュートで
 負けないって　決まってるでしょ！▼
 ほ　ほら！
@@ -745,7 +745,7 @@
 [1:02:ポケモンニックネーム:0]ガール！
 </language>
 		<language name="JPN_KANJI" width="256">怪人ハチクマンの　前に
-%MYPOK0Eガールは▽
+[1:02:ポケモンニックネーム:0]ガールは▽
 おしくも　力　尽きた……▼
 ……しかし▼
 おびえながらも　必死に

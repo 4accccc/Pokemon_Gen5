@@ -5,10 +5,10 @@
 		Label="msg_pw_studio_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>○○○○○○　スタジオへ　ようこそ！▼</Text>
+			<Text>ポケウッド　スタジオへ　ようこそ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-05T09:19:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:36:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -16,10 +16,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>○○○○○○　スタジオへ　ようこそ！▼</Text>
+			<Text>ポケウッド　スタジオへ　ようこそ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-05T09:19:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -89,27 +89,30 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_studio_04">
+		Label="msg_pw_studio_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここ　ポケウッドでは　えいがを
 つくることが　できるんだ！▼
-だいほんに　よって　きめられた
+だいほんで　きめられた
 きょうえんしゃと　えんぎを　して▽
 さくひんの　かんせいに▽
 ひつような　じょうけんを▽
 みたせば　クランク　アップ！▼
-あっという　まに　えいがが
+さいしんの　ＶＦＸぎじゅつで
+あっという　まに　えいがが▽
 かんせい　するのさ！▼
-さくひん　かんせいに　ひつような
-じょうけんは　だいほんに　よって▽
+イイ　さくひんの　かんせいに
+ひつような　じょうけんは▽
+だいほんに　よって▽
 ちがうから　きを　つけてくれよ！▼
 かんせいした　えいがは　ポケウッドに
 シアターで　じょうえい　されるから▽
 チェック　してくれよな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:19:49" />
+				Time="2011-07-13T11:48:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -117,24 +120,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここ　ポケウッドでは　えいがを
+			<Text>ここ　ポケウッドでは　映画を
 つくることが　できるんだ！▼
-だいほんに　よって　きめられた
-きょうえんしゃと　えんぎを　して▽
-さくひんの　かんせいに▽
-ひつような　じょうけんを▽
-みたせば　クランク　アップ！▼
-あっという　まに　えいがが
-かんせい　するのさ！▼
-さくひん　かんせいに　ひつような
-じょうけんは　だいほんに　よって▽
-ちがうから　きを　つけてくれよ！▼
-かんせいした　えいがは　ポケウッドに
-シアターで　じょうえい　されるから▽
+台本で　決められた
+共演者と　演技を　して▽
+作品の　完成に▽
+必要な　条件を▽
+満たせば　クランク　アップ！▼
+最新鋭の　ＶＦＸ技術で
+あっという　間に　映画が▽
+完成　するのさ！▼
+イイ　作品の　完成に　必要な
+条件は　台本に　よって▽
+気を　つけてくれよ！▼
+完成した　映画は　ポケウッドに
+シアターで　上映　されるから▽
 チェック　してくれよな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:19:59" />
+				Time="2011-07-13T11:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -150,11 +154,12 @@
 いっぱい　だぜ！▼
 あたらしい　さくひんを　とるには
 いま　こうかいしてる　なかから▽
-いっぽん　しゅうりょう　しなきゃ▽
+いっぽん　こうかいを▽
+しゅうりょう　しなきゃ▽
 ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:22:40" />
+				Time="2011-07-13T11:56:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -162,16 +167,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＡＯ！　いま　こうかいちゅうの
-さくひんで　スクリーンが▽
-いっぱい　だぜ！▼
-あたらしい　さくひんを　とるには
-いま　こうかいしてる　なかから▽
-いっぽん　しゅうりょう　しなきゃ▽
+			<Text>ＷＡＯ！　いま　公開中の
+作品で　シアターの▽
+スクリーンは　いっぱい　だぜ！▼
+新作を　撮るには
+今　公開してる　中から▽
+一本　公開を　終了しなきゃ▽
 ならないんだ！　いいかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:22:44" />
+				Time="2011-07-13T11:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -184,10 +189,10 @@
 			Language="JPN">
 			<Text>ＯＫ！　じゃあ　こうかいを
 しゅうりょう　する▽
-さくひんを　きめてくれ▼</Text>
+さくひんを　きめてくれよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:22:52" />
+				Time="2011-07-13T11:57:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -195,12 +200,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　じゃあ　こうかいを
-しゅうりょう　する▽
-さくひんを　きめてくれ▼</Text>
+			<Text>ＯＫ！　じゃあ　公開を
+終了　する▽
+作品を　決めてくれよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:22:56" />
+				Time="2011-07-13T11:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -224,12 +229,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　じゃあ　まず　さつえいする
-さくひんの　だいほんを▽
-えらんで　くれよ！▼</Text>
+			<Text>ＯＫ！　じゃあ　まず　撮影する
+作品の　台本を▽
+選んで　くれよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:23:28" />
+				Time="2011-07-13T11:49:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -252,11 +257,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　じゃあ　さくひんに
-しゅつえんする　ポケモンは　どうする？</Text>
+			<Text>ＯＫ！　じゃあ　作品に
+出演する　ポケモンは　どうする？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:23:44" />
+				Time="2011-07-13T11:49:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -279,11 +284,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　ＯＫ！　じゃあ　さくひんに
-しゅつえんする　ポケモンを　きめてくれ！▼</Text>
+			<Text>ＯＫ！　ＯＫ！　じゃあ　作品に
+出演する　ポケモンを　決めてくれ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:18:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:50:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -307,12 +312,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　ＯＫ！　じゃあ　この　さくひんに
-しゅつえんできる　ポケモンキャストを▼
-しょうかいするぜ！</Text>
+			<Text>ＯＫ！　ＯＫ！　じゃあ　この　作品に
+出演できる　ポケモンキャストを▼
+紹介するぜ！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:18:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:50:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -361,17 +366,59 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　それじゃあ　さっそく　えいがの
-さつえいを　はじめようぜ！▼
+			<Text>ＯＫ！　それじゃあ　早速　映画の
+撮影を　はじめようぜ！▼
 レッツ！　シューティングっ！！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:18:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
 				Time="2011-07-04T12:18:01" />
 		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_studio_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>さつえい　おつかれ！▼
+さっそくだけど　とった　えいがが
+どんな　さくひんに　なるか▽
+きに　なるだろ！？▼
+となりに　いる　こに
+はなしけて　みてくれよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T13:26:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T13:16:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>撮影　お疲れ！▼
+早速だけど　撮った　映画が
+どんな　作品に　なるか▽
+気に　なるだろ！？▼
+となりに　いる　子に
+話しかけて　みてくれよ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T13:26:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T13:16:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>撮影終了時のセリフ</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T13:16:26" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_studio_sel_01">
@@ -388,10 +435,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょうせんする</Text>
+			<Text>挑戦する</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:21:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:51:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -413,10 +460,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せつめいをきく</Text>
+			<Text>説明をきく</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:21:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:51:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -463,10 +510,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じぶんの　ポケモン</Text>
+			<Text>自分の　ポケモン</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-04T12:22:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -503,14 +550,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしの　しごとは
-えいがの　へんしゅう　！▼
+えいがの　へんしゅう！▼
 さつえいが　おわったら
 わたしの　ところへ　きてね！！▼
 とくべつに　あなたが　さつえいした
 さくひんを　みせてあげるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:50" />
+				Time="2011-07-13T11:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -518,15 +565,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　しごとは
-えいがの　へんしゅう　！▼
-さつえいが　おわったら
-わたしの　ところへ　きてね！！▼
-とくべつに　あなたが　さつえいした
-さくひんを　みせてあげるよ！▼</Text>
+			<Text>私の　仕事は
+映画の　編集！▼
+撮影が　終わったら
+わたしの　所へ　きてね！！▼
+特別に　あなたが　撮影した
+作品を　みせてあげるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:08:05" />
+				Time="2011-07-13T11:52:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -561,12 +608,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さつえい　おつかれさま　でした！▼
-さっき　さつえいした
-えいが　みてみない？▼</Text>
+			<Text>撮影　お疲れ様　でした！▼
+さっき　撮影した
+映画　みてみない？▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:26" />
+				Time="2011-07-13T11:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -605,10 +652,10 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よーし！　それじゃあ
-テストししゃ　スタート！▼</Text>
+テスト試写　スタート！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-13T05:26:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -663,12 +710,12 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたの　さくひん　すばらしかった！▼
-いまみたいに　すばらしい　さくひんを
-ヒットしたら　ぞくへんを▽
+いまみたいに　スゴい　さくひんが
+できて　ヒットしたら　ぞくへんを▽
 とることが　できるように　なるよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:35" />
+				Time="2011-07-13T11:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -676,13 +723,13 @@ msg_pw_theater_tes_04</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたの　さくひん　すばらしかった！▼
-いまみたいに　すばらしい　さくひんを
-ヒットしたら　ぞくへんを▽
-とることが　できるように　なるよ！</Text>
+			<Text>あなたの　作品　素晴らしかった！▼
+今みたいに　スゴい　作品が
+できて　ヒットしたら　続編を▽
+撮ることが　できるように　なるよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:39" />
+				Time="2011-07-13T11:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -749,10 +796,10 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>『[Name:Undefined ]』を
-みてみるのね？</Text>
+見てみるのね？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-13T08:39:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -761,10 +808,10 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『[Name:Undefined ]』を
-みてみるのね？</Text>
+見てみるのね？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-13T08:39:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-13T11:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
