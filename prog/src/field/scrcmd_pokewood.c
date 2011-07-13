@@ -34,6 +34,8 @@
 #include "battle/pokewood.h"
 #include "savedata/pokewood_rec.h"
 
+#include "msg/msg_pw_movietitle.h"
+
 
 //SDK_COMPILER_ASSERT( SCR_PKWD_SCENARIO_MAX == POKEWOOD_SENARIO_MAX );
 SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
@@ -297,7 +299,9 @@ VMCMD_RESULT EvCmdPokewoodSetScenarioName( VMHANDLE * core, void * wk )
   u16           rec_id = SCRCMD_GetVMWorkValue( core, work );
   HEAPID        heapID = SCRCMD_WORK_GetHeapID( work );
 
-  u32           msg_id = getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SENARIO, NULL );
+  u32           msg_id;
+  
+  msg_id = pw_title_00 + getRecordInfo( wk, rec_id, POKEWOOD_REC_PARAM_SENARIO, NULL );
   {
     GFL_MSGDATA     *man;
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
