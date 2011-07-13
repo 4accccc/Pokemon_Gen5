@@ -22,6 +22,7 @@
 #include "print\printsys.h"
 #include "message.naix"
 #include "field/event_beacon_detail.h"
+#include "field/event_push_medal.h"
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
 #include "field/event_freeword_input.h"
@@ -192,7 +193,7 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     {
       u32 target = wk->ctrl.target+wk->ctrl.view_top;
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
-          FS_OVERLAY_ID( notwifi_event_beacon_detail ), EVENT_BeaconDetail, &target );
+          FS_OVERLAY_ID( notwifi_event_push_medal ), EVENT_PushMedal, &target );
     }
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_MEDAL_ANM, wk->ctrl.target_panel );
     break;
@@ -1019,6 +1020,8 @@ static void act_NormalObjAdd( BEACON_VIEW_PTR wk )
    { ACT_MENU_PX+ACT_MENU_OX*3 ,ACT_MENU_PY, ACTANM_RETURN_ON, OBJ_MENU_BG_PRI },
    { ACT_UP_PX ,ACT_UP_PY, ACTANM_UP_OFF, OBJ_BG_PRI },
    { ACT_DOWN_PX ,ACT_DOWN_PY, ACTANM_DOWN_OFF, OBJ_BG_PRI },
+   { ACT_SWITCH_PX ,ACT_SWITCH_PY, ACTANM_SWITCH, OBJ_BG_PRI },
+   { ACT_BAR_PX ,ACT_BAR_PY, ACTANM_BAR, OBJ_BG_PRI },
    { ACT_LOGNUM_WIN_PX ,ACT_LOGNUM_WIN_PY, ACTANM_LOGNUM_WIN, OBJ_BG_PRI },
   };
 

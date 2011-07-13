@@ -87,6 +87,13 @@ typedef struct _LOG_CTRL{
   u8  target;
   u8  target_panel;
 
+  u8  scroll_mode;
+  u8  bar_top;
+  u8  old_bar_top;
+  u8  target_bar_top;
+  u8  bar_scr_step;
+  u8  bar_scr_dir;
+
   u8  g_power;
   u8  mine_power_f;
 

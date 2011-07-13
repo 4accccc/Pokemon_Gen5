@@ -47,6 +47,7 @@ static int seq_Main( BEACON_VIEW_PTR wk );
 static int seq_LogEntry( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
 static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk );
+static int seq_ScrollBar( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
 static int seq_ThankYou( BEACON_VIEW_PTR wk );
 
@@ -175,6 +176,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     break;
   case SEQ_LIST_SCROLL_REPEAT:
     wk->seq = seq_ListScrollRepeat( wk );
+    break;
+  case SEQ_SCROLL_BAR:
+    wk->seq = seq_ScrollBar( wk );
     break;
   case SEQ_GPOWER_USE:
     wk->seq = seq_GPowerUse( wk );
@@ -360,6 +364,15 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
   }
   return SEQ_LIST_SCROLL_REPEAT;
 }
+
+/*
+ *  @brief  スクロールバーによるスクロール処理
+ */
+static int seq_ScrollBar( BEACON_VIEW_PTR wk )
+{
+  return BeaconView_ScrollBarMain( wk );
+}
+
 
 /*
  *  @brief  自分のGパワーを使用

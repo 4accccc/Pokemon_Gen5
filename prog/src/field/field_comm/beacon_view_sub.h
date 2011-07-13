@@ -23,6 +23,11 @@ extern int BeaconView_CheckInput( BEACON_VIEW_PTR wk );
 extern int BeaconView_CheckInoutTouchUpDown( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  リスト スクロールバー判定
+ */
+extern int BeaconView_ScrollBarMain( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  御礼対象選択ループ内での入力チェック
  */
 extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
