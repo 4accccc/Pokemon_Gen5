@@ -19,6 +19,8 @@
 #define C06_BABYGIRL1_01                   2
 #define C06_SWLEADER6_01                   3
 #define C06_HAKASE2_01                     4
+#define FLD_ITEM_99                        5
+#define FLD_ITEM_100                       6
 
 #endif //ZONE_C06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

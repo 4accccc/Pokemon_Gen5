@@ -9,13 +9,14 @@
 #ifndef ZONE_D06R0301_EVC_H
 #define ZONE_D06R0301_EVC_H
 
+#define FLD_ITEM_96                        0
+#define FLD_ITEM_97                        1
+#define FLD_ITEM_98                        2
 
 #endif //ZONE_D06R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D06R0301_EVB_H
 #define ZONE_D06R0301_EVB_H
 
-#define D06R0301_HIDE_ITEM_01             0
-#define D06R0301_HIDE_ITEM_02             1
 
 #endif //ZONE_D06R0301_EVB_H

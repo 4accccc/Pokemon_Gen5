@@ -15,13 +15,13 @@
 #define D06R0201_SWBELL_01                 0
 #define D06R0201_SWGOLD2_01                1
 #define D06R0201_SWGOLD1_01                2
+#define FLD_ITEM_94                        3
+#define FLD_ITEM_95                        4
 
 #endif //ZONE_D06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D06R0201_EVB_H
 #define ZONE_D06R0201_EVB_H
 
-#define D06R0201_HIDE_ITEM_01             0
-#define D06R0201_HIDE_ITEM_02             1
 
 #endif //ZONE_D06R0201_EVB_H

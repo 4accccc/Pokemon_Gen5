@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/23 17:52:29
+#save date:2011/07/13 11:15:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -14,7 +14,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d06r0101.wms
 #type
 1
 #ID name
-D06R0101_FLD_ITEM_01
+FLD_ITEM_89
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -22,9 +22,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_31
+FV_FLD_ITEM_89
 #Event Script Name
-SCRID_FLD_ITEM_31
+SCRID_FLD_ITEM_89
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -40,12 +40,12 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 16 72
+200 16 88
 #event number: 1
 #type
 1
 #ID name
-D06R0101_FLD_ITEM_02
+FLD_ITEM_90
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -53,9 +53,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_32
+FV_FLD_ITEM_90
 #Event Script Name
-SCRID_FLD_ITEM_32
+SCRID_FLD_ITEM_90
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -76,7 +76,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D06R0101_FLD_ITEM_03
+FLD_ITEM_88
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -84,9 +84,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_33
+FV_FLD_ITEM_88
 #Event Script Name
-SCRID_FLD_ITEM_33
+SCRID_FLD_ITEM_88
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -102,22 +102,22 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 0 -568
+-104 0 -424
 #event number: 3
 #type
 1
 #ID name
-D06R0101_FLD_ITEM_04
+FLD_ITEM_91
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_34
+FV_FLD_ITEM_91
 #Event Script Name
-SCRID_FLD_ITEM_34
+SCRID_FLD_ITEM_91
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -133,7 +133,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-824 0 -152
+344 0 -472
 #event number: 4
 #type
 1
@@ -293,7 +293,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D05R0101_FLD_ITEM_05
+FLD_ITEM_92
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -301,9 +301,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_295
+FV_FLD_ITEM_92
 #Event Script Name
-SCRID_FLD_ITEM_295
+SCRID_FLD_ITEM_92
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -319,12 +319,12 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 -104
+824 0 -152
 #event number: 10
 #type
 1
 #ID name
-D05R0101_FLD_ITEM_06
+FLD_ITEM_93
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -332,9 +332,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_296
+FV_FLD_ITEM_93
 #Event Script Name
-SCRID_FLD_ITEM_296
+SCRID_FLD_ITEM_93
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -350,7 +350,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-696 0 -360
+568 0 -568
 #event number: 11
 #type
 1
@@ -453,7 +453,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+2
 #event number: 0
 #Bg Event Label
 D06R0101_HIDE_ITEM_01
@@ -480,19 +480,6 @@ SCRID_HIDE_ITEM_061
 EVENTDATA_POSTYPE_GRID
 #position
 392 16 72
-#event number: 2
-#Bg Event Label
-D06R0101_HIDE_ITEM_03
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_148
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 16 88
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
