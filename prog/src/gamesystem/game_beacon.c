@@ -17,6 +17,7 @@
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
+#include "savedata/medalbox.h"
 #include "net/net_whpipe.h"
 #include "savedata/my_pms_data.h"
 #include "app/townmap_util.h"
@@ -854,7 +855,12 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   
   info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
-  
+ 
+  {
+    MEDALBOX* sv_mdlbox = SaveData_GetMedalBox( sv );
+    info->push_medal = MEDALBOX_GetPushMedalID( sv_mdlbox );
+    info->medal_num = MEDALBOX_GetMedalCount( sv_mdlbox , FALSE );
+  }
   {
     PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( gamedata );
     info->play_hour = PLAYTIME_GetHour( sv_playtime );
@@ -1321,7 +1327,37 @@ void GAMEBEACON_SendDataUpdate_SelfIntroduction(void)
   send->beacon_update = TRUE;
 }
 
+//==================================================================
+/**
+ * 送信データ更新：メダル獲得数をバッファに反映する
+ *
+ * @param   pms		
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_MedalCount( u8 medal_num )
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
 
+  info->medal_num = medal_num;
+  send->beacon_update = TRUE;
+}
+
+//==================================================================
+/**
+ * 送信データ更新：メダル獲得数をバッファに反映する
+ *
+ * @param   pms		
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_PushMedal( MedalID push_medal )
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+
+  info->push_medal = push_medal;
+  send->beacon_update = TRUE;
+}
 
 //==============================================================================
 //

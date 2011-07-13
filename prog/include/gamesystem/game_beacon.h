@@ -16,7 +16,7 @@
 #include "field/gpower_id.h"
 #include "gamesystem/playerwork.h"  //typedef ZONEID
 #include "savedata/questionnaire_save.h"
-
+#include "app/mdlid_def.h"
 
 //==============================================================================
 //  定数定義
@@ -257,6 +257,8 @@ extern void GAMEBEACON_SendDataUpdate_ResearchTeamRank(u8 research_team_rank);
 extern void GAMEBEACON_SendDataUpdate_TrCardIntroduction(const PMS_DATA *pms);
 extern void GAMEBEACON_SendDataUpdate_SelfIntroduction(void);
 extern void GAMEBEACON_SendDataUpdate_TrainerView(int trainer_view);
+extern void GAMEBEACON_SendDataUpdate_MedalCount( u8 medal_num );
+extern void GAMEBEACON_SendDataUpdate_PushMedal( MedalID push_medal );
 
 //--------------------------------------------------------------
 //  アンケート

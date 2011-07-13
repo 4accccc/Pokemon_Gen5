@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
+#include "gamesystem/game_beacon.h"
 #include "system/main.h"
 #include "system/bmp_winframe.h"
 #include "arc_def.h"
@@ -183,6 +184,7 @@ static void debugMenuAllTitleMedalOpen( DEBUG_MEDALBOX_WORK* wk )
         MEDALBOX_SetTitleMedalAchive( medal_box , medal_id );
       }
       MEDALBOX_SetTitleMedalGetFlg( medal_box , medal_id , 99 , 12 , 31 );
+      GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medal_box,FALSE));
 
       // ê›íËå„ÇÃäJï˙èÛãµÇï\é¶
       medal_state = MEDALBOX_GetMedalState( medal_box , medal_id );
@@ -597,6 +599,7 @@ static void setMedalState( MEDALBOX * medal_box, u8 id, u8 state )
   case MEDAL_STATE_TITLE_GET:
     DEBUG_SetMedalState( medal_box, id, MEDAL_STATE_TITLE_ACHIVE );
     MEDALBOX_SetTitleMedalGetFlg( medal_box, id, 12, 12, 12 );
+    GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medal_box,FALSE));
     break;
   }
 }

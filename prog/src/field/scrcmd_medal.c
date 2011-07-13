@@ -14,6 +14,7 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
+#include "gamesystem/game_beacon.h"
 
 #include "script.h"
 #include "script_def.h"
@@ -190,6 +191,7 @@ VMCMD_RESULT EvCmdGetMedal( VMHANDLE * core, void * wk )
   if ( mode )
   {
     MEDALBOX_SetTitleMedalGetFlg( medalbox, medal_id, date.year, date.month, date.day );
+    GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medalbox,FALSE));
   } else {
     MEDALBOX_SetHintMedalGetFlg( medalbox, medal_id, date.year, date.month, date.day );
   }
@@ -323,6 +325,7 @@ static void updateTitleMedal( SCRCMD_WORK * work )
   if ( id >= 0 )
   {
     MEDALBOX_SetTitleMedalGetFlg( medalbox, id, date.year, date.month, date.day );
+    GAMEBEACON_SendDataUpdate_MedalCount( MEDALBOX_GetMedalCount(medalbox,FALSE));
   }
 }
 //--------------------------------------------------------------

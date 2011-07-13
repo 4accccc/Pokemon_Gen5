@@ -17,6 +17,7 @@
 #include "arc_def.h"              // ARC_ID
 #include "message.naix"           // MESSAGE_ARC_ID
 
+#include "gamesystem/game_beacon.h"
 #include "sound/pm_sndsys.h"      // サウンド
 
 #include "print/gf_font.h"        // フォント
@@ -5256,10 +5257,12 @@ static void SetPushMedalData( MEDALBOXSYS_WORK *p_wk ,MedalID medal_id , PUSHMED
   if( set_type == PUSHMEDAL_TYPE_SET )
   {
     p_wk->medal_data.push_medalid = medal_id;
+    GAMEBEACON_SendDataUpdate_PushMedal( medal_id );
   }
   else if( set_type == PUSHMEDAL_TYPE_REMOVE )
   {
     p_wk->medal_data.push_medalid = MDLID_MAX;
+    GAMEBEACON_SendDataUpdate_PushMedal( medal_id );
   }
   else if( set_type == PUSHMEDAL_TYPE_HINT )
   {
