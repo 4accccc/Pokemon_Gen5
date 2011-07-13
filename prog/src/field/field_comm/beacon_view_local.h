@@ -95,7 +95,6 @@ typedef struct _LOG_CTRL{
   u8  bar_scr_dir;
 
   u8  g_power;
-  u8  mine_power_f;
 
   u8  fm_entry;
   u32 fm_my_score;

@@ -209,7 +209,7 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     {
       GPOWER_EFFECT_PARAM param;
       param.g_power = wk->ctrl.g_power;
-      param.mine_f = wk->ctrl.mine_power_f;
+      param.mine_f = FALSE;
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
     }

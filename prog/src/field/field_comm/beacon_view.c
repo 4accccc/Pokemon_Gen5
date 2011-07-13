@@ -48,41 +48,13 @@ static int seq_LogEntry( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
 static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk );
 static int seq_ScrollBar( BEACON_VIEW_PTR wk );
-static int seq_GPowerUse( BEACON_VIEW_PTR wk );
 static int seq_ThankYou( BEACON_VIEW_PTR wk );
 
 static void sub_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
 
-static void debug_InputCheck(BEACON_VIEW_PTR view);
-
 //==============================================================================
 //  データ
 //==============================================================================
-#ifdef PM_DEBUG
-///タッチ範囲テーブル
-static const GFL_UI_TP_HITTBL TouchRect[] = {
-  {//Gパワー
-    0x15*8,
-    0x18*8,
-    0*8,
-    6*8,
-  },
-  {//おめでとう
-    0x15*8,
-    0x18*8,
-    6*8,
-    12*8,
-  },
-  {//戻る
-    0x15*8,
-    0x18*8,
-    (0x20-3)*8,
-    0x20*8,
-  },
-  { GFL_UI_TP_HIT_END, 0, 0, 0 },
-};
-#endif  //PM_DEBUG
-
 //==============================================================================
 //
 //  
@@ -180,9 +152,6 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   case SEQ_SCROLL_BAR:
     wk->seq = seq_ScrollBar( wk );
     break;
-  case SEQ_GPOWER_USE:
-    wk->seq = seq_GPowerUse( wk );
-    break;
   case SEQ_THANK_YOU:
     wk->seq = seq_ThankYou( wk );
     break;
@@ -233,7 +202,6 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
     t_tick = e_tick-s_tick;
     IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
-  debug_InputCheck( wk );
 #endif
 #endif
 }
@@ -373,19 +341,6 @@ static int seq_ScrollBar( BEACON_VIEW_PTR wk )
   return BeaconView_ScrollBarMain( wk );
 }
 
-
-/*
- *  @brief  自分のGパワーを使用
- */
-static int seq_GPowerUse( BEACON_VIEW_PTR wk )
-{
-  if( !BeaconView_SubSeqGPower( wk )){
-    return SEQ_GPOWER_USE;
-  }
-  wk->sub_seq = 0;
-  return SEQ_MAIN;
-}
-
 /*
  *  @brief  御礼をする相手を選ぶ
  */
@@ -409,47 +364,4 @@ static void sub_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
     FLD_VREQ_G2S_SetBlendAlpha( wk->fld_vreq, ALPHA_1ST_NORMAL, ALPHA_2ND, ALPHA_EV1_NORMAL, ALPHA_EV2_NORMAL);
   }
 }
-
-#ifdef PM_DEBUG
-//--------------------------------------------------------------
-/**
- * タッチ判定
- *
- * @param   wk		
- */
-//--------------------------------------------------------------
-static void debug_InputCheck(BEACON_VIEW_PTR wk)
-{
-  u32 tp_x, tp_y;
-  int trg =  GFL_UI_KEY_GetTrg();
-  int cont =  GFL_UI_KEY_GetCont();
-  int tp_ret = GFL_UI_TP_HitTrg(TouchRect);
-
-  if( wk->event_id != EV_NONE ){
-    return;
-  }
-
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  switch(tp_ret){
-  case 0: //
-    OS_TPrintf("ランダム ビーコンセット\n");
-    DEBUG_GAMEBEACON_Set_Random();
-//    GAMEBEACON_Set_GPower( 1 );
-    break;
-  case 1: //おめでとう
-    OS_TPrintf("ビーコンセット\n");
-//    GAMEBEACON_Set_SpecialPokemonGet( 1 );
-//    GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no);
-    GAMEBEACON_Set_Subway();
-
-//    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
-    break;
-  case 2: //戻る
-    break;
-  }
-#endif
-}
-
-#endif  //PM_DEBUG
-
 

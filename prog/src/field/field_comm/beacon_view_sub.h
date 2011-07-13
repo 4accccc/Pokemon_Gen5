@@ -72,11 +72,6 @@ extern void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk );
 extern BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk );
 
 /*
- *  @brief  サブシーケンス　GPower使用メイン
- */
-extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );
-
-/*
  *  @brief  メニューバーアニメセット
  */
 extern void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state );

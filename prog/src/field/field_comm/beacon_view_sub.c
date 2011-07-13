@@ -102,7 +102,6 @@ static BOOL effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
 static void effReq_PopupMsgFromInfo( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_PopupMsgSys( BEACON_VIEW_PTR wk, u8 msg_id );
 static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haifu_f );
-static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk );
 static void effReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpower_id );
 static BOOL effReq_PopupMsgFMission( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info );
 static void effReq_SetPanelFlash( BEACON_VIEW_PTR wk, u8 target_ofs );
@@ -578,36 +577,6 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
   }
   return FALSE;
 }
-
-///////////////////////////////////////////////////////////////////
-/*
- *  @brief  サブシーケンス　GPower
- */
-///////////////////////////////////////////////////////////////////
-
-/*
- *  @brief  サブシーケンス　GPower使用メイン
- */
-BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk )
-{
-  switch( wk->sub_seq ){
-  case 0:
-    BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_ANM );
-    BVC_PrintQueLimmitUpSet( wk->printQue, TRUE );
-    effReq_PopupMsgGPowerMine( wk );
-    wk->sub_seq++;
-    break;
-  case 1:
-    if( wk->eff_task_ct ){
-      break;
-    }
-    BVC_PrintQueLimmitUpSet( wk->printQue, FALSE );
-    wk->sub_seq = 0;
-    return TRUE;
-  }
-  return FALSE;
-}
-
 
 ///////////////////////////////////////////////////////////////////
 /*
@@ -1938,24 +1907,17 @@ typedef struct _TASKWK_WIN_GPOWER{
   int child_task;
 
   GPOWER_ID  g_power;
-  u16 item_num;
-  u16 item_use;
-  u16 mypower_use;
-  u16 mypower_min;
-  u16 mypower_sec;
   BEACON_VIEW_PTR bvp;
   int* task_ct;
 }TASKWK_WIN_GPOWER;
 
 static const u8 DATA_GPowerUseMsg[GPOWER_USE_MAX] = {
- msg_sys_gpower_use00,
  msg_sys_gpower_use01,
  msg_sys_gpower_use02,
 };
 
 static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, int* task_ct );
 static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* work);
-static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* work);
 
 static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haifu_f )
 {
@@ -1981,11 +1943,6 @@ static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BO
   taskAdd_WinGPower( wk, gpower_id, GPOWER_USE_BEACON, &wk->eff_task_ct);
   return TRUE;
 }
-static void effReq_PopupMsgGPowerMine( BEACON_VIEW_PTR wk )
-{
-  taskAdd_WinGPower( wk,
-      wk->my_data.power, GPOWER_USE_MINE, &wk->eff_task_ct );
-}
 static void effReq_PopupMsgGPowerSpecial( BEACON_VIEW_PTR wk, GPOWER_ID sp_gpower_id )
 {
   taskAdd_WinGPower( wk, sp_gpower_id, GPOWER_USE_SPECIAL, &wk->eff_task_ct );
@@ -2005,7 +1962,6 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, i
   MI_CpuClear8( twk, sizeof( TASKWK_WIN_GPOWER ));
 
   wk->ctrl.g_power = GPOWER_ID_NULL;
-  wk->ctrl.mine_power_f = ( type == GPOWER_USE_MINE);
 
   twk->bvp = wk;
   twk->wait = POPUP_WAIT;
@@ -2014,34 +1970,8 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, i
 
   WORDSET_RegisterGPowerName( wk->wordset, 1, g_power );
 
-  //使用ポイント取得
-  if( twk->type == GPOWER_USE_MINE ){
-    twk->item_use = GPOWER_ID_to_Point( wk->gpower_data, g_power );
-    twk->item_num = MYITEM_GetItemNum(wk->item_sv, ITEM_DERUDAMA, wk->tmpHeapID);
-    
-    WORDSET_RegisterNumber( wk->wordset, 2, twk->item_use, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wk->wordset, 3, twk->item_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  
-    if( GPOWER_Check_OccurID( g_power, wk->gpower_data) == g_power ){
-      twk->mypower_use = GPOWER_Check_MyPower();
-      if( twk->mypower_use > 0 ){
-        twk->mypower_min = twk->mypower_use/60;
-        twk->mypower_sec = twk->mypower_use%60;
-        WORDSET_RegisterNumber( wk->wordset, 4, twk->mypower_min, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-        WORDSET_RegisterNumber( wk->wordset, 5, twk->mypower_sec, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      }
-    }
-  }
-  if( twk->type != GPOWER_USE_MINE ){
-    BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
-  }
-  BeaconView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_OFF );
-  BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_OFF );
-  BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
 
-  if( twk->mypower_use || (twk->item_num < twk->item_use )){
-    GFL_TCBL_ChangeFunc( tcb, tcb_WinGPowerCheck );
-  }
   twk->task_ct = task_ct;
   (*task_ct)++;
 }
@@ -2128,84 +2058,6 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
-
-static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
-{
-  TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
-  BEACON_VIEW_PTR bvp = twk->bvp;
-
-  if( twk->child_task > 0 ){
-    return;
-  }
-
-  switch( twk->seq ){
-  case 0:
-    if( twk->mypower_use ){ //既に使用中
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err02+(twk->mypower_min != 0) );
-    }else if( twk->item_num < twk->item_use ){  //アイテムが足りない
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err01);
-    }
-    print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
-    twk->seq++;
-    return;
-  case 1:
-    BVCTaskAdd_MsgUpdown( bvp->pTcbSys, FRM_POPUP, SCROLL_UP, &twk->child_task );
-    twk->seq++;
-    return;
-  case 2:
-    draw_MenuIconVisibleSet( bvp, FALSE );
-    twk->seq++;
-    return;
-  case 3:
-    BVCTMenu_Create( bvp->tmenu, TMENU_ID_CHECK );
-    draw_ClearMenuWindow( bvp );
-    twk->seq++;
-    return;
-  case 4: //選択待ち
-    {
-      int ret = BVCTMenu_Update( bvp->tmenu );
-      if( ret < 0 ){
-        return;
-      }
-      twk->ret = ret;
-      if(twk->ret == TMENU_CHECK_CALL){
-        BVSEvent_Reserve( bvp, EV_GPOWER_CHECK_TMENU_CHK );
-        bvp->gpower_check_req = TRUE;
-        twk->seq = 5;
-      }else{
-        twk->seq = 6;
-      }
-    }
-    return;
-  case 5: //イベントが実行されたかチェック
-    if( bvp->gpower_check_req ){
-      twk->seq = 4; //途中キャンセルされていたら、選択しなおし
-    }else{
-      BVCTMenu_End( bvp->tmenu );
-      twk->seq = 7; //実行されていればメニュー削除
-    }
-    return;
-  case 6: //決定アニメ待ち
-    if( BVCTMenu_EndWait( bvp->tmenu, twk->ret )){
-      twk->seq++;
-    }
-    return;
-  case 7:
-    draw_MenuWindow( bvp, msg_sys_now_record, &twk->child_task );
-    draw_MenuIconVisibleSet( bvp, TRUE );
-    BVCTaskAdd_MsgUpdown( bvp->pTcbSys, FRM_POPUP, SCROLL_DOWN, &twk->child_task );
-    twk->seq++;
-    return;
-  default:
-    //終了
-    break;
-  }
-  BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
-  
-  --(*twk->task_ct);
-  GFL_TCBL_Delete(tcb);
-}
-
 
 /////////////////////////////////////////////////////////////////////
 /*
