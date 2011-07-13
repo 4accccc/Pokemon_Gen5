@@ -9,6 +9,7 @@
 #define ZONE_C15R0101_EVC_H
 
 #define C15R0101_PKWD_REC                  0
+#define C15R0101_PKWD_SHOW                 1
 
 #endif //ZONE_C15R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c15r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
