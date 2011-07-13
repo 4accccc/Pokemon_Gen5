@@ -1,0 +1,12 @@
+DATA_LIST = \
+    as_button01.nsbmd \
+    as_button01_off.nsbta \
+    as_button01_on.nsbta \
+    as_gate01.nsbmd \
+    as_gate01.nsbta \
+    as_gate01_off.nsbma \
+    as_pipe01.nsbmd \
+    as_pipe01_in.nsbca \
+    as_pipe01_on.nsbta \
+    as_pipe01_out.nsbca
+ 

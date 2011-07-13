@@ -32,7 +32,8 @@ SUBDIRS	=	gym_denki \
 					fourkings_esp \
 					fourkings_ghost \
 					fourkings_fight \
-					badge_gate
+					badge_gate \
+					hide_ship_engine
 
 .PHONY:	do-build clean
 

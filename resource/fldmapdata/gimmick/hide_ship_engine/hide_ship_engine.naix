@@ -1,0 +1,27 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: hide_ship_engine.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_HIDE_SHIP_ENGINE_NAIX_
+#define NARC_HIDE_SHIP_ENGINE_NAIX_
+
+enum {
+	NARC_hide_ship_engine_as_button01_nsbmd = 0,
+	NARC_hide_ship_engine_as_button01_off_nsbta = 1,
+	NARC_hide_ship_engine_as_button01_on_nsbta = 2,
+	NARC_hide_ship_engine_as_gate01_nsbmd = 3,
+	NARC_hide_ship_engine_as_gate01_nsbta = 4,
+	NARC_hide_ship_engine_as_gate01_off_nsbma = 5,
+	NARC_hide_ship_engine_as_pipe01_nsbmd = 6,
+	NARC_hide_ship_engine_as_pipe01_in_nsbca = 7,
+	NARC_hide_ship_engine_as_pipe01_on_nsbta = 8,
+	NARC_hide_ship_engine_as_pipe01_out_nsbca = 9
+};
+
+/* NARC_HIDE_SHIP_ENGINE_NAIX_ */
+#endif
