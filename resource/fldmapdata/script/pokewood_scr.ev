@@ -209,7 +209,13 @@ ev_pkwd_rec_shooting:
   //仮：ここで録画アプリ呼び出し
   _PKWD_REC( LWK_PKWD_REC_POS, LWK_PKWD_SCENARIO, SCWK_ANSWER )
   
-  $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+  //_PKWD_CHECK_MOVIE_ENABLE( LWK_PKWD_REC_POS, SCWK_ANSWER )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_13, SCWK_TARGET_OBJID, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_END
+  //$LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
 _RET
 
 /**************************************************************/
