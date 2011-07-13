@@ -9113,6 +9113,66 @@
 		<language name="JPN" width="256">SW-CATTLEYA-02</language>
 		<language name="JPN_KANJI" width="256">SW-CATTLEYA-02</language>
 	</row>
+	<row id="msg_seq_se_sw_shikimi_01">
+		<language name="JPN" width="256">SW-SHIKIMI-01</language>
+		<language name="JPN_KANJI" width="256">SW-SHIKIMI-01</language>
+	</row>
+	<row id="msg_seq_se_sw_shikimi_02">
+		<language name="JPN" width="256">SW-SHIKIMI-02</language>
+		<language name="JPN_KANJI" width="256">SW-SHIKIMI-02</language>
+	</row>
+	<row id="msg_seq_se_sw_shikimi_03">
+		<language name="JPN" width="256">SW-SHIKIMI-03</language>
+		<language name="JPN_KANJI" width="256">SW-SHIKIMI-03</language>
+	</row>
+	<row id="msg_seq_se_sw_shikimi_04">
+		<language name="JPN" width="256">SW-SHIKIMI-04</language>
+		<language name="JPN_KANJI" width="256">SW-SHIKIMI-04</language>
+	</row>
+	<row id="msg_seq_se_sw_shikimi_05">
+		<language name="JPN" width="256">SW-SHIKIMI-05</language>
+		<language name="JPN_KANJI" width="256">SW-SHIKIMI-05</language>
+	</row>
+	<row id="msg_seq_se_sw_renbu_01">
+		<language name="JPN" width="256">SW-RENBU-01</language>
+		<language name="JPN_KANJI" width="256">SW-RENBU-01</language>
+	</row>
+	<row id="msg_seq_se_sw_renbu_02">
+		<language name="JPN" width="256">SW-RENBU-02</language>
+		<language name="JPN_KANJI" width="256">SW-RENBU-02</language>
+	</row>
+	<row id="msg_seq_se_sw_renbu_03">
+		<language name="JPN" width="256">SW-RENBU-03</language>
+		<language name="JPN_KANJI" width="256">SW-RENBU-03</language>
+	</row>
+	<row id="msg_seq_se_sw_renbu_04">
+		<language name="JPN" width="256">SW-RENBU-04</language>
+		<language name="JPN_KANJI" width="256">SW-RENBU-04</language>
+	</row>
+	<row id="msg_seq_se_sw_renbu_05">
+		<language name="JPN" width="256">SW-RENBU-05</language>
+		<language name="JPN_KANJI" width="256">SW-RENBU-05</language>
+	</row>
+	<row id="msg_seq_se_sw_bcg_01">
+		<language name="JPN" width="256">SW-BCG-01</language>
+		<language name="JPN_KANJI" width="256">SW-BCG-01</language>
+	</row>
+	<row id="msg_seq_se_sw_bcg_02">
+		<language name="JPN" width="256">SW-BCG-02</language>
+		<language name="JPN_KANJI" width="256">SW-BCG-02</language>
+	</row>
+	<row id="msg_seq_se_sw_bcg_03">
+		<language name="JPN" width="256">SW-BCG-03</language>
+		<language name="JPN_KANJI" width="256">SW-BCG-03</language>
+	</row>
+	<row id="msg_seq_se_sw_bcg_04">
+		<language name="JPN" width="256">SW-BCG-04</language>
+		<language name="JPN_KANJI" width="256">SW-BCG-04</language>
+	</row>
+	<row id="msg_seq_se_sw_bcg_05">
+		<language name="JPN" width="256">SW-BCG-05</language>
+		<language name="JPN_KANJI" width="256">SW-BCG-05</language>
+	</row>
 	<row id="msg_seq_se_sw_wbt_10">
 		<language name="JPN" width="256">SW-WBT-10</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-10</language>
