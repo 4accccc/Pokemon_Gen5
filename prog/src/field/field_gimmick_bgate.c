@@ -26,6 +26,7 @@
 #include "arc/fieldmap/badge_gate_gmk.naix"   // モデルデータアーカイブ
 #include "field/field_const.h"                // for GRID_TO_FX32
 #include "field_gimmick_bgate.cdat"           // モデルセットアップデータ
+#include "sound/pm_sndsys.h"                  // for SEQ_SE_*
 
 
 //=============================================================================
@@ -42,6 +43,17 @@
 
 // イベントが起動済みの時にワークに設定されている値
 #define IS_ACTION_WK_VALUE  (2)
+
+//-------------------------------------
+///	SEシーケンス定義
+//=====================================
+typedef enum{
+  BADGEGATE_SE_SEQ_MONUMENT_START   = SEQ_SE_SW_BCG_01,
+  BADGEGATE_SE_SEQ_GATE_START       = SEQ_SE_SW_BCG_03,
+  BADGEGATE_SE_SEQ_GATE_LIGHT       = SEQ_SE_SW_BCG_02,
+  BADGEGATE_SE_SEQ_GATE_COLUMN_DOWN = SEQ_SE_SW_BCG_04,
+  BADGEGATE_SE_SEQ_GATE_OPEN        = SEQ_SE_SW_BCG_05,
+}GYM_DRAGON_SE_SEQ;
 
 //=============================================================================
 /**
@@ -136,6 +148,7 @@ static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk );
 static void setup_anm_before_action( MODEL *p_model );
 static void setup_anm_after_action( MODEL *p_model );
 static BOOL get_is_action_end( u32 id, EVENTWORK *p_event_wk );
+static void GateOpen_SePlayMain( GATE_START_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -600,6 +613,9 @@ static GMEVENT_RESULT GateOpen_Event( GMEVENT* p_event, int* p_seq, void* p_wk_a
   // カメラ揺れの更新
   GateOpen_CameraShakeMain( p_wk );
 
+  // SE再生
+  GateOpen_SePlayMain( p_wk );
+
   // カメラ揺れフレームの加算
   p_wk->shake_event_frame++;
 
@@ -707,6 +723,39 @@ static void GateOpen_CameraShakeMain( GATE_START_WK *p_wk )
         ONOUE_Printf("振動終了\n");
       }
     }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートオープンイベントのSE再生
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void GateOpen_SePlayMain( GATE_START_WK *p_wk )
+{
+  // ゲート起動、シンボルマークが光る
+  if( p_wk->shake_event_frame == GATE_SE_SYMBOL_LIGHT_FRAME )
+  {
+    PMSND_PlaySE( BADGEGATE_SE_SEQ_GATE_START );
+  }
+  // ゲートの光が立ち上がる
+  if( p_wk->shake_event_frame == GATE_SE_LIGHT_MOVE_FRAME )
+  {
+    PMSND_PlaySE( BADGEGATE_SE_SEQ_GATE_LIGHT );
+  }
+  // 石柱と、石版が沈む
+  if( p_wk->shake_event_frame == GATE_SE_COLUMNLE_DOWN_FRAME )
+  {
+    PMSND_PlaySE( BADGEGATE_SE_SEQ_GATE_COLUMN_DOWN );
+  }
+  // 門が沈む
+  if( p_wk->shake_event_frame == GATE_SE_OPEN_FRAME )
+  {
+    PMSND_PlaySE( BADGEGATE_SE_SEQ_GATE_OPEN );
   }
 }
 
