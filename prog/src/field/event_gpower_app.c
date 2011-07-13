@@ -97,7 +97,7 @@ static void sub_CallParamSet( GPOWER_APP_PARAM* pp, int mode, GAMESYS_WORK* gsys
   //éıñΩÇÃí∑Ç¢èáÇ…É\Å[Ég
   for( i = 0;i < (pp->occur_num-1); i++ ){
     GPOWER_OCCUR_LIST tmp;
-    for( j = 0; j < (pp->occur_num-1); j++ ){
+    for( j = (pp->occur_num-1); j > i; j-- ){
       if( pp->occur_list[j-1].life > pp->occur_list[j].life ){
         tmp = pp->occur_list[j];
         pp->occur_list[j] = pp->occur_list[j-1];
