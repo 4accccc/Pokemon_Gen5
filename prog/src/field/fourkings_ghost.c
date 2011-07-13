@@ -26,6 +26,9 @@
 #include "arc/fieldmap/fourkings_ghost.naix"
 #include "../../../resource/fldmapdata/eventdata/tmp/c09r0101.h"
 
+// sound
+#include "sound/pm_sndsys.h"
+
 // mine
 #include "fourkings_sv.h"
 #include "fourkings_ghost.h"
@@ -661,6 +664,9 @@ void FOURKINGS_GHOST_FireAnm( GAMESYS_WORK *gsys, int id )
     ANM_FIRE_B_Play( p_wk, id - 1 );
     GFL_TCB_AddTask( tcbsys, FireTcbB, (void*)task_wk, 0 );
   }
+
+  // SE 再生 
+  PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_02 );   // 火の玉現れる音
 }
 //----------------------------------------------------------------------------
 /**
@@ -1615,6 +1621,8 @@ static GMEVENT_RESULT MistEvent( GMEVENT* event, int* seq, void* wk )
   case 1:
     // 霧晴れるアニメ
     ANM_MIST_Play( p_gmk_wk );
+    // SE 再生 
+    PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_01 );   // 渦巻くような風の音
     return GMEVENT_RES_FINISH;
   }
 
@@ -1759,6 +1767,10 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk )
 
       // 本が落ちるアニメ再生
       ANM_BOOK_Play( p_gmk_wk );
+
+      // SE 再生 
+      PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_03 );   // 本が落ちる音
+
       *seq = SEQ_WAIT;
     }
     break;
@@ -1879,6 +1891,10 @@ static GMEVENT_RESULT LampEvent( GMEVENT* event, int* seq, void* wk )
     ANM_LAMP_Play( p_gmk_wk );
     // NOFOG
     ANM_NOFOG_Play( p_gmk_wk );
+
+    // SE 再生 
+    PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_05 );   // ランプがともる音
+
     (*seq)++;
     break;
 
