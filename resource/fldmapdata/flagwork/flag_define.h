@@ -345,7 +345,7 @@
 #define FE_R22_POKE5_MEET_01               329 /* 0x0149 22番道路：テラキオンに会った */
 #define FE_R22_POKE5_GET_01                330 /* 0x014a 22番道路：テラキオンを捕まえた */
 #define FE_D02R0201_RANGERM_01             331 /* 0x014b D02R0201：レンジャー初回会話フラグ */
-		/* not used   332(0x014c) */
+#define FE_C06_APPRAISAL_TALK              332 /* 0x014c フキヨセシティ：こやし買取人初回会話フラグ */
 		/* not used   333(0x014d) */
 		/* not used   334(0x014e) */
 		/* not used   335(0x014f) */
@@ -2231,8 +2231,8 @@
 #define TMFLG_C07R0201_QUIZ               2757 /* 0x0ac5 セッカシティ：一日一回クイズ一家 */
 #define TMFLG_C05R0301_WAZA_NO            2758 /* 0x0ac6 日替わり技見せ：本日の技ナンバー */
 #define TMFLG_C05R0301_WAZA_CLEAR         2759 /* 0x0ac7 日替わり技見せ：クリア判定 */
-		/* not used  2760(0x0ac8) */
-		/* not used  2761(0x0ac9) */
+#define TMFLG_D02_ROCK_01                 2760 /* 0x0ac8 ヤグルマの森：1日1回試しの岩 */
+#define TMFLG_C03R1101_MASSAGE            2761 /* 0x0ac9 ヒウン便利ビル：1日1回マッサージ */
 		/* not used  2762(0x0aca) */
 		/* not used  2763(0x0acb) */
 		/* not used  2764(0x0acc) */
