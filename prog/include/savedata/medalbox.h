@@ -12,7 +12,7 @@
 
 #include  <gflib.h>
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
-#include "../../../resource/medal/data/mdlid_def.h" // for MDLID_MAX
+#include "app/mdlid_def.h" // for MDLID_MAX
 
 #include "savedata/medalbox_rank_def.h" // rankに関する定義ファイル
 //=============================================================================

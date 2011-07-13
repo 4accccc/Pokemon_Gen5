@@ -92,7 +92,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
+do-build:	$(TARGETDIR)/$(NARCNAME) $(TARGETDIR)/$(NAIXNAME) $(GMMDIR)/$(MEDALNAME_GMM) $(GMMDIR)/$(MEDALEX_GMM) $(GMMDIR)/$(MEDALHELP_GMM) $(INCLUDE_DIR)/$(MEDAL_ID_H) $(INCLUDE_DIR)/$(MEDALRECID_H) $(SRC_DIR)/$(MEDAL_SORT_CDAT)
 $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 	$(COPY)	$(NARCNAME) $(TARGETDIR)
 
@@ -110,6 +110,9 @@ $(GMMDIR)/$(MEDALHELP_GMM):	$(MEDALHELP_GMM)
 
 $(INCLUDE_DIR)/$(MEDAL_ID_H):	$(MEDAL_ID_H)
 	$(COPY)	$(MEDAL_ID_H) $(INCLUDE_DIR)
+
+$(INCLUDE_DIR)/$(MEDALRECID_H):	$(MEDALRECID_H)
+	$(COPY)	$(MEDALRECID_H) $(INCLUDE_DIR)
 
 $(SRC_DIR)/$(MEDAL_SORT_CDAT):	$(MEDAL_SORT_CDAT)
 	$(COPY)	$(MEDAL_SORT_CDAT) $(SRC_DIR)

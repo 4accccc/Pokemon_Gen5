@@ -12,7 +12,7 @@
 
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
-#include "../../../resource/medal/data/mdlid_def.h" // for MedalID
+#include "mdlid_def.h" // for MedalID
 FS_EXTERN_OVERLAY(medalinfo);
 
 //=============================================================================
