@@ -1,15 +1,15 @@
 
 fileID:  byte(s) name
 ----------------------------------------
-     0:     6096 /swanbg_01.nsbmd
-     1:     6096 /swanbg_02.nsbmd
-     2:     6096 /swanbg_03.nsbmd
-     3:     6096 /swanbg_04.nsbmd
-     4:     6096 /swanbg_05.nsbmd
-     5:     6096 /swanbg_06.nsbmd
-     6:     6096 /swanbg_07.nsbmd
-     7:     6096 /swanbg_08.nsbmd
-     8:    31996 /swanbg_09.nsbmd
+     0:     5252 /swanbg_01.nsbmd
+     1:     5252 /swanbg_02.nsbmd
+     2:     5252 /swanbg_03.nsbmd
+     3:     5252 /swanbg_04.nsbmd
+     4:     5252 /swanbg_05.nsbmd
+     5:     5252 /swanbg_06.nsbmd
+     6:     5252 /swanbg_07.nsbmd
+     7:     5252 /swanbg_08.nsbmd
+     8:    22708 /swanbg_09.nsbmd
      9:      304 /swanbg_01.nsbca
     10:      304 /swanbg_02.nsbca
     11:      304 /swanbg_03.nsbca
@@ -18,7 +18,7 @@ fileID:  byte(s) name
     14:      304 /swanbg_06.nsbca
     15:      304 /swanbg_07.nsbca
     16:      304 /swanbg_08.nsbca
-    17:     4880 /swanbg_09.nsbca
+    17:     4188 /swanbg_09.nsbca
     18:      324 /swanbg_01.nsbta
     19:      324 /swanbg_02.nsbta
     20:      324 /swanbg_03.nsbta
