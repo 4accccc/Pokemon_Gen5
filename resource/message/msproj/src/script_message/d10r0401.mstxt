@@ -2,7 +2,2423 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d10r0401_swsage01_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『ジャイアントホール！▼
+ココこそが
+キュレムの　パワースポット▼
+ココでなら　さいだいげんの
+パワーを　はっきし▼
+イッシュぜんどを　いともたやすく
+こおりづけに　できます！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:25:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:25:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いでよ　キュレム！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d10r0401_poke10_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュララララ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュララララ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・画面奥から歩いてくる
+・あわせて鳴き声再生
+・続けてswsage01_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE10
+ポケモン・キュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:26:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『ワタクシには
+ゆるせない　おもいでが　あるのですよ▽
+ゆいいつ　ね▼
+アナタは　それを　おもいださせる
+ふゆかいな　めを　しています▼
+ですが　ここまで　きたことに
+けいいを　あらわし　プレゼントです▼
+ここで　こおりづけ　となり
+イッシュの　ゆくすえを　みるがいい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswsage01_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キュレム！
+こごえるせかい　です！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムをみて
+・続けてpoke10_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:28:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_poke10_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュラッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュラッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・デモその１
+　キュレムの周囲から
+　主人公に向かって凍り付いて行く演出
+・デモその２
+　画面半分ほど凍りついた状態で
+　主人公に氷が向かって行く（ゲーチス視点に切り替え）
+・途中で
+　BLACK2→boss_01b
+　WHITE2→boss_01w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE10
+ポケモン・キュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスサンダー[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスサンダー[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK２ver
+・デモ中のメッセージ（早口で表示）
+・主人公に氷が迫るデモに
+　雷が落ちる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスフレイム[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]クロスフレイム[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WHITE２ver
+・デモ中のメッセージ（早口で表示）
+・主人公に氷が迫るデモに
+　火柱が落ちる</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:30:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『……きたか▼
+ヒトの　こころを　もたぬ　ばけもの
+Ｎ（エヌ）よ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+　BLACK2→boss_02b
+　WHITE2→boss_02w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:31:55" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_02b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムが　おしえてくれました
+キュレムが　くるしんでいると……▼
+それに　ボクは　イッシュが　すきです▼
+ボクに　ヒトとしての　いきかたを……▼
+ポケモンと　ヒトが　ともに　いることで
+かなでる　ハーモニーが　あると▽
+おしえてくれた　ばしょ　イッシュ！▼
+そこに　くらす　ポケモンや　ヒトを
+ボクは　まもります！！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK２ver
+・続けてmu_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_02w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムが　おしえてくれました
+キュレムが　くるしんでいると……▼
+それに　ボクは　イッシュが　すきです▼
+ボクに　ヒトとしての　いきかたを……▼
+ポケモンと　ヒトが　ともに　いることで
+かなでる　ハーモニーが　あると▽
+おしえてくれた　ばしょ　イッシュ！▼
+そこに　くらす　ポケモンや　ヒトを
+ボクは　まもります！！[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WHITE２ver
+・続けてshin_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:32:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_mu_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ババリバリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ババリバリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けてswsage01_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MU_B
+ポケモン・ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_shin_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ンバーニンガガッ！ </Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ンバーニンガガッ！ </Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けてswsage01_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SHIN_B
+ポケモン・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:34:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『すばらしい！
+むねを　うつ　けついの　あらわれ！▼
+わたくしが　ほどこした
+おう　としての　きょういく▽
+けっして　むだでは　なかったか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswsage01_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とはいえ　もりのなか
+ポケモンと　くらしていた　アナタを▼
+さがしだし　めんどうを　みてやったのに
+さいご　すきかってを　のたまい▼
+ワタクシの　けいかくを　くるわせたこと
+いまだに　わすれていませんよ▼
+アナタの　のうりょくを　りようして
+イッシュを　しはいする　はずだったのに！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:56:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+　BLACK2→swsage01_08b
+　WHITE2→swsage01_08w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_08b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だが　それも　ゆるしましょう▼
+アナタが　つれてきた
+ゼクロムなら　こおりを　くだける！▼
+さがす　てまが　はぶけたというもの▼
+もっとも　ソウリュウに　こおりを
+うちこめば　いへんを　さっちし▽
+すがたを　あらわすと　よんでいましたが</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてboss_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_08w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だが　それも　ゆるしましょう▼
+アナタが　つれてきた
+レシラムなら　こおりを　とかせる！▼
+さがす　てまが　はぶけたというもの▼
+もっとも　ソウリュウに　こおりを
+うちこめば　いへんを　さっちし▽
+すがたを　あらわすと　よんでいましたが</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてboss_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:35:43" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]そんなことは　できません
+とけない　すうしき　です[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:53:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswsage01_09</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:36:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『できますとも！▼
+この！▼
+いでんじのくさびを　つかえばな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:37:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、動作モデルが杖を掲げるアニメ
+・デモへ移行
+　BLACK2ver→キュレムとゼクロムの合体
+　WHITE２ver→キュレムとレシラムの合体</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:37:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……！▼
+まさか　ポケモンが　がったいだなんて
+そんな　すうしき　あるものか……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:53:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・合体デモ終了後にメッセージ表示
+・続けてswsage01_10</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:38:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『おろかもの　よ
+そこで　ことの　てんまつを　みていろ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:29:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さて　トレーナーよ
+こんどは　だれも　たすけてくれぬ▼
+だが　もういちど　おなじことを　するのは
+おもしろみに　かける▼
+そこでだ　アナタが　この　キュレムを
+たおせるかどうか　みせてもらいましょう！▼　</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:56" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>・モンスターボールが震えている
+・ポケモンたちが怒っているのか
+・そんあことあるまい
+・たかが道具に感情や
+　湧きあがる思いなど、ない！
+・捕獲禁止</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:39:31" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_05b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]まだ　ゼクロムの　こえが　きこえる
+いまなら　ぶんり　できる……　と▼
+たのむ！
+ボクの　トモダチを　たすけてくれ！▼
+そして　イッシュも……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:53:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK２ver
+・合体キュレムと戦闘するまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_05w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]まだ　レシラムの　こえが　きこえる
+いまなら　ぶんり　できる……　と▼
+たのむ！
+ボクの　トモダチを　たすけてくれ！▼
+そして　イッシュも……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:53:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WHITE２ver
+・合体キュレムと戦闘するまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:40:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『さあ！▼
+ワタクシは　アナタの　ぜつぼうする
+しゅんかんの　かおが　みたいのだ！▼
+イッシュを　まもるため　たたかう！▼
+アナタの　ような　わきやくには
+もったいない　とっておきの▽
+ぶたいを　ようい　してあげたのです！▽
+わきやくとして　まけて　ちれ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:42:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:41:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:41:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:41:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・合体キュレムと戦闘するまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:41:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:41:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バリィバキュロムッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バリィバキュロムッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生＋芝居で吠える
+・続けて戦闘画面へ
+・特殊処理として
+　ここでの合体キュレムとの戦闘では
+　捕獲/逃走できないようにしたい
+・勝利してフィールドに復帰すると
+　swsage1_14</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+ポケモン・ブラックキュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:42:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_w_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バァーニキュラムッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バァーニキュラムッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生＋芝居で吠える
+・続けて戦闘画面へ
+・特殊処理として
+　ここでの合体キュレムとの戦闘では
+　捕獲/逃走できないようにしたい
+・勝利してフィールドに復帰すると
+　swsage1_14</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+ポケモン・ホワイトキュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:42:42" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『いまいましい　トレーナーめ！▼
+また　キュレムを
+かくほ　せねば　ならんではないか！▼
+やはり　めざわりな　トレーナーは
+ワタクシが　てを　くだすか！▼
+こんどこそ！　だれが　なにを　しようと！
+ワタクシを　とめることは　できない！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・このときキュレム不在
+　ゼクロムかレシラムだけを表示
+・表示後、トレーナー戦闘へ
+・連戦、回復処理なし
+※難易度的に問題がある場合は
+　ＢＷと同じく、Ｎが回復もあり</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:43:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『……どういうことだ？▼
+この　ワタクシは
+プラズマだんを　つくりあげた▽
+かんぜんな　おとこ　なんだぞ！▼
+せかいを　かえる
+かんぜんな　しはいしゃ　だぞッ！？▼
+いちどならず　にどまでも
+むめいの　トレーナーごときに……！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後、フィールドに戻ると表示
+・続けてswsage01_16</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みとめるか……！
+ありえるか……！▼
+ポケモンなる
+どうぐを　つかいこなせぬ▼
+おろかな　ものたちに
+おくれを　とるとは！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:57:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・左右にウロウロしたあと
+　画面上を向いてメッセージ表示
+・続けてboss_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]あえて　こう　よびます▼
+とうさん！
+もう　やめてください▼
+ポケモンは　どうぐ　ではないのです▼
+ボクたち　ヒトを　たかみへと　いざなう
+すばらしき　パートナー　なのです[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:53:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:46:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>共に高めあう
+・個体としての進化ではなく
+・種としての進化</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:58:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:46:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・一歩。上に向かってからメッセージ表示
+・続けてswsage01_15</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:46:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:44:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_swsage01_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『だまれ　ばけもの！
+ひとの　ふりを　するな！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・画面右を向いて（Nをみずに）メッセージ表示
+・表示後、ゲーチスの周囲にダークトリニティ3人出現
+・続けてninja_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_ninja_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『Ｎさま
+ゲーチスさまの　ことは　わたしたちが▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてboss_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:47:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ありがとう……
+よろしく　たのむ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:58:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてninja_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_ninja_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークトリニティ『……はい▼
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、ダークトリニティ、ゲーチスその場から消える</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キュレムに　かわって
+かんしゃの　きもちを　のべるよ▼
+アリガトウ！▼
+キュレムだけど　だいじょうぶ　だ▼
+いまは　ちからを　うしなっているが
+また　ここに　あらわれる　はずだよ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:00:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合って
+・表示後、Ｎと連れ立って
+　ジャイアントホール入り口へ歩き出す
+　※ＢＷで画面奥に向かったのと逆</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:48:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_mu_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けてboss_09b</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:02:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MU_B
+ポケモン・ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_shin_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バーニンッ！ </Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バーニンッ！ </Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・続けてboss_09w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:02:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SHIN_B
+ポケモン・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_09b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　ありがとう　だって▼
+ああ　そうか……▼
+ボクが　ポケモンと　はなせること
+キミは　しらないんだね[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK２ver
+・表示後、Ｎと連れ立って
+　ジャイアントホール入り口へ歩き出す
+　※ＢＷで画面奥に向かったのと逆</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_09w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　ありがとう　だって▼
+ああ　そうか……▼
+ボクが　ポケモンと　はなせること
+キミは　しらないんだね[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、Ｎと連れ立って
+　ジャイアントホール入り口へ歩き出す
+　※ＢＷで画面奥に向かったのと逆
+・続けて
+　データ引継ぎなし→boss_10
+　データ引継ぎあり→boss_11</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:03:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:49:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]２ねんまえ　あの　しろで
+あの　トレーナーに　たすけられてから……▼
+おおくの　ポケモンと　であい
+いろんな　こえを　きいた……▼
+そうして　ボクの　せかいは
+しずかに　ひろがり　かわっていった[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・データ引継ぎなし
+・途中で向き合って</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]２ねんまえ　あの　しろで
+[Name:TrainerName Idx="1" ]に　たすけられてから▼
+おおくの　ポケモンと　であい
+いろんな　こえを　きいた……▼
+そうして　ボクの　せかいは
+しずかに　ひろがり　かわっていった[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・データ引継ぎあり
+・1＝前作の主人公名前
+・途中で向き合って</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_12b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンと　いることで　ヒトは
+みちなる　せかいを　すすんでいける▼
+ヒトと　いることで　ポケモンは
+ほんらいの　ちからを　はっきする……▼
+それが　ゼクロムが　おしえてくれた
+ポケモンと　ボクの　りそう……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK２ver
+・出入り口前
+・続けてboss_13b</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:03:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_12w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンと　いることで　ヒトは
+みちなる　せかいを　すすんでいける▼
+ヒトと　いることで　ポケモンは
+ほんらいの　ちからを　はっきする……▼
+それが　レシラムが　おしえてくれた
+ポケモンと　ボクの　しんじつ……[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WHITEver
+・出入り口前
+・続けてboss_13w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:03:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:50:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_13b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミにとっての　りそうを　たしかめるため
+ポケモンリーグへ　むかうんだ▼
+そのために　２３ばんどうろ　へ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・BLACK２ver
+・以降、主人公フリームーブ可能
+・r23に行くまでメッセージ繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_boss_13w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミにとっての　しんじつを　たしかめるため
+ポケモンリーグへ　むかうんだ▼
+そのために　２３ばんどうろ　へ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:54:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WHITEver
+・以降、主人公フリームーブ可能
+・r23に行くまでメッセージ繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:51:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0401_poke10_end_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -28,13 +2444,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>キュレム
+			<Comment>ポケモン
+・クリア後＋リュウラセンの塔でレシラム/ゼクロム捕獲後
 ・話しかけ
 ・戦闘開始前
 ※swanでは新規イベント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:43:04" />
+				Time="2011-07-13T11:27:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -53,14 +2470,14 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d10r0401_poke10_02"
+		Label="msg_d10r0401_poke10_end_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -88,7 +2505,8 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システムメッセージ
+			<Comment>イベント
+・クリア後＋リュウラセンの塔でレシラム/ゼクロム捕獲後
 ・戦闘後
 ・ポケモンを倒した/逃げた場合のメッセージ
 ・殿堂入り後に復活
@@ -96,14 +2514,15 @@
 　処理変更予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T11:43:13" />
+				Time="2011-07-13T11:27:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>ナレーション</Text>
+			<Text>POKE10
+ポケモン・キュレム</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-13T11:24:37" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -114,7 +2533,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
