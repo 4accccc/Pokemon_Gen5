@@ -419,10 +419,10 @@
 		Label="msg_wbtsys_title_11">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワールドバトルトーナメント</Text>
+			<Text>ワールドリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-07T10:43:38" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T05:17:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -430,10 +430,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワールドバトルトーナメント</Text>
+			<Text>ワールドリーダーズトーナメント</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-07T10:43:41" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T05:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -544,10 +544,10 @@
 		Label="msg_wbtsys_title_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイプマスタートーナメント</Text>
+			<Text>タイプエキスパートトーナメント</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-07T10:47:14" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T09:02:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -555,10 +555,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイプマスタートーナメント</Text>
+			<Text>タイプエキスパートトーナメント</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-07T10:47:17" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T09:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

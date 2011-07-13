@@ -313,10 +313,27 @@ msg_wbt_menu_no</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・選択肢表示</Comment>
+・選択肢表示
+受付員１
+msg_wbt_menu_hodomoe
+msg_wbt_menu_rental
+msg_wbt_menu_shuffle
+msg_wbt_menu_dl
+受付員２
+msg_wbt_menu_champ
+msg_wbt_menu_type
+msg_wbt_menu_issyu
+msg_wbt_menu_kanto
+msg_wbt_menu_jouto
+msg_wbt_menu_houen
+msg_wbt_menu_sinou
+msg_wbt_menu_world
+msg_wbt_menu_rental_m
+msg_wbt_menu_shuffle_m
+msg_wbt_menu_wcs</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:45:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -367,10 +384,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_04へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -421,10 +439,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_06へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -475,10 +494,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_05へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -529,10 +549,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -583,10 +604,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -630,10 +652,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -677,10 +700,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -724,10 +748,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -771,10 +796,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -818,10 +844,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -865,10 +892,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:34:09" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1023,10 +1051,11 @@ msg_wbt_menu_no</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・msg_wbt_info_03へ</Comment>
+※削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:26:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1055,11 +1084,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイプトーナメントは
+			<Text>タイプエキスパートトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:26:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1067,11 +1096,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイプトーナメントは
+			<Text>タイプエキスパートトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:26:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1250,10 +1279,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1275,11 +1305,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュトーナメントは
+			<Text>イッシュリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:27" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -1287,11 +1317,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュトーナメントは
+			<Text>イッシュリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:28" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -1299,10 +1329,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1324,11 +1355,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントートーナメントは
+			<Text>カントーリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:43:52" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1336,11 +1367,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントートーナメントは
+			<Text>カントーリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:43:54" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1348,10 +1379,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1380,11 +1412,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジョウトトーナメントは
+			<Text>ジョウトリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:43:57" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1392,11 +1424,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジョウトトーナメントは
+			<Text>ジョウトリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:43:56" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1404,10 +1436,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1436,11 +1469,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホウエントーナメントは
+			<Text>ホウエンリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:44:00" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1448,11 +1481,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホウエントーナメントは
+			<Text>ホウエンリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:44:01" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1460,10 +1493,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1492,11 +1526,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シンオウトーナメントは
+			<Text>シンオウリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:44:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1504,11 +1538,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シンオウトーナメントは
+			<Text>シンオウリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:44:07" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1516,10 +1550,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1548,11 +1583,11 @@ msg_wbt_menu_no</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワールドトーナメントは
+			<Text>ワールドリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:44:12" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:27:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1560,11 +1595,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワールドトーナメントは
+			<Text>ワールドリーダーズトーナメントは
 ～～～～～～な　トーナメントです▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:44:11" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1572,10 +1607,11 @@ msg_wbt_menu_no</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_07へ</Comment>
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:42:05" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1598,6 +1634,186 @@ msg_wbt_menu_no</Comment>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_wcs"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＷＣＳ２０１１トーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＷＣＳ２０１１トーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_rental"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタルトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタルトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:30:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_shuffle"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフルトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:30:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフルトーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:30:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_rental_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタルマスタートーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:31:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタルマスタートーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:31:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_explain_shuffle_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフルマスタートーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:31:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフルマスタートーナメントは
+～～～～～～な　トーナメントです▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:31:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:29:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_wbt_info_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:32:12" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_wbt_info_08"
@@ -1895,13 +2111,13 @@ msg_wbt_menu_no</Comment>
 			Language="JPN">
 			<Text>ゆうしょう　おめでとうございます！▼
 こんかいの　ゆうしょうで
-チャンピオントーナメントに▽
+■■■■トーナメントに▽
 さんか　できるように　なりました！▼
 それでは　またの　さんかを
 おまちして　おります！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:17:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1911,13 +2127,13 @@ msg_wbt_menu_no</Comment>
 			Language="JPN_KANJI">
 			<Text>優勝　おめでとうございます！▼
 今回の　優勝で
-チャンピオントーナメントに▽
+■■■■トーナメントに▽
 参加できるように　なりました！▼
 それでは　またの　参加を
 お待ちして　おります！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1926,11 +2142,12 @@ msg_wbt_menu_no</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・チャンピオントーナメント解放時のメッセージ
-※暫定</Comment>
+・トーナメント解放時のメッセージ
+※暫定
+タグで対応する？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:13:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1953,6 +2170,98 @@ msg_wbt_menu_no</Comment>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_09e"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆうしょう　おめでとうございます！▼
+こんかいの　ゆうしょうで
+ちほうトーナメントに▽
+さんか　できるように　なりました！▼
+それでは　またの　さんかを
+おまちして　おります！</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:13:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:10:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>優勝　おめでとうございます！▼
+今回の　優勝で
+地方トーナメントに▽
+参加できるように　なりました！▼
+それでは　またの　参加を
+お待ちして　おります！</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:13:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:10:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・各地方のトーナメント解放時のメッセージ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:11:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_09f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ▼
+あと[Digit:1digit Idx="0" ]かい
+ゆうしょう　すれば▼
+チャンピオンズトーナメントへの
+さんかけんりが　もらえますよ▼
+それでは　またの　さんかを
+おまちしております▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:58:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ▼
+あと[Digit:1digit Idx="0" ]かい
+ゆうしょう　すれば▼
+チャンピオンズトーナメントへの
+さんかけんりが　もらえますよ▼
+それでは　またの　さんかを
+おまちしております▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・チャンピオンズが解禁されてなく
+ワールドリーダーズに優勝したときに表示</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:57:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_wbt_info_10"
@@ -1985,13 +2294,26 @@ msg_wbt_menu_no</Comment>
 			Language="JPN">
 			<Comment>♀
 ・選択肢表示
-msg_wbt_menu_all
+受付員１
+msg_wbt_menu_hodomoe
+msg_wbt_menu_rental
+msg_wbt_menu_shuffle
+msg_wbt_menu_dl
+受付員２
 msg_wbt_menu_champ
 msg_wbt_menu_type
-msg_wbt_menu_dl</Comment>
+msg_wbt_menu_issyu
+msg_wbt_menu_kanto
+msg_wbt_menu_jouto
+msg_wbt_menu_houen
+msg_wbt_menu_sinou
+msg_wbt_menu_world
+msg_wbt_menu_rental_m
+msg_wbt_menu_shuffle_m
+msg_wbt_menu_wcs</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:45:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2042,10 +2364,11 @@ msg_wbt_menu_dl</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_13へ</Comment>
+			<Comment>※削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:26:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2074,10 +2397,10 @@ msg_wbt_menu_dl</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオントーナメント</Text>
+			<Text>チャンピオンズ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2085,10 +2408,10 @@ msg_wbt_menu_dl</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオントーナメント</Text>
+			<Text>チャンピオンズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2131,10 +2454,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイプトーナメント</Text>
+			<Text>タイプエキスパート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:18:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2142,10 +2465,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイプトーナメント</Text>
+			<Text>タイプエキスパート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:18:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2185,10 +2508,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダウンロードトーナメント</Text>
+			<Text>ダウンロード</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:18:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2196,10 +2519,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダウンロードトーナメント</Text>
+			<Text>ダウンロード</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2239,10 +2562,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホドモエトーナメント</Text>
+			<Text>ホドモエ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:02" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2250,10 +2573,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエトーナメント</Text>
+			<Text>ホドモエ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:04" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2293,10 +2616,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュトーナメント</Text>
+			<Text>イッシュリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:10" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2304,10 +2627,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュトーナメント</Text>
+			<Text>イッシュリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:13" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2347,10 +2670,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントートーナメント</Text>
+			<Text>カントーリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:21" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2358,10 +2681,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントートーナメント</Text>
+			<Text>カントーリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2401,10 +2724,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジョウトトーナメント</Text>
+			<Text>ジョウトリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:27" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2412,10 +2735,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジョウトトーナメント</Text>
+			<Text>ジョウトリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:30" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:19:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2455,10 +2778,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホウエントーナメント</Text>
+			<Text>ホウエンリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:38" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2466,10 +2789,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホウエントーナメント</Text>
+			<Text>ホウエンリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:33" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2509,10 +2832,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シンオウトーナメント</Text>
+			<Text>シンオウリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:42" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:20:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2520,10 +2843,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シンオウトーナメント</Text>
+			<Text>シンオウリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:45" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2563,10 +2886,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワールドトーナメント</Text>
+			<Text>ワールドリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:53" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:20:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2574,10 +2897,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワールドトーナメント</Text>
+			<Text>ワールドリーダーズ</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-12T08:40:50" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:20:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2613,6 +2936,171 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_wbt_menu_rental"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタル</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタル</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_shuffle"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフル</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフル</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_rental_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタルマスター</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタルマスター</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_shuffle_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフルマスター</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフルマスター</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:22:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_menu_wcs"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>WCS２０１１</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>WCS２０１１</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・msg_wbt_info_07へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:23:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_wbt_info_11"
 		Style="Large">
 		<LanguageCell
@@ -2643,11 +3131,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・会話終了</Comment>
+			<Comment>
+・削除対象
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:40:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3154,12 +3643,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>参加数の条件を
-・満たしている　→msg_wbt_info_15
-・満たしていない→msg_wbt_info16</Comment>
+			<Comment>・削除対象
+
+ダウンロードデータの選択はアプリ内で行う</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:46:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3210,12 +3699,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>参加数の条件を
-・満たしている　→msg_wbt_info_15
-・満たしていない→msg_wbt_info16</Comment>
+			<Comment>・削除対象
+
+ダウンロードデータの選択はアプリ内で行う</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:46:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3266,10 +3755,12 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・msg_wbt_info_15へ</Comment>
+			<Comment>・削除対象
+
+ダウンロードデータの選択はアプリ内で行う</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:46:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3358,8 +3849,8 @@ msg_wbt_info_11へ</Comment>
 			<Text>トーナメントの　さんかには
 [Digit:1digit Idx="0" ]ひき　ひつよう　ですよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:16:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3585,6 +4076,263 @@ msg_wbt_info_11へ</Comment>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_info_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアごに　またくることを　うながす
+かりメッセージ　ひょうじ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:48:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:47:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアごに　またくることを　うながす
+かりメッセージ　ひょうじ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:47:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+クリア前に受付員２に話しかけた場合表示
+クリア後にトーナメントが増えることを話す</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:59:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_notice_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+ちほうトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:51:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+ちほうトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:51:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・地方トーナメントの解禁条件が揃っている場合に表示
+・つづけてmsg_wbt_info_17へ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:51:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_notice_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+ワールドリーダーズトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:52:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+ワールドリーダーズトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:52:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ワールドリーダーズトーナメントの解禁条件が揃っている場合に表示
+・つづけてmsg_wbt_info_17へ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_notice_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+チャンピオンズトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+チャンピオンズトーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・チャンピオンズトーナメントの解禁条件が揃っている場合に表示
+・つづけてmsg_wbt_info_17へ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:54:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_notice_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+レンタルマスタートーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+レンタルマスタートーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・レンタルマスタートーナメントの解禁条件が揃っている場合に表示
+・つづけてmsg_wbt_info_17へ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_notice_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+シャッフルマスタートーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かりメッセージ
+この　トーナメントに▽
+ゆうしょう　すると▼
+シャッフルマスタートーナメントに
+さんか　できますよ▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:50:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・シャッフルマスタートーナメントの解禁条件が揃っている場合に表示
+・つづけてmsg_wbt_info_17へ
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-13T08:53:53" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_wbt_menu_normal"
