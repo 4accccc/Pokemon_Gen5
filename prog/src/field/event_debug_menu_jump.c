@@ -185,6 +185,10 @@ static const u16 JumpZoneID_ListTbl[] = {
 #if defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko) | defined(DEBUG_ONLY_FOR_ibe_mana) | defined(DEBUG_ONLY_FOR_nakamura_akira)
   ZONE_ID_C09P01,
 #endif
+#if defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko) | defined(DEBUG_ONLY_FOR_fuchino_hiroki) | defined(DEBUG_ONLY_FOR_nakamura_akira) | defined(DEBUG_ONLY_FOR_mizuguchi_mai)
+  ZONE_ID_D27R1001,
+  ZONE_ID_D27R1301,
+#endif
 };
 
 //--------------------------------------------------------------
