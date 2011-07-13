@@ -28,10 +28,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・クリア後
+・Nの城への誘導用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:49:16" />
+				Time="2011-07-13T11:15:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
