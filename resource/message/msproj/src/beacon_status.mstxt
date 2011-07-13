@@ -136,62 +136,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_gpower_use00"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:Undefined Idx="1" ]を
-つかいますか？
-ひつよう　[Digit:3digits Idx="2" ]こ／もってる　[Digit:3digits Idx="3" ]こ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1" ]を
-使いますか？
-必要　[Digit:3digits Idx="2" ]個／持ってる　[Digit:3digits Idx="3" ]個</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>1：デルパワー名
-2：消費するアイテム数(1-999)
-3：もっているアイテム数(1-999)</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="msg_sys_gpower_use01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんが　はつどうした
-[Name:Undefined Idx="1" ]を
+[Name:GPower Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:21:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -200,11 +154,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんが　発動した
-[Name:Undefined Idx="1" ]を
+[Name:GPower Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -234,11 +188,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とくしゅデルパワー　はつどう！！
-[Name:Undefined Idx="1" ]を
+[Name:GPower Idx="1" ]を
 つかいますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:22:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -247,11 +201,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>特殊デルパワー　発動！！
-[Name:Undefined Idx="1" ]を
+[Name:GPower Idx="1" ]を
 使いますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:23:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -280,11 +234,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Undefined Idx="1" ]を
+			<Text>[Name:GPower Idx="1" ]を
 つかいました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -292,11 +246,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1" ]を
+			<Text>[Name:GPower Idx="1" ]を
 使いました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -305,142 +259,6 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>1：デルパワー名</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_gpower_use_err01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>デルパワーを　つかうには
-デルダマが　たりません
-ひつよう　[Digit:3digits Idx="2" ]こ／もってる[Digit:3digits Idx="3" ]こ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>デルパワーを　使うには
-デルダマが　不足しています
-必要　[Digit:3digits Idx="2" ]個／持ってる　[Digit:3digits Idx="3" ]個</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>2：消費するアイテム数(1-999)
-3：もっているアイテム数(1-999)</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_gpower_use_err02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:Undefined Idx="1" ]を
-つかっています
-のこり　[Digit:2digits Idx="5" ]びょう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1" ]を
-使っています
-残り　[Digit:2digits Idx="5" ]秒</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>1：デルパワー名
-5：残り秒(0-59)</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_gpower_use_err03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:Undefined Idx="1" ]を
-つかっています
-のこり　[Digit:3digits Idx="4" ]ふん[Digit:2digits Idx="5" ]びょう</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:Undefined Idx="1" ]を
-使っています
-残り　[Digit:3digits Idx="4" ]分[Digit:2digits Idx="5" ]秒</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>1：デルパワー名
-4：残り分(1-999)
-5：残り秒(0-59)</Comment>
 			<CommentModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:20" />
@@ -3108,11 +2926,11 @@ msg_sys_gpower_use00～02が
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんは　うけとった
-[Name:Undefined Idx="1" ]を
+[Name:GPower Idx="1" ]を
 つかいました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:22:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3121,11 +2939,11 @@ msg_sys_gpower_use00～02が
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんは　受け取った
-[Name:Undefined Idx="1" ]を
+[Name:GPower Idx="1" ]を
 使いました！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
+				User="iwasawa:W00270"
+				Time="2011-07-13T12:23:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
