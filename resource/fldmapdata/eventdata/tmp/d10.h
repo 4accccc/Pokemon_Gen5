@@ -9,6 +9,7 @@
 #ifndef ZONE_D10_EVC_H
 #define ZONE_D10_EVC_H
 
+#define FLD_ITEM_143                       0
 
 #endif //ZONE_D10_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -21,6 +21,7 @@
 #define C14_GIRL4_01                       2
 #define C14_BOY4_01                        3
 #define C14_BOY4_02                        4
+#define FLD_ITEM_171                       5
 
 #endif //ZONE_C14_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

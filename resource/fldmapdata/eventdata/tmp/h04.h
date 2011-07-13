@@ -32,6 +32,12 @@
 #define H04_OLDMAN1_01                    12
 #define H04_BOY1_01                       13
 #define H04_BACKPACKERW_01                14
+#define FLD_ITEM_148                      15
+#define FLD_ITEM_149                      16
+#define FLD_ITEM_150                      17
+#define FLD_ITEM_151                      18
+#define FLD_ITEM_152                      19
+#define FLD_ITEM_153                      20
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -41,8 +47,6 @@
 #define BG_H04_SIGN_03                    0
 #define BG_H04_SIGN_01                    1
 #define H04_HIDE_ITEM_01                  2
-#define H04_HIDE_ITEM_02                  3
-#define H04_HIDE_ITEM_03                  4
-#define BG_H04_SIGN_02                    5
+#define BG_H04_SIGN_02                    3
 
 #endif //ZONE_H04_EVB_H

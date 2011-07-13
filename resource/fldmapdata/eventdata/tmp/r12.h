@@ -14,6 +14,10 @@
 #define TR_FANW_12_2                       2
 #define TR_KARATE_14                       3
 #define TR_BATTLEG_14                      4
+#define FLD_ITEM_144                       5
+#define FLD_ITEM_145                       6
+#define FLD_ITEM_146                       7
+#define FLD_ITEM_147                       8
 
 #endif //ZONE_R12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

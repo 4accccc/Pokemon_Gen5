@@ -27,6 +27,7 @@
 #define T03_SWSAGE7_01                    11
 #define T03_SWPLAZMAM_02                  12
 #define T03_SWRIVAL_01                    13
+#define FLD_ITEM_142                      14
 
 #endif //ZONE_T03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -16,6 +16,10 @@
 #define TR_MOUNT_15                        5
 #define R22_POKE5_01                       6
 #define R22_SWBOSS_01                      7
+#define FLD_ITEM_172                       8
+#define FLD_ITEM_173                       9
+#define FLD_ITEM_174                      10
+#define FLD_ITEM_175                      11
 
 #endif //ZONE_R22_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r22.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

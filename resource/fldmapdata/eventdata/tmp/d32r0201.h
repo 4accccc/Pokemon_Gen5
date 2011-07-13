@@ -10,6 +10,9 @@
 #ifndef ZONE_D32R0201_EVC_H
 #define ZONE_D32R0201_EVC_H
 
+#define FLD_ITEM_168                       0
+#define FLD_ITEM_164                       1
+#define FLD_ITEM_162                       2
 
 #endif //ZONE_D32R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d32r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

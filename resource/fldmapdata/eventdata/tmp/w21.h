@@ -16,6 +16,8 @@
 #define TR_FISHING_20                      4
 #define TR_DOCTOR_06                       5
 #define TR_KARATE_15                       6
+#define FLD_ITEM_169                       7
+#define FLD_ITEM_170                       8
 
 #endif //ZONE_W21_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/w21.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
