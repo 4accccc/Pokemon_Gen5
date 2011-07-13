@@ -677,6 +677,56 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r09r0201_waitress_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんと！　１０パーセントオフ　なのに
+これいじょう　もてないですってー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T07:21:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T07:21:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんと！　１０パーセントオフ　なのに
+これ以上　持てないですってー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T07:22:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T07:21:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時＋アイテム一杯</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T07:21:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T07:21:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r09r0201_trainerm_01"
 		Style="Large">
 		<LanguageCell
