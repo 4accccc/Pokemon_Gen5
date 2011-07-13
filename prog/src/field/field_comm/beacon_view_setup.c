@@ -104,8 +104,6 @@ BEACON_VIEW* BVS_InitWork( GAMESYS_WORK* gsys, FIELD_SUBSCREEN_WORK* subscreen )
 
   wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, wk->heap_sID);
 
-  wk->mode = 0; //mode;
-
   _sub_DataSetup(wk);
   _sub_SystemSetup(wk);
   _sub_BGLoad(wk, wk->arc_handle);
@@ -426,17 +424,6 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   }
   wk->ctrl.g_power = GPOWER_ID_NULL;
 
-  //メッセージスピード取得
-  /*
-   *  アフターマスター ローカライズ版に向けてのコメント
-   *
-   *  wk->msg_spdメンバはu8だが、実際はs8以上のsigned型である必要がある。
-   *  現状、msg_spdメンバが非参照のため、修正はせずコメントを残すのみとする
-   *
-   *  by iwasawa 20100806
-   */
-  wk->msg_spd  = MSGSPEED_GetWait();
- 
   //セーブデータ取得
   save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   {
@@ -610,25 +597,25 @@ static void _sub_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 	G2S_BlendNone();
   
   //パレット転送
-  PaletteWorkSet_ArcHandle( wk->pfd, handle, NARC_beacon_status_bstatus_bg_nclr+wk->mode,
+  PaletteWorkSet_ArcHandle( wk->pfd, handle, NARC_beacon_status_bstatus_bg_nclr,
       wk->tmpHeapID, FADE_SUB_BG, 0x20*FONT_PAL, 0 );
   PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_default_nclr,
       wk->tmpHeapID, FADE_SUB_BG, 0x20, FONT_PAL*16 );
   
   //キャラ転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
-    handle, NARC_beacon_status_bstatus_bg_lz_ncgr+wk->mode, GFL_BG_FRAME3_S, 0, 
+    handle, NARC_beacon_status_bstatus_bg_lz_ncgr, GFL_BG_FRAME3_S, 0, 
     0, TRUE, wk->tmpHeapID);
   
   //スクリーン転送
   GFL_ARCHDL_UTIL_TransVramScreen(
-    handle, NARC_beacon_status_bstatus_bg01_lz_nscr+wk->mode, GFL_BG_FRAME1_S, 0, 
+    handle, NARC_beacon_status_bstatus_bg01_lz_nscr, GFL_BG_FRAME1_S, 0, 
     0x800, TRUE, wk->tmpHeapID);
   GFL_ARCHDL_UTIL_TransVramScreen(
-    handle, NARC_beacon_status_bstatus_bg02_lz_nscr+wk->mode, GFL_BG_FRAME2_S, 0, 
+    handle, NARC_beacon_status_bstatus_bg02_lz_nscr, GFL_BG_FRAME2_S, 0, 
     0x800, TRUE, wk->tmpHeapID);
   GFL_ARCHDL_UTIL_TransVramScreen(
-    handle, NARC_beacon_status_bstatus_bg03_lz_nscr+wk->mode, GFL_BG_FRAME3_S, 0, 
+    handle, NARC_beacon_status_bstatus_bg03_lz_nscr, GFL_BG_FRAME3_S, 0, 
     0x800, TRUE, wk->tmpHeapID);
 
   G2S_SetBlendAlpha( ALPHA_1ST_NORMAL, ALPHA_2ND, ALPHA_EV1_NORMAL, ALPHA_EV2_NORMAL);

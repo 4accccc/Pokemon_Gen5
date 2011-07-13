@@ -37,11 +37,6 @@
 #include "beacon_view_def.h"
 #include "beacon_view_common.h"
 
-typedef enum{
-  VIEW_MODE_NORMAL,
-  VIEW_MODE_FMISSION,
-}BEACON_VIEW_MODE;
-
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -134,7 +129,6 @@ typedef struct _BEACON_VIEW{
   ////////////////////////////////////////
   MY_DATA               my_data;
  
-  BEACON_VIEW_MODE      mode;
   BEACON_STATUS* b_status;
   GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
@@ -161,7 +155,6 @@ typedef struct _BEACON_VIEW{
   u16       event_reserve_f;
 
   int       io_interval;      ///<スタックチェックインターバルカウンタ
-  u8        msg_spd;            ///<メッセージスピード
   u8        gpower_check_req;   ///<発動中のGパワー確認イベントリクエストフラグ
   u8        init_f;             ///<初期化中フラグ
   LOG_CTRL  ctrl;
