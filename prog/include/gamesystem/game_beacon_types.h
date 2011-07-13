@@ -141,7 +141,7 @@ struct _GAMEBEACON_INFO{
   QUESTIONNAIRE_ANSWER_WORK question_answer;  ///<アンケート回答    10
 
   //BWでのパディング領域2byteをスワンでメダルデータに使用する
-  u8  medal_num;                            ///<獲得メダル数
+  u8  medal_count;                            ///<獲得メダル数
   u8  push_medal;                           ///<イチオシメダルID  
 
   u32 dummy2;                               ///GAMEBEACON_INFOを領域末尾に含むビーコンのユーザー領域を定義している

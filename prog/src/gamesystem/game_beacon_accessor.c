@@ -526,6 +526,10 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
   if( info->suretigai_count > 99999 || info->thanks_recv_count > 99999 ){
     return TRUE;
   }
+  //メダルIDチェック
+  if( info->medal_count >= MDLID_MAX ){
+    return TRUE;
+  }
   //アクション詳細データチェック
   if( (DATA_ErrorCheckFuncTbl[GAMEBEACON_GetActionDataType(info->action.action_no )])(info) ){
     return TRUE;
@@ -819,6 +823,30 @@ u32 GAMEBEACON_Get_ThanksRecvCount(const GAMEBEACON_INFO *info)
 u32 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info)
 {
   return info->suretigai_count;
+}
+
+//==================================================================
+/**
+ * イチオシメダルIDを取得する
+ * @param   info      ビーコン情報へのポインタ
+ * @retval  MedalID		イチオシメダルID
+ */
+//==================================================================
+MedalID GAMEBEACON_Get_PushMedal(const GAMEBEACON_INFO *info)
+{
+  return info->push_medal;
+}
+
+//==================================================================
+/**
+ * 獲得メダル数を取得する
+ * @param   info      ビーコン情報へのポインタ
+ * @retval  u8		    獲得メダル数
+ */
+//==================================================================
+u8 GAMEBEACON_Get_MedalCount(const GAMEBEACON_INFO *info)
+{
+  return info->medal_count;
 }
 
 //==================================================================

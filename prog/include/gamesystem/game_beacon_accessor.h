@@ -83,6 +83,8 @@ extern u16 GAMEBEACON_Get_ZoneID(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_TownmapRootZoneID(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_ThanksRecvCount(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_SuretigaiCount(const GAMEBEACON_INFO *info);
+extern MedalID GAMEBEACON_Get_PushMedal(const GAMEBEACON_INFO *info);
+extern u8 GAMEBEACON_Get_MedalCount(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest);
 extern void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest);
 extern void GAMEBEACON_Get_FreeWordMessage(const GAMEBEACON_INFO *info, STRBUF *dest);

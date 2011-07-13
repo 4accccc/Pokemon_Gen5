@@ -859,7 +859,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   {
     MEDALBOX* sv_mdlbox = SaveData_GetMedalBox( sv );
     info->push_medal = MEDALBOX_GetPushMedalID( sv_mdlbox );
-    info->medal_num = MEDALBOX_GetMedalCount( sv_mdlbox , FALSE );
+    info->medal_count = MEDALBOX_GetMedalCount( sv_mdlbox , FALSE );
   }
   {
     PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( gamedata );
@@ -1334,12 +1334,12 @@ void GAMEBEACON_SendDataUpdate_SelfIntroduction(void)
  * @param   pms		
  */
 //==================================================================
-void GAMEBEACON_SendDataUpdate_MedalCount( u8 medal_num )
+void GAMEBEACON_SendDataUpdate_MedalCount( u8 medal_count )
 {
   GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
   GAMEBEACON_INFO *info = &send->info;
 
-  info->medal_num = medal_num;
+  info->medal_count = medal_count;
   send->beacon_update = TRUE;
 }
 
