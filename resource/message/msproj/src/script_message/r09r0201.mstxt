@@ -957,6 +957,582 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r09r0201_girl4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたし……　おじょうさま　よ▼
+おかいものに　きてみたのだけれど
+どこに　なにが　うっているか▽
+わからなくて　こまっているのよね▼
+あなた　おかねを　わたすから
+「すごいキズぐすり」を▽
+かってきて　くれないかしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:12:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:15:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありがとう！
+それじゃ　おかねを　わたすわね▼
+「すごいキズぐすり」よ
+おねがい　ね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:12:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:16:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+1200円　を　うけとった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:12:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・お金一杯でもこの処理</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:16:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしの　たのみを　ことわれる
+なんて……　しんせん　よ▼
+いったい　どこに
+「すごいキズぐすり」　うっているのかしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:13:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:12:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:16:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしが　ほしいのは
+「すごいキズぐすり」よ！▽
+それとも　もう　かってきてくれた？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:13:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:12:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択後、条件を満たさず
+　日付が変わっていない場合
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:18:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたし……　あなたに
+すごいキズぐすりを　かってくるよう
+おねがい　したきが　するんだけど……
+おねがい　ね！　まっているから
+それとも　もう　かってきてくれた？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:15:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:13:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択後、条件を満たさず
+　日付が経過した場合
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:18:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごいキズぐすり　ね！
+すぐに　かってきてくれて　ありがと！▼
+これは　すくないけれど　おれいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:13:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択後、条件を達成し
+　日付が変わっていない場合
+・アイテム入手
+　No000「かんぽう」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:17:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すごいキズぐすり　ね！
+ずいぶん　まった　きがするけれど▼
+ぶじに　てにはいって　まんぞく
+これは　すくないけれど　おれいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:13:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択後、条件を達成し
+　日付が経過した場合
+・アイテム入手
+　No000「かんぽう」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:17:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　すごいキズぐすり
+バッグに　ないみたいね▼
+かってきて　ね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択後、バッグに
+　No000「すごいキズぐすり」がない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:18:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしが　ほしいのは
+「すごいキズぐすり」よ！▽
+おねがいね！　まってるから……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:19:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r09r0201_girl4_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おかいもの　って
+とっても　たのしいのね！▼
+まんきつ　しちゃった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:14:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後、日付が変わるまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:19:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:11:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r09r0201_workman_01"
 		Style="Large">
 		<LanguageCell

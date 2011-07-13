@@ -1471,6 +1471,208 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c01_badman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なつが　まちどおしいな
+あの　よるの　こうけいを　みたいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・夏以外
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERM
+ブリーダー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_badman2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいきん　よるになると
+この　いけに　マッギョが▽
+むれになって　あらわれるんだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・夏＋夜以外の時間帯
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERM
+ブリーダー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:21:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_badman2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このごろ　はやりといえば
+サンヨウシティの　マッギョナイト▽
+かれらの　むれ　だよ▼
+なんとも　いえない　こうけい　だね
+ふまない　ように　きをつけないとな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:23:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:23:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・夏＋夜の時間帯
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:24:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERM
+ブリーダー♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:21:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01_poke44_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぎょぎょー！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぎょぎょー！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・夏＋夜だけ出現
+・あわせて鳴き声再生
+・全部同じ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:25:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・マッギョ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:22:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c01_sign1_01"
 		Style="Large">
 		<LanguageCell
