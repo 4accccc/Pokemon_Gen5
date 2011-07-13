@@ -21,6 +21,10 @@
 #define TR_JUGGLING_14                     7
 #define TR_JUGGLING_15                     8
 #define TR_CHILDCARE_06                    9
+#define FLD_ITEM_101                      10
+#define FLD_ITEM_102                      11
+#define FLD_ITEM_103                      12
+#define FLD_ITEM_104                      13
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

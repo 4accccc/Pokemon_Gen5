@@ -10,6 +10,8 @@
 #ifndef ZONE_R07R0102_EVC_H
 #define ZONE_R07R0102_EVC_H
 
+#define FLD_ITEM_105                       0
+#define FLD_ITEM_106                       1
 
 #endif //ZONE_R07R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

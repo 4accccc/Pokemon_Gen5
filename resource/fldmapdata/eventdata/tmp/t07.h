@@ -16,6 +16,7 @@
 #define T07_BACKPACKERM_01                 3
 #define T07_WOMAN1_01                      4
 #define T07_SWBELL_01                      5
+#define FLD_ITEM_110                       6
 
 #endif //ZONE_T07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
