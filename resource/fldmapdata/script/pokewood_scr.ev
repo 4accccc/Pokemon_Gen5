@@ -31,6 +31,8 @@ DEFINE_LOCAL  LWK_PKWD_MENU
 DEFINE_LOCAL  LWK_PKWD_SCENARIO
 DEFINE_LOCAL  LWK_PKWD_REC_POS
 
+DEFINE_LOCAL  LWK_PKWD_REC_COUNT
+
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
@@ -125,9 +127,10 @@ _RET
 /**************************************************************/
 /**************************************************************/
 ev_pkwd_rec_erase_movie:
-  $LWK_PKWD_REC_POS = 0
+  $LWK_PKWD_REC_COUNT = 0
   //仮：本当は上映可能な録画データの数を取得する
-  _PKWD_GET_MOVIE_COUNT( LWK_PKWD_REC_POS )
+  //_PKWD_GET_MOVIE_COUNT( LWK_PKWD_REC_COUNT )
+  _CALL ev_pkwd_get_empty_pos
   IF $LWK_PKWD_REC_POS == SCR_PKWD_MOVIE_MAX THEN
     //映画が一杯！
     _BALLOONWIN_OBJMSG_POS( msg_pw_studio_05, SCWK_TARGET_OBJID, POS_DOWN )
@@ -141,14 +144,15 @@ ev_pkwd_rec_erase_movie:
     _BALLOONWIN_OBJMSG_POS( msg_pw_studio_06, SCWK_TARGET_OBJID, POS_DOWN )
     _MSGWIN_CLOSE()
     //仮：本当は上映選択アプリを呼び出し
-    _PKWD_SELECT_MOVIE( SCWK_ANSWER )
-    IF $SCWK_ANSWER == SCR_PKWD_MOVIE_MAX THEN
+    //_PKWD_SELECT_MOVIE( LWK_PKWD_REC_POS )
+    _CALL ev_pkwd_select_movie
+    IF $LWK_PKWD_REC_POS == SCR_PKWD_MOVIE_MAX THEN
       //キャンセル→じゃあ、また
       $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
       _RET
     ENDIF
     //仮：本当は録画削除を呼び出し
-    _PKWD_DELETE_MOVIE( SCWK_ANSWER )
+    _PKWD_DELETE_MOVIE( LWK_PKWD_REC_POS )
   ENDIF
   //シーケンス：シナリオ選択へ
   $LWK_PKWD_SEQ = PKWD_REC_SEQ_SELECT_SCENARIO
@@ -161,7 +165,7 @@ ev_pkwd_rec_select_scenario:
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_07, SCWK_TARGET_OBJID, POS_DOWN )
   _MSGWIN_CLOSE()
   $LWK_PKWD_SCENARIO = SCR_PKWD_SCENARIO_MAX
-  //仮：本当は台本選択アプリを呼び出し
+  //台本選択アプリを呼び出し
   _PKWD_SELECT_SCENARIO( LWK_PKWD_SCENARIO )
 
   _DEBUG_PRINT_WK( LWK_PKWD_SCENARIO )
@@ -212,5 +216,135 @@ _RET
 //    ポケウッド：上映の人（仮）
 /**************************************************************/
 EVENT_START ev_pokewood_show
+
+  _CALL ev_pkwd_get_record_count
+  IF $LWK_PKWD_REC_COUNT == 0 THEN
+    //映画がなければ上映できない
+    _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_01, SCWK_TARGET_OBJID, POS_DOWN )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_02, SCWK_TARGET_OBJID, POS_DOWN )
+    _MSGWIN_CLOSE()
+    //上映選択へ
+    _CALL ev_pkwd_select_movie
+    IF $LWK_PKWD_REC_POS == SCR_PKWD_MOVIE_MAX THEN
+      //そう！またね！
+      _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_04, SCWK_TARGET_OBJID, POS_DOWN )
+    ELSE
+      _PKWD_SET_SCENARIO_NAME( 0, LWK_PKWD_REC_POS )
+      _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_07, SCWK_TARGET_OBJID, POS_DOWN )
+      _YES_NO_WIN( SCWK_ANSWER )
+      IF $SCWK_ANSWER != SCR_YES THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_04, SCWK_TARGET_OBJID, POS_DOWN )
+      ELSE
+
+        _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_03, SCWK_TARGET_OBJID, POS_DOWN )
+        _MSGWIN_CLOSE()
+
+        //上映呼び出し
+        _PKWD_SHOW( LWK_PKWD_REC_POS )
+
+        _PKWD_GET_MOVIE_VALUE( LWK_PKWD_REC_POS, SCWK_ANSWER )
+        //評価が決まっていないため暫定
+        IF $SCWK_ANSWER == 0 THEN
+          _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_06, SCWK_TARGET_OBJID, POS_DOWN )
+        ELSE
+          _BALLOONWIN_OBJMSG_POS( msg_pw_theater_tes_05, SCWK_TARGET_OBJID, POS_DOWN )
+        ENDIF
+      ENDIF
+    ENDIF
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
+
+
+//--------------------------------------------------------------
+//  上映可能な録画データをカウントする（仮）
+//--------------------------------------------------------------
+ev_pkwd_get_record_count:
+  $LWK_PKWD_REC_COUNT = 0
+  _PKWD_CHECK_MOVIE_ENABLE( 0, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    $LWK_PKWD_REC_COUNT += 1
+  ENDIF
+  _PKWD_CHECK_MOVIE_ENABLE( 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    $LWK_PKWD_REC_COUNT += 1
+  ENDIF
+  _PKWD_CHECK_MOVIE_ENABLE( 2, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    $LWK_PKWD_REC_COUNT += 1
+  ENDIF
+  _PKWD_CHECK_MOVIE_ENABLE( 3, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    $LWK_PKWD_REC_COUNT += 1
+  ENDIF
+  _RET
+
+//--------------------------------------------------------------
+//  録画データが入っていない場所を探す
+//--------------------------------------------------------------
+ev_pkwd_get_empty_pos:
+  $LWK_PKWD_REC_POS = 0
+  _PKWD_CHECK_MOVIE_ENABLE( LWK_PKWD_REC_POS, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    _RET
+  ENDIF
+  $LWK_PKWD_REC_POS = 1
+  _PKWD_CHECK_MOVIE_ENABLE( LWK_PKWD_REC_POS, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    _RET
+  ENDIF
+  $LWK_PKWD_REC_POS = 2
+  _PKWD_CHECK_MOVIE_ENABLE( LWK_PKWD_REC_POS, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    _RET
+  ENDIF
+  $LWK_PKWD_REC_POS = 3
+  _PKWD_CHECK_MOVIE_ENABLE( LWK_PKWD_REC_POS, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    _RET
+  ENDIF
+  $LWK_PKWD_REC_POS = SCR_PKWD_MOVIE_MAX
+  _RET
+  
+//--------------------------------------------------------------
+//  上映データを選択する（仮）
+//--------------------------------------------------------------
+ev_pkwd_select_movie:
+  _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_PKWD_MENU )
+
+  _PKWD_CHECK_MOVIE_ENABLE( 0, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_01, 0 )  //
+  ENDIF
+
+  _PKWD_CHECK_MOVIE_ENABLE( 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_02, 1 )  //
+  ENDIF
+
+  _PKWD_CHECK_MOVIE_ENABLE( 2, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_03, 2 )  //
+  ENDIF
+
+  _PKWD_CHECK_MOVIE_ENABLE( 3, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_04, 3 )  //
+  ENDIF
+  _BMPMENU_MAKE_LIST( msg_pw_theater_menu_05, 0xff )  //やめる
+  _BMPMENU_START()
+  SWITCH $LWK_PKWD_MENU
+  CASE 0,1,2,3 THEN
+    $LWK_PKWD_REC_POS = $LWK_PKWD_MENU
+  DEFAULT
+    $LWK_PKWD_REC_POS = SCR_PKWD_MOVIE_MAX
+  ENDSWITCH
+  _RET
+
+
+
+
+
 

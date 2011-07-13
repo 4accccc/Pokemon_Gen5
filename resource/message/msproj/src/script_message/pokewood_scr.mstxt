@@ -2,206 +2,6 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_pokewood_rec_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>どのきゃくほんを　えらびますか？</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:38:38" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>どの脚本を選びますか？</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:38:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>？？？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pokewood_rec_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>それでは　またのきかいを
-おまちしています！</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:39:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>それでは　またの機会を
-お待ちしています！</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:40:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>？？？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>？？？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pokewood_rec_03">
-		<LanguageCell
-			Language="JPN">
-			<Text>「[Name:Undefined ]」で
-いいですか？</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:41:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:40:48" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>「[Name:Undefined ]」で
-いいですか？</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:41:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:41:09" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pokewood_rec_04">
-		<LanguageCell
-			Language="JPN">
-			<Text>じゃあ　さつえい　かいし！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:54:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:41:30" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>じゃあ　撮影　開始！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:54:10" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:41:46" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pokewood_rec_05">
-		<LanguageCell
-			Language="JPN">
-			<Text>じょうえいが　たのしみだな！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:54:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:42:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>上映が　楽しみ　だな！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:54:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:42:21" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pokewood_rec_06">
-		<LanguageCell
-			Language="JPN">
-			<Text>あれ？
-さつえいを　やりなおしますか？</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:43:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:42:47" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あれ？
-撮影を　やり直しますか？</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:43:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-01T04:43:10" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
 		Label="msg_pw_studio_01">
 		<LanguageCell
 			Language="JPN">
@@ -793,10 +593,10 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>よーし！　それじゃあ
-テストししゃ　スタート！</Text>
+テストししゃ　スタート！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T09:57:50" />
+				User="tamada:W00253"
+				Time="2011-07-13T05:26:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -805,10 +605,10 @@ msg_pw_theater_tes_04</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よーし！　それじゃあ
-テストししゃ　スタート！</Text>
+テストししゃ　スタート！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:26" />
+				User="tamada:W00253"
+				Time="2011-07-13T05:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -908,10 +708,10 @@ msg_pw_theater_tes_04</Comment>
 			<Text>うーん　なかなかの　さくひんね！▼
 でも　もっと　いい　さくひんが
 できれば　ヒットして　ぞくへんが▽
-つくれるように　なるかもよ！▼</Text>
+つくれるように　なるかもよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:01:45" />
+				User="tamada:W00253"
+				Time="2011-07-13T05:47:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -922,10 +722,10 @@ msg_pw_theater_tes_04</Comment>
 			<Text>うーん　なかなかの　さくひんね！▼
 でも　もっと　いい　さくひんが
 できれば　ヒットして　ぞくへんが▽
-つくれるように　なるかもよ！▼</Text>
+つくれるように　なるかもよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:26" />
+				User="tamada:W00253"
+				Time="2011-07-13T05:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -948,10 +748,11 @@ msg_pw_theater_tes_04</Comment>
 		Label="msg_pw_theater_tes_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい</Text>
+			<Text>『[Name:Undefined ]』を
+みてみるのね？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:02:04" />
+				User="tamada:W00253"
+				Time="2011-07-13T08:39:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -959,24 +760,34 @@ msg_pw_theater_tes_04</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい</Text>
+			<Text>『[Name:Undefined ]』を
+みてみるのね？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:26" />
+				User="tamada:W00253"
+				Time="2011-07-13T08:39:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-07-11T10:07:26" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>プレゼン用ＮＰＣ
+
+上映データの確認</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T08:38:58" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_tes_08">
+		Label="msg_pw_theater_menu_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいえ</Text>
+			<Text>ろくが１</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:02:21" />
+				User="tamada:W00253"
+				Time="2011-07-13T04:00:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -984,10 +795,110 @@ msg_pw_theater_tes_04</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいえ</Text>
+			<Text>録画１</Text>
 			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T04:00:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_menu_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ろくが２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:11:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>録画２</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:11:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_menu_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ろくが３</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:11:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>録画３</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:11:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_menu_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ろくが４</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:11:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>録画４</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:11:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:07:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_theater_menu_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:30:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-07-11T10:02:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-13T05:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

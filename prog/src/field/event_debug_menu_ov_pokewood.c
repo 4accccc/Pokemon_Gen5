@@ -53,15 +53,6 @@
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-typedef enum {
-  DEBUG_SHOW_01 = LOADDATA_POKEWOOD0,
-  DEBUG_SHOW_02 = LOADDATA_POKEWOOD1,
-  DEBUG_SHOW_03 = LOADDATA_POKEWOOD2,
-  DEBUG_SHOW_ROM,
-}DEBUG_SHOW_TYPE;
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 typedef struct {
   int seq_no;
   HEAPID heapID;
@@ -83,7 +74,7 @@ static BOOL debugMenuCallProc_PokewoodRec3( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow1( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow2( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk );
-static BOOL debugMenuCallProc_PokewoodShowRom( POKEWOOD_FUNC_WORK * wk );
+static BOOL debugMenuCallProc_PokewoodShow4( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk );
 
@@ -123,8 +114,8 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_SHOW_01, (void*)debugMenuCallProc_PokewoodShow1, GFL_OVERLAY_BLANK_ID }, //
   { DEBUG_STRID_POKEWOOD_REC_03, (void*)debugMenuCallProc_PokewoodRec3, GFL_OVERLAY_BLANK_ID },  // 
   { DEBUG_STRID_POKEWOOD_SHOW_03, (void*)debugMenuCallProc_PokewoodShow3, GFL_OVERLAY_BLANK_ID }, //
-//  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShowRom, GFL_OVERLAY_BLANK_ID },
-//  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShowRom, GFL_OVERLAY_BLANK_ID },
+//  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShow4, GFL_OVERLAY_BLANK_ID },
+//  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShow4, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
 };
@@ -234,12 +225,12 @@ static GMEVENT_RESULT debugMenuPokewoodEvent( GMEVENT *event, int *seq, void *wk
 //=============================================================================
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static BOOL callShowProc( POKEWOOD_FUNC_WORK * wk, DEBUG_SHOW_TYPE type )
+static BOOL callShowProc( POKEWOOD_FUNC_WORK * wk, PKWD_REC_POS rec_pos )
 {
   LOAD_RESULT result;
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData( wk->gmSys ) );
 
-//  if ( BattleRec_DataOccCheck( sv, HEAPID_FIELDMAP, &result, type ) == FALSE )
+//  if ( BattleRec_DataOccCheck( sv, HEAPID_FIELDMAP, &result, rec_pos ) == FALSE )
 //  { //‘Î‰ž‚·‚é˜^‰æƒf[ƒ^‚ª‘¶Ý‚µ‚È‚¢‚Æ‚«‚É‚Í‚È‚É‚à‚¹‚¸‚É–ß‚é
 //    PMSND_PlaySE( SEQ_SE_BEEP );
 //    return FALSE;
@@ -250,7 +241,7 @@ static BOOL callShowProc( POKEWOOD_FUNC_WORK * wk, DEBUG_SHOW_TYPE type )
     FIELDMAP_WORK *fieldWork = wk->fieldWork;
     GAMESYS_WORK  *gameSys  = wk->gmSys;
     GMEVENT *next_event;
-    int rec_id = type;
+    int rec_id = rec_pos;
     next_event = GMEVENT_CreateOverlayEventCall( gameSys,
         FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)&rec_id );
     GMEVENT_ChangeEvent( event, next_event );
@@ -308,28 +299,28 @@ static BOOL debugMenuCallProc_PokewoodRec3( POKEWOOD_FUNC_WORK * wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodShow1( POKEWOOD_FUNC_WORK * wk )
 {
-  return callShowProc( wk, DEBUG_SHOW_01 );
+  return callShowProc( wk, PKWD_REC_POS_00 );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodShow2( POKEWOOD_FUNC_WORK * wk )
 {
-  return callShowProc( wk, DEBUG_SHOW_02 );
+  return callShowProc( wk, PKWD_REC_POS_01 );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk )
 {
-  return callShowProc( wk, DEBUG_SHOW_03 );
+  return callShowProc( wk, PKWD_REC_POS_02 );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_PokewoodShowRom( POKEWOOD_FUNC_WORK * wk )
+static BOOL debugMenuCallProc_PokewoodShow4( POKEWOOD_FUNC_WORK * wk )
 {
-  return callShowProc( wk, DEBUG_SHOW_ROM );
+  return callShowProc( wk, PKWD_REC_POS_03 );
 }
 
 //----------------------------------------------------------------------------

@@ -260,6 +260,8 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   {
   case POKEWOOD_REC_PARAM_SENARIO:
     return sp_pokewood_rec_sv->rec.senario.senario_no;
+  case POKEWOOD_REC_PARAM_SUCCESS:
+    return sp_pokewood_rec_sv->rec.senario.success;
   case POKEWOOD_REC_PARAM_POKE0:
     {
       POKEMON_PARAM *pp = (POKEMON_PARAM*)dst;
@@ -293,11 +295,10 @@ static SAVE_EXTRA_ID PokeWood_Rec_LoadDataNumToSaveExtraID( POKEWOOD_LOADDATA_NU
     SAVE_EXTRA_ID_POKEWOOD_04,
   };
 
-  num -= LOADDATA_MAX;
-
   if( num >= NELEMS(sc_loaddata_to_extra_id)
       || num < 0 )
   {
+    OS_Printf( " incorrect load number = %d\n", num );
     GF_ASSERT(0);
     num = 0;
   }

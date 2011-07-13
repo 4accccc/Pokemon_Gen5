@@ -53,6 +53,14 @@
 #include "pokewood_party.naix"
 
 #include "field_fade.h"
+
+//’è‹`‚µ‚½’l‚ª‚¸‚ê‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¢‚é
+SDK_COMPILER_ASSERT( PKWD_REC_POS_00 == LOADDATA_POKEWOOD0 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_01 == LOADDATA_POKEWOOD1 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_02 == LOADDATA_POKEWOOD2 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_03 == LOADDATA_POKEWOOD3 );
+SDK_COMPILER_ASSERT( PKWD_REC_POS_MAX <= LOADDATA_POKEWOOD_MAX );
+
 //======================================================================
 //  define
 //======================================================================
@@ -731,7 +739,7 @@ GMEVENT * POKEWOOD_EVENT_Rec( GAMESYS_WORK *gsys, void * param )
   event = GMEVENT_Create( gsys, NULL, pokewoodCallEvent, sizeof(PREW) );
   prew = GMEVENT_GetEventWork( event );
   prew->gsys      = gsys;
-  prew->rec_id    = rec_param->rec_pos + LOADDATA_POKEWOOD0; // ˜^‰æNO
+  prew->rec_id    = rec_param->rec_pos; // ˜^‰æNO
   prew->SenarioNo = rec_param->scenario_no;
   prew->heapID    = HEAPID_PROC;
   OS_Printf(" POKEWOOD EVENT rec_id = %x, senario = %d\n", rec_param->rec_pos, rec_param->scenario_no );
@@ -757,7 +765,7 @@ GMEVENT * POKEWOOD_EVENT_Show( GAMESYS_WORK *gsys, void * parent_work )
   prew = GMEVENT_GetEventWork( event );
   prew->gsys = gsys;
   prew->heapID = HEAPID_PROC;
-  prew->rec_id = rec_id;
+  prew->rec_id = rec_id; //˜^‰æNO
   OS_Printf(" POKEWOOD EVENT Parent Value = %x\n", rec_id);
   prew->PokewoodMode = BTL_POKEWOOD_SHOW;
 

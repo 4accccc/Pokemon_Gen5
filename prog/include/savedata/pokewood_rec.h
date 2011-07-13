@@ -30,11 +30,13 @@
 //=====================================
 typedef enum
 {
-  LOADDATA_POKEWOOD0 = LOADDATA_MAX,  //battle_rec.hのロードデータの続きから始まる
+  LOADDATA_POKEWOOD0 = 0,
   LOADDATA_POKEWOOD1,
   LOADDATA_POKEWOOD2,
   LOADDATA_POKEWOOD3,
   LOADDATA_POKEWOOD4,
+
+  LOADDATA_POKEWOOD_MAX,
 }POKEWOOD_LOADDATA_NUM;
 
 //-------------------------------------
@@ -43,6 +45,7 @@ typedef enum
 typedef enum 
 {
   POKEWOOD_REC_PARAM_SENARIO, // シナリオナンバー
+  POKEWOOD_REC_PARAM_SUCCESS, // 成功フラグ
   POKEWOOD_REC_PARAM_POKE0,   // 自分の手持ち１匹目のPOKEMON_PARAM
 } POKEWOOD_REC_PARAM;
 

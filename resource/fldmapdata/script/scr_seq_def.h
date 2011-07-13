@@ -14030,7 +14030,37 @@
     .short  \ret_wk
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：録画データが上映可能かチェック
+ * @param rec_pos  録画データ指定（０～３）
+ * @param BOOL  TRUEのとき、指定録画データが存在する
+ */
+//--------------------------------------------------------------
+#define _PKWD_CHECK_MOVIE_ENABLE( rec_pos, ret_wk ) \
+    _ASM_PKWD_CHECK_MOVIE_ENABLE rec_pos, ret_wk
 
+    .macro  _ASM_PKWD_CHECK_MOVIE_ENABLE rec_pos, ret_wk
+    .short  EV_SEQ_PKWD_CHECK_MOVIE_ENABLE
+    .short  \rec_pos
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：録画データの評価取得
+ * @param rec_pos  録画データ指定（０～３）
+ * @param ret_wk
+ */
+//--------------------------------------------------------------
+#define _PKWD_GET_MOVIE_VALUE( rec_pos, ret_wk ) \
+    _ASM_PKWD_GET_MOVIE_VALUE rec_pos, ret_wk
+
+    .macro _ASM_PKWD_GET_MOVIE_VALUE rec_pos, ret_wk
+    .short  EV_SEQ_PKWD_GET_MOVIE_VALUE
+    .short  \rec_pos
+    .short  \ret_wk
+    .endm
 
 
 
