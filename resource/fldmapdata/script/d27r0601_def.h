@@ -5,6 +5,6 @@
 #define _D27R0601_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D27R0601 (1)
+#define SCRID_POS_D27R0601_WARP_01 (1)
 
 #endif //_D27R0601_DEF_H_
