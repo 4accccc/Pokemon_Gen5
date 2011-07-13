@@ -18,6 +18,10 @@
 #define TR_ELITEM_25                       5
 #define TR_ELITEW_24                       6
 #define TR_BACKPACKERM_20                  7
+#define FLD_ITEM_129                       8
+#define FLD_ITEM_130                       9
+#define FLD_ITEM_131                      10
+#define FLD_ITEM_132                      11
 
 #endif //ZONE_R14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

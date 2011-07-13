@@ -29,6 +29,8 @@
 #define R05_STOP07_01                     15
 #define R05_STOP08_01                     16
 #define R05_STOP09_01                     17
+#define FLD_ITEM_68                       18
+#define FLD_ITEM_69                       19
 
 #endif //ZONE_R05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

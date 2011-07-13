@@ -29,6 +29,12 @@
 #define R13_SUNGLASSES_01                 15
 #define R13_POKE4_01                      16
 #define TR_RANGERW_14                     17
+#define FLD_ITEM_133                      18
+#define FLD_ITEM_134                      19
+#define FLD_ITEM_135                      20
+#define FLD_ITEM_136                      21
+#define FLD_ITEM_137                      22
+#define FLD_ITEM_139                      23
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

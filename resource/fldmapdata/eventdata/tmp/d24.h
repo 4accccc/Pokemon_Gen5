@@ -11,6 +11,9 @@
 #ifndef ZONE_D24_EVC_H
 #define ZONE_D24_EVC_H
 
+#define FLD_ITEM_116                       0
+#define FLD_ITEM_115                       1
+#define FLD_ITEM_117                       2
 
 #endif //ZONE_D24_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

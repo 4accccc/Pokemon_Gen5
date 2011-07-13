@@ -15,6 +15,8 @@
 #define TR_SWIMMERM_09                     3
 #define TR_SWIMMERW_09                     4
 #define TR_SWIMMERM_10                     5
+#define FLD_ITEM_127                       6
+#define FLD_ITEM_128                       7
 
 #endif //ZONE_D20_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d20.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
