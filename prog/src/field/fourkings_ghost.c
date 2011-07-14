@@ -1803,7 +1803,7 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk )
     //GFL_FADE_SetFadeSpeed( 10 );
 		//GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys, p_wk->p_fieldmap, FIELD_FADE_WAIT));
     *seq = SEQ_FADE_OUT_WAIT;
-    p_wk->wait = 60;
+    p_wk->wait = 15;
     break;
   // フェードアウト待ち
   case SEQ_FADE_OUT_WAIT:

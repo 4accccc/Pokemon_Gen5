@@ -96,26 +96,23 @@ EVENT_START	ev_pos_c09r0101_enter_01
   // 演出開始
   //--------------------------------------
 
-  _TIME_WAIT( 5 )
-
   // もやが晴れる
   _FOURKINGS_GHOST_MIST()
 
-  _TIME_WAIT( 40 )
+  _TIME_WAIT( 31 )
 
   // 炎アニメ(fire_a)
   _FOURKINGS_GHOST_FIRE( 0 )
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 35 )
 
   // 階段の炎アニメ(fire_b) 4つ
   _FOURKINGS_GHOST_FIRE( 1 )
-  _TIME_WAIT( 5 )
+  _TIME_WAIT( 7 )
   _FOURKINGS_GHOST_FIRE( 2 )
-  _TIME_WAIT( 5 )
+  _TIME_WAIT( 7 )
   _FOURKINGS_GHOST_FIRE( 3 )
-  _TIME_WAIT( 5 )
+  _TIME_WAIT( 7 )
   _FOURKINGS_GHOST_FIRE( 4 )
-  _TIME_WAIT( 5 )
 
   //--------------------------------------
   // 演出終了
@@ -143,18 +140,12 @@ EVENT_START	ev_pos_c09r0101_enter_02
   // 演出開始
   //--------------------------------------
 
-  _TIME_WAIT( 5 )
-
   // 本が落ちる⇒暗転
   // 数字は本が落ちるアニメが再生してから暗転までのウェイト
-  _FOURKINGS_GHOST_BOOK_FALL( 10 )
-
-  _TIME_WAIT( 5 )
+  _FOURKINGS_GHOST_BOOK_FALL( 37 )
 
   // ランプアニメ
   _FOURKINGS_GHOST_LAMP()
-
-  _TIME_WAIT( 5 )
 
   //--------------------------------------
   // 演出終了
