@@ -1828,8 +1828,8 @@ N</Text>
 とうさん！
 わかってください▼
 ポケモンは　どうぐ　ではないのです▼
-ボクたち　ヒトを
-たかみへと　いざなってくれる▽
+ポケモンと　ヒトをは　おたがいを
+たかみへと　いざなっていける▽
 すばらしき　パートナー　なのです！▼
 それを　わかっている
 ヒトたちも　いるのです！▼
@@ -1837,7 +1837,7 @@ N</Text>
 とうさんは……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:42:08" />
+				Time="2011-07-14T05:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1845,12 +1845,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]あえて　こう　よびます▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]あえて　こう　呼びます▼
 とうさん！
 わかってください▼
-ポケモンは　どうぐ　ではないのです▼
-ボクたち　ヒトを
-たかみへと　いざなってくれる▽
+ポケモンは　道具　ではないのです▼
+ポケモンと　ヒトをは　お互いを
+高みへと　誘っていける▽
 すばらしき　パートナー　なのです！▼
 それを　わかっている
 ヒトたちも　いるのです！▼
@@ -1858,7 +1858,7 @@ N</Text>
 とうさんは……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:42:11" />
+				Time="2011-07-14T05:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1942,11 +1942,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『Ｎさま
+			<Text>ダークトリニティ『Ｎさま
 ゲーチスさまの　ことは　わたしたちが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:45:28" />
+				Time="2011-07-14T05:08:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1954,10 +1954,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ダークトリニティ『Ｎさま
+ゲーチスさまの　ことは　わたしたちが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:48:39" />
+				Time="2011-07-14T05:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1992,11 +1993,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ありがとう……
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……
 よろしく　たのむ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:58:36" />
+				Time="2011-07-14T05:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2004,10 +2005,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……
+よろしく　頼む[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:48:39" />
+				Time="2011-07-14T05:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2054,10 +2056,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ダークトリニティ『……はい
+</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:48:39" />
+				Time="2011-07-14T05:08:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2092,7 +2095,7 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キュレムに　かわって
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]みんなに　かわって
 かんしゃの　きもちを……▼
 アリガトウ！▼
 キュレムだけど　だいじょうぶ　だよ▼
@@ -2100,7 +2103,7 @@ N</Text>
 また　ここに　あらわれる……！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T03:46:12" />
+				Time="2011-07-14T05:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2108,10 +2111,15 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]みんなに　かわって
+感謝の　気持ちを……▼
+アリガトウ！▼
+キュレムだけど　大丈夫だよ▼
+今は　力を　失っているが
+また　ここに　現れる……！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:48:39" />
+				Time="2011-07-14T05:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2249,13 +2257,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　ありがとう　だって▼
-ああ　そうか……▼
-ボクが　ポケモンと　はなせること
-キミは　しらないんだね[Ctrl2:CtrlSpeed ]</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
+キミに　ありがとう　って！▼
+そうなんだ
+ボクは　ポケモンと　はなせるんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:54:03" />
+				Time="2011-07-14T05:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2263,10 +2271,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
+キミに　ありがとう　って！▼
+そうなんだ
+ボクは　ポケモンと　話せるんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:04" />
+				Time="2011-07-14T05:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2304,13 +2315,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　ありがとう　だって▼
-ああ　そうか……▼
-ボクが　ポケモンと　はなせること
-キミは　しらないんだね[Ctrl2:CtrlSpeed ]</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
+キミに　ありがとう　って！▼
+そうなんだ
+ボクは　ポケモンと　はなせるんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:54:07" />
+				Time="2011-07-14T05:19:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2318,10 +2329,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
+キミに　ありがとう　って！▼
+そうなんだ
+ボクは　ポケモンと　話せるんだ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:04" />
+				Time="2011-07-14T05:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2361,15 +2375,17 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]２ねんまえ　あの　しろで
-あの　トレーナーに　たすけられてから……▼
-おおくの　ポケモンと　であい
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　あの　トレーナーや
+アデクさんが　おしえてくれた……▼
+さらに　おおくの　であいを　へて
 いろんな　こえを　きいた……▼
+ことなる　かんがえを　うけいれて
+せかいは　かがくはんのうを　おこす▼
 そうして　ボクの　せかいは
-しずかに　ひろがり　かわっていった[Ctrl2:CtrlSpeed ]</Text>
+しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:54:11" />
+				Time="2011-07-14T05:56:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2377,10 +2393,17 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　あの　トレーナーや
+アデクさんが　教えてくれた……▼
+さらに　多くの　出会いを　経て
+いろんな　声を　きいた……▼
+異なる　考えを　受け入れて
+世界は　化学反応を　起こす▼
+そうして　ボクの　世界は
+静かに　広がったんだ……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:36" />
+				Time="2011-07-14T05:55:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2416,15 +2439,17 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]２ねんまえ　あの　しろで
-[Name:TrainerName Idx="1" ]に　たすけられてから▼
-おおくの　ポケモンと　であい
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　[Name:TrainerName Idx="1" ]や
+アデクさんが　おしえてくれた……▼
+さらに　おおくの　であいを　へて
 いろんな　こえを　きいた……▼
+ことなる　かんがえを　うけいれて
+せかいは　かがくはんのうを　おこす▼
 そうして　ボクの　せかいは
-しずかに　ひろがり　かわっていった[Ctrl2:CtrlSpeed ]</Text>
+しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:54:16" />
+				Time="2011-07-14T05:56:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2432,10 +2457,17 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　[Name:TrainerName Idx="1" ]や
+アデクさんが　教えてくれた……▼
+さらに　多くの　出会いを　経て
+いろんな　声を　きいた……▼
+異なる　考えを　受け入れて
+世界は　化学反応を　起こす▼
+そうして　ボクの　世界は
+静かに　広がったんだ……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:36" />
+				Time="2011-07-14T05:55:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2488,10 +2520,15 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンと　いることで　ヒトは
+未知なる　世界へ　進める▼
+ヒトと　いることで　ポケモンは
+真の　力を　発揮する……▼
+それが　ゼクロムが　教えてくれた
+ポケモンと　ボクの　理想……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:36" />
+				Time="2011-07-14T05:40:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2544,10 +2581,15 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンと　いることで　ヒトは
+未知なる　世界へ　進める▼
+ヒトと　いることで　ポケモンは
+真の　力を　発揮する……▼
+それが　レシラムが　教えてくれた
+ポケモンと　ボクの　真実……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:50:36" />
+				Time="2011-07-14T05:41:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2556,12 +2598,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITEver
+・WHITE2ver
 ・出入り口前
 ・続けてboss_13w</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:03:33" />
+				Time="2011-07-14T05:41:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2584,13 +2626,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミにとっての
-りそうを　たしかめるため▽
-ポケモンリーグへ　むかうんだ▼
-そのために　２３ばんどうろ　へ[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+めざす　みちは　どんなものか？▼
+その　りそうを　たしかめるため
+ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:07:28" />
+				Time="2011-07-14T05:46:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2598,10 +2640,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+目指す　道は　どんなものか？▼
+その理想を　確かめるため
+ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:51:26" />
+				Time="2011-07-14T05:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2638,13 +2683,13 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミにとっての
-しんじつを　たしかめるため▽
-ポケモンリーグへ　むかうんだ▼
-そのために　２３ばんどうろ　へ[Ctrl2:CtrlSpeed ]</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+めざす　みちは　どんなものか？▼
+その　しんじつを　たしかめるため
+ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:07:36" />
+				Time="2011-07-14T05:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2652,10 +2697,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミの　ポケモンが
+目指す　道は　どんなものか？▼
+その理想を　確かめるため
+ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:51:26" />
+				Time="2011-07-14T05:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2664,12 +2712,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WHITEver
+・WHITE2ver
 ・以降、主人公フリームーブ可能
 ・r23に行くまでメッセージ繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T11:51:23" />
+				Time="2011-07-14T05:41:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
