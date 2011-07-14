@@ -27,6 +27,9 @@
   DEF_CMD( EvCmdPokewoodCheckMovieEnable,       EV_SEQ_PKWD_CHECK_MOVIE_ENABLE )
   DEF_CMD( EvCmdPokewoodGetMovieValue,          EV_SEQ_PKWD_GET_MOVIE_VALUE )
 
+  DEF_CMD( EvCmdPokewoodSystemStart,            EV_SEQ_PKWD_SYSTEM_START )
+  DEF_CMD( EvCmdPokewoodSystemEnd,              EV_SEQ_PKWD_SYSTEM_END )
+  DEF_CMD( EvCmdPKWDSelectPokemon,              EV_SEQ_PKWD_SELECT_POKEMON )
   
   END_CMD
   //スクリプトコマンドテーブル終了

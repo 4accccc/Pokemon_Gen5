@@ -62,6 +62,7 @@
 #include "savedata/tradepoke_after_save.h"
 #include "savedata/medalbox.h"  // MDLID_MAX
 #include "field/wbt.h"  //WBTSYS
+#include "field/pokewood.h"
 
 //============================================================================================
 //============================================================================================
@@ -126,33 +127,34 @@ struct _GAMEDATA{
   
   SHORTCUT_CURSOR shortcut_cursor;  ///<ショートカット画面のカーソル
   
-  GIMMICKWORK GimmickWork;      //ギミックワーク
-  PL_BOAT_WORK_PTR PlBoatWorkPtr;   //遊覧船ワーク
+  GIMMICKWORK GimmickWork;      ///<ギミックワーク
+  PL_BOAT_WORK_PTR PlBoatWorkPtr;   ///<遊覧船ワーク
 
   COMM_PLAYER_SUPPORT *comm_player_support;   ///<通信プレイヤーサポート
   
-  BSUBWAY_SCRWORK *bsubway_scrwork; //バトルサブウェイワーク
+  BSUBWAY_SCRWORK *bsubway_scrwork; ///<バトルサブウェイワーク
 
   BEACON_STATUS* beacon_status; ///<ビーコン関連ログ他
 
-  CALENDER* calender;  // カレンダー
-  UNSV_WORK UnsvWork;      //国連ワーク
-  TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    //トライアルハウスワーク
-  MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
-  WBTSYS * wbtsys;                    ///<WBT用システムワーク
+  CALENDER* calender;  ///< カレンダー
+  UNSV_WORK UnsvWork;      ///<国連ワーク
+  TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    ///<トライアルハウスワーク
+  MUSICAL_SCRIPT_WORK *musicalScrWork;  ///<ミュージカルスクリプト用ワーク
+  WBTSYS * wbtsys;                      ///<WBT用システムワーク
+  PKWDSYS *pkwdsys;                     ///<ポケウッド用システムワーク
 
-  PLAYTIME* playtime; // プレイ時間
+  PLAYTIME* playtime; ///< プレイ時間
   
-  PAIR_SYSTEM_WORK* pairSystem; //連れ歩きシステムワーク
-  u32 scriptCommandOverlayID; //フィールドスクリプトコマンド用オーバーレイID
+  PAIR_SYSTEM_WORK* pairSystem; ///<連れ歩きシステムワーク
+  u32 scriptCommandOverlayID; ///<フィールドスクリプトコマンド用オーバーレイID
 
-  BOOL  is_livecaster_secret_call;  //隠しキャラに電話できるかどうかフラグ
-  u32   goout_effect_room_count;    //室外演出部屋内カウンタ
+  BOOL  is_livecaster_secret_call;  ///<隠しキャラに電話できるかどうかフラグ
+  u32   goout_effect_room_count;    ///<室外演出部屋内カウンタ
   u8    goout_effect_flag;
-  u8    top_medal_id;  // メダルボックスを開いた時に最初に表示されるメダルID
-  u8    area_ofs; //エリアオフセット(今はリゾートでしか使っていない)
+  u8    top_medal_id;  ///< メダルボックスを開いた時に最初に表示されるメダルID
+  u8    area_ofs; ///<エリアオフセット(今はリゾートでしか使っていない)
   u8    dummy;
-  void *p_resort_buff;  //レゾナンスリゾート用バッファ
+  void *p_resort_buff;  ///<レゾナンスリゾート用バッファ
 };
 
 //==============================================================================
@@ -296,6 +298,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //WBT用システムワーク初期化
   gd->wbtsys = NULL;
+
+  //ポケウッド用システムワーク初期化
+  gd->pkwdsys = NULL;
 
   //スクリプトオーバーレイ初期化
   gd->scriptCommandOverlayID  = 0;
@@ -2018,6 +2023,18 @@ WBTSYS ** GAMEDATA_GetWBTSysPointer( GAMEDATA * gamedata )
 WBTSAVE * GAMEDATA_GetWBTSave( GAMEDATA * gamedata )
 {
   return SAVEDATA_GetWBTSave( gamedata->sv_control_ptr );
+}
+
+//----------------------------------------------------------
+/**
+ * @brief   POKEWOODのシステムワーク格納位置のポインタを取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  PKWDSYS **    POKEWOODのシステムワークのポインタ格納位置へのポインタ
+ */
+//----------------------------------------------------------
+PKWDSYS ** GAMEDATA_GetPKWDSysPointer( GAMEDATA * gamedata )
+{
+  return &gamedata->pkwdsys;
 }
 
 //==================================================================

@@ -15,6 +15,12 @@ extern "C"{
 
 #include "system/vm.h"
 
+extern VMCMD_RESULT EvCmdPokewoodSystemStart( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPokewoodSystemEnd( VMHANDLE * core, void * wk );
+
+extern VMCMD_RESULT EvCmdPKWDSelectPokemon( VMHANDLE * core, void * wk );
+
+
 // ポケウッド　再生
 extern VMCMD_RESULT EvCmdPokewoodRec( VMHANDLE *core, void *wk );
 // ポケウッド　録画

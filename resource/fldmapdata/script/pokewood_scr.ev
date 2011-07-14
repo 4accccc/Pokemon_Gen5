@@ -46,6 +46,8 @@ DEFINE_LOCAL  LWK_PKWD_REC_COUNT
 /**************************************************************/
 EVENT_START ev_pokewood_rec
 
+  _PKWD_SYSTEM_START()
+
   $LWK_PKWD_SEQ = PKWD_REC_SEQ_FIRST_MENU
 
   _TALK_OBJ_START()
@@ -78,6 +80,9 @@ EVENT_START ev_pokewood_rec
     CASE PKWD_REC_SEQ_SHOOTING        THEN
       _CALL ev_pkwd_rec_shooting
 
+    CASE PKWD_REC_SEQ_POKELIST        THEN
+      _CALL ev_pkwd_rec_pokelist
+
     CASE PKWD_REC_SEQ_GOODBYE         THEN
       //またの機会をお待ちしています！
       _BALLOONWIN_OBJMSG_POS( msg_pw_studio_11, SCWK_TARGET_OBJID, POS_DOWN )
@@ -94,6 +99,7 @@ EVENT_START ev_pokewood_rec
 
   ENDWHILE
 
+  _PKWD_SYSTEM_END()
 
 EVENT_END
 
@@ -182,6 +188,8 @@ _RET
 /**************************************************************/
 /**************************************************************/
 ev_pkwd_rec_select_poke:
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
+  _RET
 
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_08, SCWK_TARGET_OBJID, POS_DOWN )
   _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_PKWD_MENU )
@@ -192,7 +200,7 @@ ev_pkwd_rec_select_poke:
 
   SWITCH $LWK_PKWD_MENU
   CASE 0 THEN
-    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_POKELIST
   CASE 1 THEN
     $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
   DEFAULT
@@ -216,6 +224,13 @@ ev_pkwd_rec_shooting:
   
   $LWK_PKWD_SEQ = PKWD_REC_SEQ_END
   //$LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+_RET
+
+/**************************************************************/
+// ポケウッド：ポケモンリスト呼び出し
+/**************************************************************/
+ev_pkwd_rec_pokelist:
+  _PKWD_SELECT_POKEMON( SCWK_ANSWER )
 _RET
 
 /**************************************************************/

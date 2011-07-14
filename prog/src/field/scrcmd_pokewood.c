@@ -11,6 +11,7 @@
 #include "gflib.h"
 #include "system/gfl_use.h"
 #include "system/vm_cmd.h"
+#include "system/main.h"
 
 
 #include "script.h"
@@ -31,7 +32,8 @@
 #include "app/pkwd_book.h"  //PKWD_BOOK_PARAM
 #include "pokewood_setup.h" //PKWD_BOOK_PARAM_Create
 
-#include "battle/pokewood.h"
+#include "field/pokewood.h"
+#include "pokewood_system.h"
 #include "savedata/pokewood_rec.h"
 
 #include "msg/msg_pw_movietitle.h"
@@ -59,6 +61,62 @@ SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
 //-----------------------------------------------------------------------------
 //============================================================================================
 //============================================================================================
+
+//============================================================================================
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static PKWDSYS * getPOKEWOODSys( SCRCMD_WORK * work )
+{
+  GAMEDATA* gamedata    = SCRCMD_WORK_GetGameData( work );
+  PKWDSYS ** pkwdsys_work = GAMEDATA_GetPKWDSysPointer( gamedata );
+  if ( *pkwdsys_work == NULL )
+  {
+    OS_Printf("POKEWOODシステムが起動していません！！\n");
+    GF_ASSERT(0);
+  }
+  return *pkwdsys_work;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBTシステム開始
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodSystemStart( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work     = (SCRCMD_WORK*)wk;
+  GAMEDATA   * gamedata = SCRCMD_WORK_GetGameData( work );
+  PKWDSYS   ** pkwdsys_work;
+
+  MORI_Printf("EvCmdPKWDSystemStart\n");
+  pkwdsys_work = GAMEDATA_GetPKWDSysPointer( gamedata );
+  GF_ASSERT( *pkwdsys_work == NULL );
+  *pkwdsys_work = PKWDSYS_Create( HEAPID_PROC );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBTシステム終了
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodSystemEnd( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work     = (SCRCMD_WORK*)wk;
+  GAMEDATA   * gamedata = SCRCMD_WORK_GetGameData( work );
+  PKWDSYS   ** pkwdsys_work;
+
+  MORI_Printf("EvCmdPKWDSystemEnd\n");
+  pkwdsys_work = GAMEDATA_GetPKWDSysPointer( gamedata );
+  GF_ASSERT( *pkwdsys_work != NULL );
+  PKWDSYS_Delete( *pkwdsys_work );
+  *pkwdsys_work = NULL;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  スクリプトコマンド：ポケウッド録画アプリ呼び出し
@@ -66,10 +124,10 @@ SDK_COMPILER_ASSERT( SCR_PKWD_MOVIE_MAX == PKWD_REC_POS_MAX );
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodRec( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  SCRCMD_WORK * work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK * scw  = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GMEVENT * next_event;
+  GMEVENT     * next_event;
   POKEWOOD_EVENT_PARAM pw_param;
   u16* ret_wk;
   pw_param.type       = SCRCMD_GetVMWorkValue( core, work );
@@ -83,6 +141,32 @@ VMCMD_RESULT EvCmdPokewoodRec( VMHANDLE *core, void *wk )
   OS_Printf("EvCmdPokewoodRec( type = %d, scenario = %d\n", pw_param.type, pw_param.senario_no );
   return VMCMD_RESULT_SUSPEND;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：参加ポケモンを選択する
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPKWDSelectPokemon( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK  *work   = wk;
+  SCRIPT_WORK  *sc     = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys   = SCRIPT_GetGameSysWork( sc );
+  u16          *ret_wk = SCRCMD_GetVMWork( core, wk );
+  PKWDSYS       *pkwdsys = getPOKEWOODSys( wk );
+  GMEVENT      *event;
+
+  event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_EVENT_SetSelectPokeList, (void *)pkwdsys );
+  TAMADA_Printf("EvCmdPKWDSelectPokemon\n");
+  SCRIPT_CallEvent( sc, event );
+  PKWDSYS_SetScriptAnswerWork( pkwdsys, ret_wk );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
 
 //----------------------------------------------------------------------------
 /**

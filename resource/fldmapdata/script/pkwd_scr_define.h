@@ -14,7 +14,7 @@
 #define   PKWD_REC_SEQ_SELECT_SCENARIO   3
 #define   PKWD_REC_SEQ_SELECT_POKE       4
 #define   PKWD_REC_SEQ_SHOOTING          5
-#define   PKWD_REC_SEQ_GOODBYE           6
-
+#define   PKWD_REC_SEQ_POKELIST          6
+#define   PKWD_REC_SEQ_GOODBYE           7
 
 

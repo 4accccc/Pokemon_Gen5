@@ -1012,6 +1012,7 @@ SRCS_OVERLAY_SCRCMD_INFINITY_DUNGEON  = field/scrcmd_infinity_dungeon.c \
 #GROUP_OVERLAY_SCRCMD
 SRCS_OVERLAY_SCRCMD_POKEWOOD  =  field/scrcmd_pokewood.c \
                             field/scrcmd_pokewood_table.c \
+                            field/pokewood_system.c \
                             field/pokewood_setup.c
 
 # スクリプトコマンド並列化  バッジチェックゲート

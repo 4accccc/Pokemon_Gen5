@@ -15,7 +15,7 @@
 #include "event_fieldmap_control.h"
 #include "event_fldmmdl_control.h"
 //#include "poke_tool/poke_regulation.h"
-//#include "app/pokelist.h"
+#include "app/pokelist.h"
 //#include "app/p_status.h"
 //#include "app/leader_board.h"
 #include "poke_tool/poke_memo.h"
@@ -32,6 +32,7 @@
 #include "tr_tool/trtype_def.h"
 
 #include "savedata/save_tbl.h"
+#include "savedata/misc.h"
 
 #include "fieldmap.h"
 
@@ -40,6 +41,8 @@
 #define POKEWOOD_SCENEARIO_MAX POKEWOOD_SENARIO_MAX
 #endif
 
+#include "field/pokewood.h"
+#include "pokewood_system.h"
 #include "event_pokewood.h"
 //#include "event_debug_menu_ov_pokewood.h"
 
@@ -337,6 +340,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
   GFL_HEAP_FreeMemory( pp );
   bsp->PokewoodMode = BTL_POKEWOOD_REC;
   bsp->pokewoodSenario = senario_no; //仮
+//  bsp->DebugFlagBit = 1<<BTL_DEBUGFLAG_SKIP_BTLIN;
 
   OS_Printf("create BSP pokewood senario = %d\n", bsp->pokewoodSenario);
 
@@ -455,10 +459,15 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
   switch ( *seq )
   {
   case 0:
+    // 指定シナリオのプレイ済みフラグを立てる
+    {
+      MISC *misc = GAMEDATA_GetMiscWork(psew->gamedata);
+      MISC_SetPokewoodPlayedFlag( misc, psew->bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
+    }
+
     /**
      *  BATTLE_SETUP_PARAM の録画データセーブ開始
      */
-
     OS_Printf(" load pokewood player sex=%d\n ", MyStatus_GetMySex(psew->bsp->playerStatus[0]));
     BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
     // BATTLE_SETUP_PARAMを上映用のトレーナーデータに書き換える
@@ -955,3 +964,103 @@ static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_ad
   return GMEVENT_RES_CONTINUE ;
 }
 
+//============================================================================================
+//  PKWD　イベント　ポケモンリスト
+//============================================================================================
+//--------------------------------------------------------------
+/// ポケモンリスト選択イベント
+//--------------------------------------------------------------
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK *fieldmap;
+  PKWDSYS * pkwdsys;
+  
+  PSTATUS_DATA status_data;
+
+  PLIST_DATA list_data;
+  
+}EVENT_WORK_POKE_LIST;
+
+//--------------------------------------------------------------
+/**
+ * ポケモンリスト選択イベント
+ * @param event GMEVENT
+ * @param seq event sequence
+ * @param wk event work
+ * @retval GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_WORK_POKE_LIST *work = wk;
+  GAMESYS_WORK *gsys = work->gsys;
+  
+  switch( *seq )
+  {
+  case 0:
+		GMEVENT_CallEvent( event,
+        EVENT_FieldFadeOut_Black(gsys,work->fieldmap,FIELD_FADE_WAIT) );
+    (*seq)++;
+    break;
+  case 1:
+		GMEVENT_CallEvent( event, EVENT_FieldClose(gsys,work->fieldmap) );
+    (*seq)++;
+    break;
+  case 2:
+    GMEVENT_CallEvent( event, EVENT_PokeSelect(
+          gsys,work->fieldmap,&work->list_data,&work->status_data) );
+    (*seq)++;
+    break;
+  case 3:
+		GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
+    (*seq)++;
+    break;
+  case 4:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black(
+          gsys,work->fieldmap, FIELD_FADE_WAIT) );
+    (*seq)++;
+    break;
+  case 5:
+    PKWDSYS_SetPokelistResult( work->pkwdsys, &work->list_data );
+    return( GMEVENT_RES_FINISH );
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * ポケモンリスト選択イベント　呼び出し
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+GMEVENT * PKWD_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work )
+{
+  GMEVENT   *event;
+  GAMEDATA  *gamedata;
+  PKWDSYS   *pkwdsys;
+  POKEPARTY *pp;
+  FIELDMAP_WORK        *fieldmap;
+  EVENT_WORK_POKE_LIST *work;
+  
+  pkwdsys   = (PKWDSYS *)parent_work;
+  gamedata = GAMESYSTEM_GetGameData( gsys );
+  fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  
+  event = GMEVENT_Create( gsys, NULL,
+      ev_SelectPokeList, sizeof(EVENT_WORK_POKE_LIST) );
+  
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  work->fieldmap = fieldmap;
+  work->pkwdsys = pkwdsys;
+  
+  PKWDSYS_SetupPokeListData( pkwdsys, gamedata, &work->list_data );
+  
+  PKWDSYS_SetupPokeStatusData( pkwdsys, gamedata, &work->status_data );
+   
+  return( event );
+}

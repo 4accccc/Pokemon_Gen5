@@ -53,6 +53,7 @@
 #include "field/trial_house_ptr.h"
 #include "savedata/trainercard_data.h"
 #include "field/wbt.h"      //WBTSYS
+#include "field/pokewood.h" //PKWDSYS
 #include "savedata/wbt_save.h"  //WBTSAVE
 
 //============================================================================================
@@ -986,6 +987,16 @@ extern WBTSYS ** GAMEDATA_GetWBTSysPointer( GAMEDATA * gamedata );
  */
 //-----------------------------------------------------------------------------
 extern WBTSAVE * GAMEDATA_GetWBTSave( GAMEDATA * gamedata );
+
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief   POKEWOODのシステムワーク格納位置のポインタを取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  PKWDSYS **    POKEWOODのシステムワークのポインタ格納位置へのポインタ
+ */
+//-----------------------------------------------------------------------------
+PKWDSYS ** GAMEDATA_GetPKWDSysPointer( GAMEDATA * gamedata );
 
 //----------------------------------------------------------------------------
 /**
