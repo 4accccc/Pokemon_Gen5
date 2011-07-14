@@ -634,7 +634,7 @@
 #define FV_AREA_END                        899 /* 0x0383  */
 
 
-/* flags "" 900 ～ 1105 */
+/* flags "" 900 ～ 1137 */
 
 #define FLAG_HIDEITEM_AREA_START           900 /* 0x0384  */
 
@@ -844,1233 +844,1165 @@
 #define FLAG_HIDEITEM_203                 1103 /* 0x044f 領域確保による自動生成 */
 #define FLAG_HIDEITEM_204                 1104 /* 0x0450 領域確保による自動生成 */
 #define FLAG_HIDEITEM_205                 1105 /* 0x0451 領域確保による自動生成 */
+#define FLAG_HIDEITEM_206                 1106 /* 0x0452 領域確保による自動生成 */
+#define FLAG_HIDEITEM_207                 1107 /* 0x0453 領域確保による自動生成 */
+#define FLAG_HIDEITEM_208                 1108 /* 0x0454 領域確保による自動生成 */
+#define FLAG_HIDEITEM_209                 1109 /* 0x0455 領域確保による自動生成 */
+#define FLAG_HIDEITEM_210                 1110 /* 0x0456 領域確保による自動生成 */
+#define FLAG_HIDEITEM_211                 1111 /* 0x0457 領域確保による自動生成 */
+#define FLAG_HIDEITEM_212                 1112 /* 0x0458 領域確保による自動生成 */
+#define FLAG_HIDEITEM_213                 1113 /* 0x0459 領域確保による自動生成 */
+#define FLAG_HIDEITEM_214                 1114 /* 0x045a 領域確保による自動生成 */
+#define FLAG_HIDEITEM_215                 1115 /* 0x045b 領域確保による自動生成 */
+#define FLAG_HIDEITEM_216                 1116 /* 0x045c 領域確保による自動生成 */
+#define FLAG_HIDEITEM_217                 1117 /* 0x045d 領域確保による自動生成 */
+#define FLAG_HIDEITEM_218                 1118 /* 0x045e 領域確保による自動生成 */
+#define FLAG_HIDEITEM_219                 1119 /* 0x045f 領域確保による自動生成 */
+#define FLAG_HIDEITEM_220                 1120 /* 0x0460 領域確保による自動生成 */
+#define FLAG_HIDEITEM_221                 1121 /* 0x0461 領域確保による自動生成 */
+#define FLAG_HIDEITEM_222                 1122 /* 0x0462 領域確保による自動生成 */
+#define FLAG_HIDEITEM_223                 1123 /* 0x0463 領域確保による自動生成 */
+#define FLAG_HIDEITEM_224                 1124 /* 0x0464 領域確保による自動生成 */
+#define FLAG_HIDEITEM_225                 1125 /* 0x0465 領域確保による自動生成 */
+#define FLAG_HIDEITEM_226                 1126 /* 0x0466 領域確保による自動生成 */
+#define FLAG_HIDEITEM_227                 1127 /* 0x0467 領域確保による自動生成 */
+#define FLAG_HIDEITEM_228                 1128 /* 0x0468 領域確保による自動生成 */
+#define FLAG_HIDEITEM_229                 1129 /* 0x0469 領域確保による自動生成 */
+#define FLAG_HIDEITEM_230                 1130 /* 0x046a 領域確保による自動生成 */
+#define FLAG_HIDEITEM_231                 1131 /* 0x046b 領域確保による自動生成 */
+#define FLAG_HIDEITEM_232                 1132 /* 0x046c 領域確保による自動生成 */
+#define FLAG_HIDEITEM_233                 1133 /* 0x046d 領域確保による自動生成 */
+#define FLAG_HIDEITEM_234                 1134 /* 0x046e 領域確保による自動生成 */
+#define FLAG_HIDEITEM_235                 1135 /* 0x046f 領域確保による自動生成 */
+#define FLAG_HIDEITEM_236                 1136 /* 0x0470 領域確保による自動生成 */
+#define FLAG_HIDEITEM_237                 1137 /* 0x0471 領域確保による自動生成 */
 
-#define FLAG_HIDEITEM_AREA_END            1105 /* 0x0451  */
-
-
-/* flags "item_flag.xls" 1106 ～ 1411 */
-
-#define FV_FLD_ITEM_AREA_START            1106 /* 0x0452  */
-
-#define FV_FLD_ITEM_0                     1106 /* 0x0452  */
-#define FV_FLD_ITEM_1                     1107 /* 0x0453  */
-#define FV_FLD_ITEM_2                     1108 /* 0x0454  */
-#define FV_FLD_ITEM_3                     1109 /* 0x0455  */
-#define FV_FLD_ITEM_4                     1110 /* 0x0456  */
-#define FV_FLD_ITEM_5                     1111 /* 0x0457  */
-#define FV_FLD_ITEM_6                     1112 /* 0x0458  */
-#define FV_FLD_ITEM_7                     1113 /* 0x0459  */
-#define FV_FLD_ITEM_8                     1114 /* 0x045a  */
-#define FV_FLD_ITEM_9                     1115 /* 0x045b  */
-#define FV_FLD_ITEM_10                    1116 /* 0x045c  */
-#define FV_FLD_ITEM_11                    1117 /* 0x045d  */
-#define FV_FLD_ITEM_12                    1118 /* 0x045e  */
-#define FV_FLD_ITEM_13                    1119 /* 0x045f  */
-#define FV_FLD_ITEM_14                    1120 /* 0x0460  */
-#define FV_FLD_ITEM_15                    1121 /* 0x0461  */
-#define FV_FLD_ITEM_16                    1122 /* 0x0462  */
-#define FV_FLD_ITEM_17                    1123 /* 0x0463  */
-#define FV_FLD_ITEM_18                    1124 /* 0x0464  */
-#define FV_FLD_ITEM_19                    1125 /* 0x0465  */
-#define FV_FLD_ITEM_20                    1126 /* 0x0466  */
-#define FV_FLD_ITEM_21                    1127 /* 0x0467  */
-#define FV_FLD_ITEM_22                    1128 /* 0x0468  */
-#define FV_FLD_ITEM_23                    1129 /* 0x0469  */
-#define FV_FLD_ITEM_24                    1130 /* 0x046a  */
-#define FV_FLD_ITEM_25                    1131 /* 0x046b  */
-#define FV_FLD_ITEM_26                    1132 /* 0x046c  */
-#define FV_FLD_ITEM_27                    1133 /* 0x046d  */
-#define FV_FLD_ITEM_28                    1134 /* 0x046e  */
-#define FV_FLD_ITEM_29                    1135 /* 0x046f  */
-#define FV_FLD_ITEM_30                    1136 /* 0x0470  */
-#define FV_FLD_ITEM_31                    1137 /* 0x0471  */
-#define FV_FLD_ITEM_32                    1138 /* 0x0472  */
-#define FV_FLD_ITEM_33                    1139 /* 0x0473  */
-#define FV_FLD_ITEM_34                    1140 /* 0x0474  */
-#define FV_FLD_ITEM_35                    1141 /* 0x0475  */
-#define FV_FLD_ITEM_36                    1142 /* 0x0476  */
-#define FV_FLD_ITEM_37                    1143 /* 0x0477  */
-#define FV_FLD_ITEM_38                    1144 /* 0x0478  */
-#define FV_FLD_ITEM_39                    1145 /* 0x0479  */
-#define FV_FLD_ITEM_40                    1146 /* 0x047a  */
-#define FV_FLD_ITEM_41                    1147 /* 0x047b  */
-#define FV_FLD_ITEM_42                    1148 /* 0x047c  */
-#define FV_FLD_ITEM_43                    1149 /* 0x047d  */
-#define FV_FLD_ITEM_44                    1150 /* 0x047e  */
-#define FV_FLD_ITEM_45                    1151 /* 0x047f  */
-#define FV_FLD_ITEM_46                    1152 /* 0x0480  */
-#define FV_FLD_ITEM_47                    1153 /* 0x0481  */
-#define FV_FLD_ITEM_48                    1154 /* 0x0482  */
-#define FV_FLD_ITEM_49                    1155 /* 0x0483  */
-#define FV_FLD_ITEM_50                    1156 /* 0x0484  */
-#define FV_FLD_ITEM_51                    1157 /* 0x0485  */
-#define FV_FLD_ITEM_52                    1158 /* 0x0486  */
-#define FV_FLD_ITEM_53                    1159 /* 0x0487  */
-#define FV_FLD_ITEM_54                    1160 /* 0x0488  */
-#define FV_FLD_ITEM_55                    1161 /* 0x0489  */
-#define FV_FLD_ITEM_56                    1162 /* 0x048a  */
-#define FV_FLD_ITEM_57                    1163 /* 0x048b  */
-#define FV_FLD_ITEM_58                    1164 /* 0x048c  */
-#define FV_FLD_ITEM_59                    1165 /* 0x048d  */
-#define FV_FLD_ITEM_60                    1166 /* 0x048e  */
-#define FV_FLD_ITEM_61                    1167 /* 0x048f  */
-#define FV_FLD_ITEM_62                    1168 /* 0x0490  */
-#define FV_FLD_ITEM_63                    1169 /* 0x0491  */
-#define FV_FLD_ITEM_64                    1170 /* 0x0492  */
-#define FV_FLD_ITEM_65                    1171 /* 0x0493  */
-#define FV_FLD_ITEM_66                    1172 /* 0x0494  */
-#define FV_FLD_ITEM_67                    1173 /* 0x0495  */
-#define FV_FLD_ITEM_68                    1174 /* 0x0496  */
-#define FV_FLD_ITEM_69                    1175 /* 0x0497  */
-#define FV_FLD_ITEM_70                    1176 /* 0x0498  */
-#define FV_FLD_ITEM_71                    1177 /* 0x0499  */
-#define FV_FLD_ITEM_72                    1178 /* 0x049a  */
-#define FV_FLD_ITEM_73                    1179 /* 0x049b  */
-#define FV_FLD_ITEM_74                    1180 /* 0x049c  */
-#define FV_FLD_ITEM_75                    1181 /* 0x049d  */
-#define FV_FLD_ITEM_76                    1182 /* 0x049e  */
-#define FV_FLD_ITEM_77                    1183 /* 0x049f  */
-#define FV_FLD_ITEM_78                    1184 /* 0x04a0  */
-#define FV_FLD_ITEM_79                    1185 /* 0x04a1  */
-#define FV_FLD_ITEM_80                    1186 /* 0x04a2  */
-#define FV_FLD_ITEM_81                    1187 /* 0x04a3  */
-#define FV_FLD_ITEM_82                    1188 /* 0x04a4  */
-#define FV_FLD_ITEM_83                    1189 /* 0x04a5  */
-#define FV_FLD_ITEM_84                    1190 /* 0x04a6  */
-#define FV_FLD_ITEM_85                    1191 /* 0x04a7  */
-#define FV_FLD_ITEM_86                    1192 /* 0x04a8  */
-#define FV_FLD_ITEM_87                    1193 /* 0x04a9  */
-#define FV_FLD_ITEM_88                    1194 /* 0x04aa  */
-#define FV_FLD_ITEM_89                    1195 /* 0x04ab  */
-#define FV_FLD_ITEM_90                    1196 /* 0x04ac  */
-#define FV_FLD_ITEM_91                    1197 /* 0x04ad  */
-#define FV_FLD_ITEM_92                    1198 /* 0x04ae  */
-#define FV_FLD_ITEM_93                    1199 /* 0x04af  */
-#define FV_FLD_ITEM_94                    1200 /* 0x04b0  */
-#define FV_FLD_ITEM_95                    1201 /* 0x04b1  */
-#define FV_FLD_ITEM_96                    1202 /* 0x04b2  */
-#define FV_FLD_ITEM_97                    1203 /* 0x04b3  */
-#define FV_FLD_ITEM_98                    1204 /* 0x04b4  */
-#define FV_FLD_ITEM_99                    1205 /* 0x04b5  */
-#define FV_FLD_ITEM_100                   1206 /* 0x04b6  */
-#define FV_FLD_ITEM_101                   1207 /* 0x04b7  */
-#define FV_FLD_ITEM_102                   1208 /* 0x04b8  */
-#define FV_FLD_ITEM_103                   1209 /* 0x04b9  */
-#define FV_FLD_ITEM_104                   1210 /* 0x04ba  */
-#define FV_FLD_ITEM_105                   1211 /* 0x04bb  */
-#define FV_FLD_ITEM_106                   1212 /* 0x04bc  */
-#define FV_FLD_ITEM_107                   1213 /* 0x04bd  */
-#define FV_FLD_ITEM_108                   1214 /* 0x04be  */
-#define FV_FLD_ITEM_109                   1215 /* 0x04bf  */
-#define FV_FLD_ITEM_110                   1216 /* 0x04c0  */
-#define FV_FLD_ITEM_111                   1217 /* 0x04c1  */
-#define FV_FLD_ITEM_112                   1218 /* 0x04c2  */
-#define FV_FLD_ITEM_113                   1219 /* 0x04c3  */
-#define FV_FLD_ITEM_114                   1220 /* 0x04c4  */
-#define FV_FLD_ITEM_115                   1221 /* 0x04c5  */
-#define FV_FLD_ITEM_116                   1222 /* 0x04c6  */
-#define FV_FLD_ITEM_117                   1223 /* 0x04c7  */
-#define FV_FLD_ITEM_118                   1224 /* 0x04c8  */
-#define FV_FLD_ITEM_119                   1225 /* 0x04c9  */
-#define FV_FLD_ITEM_120                   1226 /* 0x04ca  */
-#define FV_FLD_ITEM_121                   1227 /* 0x04cb  */
-#define FV_FLD_ITEM_122                   1228 /* 0x04cc  */
-#define FV_FLD_ITEM_123                   1229 /* 0x04cd  */
-#define FV_FLD_ITEM_124                   1230 /* 0x04ce  */
-#define FV_FLD_ITEM_125                   1231 /* 0x04cf  */
-#define FV_FLD_ITEM_126                   1232 /* 0x04d0  */
-#define FV_FLD_ITEM_127                   1233 /* 0x04d1  */
-#define FV_FLD_ITEM_128                   1234 /* 0x04d2  */
-#define FV_FLD_ITEM_129                   1235 /* 0x04d3  */
-#define FV_FLD_ITEM_130                   1236 /* 0x04d4  */
-#define FV_FLD_ITEM_131                   1237 /* 0x04d5  */
-#define FV_FLD_ITEM_132                   1238 /* 0x04d6  */
-#define FV_FLD_ITEM_133                   1239 /* 0x04d7  */
-#define FV_FLD_ITEM_134                   1240 /* 0x04d8  */
-#define FV_FLD_ITEM_135                   1241 /* 0x04d9  */
-#define FV_FLD_ITEM_136                   1242 /* 0x04da  */
-#define FV_FLD_ITEM_137                   1243 /* 0x04db  */
-#define FV_FLD_ITEM_138                   1244 /* 0x04dc  */
-#define FV_FLD_ITEM_139                   1245 /* 0x04dd  */
-#define FV_FLD_ITEM_140                   1246 /* 0x04de  */
-#define FV_FLD_ITEM_141                   1247 /* 0x04df  */
-#define FV_FLD_ITEM_142                   1248 /* 0x04e0  */
-#define FV_FLD_ITEM_143                   1249 /* 0x04e1  */
-#define FV_FLD_ITEM_144                   1250 /* 0x04e2  */
-#define FV_FLD_ITEM_145                   1251 /* 0x04e3  */
-#define FV_FLD_ITEM_146                   1252 /* 0x04e4  */
-#define FV_FLD_ITEM_147                   1253 /* 0x04e5  */
-#define FV_FLD_ITEM_148                   1254 /* 0x04e6  */
-#define FV_FLD_ITEM_149                   1255 /* 0x04e7  */
-#define FV_FLD_ITEM_150                   1256 /* 0x04e8  */
-#define FV_FLD_ITEM_151                   1257 /* 0x04e9  */
-#define FV_FLD_ITEM_152                   1258 /* 0x04ea  */
-#define FV_FLD_ITEM_153                   1259 /* 0x04eb  */
-#define FV_FLD_ITEM_154                   1260 /* 0x04ec  */
-#define FV_FLD_ITEM_155                   1261 /* 0x04ed  */
-#define FV_FLD_ITEM_156                   1262 /* 0x04ee  */
-#define FV_FLD_ITEM_157                   1263 /* 0x04ef  */
-#define FV_FLD_ITEM_158                   1264 /* 0x04f0  */
-#define FV_FLD_ITEM_159                   1265 /* 0x04f1  */
-#define FV_FLD_ITEM_160                   1266 /* 0x04f2  */
-#define FV_FLD_ITEM_161                   1267 /* 0x04f3  */
-#define FV_FLD_ITEM_162                   1268 /* 0x04f4  */
-#define FV_FLD_ITEM_163                   1269 /* 0x04f5  */
-#define FV_FLD_ITEM_164                   1270 /* 0x04f6  */
-#define FV_FLD_ITEM_165                   1271 /* 0x04f7  */
-#define FV_FLD_ITEM_166                   1272 /* 0x04f8  */
-#define FV_FLD_ITEM_167                   1273 /* 0x04f9  */
-#define FV_FLD_ITEM_168                   1274 /* 0x04fa  */
-#define FV_FLD_ITEM_169                   1275 /* 0x04fb  */
-#define FV_FLD_ITEM_170                   1276 /* 0x04fc  */
-#define FV_FLD_ITEM_171                   1277 /* 0x04fd  */
-#define FV_FLD_ITEM_172                   1278 /* 0x04fe  */
-#define FV_FLD_ITEM_173                   1279 /* 0x04ff  */
-#define FV_FLD_ITEM_174                   1280 /* 0x0500  */
-#define FV_FLD_ITEM_175                   1281 /* 0x0501  */
-#define FV_FLD_ITEM_176                   1282 /* 0x0502  */
-#define FV_FLD_ITEM_177                   1283 /* 0x0503  */
-#define FV_FLD_ITEM_178                   1284 /* 0x0504  */
-#define FV_FLD_ITEM_179                   1285 /* 0x0505  */
-#define FV_FLD_ITEM_180                   1286 /* 0x0506  */
-#define FV_FLD_ITEM_181                   1287 /* 0x0507  */
-#define FV_FLD_ITEM_182                   1288 /* 0x0508  */
-#define FV_FLD_ITEM_183                   1289 /* 0x0509  */
-#define FV_FLD_ITEM_184                   1290 /* 0x050a  */
-#define FV_FLD_ITEM_185                   1291 /* 0x050b  */
-#define FV_FLD_ITEM_186                   1292 /* 0x050c  */
-#define FV_FLD_ITEM_187                   1293 /* 0x050d  */
-#define FV_FLD_ITEM_188                   1294 /* 0x050e  */
-#define FV_FLD_ITEM_189                   1295 /* 0x050f  */
-#define FV_FLD_ITEM_190                   1296 /* 0x0510  */
-#define FV_FLD_ITEM_191                   1297 /* 0x0511  */
-#define FV_FLD_ITEM_192                   1298 /* 0x0512  */
-#define FV_FLD_ITEM_193                   1299 /* 0x0513  */
-#define FV_FLD_ITEM_194                   1300 /* 0x0514  */
-#define FV_FLD_ITEM_195                   1301 /* 0x0515  */
-#define FV_FLD_ITEM_196                   1302 /* 0x0516  */
-#define FV_FLD_ITEM_197                   1303 /* 0x0517  */
-#define FV_FLD_ITEM_198                   1304 /* 0x0518  */
-#define FV_FLD_ITEM_199                   1305 /* 0x0519  */
-#define FV_FLD_ITEM_200                   1306 /* 0x051a  */
-#define FV_FLD_ITEM_201                   1307 /* 0x051b  */
-#define FV_FLD_ITEM_202                   1308 /* 0x051c  */
-#define FV_FLD_ITEM_203                   1309 /* 0x051d  */
-#define FV_FLD_ITEM_204                   1310 /* 0x051e  */
-#define FV_FLD_ITEM_205                   1311 /* 0x051f  */
-#define FV_FLD_ITEM_206                   1312 /* 0x0520  */
-#define FV_FLD_ITEM_207                   1313 /* 0x0521  */
-#define FV_FLD_ITEM_208                   1314 /* 0x0522  */
-#define FV_FLD_ITEM_209                   1315 /* 0x0523  */
-#define FV_FLD_ITEM_210                   1316 /* 0x0524  */
-#define FV_FLD_ITEM_211                   1317 /* 0x0525  */
-#define FV_FLD_ITEM_212                   1318 /* 0x0526  */
-#define FV_FLD_ITEM_213                   1319 /* 0x0527  */
-#define FV_FLD_ITEM_214                   1320 /* 0x0528  */
-#define FV_FLD_ITEM_215                   1321 /* 0x0529  */
-#define FV_FLD_ITEM_216                   1322 /* 0x052a  */
-#define FV_FLD_ITEM_217                   1323 /* 0x052b  */
-#define FV_FLD_ITEM_218                   1324 /* 0x052c  */
-#define FV_FLD_ITEM_219                   1325 /* 0x052d  */
-#define FV_FLD_ITEM_220                   1326 /* 0x052e  */
-#define FV_FLD_ITEM_221                   1327 /* 0x052f  */
-#define FV_FLD_ITEM_222                   1328 /* 0x0530  */
-#define FV_FLD_ITEM_223                   1329 /* 0x0531  */
-#define FV_FLD_ITEM_224                   1330 /* 0x0532  */
-#define FV_FLD_ITEM_225                   1331 /* 0x0533  */
-#define FV_FLD_ITEM_226                   1332 /* 0x0534  */
-#define FV_FLD_ITEM_227                   1333 /* 0x0535  */
-#define FV_FLD_ITEM_228                   1334 /* 0x0536  */
-#define FV_FLD_ITEM_229                   1335 /* 0x0537  */
-#define FV_FLD_ITEM_230                   1336 /* 0x0538  */
-#define FV_FLD_ITEM_231                   1337 /* 0x0539  */
-#define FV_FLD_ITEM_232                   1338 /* 0x053a  */
-#define FV_FLD_ITEM_233                   1339 /* 0x053b  */
-#define FV_FLD_ITEM_234                   1340 /* 0x053c  */
-#define FV_FLD_ITEM_235                   1341 /* 0x053d  */
-#define FV_FLD_ITEM_236                   1342 /* 0x053e  */
-#define FV_FLD_ITEM_237                   1343 /* 0x053f  */
-#define FV_FLD_ITEM_238                   1344 /* 0x0540  */
-#define FV_FLD_ITEM_239                   1345 /* 0x0541  */
-#define FV_FLD_ITEM_240                   1346 /* 0x0542  */
-#define FV_FLD_ITEM_241                   1347 /* 0x0543  */
-#define FV_FLD_ITEM_242                   1348 /* 0x0544  */
-#define FV_FLD_ITEM_243                   1349 /* 0x0545  */
-#define FV_FLD_ITEM_244                   1350 /* 0x0546  */
-#define FV_FLD_ITEM_245                   1351 /* 0x0547  */
-#define FV_FLD_ITEM_246                   1352 /* 0x0548  */
-#define FV_FLD_ITEM_247                   1353 /* 0x0549  */
-#define FV_FLD_ITEM_248                   1354 /* 0x054a  */
-#define FV_FLD_ITEM_249                   1355 /* 0x054b  */
-#define FV_FLD_ITEM_250                   1356 /* 0x054c  */
-#define FV_FLD_ITEM_251                   1357 /* 0x054d  */
-#define FV_FLD_ITEM_252                   1358 /* 0x054e  */
-#define FV_FLD_ITEM_253                   1359 /* 0x054f  */
-#define FV_FLD_ITEM_254                   1360 /* 0x0550  */
-#define FV_FLD_ITEM_255                   1361 /* 0x0551  */
-#define FV_FLD_ITEM_256                   1362 /* 0x0552  */
-#define FV_FLD_ITEM_257                   1363 /* 0x0553  */
-#define FV_FLD_ITEM_258                   1364 /* 0x0554  */
-#define FV_FLD_ITEM_259                   1365 /* 0x0555  */
-#define FV_FLD_ITEM_260                   1366 /* 0x0556  */
-#define FV_FLD_ITEM_261                   1367 /* 0x0557  */
-#define FV_FLD_ITEM_262                   1368 /* 0x0558  */
-#define FV_FLD_ITEM_263                   1369 /* 0x0559  */
-#define FV_FLD_ITEM_264                   1370 /* 0x055a  */
-#define FV_FLD_ITEM_265                   1371 /* 0x055b  */
-#define FV_FLD_ITEM_266                   1372 /* 0x055c  */
-#define FV_FLD_ITEM_267                   1373 /* 0x055d  */
-#define FV_FLD_ITEM_268                   1374 /* 0x055e  */
-#define FV_FLD_ITEM_269                   1375 /* 0x055f  */
-#define FV_FLD_ITEM_270                   1376 /* 0x0560  */
-#define FV_FLD_ITEM_271                   1377 /* 0x0561  */
-#define FV_FLD_ITEM_272                   1378 /* 0x0562  */
-#define FV_FLD_ITEM_273                   1379 /* 0x0563  */
-#define FV_FLD_ITEM_274                   1380 /* 0x0564  */
-#define FV_FLD_ITEM_275                   1381 /* 0x0565  */
-#define FV_FLD_ITEM_276                   1382 /* 0x0566  */
-#define FV_FLD_ITEM_277                   1383 /* 0x0567  */
-#define FV_FLD_ITEM_278                   1384 /* 0x0568  */
-#define FV_FLD_ITEM_279                   1385 /* 0x0569  */
-#define FV_FLD_ITEM_280                   1386 /* 0x056a  */
-#define FV_FLD_ITEM_281                   1387 /* 0x056b  */
-#define FV_FLD_ITEM_282                   1388 /* 0x056c  */
-#define FV_FLD_ITEM_283                   1389 /* 0x056d  */
-#define FV_FLD_ITEM_284                   1390 /* 0x056e  */
-#define FV_FLD_ITEM_285                   1391 /* 0x056f  */
-#define FV_FLD_ITEM_286                   1392 /* 0x0570  */
-#define FV_FLD_ITEM_287                   1393 /* 0x0571  */
-#define FV_FLD_ITEM_288                   1394 /* 0x0572  */
-#define FV_FLD_ITEM_289                   1395 /* 0x0573  */
-#define FV_FLD_ITEM_290                   1396 /* 0x0574  */
-#define FV_FLD_ITEM_291                   1397 /* 0x0575  */
-#define FV_FLD_ITEM_292                   1398 /* 0x0576  */
-#define FV_FLD_ITEM_293                   1399 /* 0x0577  */
-#define FV_FLD_ITEM_294                   1400 /* 0x0578  */
-#define FV_FLD_ITEM_295                   1401 /* 0x0579  */
-#define FV_FLD_ITEM_296                   1402 /* 0x057a  */
-#define FV_FLD_ITEM_297                   1403 /* 0x057b  */
-#define FV_FLD_ITEM_298                   1404 /* 0x057c  */
-#define FV_FLD_ITEM_299                   1405 /* 0x057d  */
-#define FV_FLD_ITEM_300                   1406 /* 0x057e  */
-#define FV_FLD_ITEM_301                   1407 /* 0x057f  */
-#define FV_FLD_ITEM_302                   1408 /* 0x0580  */
-#define FV_FLD_ITEM_303                   1409 /* 0x0581  */
-#define FV_FLD_ITEM_304                   1410 /* 0x0582  */
-#define FV_FLD_ITEM_305                   1411 /* 0x0583  */
-
-#define FV_FLD_ITEM_AREA_END              1411 /* 0x0583  */
+#define FLAG_HIDEITEM_AREA_END            1137 /* 0x0471  */
 
 
-/* flags "" 1420 ～ 2319 */
+/* flags "item_flag.xls" 1138 ～ 1507 */
 
-#define TR_FLAG_AREA_START                1420 /* 0x058c  */
+#define FV_FLD_ITEM_AREA_START            1138 /* 0x0472  */
 
-#define TR_FLAG_000                       1420 /* 0x058c 領域確保による自動生成 */
-#define TR_FLAG_001                       1421 /* 0x058d 領域確保による自動生成 */
-#define TR_FLAG_002                       1422 /* 0x058e 領域確保による自動生成 */
-#define TR_FLAG_003                       1423 /* 0x058f 領域確保による自動生成 */
-#define TR_FLAG_004                       1424 /* 0x0590 領域確保による自動生成 */
-#define TR_FLAG_005                       1425 /* 0x0591 領域確保による自動生成 */
-#define TR_FLAG_006                       1426 /* 0x0592 領域確保による自動生成 */
-#define TR_FLAG_007                       1427 /* 0x0593 領域確保による自動生成 */
-#define TR_FLAG_008                       1428 /* 0x0594 領域確保による自動生成 */
-#define TR_FLAG_009                       1429 /* 0x0595 領域確保による自動生成 */
-#define TR_FLAG_010                       1430 /* 0x0596 領域確保による自動生成 */
-#define TR_FLAG_011                       1431 /* 0x0597 領域確保による自動生成 */
-#define TR_FLAG_012                       1432 /* 0x0598 領域確保による自動生成 */
-#define TR_FLAG_013                       1433 /* 0x0599 領域確保による自動生成 */
-#define TR_FLAG_014                       1434 /* 0x059a 領域確保による自動生成 */
-#define TR_FLAG_015                       1435 /* 0x059b 領域確保による自動生成 */
-#define TR_FLAG_016                       1436 /* 0x059c 領域確保による自動生成 */
-#define TR_FLAG_017                       1437 /* 0x059d 領域確保による自動生成 */
-#define TR_FLAG_018                       1438 /* 0x059e 領域確保による自動生成 */
-#define TR_FLAG_019                       1439 /* 0x059f 領域確保による自動生成 */
-#define TR_FLAG_020                       1440 /* 0x05a0 領域確保による自動生成 */
-#define TR_FLAG_021                       1441 /* 0x05a1 領域確保による自動生成 */
-#define TR_FLAG_022                       1442 /* 0x05a2 領域確保による自動生成 */
-#define TR_FLAG_023                       1443 /* 0x05a3 領域確保による自動生成 */
-#define TR_FLAG_024                       1444 /* 0x05a4 領域確保による自動生成 */
-#define TR_FLAG_025                       1445 /* 0x05a5 領域確保による自動生成 */
-#define TR_FLAG_026                       1446 /* 0x05a6 領域確保による自動生成 */
-#define TR_FLAG_027                       1447 /* 0x05a7 領域確保による自動生成 */
-#define TR_FLAG_028                       1448 /* 0x05a8 領域確保による自動生成 */
-#define TR_FLAG_029                       1449 /* 0x05a9 領域確保による自動生成 */
-#define TR_FLAG_030                       1450 /* 0x05aa 領域確保による自動生成 */
-#define TR_FLAG_031                       1451 /* 0x05ab 領域確保による自動生成 */
-#define TR_FLAG_032                       1452 /* 0x05ac 領域確保による自動生成 */
-#define TR_FLAG_033                       1453 /* 0x05ad 領域確保による自動生成 */
-#define TR_FLAG_034                       1454 /* 0x05ae 領域確保による自動生成 */
-#define TR_FLAG_035                       1455 /* 0x05af 領域確保による自動生成 */
-#define TR_FLAG_036                       1456 /* 0x05b0 領域確保による自動生成 */
-#define TR_FLAG_037                       1457 /* 0x05b1 領域確保による自動生成 */
-#define TR_FLAG_038                       1458 /* 0x05b2 領域確保による自動生成 */
-#define TR_FLAG_039                       1459 /* 0x05b3 領域確保による自動生成 */
-#define TR_FLAG_040                       1460 /* 0x05b4 領域確保による自動生成 */
-#define TR_FLAG_041                       1461 /* 0x05b5 領域確保による自動生成 */
-#define TR_FLAG_042                       1462 /* 0x05b6 領域確保による自動生成 */
-#define TR_FLAG_043                       1463 /* 0x05b7 領域確保による自動生成 */
-#define TR_FLAG_044                       1464 /* 0x05b8 領域確保による自動生成 */
-#define TR_FLAG_045                       1465 /* 0x05b9 領域確保による自動生成 */
-#define TR_FLAG_046                       1466 /* 0x05ba 領域確保による自動生成 */
-#define TR_FLAG_047                       1467 /* 0x05bb 領域確保による自動生成 */
-#define TR_FLAG_048                       1468 /* 0x05bc 領域確保による自動生成 */
-#define TR_FLAG_049                       1469 /* 0x05bd 領域確保による自動生成 */
-#define TR_FLAG_050                       1470 /* 0x05be 領域確保による自動生成 */
-#define TR_FLAG_051                       1471 /* 0x05bf 領域確保による自動生成 */
-#define TR_FLAG_052                       1472 /* 0x05c0 領域確保による自動生成 */
-#define TR_FLAG_053                       1473 /* 0x05c1 領域確保による自動生成 */
-#define TR_FLAG_054                       1474 /* 0x05c2 領域確保による自動生成 */
-#define TR_FLAG_055                       1475 /* 0x05c3 領域確保による自動生成 */
-#define TR_FLAG_056                       1476 /* 0x05c4 領域確保による自動生成 */
-#define TR_FLAG_057                       1477 /* 0x05c5 領域確保による自動生成 */
-#define TR_FLAG_058                       1478 /* 0x05c6 領域確保による自動生成 */
-#define TR_FLAG_059                       1479 /* 0x05c7 領域確保による自動生成 */
-#define TR_FLAG_060                       1480 /* 0x05c8 領域確保による自動生成 */
-#define TR_FLAG_061                       1481 /* 0x05c9 領域確保による自動生成 */
-#define TR_FLAG_062                       1482 /* 0x05ca 領域確保による自動生成 */
-#define TR_FLAG_063                       1483 /* 0x05cb 領域確保による自動生成 */
-#define TR_FLAG_064                       1484 /* 0x05cc 領域確保による自動生成 */
-#define TR_FLAG_065                       1485 /* 0x05cd 領域確保による自動生成 */
-#define TR_FLAG_066                       1486 /* 0x05ce 領域確保による自動生成 */
-#define TR_FLAG_067                       1487 /* 0x05cf 領域確保による自動生成 */
-#define TR_FLAG_068                       1488 /* 0x05d0 領域確保による自動生成 */
-#define TR_FLAG_069                       1489 /* 0x05d1 領域確保による自動生成 */
-#define TR_FLAG_070                       1490 /* 0x05d2 領域確保による自動生成 */
-#define TR_FLAG_071                       1491 /* 0x05d3 領域確保による自動生成 */
-#define TR_FLAG_072                       1492 /* 0x05d4 領域確保による自動生成 */
-#define TR_FLAG_073                       1493 /* 0x05d5 領域確保による自動生成 */
-#define TR_FLAG_074                       1494 /* 0x05d6 領域確保による自動生成 */
-#define TR_FLAG_075                       1495 /* 0x05d7 領域確保による自動生成 */
-#define TR_FLAG_076                       1496 /* 0x05d8 領域確保による自動生成 */
-#define TR_FLAG_077                       1497 /* 0x05d9 領域確保による自動生成 */
-#define TR_FLAG_078                       1498 /* 0x05da 領域確保による自動生成 */
-#define TR_FLAG_079                       1499 /* 0x05db 領域確保による自動生成 */
-#define TR_FLAG_080                       1500 /* 0x05dc 領域確保による自動生成 */
-#define TR_FLAG_081                       1501 /* 0x05dd 領域確保による自動生成 */
-#define TR_FLAG_082                       1502 /* 0x05de 領域確保による自動生成 */
-#define TR_FLAG_083                       1503 /* 0x05df 領域確保による自動生成 */
-#define TR_FLAG_084                       1504 /* 0x05e0 領域確保による自動生成 */
-#define TR_FLAG_085                       1505 /* 0x05e1 領域確保による自動生成 */
-#define TR_FLAG_086                       1506 /* 0x05e2 領域確保による自動生成 */
-#define TR_FLAG_087                       1507 /* 0x05e3 領域確保による自動生成 */
-#define TR_FLAG_088                       1508 /* 0x05e4 領域確保による自動生成 */
-#define TR_FLAG_089                       1509 /* 0x05e5 領域確保による自動生成 */
-#define TR_FLAG_090                       1510 /* 0x05e6 領域確保による自動生成 */
-#define TR_FLAG_091                       1511 /* 0x05e7 領域確保による自動生成 */
-#define TR_FLAG_092                       1512 /* 0x05e8 領域確保による自動生成 */
-#define TR_FLAG_093                       1513 /* 0x05e9 領域確保による自動生成 */
-#define TR_FLAG_094                       1514 /* 0x05ea 領域確保による自動生成 */
-#define TR_FLAG_095                       1515 /* 0x05eb 領域確保による自動生成 */
-#define TR_FLAG_096                       1516 /* 0x05ec 領域確保による自動生成 */
-#define TR_FLAG_097                       1517 /* 0x05ed 領域確保による自動生成 */
-#define TR_FLAG_098                       1518 /* 0x05ee 領域確保による自動生成 */
-#define TR_FLAG_099                       1519 /* 0x05ef 領域確保による自動生成 */
-#define TR_FLAG_100                       1520 /* 0x05f0 領域確保による自動生成 */
-#define TR_FLAG_101                       1521 /* 0x05f1 領域確保による自動生成 */
-#define TR_FLAG_102                       1522 /* 0x05f2 領域確保による自動生成 */
-#define TR_FLAG_103                       1523 /* 0x05f3 領域確保による自動生成 */
-#define TR_FLAG_104                       1524 /* 0x05f4 領域確保による自動生成 */
-#define TR_FLAG_105                       1525 /* 0x05f5 領域確保による自動生成 */
-#define TR_FLAG_106                       1526 /* 0x05f6 領域確保による自動生成 */
-#define TR_FLAG_107                       1527 /* 0x05f7 領域確保による自動生成 */
-#define TR_FLAG_108                       1528 /* 0x05f8 領域確保による自動生成 */
-#define TR_FLAG_109                       1529 /* 0x05f9 領域確保による自動生成 */
-#define TR_FLAG_110                       1530 /* 0x05fa 領域確保による自動生成 */
-#define TR_FLAG_111                       1531 /* 0x05fb 領域確保による自動生成 */
-#define TR_FLAG_112                       1532 /* 0x05fc 領域確保による自動生成 */
-#define TR_FLAG_113                       1533 /* 0x05fd 領域確保による自動生成 */
-#define TR_FLAG_114                       1534 /* 0x05fe 領域確保による自動生成 */
-#define TR_FLAG_115                       1535 /* 0x05ff 領域確保による自動生成 */
-#define TR_FLAG_116                       1536 /* 0x0600 領域確保による自動生成 */
-#define TR_FLAG_117                       1537 /* 0x0601 領域確保による自動生成 */
-#define TR_FLAG_118                       1538 /* 0x0602 領域確保による自動生成 */
-#define TR_FLAG_119                       1539 /* 0x0603 領域確保による自動生成 */
-#define TR_FLAG_120                       1540 /* 0x0604 領域確保による自動生成 */
-#define TR_FLAG_121                       1541 /* 0x0605 領域確保による自動生成 */
-#define TR_FLAG_122                       1542 /* 0x0606 領域確保による自動生成 */
-#define TR_FLAG_123                       1543 /* 0x0607 領域確保による自動生成 */
-#define TR_FLAG_124                       1544 /* 0x0608 領域確保による自動生成 */
-#define TR_FLAG_125                       1545 /* 0x0609 領域確保による自動生成 */
-#define TR_FLAG_126                       1546 /* 0x060a 領域確保による自動生成 */
-#define TR_FLAG_127                       1547 /* 0x060b 領域確保による自動生成 */
-#define TR_FLAG_128                       1548 /* 0x060c 領域確保による自動生成 */
-#define TR_FLAG_129                       1549 /* 0x060d 領域確保による自動生成 */
-#define TR_FLAG_130                       1550 /* 0x060e 領域確保による自動生成 */
-#define TR_FLAG_131                       1551 /* 0x060f 領域確保による自動生成 */
-#define TR_FLAG_132                       1552 /* 0x0610 領域確保による自動生成 */
-#define TR_FLAG_133                       1553 /* 0x0611 領域確保による自動生成 */
-#define TR_FLAG_134                       1554 /* 0x0612 領域確保による自動生成 */
-#define TR_FLAG_135                       1555 /* 0x0613 領域確保による自動生成 */
-#define TR_FLAG_136                       1556 /* 0x0614 領域確保による自動生成 */
-#define TR_FLAG_137                       1557 /* 0x0615 領域確保による自動生成 */
-#define TR_FLAG_138                       1558 /* 0x0616 領域確保による自動生成 */
-#define TR_FLAG_139                       1559 /* 0x0617 領域確保による自動生成 */
-#define TR_FLAG_140                       1560 /* 0x0618 領域確保による自動生成 */
-#define TR_FLAG_141                       1561 /* 0x0619 領域確保による自動生成 */
-#define TR_FLAG_142                       1562 /* 0x061a 領域確保による自動生成 */
-#define TR_FLAG_143                       1563 /* 0x061b 領域確保による自動生成 */
-#define TR_FLAG_144                       1564 /* 0x061c 領域確保による自動生成 */
-#define TR_FLAG_145                       1565 /* 0x061d 領域確保による自動生成 */
-#define TR_FLAG_146                       1566 /* 0x061e 領域確保による自動生成 */
-#define TR_FLAG_147                       1567 /* 0x061f 領域確保による自動生成 */
-#define TR_FLAG_148                       1568 /* 0x0620 領域確保による自動生成 */
-#define TR_FLAG_149                       1569 /* 0x0621 領域確保による自動生成 */
-#define TR_FLAG_150                       1570 /* 0x0622 領域確保による自動生成 */
-#define TR_FLAG_151                       1571 /* 0x0623 領域確保による自動生成 */
-#define TR_FLAG_152                       1572 /* 0x0624 領域確保による自動生成 */
-#define TR_FLAG_153                       1573 /* 0x0625 領域確保による自動生成 */
-#define TR_FLAG_154                       1574 /* 0x0626 領域確保による自動生成 */
-#define TR_FLAG_155                       1575 /* 0x0627 領域確保による自動生成 */
-#define TR_FLAG_156                       1576 /* 0x0628 領域確保による自動生成 */
-#define TR_FLAG_157                       1577 /* 0x0629 領域確保による自動生成 */
-#define TR_FLAG_158                       1578 /* 0x062a 領域確保による自動生成 */
-#define TR_FLAG_159                       1579 /* 0x062b 領域確保による自動生成 */
-#define TR_FLAG_160                       1580 /* 0x062c 領域確保による自動生成 */
-#define TR_FLAG_161                       1581 /* 0x062d 領域確保による自動生成 */
-#define TR_FLAG_162                       1582 /* 0x062e 領域確保による自動生成 */
-#define TR_FLAG_163                       1583 /* 0x062f 領域確保による自動生成 */
-#define TR_FLAG_164                       1584 /* 0x0630 領域確保による自動生成 */
-#define TR_FLAG_165                       1585 /* 0x0631 領域確保による自動生成 */
-#define TR_FLAG_166                       1586 /* 0x0632 領域確保による自動生成 */
-#define TR_FLAG_167                       1587 /* 0x0633 領域確保による自動生成 */
-#define TR_FLAG_168                       1588 /* 0x0634 領域確保による自動生成 */
-#define TR_FLAG_169                       1589 /* 0x0635 領域確保による自動生成 */
-#define TR_FLAG_170                       1590 /* 0x0636 領域確保による自動生成 */
-#define TR_FLAG_171                       1591 /* 0x0637 領域確保による自動生成 */
-#define TR_FLAG_172                       1592 /* 0x0638 領域確保による自動生成 */
-#define TR_FLAG_173                       1593 /* 0x0639 領域確保による自動生成 */
-#define TR_FLAG_174                       1594 /* 0x063a 領域確保による自動生成 */
-#define TR_FLAG_175                       1595 /* 0x063b 領域確保による自動生成 */
-#define TR_FLAG_176                       1596 /* 0x063c 領域確保による自動生成 */
-#define TR_FLAG_177                       1597 /* 0x063d 領域確保による自動生成 */
-#define TR_FLAG_178                       1598 /* 0x063e 領域確保による自動生成 */
-#define TR_FLAG_179                       1599 /* 0x063f 領域確保による自動生成 */
-#define TR_FLAG_180                       1600 /* 0x0640 領域確保による自動生成 */
-#define TR_FLAG_181                       1601 /* 0x0641 領域確保による自動生成 */
-#define TR_FLAG_182                       1602 /* 0x0642 領域確保による自動生成 */
-#define TR_FLAG_183                       1603 /* 0x0643 領域確保による自動生成 */
-#define TR_FLAG_184                       1604 /* 0x0644 領域確保による自動生成 */
-#define TR_FLAG_185                       1605 /* 0x0645 領域確保による自動生成 */
-#define TR_FLAG_186                       1606 /* 0x0646 領域確保による自動生成 */
-#define TR_FLAG_187                       1607 /* 0x0647 領域確保による自動生成 */
-#define TR_FLAG_188                       1608 /* 0x0648 領域確保による自動生成 */
-#define TR_FLAG_189                       1609 /* 0x0649 領域確保による自動生成 */
-#define TR_FLAG_190                       1610 /* 0x064a 領域確保による自動生成 */
-#define TR_FLAG_191                       1611 /* 0x064b 領域確保による自動生成 */
-#define TR_FLAG_192                       1612 /* 0x064c 領域確保による自動生成 */
-#define TR_FLAG_193                       1613 /* 0x064d 領域確保による自動生成 */
-#define TR_FLAG_194                       1614 /* 0x064e 領域確保による自動生成 */
-#define TR_FLAG_195                       1615 /* 0x064f 領域確保による自動生成 */
-#define TR_FLAG_196                       1616 /* 0x0650 領域確保による自動生成 */
-#define TR_FLAG_197                       1617 /* 0x0651 領域確保による自動生成 */
-#define TR_FLAG_198                       1618 /* 0x0652 領域確保による自動生成 */
-#define TR_FLAG_199                       1619 /* 0x0653 領域確保による自動生成 */
-#define TR_FLAG_200                       1620 /* 0x0654 領域確保による自動生成 */
-#define TR_FLAG_201                       1621 /* 0x0655 領域確保による自動生成 */
-#define TR_FLAG_202                       1622 /* 0x0656 領域確保による自動生成 */
-#define TR_FLAG_203                       1623 /* 0x0657 領域確保による自動生成 */
-#define TR_FLAG_204                       1624 /* 0x0658 領域確保による自動生成 */
-#define TR_FLAG_205                       1625 /* 0x0659 領域確保による自動生成 */
-#define TR_FLAG_206                       1626 /* 0x065a 領域確保による自動生成 */
-#define TR_FLAG_207                       1627 /* 0x065b 領域確保による自動生成 */
-#define TR_FLAG_208                       1628 /* 0x065c 領域確保による自動生成 */
-#define TR_FLAG_209                       1629 /* 0x065d 領域確保による自動生成 */
-#define TR_FLAG_210                       1630 /* 0x065e 領域確保による自動生成 */
-#define TR_FLAG_211                       1631 /* 0x065f 領域確保による自動生成 */
-#define TR_FLAG_212                       1632 /* 0x0660 領域確保による自動生成 */
-#define TR_FLAG_213                       1633 /* 0x0661 領域確保による自動生成 */
-#define TR_FLAG_214                       1634 /* 0x0662 領域確保による自動生成 */
-#define TR_FLAG_215                       1635 /* 0x0663 領域確保による自動生成 */
-#define TR_FLAG_216                       1636 /* 0x0664 領域確保による自動生成 */
-#define TR_FLAG_217                       1637 /* 0x0665 領域確保による自動生成 */
-#define TR_FLAG_218                       1638 /* 0x0666 領域確保による自動生成 */
-#define TR_FLAG_219                       1639 /* 0x0667 領域確保による自動生成 */
-#define TR_FLAG_220                       1640 /* 0x0668 領域確保による自動生成 */
-#define TR_FLAG_221                       1641 /* 0x0669 領域確保による自動生成 */
-#define TR_FLAG_222                       1642 /* 0x066a 領域確保による自動生成 */
-#define TR_FLAG_223                       1643 /* 0x066b 領域確保による自動生成 */
-#define TR_FLAG_224                       1644 /* 0x066c 領域確保による自動生成 */
-#define TR_FLAG_225                       1645 /* 0x066d 領域確保による自動生成 */
-#define TR_FLAG_226                       1646 /* 0x066e 領域確保による自動生成 */
-#define TR_FLAG_227                       1647 /* 0x066f 領域確保による自動生成 */
-#define TR_FLAG_228                       1648 /* 0x0670 領域確保による自動生成 */
-#define TR_FLAG_229                       1649 /* 0x0671 領域確保による自動生成 */
-#define TR_FLAG_230                       1650 /* 0x0672 領域確保による自動生成 */
-#define TR_FLAG_231                       1651 /* 0x0673 領域確保による自動生成 */
-#define TR_FLAG_232                       1652 /* 0x0674 領域確保による自動生成 */
-#define TR_FLAG_233                       1653 /* 0x0675 領域確保による自動生成 */
-#define TR_FLAG_234                       1654 /* 0x0676 領域確保による自動生成 */
-#define TR_FLAG_235                       1655 /* 0x0677 領域確保による自動生成 */
-#define TR_FLAG_236                       1656 /* 0x0678 領域確保による自動生成 */
-#define TR_FLAG_237                       1657 /* 0x0679 領域確保による自動生成 */
-#define TR_FLAG_238                       1658 /* 0x067a 領域確保による自動生成 */
-#define TR_FLAG_239                       1659 /* 0x067b 領域確保による自動生成 */
-#define TR_FLAG_240                       1660 /* 0x067c 領域確保による自動生成 */
-#define TR_FLAG_241                       1661 /* 0x067d 領域確保による自動生成 */
-#define TR_FLAG_242                       1662 /* 0x067e 領域確保による自動生成 */
-#define TR_FLAG_243                       1663 /* 0x067f 領域確保による自動生成 */
-#define TR_FLAG_244                       1664 /* 0x0680 領域確保による自動生成 */
-#define TR_FLAG_245                       1665 /* 0x0681 領域確保による自動生成 */
-#define TR_FLAG_246                       1666 /* 0x0682 領域確保による自動生成 */
-#define TR_FLAG_247                       1667 /* 0x0683 領域確保による自動生成 */
-#define TR_FLAG_248                       1668 /* 0x0684 領域確保による自動生成 */
-#define TR_FLAG_249                       1669 /* 0x0685 領域確保による自動生成 */
-#define TR_FLAG_250                       1670 /* 0x0686 領域確保による自動生成 */
-#define TR_FLAG_251                       1671 /* 0x0687 領域確保による自動生成 */
-#define TR_FLAG_252                       1672 /* 0x0688 領域確保による自動生成 */
-#define TR_FLAG_253                       1673 /* 0x0689 領域確保による自動生成 */
-#define TR_FLAG_254                       1674 /* 0x068a 領域確保による自動生成 */
-#define TR_FLAG_255                       1675 /* 0x068b 領域確保による自動生成 */
-#define TR_FLAG_256                       1676 /* 0x068c 領域確保による自動生成 */
-#define TR_FLAG_257                       1677 /* 0x068d 領域確保による自動生成 */
-#define TR_FLAG_258                       1678 /* 0x068e 領域確保による自動生成 */
-#define TR_FLAG_259                       1679 /* 0x068f 領域確保による自動生成 */
-#define TR_FLAG_260                       1680 /* 0x0690 領域確保による自動生成 */
-#define TR_FLAG_261                       1681 /* 0x0691 領域確保による自動生成 */
-#define TR_FLAG_262                       1682 /* 0x0692 領域確保による自動生成 */
-#define TR_FLAG_263                       1683 /* 0x0693 領域確保による自動生成 */
-#define TR_FLAG_264                       1684 /* 0x0694 領域確保による自動生成 */
-#define TR_FLAG_265                       1685 /* 0x0695 領域確保による自動生成 */
-#define TR_FLAG_266                       1686 /* 0x0696 領域確保による自動生成 */
-#define TR_FLAG_267                       1687 /* 0x0697 領域確保による自動生成 */
-#define TR_FLAG_268                       1688 /* 0x0698 領域確保による自動生成 */
-#define TR_FLAG_269                       1689 /* 0x0699 領域確保による自動生成 */
-#define TR_FLAG_270                       1690 /* 0x069a 領域確保による自動生成 */
-#define TR_FLAG_271                       1691 /* 0x069b 領域確保による自動生成 */
-#define TR_FLAG_272                       1692 /* 0x069c 領域確保による自動生成 */
-#define TR_FLAG_273                       1693 /* 0x069d 領域確保による自動生成 */
-#define TR_FLAG_274                       1694 /* 0x069e 領域確保による自動生成 */
-#define TR_FLAG_275                       1695 /* 0x069f 領域確保による自動生成 */
-#define TR_FLAG_276                       1696 /* 0x06a0 領域確保による自動生成 */
-#define TR_FLAG_277                       1697 /* 0x06a1 領域確保による自動生成 */
-#define TR_FLAG_278                       1698 /* 0x06a2 領域確保による自動生成 */
-#define TR_FLAG_279                       1699 /* 0x06a3 領域確保による自動生成 */
-#define TR_FLAG_280                       1700 /* 0x06a4 領域確保による自動生成 */
-#define TR_FLAG_281                       1701 /* 0x06a5 領域確保による自動生成 */
-#define TR_FLAG_282                       1702 /* 0x06a6 領域確保による自動生成 */
-#define TR_FLAG_283                       1703 /* 0x06a7 領域確保による自動生成 */
-#define TR_FLAG_284                       1704 /* 0x06a8 領域確保による自動生成 */
-#define TR_FLAG_285                       1705 /* 0x06a9 領域確保による自動生成 */
-#define TR_FLAG_286                       1706 /* 0x06aa 領域確保による自動生成 */
-#define TR_FLAG_287                       1707 /* 0x06ab 領域確保による自動生成 */
-#define TR_FLAG_288                       1708 /* 0x06ac 領域確保による自動生成 */
-#define TR_FLAG_289                       1709 /* 0x06ad 領域確保による自動生成 */
-#define TR_FLAG_290                       1710 /* 0x06ae 領域確保による自動生成 */
-#define TR_FLAG_291                       1711 /* 0x06af 領域確保による自動生成 */
-#define TR_FLAG_292                       1712 /* 0x06b0 領域確保による自動生成 */
-#define TR_FLAG_293                       1713 /* 0x06b1 領域確保による自動生成 */
-#define TR_FLAG_294                       1714 /* 0x06b2 領域確保による自動生成 */
-#define TR_FLAG_295                       1715 /* 0x06b3 領域確保による自動生成 */
-#define TR_FLAG_296                       1716 /* 0x06b4 領域確保による自動生成 */
-#define TR_FLAG_297                       1717 /* 0x06b5 領域確保による自動生成 */
-#define TR_FLAG_298                       1718 /* 0x06b6 領域確保による自動生成 */
-#define TR_FLAG_299                       1719 /* 0x06b7 領域確保による自動生成 */
-#define TR_FLAG_300                       1720 /* 0x06b8 領域確保による自動生成 */
-#define TR_FLAG_301                       1721 /* 0x06b9 領域確保による自動生成 */
-#define TR_FLAG_302                       1722 /* 0x06ba 領域確保による自動生成 */
-#define TR_FLAG_303                       1723 /* 0x06bb 領域確保による自動生成 */
-#define TR_FLAG_304                       1724 /* 0x06bc 領域確保による自動生成 */
-#define TR_FLAG_305                       1725 /* 0x06bd 領域確保による自動生成 */
-#define TR_FLAG_306                       1726 /* 0x06be 領域確保による自動生成 */
-#define TR_FLAG_307                       1727 /* 0x06bf 領域確保による自動生成 */
-#define TR_FLAG_308                       1728 /* 0x06c0 領域確保による自動生成 */
-#define TR_FLAG_309                       1729 /* 0x06c1 領域確保による自動生成 */
-#define TR_FLAG_310                       1730 /* 0x06c2 領域確保による自動生成 */
-#define TR_FLAG_311                       1731 /* 0x06c3 領域確保による自動生成 */
-#define TR_FLAG_312                       1732 /* 0x06c4 領域確保による自動生成 */
-#define TR_FLAG_313                       1733 /* 0x06c5 領域確保による自動生成 */
-#define TR_FLAG_314                       1734 /* 0x06c6 領域確保による自動生成 */
-#define TR_FLAG_315                       1735 /* 0x06c7 領域確保による自動生成 */
-#define TR_FLAG_316                       1736 /* 0x06c8 領域確保による自動生成 */
-#define TR_FLAG_317                       1737 /* 0x06c9 領域確保による自動生成 */
-#define TR_FLAG_318                       1738 /* 0x06ca 領域確保による自動生成 */
-#define TR_FLAG_319                       1739 /* 0x06cb 領域確保による自動生成 */
-#define TR_FLAG_320                       1740 /* 0x06cc 領域確保による自動生成 */
-#define TR_FLAG_321                       1741 /* 0x06cd 領域確保による自動生成 */
-#define TR_FLAG_322                       1742 /* 0x06ce 領域確保による自動生成 */
-#define TR_FLAG_323                       1743 /* 0x06cf 領域確保による自動生成 */
-#define TR_FLAG_324                       1744 /* 0x06d0 領域確保による自動生成 */
-#define TR_FLAG_325                       1745 /* 0x06d1 領域確保による自動生成 */
-#define TR_FLAG_326                       1746 /* 0x06d2 領域確保による自動生成 */
-#define TR_FLAG_327                       1747 /* 0x06d3 領域確保による自動生成 */
-#define TR_FLAG_328                       1748 /* 0x06d4 領域確保による自動生成 */
-#define TR_FLAG_329                       1749 /* 0x06d5 領域確保による自動生成 */
-#define TR_FLAG_330                       1750 /* 0x06d6 領域確保による自動生成 */
-#define TR_FLAG_331                       1751 /* 0x06d7 領域確保による自動生成 */
-#define TR_FLAG_332                       1752 /* 0x06d8 領域確保による自動生成 */
-#define TR_FLAG_333                       1753 /* 0x06d9 領域確保による自動生成 */
-#define TR_FLAG_334                       1754 /* 0x06da 領域確保による自動生成 */
-#define TR_FLAG_335                       1755 /* 0x06db 領域確保による自動生成 */
-#define TR_FLAG_336                       1756 /* 0x06dc 領域確保による自動生成 */
-#define TR_FLAG_337                       1757 /* 0x06dd 領域確保による自動生成 */
-#define TR_FLAG_338                       1758 /* 0x06de 領域確保による自動生成 */
-#define TR_FLAG_339                       1759 /* 0x06df 領域確保による自動生成 */
-#define TR_FLAG_340                       1760 /* 0x06e0 領域確保による自動生成 */
-#define TR_FLAG_341                       1761 /* 0x06e1 領域確保による自動生成 */
-#define TR_FLAG_342                       1762 /* 0x06e2 領域確保による自動生成 */
-#define TR_FLAG_343                       1763 /* 0x06e3 領域確保による自動生成 */
-#define TR_FLAG_344                       1764 /* 0x06e4 領域確保による自動生成 */
-#define TR_FLAG_345                       1765 /* 0x06e5 領域確保による自動生成 */
-#define TR_FLAG_346                       1766 /* 0x06e6 領域確保による自動生成 */
-#define TR_FLAG_347                       1767 /* 0x06e7 領域確保による自動生成 */
-#define TR_FLAG_348                       1768 /* 0x06e8 領域確保による自動生成 */
-#define TR_FLAG_349                       1769 /* 0x06e9 領域確保による自動生成 */
-#define TR_FLAG_350                       1770 /* 0x06ea 領域確保による自動生成 */
-#define TR_FLAG_351                       1771 /* 0x06eb 領域確保による自動生成 */
-#define TR_FLAG_352                       1772 /* 0x06ec 領域確保による自動生成 */
-#define TR_FLAG_353                       1773 /* 0x06ed 領域確保による自動生成 */
-#define TR_FLAG_354                       1774 /* 0x06ee 領域確保による自動生成 */
-#define TR_FLAG_355                       1775 /* 0x06ef 領域確保による自動生成 */
-#define TR_FLAG_356                       1776 /* 0x06f0 領域確保による自動生成 */
-#define TR_FLAG_357                       1777 /* 0x06f1 領域確保による自動生成 */
-#define TR_FLAG_358                       1778 /* 0x06f2 領域確保による自動生成 */
-#define TR_FLAG_359                       1779 /* 0x06f3 領域確保による自動生成 */
-#define TR_FLAG_360                       1780 /* 0x06f4 領域確保による自動生成 */
-#define TR_FLAG_361                       1781 /* 0x06f5 領域確保による自動生成 */
-#define TR_FLAG_362                       1782 /* 0x06f6 領域確保による自動生成 */
-#define TR_FLAG_363                       1783 /* 0x06f7 領域確保による自動生成 */
-#define TR_FLAG_364                       1784 /* 0x06f8 領域確保による自動生成 */
-#define TR_FLAG_365                       1785 /* 0x06f9 領域確保による自動生成 */
-#define TR_FLAG_366                       1786 /* 0x06fa 領域確保による自動生成 */
-#define TR_FLAG_367                       1787 /* 0x06fb 領域確保による自動生成 */
-#define TR_FLAG_368                       1788 /* 0x06fc 領域確保による自動生成 */
-#define TR_FLAG_369                       1789 /* 0x06fd 領域確保による自動生成 */
-#define TR_FLAG_370                       1790 /* 0x06fe 領域確保による自動生成 */
-#define TR_FLAG_371                       1791 /* 0x06ff 領域確保による自動生成 */
-#define TR_FLAG_372                       1792 /* 0x0700 領域確保による自動生成 */
-#define TR_FLAG_373                       1793 /* 0x0701 領域確保による自動生成 */
-#define TR_FLAG_374                       1794 /* 0x0702 領域確保による自動生成 */
-#define TR_FLAG_375                       1795 /* 0x0703 領域確保による自動生成 */
-#define TR_FLAG_376                       1796 /* 0x0704 領域確保による自動生成 */
-#define TR_FLAG_377                       1797 /* 0x0705 領域確保による自動生成 */
-#define TR_FLAG_378                       1798 /* 0x0706 領域確保による自動生成 */
-#define TR_FLAG_379                       1799 /* 0x0707 領域確保による自動生成 */
-#define TR_FLAG_380                       1800 /* 0x0708 領域確保による自動生成 */
-#define TR_FLAG_381                       1801 /* 0x0709 領域確保による自動生成 */
-#define TR_FLAG_382                       1802 /* 0x070a 領域確保による自動生成 */
-#define TR_FLAG_383                       1803 /* 0x070b 領域確保による自動生成 */
-#define TR_FLAG_384                       1804 /* 0x070c 領域確保による自動生成 */
-#define TR_FLAG_385                       1805 /* 0x070d 領域確保による自動生成 */
-#define TR_FLAG_386                       1806 /* 0x070e 領域確保による自動生成 */
-#define TR_FLAG_387                       1807 /* 0x070f 領域確保による自動生成 */
-#define TR_FLAG_388                       1808 /* 0x0710 領域確保による自動生成 */
-#define TR_FLAG_389                       1809 /* 0x0711 領域確保による自動生成 */
-#define TR_FLAG_390                       1810 /* 0x0712 領域確保による自動生成 */
-#define TR_FLAG_391                       1811 /* 0x0713 領域確保による自動生成 */
-#define TR_FLAG_392                       1812 /* 0x0714 領域確保による自動生成 */
-#define TR_FLAG_393                       1813 /* 0x0715 領域確保による自動生成 */
-#define TR_FLAG_394                       1814 /* 0x0716 領域確保による自動生成 */
-#define TR_FLAG_395                       1815 /* 0x0717 領域確保による自動生成 */
-#define TR_FLAG_396                       1816 /* 0x0718 領域確保による自動生成 */
-#define TR_FLAG_397                       1817 /* 0x0719 領域確保による自動生成 */
-#define TR_FLAG_398                       1818 /* 0x071a 領域確保による自動生成 */
-#define TR_FLAG_399                       1819 /* 0x071b 領域確保による自動生成 */
-#define TR_FLAG_400                       1820 /* 0x071c 領域確保による自動生成 */
-#define TR_FLAG_401                       1821 /* 0x071d 領域確保による自動生成 */
-#define TR_FLAG_402                       1822 /* 0x071e 領域確保による自動生成 */
-#define TR_FLAG_403                       1823 /* 0x071f 領域確保による自動生成 */
-#define TR_FLAG_404                       1824 /* 0x0720 領域確保による自動生成 */
-#define TR_FLAG_405                       1825 /* 0x0721 領域確保による自動生成 */
-#define TR_FLAG_406                       1826 /* 0x0722 領域確保による自動生成 */
-#define TR_FLAG_407                       1827 /* 0x0723 領域確保による自動生成 */
-#define TR_FLAG_408                       1828 /* 0x0724 領域確保による自動生成 */
-#define TR_FLAG_409                       1829 /* 0x0725 領域確保による自動生成 */
-#define TR_FLAG_410                       1830 /* 0x0726 領域確保による自動生成 */
-#define TR_FLAG_411                       1831 /* 0x0727 領域確保による自動生成 */
-#define TR_FLAG_412                       1832 /* 0x0728 領域確保による自動生成 */
-#define TR_FLAG_413                       1833 /* 0x0729 領域確保による自動生成 */
-#define TR_FLAG_414                       1834 /* 0x072a 領域確保による自動生成 */
-#define TR_FLAG_415                       1835 /* 0x072b 領域確保による自動生成 */
-#define TR_FLAG_416                       1836 /* 0x072c 領域確保による自動生成 */
-#define TR_FLAG_417                       1837 /* 0x072d 領域確保による自動生成 */
-#define TR_FLAG_418                       1838 /* 0x072e 領域確保による自動生成 */
-#define TR_FLAG_419                       1839 /* 0x072f 領域確保による自動生成 */
-#define TR_FLAG_420                       1840 /* 0x0730 領域確保による自動生成 */
-#define TR_FLAG_421                       1841 /* 0x0731 領域確保による自動生成 */
-#define TR_FLAG_422                       1842 /* 0x0732 領域確保による自動生成 */
-#define TR_FLAG_423                       1843 /* 0x0733 領域確保による自動生成 */
-#define TR_FLAG_424                       1844 /* 0x0734 領域確保による自動生成 */
-#define TR_FLAG_425                       1845 /* 0x0735 領域確保による自動生成 */
-#define TR_FLAG_426                       1846 /* 0x0736 領域確保による自動生成 */
-#define TR_FLAG_427                       1847 /* 0x0737 領域確保による自動生成 */
-#define TR_FLAG_428                       1848 /* 0x0738 領域確保による自動生成 */
-#define TR_FLAG_429                       1849 /* 0x0739 領域確保による自動生成 */
-#define TR_FLAG_430                       1850 /* 0x073a 領域確保による自動生成 */
-#define TR_FLAG_431                       1851 /* 0x073b 領域確保による自動生成 */
-#define TR_FLAG_432                       1852 /* 0x073c 領域確保による自動生成 */
-#define TR_FLAG_433                       1853 /* 0x073d 領域確保による自動生成 */
-#define TR_FLAG_434                       1854 /* 0x073e 領域確保による自動生成 */
-#define TR_FLAG_435                       1855 /* 0x073f 領域確保による自動生成 */
-#define TR_FLAG_436                       1856 /* 0x0740 領域確保による自動生成 */
-#define TR_FLAG_437                       1857 /* 0x0741 領域確保による自動生成 */
-#define TR_FLAG_438                       1858 /* 0x0742 領域確保による自動生成 */
-#define TR_FLAG_439                       1859 /* 0x0743 領域確保による自動生成 */
-#define TR_FLAG_440                       1860 /* 0x0744 領域確保による自動生成 */
-#define TR_FLAG_441                       1861 /* 0x0745 領域確保による自動生成 */
-#define TR_FLAG_442                       1862 /* 0x0746 領域確保による自動生成 */
-#define TR_FLAG_443                       1863 /* 0x0747 領域確保による自動生成 */
-#define TR_FLAG_444                       1864 /* 0x0748 領域確保による自動生成 */
-#define TR_FLAG_445                       1865 /* 0x0749 領域確保による自動生成 */
-#define TR_FLAG_446                       1866 /* 0x074a 領域確保による自動生成 */
-#define TR_FLAG_447                       1867 /* 0x074b 領域確保による自動生成 */
-#define TR_FLAG_448                       1868 /* 0x074c 領域確保による自動生成 */
-#define TR_FLAG_449                       1869 /* 0x074d 領域確保による自動生成 */
-#define TR_FLAG_450                       1870 /* 0x074e 領域確保による自動生成 */
-#define TR_FLAG_451                       1871 /* 0x074f 領域確保による自動生成 */
-#define TR_FLAG_452                       1872 /* 0x0750 領域確保による自動生成 */
-#define TR_FLAG_453                       1873 /* 0x0751 領域確保による自動生成 */
-#define TR_FLAG_454                       1874 /* 0x0752 領域確保による自動生成 */
-#define TR_FLAG_455                       1875 /* 0x0753 領域確保による自動生成 */
-#define TR_FLAG_456                       1876 /* 0x0754 領域確保による自動生成 */
-#define TR_FLAG_457                       1877 /* 0x0755 領域確保による自動生成 */
-#define TR_FLAG_458                       1878 /* 0x0756 領域確保による自動生成 */
-#define TR_FLAG_459                       1879 /* 0x0757 領域確保による自動生成 */
-#define TR_FLAG_460                       1880 /* 0x0758 領域確保による自動生成 */
-#define TR_FLAG_461                       1881 /* 0x0759 領域確保による自動生成 */
-#define TR_FLAG_462                       1882 /* 0x075a 領域確保による自動生成 */
-#define TR_FLAG_463                       1883 /* 0x075b 領域確保による自動生成 */
-#define TR_FLAG_464                       1884 /* 0x075c 領域確保による自動生成 */
-#define TR_FLAG_465                       1885 /* 0x075d 領域確保による自動生成 */
-#define TR_FLAG_466                       1886 /* 0x075e 領域確保による自動生成 */
-#define TR_FLAG_467                       1887 /* 0x075f 領域確保による自動生成 */
-#define TR_FLAG_468                       1888 /* 0x0760 領域確保による自動生成 */
-#define TR_FLAG_469                       1889 /* 0x0761 領域確保による自動生成 */
-#define TR_FLAG_470                       1890 /* 0x0762 領域確保による自動生成 */
-#define TR_FLAG_471                       1891 /* 0x0763 領域確保による自動生成 */
-#define TR_FLAG_472                       1892 /* 0x0764 領域確保による自動生成 */
-#define TR_FLAG_473                       1893 /* 0x0765 領域確保による自動生成 */
-#define TR_FLAG_474                       1894 /* 0x0766 領域確保による自動生成 */
-#define TR_FLAG_475                       1895 /* 0x0767 領域確保による自動生成 */
-#define TR_FLAG_476                       1896 /* 0x0768 領域確保による自動生成 */
-#define TR_FLAG_477                       1897 /* 0x0769 領域確保による自動生成 */
-#define TR_FLAG_478                       1898 /* 0x076a 領域確保による自動生成 */
-#define TR_FLAG_479                       1899 /* 0x076b 領域確保による自動生成 */
-#define TR_FLAG_480                       1900 /* 0x076c 領域確保による自動生成 */
-#define TR_FLAG_481                       1901 /* 0x076d 領域確保による自動生成 */
-#define TR_FLAG_482                       1902 /* 0x076e 領域確保による自動生成 */
-#define TR_FLAG_483                       1903 /* 0x076f 領域確保による自動生成 */
-#define TR_FLAG_484                       1904 /* 0x0770 領域確保による自動生成 */
-#define TR_FLAG_485                       1905 /* 0x0771 領域確保による自動生成 */
-#define TR_FLAG_486                       1906 /* 0x0772 領域確保による自動生成 */
-#define TR_FLAG_487                       1907 /* 0x0773 領域確保による自動生成 */
-#define TR_FLAG_488                       1908 /* 0x0774 領域確保による自動生成 */
-#define TR_FLAG_489                       1909 /* 0x0775 領域確保による自動生成 */
-#define TR_FLAG_490                       1910 /* 0x0776 領域確保による自動生成 */
-#define TR_FLAG_491                       1911 /* 0x0777 領域確保による自動生成 */
-#define TR_FLAG_492                       1912 /* 0x0778 領域確保による自動生成 */
-#define TR_FLAG_493                       1913 /* 0x0779 領域確保による自動生成 */
-#define TR_FLAG_494                       1914 /* 0x077a 領域確保による自動生成 */
-#define TR_FLAG_495                       1915 /* 0x077b 領域確保による自動生成 */
-#define TR_FLAG_496                       1916 /* 0x077c 領域確保による自動生成 */
-#define TR_FLAG_497                       1917 /* 0x077d 領域確保による自動生成 */
-#define TR_FLAG_498                       1918 /* 0x077e 領域確保による自動生成 */
-#define TR_FLAG_499                       1919 /* 0x077f 領域確保による自動生成 */
-#define TR_FLAG_500                       1920 /* 0x0780 領域確保による自動生成 */
-#define TR_FLAG_501                       1921 /* 0x0781 領域確保による自動生成 */
-#define TR_FLAG_502                       1922 /* 0x0782 領域確保による自動生成 */
-#define TR_FLAG_503                       1923 /* 0x0783 領域確保による自動生成 */
-#define TR_FLAG_504                       1924 /* 0x0784 領域確保による自動生成 */
-#define TR_FLAG_505                       1925 /* 0x0785 領域確保による自動生成 */
-#define TR_FLAG_506                       1926 /* 0x0786 領域確保による自動生成 */
-#define TR_FLAG_507                       1927 /* 0x0787 領域確保による自動生成 */
-#define TR_FLAG_508                       1928 /* 0x0788 領域確保による自動生成 */
-#define TR_FLAG_509                       1929 /* 0x0789 領域確保による自動生成 */
-#define TR_FLAG_510                       1930 /* 0x078a 領域確保による自動生成 */
-#define TR_FLAG_511                       1931 /* 0x078b 領域確保による自動生成 */
-#define TR_FLAG_512                       1932 /* 0x078c 領域確保による自動生成 */
-#define TR_FLAG_513                       1933 /* 0x078d 領域確保による自動生成 */
-#define TR_FLAG_514                       1934 /* 0x078e 領域確保による自動生成 */
-#define TR_FLAG_515                       1935 /* 0x078f 領域確保による自動生成 */
-#define TR_FLAG_516                       1936 /* 0x0790 領域確保による自動生成 */
-#define TR_FLAG_517                       1937 /* 0x0791 領域確保による自動生成 */
-#define TR_FLAG_518                       1938 /* 0x0792 領域確保による自動生成 */
-#define TR_FLAG_519                       1939 /* 0x0793 領域確保による自動生成 */
-#define TR_FLAG_520                       1940 /* 0x0794 領域確保による自動生成 */
-#define TR_FLAG_521                       1941 /* 0x0795 領域確保による自動生成 */
-#define TR_FLAG_522                       1942 /* 0x0796 領域確保による自動生成 */
-#define TR_FLAG_523                       1943 /* 0x0797 領域確保による自動生成 */
-#define TR_FLAG_524                       1944 /* 0x0798 領域確保による自動生成 */
-#define TR_FLAG_525                       1945 /* 0x0799 領域確保による自動生成 */
-#define TR_FLAG_526                       1946 /* 0x079a 領域確保による自動生成 */
-#define TR_FLAG_527                       1947 /* 0x079b 領域確保による自動生成 */
-#define TR_FLAG_528                       1948 /* 0x079c 領域確保による自動生成 */
-#define TR_FLAG_529                       1949 /* 0x079d 領域確保による自動生成 */
-#define TR_FLAG_530                       1950 /* 0x079e 領域確保による自動生成 */
-#define TR_FLAG_531                       1951 /* 0x079f 領域確保による自動生成 */
-#define TR_FLAG_532                       1952 /* 0x07a0 領域確保による自動生成 */
-#define TR_FLAG_533                       1953 /* 0x07a1 領域確保による自動生成 */
-#define TR_FLAG_534                       1954 /* 0x07a2 領域確保による自動生成 */
-#define TR_FLAG_535                       1955 /* 0x07a3 領域確保による自動生成 */
-#define TR_FLAG_536                       1956 /* 0x07a4 領域確保による自動生成 */
-#define TR_FLAG_537                       1957 /* 0x07a5 領域確保による自動生成 */
-#define TR_FLAG_538                       1958 /* 0x07a6 領域確保による自動生成 */
-#define TR_FLAG_539                       1959 /* 0x07a7 領域確保による自動生成 */
-#define TR_FLAG_540                       1960 /* 0x07a8 領域確保による自動生成 */
-#define TR_FLAG_541                       1961 /* 0x07a9 領域確保による自動生成 */
-#define TR_FLAG_542                       1962 /* 0x07aa 領域確保による自動生成 */
-#define TR_FLAG_543                       1963 /* 0x07ab 領域確保による自動生成 */
-#define TR_FLAG_544                       1964 /* 0x07ac 領域確保による自動生成 */
-#define TR_FLAG_545                       1965 /* 0x07ad 領域確保による自動生成 */
-#define TR_FLAG_546                       1966 /* 0x07ae 領域確保による自動生成 */
-#define TR_FLAG_547                       1967 /* 0x07af 領域確保による自動生成 */
-#define TR_FLAG_548                       1968 /* 0x07b0 領域確保による自動生成 */
-#define TR_FLAG_549                       1969 /* 0x07b1 領域確保による自動生成 */
-#define TR_FLAG_550                       1970 /* 0x07b2 領域確保による自動生成 */
-#define TR_FLAG_551                       1971 /* 0x07b3 領域確保による自動生成 */
-#define TR_FLAG_552                       1972 /* 0x07b4 領域確保による自動生成 */
-#define TR_FLAG_553                       1973 /* 0x07b5 領域確保による自動生成 */
-#define TR_FLAG_554                       1974 /* 0x07b6 領域確保による自動生成 */
-#define TR_FLAG_555                       1975 /* 0x07b7 領域確保による自動生成 */
-#define TR_FLAG_556                       1976 /* 0x07b8 領域確保による自動生成 */
-#define TR_FLAG_557                       1977 /* 0x07b9 領域確保による自動生成 */
-#define TR_FLAG_558                       1978 /* 0x07ba 領域確保による自動生成 */
-#define TR_FLAG_559                       1979 /* 0x07bb 領域確保による自動生成 */
-#define TR_FLAG_560                       1980 /* 0x07bc 領域確保による自動生成 */
-#define TR_FLAG_561                       1981 /* 0x07bd 領域確保による自動生成 */
-#define TR_FLAG_562                       1982 /* 0x07be 領域確保による自動生成 */
-#define TR_FLAG_563                       1983 /* 0x07bf 領域確保による自動生成 */
-#define TR_FLAG_564                       1984 /* 0x07c0 領域確保による自動生成 */
-#define TR_FLAG_565                       1985 /* 0x07c1 領域確保による自動生成 */
-#define TR_FLAG_566                       1986 /* 0x07c2 領域確保による自動生成 */
-#define TR_FLAG_567                       1987 /* 0x07c3 領域確保による自動生成 */
-#define TR_FLAG_568                       1988 /* 0x07c4 領域確保による自動生成 */
-#define TR_FLAG_569                       1989 /* 0x07c5 領域確保による自動生成 */
-#define TR_FLAG_570                       1990 /* 0x07c6 領域確保による自動生成 */
-#define TR_FLAG_571                       1991 /* 0x07c7 領域確保による自動生成 */
-#define TR_FLAG_572                       1992 /* 0x07c8 領域確保による自動生成 */
-#define TR_FLAG_573                       1993 /* 0x07c9 領域確保による自動生成 */
-#define TR_FLAG_574                       1994 /* 0x07ca 領域確保による自動生成 */
-#define TR_FLAG_575                       1995 /* 0x07cb 領域確保による自動生成 */
-#define TR_FLAG_576                       1996 /* 0x07cc 領域確保による自動生成 */
-#define TR_FLAG_577                       1997 /* 0x07cd 領域確保による自動生成 */
-#define TR_FLAG_578                       1998 /* 0x07ce 領域確保による自動生成 */
-#define TR_FLAG_579                       1999 /* 0x07cf 領域確保による自動生成 */
-#define TR_FLAG_580                       2000 /* 0x07d0 領域確保による自動生成 */
-#define TR_FLAG_581                       2001 /* 0x07d1 領域確保による自動生成 */
-#define TR_FLAG_582                       2002 /* 0x07d2 領域確保による自動生成 */
-#define TR_FLAG_583                       2003 /* 0x07d3 領域確保による自動生成 */
-#define TR_FLAG_584                       2004 /* 0x07d4 領域確保による自動生成 */
-#define TR_FLAG_585                       2005 /* 0x07d5 領域確保による自動生成 */
-#define TR_FLAG_586                       2006 /* 0x07d6 領域確保による自動生成 */
-#define TR_FLAG_587                       2007 /* 0x07d7 領域確保による自動生成 */
-#define TR_FLAG_588                       2008 /* 0x07d8 領域確保による自動生成 */
-#define TR_FLAG_589                       2009 /* 0x07d9 領域確保による自動生成 */
-#define TR_FLAG_590                       2010 /* 0x07da 領域確保による自動生成 */
-#define TR_FLAG_591                       2011 /* 0x07db 領域確保による自動生成 */
-#define TR_FLAG_592                       2012 /* 0x07dc 領域確保による自動生成 */
-#define TR_FLAG_593                       2013 /* 0x07dd 領域確保による自動生成 */
-#define TR_FLAG_594                       2014 /* 0x07de 領域確保による自動生成 */
-#define TR_FLAG_595                       2015 /* 0x07df 領域確保による自動生成 */
-#define TR_FLAG_596                       2016 /* 0x07e0 領域確保による自動生成 */
-#define TR_FLAG_597                       2017 /* 0x07e1 領域確保による自動生成 */
-#define TR_FLAG_598                       2018 /* 0x07e2 領域確保による自動生成 */
-#define TR_FLAG_599                       2019 /* 0x07e3 領域確保による自動生成 */
-#define TR_FLAG_600                       2020 /* 0x07e4 領域確保による自動生成 */
-#define TR_FLAG_601                       2021 /* 0x07e5 領域確保による自動生成 */
-#define TR_FLAG_602                       2022 /* 0x07e6 領域確保による自動生成 */
-#define TR_FLAG_603                       2023 /* 0x07e7 領域確保による自動生成 */
-#define TR_FLAG_604                       2024 /* 0x07e8 領域確保による自動生成 */
-#define TR_FLAG_605                       2025 /* 0x07e9 領域確保による自動生成 */
-#define TR_FLAG_606                       2026 /* 0x07ea 領域確保による自動生成 */
-#define TR_FLAG_607                       2027 /* 0x07eb 領域確保による自動生成 */
-#define TR_FLAG_608                       2028 /* 0x07ec 領域確保による自動生成 */
-#define TR_FLAG_609                       2029 /* 0x07ed 領域確保による自動生成 */
-#define TR_FLAG_610                       2030 /* 0x07ee 領域確保による自動生成 */
-#define TR_FLAG_611                       2031 /* 0x07ef 領域確保による自動生成 */
-#define TR_FLAG_612                       2032 /* 0x07f0 領域確保による自動生成 */
-#define TR_FLAG_613                       2033 /* 0x07f1 領域確保による自動生成 */
-#define TR_FLAG_614                       2034 /* 0x07f2 領域確保による自動生成 */
-#define TR_FLAG_615                       2035 /* 0x07f3 領域確保による自動生成 */
-#define TR_FLAG_616                       2036 /* 0x07f4 領域確保による自動生成 */
-#define TR_FLAG_617                       2037 /* 0x07f5 領域確保による自動生成 */
-#define TR_FLAG_618                       2038 /* 0x07f6 領域確保による自動生成 */
-#define TR_FLAG_619                       2039 /* 0x07f7 領域確保による自動生成 */
-#define TR_FLAG_620                       2040 /* 0x07f8 領域確保による自動生成 */
-#define TR_FLAG_621                       2041 /* 0x07f9 領域確保による自動生成 */
-#define TR_FLAG_622                       2042 /* 0x07fa 領域確保による自動生成 */
-#define TR_FLAG_623                       2043 /* 0x07fb 領域確保による自動生成 */
-#define TR_FLAG_624                       2044 /* 0x07fc 領域確保による自動生成 */
-#define TR_FLAG_625                       2045 /* 0x07fd 領域確保による自動生成 */
-#define TR_FLAG_626                       2046 /* 0x07fe 領域確保による自動生成 */
-#define TR_FLAG_627                       2047 /* 0x07ff 領域確保による自動生成 */
-#define TR_FLAG_628                       2048 /* 0x0800 領域確保による自動生成 */
-#define TR_FLAG_629                       2049 /* 0x0801 領域確保による自動生成 */
-#define TR_FLAG_630                       2050 /* 0x0802 領域確保による自動生成 */
-#define TR_FLAG_631                       2051 /* 0x0803 領域確保による自動生成 */
-#define TR_FLAG_632                       2052 /* 0x0804 領域確保による自動生成 */
-#define TR_FLAG_633                       2053 /* 0x0805 領域確保による自動生成 */
-#define TR_FLAG_634                       2054 /* 0x0806 領域確保による自動生成 */
-#define TR_FLAG_635                       2055 /* 0x0807 領域確保による自動生成 */
-#define TR_FLAG_636                       2056 /* 0x0808 領域確保による自動生成 */
-#define TR_FLAG_637                       2057 /* 0x0809 領域確保による自動生成 */
-#define TR_FLAG_638                       2058 /* 0x080a 領域確保による自動生成 */
-#define TR_FLAG_639                       2059 /* 0x080b 領域確保による自動生成 */
-#define TR_FLAG_640                       2060 /* 0x080c 領域確保による自動生成 */
-#define TR_FLAG_641                       2061 /* 0x080d 領域確保による自動生成 */
-#define TR_FLAG_642                       2062 /* 0x080e 領域確保による自動生成 */
-#define TR_FLAG_643                       2063 /* 0x080f 領域確保による自動生成 */
-#define TR_FLAG_644                       2064 /* 0x0810 領域確保による自動生成 */
-#define TR_FLAG_645                       2065 /* 0x0811 領域確保による自動生成 */
-#define TR_FLAG_646                       2066 /* 0x0812 領域確保による自動生成 */
-#define TR_FLAG_647                       2067 /* 0x0813 領域確保による自動生成 */
-#define TR_FLAG_648                       2068 /* 0x0814 領域確保による自動生成 */
-#define TR_FLAG_649                       2069 /* 0x0815 領域確保による自動生成 */
-#define TR_FLAG_650                       2070 /* 0x0816 領域確保による自動生成 */
-#define TR_FLAG_651                       2071 /* 0x0817 領域確保による自動生成 */
-#define TR_FLAG_652                       2072 /* 0x0818 領域確保による自動生成 */
-#define TR_FLAG_653                       2073 /* 0x0819 領域確保による自動生成 */
-#define TR_FLAG_654                       2074 /* 0x081a 領域確保による自動生成 */
-#define TR_FLAG_655                       2075 /* 0x081b 領域確保による自動生成 */
-#define TR_FLAG_656                       2076 /* 0x081c 領域確保による自動生成 */
-#define TR_FLAG_657                       2077 /* 0x081d 領域確保による自動生成 */
-#define TR_FLAG_658                       2078 /* 0x081e 領域確保による自動生成 */
-#define TR_FLAG_659                       2079 /* 0x081f 領域確保による自動生成 */
-#define TR_FLAG_660                       2080 /* 0x0820 領域確保による自動生成 */
-#define TR_FLAG_661                       2081 /* 0x0821 領域確保による自動生成 */
-#define TR_FLAG_662                       2082 /* 0x0822 領域確保による自動生成 */
-#define TR_FLAG_663                       2083 /* 0x0823 領域確保による自動生成 */
-#define TR_FLAG_664                       2084 /* 0x0824 領域確保による自動生成 */
-#define TR_FLAG_665                       2085 /* 0x0825 領域確保による自動生成 */
-#define TR_FLAG_666                       2086 /* 0x0826 領域確保による自動生成 */
-#define TR_FLAG_667                       2087 /* 0x0827 領域確保による自動生成 */
-#define TR_FLAG_668                       2088 /* 0x0828 領域確保による自動生成 */
-#define TR_FLAG_669                       2089 /* 0x0829 領域確保による自動生成 */
-#define TR_FLAG_670                       2090 /* 0x082a 領域確保による自動生成 */
-#define TR_FLAG_671                       2091 /* 0x082b 領域確保による自動生成 */
-#define TR_FLAG_672                       2092 /* 0x082c 領域確保による自動生成 */
-#define TR_FLAG_673                       2093 /* 0x082d 領域確保による自動生成 */
-#define TR_FLAG_674                       2094 /* 0x082e 領域確保による自動生成 */
-#define TR_FLAG_675                       2095 /* 0x082f 領域確保による自動生成 */
-#define TR_FLAG_676                       2096 /* 0x0830 領域確保による自動生成 */
-#define TR_FLAG_677                       2097 /* 0x0831 領域確保による自動生成 */
-#define TR_FLAG_678                       2098 /* 0x0832 領域確保による自動生成 */
-#define TR_FLAG_679                       2099 /* 0x0833 領域確保による自動生成 */
-#define TR_FLAG_680                       2100 /* 0x0834 領域確保による自動生成 */
-#define TR_FLAG_681                       2101 /* 0x0835 領域確保による自動生成 */
-#define TR_FLAG_682                       2102 /* 0x0836 領域確保による自動生成 */
-#define TR_FLAG_683                       2103 /* 0x0837 領域確保による自動生成 */
-#define TR_FLAG_684                       2104 /* 0x0838 領域確保による自動生成 */
-#define TR_FLAG_685                       2105 /* 0x0839 領域確保による自動生成 */
-#define TR_FLAG_686                       2106 /* 0x083a 領域確保による自動生成 */
-#define TR_FLAG_687                       2107 /* 0x083b 領域確保による自動生成 */
-#define TR_FLAG_688                       2108 /* 0x083c 領域確保による自動生成 */
-#define TR_FLAG_689                       2109 /* 0x083d 領域確保による自動生成 */
-#define TR_FLAG_690                       2110 /* 0x083e 領域確保による自動生成 */
-#define TR_FLAG_691                       2111 /* 0x083f 領域確保による自動生成 */
-#define TR_FLAG_692                       2112 /* 0x0840 領域確保による自動生成 */
-#define TR_FLAG_693                       2113 /* 0x0841 領域確保による自動生成 */
-#define TR_FLAG_694                       2114 /* 0x0842 領域確保による自動生成 */
-#define TR_FLAG_695                       2115 /* 0x0843 領域確保による自動生成 */
-#define TR_FLAG_696                       2116 /* 0x0844 領域確保による自動生成 */
-#define TR_FLAG_697                       2117 /* 0x0845 領域確保による自動生成 */
-#define TR_FLAG_698                       2118 /* 0x0846 領域確保による自動生成 */
-#define TR_FLAG_699                       2119 /* 0x0847 領域確保による自動生成 */
-#define TR_FLAG_700                       2120 /* 0x0848 領域確保による自動生成 */
-#define TR_FLAG_701                       2121 /* 0x0849 領域確保による自動生成 */
-#define TR_FLAG_702                       2122 /* 0x084a 領域確保による自動生成 */
-#define TR_FLAG_703                       2123 /* 0x084b 領域確保による自動生成 */
-#define TR_FLAG_704                       2124 /* 0x084c 領域確保による自動生成 */
-#define TR_FLAG_705                       2125 /* 0x084d 領域確保による自動生成 */
-#define TR_FLAG_706                       2126 /* 0x084e 領域確保による自動生成 */
-#define TR_FLAG_707                       2127 /* 0x084f 領域確保による自動生成 */
-#define TR_FLAG_708                       2128 /* 0x0850 領域確保による自動生成 */
-#define TR_FLAG_709                       2129 /* 0x0851 領域確保による自動生成 */
-#define TR_FLAG_710                       2130 /* 0x0852 領域確保による自動生成 */
-#define TR_FLAG_711                       2131 /* 0x0853 領域確保による自動生成 */
-#define TR_FLAG_712                       2132 /* 0x0854 領域確保による自動生成 */
-#define TR_FLAG_713                       2133 /* 0x0855 領域確保による自動生成 */
-#define TR_FLAG_714                       2134 /* 0x0856 領域確保による自動生成 */
-#define TR_FLAG_715                       2135 /* 0x0857 領域確保による自動生成 */
-#define TR_FLAG_716                       2136 /* 0x0858 領域確保による自動生成 */
-#define TR_FLAG_717                       2137 /* 0x0859 領域確保による自動生成 */
-#define TR_FLAG_718                       2138 /* 0x085a 領域確保による自動生成 */
-#define TR_FLAG_719                       2139 /* 0x085b 領域確保による自動生成 */
-#define TR_FLAG_720                       2140 /* 0x085c 領域確保による自動生成 */
-#define TR_FLAG_721                       2141 /* 0x085d 領域確保による自動生成 */
-#define TR_FLAG_722                       2142 /* 0x085e 領域確保による自動生成 */
-#define TR_FLAG_723                       2143 /* 0x085f 領域確保による自動生成 */
-#define TR_FLAG_724                       2144 /* 0x0860 領域確保による自動生成 */
-#define TR_FLAG_725                       2145 /* 0x0861 領域確保による自動生成 */
-#define TR_FLAG_726                       2146 /* 0x0862 領域確保による自動生成 */
-#define TR_FLAG_727                       2147 /* 0x0863 領域確保による自動生成 */
-#define TR_FLAG_728                       2148 /* 0x0864 領域確保による自動生成 */
-#define TR_FLAG_729                       2149 /* 0x0865 領域確保による自動生成 */
-#define TR_FLAG_730                       2150 /* 0x0866 領域確保による自動生成 */
-#define TR_FLAG_731                       2151 /* 0x0867 領域確保による自動生成 */
-#define TR_FLAG_732                       2152 /* 0x0868 領域確保による自動生成 */
-#define TR_FLAG_733                       2153 /* 0x0869 領域確保による自動生成 */
-#define TR_FLAG_734                       2154 /* 0x086a 領域確保による自動生成 */
-#define TR_FLAG_735                       2155 /* 0x086b 領域確保による自動生成 */
-#define TR_FLAG_736                       2156 /* 0x086c 領域確保による自動生成 */
-#define TR_FLAG_737                       2157 /* 0x086d 領域確保による自動生成 */
-#define TR_FLAG_738                       2158 /* 0x086e 領域確保による自動生成 */
-#define TR_FLAG_739                       2159 /* 0x086f 領域確保による自動生成 */
-#define TR_FLAG_740                       2160 /* 0x0870 領域確保による自動生成 */
-#define TR_FLAG_741                       2161 /* 0x0871 領域確保による自動生成 */
-#define TR_FLAG_742                       2162 /* 0x0872 領域確保による自動生成 */
-#define TR_FLAG_743                       2163 /* 0x0873 領域確保による自動生成 */
-#define TR_FLAG_744                       2164 /* 0x0874 領域確保による自動生成 */
-#define TR_FLAG_745                       2165 /* 0x0875 領域確保による自動生成 */
-#define TR_FLAG_746                       2166 /* 0x0876 領域確保による自動生成 */
-#define TR_FLAG_747                       2167 /* 0x0877 領域確保による自動生成 */
-#define TR_FLAG_748                       2168 /* 0x0878 領域確保による自動生成 */
-#define TR_FLAG_749                       2169 /* 0x0879 領域確保による自動生成 */
-#define TR_FLAG_750                       2170 /* 0x087a 領域確保による自動生成 */
-#define TR_FLAG_751                       2171 /* 0x087b 領域確保による自動生成 */
-#define TR_FLAG_752                       2172 /* 0x087c 領域確保による自動生成 */
-#define TR_FLAG_753                       2173 /* 0x087d 領域確保による自動生成 */
-#define TR_FLAG_754                       2174 /* 0x087e 領域確保による自動生成 */
-#define TR_FLAG_755                       2175 /* 0x087f 領域確保による自動生成 */
-#define TR_FLAG_756                       2176 /* 0x0880 領域確保による自動生成 */
-#define TR_FLAG_757                       2177 /* 0x0881 領域確保による自動生成 */
-#define TR_FLAG_758                       2178 /* 0x0882 領域確保による自動生成 */
-#define TR_FLAG_759                       2179 /* 0x0883 領域確保による自動生成 */
-#define TR_FLAG_760                       2180 /* 0x0884 領域確保による自動生成 */
-#define TR_FLAG_761                       2181 /* 0x0885 領域確保による自動生成 */
-#define TR_FLAG_762                       2182 /* 0x0886 領域確保による自動生成 */
-#define TR_FLAG_763                       2183 /* 0x0887 領域確保による自動生成 */
-#define TR_FLAG_764                       2184 /* 0x0888 領域確保による自動生成 */
-#define TR_FLAG_765                       2185 /* 0x0889 領域確保による自動生成 */
-#define TR_FLAG_766                       2186 /* 0x088a 領域確保による自動生成 */
-#define TR_FLAG_767                       2187 /* 0x088b 領域確保による自動生成 */
-#define TR_FLAG_768                       2188 /* 0x088c 領域確保による自動生成 */
-#define TR_FLAG_769                       2189 /* 0x088d 領域確保による自動生成 */
-#define TR_FLAG_770                       2190 /* 0x088e 領域確保による自動生成 */
-#define TR_FLAG_771                       2191 /* 0x088f 領域確保による自動生成 */
-#define TR_FLAG_772                       2192 /* 0x0890 領域確保による自動生成 */
-#define TR_FLAG_773                       2193 /* 0x0891 領域確保による自動生成 */
-#define TR_FLAG_774                       2194 /* 0x0892 領域確保による自動生成 */
-#define TR_FLAG_775                       2195 /* 0x0893 領域確保による自動生成 */
-#define TR_FLAG_776                       2196 /* 0x0894 領域確保による自動生成 */
-#define TR_FLAG_777                       2197 /* 0x0895 領域確保による自動生成 */
-#define TR_FLAG_778                       2198 /* 0x0896 領域確保による自動生成 */
-#define TR_FLAG_779                       2199 /* 0x0897 領域確保による自動生成 */
-#define TR_FLAG_780                       2200 /* 0x0898 領域確保による自動生成 */
-#define TR_FLAG_781                       2201 /* 0x0899 領域確保による自動生成 */
-#define TR_FLAG_782                       2202 /* 0x089a 領域確保による自動生成 */
-#define TR_FLAG_783                       2203 /* 0x089b 領域確保による自動生成 */
-#define TR_FLAG_784                       2204 /* 0x089c 領域確保による自動生成 */
-#define TR_FLAG_785                       2205 /* 0x089d 領域確保による自動生成 */
-#define TR_FLAG_786                       2206 /* 0x089e 領域確保による自動生成 */
-#define TR_FLAG_787                       2207 /* 0x089f 領域確保による自動生成 */
-#define TR_FLAG_788                       2208 /* 0x08a0 領域確保による自動生成 */
-#define TR_FLAG_789                       2209 /* 0x08a1 領域確保による自動生成 */
-#define TR_FLAG_790                       2210 /* 0x08a2 領域確保による自動生成 */
-#define TR_FLAG_791                       2211 /* 0x08a3 領域確保による自動生成 */
-#define TR_FLAG_792                       2212 /* 0x08a4 領域確保による自動生成 */
-#define TR_FLAG_793                       2213 /* 0x08a5 領域確保による自動生成 */
-#define TR_FLAG_794                       2214 /* 0x08a6 領域確保による自動生成 */
-#define TR_FLAG_795                       2215 /* 0x08a7 領域確保による自動生成 */
-#define TR_FLAG_796                       2216 /* 0x08a8 領域確保による自動生成 */
-#define TR_FLAG_797                       2217 /* 0x08a9 領域確保による自動生成 */
-#define TR_FLAG_798                       2218 /* 0x08aa 領域確保による自動生成 */
-#define TR_FLAG_799                       2219 /* 0x08ab 領域確保による自動生成 */
-#define TR_FLAG_800                       2220 /* 0x08ac 領域確保による自動生成 */
-#define TR_FLAG_801                       2221 /* 0x08ad 領域確保による自動生成 */
-#define TR_FLAG_802                       2222 /* 0x08ae 領域確保による自動生成 */
-#define TR_FLAG_803                       2223 /* 0x08af 領域確保による自動生成 */
-#define TR_FLAG_804                       2224 /* 0x08b0 領域確保による自動生成 */
-#define TR_FLAG_805                       2225 /* 0x08b1 領域確保による自動生成 */
-#define TR_FLAG_806                       2226 /* 0x08b2 領域確保による自動生成 */
-#define TR_FLAG_807                       2227 /* 0x08b3 領域確保による自動生成 */
-#define TR_FLAG_808                       2228 /* 0x08b4 領域確保による自動生成 */
-#define TR_FLAG_809                       2229 /* 0x08b5 領域確保による自動生成 */
-#define TR_FLAG_810                       2230 /* 0x08b6 領域確保による自動生成 */
-#define TR_FLAG_811                       2231 /* 0x08b7 領域確保による自動生成 */
-#define TR_FLAG_812                       2232 /* 0x08b8 領域確保による自動生成 */
-#define TR_FLAG_813                       2233 /* 0x08b9 領域確保による自動生成 */
-#define TR_FLAG_814                       2234 /* 0x08ba 領域確保による自動生成 */
-#define TR_FLAG_815                       2235 /* 0x08bb 領域確保による自動生成 */
-#define TR_FLAG_816                       2236 /* 0x08bc 領域確保による自動生成 */
-#define TR_FLAG_817                       2237 /* 0x08bd 領域確保による自動生成 */
-#define TR_FLAG_818                       2238 /* 0x08be 領域確保による自動生成 */
-#define TR_FLAG_819                       2239 /* 0x08bf 領域確保による自動生成 */
-#define TR_FLAG_820                       2240 /* 0x08c0 領域確保による自動生成 */
-#define TR_FLAG_821                       2241 /* 0x08c1 領域確保による自動生成 */
-#define TR_FLAG_822                       2242 /* 0x08c2 領域確保による自動生成 */
-#define TR_FLAG_823                       2243 /* 0x08c3 領域確保による自動生成 */
-#define TR_FLAG_824                       2244 /* 0x08c4 領域確保による自動生成 */
-#define TR_FLAG_825                       2245 /* 0x08c5 領域確保による自動生成 */
-#define TR_FLAG_826                       2246 /* 0x08c6 領域確保による自動生成 */
-#define TR_FLAG_827                       2247 /* 0x08c7 領域確保による自動生成 */
-#define TR_FLAG_828                       2248 /* 0x08c8 領域確保による自動生成 */
-#define TR_FLAG_829                       2249 /* 0x08c9 領域確保による自動生成 */
-#define TR_FLAG_830                       2250 /* 0x08ca 領域確保による自動生成 */
-#define TR_FLAG_831                       2251 /* 0x08cb 領域確保による自動生成 */
-#define TR_FLAG_832                       2252 /* 0x08cc 領域確保による自動生成 */
-#define TR_FLAG_833                       2253 /* 0x08cd 領域確保による自動生成 */
-#define TR_FLAG_834                       2254 /* 0x08ce 領域確保による自動生成 */
-#define TR_FLAG_835                       2255 /* 0x08cf 領域確保による自動生成 */
-#define TR_FLAG_836                       2256 /* 0x08d0 領域確保による自動生成 */
-#define TR_FLAG_837                       2257 /* 0x08d1 領域確保による自動生成 */
-#define TR_FLAG_838                       2258 /* 0x08d2 領域確保による自動生成 */
-#define TR_FLAG_839                       2259 /* 0x08d3 領域確保による自動生成 */
-#define TR_FLAG_840                       2260 /* 0x08d4 領域確保による自動生成 */
-#define TR_FLAG_841                       2261 /* 0x08d5 領域確保による自動生成 */
-#define TR_FLAG_842                       2262 /* 0x08d6 領域確保による自動生成 */
-#define TR_FLAG_843                       2263 /* 0x08d7 領域確保による自動生成 */
-#define TR_FLAG_844                       2264 /* 0x08d8 領域確保による自動生成 */
-#define TR_FLAG_845                       2265 /* 0x08d9 領域確保による自動生成 */
-#define TR_FLAG_846                       2266 /* 0x08da 領域確保による自動生成 */
-#define TR_FLAG_847                       2267 /* 0x08db 領域確保による自動生成 */
-#define TR_FLAG_848                       2268 /* 0x08dc 領域確保による自動生成 */
-#define TR_FLAG_849                       2269 /* 0x08dd 領域確保による自動生成 */
-#define TR_FLAG_850                       2270 /* 0x08de 領域確保による自動生成 */
-#define TR_FLAG_851                       2271 /* 0x08df 領域確保による自動生成 */
-#define TR_FLAG_852                       2272 /* 0x08e0 領域確保による自動生成 */
-#define TR_FLAG_853                       2273 /* 0x08e1 領域確保による自動生成 */
-#define TR_FLAG_854                       2274 /* 0x08e2 領域確保による自動生成 */
-#define TR_FLAG_855                       2275 /* 0x08e3 領域確保による自動生成 */
-#define TR_FLAG_856                       2276 /* 0x08e4 領域確保による自動生成 */
-#define TR_FLAG_857                       2277 /* 0x08e5 領域確保による自動生成 */
-#define TR_FLAG_858                       2278 /* 0x08e6 領域確保による自動生成 */
-#define TR_FLAG_859                       2279 /* 0x08e7 領域確保による自動生成 */
-#define TR_FLAG_860                       2280 /* 0x08e8 領域確保による自動生成 */
-#define TR_FLAG_861                       2281 /* 0x08e9 領域確保による自動生成 */
-#define TR_FLAG_862                       2282 /* 0x08ea 領域確保による自動生成 */
-#define TR_FLAG_863                       2283 /* 0x08eb 領域確保による自動生成 */
-#define TR_FLAG_864                       2284 /* 0x08ec 領域確保による自動生成 */
-#define TR_FLAG_865                       2285 /* 0x08ed 領域確保による自動生成 */
-#define TR_FLAG_866                       2286 /* 0x08ee 領域確保による自動生成 */
-#define TR_FLAG_867                       2287 /* 0x08ef 領域確保による自動生成 */
-#define TR_FLAG_868                       2288 /* 0x08f0 領域確保による自動生成 */
-#define TR_FLAG_869                       2289 /* 0x08f1 領域確保による自動生成 */
-#define TR_FLAG_870                       2290 /* 0x08f2 領域確保による自動生成 */
-#define TR_FLAG_871                       2291 /* 0x08f3 領域確保による自動生成 */
-#define TR_FLAG_872                       2292 /* 0x08f4 領域確保による自動生成 */
-#define TR_FLAG_873                       2293 /* 0x08f5 領域確保による自動生成 */
-#define TR_FLAG_874                       2294 /* 0x08f6 領域確保による自動生成 */
-#define TR_FLAG_875                       2295 /* 0x08f7 領域確保による自動生成 */
-#define TR_FLAG_876                       2296 /* 0x08f8 領域確保による自動生成 */
-#define TR_FLAG_877                       2297 /* 0x08f9 領域確保による自動生成 */
-#define TR_FLAG_878                       2298 /* 0x08fa 領域確保による自動生成 */
-#define TR_FLAG_879                       2299 /* 0x08fb 領域確保による自動生成 */
-#define TR_FLAG_880                       2300 /* 0x08fc 領域確保による自動生成 */
-#define TR_FLAG_881                       2301 /* 0x08fd 領域確保による自動生成 */
-#define TR_FLAG_882                       2302 /* 0x08fe 領域確保による自動生成 */
-#define TR_FLAG_883                       2303 /* 0x08ff 領域確保による自動生成 */
-#define TR_FLAG_884                       2304 /* 0x0900 領域確保による自動生成 */
-#define TR_FLAG_885                       2305 /* 0x0901 領域確保による自動生成 */
-#define TR_FLAG_886                       2306 /* 0x0902 領域確保による自動生成 */
-#define TR_FLAG_887                       2307 /* 0x0903 領域確保による自動生成 */
-#define TR_FLAG_888                       2308 /* 0x0904 領域確保による自動生成 */
-#define TR_FLAG_889                       2309 /* 0x0905 領域確保による自動生成 */
-#define TR_FLAG_890                       2310 /* 0x0906 領域確保による自動生成 */
-#define TR_FLAG_891                       2311 /* 0x0907 領域確保による自動生成 */
-#define TR_FLAG_892                       2312 /* 0x0908 領域確保による自動生成 */
-#define TR_FLAG_893                       2313 /* 0x0909 領域確保による自動生成 */
-#define TR_FLAG_894                       2314 /* 0x090a 領域確保による自動生成 */
-#define TR_FLAG_895                       2315 /* 0x090b 領域確保による自動生成 */
-#define TR_FLAG_896                       2316 /* 0x090c 領域確保による自動生成 */
-#define TR_FLAG_897                       2317 /* 0x090d 領域確保による自動生成 */
-#define TR_FLAG_898                       2318 /* 0x090e 領域確保による自動生成 */
-#define TR_FLAG_899                       2319 /* 0x090f 領域確保による自動生成 */
+#define FV_FLD_ITEM_0                     1138 /* 0x0472  */
+#define FV_FLD_ITEM_1                     1139 /* 0x0473  */
+#define FV_FLD_ITEM_2                     1140 /* 0x0474  */
+#define FV_FLD_ITEM_3                     1141 /* 0x0475  */
+#define FV_FLD_ITEM_4                     1142 /* 0x0476  */
+#define FV_FLD_ITEM_5                     1143 /* 0x0477  */
+#define FV_FLD_ITEM_6                     1144 /* 0x0478  */
+#define FV_FLD_ITEM_7                     1145 /* 0x0479  */
+#define FV_FLD_ITEM_8                     1146 /* 0x047a  */
+#define FV_FLD_ITEM_9                     1147 /* 0x047b  */
+#define FV_FLD_ITEM_10                    1148 /* 0x047c  */
+#define FV_FLD_ITEM_11                    1149 /* 0x047d  */
+#define FV_FLD_ITEM_12                    1150 /* 0x047e  */
+#define FV_FLD_ITEM_13                    1151 /* 0x047f  */
+#define FV_FLD_ITEM_14                    1152 /* 0x0480  */
+#define FV_FLD_ITEM_15                    1153 /* 0x0481  */
+#define FV_FLD_ITEM_16                    1154 /* 0x0482  */
+#define FV_FLD_ITEM_17                    1155 /* 0x0483  */
+#define FV_FLD_ITEM_18                    1156 /* 0x0484  */
+#define FV_FLD_ITEM_19                    1157 /* 0x0485  */
+#define FV_FLD_ITEM_20                    1158 /* 0x0486  */
+#define FV_FLD_ITEM_21                    1159 /* 0x0487  */
+#define FV_FLD_ITEM_22                    1160 /* 0x0488  */
+#define FV_FLD_ITEM_23                    1161 /* 0x0489  */
+#define FV_FLD_ITEM_24                    1162 /* 0x048a  */
+#define FV_FLD_ITEM_25                    1163 /* 0x048b  */
+#define FV_FLD_ITEM_26                    1164 /* 0x048c  */
+#define FV_FLD_ITEM_27                    1165 /* 0x048d  */
+#define FV_FLD_ITEM_28                    1166 /* 0x048e  */
+#define FV_FLD_ITEM_29                    1167 /* 0x048f  */
+#define FV_FLD_ITEM_30                    1168 /* 0x0490  */
+#define FV_FLD_ITEM_31                    1169 /* 0x0491  */
+#define FV_FLD_ITEM_32                    1170 /* 0x0492  */
+#define FV_FLD_ITEM_33                    1171 /* 0x0493  */
+#define FV_FLD_ITEM_34                    1172 /* 0x0494  */
+#define FV_FLD_ITEM_35                    1173 /* 0x0495  */
+#define FV_FLD_ITEM_36                    1174 /* 0x0496  */
+#define FV_FLD_ITEM_37                    1175 /* 0x0497  */
+#define FV_FLD_ITEM_38                    1176 /* 0x0498  */
+#define FV_FLD_ITEM_39                    1177 /* 0x0499  */
+#define FV_FLD_ITEM_40                    1178 /* 0x049a  */
+#define FV_FLD_ITEM_41                    1179 /* 0x049b  */
+#define FV_FLD_ITEM_42                    1180 /* 0x049c  */
+#define FV_FLD_ITEM_43                    1181 /* 0x049d  */
+#define FV_FLD_ITEM_44                    1182 /* 0x049e  */
+#define FV_FLD_ITEM_45                    1183 /* 0x049f  */
+#define FV_FLD_ITEM_46                    1184 /* 0x04a0  */
+#define FV_FLD_ITEM_47                    1185 /* 0x04a1  */
+#define FV_FLD_ITEM_48                    1186 /* 0x04a2  */
+#define FV_FLD_ITEM_49                    1187 /* 0x04a3  */
+#define FV_FLD_ITEM_50                    1188 /* 0x04a4  */
+#define FV_FLD_ITEM_51                    1189 /* 0x04a5  */
+#define FV_FLD_ITEM_52                    1190 /* 0x04a6  */
+#define FV_FLD_ITEM_53                    1191 /* 0x04a7  */
+#define FV_FLD_ITEM_54                    1192 /* 0x04a8  */
+#define FV_FLD_ITEM_55                    1193 /* 0x04a9  */
+#define FV_FLD_ITEM_56                    1194 /* 0x04aa  */
+#define FV_FLD_ITEM_57                    1195 /* 0x04ab  */
+#define FV_FLD_ITEM_58                    1196 /* 0x04ac  */
+#define FV_FLD_ITEM_59                    1197 /* 0x04ad  */
+#define FV_FLD_ITEM_60                    1198 /* 0x04ae  */
+#define FV_FLD_ITEM_61                    1199 /* 0x04af  */
+#define FV_FLD_ITEM_62                    1200 /* 0x04b0  */
+#define FV_FLD_ITEM_63                    1201 /* 0x04b1  */
+#define FV_FLD_ITEM_64                    1202 /* 0x04b2  */
+#define FV_FLD_ITEM_65                    1203 /* 0x04b3  */
+#define FV_FLD_ITEM_66                    1204 /* 0x04b4  */
+#define FV_FLD_ITEM_67                    1205 /* 0x04b5  */
+#define FV_FLD_ITEM_68                    1206 /* 0x04b6  */
+#define FV_FLD_ITEM_69                    1207 /* 0x04b7  */
+#define FV_FLD_ITEM_70                    1208 /* 0x04b8  */
+#define FV_FLD_ITEM_71                    1209 /* 0x04b9  */
+#define FV_FLD_ITEM_72                    1210 /* 0x04ba  */
+#define FV_FLD_ITEM_73                    1211 /* 0x04bb  */
+#define FV_FLD_ITEM_74                    1212 /* 0x04bc  */
+#define FV_FLD_ITEM_75                    1213 /* 0x04bd  */
+#define FV_FLD_ITEM_76                    1214 /* 0x04be  */
+#define FV_FLD_ITEM_77                    1215 /* 0x04bf  */
+#define FV_FLD_ITEM_78                    1216 /* 0x04c0  */
+#define FV_FLD_ITEM_79                    1217 /* 0x04c1  */
+#define FV_FLD_ITEM_80                    1218 /* 0x04c2  */
+#define FV_FLD_ITEM_81                    1219 /* 0x04c3  */
+#define FV_FLD_ITEM_82                    1220 /* 0x04c4  */
+#define FV_FLD_ITEM_83                    1221 /* 0x04c5  */
+#define FV_FLD_ITEM_84                    1222 /* 0x04c6  */
+#define FV_FLD_ITEM_85                    1223 /* 0x04c7  */
+#define FV_FLD_ITEM_86                    1224 /* 0x04c8  */
+#define FV_FLD_ITEM_87                    1225 /* 0x04c9  */
+#define FV_FLD_ITEM_88                    1226 /* 0x04ca  */
+#define FV_FLD_ITEM_89                    1227 /* 0x04cb  */
+#define FV_FLD_ITEM_90                    1228 /* 0x04cc  */
+#define FV_FLD_ITEM_91                    1229 /* 0x04cd  */
+#define FV_FLD_ITEM_92                    1230 /* 0x04ce  */
+#define FV_FLD_ITEM_93                    1231 /* 0x04cf  */
+#define FV_FLD_ITEM_94                    1232 /* 0x04d0  */
+#define FV_FLD_ITEM_95                    1233 /* 0x04d1  */
+#define FV_FLD_ITEM_96                    1234 /* 0x04d2  */
+#define FV_FLD_ITEM_97                    1235 /* 0x04d3  */
+#define FV_FLD_ITEM_98                    1236 /* 0x04d4  */
+#define FV_FLD_ITEM_99                    1237 /* 0x04d5  */
+#define FV_FLD_ITEM_100                   1238 /* 0x04d6  */
+#define FV_FLD_ITEM_101                   1239 /* 0x04d7  */
+#define FV_FLD_ITEM_102                   1240 /* 0x04d8  */
+#define FV_FLD_ITEM_103                   1241 /* 0x04d9  */
+#define FV_FLD_ITEM_104                   1242 /* 0x04da  */
+#define FV_FLD_ITEM_105                   1243 /* 0x04db  */
+#define FV_FLD_ITEM_106                   1244 /* 0x04dc  */
+#define FV_FLD_ITEM_107                   1245 /* 0x04dd  */
+#define FV_FLD_ITEM_108                   1246 /* 0x04de  */
+#define FV_FLD_ITEM_109                   1247 /* 0x04df  */
+#define FV_FLD_ITEM_110                   1248 /* 0x04e0  */
+#define FV_FLD_ITEM_111                   1249 /* 0x04e1  */
+#define FV_FLD_ITEM_112                   1250 /* 0x04e2  */
+#define FV_FLD_ITEM_113                   1251 /* 0x04e3  */
+#define FV_FLD_ITEM_114                   1252 /* 0x04e4  */
+#define FV_FLD_ITEM_115                   1253 /* 0x04e5  */
+#define FV_FLD_ITEM_116                   1254 /* 0x04e6  */
+#define FV_FLD_ITEM_117                   1255 /* 0x04e7  */
+#define FV_FLD_ITEM_118                   1256 /* 0x04e8  */
+#define FV_FLD_ITEM_119                   1257 /* 0x04e9  */
+#define FV_FLD_ITEM_120                   1258 /* 0x04ea  */
+#define FV_FLD_ITEM_121                   1259 /* 0x04eb  */
+#define FV_FLD_ITEM_122                   1260 /* 0x04ec  */
+#define FV_FLD_ITEM_123                   1261 /* 0x04ed  */
+#define FV_FLD_ITEM_124                   1262 /* 0x04ee  */
+#define FV_FLD_ITEM_125                   1263 /* 0x04ef  */
+#define FV_FLD_ITEM_126                   1264 /* 0x04f0  */
+#define FV_FLD_ITEM_127                   1265 /* 0x04f1  */
+#define FV_FLD_ITEM_128                   1266 /* 0x04f2  */
+#define FV_FLD_ITEM_129                   1267 /* 0x04f3  */
+#define FV_FLD_ITEM_130                   1268 /* 0x04f4  */
+#define FV_FLD_ITEM_131                   1269 /* 0x04f5  */
+#define FV_FLD_ITEM_132                   1270 /* 0x04f6  */
+#define FV_FLD_ITEM_133                   1271 /* 0x04f7  */
+#define FV_FLD_ITEM_134                   1272 /* 0x04f8  */
+#define FV_FLD_ITEM_135                   1273 /* 0x04f9  */
+#define FV_FLD_ITEM_136                   1274 /* 0x04fa  */
+#define FV_FLD_ITEM_137                   1275 /* 0x04fb  */
+#define FV_FLD_ITEM_138                   1276 /* 0x04fc  */
+#define FV_FLD_ITEM_139                   1277 /* 0x04fd  */
+#define FV_FLD_ITEM_140                   1278 /* 0x04fe  */
+#define FV_FLD_ITEM_141                   1279 /* 0x04ff  */
+#define FV_FLD_ITEM_142                   1280 /* 0x0500  */
+#define FV_FLD_ITEM_143                   1281 /* 0x0501  */
+#define FV_FLD_ITEM_144                   1282 /* 0x0502  */
+#define FV_FLD_ITEM_145                   1283 /* 0x0503  */
+#define FV_FLD_ITEM_146                   1284 /* 0x0504  */
+#define FV_FLD_ITEM_147                   1285 /* 0x0505  */
+#define FV_FLD_ITEM_148                   1286 /* 0x0506  */
+#define FV_FLD_ITEM_149                   1287 /* 0x0507  */
+#define FV_FLD_ITEM_150                   1288 /* 0x0508  */
+#define FV_FLD_ITEM_151                   1289 /* 0x0509  */
+#define FV_FLD_ITEM_152                   1290 /* 0x050a  */
+#define FV_FLD_ITEM_153                   1291 /* 0x050b  */
+#define FV_FLD_ITEM_154                   1292 /* 0x050c  */
+#define FV_FLD_ITEM_155                   1293 /* 0x050d  */
+#define FV_FLD_ITEM_156                   1294 /* 0x050e  */
+#define FV_FLD_ITEM_157                   1295 /* 0x050f  */
+#define FV_FLD_ITEM_158                   1296 /* 0x0510  */
+#define FV_FLD_ITEM_159                   1297 /* 0x0511  */
+#define FV_FLD_ITEM_160                   1298 /* 0x0512  */
+#define FV_FLD_ITEM_161                   1299 /* 0x0513  */
+#define FV_FLD_ITEM_162                   1300 /* 0x0514  */
+#define FV_FLD_ITEM_163                   1301 /* 0x0515  */
+#define FV_FLD_ITEM_164                   1302 /* 0x0516  */
+#define FV_FLD_ITEM_165                   1303 /* 0x0517  */
+#define FV_FLD_ITEM_166                   1304 /* 0x0518  */
+#define FV_FLD_ITEM_167                   1305 /* 0x0519  */
+#define FV_FLD_ITEM_168                   1306 /* 0x051a  */
+#define FV_FLD_ITEM_169                   1307 /* 0x051b  */
+#define FV_FLD_ITEM_170                   1308 /* 0x051c  */
+#define FV_FLD_ITEM_171                   1309 /* 0x051d  */
+#define FV_FLD_ITEM_172                   1310 /* 0x051e  */
+#define FV_FLD_ITEM_173                   1311 /* 0x051f  */
+#define FV_FLD_ITEM_174                   1312 /* 0x0520  */
+#define FV_FLD_ITEM_175                   1313 /* 0x0521  */
+#define FV_FLD_ITEM_176                   1314 /* 0x0522  */
+#define FV_FLD_ITEM_177                   1315 /* 0x0523  */
+#define FV_FLD_ITEM_178                   1316 /* 0x0524  */
+#define FV_FLD_ITEM_179                   1317 /* 0x0525  */
+#define FV_FLD_ITEM_180                   1318 /* 0x0526  */
+#define FV_FLD_ITEM_181                   1319 /* 0x0527  */
+#define FV_FLD_ITEM_182                   1320 /* 0x0528  */
+#define FV_FLD_ITEM_183                   1321 /* 0x0529  */
+#define FV_FLD_ITEM_184                   1322 /* 0x052a  */
+#define FV_FLD_ITEM_185                   1323 /* 0x052b  */
+#define FV_FLD_ITEM_186                   1324 /* 0x052c  */
+#define FV_FLD_ITEM_187                   1325 /* 0x052d  */
+#define FV_FLD_ITEM_188                   1326 /* 0x052e  */
+#define FV_FLD_ITEM_189                   1327 /* 0x052f  */
+#define FV_FLD_ITEM_190                   1328 /* 0x0530  */
+#define FV_FLD_ITEM_191                   1329 /* 0x0531  */
+#define FV_FLD_ITEM_192                   1330 /* 0x0532  */
+#define FV_FLD_ITEM_193                   1331 /* 0x0533  */
+#define FV_FLD_ITEM_194                   1332 /* 0x0534  */
+#define FV_FLD_ITEM_195                   1333 /* 0x0535  */
+#define FV_FLD_ITEM_196                   1334 /* 0x0536  */
+#define FV_FLD_ITEM_197                   1335 /* 0x0537  */
+#define FV_FLD_ITEM_198                   1336 /* 0x0538  */
+#define FV_FLD_ITEM_199                   1337 /* 0x0539  */
+#define FV_FLD_ITEM_200                   1338 /* 0x053a  */
+#define FV_FLD_ITEM_201                   1339 /* 0x053b  */
+#define FV_FLD_ITEM_202                   1340 /* 0x053c  */
+#define FV_FLD_ITEM_203                   1341 /* 0x053d  */
+#define FV_FLD_ITEM_204                   1342 /* 0x053e  */
+#define FV_FLD_ITEM_205                   1343 /* 0x053f  */
+#define FV_FLD_ITEM_206                   1344 /* 0x0540  */
+#define FV_FLD_ITEM_207                   1345 /* 0x0541  */
+#define FV_FLD_ITEM_208                   1346 /* 0x0542  */
+#define FV_FLD_ITEM_209                   1347 /* 0x0543  */
+#define FV_FLD_ITEM_210                   1348 /* 0x0544  */
+#define FV_FLD_ITEM_211                   1349 /* 0x0545  */
+#define FV_FLD_ITEM_212                   1350 /* 0x0546  */
+#define FV_FLD_ITEM_213                   1351 /* 0x0547  */
+#define FV_FLD_ITEM_214                   1352 /* 0x0548  */
+#define FV_FLD_ITEM_215                   1353 /* 0x0549  */
+#define FV_FLD_ITEM_216                   1354 /* 0x054a  */
+#define FV_FLD_ITEM_217                   1355 /* 0x054b  */
+#define FV_FLD_ITEM_218                   1356 /* 0x054c  */
+#define FV_FLD_ITEM_219                   1357 /* 0x054d  */
+#define FV_FLD_ITEM_220                   1358 /* 0x054e  */
+#define FV_FLD_ITEM_221                   1359 /* 0x054f  */
+#define FV_FLD_ITEM_222                   1360 /* 0x0550  */
+#define FV_FLD_ITEM_223                   1361 /* 0x0551  */
+#define FV_FLD_ITEM_224                   1362 /* 0x0552  */
+#define FV_FLD_ITEM_225                   1363 /* 0x0553  */
+#define FV_FLD_ITEM_226                   1364 /* 0x0554  */
+#define FV_FLD_ITEM_227                   1365 /* 0x0555  */
+#define FV_FLD_ITEM_228                   1366 /* 0x0556  */
+#define FV_FLD_ITEM_229                   1367 /* 0x0557  */
+#define FV_FLD_ITEM_230                   1368 /* 0x0558  */
+#define FV_FLD_ITEM_231                   1369 /* 0x0559  */
+#define FV_FLD_ITEM_232                   1370 /* 0x055a  */
+#define FV_FLD_ITEM_233                   1371 /* 0x055b  */
+#define FV_FLD_ITEM_234                   1372 /* 0x055c  */
+#define FV_FLD_ITEM_235                   1373 /* 0x055d  */
+#define FV_FLD_ITEM_236                   1374 /* 0x055e  */
+#define FV_FLD_ITEM_237                   1375 /* 0x055f  */
+#define FV_FLD_ITEM_238                   1376 /* 0x0560  */
+#define FV_FLD_ITEM_239                   1377 /* 0x0561  */
+#define FV_FLD_ITEM_240                   1378 /* 0x0562  */
+#define FV_FLD_ITEM_241                   1379 /* 0x0563  */
+#define FV_FLD_ITEM_242                   1380 /* 0x0564  */
+#define FV_FLD_ITEM_243                   1381 /* 0x0565  */
+#define FV_FLD_ITEM_244                   1382 /* 0x0566  */
+#define FV_FLD_ITEM_245                   1383 /* 0x0567  */
+#define FV_FLD_ITEM_246                   1384 /* 0x0568  */
+#define FV_FLD_ITEM_247                   1385 /* 0x0569  */
+#define FV_FLD_ITEM_248                   1386 /* 0x056a  */
+#define FV_FLD_ITEM_249                   1387 /* 0x056b  */
+#define FV_FLD_ITEM_250                   1388 /* 0x056c  */
+#define FV_FLD_ITEM_251                   1389 /* 0x056d  */
+#define FV_FLD_ITEM_252                   1390 /* 0x056e  */
+#define FV_FLD_ITEM_253                   1391 /* 0x056f  */
+#define FV_FLD_ITEM_254                   1392 /* 0x0570  */
+#define FV_FLD_ITEM_255                   1393 /* 0x0571  */
+#define FV_FLD_ITEM_256                   1394 /* 0x0572  */
+#define FV_FLD_ITEM_257                   1395 /* 0x0573  */
+#define FV_FLD_ITEM_258                   1396 /* 0x0574  */
+#define FV_FLD_ITEM_259                   1397 /* 0x0575  */
+#define FV_FLD_ITEM_260                   1398 /* 0x0576  */
+#define FV_FLD_ITEM_261                   1399 /* 0x0577  */
+#define FV_FLD_ITEM_262                   1400 /* 0x0578  */
+#define FV_FLD_ITEM_263                   1401 /* 0x0579  */
+#define FV_FLD_ITEM_264                   1402 /* 0x057a  */
+#define FV_FLD_ITEM_265                   1403 /* 0x057b  */
+#define FV_FLD_ITEM_266                   1404 /* 0x057c  */
+#define FV_FLD_ITEM_267                   1405 /* 0x057d  */
+#define FV_FLD_ITEM_268                   1406 /* 0x057e  */
+#define FV_FLD_ITEM_269                   1407 /* 0x057f  */
+#define FV_FLD_ITEM_270                   1408 /* 0x0580  */
+#define FV_FLD_ITEM_271                   1409 /* 0x0581  */
+#define FV_FLD_ITEM_272                   1410 /* 0x0582  */
+#define FV_FLD_ITEM_273                   1411 /* 0x0583  */
+#define FV_FLD_ITEM_274                   1412 /* 0x0584  */
+#define FV_FLD_ITEM_275                   1413 /* 0x0585  */
+#define FV_FLD_ITEM_276                   1414 /* 0x0586  */
+#define FV_FLD_ITEM_277                   1415 /* 0x0587  */
+#define FV_FLD_ITEM_278                   1416 /* 0x0588  */
+#define FV_FLD_ITEM_279                   1417 /* 0x0589  */
+#define FV_FLD_ITEM_280                   1418 /* 0x058a  */
+#define FV_FLD_ITEM_281                   1419 /* 0x058b  */
+#define FV_FLD_ITEM_282                   1420 /* 0x058c  */
+#define FV_FLD_ITEM_283                   1421 /* 0x058d  */
+#define FV_FLD_ITEM_284                   1422 /* 0x058e  */
+#define FV_FLD_ITEM_285                   1423 /* 0x058f  */
+#define FV_FLD_ITEM_286                   1424 /* 0x0590  */
+#define FV_FLD_ITEM_287                   1425 /* 0x0591  */
+#define FV_FLD_ITEM_288                   1426 /* 0x0592  */
+#define FV_FLD_ITEM_289                   1427 /* 0x0593  */
+#define FV_FLD_ITEM_290                   1428 /* 0x0594  */
+#define FV_FLD_ITEM_291                   1429 /* 0x0595  */
+#define FV_FLD_ITEM_292                   1430 /* 0x0596  */
+#define FV_FLD_ITEM_293                   1431 /* 0x0597  */
+#define FV_FLD_ITEM_294                   1432 /* 0x0598  */
+#define FV_FLD_ITEM_295                   1433 /* 0x0599  */
+#define FV_FLD_ITEM_296                   1434 /* 0x059a  */
+#define FV_FLD_ITEM_297                   1435 /* 0x059b  */
+#define FV_FLD_ITEM_298                   1436 /* 0x059c  */
+#define FV_FLD_ITEM_299                   1437 /* 0x059d  */
+#define FV_FLD_ITEM_300                   1438 /* 0x059e  */
+#define FV_FLD_ITEM_301                   1439 /* 0x059f  */
+#define FV_FLD_ITEM_302                   1440 /* 0x05a0  */
+#define FV_FLD_ITEM_303                   1441 /* 0x05a1  */
+#define FV_FLD_ITEM_304                   1442 /* 0x05a2  */
+#define FV_FLD_ITEM_305                   1443 /* 0x05a3  */
+
+#define FV_FLD_ITEM_AREA_END              1507 /* 0x05e3  */
+
+
+/* flags "" 1520 ～ 2319 */
+
+#define TR_FLAG_AREA_START                1520 /* 0x05f0  */
+
+#define TR_FLAG_000                       1520 /* 0x05f0 領域確保による自動生成 */
+#define TR_FLAG_001                       1521 /* 0x05f1 領域確保による自動生成 */
+#define TR_FLAG_002                       1522 /* 0x05f2 領域確保による自動生成 */
+#define TR_FLAG_003                       1523 /* 0x05f3 領域確保による自動生成 */
+#define TR_FLAG_004                       1524 /* 0x05f4 領域確保による自動生成 */
+#define TR_FLAG_005                       1525 /* 0x05f5 領域確保による自動生成 */
+#define TR_FLAG_006                       1526 /* 0x05f6 領域確保による自動生成 */
+#define TR_FLAG_007                       1527 /* 0x05f7 領域確保による自動生成 */
+#define TR_FLAG_008                       1528 /* 0x05f8 領域確保による自動生成 */
+#define TR_FLAG_009                       1529 /* 0x05f9 領域確保による自動生成 */
+#define TR_FLAG_010                       1530 /* 0x05fa 領域確保による自動生成 */
+#define TR_FLAG_011                       1531 /* 0x05fb 領域確保による自動生成 */
+#define TR_FLAG_012                       1532 /* 0x05fc 領域確保による自動生成 */
+#define TR_FLAG_013                       1533 /* 0x05fd 領域確保による自動生成 */
+#define TR_FLAG_014                       1534 /* 0x05fe 領域確保による自動生成 */
+#define TR_FLAG_015                       1535 /* 0x05ff 領域確保による自動生成 */
+#define TR_FLAG_016                       1536 /* 0x0600 領域確保による自動生成 */
+#define TR_FLAG_017                       1537 /* 0x0601 領域確保による自動生成 */
+#define TR_FLAG_018                       1538 /* 0x0602 領域確保による自動生成 */
+#define TR_FLAG_019                       1539 /* 0x0603 領域確保による自動生成 */
+#define TR_FLAG_020                       1540 /* 0x0604 領域確保による自動生成 */
+#define TR_FLAG_021                       1541 /* 0x0605 領域確保による自動生成 */
+#define TR_FLAG_022                       1542 /* 0x0606 領域確保による自動生成 */
+#define TR_FLAG_023                       1543 /* 0x0607 領域確保による自動生成 */
+#define TR_FLAG_024                       1544 /* 0x0608 領域確保による自動生成 */
+#define TR_FLAG_025                       1545 /* 0x0609 領域確保による自動生成 */
+#define TR_FLAG_026                       1546 /* 0x060a 領域確保による自動生成 */
+#define TR_FLAG_027                       1547 /* 0x060b 領域確保による自動生成 */
+#define TR_FLAG_028                       1548 /* 0x060c 領域確保による自動生成 */
+#define TR_FLAG_029                       1549 /* 0x060d 領域確保による自動生成 */
+#define TR_FLAG_030                       1550 /* 0x060e 領域確保による自動生成 */
+#define TR_FLAG_031                       1551 /* 0x060f 領域確保による自動生成 */
+#define TR_FLAG_032                       1552 /* 0x0610 領域確保による自動生成 */
+#define TR_FLAG_033                       1553 /* 0x0611 領域確保による自動生成 */
+#define TR_FLAG_034                       1554 /* 0x0612 領域確保による自動生成 */
+#define TR_FLAG_035                       1555 /* 0x0613 領域確保による自動生成 */
+#define TR_FLAG_036                       1556 /* 0x0614 領域確保による自動生成 */
+#define TR_FLAG_037                       1557 /* 0x0615 領域確保による自動生成 */
+#define TR_FLAG_038                       1558 /* 0x0616 領域確保による自動生成 */
+#define TR_FLAG_039                       1559 /* 0x0617 領域確保による自動生成 */
+#define TR_FLAG_040                       1560 /* 0x0618 領域確保による自動生成 */
+#define TR_FLAG_041                       1561 /* 0x0619 領域確保による自動生成 */
+#define TR_FLAG_042                       1562 /* 0x061a 領域確保による自動生成 */
+#define TR_FLAG_043                       1563 /* 0x061b 領域確保による自動生成 */
+#define TR_FLAG_044                       1564 /* 0x061c 領域確保による自動生成 */
+#define TR_FLAG_045                       1565 /* 0x061d 領域確保による自動生成 */
+#define TR_FLAG_046                       1566 /* 0x061e 領域確保による自動生成 */
+#define TR_FLAG_047                       1567 /* 0x061f 領域確保による自動生成 */
+#define TR_FLAG_048                       1568 /* 0x0620 領域確保による自動生成 */
+#define TR_FLAG_049                       1569 /* 0x0621 領域確保による自動生成 */
+#define TR_FLAG_050                       1570 /* 0x0622 領域確保による自動生成 */
+#define TR_FLAG_051                       1571 /* 0x0623 領域確保による自動生成 */
+#define TR_FLAG_052                       1572 /* 0x0624 領域確保による自動生成 */
+#define TR_FLAG_053                       1573 /* 0x0625 領域確保による自動生成 */
+#define TR_FLAG_054                       1574 /* 0x0626 領域確保による自動生成 */
+#define TR_FLAG_055                       1575 /* 0x0627 領域確保による自動生成 */
+#define TR_FLAG_056                       1576 /* 0x0628 領域確保による自動生成 */
+#define TR_FLAG_057                       1577 /* 0x0629 領域確保による自動生成 */
+#define TR_FLAG_058                       1578 /* 0x062a 領域確保による自動生成 */
+#define TR_FLAG_059                       1579 /* 0x062b 領域確保による自動生成 */
+#define TR_FLAG_060                       1580 /* 0x062c 領域確保による自動生成 */
+#define TR_FLAG_061                       1581 /* 0x062d 領域確保による自動生成 */
+#define TR_FLAG_062                       1582 /* 0x062e 領域確保による自動生成 */
+#define TR_FLAG_063                       1583 /* 0x062f 領域確保による自動生成 */
+#define TR_FLAG_064                       1584 /* 0x0630 領域確保による自動生成 */
+#define TR_FLAG_065                       1585 /* 0x0631 領域確保による自動生成 */
+#define TR_FLAG_066                       1586 /* 0x0632 領域確保による自動生成 */
+#define TR_FLAG_067                       1587 /* 0x0633 領域確保による自動生成 */
+#define TR_FLAG_068                       1588 /* 0x0634 領域確保による自動生成 */
+#define TR_FLAG_069                       1589 /* 0x0635 領域確保による自動生成 */
+#define TR_FLAG_070                       1590 /* 0x0636 領域確保による自動生成 */
+#define TR_FLAG_071                       1591 /* 0x0637 領域確保による自動生成 */
+#define TR_FLAG_072                       1592 /* 0x0638 領域確保による自動生成 */
+#define TR_FLAG_073                       1593 /* 0x0639 領域確保による自動生成 */
+#define TR_FLAG_074                       1594 /* 0x063a 領域確保による自動生成 */
+#define TR_FLAG_075                       1595 /* 0x063b 領域確保による自動生成 */
+#define TR_FLAG_076                       1596 /* 0x063c 領域確保による自動生成 */
+#define TR_FLAG_077                       1597 /* 0x063d 領域確保による自動生成 */
+#define TR_FLAG_078                       1598 /* 0x063e 領域確保による自動生成 */
+#define TR_FLAG_079                       1599 /* 0x063f 領域確保による自動生成 */
+#define TR_FLAG_080                       1600 /* 0x0640 領域確保による自動生成 */
+#define TR_FLAG_081                       1601 /* 0x0641 領域確保による自動生成 */
+#define TR_FLAG_082                       1602 /* 0x0642 領域確保による自動生成 */
+#define TR_FLAG_083                       1603 /* 0x0643 領域確保による自動生成 */
+#define TR_FLAG_084                       1604 /* 0x0644 領域確保による自動生成 */
+#define TR_FLAG_085                       1605 /* 0x0645 領域確保による自動生成 */
+#define TR_FLAG_086                       1606 /* 0x0646 領域確保による自動生成 */
+#define TR_FLAG_087                       1607 /* 0x0647 領域確保による自動生成 */
+#define TR_FLAG_088                       1608 /* 0x0648 領域確保による自動生成 */
+#define TR_FLAG_089                       1609 /* 0x0649 領域確保による自動生成 */
+#define TR_FLAG_090                       1610 /* 0x064a 領域確保による自動生成 */
+#define TR_FLAG_091                       1611 /* 0x064b 領域確保による自動生成 */
+#define TR_FLAG_092                       1612 /* 0x064c 領域確保による自動生成 */
+#define TR_FLAG_093                       1613 /* 0x064d 領域確保による自動生成 */
+#define TR_FLAG_094                       1614 /* 0x064e 領域確保による自動生成 */
+#define TR_FLAG_095                       1615 /* 0x064f 領域確保による自動生成 */
+#define TR_FLAG_096                       1616 /* 0x0650 領域確保による自動生成 */
+#define TR_FLAG_097                       1617 /* 0x0651 領域確保による自動生成 */
+#define TR_FLAG_098                       1618 /* 0x0652 領域確保による自動生成 */
+#define TR_FLAG_099                       1619 /* 0x0653 領域確保による自動生成 */
+#define TR_FLAG_100                       1620 /* 0x0654 領域確保による自動生成 */
+#define TR_FLAG_101                       1621 /* 0x0655 領域確保による自動生成 */
+#define TR_FLAG_102                       1622 /* 0x0656 領域確保による自動生成 */
+#define TR_FLAG_103                       1623 /* 0x0657 領域確保による自動生成 */
+#define TR_FLAG_104                       1624 /* 0x0658 領域確保による自動生成 */
+#define TR_FLAG_105                       1625 /* 0x0659 領域確保による自動生成 */
+#define TR_FLAG_106                       1626 /* 0x065a 領域確保による自動生成 */
+#define TR_FLAG_107                       1627 /* 0x065b 領域確保による自動生成 */
+#define TR_FLAG_108                       1628 /* 0x065c 領域確保による自動生成 */
+#define TR_FLAG_109                       1629 /* 0x065d 領域確保による自動生成 */
+#define TR_FLAG_110                       1630 /* 0x065e 領域確保による自動生成 */
+#define TR_FLAG_111                       1631 /* 0x065f 領域確保による自動生成 */
+#define TR_FLAG_112                       1632 /* 0x0660 領域確保による自動生成 */
+#define TR_FLAG_113                       1633 /* 0x0661 領域確保による自動生成 */
+#define TR_FLAG_114                       1634 /* 0x0662 領域確保による自動生成 */
+#define TR_FLAG_115                       1635 /* 0x0663 領域確保による自動生成 */
+#define TR_FLAG_116                       1636 /* 0x0664 領域確保による自動生成 */
+#define TR_FLAG_117                       1637 /* 0x0665 領域確保による自動生成 */
+#define TR_FLAG_118                       1638 /* 0x0666 領域確保による自動生成 */
+#define TR_FLAG_119                       1639 /* 0x0667 領域確保による自動生成 */
+#define TR_FLAG_120                       1640 /* 0x0668 領域確保による自動生成 */
+#define TR_FLAG_121                       1641 /* 0x0669 領域確保による自動生成 */
+#define TR_FLAG_122                       1642 /* 0x066a 領域確保による自動生成 */
+#define TR_FLAG_123                       1643 /* 0x066b 領域確保による自動生成 */
+#define TR_FLAG_124                       1644 /* 0x066c 領域確保による自動生成 */
+#define TR_FLAG_125                       1645 /* 0x066d 領域確保による自動生成 */
+#define TR_FLAG_126                       1646 /* 0x066e 領域確保による自動生成 */
+#define TR_FLAG_127                       1647 /* 0x066f 領域確保による自動生成 */
+#define TR_FLAG_128                       1648 /* 0x0670 領域確保による自動生成 */
+#define TR_FLAG_129                       1649 /* 0x0671 領域確保による自動生成 */
+#define TR_FLAG_130                       1650 /* 0x0672 領域確保による自動生成 */
+#define TR_FLAG_131                       1651 /* 0x0673 領域確保による自動生成 */
+#define TR_FLAG_132                       1652 /* 0x0674 領域確保による自動生成 */
+#define TR_FLAG_133                       1653 /* 0x0675 領域確保による自動生成 */
+#define TR_FLAG_134                       1654 /* 0x0676 領域確保による自動生成 */
+#define TR_FLAG_135                       1655 /* 0x0677 領域確保による自動生成 */
+#define TR_FLAG_136                       1656 /* 0x0678 領域確保による自動生成 */
+#define TR_FLAG_137                       1657 /* 0x0679 領域確保による自動生成 */
+#define TR_FLAG_138                       1658 /* 0x067a 領域確保による自動生成 */
+#define TR_FLAG_139                       1659 /* 0x067b 領域確保による自動生成 */
+#define TR_FLAG_140                       1660 /* 0x067c 領域確保による自動生成 */
+#define TR_FLAG_141                       1661 /* 0x067d 領域確保による自動生成 */
+#define TR_FLAG_142                       1662 /* 0x067e 領域確保による自動生成 */
+#define TR_FLAG_143                       1663 /* 0x067f 領域確保による自動生成 */
+#define TR_FLAG_144                       1664 /* 0x0680 領域確保による自動生成 */
+#define TR_FLAG_145                       1665 /* 0x0681 領域確保による自動生成 */
+#define TR_FLAG_146                       1666 /* 0x0682 領域確保による自動生成 */
+#define TR_FLAG_147                       1667 /* 0x0683 領域確保による自動生成 */
+#define TR_FLAG_148                       1668 /* 0x0684 領域確保による自動生成 */
+#define TR_FLAG_149                       1669 /* 0x0685 領域確保による自動生成 */
+#define TR_FLAG_150                       1670 /* 0x0686 領域確保による自動生成 */
+#define TR_FLAG_151                       1671 /* 0x0687 領域確保による自動生成 */
+#define TR_FLAG_152                       1672 /* 0x0688 領域確保による自動生成 */
+#define TR_FLAG_153                       1673 /* 0x0689 領域確保による自動生成 */
+#define TR_FLAG_154                       1674 /* 0x068a 領域確保による自動生成 */
+#define TR_FLAG_155                       1675 /* 0x068b 領域確保による自動生成 */
+#define TR_FLAG_156                       1676 /* 0x068c 領域確保による自動生成 */
+#define TR_FLAG_157                       1677 /* 0x068d 領域確保による自動生成 */
+#define TR_FLAG_158                       1678 /* 0x068e 領域確保による自動生成 */
+#define TR_FLAG_159                       1679 /* 0x068f 領域確保による自動生成 */
+#define TR_FLAG_160                       1680 /* 0x0690 領域確保による自動生成 */
+#define TR_FLAG_161                       1681 /* 0x0691 領域確保による自動生成 */
+#define TR_FLAG_162                       1682 /* 0x0692 領域確保による自動生成 */
+#define TR_FLAG_163                       1683 /* 0x0693 領域確保による自動生成 */
+#define TR_FLAG_164                       1684 /* 0x0694 領域確保による自動生成 */
+#define TR_FLAG_165                       1685 /* 0x0695 領域確保による自動生成 */
+#define TR_FLAG_166                       1686 /* 0x0696 領域確保による自動生成 */
+#define TR_FLAG_167                       1687 /* 0x0697 領域確保による自動生成 */
+#define TR_FLAG_168                       1688 /* 0x0698 領域確保による自動生成 */
+#define TR_FLAG_169                       1689 /* 0x0699 領域確保による自動生成 */
+#define TR_FLAG_170                       1690 /* 0x069a 領域確保による自動生成 */
+#define TR_FLAG_171                       1691 /* 0x069b 領域確保による自動生成 */
+#define TR_FLAG_172                       1692 /* 0x069c 領域確保による自動生成 */
+#define TR_FLAG_173                       1693 /* 0x069d 領域確保による自動生成 */
+#define TR_FLAG_174                       1694 /* 0x069e 領域確保による自動生成 */
+#define TR_FLAG_175                       1695 /* 0x069f 領域確保による自動生成 */
+#define TR_FLAG_176                       1696 /* 0x06a0 領域確保による自動生成 */
+#define TR_FLAG_177                       1697 /* 0x06a1 領域確保による自動生成 */
+#define TR_FLAG_178                       1698 /* 0x06a2 領域確保による自動生成 */
+#define TR_FLAG_179                       1699 /* 0x06a3 領域確保による自動生成 */
+#define TR_FLAG_180                       1700 /* 0x06a4 領域確保による自動生成 */
+#define TR_FLAG_181                       1701 /* 0x06a5 領域確保による自動生成 */
+#define TR_FLAG_182                       1702 /* 0x06a6 領域確保による自動生成 */
+#define TR_FLAG_183                       1703 /* 0x06a7 領域確保による自動生成 */
+#define TR_FLAG_184                       1704 /* 0x06a8 領域確保による自動生成 */
+#define TR_FLAG_185                       1705 /* 0x06a9 領域確保による自動生成 */
+#define TR_FLAG_186                       1706 /* 0x06aa 領域確保による自動生成 */
+#define TR_FLAG_187                       1707 /* 0x06ab 領域確保による自動生成 */
+#define TR_FLAG_188                       1708 /* 0x06ac 領域確保による自動生成 */
+#define TR_FLAG_189                       1709 /* 0x06ad 領域確保による自動生成 */
+#define TR_FLAG_190                       1710 /* 0x06ae 領域確保による自動生成 */
+#define TR_FLAG_191                       1711 /* 0x06af 領域確保による自動生成 */
+#define TR_FLAG_192                       1712 /* 0x06b0 領域確保による自動生成 */
+#define TR_FLAG_193                       1713 /* 0x06b1 領域確保による自動生成 */
+#define TR_FLAG_194                       1714 /* 0x06b2 領域確保による自動生成 */
+#define TR_FLAG_195                       1715 /* 0x06b3 領域確保による自動生成 */
+#define TR_FLAG_196                       1716 /* 0x06b4 領域確保による自動生成 */
+#define TR_FLAG_197                       1717 /* 0x06b5 領域確保による自動生成 */
+#define TR_FLAG_198                       1718 /* 0x06b6 領域確保による自動生成 */
+#define TR_FLAG_199                       1719 /* 0x06b7 領域確保による自動生成 */
+#define TR_FLAG_200                       1720 /* 0x06b8 領域確保による自動生成 */
+#define TR_FLAG_201                       1721 /* 0x06b9 領域確保による自動生成 */
+#define TR_FLAG_202                       1722 /* 0x06ba 領域確保による自動生成 */
+#define TR_FLAG_203                       1723 /* 0x06bb 領域確保による自動生成 */
+#define TR_FLAG_204                       1724 /* 0x06bc 領域確保による自動生成 */
+#define TR_FLAG_205                       1725 /* 0x06bd 領域確保による自動生成 */
+#define TR_FLAG_206                       1726 /* 0x06be 領域確保による自動生成 */
+#define TR_FLAG_207                       1727 /* 0x06bf 領域確保による自動生成 */
+#define TR_FLAG_208                       1728 /* 0x06c0 領域確保による自動生成 */
+#define TR_FLAG_209                       1729 /* 0x06c1 領域確保による自動生成 */
+#define TR_FLAG_210                       1730 /* 0x06c2 領域確保による自動生成 */
+#define TR_FLAG_211                       1731 /* 0x06c3 領域確保による自動生成 */
+#define TR_FLAG_212                       1732 /* 0x06c4 領域確保による自動生成 */
+#define TR_FLAG_213                       1733 /* 0x06c5 領域確保による自動生成 */
+#define TR_FLAG_214                       1734 /* 0x06c6 領域確保による自動生成 */
+#define TR_FLAG_215                       1735 /* 0x06c7 領域確保による自動生成 */
+#define TR_FLAG_216                       1736 /* 0x06c8 領域確保による自動生成 */
+#define TR_FLAG_217                       1737 /* 0x06c9 領域確保による自動生成 */
+#define TR_FLAG_218                       1738 /* 0x06ca 領域確保による自動生成 */
+#define TR_FLAG_219                       1739 /* 0x06cb 領域確保による自動生成 */
+#define TR_FLAG_220                       1740 /* 0x06cc 領域確保による自動生成 */
+#define TR_FLAG_221                       1741 /* 0x06cd 領域確保による自動生成 */
+#define TR_FLAG_222                       1742 /* 0x06ce 領域確保による自動生成 */
+#define TR_FLAG_223                       1743 /* 0x06cf 領域確保による自動生成 */
+#define TR_FLAG_224                       1744 /* 0x06d0 領域確保による自動生成 */
+#define TR_FLAG_225                       1745 /* 0x06d1 領域確保による自動生成 */
+#define TR_FLAG_226                       1746 /* 0x06d2 領域確保による自動生成 */
+#define TR_FLAG_227                       1747 /* 0x06d3 領域確保による自動生成 */
+#define TR_FLAG_228                       1748 /* 0x06d4 領域確保による自動生成 */
+#define TR_FLAG_229                       1749 /* 0x06d5 領域確保による自動生成 */
+#define TR_FLAG_230                       1750 /* 0x06d6 領域確保による自動生成 */
+#define TR_FLAG_231                       1751 /* 0x06d7 領域確保による自動生成 */
+#define TR_FLAG_232                       1752 /* 0x06d8 領域確保による自動生成 */
+#define TR_FLAG_233                       1753 /* 0x06d9 領域確保による自動生成 */
+#define TR_FLAG_234                       1754 /* 0x06da 領域確保による自動生成 */
+#define TR_FLAG_235                       1755 /* 0x06db 領域確保による自動生成 */
+#define TR_FLAG_236                       1756 /* 0x06dc 領域確保による自動生成 */
+#define TR_FLAG_237                       1757 /* 0x06dd 領域確保による自動生成 */
+#define TR_FLAG_238                       1758 /* 0x06de 領域確保による自動生成 */
+#define TR_FLAG_239                       1759 /* 0x06df 領域確保による自動生成 */
+#define TR_FLAG_240                       1760 /* 0x06e0 領域確保による自動生成 */
+#define TR_FLAG_241                       1761 /* 0x06e1 領域確保による自動生成 */
+#define TR_FLAG_242                       1762 /* 0x06e2 領域確保による自動生成 */
+#define TR_FLAG_243                       1763 /* 0x06e3 領域確保による自動生成 */
+#define TR_FLAG_244                       1764 /* 0x06e4 領域確保による自動生成 */
+#define TR_FLAG_245                       1765 /* 0x06e5 領域確保による自動生成 */
+#define TR_FLAG_246                       1766 /* 0x06e6 領域確保による自動生成 */
+#define TR_FLAG_247                       1767 /* 0x06e7 領域確保による自動生成 */
+#define TR_FLAG_248                       1768 /* 0x06e8 領域確保による自動生成 */
+#define TR_FLAG_249                       1769 /* 0x06e9 領域確保による自動生成 */
+#define TR_FLAG_250                       1770 /* 0x06ea 領域確保による自動生成 */
+#define TR_FLAG_251                       1771 /* 0x06eb 領域確保による自動生成 */
+#define TR_FLAG_252                       1772 /* 0x06ec 領域確保による自動生成 */
+#define TR_FLAG_253                       1773 /* 0x06ed 領域確保による自動生成 */
+#define TR_FLAG_254                       1774 /* 0x06ee 領域確保による自動生成 */
+#define TR_FLAG_255                       1775 /* 0x06ef 領域確保による自動生成 */
+#define TR_FLAG_256                       1776 /* 0x06f0 領域確保による自動生成 */
+#define TR_FLAG_257                       1777 /* 0x06f1 領域確保による自動生成 */
+#define TR_FLAG_258                       1778 /* 0x06f2 領域確保による自動生成 */
+#define TR_FLAG_259                       1779 /* 0x06f3 領域確保による自動生成 */
+#define TR_FLAG_260                       1780 /* 0x06f4 領域確保による自動生成 */
+#define TR_FLAG_261                       1781 /* 0x06f5 領域確保による自動生成 */
+#define TR_FLAG_262                       1782 /* 0x06f6 領域確保による自動生成 */
+#define TR_FLAG_263                       1783 /* 0x06f7 領域確保による自動生成 */
+#define TR_FLAG_264                       1784 /* 0x06f8 領域確保による自動生成 */
+#define TR_FLAG_265                       1785 /* 0x06f9 領域確保による自動生成 */
+#define TR_FLAG_266                       1786 /* 0x06fa 領域確保による自動生成 */
+#define TR_FLAG_267                       1787 /* 0x06fb 領域確保による自動生成 */
+#define TR_FLAG_268                       1788 /* 0x06fc 領域確保による自動生成 */
+#define TR_FLAG_269                       1789 /* 0x06fd 領域確保による自動生成 */
+#define TR_FLAG_270                       1790 /* 0x06fe 領域確保による自動生成 */
+#define TR_FLAG_271                       1791 /* 0x06ff 領域確保による自動生成 */
+#define TR_FLAG_272                       1792 /* 0x0700 領域確保による自動生成 */
+#define TR_FLAG_273                       1793 /* 0x0701 領域確保による自動生成 */
+#define TR_FLAG_274                       1794 /* 0x0702 領域確保による自動生成 */
+#define TR_FLAG_275                       1795 /* 0x0703 領域確保による自動生成 */
+#define TR_FLAG_276                       1796 /* 0x0704 領域確保による自動生成 */
+#define TR_FLAG_277                       1797 /* 0x0705 領域確保による自動生成 */
+#define TR_FLAG_278                       1798 /* 0x0706 領域確保による自動生成 */
+#define TR_FLAG_279                       1799 /* 0x0707 領域確保による自動生成 */
+#define TR_FLAG_280                       1800 /* 0x0708 領域確保による自動生成 */
+#define TR_FLAG_281                       1801 /* 0x0709 領域確保による自動生成 */
+#define TR_FLAG_282                       1802 /* 0x070a 領域確保による自動生成 */
+#define TR_FLAG_283                       1803 /* 0x070b 領域確保による自動生成 */
+#define TR_FLAG_284                       1804 /* 0x070c 領域確保による自動生成 */
+#define TR_FLAG_285                       1805 /* 0x070d 領域確保による自動生成 */
+#define TR_FLAG_286                       1806 /* 0x070e 領域確保による自動生成 */
+#define TR_FLAG_287                       1807 /* 0x070f 領域確保による自動生成 */
+#define TR_FLAG_288                       1808 /* 0x0710 領域確保による自動生成 */
+#define TR_FLAG_289                       1809 /* 0x0711 領域確保による自動生成 */
+#define TR_FLAG_290                       1810 /* 0x0712 領域確保による自動生成 */
+#define TR_FLAG_291                       1811 /* 0x0713 領域確保による自動生成 */
+#define TR_FLAG_292                       1812 /* 0x0714 領域確保による自動生成 */
+#define TR_FLAG_293                       1813 /* 0x0715 領域確保による自動生成 */
+#define TR_FLAG_294                       1814 /* 0x0716 領域確保による自動生成 */
+#define TR_FLAG_295                       1815 /* 0x0717 領域確保による自動生成 */
+#define TR_FLAG_296                       1816 /* 0x0718 領域確保による自動生成 */
+#define TR_FLAG_297                       1817 /* 0x0719 領域確保による自動生成 */
+#define TR_FLAG_298                       1818 /* 0x071a 領域確保による自動生成 */
+#define TR_FLAG_299                       1819 /* 0x071b 領域確保による自動生成 */
+#define TR_FLAG_300                       1820 /* 0x071c 領域確保による自動生成 */
+#define TR_FLAG_301                       1821 /* 0x071d 領域確保による自動生成 */
+#define TR_FLAG_302                       1822 /* 0x071e 領域確保による自動生成 */
+#define TR_FLAG_303                       1823 /* 0x071f 領域確保による自動生成 */
+#define TR_FLAG_304                       1824 /* 0x0720 領域確保による自動生成 */
+#define TR_FLAG_305                       1825 /* 0x0721 領域確保による自動生成 */
+#define TR_FLAG_306                       1826 /* 0x0722 領域確保による自動生成 */
+#define TR_FLAG_307                       1827 /* 0x0723 領域確保による自動生成 */
+#define TR_FLAG_308                       1828 /* 0x0724 領域確保による自動生成 */
+#define TR_FLAG_309                       1829 /* 0x0725 領域確保による自動生成 */
+#define TR_FLAG_310                       1830 /* 0x0726 領域確保による自動生成 */
+#define TR_FLAG_311                       1831 /* 0x0727 領域確保による自動生成 */
+#define TR_FLAG_312                       1832 /* 0x0728 領域確保による自動生成 */
+#define TR_FLAG_313                       1833 /* 0x0729 領域確保による自動生成 */
+#define TR_FLAG_314                       1834 /* 0x072a 領域確保による自動生成 */
+#define TR_FLAG_315                       1835 /* 0x072b 領域確保による自動生成 */
+#define TR_FLAG_316                       1836 /* 0x072c 領域確保による自動生成 */
+#define TR_FLAG_317                       1837 /* 0x072d 領域確保による自動生成 */
+#define TR_FLAG_318                       1838 /* 0x072e 領域確保による自動生成 */
+#define TR_FLAG_319                       1839 /* 0x072f 領域確保による自動生成 */
+#define TR_FLAG_320                       1840 /* 0x0730 領域確保による自動生成 */
+#define TR_FLAG_321                       1841 /* 0x0731 領域確保による自動生成 */
+#define TR_FLAG_322                       1842 /* 0x0732 領域確保による自動生成 */
+#define TR_FLAG_323                       1843 /* 0x0733 領域確保による自動生成 */
+#define TR_FLAG_324                       1844 /* 0x0734 領域確保による自動生成 */
+#define TR_FLAG_325                       1845 /* 0x0735 領域確保による自動生成 */
+#define TR_FLAG_326                       1846 /* 0x0736 領域確保による自動生成 */
+#define TR_FLAG_327                       1847 /* 0x0737 領域確保による自動生成 */
+#define TR_FLAG_328                       1848 /* 0x0738 領域確保による自動生成 */
+#define TR_FLAG_329                       1849 /* 0x0739 領域確保による自動生成 */
+#define TR_FLAG_330                       1850 /* 0x073a 領域確保による自動生成 */
+#define TR_FLAG_331                       1851 /* 0x073b 領域確保による自動生成 */
+#define TR_FLAG_332                       1852 /* 0x073c 領域確保による自動生成 */
+#define TR_FLAG_333                       1853 /* 0x073d 領域確保による自動生成 */
+#define TR_FLAG_334                       1854 /* 0x073e 領域確保による自動生成 */
+#define TR_FLAG_335                       1855 /* 0x073f 領域確保による自動生成 */
+#define TR_FLAG_336                       1856 /* 0x0740 領域確保による自動生成 */
+#define TR_FLAG_337                       1857 /* 0x0741 領域確保による自動生成 */
+#define TR_FLAG_338                       1858 /* 0x0742 領域確保による自動生成 */
+#define TR_FLAG_339                       1859 /* 0x0743 領域確保による自動生成 */
+#define TR_FLAG_340                       1860 /* 0x0744 領域確保による自動生成 */
+#define TR_FLAG_341                       1861 /* 0x0745 領域確保による自動生成 */
+#define TR_FLAG_342                       1862 /* 0x0746 領域確保による自動生成 */
+#define TR_FLAG_343                       1863 /* 0x0747 領域確保による自動生成 */
+#define TR_FLAG_344                       1864 /* 0x0748 領域確保による自動生成 */
+#define TR_FLAG_345                       1865 /* 0x0749 領域確保による自動生成 */
+#define TR_FLAG_346                       1866 /* 0x074a 領域確保による自動生成 */
+#define TR_FLAG_347                       1867 /* 0x074b 領域確保による自動生成 */
+#define TR_FLAG_348                       1868 /* 0x074c 領域確保による自動生成 */
+#define TR_FLAG_349                       1869 /* 0x074d 領域確保による自動生成 */
+#define TR_FLAG_350                       1870 /* 0x074e 領域確保による自動生成 */
+#define TR_FLAG_351                       1871 /* 0x074f 領域確保による自動生成 */
+#define TR_FLAG_352                       1872 /* 0x0750 領域確保による自動生成 */
+#define TR_FLAG_353                       1873 /* 0x0751 領域確保による自動生成 */
+#define TR_FLAG_354                       1874 /* 0x0752 領域確保による自動生成 */
+#define TR_FLAG_355                       1875 /* 0x0753 領域確保による自動生成 */
+#define TR_FLAG_356                       1876 /* 0x0754 領域確保による自動生成 */
+#define TR_FLAG_357                       1877 /* 0x0755 領域確保による自動生成 */
+#define TR_FLAG_358                       1878 /* 0x0756 領域確保による自動生成 */
+#define TR_FLAG_359                       1879 /* 0x0757 領域確保による自動生成 */
+#define TR_FLAG_360                       1880 /* 0x0758 領域確保による自動生成 */
+#define TR_FLAG_361                       1881 /* 0x0759 領域確保による自動生成 */
+#define TR_FLAG_362                       1882 /* 0x075a 領域確保による自動生成 */
+#define TR_FLAG_363                       1883 /* 0x075b 領域確保による自動生成 */
+#define TR_FLAG_364                       1884 /* 0x075c 領域確保による自動生成 */
+#define TR_FLAG_365                       1885 /* 0x075d 領域確保による自動生成 */
+#define TR_FLAG_366                       1886 /* 0x075e 領域確保による自動生成 */
+#define TR_FLAG_367                       1887 /* 0x075f 領域確保による自動生成 */
+#define TR_FLAG_368                       1888 /* 0x0760 領域確保による自動生成 */
+#define TR_FLAG_369                       1889 /* 0x0761 領域確保による自動生成 */
+#define TR_FLAG_370                       1890 /* 0x0762 領域確保による自動生成 */
+#define TR_FLAG_371                       1891 /* 0x0763 領域確保による自動生成 */
+#define TR_FLAG_372                       1892 /* 0x0764 領域確保による自動生成 */
+#define TR_FLAG_373                       1893 /* 0x0765 領域確保による自動生成 */
+#define TR_FLAG_374                       1894 /* 0x0766 領域確保による自動生成 */
+#define TR_FLAG_375                       1895 /* 0x0767 領域確保による自動生成 */
+#define TR_FLAG_376                       1896 /* 0x0768 領域確保による自動生成 */
+#define TR_FLAG_377                       1897 /* 0x0769 領域確保による自動生成 */
+#define TR_FLAG_378                       1898 /* 0x076a 領域確保による自動生成 */
+#define TR_FLAG_379                       1899 /* 0x076b 領域確保による自動生成 */
+#define TR_FLAG_380                       1900 /* 0x076c 領域確保による自動生成 */
+#define TR_FLAG_381                       1901 /* 0x076d 領域確保による自動生成 */
+#define TR_FLAG_382                       1902 /* 0x076e 領域確保による自動生成 */
+#define TR_FLAG_383                       1903 /* 0x076f 領域確保による自動生成 */
+#define TR_FLAG_384                       1904 /* 0x0770 領域確保による自動生成 */
+#define TR_FLAG_385                       1905 /* 0x0771 領域確保による自動生成 */
+#define TR_FLAG_386                       1906 /* 0x0772 領域確保による自動生成 */
+#define TR_FLAG_387                       1907 /* 0x0773 領域確保による自動生成 */
+#define TR_FLAG_388                       1908 /* 0x0774 領域確保による自動生成 */
+#define TR_FLAG_389                       1909 /* 0x0775 領域確保による自動生成 */
+#define TR_FLAG_390                       1910 /* 0x0776 領域確保による自動生成 */
+#define TR_FLAG_391                       1911 /* 0x0777 領域確保による自動生成 */
+#define TR_FLAG_392                       1912 /* 0x0778 領域確保による自動生成 */
+#define TR_FLAG_393                       1913 /* 0x0779 領域確保による自動生成 */
+#define TR_FLAG_394                       1914 /* 0x077a 領域確保による自動生成 */
+#define TR_FLAG_395                       1915 /* 0x077b 領域確保による自動生成 */
+#define TR_FLAG_396                       1916 /* 0x077c 領域確保による自動生成 */
+#define TR_FLAG_397                       1917 /* 0x077d 領域確保による自動生成 */
+#define TR_FLAG_398                       1918 /* 0x077e 領域確保による自動生成 */
+#define TR_FLAG_399                       1919 /* 0x077f 領域確保による自動生成 */
+#define TR_FLAG_400                       1920 /* 0x0780 領域確保による自動生成 */
+#define TR_FLAG_401                       1921 /* 0x0781 領域確保による自動生成 */
+#define TR_FLAG_402                       1922 /* 0x0782 領域確保による自動生成 */
+#define TR_FLAG_403                       1923 /* 0x0783 領域確保による自動生成 */
+#define TR_FLAG_404                       1924 /* 0x0784 領域確保による自動生成 */
+#define TR_FLAG_405                       1925 /* 0x0785 領域確保による自動生成 */
+#define TR_FLAG_406                       1926 /* 0x0786 領域確保による自動生成 */
+#define TR_FLAG_407                       1927 /* 0x0787 領域確保による自動生成 */
+#define TR_FLAG_408                       1928 /* 0x0788 領域確保による自動生成 */
+#define TR_FLAG_409                       1929 /* 0x0789 領域確保による自動生成 */
+#define TR_FLAG_410                       1930 /* 0x078a 領域確保による自動生成 */
+#define TR_FLAG_411                       1931 /* 0x078b 領域確保による自動生成 */
+#define TR_FLAG_412                       1932 /* 0x078c 領域確保による自動生成 */
+#define TR_FLAG_413                       1933 /* 0x078d 領域確保による自動生成 */
+#define TR_FLAG_414                       1934 /* 0x078e 領域確保による自動生成 */
+#define TR_FLAG_415                       1935 /* 0x078f 領域確保による自動生成 */
+#define TR_FLAG_416                       1936 /* 0x0790 領域確保による自動生成 */
+#define TR_FLAG_417                       1937 /* 0x0791 領域確保による自動生成 */
+#define TR_FLAG_418                       1938 /* 0x0792 領域確保による自動生成 */
+#define TR_FLAG_419                       1939 /* 0x0793 領域確保による自動生成 */
+#define TR_FLAG_420                       1940 /* 0x0794 領域確保による自動生成 */
+#define TR_FLAG_421                       1941 /* 0x0795 領域確保による自動生成 */
+#define TR_FLAG_422                       1942 /* 0x0796 領域確保による自動生成 */
+#define TR_FLAG_423                       1943 /* 0x0797 領域確保による自動生成 */
+#define TR_FLAG_424                       1944 /* 0x0798 領域確保による自動生成 */
+#define TR_FLAG_425                       1945 /* 0x0799 領域確保による自動生成 */
+#define TR_FLAG_426                       1946 /* 0x079a 領域確保による自動生成 */
+#define TR_FLAG_427                       1947 /* 0x079b 領域確保による自動生成 */
+#define TR_FLAG_428                       1948 /* 0x079c 領域確保による自動生成 */
+#define TR_FLAG_429                       1949 /* 0x079d 領域確保による自動生成 */
+#define TR_FLAG_430                       1950 /* 0x079e 領域確保による自動生成 */
+#define TR_FLAG_431                       1951 /* 0x079f 領域確保による自動生成 */
+#define TR_FLAG_432                       1952 /* 0x07a0 領域確保による自動生成 */
+#define TR_FLAG_433                       1953 /* 0x07a1 領域確保による自動生成 */
+#define TR_FLAG_434                       1954 /* 0x07a2 領域確保による自動生成 */
+#define TR_FLAG_435                       1955 /* 0x07a3 領域確保による自動生成 */
+#define TR_FLAG_436                       1956 /* 0x07a4 領域確保による自動生成 */
+#define TR_FLAG_437                       1957 /* 0x07a5 領域確保による自動生成 */
+#define TR_FLAG_438                       1958 /* 0x07a6 領域確保による自動生成 */
+#define TR_FLAG_439                       1959 /* 0x07a7 領域確保による自動生成 */
+#define TR_FLAG_440                       1960 /* 0x07a8 領域確保による自動生成 */
+#define TR_FLAG_441                       1961 /* 0x07a9 領域確保による自動生成 */
+#define TR_FLAG_442                       1962 /* 0x07aa 領域確保による自動生成 */
+#define TR_FLAG_443                       1963 /* 0x07ab 領域確保による自動生成 */
+#define TR_FLAG_444                       1964 /* 0x07ac 領域確保による自動生成 */
+#define TR_FLAG_445                       1965 /* 0x07ad 領域確保による自動生成 */
+#define TR_FLAG_446                       1966 /* 0x07ae 領域確保による自動生成 */
+#define TR_FLAG_447                       1967 /* 0x07af 領域確保による自動生成 */
+#define TR_FLAG_448                       1968 /* 0x07b0 領域確保による自動生成 */
+#define TR_FLAG_449                       1969 /* 0x07b1 領域確保による自動生成 */
+#define TR_FLAG_450                       1970 /* 0x07b2 領域確保による自動生成 */
+#define TR_FLAG_451                       1971 /* 0x07b3 領域確保による自動生成 */
+#define TR_FLAG_452                       1972 /* 0x07b4 領域確保による自動生成 */
+#define TR_FLAG_453                       1973 /* 0x07b5 領域確保による自動生成 */
+#define TR_FLAG_454                       1974 /* 0x07b6 領域確保による自動生成 */
+#define TR_FLAG_455                       1975 /* 0x07b7 領域確保による自動生成 */
+#define TR_FLAG_456                       1976 /* 0x07b8 領域確保による自動生成 */
+#define TR_FLAG_457                       1977 /* 0x07b9 領域確保による自動生成 */
+#define TR_FLAG_458                       1978 /* 0x07ba 領域確保による自動生成 */
+#define TR_FLAG_459                       1979 /* 0x07bb 領域確保による自動生成 */
+#define TR_FLAG_460                       1980 /* 0x07bc 領域確保による自動生成 */
+#define TR_FLAG_461                       1981 /* 0x07bd 領域確保による自動生成 */
+#define TR_FLAG_462                       1982 /* 0x07be 領域確保による自動生成 */
+#define TR_FLAG_463                       1983 /* 0x07bf 領域確保による自動生成 */
+#define TR_FLAG_464                       1984 /* 0x07c0 領域確保による自動生成 */
+#define TR_FLAG_465                       1985 /* 0x07c1 領域確保による自動生成 */
+#define TR_FLAG_466                       1986 /* 0x07c2 領域確保による自動生成 */
+#define TR_FLAG_467                       1987 /* 0x07c3 領域確保による自動生成 */
+#define TR_FLAG_468                       1988 /* 0x07c4 領域確保による自動生成 */
+#define TR_FLAG_469                       1989 /* 0x07c5 領域確保による自動生成 */
+#define TR_FLAG_470                       1990 /* 0x07c6 領域確保による自動生成 */
+#define TR_FLAG_471                       1991 /* 0x07c7 領域確保による自動生成 */
+#define TR_FLAG_472                       1992 /* 0x07c8 領域確保による自動生成 */
+#define TR_FLAG_473                       1993 /* 0x07c9 領域確保による自動生成 */
+#define TR_FLAG_474                       1994 /* 0x07ca 領域確保による自動生成 */
+#define TR_FLAG_475                       1995 /* 0x07cb 領域確保による自動生成 */
+#define TR_FLAG_476                       1996 /* 0x07cc 領域確保による自動生成 */
+#define TR_FLAG_477                       1997 /* 0x07cd 領域確保による自動生成 */
+#define TR_FLAG_478                       1998 /* 0x07ce 領域確保による自動生成 */
+#define TR_FLAG_479                       1999 /* 0x07cf 領域確保による自動生成 */
+#define TR_FLAG_480                       2000 /* 0x07d0 領域確保による自動生成 */
+#define TR_FLAG_481                       2001 /* 0x07d1 領域確保による自動生成 */
+#define TR_FLAG_482                       2002 /* 0x07d2 領域確保による自動生成 */
+#define TR_FLAG_483                       2003 /* 0x07d3 領域確保による自動生成 */
+#define TR_FLAG_484                       2004 /* 0x07d4 領域確保による自動生成 */
+#define TR_FLAG_485                       2005 /* 0x07d5 領域確保による自動生成 */
+#define TR_FLAG_486                       2006 /* 0x07d6 領域確保による自動生成 */
+#define TR_FLAG_487                       2007 /* 0x07d7 領域確保による自動生成 */
+#define TR_FLAG_488                       2008 /* 0x07d8 領域確保による自動生成 */
+#define TR_FLAG_489                       2009 /* 0x07d9 領域確保による自動生成 */
+#define TR_FLAG_490                       2010 /* 0x07da 領域確保による自動生成 */
+#define TR_FLAG_491                       2011 /* 0x07db 領域確保による自動生成 */
+#define TR_FLAG_492                       2012 /* 0x07dc 領域確保による自動生成 */
+#define TR_FLAG_493                       2013 /* 0x07dd 領域確保による自動生成 */
+#define TR_FLAG_494                       2014 /* 0x07de 領域確保による自動生成 */
+#define TR_FLAG_495                       2015 /* 0x07df 領域確保による自動生成 */
+#define TR_FLAG_496                       2016 /* 0x07e0 領域確保による自動生成 */
+#define TR_FLAG_497                       2017 /* 0x07e1 領域確保による自動生成 */
+#define TR_FLAG_498                       2018 /* 0x07e2 領域確保による自動生成 */
+#define TR_FLAG_499                       2019 /* 0x07e3 領域確保による自動生成 */
+#define TR_FLAG_500                       2020 /* 0x07e4 領域確保による自動生成 */
+#define TR_FLAG_501                       2021 /* 0x07e5 領域確保による自動生成 */
+#define TR_FLAG_502                       2022 /* 0x07e6 領域確保による自動生成 */
+#define TR_FLAG_503                       2023 /* 0x07e7 領域確保による自動生成 */
+#define TR_FLAG_504                       2024 /* 0x07e8 領域確保による自動生成 */
+#define TR_FLAG_505                       2025 /* 0x07e9 領域確保による自動生成 */
+#define TR_FLAG_506                       2026 /* 0x07ea 領域確保による自動生成 */
+#define TR_FLAG_507                       2027 /* 0x07eb 領域確保による自動生成 */
+#define TR_FLAG_508                       2028 /* 0x07ec 領域確保による自動生成 */
+#define TR_FLAG_509                       2029 /* 0x07ed 領域確保による自動生成 */
+#define TR_FLAG_510                       2030 /* 0x07ee 領域確保による自動生成 */
+#define TR_FLAG_511                       2031 /* 0x07ef 領域確保による自動生成 */
+#define TR_FLAG_512                       2032 /* 0x07f0 領域確保による自動生成 */
+#define TR_FLAG_513                       2033 /* 0x07f1 領域確保による自動生成 */
+#define TR_FLAG_514                       2034 /* 0x07f2 領域確保による自動生成 */
+#define TR_FLAG_515                       2035 /* 0x07f3 領域確保による自動生成 */
+#define TR_FLAG_516                       2036 /* 0x07f4 領域確保による自動生成 */
+#define TR_FLAG_517                       2037 /* 0x07f5 領域確保による自動生成 */
+#define TR_FLAG_518                       2038 /* 0x07f6 領域確保による自動生成 */
+#define TR_FLAG_519                       2039 /* 0x07f7 領域確保による自動生成 */
+#define TR_FLAG_520                       2040 /* 0x07f8 領域確保による自動生成 */
+#define TR_FLAG_521                       2041 /* 0x07f9 領域確保による自動生成 */
+#define TR_FLAG_522                       2042 /* 0x07fa 領域確保による自動生成 */
+#define TR_FLAG_523                       2043 /* 0x07fb 領域確保による自動生成 */
+#define TR_FLAG_524                       2044 /* 0x07fc 領域確保による自動生成 */
+#define TR_FLAG_525                       2045 /* 0x07fd 領域確保による自動生成 */
+#define TR_FLAG_526                       2046 /* 0x07fe 領域確保による自動生成 */
+#define TR_FLAG_527                       2047 /* 0x07ff 領域確保による自動生成 */
+#define TR_FLAG_528                       2048 /* 0x0800 領域確保による自動生成 */
+#define TR_FLAG_529                       2049 /* 0x0801 領域確保による自動生成 */
+#define TR_FLAG_530                       2050 /* 0x0802 領域確保による自動生成 */
+#define TR_FLAG_531                       2051 /* 0x0803 領域確保による自動生成 */
+#define TR_FLAG_532                       2052 /* 0x0804 領域確保による自動生成 */
+#define TR_FLAG_533                       2053 /* 0x0805 領域確保による自動生成 */
+#define TR_FLAG_534                       2054 /* 0x0806 領域確保による自動生成 */
+#define TR_FLAG_535                       2055 /* 0x0807 領域確保による自動生成 */
+#define TR_FLAG_536                       2056 /* 0x0808 領域確保による自動生成 */
+#define TR_FLAG_537                       2057 /* 0x0809 領域確保による自動生成 */
+#define TR_FLAG_538                       2058 /* 0x080a 領域確保による自動生成 */
+#define TR_FLAG_539                       2059 /* 0x080b 領域確保による自動生成 */
+#define TR_FLAG_540                       2060 /* 0x080c 領域確保による自動生成 */
+#define TR_FLAG_541                       2061 /* 0x080d 領域確保による自動生成 */
+#define TR_FLAG_542                       2062 /* 0x080e 領域確保による自動生成 */
+#define TR_FLAG_543                       2063 /* 0x080f 領域確保による自動生成 */
+#define TR_FLAG_544                       2064 /* 0x0810 領域確保による自動生成 */
+#define TR_FLAG_545                       2065 /* 0x0811 領域確保による自動生成 */
+#define TR_FLAG_546                       2066 /* 0x0812 領域確保による自動生成 */
+#define TR_FLAG_547                       2067 /* 0x0813 領域確保による自動生成 */
+#define TR_FLAG_548                       2068 /* 0x0814 領域確保による自動生成 */
+#define TR_FLAG_549                       2069 /* 0x0815 領域確保による自動生成 */
+#define TR_FLAG_550                       2070 /* 0x0816 領域確保による自動生成 */
+#define TR_FLAG_551                       2071 /* 0x0817 領域確保による自動生成 */
+#define TR_FLAG_552                       2072 /* 0x0818 領域確保による自動生成 */
+#define TR_FLAG_553                       2073 /* 0x0819 領域確保による自動生成 */
+#define TR_FLAG_554                       2074 /* 0x081a 領域確保による自動生成 */
+#define TR_FLAG_555                       2075 /* 0x081b 領域確保による自動生成 */
+#define TR_FLAG_556                       2076 /* 0x081c 領域確保による自動生成 */
+#define TR_FLAG_557                       2077 /* 0x081d 領域確保による自動生成 */
+#define TR_FLAG_558                       2078 /* 0x081e 領域確保による自動生成 */
+#define TR_FLAG_559                       2079 /* 0x081f 領域確保による自動生成 */
+#define TR_FLAG_560                       2080 /* 0x0820 領域確保による自動生成 */
+#define TR_FLAG_561                       2081 /* 0x0821 領域確保による自動生成 */
+#define TR_FLAG_562                       2082 /* 0x0822 領域確保による自動生成 */
+#define TR_FLAG_563                       2083 /* 0x0823 領域確保による自動生成 */
+#define TR_FLAG_564                       2084 /* 0x0824 領域確保による自動生成 */
+#define TR_FLAG_565                       2085 /* 0x0825 領域確保による自動生成 */
+#define TR_FLAG_566                       2086 /* 0x0826 領域確保による自動生成 */
+#define TR_FLAG_567                       2087 /* 0x0827 領域確保による自動生成 */
+#define TR_FLAG_568                       2088 /* 0x0828 領域確保による自動生成 */
+#define TR_FLAG_569                       2089 /* 0x0829 領域確保による自動生成 */
+#define TR_FLAG_570                       2090 /* 0x082a 領域確保による自動生成 */
+#define TR_FLAG_571                       2091 /* 0x082b 領域確保による自動生成 */
+#define TR_FLAG_572                       2092 /* 0x082c 領域確保による自動生成 */
+#define TR_FLAG_573                       2093 /* 0x082d 領域確保による自動生成 */
+#define TR_FLAG_574                       2094 /* 0x082e 領域確保による自動生成 */
+#define TR_FLAG_575                       2095 /* 0x082f 領域確保による自動生成 */
+#define TR_FLAG_576                       2096 /* 0x0830 領域確保による自動生成 */
+#define TR_FLAG_577                       2097 /* 0x0831 領域確保による自動生成 */
+#define TR_FLAG_578                       2098 /* 0x0832 領域確保による自動生成 */
+#define TR_FLAG_579                       2099 /* 0x0833 領域確保による自動生成 */
+#define TR_FLAG_580                       2100 /* 0x0834 領域確保による自動生成 */
+#define TR_FLAG_581                       2101 /* 0x0835 領域確保による自動生成 */
+#define TR_FLAG_582                       2102 /* 0x0836 領域確保による自動生成 */
+#define TR_FLAG_583                       2103 /* 0x0837 領域確保による自動生成 */
+#define TR_FLAG_584                       2104 /* 0x0838 領域確保による自動生成 */
+#define TR_FLAG_585                       2105 /* 0x0839 領域確保による自動生成 */
+#define TR_FLAG_586                       2106 /* 0x083a 領域確保による自動生成 */
+#define TR_FLAG_587                       2107 /* 0x083b 領域確保による自動生成 */
+#define TR_FLAG_588                       2108 /* 0x083c 領域確保による自動生成 */
+#define TR_FLAG_589                       2109 /* 0x083d 領域確保による自動生成 */
+#define TR_FLAG_590                       2110 /* 0x083e 領域確保による自動生成 */
+#define TR_FLAG_591                       2111 /* 0x083f 領域確保による自動生成 */
+#define TR_FLAG_592                       2112 /* 0x0840 領域確保による自動生成 */
+#define TR_FLAG_593                       2113 /* 0x0841 領域確保による自動生成 */
+#define TR_FLAG_594                       2114 /* 0x0842 領域確保による自動生成 */
+#define TR_FLAG_595                       2115 /* 0x0843 領域確保による自動生成 */
+#define TR_FLAG_596                       2116 /* 0x0844 領域確保による自動生成 */
+#define TR_FLAG_597                       2117 /* 0x0845 領域確保による自動生成 */
+#define TR_FLAG_598                       2118 /* 0x0846 領域確保による自動生成 */
+#define TR_FLAG_599                       2119 /* 0x0847 領域確保による自動生成 */
+#define TR_FLAG_600                       2120 /* 0x0848 領域確保による自動生成 */
+#define TR_FLAG_601                       2121 /* 0x0849 領域確保による自動生成 */
+#define TR_FLAG_602                       2122 /* 0x084a 領域確保による自動生成 */
+#define TR_FLAG_603                       2123 /* 0x084b 領域確保による自動生成 */
+#define TR_FLAG_604                       2124 /* 0x084c 領域確保による自動生成 */
+#define TR_FLAG_605                       2125 /* 0x084d 領域確保による自動生成 */
+#define TR_FLAG_606                       2126 /* 0x084e 領域確保による自動生成 */
+#define TR_FLAG_607                       2127 /* 0x084f 領域確保による自動生成 */
+#define TR_FLAG_608                       2128 /* 0x0850 領域確保による自動生成 */
+#define TR_FLAG_609                       2129 /* 0x0851 領域確保による自動生成 */
+#define TR_FLAG_610                       2130 /* 0x0852 領域確保による自動生成 */
+#define TR_FLAG_611                       2131 /* 0x0853 領域確保による自動生成 */
+#define TR_FLAG_612                       2132 /* 0x0854 領域確保による自動生成 */
+#define TR_FLAG_613                       2133 /* 0x0855 領域確保による自動生成 */
+#define TR_FLAG_614                       2134 /* 0x0856 領域確保による自動生成 */
+#define TR_FLAG_615                       2135 /* 0x0857 領域確保による自動生成 */
+#define TR_FLAG_616                       2136 /* 0x0858 領域確保による自動生成 */
+#define TR_FLAG_617                       2137 /* 0x0859 領域確保による自動生成 */
+#define TR_FLAG_618                       2138 /* 0x085a 領域確保による自動生成 */
+#define TR_FLAG_619                       2139 /* 0x085b 領域確保による自動生成 */
+#define TR_FLAG_620                       2140 /* 0x085c 領域確保による自動生成 */
+#define TR_FLAG_621                       2141 /* 0x085d 領域確保による自動生成 */
+#define TR_FLAG_622                       2142 /* 0x085e 領域確保による自動生成 */
+#define TR_FLAG_623                       2143 /* 0x085f 領域確保による自動生成 */
+#define TR_FLAG_624                       2144 /* 0x0860 領域確保による自動生成 */
+#define TR_FLAG_625                       2145 /* 0x0861 領域確保による自動生成 */
+#define TR_FLAG_626                       2146 /* 0x0862 領域確保による自動生成 */
+#define TR_FLAG_627                       2147 /* 0x0863 領域確保による自動生成 */
+#define TR_FLAG_628                       2148 /* 0x0864 領域確保による自動生成 */
+#define TR_FLAG_629                       2149 /* 0x0865 領域確保による自動生成 */
+#define TR_FLAG_630                       2150 /* 0x0866 領域確保による自動生成 */
+#define TR_FLAG_631                       2151 /* 0x0867 領域確保による自動生成 */
+#define TR_FLAG_632                       2152 /* 0x0868 領域確保による自動生成 */
+#define TR_FLAG_633                       2153 /* 0x0869 領域確保による自動生成 */
+#define TR_FLAG_634                       2154 /* 0x086a 領域確保による自動生成 */
+#define TR_FLAG_635                       2155 /* 0x086b 領域確保による自動生成 */
+#define TR_FLAG_636                       2156 /* 0x086c 領域確保による自動生成 */
+#define TR_FLAG_637                       2157 /* 0x086d 領域確保による自動生成 */
+#define TR_FLAG_638                       2158 /* 0x086e 領域確保による自動生成 */
+#define TR_FLAG_639                       2159 /* 0x086f 領域確保による自動生成 */
+#define TR_FLAG_640                       2160 /* 0x0870 領域確保による自動生成 */
+#define TR_FLAG_641                       2161 /* 0x0871 領域確保による自動生成 */
+#define TR_FLAG_642                       2162 /* 0x0872 領域確保による自動生成 */
+#define TR_FLAG_643                       2163 /* 0x0873 領域確保による自動生成 */
+#define TR_FLAG_644                       2164 /* 0x0874 領域確保による自動生成 */
+#define TR_FLAG_645                       2165 /* 0x0875 領域確保による自動生成 */
+#define TR_FLAG_646                       2166 /* 0x0876 領域確保による自動生成 */
+#define TR_FLAG_647                       2167 /* 0x0877 領域確保による自動生成 */
+#define TR_FLAG_648                       2168 /* 0x0878 領域確保による自動生成 */
+#define TR_FLAG_649                       2169 /* 0x0879 領域確保による自動生成 */
+#define TR_FLAG_650                       2170 /* 0x087a 領域確保による自動生成 */
+#define TR_FLAG_651                       2171 /* 0x087b 領域確保による自動生成 */
+#define TR_FLAG_652                       2172 /* 0x087c 領域確保による自動生成 */
+#define TR_FLAG_653                       2173 /* 0x087d 領域確保による自動生成 */
+#define TR_FLAG_654                       2174 /* 0x087e 領域確保による自動生成 */
+#define TR_FLAG_655                       2175 /* 0x087f 領域確保による自動生成 */
+#define TR_FLAG_656                       2176 /* 0x0880 領域確保による自動生成 */
+#define TR_FLAG_657                       2177 /* 0x0881 領域確保による自動生成 */
+#define TR_FLAG_658                       2178 /* 0x0882 領域確保による自動生成 */
+#define TR_FLAG_659                       2179 /* 0x0883 領域確保による自動生成 */
+#define TR_FLAG_660                       2180 /* 0x0884 領域確保による自動生成 */
+#define TR_FLAG_661                       2181 /* 0x0885 領域確保による自動生成 */
+#define TR_FLAG_662                       2182 /* 0x0886 領域確保による自動生成 */
+#define TR_FLAG_663                       2183 /* 0x0887 領域確保による自動生成 */
+#define TR_FLAG_664                       2184 /* 0x0888 領域確保による自動生成 */
+#define TR_FLAG_665                       2185 /* 0x0889 領域確保による自動生成 */
+#define TR_FLAG_666                       2186 /* 0x088a 領域確保による自動生成 */
+#define TR_FLAG_667                       2187 /* 0x088b 領域確保による自動生成 */
+#define TR_FLAG_668                       2188 /* 0x088c 領域確保による自動生成 */
+#define TR_FLAG_669                       2189 /* 0x088d 領域確保による自動生成 */
+#define TR_FLAG_670                       2190 /* 0x088e 領域確保による自動生成 */
+#define TR_FLAG_671                       2191 /* 0x088f 領域確保による自動生成 */
+#define TR_FLAG_672                       2192 /* 0x0890 領域確保による自動生成 */
+#define TR_FLAG_673                       2193 /* 0x0891 領域確保による自動生成 */
+#define TR_FLAG_674                       2194 /* 0x0892 領域確保による自動生成 */
+#define TR_FLAG_675                       2195 /* 0x0893 領域確保による自動生成 */
+#define TR_FLAG_676                       2196 /* 0x0894 領域確保による自動生成 */
+#define TR_FLAG_677                       2197 /* 0x0895 領域確保による自動生成 */
+#define TR_FLAG_678                       2198 /* 0x0896 領域確保による自動生成 */
+#define TR_FLAG_679                       2199 /* 0x0897 領域確保による自動生成 */
+#define TR_FLAG_680                       2200 /* 0x0898 領域確保による自動生成 */
+#define TR_FLAG_681                       2201 /* 0x0899 領域確保による自動生成 */
+#define TR_FLAG_682                       2202 /* 0x089a 領域確保による自動生成 */
+#define TR_FLAG_683                       2203 /* 0x089b 領域確保による自動生成 */
+#define TR_FLAG_684                       2204 /* 0x089c 領域確保による自動生成 */
+#define TR_FLAG_685                       2205 /* 0x089d 領域確保による自動生成 */
+#define TR_FLAG_686                       2206 /* 0x089e 領域確保による自動生成 */
+#define TR_FLAG_687                       2207 /* 0x089f 領域確保による自動生成 */
+#define TR_FLAG_688                       2208 /* 0x08a0 領域確保による自動生成 */
+#define TR_FLAG_689                       2209 /* 0x08a1 領域確保による自動生成 */
+#define TR_FLAG_690                       2210 /* 0x08a2 領域確保による自動生成 */
+#define TR_FLAG_691                       2211 /* 0x08a3 領域確保による自動生成 */
+#define TR_FLAG_692                       2212 /* 0x08a4 領域確保による自動生成 */
+#define TR_FLAG_693                       2213 /* 0x08a5 領域確保による自動生成 */
+#define TR_FLAG_694                       2214 /* 0x08a6 領域確保による自動生成 */
+#define TR_FLAG_695                       2215 /* 0x08a7 領域確保による自動生成 */
+#define TR_FLAG_696                       2216 /* 0x08a8 領域確保による自動生成 */
+#define TR_FLAG_697                       2217 /* 0x08a9 領域確保による自動生成 */
+#define TR_FLAG_698                       2218 /* 0x08aa 領域確保による自動生成 */
+#define TR_FLAG_699                       2219 /* 0x08ab 領域確保による自動生成 */
+#define TR_FLAG_700                       2220 /* 0x08ac 領域確保による自動生成 */
+#define TR_FLAG_701                       2221 /* 0x08ad 領域確保による自動生成 */
+#define TR_FLAG_702                       2222 /* 0x08ae 領域確保による自動生成 */
+#define TR_FLAG_703                       2223 /* 0x08af 領域確保による自動生成 */
+#define TR_FLAG_704                       2224 /* 0x08b0 領域確保による自動生成 */
+#define TR_FLAG_705                       2225 /* 0x08b1 領域確保による自動生成 */
+#define TR_FLAG_706                       2226 /* 0x08b2 領域確保による自動生成 */
+#define TR_FLAG_707                       2227 /* 0x08b3 領域確保による自動生成 */
+#define TR_FLAG_708                       2228 /* 0x08b4 領域確保による自動生成 */
+#define TR_FLAG_709                       2229 /* 0x08b5 領域確保による自動生成 */
+#define TR_FLAG_710                       2230 /* 0x08b6 領域確保による自動生成 */
+#define TR_FLAG_711                       2231 /* 0x08b7 領域確保による自動生成 */
+#define TR_FLAG_712                       2232 /* 0x08b8 領域確保による自動生成 */
+#define TR_FLAG_713                       2233 /* 0x08b9 領域確保による自動生成 */
+#define TR_FLAG_714                       2234 /* 0x08ba 領域確保による自動生成 */
+#define TR_FLAG_715                       2235 /* 0x08bb 領域確保による自動生成 */
+#define TR_FLAG_716                       2236 /* 0x08bc 領域確保による自動生成 */
+#define TR_FLAG_717                       2237 /* 0x08bd 領域確保による自動生成 */
+#define TR_FLAG_718                       2238 /* 0x08be 領域確保による自動生成 */
+#define TR_FLAG_719                       2239 /* 0x08bf 領域確保による自動生成 */
+#define TR_FLAG_720                       2240 /* 0x08c0 領域確保による自動生成 */
+#define TR_FLAG_721                       2241 /* 0x08c1 領域確保による自動生成 */
+#define TR_FLAG_722                       2242 /* 0x08c2 領域確保による自動生成 */
+#define TR_FLAG_723                       2243 /* 0x08c3 領域確保による自動生成 */
+#define TR_FLAG_724                       2244 /* 0x08c4 領域確保による自動生成 */
+#define TR_FLAG_725                       2245 /* 0x08c5 領域確保による自動生成 */
+#define TR_FLAG_726                       2246 /* 0x08c6 領域確保による自動生成 */
+#define TR_FLAG_727                       2247 /* 0x08c7 領域確保による自動生成 */
+#define TR_FLAG_728                       2248 /* 0x08c8 領域確保による自動生成 */
+#define TR_FLAG_729                       2249 /* 0x08c9 領域確保による自動生成 */
+#define TR_FLAG_730                       2250 /* 0x08ca 領域確保による自動生成 */
+#define TR_FLAG_731                       2251 /* 0x08cb 領域確保による自動生成 */
+#define TR_FLAG_732                       2252 /* 0x08cc 領域確保による自動生成 */
+#define TR_FLAG_733                       2253 /* 0x08cd 領域確保による自動生成 */
+#define TR_FLAG_734                       2254 /* 0x08ce 領域確保による自動生成 */
+#define TR_FLAG_735                       2255 /* 0x08cf 領域確保による自動生成 */
+#define TR_FLAG_736                       2256 /* 0x08d0 領域確保による自動生成 */
+#define TR_FLAG_737                       2257 /* 0x08d1 領域確保による自動生成 */
+#define TR_FLAG_738                       2258 /* 0x08d2 領域確保による自動生成 */
+#define TR_FLAG_739                       2259 /* 0x08d3 領域確保による自動生成 */
+#define TR_FLAG_740                       2260 /* 0x08d4 領域確保による自動生成 */
+#define TR_FLAG_741                       2261 /* 0x08d5 領域確保による自動生成 */
+#define TR_FLAG_742                       2262 /* 0x08d6 領域確保による自動生成 */
+#define TR_FLAG_743                       2263 /* 0x08d7 領域確保による自動生成 */
+#define TR_FLAG_744                       2264 /* 0x08d8 領域確保による自動生成 */
+#define TR_FLAG_745                       2265 /* 0x08d9 領域確保による自動生成 */
+#define TR_FLAG_746                       2266 /* 0x08da 領域確保による自動生成 */
+#define TR_FLAG_747                       2267 /* 0x08db 領域確保による自動生成 */
+#define TR_FLAG_748                       2268 /* 0x08dc 領域確保による自動生成 */
+#define TR_FLAG_749                       2269 /* 0x08dd 領域確保による自動生成 */
+#define TR_FLAG_750                       2270 /* 0x08de 領域確保による自動生成 */
+#define TR_FLAG_751                       2271 /* 0x08df 領域確保による自動生成 */
+#define TR_FLAG_752                       2272 /* 0x08e0 領域確保による自動生成 */
+#define TR_FLAG_753                       2273 /* 0x08e1 領域確保による自動生成 */
+#define TR_FLAG_754                       2274 /* 0x08e2 領域確保による自動生成 */
+#define TR_FLAG_755                       2275 /* 0x08e3 領域確保による自動生成 */
+#define TR_FLAG_756                       2276 /* 0x08e4 領域確保による自動生成 */
+#define TR_FLAG_757                       2277 /* 0x08e5 領域確保による自動生成 */
+#define TR_FLAG_758                       2278 /* 0x08e6 領域確保による自動生成 */
+#define TR_FLAG_759                       2279 /* 0x08e7 領域確保による自動生成 */
+#define TR_FLAG_760                       2280 /* 0x08e8 領域確保による自動生成 */
+#define TR_FLAG_761                       2281 /* 0x08e9 領域確保による自動生成 */
+#define TR_FLAG_762                       2282 /* 0x08ea 領域確保による自動生成 */
+#define TR_FLAG_763                       2283 /* 0x08eb 領域確保による自動生成 */
+#define TR_FLAG_764                       2284 /* 0x08ec 領域確保による自動生成 */
+#define TR_FLAG_765                       2285 /* 0x08ed 領域確保による自動生成 */
+#define TR_FLAG_766                       2286 /* 0x08ee 領域確保による自動生成 */
+#define TR_FLAG_767                       2287 /* 0x08ef 領域確保による自動生成 */
+#define TR_FLAG_768                       2288 /* 0x08f0 領域確保による自動生成 */
+#define TR_FLAG_769                       2289 /* 0x08f1 領域確保による自動生成 */
+#define TR_FLAG_770                       2290 /* 0x08f2 領域確保による自動生成 */
+#define TR_FLAG_771                       2291 /* 0x08f3 領域確保による自動生成 */
+#define TR_FLAG_772                       2292 /* 0x08f4 領域確保による自動生成 */
+#define TR_FLAG_773                       2293 /* 0x08f5 領域確保による自動生成 */
+#define TR_FLAG_774                       2294 /* 0x08f6 領域確保による自動生成 */
+#define TR_FLAG_775                       2295 /* 0x08f7 領域確保による自動生成 */
+#define TR_FLAG_776                       2296 /* 0x08f8 領域確保による自動生成 */
+#define TR_FLAG_777                       2297 /* 0x08f9 領域確保による自動生成 */
+#define TR_FLAG_778                       2298 /* 0x08fa 領域確保による自動生成 */
+#define TR_FLAG_779                       2299 /* 0x08fb 領域確保による自動生成 */
+#define TR_FLAG_780                       2300 /* 0x08fc 領域確保による自動生成 */
+#define TR_FLAG_781                       2301 /* 0x08fd 領域確保による自動生成 */
+#define TR_FLAG_782                       2302 /* 0x08fe 領域確保による自動生成 */
+#define TR_FLAG_783                       2303 /* 0x08ff 領域確保による自動生成 */
+#define TR_FLAG_784                       2304 /* 0x0900 領域確保による自動生成 */
+#define TR_FLAG_785                       2305 /* 0x0901 領域確保による自動生成 */
+#define TR_FLAG_786                       2306 /* 0x0902 領域確保による自動生成 */
+#define TR_FLAG_787                       2307 /* 0x0903 領域確保による自動生成 */
+#define TR_FLAG_788                       2308 /* 0x0904 領域確保による自動生成 */
+#define TR_FLAG_789                       2309 /* 0x0905 領域確保による自動生成 */
+#define TR_FLAG_790                       2310 /* 0x0906 領域確保による自動生成 */
+#define TR_FLAG_791                       2311 /* 0x0907 領域確保による自動生成 */
+#define TR_FLAG_792                       2312 /* 0x0908 領域確保による自動生成 */
+#define TR_FLAG_793                       2313 /* 0x0909 領域確保による自動生成 */
+#define TR_FLAG_794                       2314 /* 0x090a 領域確保による自動生成 */
+#define TR_FLAG_795                       2315 /* 0x090b 領域確保による自動生成 */
+#define TR_FLAG_796                       2316 /* 0x090c 領域確保による自動生成 */
+#define TR_FLAG_797                       2317 /* 0x090d 領域確保による自動生成 */
+#define TR_FLAG_798                       2318 /* 0x090e 領域確保による自動生成 */
+#define TR_FLAG_799                       2319 /* 0x090f 領域確保による自動生成 */
 
 #define TR_FLAG_AREA_END                  2319 /* 0x090f  */
 
 
-/* flags "sys_flag.xls" 2400 ～ 2719 */
+/* flags "sys_flag.xls" 2400 ～ 2639 */
 
 #define SYS_FLAG_AREA_START               2400 /* 0x0960  */
 
@@ -2185,7 +2117,95 @@
 		/* not used  2508(0x09cc) */
 		/* not used  2509(0x09cd) */
 
-#define SYS_FLAG_AREA_END                 2719 /* 0x0a9f  */
+#define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
+
+
+/* flags "medal_flag.xls" 2640 ～ 2719 */
+
+#define MDL_FLAG_AREA_START               2640 /* 0x0a50  */
+
+#define MDL_FLAG_ANIMALTRAIL_01           2640 /* 0x0a50 けものみちチェック済みその1 */
+#define MDL_FLAG_ANIMALTRAIL_02           2641 /* 0x0a51 けものみちチェック済みその2 */
+#define MDL_FLAG_ANIMALTRAIL_03           2642 /* 0x0a52 けものみちチェック済みその3 */
+#define MDL_FLAG_ANIMALTRAIL_04           2643 /* 0x0a53 けものみちチェック済みその4 */
+#define MDL_FLAG_ANIMALTRAIL_05           2644 /* 0x0a54 けものみちチェック済みその5 */
+#define MDL_FLAG_ANIMALTRAIL_06           2645 /* 0x0a55 けものみちチェック済みその6 */
+#define MDL_FLAG_ANIMALTRAIL_07           2646 /* 0x0a56 けものみちチェック済みその7 */
+#define MDL_FLAG_ANIMALTRAIL_08           2647 /* 0x0a57 けものみちチェック済みその8 */
+#define MDL_FLAG_ANIMALTRAIL_09           2648 /* 0x0a58 けものみちチェック済みその9 */
+#define MDL_FLAG_ANIMALTRAIL_10           2649 /* 0x0a59 けものみちチェック済みその10 */
+#define MDL_FLAG_ANIMALTRAIL_11           2650 /* 0x0a5a けものみちチェック済みその11 */
+#define MDL_FLAG_ANIMALTRAIL_12           2651 /* 0x0a5b けものみちチェック済みその12 */
+#define MDL_FLAG_ANIMALTRAIL_13           2652 /* 0x0a5c けものみちチェック済みその13 */
+#define MDL_FLAG_ANIMALTRAIL_14           2653 /* 0x0a5d けものみちチェック済みその14 */
+#define MDL_FLAG_ANIMALTRAIL_15           2654 /* 0x0a5e けものみちチェック済みその15 */
+#define MDL_FLAG_ANIMALTRAIL_16           2655 /* 0x0a5f けものみちチェック済みその16 */
+#define MDL_FLAG_ANIMALTRAIL_17           2656 /* 0x0a60 けものみちチェック済みその17 */
+#define MDL_FLAG_ANIMALTRAIL_18           2657 /* 0x0a61 けものみちチェック済みその18 */
+#define MDL_FLAG_ANIMALTRAIL_19           2658 /* 0x0a62 けものみちチェック済みその19 */
+#define MDL_FLAG_ANIMALTRAIL_20           2659 /* 0x0a63 けものみちチェック済みその20 */
+		/* not used  2660(0x0a64) */
+		/* not used  2661(0x0a65) */
+		/* not used  2662(0x0a66) */
+		/* not used  2663(0x0a67) */
+		/* not used  2664(0x0a68) */
+		/* not used  2665(0x0a69) */
+		/* not used  2666(0x0a6a) */
+		/* not used  2667(0x0a6b) */
+		/* not used  2668(0x0a6c) */
+		/* not used  2669(0x0a6d) */
+		/* not used  2670(0x0a6e) */
+		/* not used  2671(0x0a6f) */
+		/* not used  2672(0x0a70) */
+		/* not used  2673(0x0a71) */
+		/* not used  2674(0x0a72) */
+		/* not used  2675(0x0a73) */
+		/* not used  2676(0x0a74) */
+		/* not used  2677(0x0a75) */
+		/* not used  2678(0x0a76) */
+		/* not used  2679(0x0a77) */
+		/* not used  2680(0x0a78) */
+		/* not used  2681(0x0a79) */
+		/* not used  2682(0x0a7a) */
+		/* not used  2683(0x0a7b) */
+		/* not used  2684(0x0a7c) */
+		/* not used  2685(0x0a7d) */
+		/* not used  2686(0x0a7e) */
+		/* not used  2687(0x0a7f) */
+		/* not used  2688(0x0a80) */
+		/* not used  2689(0x0a81) */
+		/* not used  2690(0x0a82) */
+		/* not used  2691(0x0a83) */
+		/* not used  2692(0x0a84) */
+		/* not used  2693(0x0a85) */
+		/* not used  2694(0x0a86) */
+		/* not used  2695(0x0a87) */
+		/* not used  2696(0x0a88) */
+		/* not used  2697(0x0a89) */
+		/* not used  2698(0x0a8a) */
+		/* not used  2699(0x0a8b) */
+		/* not used  2700(0x0a8c) */
+		/* not used  2701(0x0a8d) */
+		/* not used  2702(0x0a8e) */
+		/* not used  2703(0x0a8f) */
+		/* not used  2704(0x0a90) */
+		/* not used  2705(0x0a91) */
+		/* not used  2706(0x0a92) */
+		/* not used  2707(0x0a93) */
+		/* not used  2708(0x0a94) */
+		/* not used  2709(0x0a95) */
+		/* not used  2710(0x0a96) */
+		/* not used  2711(0x0a97) */
+		/* not used  2712(0x0a98) */
+		/* not used  2713(0x0a99) */
+		/* not used  2714(0x0a9a) */
+		/* not used  2715(0x0a9b) */
+		/* not used  2716(0x0a9c) */
+		/* not used  2717(0x0a9d) */
+		/* not used  2718(0x0a9e) */
+		/* not used  2719(0x0a9f) */
+
+#define MDL_FLAG_AREA_END                 2719 /* 0x0a9f  */
 
 
 /* flags "time_flag.xls" 2720 ～ 2911 */
