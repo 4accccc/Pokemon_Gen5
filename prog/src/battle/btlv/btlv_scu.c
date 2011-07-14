@@ -110,8 +110,8 @@ enum {
 
   // ポケウッド用
   POKEWOOD_WIN0_TOP_Y       =   8,
-  POKEWOOD_WIN0_BOTTOM_Y    = 176,
-  POKEWOOD_MSGWIN_SLIDE_Y   =  16,
+  POKEWOOD_WIN0_BOTTOM_Y    = 176-18, // 176
+  POKEWOOD_MSGWIN_SLIDE_Y   =  -8, // 16
   BATTLE_WINFRAME_CHARANUM  =   8,
   
 
@@ -479,7 +479,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 |
                            GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 |
                            GX_WND_PLANEMASK_OBJ, TRUE );
-    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+//    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG1, FALSE );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
     G2_SetWnd0Position( 0, POKEWOOD_WIN0_TOP_Y, 255, POKEWOOD_WIN0_BOTTOM_Y);
     GFL_BG_SetScroll( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, POKEWOOD_MSGWIN_SLIDE_Y );
@@ -757,6 +758,8 @@ static BOOL btlin_skip_core( BTLV_SCU* wk, int* seq, const u8* vposAry, u8 vposC
     }
     break;
   case 1:
+
+    OS_Printf("btlinSkipFlag=%d\n", wk->btlinSkipFlag);
     // チャプタスキップ時はここでフェードインしない
     if( wk->btlinSkipFlag ){
       return TRUE;
