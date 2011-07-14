@@ -48,7 +48,6 @@ static const PRINTSYS_LSB DATA_PanelFontColor[] = { FCOL_FNTOAM_W, FCOL_FNTOAM_B
 
 //////////////////////////////////////////////////////////////////
 static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 old_log_max );
-static void sp_gpower_RequestSet( BEACON_VIEW_PTR wk, u8 req_id );
 static GPOWER_ID sp_gpower_RequestGet( BEACON_VIEW_PTR wk );
 static BOOL sp_gpower_ZoromeCheck( u32 log_count );
 
@@ -95,6 +94,7 @@ static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u
 
 static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f );
 static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* task_ct );
+static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, int* task_ct );
 
 static void effReq_PanelScroll( BEACON_VIEW_PTR wk, u8 dir, u8 frame, PANEL_WORK* new_pp, PANEL_WORK* ignore_pp, int* task_ct );
 static void effReq_PanelSlideIn( BEACON_VIEW_PTR wk, PANEL_WORK* pp, int* task_ct );
@@ -341,6 +341,20 @@ BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk )
 {
   GPOWER_ID power;
 
+  //ユーザーパワー退避チェック
+  power = BEACON_STATUS_BeaconGPowerGet( wk->b_status, wk->str_tmp );
+  
+  if( power != GPOWER_ID_NULL ){
+    if( GPOWER_Check_OccurID( power, wk->gpower_data ) == power ){
+      BEACON_STATUS_BeaconGPowerDel( wk->b_status );
+      return FALSE; //同じパワー発動中は捨てる
+    }
+    //オーナー名をタグ展開しておいてポップアップリクエスト
+    WORDSET_RegisterWord( wk->wordset, 0, wk->str_tmp, 0, TRUE, PM_LANG);
+    taskAdd_WinGPower( wk, power, GPOWER_USE_BEACON, &wk->eff_task_ct );
+    return TRUE;
+  }
+
   //特殊Gパワーリクエストチェック
   power = sp_gpower_RequestGet( wk );
 
@@ -348,6 +362,7 @@ BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk )
     return FALSE;
   }
   if( GPOWER_Check_OccurID( power, wk->gpower_data ) == power ){
+    BEACON_STATUS_SpGPowerDel( wk->b_status );
     return FALSE; //同じパワー発動中は捨てる
   }
   //ポップアップをリクエスト
@@ -742,49 +757,31 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
 
   //海外版ロムとすれ違ったか？
   if( GAMEBEACON_Get_PmLanguage( info ) != PM_LANG ){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_HATCH_UP );
+    BEACON_STATUS_SpGPowerSet( wk->b_status, SP_GPOWER_REQ_HATCH_UP );
   }
   //ログにいる自分と異なるカセットバージョンのプレイヤーが20人か？
   if( wk->old_version_ct != version_ct && version_ct == 20 ){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_NATSUKI_UP );
+    BEACON_STATUS_SpGPowerSet( wk->b_status, SP_GPOWER_REQ_NATSUKI_UP );
   }
   //すれ違い人数が100の倍数になったか？
   if( ( wk->log_count % 100 ) == 0 ){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_SALE );
+    BEACON_STATUS_SpGPowerSet( wk->b_status, SP_GPOWER_REQ_SALE );
   }
   //プレイヤーリストが30人埋まったか？
   if( old_log_max == (BS_LOG_MAX-1) && wk->ctrl.max == BS_LOG_MAX ){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_EXP_UP );
+    BEACON_STATUS_SpGPowerSet( wk->b_status, SP_GPOWER_REQ_EXP_UP );
   }
   //ログにいる自分と異なる性別のプレイヤーが20人か？
   if( wk->old_sex_ct != sex_ct && sex_ct == 20 ){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_MONEY_UP );
+    BEACON_STATUS_SpGPowerSet( wk->b_status, SP_GPOWER_REQ_MONEY_UP );
   }
   //すれ違い人数が3桁以上のゾロ目になったか？
   if( sp_gpower_ZoromeCheck( wk->log_count )){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_CAPTURE_UP );
+    BEACON_STATUS_SpGPowerSet( wk->b_status, SP_GPOWER_REQ_CAPTURE_UP );
   }
   
   wk->old_sex_ct = sex_ct;
   wk->old_version_ct = version_ct;
-}
-
-//----------------------------------------------------------
-/*
- *  @brief  特殊Gパワーの発動を予約する
- */
-//----------------------------------------------------------
-static void sp_gpower_RequestSet( BEACON_VIEW_PTR wk, u8 req_id )
-{
-  int i;
-
-  //既に予約リストにあるかどうか？
-  for(i = 0;i < wk->sp_gpower_req_ct;i++){
-    if(wk->sp_gpower_req[i] == req_id){
-      return;
-    }
-  }
-  wk->sp_gpower_req[wk->sp_gpower_req_ct++] = req_id;
 }
 
 //----------------------------------------------------------
@@ -796,20 +793,15 @@ static void sp_gpower_RequestSet( BEACON_VIEW_PTR wk, u8 req_id )
 //----------------------------------------------------------
 static GPOWER_ID sp_gpower_RequestGet( BEACON_VIEW_PTR wk )
 {
+  SP_GPOWER_REQ  req;
   GPOWER_ID gpower_id;
 
-  if( wk->sp_gpower_req[0] == SP_GPOWER_REQ_NULL ){
+  req = BEACON_STATUS_SpGPowerGet( wk->b_status );
+  if( req == SP_GPOWER_REQ_NULL ){
     return GPOWER_ID_NULL;
   }
   //一つ取り出す
-  gpower_id = DATA_SpGPowerTbl[ wk->sp_gpower_req[0]-1 ];
-  wk->sp_gpower_req_ct--;
-
-  //テーブルを詰める
-  MI_CpuCopy8( &(wk->sp_gpower_req[1]), &(wk->sp_gpower_req[0]), sizeof(u8)*wk->sp_gpower_req_ct);
-  wk->sp_gpower_req[wk->sp_gpower_req_ct] = SP_GPOWER_REQ_NULL;
-
-  return gpower_id;
+  return DATA_SpGPowerTbl[ req-1 ];
 }
 
 //----------------------------------------------------------
@@ -1916,7 +1908,6 @@ static const u8 DATA_GPowerUseMsg[GPOWER_USE_MAX] = {
  msg_sys_gpower_use02,
 };
 
-static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, int* task_ct );
 static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* work);
 
 static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL haifu_f )
@@ -1938,8 +1929,13 @@ static BOOL effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BO
   if( GPOWER_Check_OccurID( gpower_id, wk->gpower_data ) == gpower_id ){
     return FALSE;
   }
+  //選択中にログ画面を終了した時対策用に情報を退避
+  GAMEBEACON_Get_PlayerNameToBuf( info, wk->str_tmp );
+  BEACON_STATUS_BeaconGPowerSet( wk->b_status, gpower_id, wk->str_tmp );
+ 
+  //トレーナー名をタグ展開しておく
   GAMEBEACON_InfoWordset( info, wk->wordset, wk->tmpHeapID );
-  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
+//  WORDSET_ExpandStr( wk->wordset, wk->str_expand, wk->str_tmp );
   taskAdd_WinGPower( wk, gpower_id, GPOWER_USE_BEACON, &wk->eff_task_ct);
   return TRUE;
 }
@@ -2044,6 +2040,11 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
     }
     return;
   case 6:
+    if( twk->type == GPOWER_USE_SPECIAL ){
+      BEACON_STATUS_SpGPowerDel( bvp->b_status ); 
+    }else{
+      BEACON_STATUS_BeaconGPowerDel( bvp->b_status ); 
+    }
     draw_MenuWindow( bvp, msg_sys_now_record, &twk->child_task );
     draw_MenuIconVisibleSet( bvp, TRUE );
     BVCTaskAdd_MsgUpdown( bvp->pTcbSys, FRM_POPUP, SCROLL_DOWN, &twk->child_task );

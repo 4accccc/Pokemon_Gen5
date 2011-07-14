@@ -11,22 +11,13 @@
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/beacon_status.h"
 
+#include "buflen.h"
 #include "arc/arc_def.h"
 #include "msgdata.h"
 #include "message.naix"
 #include "msg/msg_beacon_status.h"
 
-struct _TAG_BEACON_STATUS{
-  GAMEBEACON_INFO_TBL view_log; 
-  STRBUF* str_fword;  //フリーワード
-  
-  u16 ret_fword_input;  ///<フリーワード入力があったかの結果を受けるワーク(u16の必要がある)
-  u8  view_top_ofs;     ///<ビューリストのトップのデータオフセット
-
-#ifdef PM_DEBUG
-  u8  debug_stack_check_throw:1;
-#endif
-};
+#include "beacon_status_local.h"
 
 #define BUFLEN_INTRODUCTION_MSG (GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE)
 
@@ -41,7 +32,10 @@ BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID, HEAPID tmpHeapID )
 
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BEACON_STATUS));
   wk->str_fword = GFL_STR_CreateBuffer( BUFLEN_INTRODUCTION_MSG ,heapID );
+  wk->str_beacon_gpower_owner = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME ,heapID );
 	
+  wk->beacon_gpower_id = GPOWER_ID_NULL;
+
   {
     GFL_MSGDATA* msg;
     STRBUF* buf;
@@ -68,6 +62,7 @@ BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID, HEAPID tmpHeapID )
 //------------------------------------------------------------
 void BEACON_STATUS_Delete( BEACON_STATUS* wk )
 {
+  GFL_STR_DeleteBuffer(wk->str_beacon_gpower_owner);
   GFL_STR_DeleteBuffer(wk->str_fword);
   MI_CpuClear8( wk, sizeof(BEACON_STATUS));
   GFL_HEAP_FreeMemory( wk );

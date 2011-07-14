@@ -11,6 +11,7 @@
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/beacon_status.h"
+#include "gamesystem/beacon_status_fld.h"
 #include "gamesystem/g_power.h"
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission.h"

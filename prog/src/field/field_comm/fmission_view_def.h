@@ -53,18 +53,6 @@ typedef enum{
 #endif  //PM_DEBUG
 }BEACON_DETAIL_EVENT;
 
-///スペシャルGパワーリクエストID
-typedef enum{
-  SP_GPOWER_REQ_NULL,
-  SP_GPOWER_REQ_HATCH_UP,
-  SP_GPOWER_REQ_NATSUKI_UP,
-  SP_GPOWER_REQ_SALE,
-  SP_GPOWER_REQ_EXP_UP,
-  SP_GPOWER_REQ_MONEY_UP,
-  SP_GPOWER_REQ_CAPTURE_UP,
-  SP_GPOWER_REQ_MAX = SP_GPOWER_REQ_CAPTURE_UP,
-}SP_GPOWER_REQ;
-
 /////////////////////////////////////
 //リテラル
 #define FRM_MENUMSG ( GFL_BG_FRAME0_S )

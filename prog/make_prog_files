@@ -1087,7 +1087,8 @@ SRCS_OVERLAY_BEACON_VIEW_COMMON = field/field_comm/beacon_view_common.c
 SRCS_OVERLAY_BEACON_VIEW = field/field_comm/beacon_view_setup.c \
         field/field_comm/beacon_view.c \
         field/field_comm/beacon_view_sub.c \
-        gamesystem/fmission_log_accessor_bv.c
+        gamesystem/fmission_log_accessor_bv.c \
+        gamesystem/beacon_status_fld.c
 
 #FMissionView
 #===> SRCS_OVERLAY_BEACON_VIEW_COMMON

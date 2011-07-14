@@ -1,5 +1,5 @@
 /*
- *  @file   beacon_status.c
+ *  @file   beacon_status.h
  *  @brief  ゲーム中保持するビーコンログ管理
  *  @author Miyuki Iwasawa
  *  @date   10.01.21
@@ -7,6 +7,18 @@
 #pragma once
 
 #include "gamesystem/game_beacon.h"
+
+///スペシャルGパワーリクエストID
+typedef enum{
+  SP_GPOWER_REQ_NULL,
+  SP_GPOWER_REQ_HATCH_UP,
+  SP_GPOWER_REQ_NATSUKI_UP,
+  SP_GPOWER_REQ_SALE,
+  SP_GPOWER_REQ_EXP_UP,
+  SP_GPOWER_REQ_MONEY_UP,
+  SP_GPOWER_REQ_CAPTURE_UP,
+  SP_GPOWER_REQ_MAX = SP_GPOWER_REQ_CAPTURE_UP,
+}SP_GPOWER_REQ;
 
 typedef struct _TAG_BEACON_STATUS BEACON_STATUS;
 
