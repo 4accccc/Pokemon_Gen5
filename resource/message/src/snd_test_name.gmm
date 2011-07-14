@@ -9213,14 +9213,6 @@
 		<language name="JPN" width="256">SW-PKWOOD-05</language>
 		<language name="JPN_KANJI" width="256">SW-PKWOOD-05</language>
 	</row>
-	<row id="msg_seq_se_sw_keysys_01">
-		<language name="JPN" width="256">SW-KEYSYS-01</language>
-		<language name="JPN_KANJI" width="256">SW-KEYSYS-01</language>
-	</row>
-	<row id="msg_seq_se_sw_keysys_02">
-		<language name="JPN" width="256">SW-KEYSYS-02</language>
-		<language name="JPN_KANJI" width="256">SW-KEYSYS-02</language>
-	</row>
 	<row id="msg_seq_se_sw_scenario_01">
 		<language name="JPN" width="256">SW-SCENARIO-01</language>
 		<language name="JPN_KANJI" width="256">SW-SCENARIO-01</language>
@@ -9300,6 +9292,18 @@
 	<row id="msg_seq_se_sw_net_10">
 		<language name="JPN" width="256">SW-NET-10</language>
 		<language name="JPN_KANJI" width="256">SW-NET-10</language>
+	</row>
+	<row id="msg_seq_se_sw_keysys_01">
+		<language name="JPN" width="256">SW-KEYSYS-01</language>
+		<language name="JPN_KANJI" width="256">SW-KEYSYS-01</language>
+	</row>
+	<row id="msg_seq_se_sw_keysys_02">
+		<language name="JPN" width="256">SW-KEYSYS-02</language>
+		<language name="JPN_KANJI" width="256">SW-KEYSYS-02</language>
+	</row>
+	<row id="msg_seq_se_sw_keysys_03">
+		<language name="JPN" width="256">SW-KEYSYS-03</language>
+		<language name="JPN_KANJI" width="256">SW-KEYSYS-03</language>
 	</row>
 	<row id="msg_seq_se_sw_plazmaship_01">
 		<language name="JPN" width="256">SW-PLAZMASHIP-01</language>
