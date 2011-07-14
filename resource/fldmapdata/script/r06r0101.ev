@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r06r0101.h"
   .include  "r06r0101.h"
 
+  //@author fujimura_souichirou（なみのり入手追加）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,36 +21,38 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA 	ev_bg_r06r0101_case_01
-_EVENT_DATA 	ev_bg_r06r0101_case_02
-_EVENT_DATA		ev_reserve_r06r0101_swleader1_01
-_EVENT_DATA		ev_r06r0101_swleader1_01
-
+_EVENT_DATA   ev_bg_r06r0101_case_01
+_EVENT_DATA   ev_bg_r06r0101_case_02
+_EVENT_DATA   ev_reserve_r06r0101_swleader1_01
+_EVENT_DATA   ev_r06r0101_swleader1_01
 _EVENT_DATA_END
+
 
 /**************************************************************/
 /*  reserve：異常気象説明イベント*/
 /**************************************************************/
 EVENT_START   ev_reserve_r06r0101_swleader1_01
 
-  //アニメ；主人公中央へ
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 7, FORCE_TYPE_NPC, 8, DIR_LR)
+  //アニメ：主人公中央へ
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 7, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
-  
+
   //チェレン：あまり
-  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_01,R06R0101_SWLEADER1_01, POS_DEFAULT ) 
-  
+  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_01, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
+
   //チェレン：それだけじゃない
-  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_02,R06R0101_SWLEADER1_01, POS_DEFAULT ) 
-  
+  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_02, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
+
   //チェレン：で　さきほどの
-  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_03,R06R0101_SWLEADER1_01, POS_DEFAULT ) 
-  
+  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_03, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
+
   //チェレン：あしどめして
-  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_04,R06R0101_SWLEADER1_01, POS_DEFAULT ) 
-  
+  _BALLOONWIN_OBJMSG_POS( msg_r06r0101_swleader1_04, R06R0101_SWLEADER1_01, POS_DEFAULT ) 
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
+
+  //アイテム入手：秘伝マシン「なみのり」
+  _ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN03, 1 )
 
 EVENT_END
 
@@ -56,7 +60,7 @@ EVENT_END
 /*  話しかけ：チェレン*/
 /**************************************************************/
 EVENT_START   ev_r06r0101_swleader1_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_swleader1_04 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_swleader1_05 )
 EVENT_END
 
 /**************************************************************/

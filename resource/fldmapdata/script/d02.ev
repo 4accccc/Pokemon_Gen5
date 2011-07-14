@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_d02.h"
   .include  "d02.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,125 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_bg_d02_rock_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  ためしのいわ                                              */
+/**************************************************************/
+EVENT_START   ev_bg_d02_rock_01
+
+_TALK_START_SE_PLAY()
+  //その日、初めての場合
+  IF FLAG_OFF( TMFLG_D02_ROCK_01 ) THEN
+
+    _CALL ev_tameshi  //試しイベントへジャンプ
+
+  //もう試し済み
+  ELSE
+
+    //メッセージ：ためしのいわが　ある……
+    _PLAINWIN_MSG_DOWN( msg_d02_rock_03 )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_tameshi:
+
+DEFINE_LOCAL  LWK_POKETYPE1
+DEFINE_LOCAL  LWK_POKETYPE2
+DEFINE_LOCAL  LWK_POKE
+DEFINE_LOCAL  LWK_EGG
+DEFINE_LOCAL  LWK_TEMOCHI
+DEFINE_LOCAL  LWK_TALK
+
+$LWK_POKE = 0
+
+  //パーティカウント
+  _GET_PARTY_POKE_COUNT( LWK_TEMOCHI, POKECOUNT_MODE_TOTAL )
+
+  WHILE $LWK_POKE < $LWK_TEMOCHI
+
+  //タマゴチェック
+  _CHECK_TEMOTI_EGG( LWK_EGG, LWK_POKE )
+
+  //タマゴではなかった場合
+  IF $LWK_EGG == FALSE THEN
+
+    //ポケモンのタイプをチェック
+    _GET_TEMOTI_POKE_TYPE( LWK_POKETYPE1, LWK_POKETYPE2, LWK_POKE )
+
+    //かくとうタイプの場合
+    IF $LWK_POKETYPE1 == POKETYPE_KAKUTOU || $LWK_POKETYPE2 == POKETYPE_KAKUTOU THEN
+
+      //ためしのいわを壊すか壊さないか・分岐
+      _TEMOTI_NICK_NAME( 0, LWK_POKE )
+
+      //メッセージ：《ポケモン名》に　こわさせて　みますか？
+      _PLAINWIN_MSG_DOWN( msg_d02_rock_01 )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      //はいの場合
+      IF $SCWK_ANSWER == SCR_YES THEN
+
+        _TEMOTI_NICK_NAME( 0, LWK_POKE )
+        //メッセージ：すなとなって　おちた
+        _PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
+        _PLAINWIN_CLOSE()
+
+        _ITEM_EVENT_NOWAIT( ITEM_HOSINOSUNA, 1 )  //アイテム「ほしのすな」入手
+
+        //========================================/
+        //ためしのいわ壊したフラグ（１日でリセット）
+        _FLAG_SET( TMFLG_D02_ROCK_01 )
+        //WHILE抜け
+        $LWK_POKE = 6
+        $LWK_TALK = 1
+        //========================================/
+
+      ELSE
+
+        _PLAINWIN_CLOSE()
+
+        //========================================/
+        $LWK_POKE = 6
+        $LWK_TALK = 1
+        //========================================/
+
+      ENDIF
+
+    ELSE
+
+      //========================================/
+      $LWK_POKE += 1
+      //========================================/
+
+    ENDIF
+
+  //タマゴだった場合
+  ELSE
+
+    //========================================/
+    $LWK_POKE += 1
+    //========================================/
+
+  ENDIF
+
+  ENDWHILE
+
+  IF $LWK_TALK == 0 THEN
+
+    //メッセージ：ためしのいわがある……
+    _PLAINWIN_MSG_DOWN( msg_d02_rock_03 )
+    _LAST_KEYWAIT()
+    _PLAINWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
