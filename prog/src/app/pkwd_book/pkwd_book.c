@@ -1526,7 +1526,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------------------
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
 		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-		10, 6 );
+		8, 3 );
 }
 
 //-----------------------------------------------------------------------------
