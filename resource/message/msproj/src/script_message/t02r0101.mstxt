@@ -35,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:53:53" />
+				Time="2011-07-14T08:39:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -92,10 +92,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:53:55" />
+				Time="2011-07-14T08:39:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -149,10 +149,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:57:20" />
+				Time="2011-07-14T08:39:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -198,10 +198,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・あわせて鳴き声再生</Comment>
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:54:48" />
+				Time="2011-07-14T08:39:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
