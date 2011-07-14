@@ -4336,13 +4336,13 @@
 	</row>
 
 	<row id="schoolb_13">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">シュウヘイ</language>
+		<language name="JPN_KANJI" width="216">シュウヘイ</language>
 	</row>
 
 	<row id="schoolg_11">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">サワコ</language>
+		<language name="JPN_KANJI" width="216">サワコ</language>
 	</row>
 
 	<row id="childcare_07">
@@ -4386,13 +4386,13 @@
 	</row>
 
 	<row id="tanpan_25">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ケンタ</language>
+		<language name="JPN_KANJI" width="216">ケンタ</language>
 	</row>
 
 	<row id="mini_19">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">マリ</language>
+		<language name="JPN_KANJI" width="216">マリ</language>
 	</row>
 
 	<row id="veteranw_09">
@@ -4416,13 +4416,13 @@
 	</row>
 
 	<row id="tanpan_26">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">タカヒロ</language>
+		<language name="JPN_KANJI" width="216">タカヒロ</language>
 	</row>
 
 	<row id="mini_20">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ミノリ</language>
+		<language name="JPN_KANJI" width="216">ミノリ</language>
 	</row>
 
 	<row id="rangerm_19">
@@ -4688,6 +4688,26 @@
 	<row id="dpchampion_01">
 		<language name="JPN" width="216">シロナ</language>
 		<language name="JPN_KANJI" width="216">シロナ</language>
+	</row>
+
+	<row id="waitress_05">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="childcare_08">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="ol_08">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="maid_03">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<flowchart-group-list>

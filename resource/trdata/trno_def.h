@@ -859,7 +859,11 @@
 #define	TRID_HAKAIM1_30   ( 846 ) 
 #define	TRID_HAKAIM1_31   ( 847 ) 
 #define	TRID_DPCHAMPION_01   ( 848 ) 
-#define TRID_MAX  ( 849 )
+#define	TRID_WAITRESS_05   ( 849 ) 
+#define	TRID_CHILDCARE_08   ( 850 ) 
+#define	TRID_OL_08   ( 851 ) 
+#define	TRID_MAID_03   ( 852 ) 
+#define TRID_MAX  ( 853 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
