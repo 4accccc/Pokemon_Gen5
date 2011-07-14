@@ -629,6 +629,7 @@
 #define FV_R22_SWBOSS_01                   711 /* 0x02c7 22番道路：アクロマ */
 #define FV_D02R0201_POKE6_01               712 /* 0x02c8 思索の原：ビリジオン */
 #define FV_D02R0201_RANGERM_01             713 /* 0x02c9 思索の原：レンジャー */
+#define FV_C03R0601_SWBELL_01              714 /* 0x02ca ヒウンシティゲート：ベル */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2233,7 +2234,7 @@
 #define TMFLG_C05R0301_WAZA_CLEAR         2759 /* 0x0ac7 日替わり技見せ：クリア判定 */
 #define TMFLG_D02_ROCK_01                 2760 /* 0x0ac8 ヤグルマの森：1日1回試しの岩 */
 #define TMFLG_C03R1101_MASSAGE            2761 /* 0x0ac9 ヒウン便利ビル：1日1回マッサージ */
-		/* not used  2762(0x0aca) */
+#define TMFLG_C03R0402_BATTLE_02          2762 /* 0x0aca ヒウンシティ・ゲームフリーク：1日1回戦闘 */
 		/* not used  2763(0x0acb) */
 		/* not used  2764(0x0acc) */
 		/* not used  2765(0x0acd) */
