@@ -11,6 +11,8 @@
 #ifndef ZONE_D01R0201_EVC_H
 #define ZONE_D01R0201_EVC_H
 
+#define FLD_ITEM_298                       0
+#define FLD_ITEM_299                       1
 
 #endif //ZONE_D01R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d01r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

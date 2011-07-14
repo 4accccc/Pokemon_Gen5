@@ -14,6 +14,13 @@
 
 #define D01_TREE_01                        0
 #define D01R0101_ROCK_01                   1
+#define FLD_ITEM_291                       2
+#define FLD_ITEM_292                       3
+#define FLD_ITEM_293                       4
+#define FLD_ITEM_294                       5
+#define FLD_ITEM_295                       6
+#define FLD_ITEM_296                       7
+#define FLD_ITEM_297                       8
 
 #endif //ZONE_D01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
