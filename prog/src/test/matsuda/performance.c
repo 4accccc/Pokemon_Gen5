@@ -19,7 +19,7 @@
 //	定数定義
 //==============================================================================
 ///パフォーマンスメーターの機能そのものの有効・無効
-#define PERFORMANCE_ENABLE      (FALSE)   //TRUE有効：FALSE無効
+#define PERFORMANCE_ENABLE      (TRUE)   //TRUE有効：FALSE無効
 
 
 ///メータータイプ
