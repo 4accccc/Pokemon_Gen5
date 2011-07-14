@@ -23,6 +23,14 @@
 #define TR_CHILDCARE_07                    8
 #define TR_ELITEM_29                       9
 #define TR_SCHOOLB_13                     10
+#define FLD_ITEM_272                      11
+#define FLD_ITEM_273                      12
+#define FLD_ITEM_274                      13
+#define FLD_ITEM_275                      14
+#define FLD_ITEM_276                      15
+#define FLD_ITEM_277                      16
+#define FLD_ITEM_278                      17
+#define FLD_ITEM_279                      18
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -32,8 +40,5 @@
 #define R03_BOARD_01                      0
 #define R03_BOARD_03                      1
 #define R03_BOARD_02                      2
-#define R03_HIDE_ITEM_00                  3
-#define R03_HIDE_ITEM_02                  4
-#define R03_HIDE_ITEM_01                  5
 
 #endif //ZONE_R03_EVB_H

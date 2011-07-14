@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/11 16:32:46
+#save date:2011/07/14 15:06:53
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r03.wms
 #hold event type:
 1
 #hold event number:
-11
+19
 #event number: 0
 #type
 1
@@ -351,6 +351,254 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 616 0 -504
+#event number: 11
+#type
+1
+#ID name
+FLD_ITEM_272
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_272
+#Event Script Name
+SCRID_FLD_ITEM_272
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 16 24
+#event number: 12
+#type
+1
+#ID name
+FLD_ITEM_273
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_273
+#Event Script Name
+SCRID_FLD_ITEM_273
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 0 -264
+#event number: 13
+#type
+1
+#ID name
+FLD_ITEM_274
+#OBJ CODE Number
+ITEM_GRASS2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_274
+#Event Script Name
+SCRID_FLD_ITEM_274
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+680 0 -472
+#event number: 14
+#type
+1
+#ID name
+FLD_ITEM_275
+#OBJ CODE Number
+ITEM_GRASS
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_275
+#Event Script Name
+SCRID_FLD_ITEM_275
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 16 -248
+#event number: 15
+#type
+1
+#ID name
+FLD_ITEM_276
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_276
+#Event Script Name
+SCRID_FLD_ITEM_276
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 16 -184
+#event number: 16
+#type
+1
+#ID name
+FLD_ITEM_277
+#OBJ CODE Number
+ITEM_GRASS
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_277
+#Event Script Name
+SCRID_FLD_ITEM_277
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 16 -168
+#event number: 17
+#type
+1
+#ID name
+FLD_ITEM_278
+#OBJ CODE Number
+ITEM_GRASS
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_278
+#Event Script Name
+SCRID_FLD_ITEM_278
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -312
+#event number: 18
+#type
+1
+#ID name
+FLD_ITEM_279
+#OBJ CODE Number
+ITEM_GRASS
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_279
+#Event Script Name
+SCRID_FLD_ITEM_279
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -360,7 +608,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-6
+3
 #event number: 0
 #Bg Event Label
 R03_BOARD_01
@@ -400,45 +648,6 @@ SCRID_BG_R03_BOARD_02
 EVENTDATA_POSTYPE_GRID
 #position
 952 16 56
-#event number: 3
-#Bg Event Label
-R03_HIDE_ITEM_00
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_003
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-600 16 24
-#event number: 4
-#Bg Event Label
-R03_HIDE_ITEM_02
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_004
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-680 0 -472
-#event number: 5
-#Bg Event Label
-R03_HIDE_ITEM_01
-#Bg Event Type
-BG_TALK_TYPE_HIDE
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_HIDE_ITEM_004
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 16 -296
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
