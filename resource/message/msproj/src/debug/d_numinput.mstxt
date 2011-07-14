@@ -1386,6 +1386,53 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dni_medal_flag"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルチェック用フラグ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-14T07:51:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルチェック用フラグ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-14T07:51:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スクリプト用フラグ操作メニュー：メダル獲得処理用</Comment>
+			<CommentModifiedBy
+				User="tamada:W00253"
+				Time="2011-07-14T07:50:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dni_etc_flag"
 		Style="Large">
 		<LanguageCell

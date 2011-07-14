@@ -261,6 +261,8 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_sys_flag = {
   D_NINPUT_DATA_BIN, NARC_debug_symbol_sys_flag_bin, &listPrototype_flag, };
 static const DEBUG_NUMINPUT_INITIALIZER DATA_vanish_flag = {
   D_NINPUT_DATA_BIN, NARC_debug_symbol_vanish_flag_bin, &listPrototype_flag, };
+static const DEBUG_NUMINPUT_INITIALIZER DATA_mdl_scr_flag = {
+  D_NINPUT_DATA_BIN, NARC_debug_symbol_medal_flag_bin, &listPrototype_flag, };
 static const DEBUG_NUMINPUT_INITIALIZER DATA_item_flag = {
   D_NINPUT_DATA_BIN, NARC_debug_symbol_item_flag_bin, &listPrototype_flag, };
 static const DEBUG_NUMINPUT_INITIALIZER DATA_etc_flag = {
@@ -365,6 +367,7 @@ static const DEBUG_MENU_LIST DATA_DNumInputMenu[] =
   { dni_sys_flag, (void*)&DATA_sys_flag, GFL_OVERLAY_BLANK_ID },
   { dni_item_flag, (void*)&DATA_item_flag, GFL_OVERLAY_BLANK_ID },
   { dni_vanish_flag, (void*)&DATA_vanish_flag, GFL_OVERLAY_BLANK_ID },
+  { dni_medal_flag, (void*)&DATA_mdl_scr_flag, GFL_OVERLAY_BLANK_ID },
   { dni_etc_flag, (void*)&DATA_etc_flag, GFL_OVERLAY_BLANK_ID },
   { dni_sys_work, (void*)&DATA_sys_work, GFL_OVERLAY_BLANK_ID },
   { dni_scene_work, (void*)&DATA_scene_work, GFL_OVERLAY_BLANK_ID },
