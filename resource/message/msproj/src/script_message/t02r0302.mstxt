@@ -7,11 +7,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>これは　むかし　てにいれた
-モンスターボール　だが[Ctrl2:LineFeed ]
-きみに　あげようではないか[Ctrl2:PageClear ]</Text>
+モンスターボール　だが▽
+きみに　あげようではないか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-14T08:32:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,11 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これは　昔　手に入れた
-モンスターボール　だが[Ctrl2:LineFeed ]
-君に　進呈しようではないか[Ctrl2:PageClear ]</Text>
+モンスターボール　だが▽
+君に　進呈しようではないか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-14T08:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -68,12 +68,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モンスターボールが　ないと
-ポケモンは　つかまえられない！[Ctrl2:PageClear ]
+ポケモンは　つかまえられない！▼
 いろんな　モンスターボールがあるから
 うまく　つかいわけなさいよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-14T08:32:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82,12 +82,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モンスターボールが　ないと
-ポケモンは　捕まえられない！[Ctrl2:PageClear ]
+ポケモンは　捕まえられない！▼
 いろんな　モンスターボールがあるから
 うまく　使い分けなさいよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-14T08:32:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
