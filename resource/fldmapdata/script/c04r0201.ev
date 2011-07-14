@@ -14,6 +14,8 @@
   .include  "musical_scr_def.h"
   .include  "musical_scr_local.h" //ミュージカルの定義が入っています
 
+  //@author fujimura_souichirou(ライモンラリー)
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -42,19 +44,19 @@ _EVENT_DATA_END
 
 
 /************************************************************/
-/*					FIELD_INIT_SCRIPT						*/
+/*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
-INIT_EVENT_START	ev_c04R0201_init
-	
-	//ミュージカル初回イベント用
-	IF $WK_SCENE_C04R0201 == 0 THEN
-		//オーナーの位置を変更
-		_OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_UP )
-		
-		//初回イベント用のサポートを配置
-		_OBJ_ADD_EX( 13, 19, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
-		
-	ENDIF
+INIT_EVENT_START  ev_c04R0201_init
+
+  //ミュージカル初回イベント用
+  IF $WK_SCENE_C04R0201 == 0 THEN
+    //オーナーの位置を変更
+    _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_UP )
+
+    //初回イベント用のサポートを配置
+    _OBJ_ADD_EX( 13, 19, DIR_UP, MMDL_ID_EVENTOBJ_00, SUPPORT, MV_DMY )
+
+  ENDIF
 
 INIT_EVENT_END
 

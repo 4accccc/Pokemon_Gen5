@@ -19,36 +19,39 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_pos_c13_swleader2_meet_01
-_EVENT_DATA		ev_c13_badman_01
-_EVENT_DATA		ev_c13_workman2_01
-_EVENT_DATA		ev_c13_oldman1_01
-_EVENT_DATA		ev_c13_woman2_01
-_EVENT_DATA		ev_c13_guitarw_01
-_EVENT_DATA		ev_c13_sunglasses_01
-_EVENT_DATA		ev_pos_c13_sunglasses_stop
-_EVENT_DATA		ev_pos_c13_livecaster
-_EVENT_DATA		ev_pos_c13_swplazma
-_EVENT_DATA		ev_c13_swleader2_02
-_EVENT_DATA		ev_c13_swrival_01
-_EVENT_DATA		ev_c13_swplazmam_01
-_EVENT_DATA		ev_init_c13
-_EVENT_DATA		ev_bg_c13_sign1_01
-_EVENT_DATA		ev_bg_c13_sign2_01
-_EVENT_DATA		ev_bg_c13_gymsign_01
+_EVENT_DATA   ev_pos_c13_swleader2_meet_01
+_EVENT_DATA   ev_c13_badman_01
+_EVENT_DATA   ev_c13_workman2_01
+_EVENT_DATA   ev_c13_oldman1_01
+_EVENT_DATA   ev_c13_woman2_01
+_EVENT_DATA   ev_c13_guitarw_01
+_EVENT_DATA   ev_c13_sunglasses_01
+_EVENT_DATA   ev_pos_c13_sunglasses_stop
+_EVENT_DATA   ev_pos_c13_livecaster
+_EVENT_DATA   ev_pos_c13_swplazma
+_EVENT_DATA   ev_c13_swleader2_02
+_EVENT_DATA   ev_c13_swrival_01
+_EVENT_DATA   ev_c13_swplazmam_01
+_EVENT_DATA   ev_init_c13
+_EVENT_DATA   ev_bg_c13_sign1_01
+_EVENT_DATA   ev_bg_c13_sign2_01
+_EVENT_DATA   ev_bg_c13_gymsign_01
+_EVENT_DATA   ev_c13_poke29_01
 _EVENT_DATA_END
 
+
 /************************************************************/
-/*					FIELD_INIT_SCRIPT						*/
+/*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
 INIT_EVENT_START ev_init_c13
-	
-	//ネオプラズマ団イベント起動後なら
-	IF $WK_SCENE_C13 == 6 THEN
-		_OBJ_POS_CHANGE( C13_SWRIVAL_01, 239, 0, 671, DIR_RIGHT )
-	ENDIF
+
+  //ネオプラズマ団イベント起動後なら
+  IF $WK_SCENE_C13 == 6 THEN
+    _OBJ_POS_CHANGE( C13_SWRIVAL_01, 239, 0, 671, DIR_RIGHT )
+  ENDIF
 
 INIT_EVENT_END
+
 
 /**************************************************************/
 /*			ホミカとの出会いイベント						  */
@@ -218,50 +221,49 @@ _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*	C13	BADMAN		一言メッセージ							  */
+/*  C13 BADMAN：一言メッセージ                                */
 /**************************************************************/
-EVENT_START		ev_c13_badman_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_badman_01 )
+EVENT_START   ev_c13_badman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_badman_01 )
 EVENT_END
 
 /**************************************************************/
-/*	C13	WORKMAN2	一言メッセージ							  */
+/*  C13 WORKMAN2：一言メッセージ                              */
 /**************************************************************/
-EVENT_START		ev_c13_workman2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_workman2_01 )
+EVENT_START   ev_c13_workman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_workman2_01 )
 EVENT_END
 
 /**************************************************************/
-/*	C13	oldman1		一言メッセージ							  */
+/*  C13 oldman1：一言メッセージ                               */
 /**************************************************************/
-EVENT_START		ev_c13_oldman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_oldman1_01 )
+EVENT_START   ev_c13_oldman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_oldman1_01 )
 EVENT_END
 
 /**************************************************************/
-/*	C13	woman2		一言メッセージ							  */
+/*  C13 woman2：一言メッセージ                                */
 /**************************************************************/
-EVENT_START		ev_c13_woman2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_woman2_01 )
+EVENT_START   ev_c13_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_woman2_01 )
 EVENT_END
 
 /**************************************************************/
-/*	C13	guitarw		一言メッセージ							  */
+/*  C13 guitarw：一言メッセージ                               */
 /**************************************************************/
-EVENT_START		ev_c13_guitarw_01
-_TALK_START_TURN_NOT()
-	_BALLOONWIN_TALKOBJ_MSG( msg_c13_guitarw_01 )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START   ev_c13_guitarw_01
+  _TALK_START_TURN_NOT()
+  _BALLOONWIN_TALKOBJ_MSG( msg_c13_guitarw_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/
-/*	C13	SUNGLASSES	ストッパーメッセージ					  */
+/*  C13 SUNGLASSES：ストッパーメッセージ                      */
 /**************************************************************/
-EVENT_START		ev_c13_sunglasses_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_stop_01 )
+EVENT_START   ev_c13_sunglasses_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_stop_01 )
 EVENT_END
-
 
 /**************************************************************/
 /*			ポケウッドのストッパー							  */
@@ -396,8 +398,8 @@ ev_swplazma:
 	_BALLOONWIN_OBJMSG( msg_c13_swplazmam1_01 , C13_SWPLAZMAM_01 )
 	_MSGWIN_CLOSE()
 
-	//【仮】ライバル名代入
-	_NUMBER( 1 , 12345 , 5 )
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
 
 	//ライバル：プラズマだん　ふっかつ？
 	_BALLOONWIN_OBJMSG( msg_c13_swrival_01 , C13_SWRIVAL_01 )
@@ -469,8 +471,8 @@ EVENT_START		ev_c13_swrival_01
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
 		
-		//【仮】ライバル名代入
-		_NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
 		
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_swrival_03 )
 	ELSE
@@ -555,8 +557,8 @@ _TALK_OBJ_START()
 		_OBJ_ANIME( C13_SWRIVAL_01, anm_walk_r )
 		_OBJ_ANIME_WAIT()
 		
-		//【仮】ライバル名代入
-		_NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
 		
 		//ライバル：あいつら！　にげるための
 		_BALLOONWIN_OBJMSG( msg_c13_swrival_04 , C13_SWRIVAL_01 )
@@ -601,8 +603,8 @@ _TALK_OBJ_START()
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
 		_OBJ_ANIME_WAIT()
 		
-		//【仮】ライバル名代入
-		_NUMBER( 1 , 12345 , 5 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
 		
 		//ライバル：それ……　ひでんマシン
 		_BALLOONWIN_OBJMSG( msg_c13_swrival_05 , C13_SWRIVAL_01 )
@@ -747,3 +749,11 @@ EVENT_END
 EVENT_START		ev_bg_c13_gymsign_01
 	_EASY_BGWIN_MSG( msg_c13_gymsign_01, 2 )
 EVENT_END
+
+/**************************************************************/
+/*  C13 POKE29：一言メッセージ（ミルホッグ）                  */
+/**************************************************************/
+EVENT_START   ev_c13_poke29_01
+  _EASY_TALK_POKEVOICE( MONSNO_538, msg_c13_poke29_01 )
+EVENT_END
+

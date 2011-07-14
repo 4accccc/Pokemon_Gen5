@@ -9,6 +9,12 @@
 #define ZONE_C03R0402_EVC_H
 
 #define FLD_ITEM_25                        0
+#define C03R0402_DIRECTOR_01               1
+#define C03R0402_ASSISTANTM_01             2
+#define C03R0402_WOMAN1_01                 3
+#define C03R0402_MAN1_01                   4
+#define C03R0402_MIDDLEMAN2_01             5
+#define C03R0402_TRAINERM_01               6
 
 #endif //ZONE_C03R0402_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0402.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

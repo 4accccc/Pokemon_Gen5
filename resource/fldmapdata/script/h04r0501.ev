@@ -12,6 +12,8 @@
   .include  "msg_h04r0501.h"
   .include  "h04r0501.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -53,23 +55,6 @@ INIT_EVENT_START  ev_zone_h04r0501
       _FLAG_SET( TMFLG_H04R0501_PEOPLE_03 )
       //========================================//
     ENDIF
-
-/*
-    //乱数によって、出現させる引越し客を変化させる
-    IF $LWK_NUM == 0 THEN
-      $OBJCHRWORK0 = MAN1
-      $OBJCHRWORK1 = WOMAN1
-      $LOCALWORK0 = 0
-    ELSIF $LWK_NUM == 1 THEN
-      $OBJCHRWORK0 = MAN2
-      $OBJCHRWORK1 = WOMAN2
-      $LOCALWORK0 = 1
-    ELSIF $LWK_NUM == 2 THEN
-      $OBJCHRWORK0 = MAN3
-      $OBJCHRWORK1 = WOMAN3
-      $LOCALWORK0 = 2
-    ENDIF
-*/
 
   ENDIF
 

@@ -10,6 +10,11 @@
 #ifndef ZONE_C04R0501_EVC_H
 #define ZONE_C04R0501_EVC_H
 
+#define C04R0501_TRAINERM_01               0
+#define C04R0501_TRAINERW_01               1
+#define C04R0501_MIDDLEWOMAN_01            2
+#define C04R0501_LADY_01                   3
+#define C04R0501_POKE37_01                 4
 
 #endif //ZONE_C04R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

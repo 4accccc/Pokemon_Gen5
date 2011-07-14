@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0501.h"
-  //.include  "c04r0501.h"
+  .include  "c04r0501.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,58 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_c04r0501_trainerm_01
+_EVENT_DATA    ev_c04r0501_trainerw_01
+_EVENT_DATA    ev_c04r0501_lady_01
+_EVENT_DATA    ev_c04r0501_middlewoman_01
+_EVENT_DATA    ev_c04r0501_poke37_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  エリート♂：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c04r0501_trainerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0501_trainerm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  エリート♀：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c04r0501_trainerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0501_trainaerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  マダム：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c04r0501_lady_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0501_lady_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c04r0501_middlewoman_01
+
+  //ゲームクリア後か
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //おばさん：ポケモンを　うばわれた　ひとですけど
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0501_middleman2_02 )
+
+  ELSE
+    //おばさん：プラズマだんに　ポケモンを　うばわれ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0501_middleman2_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  オタマロ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c04r0501_poke37_01
+  _EASY_TALK_POKEVOICE( MONSNO_586, msg_c04r0501_poke37_01 )
+EVENT_END
+
+

@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0701.h"
-  //.include  "c04r0701.h"
+  .include  "c04r0701.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,15 +21,120 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c04r0701_board_01
+_EVENT_DATA   ev_bg_c04r0701_board_01
+_EVENT_DATA   ev_c04r0701_informationw_01
+_EVENT_DATA   ev_c04r0701_rangerm_01
+_EVENT_DATA   ev_c04r0701_clown_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*  電光掲示板のイベントスクリプト*/
+/*  電光掲示板のイベントスクリプト                            */
 /**************************************************************/
 EVENT_START   ev_bg_c04r0701_board_01
-
-	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
-
+  _LOOK_ELBOARD( ELBOARD_CAMERA_FRAME )
 EVENT_END
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c04r0701_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0701_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  レンジャー♂：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c04r0701_rangerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0701_rangerm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  クラウン：はなしかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c04r0701_clown_01
+{
+
+  _TALK_OBJ_START()
+
+  //ラリーイベント中の場合
+  IF $WK_SCENE_C04_RALLY != 7 THEN
+
+    //クラウン：まだ　おとずれて　いないのは……
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0701_rally_03 )
+
+    //全てのポイントをめぐっていた場合
+    IF $WK_SCENE_C04_RALLY == 6 THEN
+      //クラウン：なんと！　のこり０！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0701_rally_10 )
+      _MSGWIN_CLOSE()
+
+      //記念品受け取り【仮】記念品アイテムは仮です
+      _ITEM_EVENT_KEYWAIT(ITEM_MOOMOOMIRUKU, 1)
+      //========================================//
+      //クリア後メッセージ表示終了
+      $WK_SCENE_C04_RALLY = 7
+      //========================================//
+
+    ELSE
+      //まだ訪れていない場所を数える用変数定義
+      DEFINE_LOCAL LWK_POINT_NUM  //訪れていないポイントの数
+      DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+
+      //訪れていない場所の確認処理（繰り返し処理）
+      WHILE $LWK_COUNT_NUM < 5
+
+        //ギアステーションにおとずれていない
+        IF $LWK_COUNT_NUM == 0 && FLAG_OFF( FE_C04_RALLYPOINT_01 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0701_rally_04, C04R0701_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        //ミュージカルホールにおとずれていない
+        ELSIF $LWK_COUNT_NUM == 1 && FLAG_OFF( FE_C04_RALLYPOINT_02 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0701_rally_05, C04R0701_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        //ビッグスタジアムにおとずれていない
+        ELSIF $LWK_COUNT_NUM == 2 && FLAG_OFF( FE_C04_RALLYPOINT_03 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0701_rally_06, C04R0701_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        //リトルコートにおとずれていない
+        ELSIF $LWK_COUNT_NUM == 3 && FLAG_OFF( FE_C04_RALLYPOINT_04 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0701_rally_07, C04R0701_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        //かんらんしゃにおとずれていない
+        ELSIF $LWK_COUNT_NUM == 4 && FLAG_OFF( FE_C04_RALLYPOINT_05 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0701_rally_08, C04R0701_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        ENDIF
+
+        //カウント
+        $LWK_COUNT_NUM += 1
+
+      ENDWHILE
+
+      //訪れていない場所の数値を指定タグにセット
+      _NUMBER( 0, LWK_POINT_NUM, 1 )
+
+      //クラウン：～の　X箇所　ですね
+      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0701_rally_09 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+    //クラウン：ライモンを　あいする
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0701_rally_11 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+}
+EVENT_END
+
+

@@ -11,6 +11,8 @@
 #define ZONE_C04R0601_EVC_H
 
 #define C04R0601_CLOWN_01                  0
+#define C04R0601_INFORMATIONW_01           1
+#define C04R0601_OLDMAN_01                 2
 
 #endif //ZONE_C04R0601_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0601.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

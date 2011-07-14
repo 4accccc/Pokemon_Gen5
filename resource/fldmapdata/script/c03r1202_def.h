@@ -5,5 +5,7 @@
 #define _C03R1202_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_C03R1202_BADGE_01 (1)
+#define SCRID_C03R1202_MOUNTMAN_01 (2)
 
 #endif //_C03R1202_DEF_H_

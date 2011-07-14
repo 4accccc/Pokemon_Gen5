@@ -1,5 +1,5 @@
 #event data
-#save date:2011/03/22 16:58:30
+#save date:2011/07/14 15:00:45
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r0901.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03r0901.wms
 #hold event type:
 1
 #hold event number:
-2
+4
 #event number: 0
 #type
 1
@@ -18,7 +18,7 @@ C03R0901_MUSICIAN_01
 #OBJ CODE Number
 MUSICIAN
 #MOVE CODE Number
-MV_DIR_RND
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -72,6 +72,68 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -200 0 216
+#event number: 2
+#type
+1
+#ID name
+C03R0901_SUNGLASSES_01
+#OBJ CODE Number
+SUNGLASSES
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0901_SUNGLASSES_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 184
+#event number: 3
+#type
+1
+#ID name
+C03R0901_BUSINESSMAN_01
+#OBJ CODE Number
+BUSINESSMAN
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03R0901_BUSINESSMAN_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

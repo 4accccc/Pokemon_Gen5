@@ -13,6 +13,8 @@
   .include  "c04r0101_def.h"
   .include  "c04.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -48,7 +50,7 @@ DEFINE_LOCAL  LCW_POSZ
 
 
 /************************************************************/
-/*            ZONE_CHANGE_SCRIPT            */
+/*  ZONE_CHANGE_SCRIPT                                      */
 /************************************************************/
 INIT_EVENT_START  ev_zone_c04
 
@@ -88,7 +90,7 @@ INIT_EVENT_END
 
 
 /************************************************************/
-/*            FIELD_INIT_SCRIPT           */
+/*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
 INIT_EVENT_START  ev_init_c04
 
@@ -111,13 +113,13 @@ EVENT_END
 //--------------------------------------------------------------------
 //主人公：一歩前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_exit_player_walk_out
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_exit_player_walk_out
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //サポートミュージカル誘導イベントの起動方法チェック用ワークを定義
 //値が１ならPOSイベント起動
-DEFINE_LOCAL	LWK_GUIDE_POS
+DEFINE_LOCAL  LWK_GUIDE_POS
 
 
 /************************************************************/
@@ -127,14 +129,12 @@ EVENT_START   ev_bg_c04_board_01
   _EASY_BGWIN_MSG( msg_c04_sign1_01, TYPE_TOWN )
 EVENT_END
 
-
 /************************************************************/
 /*              看板              */
 /************************************************************/
 EVENT_START   ev_bg_c04_board_02
   _EASY_BGWIN_MSG( msg_c04_sign2_01, TYPE_POST )
 EVENT_END
-
 
 /************************************************************/
 /*              看板              */
@@ -143,14 +143,12 @@ EVENT_START   ev_bg_c04_board_03
   _EASY_BGWIN_MSG( msg_c04_sign3_01, TYPE_POST )
 EVENT_END
 
-
 /************************************************************/
 /*              看板              */
 /************************************************************/
 EVENT_START   ev_bg_c04_board_04
   _EASY_BGWIN_MSG( msg_c04_sign4_01, TYPE_POST )
 EVENT_END
-
 
 /************************************************************/
 /*              看板              */
@@ -159,7 +157,6 @@ EVENT_START   ev_bg_c04_board_05
   _EASY_BGWIN_MSG( msg_c04_sign5_01, TYPE_POST )
 EVENT_END
 
-
 /************************************************************/
 /*              看板              */
 /************************************************************/
@@ -167,14 +164,12 @@ EVENT_START   ev_bg_c04_board_06
   _EASY_BGWIN_MSG( msg_c04_sign6_01, TYPE_INFO )
 EVENT_END
 
-
 /************************************************************/
 /*              看板              */
 /************************************************************/
 EVENT_START   ev_bg_c04_board_07
   _EASY_BGWIN_MSG( msg_c04_sign7_01, TYPE_INFO )
 EVENT_END
-
 
 /************************************************************/
 /*              看板              */
@@ -184,14 +179,13 @@ EVENT_START   ev_bg_c04_board_08
   _EASY_BGWIN_MSG( msg_c04_sign8_01, TYPE_POST )
 EVENT_END
 
-
 /**************************************************************/
-/*    POS：ライバルイベント（プラズマ団戦）
+/*  POS：ライバルイベント（プラズマ団戦）                     */
 /**************************************************************/
 EVENT_START   ev_pos_c04_swrival_01
 
   //==================================//
-  //【仮】POSイベント終了
+  //POSイベント終了
   $WK_SCENE_C04_SWRIVAL = 2
   //==================================//
 
@@ -262,7 +256,6 @@ EVENT_START   ev_pos_c04_swrival_01
 
 EVENT_END
 
-
 /**************************************************************/
 /*  ライバル（ライバルイベント中）                            */
 /**************************************************************/
@@ -281,9 +274,8 @@ EVENT_START   ev_c04_swrival_01
 
 EVENT_END
 
-
 /**************************************************************/
-/*  プラズマ団男04（ライバルイベント中）
+/*  プラズマ団男04（ライバルイベント中）                      */
 /**************************************************************/
 EVENT_START   ev_c04_swplazmam_04
 
@@ -295,9 +287,8 @@ EVENT_START   ev_c04_swplazmam_04
 
 EVENT_END
 
-
 /**************************************************************/
-/*  プラズマ団男02（ライバルイベント中）
+/*  プラズマ団男02（ライバルイベント中）                      */
 /**************************************************************/
 EVENT_START   ev_c04_swplazmam_02
 
@@ -391,9 +382,8 @@ EVENT_START   ev_c04_swplazmam_02
 
 EVENT_END
 
-
 /**************************************************************/
-/*  プラズマ団女01（ライバルイベント中）
+/*  プラズマ団女01（ライバルイベント中）                      */
 /**************************************************************/
 EVENT_START   ev_c04_swplazmaw_01
 
@@ -485,14 +475,13 @@ ev_battle_check:
   ENDIF
 _RET
 
-
 /**************************************************************/
-/*    ライバルイベント２（プラズマ団全滅）
+/*    ライバルイベント２（プラズマ団全滅）                    */
 /**************************************************************/
 EVENT_START   ev_pos_c04_swrival_02
 
   //==================================//
-  //【仮】POSイベント終了
+  //POSイベント終了
   $WK_SCENE_C04_SWRIVAL = 4
   //==================================//
 
@@ -770,7 +759,7 @@ EVENT_END
 
 
 /**************************************************************/
-/* ノボリ話しかけ                                             */
+/* ノボリ：話しかけ                                           */
 /**************************************************************/
 EVENT_START   ev_C04_tbossbl_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tbossbl_01 )
@@ -783,7 +772,7 @@ EVENT_END
 
 
 /**************************************************************/
-/* クダリ話しかけ                                             */
+/* クダリ：話しかけ                                           */
 /**************************************************************/
 EVENT_START   ev_C04_tboss_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_tboss_01 )
@@ -791,93 +780,93 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//	☆共通処理：下に1歩歩く
+//☆共通処理：下に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：上に1歩歩く
+//☆共通処理：上に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：右に1歩歩く
+//☆共通処理：右に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：左に1歩歩く
+//☆共通処理：左に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：方向転換
+//☆共通処理：方向転換
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_u
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_dir_l
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_dir_r
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//	☆共通処理：右に2歩歩く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk2_r
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：左に2歩歩く
+//☆共通処理：右に2歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk2_l
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk2_r
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：きょろきょろする
+//☆共通処理：左に2歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_meet
-  _ANIME_DATA	AC_WAIT_2F,1
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-  _ANIME_DATA	AC_STAY_WALK_D_8F,1
-  _ANIME_DATA	AC_WAIT_2F,1
-  _ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk2_l
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆共通処理：きょろきょろする
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_meet
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 

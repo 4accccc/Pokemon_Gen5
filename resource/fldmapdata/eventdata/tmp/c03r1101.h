@@ -9,6 +9,12 @@
 #ifndef ZONE_C03R1101_EVC_H
 #define ZONE_C03R1101_EVC_H
 
+#define C03R1101_INFORMATIONW_01           0
+#define C03R1101_MIDDLEWOMAN2_01           1
+#define C03R1101_OLDMAN1_01                2
+#define C03R1101_MOUNTMAN_01               3
+#define C03R1101_POKE_01                   4
+#define C03R1101_WOMAN3_01                 5
 
 #endif //ZONE_C03R1101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r1101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

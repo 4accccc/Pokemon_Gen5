@@ -9,6 +9,11 @@
 #ifndef ZONE_C03R1001_EVC_H
 #define ZONE_C03R1001_EVC_H
 
+#define C03R1001_MAN3_01                   0
+#define C03R1001_MOUNTMAN_01               1
+#define C03R1001_POKE_01                   2
+#define C03R1001_MAN2_01                   3
+#define C03R1001_TRAINERW_01               4
 
 #endif //ZONE_C03R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

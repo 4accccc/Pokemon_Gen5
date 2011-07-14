@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c06.h"
   .include  "c06.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -34,28 +36,28 @@ DEFINE_LOCAL  LCW_POSZ
 
 
 /**************************************************************/
-/*  C06 看板のイベントスクリプト1                      */
+/*  C06 看板のイベントスクリプト1                             */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign1_01
   _EASY_BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN)
 EVENT_END
 
 /**************************************************************/
-/*  C06 看板のイベントスクリプト2                      */
+/*  C06 看板のイベントスクリプト2                             */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign2_01
   _EASY_BGWIN_MSG(msg_c06_sign2_01,TYPE_POST)
 EVENT_END
 
 /**************************************************************/
-/*  C06 看板のイベントスクリプト3                      */
+/*  C06 看板のイベントスクリプト3                             */
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign3_01
   _EASY_BGWIN_MSG(msg_c06_gymsign_01,TYPE_POST)
 EVENT_END
 
 /**************************************************************/
-/*  C06 BOY2とGIRL1のつばめがえし入手イベントスクリプト           */
+/*  C06 BOY2とGIRL1のつばめがえし入手イベントスクリプト       */
 /**************************************************************/
 EVENT_START   ev_c06_monsterball_01
 
@@ -127,7 +129,7 @@ EVENT_END
 
 
 /**************************************************************/
-/*  POS：博士イベント01
+/*  POS：博士イベント01                                       */
 /**************************************************************/
 EVENT_START   ev_pos_c06_hakase_01
 
@@ -394,36 +396,36 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//	アララギ：「！」振り向く
+//アララギ：「！」振り向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase2_guide01
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_hakase2_guide01
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	アララギ：ジム前にやってくる
+//アララギ：ジム前にやってくる
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase2_come_01
-	_ANIME_DATA	AC_WALK_U_8F,9
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_hakase2_come_01
+  _ANIME_DATA AC_WALK_U_8F,9
+  _ANIME_DATA AC_WALK_L_8F,4
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	アララギ：ジム前から帰る
+//アララギ：ジム前から帰る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase2_back_01
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_D_8F,9
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_hakase2_back_01
+  _ANIME_DATA AC_WALK_R_8F,4
+  _ANIME_DATA AC_WALK_D_8F,9
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	フウロ：ジム前から去る
+//フウロ：ジム前から去る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swleader6_back_01
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_D_8F,8
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swleader6_back_01
+  _ANIME_DATA AC_WALK_R_8F,5
+  _ANIME_DATA AC_WALK_D_8F,8
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //c06_babygirl1_01 : やってくる                       
@@ -435,71 +437,71 @@ _ANIME_LABEL	anm_c06_babygirl1_01_come_01
 //--------------------------------------------------------------------
 //c06_boy2_01 : やってくる                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_c06_boy2_01_come_01
-	_ANIME_DATA	AC_WALK_L_4F,7
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_c06_boy2_01_come_01
+  _ANIME_DATA AC_WALK_L_4F,7
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //c06_babygirl1_01 : 帰っていく                      
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_c06_babygirl1_01_back_01
-	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_c06_babygirl1_01_back_01
+  _ANIME_DATA AC_WALK_R_8F,7
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //c06_boy2_01 : 帰っていく                     
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_c06_boy2_01_back_01
-	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_c06_boy2_01_back_01
+  _ANIME_DATA AC_WALK_R_8F,7
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン右                 
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_r
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン左                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l
-	_ANIME_DATA AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン左（速い）                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l_q
-	_ANIME_DATA AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_l_q
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン左（遅い）                       
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l_s
-	_ANIME_DATA AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_l_s
+  _ANIME_DATA AC_STAY_WALK_L_16F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン上                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_u
-	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン下                         
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_d
-	_ANIME_DATA AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：ギョエ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 

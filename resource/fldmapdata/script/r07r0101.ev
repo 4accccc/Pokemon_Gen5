@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r07r0101.h"
   .include  "r07r0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,7 +21,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA			ev_r07r0101_hakase2_01
+_EVENT_DATA   ev_r07r0101_hakase2_01
 _EVENT_DATA_END
 
 //主人公の座標、方向取得変数
@@ -29,12 +31,14 @@ DEFINE_LOCAL  LCW_POSZ
 
 
 /************************************************************/
-/*          ZONE_CHANGE_SCRIPT          */
+/*  ZONE_CHANGE_SCRIPT                                      */
 /************************************************************/
 
+
 /************************************************************/
-/*          FIELD_INIT_SCRIPT           */
+/*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
+
 
 /**************************************************************/
 /* アララギ博士01                                             */
@@ -126,22 +130,22 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆共通処理：その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 

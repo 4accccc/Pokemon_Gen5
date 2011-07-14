@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_d06r0101.h"
   .include  "d06r0101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -32,19 +34,17 @@ DEFINE_LOCAL  LCW_POSZ
 
 
 /**************************************************************/
-/*            FIELD_INIT_LABEL                              　 */
+/*  FIELD_INIT_LABEL                                           */
 /**************************************************************/
 INIT_EVENT_START	ev_init_d06r0101
 
 INIT_EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                            　 */
+/*  ZONE_CHANGE_LABEL                                         */
 /**************************************************************/
 INIT_EVENT_START  ev_zone_d06r0101
-{
 
-}
 INIT_EVENT_END
 
 /**************************************************************/
@@ -148,53 +148,54 @@ EVENT_END
 //--------------------------------------------------------------------
 //共通：ターン右                 
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_r
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン左                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l
-	_ANIME_DATA AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン上                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_u
-	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン下                         
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_d
-	_ANIME_DATA AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：きょろきょろする
+//☆共通処理：きょろきょろする
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_meet
-  _ANIME_DATA	AC_WAIT_2F,1
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
-  _ANIME_DATA	AC_STAY_WALK_L_8F,1
-  _ANIME_DATA	AC_WAIT_2F,1
-  _ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_meet
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_2F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：ギョエ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	ベル：「！」振り向く
+//ベル：「！」振り向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swbell_guide01
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_swbell_guide01
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
 

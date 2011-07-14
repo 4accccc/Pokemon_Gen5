@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c03p09.h"
   .include  "c03p09.h"
 
+  //@author fujimura_souichirou（ヒウンアイスイベント）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -75,20 +77,18 @@ INIT_EVENT_END
 
 
 /**************************************************************/
-/* 			ギャラリー看板	C03P09								  */
+/*  ギャラリー看板  C03P09                                    */
 /**************************************************************/
-EVENT_START		ev_bg_c03p09_board_01
-  _EASY_BGWIN_MSG(msg_c03p09_sign1_01 , TYPE_POST)
+EVENT_START   ev_bg_c03p09_board_01
+  _EASY_BGWIN_MSG( msg_c03p09_sign1_01, TYPE_POST )
 EVENT_END
 
-
 /**************************************************************/
-/* 			アイス看板	C03P09								  */
+/*  アイス看板  C03P09                                        */
 /**************************************************************/
-EVENT_START		ev_bg_c03p09_board_02
-  _EASY_BGWIN_MSG(msg_c03p09_sign2_01 , TYPE_POST)
+EVENT_START   ev_bg_c03p09_board_02
+  _EASY_BGWIN_MSG( msg_c03p09_sign2_01, TYPE_POST )
 EVENT_END
-
 
 /**************************************************************/
 /*  ヒウンアイス屋台                                          */
@@ -855,105 +855,105 @@ _RET
 
 
 //--------------------------------------------------------------------
-//	ビジネスマン：「！」振り向く
+//ビジネスマン：「！」振り向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_business_guide01
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_business_guide01
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	行列：アイスを買い列から出る
+//行列：アイスを買い列から出る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_customer_back_01
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,12
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_customer_back_01
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA AC_WALK_D_8F,12
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	行列：アイスを買う
+//行列：アイスを買う
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_customer_icebuy
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	AC_WAIT_8F,2
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_customer_icebuy
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_8F,2
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	行列：列が進む
+//行列：列が進む
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_customer_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_customer_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	行列：行列に並ぶ
+//行列：行列に並ぶ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_customer_come_01
-	_ANIME_DATA	AC_WALK_U_8F,8
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_customer_come_01
+  _ANIME_DATA AC_WALK_U_8F,8
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン右                 
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_r
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン左                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l
-	_ANIME_DATA AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン上                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_u
-	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン下                         
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_d
-	_ANIME_DATA AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：右に1歩歩く
+//☆共通処理：右に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：左に1歩歩く
+//☆共通処理：左に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：下に1歩歩く
+//☆共通処理：下に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：上に1歩歩く
+//☆共通処理：上に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：ギョエ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 

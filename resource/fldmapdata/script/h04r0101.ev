@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_h04r0101.h"
-  //.include  "h04r0101.h"
+  .include  "h04r0101.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体

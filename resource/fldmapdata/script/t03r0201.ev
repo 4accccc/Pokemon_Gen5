@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_t03r0201.h"
   .include  "t03r0201.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -282,35 +284,36 @@ _ANIME_LABEL  anm_swbell_back
 //--------------------------------------------------------------------
 //共通：ターン右                 
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_r
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン左                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_l
-	_ANIME_DATA AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
 //--------------------------------------------------------------------
 //共通：ターン上                        
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_u
-	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //共通：ターン下                         
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_turn_d
-	_ANIME_DATA AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_turn_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//☆共通処理：ギョエ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
 
 

@@ -12,6 +12,8 @@
   .include  "msg_c03r1101.h"
   .include  "c03r1101.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,232 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_c03r1101_informationw_01
+_EVENT_DATA   ev_c03r1101_middlewoman2_01
+_EVENT_DATA   ev_c03r1101_woman3_01
+_EVENT_DATA   ev_c03r1101_mountman_01
+_EVENT_DATA   ev_c03r1101_poke_01
 _EVENT_DATA_END
+
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r1101_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1101_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  フィーリング占い師：話しかけ                              */
+/**************************************************************/
+EVENT_START   ev_c03r1101_middlewoman2_01
+
+_TALK_OBJ_START()
+
+  //ローカル変数を定義
+  DEFINE_LOCAL  LWK_TOTAL
+
+  //フィーリングチェックのデータ数を参照
+  _GET_FEELING_COUNT( LWK_TOTAL )
+
+  //フィーリングチェックをした事が無い場合
+  IF $LWK_TOTAL == 0 THEN
+
+    //占い師：よのなか　Cギアを　つかって
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r1101_middlewoman2_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //フィーリングチェックをしたことがある場合
+  ELSE
+
+    //占い師：どう　あなた　うらない　してみる？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r1101_middlewoman2_02 )
+
+    //占ってもらう？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //ラッキーマンをトレーナー名に格納
+      _FEELING_NAME( 0 )
+
+      //フィーリングチェックを１人としかやっていない場合
+      IF $LWK_TOTAL == 1 THEN
+
+        //占い師：あら　～さんとしか　フィーリングチェックを　していないのね
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r1101_middlewoman2_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      //複数人データがある場合
+      ELSE
+
+        //占い師：ハッピーに過ごせる人は
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r1101_middlewoman2_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえの場合
+
+      //占い師：あら　えんりょ　しなくていいのよ
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r1101_middlewoman2_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  マッサージお姉さん：話しかけ                              */
+/**************************************************************/
+EVENT_START   ev_c03r1101_woman3_01
+
+  DEFINE_LOCAL LWK_TAMAGO_CHK
+
+  _TALK_OBJ_START()
+  //今日イベントを終えたかチェック
+  //まだである
+  IF FLAG_OFF( TMFLG_C03R1101_MASSAGE ) THEN
+
+    //お姉さん：マッサージ　しましょうか？
+    _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_01, C03R1101_WOMAN3_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN    //はい
+    _MSGWIN_CLOSE()
+
+      //選択ポケモン格納変数定義
+      DEFINE_LOCAL LWK_CHOICE
+      //キャンセルしたか結果格納変数定義
+      DEFINE_LOCAL LWK_SELECT_RESULT
+
+      //ポケモン選択画面開く
+      _SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT, LWK_CHOICE, 0 )
+
+      //タマゴをチェックする
+      _CHECK_TEMOTI_EGG( LWK_TAMAGO_CHK, LWK_CHOICE  )
+
+      //選択したポケモンがタマゴでない
+      IF $LWK_TAMAGO_CHK == FALSE THEN 
+
+        //ポケモンを選択した
+        IF $LWK_SELECT_RESULT == TRUE THEN
+
+          //お姉さん：それでは　はじめますね▼
+          _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_03, C03R1101_WOMAN3_01 )
+          _BALLOONWIN_CLOSE()
+
+          //暗転処理
+          _BLACK_OUT()
+          _DISP_FADE_END_CHECK()
+
+          //ME再生
+          _ME_PLAY( SEQ_SE_FLD_145 )
+          _ME_WAIT()
+
+          _BLACK_IN()
+          _DISP_FADE_END_CHECK()
+
+          //乱数で0～100幅で確率を決める
+          _GET_RND( LOCALWORK10, 100 )
+
+          //5%以下
+          IF $LOCALWORK10 <= 5 THEN
+
+            //指定されたポケモンのなつき度加算（30）
+            _ADD_TEMOTI_NATSUKI( LWK_CHOICE, 30 )
+            //お姉さん：あなたに　とても　なついたみたい！
+            _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_05, C03R1101_WOMAN3_01 )
+            _LAST_KEYWAIT()
+            _BALLOONWIN_CLOSE()
+
+          //25%以下
+          ELSIF $LOCALWORK10 <= 25 THEN
+
+            //指定されたポケモンのなつき度加算（10）
+            _ADD_TEMOTI_NATSUKI( LWK_CHOICE, 10 )
+            //お姉さん：あなたに　なついたみたいね！
+            _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_06, C03R1101_WOMAN3_01 )
+            _LAST_KEYWAIT()
+            _BALLOONWIN_CLOSE()
+
+          //70%以下
+          ELSE
+
+            //指定されたポケモンのなつき度加算（5）
+            _ADD_TEMOTI_NATSUKI( LWK_CHOICE, 5 )
+            //お姉さん：あなたに　すこし　なついたみたいね！
+            _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_07, C03R1101_WOMAN3_01 )
+            _LAST_KEYWAIT()
+            _BALLOONWIN_CLOSE()
+
+          ENDIF
+
+          //==================================//
+          //今日のマッサージイベントはもう終了
+          _FLAG_SET ( TMFLG_C03R1101_MASSAGE )
+          //==================================//
+
+        //ポケモン選択をキャンセル
+        ELSE
+
+          //お姉さん：また　きてくださいね
+          _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_02, C03R1101_WOMAN3_01 )
+          _LAST_KEYWAIT()
+          _BALLOONWIN_CLOSE()
+
+        ENDIF
+
+      //選択したポケモンがタマゴである
+      ELSE
+
+        //お姉さん：タマゴに　マッサージね……
+        _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_04, C03R1101_WOMAN3_01 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+
+      ENDIF
+
+    //「いいえ」
+    ELSE
+
+      //お姉さん：また　きてくださいね
+      _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_02, C03R1101_WOMAN3_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+    ENDIF
+
+  //もうイベントを終えた
+  ELSE
+
+    //お姉さん：また　あした　きてみてね！
+    _BALLOONWIN_OBJMSG( msg_c03r1001_woman3_08, C03R1101_WOMAN3_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  山男：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c03r1101_mountman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1001_mountain_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ミルホッグ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c03r1101_poke_01
+  _EASY_TALK_POKEVOICE( MONSNO_538, msg_c03r1001_poke_01 )
+EVENT_END
+
+

@@ -13,6 +13,7 @@
   .include  "c03r0901.h"
   .include  "skill_teach_scr_def.h"     //for SCRID_SKILL_LEARN
 
+  //@author fujimura_souichirou（移植作業）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,21 +22,24 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_c03r0901_musician_01
-_EVENT_DATA		ev_c03r0901_waiter_01
+_EVENT_DATA   ev_c03r0901_musician_01
+_EVENT_DATA   ev_c03r0901_waiter_01
+_EVENT_DATA   ev_c03r0901_businessman_01
+_EVENT_DATA   ev_c03r0901_sunglasses_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/* 			MUSICIAN	C03R0901							  */
+/*  MUSICIAN  C03R0901                                        */
 /**************************************************************/
-EVENT_START		ev_c03r0901_musician_01
+EVENT_START   ev_c03r0901_musician_01
 
     DEFINE_LOCAL target_poke_pos
-    
-    _TALK_OBJ_START()
 
-    //条件を満たすメロディアがいるか?
+    //_TALK_OBJ_START()
+    _TALK_START_SE_PLAY()
+
+    //条件を満たすメロエッタがいるか?
     _GET_EVT_POKE_POS( MONSNO_655, TRUE, target_poke_pos, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_02 )
@@ -49,9 +53,9 @@ EVENT_START		ev_c03r0901_musician_01
 
       //カメラ移動
       _CAMERA_START()
-      _CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	    _CAMERA_MOVE(9688,0,970752,360448,0,425984,30)
-      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+      _CAMERA_PURGE()   //対象物とカメラのバインドを解く
+      _CAMERA_MOVE( 9688, 0, 970752, 360448, 0, 425984, 30 )
+      _CAMERA_WAIT_MOVE()   //カメラ移動待ち
 
       //BGMの再生
       _START_EVENT_BGM( SEQ_BGM_E_INISHIE )
@@ -73,7 +77,7 @@ EVENT_START		ev_c03r0901_musician_01
       _TIME_WAIT( MERODHIA_RISE_WAIT ) 
 
       //カメラ移動
-      _CAMERA_MOVE(9688,0,970752,360448,151552,331776,120)
+      _CAMERA_MOVE( 9688, 0, 970752, 360448, 151552, 331776, 120 )
       //上昇
       _EVENT_RISE_OBJ( MMDL_ID_EVENTOBJ_00, 8, 120 )
 
@@ -82,7 +86,7 @@ EVENT_START		ev_c03r0901_musician_01
       //回転
       _EVENT_ROTATE_OBJ( MMDL_ID_EVENTOBJ_00 )
 
-      //メロディアアニメ待ち
+      //メロエッタアニメ待ち
       _OBJ_ANIME_WAIT()
 
       _BGM_WAIT()
@@ -92,26 +96,26 @@ EVENT_START		ev_c03r0901_musician_01
       //カットンエフェクト再生
       _CALL_FLD3D_CUTIN( FLDCIID_MERODIA )
 
-      //メロディアきめポーズを通常に戻す（アニメ更新）
+      //メロエッタきめポーズを通常に戻す（アニメ更新）
       _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_normal )
       _OBJ_ANIME_WAIT()
 
-      //対象メロディアのニックネームをタグ０番にセット
+      //対象メロエッタのニックネームをタグ０番にセット
       _TEMOTI_NICK_NAME( 0, target_poke_pos )
       //「○○は古の歌をおもいだした」
       _SYSWIN_MSG( msg_c03r0901_narrator_01, POS_DOWN )
       _SYSWIN_CLOSE()
 
-      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+      _CAMERA_WAIT_MOVE()   //カメラ移動待ち
       //カメラもどし
       _CAMERA_DEF_MOVE( 30 )
 
-      //メロディア着地
+      //メロエッタ着地
       _EVENT_RISE_OBJ( MMDL_ID_EVENTOBJ_00, 0, 24 )
       
-      _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	    _CAMERA_BIND()		//カメラバインド
-	    _CAMERA_END()		//カメラ操作終了
+      _CAMERA_WAIT_MOVE() //カメラ移動待ち
+      _CAMERA_BIND()    //カメラバインド
+      _CAMERA_END()   //カメラ操作終了
       
       //技を覚えさせる処理
       _CALL learn_skill
@@ -225,78 +229,92 @@ _RET
 //--------------------------------------------------------------------
 //語り部アニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_guitar_move
-  _ANIME_DATA	AC_STAY_WALK_D_8F,140
-	_ANIME_DATA	ACMD_END,0
-
+_ANIME_LABEL  anm_guitar_move
+   _ANIME_DATA AC_STAY_WALK_D_8F,140
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //自機定位置へ　上から話しかけたとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move_down
-  _ANIME_DATA	AC_WALK_L_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,5
-  _ANIME_DATA	AC_WALK_R_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_move_down
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,5
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //自機定位置へ　下から話しかけたとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move_up
-  _ANIME_DATA	AC_WALK_D_8F,4
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_move_up
+  _ANIME_DATA AC_WALK_D_8F,4
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //自機定位置へ　右から話しかけたとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move_left
-  _ANIME_DATA	AC_WALK_D_8F,4
-  _ANIME_DATA	AC_WALK_L_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_move_left
+  _ANIME_DATA AC_WALK_D_8F,4
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //自機定位置へ　左から話しかけたとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move_right
-  _ANIME_DATA	AC_WALK_D_8F,4
-  _ANIME_DATA	AC_WALK_R_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_move_right
+  _ANIME_DATA AC_WALK_D_8F,4
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//　メロディアアニメ
+//　メロエッタアニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_merodhia
-  _ANIME_DATA	AC_MELODYER_SHAKE,4
-  _ANIME_DATA	AC_MELODYER_SPIN,13
-  _ANIME_DATA	AC_MELODYER_SPIN_POSE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_merodhia
+  _ANIME_DATA AC_MELODYER_SHAKE,4
+  _ANIME_DATA AC_MELODYER_SPIN,13
+  _ANIME_DATA AC_MELODYER_SPIN_POSE,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//　メロディア戻し
+//　メロエッタ戻し
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_merodhia_normal
-  _ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_merodhia_normal
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
 //自機定位置へ　左から話しかけたとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move_front
-  _ANIME_DATA	AC_WALK_U_8F,3
-	_ANIME_DATA	ACMD_END,0
-  
+_ANIME_LABEL  anm_player_move_front
+  _ANIME_DATA AC_WALK_U_8F,3
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
-/* 			WAITER（アイテム入手）	C03R0901				  */
+/*  WAITER（アイテム入手）  C03R0901                          */
 /**************************************************************/
 EVENT_START   ev_c03r0901_waiter_01
-	//ミックスオレ入手
-  _EASY_TALK_ITEM_EVENT(ITEM_MIKKUSUORE, 1, FE_C03R0901_ITEMGET, msg_c03r0901_waiter_01, msg_c03r0901_waiter_02, msg_c03r0901_waiter_03 )
+  //モーモーミルク入手
+  _EASY_TALK_ITEM_EVENT( ITEM_MOOMOOMIRUKU, 1, FE_C03R0901_ITEMGET, msg_c03r0901_waiter_01, msg_c03r0901_waiter_02, msg_c03r0901_waiter_03 )
 EVENT_END
+
+/**************************************************************/
+/*  ビジネスマン：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c03r0901_businessman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_bussinesman_01 )
+EVENT_END
+
+/**************************************************************/
+/*  黒服：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c03r0901_sunglasses_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_sunglasses_01 )
+EVENT_END
+
+

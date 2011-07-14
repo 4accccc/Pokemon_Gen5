@@ -18,7 +18,9 @@
 #define C03PC0101_DELIVERY                 6
 #define C03PC0101_MEDALOYAJI               7
 #define C03PC0101_TENNISW_01               8
-#define C03PC0101_WOMAN1_01                9
+#define C03PC0101_POKE36_01                9
+#define C03PC0101_WOMAN1_01               10
+#define C03PC0101_BUSINESSMAN_01          11
 
 #endif //ZONE_C03PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

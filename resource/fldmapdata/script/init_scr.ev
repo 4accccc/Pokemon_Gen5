@@ -184,6 +184,9 @@ init_flags:
   //D02R0201
   _FLAG_SET( FV_D02R0201_POKE6_01 ) //思索の原：ビリジオン
 
+  //C03R0601
+  _FLAG_SET( FV_C03R0601_SWBELL_01 )  //ヒウンシティ・ゲート：ベル
+
 }
 _RET
 

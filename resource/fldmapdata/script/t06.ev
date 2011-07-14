@@ -12,6 +12,8 @@
   .include  "msg_t06.h"
   .include  "t06.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -71,7 +73,7 @@ EVENT_START   ev_pos_t06_champion_guide_01
   _OBJ_ANIME_WAIT()
 
   //メッセージ：そうだ！
-  _PLAYER_NAME( 0 )	 //プレイヤー名を反映
+  _PLAYER_NAME( 0 )   //プレイヤー名を反映
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_01,T06_CHAMPION_01, POS_DEFAULT )
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_02,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -92,20 +94,20 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//	アデク：「！」振り向く
+//アデク：「！」振り向く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_champion_guide01
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_champion_guide01
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	アデク：寺小屋方面に移動
+//アデク：寺小屋方面に移動
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_champion_guide01_bye
-	_ANIME_DATA	AC_WALK_R_8F,3
-	_ANIME_DATA	AC_WALK_U_8F,11
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_champion_guide01_bye
+  _ANIME_DATA AC_WALK_R_8F,3
+  _ANIME_DATA AC_WALK_U_8F,11
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /* POS：アデクのガイド                                        */
@@ -181,12 +183,12 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//	アデク：20ばんどうろを見る
+//アデク：20ばんどうろを見る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_champion_look_r20
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_champion_look_r20
+  _ANIME_DATA AC_WALK_U_8F,2
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /* POS：アデクのガイド（ストッパー）                          */
@@ -227,11 +229,11 @@ EVENT_START   ev_pos_t06_champion_guide_04
   
     //ドア生成
   _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 107, 661 )
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-	
-	//アニメ：ドアの中に入る
-	_OBJ_ANIME( T06_CHAMPION_01, anm_walk_u )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+  //アニメ：ドアの中に入る
+  _OBJ_ANIME( T06_CHAMPION_01, anm_walk_u )
   _OBJ_ANIME_WAIT()
   
   //アデクモデル非表示に
@@ -252,15 +254,15 @@ EVENT_START   ev_pos_t06_champion_guide_04
 EVENT_END
 
 //--------------------------------------------------------------------
-//	アデク：寺小屋方面に移動
+//アデク：寺小屋方面に移動
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_champion_guide04_bye
-	_ANIME_DATA	AC_WALK_L_8F,6
-	_ANIME_DATA	AC_WALK_U_8F,7
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_champion_guide04_bye
+  _ANIME_DATA AC_WALK_L_8F,6
+  _ANIME_DATA AC_WALK_U_8F,7
+  _ANIME_DATA ACMD_END,0
 
 /********************************************************************/
-/*            【仮】メダル初回イベント                                    */
+/*  【仮】メダル初回イベント                                        */
 /********************************************************************/
 
 //メダルおやじのスクリプトと統合できないか玉田さんに相談（11/04/16水口）
@@ -296,9 +298,9 @@ EVENT_START ev_scene_t06_medal_01
   _OBJ_ADD( T06_CHAMPION_01 )
   
   //ドア開ける
-	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 107, 661 )
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 107, 661 )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
   
   //アデクワープ
   _OBJ_POS_CHANGE(T06_CHAMPION_01,107,2,661,DIR_DOWN)
@@ -309,13 +311,13 @@ EVENT_START ev_scene_t06_medal_01
   _OBJ_ANIME_WAIT()
   
   //ドア閉じる
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
-	
-	//メッセージ：ヒオウギにできた
-	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t06_champion_10,T06_CHAMPION_01, POS_DEFAULT )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  
+  //メッセージ：ヒオウギにできた
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_t06_champion_10,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：アデク上を向く
@@ -325,20 +327,20 @@ EVENT_START ev_scene_t06_medal_01
   
   //ドア生成
   _BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 107, 661 )
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-	
-	//アニメ：ドアの中に入る
-	_OBJ_ANIME( T06_CHAMPION_01, anm_walk_u )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  
+  //アニメ：ドアの中に入る
+  _OBJ_ANIME( T06_CHAMPION_01, anm_walk_u )
   _OBJ_ANIME_WAIT()
   
   //アデクモデル非表示に
   _OBJ_DEL( T06_CHAMPION_01 )
   
   //ドア閉じる
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+  _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+  _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 
   //========================================//
   //T06のアデクを消す
@@ -414,58 +416,58 @@ sub_medaloyaji_gettitle:
 */
 
 //--------------------------------------------------------------------
-//	メダルおやじ退場
+//メダルおやじ退場
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_oyaji_bye
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,5
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_oyaji_bye
+  _ANIME_DATA AC_WALK_D_8F,3
+  _ANIME_DATA AC_WALK_R_8F,6
+  _ANIME_DATA AC_WALK_D_8F,5
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
-/* CHAMPIONはなしかけ                                         */
+/*  CHAMPION：話しかけ                                        */
 /**************************************************************/
 EVENT_START   ev_t06_champion_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_champion_08 )
 EVENT_END
 
 /**************************************************************/
-/* BOY1話しかけ                                         */
+/*  BOY1：話しかけ                                            */
 /**************************************************************/
 EVENT_START   ev_t06_boy1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_boy1_01 )
 EVENT_END
 
 /**************************************************************/
-/* GIRL1話しかけ                                         */
+/*  GIRL1：話しかけ                                           */
 /**************************************************************/
 EVENT_START   ev_t06_girl1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_girl1_01 )
 EVENT_END
 
 /**************************************************************/
-/* OLDMAN1話しかけ                                         */
+/*  OLDMAN1：話しかけ                                         */
 /**************************************************************/
 EVENT_START   ev_t06_oldman1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_oldman1_01 )
 EVENT_END
 
 /**************************************************************/
-/* MIDDLEMAN1話しかけ                                         */
+/*  MIDDLEMAN1：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_t06_middleman1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06_middleman1_01 )
 EVENT_END
 
 /**************************************************************/
-/* 街看板                                         */
+/*  街看板                                                    */
 /**************************************************************/
 EVENT_START   ev_bg_t06_board_01
   _EASY_BGWIN_MSG( msg_t06_sign_01, TYPE_TOWN )
 EVENT_END
 
 /**************************************************************/
-/* WOMAN2話しかけ                                         */
+/*  WOMAN2話しかけ                                            */
 /**************************************************************/
 EVENT_START   ev_t06_woman2_01
 {
@@ -498,84 +500,83 @@ EVENT_END
 
 
 //--------------------------------------------------------------------
-//	☆共通処理：下に1歩歩く
+//☆共通処理：下に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_d
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：上に1歩歩く
+//☆共通処理：上に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_u
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：右に1歩歩く
+//☆共通処理：右に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_r
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：左に1歩歩く
+//☆共通処理：左に1歩歩く
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_walk_l
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
- //--------------------------------------------------------------------
-//	☆共通処理：方向転換
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_u
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_l
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_dir_r
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：その場歩き
+//☆共通処理：方向転換
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staystep_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_l
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	anm_staystep_r
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------------
-//	☆共通処理：ギョエ
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_gyoe
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：hatena
+//☆共通処理：その場歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_common_hatena
-	_ANIME_DATA	AC_MARK_HATENA,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：hatena
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_hatena
+  _ANIME_DATA AC_MARK_HATENA,1
+  _ANIME_DATA ACMD_END,0
 
 

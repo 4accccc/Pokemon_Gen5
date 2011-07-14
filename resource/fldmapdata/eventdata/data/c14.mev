@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/13 18:21:19
+#save date:2011/07/14 15:35:27
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -80,7 +80,7 @@ C14_GIRL4_01
 #OBJ CODE Number
 GIRL4
 #MOVE CODE Number
-MV_RTDL         
+MV_RTLU         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ FV_C14_GIRL4_01
 #Event Script Name
 SCRID_C14_GIRL4_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+1
 #Move Limit Z Number
 2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 -80 -648
+-136 -80 -632
 #event number: 3
 #type
 1
@@ -111,44 +111,13 @@ C14_BOY4_01
 #OBJ CODE Number
 BOY4
 #MOVE CODE Number
-MV_RTRD         
+MV_RTDL         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 FV_C14_BOY4_01
 #Event Script Name
 SCRID_C14_BOY4_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-2
-#Move Limit Z Number
-2
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 -80 -648
-#event number: 4
-#type
-1
-#ID name
-C14_BOY4_02
-#OBJ CODE Number
-BOY4
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_C14_BOY4_02
-#Event Script Name
-SCRID_C14_BOY4_02
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -158,14 +127,14 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 -80 -696
-#event number: 5
+-136 -80 -600
+#event number: 4
 #type
 1
 #ID name
@@ -196,6 +165,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -104 -64 -328
+#event number: 5
+#type
+1
+#ID name
+C14_BOY4_02
+#OBJ CODE Number
+BOY4
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_BOY4_02
+#Event Script Name
+SCRID_C14_BOY4_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 -80 -632
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

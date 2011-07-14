@@ -510,38 +510,50 @@ EVENT_START   ev_debug_suginaka
 EVENT_END
 
 /**************************************************************/
-/*   FUJIMURA                                                         */
+/*   FUJIMURA                                                 */
 /**************************************************************/
 EVENT_START   ev_debug_fujimura
-		$SCWK_TEMP2 = 0
-		//メニュー作成
-		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
-		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_scr01_01, 0 )
-		_BMPMENU_MAKE_LIST( msg_debug_scr01_02, 1 )
-		_BMPMENU_MAKE_LIST( msg_debug_scr01_03, 2 )
-		_BMPMENU_MAKE_LIST( msg_debug_scr01_04, 3 )
-		_BMPMENU_MAKE_LIST( msg_debug_scr01_05, 4 )
-		
-		//メニュー表示
-		_BMPMENU_START()
-	  
-	  //メニュー1つ目
-		IF $SCWK_TEMP2 == 0 THEN
-     _FLAG_RESET(FV_D22R0101_BREEDER_01)
-      $WK_SCENE_D22R0101 = 1
-      
+  $SCWK_TEMP2 = 0
+  //メニュー作成
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
+  //リスト追加
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_01, 0 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_02, 1 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_03, 2 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_04, 3 )
+  _BMPMENU_MAKE_LIST( msg_debug_scr01_05, 4 )
+
+    //メニュー表示
+    _BMPMENU_START()
+
+    //メニュー1つ目
+    IF $SCWK_TEMP2 == 0 THEN
+      //セイガイハ：ライバルイベントスタンバイ
+      $WK_SCENE_C14_SWRIVAL_01 = 1
+
     //メニュー2つ目
-		ELSIF $SCWK_TEMP2 == 1 THEN
-    
+    ELSIF $SCWK_TEMP2 == 1 THEN
+      //セイガイハ：ジムリーダーイベントスタンバイ
+      $WK_SCENE_C14_SWLEADER8_01 = 1
+
     //メニュー3つ目
-		ELSIF $SCWK_TEMP2 == 2 THEN
+    ELSIF $SCWK_TEMP2 == 2 THEN
+      //アイス復活
+      _FLAG_RESET( TMFLG_C03P09_ICEBUY )
+      //アイス屋の行列設置
+      _FLAG_SET( FE_C03P09_ICEBUY_01 )
+      _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+
     //メニュー4つ目
-		ELSIF $SCWK_TEMP2 == 3 THEN
+    ELSIF $SCWK_TEMP2 == 3 THEN
+
     //メニュー5つ目
-		ELSIF $SCWK_TEMP2 == 4 THEN
-			
-		ENDIF
+    ELSIF $SCWK_TEMP2 == 4 THEN
+      //ライバルイベントの準備
+      $WK_SCENE_C13 = 5
+
+    ENDIF
+
 EVENT_END
 //--------------------------------------------------------------------
 //  パッケージポケモン： Nを乗せて飛ぶ              

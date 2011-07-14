@@ -21,15 +21,16 @@
 #define C13_BADMAN_01                      2
 #define C13_WORKMAN2_01                    3
 #define C13_OLDMAN1_01                     4
-#define C13_WOMAN2_01                      5
-#define C13_GUITARW_01                     6
-#define C13_SUNGLASSES_01                  7
-#define C13_SWLEADER2_02                   8
-#define C13_SWRIVAL_01                     9
-#define C13_SWPLAZMAM_01                  10
-#define C13_SWPLAZMAW_01                  11
-#define C13_SWPLAZMAM_02                  12
-#define FLD_ITEM_16                       13
+#define C13_GUITARW_01                     5
+#define C13_SUNGLASSES_01                  6
+#define C13_SWLEADER2_02                   7
+#define C13_SWRIVAL_01                     8
+#define C13_SWPLAZMAM_01                   9
+#define C13_SWPLAZMAW_01                  10
+#define C13_SWPLAZMAM_02                  11
+#define FLD_ITEM_16                       12
+#define C13_WOMAN2_01                     13
+#define C13_POKE29_01                     14
 
 #endif //ZONE_C13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

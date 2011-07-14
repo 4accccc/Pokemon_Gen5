@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r0402.h"
-  //.include  "c03r0402.h"
+  .include  "c03r0402.h"
+
+  //@author fujimura_souichirou（移植作業）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,310 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_c03r0402_director_01
+_EVENT_DATA    ev_c03r0402_assistantm_01
+_EVENT_DATA    ev_c03r0402_woman1_01
+_EVENT_DATA    ev_c03r0402_man1_01
+_EVENT_DATA    ev_c03r0402_middleman2_01
+_EVENT_DATA    ev_c03r0402_trainerm_01
 _EVENT_DATA_END
+
+
+//------------------------！注意！------------------------------//
+//                                                              //
+//    LOCALWORK10を表彰状イベントのの制御に使用                 //
+//    ゾーン内での使用を禁止します                              //
+//                                                              //
+//--------------------------------------------------------------//
+
+
+/**************************************************************/
+/*  ディレクター：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c03r0402_director_01
+
+  DEFINE_LOCAL  LWK_LOCAL
+  DEFINE_LOCAL  LWK_GLOBAL
+  _GET_ZUKAN_COMPLETE( LWK_LOCAL, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET )
+  _GET_ZUKAN_COMPLETE( LWK_GLOBAL, SCR_ZUKAN_HYOUKA_MODE_GLOBAL )
+  _DEBUG_PRINT_WK( LWK_LOCAL )
+  _DEBUG_PRINT_WK( LWK_GLOBAL )
+
+  //既にマップ内で表彰済の場合
+  IF $LOCALWORK10 == 1 THEN
+
+    //ディレクター：ひとり　ひとり　ちがうんだね！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04 )
+
+  //初会話の場合
+  ELSE
+
+    //地方図鑑の表彰をしていない
+    IF FLAG_OFF( FE_AWARD_LOCAL ) THEN
+
+      //地方図鑑が完成している
+      IF $LWK_LOCAL == TRUE THEN
+
+        _TALK_OBJ_START()
+        //ディレクター：ひょうしょう　しましょう
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_02 )
+        _MSGWIN_CLOSE()
+
+        _CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 0 )
+
+        //ディレクター：この　ひょうしょうじょう　ですが
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_02a )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================/
+        //フラグ操作
+        _FLAG_RESET( FV_C12R0101_PRIZE1_01 )
+        _FLAG_SET( FE_AWARD_LOCAL )
+        //部長会話済
+        $LOCALWORK10 = 1
+        //========================================/
+
+      //地方図鑑は完成していない
+      ELSE
+
+        //ディレクター：ぼくにも　みせて　ほしいな！
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
+
+      ENDIF
+
+    //地方図鑑の表彰は終わっている
+    ELSE
+
+      //全国図鑑の表彰をしていない
+      IF FLAG_OFF( FE_AWARD_NATIONAL ) THEN
+
+        //全国図鑑が完成している場合
+        IF $LWK_GLOBAL == TRUE THEN
+
+          _TALK_OBJ_START()
+          //ディレクター：ぜひ　ひょうしょう　させてください！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_03 )
+          _MSGWIN_CLOSE()
+
+          _CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 0 )
+
+          //ディレクター：この　ひょうしょうじょう　も
+          _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04a )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+          //========================================/
+          //フラグ操作
+          _FLAG_RESET( FV_C12R0101_PRIZE2_01 )
+          _FLAG_SET( FE_AWARD_NATIONAL )
+          //部長会話済
+          $LOCALWORK10 = 1
+          //========================================/
+
+        //全国図鑑は完成していない
+        ELSE
+
+          //ディレクター：ぼくにも　みせて　ほしいな！
+          _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
+
+        ENDIF
+
+      //全国図鑑の表彰は終わっている
+      ELSE
+
+        //ディレクター：ひとり　ひとり　ちがうんだね！
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04 )
+
+      ENDIF
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  助手♂：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c03r0402_assistantm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_01_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c03r0402_woman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_02_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_c03r0402_man1_01
+
+  //クリア前の場合
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN	
+
+    //男性：ポケモンしょうぶで
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_01 )
+
+  //クリア後の場合
+  ELSE
+
+    //既に戦っているか？(１日フラグがＯＮの場合)
+    IF FLAG_ON( TMFLG_C03R0402_BATTLE ) THEN
+
+      //男性：また　あした　おいでよ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
+
+    //まだ戦っていない場合
+    ELSE
+
+      _TALK_OBJ_START()
+
+      //男性：おっ　つよくなったね！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_02 )
+      _YES_NO_WIN( SCWK_ANSWER )
+
+      IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+        //男性：じゃあ　はじめるよー！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
+        _MSGWIN_CLOSE()
+
+        _TRAINER_BTL_SET( TRID_VETERANM_1_08, 0 )   //【仮】モリモトさんのままです
+
+        _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+        IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+          _TRAINER_WIN()
+        ELSE
+          _TRAINER_LOSE()   //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+        ENDIF
+
+        //男性：いろいろ　かんがえてるよね！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+        //========================================//
+        //対戦済みにする（１日１回フラグ）
+        _FLAG_SET( TMFLG_C03R0402_BATTLE )
+        //========================================//
+
+      ELSE    //いいえ
+
+        //男性：いいえ　かー
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  おじさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c03r0402_middleman2_01
+
+  //既に戦っているか？(１日フラグがＯＮの場合)
+  IF FLAG_ON( TMFLG_C03R0402_BATTLE_02 ) THEN
+
+    //おじさん：くぅー！　いい　ポケモンだね！▼
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
+
+  //まだ戦っていない場合
+  ELSE
+
+    _TALK_OBJ_START()
+
+    //おじさん：おれ　カビゴン▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_01 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //おじさん：あの　くみあわせが　きまれば
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_02 )
+      _MSGWIN_CLOSE()
+
+      _TRAINER_BTL_SET( TRID_VETERANM_1_08, 0 )   //【仮】モリモトさんのままです
+
+      _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+        _TRAINER_WIN()
+      ELSE
+        _TRAINER_LOSE()   //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+      ENDIF
+
+      //おじさん：くぅー！　いい　ポケモンだね！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //========================================//
+      //対戦済みにする（１日１回フラグ）
+      _FLAG_SET( TMFLG_C03R0402_BATTLE_02 )
+      //========================================//
+
+    ELSE    //いいえ
+
+      //おじさん：いいえ！？　そっかあ
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_04_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  エリート♂：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c03r0402_trainerm_01
+
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  //クリア後
+    _TALK_OBJ_START()
+
+    //ゾーンＢＧＭ変更チェック
+    IF FLAG_OFF( SYS_FLAG_BGM_C03R0402 ) THEN
+    //ゾーン曲かわる前
+
+      //エリート：ちゃんと　サウンド
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_02 )
+      _MSGWIN_CLOSE()
+
+      _START_EVENT_BGM( SEQ_BGM_E_SOUND_DESIGNER )  //【仮】ロケット団のものを
+
+      //========================================//
+      //ＢＧＭ変更フラグをセット
+      _FLAG_SET( SYS_FLAG_BGM_C03R0402 )
+      //BGMチェンジでの環境SEポーズ状態をCLEAR
+      _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
+      //========================================//
+
+    ELSE
+    //ゾーン曲がロケット団曲に変わっている
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+  //クリア前
+    //ぼくサウンドデザイナー！
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_05_01 )
+  ENDIF
+
+EVENT_END
+
+
