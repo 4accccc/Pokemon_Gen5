@@ -33,6 +33,10 @@
 #define R04_BIGROCK_05                    18
 #define R04_BIGROCK_06                    19
 #define R04_BIGROCK_07                    20
+#define R04_BIGROCK_08                    21
+#define R04_BIGROCK_09                    22
+#define R04_BIGROCK_10                    23
+#define R04_BIGROCK_11                    24
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
