@@ -10,6 +10,7 @@
 #ifndef ZONE_D08R0101_EVC_H
 #define ZONE_D08R0101_EVC_H
 
+#define FLD_ITEM_229                       0
 
 #endif //ZONE_D08R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

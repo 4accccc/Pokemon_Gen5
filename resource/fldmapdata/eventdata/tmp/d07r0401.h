@@ -19,6 +19,8 @@
 #define D07R0401_ROCK_02                   0
 #define D07R0401_ROCK_01                   1
 #define D07R0401_WORKMAN_01                2
+#define FLD_ITEM_244                       3
+#define FLD_ITEM_249                       4
 
 #endif //ZONE_D07R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

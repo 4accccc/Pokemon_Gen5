@@ -17,6 +17,7 @@
 #ifndef ZONE_D07R0201_EVC_H
 #define ZONE_D07R0201_EVC_H
 
+#define FLD_ITEM_241                       0
 
 #endif //ZONE_D07R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d07r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -24,6 +24,7 @@
 #define C07_ISS3_01                        6
 #define C07_ISS4_01                        7
 #define C07_AMBRELLA_02                    8
+#define FLD_ITEM_239                       9
 
 #endif //ZONE_C07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -34,12 +35,7 @@
 #define C07_BOARD_02                      1
 #define C07_BOARD_03                      2
 #define C07_BOARD_04                      3
-#define C07_HIDE_ITEM_01                  4
-#define C07_HIDE_ITEM_02                  5
-#define C07_HIDE_ITEM_03                  6
-#define C07_HIDE_ITEM_04                  7
-#define C07_HIDE_ITEM_05                  8
-#define C07_HIDE_ITEM_06                  9
-#define C07_HIDE_ITEM_07                 10
+#define C07_HIDE_ITEM_06                  4
+#define C07_HIDE_ITEM_07                  5
 
 #endif //ZONE_C07_EVB_H

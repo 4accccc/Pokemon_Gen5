@@ -19,14 +19,14 @@
 #define ZONE_D07R0301_EVC_H
 
 #define D07R0301_ROCK_01                   0
+#define FLD_ITEM_242                       1
+#define FLD_ITEM_247                       2
+#define FLD_ITEM_248                       3
 
 #endif //ZONE_D07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D07R0301_EVB_H
 #define ZONE_D07R0301_EVB_H
 
-#define D07R0301_HIDE_ITEM_01             0
-#define D07R0301_HIDE_ITEM_02             1
-#define D07R0301_HIDE_ITEM_03             2
 
 #endif //ZONE_D07R0301_EVB_H

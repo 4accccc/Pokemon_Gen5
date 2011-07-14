@@ -26,6 +26,10 @@
 #define ZONE_D07R0101_EVC_H
 
 #define D07R0101_WORKMAN1_02               0
+#define FLD_ITEM_240                       1
+#define FLD_ITEM_243                       2
+#define FLD_ITEM_246                       3
+#define FLD_ITEM_250                       4
 
 #endif //ZONE_D07R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

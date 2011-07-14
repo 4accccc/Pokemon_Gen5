@@ -13,6 +13,10 @@
 #define R08_AMBRELLA_02                    0
 #define R08_FISING_01                      1
 #define R08_AMBRELLA_01                    2
+#define FLD_ITEM_220                       3
+#define FLD_ITEM_221                       4
+#define FLD_ITEM_222                       5
+#define FLD_ITEM_223                       6
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -22,7 +26,5 @@
 #define BG_R08_SIGN1_01                   0
 #define BG_R08_SIGN3_01                   1
 #define BG_R08_SIGN2_01                   2
-#define R08_HIDE_ITEM_01                  3
-#define R08_HIDE_ITEM_02                  4
 
 #endif //ZONE_R08_EVB_H
