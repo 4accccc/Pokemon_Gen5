@@ -873,11 +873,14 @@ static void _sub_ActorCreate(BEACON_DETAIL_WORK* wk)
 
   //‰ŠúÀ•W‚Í“K“–
   wk->pAct[ACT_ICON_TR] = act_Add( wk, clunit, &wk->objResUnion,
-                    128, 120, 0, 0, ACT_ICON_BGPRI, ACT_SF_MAIN );
+                    128, 120, 0, 1, ACT_ICON_BGPRI, ACT_SF_MAIN );
   GFL_CLACT_WK_SetPlttOffs( wk->pAct[ACT_ICON_TR], 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
   wk->pAct[ACT_ICON_EV] = act_Add( wk, clunit, &wk->objResNormal,
-                    128-32, 120, 0, 1, ACT_ICON_BGPRI, ACT_SF_MAIN );
+                    128-32, 120, 0, 2, ACT_ICON_BGPRI, ACT_SF_MAIN );
+  
+  wk->pAct[ACT_ICON_IO] = act_Add( wk, clunit, &wk->objResNormal,
+                    ACT_INOUT_PX, ACT_INOUT_PY_D, ACTANM_OUTSIDE, 0, ACT_INOUT_BGPRI, ACT_SF_MAIN );
 }
 
 //--------------------------------------------------------------

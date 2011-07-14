@@ -171,42 +171,6 @@ enum
 #define BMP_RECORD_DAT_SX  (BMP_RECORD_SX-BMP_RECORD_DAT_PX)
 #define BMP_RECORD_DAT_SY  (BMP_RECORD_SY)
 
-//////////////////////////////////////////////
-//アクター
-enum{
- ACT_ICON_TR,
- ACT_ICON_EV,
- ACT_MAX
-};
-
-enum{
- ACT_SF_MAIN,
- ACT_SF_SUB,
- ACT_SF_MAX,
-};
-
-enum{
- ACTANM_ICON_TR,
- ACTANM_ICON_POKE,
- ACTANM_RANK01,
- ACTANM_RANK02,
- ACTANM_RANK03,
- ACTANM_RANK04,
- ACTANM_RANK05,
-};
-
-#define ACT_TRAINER_PX  (27*8+4)
-#define ACT_TRAINER_PY  (5*8+4)
-#define ACT_RANK_PX     (25*8)
-#define ACT_RANK_PY     (10*8)
-#define ACT_TRAINER_BGPRI (0)
-
-#define ACT_ICON_BGPRI  (2)
-#define ACT_ICON_SX   (24)
-#define ACT_ICON_SY   (32)
-#define ACT_ICON_SXH  (ACT_ICON_SX/2)
-#define ACT_ICON_SYH  (ACT_ICON_SY/2)
-
 //////////////////////////////////////////
 //エフェクト関連定義値
 enum{
@@ -231,3 +195,48 @@ enum{
  SCROLL_POS_DEF,
  SCROLL_POS_DOWN,
 };
+
+//////////////////////////////////////////////
+//アクター
+enum{
+ ACT_ICON_TR,
+ ACT_ICON_EV,
+ ACT_ICON_IO,
+ ACT_MAX
+};
+
+enum{
+ ACT_SF_MAIN,
+ ACT_SF_SUB,
+ ACT_SF_MAX,
+};
+
+enum{
+ ACTANM_ICON_TR,
+ ACTANM_ICON_POKE,
+ ACTANM_RANK01,
+ ACTANM_RANK02,
+ ACTANM_RANK03,
+ ACTANM_RANK04,
+ ACTANM_RANK05,
+ ACTANM_OUTSIDE,
+ ACTANM_INSIDE,
+};
+
+#define ACT_TRAINER_PX  (27*8+4)
+#define ACT_TRAINER_PY  (5*8+4)
+#define ACT_RANK_PX     (25*8)
+#define ACT_RANK_PY     (10*8)
+#define ACT_TRAINER_BGPRI (0)
+
+#define ACT_ICON_BGPRI  (2)
+#define ACT_ICON_SX   (24)
+#define ACT_ICON_SY   (32)
+#define ACT_ICON_SXH  (ACT_ICON_SX/2)
+#define ACT_ICON_SYH  (ACT_ICON_SY/2)
+
+#define ACT_INOUT_BGPRI   (1)
+#define ACT_INOUT_PX      (8*28)
+#define ACT_INOUT_PY_D    (8*22)
+#define ACT_INOUT_PY_U    (ACT_INOUT_PY_D-(POPUP_HEIGHT))
+
