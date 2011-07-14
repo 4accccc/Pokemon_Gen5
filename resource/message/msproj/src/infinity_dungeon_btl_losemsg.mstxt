@@ -5861,11 +5861,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんぱい……
+			<Text>先輩……
 ボクのかたきを　とってください……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:07:06" />
+				Time="2011-07-14T10:57:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9889,10 +9889,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いまの　たたかいも　みられてたよ！
-のぞきま　さんの　ばーか！▼</Text>
+のぞきま　さんの　あほー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-12T02:50:16" />
+				Time="2011-07-14T11:01:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9901,10 +9901,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いまの　戦いも　見られてたよ！
-のぞき魔さんの　ばーか！▼</Text>
+のぞき魔さんの　あほー！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-12T02:49:42" />
+				Time="2011-07-14T11:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9943,10 +9943,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>調子に　乗っちゃったんだよ……
-あの子には　悪い事したなぁ……▼</Text>
+あの子には　悪いことしたなぁ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-12T02:30:43" />
+				Time="2011-07-14T11:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
