@@ -445,17 +445,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きょだいな　ちからを　かんじさせる
-ポケモンの　ぞうが　ある……▼
-[Name:TrainerName ]は
-かかれている　もじを　よんだ……▼
-いわの　からだ▼
-こおりの　からだ▼
-はがねの　からだ▼
-３つの　ポケモン　あつまりしとき
-おう　すがたを　みせる</Text>
+ポケモンの　ぞうが　ある……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:13:33" />
+				Time="2011-07-14T02:12:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -464,17 +457,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>巨大な　力を　感じさせる
-ポケモンの　像が　ある……▼
-[Name:TrainerName ]は
-かかれている　文字を　読んだ……▼
-岩の　体▼
-氷の　体▼
-鋼の　体▼
-３つの　ポケモン　集まりしとき
-王　その姿を　みせる</Text>
+ポケモンの　像が　ある……
+</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:16:27" />
+				Time="2011-07-14T02:12:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -483,11 +470,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>イベント
-・条件を満たしていないとき
-・0＝トレーナー名</Comment>
+・条件を満たしていないとき</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:12:09" />
+				Time="2011-07-14T02:12:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -505,18 +491,11 @@
 			Language="JPN">
 			<Text>きょだいな　ちからを　かんじさせる
 ポケモンの　ぞうが　ある……▼
-[Name:TrainerName ]は
-かかれている　もじを　よんだ……▼
-いわの　からだ▼
-こおりの　からだ▼
-はがねの　からだ▼
-３つの　ポケモン　あつまりしとき
-おう　すがたを　みせる▼
 ……　……　……
-……　……　……▼</Text>
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:13:38" />
+				Time="2011-07-14T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -526,18 +505,11 @@
 			Language="JPN_KANJI">
 			<Text>巨大な　力を　感じさせる
 ポケモンの　像が　ある……▼
-[Name:TrainerName ]は
-かかれている　文字を　読んだ……▼
-岩の　体▼
-氷の　体▼
-鋼の　体▼
-３つの　ポケモン　集まりしとき
-王　その姿を　みせる▼
 ……　……　……
-……　……　……▼</Text>
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:16:33" />
+				Time="2011-07-14T02:12:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -568,10 +540,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ズッ　ズッ！！▼</Text>
+			<Text>……ズッ　ズッ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:10:26" />
+				Time="2011-07-14T02:12:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -579,10 +551,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ズッ　ズッ！！▼</Text>
+			<Text>……ズッ　ズッ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:11:57" />
+				Time="2011-07-14T02:12:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -650,5 +622,65 @@
 				User="matsumiya:W00224"
 				Time="2011-07-12T05:10:13" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d29r0401_poke4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+かかれている　もじを　よんだ……▼
+いわの　からだ▼
+こおりの　からだ▼
+はがねの　からだ▼
+３つの　ポケモン　あつまりしとき
+おう　すがたを　みせる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T02:12:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T02:12:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+かかれている　文字を　読んだ……▼
+岩の　体▼
+氷の　体▼
+鋼の　体▼
+３つの　ポケモン　集まりしとき
+王　その姿を　みせる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T02:12:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T02:12:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・0＝トレーナー名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T02:12:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>壁に刻まれた文字</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T02:13:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
