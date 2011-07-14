@@ -296,6 +296,23 @@ FMMDL_RESLIST_NCGIMD = \
 	poke48.imd \
 	poke49.imd \
 	poke50.imd \
+	old_leader1c.imd \
+	old_leader1a.imd \
+	old_leader1b.imd \
+	old_ninja.imd \
+	old_leader6.imd \
+	old_leader4.imd \
+	old_champion.imd \
+	old_bigfour3.imd \
+	old_leader7.imd \
+	old_leader8b.imd \
+	old_leader8w.imd \
+	old_swchampion.imd \
+	old_leader2.imd \
+	old_leader5.imd \
+	old_leader3.imd \
+	old_boss.imd \
+	old_hakaim.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

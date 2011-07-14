@@ -1483,6 +1483,91 @@
 	@echo convert ncg_imd poke50
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke50.ncg ./mmdl_res ./mmdl_dmy/t4x4x1.imd 4 4 1
 
+#old_leader1c.imd
+./mmdl_res/old_leader1c.imd: ./mmdl_nchara/old_leader1c.ncg ./mmdl_nchara/old_leader1c.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader1c
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader1c.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader1a.imd
+./mmdl_res/old_leader1a.imd: ./mmdl_nchara/old_leader1a.ncg ./mmdl_nchara/old_leader1a.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader1a
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader1a.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader1b.imd
+./mmdl_res/old_leader1b.imd: ./mmdl_nchara/old_leader1b.ncg ./mmdl_nchara/old_leader1b.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader1b
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader1b.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_ninja.imd
+./mmdl_res/old_ninja.imd: ./mmdl_nchara/old_ninja.ncg ./mmdl_nchara/old_ninja.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_ninja
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_ninja.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader6.imd
+./mmdl_res/old_leader6.imd: ./mmdl_nchara/old_leader6.ncg ./mmdl_nchara/old_leader6.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader6
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader6.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader4.imd
+./mmdl_res/old_leader4.imd: ./mmdl_nchara/old_leader4.ncg ./mmdl_nchara/old_leader4.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader4
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader4.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_champion.imd
+./mmdl_res/old_champion.imd: ./mmdl_nchara/old_champion.ncg ./mmdl_nchara/old_champion.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_champion
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_champion.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_bigfour3.imd
+./mmdl_res/old_bigfour3.imd: ./mmdl_nchara/old_bigfour3.ncg ./mmdl_nchara/old_bigfour3.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_bigfour3
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_bigfour3.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader7.imd
+./mmdl_res/old_leader7.imd: ./mmdl_nchara/old_leader7.ncg ./mmdl_nchara/old_leader7.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader7
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader7.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader8b.imd
+./mmdl_res/old_leader8b.imd: ./mmdl_nchara/old_leader8b.ncg ./mmdl_nchara/old_leader8b.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader8b
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader8b.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader8w.imd
+./mmdl_res/old_leader8w.imd: ./mmdl_nchara/old_leader8w.ncg ./mmdl_nchara/old_leader8w.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader8w
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader8w.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_swchampion.imd
+./mmdl_res/old_swchampion.imd: ./mmdl_nchara/old_swchampion.ncg ./mmdl_nchara/old_swchampion.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_swchampion
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_swchampion.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader2.imd
+./mmdl_res/old_leader2.imd: ./mmdl_nchara/old_leader2.ncg ./mmdl_nchara/old_leader2.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader2
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader2.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader5.imd
+./mmdl_res/old_leader5.imd: ./mmdl_nchara/old_leader5.ncg ./mmdl_nchara/old_leader5.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader5
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader5.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_leader3.imd
+./mmdl_res/old_leader3.imd: ./mmdl_nchara/old_leader3.ncg ./mmdl_nchara/old_leader3.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_leader3
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_leader3.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_boss.imd
+./mmdl_res/old_boss.imd: ./mmdl_nchara/old_boss.ncg ./mmdl_nchara/old_boss.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_boss
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_boss.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
+#old_hakaim.imd
+./mmdl_res/old_hakaim.imd: ./mmdl_nchara/old_hakaim.ncg ./mmdl_nchara/old_hakaim.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd old_hakaim
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/old_hakaim.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
