@@ -22,4 +22,6 @@ extern void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap );
 
 // スクリプトコマンド用
 extern GMEVENT* HIDE_SHIP_Button( GAMESYS_WORK *gsys, int id );
+extern void HIDE_SHIP_GateSet( GAMESYS_WORK *gsys, int id, BOOL flag );
+extern void HIDE_SHIP_GateOff( GAMESYS_WORK *gsys, int id );
 

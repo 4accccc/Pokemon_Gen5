@@ -86,6 +86,7 @@ VMCMD_RESULT EvCmdHideShip_GateSet( VMHANDLE *core, void *wk )
 {
   int id;
   int state;
+  BOOL  flag;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
@@ -93,8 +94,10 @@ VMCMD_RESULT EvCmdHideShip_GateSet( VMHANDLE *core, void *wk )
   id  = VMGetU16( core );
   // ON/OFF
   state  = VMGetU16( core );
+  if( state == 0 ){ flag = FALSE; }
+  else            { flag = TRUE;  }
 
-  //FOURKINGS_FIGHT_StairsAnm( gsys, id );
+  HIDE_SHIP_GateSet( gsys, id, flag );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -112,7 +115,7 @@ VMCMD_RESULT EvCmdHideShip_GateOff( VMHANDLE *core, void *wk )
   // ÉQÅ[ÉgID
   id  = VMGetU16( core );
 
-  //FOURKINGS_FIGHT_StairsAnm( gsys, id );
+  HIDE_SHIP_GateOff( gsys, id );
 
   return VMCMD_RESULT_CONTINUE;
 }

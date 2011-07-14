@@ -598,8 +598,13 @@ static BOOL ANM_PIPE_OUT_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 
 // BUTTONアニメ
-static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
-static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id );
+
+// GATE
+static void ANM_GATE_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_GATE_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_GATE_SET_On( HIDE_SHIP_TMP *p_wk, u16 id );
 
 // EFFECT
 static void ANM_EFFECT_01_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx );
@@ -610,6 +615,7 @@ static GMEVENT * BUTTON_CreateEvent( GAMESYS_WORK* gsys, int idx );
 static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk );
 static void BUTTON_EVENT_PosCheck( HIDE_SHIP_TMP *p_wk, int btn_idx );
 static void BUTTON_EVENT_PipeStartup( HIDE_SHIP_TMP *p_wk, int pipe_idx );
+static void BUTTON_EVENT_ButtonAnm( HIDE_SHIP_TMP *p_wk, int btn_idx );
 
 // パイプタスク
 static void PIPE_IN_TASK_Add( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
@@ -709,6 +715,18 @@ void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap )
       event = BUTTON_CreateEvent( gsys, 3 );
       GAMESYSTEM_SetEvent(gsys, event);
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      ANM_BUTTON_ON_Play( p_wk, 0 );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      ANM_BUTTON_OFF_Play( p_wk, 0 );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      ANM_GATE_OFF_Play( p_wk, 0 );
+    }
   }
 #endif
 
@@ -726,7 +744,7 @@ void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap )
  *	@brief  ボタン押下イベント
  *
  *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
- *	@param	id 
+ *	@param	id      ボタンID
  *
  *	@return イベント
  */
@@ -737,9 +755,45 @@ GMEVENT* HIDE_SHIP_Button( GAMESYS_WORK *gsys, int id )
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
   
+  if( id >= BUTTON_NUM )
+  {
+    GF_ASSERT_MSG( 0, "_HIDE_SHIP_BUTTON の 引数が 違います");
+    return NULL;
+  }
+
   event = BUTTON_CreateEvent( gsys, id );
 
   return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート状態の設定
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id      ゲートID
+ *	@param	flag    状態  TRUE:ON FALSE:OFF
+ */
+//-----------------------------------------------------------------------------
+void HIDE_SHIP_GateSet( GAMESYS_WORK *gsys, int id, BOOL on_flag )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート解除アニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id      ゲートID  
+ */
+//-----------------------------------------------------------------------------
+void HIDE_SHIP_GateOff( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
+
 }
 
 //=============================================================================
@@ -1073,8 +1127,12 @@ static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
  *	@param  u16 obj_idx   OBJインデックス
  */
 //-----------------------------------------------------------------------------
-static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id )
 {
+  u16 obj_idx = OBJ_BUTTON_1 + id;
+
+  GF_ASSERT( id < BUTTON_NUM );
+
   ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE );
   ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
 }
@@ -1086,10 +1144,82 @@ static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
  *	@param  u16 obj_idx   OBJインデックス
  */
 //-----------------------------------------------------------------------------
-static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id )
 {
+  u16 obj_idx = OBJ_BUTTON_1 + id;
+
+  GF_ASSERT( id < BUTTON_NUM );
+
   ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
   ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
+}
+
+//=============================================================================
+/**
+ *          GATE
+ *          アニメインデックス
+ *          0:常時アニメ
+ *          1:解除アニメ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート解除アニメ再生
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	id    ゲートID
+ */
+//-----------------------------------------------------------------------------
+static void ANM_GATE_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 obj_idx = OBJ_GATE_1 + id;
+
+  GF_ASSERT( id < GATE_NUM );
+
+  // 常時アニメを維持しつつ再生する
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートをOFF状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	id    ゲートID
+ */
+//-----------------------------------------------------------------------------
+static void ANM_GATE_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  fx32 last_frame;
+  u16 obj_idx = OBJ_GATE_1 + id;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+
+  GF_ASSERT( id < GATE_NUM );
+
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 0 );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 0, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 0, last_frame );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートをON状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	id    ゲートID
+ */
+//-----------------------------------------------------------------------------
+static void ANM_GATE_SET_On( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 obj_idx = OBJ_GATE_1 + id;
+
+  GF_ASSERT( id < GATE_NUM );
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
 }
 
 //=============================================================================
@@ -1202,8 +1332,6 @@ static GMEVENT * BUTTON_CreateEvent( GAMESYS_WORK* gsys, int idx )
   BUTTON_EVENT_WORK*  work;
   FIELDMAP_WORK     *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
 
-  GF_ASSERT( idx<BUTTON_NUM );
-
   // イベント生成
   event = GMEVENT_Create( gsys, NULL, ButtonEvent, sizeof(BUTTON_EVENT_WORK) );
 
@@ -1245,7 +1373,8 @@ static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk )
     
     // ボタンの押したチェック
     BUTTON_EVENT_PosCheck( p_gmk_wk, p_wk->idx );
-
+    // ボタンのアニメ
+    BUTTON_EVENT_ButtonAnm( p_gmk_wk, p_wk->idx );
     *seq = SEQ_WAIT;
     break;
 
@@ -1316,6 +1445,29 @@ static void BUTTON_EVENT_PipeStartup( HIDE_SHIP_TMP *p_wk, int pipe_idx )
 
   // フラグ反転
   p_wk->pipe_wk[ pipe_idx ].start_flag = !p_wk->pipe_wk[ pipe_idx ].start_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  押したボタンと、押してないボタンのアニメ管理
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	btn_idx  ボタンのIDX
+ */
+//-----------------------------------------------------------------------------
+static void BUTTON_EVENT_ButtonAnm( HIDE_SHIP_TMP *p_wk, int btn_idx )
+{
+  int i;
+
+  // 押したボタンは押すアニメする
+  ANM_BUTTON_ON_Play( p_wk, btn_idx );
+
+  // その他のボタンはOFFのアニメする
+  for( i=0; i<BUTTON_NUM; i++ )
+  {
+    if( i == btn_idx ) continue;
+    ANM_BUTTON_OFF_Play( p_wk, i );
+  }
 }
 
 //=============================================================================
