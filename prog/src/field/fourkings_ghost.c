@@ -658,15 +658,19 @@ void FOURKINGS_GHOST_FireAnm( GAMESYS_WORK *gsys, int id )
     ANM_LIGHT_Play( p_wk );
     // 終了タスク関数
     GFL_TCB_AddTask( tcbsys, FireTcbA, (void*)task_wk, 0 );
+
+    // SE 再生 
+    PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_04 );   // 火の玉現れる音
   }
   else
   {
     ANM_FIRE_B_Play( p_wk, id - 1 );
     GFL_TCB_AddTask( tcbsys, FireTcbB, (void*)task_wk, 0 );
+
+    // SE 再生 
+    PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_02 );   // 火の玉現れる音
   }
 
-  // SE 再生 
-  PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_02 );   // 火の玉現れる音
 }
 //----------------------------------------------------------------------------
 /**
