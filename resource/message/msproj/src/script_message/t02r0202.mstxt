@@ -60,13 +60,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よわいポケモン　つよいポケモン
-かっこいいポケモン　かわいいポケモン▼
-たくさんの　ポケモンが
-あなたと　であうのを　まってるのね！</Text>
+			<Text>あなたの　ポケモンずかん　には
+よわいポケモン　つよいポケモン▼
+かっこいいポケモン　かわいいポケモン
+たくさんの　ポケモンが　いるのね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-14T09:08:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74,13 +74,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>弱いポケモン　強いポケモン
-かっこいいポケモン　かわいいポケモン▼
-たくさんの　ポケモンが
-あなたと　出会うのを　待ってるのね！</Text>
+			<Text>あなたの　ポケモン図鑑　には
+弱いポケモン　強いポケモン▼
+かっこいいポケモン　可愛いポケモン
+たくさんの　ポケモンが　いるのね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-14T09:08:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,10 +89,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T08:39:46" />
+				Time="2011-07-14T09:08:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
