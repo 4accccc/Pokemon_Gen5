@@ -424,4 +424,6 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/bg_pc_01.nsbmd \
 	$(RESDIR)/c03_ship_03_02.nsbmd \
 	$(RESDIR)/c03_ship_03_03.nsbmd \
+	$(RESDIR)/c04_gym_02.nsbmd \
+	$(RESDIR)/nschool_02.nsbmd \
 
