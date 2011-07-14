@@ -230,6 +230,30 @@ enum{
 	FLG_MW_DECIDE_ANIM	= (1<<5),			// 決定アニメ
 };
 
+// プライオリティセット
+enum{
+	PRIO_CHANGE			= 0,				// プライオリティセット
+	PRIO_BACK,								// プライオリティ戻し
+};
+
+// スクロール
+enum{
+	SCROLL_UP			= 0,				// スクロールアップ
+	SCROLL_DOWN,							// スクロールダウン
+};
+
+// ウインドウの種類
+enum{
+	WIN_FULL			= 0,				// 足りている
+	WIN_NOT_FULL,							// 足りてない
+};
+
+// いろいろ
+enum{
+	BG_SCROLL_FIXPOS	= -64,				// スクロールのオフセット
+	BG_SCROLL_SPD		= 8,				// スクロールスピード
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -282,9 +306,10 @@ typedef struct
 	s32							Result;							// 結果
 	s32							Timer;							// タイマ
 	s32							AnimNum;						// アニメ用
-	s32							YesNoCursor;					// yes/no
-	u32							DelTamaFlag;					// フラグ
+	s32							YesNoCursor;					// yes/noカーソル位置
+	u32							DelTamaFlag;					// デルダマ用フラグ
 	s32							DelTama[3];						// 必要なデルタマ数
+	s32							BgOffset;						// BGのオフセット
 	//
 	s16							*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	// パレットチェンジ用
@@ -608,14 +633,14 @@ static s32  gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk );
 //
 static void gpower_app_disp_win( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
 static void gpower_app_is_visible_win( GPOWER_APP_MAIN_WORK* wk, const BOOL bflg );
-//
+// バッテリーチェック
 static BOOL gpower_app_chk_battery( GPOWER_APP_MAIN_WORK* wk );
-//
+// パラメータ初期化
 static void gpower_app_init_param( GPOWER_APP_MAIN_WORK* wk );
-//
+// パレットチェンジ
 static void gpower_app_init_chgpal( GPOWER_APP_MAIN_WORK* wk );
 static void gpower_app_main_chgpal( GPOWER_APP_MAIN_WORK* wk );
-//
+// 決定アニメ
 static BOOL gpower_app_set_decide_anim( GPOWER_APP_MAIN_WORK* wk );
 //
 // yes/no
@@ -625,8 +650,11 @@ static void gpower_app_main_yesnowin( GPOWER_APP_MAIN_WORK* wk );
 static BOOL gpower_app_chk_yesnowin(  GPOWER_APP_MAIN_WORK* wk );
 static BOOL gpower_app_is_yesnowin_anime_end( GPOWER_APP_MAIN_WORK* wk );
 static BOOL gpower_app_chk_deltamawin( GPOWER_APP_MAIN_WORK* wk );
-//
+// デルダマ判定
 static void gpower_app_init_deltama( GPOWER_APP_MAIN_WORK* wk );
+//
+static BOOL gpower_app_main_bgscroll( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
+static void gpower_app_set_bgprio( GPOWER_APP_MAIN_WORK* wk, const s32 mode );
 
 //=============================================================================
 /**
@@ -865,6 +893,7 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	wk->AnimNum		= 0;
 	wk->Timer		= 0;
 	wk->YesNoCursor = 0;
+	wk->BgOffset	= 0;
 	// 初期化
 	for(i=0;i<GPOWER_APP_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
@@ -1061,6 +1090,7 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 			break;
 		//
 		// 決定アニメ待ち=>window表示
+		// (足りているか、足りてないかを判定)
 		case STEP_LV3:
 			bflg = gpower_app_set_decide_anim( wk );
 			gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, wk->AnimNum );
@@ -1070,29 +1100,52 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 					wk->Result = wk->CurPos;
 				}else{
 					// デルタマが足りない場合
-					// =>足りないメッセージ
+					// =>足りないメッセージ(yes/no非表示)
 					if(wk->DelTamaFlag & (1<<wk->CurPos)){
-						gpower_app_disp_win( wk, 1 );
-						wk->Step = STEP_LV3+3;
-						gpower_app_is_visible_win( wk, TRUE );
-					}
-					// 足りているので使う(yes/no)
-					else{
-						gpower_app_init_yesnowin( wk );
-						gpower_app_disp_win( wk, 0 );
+						// スクロールUP(プライオリティ変更)
+						wk->BgOffset = BG_SCROLL_FIXPOS;
+						gpower_app_main_bgscroll( wk, SCROLL_UP );
+						gpower_app_set_bgprio( wk, PRIO_CHANGE );
+						// window表示
+						gpower_app_disp_win( wk, WIN_NOT_FULL );
 						gpower_app_is_visible_win( wk, TRUE );
 						wk->Step = STEP_LV3+10;
-						// 戻るボタンを消しておく
-						// yes/no表示で見えにくくなるため
-						gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, FALSE );
 					}
+					// 足りているメッセージ(yes/no表示)
+					// =>(yes/no)はスクロールUPが終了してから
+					else{
+						// スクロールUP(プライオリティ変更)
+						wk->BgOffset = BG_SCROLL_FIXPOS;
+						gpower_app_main_bgscroll( wk, SCROLL_UP );
+						gpower_app_set_bgprio( wk, PRIO_CHANGE );
+						// window表示
+						gpower_app_disp_win( wk, WIN_FULL );
+						gpower_app_is_visible_win( wk, TRUE );
+						wk->Step = STEP_LV4;
+					}
+					// 戻るボタンを消しておく
+					gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, FALSE );
 				}
 				wk->Flag &= ~FLG_MW_DECIDE_ANIM;
 			}
 			break;
 		//
+		//--------------
+		// 足りないwin
+		//---------------
+		// windowスクロール(足りないメッセージ)
+		case STEP_LV3+10:
+			// スクロールUP待ち
+			bflg = gpower_app_main_bgscroll( wk, SCROLL_UP );
+			if(bflg == TRUE){
+				// スクロール終了 => プライオリティ修正
+				wk->Step = STEP_LV3+20;
+				gpower_app_set_bgprio( wk, PRIO_BACK );
+			}
+			break;
+		//
 		// window(足りないメッセージ)
-		case STEP_LV3+3:
+		case STEP_LV3+20:
 			// バッテリーチェック
 			bbflg = gpower_app_chk_battery( wk );
 			if(bbflg == TRUE){
@@ -1101,18 +1154,53 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 			}else{
 				bflg = gpower_app_chk_deltamawin( wk );
 				if(bflg == TRUE){
-					gpower_app_is_visible_win( wk, FALSE );
-					wk->Step = STEP_LV1;
-					// カーソルのアニメを戻す
-					wk->Flag |= FLG_MW_UPDATE;
+					// スクロールDOWN
+					gpower_app_main_bgscroll( wk, SCROLL_DOWN );
+					gpower_app_set_bgprio( wk, PRIO_CHANGE );
 					// SE
 					PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+					wk->Step = STEP_LV3+30;
 				}
 			}
 			break;
 		//
+		// window(足りないメッセージ)(スクロールアウト)
+		case STEP_LV3+30:
+			// スクロールDOWN待ち
+			bflg = gpower_app_main_bgscroll( wk, SCROLL_DOWN );
+			if(bflg == TRUE){
+				// スクロールDOWN終了 => プライオリティ戻し
+				gpower_app_set_bgprio( wk, PRIO_BACK );
+				gpower_app_is_visible_win( wk, FALSE );
+				wk->Step = STEP_LV1;
+				// カーソルのアニメを戻す
+				wk->Flag |= FLG_MW_UPDATE;
+				// 戻るボタンを戻しておく
+				gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, TRUE );
+			}
+			break;
+		//
+		//
+		//------------
+		// 足りているwin
+		//------------
+		// スクロールUP待ち
+		case STEP_LV4:
+			// スクロールUP
+			bflg = gpower_app_main_bgscroll( wk, SCROLL_UP );
+			if(bflg == TRUE){
+				// スクロールUP終了後 => プライオリティ戻し => (yes/no)表示
+				gpower_app_set_bgprio( wk, PRIO_BACK );
+				gpower_app_init_yesnowin( wk );
+				// 戻るボタンを消しておく
+				// yes/no表示で見えにくくなるため
+//				gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, FALSE );
+				wk->Step = STEP_LV4+10;
+			}
+			break;
+		//
 		// yes/no待ち=>yes/no終了アニメ
-		case STEP_LV3+10:
+		case STEP_LV4+10:
 			// バッテリーチェック
 			bbflg = gpower_app_chk_battery( wk );
 			if(bbflg == TRUE){
@@ -1124,17 +1212,31 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 				// 判定
 				bflg = gpower_app_chk_yesnowin( wk );
 				if(bflg == TRUE){
-					wk->Step = STEP_LV3+20;
+					wk->Step = STEP_LV4+20;
 				}
 			}
 			break;
 		//
-		// yes/no終了アニメ待ち=>終了など
-		case STEP_LV3+20:
+		// yes/no終了アニメ待ち
+		case STEP_LV4+20:
 			// yes/noまち
 			gpower_app_main_yesnowin( wk );
 			// 終了待ち
 			bflg = gpower_app_is_yesnowin_anime_end( wk );
+			if(bflg == TRUE){
+				// スクロールDOWN(プライオリティ変更)
+				// (yes/no)は消しておく
+				gpower_app_main_bgscroll( wk, SCROLL_DOWN );
+				gpower_app_set_bgprio( wk, PRIO_CHANGE );
+				gpower_app_exit_yesnowin( wk );
+				wk->Step = STEP_LV4+30;
+			}
+			break;
+		//
+		// スクロールDOWN待ち
+		case STEP_LV4+30:
+			// スクロールDOWN
+			bflg = gpower_app_main_bgscroll( wk, SCROLL_DOWN );
 			if(bflg == TRUE){
 				// 終了したので処理の分岐
 				// yes
@@ -1148,10 +1250,9 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 					// カーソルのアニメを戻す
 					wk->Flag |= FLG_MW_UPDATE;
 				}
-				// 非表示
+				// プライオリティを戻しておく
+				gpower_app_set_bgprio( wk, PRIO_BACK );
 				gpower_app_is_visible_win( wk, FALSE );
-				gpower_app_exit_yesnowin( wk );
-				//
 				// 戻るボタンを戻しておく
 				gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, TRUE );
 			}
@@ -2299,6 +2400,7 @@ static s32 gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk )
  *	@brief  下画面説明パネル
  *
  *	@param	GPOWER_APP_MAIN_WORK* wk
+ *	@param	const s32			(0:足りている、1:足りない)
  *
  *	@retval
  */
@@ -2316,7 +2418,7 @@ static void gpower_app_disp_win( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
 	// 文章
 	//
 	// 足りている場合
-	if(mode == 0){
+	if(mode == WIN_FULL){
 		strbuf  = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[4] );		// org
 		strbuf3 = GFL_STR_CreateBuffer( 256, wk->heapID );						// dest
 		// gpower(0)
@@ -2812,5 +2914,69 @@ static void gpower_app_init_deltama( GPOWER_APP_MAIN_WORK* wk )
 			i, wk->DelTama[i], wk->Param->gpower[i], (wk->DelTamaFlag & (1<<i)));
 	}
 #endif
+}
+
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *  @brief   BGのスクロール処理
+ *
+ *  @param  GPOWER_APP_MAIN_WORK *wk
+ *  @param  const s32			(0:スクロールUP、1:スクロールDOWN)
+ *
+ *  @retval none
+ */
+//-----------------------------------------------------------------------------
+static BOOL gpower_app_main_bgscroll( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
+{
+	BOOL	bflg=FALSE;
+	
+	// UP
+	if(mode == SCROLL_UP){
+		wk->BgOffset+=BG_SCROLL_SPD;
+		if(wk->BgOffset >= 0){
+			wk->BgOffset = 0;
+			bflg = TRUE;
+		}
+	}
+	// DOWN
+	else{
+		wk->BgOffset-=BG_SCROLL_SPD;
+		if(wk->BgOffset <= BG_SCROLL_FIXPOS){
+			wk->BgOffset = BG_SCROLL_FIXPOS;
+			bflg = TRUE;
+		}
+	}
+	GFL_BG_SetScroll( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_SET, wk->BgOffset );
+	GFL_BG_SetScroll( GFL_BG_FRAME0_M, GFL_BG_SCROLL_Y_SET, wk->BgOffset );
+	//
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief   BGスクロール中のプライオリティ修正
+ *
+ *  @param  GPOWER_APP_MAIN_WORK *wk
+ *  @param  const s32			(0:セット、1:戻し)
+ *
+ *  @retval none
+ */
+//-----------------------------------------------------------------------------
+static void gpower_app_set_bgprio( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
+{
+	// 変更
+	if(mode == PRIO_CHANGE){
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );		// 文字
+		GFL_BG_SetPriority( GFL_BG_FRAME1_M, 2 );		// win
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );		// 黒帯
+	}
+	// 戻し
+	else{
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );		// 文字
+		GFL_BG_SetPriority( GFL_BG_FRAME1_M, 1 );		// win
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 2 );		// 黒帯
+	}
 }
 
