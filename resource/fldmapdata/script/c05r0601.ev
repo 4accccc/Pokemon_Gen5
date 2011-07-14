@@ -24,6 +24,7 @@ _EVENT_DATA    ev_c05r0601_waitress_01
 _EVENT_DATA    ev_c05r0601_hakaim_01
 _EVENT_DATA    ev_c05r0601_woman3_01
 _EVENT_DATA    ev_c05r0601_sunglasses_01
+_EVENT_DATA    ev_c05r0601_woman2_01
 _EVENT_DATA_END
 
 
@@ -155,10 +156,17 @@ EVENT_START   ev_c05r0601_hakaim_01
 EVENT_END
 
 /**************************************************************/
-/*  C05R0601 WOMAN2の会話用イベントスクリプト                 */
+/*  C05R0601 WOMAN3の会話用イベントスクリプト                 */
 /**************************************************************/
 EVENT_START   ev_c05r0601_woman3_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_woman3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  C05R0601 WOMAN2の会話用イベントスクリプト                 */
+/**************************************************************/
+EVENT_START   ev_c05r0601_woman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_woman2_01 )
 EVENT_END
 
 /**************************************************************/
