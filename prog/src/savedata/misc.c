@@ -114,9 +114,9 @@ void MISC_Init( MISC *p_msc )
   p_msc->research_question_id[1] = QUESTION_ID_DUMMY;
   p_msc->research_question_id[2] = QUESTION_ID_DUMMY;
 
-  MISC_SetPokewoodOpenFlag( p_msc, 0 );   /// ポケウッド初期状態
-  MISC_SetPokewoodOpenFlag( p_msc, 1 );
-  MISC_SetPokewoodOpenFlag( p_msc, 2 );
+//  MISC_SetPokewoodOpenFlag( p_msc, 0 );   /// ポケウッド初期状態
+  MISC_SetPokewoodOpenFlag( p_msc, 1 ); // ハチクマン
+//  MISC_SetPokewoodOpenFlag( p_msc, 2 );
 }
 
 //=============================================================================
