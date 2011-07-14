@@ -27,6 +27,7 @@
 
 // mine
 #include "field_gimmick_hide_ship_engine.h"
+#include "field_gimmick_hide_ship_engine_se_def.h"
 
 //=============================================================================
 /**
@@ -717,11 +718,17 @@ void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap )
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      ANM_BUTTON_ON_Play( p_wk, 0 );
+      ANM_GATE_SET_On( p_wk, 0 );
+      ANM_GATE_SET_On( p_wk, 1 );
+      ANM_GATE_SET_On( p_wk, 2 );
+      ANM_GATE_SET_On( p_wk, 3 );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
-      ANM_BUTTON_OFF_Play( p_wk, 0 );
+      ANM_GATE_SET_Off( p_wk, 0 );
+      ANM_GATE_SET_Off( p_wk, 1 );
+      ANM_GATE_SET_Off( p_wk, 2 );
+      ANM_GATE_SET_Off( p_wk, 3 );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
     {
@@ -775,11 +782,19 @@ GMEVENT* HIDE_SHIP_Button( GAMESYS_WORK *gsys, int id )
  *	@param	flag    状態  TRUE:ON FALSE:OFF
  */
 //-----------------------------------------------------------------------------
-void HIDE_SHIP_GateSet( GAMESYS_WORK *gsys, int id, BOOL on_flag )
+void HIDE_SHIP_GateSet( GAMESYS_WORK *gsys, int id, BOOL flag )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
 
+  if( flag == TRUE )
+  {
+    ANM_GATE_SET_On( p_wk, id );
+  }
+  else
+  {
+    ANM_GATE_SET_Off( p_wk, id );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -794,6 +809,10 @@ void HIDE_SHIP_GateOff( GAMESYS_WORK *gsys, int id )
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
 
+  ANM_GATE_OFF_Play( p_wk, id );
+
+  // SE 再生
+  PMSND_PlaySE( HIDE_SHIP_SE_GATE_OFF );
 }
 
 //=============================================================================
@@ -1195,14 +1214,16 @@ static void ANM_GATE_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id )
 
   GF_ASSERT( id < GATE_NUM );
 
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 0 );
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 1 );
 
-  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 0, TRUE );
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 1, TRUE );
   // 最終フレーム取得
   last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
 
   // ラストフレームにする
-  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 0, last_frame );
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, 1, last_frame );
+  // 常時はSTOP
+  ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1375,6 +1396,10 @@ static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk )
     BUTTON_EVENT_PosCheck( p_gmk_wk, p_wk->idx );
     // ボタンのアニメ
     BUTTON_EVENT_ButtonAnm( p_gmk_wk, p_wk->idx );
+
+    // SE 再生
+    PMSND_PlaySE( HIDE_SHIP_SE_BTN );
+
     *seq = SEQ_WAIT;
     break;
 
@@ -1512,6 +1537,10 @@ static FIELD_TASK_RETVAL tcb_PipeInTask( void* wk )
   // 引っ込むアニメ再生
   case 0:
     ANM_PIPE_IN_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
+
+    // SE 再生
+    PMSND_PlaySE( HIDE_SHIP_SE_PIPE_JOINT );
+
     p_wk->seq++;
     break;
   // アニメ終了チェック
@@ -1571,6 +1600,9 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
       ANM_EFFECT_01_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
     }
 
+    // SE 再生
+    PMSND_PlaySE( HIDE_SHIP_SE_PIPE_OUT );
+
     p_wk->seq++;
     break;
   // アニメ終了チェック
@@ -1588,6 +1620,9 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
     {
       ANM_EFFECT_02_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
     }
+
+    // SE 再生
+    PMSND_PlaySE( HIDE_SHIP_SE_PIPE_JOINT );
 
     p_wk->seq++;
     break;
