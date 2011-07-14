@@ -5515,31 +5515,6 @@
 だれにでも　できることよ</language>
 	</row>
 
-	<row id="TRID_ELITEM_12_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">キミが！　どれだけ！
-ポケモンを　しっているか　ためす！▼</language>
-		<language name="JPN_KANJI" width="216">キミが！　どれだけ！
-ポケモンを　知っているか　試す！▼</language>
-	</row>
-
-	<row id="TRID_ELITEM_12_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ぞんぶんに　ポケモンの
-ちからを　ひきだしているな！</language>
-		<language name="JPN_KANJI" width="216">存分に　ポケモンの
-力を　引き出しているな！</language>
-	</row>
-
-	<row id="TRID_ELITEM_12_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">トレーナーである　じぶんが
-つよくある　ひつようは　ない▼
-ポケモンが　つよく　たたかえるよう
-サポートできれば　いいんだ</language>
-		<language name="JPN_KANJI" width="216">トレーナーである　自分が
-強くある　必要は　ない▼
-ポケモンが　強く　戦えるよう
-サポートできれば　いいんだ</language>
-	</row>
-
 	<row id="TRID_ELITEM_13_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">せんとうまえ
 テストメッセージ</language>
@@ -13046,27 +13021,6 @@ può accadere ancora di tutto!</language>
 きらびやかな　ポケモン勝負▼
 おもわず　みとれちゃったじゃない！
 とても　ステキな　ショーだったわよ！</language>
-	</row>
-
-	<row id="TRID_LEADER4_02_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">あなたと　ポケモン……
-はなやかに　かがやいている！</language>
-		<language name="JPN_KANJI" width="216">あなたと　ポケモン……
-華やかに　輝いている！</language>
-	</row>
-
-	<row id="TRID_LEADER4_02_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">……こんな　ピンチでこそ
-ポケモンも　ひとも　かがやく！</language>
-		<language name="JPN_KANJI" width="216">……こんな　ピンチでこそ
-ポケモンも　人も　輝く！</language>
-	</row>
-
-	<row id="TRID_LEADER4_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">あなたたちの　かがやき……
-まさに　シャイニング　ビューティ！</language>
-		<language name="JPN_KANJI" width="216">あなたたちの　かがやき……
-まさに　シャイニング　ビューティ！</language>
 	</row>
 
 	<row id="TRID_JUGGLING_10_TRMSG_FIGHT_START">
