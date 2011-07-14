@@ -46,6 +46,9 @@ typedef struct {
 // swan 地面ジム専用
 #define	GYM_GROUND_MAPPER_MAPMDL_SIZE		(0x7530)	//モデルデータ用メモリ確保サイズ 
 #define GYM_GROUND_MAPPER_BLOCK_MEMSIZE	( GYM_GROUND_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + FLD_MAPPER_MAPATTR_SIZE )
+// swan バッジチェックゲート
+#define SWBCG_MAPPER_MAPMDL_SIZE    (0x8000)    //バッジチェックゲート用メモリ確保サイズ(32kbまでOK)
+#define SWBCG_MAPPER_BLOCK_MEMSIZE	(SWBCG_MAPPER_MAPMDL_SIZE + FLD_MAPPER_MAPTEX_SIZE + FLD_MAPPER_MAPATTR_SIZE )
 
 //-------------------------------------
 ///	描画ブロック指定

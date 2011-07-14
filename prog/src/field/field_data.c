@@ -644,7 +644,7 @@ const SCENE_DATA resistMapTbl[] = {
     HEAPSIZE_FIELDMAP_NORMAL,
 	},
   //RSC_GRID_WIDE_NOCROSS = 24,
-	{	//横に長い(立体交差禁止 バッジチェックゲートで使用)
+	{	//横に長い(立体交差禁止 バッジチェックゲートで使用 地形モデル許容サイズが通常に比べて58kb少ないので注意)
 		{
 			MAP_XZ_SIZE, 1024*FX32_ONE, 
       3,2,
@@ -657,7 +657,7 @@ const SCENE_DATA resistMapTbl[] = {
 			FLDMAPPER_TEXTYPE_NONE,	{ 0, 0 },
 			{0,2},	// 地面アニメーション
 
-			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差不可サイズ)
+			SWBCG_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ(立体交差不可&モデルサイズ上限32kb サイズ)
       1,  // topフレームのブロック描画数
 		},
 		&FieldMapCtrl_GridFunctions,
