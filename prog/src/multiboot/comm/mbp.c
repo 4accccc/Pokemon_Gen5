@@ -58,7 +58,6 @@
 #include "multiboot/mb_local_def.h"
 #include "mbp.h"
 
-#define MB_HEAP_ID HEAPID_MULTIBOOT
 
 
 //============================================================================
@@ -103,6 +102,8 @@ static u32 *sCWork = NULL;
 /* 子機起動バイナリ転送用バッファ */
 static u8 *sFilebuf = NULL;
 
+static u16 sHeapID = 0xFFFF;
+
 //============================================================================
 //  関数定義
 //============================================================================
@@ -117,7 +118,7 @@ static u8 *sFilebuf = NULL;
 
   Returns:      None.
  *---------------------------------------------------------------------------*/
-void MBP_Init(u32 ggid, u32 tgid )
+void MBP_Init( u16 heapID, u32 ggid, u32 tgid )
 {
     /* 子機画面へ表示する親機情報設定用 */
     MBUserInfo myUser;
@@ -141,6 +142,7 @@ void MBP_Init(u32 ggid, u32 tgid )
     MI_CpuCopy8(info.nickName, myUser.name, (u32)(info.nickNameLength * 2));
 #endif
 
+    sHeapID = heapID;
 
     myUser.playerNo = 0;               // 親機は0番
 
@@ -152,10 +154,10 @@ void MBP_Init(u32 ggid, u32 tgid )
     /* MB 親機制御を開始します. */
     // MBワーク領域確保。
 #if !defined(MBP_USING_MB_EX)
-	sCWork = GFL_NET_Align32Alloc( MB_HEAP_ID , MB_SYSTEM_BUF_SIZE);
+	sCWork = GFL_NET_Align32Alloc( sHeapID, MB_SYSTEM_BUF_SIZE);
 #else
     /* 外部で WM の初期化を済ませていればワークサイズは少なくしても構いません. */
-    sCWork = GFL_NET_Align32Alloc( MB_HEAP_ID , MB_SYSTEM_BUF_SIZE - WM_SYSTEM_BUF_SIZE);
+    sCWork = GFL_NET_Align32Alloc( sHeapID, MB_SYSTEM_BUF_SIZE - WM_SYSTEM_BUF_SIZE);
 #endif
 
 	if (MB_Init(sCWork, &myUser, ggid, tgid, MBP_DMA_NO) != MB_SUCCESS)
@@ -283,9 +285,9 @@ static BOOL MBP_RegistFile(const MBGameRegistry *gameInfo)
          * この領域が使用されます。
          * このメモリはサイズさえ充分であれば 静的に用意されていても構いません.
          */
-        MB_TPrintf("LeastMbHeap[%x]",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID));
-        sFilebuf = GFL_HEAP_AllocClearMemory( MB_HEAP_ID , 0x10000);
-        MB_TPrintf("->MbHeap[%x](%x)\n",GFI_HEAP_GetHeapFreeSize(MB_HEAP_ID),bufferSize);
+        MB_TPrintf("LeastMbHeap[%x]",GFI_HEAP_GetHeapFreeSize(sHeapID));
+        sFilebuf = GFL_HEAP_AllocClearMemory( sHeapID, 0x10000);
+        MB_TPrintf("->MbHeap[%x](%x)\n",GFI_HEAP_GetHeapFreeSize(sHeapID),bufferSize);
         if (sFilebuf == NULL)
         {
             /* セグメント情報を格納するバッファの確保失敗 */

@@ -29,16 +29,19 @@
 #define MB_ROMCODE_PLATINUM (0x4A555043)
 #define MB_ROMCODE_H_GOLD   (0x4A4B5049)
 #define MB_ROMCODE_S_SILVER (0x4A475049)
+#define MB_ROMCODE_BLACK    (0x4A415249)
+#define MB_ROMCODE_WHITE    (0x4A425249)
 
 //本体に刺さっているカードの種類
 typedef enum {
   CARD_TYPE_DP,   //ダイアモンド＆パール
   CARD_TYPE_PT,   //プラチナ
   CARD_TYPE_GS,   //ゴールド＆シルバー
+  CARD_TYPE_WB,   //ブラックホワイト
+  CARD_TYPE_INVALID,
 #if PM_DEBUG
   CARD_TYPE_DUMMY,  //MBテストダミー
 #endif
-  CARD_TYPE_INVALID,
 }DLPLAY_CARD_TYPE;
 
 enum DLPLAY_ERROR_STATE

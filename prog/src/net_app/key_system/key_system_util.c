@@ -96,7 +96,6 @@ KEYSYS_TEXT_WORK * KEYSYS_TEXT_Init( u16 frm, u16 x, u16 y, u16 w, u16 h, u16 fo
   p_wk->print_update  = KEYSYS_TEXT_TYPE_NONE;
   p_wk->heapID    = heapID;
 
-
   //バッファ作成
   p_wk->p_strbuf  = GFL_STR_CreateBuffer( 768, heapID );
 
@@ -419,6 +418,18 @@ void KEYSYS_TEXT_WriteWindowFrame( KEYSYS_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_p
 void KEYSYS_TEXT_ClearCharacter( KEYSYS_TEXT_WORK* p_wk )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB(p_wk->color) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief スクリーンクリア
+ *
+ *	@param	KEYSYS_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXT_ClearScreen( KEYSYS_TEXT_WORK* p_wk )
+{
+  BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_OFF );
 }
 //----------------------------------------------------------------------------
 /**
@@ -836,7 +847,8 @@ struct _KEYSYS_MENU_WORK
   BOOL is_change;
   s32 cursor;
   u16 bganm_normal[0x10];
-  u16 bganm_change[0x10];
+  u16 bganm_change1[0x10];
+  u16 bganm_change2[0x10];
   u16 bganm_buff[0x10];
   u16 bganm_cnt;
   u16 decide_anm;
@@ -869,8 +881,9 @@ KEYSYS_MENU_WORK * KEYSYS_MENU_Init( const KEYSYS_MENU_PARAM *cp_param, HEAPID h
 
     p_plt_buff  = GFL_ARC_UTIL_LoadPalette( ARCID_KEY_SYSTEM, NARC_key_system_gra_menu_frame_NCLR, &p_plt_data, heapID );
     cp_plt_adrs = p_plt_data->pRawData;
-    GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->bganm_normal, sizeof(u16) * 0x10 );
-    GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->bganm_change, sizeof(u16) * 0x10 );
+    GFL_STD_MemCopy( (u8*)cp_plt_adrs + (0 * 0x20), p_wk->bganm_normal, sizeof(u16) * 0x10 );
+    GFL_STD_MemCopy( (u8*)cp_plt_adrs + (1 * 0x20), p_wk->bganm_change1, sizeof(u16) * 0x10 );
+    GFL_STD_MemCopy( (u8*)cp_plt_adrs + (2 * 0x20), p_wk->bganm_change2, sizeof(u16) * 0x10 );
 
     GFL_HEAP_FreeMemory( p_plt_buff );
   }
@@ -1011,7 +1024,7 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
           KEYSYS_TEXT_ChangePalette( p_wk->p_wndmsg[i], p_wk->param.frm_plt );
         }
 
-        GFL_BG_LoadPalette( p_wk->param.frm, p_wk->bganm_change, sizeof(u16)*0x10, (p_wk->param.frm_plt+1) * 0x20 );
+        GFL_BG_LoadPalette( p_wk->param.frm, p_wk->bganm_change1, sizeof(u16)*0x10, (p_wk->param.frm_plt+1) * 0x20 );
         p_wk->seq++;
         p_wk->bganm_cnt = 0;
         p_wk->decide_anm = 0;
@@ -1065,7 +1078,7 @@ void KEYSYS_MENU_Draw( KEYSYS_MENU_WORK *p_wk )
   
   for( i = 0; i < 0x10; i++ )
   {
-    KEYSYS_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->bganm_buff[i], p_wk->bganm_cnt, p_wk->param.frm_plt + 1, i, p_wk->bganm_normal[i], p_wk->bganm_change[i] );
+    KEYSYS_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->bganm_buff[i], p_wk->bganm_cnt, p_wk->param.frm_plt + 1, i, p_wk->bganm_change2[i], p_wk->bganm_change1[i] );
   }
 }
 //----------------------------------------------------------------------------
@@ -1373,6 +1386,20 @@ void KEYSYS_SEQ_AddLocalSeq( KEYSYS_SEQ_WORK *p_wk, int add )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  シーケンスをすべてクリアする
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_SEQ_Clear( KEYSYS_SEQ_WORK *p_wk )
+{
+  while( p_wk->stack_now > 0 )
+  {
+    KEYSYS_SEQ_Return( p_wk );
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  シーケンスワークを取得
  *
  *	@param	KEYSYS_SEQ_WORK *p_wkワーク
@@ -1444,7 +1471,6 @@ KEYSYS_DISPLAY_GENELATER * KEYSYS_DISPLAY_Init( void *p_wk_adrs, HEAPID heapID )
 //-----------------------------------------------------------------------------
 void KEYSYS_DISPLAY_Exit( KEYSYS_DISPLAY_GENELATER *p_wk )
 {
-  GF_ASSERT( p_wk->seq == DISPLAY_SEQ_NO_DISPLAY );
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -1541,6 +1567,427 @@ void KEYSYS_DISPLAY_Delete( KEYSYS_DISPLAY_GENELATER *p_wk )
 BOOL KEYSYS_DISPLAY_IsComplete( const KEYSYS_DISPLAY_GENELATER *cp_wk )
 {
   return cp_wk->seq == DISPLAY_SEQ_NO_DISPLAY || cp_wk->seq == DISPLAY_SEQ_ON_DISPLAY;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制消去
+ *
+ *	@param	KEYSYS_DISPLAY_GENELATER *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_DISPLAY_DeleteForce( KEYSYS_DISPLAY_GENELATER *p_wk )
+{
+  if( p_wk->seq == DISPLAY_SEQ_ON_DISPLAY )
+  {
+    if( p_wk->func.Delete )
+    {
+      p_wk->func.Delete( p_wk->p_wk_adrs );
+    }
+
+    p_wk->seq = DISPLAY_SEQ_NO_DISPLAY;
+  }
+}
+
+//=============================================================================
+/**
+ *    TEXTOBJ
+ */
+//=============================================================================
+//-------------------------------------
+/// 定数
+//=====================================
+//-------------------------------------
+/// メッセージOAM
+//=====================================
+struct _KEYSYS_TEXTOBJ_WORK
+{ 
+  GFL_BMP_DATA        *p_bmp;     //文字用BMP
+  PRINTSYS_LSB        color;      //文字色
+  BOOL                trans_req;  //BMP転送リクエストフラグ
+  GFL_POINT           ofs;        //文字描画位置オフセット
+  KEYSYS_TEXT_POS     pos_type;   //描画位置タイプ
+  STRBUF              *p_strbuf;  //文字バッファ
+  BMPOAM_ACT_PTR      p_bmpoam_wk;  //BMPOAM
+  PRINT_QUE           *p_que;       //描画キュー
+};
+
+//-------------------------------------
+/// 文字描画位置計算
+//=====================================
+
+//-------------------------------------
+/// パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TEXTOBJ  作成
+ *
+ *  @param  const GFL_CLWK_DATA *cp_data  OAM情報
+ *  @param  w                             幅  キャラ単位
+ *  @param  h                             高さ  キャラ単位
+ *  @param  plt_idx                       GFL_CLGRPに登録したパレットインデックス
+ *  @param  plt_ofs                       パレットオフセット
+ *  @param  p_bmpoam_sys                  BMPOAMシステム
+ *  @param  *p_que  メッセージ描画キュー
+ *  @param  heapID  ヒープID
+ *
+ *  @return TEXTOBJワーク
+ */
+//-----------------------------------------------------------------------------
+KEYSYS_TEXTOBJ_WORK * KEYSYS_TEXTOBJ_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 h, u32 plt_idx, u8 plt_ofs, CLSYS_DRAW_TYPE draw_type, BMPOAM_SYS_PTR p_bmpoam_sys, HEAPID heapID )
+{ 
+  KEYSYS_TEXTOBJ_WORK *p_wk;
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(KEYSYS_TEXTOBJ_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(KEYSYS_TEXTOBJ_WORK) );
+  p_wk->p_que = PRINTSYS_QUE_Create( heapID );
+
+  //バッファ作成
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
+
+  //BMP作成
+  p_wk->p_bmp = GFL_BMP_Create( w, h, GFL_BMP_16_COLOR, heapID );
+
+  //BMPOAM作成
+  { 
+    BMPOAM_ACT_DATA actdata;
+    
+    GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
+    actdata.bmp = p_wk->p_bmp;
+    actdata.x   = cp_cldata->pos_x;
+    actdata.y   = cp_cldata->pos_y;
+    actdata.pltt_index  = plt_idx;
+    actdata.soft_pri    = cp_cldata->softpri;
+    actdata.setSerface  = draw_type;
+    actdata.draw_type   = draw_type;
+    actdata.bg_pri      = cp_cldata->bgpri;
+    actdata.pal_offset  = plt_ofs;
+    p_wk->p_bmpoam_wk   = BmpOam_ActorAdd( p_bmpoam_sys, &actdata );
+  }
+
+  return p_wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TEXTOBJ　破棄
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_Exit( KEYSYS_TEXTOBJ_WORK* p_wk )
+{ 
+  BmpOam_ActorDel( p_wk->p_bmpoam_wk );
+  GFL_BMP_Delete( p_wk->p_bmp );
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TEXTOBJ  背景色でクリア
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_Clear( KEYSYS_TEXTOBJ_WORK* p_wk )
+{
+  GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB(p_wk->color) );
+  BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TEXTOBJ  文字描画
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk ワーク
+ *  @param  *p_msg                    メッセージ
+ *  @param  strID                     文字番号
+ *  @param  *p_font                   フォント
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_Print( KEYSYS_TEXTOBJ_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font )
+{ 
+  GFL_POINT pos;
+
+  //一端消去
+  GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) ); 
+
+  //文字列作成
+  GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+
+  //位置計算
+  KeySys_Text_CalcPosCore( p_wk->pos_type, &p_wk->ofs, p_wk->p_bmp, p_wk->p_strbuf, p_font, &pos );
+
+  //文字列描画
+  PRINTSYS_PrintQueColor( p_wk->p_que, p_wk->p_bmp, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
+  p_wk->trans_req = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  TEXTOBJ  文字描画STRBUF版
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk     ワーク
+ *  @param  STRBUF *cp_strbuf             文字列
+ *  @param  *p_font                       フォント
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_PrintBuf( KEYSYS_TEXTOBJ_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font )
+{ 
+  GFL_POINT pos;
+
+  //一端消去
+  GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) ); 
+
+  //文字列作成
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
+
+  //位置計算
+  KeySys_Text_CalcPosCore( p_wk->pos_type, &p_wk->ofs, p_wk->p_bmp, p_wk->p_strbuf, p_font, &pos );
+
+  //文字列描画
+  PRINTSYS_PrintQueColor( p_wk->p_que, p_wk->p_bmp, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
+  p_wk->trans_req = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  文字色を設定
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk   ワーク
+ *  @param  color                       文字色
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_SetStrColor( KEYSYS_TEXTOBJ_WORK* p_wk, PRINTSYS_LSB color )
+{ 
+  p_wk->color = color;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  文字描画位置設定
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk ワーク
+ *  @param  x 座標
+ *  @param  y 座標
+ *  @param  type  座標タイプ
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_SetStrPos( KEYSYS_TEXTOBJ_WORK* p_wk, s16 x, s16 y, KEYSYS_TEXT_POS type )
+{ 
+  p_wk->ofs.x = x;
+  p_wk->ofs.y = y;
+  p_wk->pos_type  = type;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  表示処理
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk ワーク
+ *
+ *  @return TRUEで描画完了  FALSEで描画中
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_TEXTOBJ_Draw( KEYSYS_TEXTOBJ_WORK* p_wk )
+{ 
+  PRINTSYS_QUE_Main( p_wk->p_que );
+
+  if( p_wk->trans_req )
+  { 
+    if( !PRINTSYS_QUE_IsExistTarget( p_wk->p_que, p_wk->p_bmp ) )
+    { 
+      BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
+      p_wk->trans_req = FALSE;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画終了
+ *
+ *	@param	const KEYSYS_TEXTOBJ_WORK* cp_wk  ワーク
+ *
+ *	@return TRUE描画完了  FALSE描画終了
+ */
+//-----------------------------------------------------------------------------
+BOOL KEYSYS_TEXTOBJ_IsDrawEnd( const KEYSYS_TEXTOBJ_WORK* cp_wk )
+{
+  return !cp_wk->trans_req;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  BMPOAM取得
+ *
+ *  @param  KEYSYS_TEXTOBJ_WORK* p_wk   ワーク
+ *
+ *  @return BMPOAM
+ */
+//-----------------------------------------------------------------------------
+BMPOAM_ACT_PTR KEYSYS_TEXTOBJ_GetBmpOamAct( KEYSYS_TEXTOBJ_WORK* p_wk )
+{ 
+  return p_wk->p_bmpoam_wk;
+}
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  等速加速運動
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等速直線運動初期化
+ *
+ *	@param	KEYSYS_VELOCITY_WORK* p_wk	ワーク
+ *	@param	start						開始座標
+ *	@param	end							終了座標
+ *	@param	sync						かかるシンク
+ *
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_VEL_Init( KEYSYS_VELOCITY_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int sync )
+{
+	p_wk->now_val	= *cp_start;
+	p_wk->start_val	= *cp_start;
+	p_wk->end_val	= *cp_end;
+	p_wk->sync_max	= sync;
+	if( sync ) {
+		p_wk->add_val.x	= FX32_CONST(p_wk->end_val.x - p_wk->start_val.x) / sync;
+		p_wk->add_val.y	= FX32_CONST(p_wk->end_val.y - p_wk->start_val.y) / sync;
+		p_wk->sync_now	= 0;
+	}else{
+		//	sync == 0 の場合は即処理終了
+		p_wk->sync_now	= p_wk->sync_max-2;	//(p_wk->sync_max-1)より下の値
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等速直線運動メイン処理（毎フレームよぶこと）
+ *
+ *	@param	KEYSYS_VELOCITY_WORK* p_wk ワーク
+ *
+ *	@return	TRUEなら処理終了、FALSEなら処理中。
+ */
+//-----------------------------------------------------------------------------
+BOOL KEYSYS_VEL_Main( KEYSYS_VELOCITY_WORK* p_wk )
+{
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {	//	なぜ-1かというと、elseの中をふくめてのsyncだから
+		p_wk->sync_now++;
+		p_wk->now_val.x	= p_wk->start_val.x + ((p_wk->add_val.x * (p_wk->sync_now)) >> FX32_SHIFT);
+		p_wk->now_val.y	= p_wk->start_val.y + ((p_wk->add_val.y * (p_wk->sync_now)) >> FX32_SHIFT);
+		return FALSE;
+	}else{
+		p_wk->now_val	= p_wk->end_val;
+		return TRUE;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  等速直線運動座標取得
+ *
+ *	@param	const KEYSYS_VELOCITY_WORK* cp_wk  ワーク
+ *	@param	*p_pos  座標
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_VEL_GetPos( const KEYSYS_VELOCITY_WORK* cp_wk, GFL_CLACTPOS *p_pos )
+{
+  p_pos->x = cp_wk->now_val.x;
+  p_pos->y = cp_wk->now_val.y;
+}
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *          ETC
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//----------------------------------------------------------------------------
+/**
+ *	@brief　等加速運動初期化
+ *
+ *	@param	KEYSYS_ACLR_WORK* p_wk ワーク
+ *	@param	GFL_POINT *cp_start 開始点
+ *	@param	GFL_POINT *cp_end   終了点
+ *	@param	velocity  初速
+ *	@param	sync      かかるシンク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_ACLR_Init( KEYSYS_ACLR_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, fx32 velocity, int sync )
+{
+	fx32 t_x_t;	// タイムの２乗
+	fx32 vot;	// 初速度＊タイム
+	fx32 dis;
+	fx32 a;
+
+  fx32 num;
+
+  VEC_Set( &p_wk->now_val, FX32_CONST(cp_start->x),FX32_CONST(cp_start->y),0);
+  VEC_Set( &p_wk->start_val, FX32_CONST(cp_start->x),FX32_CONST(cp_start->y),0);
+  VEC_Set( &p_wk->end_val, FX32_CONST(cp_end->x),FX32_CONST(cp_end->y),0);
+
+  dis = VEC_Distance( &p_wk->end_val, &p_wk->start_val );
+
+  VEC_Subtract( &p_wk->end_val, &p_wk->start_val, &p_wk->vec );
+  VEC_Normalize( &p_wk->vec, &p_wk->vec );
+
+	// 加速値を求める
+	// a = 2(x - vot)/(t*t)
+	t_x_t	= (sync * sync) << FX32_SHIFT;
+	vot		= velocity * sync;
+	vot		= (dis - vot) * 2;
+	a		  = FX_Div( vot, t_x_t );
+
+	p_wk->velocity	= velocity;
+	p_wk->aclr		= a;
+	p_wk->sync_now	= 0;
+	p_wk->sync_max	= sync;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	等加速運動メイン処理（毎フレームよぶこと）
+ *
+ *	@param	KEYSYS_ACLR_WORK* p_wk ワーク
+ *
+ *	@return	TRUEなら処理終了、FALSEなら処理中。
+ */
+//-----------------------------------------------------------------------------
+BOOL KEYSYS_ACLR_Main( KEYSYS_ACLR_WORK* p_wk )
+{
+	fx32 dis;
+	fx32 t_x_t;
+	fx32 calc_work;
+	fx32 vot;
+
+	if( p_wk->sync_now < (p_wk->sync_max-1) ) {
+		p_wk->sync_now++;
+
+		// 等加速度運動
+		// dis = vot + 1/2( a*(t*t) )
+		vot = FX_Mul( p_wk->velocity, p_wk->sync_now << FX32_SHIFT );
+		t_x_t = (p_wk->sync_now * p_wk->sync_now) << FX32_SHIFT;
+		calc_work = FX_Mul( p_wk->aclr, t_x_t );
+		calc_work = calc_work / 2;	// 1/2(a*(t*t))
+		dis = vot + calc_work;		///<移動距離
+
+    VEC_MultAdd( dis, &p_wk->vec, &p_wk->start_val, &p_wk->now_val );
+
+		return FALSE;
+	}else {
+		p_wk->now_val = p_wk->end_val;
+		return TRUE;
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief 等加速運動座標取得
+ *
+ *	@param	const KEYSYS_ACLR_WORK* cp_wk  ワーク
+ *	@param	*p_pos  座標
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_ACLR_GetPos( const KEYSYS_ACLR_WORK* cp_wk, GFL_CLACTPOS *p_pos )
+{
+  p_pos->x = cp_wk->now_val.x >> FX32_SHIFT;
+  p_pos->y = cp_wk->now_val.y >> FX32_SHIFT;
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

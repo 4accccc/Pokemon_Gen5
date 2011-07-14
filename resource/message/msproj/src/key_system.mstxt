@@ -530,11 +530,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スタート　メニューに
+			<Text>メイン　メニューに
 もどります</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:51:20" />
+				Time="2011-07-07T07:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -542,11 +542,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スタート　メニューに
+			<Text>メイン　メニューに
 もどります</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:51:22" />
+				Time="2011-07-07T07:43:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1311,10 +1311,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>レポートへの　かきこみが
-かんりょう　いたしました</Text>
+かんりょう　いたしました▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-24T02:29:30" />
+				Time="2011-07-13T10:49:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1323,10 +1323,10 @@ DSを　むかいあわせに　してください</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レポートへの　かきこみが
-かんりょう　いたしました</Text>
+かんりょう　いたしました▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-06-24T02:29:33" />
+				Time="2011-07-13T10:49:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1664,5 +1664,918 @@ DSを　むかいあわせに　してください</Text>
 				User="nagihashi_toru:W00268"
 				Time="2011-06-24T01:37:18" />
 		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_62"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キーシステム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キーシステム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:43:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_63"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データコンバート</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データコンバート</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:43:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_64"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:42:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:42:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_65"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケットモンスター　ブラック２　ホワイト２と
+つうしんして　キーを　おくりあえます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:45:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケットモンスター　ブラック２　ホワイト２と
+つうしんして　キーを　おくりあえます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:45:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_66"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケットモンスター　ブラック　ホワイトと
+つうしんして　セーブデータを　うけつぎます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:45:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケットモンスター　ブラック　ホワイトと
+つうしんして　セーブデータを　うけつぎます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T07:45:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_67"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイトル　メニューに
+もどります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:19:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイトル　メニューに
+もどります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:19:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_68"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データコンバート</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:31:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データコンバート</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:31:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_69"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワイヤレスで　うけつぐ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:32:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワイヤレスで　うけつぐ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:32:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_70"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>WiFiで　うけつぐ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>WiFiで　うけつぐ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_71"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_72"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２だいの　DSを　しようして
+ワイヤレスで　うけつぎます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:34:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２だいの　DSを　しようして
+ワイヤレスで　うけつぎます</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:34:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_73"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Wi-Fiけいゆで
+ポケモングローバルリンクから　うけとります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:34:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Wi-Fiけいゆで
+ポケモングローバルリンクから　うけとります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:34:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_74"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メイン　メニューに
+もどります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メイン　メニューに
+もどります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_75"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メイン　メニューに
+もどります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メイン　メニューに
+もどります</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T08:33:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_76"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メインメニュー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-14T02:47:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メインメニュー</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-14T02:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_77"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのかんたんキーで
+ロックを　はずしました▼
+なんいど「かんたん」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:36:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しろのかんたんキーで
+ロックを　はずしました▼
+なんいど「かんたん」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:36:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_78"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのむずかしいキーで
+ロックを　はずしました▼
+なんいど「むずかしい」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろのむずかしいキーで
+ロックを　はずしました▼
+なんいど「むずかしい」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:36:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_79"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホワイトフォレストキーで
+ロックを　はずしました▼
+まちのへんこう「ホワイトフォレスト」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:35:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホワイトフォレストキーで
+ロックを　はずしました▼
+まちのへんこう「ホワイトフォレスト」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:35:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_80"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラックシティキーで
+ロックを　はずしました▼
+まちのへんこう「ブラックシティ」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホワイトフォレストキーで
+ロックを　はずしました▼
+まちのへんこう「ブラックシティ」が　せんたく
+できるように　なりました▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:35:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_81"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろのかんたんキーを
+てにいれました▼
+なんいど「かんたん」が　せんたく
+できるように　なりました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:39:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しろのかんたんキーを
+てにいれました▼
+なんいど「かんたん」が　せんたく
+できるように　なりました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:39:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_82"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろのむずかしいキーを
+てにいれました▼
+なんいど「むずかしい」が　せんたく
+できるように　なりました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:39:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろのむずかしいキーを
+てにいれました▼
+なんいど「むずかしい」が　せんたく
+できるように　なりました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:39:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_83"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホワイトフォレストキーを
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:39:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホワイトフォレストキーを
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:40:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_STR_84"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラックシティキーを
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:40:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラックシティキーを
+てにいれました▼
+キーは　つうしんで　ひとと
+うけわたし　することが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:40:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_ROM_TITLE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データコンバート　ＩＤ:[Digit:5digits Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:10:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データコンバート　ＩＤ:[Digit:5digits Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:10:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>DLROMの名前
+48文字185ドット以内
+DSシステムフォントなので
+幅が違います。注意！
+漢字不可！全角英数不可！
+ＩＤはプログラムで半角変換</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_ROM_TITLE_NOSAVE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データコンバート</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:18:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データコンバート</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-13T09:18:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>DLROMの名前
+48文字185ドット以内
+DSシステムフォントなので
+幅が違います。注意！
+漢字不可！全角英数不可！
+ＩＤはプログラムで半角変換</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_ROM_INFO_B"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケットモンスターブラック２
+データコンバート プログラム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:10:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケットモンスターブラック２
+データコンバート プログラム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:10:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>DLROMの説明
+96文字(２行可)199ドット以内
+DSシステムフォントなので
+幅が違います。注意！
+漢字不可！</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_ROM_INFO_W"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケットモンスターホワイト２
+データコンバート プログラム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:11:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケットモンスターホワイト２
+データコンバート プログラム</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:11:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>DLROMの説明
+96文字(２行可)199ドット以内
+DSシステムフォントなので
+幅が違います。注意！
+漢字不可！</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

@@ -154,7 +154,7 @@ MBPChildState;
 /* variable */
 
 /* 親機初期化 */
-void    MBP_Init(u32 ggid, u32 tgid);
+void    MBP_Init( u16 heapID, u32 ggid, u32 tgid);
 void    MBP_Start(const MBGameRegistry *gameInfo, u16 channel);
 
 /* 1 フレームごとの親機メイン処理 */

@@ -62,10 +62,7 @@
 /// シーケンス
 //=====================================
 //メインシーケンス
-static void KeySys_Seq_Get_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void KeySys_Seq_App_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //サブシーケンス
-static void KeySys_Seq_App_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_LockList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -80,7 +77,6 @@ static void KeySys_Seq_CreateDisplayDifficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p
 static void KeySys_Seq_CreateDisplayWfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_CreateDisplayRecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_CreateDisplaySendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -152,17 +148,22 @@ static void KeySys_SelMenu_Wfbc_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_MENU_PARA
 static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, void *p_wk_adrs );
 
 //-------------------------------------
-///	デモ
-//=====================================
-static void KeySys_Demo_Init( KEYSYS_DEMO_WORK *p_wk );
-
-//-------------------------------------
 /// メッセージ取得
 //=====================================
 static u16 KeySys_Mes_GetDifficultInfoMessage( const KEY_SYSTEM_SAVE *cp_save );
 static u16 KeySys_Mes_GetWfbcInfoMessage( const KEY_SYSTEM_SAVE *cp_save );
 static u16 KeySys_Mes_GetLockListInfoMessage( const KEY_SYSTEM_SAVE *cp_save, u16 cursor );
 static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE index, BOOL recv_or_send );
+
+//-------------------------------------
+/// デモ
+//=====================================
+static void KeySys_Demo_Init( KEYSYS_DEMO_WORK *p_wk, KEYSYS_OBJ_WORK *p_obj, KEYSYS_TEXT_WORK *p_text, GFL_FONT *p_font, HEAPID heapID );
+static void KeySys_Demo_Exit( KEYSYS_DEMO_WORK *p_wk );
+static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_MSGDATA *p_msg, u16 menu_msg, const STRBUF *p_info_msg, BOOL is_get );
+static BOOL KeySys_Demo_Main( KEYSYS_DEMO_WORK *p_wk );
+static BOOL KeySys_Demo_MainModeUnLock( KEYSYS_DEMO_WORK *p_wk );
+static BOOL KeySys_Demo_MainModeGet( KEYSYS_DEMO_WORK *p_wk );
 
 //-------------------------------------
 /// その他
@@ -260,18 +261,6 @@ void KEYSYS_KEYFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   //自分の情報を設定
   KeySys_KeyData_Init( &p_wk->key_data[KEYSYS_DATA_SELF], p_wk->p_key_sv );
   KeySys_PlayerData_Init( &p_wk->player_data[KEYSYS_DATA_SELF], p_wk->p_param->p_gamedata );
-
-  //シーケンス
-  {
-    //初回シーケンス
-    static const KEYSYS_SEQ_FUNCTION sc_init_seq[KEY_SYSTEM_MODE_MAX]  =
-    {
-      KeySys_Seq_Get_Main,//KEY_SYSTEM_MODE_GET
-      KeySys_Seq_App_Main,//KEY_SYSTEM_MODE_APP
-    };
-    GF_ASSERT( p_wk->p_param->mode < KEY_SYSTEM_MODE_MAX );
-    KEYSYS_SEQ_Next( p_wk->p_seq, sc_init_seq[p_wk->p_param->mode] );
-  }
 }
 
 
@@ -282,63 +271,26 @@ void KEYSYS_KEYFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  取得モード  メイン処理
+ *	@brief  取得モード  メインフロー
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
  *	@param	*p_seq                    シーケンス
  *	@param	*p_wk_adrs                ワークアドレス
  */
 //-----------------------------------------------------------------------------
-static void KeySys_Seq_Get_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_FADEIN,
-    SEQ_MAIN,
-    SEQ_FADEOUT,
-    SEQ_END,
-  };
-
-  switch( *p_seq )
-  {
-  case SEQ_FADEIN:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
-    (*p_seq)++;
-    break;
-  case SEQ_MAIN:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
-    {
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_FADEOUT:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
-    (*p_seq)++;
-    break;
-  case SEQ_END:
-    KEYSYS_SEQ_End( p_seqwk );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  アプリモード  メイン処理
- *
- *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
- *	@param	*p_seq                    シーケンス
- *	@param	*p_wk_adrs                ワークアドレス
- */
-//-----------------------------------------------------------------------------
-static void KeySys_Seq_App_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
   enum
   {
     SEQ_DISPLAY_CREATE,
     SEQ_FADEIN,
-    SEQ_MAIN,
+    SEQ_DEMO_START,
+    SEQ_DEMO_WAIT,
+    SEQ_SAVE_MSG,
+    SEQ_SAVE_START,
+    SEQ_SAVE_END,
+    SEQ_COMPLETE_MSG_START,
+    SEQ_COMPLETE_MSG_WAIT,
     SEQ_FADEOUT,
     SEQ_DISPLAY_DELETE,
     SEQ_END,
@@ -349,17 +301,108 @@ static void KeySys_Seq_App_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   {
   case SEQ_DISPLAY_CREATE:
-    //最初はメインメニュー作成
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayMainMenu );
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayRecvDemo );
     (*p_seq)++;
     break;
   case SEQ_FADEIN:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
     (*p_seq)++;
     break;
-  case SEQ_MAIN:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_MainMenu );
+  case SEQ_DEMO_START:
+    {
+      static const u16 sc_key_to_info_w[]  =
+      {
+        KEYSYS_STR_81,
+        KEYSYS_STR_82,
+        KEYSYS_STR_83,
+      };
+      static const u16 sc_key_to_info_b[]  =
+      {
+        KEYSYS_STR_81,
+        KEYSYS_STR_82,
+        KEYSYS_STR_84,
+      };
+      static const u16 sc_key_to_menu_w[]  =
+      {
+        KEYSYS_STR_07,
+        KEYSYS_STR_09,
+        KEYSYS_STR_10,
+      };
+      static const u16 sc_key_to_menu_b[]  =
+      {
+        KEYSYS_STR_07,
+        KEYSYS_STR_09,
+        KEYSYS_STR_11,
+      };
+      u16 menu_msg;
+      STRBUF *p_str;
+      BOOL is_get = FALSE;
+
+      //自分で取得するときは、BLACKバージョンならブラックシティキー
+      if( GET_VERSION() == VERSION_B2 )
+      {
+        menu_msg = sc_key_to_menu_b[ p_wk->p_param->get_key ];
+        p_str = GFL_MSG_CreateString( p_wk->p_msg, sc_key_to_info_b[ p_wk->p_param->get_key ] );
+      }
+      else
+      {
+        menu_msg = sc_key_to_menu_w[ p_wk->p_param->get_key ];
+        p_str = GFL_MSG_CreateString( p_wk->p_msg, sc_key_to_info_w[ p_wk->p_param->get_key ] );
+      }
+
+      if( p_wk->p_param->get_key == KEY_SYSTEM_TYPE_CITY_WFBC )
+      {
+        is_get = TRUE;
+      }
+      else
+      {
+        is_get = FALSE;
+      }
+
+      KeySys_Demo_Start( &p_wk->demo, p_wk->p_param->get_key, p_wk->p_msg, menu_msg, p_str, is_get );
+      GFL_STR_DeleteBuffer( p_str );
+    }
     (*p_seq)++;
+    break;
+  case SEQ_DEMO_WAIT:
+    if( KeySys_Demo_Main( &p_wk->demo ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+ case SEQ_SAVE_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      KEY_SYSTEM_SAVE_SetHave( p_wk->p_key_sv, p_wk->p_param->get_key );
+      KEY_SYSTEM_SAVE_SetUse( p_wk->p_key_sv, p_wk->p_param->get_key );
+      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+      p_wk->cnt = 0;
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_END: 
+    p_wk->cnt++;
+    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_COMPLETE_MSG_START:
+    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    (*p_seq)++;
+    }
+    break;
+  case SEQ_COMPLETE_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
     break;
   case SEQ_FADEOUT:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
@@ -370,22 +413,23 @@ static void KeySys_Seq_App_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     (*p_seq)++;
     break;
   case SEQ_END:
-    KEYSYS_SEQ_End( p_seqwk );
+    KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
     GF_ASSERT(0);
   }
 }
+
 //----------------------------------------------------------------------------
 /**
- *	@brief  アプリモード  メインメニュー
+ *	@brief  アプリモード  メインメニューフロー
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
  *	@param	*p_seq                    シーケンス
  *	@param	*p_wk_adrs                ワークアドレス
  */
 //-----------------------------------------------------------------------------
-static void KeySys_Seq_App_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+void KEYSYS_KEYFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
   enum
   {
@@ -419,15 +463,11 @@ static void KeySys_Seq_App_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     if( KEYSYS_MENU_IsDecide( p_wk->p_menu ) )
     {
       p_wk->ret = KEYSYS_MENU_GetSelect( p_wk->p_menu );
-
-      if( p_wk->ret == 2 )//もどるのときはFADE後まで画面を残すので消さない
+      if( p_wk->ret != 2 )
       {
-        *p_seq = SEQ_END;
+        KEYSYS_MAP_Insert( &p_wk->select, "KEM", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
       }
-      else
-      {
-        (*p_seq)++;
-      }
+      (*p_seq)++;
     }
     break;
   case SEQ_DISPLAY_DELETE:
@@ -439,18 +479,23 @@ static void KeySys_Seq_App_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     switch( p_wk->ret )
     {
     case 0://キーの通信
+      //カーソル位置を登録
       KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Irc );
+      //もう一度メインメニュー
+      (*p_seq ) = 0;
       break;
     case 1://ロックリスト
-      KEYSYS_STACK_Push( &p_wk->select, p_wk->ret );
+      //カーソル位置を登録
       KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_LockList );
+      //もう一度メインメニュー
+      (*p_seq ) = 0;
+      break;
+    case 2://もどる
+      (*p_seq)++;
       break;
     default:
       GF_ASSERT(0);
     }
-
-    //もう一度メインメニュー
-    (*p_seq ) = 0;
     break;
 
   case SEQ_END:
@@ -480,15 +525,18 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_DISPLAY_CREATE,
     SEQ_NET_START,
     SEQ_NET_START_WAIT,
+    SEQ_NET_END_DISPLAY_DELETE,
+    SEQ_NET_EXIT_END,
+    SEQ_NET_EXIT_END_WAIT,
     SEQ_NET_SEND_NAME_START,
     SEQ_NET_SEND_NAME_WAIT,
     SEQ_NET_SEND_KEY_START,
     SEQ_NET_SEND_KEY_WAIT,
-    SEQ_NET_EXIT,
-    SEQ_NET_EXIT_WAIT,
     SEQ_DISPLAY_DELETE,
     SEQ_CALL_DEMO1,
     SEQ_CALL_DEMO2,
+    SEQ_NET_EXIT,
+    SEQ_NET_EXIT_WAIT,
     SEQ_SAVE_MSG,
     SEQ_SAVE_START,
     SEQ_SAVE_END,
@@ -555,7 +603,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     break;
 
   case SEQ_DISPLAY_CREATE:
-    p_wk->ret = 0;
+    p_wk->ret = FALSE;
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrc );
     (*p_seq)++;
     break;
@@ -590,13 +638,33 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     {
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
       {
-        (*p_seq) = SEQ_NET_EXIT;
+        (*p_seq) = SEQ_NET_END_DISPLAY_DELETE;
       }
     }
     if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_WAIT )
     {
       p_wk->is_parent = GFL_NET_IsParentMachine();
-      (*p_seq)++;
+      (*p_seq)  = SEQ_NET_SEND_NAME_START;
+    }
+    else if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
+    {
+      OS_TPrintf( "タイムアウトして戻ってきたから再スタートするよ\n" );
+      (*p_seq)  = SEQ_NET_START;
+    }
+    break;
+
+  case SEQ_NET_END_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_NET_EXIT_END:
+    KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_DISCONNECT_IRCWIRELESS, NULL );
+    (*p_seq)++;
+    break;
+  case SEQ_NET_EXIT_END_WAIT:
+    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
+    {
+      (*p_seq)  = SEQ_END;
     }
     break;
 
@@ -634,16 +702,6 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       (*p_seq)++;
     }
     break;
-  case SEQ_NET_EXIT:
-    KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_DISCONNECT_IRCWIRELESS, NULL );
-    (*p_seq)++;
-    break;
-  case SEQ_NET_EXIT_WAIT:
-    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
-    {
-      (*p_seq)++;
-    }
-    break;
   case SEQ_DISPLAY_DELETE:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
     if( p_wk->ret )
@@ -652,7 +710,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     else
     {
-      *p_seq = SEQ_END;
+      *p_seq = SEQ_NET_EXIT;
     }
     break;
   case SEQ_CALL_DEMO1:
@@ -677,7 +735,16 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     (*p_seq)++;
     break;
-
+  case SEQ_NET_EXIT:
+    KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_DISCONNECT_IRCWIRELESS, NULL );
+    (*p_seq)++;
+    break;
+  case SEQ_NET_EXIT_WAIT:
+    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_WAIT )
+    {
+      (*p_seq)++;
+    }
+    break;
   case SEQ_SAVE_MSG:
     //受信していたらセーブ、していなかったら終わり
     if( KeySys_KeyData_IsGet( &p_wk->key_data[KEYSYS_DATA_SELF], &p_wk->key_data[KEYSYS_DATA_OTHER], TRUE ) )
@@ -770,6 +837,10 @@ static void KeySys_Seq_App_LockList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     if( KEYSYS_MENU_IsDecide( p_wk->p_menu ) )
     {
       p_wk->ret = KEYSYS_MENU_GetSelect( p_wk->p_menu );
+      if( p_wk->ret != 2 )
+      {
+        KEYSYS_MAP_Insert( &p_wk->select, "KLL", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
+      }
       (*p_seq)++;
     }
     break;
@@ -782,12 +853,12 @@ static void KeySys_Seq_App_LockList( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     switch( p_wk->ret )
     {
     case 0://なんいど
-      KEYSYS_STACK_Push( &p_wk->select, p_wk->ret );
+      //カーソル位置を登録
       KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Difficulty );
       *p_seq = SEQ_SELECT_RET;
       break;
     case 1://まちのきりかえ
-      KEYSYS_STACK_Push( &p_wk->select, p_wk->ret );
+      //カーソル位置を登録
       KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Wfbc );
       *p_seq = SEQ_SELECT_RET;
       break;
@@ -1099,9 +1170,10 @@ static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
     SEQ_NOTRECV_MSG_WAIT,
 
     SEQ_DISPLAY_CREATE,
-    SEQ_RECV_WAIT,
-    SEQ_MSG_START,
-    SEQ_MSG_END,
+    SEQ_TIMING_START,
+    SEQ_TIMING_WAIT,
+    SEQ_DEMO_START,
+    SEQ_DEMO_WAIT,
     SEQ_DISPLAY_DELETE,
     SEQ_END,
   };
@@ -1136,17 +1208,21 @@ static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayRecvDemo );
     p_wk->cnt = 0;
     p_wk->ret = 0;
-    KeySys_Demo_Init( &p_wk->demo );
     (*p_seq)++;
     break;
-  case SEQ_RECV_WAIT:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+
+  case SEQ_TIMING_START:
+    KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_TIMINGSYNC, NULL );
+    (*p_seq)++;
+    break;
+  case SEQ_TIMING_WAIT:
+    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_WAIT )
     {
-      p_wk->cnt = 0;
       (*p_seq)++;
     }
     break;
-  case SEQ_MSG_START:
+
+  case SEQ_DEMO_START:
     while( 1 )
     {
       if( p_wk->ret >= KEY_SYSTEM_TYPE_MAX )
@@ -1157,21 +1233,46 @@ static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
 
       if( KeySys_Mes_CreateKeyMessage( p_wk, p_wk->ret, TRUE ) )
       {
-        KEYSYS_TEXT_PrintBuf( p_wk->p_text, p_wk->p_strbuf, KEYSYS_TEXT_TYPE_STREAM_FIX );
+        static const u16 sc_key_to_menu_w[]  =
+        {
+          KEYSYS_STR_07,
+          KEYSYS_STR_09,
+          KEYSYS_STR_10,
+        };
+        static const u16 sc_key_to_menu_b[]  =
+        {
+          KEYSYS_STR_07,
+          KEYSYS_STR_09,
+          KEYSYS_STR_11,
+        };
+        u16 menu_msg;
+
+        //通信で受け取るときは、BLACKバージョンならホワイトフォレストキー
+        if( GET_VERSION() == VERSION_B2 )
+        {
+          menu_msg = sc_key_to_menu_w[ p_wk->ret ];
+        }
+        else
+        {
+          menu_msg = sc_key_to_menu_b[ p_wk->ret ];
+        }
+
+
+        KeySys_Demo_Start( &p_wk->demo, p_wk->ret, p_wk->p_msg, menu_msg, p_wk->p_strbuf, FALSE );
+        KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_38, KEYSYS_TEXT_TYPE_STREAM_FIX );
         (*p_seq)++;
         break;
       }
 
       p_wk->ret++;
-
     }
     break;
-  case SEQ_MSG_END:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+  case SEQ_DEMO_WAIT:
+    if( KeySys_Demo_Main( &p_wk->demo ) )
     {
       p_wk->cnt = 0;
       p_wk->ret++;
-      *p_seq = SEQ_MSG_START;
+      *p_seq = SEQ_TIMING_START;
     }
     break;
   case SEQ_DISPLAY_DELETE:
@@ -1205,6 +1306,8 @@ static void KeySys_Seq_App_SendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
 
     SEQ_DISPLAY_CREATE,
     SEQ_RECV_WAIT,
+    SEQ_TIMING_START,
+    SEQ_TIMING_WAIT,
     SEQ_MSG_START,
     SEQ_MSG_END,
     SEQ_DISPLAY_DELETE,
@@ -1251,6 +1354,18 @@ static void KeySys_Seq_App_SendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
       (*p_seq)++;
     }
     break;
+
+  case SEQ_TIMING_START:
+    KEYSYS_NET_RequestState( p_wk->p_net, KEYSYS_NET_REQ_TIMINGSYNC, NULL );
+    (*p_seq)++;
+    break;
+  case SEQ_TIMING_WAIT:
+    if( KEYSYS_NET_GetState( p_wk->p_net ) == KEYSYS_NET_STATE_IRCWIRELESS_WAIT )
+    {
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_MSG_START:
     while( 1 )
     {
@@ -1276,7 +1391,7 @@ static void KeySys_Seq_App_SendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
     {
       p_wk->cnt = 0;
       p_wk->ret++;
-      *p_seq = SEQ_MSG_START;
+      *p_seq = SEQ_TIMING_START;
     }
     break;
   case SEQ_DISPLAY_DELETE:
@@ -1587,48 +1702,7 @@ static void KeySys_Seq_CreateDisplaySendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_s
     GF_ASSERT(0);
   }
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  ディスプレイ破棄
- *
- *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
- *	@param	*p_seq                    シーケンス
- *	@param	*p_wk_adrs                ワークアドレス
- */
-//-----------------------------------------------------------------------------
-static void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_DISPLAY_DELETE_START,
-    SEQ_DISPLAY_DELETE_WAIT,
-    SEQ_END,
-  };
 
-  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
-
-  switch( *p_seq )
-  {
-  case SEQ_DISPLAY_DELETE_START:
-    KEYSYS_DISPLAY_Delete( p_wk->p_display );
-    (*p_seq)++;
-    break;
-
-  case SEQ_DISPLAY_DELETE_WAIT:
-    if( KEYSYS_DISPLAY_IsComplete(p_wk->p_display) )
-    {
-      (*p_seq)++;
-    }
-    break;
-
-  case SEQ_END:
-    KEYSYS_SEQ_Return( p_seqwk );
-		break;
-
-  default:
-    GF_ASSERT(0);
-  }
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  メインメニュー作成
@@ -1656,14 +1730,14 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
     menu_param.p_msg    = p_wk->p_msg;
     menu_param.p_font   = p_wk->p_font;
     menu_param.max      = 3;
-    if( KEYSYS_STACK_GetStackNum( &p_wk->select ) == 0 )
+    if( KEYSYS_MAP_IsExist( &p_wk->select, "KEM" ) )
     {
-      menu_param.cursor   = 0;
+      menu_param.cursor   = KEYSYS_MAP_GetValue( &p_wk->select, "KEM" );
+      KEYSYS_MAP_Erase( &p_wk->select, "KEM" );
     }
     else
     {
-      menu_param.cursor   = KEYSYS_STACK_GetNow( &p_wk->select );
-      KEYSYS_STACK_Pop( &p_wk->select );
+      menu_param.cursor   = 0;
     }
     for( i = 0; i < menu_param.max; i++ )
     {
@@ -1772,6 +1846,8 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
 
     p_wk->p_textset = KEYSYS_TEXTSET_Init( wnd_data, cnt+1, KEYSYS_BG_FRAME_TEXT_S, KEYSYS_PLT_BG_FONT_S, p_wk->p_font, p_wk->p_msg, heapID );
   }
+
+  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_S, KEYSYS_BG_SCR_HAVEKEY_S );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1793,6 +1869,7 @@ static BOOL KeySys_Display_IsEndCreateMainMenu( void *p_wk_adrs )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
     return TRUE;
   }
   return FALSE;
@@ -1814,10 +1891,13 @@ static void KeySys_Display_DeleteMainMenu( void *p_wk_adrs )
 
   //メニュー破棄
   KEYSYS_MENU_Exit( p_wk->p_menu );
-  p_wk->p_menu = NULL;    
+  p_wk->p_menu = NULL;
+
+  GFL_BG_ClearScreen( KEYSYS_BG_FRAME_WND_S );
   
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_S );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
 
 }
 //----------------------------------------------------------------------------
@@ -1839,6 +1919,16 @@ static void KeySys_Display_CreateIrc( void *p_wk_adrs, HEAPID heapID )
   KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_WAVE_U, heapID );
   KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_DS_D, heapID );
   KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_DS_U, heapID );
+
+
+  //OBJをアルファに
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ,  GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 9, 14);
+
+  //通信アイコンにウィンドウマスク
+  GX_SetVisibleWnd(GX_WNDMASK_W0);
+  G2_SetWnd0Position(256-32,0,256,32);
+  G2_SetWnd0InsidePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ,FALSE);
+  G2_SetWndOutsidePlane(GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ,TRUE);
 }
 //----------------------------------------------------------------------------
 /**
@@ -1874,6 +1964,9 @@ static void KeySys_Display_DeleteIrc( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
+  G2_BlendNone();
+  GX_SetVisibleWnd(GX_WNDMASK_NONE);
+
   KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_DS_U );
   KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_DS_D );
   KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_WAVE_U );
@@ -1906,14 +1999,14 @@ static void KeySys_Display_CreateLockList( void *p_wk_adrs, HEAPID heapID )
     menu_param.p_msg    = p_wk->p_msg;
     menu_param.p_font   = p_wk->p_font;
     menu_param.max      = 3;
-    if( KEYSYS_STACK_GetStackNum( &p_wk->select ) == 1 )
+    if( KEYSYS_MAP_IsExist( &p_wk->select, "KLL" ) )
     {
-      menu_param.cursor   = 0;
+      menu_param.cursor   = KEYSYS_MAP_GetValue( &p_wk->select, "KLL" );
+      KEYSYS_MAP_Erase( &p_wk->select, "KLL" );
     }
     else
     {
-      menu_param.cursor   = KEYSYS_STACK_GetNow( &p_wk->select );
-      KEYSYS_STACK_Pop( &p_wk->select );
+      menu_param.cursor   = 0;
     }
     for( i = 0; i < menu_param.max; i++ )
     {
@@ -2104,11 +2197,8 @@ static void KeySys_Display_CreateRecvDemo( void *p_wk_adrs, HEAPID heapID )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  GFL_CLWK *p_key = KEYSYS_OBJ_AddClwk( &p_wk->obj, KEYSYS_CLWK_KEY, heapID );
-
-  //メッセージ
-  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_38, KEYSYS_TEXT_TYPE_STREAM_FIX );
-  
+  //デモ初期化
+  KeySys_Demo_Init( &p_wk->demo, &p_wk->obj, p_wk->p_text, p_wk->p_font, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2122,9 +2212,6 @@ static void KeySys_Display_CreateRecvDemo( void *p_wk_adrs, HEAPID heapID )
 static BOOL KeySys_Display_IsEndCreateRecvDemo( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
-
-  //BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
-
   return TRUE;
 }
 //----------------------------------------------------------------------------
@@ -2138,11 +2225,8 @@ static void KeySys_Display_DeleteRecvDemo( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  KEYSYS_OBJ_RemoveClwk( &p_wk->obj, KEYSYS_CLWK_KEY );
+  KeySys_Demo_Exit( &p_wk->demo );
 
-  KEYSYS_TEXT_EndWait( p_wk->p_text );
-
-  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2162,28 +2246,28 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
     {
       {
         1,
-        1+2,
+        4,
         18,
         2,
         KEYSYS_STR_12,
       },
       {
         1,
-        4+2,
+        7,
         18,
         2,
         0,
       },
       {
         1,
-        7+2,
+        10,
         18,
         2,
         0,
       },
       {
         1,
-        10+2,
+        13,
         18,
         2,
         0,
@@ -2226,6 +2310,9 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
     p_wk->p_textset = KEYSYS_TEXTSET_Init( wnd_data, cnt+1, KEYSYS_BG_FRAME_TEXT_M, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, p_wk->p_msg, heapID );
   }
 
+
+  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_HAVEKEY_M );
+
   //メッセージ
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_31, KEYSYS_TEXT_TYPE_STREAM_FIX );
 }
@@ -2248,6 +2335,7 @@ static BOOL KeySys_Display_IsEndCreateSendDemo( void *p_wk_adrs )
   if( is_end_textset )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
     return TRUE;
   }
 
@@ -2270,7 +2358,10 @@ static void KeySys_Display_DeleteSendDemo( void *p_wk_adrs )
 
   KEYSYS_TEXT_EndWait( p_wk->p_text );
 
+  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
 }
 
 //=============================================================================
@@ -2821,12 +2912,18 @@ static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, voi
   }
   else if( index < KEY_SYSTEM_WFBC_MAX )
   {
-    const LOCATION *cp_locate = GAMEDATA_GetStartLocation(p_wk->p_gamedata);
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_gamedata );
+    BOOL is_save_exist = SaveData_GetExistFlag( p_sv );
 
-    //今WFBCにいるなら押せない
-    if( ZONEDATA_IsWfbc( ZONEDATA_GetGroupID(cp_locate->zone_id) ) )
+    if( is_save_exist )
     {
-      return KEYSYS_SELECT_MENU_RET_SP_UNSELECT;
+      const LOCATION *cp_locate = GAMEDATA_GetStartLocation(p_wk->p_gamedata);
+
+      //今WFBCにいるなら押せない
+      if( ZONEDATA_IsWfbc( ZONEDATA_GetGroupID(cp_locate->zone_id) ) )
+      {
+        return KEYSYS_SELECT_MENU_RET_SP_UNSELECT;
+      }
     }
 
     //決定
@@ -2855,19 +2952,6 @@ static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, voi
   }
 
   return KEYSYS_SELECT_MENU_RET_DECIDE;
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  デモワーク初期化
- *
- *	@param	KEYSYS_DEMO_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void KeySys_Demo_Init( KEYSYS_DEMO_WORK *p_wk )
-{
-  GFL_STD_MemClear( p_wk, sizeof( KEYSYS_DEMO_WORK ) );
 }
 
 //----------------------------------------------------------------------------
@@ -3009,6 +3093,567 @@ static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE 
     WORDSET_ExpandStr( p_wk->p_word, p_wk->p_strbuf, p_str );
     GFL_STR_DeleteBuffer( p_str );
     return TRUE;
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デモ初期化
+ *
+ *	@param	KEYSYS_DEMO_WORK *p_wk  ワーク
+ *	@param	heapID                  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Demo_Init( KEYSYS_DEMO_WORK *p_wk, KEYSYS_OBJ_WORK *p_obj, KEYSYS_TEXT_WORK *p_text, GFL_FONT *p_font, HEAPID heapID )
+{
+  GFL_STD_MemClear( p_wk, sizeof(KEYSYS_DEMO_WORK) );
+  p_wk->p_text    = p_text;
+  p_wk->p_font    = p_font;
+  p_wk->p_obj     = p_obj;
+  p_wk->p_bmpoam  = BmpOam_Init( heapID, KEYSYS_OBJ_GetClunit(p_obj) );
+  p_wk->p_info_msg= GFL_STR_CreateBuffer( 128, heapID );
+
+  p_wk->p_key     = KEYSYS_OBJ_AddClwk( p_obj, KEYSYS_CLWK_KEY, heapID );
+  p_wk->p_effect  = KEYSYS_OBJ_AddClwk( p_obj, KEYSYS_CLWK_KIRAKIRA, heapID );
+  p_wk->p_lock    = KEYSYS_OBJ_AddClwk( p_obj, KEYSYS_CLWK_LOCK_OPEN, heapID );
+  p_wk->p_window  = KEYSYS_OBJ_AddClwk( p_obj, KEYSYS_CLWK_WINDOW, heapID );
+
+  {
+    GFL_CLWK_DATA clwk_data = 
+    {
+      192,
+      98,
+      0,
+      1,    //softpri
+      1,    //bgpri
+    };
+    BMPOAM_ACT_PTR p_bmpact;
+    u32 obj_plt = KEYSYS_OBJ_GetResource( p_obj, KEYSYS_RES_OBJ_NCL );
+    p_wk->p_txtobj    = KEYSYS_TEXTOBJ_Init( &clwk_data, 16, 2, obj_plt, KEYSYS_PLT_OBJ_FONT_M, CLSYS_DRAW_MAIN, p_wk->p_bmpoam, heapID );
+    p_bmpact = KEYSYS_TEXTOBJ_GetBmpOamAct( p_wk->p_txtobj );
+    BmpOam_ActorSetDrawEnable( p_bmpact, FALSE );
+  }
+;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デモ破棄
+ *
+ *	@param	KEYSYS_DEMO_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Demo_Exit( KEYSYS_DEMO_WORK *p_wk )
+{
+  KEYSYS_TEXTOBJ_Exit( p_wk->p_txtobj );
+
+  KEYSYS_OBJ_RemoveClwk( p_wk->p_obj, KEYSYS_CLWK_WINDOW );
+  KEYSYS_OBJ_RemoveClwk( p_wk->p_obj, KEYSYS_CLWK_LOCK_OPEN );
+  KEYSYS_OBJ_RemoveClwk( p_wk->p_obj, KEYSYS_CLWK_KIRAKIRA );
+  KEYSYS_OBJ_RemoveClwk( p_wk->p_obj, KEYSYS_CLWK_KEY );
+
+  GFL_STR_DeleteBuffer( p_wk->p_info_msg );
+  BmpOam_Exit( p_wk->p_bmpoam );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デモ開始
+ *
+ *	@param	KEYSYS_DEMO_WORK *p_wk  ワーク
+ *	@param	key デモをする鍵
+ *	@param	msg デモ完了時に表示するメッセージ
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_MSGDATA *p_msg, u16 menu_msg, const STRBUF *p_info_msg, BOOL is_get )
+{
+  p_wk->seq = 0;
+  p_wk->key = key;
+  p_wk->menu_msg = menu_msg;
+  p_wk->is_start = TRUE;
+  p_wk->p_msg = p_msg;
+  p_wk->all_cnt = 0;
+  p_wk->cnt = 0;
+
+  GFL_STR_CopyBuffer( p_wk->p_info_msg, p_info_msg );
+
+  if( is_get )
+  {
+    p_wk->Update = KeySys_Demo_MainModeGet;
+  }
+  else
+  {
+    p_wk->Update = KeySys_Demo_MainModeUnLock;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メイン処理
+ *
+ *	@param	KEYSYS_DEMO_WORK *p_wk  ワーク
+ *
+ *	@return　TRUEでデモ終了 FALSEでデモ中
+ */
+//-----------------------------------------------------------------------------
+static BOOL KeySys_Demo_Main( KEYSYS_DEMO_WORK *p_wk )
+{
+  return p_wk->Update( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ロック解除デモメイン処理
+ *
+ *	@param	KEYSYS_DEMO_WORK *p_wk  ワーク
+ *
+ *	@return　TRUEでデモ終了 FALSEでデモ中
+ */
+//-----------------------------------------------------------------------------
+static BOOL KeySys_Demo_MainModeUnLock( KEYSYS_DEMO_WORK *p_wk )
+{
+  enum
+  {
+    SEQ_PRINT_START,
+    SEQ_PRINT_WAIT,
+    SEQ_MOVE_WINDOW_START,
+    SEQ_MOVE_WINDOW_WAIT,
+    SEQ_MOVE_WAIT_00,
+    SEQ_MOVE_KEY_START,
+    SEQ_MOVE_KEY_WAIT,
+    SEQ_MOVE_WAIT_01,
+    SEQ_MOVE_KEY_SCALE_START,
+    SEQ_MOVE_KEY_SCALE_WAIT,
+    SEQ_MOVE_LOCK_OPEN_START,
+    SEQ_MOVE_LOCK_OPEN_WAIT,
+    SEQ_MOVE_KIRAKIRA_START,
+    SEQ_MOVE_KIRAKIRA_WAIT,
+    SEQ_MOVE_WAIT_03,
+    SEQ_PRINT_MSG,
+    SEQ_END_MSG,
+    SEQ_MOVE_WINDOW_D_START,
+    SEQ_MOVE_WINDOW_D_WAIT,
+    SEQ_END,
+  };
+
+  enum
+  {
+    //POS_WND_X     = 0,  no side effectと言われるので…
+    //POS_WND_Y     = 0,
+    POS_TXTOBJ_X  = -64,  //WND_Xからの相対座標
+    POS_TXTOBJ_Y  = -8,   //〃
+    POS_ICON_X    = 56,   //〃
+    //POS_ICON_Y    = 0,    //〃
+  };
+
+  if( p_wk->is_start == FALSE )
+  {
+    return TRUE;
+  }
+
+  p_wk->all_cnt++;
+
+  switch( p_wk->seq )
+  {
+  case SEQ_PRINT_START:
+    KEYSYS_TEXTOBJ_SetStrColor( p_wk->p_txtobj, PRINTSYS_LSB_Make(1,2,0) );
+    KEYSYS_TEXTOBJ_Print( p_wk->p_txtobj, p_wk->p_msg, p_wk->menu_msg, p_wk->p_font );
+    p_wk->seq++;
+    /* fallthrow */
+  case SEQ_PRINT_WAIT:
+    KEYSYS_TEXTOBJ_Draw( p_wk->p_txtobj );
+    if( KEYSYS_TEXTOBJ_IsDrawEnd( p_wk->p_txtobj ) )
+    {
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_MOVE_WINDOW_START:
+    {
+      static const GFL_POINT sc_start =
+      {
+        128,
+        192+16,
+      };
+      static const GFL_POINT sc_end = 
+      {
+        128,
+        114,
+      };
+      static const int sc_move_sync = 70;
+      static const fx32 sc_velocity = -FX32_CONST(3);
+
+      //速度設定
+      KEYSYS_ACLR_Init( &p_wk->aclr, &sc_start, &sc_end, sc_velocity, sc_move_sync );
+
+      //描画ON
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_window, TRUE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_lock, TRUE );
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_lock, 7 );
+      {
+        BMPOAM_ACT_PTR p_bmpact = KEYSYS_TEXTOBJ_GetBmpOamAct( p_wk->p_txtobj );
+        BmpOam_ActorSetDrawEnable( p_bmpact, TRUE );
+      }
+      p_wk->seq++;
+    }
+    /* fallthrow */
+  case SEQ_MOVE_WINDOW_WAIT:
+    if( KEYSYS_ACLR_Main(&p_wk->aclr) )
+    {
+      p_wk->seq++;
+    }
+    {
+      GFL_CLACTPOS move_pos;
+      GFL_CLACTPOS pos;
+      KEYSYS_ACLR_GetPos(&p_wk->aclr,&move_pos);
+      pos = move_pos;
+      //pos.x += POS_WND_X;
+      //pos.y += POS_WND_Y;
+      GFL_CLACT_WK_SetPos( p_wk->p_window, &pos, CLSYS_DRAW_MAIN );
+      pos = move_pos;
+      pos.x += POS_ICON_X;
+      //pos.y += POS_ICON_Y;
+      GFL_CLACT_WK_SetPos( p_wk->p_lock, &pos, CLSYS_DRAW_MAIN );
+      {
+        BMPOAM_ACT_PTR p_bmpact = KEYSYS_TEXTOBJ_GetBmpOamAct( p_wk->p_txtobj );
+        pos = move_pos;
+        pos.x += POS_TXTOBJ_X;
+        pos.y += POS_TXTOBJ_Y;
+        BmpOam_ActorSetPos( p_bmpact, pos.x, pos.y );
+      }
+    }
+    break;
+  case SEQ_MOVE_WAIT_00:
+    if( p_wk->cnt++ > 60 )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_MOVE_KEY_START:
+    {
+      static const GFL_POINT sc_start =
+      {
+        128+56,
+        -32,
+      };
+      static const GFL_POINT sc_end = 
+      {
+        128+56,
+        104,
+      };
+      static const int sc_move_sync = 150;
+
+      //速度設定
+      KEYSYS_VEL_Init( &p_wk->vel, &sc_start, &sc_end, sc_move_sync );
+
+      //描画ON
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_key, TRUE );
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_key, 8 );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_key, TRUE );
+      p_wk->seq++;
+    }
+    /* fallthrow */
+  case SEQ_MOVE_KEY_WAIT:
+    if( KEYSYS_VEL_Main( &p_wk->vel )
+      && (GFL_CLACT_WK_GetAnmIndex(p_wk->p_key) == 0 ) )
+    {
+      GFL_CLACT_WK_StopAnm( p_wk->p_key );
+      p_wk->seq++;
+    }
+    {
+      GFL_CLACTPOS pos;
+      KEYSYS_VEL_GetPos( &p_wk->vel, &pos );
+      GFL_CLACT_WK_SetPos( p_wk->p_key, &pos, CLSYS_DRAW_MAIN );
+    }
+    break;
+  case SEQ_MOVE_WAIT_01:
+    if( p_wk->cnt++ > 60 )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_MOVE_KEY_SCALE_START:
+
+    {
+      static const GFL_POINT sc_start =
+      {
+        128+56,
+        104,
+      };
+      static const GFL_POINT sc_end = 
+      {
+        128+56,
+        122,
+      };
+      static const int sc_move_sync = 80; //小さくなるアニメフレームと一緒
+
+      //速度設定
+      KEYSYS_VEL_Init( &p_wk->vel, &sc_start, &sc_end, sc_move_sync );
+
+      //小さくなるアニメに変更
+      GFL_CLACT_WK_SetAnmSeq( p_wk->p_key, 9 );
+      p_wk->seq++;
+    }
+    /* fallthrow  */
+  case SEQ_MOVE_KEY_SCALE_WAIT:
+    if( KEYSYS_VEL_Main( &p_wk->vel )
+      && !GFL_CLACT_WK_CheckAnmActive(p_wk->p_key) )
+    {
+      GFL_CLACT_WK_SetDrawEnable(p_wk->p_key, FALSE );
+      p_wk->seq++;
+    }
+    {
+      GFL_CLACTPOS pos;
+      KEYSYS_VEL_GetPos( &p_wk->vel, &pos );
+      GFL_CLACT_WK_SetPos( p_wk->p_key, &pos, CLSYS_DRAW_MAIN );
+    }
+    break;
+  case SEQ_MOVE_LOCK_OPEN_START:
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_lock, 12 );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_lock, TRUE );
+    p_wk->seq++;
+    break;
+  case SEQ_MOVE_LOCK_OPEN_WAIT:
+    if( !GFL_CLACT_WK_CheckAnmActive(p_wk->p_lock) )
+    {
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_lock, FALSE );
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_MOVE_KIRAKIRA_START:
+    {
+      static const GFL_CLACTPOS pos  =
+      {
+        128+56,
+        114,
+      };
+      GFL_CLACT_WK_SetPos( p_wk->p_effect, &pos, CLSYS_DRAW_MAIN );
+    }
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_effect, TRUE );
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_effect, 11 );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_effect, TRUE );
+    p_wk->seq++;
+    break;
+  case SEQ_MOVE_KIRAKIRA_WAIT:
+    if( !GFL_CLACT_WK_CheckAnmActive(p_wk->p_effect) )
+    {
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_effect, FALSE );
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_MOVE_WAIT_03:
+    if( p_wk->cnt++ > 120 )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_PRINT_MSG:
+    KEYSYS_TEXT_PrintBuf( p_wk->p_text, p_wk->p_info_msg, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    p_wk->seq++;
+    break;
+
+  case SEQ_END_MSG:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_MOVE_WINDOW_D_START:
+    {
+      static const GFL_POINT sc_start =
+      {
+        128,
+        114,
+      };
+      static const GFL_POINT sc_end = 
+      {
+        128,
+        192+16,
+      };
+      static const int sc_move_sync = 40;
+
+      //速度設定
+      KEYSYS_VEL_Init( &p_wk->vel, &sc_start, &sc_end, sc_move_sync );
+      p_wk->seq++;
+    }
+    /* fallthrow */
+  case SEQ_MOVE_WINDOW_D_WAIT:
+    if( KEYSYS_VEL_Main(&p_wk->vel) )
+    {
+      //描画OFF
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_window, FALSE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_lock, FALSE );
+      {
+        BMPOAM_ACT_PTR p_bmpact = KEYSYS_TEXTOBJ_GetBmpOamAct( p_wk->p_txtobj );
+        BmpOam_ActorSetDrawEnable( p_bmpact, FALSE );
+      }
+
+      p_wk->seq++;
+    }
+    {
+      GFL_CLACTPOS move_pos;
+      GFL_CLACTPOS pos;
+      KEYSYS_VEL_GetPos(&p_wk->vel,&move_pos);
+      pos = move_pos;
+      //pos.x += POS_WND_X;
+      //pos.y += POS_WND_Y;
+      GFL_CLACT_WK_SetPos( p_wk->p_window, &pos, CLSYS_DRAW_MAIN );
+      pos = move_pos;
+      pos.x += POS_ICON_X;
+      //pos.y += POS_ICON_Y;
+      GFL_CLACT_WK_SetPos( p_wk->p_lock, &pos, CLSYS_DRAW_MAIN );
+      {
+        BMPOAM_ACT_PTR p_bmpact = KEYSYS_TEXTOBJ_GetBmpOamAct( p_wk->p_txtobj );
+        pos = move_pos;
+        pos.x += POS_TXTOBJ_X;
+        pos.y += POS_TXTOBJ_Y;
+        BmpOam_ActorSetPos( p_bmpact, pos.x, pos.y );
+      }
+    }
+    break;
+  case SEQ_END:
+    OS_TPrintf( "DEMO END %dcnt\n", p_wk->all_cnt );
+    p_wk->is_start = FALSE;
+    return TRUE;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キー取得デモメイン処理
+ *
+ *	@param	KEYSYS_DEMO_WORK *p_wk  ワーク
+ *
+ *	@return　TRUEでデモ終了 FALSEでデモ中
+ */
+//-----------------------------------------------------------------------------
+static BOOL KeySys_Demo_MainModeGet( KEYSYS_DEMO_WORK *p_wk )
+{
+  enum
+  {
+    SEQ_MOVE_KEY_START,
+    SEQ_MOVE_KEY_WAIT,
+    SEQ_MOVE_WAIT_01,
+    SEQ_PRINT_MSG,
+    SEQ_END_MSG,
+    SEQ_MOVE_KEY_D_START,
+    SEQ_MOVE_KEY_D_WAIT,
+    SEQ_END,
+  };
+
+  if( p_wk->is_start == FALSE )
+  {
+    return TRUE;
+  }
+
+  p_wk->all_cnt++;
+
+  switch( p_wk->seq )
+  {
+  case SEQ_MOVE_KEY_START:
+    {
+      static const GFL_POINT sc_start =
+      {
+        128,
+        -32,
+      };
+      static const GFL_POINT sc_end = 
+      {
+        128,
+        104,
+      };
+      static const int sc_move_sync = 150;
+
+      //速度設定
+      KEYSYS_VEL_Init( &p_wk->vel, &sc_start, &sc_end, sc_move_sync );
+
+      //描画ON
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_key, TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_key, TRUE );
+      p_wk->seq++;
+    }
+    /* fallthrow */
+  case SEQ_MOVE_KEY_WAIT:
+    if( KEYSYS_VEL_Main( &p_wk->vel )
+      && (GFL_CLACT_WK_GetAnmIndex(p_wk->p_key) == 0 ) )
+    {
+      GFL_CLACT_WK_StopAnm( p_wk->p_key );
+      p_wk->seq++;
+    }
+    {
+      GFL_CLACTPOS pos;
+      KEYSYS_VEL_GetPos( &p_wk->vel, &pos );
+      GFL_CLACT_WK_SetPos( p_wk->p_key, &pos, CLSYS_DRAW_MAIN );
+
+    }
+    break;
+  case SEQ_MOVE_WAIT_01:
+    if( p_wk->cnt++ > 60 )
+    {
+      p_wk->cnt = 0;
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_PRINT_MSG:
+    KEYSYS_TEXT_PrintBuf( p_wk->p_text, p_wk->p_info_msg, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    p_wk->seq++;
+    break;
+
+  case SEQ_END_MSG:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_MOVE_KEY_D_START:
+    {
+      static const GFL_POINT sc_start =
+      {
+        128,
+        104,
+      };
+      static const GFL_POINT sc_end = 
+      {
+        128,
+        192+96,
+      };
+      static const int sc_move_sync = 40;
+
+      //速度設定
+      KEYSYS_VEL_Init( &p_wk->vel, &sc_start, &sc_end, sc_move_sync );
+
+      //描画ON
+      p_wk->seq++;
+    }
+    /* fallthrow */
+  case SEQ_MOVE_KEY_D_WAIT:
+    if( KEYSYS_VEL_Main( &p_wk->vel ) )
+    {
+      p_wk->seq++;
+    }
+    {
+      GFL_CLACTPOS pos;
+      KEYSYS_VEL_GetPos( &p_wk->vel, &pos );
+      GFL_CLACT_WK_SetPos( p_wk->p_key, &pos, CLSYS_DRAW_MAIN );
+    } 
+    break;
+  case SEQ_END:
+    OS_TPrintf( "DEMO END %dcnt\n", p_wk->all_cnt );
+    p_wk->is_start = FALSE;
+    return TRUE;
+  default:
+    GF_ASSERT(0);
   }
 
   return FALSE;

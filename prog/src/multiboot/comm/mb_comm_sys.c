@@ -38,6 +38,8 @@
 #define MB_COMM_PPP_PACK_SIZE (POKETOOL_GetPPPWorkSize()*MB_CAP_POKE_NUM + sizeof(MB_COMM_PPP_PACK_HEADER))
 
 #define MB_COMM_TIMMING_EXIT (64)
+
+#define MB_COMM_COMMON_BUFFER_SIZE  (0x100)
 //======================================================================
 //  enum
 //======================================================================
@@ -64,6 +66,7 @@ typedef enum
   MCST_FLG = GFL_NET_CMD_MULTIBOOT,
   MCST_INIT_DATA,
   MCST_POKE_DATA,
+  MCST_COMMON_DATA,
   
   MCST_MAX,
 }MB_COMM_SEND_TYPE;
@@ -120,12 +123,15 @@ struct _MB_COMM_WORK
   u16    isMovieTransLockCapsule:1;
   u16    isMoviePostStartSaveCheck:1;
   u16    isMovieFinishMachine:1;
-  u16    pad:10;
+  u16    isPostCommonData:1;
+  u16    pad:9;
   
   u8      saveWaitCnt;
   u16     boxLeast;
   u8      moviePokeConfirm;
   u32     moviePokeNum; //上位2bitはアイテムの状態、上位8bitは秘伝持ちの数
+
+  void  *common_data; //受信バッファ
 };
 
 
@@ -144,11 +150,14 @@ static void MB_COMM_Post_GameData( const int netID, const int size , const void*
 static u8*    MUS_COMM_Post_GameDataBuff( int netID, void* pWork , int size );
 static void MB_COMM_Post_PokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
 static u8*    MUS_COMM_Post_PokeDataBuff( int netID, void* pWork , int size );
+static void MB_COMM_Post_CommonData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle );
+static u8*    MUS_COMM_Post_CommonDataBuff( int netID, void* pWork , int size );
 
 static const NetRecvFuncTable MultiBootCommPostTable[] = {
   { MB_COMM_Post_Flag     , NULL },
   { MB_COMM_Post_InitData , MUS_COMM_Post_InitDataBuff },
   { MB_COMM_Post_PokeData , MUS_COMM_Post_PokeDataBuff },
+  { MB_COMM_Post_CommonData , MUS_COMM_Post_CommonDataBuff },
 };
 
 //--------------------------------------------------------------
@@ -175,6 +184,11 @@ MB_COMM_WORK* MB_COMM_CreateSystem( const HEAPID heapId )
 //--------------------------------------------------------------
 void MB_COMM_DeleteSystem( MB_COMM_WORK* commWork )
 {
+  if( commWork->common_data != NULL )
+  {
+    GFL_HEAP_FreeMemory( commWork->common_data );
+  }
+
   if( commWork->initData != NULL )
   {
     GFL_HEAP_FreeMemory( commWork->initData );
@@ -679,6 +693,10 @@ const BOOL MB_COMM_IsPost_PostPoke( MB_COMM_WORK* commWork )
 {
   return commWork->isPost_PostPokeData;
 }
+const BOOL MB_COMM_IsPost_PostCommon( MB_COMM_WORK* commWork )
+{
+  return commWork->isPostCommonData;
+}
 
 #pragma mark [>SendFunc
 //--------------------------------------------------------------
@@ -888,6 +906,29 @@ const BOOL MB_COMM_Send_PokeData( MB_COMM_WORK *commWork )
   
 }
 //--------------------------------------------------------------
+// コンバートデータ受信
+//--------------------------------------------------------------
+const BOOL MB_COMM_Send_CommonData( MB_COMM_WORK *commWork, const void *cp_data, u32 size )
+{
+  BOOL ret;
+  //GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
+  GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
+  MB_COMM_TPrintf("Send PokeData.\n");
+
+  GF_ASSERT( size < MB_COMM_COMMON_BUFFER_SIZE );
+
+  //親機にだけ送れば良い
+  ret = GFL_NET_SendDataEx( selfHandle , 0 , 
+                            MCST_COMMON_DATA , size, 
+                            cp_data, TRUE , FALSE , TRUE );
+  if( ret == FALSE )
+  {
+    MB_COMM_TPrintf("Send PokeData is failued!!\n");
+  }
+  return ret;
+}
+
+//--------------------------------------------------------------
 // 初期化用データ受信
 //--------------------------------------------------------------
 static void MB_COMM_Post_PokeData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
@@ -903,6 +944,27 @@ static u8*    MUS_COMM_Post_PokeDataBuff( int netID, void* pWork , int size )
   return (u8*)commWork->pppPackData;
 }
 
+//--------------------------------------------------------------
+// コンバートデータ受信
+//--------------------------------------------------------------
+static void MB_COMM_Post_CommonData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
+{
+  MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
+  MB_COMM_TPrintf("Post CommonData.\n");
+  commWork->isPostCommonData = TRUE;
+  
+}
+static u8*    MUS_COMM_Post_CommonDataBuff( int netID, void* pWork , int size )
+{
+  MB_COMM_WORK *commWork = (MB_COMM_WORK*)pWork;
+
+  if( commWork->common_data == NULL )
+  {
+    commWork->common_data = GFL_HEAP_AllocClearMemory( commWork->heapId , MB_COMM_COMMON_BUFFER_SIZE );
+  }
+
+  return (u8*)commWork->common_data;
+}
 
 //--------------------------------------------------------------
 /**

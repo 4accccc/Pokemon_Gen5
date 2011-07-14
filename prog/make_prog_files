@@ -1625,7 +1625,8 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/capture/mb_cap_down.c \
         multiboot/capture/mb_cap_ball.c \
         multiboot/capture/mb_cap_effect.c \
-        multiboot/capture/mb_cap_demo.c
+        multiboot/capture/mb_cap_demo.c \
+        multiboot/parent/mb_parent_dataconv_sys.c
 
 
 
@@ -2697,17 +2698,20 @@ SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
 # 管理外セーブシステム
 #===> SRCS_OVERLAY_INTRO
 #===> SRCS_OVERLAY_MYSTERY
+#===> SRCS_OVERLAY_MULTIBOOT
 SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 
 
 # キーシステム
 #===> SRCS_OVERLAY_DEV_IRC
 #===> SRCS_OVERLAY_OUTSIDE_SAVE
+#===> SRCS_OVERLAY_MULTIBOOT
 SRCS_OVERLAY_KEY_SYSTEM = net_app/key_system/key_system_main.c \
                           net_app/key_system/key_system_graphic.c \
                           net_app/key_system/key_system_util.c \
                           net_app/key_system/key_system_net.c \
-                          net_app/key_system/key_system_flow.c
+                          net_app/key_system/key_system_flow.c \
+                          net_app/key_system/data_convert_flow.c
 
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_DEV_WIFI

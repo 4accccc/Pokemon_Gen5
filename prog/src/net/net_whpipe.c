@@ -2052,7 +2052,9 @@ static void _crossScanShootEndWait(GFL_NETWL* pNetWL)
       pNetWL->crossChannel=0;
     }
 		NET_WHPIPE_BeaconSetInfo();
+#ifndef MULTI_BOOT_MAKE
     GAMEBEACON_BeaconTypeSwap();  //BW互換ビーコン送信モードと、Swan専用ビーコン送信モードを切り替える
+#endif
     if( WH_ParentConnect(WH_CONNECTMODE_MP_PARENT, pNetWL->_sTgid, ch[pNetWL->crossChannel], 1 )){
       pNetWL->CrossRand = 60 + GFUser_GetPublicRand(152);
       _CHANGE_STATE(_crossScanWait);  // 親機になる

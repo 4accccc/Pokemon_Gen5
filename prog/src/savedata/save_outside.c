@@ -6,6 +6,8 @@
  * @date    2010.04.10(“y)
  */
 //==============================================================================
+#include <gflib.h>
+#include "system/gfl_use.h"
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 #include "savedata/save_outside.h"
@@ -271,6 +273,12 @@ void OutsideSave_SaveAsyncInit(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
   outsv_ctrl->permanent_save.rec.crc 
     = GFL_STD_CrcCalc(&outsv_ctrl->permanent_save.permanent, OUTSIDE_PERMANENT_WORK_SIZE);
   NAGI_Printf( "PERMANENT‚Ì‚Ìcrc[%x]\n", outsv_ctrl->mystery_save.rec.crc );
+
+  //ƒXƒŠ[ƒv‹ÖŽ~
+  GFL_UI_SleepDisable(GFL_UI_SLEEP_EXTRA_SAVE);
+
+  //ƒŠƒZƒbƒg‹ÖŽ~
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_SVLD);
 }
 
 //==================================================================
@@ -314,6 +322,9 @@ BOOL OutsideSave_SaveAsyncMain(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
   default:
     outsv_ctrl->break_flag = OUTSIDE_BREAK_OK;
     outsv_ctrl->data_exists = TRUE;
+
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
+    GFL_UI_SleepEnable(GFL_UI_SLEEP_EXTRA_SAVE);
     return TRUE;
   }
   return FALSE;

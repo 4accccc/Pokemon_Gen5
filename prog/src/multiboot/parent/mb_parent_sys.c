@@ -1700,7 +1700,7 @@ static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
   
   work->gameRegistry.gameNamep = work->romTitleStr;
   work->gameRegistry.gameIntroductionp = work->romInfoStr;
-  MBP_Init( MB_DEF_GGID , MB_TGID_AUTO );
+  MBP_Init( HEAPID_MULTIBOOT, MB_DEF_GGID , MB_TGID_AUTO );
   MBP_Start( &work->gameRegistry , channel );
   
 }

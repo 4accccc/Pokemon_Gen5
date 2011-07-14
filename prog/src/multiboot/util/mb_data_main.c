@@ -20,6 +20,7 @@
 #include "multiboot/mb_data_main.h"
 #include "./mb_data_pt.h"
 #include "./mb_data_gs.h"
+#include "./mb_data_wb.h"
 
 //======================================================================
 //  define
@@ -115,6 +116,11 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
       {
         dataWork->cardType = CARD_TYPE_GS;
       }
+      else if( headerData->game_code == MB_ROMCODE_BLACK ||
+               headerData->game_code == MB_ROMCODE_WHITE )
+      {
+        dataWork->cardType = CARD_TYPE_WB;
+      }
   #if PM_DEBUG
       else if( STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
                STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
@@ -128,7 +134,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   #endif
     }
   }
-  if( dataWork->cardType != CARD_TYPE_INVALID )
+  if( dataWork->cardType != CARD_TYPE_INVALID && dataWork->cardType != CARD_TYPE_WB )
   {
     MB_DATA_InitCardSystem( dataWork );
   }
@@ -183,6 +189,9 @@ BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork )
 
   case CARD_TYPE_GS:
     return MB_DATA_GS_LoadData( dataWork );
+    break;
+  case CARD_TYPE_WB:
+    return MB_DATA_WB_LoadData( dataWork );
     break;
   }
   return FALSE;
@@ -243,6 +252,10 @@ BOOL  MB_DATA_LoadRomCRC( MB_DATA_WORK *dataWork )
 
   case CARD_TYPE_GS:
     return MB_DATA_GS_LoadRomCRC( dataWork );
+    break;
+
+  case CARD_TYPE_WB:
+    return MB_DATA_WB_LoadRomCRC( dataWork );
     break;
   }
   return FALSE;
@@ -396,6 +409,9 @@ u32   MB_DATA_GetStartAddress( const u16 id , DLPLAY_CARD_TYPE type )
   else if( type == CARD_TYPE_GS ){
     return MB_DATA_GS_GetStartAddress( id );
   }
+  else if( type == CARD_TYPE_WB ){
+    return MB_DATA_WB_GetStartAddress( id );
+  }
   
   GF_ASSERT_HEAVY( NULL );
   return 0;
@@ -405,7 +421,7 @@ const u32 MB_DATA_GetSavedataSize( const DLPLAY_CARD_TYPE type )
 {
   GF_ASSERT_HEAVY( type < CARD_TYPE_INVALID );
   {
-    const sizeArr[] = { PT_SAVE_SIZE , PT_SAVE_SIZE , GS_SAVE_SIZE };
+    const sizeArr[] = { PT_SAVE_SIZE , PT_SAVE_SIZE , GS_SAVE_SIZE, WB_SAVE_SIZE };
     return sizeArr[type];
   }
 }

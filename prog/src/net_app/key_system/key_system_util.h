@@ -14,6 +14,7 @@
 #include "print/gf_font.h"  //GFL_FONT
 #include "system/bmp_menulist.h"  //BMPMENULIST_NULL
 #include "gamesystem/game_data.h"
+#include "system/bmp_oam.h"
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -65,6 +66,7 @@ extern BOOL KEYSYS_TEXT_IsMsgEnd( const KEYSYS_TEXT_WORK* cp_wk );
 extern void KEYSYS_TEXT_EndWait( KEYSYS_TEXT_WORK* p_wk );
 extern void KEYSYS_TEXT_WriteWindowFrame( KEYSYS_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt );
 extern void KEYSYS_TEXT_ClearCharacter( KEYSYS_TEXT_WORK* p_wk );
+extern void KEYSYS_TEXT_ClearScreen( KEYSYS_TEXT_WORK* p_wk );
 extern void KEYSYS_TEXT_ChangePalette( KEYSYS_TEXT_WORK* p_wk, u8 plt );
 
 #ifdef PM_DEBUG
@@ -226,6 +228,7 @@ extern void KEYSYS_SEQ_SetReservSeq( KEYSYS_SEQ_WORK *p_wk, int seq );
 extern void KEYSYS_SEQ_NextReservSeq( KEYSYS_SEQ_WORK *p_wk );
 extern BOOL KEYSYS_SEQ_IsCompireFunc( const KEYSYS_SEQ_WORK *cp_wk, KEYSYS_SEQ_FUNCTION seq_function );
 extern void KEYSYS_SEQ_AddLocalSeq( KEYSYS_SEQ_WORK *p_wk, int add );
+extern void KEYSYS_SEQ_Clear( KEYSYS_SEQ_WORK *p_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -257,7 +260,66 @@ extern void KEYSYS_DISPLAY_Main( KEYSYS_DISPLAY_GENELATER *p_wk );
 extern void KEYSYS_DISPLAY_Create( KEYSYS_DISPLAY_GENELATER *p_wk, const KEYSYS_DISPLAY_FUNCTION *cp_func, HEAPID heapID );
 extern void KEYSYS_DISPLAY_Delete( KEYSYS_DISPLAY_GENELATER *p_wk );
 extern BOOL KEYSYS_DISPLAY_IsComplete( const KEYSYS_DISPLAY_GENELATER *cp_wk );
+extern void KEYSYS_DISPLAY_DeleteForce( KEYSYS_DISPLAY_GENELATER *p_wk );
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  TEXTOBJ　OAMで文字を書くモジュール
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	メッセージOAM
+//=====================================
+typedef struct _KEYSYS_TEXTOBJ_WORK KEYSYS_TEXTOBJ_WORK;
+//-------------------------------------
+///	パブリック
+//=====================================
+extern KEYSYS_TEXTOBJ_WORK * KEYSYS_TEXTOBJ_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 h, u32 plt_idx, u8 plt_ofs, CLSYS_DRAW_TYPE draw_type, BMPOAM_SYS_PTR p_bmpoam_sys, HEAPID heapID );
+extern void KEYSYS_TEXTOBJ_Exit( KEYSYS_TEXTOBJ_WORK* p_wk );
+extern void KEYSYS_TEXTOBJ_Clear( KEYSYS_TEXTOBJ_WORK* p_wk );
+extern void KEYSYS_TEXTOBJ_Print( KEYSYS_TEXTOBJ_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
+extern void KEYSYS_TEXTOBJ_PrintBuf( KEYSYS_TEXTOBJ_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font );
+extern void KEYSYS_TEXTOBJ_SetStrColor( KEYSYS_TEXTOBJ_WORK* p_wk, PRINTSYS_LSB color );
+extern void KEYSYS_TEXTOBJ_SetStrPos( KEYSYS_TEXTOBJ_WORK* p_wk, s16 x, s16 y, KEYSYS_TEXT_POS type );
+extern void KEYSYS_TEXTOBJ_Draw( KEYSYS_TEXTOBJ_WORK* p_wk );
+extern BOOL KEYSYS_TEXTOBJ_IsDrawEnd( const KEYSYS_TEXTOBJ_WORK* cp_wk );
+extern BMPOAM_ACT_PTR KEYSYS_TEXTOBJ_GetBmpOamAct( KEYSYS_TEXTOBJ_WORK* p_wk );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  等速加速運動
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+typedef struct
+{
+	GFL_POINT now_val;		//現在の値
+	GFL_POINT start_val;	//開始の値
+	GFL_POINT end_val;		//終了の値
+	GFL_POINT add_val;		//加算値(誤差をださないようにここだけfx)
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+}KEYSYS_VELOCITY_WORK;
+extern void KEYSYS_VEL_Init( KEYSYS_VELOCITY_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int sync );
+extern BOOL KEYSYS_VEL_Main( KEYSYS_VELOCITY_WORK* p_wk );
+extern void KEYSYS_VEL_GetPos( const KEYSYS_VELOCITY_WORK* cp_wk, GFL_CLACTPOS *p_pos );
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *				  等加速度運動
+*/
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+typedef struct {
+	VecFx32 now_val;		//現在の値
+	VecFx32 start_val;	//開始の値
+	VecFx32 end_val;		//終了の値
+  VecFx32 vec;
+	fx32 velocity;	//初速度
+	fx32 aclr;			//加速度
+	int sync_now;		//現在のシンク
+	int sync_max;		//シンク最大数
+} KEYSYS_ACLR_WORK;
+extern void KEYSYS_ACLR_Init( KEYSYS_ACLR_WORK* p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, fx32 velocity, int sync );
+extern BOOL KEYSYS_ACLR_Main( KEYSYS_ACLR_WORK* p_wk );
+extern void KEYSYS_ACLR_GetPos( const KEYSYS_ACLR_WORK* cp_wk, GFL_CLACTPOS *p_pos );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

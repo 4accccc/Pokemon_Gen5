@@ -28,6 +28,7 @@
 #include "key_system_util.h"
 #include "key_system_graphic.h"
 #include "key_system_net.h"
+#include "multiboot/mb_parent_dataconv_sys.h"
 
 //セーブ
 #include "savedata/save_outside.h"
@@ -49,8 +50,10 @@
 enum
 {
   KEYSYS_BG_FRAME_TEXT_M = GFL_BG_FRAME0_M,
+  KEYSYS_BG_FRAME_WND_M  = GFL_BG_FRAME2_M,
   KEYSYS_BG_FRAME_BACK_M = GFL_BG_FRAME3_M,
   KEYSYS_BG_FRAME_TEXT_S = GFL_BG_FRAME0_S,
+  KEYSYS_BG_FRAME_WND_S  = GFL_BG_FRAME2_S,
   KEYSYS_BG_FRAME_BACK_S = GFL_BG_FRAME3_S,
 };
 
@@ -59,7 +62,8 @@ enum
 {
   KEYSYS_PLT_BG_BACK_M    = 0,
   KEYSYS_PLT_BG_MENU_NORMAL_M,
-  KEYSYS_PLT_BG_MENU_SELECT_M,
+  KEYSYS_PLT_BG_MENU_SELECT_A_M,
+  KEYSYS_PLT_BG_MENU_SELECT_B_M,
   KEYSYS_PLT_BG_FONT_M    = 0xE,
   KEYSYS_PLT_BG_FRAME_M   = 0xF,
 
@@ -67,7 +71,9 @@ enum
   KEYSYS_PLT_BG_FONT_S    = 0xE,
 
   KEYSYS_PLT_OBJ_COMMON_M = 0,
-  KEYSYS_PLT_OBJ_BARICON_M = 1,
+  KEYSYS_PLT_OBJ_BARICON_M,
+  KEYSYS_PLT_OBJ_BARICON_A_M,
+  KEYSYS_PLT_OBJ_FONT_M,
 };
 
 //キャラ管理
@@ -80,13 +86,13 @@ enum
 };
 
 //OBJリソース管理
-enum
+typedef enum
 {
   KEYSYS_RES_OBJ_NCL,
   KEYSYS_RES_OBJ_NCG,
   KEYSYS_RES_OBJ_NCE,
   KEYSYS_RES_MAX,
-};
+}KEYSYS_RES;
 
 //CLWKの種類
 typedef enum
@@ -100,6 +106,9 @@ typedef enum
   KEYSYS_CLWK_LOCK_02,
   KEYSYS_CLWK_MARK,
   KEYSYS_CLWK_KEY,
+  KEYSYS_CLWK_WINDOW,
+  KEYSYS_CLWK_KIRAKIRA,
+  KEYSYS_CLWK_LOCK_OPEN,
   KEYSYS_CLWK_MAX,
 }KEYSYS_CLWK;
 
@@ -135,6 +144,7 @@ typedef enum
 typedef struct
 {
   fx32 scroll_now;
+  HEAPID heapID;
 } KEYSYS_BG_WORK;
 
 //-------------------------------------
@@ -150,12 +160,16 @@ typedef struct
 //-------------------------------------
 ///	スタック
 //=====================================
-#define KEYSYS_STACK_MAX (5)
+#define KEYSYS_MAP_MAX (5)
+#define KEYSYS_MAP_KEY_MAX (4)
 typedef struct
 {
-  u32 pos;
-  u32 stack[KEYSYS_STACK_MAX];
-} KEYSYS_STACK;
+  struct
+  {
+    u32 value;
+    char key[KEYSYS_MAP_KEY_MAX];
+  }data[KEYSYS_MAP_MAX];
+} KEYSYS_MAP;
 
 //-------------------------------------
 ///	選択メニュー
@@ -197,9 +211,29 @@ typedef struct
 //-------------------------------------
 ///	デモワーク
 //=====================================
-typedef struct
+typedef struct _KEYSYS_DEMO_WORK
 {
-  int dummy;
+  KEYSYS_TEXT_WORK    *p_text;
+  KEYSYS_OBJ_WORK     *p_obj;
+  GFL_CLWK            *p_key;
+  GFL_CLWK            *p_effect;
+  GFL_CLWK            *p_window;
+  GFL_CLWK            *p_lock;
+  KEYSYS_TEXTOBJ_WORK *p_txtobj;
+  BMPOAM_SYS_PTR      p_bmpoam;
+  u32                 seq;
+  u32                 cnt;
+  u16                 menu_msg;
+  STRBUF              *p_info_msg;
+  KEY_SYSTEM_TYPE     key;
+  BOOL                is_start;
+  GFL_MSGDATA         *p_msg;
+  GFL_FONT            *p_font;
+
+  KEYSYS_VELOCITY_WORK  vel;
+  KEYSYS_ACLR_WORK      aclr;
+  u32                   all_cnt;
+  BOOL (*Update)( struct _KEYSYS_DEMO_WORK *p_wk );
 } KEYSYS_DEMO_WORK;
 
 //-------------------------------------
@@ -237,7 +271,7 @@ typedef struct
 
   KEYSYS_OBJ_WORK         obj;
 
-  KEYSYS_STACK            select;
+  KEYSYS_MAP            select;
 
   KEYSYS_SELECT_MENU      selmenu;
 
@@ -246,6 +280,8 @@ typedef struct
   KEY_SYSTEM_SAVE         *p_key_sv;
 
   KEYSYS_NET_WORK         *p_net;
+
+  MB_PARENT_DATACONV      *p_mb;
 
   KEYSYS_KEY_DATA         key_data[ KEYSYS_DATA_MAX ];
 
@@ -268,12 +304,22 @@ typedef struct
 //=====================================
 extern void KeySys_Seq_FadeInBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_FadeOutBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+extern void KeySys_Seq_FadeOutWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+extern void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// BG
 //=====================================
 extern void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID );
 extern void KEYSYS_BG_Main( KEYSYS_BG_WORK *p_wk );
+
+typedef enum
+{
+  KEYSYS_BG_SCR_TITLE_M,    //タイトル表紙だけ
+  KEYSYS_BG_SCR_HAVEKEY_M,  //タイトル＋所持キー
+  KEYSYS_BG_SCR_HAVEKEY_S,  //所持キーだけ
+}KEYSYS_BG_SCR;
+extern void KEYSYS_BG_TransScreen( KEYSYS_BG_WORK *p_wk, int frm, KEYSYS_BG_SCR scr );
 
 //-------------------------------------
 /// OBJ
@@ -284,12 +330,15 @@ extern void KEYSYS_OBJ_Release( KEYSYS_OBJ_WORK *p_wk );
 extern GFL_CLWK * KEYSYS_OBJ_AddClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id, HEAPID heapID );
 extern void KEYSYS_OBJ_RemoveClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id );
 extern GFL_CLWK * KEYSYS_OBJ_GetClwk( KEYSYS_OBJ_WORK *p_wk, KEYSYS_CLWK id );
+extern u32 KEYSYS_OBJ_GetResource( const KEYSYS_OBJ_WORK *cp_wk, KEYSYS_RES res );
+extern GFL_CLUNIT * KEYSYS_OBJ_GetClunit( KEYSYS_OBJ_WORK *p_wk );
 
 //-------------------------------------
-/// STACK
+/// MAP
 //=====================================
-extern void KEYSYS_STACK_Init( KEYSYS_STACK *p_wk, HEAPID heapID );
-extern void KEYSYS_STACK_Push( KEYSYS_STACK *p_wk, u32 num );
-extern u32 KEYSYS_STACK_Pop( KEYSYS_STACK *p_wk );
-extern u32 KEYSYS_STACK_GetNow( const KEYSYS_STACK *cp_wk );
-extern u32 KEYSYS_STACK_GetStackNum( const KEYSYS_STACK *cp_wk );
+extern void KEYSYS_MAP_Init( KEYSYS_MAP *p_wk, HEAPID heapID );
+extern void KEYSYS_MAP_Insert( KEYSYS_MAP *p_wk, const char *cp_key, u32 value );
+extern void KEYSYS_MAP_Erase( KEYSYS_MAP *p_wk, const char *cp_key );
+extern BOOL KEYSYS_MAP_IsExist( const KEYSYS_MAP *cp_wk, const char *cp_key );
+extern u32 KEYSYS_MAP_GetValue( const KEYSYS_MAP *cp_wk, const char *cp_key );
+extern void KEYSYS_MAP_Clear( KEYSYS_MAP *p_wk );

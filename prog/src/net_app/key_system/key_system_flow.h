@@ -28,3 +28,6 @@
 */
 //=============================================================================
 extern void KEYSYS_KEYFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+
+extern void KEYSYS_KEYFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+extern void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );

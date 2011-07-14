@@ -40,12 +40,16 @@
 #define KEYSYS_NET_REQUEST_STATE_PARAM  (0x100)
 #define KEYSYS_NET_RECV_BUFFER_SIZE     (0x100)
 
+#define KEYSYS_NET_TIMEOUT_CNT      (60*60)  //1分タイムアウト
+
 enum
 {
-  NET_TIMING_NO_IW_CONNECT = 101,
+  NET_TIMING_NO_IW_CONNECT = 10,
   NET_TIMING_NO_IW_SEND_START,
   NET_TIMING_NO_IW_SEND_END,
   NET_TIMING_NO_IW_DISCONNECT,
+  /* この上に追加すること */
+  NET_TIMING_NO_IW_TIMINGSYNC_COMMON  = 20,
 };
 
 //=============================================================================
@@ -63,6 +67,8 @@ struct _KEYSYS_NET_WORK
   u8 param_buffer[KEYSYS_NET_REQUEST_STATE_PARAM];
   BOOL is_receive;
   KEYSYS_SEQ_WORK         *p_seq;
+  u32 timingsync;
+  u32 timeout_cnt;
 };
 
 //=============================================================================
@@ -76,6 +82,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
 static void KeySys_Net_Seq_DisConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_WaitIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_SendDataIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Net_Seq_TimingSyncIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //ネットコールバック
 static void* KeySys_NetCallback_GetBeaconData( void *p_wk_adrs );
@@ -250,6 +257,9 @@ void KEYSYS_NET_RequestState( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_REQ req, const v
   case KEYSYS_NET_REQ_SENDATA_BOTH_IRCWIRELESS://引数KEYSYS_NET_SEQ_PARAM_IW_SEND
     next = KeySys_Net_Seq_SendDataIrcWirelessBoth;
     break;
+  case KEYSYS_NET_REQ_TIMINGSYNC:
+    next = KeySys_Net_Seq_TimingSyncIrcWirelessBoth;
+    break;
   }
 
   KEYSYS_SEQ_Next( p_wk->p_seq, next );
@@ -284,6 +294,10 @@ KEYSYS_NET_STATE KEYSYS_NET_GetState( const KEYSYS_NET_WORK *cp_wk )
   else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_SendDataIrcWirelessBoth ) )
   {
     return KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH;
+  }
+  else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_TimingSyncIrcWirelessBoth ) )
+  {
+    return KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC;
   }
 
 
@@ -330,7 +344,7 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
   case KEYSYS_NET_TYPE_IRCWIRELESS:
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
     {
-      NetErr_App_ReqErrorDisp();
+      NetErr_DispCallPushPop();
       return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
     }
     break;
@@ -351,6 +365,9 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
     GFL_NET_IRCWIRELESS_ResetSystemError();
+    NetErr_ExitNetSystem();
+    NetErr_ErrWorkInit();
+    KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Net_Seq_Wait );
     break;
   }
 }
@@ -402,6 +419,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
   {
   case SEQ_NET_INIT:
     GFL_NET_Init( &sc_net_init, NULL, p_wk );
+    p_wk->timeout_cnt = 0;
     (*p_seq)++;
     break;
 
@@ -414,6 +432,11 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
     break;
 
   case SEQ_NET_CHANGEOVER_WAIT:
+    if( p_wk->timeout_cnt++ >= KEYSYS_NET_TIMEOUT_CNT )
+    {
+      GFL_NET_Exit(NULL);
+      KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+    }
     //KeySys_NetCallback_ConnectIrcWirelessの中で次にすすめる
     break;
 
@@ -583,6 +606,50 @@ static void KeySys_Net_Seq_SendDataIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, in
     GF_ASSERT(0);
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  赤外線ワイヤレスタイミングシンク
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq  内部シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_Seq_TimingSyncIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_TIMING_START,
+    SEQ_TIMING_WAIT,
+    SEQ_COUNTUP,
+    SEQ_END,
+  };
+
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_TIMING_START:
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),NET_TIMING_NO_IW_TIMINGSYNC_COMMON+p_wk->timingsync, WB_NET_KEY_SYSTEM);
+    (*p_seq)++;
+    break;
+  case SEQ_TIMING_WAIT:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),NET_TIMING_NO_IW_TIMINGSYNC_COMMON+p_wk->timingsync,WB_NET_KEY_SYSTEM))
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_COUNTUP:
+    p_wk->timingsync++;
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_WaitIrcWireless );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
 //=============================================================================
 /**
  *    通信コールバック類
@@ -640,8 +707,12 @@ static void KeySys_NetCallback_ConnectIrcWireless( void *p_wk_adrs )
 {
   KEYSYS_NET_WORK *p_wk = p_wk_adrs;
 
-  OS_TPrintf( "IRC_WIRELESS 接続\n" );
-  KEYSYS_SEQ_AddLocalSeq( p_wk->p_seq, 1 );
+
+  if( p_wk->timeout_cnt < KEYSYS_NET_TIMEOUT_CNT )
+  {
+    OS_TPrintf( "IRC_WIRELESS 接続\n" );
+    KEYSYS_SEQ_AddLocalSeq( p_wk->p_seq, 1 );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -740,16 +811,17 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
 {
   static const u8 sc_state_enable_tbl[KEYSYS_NET_STATE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
-    { TRUE, FALSE, FALSE, },//KEYSYS_NET_STATE_WAIT
-    { FALSE, TRUE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_CONNECT
-    { FALSE, FALSE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_DISCONNECT
-    { FALSE, TRUE, TRUE, },//KEYSYS_NET_STATE_IRCWIRELESS_WAIT,   
-    { FALSE, FALSE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH,
+    { TRUE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_WAIT
+    { FALSE, TRUE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_CONNECT
+    { FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_DISCONNECT
+    { FALSE, TRUE, TRUE, TRUE,},//KEYSYS_NET_STATE_IRCWIRELESS_WAIT,   
+    { FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH,
+    { FALSE, FALSE, FALSE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC
   };
 
   static const u8 sc_type_enable_tbl[KEYSYS_NET_TYPE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
-    { TRUE, TRUE, TRUE, },//IRCWIRELESS
+    { TRUE, TRUE, TRUE, TRUE, },//IRCWIRELESS
   };
 
   KEYSYS_NET_STATE state = KEYSYS_NET_GetState( cp_wk );
