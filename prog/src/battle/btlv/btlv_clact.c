@@ -814,7 +814,7 @@ static void draw_rec_turn_bar( BTLV_CLACT_WORK *bclw, int no, GFL_FONT *font )
   str_length = PRINTSYS_GetStrWidth( str, font, 0 );
   offset = PW_TURN_NUM_BMP_W*8/2 - str_length/2;
 
-  GFL_BMP_Clear( bmp, 0x11 );
+  GFL_BMP_Clear( bmp, 0xff );
   PRINTSYS_PrintColor( bmp, offset, 0, str, font, PRINTSYS_LSB_Make( 7,8,15 ) );
   GFL_CLGRP_CGR_ReplaceEx( bclw->rec_meter[ 0 ].charID, GFL_BMP_GetCharacterAdrs(bmp), 
                            PW_TURN_NUM_BMP_W*PW_TURN_NUM_BMP_H*32, 52*32, CLSYS_DRAW_MAIN );
