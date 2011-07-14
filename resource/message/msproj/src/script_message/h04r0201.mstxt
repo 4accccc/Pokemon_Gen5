@@ -6,10 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みつあつめの依頼</Text>
+			<Text>あら？
+はじめての　おきゃくさんね▼
+じゃ　なにもいわずに　しょうぶよ！
+じゅんびは　いいかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:25:04" />
+				Time="2011-07-14T07:40:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなた！▼</Text>
+			<Text>あら？
+はじめての　おきゃくさんね▼
+じゃ　なにもいわずに　しょうぶよ！
+じゅんびは　いいかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:24:08" />
+				Time="2011-07-14T07:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29,13 +35,17 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanで追加
+・初回
+・はい/いいえの選択肢表示
+　はい　→baker_02
+　いいえ→baker_03
 ・まず戦闘
-・つぎにみつあつめのポケモン
-・最後、サブウインドウの遊び</Comment>
+・クリア後に特性みつあつめのポケモンをみせる
+・最後、サブウインドウの遊び
+※swanで追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:24:33" />
+				Time="2011-07-14T07:41:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,11 +68,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンチェック
-・みつあつめ　いる</Text>
+			<Text>そうでなくちゃ！▼
+あたしは　つよい　ポケモンに
+おいしい　パンを　あげたいの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:25:27" />
+				Time="2011-07-14T07:42:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -70,16 +81,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンチェック
-・みつあつめ　いる</Text>
+			<Text>そうでなくちゃ！▼
+あたしは　つよい　ポケモンに
+おいしい　パンを　あげたいの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:25:30" />
+				Time="2011-07-14T07:42:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-12T12:25:30" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:41:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BAKER
@@ -101,11 +122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンチェック
-・みつあつめ　いない</Text>
+			<Text>あらら……　まっ　いいのよ
+きがむいたら　また　きてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:25:24" />
+				Time="2011-07-14T07:42:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -113,16 +134,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンチェック
-・みつあつめ　いない</Text>
+			<Text>あらら……　まっ　いいのよ
+きがむいたら　また　きてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:25:30" />
+				Time="2011-07-14T07:42:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-12T12:25:30" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:37:39" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>BAKER
@@ -130,6 +159,60 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-12T12:24:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_baker_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ　なにもいわずに　しょうぶよ！
+じゅんびは　いいかしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:42:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:42:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ　なにもいわずに　しょうぶよ！
+じゅんびは　いいかしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:42:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:42:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・勝負せずに2回目以降の会話
+・はい/いいえの選択肢表示
+　はい　→baker_02
+　いいえ→baker_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:41:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-14T07:40:26" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

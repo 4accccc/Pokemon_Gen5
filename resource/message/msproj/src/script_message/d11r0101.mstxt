@@ -29,10 +29,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・連れ歩き確認
+・はい/いいえの選択肢表示
+　はい　→swrival_03
+　いいえ→swrival_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:01:51" />
+				Time="2011-07-14T05:58:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -78,10 +82,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・いいえ選択
+　押し戻される？
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T05:59:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -127,10 +133,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・はい選択
+・連れ歩き開始
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T05:59:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -176,10 +184,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・連れ歩き終了確認（出入り口のpos）
+・はい/いいえの選択肢表示
+　はい　→swrival_02
+　いいえ→swrival_03
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T05:59:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -225,10 +237,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・振り向き会話その１
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T05:59:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -274,10 +287,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・振り向き会話その２
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:00:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -323,10 +337,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・振り向き会話その３
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:00:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -372,10 +387,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・振り向き会話その４
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:00:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -421,10 +437,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・振り向き会話その５
+・以降、このメッセージを繰り返し
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:01:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -470,10 +488,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・禁則処理：道具「あなぬけのヒモ」
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:01:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -519,10 +538,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・禁則処理：わざ「あなをほる」
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:01:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -568,10 +588,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・posイベント
+　座標未定
+・続けてswplazmam1_01
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T02:37:43" />
+				Time="2011-07-14T06:01:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
