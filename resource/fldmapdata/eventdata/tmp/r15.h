@@ -14,6 +14,8 @@
 
 #define R15_ROCK_01                        0
 #define R15_ROCK_02                        1
+#define FLD_ITEM_251                       2
+#define FLD_ITEM_252                       3
 
 #endif //ZONE_R15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -24,7 +26,5 @@
 #define BG_R15_BOARD_02                   1
 #define BG_R15_BOARD_03                   2
 #define BG_R15_BOARD_04                   3
-#define R15_HIDE_ITEM_01                  4
-#define R15_HIDE_ITEM_02                  5
 
 #endif //ZONE_R15_EVB_H

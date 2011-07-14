@@ -9,15 +9,15 @@
 #ifndef ZONE_R03R0302_EVC_H
 #define ZONE_R03R0302_EVC_H
 
+#define FLD_ITEM_282                       0
+#define FLD_ITEM_283                       1
+#define FLD_ITEM_284                       2
+#define FLD_ITEM_287                       3
 
 #endif //ZONE_R03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R03R0302_EVB_H
 #define ZONE_R03R0302_EVB_H
 
-#define R03R0302_HIDE_ITEM_01             0
-#define R03R0302_HIDE_ITEM_03             1
-#define R03R0302_HIDE_ITEM_02             2
-#define R03R0302_HIDE_ITEM_04             3
 
 #endif //ZONE_R03R0302_EVB_H

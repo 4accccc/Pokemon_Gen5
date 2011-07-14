@@ -10,6 +10,11 @@
 #ifndef ZONE_R14R0201_EVC_H
 #define ZONE_R14R0201_EVC_H
 
+#define FLD_ITEM_253                       0
+#define FLD_ITEM_254                       1
+#define FLD_ITEM_255                       2
+#define FLD_ITEM_256                       3
+#define FLD_ITEM_257                       4
 
 #endif //ZONE_R14R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

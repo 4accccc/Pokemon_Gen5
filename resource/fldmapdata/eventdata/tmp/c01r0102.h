@@ -9,6 +9,7 @@
 #ifndef ZONE_C01R0102_EVC_H
 #define ZONE_C01R0102_EVC_H
 
+#define FLD_ITEM_290                       0
 
 #endif //ZONE_C01R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

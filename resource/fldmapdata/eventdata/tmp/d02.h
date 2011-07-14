@@ -9,6 +9,11 @@
 #ifndef ZONE_D02_EVC_H
 #define ZONE_D02_EVC_H
 
+#define FLD_ITEM_271                       0
+#define FLD_ITEM_270                       1
+#define FLD_ITEM_269                       2
+#define FLD_ITEM_268                       3
+#define FLD_ITEM_267                       4
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

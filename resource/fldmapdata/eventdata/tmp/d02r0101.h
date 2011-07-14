@@ -11,6 +11,14 @@
 #ifndef ZONE_D02R0101_EVC_H
 #define ZONE_D02R0101_EVC_H
 
+#define FLD_ITEM_258                       0
+#define FLD_ITEM_266                       1
+#define FLD_ITEM_265                       2
+#define FLD_ITEM_264                       3
+#define FLD_ITEM_263                       4
+#define FLD_ITEM_262                       5
+#define FLD_ITEM_261                       6
+#define FLD_ITEM_260                       7
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

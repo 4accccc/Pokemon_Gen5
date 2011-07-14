@@ -17,6 +17,8 @@
 
 #define C01_FISING_01                      0
 #define C01_BADMAN_01                      1
+#define FLD_ITEM_288                       2
+#define FLD_ITEM_289                       3
 
 #endif //ZONE_C01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -26,9 +28,7 @@
 #define BGID_C01_SIGN1_01                 0
 #define BGID_C01_SIGN2_01                 1
 #define BGID_C01_SIGN3_01                 2
-#define C01_HIDE_ITEM_01                  3
-#define C01_HIDE_ITEM_02                  4
-#define BGID_C01_GYMSIGN_01               5
-#define BGID_C01_GYMSIGN_02               6
+#define BGID_C01_GYMSIGN_01               3
+#define BGID_C01_GYMSIGN_02               4
 
 #endif //ZONE_C01_EVB_H
