@@ -2591,10 +2591,10 @@
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]を
 つかいますか？
-ひつよう／もっている</Text>
+ひつよう[Digit:4digits Idx="1" ]こ／もっている[Digit:4digits Idx="2" ]こ</Text>
 			<TextModifiedBy
 				User="tanaka_ryota:W00283"
-				Time="2011-07-12T06:45:56" />
+				Time="2011-07-14T02:30:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2604,10 +2604,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:PMS Idx="0" ]を
 つかいますか？
-ひつよう／もっている</Text>
+ひつよう[Digit:4digits Idx="1" ]こ／もっている[Digit:4digits Idx="2" ]こ</Text>
 			<TextModifiedBy
 				User="tanaka_ryota:W00283"
-				Time="2011-07-12T06:46:49" />
+				Time="2011-07-14T02:32:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2619,6 +2619,41 @@
 			<CommentModifiedBy
 				User="tanaka_ryota:W00283"
 				Time="2011-07-12T06:46:17" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_pow_105"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルダマがたりません
+ひつよう[Digit:4digits ]こ／もっている[Digit:4digits Idx="1" ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-14T02:35:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-14T02:33:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルダマがたりません
+ひつよう[Digit:4digits ]こ／もっている[Digit:4digits Idx="1" ]こ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-14T02:35:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-14T02:34:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワー使用画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-14T02:34:33" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>
