@@ -134,7 +134,9 @@ EVENT_START	ev_pos_c09r0301_enter_02
   // 演出開始
   //--------------------------------------
 
-  _TIME_WAIT( 5 )
+  // !アイコン表示
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_tr_gyoe )
+  _OBJ_ANIME_WAIT()
 
   // 階段消失
   _FOURKINGS_FIGHT_STAIRS( 1 )
@@ -145,6 +147,8 @@ EVENT_START	ev_pos_c09r0301_enter_02
   // ステージ落下
   _FOURKINGS_FIGHT_STAGE()
 	_SE_PLAY( SEQ_SE_SW_RENBU_04 )    // ステージが振ってくる音 
+
+  _TIME_WAIT( 10 ) 
 
   // ライト点灯
   _FOURKINGS_FIGHT_LIGHT()
@@ -177,4 +181,11 @@ EVENT_START	ev_pos_c09r0301_warp_01
 	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 31, 48, DIR_UP )
 	
 EVENT_END
+
+//--------------------------------------------------------------
+//	トレーナー[!]マーク
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_tr_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
