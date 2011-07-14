@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-07-08T16:18:14" source="stair01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-07-13T17:00:45" source="stair01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-07-08T16:18:14" source="stair01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-07-13T17:00:45" source="stair01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,16 +20,16 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="93 70"
-	compress_material="on" material_size="1 1"
+	compress_node="merge" node_size="94 71"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-0.984375 -0.250000 -1.500000" whd="1.468750 0.250000 5.750000"/>
+<box_test pos_scale="7" xyz="-0.246094 -0.062500 -4.125000" whd="0.371094 4.187500 5.187500"/>
 
-<tex_image_array size="1">
+<tex_image_array size="2">
 	<tex_image index="0" name="gra_kaidan01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -72,16 +72,45 @@
 			89b2 bb04 bbbb bbbb bbbb bbbb 40bb 2b98
 		</bitmap>
 	</tex_image>
+	<tex_image index="1" name="gra_stage02"
+		width="64" height="8" original_width="64" original_height="8"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gra_stage02_pl"
+		path="C:/home/swan_data3d/field/in53/chip/tex/gra_stage02.tga"
+	>
+		<bitmap size="128">
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+			3333 2233 2222 1111 1111 1111 1111 0011
+			4000 7554 6667 6666 6666 6666 6666 6666
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="1">
+<tex_palette_array size="2">
 	<tex_palette index="0" name="gra_kaidan01_pl" color_size="16">
 		0000 0821 0c62 14a4 18a4 18c5 1cc5 2106
 		2507 2928 2d48 2d49 3dcc 41ed 7fff 7fff
 	</tex_palette>
+	<tex_palette index="1" name="gra_stage02_pl" color_size="8">
+		5900 5d00 6520 6d40 6d83 71c6 7b55 7eaf
+	</tex_palette>
 </tex_palette_array>
 
-<material_array size="1">
+<material_array size="2">
 	<material index="0" name="gra_kaidan01_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -106,9 +135,33 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="1" name="gra_stage02_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
-<matrix_array size="69">
+<matrix_array size="70">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
@@ -178,9 +231,10 @@
 	<matrix index="66" mtx_weight="1" node_idx="67"/>
 	<matrix index="67" mtx_weight="1" node_idx="68"/>
 	<matrix index="68" mtx_weight="1" node_idx="69"/>
+	<matrix index="69" mtx_weight="1" node_idx="70"/>
 </matrix_array>
 
-<polygon_array size="69">
+<polygon_array size="70">
 	<polygon index="0" name="polygon0"
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
@@ -191,7 +245,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">4</mtx_list>
+			<mtx_list size="1">2</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -238,7 +292,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">25</mtx_list>
+			<mtx_list size="1">45</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -430,7 +484,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">19</mtx_list>
+			<mtx_list size="1">18</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -573,7 +627,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">64</mtx_list>
+			<mtx_list size="1">63</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -669,7 +723,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">20</mtx_list>
+			<mtx_list size="1">19</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -812,7 +866,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">65</mtx_list>
+			<mtx_list size="1">64</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -908,7 +962,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">21</mtx_list>
+			<mtx_list size="1">20</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -955,7 +1009,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">44</mtx_list>
+			<mtx_list size="1">43</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -1051,7 +1105,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">48</mtx_list>
+			<mtx_list size="1">65</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -1147,7 +1201,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">22</mtx_list>
+			<mtx_list size="1">21</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -1194,7 +1248,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">45</mtx_list>
+			<mtx_list size="1">44</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -1386,7 +1440,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">2</mtx_list>
+			<mtx_list size="1">22</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -1433,7 +1487,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">26</mtx_list>
+			<mtx_list size="1">25</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -1672,7 +1726,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">27</mtx_list>
+			<mtx_list size="1">26</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -1768,7 +1822,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">49</mtx_list>
+			<mtx_list size="1">48</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -1864,7 +1918,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">5</mtx_list>
+			<mtx_list size="1">4</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -1911,7 +1965,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">28</mtx_list>
+			<mtx_list size="1">27</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -2103,7 +2157,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">6</mtx_list>
+			<mtx_list size="1">5</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -2246,7 +2300,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">52</mtx_list>
+			<mtx_list size="1">51</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -2342,7 +2396,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">8</mtx_list>
+			<mtx_list size="1">10</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -2389,7 +2443,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">31</mtx_list>
+			<mtx_list size="1">30</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -2485,7 +2539,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">56</mtx_list>
+			<mtx_list size="1">52</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -2581,7 +2635,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">9</mtx_list>
+			<mtx_list size="1">7</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -2820,7 +2874,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">7</mtx_list>
+			<mtx_list size="1">6</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -2867,7 +2921,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">30</mtx_list>
+			<mtx_list size="1">28</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -2963,7 +3017,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">51</mtx_list>
+			<mtx_list size="1">49</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -3059,7 +3113,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">10</mtx_list>
+			<mtx_list size="1">9</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -3106,7 +3160,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">34</mtx_list>
+			<mtx_list size="1">33</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -3345,7 +3399,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">36</mtx_list>
+			<mtx_list size="1">38</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -3537,7 +3591,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">14</mtx_list>
+			<mtx_list size="1">13</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -3584,7 +3638,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">37</mtx_list>
+			<mtx_list size="1">36</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -3823,7 +3877,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">38</mtx_list>
+			<mtx_list size="1">37</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -3919,7 +3973,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">61</mtx_list>
+			<mtx_list size="1">60</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4015,7 +4069,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">13</mtx_list>
+			<mtx_list size="1">8</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -4062,7 +4116,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">33</mtx_list>
+			<mtx_list size="1">31</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4254,7 +4308,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">0</mtx_list>
+			<mtx_list size="1">14</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -4301,7 +4355,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">23</mtx_list>
+			<mtx_list size="1">34</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4397,7 +4451,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">60</mtx_list>
+			<mtx_list size="1">56</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4493,7 +4547,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">1</mtx_list>
+			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -4540,7 +4594,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">24</mtx_list>
+			<mtx_list size="1">23</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4636,7 +4690,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">46</mtx_list>
+			<mtx_list size="1">61</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4732,7 +4786,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">12</mtx_list>
+			<mtx_list size="1">1</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -4779,7 +4833,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">35</mtx_list>
+			<mtx_list size="1">24</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4875,7 +4929,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">47</mtx_list>
+			<mtx_list size="1">46</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -4971,7 +5025,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">16</mtx_list>
+			<mtx_list size="1">12</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -5018,7 +5072,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">39</mtx_list>
+			<mtx_list size="1">35</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -5114,7 +5168,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">58</mtx_list>
+			<mtx_list size="1">47</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -5210,7 +5264,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">17</mtx_list>
+			<mtx_list size="1">16</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -5257,7 +5311,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">40</mtx_list>
+			<mtx_list size="1">39</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -5353,7 +5407,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">62</mtx_list>
+			<mtx_list size="1">58</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -5449,7 +5503,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">18</mtx_list>
+			<mtx_list size="1">17</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
@@ -5496,7 +5550,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">43</mtx_list>
+			<mtx_list size="1">40</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -5592,7 +5646,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">63</mtx_list>
+			<mtx_list size="1">62</mtx_list>
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
@@ -5678,9 +5732,63 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="69" name="polygon69"
+		vertex_size="18" polygon_size="6"
+		triangle_size="0" quad_size="6"
+		volume_min="-4.000000 -4.000000 -4.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">69</mtx_list>
+			<primitive_array size="2">
+				<primitive index="0" type="quad_strip" vertex_size="10">
+					<mtx idx="0"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_s xyz="-4.000000 -4.000000 -4.000000"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_yz yz="4.000000 -4.000000"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xz xz="4.000000 -4.000000"/>
+					<tex st="64.000000 8.000000"/>
+					<pos_xz xz="4.000000 4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_yz yz="-4.000000 -4.000000"/>
+					<tex st="64.000000 8.000000"/>
+					<pos_xz xz="4.000000 4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xz xz="-4.000000 -4.000000"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+				</primitive>
+				<primitive index="1" type="quads" vertex_size="8">
+					<tex st="0.000000 0.000000"/>
+					<pos_yz yz="4.000000 -4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="4.000000 4.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 -4.000000"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xz xz="-4.000000 4.000000"/>
+					<tex st="64.000000 8.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
+					<pos_xy xy="4.000000 4.000000"/>
+					<tex st="0.000000 8.000000"/>
+					<pos_xy xy="-4.000000 4.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
-<node_array size="70">
+<node_array size="71">
 	<node index="0" name="group24" kind="null"
 		parent="-1"
 		child="1"
@@ -5704,26 +5812,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 352.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-4.000000 2.000000 2.000000"
-		volume_max="4.000000 4.000000 4.000000"
-		volume_r="6.928223"
-	>
-		<display index="0" material="0" polygon="51" priority="0"/>
-	</node>
-	<node index="2" name="pCube1_1" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="3"
-		brother_prev="1"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="248.000000 -16.000000 344.000000"
 		visibility="on"
 		display_size="1"
@@ -5735,6 +5823,26 @@
 	>
 		<display index="0" material="0" polygon="54" priority="0"/>
 	</node>
+	<node index="2" name="pCube1_1" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="3"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="248.000000 -16.000000 336.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-4.000000 2.000000 2.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="0" polygon="57" priority="0"/>
+	</node>
 	<node index="3" name="pCube1_10" kind="mesh"
 		parent="0"
 		child="-1"
@@ -5744,7 +5852,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 272.000000"
+		translate="248.000000 -16.000000 376.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="16" polygon_size="4"
@@ -5753,7 +5861,7 @@
 		volume_max="4.000000 4.000000 4.000000"
 		volume_r="6.928223"
 	>
-		<display index="0" material="0" polygon="15" priority="0"/>
+		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
 	<node index="4" name="pCube1_11" kind="mesh"
 		parent="0"
@@ -5784,26 +5892,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 376.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-4.000000 2.000000 2.000000"
-		volume_max="4.000000 4.000000 4.000000"
-		volume_r="6.928223"
-	>
-		<display index="0" material="0" polygon="0" priority="0"/>
-	</node>
-	<node index="6" name="pCube1_13" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="7"
-		brother_prev="5"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="248.000000 -16.000000 256.000000"
 		visibility="on"
 		display_size="1"
@@ -5815,11 +5903,11 @@
 	>
 		<display index="0" material="0" polygon="21" priority="0"/>
 	</node>
-	<node index="7" name="pCube1_14" kind="mesh"
+	<node index="6" name="pCube1_13" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="8"
-		brother_prev="6"
+		brother_next="7"
+		brother_prev="5"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -5835,11 +5923,11 @@
 	>
 		<display index="0" material="0" polygon="24" priority="0"/>
 	</node>
-	<node index="8" name="pCube1_15" kind="mesh"
+	<node index="7" name="pCube1_14" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="9"
-		brother_prev="7"
+		brother_next="8"
+		brother_prev="6"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -5855,31 +5943,11 @@
 	>
 		<display index="0" material="0" polygon="33" priority="0"/>
 	</node>
-	<node index="9" name="pCube1_16" kind="mesh"
+	<node index="8" name="pCube1_15" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="10"
-		brother_prev="8"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 240.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-4.000000 2.000000 2.000000"
-		volume_max="4.000000 4.000000 4.000000"
-		volume_r="6.928223"
-	>
-		<display index="0" material="0" polygon="27" priority="0"/>
-	</node>
-	<node index="10" name="pCube1_17" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="11"
-		brother_prev="9"
+		brother_next="9"
+		brother_prev="7"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -5895,11 +5963,31 @@
 	>
 		<display index="0" material="0" polygon="30" priority="0"/>
 	</node>
-	<node index="11" name="pCube1_18" kind="mesh"
+	<node index="9" name="pCube1_16" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="12"
-		brother_prev="10"
+		brother_next="10"
+		brother_prev="8"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="248.000000 -16.000000 360.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-4.000000 2.000000 2.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="0" polygon="48" priority="0"/>
+	</node>
+	<node index="10" name="pCube1_17" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="11"
+		brother_prev="9"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -5914,6 +6002,26 @@
 		volume_r="6.928223"
 	>
 		<display index="0" material="0" polygon="36" priority="0"/>
+	</node>
+	<node index="11" name="pCube1_18" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="12"
+		brother_prev="10"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="248.000000 -16.000000 240.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-4.000000 2.000000 2.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="0" polygon="27" priority="0"/>
 	</node>
 	<node index="12" name="pCube1_19" kind="mesh"
 		parent="0"
@@ -5944,7 +6052,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 336.000000"
+		translate="248.000000 -16.000000 328.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="16" polygon_size="4"
@@ -5953,33 +6061,13 @@
 		volume_max="4.000000 4.000000 4.000000"
 		volume_r="6.928223"
 	>
-		<display index="0" material="0" polygon="57" priority="0"/>
+		<display index="0" material="0" polygon="60" priority="0"/>
 	</node>
 	<node index="14" name="pCube1_20" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="15"
 		brother_prev="13"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 360.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-4.000000 2.000000 2.000000"
-		volume_max="4.000000 4.000000 4.000000"
-		volume_r="6.928223"
-	>
-		<display index="0" material="0" polygon="48" priority="0"/>
-	</node>
-	<node index="15" name="pCube1_21" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="16"
-		brother_prev="14"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -5994,6 +6082,26 @@
 		volume_r="6.928223"
 	>
 		<display index="0" material="0" polygon="42" priority="0"/>
+	</node>
+	<node index="15" name="pCube1_21" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="16"
+		brother_prev="14"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="248.000000 -16.000000 352.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-4.000000 2.000000 2.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="0" polygon="51" priority="0"/>
 	</node>
 	<node index="16" name="pCube1_22" kind="mesh"
 		parent="0"
@@ -6024,26 +6132,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="248.000000 -16.000000 328.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-4.000000 2.000000 2.000000"
-		volume_max="4.000000 4.000000 4.000000"
-		volume_r="6.928223"
-	>
-		<display index="0" material="0" polygon="60" priority="0"/>
-	</node>
-	<node index="18" name="pCube1_4" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="19"
-		brother_prev="17"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="248.000000 -16.000000 320.000000"
 		visibility="on"
 		display_size="1"
@@ -6055,11 +6143,11 @@
 	>
 		<display index="0" material="0" polygon="63" priority="0"/>
 	</node>
-	<node index="19" name="pCube1_5" kind="mesh"
+	<node index="18" name="pCube1_4" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="20"
-		brother_prev="18"
+		brother_next="19"
+		brother_prev="17"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6075,11 +6163,11 @@
 	>
 		<display index="0" material="0" polygon="66" priority="0"/>
 	</node>
-	<node index="20" name="pCube1_6" kind="mesh"
+	<node index="19" name="pCube1_5" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="21"
-		brother_prev="19"
+		brother_next="20"
+		brother_prev="18"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6095,11 +6183,11 @@
 	>
 		<display index="0" material="0" polygon="3" priority="0"/>
 	</node>
-	<node index="21" name="pCube1_7" kind="mesh"
+	<node index="20" name="pCube1_6" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="22"
-		brother_prev="20"
+		brother_next="21"
+		brother_prev="19"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6115,11 +6203,11 @@
 	>
 		<display index="0" material="0" polygon="6" priority="0"/>
 	</node>
-	<node index="22" name="pCube1_8" kind="mesh"
+	<node index="21" name="pCube1_7" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="23"
-		brother_prev="21"
+		brother_next="22"
+		brother_prev="20"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6135,11 +6223,11 @@
 	>
 		<display index="0" material="0" polygon="9" priority="0"/>
 	</node>
-	<node index="23" name="pCube1_9" kind="mesh"
+	<node index="22" name="pCube1_8" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="24"
-		brother_prev="22"
+		brother_next="23"
+		brother_prev="21"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6155,31 +6243,31 @@
 	>
 		<display index="0" material="0" polygon="12" priority="0"/>
 	</node>
+	<node index="23" name="pCube1_9" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="24"
+		brother_prev="22"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="248.000000 -16.000000 272.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="16" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-4.000000 2.000000 2.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="0" polygon="15" priority="0"/>
+	</node>
 	<node index="24" name="pCube5" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="25"
 		brother_prev="23"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 364.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="52" priority="0"/>
-	</node>
-	<node index="25" name="pCube5_1" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="26"
-		brother_prev="24"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6195,16 +6283,16 @@
 	>
 		<display index="0" material="0" polygon="55" priority="0"/>
 	</node>
-	<node index="26" name="pCube5_10" kind="mesh"
+	<node index="25" name="pCube5_1" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="27"
-		brother_prev="25"
+		brother_next="26"
+		brother_prev="24"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 388.000000"
+		translate="227.750000 -4.000000 348.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="38" polygon_size="14"
@@ -6213,13 +6301,13 @@
 		volume_max="1.062500 0.625000 0.625000"
 		volume_r="1.218994"
 	>
-		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="0" material="0" polygon="58" priority="0"/>
 	</node>
-	<node index="27" name="pCube5_11" kind="mesh"
+	<node index="26" name="pCube5_10" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="28"
-		brother_prev="26"
+		brother_next="27"
+		brother_prev="25"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6235,11 +6323,11 @@
 	>
 		<display index="0" material="0" polygon="16" priority="0"/>
 	</node>
-	<node index="28" name="pCube5_12" kind="mesh"
+	<node index="27" name="pCube5_11" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="29"
-		brother_prev="27"
+		brother_next="28"
+		brother_prev="26"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6255,11 +6343,11 @@
 	>
 		<display index="0" material="0" polygon="19" priority="0"/>
 	</node>
-	<node index="29" name="pCube5_13" kind="mesh"
+	<node index="28" name="pCube5_12" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="30"
-		brother_prev="28"
+		brother_next="29"
+		brother_prev="27"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6274,6 +6362,26 @@
 		volume_r="1.218994"
 	>
 		<display index="0" material="0" polygon="22" priority="0"/>
+	</node>
+	<node index="29" name="pCube5_13" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="30"
+		brother_prev="28"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 380.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="34" priority="0"/>
 	</node>
 	<node index="30" name="pCube5_14" kind="mesh"
 		parent="0"
@@ -6304,26 +6412,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 380.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="34" priority="0"/>
-	</node>
-	<node index="32" name="pCube5_16" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="33"
-		brother_prev="31"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="227.750000 -4.000000 252.000000"
 		visibility="on"
 		display_size="1"
@@ -6334,6 +6422,26 @@
 		volume_r="1.218994"
 	>
 		<display index="0" material="0" polygon="28" priority="0"/>
+	</node>
+	<node index="32" name="pCube5_16" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="33"
+		brother_prev="31"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 372.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="49" priority="0"/>
 	</node>
 	<node index="33" name="pCube5_17" kind="mesh"
 		parent="0"
@@ -6364,26 +6472,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 372.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="49" priority="0"/>
-	</node>
-	<node index="35" name="pCube5_19" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="36"
-		brother_prev="34"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="227.750000 -4.000000 236.000000"
 		visibility="on"
 		display_size="1"
@@ -6395,91 +6483,31 @@
 	>
 		<display index="0" material="0" polygon="37" priority="0"/>
 	</node>
+	<node index="35" name="pCube5_19" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="36"
+		brother_prev="34"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 364.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="52" priority="0"/>
+	</node>
 	<node index="36" name="pCube5_2" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="37"
 		brother_prev="35"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 348.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="58" priority="0"/>
-	</node>
-	<node index="37" name="pCube5_20" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="38"
-		brother_prev="36"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 228.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="40" priority="0"/>
-	</node>
-	<node index="38" name="pCube5_21" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="39"
-		brother_prev="37"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 220.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="43" priority="0"/>
-	</node>
-	<node index="39" name="pCube5_22" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="40"
-		brother_prev="38"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 212.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="46" priority="0"/>
-	</node>
-	<node index="40" name="pCube5_3" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="41"
-		brother_prev="39"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6495,11 +6523,71 @@
 	>
 		<display index="0" material="0" polygon="61" priority="0"/>
 	</node>
-	<node index="41" name="pCube5_4" kind="mesh"
+	<node index="37" name="pCube5_20" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="42"
-		brother_prev="40"
+		brother_next="38"
+		brother_prev="36"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 220.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="43" priority="0"/>
+	</node>
+	<node index="38" name="pCube5_21" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="39"
+		brother_prev="37"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 212.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="46" priority="0"/>
+	</node>
+	<node index="39" name="pCube5_22" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="40"
+		brother_prev="38"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 228.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="40" priority="0"/>
+	</node>
+	<node index="40" name="pCube5_3" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="41"
+		brother_prev="39"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6514,6 +6602,26 @@
 		volume_r="1.218994"
 	>
 		<display index="0" material="0" polygon="64" priority="0"/>
+	</node>
+	<node index="41" name="pCube5_4" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="42"
+		brother_prev="40"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 324.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="67" priority="0"/>
 	</node>
 	<node index="42" name="pCube5_5" kind="mesh"
 		parent="0"
@@ -6564,26 +6672,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="227.750000 -4.000000 324.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-0.812500 -0.625000 -0.625000"
-		volume_max="1.062500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="67" priority="0"/>
-	</node>
-	<node index="45" name="pCube5_8" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="46"
-		brother_prev="44"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="227.750000 -4.000000 300.000000"
 		visibility="on"
 		display_size="1"
@@ -6595,11 +6683,11 @@
 	>
 		<display index="0" material="0" polygon="10" priority="0"/>
 	</node>
-	<node index="46" name="pCube5_9" kind="mesh"
+	<node index="45" name="pCube5_8" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="47"
-		brother_prev="45"
+		brother_next="46"
+		brother_prev="44"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6615,31 +6703,31 @@
 	>
 		<display index="0" material="0" polygon="13" priority="0"/>
 	</node>
+	<node index="46" name="pCube5_9" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="47"
+		brother_prev="45"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="227.750000 -4.000000 388.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-0.812500 -0.625000 -0.625000"
+		volume_max="1.062500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+	</node>
 	<node index="47" name="pCube6" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="48"
 		brother_prev="46"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 356.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-1.062500 -0.625000 -0.625000"
-		volume_max="0.812500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="56" priority="0"/>
-	</node>
-	<node index="48" name="pCube6_1" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="49"
-		brother_prev="47"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6655,16 +6743,16 @@
 	>
 		<display index="0" material="0" polygon="59" priority="0"/>
 	</node>
-	<node index="49" name="pCube6_10" kind="mesh"
+	<node index="48" name="pCube6_1" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="50"
-		brother_prev="48"
+		brother_next="49"
+		brother_prev="47"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 300.000000"
+		translate="268.250000 -4.000000 340.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="38" polygon_size="14"
@@ -6673,13 +6761,13 @@
 		volume_max="0.812500 0.625000 0.625000"
 		volume_r="1.218994"
 	>
-		<display index="0" material="0" polygon="11" priority="0"/>
+		<display index="0" material="0" polygon="62" priority="0"/>
 	</node>
-	<node index="50" name="pCube6_11" kind="mesh"
+	<node index="49" name="pCube6_10" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="51"
-		brother_prev="49"
+		brother_next="50"
+		brother_prev="48"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6694,6 +6782,26 @@
 		volume_r="1.218994"
 	>
 		<display index="0" material="0" polygon="20" priority="0"/>
+	</node>
+	<node index="50" name="pCube6_11" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="51"
+		brother_prev="49"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="268.250000 -4.000000 380.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-1.062500 -0.625000 -0.625000"
+		volume_max="0.812500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="35" priority="0"/>
 	</node>
 	<node index="51" name="pCube6_12" kind="mesh"
 		parent="0"
@@ -6724,26 +6832,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 380.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-1.062500 -0.625000 -0.625000"
-		volume_max="0.812500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="35" priority="0"/>
-	</node>
-	<node index="53" name="pCube6_14" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="54"
-		brother_prev="52"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="268.250000 -4.000000 260.000000"
 		visibility="on"
 		display_size="1"
@@ -6754,6 +6842,26 @@
 		volume_r="1.218994"
 	>
 		<display index="0" material="0" polygon="26" priority="0"/>
+	</node>
+	<node index="53" name="pCube6_14" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="54"
+		brother_prev="52"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="268.250000 -4.000000 252.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-1.062500 -0.625000 -0.625000"
+		volume_max="0.812500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="29" priority="0"/>
 	</node>
 	<node index="54" name="pCube6_15" kind="mesh"
 		parent="0"
@@ -6824,7 +6932,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 252.000000"
+		translate="268.250000 -4.000000 364.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="38" polygon_size="14"
@@ -6833,7 +6941,7 @@
 		volume_max="0.812500 0.625000 0.625000"
 		volume_r="1.218994"
 	>
-		<display index="0" material="0" polygon="29" priority="0"/>
+		<display index="0" material="0" polygon="53" priority="0"/>
 	</node>
 	<node index="58" name="pCube6_19" kind="mesh"
 		parent="0"
@@ -6864,7 +6972,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 340.000000"
+		translate="268.250000 -4.000000 332.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="38" polygon_size="14"
@@ -6873,7 +6981,7 @@
 		volume_max="0.812500 0.625000 0.625000"
 		volume_r="1.218994"
 	>
-		<display index="0" material="0" polygon="62" priority="0"/>
+		<display index="0" material="0" polygon="65" priority="0"/>
 	</node>
 	<node index="60" name="pCube6_20" kind="mesh"
 		parent="0"
@@ -6904,26 +7012,6 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 364.000000"
-		visibility="on"
-		display_size="1"
-		vertex_size="38" polygon_size="14"
-		triangle_size="0" quad_size="14"
-		volume_min="-1.062500 -0.625000 -0.625000"
-		volume_max="0.812500 0.625000 0.625000"
-		volume_r="1.218994"
-	>
-		<display index="0" material="0" polygon="53" priority="0"/>
-	</node>
-	<node index="62" name="pCube6_22" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="63"
-		brother_prev="61"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
 		translate="268.250000 -4.000000 212.000000"
 		visibility="on"
 		display_size="1"
@@ -6935,16 +7023,16 @@
 	>
 		<display index="0" material="0" polygon="47" priority="0"/>
 	</node>
-	<node index="63" name="pCube6_3" kind="mesh"
+	<node index="62" name="pCube6_22" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="64"
-		brother_prev="62"
+		brother_next="63"
+		brother_prev="61"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="268.250000 -4.000000 332.000000"
+		translate="268.250000 -4.000000 356.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="38" polygon_size="14"
@@ -6953,13 +7041,13 @@
 		volume_max="0.812500 0.625000 0.625000"
 		volume_r="1.218994"
 	>
-		<display index="0" material="0" polygon="65" priority="0"/>
+		<display index="0" material="0" polygon="56" priority="0"/>
 	</node>
-	<node index="64" name="pCube6_4" kind="mesh"
+	<node index="63" name="pCube6_3" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="65"
-		brother_prev="63"
+		brother_next="64"
+		brother_prev="62"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6975,11 +7063,11 @@
 	>
 		<display index="0" material="0" polygon="68" priority="0"/>
 	</node>
-	<node index="65" name="pCube6_5" kind="mesh"
+	<node index="64" name="pCube6_4" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="66"
-		brother_prev="64"
+		brother_next="65"
+		brother_prev="63"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -6995,11 +7083,11 @@
 	>
 		<display index="0" material="0" polygon="5" priority="0"/>
 	</node>
-	<node index="66" name="pCube6_6" kind="mesh"
+	<node index="65" name="pCube6_5" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="67"
-		brother_prev="65"
+		brother_next="66"
+		brother_prev="64"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -7014,6 +7102,26 @@
 		volume_r="1.218994"
 	>
 		<display index="0" material="0" polygon="8" priority="0"/>
+	</node>
+	<node index="66" name="pCube6_6" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="67"
+		brother_prev="65"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="268.250000 -4.000000 300.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="38" polygon_size="14"
+		triangle_size="0" quad_size="14"
+		volume_min="-1.062500 -0.625000 -0.625000"
+		volume_max="0.812500 0.625000 0.625000"
+		volume_r="1.218994"
+	>
+		<display index="0" material="0" polygon="11" priority="0"/>
 	</node>
 	<node index="67" name="pCube6_7" kind="mesh"
 		parent="0"
@@ -7058,7 +7166,7 @@
 	<node index="69" name="pCube6_9" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="-1"
+		brother_next="70"
 		brother_prev="68"
 		draw_mtx="on"
 		billboard="off"
@@ -7075,10 +7183,30 @@
 	>
 		<display index="0" material="0" polygon="17" priority="0"/>
 	</node>
+	<node index="70" name="pCube7" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="69"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="256.000000 512.000000 -256.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="18" polygon_size="6"
+		triangle_size="0" quad_size="6"
+		volume_min="-4.000000 -4.000000 -4.000000"
+		volume_max="4.000000 4.000000 4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="1" polygon="69" priority="0"/>
+	</node>
 </node_array>
 
-<output_info vertex_size="2116" polygon_size="736"
-	triangle_size="0" quad_size="736"/>
+<output_info vertex_size="2134" polygon_size="742"
+	triangle_size="0" quad_size="742"/>
 
 </body>
 

@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-07-03T15:28:45" source="fire_a_02.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-07-07T16:09:10" source="fire_a_02.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,10 +11,10 @@
 <body>
 
 <tex_pattern_info
-	frame_size="12"
-	tool_start_frame="0"
-	tool_end_frame="11"
-	compress_material="on" material_size="2 2"
+	frame_size="17"
+	tool_start_frame="-1"
+	tool_end_frame="15"
+	compress_material="on" material_size="4 4"
 />
 
 <tex_pattern_list_data image_size="3" palette_size="3">
@@ -27,19 +27,19 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="7">
-		0 2 4 6 7 8 11
+	<frame_idx size="10">
+		0 2 3 5 7 9 10 12 14 16
 	</frame_idx>
-	<image_idx size="7">
-		0 1 2 1 0 1 2
+	<image_idx size="10">
+		1 0 1 2 0 1 2 0 1 2
 	</image_idx>
-	<palette_idx size="7">
-		0 1 2 1 0 1 2
+	<palette_idx size="10">
+		1 0 1 2 0 1 2 0 1 2
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="gos_fire_1" data_size="7" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="gos_fire_1" data_size="10" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>

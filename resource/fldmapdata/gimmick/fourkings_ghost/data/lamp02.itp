@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-07-03T16:12:56" source="lamp02.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-07-12T15:42:59" source="lamp02.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_pattern_info
-	frame_size="11"
+	frame_size="61"
 	tool_start_frame="0"
-	tool_end_frame="10"
+	tool_end_frame="60"
 	compress_material="on" material_size="4 4"
 />
 
@@ -33,20 +33,38 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="10">
-		0 1 4 7 10 0 1 4 7 10
+	<frame_idx size="62">
+		0 2 3 6 8 10 11 14 16 18
+		19 22 24 26 27 30 32 34 35 38
+		40 42 43 46 48 50 51 54 56 58
+		59 0 2 3 6 8 10 11 14 16
+		18 19 22 24 26 27 30 32 34 35
+		38 40 42 43 46 48 50 51 54 56
+		58 59
 	</frame_idx>
-	<image_idx size="10">
-		0 1 2 1 0 3 4 5 4 3
+	<image_idx size="62">
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5
 	</image_idx>
-	<palette_idx size="10">
-		0 1 2 1 0 3 4 5 4 3
+	<palette_idx size="62">
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 3 4 5 4 3 4 5 4 3
+		4 5 4 3 4 5 4 3 4 5
+		4 3 4 5 4 3 4 5 4 3
+		4 5
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="2">
-	<tex_pattern_anm index="0" material_name="c09_hi_1" data_size="5" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="c09_hka_1" data_size="5" data_head="5"/>
+	<tex_pattern_anm index="0" material_name="c09_hi_1" data_size="31" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="c09_hka_1" data_size="31" data_head="31"/>
 </tex_pattern_anm_array>
 
 </body>
