@@ -718,6 +718,32 @@ void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap )
 
 //=============================================================================
 /**
+ *          スクリプトコマンド関係
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン押下イベント
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id 
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* HIDE_SHIP_Button( GAMESYS_WORK *gsys, int id )
+{
+  GMEVENT *event;
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
+  
+  event = BUTTON_CreateEvent( gsys, id );
+
+  return event;
+}
+
+//=============================================================================
+/**
  *					static関数
 */
 //=============================================================================

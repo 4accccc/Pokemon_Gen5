@@ -1,0 +1,23 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		scrcmd_hide_ship_table.cdat
+ *	@brief  アジト船スクリプトコマンド定義
+ *	@author	Katsuhiko=Ichiraku
+ *	@date		2011.07.14
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//======================================================================
+//  命令シンボル宣言
+//======================================================================
+
+  //スクリプトコマンドテーブル開始
+  INIT_OVERLAY_CMD( hide_ship )
+
+  DEF_CMD( EvCmdHideShip_Button, EV_SEQ_HIDE_SHIP_BUTTON )
+  DEF_CMD( EvCmdHideShip_GateSet, EV_SEQ_HIDE_SHIP_GATE_SET )
+  DEF_CMD( EvCmdHideShip_GateOff, EV_SEQ_HIDE_SHIP_GATE_OFF )
+
+  END_CMD
+  //スクリプトコマンドテーブル終了

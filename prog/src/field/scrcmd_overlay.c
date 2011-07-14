@@ -31,6 +31,7 @@
 #include "scrcmd_infinity_dungeon_table.h"
 #include "scrcmd_pokewood_table.h"
 #include "scrcmd_bgate_table.h"
+#include "scrcmd_hide_ship_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -53,6 +54,7 @@ FS_EXTERN_OVERLAY( scrcmd_resort );
 FS_EXTERN_OVERLAY( scrcmd_infinity_dungeon );
 FS_EXTERN_OVERLAY( scrcmd_pokewood );
 FS_EXTERN_OVERLAY( scrcmd_bgate );
+FS_EXTERN_OVERLAY( scrcmd_hide_ship );
 
 //=============================================================================
 /**
@@ -194,7 +196,14 @@ static const ZONEID UseZoneIDTbl_badge_gate[] =
 {
   ZONE_ID_D26R0101,
 };
-
+//-------------------------------------
+///	アジト船
+//=====================================
+static const ZONEID UseZoneIDTbl_hide_ship[] = 
+{
+  ZONE_ID_D27R1001,
+  ZONE_ID_D27R1301,
+};
 
 //=============================================================================
 /**
@@ -293,7 +302,14 @@ static const struct
     UseZoneIDTbl_badge_gate,
     NELEMS(UseZoneIDTbl_badge_gate),
     FS_OVERLAY_ID( scrcmd_bgate ),
-  }
+  },
+  //HIDE_SHIP
+  {
+    ScriptCmdTbl_hide_ship,
+    UseZoneIDTbl_hide_ship,
+    NELEMS(UseZoneIDTbl_hide_ship),
+    FS_OVERLAY_ID( scrcmd_hide_ship ),
+  },
 };
 //=============================================================================
 /**

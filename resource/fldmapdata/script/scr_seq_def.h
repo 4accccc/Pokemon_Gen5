@@ -28,6 +28,7 @@
   .include "../../../prog/src/field/scrcmd_infinity_dungeon_table.cdat"
   .include "../../../prog/src/field/scrcmd_pokewood_table.cdat"
   .include "../../../prog/src/field/scrcmd_bgate_table.cdat"
+  .include "../../../prog/src/field/scrcmd_hide_ship_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -14152,4 +14153,58 @@
 //======================================================================
 //======================================================================
 
+//======================================================================
+// アジト船
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_BUTTON
+ * @brief エンジン部屋でのボタンを押下したときの演出
+ * @param id  ボタンのID 0～3
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_BUTTON( id ) \
+    _ASM_HIDE_SHIP_BUTTON id
+
+  .macro  _ASM_HIDE_SHIP_BUTTON id
+  .short  EV_SEQ_HIDE_SHIP_BUTTON
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_GATE_SET
+ * @brief エンジン部屋でのゲートの状態を設定する
+ * @param id    ゲートのID 0～3
+ * @param state  0:OFF 1:ON
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_GATE_SET( id, state ) \
+    _ASM_HIDE_SHIP_GATE_SET id, state
+
+  .macro  _ASM_HIDE_SHIP_GATE_SET id, state
+  .short  EV_SEQ_HIDE_SHIP_GATE_SET
+  .short  \id
+  .short  \state
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_GATE_OFF
+ * @brief エンジン部屋でのゲート解除再生
+ * @param id    ゲートのID 0～3
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_GATE_OFF( id ) _ASM_HIDE_SHIP_GATE_OFF id
+
+  .macro  _ASM_HIDE_SHIP_GATE_OFF id
+  .short  EV_SEQ_HIDE_SHIP_GATE_OFF
+  .short  \id
+  .endm
+
+//======================================================================
+//======================================================================
 
