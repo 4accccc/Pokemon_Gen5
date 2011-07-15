@@ -3938,3 +3938,7 @@ $(DIR_WBTMP)/m_pwood03_00_00.tbl: $(DIR_RES)/m_pwood03_00_00.bin
 	@echo create_bintbl m_pwood03_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_pwood03_00_00.bin
 
+$(DIR_WBTMP)/m_champ01_00_01.tbl: $(DIR_RES)/m_champ01_00_01.bin
+	@echo create_bintbl m_champ01_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_champ01_00_01.bin
+
