@@ -2467,10 +2467,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はつどうちゅうの　デルパワー</Text>
+			<Text>発動中の　デルパワー</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-12T06:33:00" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-15T07:31:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2591,10 +2591,10 @@
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]を
 つかいますか？
-ひつよう[Digit:4digits Idx="1" ]こ／もっている[Digit:4digits Idx="2" ]こ</Text>
+ひつよう[Digit:4digits Idx="1" ]こ／もってる[Digit:4digits Idx="2" ]こ</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-14T02:30:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-15T07:30:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2603,11 +2603,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PMS Idx="0" ]を
-つかいますか？
-ひつよう[Digit:4digits Idx="1" ]こ／もっている[Digit:4digits Idx="2" ]こ</Text>
+使いますか？
+必要[Digit:4digits Idx="1" ]個／持ってる[Digit:4digits Idx="2" ]個</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-14T02:32:42" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-15T07:29:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2626,12 +2626,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルダマがたりません
+			<Text>デルダマが　たりません
 
-ひつよう[Digit:4digits ]こ／もっている[Digit:4digits Idx="1" ]こ</Text>
+ひつよう[Digit:4digits ]こ／もってる[Digit:4digits Idx="1" ]こ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-15T03:21:46" />
+				Time="2011-07-15T07:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2639,12 +2639,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルダマがたりません
+			<Text>デルダマが　たりません
 
-ひつよう[Digit:4digits ]こ／もっている[Digit:4digits Idx="1" ]こ</Text>
+必要[Digit:4digits ]個／持ってる[Digit:4digits Idx="1" ]個</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-07-15T03:21:49" />
+				Time="2011-07-15T07:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
