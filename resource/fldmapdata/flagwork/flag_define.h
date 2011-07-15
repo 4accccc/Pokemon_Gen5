@@ -2255,9 +2255,9 @@
 #define TMFLG_D02_ROCK_01                 2760 /* 0x0ac8 ヤグルマの森：1日1回試しの岩 */
 #define TMFLG_C03R1101_MASSAGE            2761 /* 0x0ac9 ヒウン便利ビル：1日1回マッサージ */
 #define TMFLG_C03R0402_BATTLE_02          2762 /* 0x0aca ヒウンシティ・ゲームフリーク：1日1回戦闘 */
-		/* not used  2763(0x0acb) */
-		/* not used  2764(0x0acc) */
-		/* not used  2765(0x0acd) */
+#define TMFLG_C13_ITEM_TRADE              2763 /* 0x0acb タチワキシティ：１日１回アイテムトレードイベント */
+#define TMFLG_R9R0201_ITEMBUY             2764 /* 0x0acc アールナイン：お買い物お嬢様イベント起動 */
+#define TMFLG_R9R0201_ITEMBUY_CLEAR       2765 /* 0x0acd アールナイン：お買い物お嬢様イベント起動クリア */
 		/* not used  2766(0x0ace) */
 		/* not used  2767(0x0acf) */
 

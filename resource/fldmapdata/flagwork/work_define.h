@@ -231,6 +231,7 @@
 #define WK_SCENE_D26R0101_GATE_08        16619 /* 0x40eb バッジチェックゲート：POS制御ワーク */
 #define WK_SCENE_D26R0101_GATE_09        16620 /* 0x40ec バッジチェックゲート：POS制御ワーク */
 #define WK_SCENE_C03R0601_SWBELL_01      16621 /* 0x40ed ヒウンシティゲート：ベルイベントPOS制御ワーク */
+		/* not used 16622(0x40ee) */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -283,6 +284,7 @@
 #define WK_OTHER_C12_RIVAL_PAIR          16697 /* 0x4139 スワン：ヒオウギシティ連れ歩き用ワーク 0&#xff5e;2でセリフを変える */
 #define WK_OTHER_FISHING_MONSNUM         16698 /* 0x413a ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
 #define WK_OTHER_C05R0301_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
+#define WK_OTHER_R9R0201_ITEMBUY         16700 /* 0x413c アールナイン：１日１回買い物お願いお嬢様イベント制御用ワーク */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
 
