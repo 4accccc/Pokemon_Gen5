@@ -19,6 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_zone_d27r1301
+_EVENT_DATA    ev_init_d27r1301
+_EVENT_DATA    ev_recover_d27r1301
 _EVENT_DATA    ev_pos_d27r1301_warp_01
 _EVENT_DATA    ev_pos_d27r1301_warp_02
 _EVENT_DATA    ev_pos_d27r1301_warp_03
@@ -50,6 +53,53 @@ DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL 						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r1301
+  
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r1301
+
+  // ゲート状態設定
+  _CALL sub_gate_set
+
+INIT_EVENT_END
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r1301
+
+  // ゲート状態設定
+  _CALL sub_gate_set
+
+INIT_EVENT_END
+
+// ゲート(バリアー)の状態をフラグを見て設定
+sub_gate_set:
+{
+/*
+  DEFINE_LOCAL state      // ゲートが解除してあるかどうか
+  
+  //【仮】 フラグが存在しない
+  _FLAG_CHECK( FE_XXXX_01, state )
+  _HIDE_SHIP_GATE_SET( 0, state )
+  //【仮】 フラグが存在しない
+  _FLAG_CHECK( FE_XXXX_02, state  )
+  _HIDE_SHIP_GATE_SET( 1, state  )
+  //【仮】 フラグが存在しない
+  _FLAG_CHECK( FE_XXXX_03, state )
+  _HIDE_SHIP_GATE_SET( 2, state )
+  //【仮】 フラグが存在しない
+  _FLAG_CHECK( FE_XXXX_04, state )
+  _HIDE_SHIP_GATE_SET( 3, state )
+*/
+}
+_RET
 
 /************************************************************/
 /*					特殊接続（船首楼）				*/
