@@ -75,6 +75,7 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_IconVisibleSet( PANEL_WORK* pp, BOOL visible_f );
 static void panel_Clear( PANEL_WORK* pp );
 static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line );
+static void panel_Overwrite( PANEL_WORK* pp, u8 data_idx,u8 line );
 static PANEL_WORK* panel_GetPanelFromDataIndex( BEACON_VIEW_PTR wk, u8 data_idx );
 static void panel_UnionObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info);
 static void panel_IconObjUpdate( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 icon);
@@ -91,6 +92,7 @@ static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq )
 static void list_UpDownReqBar( BEACON_VIEW_PTR wk, SCROLL_DIR dir, u8 step );
 static BOOL list_BarScrollParamSet( BEACON_VIEW_PTR wk, int y );
 static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u8 dir, u8 frame, PANEL_DRAW_TYPE draw_type );
+static void list_JumpReq( BEACON_VIEW_PTR wk, u8 new_top );
 
 static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f );
 static void taskAdd_WinFMission( BEACON_VIEW_PTR wk, FEST_MISSION* fmwk, int* task_ct );
@@ -142,6 +144,8 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   obj_UpDownViewSet( wk );
   obj_ThanksViewSet( wk );
   obj_ScrollBarPosSetFromView( wk );
+
+  GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_SWITCH], (wk->ctrl.max >= PANEL_SCROLL_BAR_ENABLE_NUM) );
 
   if( wk->my_data.power == GPOWER_ID_NULL ){
     BVCAct_AnmStart( wk->pAct[ACT_POWER], ACTANM_POWER_OFF );
@@ -277,12 +281,11 @@ int BeaconView_ScrollBarMain( BEACON_VIEW_PTR wk )
   }
   if( wk->ctrl.target_bar_top == wk->ctrl.view_top ){
     if( !wk->ctrl.scroll_mode ){
-      BVC_PrintQueLimmitUpSet( wk->printQue, FALSE );
       BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
       return SEQ_MAIN;
     }
   }else{
-    list_UpDownReqBar( wk, wk->ctrl.bar_scr_dir, wk->ctrl.bar_scr_step );
+    list_JumpReq( wk, wk->ctrl.target_bar_top );
   }
   return SEQ_SCROLL_BAR;
 }
@@ -455,6 +458,10 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   if( wk->ctrl.max < BS_LOG_MAX ){
     wk->ctrl.max += wk->first_entry_f;
   
+    //スクロールバー有効処理
+    if( wk->first_entry_f && wk->ctrl.max >= PANEL_SCROLL_BAR_ENABLE_NUM ){
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_SWITCH], TRUE );
+    }
     if( wk->ctrl.max <= PANEL_VIEW_MAX){
       wk->ctrl.view_max = wk->ctrl.max;
     }
@@ -840,19 +847,28 @@ static BOOL sp_gpower_ZoromeCheck( u32 log_count )
  */
 static int touchin_CheckPanel( BEACON_VIEW_PTR wk, POINT* tp )
 {
-  int i;
+  int i,ret;
 
-  GFL_UI_TP_HITTBL tbl[PANEL_VIEW_MAX+1];
+  GFL_UI_TP_HITTBL tbl[PANEL_VIEW_MAX+2];
+
+  tbl[0].rect.top = TP_LOGNUM_WIN_TOP;
+  tbl[0].rect.bottom = TP_LOGNUM_WIN_BOTTOM;
+  tbl[0].rect.left = TP_LOGNUM_WIN_LEFT;
+  tbl[0].rect.right = TP_LOGNUM_WIN_RIGHT;
 
   for(i = 0;i < wk->ctrl.view_max;i++){
-    tbl[i].rect.top = TP_PANEL_TOP+(i*ACT_PANEL_OY);
-    tbl[i].rect.bottom = tbl[i].rect.top+ACT_PANEL_SY;
-    tbl[i].rect.left = TP_PANEL_LEFT;
-    tbl[i].rect.right = TP_PANEL_RIGHT;
+    tbl[i+1].rect.top = TP_PANEL_TOP+(i*ACT_PANEL_OY);
+    tbl[i+1].rect.bottom = tbl[i+1].rect.top+ACT_PANEL_SY;
+    tbl[i+1].rect.left = TP_PANEL_LEFT;
+    tbl[i+1].rect.right = TP_PANEL_RIGHT;
   }
-  tbl[wk->ctrl.view_max].rect.top = GFL_UI_TP_HIT_END;
+  tbl[wk->ctrl.view_max+1].rect.top = GFL_UI_TP_HIT_END;
 
-  return GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
+  ret = GFL_UI_TP_HitSelf( tbl, tp->x, tp->y );
+  if( ret == 0 || ret == GFL_UI_TP_HIT_NONE ){
+    return GFL_UI_TP_HIT_NONE;
+  }
+  return (ret-1);
 }
 
 /*
@@ -919,10 +935,8 @@ static int touchin_CheckScrollBar( BEACON_VIEW_PTR wk, POINT* tp )
   wk->ctrl.scroll_mode = TRUE;
   
   if( list_BarScrollParamSet( wk, tp->y ) == TRUE ){
-    list_UpDownReqBar( wk, wk->ctrl.bar_scr_dir, wk->ctrl.bar_scr_step );
+    list_JumpReq( wk, wk->ctrl.target_bar_top );
   }
-
-  BVC_PrintQueLimmitUpSet( wk->printQue, TRUE );
   BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
   
   return 0;
@@ -1159,6 +1173,24 @@ static void panel_Clear( PANEL_WORK* pp )
 static void panel_Entry( PANEL_WORK* pp, u8 data_idx,u8 line )
 {
   panel_Clear( pp );
+  pp->data_idx = data_idx;
+  pp->n_line = line;
+}
+
+/*
+ *  @brief  パネル登録上書き(描画クリアはしない)
+ */
+static void panel_Overwrite( PANEL_WORK* pp, u8 data_idx,u8 line )
+{
+  if( pp->tcb_print ){  //なにかプリント中だったらキャンセル
+    GFL_TCBL_Delete( pp->tcb_print );
+    pp->tcb_print = NULL;
+  }
+  if( pp->tcb_icon != NULL ){ //アイコン描画中もキャンセル
+    GFL_TCBL_Delete( pp->tcb_icon );
+    pp->tcb_icon = NULL;
+  }
+
   pp->data_idx = data_idx;
   pp->n_line = line;
 }
@@ -1755,6 +1787,104 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
     break;
   }
   --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  リストジャンプリクエストタスク処理 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_LIST_JUMP{
+  BEACON_VIEW_PTR bvp;
+  PANEL_WORK* pp[PANEL_VIEW_MAX];
+  int seq;
+  u8  new_top;
+  u8  view_max;
+  int child_task;
+  int* task_ct;
+}TASKWK_LIST_JUMP;
+
+static void tcb_ListJump( GFL_TCBL *tcb , void* work);
+
+/*
+ *  @brief  ビュー リストジャンプ処理リクエスト
+ */
+static void list_JumpReq( BEACON_VIEW_PTR wk, u8 new_top )
+{
+  PANEL_WORK* pp;
+  GFL_TCBL* tcb;
+  TASKWK_LIST_JUMP* twk;
+  int i;
+  
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_ListJump, sizeof(TASKWK_LIST_JUMP), 0 );
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_LIST_JUMP ));
+  
+  twk->bvp = wk;
+  twk->task_ct = &wk->eff_task_ct;
+  twk->new_top = new_top;
+  twk->view_max = wk->ctrl.view_max;
+
+  //指定のトップからリストを再構築
+  for( i = 0;i < wk->ctrl.view_max;i++ ){
+    twk->pp[i] = panel_GetPanelFromDataIndex( wk, GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->ctrl.view_top+i ) );
+  }
+
+  wk->ctrl.view_top = new_top;
+
+  BVC_PrintQueLimmitUpSet( wk->printQue, TRUE );
+  obj_UpDownViewSet( wk );
+  BVCSound_PlaySE( BVIEW_SE_UPDOWN );
+
+  wk->eff_task_ct++;
+}
+
+static void tcb_ListJump( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_LIST_JUMP* twk = (TASKWK_LIST_JUMP*)tcb_wk;
+  BEACON_VIEW_PTR bvp = twk->bvp;
+ 
+  switch( twk->seq ){
+  case 0: //パネルのPrintQueの残りを消化
+    {
+      int i;
+      for( i = 0;i < twk->view_max;i++ ){
+        if( twk->pp[i]->tcb_print != NULL ){
+          return;
+        }
+      }
+    }
+    twk->seq++;
+    return;
+  case 1: //パネルリライト
+    {
+      int i;
+
+      for( i = 0;i < twk->view_max;i++ ){
+        u8  idx = GAMEBEACON_InfoTblRing_Ofs2Idx( bvp->infoLog, twk->new_top+i );
+
+        GAMEBEACON_InfoTblRing_GetBeacon( bvp->infoLog, bvp->tmpInfo, &bvp->tmpTime, twk->new_top+i );
+    
+        //新しい情報で再登録
+        panel_Overwrite( twk->pp[i], idx, PANEL_VIEW_START+i );
+        panel_Draw( bvp, twk->pp[i], bvp->tmpInfo, PANEL_DRAW_INI, FALSE, &twk->child_task );   //パネル描画
+        panel_VisibleSet( twk->pp[i], TRUE );   //パネル描画
+      }
+    }
+    twk->seq++;
+    return;
+  case 2:
+    if( twk->child_task > 0 ){
+      return;
+    }
+    break;
+  }
+  BVC_PrintQueLimmitUpSet( bvp->printQue, FALSE );
+  
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
   GFL_TCBL_Delete(tcb);
 }
 
