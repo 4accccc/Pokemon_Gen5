@@ -73,7 +73,7 @@ $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 
 %.nsbmd:	data/%.imd
-	@g3dcvtr $< -tex-nomerge
+	@g3dcvtr $<
 
 %.nsbca:	data/%.ica
 	@g3dcvtr $<

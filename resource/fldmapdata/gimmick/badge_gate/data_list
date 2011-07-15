@@ -1,13 +1,31 @@
 DATA_LIST = \
     swanbg_01.nsbmd \
+    swanbg_01_start.nsbmd \
+    swanbg_01_end.nsbmd \
     swanbg_02.nsbmd \
+    swanbg_02_start.nsbmd \
+    swanbg_02_end.nsbmd \
     swanbg_03.nsbmd \
+    swanbg_03_start.nsbmd \
+    swanbg_03_end.nsbmd \
     swanbg_04.nsbmd \
+    swanbg_04_start.nsbmd \
+    swanbg_04_end.nsbmd \
     swanbg_05.nsbmd \
+    swanbg_05_start.nsbmd \
+    swanbg_05_end.nsbmd \
     swanbg_06.nsbmd \
+    swanbg_06_start.nsbmd \
+    swanbg_06_end.nsbmd \
     swanbg_07.nsbmd \
+    swanbg_07_start.nsbmd \
+    swanbg_07_end.nsbmd \
     swanbg_08.nsbmd \
+    swanbg_08_start.nsbmd \
+    swanbg_08_end.nsbmd \
     swanbg_09.nsbmd \
+    swanbg_09_start.nsbmd \
+    swanbg_09_end.nsbmd \
     swanbg_01.nsbca \
     swanbg_02.nsbca \
     swanbg_03.nsbca \
@@ -17,15 +35,6 @@ DATA_LIST = \
     swanbg_07.nsbca \
     swanbg_08.nsbca \
     swanbg_09.nsbca \
-    swanbg_01.nsbta \
-    swanbg_02.nsbta \
-    swanbg_03.nsbta \
-    swanbg_04.nsbta \
-    swanbg_05.nsbta \
-    swanbg_06.nsbta \
-    swanbg_07.nsbta \
-    swanbg_08.nsbta \
-    swanbg_09.nsbta \
     swanbg_roop_01.nsbta \
     swanbg_roop_02.nsbta \
     swanbg_roop_03.nsbta \
@@ -34,4 +43,13 @@ DATA_LIST = \
     swanbg_roop_06.nsbta \
     swanbg_roop_07.nsbta \
     swanbg_roop_08.nsbta \
-    swanbg_roop_09.nsbta
+    swanbg_roop_09.nsbta \
+    swanbg_01.nsbta \
+    swanbg_02.nsbta \
+    swanbg_03.nsbta \
+    swanbg_04.nsbta \
+    swanbg_05.nsbta \
+    swanbg_06.nsbta \
+    swanbg_07.nsbta \
+    swanbg_08.nsbta \
+    swanbg_09.nsbta
