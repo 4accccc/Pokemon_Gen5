@@ -78,7 +78,7 @@ SUBDIRS	=	wmi \
 			compatible \
 			musical \
 			infowin \
-			c_gear \
+			c_gear_old \
 			cg_comm \
 			gsync \
 			gtsnego \
