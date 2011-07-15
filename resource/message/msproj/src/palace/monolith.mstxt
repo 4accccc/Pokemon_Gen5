@@ -2627,10 +2627,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>デルダマがたりません
+
 ひつよう[Digit:4digits ]こ／もっている[Digit:4digits Idx="1" ]こ</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-14T02:35:37" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-15T03:21:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -2639,10 +2640,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デルダマがたりません
+
 ひつよう[Digit:4digits ]こ／もっている[Digit:4digits Idx="1" ]こ</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-14T02:35:50" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-15T03:21:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
