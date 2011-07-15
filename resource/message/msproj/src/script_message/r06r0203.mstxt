@@ -2,122 +2,6 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_r06r0203_poke4_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>こふおおおおーっ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:23:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>こふおおおおーっ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:23:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・GRIDX=7、GRIDZ=4
-・r13で戦闘し倒したりした場合
-　殿堂入りでココに復帰（暫定）</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:25:11" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE4
-ポケモン・コバルオン</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:25:50" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_r06r0203_poke4_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモンは　いわかべを　かけあがり
-ほらあなの　どこかへ　きえてしまった……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:25:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモンは　岩壁を　駆け上がり
-洞穴の　どこかへ　消えてしまった……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:25:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・ポケモンを倒した場合</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:25:26" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE4
-ポケモン・コバルオン</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T08:25:50" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_r06r0203_oldman_01"
 		Style="Large">
 		<LanguageCell
@@ -147,12 +31,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・コバルオンが
-　いる
-　いない</Comment>
+・手持ちにコバルオンが
+　いる　→oldman_02
+　いない→oldman_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T03:44:08" />
+				Time="2011-07-15T09:49:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -171,13 +55,18 @@
 コバルオン　ではないか……！▼
 そうか　そうか
 おまえさん　こやつらに……▼
+ポケモンと　ひとが
+おたがいに　わかりあい　たすけあう▽
+そんな　せかいに　なったことを▼
+そんな　にんげんが　いることを
+つたえられたんだな……！▼
 ひとと　ポケモンだけでは　ない……
 いきものは　おたがいに　みとめあい▼
 しんらいしあって　いきていくことが
 いちばん　なんじゃ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:43:12" />
+				Time="2011-07-15T09:45:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -189,13 +78,18 @@
 コバルオン　ではないか……！▼
 そうか　そうか
 おまえさん　こやつらに……▼
-人と　ポケモンだけでは　ない…
+ポケモンと　人が
+お互いに　わかりあい　助け合う▽
+そんな　世界に　なったことを▼
+そんな　人間が　いることを
+伝えられたんだな……！▼
+人と　ポケモンだけでは　ない……
 生きるものは　お互いに　認めあい▼
 信頼しあって　生きていくことが
 一番なんじゃ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:43:19" />
+				Time="2011-07-15T09:45:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -204,10 +98,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・いる</Comment>
+・いる
+・一度！マークを表示する</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:41:20" />
+				Time="2011-07-15T09:55:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -222,10 +117,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>いまだ　にんげんを　にくんでいるのか▼
+それとも　ポケモンと　ひとが　ともに
+くらす　いまの　せかいを　みて▽
+なにか　おもっているのだろうか……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:41:36" />
+				Time="2011-07-15T09:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -233,10 +131,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>未だ　人間を　憎んでいるのか▼
+それとも　ポケモンと　人が　ともに
+暮らす　今の　世界を　みて▽
+なにか　思っているのだろうか……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T12:41:39" />
+				Time="2011-07-15T09:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -257,5 +158,107 @@
 				User="matsumiya:W00224"
 				Time="2011-07-12T12:41:24" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0203_poke4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こふおおおおーっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こふおおおおーっ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・GRIDX=7、GRIDZ=4
+・r13で戦闘し倒したりした場合
+　殿堂入りでココに復帰（暫定）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE4
+ポケモン・コバルオン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0203_poke4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンは　いわかべを　かけあがり
+ほらあなの　どこかへ　きえてしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンは　岩壁を　駆け上がり
+洞穴の　どこかへ　消えてしまった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・ポケモンを倒した場合</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE4
+ポケモン・コバルオン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:49:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
