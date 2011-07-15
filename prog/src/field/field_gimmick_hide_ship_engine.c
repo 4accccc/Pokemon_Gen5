@@ -25,9 +25,16 @@
 // arc
 #include "arc/fieldmap/hide_ship_engine.naix"
 
+// sound
+#include "sound/pm_sndsys.h"
+
+// script
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
 // mine
 #include "field_gimmick_hide_ship_engine.h"
 #include "field_gimmick_hide_ship_engine_se_def.h"
+#include "field_gimmick_hide_ship_engine_sv.h"
 #include "../../../resource/fldmapdata/gimmick/hide_ship_engine/hide_ship_engine_local_def.h"
 
 //=============================================================================
@@ -148,6 +155,7 @@ static const EX_HEIGHT_DATA ex_height_tbl[ EX_HEIGHT_NUM ] =
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  HIDE_SHIP_SV_WORK   *p_sv_wk;       // セーブワーク
 
   BOOL                pipe_flag[ PIPE_NUM ];    // パイプ状態フラグ
 
@@ -578,6 +586,9 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk );
 static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk );
 
+// 終了
+static void HIDE_SHIP_Exit( HIDE_SHIP_TMP *p_wk );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk );
 static void EXPOBJ_ObjDell( HIDE_SHIP_TMP *p_wk );
@@ -601,6 +612,8 @@ static void ANM_PIPE_SET_OUT( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 // BUTTONアニメ
 static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id );
 static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_BUTTON_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_BUTTON_SET_On( HIDE_SHIP_TMP *p_wk, u16 id );
 
 // GATE
 static void ANM_GATE_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id );
@@ -627,6 +640,17 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk );
 // 拡張高さ
 static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk );
 
+//-------------------------------------
+///	セーブ情報
+//=====================================
+static void SAVE_SetPipe( HIDE_SHIP_SV_WORK *p_wk, const u8 pipe, const int idx );
+static u8   SAVE_GetPipe( HIDE_SHIP_SV_WORK *p_wk, const int idx );
+static void SAVE_SetButton( HIDE_SHIP_SV_WORK *p_wk, const u8 button, const int idx );
+static u8   SAVE_GetButton( HIDE_SHIP_SV_WORK *p_wk, const int idx );
+static void SAVE_SetSaveFlag( HIDE_SHIP_SV_WORK *p_wk );
+static BOOL SAVE_GetSaveFlag( HIDE_SHIP_SV_WORK *p_wk );
+
+
 //=============================================================================
 /**
  *					外部公開関数
@@ -641,6 +665,8 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk );
 //--------------------------------------------------------------
 void HIDE_SHIP_Setup( FIELDMAP_WORK *p_fieldmap )
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
 
   // 汎用ワーク確保
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID,
@@ -648,6 +674,7 @@ void HIDE_SHIP_Setup( FIELDMAP_WORK *p_fieldmap )
 
   p_wk->exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap = p_fieldmap;
+  p_wk->p_sv_wk = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_HIDE_SHIP_ENGINE );
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
@@ -669,6 +696,9 @@ void HIDE_SHIP_Setup( FIELDMAP_WORK *p_fieldmap )
 void HIDE_SHIP_End( FIELDMAP_WORK *p_fieldmap )
 {
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
+
+  // 終了処理(セーブとか)
+  HIDE_SHIP_Exit( p_wk );
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -831,8 +861,51 @@ void HIDE_SHIP_GateOff( GAMESYS_WORK *gsys, int id )
 //-----------------------------------------------------------------------------
 static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk )
 {
-  // パイプの状態初期設定
-  HIDE_SHIP_PIPE_Init( p_wk );
+  int i;
+
+  //=====================================
+  // パイプの設定
+  //
+  if( SAVE_GetSaveFlag( p_wk->p_sv_wk ) == FALSE )
+  {
+    // セーブデータがないなら初期設定
+    HIDE_SHIP_PIPE_Init( p_wk );
+  }
+  else
+  {
+    // 全パイプ状態の設定
+    for( i=0; i<PIPE_NUM; i++ )
+    {
+      u16 obj_idx = OBJ_PIPE_1 + i;
+
+      if( SAVE_GetPipe( p_wk->p_sv_wk, i ) == 0 )
+      {
+        ANM_PIPE_SET_IN( p_wk, obj_idx );
+        p_wk->pipe_flag[i] = FALSE;
+      }
+      else
+      {
+        ANM_PIPE_SET_OUT( p_wk, obj_idx );
+        p_wk->pipe_flag[i] = TRUE;
+      }
+    }
+  }
+
+  //=====================================
+  // ボタンの設定
+  //
+  for( i=0; i<BUTTON_NUM; i++ )
+  {
+    if( SAVE_GetButton( p_wk->p_sv_wk, i ) )
+    {
+      ANM_BUTTON_SET_On( p_wk, i );
+    }
+    else
+    {
+      ANM_BUTTON_SET_Off( p_wk, i );
+    }
+  }
+
 }
 
 //----------------------------------------------------------------------------
@@ -920,6 +993,42 @@ static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk )
       p_wk->pipe_flag[i] = TRUE;
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了  セーブ含む
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク 
+ */
+//-----------------------------------------------------------------------------
+static void HIDE_SHIP_Exit( HIDE_SHIP_TMP *p_wk )
+{
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+  GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTWORK* p_evwk = GAMEDATA_GetEventWork( gdata );
+  int i;
+
+  // スクリプトのワーク取得
+  u16 *local_wk0 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK0 );
+  u16 *local_wk1 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK1 );
+  u16 *local_wk2 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK2 );
+  u16 *local_wk3 = EVENTWORK_GetEventWorkAdrs( p_evwk, LOCALWORK3 );
+
+  // ボタンの状態セーブ
+  SAVE_SetButton( p_wk->p_sv_wk, (u8)(*local_wk0), 0 );
+  SAVE_SetButton( p_wk->p_sv_wk, (u8)(*local_wk1), 1 );
+  SAVE_SetButton( p_wk->p_sv_wk, (u8)(*local_wk2), 2 );
+  SAVE_SetButton( p_wk->p_sv_wk, (u8)(*local_wk3), 3 );
+
+  // パイプの状態セーブ
+  for( i=0; i<PIPE_NUM; i++ )
+  {
+    SAVE_SetPipe( p_wk->p_sv_wk, p_wk->pipe_flag[ i ], i );
+  }
+
+  // セーブを行ったフラグをたてる
+  SAVE_SetSaveFlag( p_wk->p_sv_wk );
 }
 
 //=============================================================================
@@ -1314,7 +1423,7 @@ static void ANM_PIPE_SET_OUT( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
  *	@brief  オフアニメ再生
  *
  *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
- *	@param  u16 obj_idx   OBJインデックス
+ *	@param  u16 idx   ボタンインデックス
  */
 //-----------------------------------------------------------------------------
 static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id )
@@ -1331,7 +1440,7 @@ static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id )
  *	@brief  オンアニメ再生
  *
  *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
- *	@param  u16 obj_idx   OBJインデックス
+ *	@param  u16 idx   ボタンインデックス
  */
 //-----------------------------------------------------------------------------
 static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id )
@@ -1341,6 +1450,58 @@ static void ANM_BUTTON_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id )
   GF_ASSERT( id < BUTTON_NUM );
 
   ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンをオフ状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 idx   ボタンインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_BUTTON_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 anm_idx = 0;
+  u16 obj_idx = OBJ_BUTTON_1 + id;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+
+  // 他のアニメはSTOP
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンをオン状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 idx   ボタンインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_BUTTON_SET_On( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 anm_idx = 1;
+  u16 obj_idx = OBJ_BUTTON_1 + id;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+
+  // 他のアニメはSTOP
   ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
 }
 
@@ -1830,5 +1991,89 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk )
         ex_height_list);
   }
 
+}
+
+//=============================================================================
+/**
+ *          セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプの状態を設定
+ *
+ *	@param	HIDE_SHIP_SV_WORK *p_wk アジト船セーブワーク
+ *	@param	u8 pipe   0:引っ込んでいる  1:突き出てる
+ *	@param	int idx   パイプのインデックス
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPipe( HIDE_SHIP_SV_WORK *p_wk, const u8 pipe, const int idx )
+{
+  p_wk->pipe[ idx ] = pipe;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプの状態を取得
+ *
+ *	@param	HIDE_SHIP_SV_WORK *p_wk アジト船セーブワーク
+ *	@param	int idx   パイプのインデックス
+ *
+ *	@return	u8  0:引っ込んでいる  1:突き出てる
+ */
+//-----------------------------------------------------------------------------
+static u8 SAVE_GetPipe( HIDE_SHIP_SV_WORK *p_wk, const int idx )
+{
+  return p_wk->pipe[ idx ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンの状態を設定
+ *
+ *	@param	HIDE_SHIP_SV_WORK *p_wk アジト船セーブワーク
+ *	@param	u8 button 0:引っ込んでいる  1:突き出ている
+ *	@param	int idx   ボタンのインデックス
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetButton( HIDE_SHIP_SV_WORK *p_wk, const u8 button, const int idx )
+{
+  p_wk->button[ idx ] = button;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンの状態を取得
+ *
+ *	@param	HIDE_SHIP_SV_WORK *p_wk アジト船セーブワーク
+ *	@param	int idx   ボタンのインデックス
+ *
+ *	@return	u8 0:引っ込んでいる  1:突き出ている
+ */
+//-----------------------------------------------------------------------------
+static u8 SAVE_GetButton( HIDE_SHIP_SV_WORK *p_wk, const int idx )
+{
+  return p_wk->button[ idx ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回セーブフラグを設定
+ *
+ *	@param	HIDE_SHIP_SV_WORK *p_wk アジト船セーブワーク 
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetSaveFlag( HIDE_SHIP_SV_WORK *p_wk )
+{
+  p_wk->save_flag = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回セーブフラグを取得
+ *
+ *	@param	HIDE_SHIP_SV_WORK *p_wk アジト船セーブワーク 
+ *
+ *	@return フラグ
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetSaveFlag( HIDE_SHIP_SV_WORK *p_wk )
+{
+  return p_wk->save_flag;
 }
 
