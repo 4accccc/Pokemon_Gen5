@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: medal_achieve_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MEDAL_ACHIEVE_DATA_NAIX_
+#define NARC_MEDAL_ACHIEVE_DATA_NAIX_
+
+enum {
+	NARC_medal_achieve_data_achieve_data_bin = 0
+};
+
+/* NARC_MEDAL_ACHIEVE_DATA_NAIX_ */
+#endif

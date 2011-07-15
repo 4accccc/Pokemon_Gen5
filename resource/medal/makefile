@@ -13,7 +13,7 @@ USERS	=
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
-SUBDIRS	= data graphic medal_icon
+SUBDIRS	= data graphic medal_icon achieve_table
 
 #共通ルールファイルのインクルード
 include $(PROJECT_RSCDIR)/macro_define
