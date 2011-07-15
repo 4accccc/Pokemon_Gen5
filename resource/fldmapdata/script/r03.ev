@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r03.h"
   .include  "r03.h"
 
+  //@author fujimura_souichirou（一言NPC）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,12 +21,23 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
 _EVENT_DATA    ev_bg_r03_board_01
 _EVENT_DATA    ev_bg_r03_board_02
 _EVENT_DATA    ev_bg_r03_board_03
-_EVENT_DATA    ev_pos_r03_sodateya_egg		//タマゴ発見を教えてくれるPOSイベント
+_EVENT_DATA    ev_pos_r03_sodateya_egg    //タマゴ発見を教えてくれるPOSイベント
+_EVENT_DATA    ev_r03_woman3_01
+_EVENT_DATA    ev_r03_babygirl1_01
+_EVENT_DATA    ev_r03_babygirl1_02
+_EVENT_DATA    ev_r03_babyboy1_01
+_EVENT_DATA    ev_r03_babyboy1_02
 _EVENT_DATA_END
+
+//主人公座標取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+//タマゴ用変数
+DEFINE_LOCAL  LWK_EGG_CHK
 
 
 /**************************************************************/
@@ -32,73 +45,161 @@ _EVENT_DATA_END
 /**************************************************************/
 //タマゴが発見された時、声をかけてくれるPOSイベント
 EVENT_START   ev_pos_r03_sodateya_egg
-	//育て屋：下向きにして
-	_OBJ_ANIME( R03_SODATEYA_GRANDPA, anm_obj_dir_d )
-	_OBJ_ANIME_WAIT()
-	
-	//おーい ～～くん！
-	_PLAYER_NAME( 0 )
-	_GET_MY_SEX( SCWK_ANSWER )
-	IF $SCWK_ANSWER == 0 THEN
-		_PLAINWIN_MSG_UP( msg_r03_sodateya_01m )
-	ELSE
-		_PLAINWIN_MSG_UP( msg_r03_sodateya_01f )
-	ENDIF
-	_MSGWIN_CLOSE()
-	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
-	
-	/*
-	//主人公：育て屋の方へ
-	_PLAYER_POS_GET( SCWK_TEMP0, SCWK_TEMP1 )
-	IF $SCWK_TEMP1 == 562 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01a )
-	ELSIF $SCWK_TEMP1 == 563 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01b )
-	ELSIF $SCWK_TEMP1 == 564 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01c )
-	ELSE
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01d )
-	ENDIF*/
-	_OBJ_ANIME_WAIT()
-	
-	//========================================//
-	//POSを無効にする
-	$WK_OTHER_DISCOVER_EGG = 0
-	//========================================//
-	
+  //育て屋：下向きにして
+  _OBJ_ANIME( R03_SODATEYA_GRANDPA, anm_obj_dir_d )
+  _OBJ_ANIME_WAIT()
+
+  //おーい ～～くん！
+  _PLAYER_NAME( 0 )
+  _GET_MY_SEX( SCWK_ANSWER )
+  IF $SCWK_ANSWER == 0 THEN
+    _PLAINWIN_MSG_UP( msg_r03_sodateya_01m )
+  ELSE
+    _PLAINWIN_MSG_UP( msg_r03_sodateya_01f )
+  ENDIF
+  _MSGWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+
+  /*
+  //主人公：育て屋の方へ
+  _PLAYER_POS_GET( SCWK_TEMP0, SCWK_TEMP1 )
+  IF $SCWK_TEMP1 == 562 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01a )
+  ELSIF $SCWK_TEMP1 == 563 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01b )
+  ELSIF $SCWK_TEMP1 == 564 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01c )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_egg_player_move_01d )
+  ENDIF*/
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //POSを無効にする
+  $WK_OTHER_DISCOVER_EGG = 0
+  //========================================//
+
 EVENT_END
 
 //--------------------------------------------------------------
 //方向変更
 //--------------------------------------------------------------
-_ANIME_LABEL	 anm_obj_dir_d
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_obj_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
 
-_ANIME_LABEL	 anm_stay_walk_u
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_stay_walk_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
-/*看板01                                                      */
+/*  看板01                                                    */
 /**************************************************************/
 EVENT_START   ev_bg_r03_board_01
-	_EASY_BGWIN_MSG(msg_r03_sign1_01 , TYPE_ROAD)
+  _EASY_BGWIN_MSG( msg_r03_sign1_01, TYPE_ROAD )
 EVENT_END
 
-
 /**************************************************************/
-/*看板02                                                      */
+/*  看板02                                                    */
 /**************************************************************/
 EVENT_START   ev_bg_r03_board_02
-	_EASY_BGWIN_MSG(msg_r03_sign4_01 , TYPE_POST)
+  _EASY_BGWIN_MSG( msg_r03_sign4_01, TYPE_POST )
 EVENT_END
 
-
 /**************************************************************/
-/*看板03                                                     */
+/*  看板03                                                    */
 /**************************************************************/
 EVENT_START   ev_bg_r03_board_03
-	_EASY_BGWIN_MSG(msg_r03_sign3_01 , TYPE_INFO)
+  _EASY_BGWIN_MSG( msg_r03_sign3_01, TYPE_INFO )
 EVENT_END
+
+/**************************************************************/
+/*  保育師：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r03_woman3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_woman3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♀01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03_babygirl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♀02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03_babygirl1_02
+
+  _TALK_OBJ_START()
+
+  //幼児♀：トレーナーさん
+  _BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1b_01 )
+
+  //ポケモンのタマゴを持っている？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+    //タマゴの数をチェック
+    _GET_PARTY_POKE_COUNT( LWK_EGG_CHK, POKECOUNT_MODE_ONLY_EGG )
+
+    //タマゴを持っている？
+    IF $LWK_EGG_CHK != 0 THEN
+
+      //幼児♀：うわあ！　ポケモンの　タマゴだあ！
+      _BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1b_02 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE
+
+      //幼児♀：ウソつきは　ドロボウの　はじまり！
+      _BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1b_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE    //いいえ
+
+    //幼児♀：そっかあ……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r03_babygirl1b_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  幼児♂01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03_babyboy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_babyboy_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♂02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03_babyboy1_02
+
+  //自機の動作形態を取得
+  _PLAYER_FORM_GET( SCWK_ANSWER )
+
+  //自転車に乗っている？
+  IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+    //幼児：ひゅーひゅー！！　じてんしゃに
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_babyboy1_02 )
+
+  ELSE
+    //幼児：……もしかして
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_babyboy1_01 )
+
+  ENDIF
+
+EVENT_END
+
+

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/14 15:06:53
+#save date:2011/07/15 15:08:42
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r03.wms
 #hold event type:
 1
 #hold event number:
-19
+26
 #event number: 0
 #type
 1
@@ -599,6 +599,223 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 392 0 24
+#event number: 19
+#type
+1
+#ID name
+R03_WOMAN3_01
+#OBJ CODE Number
+WOMAN3
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03_WOMAN3_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+872 16 56
+#event number: 20
+#type
+1
+#ID name
+R03_BABYGIRL1_01
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03_BABYGIRL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+840 0 -40
+#event number: 21
+#type
+1
+#ID name
+R03_BABYGIRL1_02
+#OBJ CODE Number
+BABYGIRL1
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03_BABYGIRL1_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+856 0 -40
+#event number: 22
+#type
+1
+#ID name
+R03_BABYBOY1_02
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03_BABYBOY1_02
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1016 16 8
+#event number: 23
+#type
+1
+#ID name
+R03_BABYBOY1_01
+#OBJ CODE Number
+BABYBOY1
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R03_BABYBOY1_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1064 16 72
+#event number: 24
+#type
+1
+#ID name
+R03_POKE18_01
+#OBJ CODE Number
+POKE18
+#MOVE CODE Number
+MV_RTDL         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1064 16 136
+#event number: 25
+#type
+1
+#ID name
+R03_POKE38_01
+#OBJ CODE Number
+POKE38
+#MOVE CODE Number
+MV_RTUR         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 16 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

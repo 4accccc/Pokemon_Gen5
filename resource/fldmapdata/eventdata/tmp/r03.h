@@ -31,6 +31,13 @@
 #define FLD_ITEM_277                      16
 #define FLD_ITEM_278                      17
 #define FLD_ITEM_279                      18
+#define R03_WOMAN3_01                     19
+#define R03_BABYGIRL1_01                  20
+#define R03_BABYGIRL1_02                  21
+#define R03_BABYBOY1_02                   22
+#define R03_BABYBOY1_01                   23
+#define R03_POKE18_01                     24
+#define R03_POKE38_01                     25
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

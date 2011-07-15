@@ -13,6 +13,14 @@
 
 #define R03R0101_WOMAN3_02                 0
 #define FLD_ITEM_280                       1
+#define R03R0101_BABYBOY1_01               2
+#define R03R0101_BABYBOY1_02               3
+#define R03R0101_MIDDLEWOMAN2_01           4
+#define R03R0101_BABYGIRL1_01              5
+#define R03R0101_POKE33_01                 6
+#define R03R0101_POKE34_01                 7
+#define R03R0101_POKE35_01                 8
+#define R03R0101_WOMAN3_01                 9
 
 #endif //ZONE_R03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

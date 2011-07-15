@@ -13,6 +13,7 @@
 
 #define R03R0201_SODATEYA_GRANDMA          0
 #define R03R0201_BADMAN_01                 1
+#define R03R0201_WOMAN2_01                 2
 
 #endif //ZONE_R03R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

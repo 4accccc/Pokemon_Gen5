@@ -11,7 +11,9 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r03r0101.h"
   .include  "r03r0101.h"
-  
+
+  //@author fujimura_souichirou（一言NPC）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -20,48 +22,140 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r03r0101_woman3_02
+_EVENT_DATA    ev_r03r0101_middlewoman2_01
+_EVENT_DATA    ev_r03r0101_woman3_01
+_EVENT_DATA    ev_r03r0101_babygirl1_01
+_EVENT_DATA    ev_r03r0101_babyboy1_01
+_EVENT_DATA    ev_r03r0101_babyboy1_02
+_EVENT_DATA    ev_r03r0101_poke33_01
+_EVENT_DATA    ev_r03r0101_poke34_01
+_EVENT_DATA    ev_r03r0101_poke35_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
-//																	//
-//	LOCALWORK1を使用しました。同マップ内の使用を禁止します。	//
-//	LOCALWORK1⇒回復処理を行った後1// 
-//																	//
+//                                                                  //
+//  LOCALWORK1を使用しました。同マップ内の使用を禁止します。        //
+//  LOCALWORK1⇒回復処理を行った後1                                 // 
+//                                                                  //
 //------------------------------------------------------------------//
 
+
 /**************************************************************/
-/*  R03R0101 WOMAN3（回復処理）*/
+/*  R03R0101 WOMAN3（回復処理）                               */
 /**************************************************************/
 EVENT_START   ev_r03r0101_woman3_02
-	_TALK_OBJ_START()
-	
-	//入室して初回話しかけ
-	IF $LOCALWORK1 == 0 THEN
-	
-		//やすんでいきなさい
-		_BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_02,R03R0101_WOMAN3_02 )
-		_BALLOONWIN_CLOSE()
-		
-		//暗転して手持ちポケモンを回復
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
-		_TEMOTI_POKEMON_KAIFUKU()		//回復処理
-		_ME_PLAY( SEQ_ME_ASA )
-		_ME_WAIT()
-		_BLACK_IN()
-		_DISP_FADE_END_CHECK()
-		
-		//========================================//
-		$LOCALWORK1 = 1
-		//========================================//
-	
-	//入室して２回目以降の話しかけ
-	ELSE
-		//元気ね
-		_BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_01,R03R0101_WOMAN3_02 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-	
-	ENDIF
+  _TALK_OBJ_START()
+
+  //入室して初回話しかけ
+  IF $LOCALWORK1 == 0 THEN
+
+    //やすんでいきなさい
+    _BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_02,R03R0101_WOMAN3_02 )
+    _BALLOONWIN_CLOSE()
+
+    //暗転して手持ちポケモンを回復
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+    _TEMOTI_POKEMON_KAIFUKU()   //回復処理
+    _ME_PLAY( SEQ_ME_ASA )
+    _ME_WAIT()
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+
+    //========================================//
+    $LOCALWORK1 = 1
+    //========================================//
+
+  //入室して２回目以降の話しかけ
+  ELSE
+
+    //元気ね
+    _BALLOONWIN_OBJMSG( msg_r03r0101_woman3a_01,R03R0101_WOMAN3_02 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+
+  ENDIF
+
 EVENT_END
+
+/**************************************************************/
+/*  おばさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03r0101_middlewoman2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_middlewoman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  保育師：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r03r0101_woman3_01
+
+  _TALK_OBJ_START()
+
+  //保育師：あなた　ポケモンの　とくせい
+  _BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_woman3_01 )
+
+  //特性「ほのおのからだ」を知っている？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+    //保育師：さすがね！　３ばんどうろ　だと
+    _BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_woman3_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+
+    //保育師：じゃあ　きいて！　とくせいが
+    _BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_woman3_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  幼児♀：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r03r0101_babygirl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_babygirl1a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♂01：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03r0101_babyboy1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_babyboy1a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♂02：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03r0101_babyboy1_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03r0101_babyboy1b_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ヤナップ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03r0101_poke33_01
+  _EASY_TALK_POKEVOICE( MONSNO_593, msg_r03r0101_poke33_01 )
+EVENT_END
+
+/**************************************************************/
+/*  バオップ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03r0101_poke34_01
+  _EASY_TALK_POKEVOICE( MONSNO_595, msg_r03r0101_poke34_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ヒヤップ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r03r0101_poke35_01
+  _EASY_TALK_POKEVOICE( MONSNO_597, msg_r03r0101_poke35_01 )
+EVENT_END
+
+

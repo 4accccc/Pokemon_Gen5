@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_R03R0201_BADMAN_01 (1)
+#define SCRID_R03R0201_WOMAN2_01 (2)
 
 #endif //_R03R0201_DEF_H_
