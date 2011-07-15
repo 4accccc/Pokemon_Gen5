@@ -1465,7 +1465,7 @@ end
   fp_hash.printf("$chihou_zukanno_hash = {\n" )
   monsno.size.times {|no|
     split_data = read_data[ no ].split(/,/)
-    fp_hash.printf("\t%d=>[%d],#%s\n",split_data[ PARA::ZENKOKU_NO ].to_i ,chihou_zukan[split_data[ PARA::ZENKOKU_NO ].to_i],split_data[ PARA::POKENAME ])
+    fp_hash.printf("\t%d=>%d,#%s\n",split_data[ PARA::ZENKOKU_NO ].to_i ,chihou_zukan[split_data[ PARA::ZENKOKU_NO ].to_i],split_data[ PARA::POKENAME ])
   }
   fp_hash.printf("}\n" )
   fp_hash.close
