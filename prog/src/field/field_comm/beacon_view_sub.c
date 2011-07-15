@@ -89,7 +89,6 @@ static void panel_Draw( BEACON_VIEW_PTR wk,
 static void list_TimeOutCheck( BEACON_VIEW_PTR wk );
 static void list_UpDownReq( BEACON_VIEW_PTR wk, SCROLL_DIR dir, u8 frame );
 static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq );
-static void list_UpDownReqBar( BEACON_VIEW_PTR wk, SCROLL_DIR dir, u8 step );
 static BOOL list_BarScrollParamSet( BEACON_VIEW_PTR wk, int y );
 static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u8 dir, u8 frame, PANEL_DRAW_TYPE draw_type );
 static void list_JumpReq( BEACON_VIEW_PTR wk, u8 new_top );
@@ -1505,28 +1504,6 @@ static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq )
 
   list_UpDownReq( wk, dir, PANEL_SCROLL_FRAME );
   obj_ScrollBarPosSetFromView( wk );
-}
-
-/*
- *  @brief  リストアップダウンリクエスト　スクロールバー
- */
-static void list_UpDownReqBar( BEACON_VIEW_PTR wk, SCROLL_DIR dir, u8 step )
-{
-  u8  frame;
-  if( step == 0 ){
-    return;
-  }
-  if( step < 2){
-    frame = PANEL_SCROLL_FRAME; 
-  }else if( step < 3 ){
-    frame = PANEL_SCROLL_FRAME/2; 
-  }else if( step < 4 ){
-    frame = PANEL_SCROLL_FRAME/4; 
-  }else{
-    frame = 1;
-  }
-  list_UpDownReq( wk, dir, 1/*frame*/ );
-  obj_UpDownViewSet( wk );
 }
 
 /*
