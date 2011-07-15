@@ -668,9 +668,6 @@
 #define		MONSNO_667		( 659 )		//せいぶつＸ
 #define		MONSNO_668		( 660 )		//ははおや
 #define		MONSNO_669		( 661 )		//あくりょう
-#define		MONSNO_670		( 662 )		//しろいかべ
-#define		MONSNO_671		( 663 )		//くろいかべ
-#define		MONSNO_672		( 664 )		//セットＡ
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )

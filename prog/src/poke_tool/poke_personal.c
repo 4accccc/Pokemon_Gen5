@@ -380,6 +380,7 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
 {
   POKEMON_PERSONAL_DATA ppd;
   u32 data_ofs;
+  u16 tmp = mons_no;
 
   //タマゴにはパーソナルがないので、0のダミーデータを読み込ませるようにする
   //GF_ASSERT( ( mons_no != MONSNO_TAMAGO ) && ( mons_no != MONSNO_DAMETAMAGO ) );
@@ -399,6 +400,8 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
   }
 
   mons_no = ppd.form_index + form_no - 1;
+
+  OS_Printf("monsno=%d のform_no=%dは ID=%d\n", tmp, form_no, mons_no);
 
   return mons_no;
 
