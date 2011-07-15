@@ -690,7 +690,7 @@
 #define		MONSNO_TAMAGO				( 650 )
 #define		MONSNO_DAMETAMAGO		( 651 )
 #define		MONSNO_END					( 649 )
-#define		MONSNO_MAX					( 677 )
+#define		MONSNO_MAX					( 666 )
 
 //別フォルム定義
 //アンノーン
