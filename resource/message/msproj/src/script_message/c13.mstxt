@@ -2126,6 +2126,107 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c13_badman1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ハイパーボール　もちすぎだろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:26:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！　まじかよ！　うそだろ？
+ハイパーボール　持ちすぎだろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:26:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:25:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ハイパーボールを受け取れない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:23:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:23:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_badman1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="0" ]を　ゆずって
+かわりに　[Name:Item Idx="2" ]を　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:24:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="0" ]を　譲って
+代わりに　[Name:Item Idx="2" ]を　もらった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:24:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:24:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・道具交換時
+・アイテム入手ME再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:25:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BADMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T11:23:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c13_sign1_01"
 		Style="Large">
 		<LanguageCell
