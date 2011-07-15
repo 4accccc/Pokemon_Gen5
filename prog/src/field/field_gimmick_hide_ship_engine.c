@@ -28,6 +28,7 @@
 // mine
 #include "field_gimmick_hide_ship_engine.h"
 #include "field_gimmick_hide_ship_engine_se_def.h"
+#include "../../../resource/fldmapdata/gimmick/hide_ship_engine/hide_ship_engine_local_def.h"
 
 //=============================================================================
 /**
@@ -142,20 +143,13 @@ static const EX_HEIGHT_DATA ex_height_tbl[ EX_HEIGHT_NUM ] =
 */
 //=============================================================================
 //-------------------------------------
-///	パイプ1つのデータ
-//=====================================
-typedef struct {
-  BOOL      start_flag;      // 起動フラグ(突き出てるか)
-} PIPE_WORK;
-
-//-------------------------------------
 ///	ギミック内部中の一時ワーク
 //=====================================
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
 
-  PIPE_WORK           pipe_wk[ PIPE_NUM ];    // パイプワーク
+  BOOL                pipe_flag[ PIPE_NUM ];    // パイプ状態フラグ
 
 } HIDE_SHIP_TMP;
 
@@ -580,6 +574,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 */
 //=============================================================================
 
+// 初期化
+static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk );
+static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk );
 static void EXPOBJ_ObjDell( HIDE_SHIP_TMP *p_wk );
@@ -597,6 +595,8 @@ static BOOL ANM_PIPE_IN_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_OUT_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static BOOL ANM_PIPE_OUT_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+static void ANM_PIPE_SET_IN( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+static void ANM_PIPE_SET_OUT( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 
 // BUTTONアニメ
 static void ANM_BUTTON_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id );
@@ -655,6 +655,8 @@ void HIDE_SHIP_Setup( FIELDMAP_WORK *p_fieldmap )
   // 拡張高さセット
   EX_HEIGHT_Set( p_wk );
 
+  // 初期化
+  HIDE_SHIP_Init( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -820,6 +822,106 @@ void HIDE_SHIP_GateOff( GAMESYS_WORK *gsys, int id )
  *					static関数
 */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化  セーブ含む
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク 
+ */
+//-----------------------------------------------------------------------------
+static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk )
+{
+  // パイプの状態初期設定
+  HIDE_SHIP_PIPE_Init( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化  パイプの初期状態
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk )
+{
+  int i;
+  u8 state_tbl[ PIPE_NUM ] = { 0 };
+
+  //バージョンで白黒を変える
+#ifdef PM_DEBUG
+  // L
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L)
+#else
+  if( GET_VERSION() == VERSION_B2 )
+#endif
+  {
+    const u8 tmp_tbl[ PIPE_NUM ] = {
+      PIPE_1_B,
+      PIPE_2_B,
+      PIPE_3_B,
+      PIPE_4_B,
+      PIPE_5_B,
+      PIPE_6_B,
+      PIPE_7_B,
+      PIPE_8_B,
+      PIPE_9_B,
+      PIPE_10_B,
+      PIPE_11_B,
+      PIPE_12_B,
+      PIPE_13_B,
+      PIPE_14_B,
+      PIPE_15_B,
+      PIPE_16_B,
+    };
+
+    // メモリコピー
+    GFL_STD_MemCopy( tmp_tbl, state_tbl, sizeof(u8)*PIPE_NUM );
+  }
+  else
+  {
+    const u8 tmp_tbl[ PIPE_NUM ] = {
+      PIPE_1_W,
+      PIPE_2_W,
+      PIPE_3_W,
+      PIPE_4_W,
+      PIPE_5_W,
+      PIPE_6_W,
+      PIPE_7_W,
+      PIPE_8_W,
+      PIPE_9_W,
+      PIPE_10_W,
+      PIPE_11_W,
+      PIPE_12_W,
+      PIPE_13_W,
+      PIPE_14_W,
+      PIPE_15_W,
+      PIPE_16_W,
+    };
+    // メモリコピー
+    GFL_STD_MemCopy( tmp_tbl, state_tbl, sizeof(u8)*PIPE_NUM );
+  }
+
+
+  // 全パイプ状態の設定
+  for( i=0; i<PIPE_NUM; i++ )
+  {
+    u16 obj_idx = OBJ_PIPE_1 + i;
+
+    ICHI_Printf("tbl[ %d ] = %d \n", i , state_tbl[i]);
+
+    if( state_tbl[ i ] == 0 )
+    {
+      ANM_PIPE_SET_IN( p_wk, obj_idx );
+      p_wk->pipe_flag[i] = FALSE;
+    }
+    else
+    {
+      ANM_PIPE_SET_OUT( p_wk, obj_idx );
+      p_wk->pipe_flag[i] = TRUE;
+    }
+  }
+}
+
 //=============================================================================
 /**
  *          EXPOBJ
@@ -893,7 +995,7 @@ static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
 
       // 回転
       {
-        u16 rtbl[DIR_MAX4][3] = {{0,0xc000,0},{0,0x4000,0},{0,0,0},{0,0x8000,0}};
+        u16 rtbl[DIR_MAX4][3] = {{0,0xc000,0},{0,0x4000,0},{0,0x8000,0},{0,0,0}};
         u16 *rot = rtbl[ pipe_init_tbl[i].dir ];
         GFL_G3D_OBJSTATUS *status;
 
@@ -1127,6 +1229,75 @@ static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
   ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
   ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
   ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプを引っ込み状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 obj_idx   OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_PIPE_SET_IN( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+{
+  u16 anm_idx = 0;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+
+  // 他のアニメはSTOP
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプを突き出し状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 obj_idx   OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_PIPE_SET_OUT( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+{
+  u16 anm_idx = 2;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+
+  // ICA
+  {
+    anm_idx = 2;
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+    // 最終フレーム取得
+    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+    // ラストフレームにする
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+  }
+
+  // くっついた時のアニメ
+  {
+    anm_idx = 1;
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+    // 最終フレーム取得
+    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+    // ラストフレームにする
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+  }
+
+  // 他のアニメはSTOP
+  ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
 }
 
 //=============================================================================
@@ -1459,7 +1630,7 @@ static void BUTTON_EVENT_PipeStartup( HIDE_SHIP_TMP *p_wk, int pipe_idx )
   // パイプのOBJインデックス算出
   obj_idx = OBJ_PIPE_1 + pipe_idx;
 
-  if( p_wk->pipe_wk[ pipe_idx ].start_flag == TRUE )
+  if( p_wk->pipe_flag[ pipe_idx ] == TRUE )
   {
     PIPE_IN_TASK_Add( p_wk, obj_idx );
   }
@@ -1469,7 +1640,7 @@ static void BUTTON_EVENT_PipeStartup( HIDE_SHIP_TMP *p_wk, int pipe_idx )
   }
 
   // フラグ反転
-  p_wk->pipe_wk[ pipe_idx ].start_flag = !p_wk->pipe_wk[ pipe_idx ].start_flag;
+  p_wk->pipe_flag[ pipe_idx ] = !p_wk->pipe_flag[ pipe_idx ];
 }
 
 //----------------------------------------------------------------------------

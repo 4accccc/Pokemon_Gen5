@@ -20,6 +20,8 @@ TARGETDIR = $(PROJECT_ARCDIR)$(FLDMAP)
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
+DEF_HEADER = hide_ship_engine_local_def.h
+
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
@@ -45,11 +47,14 @@ INCPATH	= -I$(NITROSDK_ROOT)/include
 #ツール
 #------------------------------------------------------------------------------
 
+DEF_MAKE = ../def_write.rb
+XLS_CNV = ../../../../tools/exceltool/xls2xml/tab_out.rb
+
 .PHONY:	do-build clean
 
 
 
-do-build: $(TARGETDIR)/$(targetname).narc
+do-build: $(TARGETDIR)/$(targetname).narc $(DEF_HEADER)
 
 clean:
 	@rm -f $(TARGETDIR)/$(targetname).narc
@@ -58,6 +63,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(targetname).narc
 	@rm -f $(targetname).naix
 	@rm -f *.nsb*
+	@rm -f *.bin
 endif
 
 
@@ -103,4 +109,7 @@ $(targetname).narc: $(DATA_LIST)
 #	@-rm -f *.nsb*
 #	@-rm -f *.bin
 
+$(DEF_HEADER): def_make.xls
+	ruby $(XLS_CNV) -c def_make.xls > def_make.csv
+	ruby $(DEF_MAKE) def_make.csv $(DEF_HEADER)
 endif
