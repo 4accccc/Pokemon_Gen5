@@ -40,14 +40,18 @@ struct _POKEWOOD_SYSTEM {
     
     u8  pokelist_select_num[6]; ///<ポケモン選択で取得した手持ちNo
     u16 pokelist_result_select; ///<ポケモンリスト戻り値
-    u16 pokelist_return_mode; ///<ポケモンリスト選択結果
+    u16 pokelist_return_mode;   ///<ポケモンリスト選択結果
 
-    REGULATION reg;           ///<レギュレーション
-  
+    REGULATION reg;             ///<レギュレーション
+    
+    u16 scenario_no; // 台本選択で選んだシナリオＮＯ
+    
 //  BATTLE_SETUP_PARAM *btl_setup_param;
 //  BTL_REC_SEL_PARAM btl_rec_sel_param;
 
   ///スクリプトとプログラムのやりとりのためのアドレスを保持するポインタ
   u16 * scr_answer_work;
+  
+  u16 join_mypoke; //手持ちでポケウッド撮影を行うか？ 
 };
 

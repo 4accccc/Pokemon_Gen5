@@ -13942,7 +13942,7 @@
 
 //--------------------------------------------------------------
 /**
- * @brief WBT:  ポケモン選択
+ * @brief POKEWOOD:  ポケモン選択
  * @param[out]  ret_wk  選択結果
  */
 //--------------------------------------------------------------
@@ -13952,6 +13952,20 @@
     .macro _ASM_PKWD_SELECT_POKEMON ret_wk
     .short  EV_SEQ_PKWD_SELECT_POKEMON
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief POKEWOOD:  ポケウッドに手持ちポケモンで参加するか？
+ * @param[in]  
+ */
+//--------------------------------------------------------------
+#define _PKWD_SET_JOIN_MYPOKE( flag ) \
+    _ASM_PKWD_SET_JOIN_MYPOKE flag
+
+    .macro _ASM_PKWD_SET_JOIN_MYPOKE flag
+    .short  EV_SEQ_PKWD_SET_JOIN_MYPOKE
+    .short  \flag
     .endm
 
 //--------------------------------------------------------------

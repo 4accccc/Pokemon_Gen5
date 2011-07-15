@@ -21,6 +21,7 @@
 #include "btl_pokeparam.h"
 #include "btl_field.h"
 #include "btlv/btlv_mcss.h"
+#include "pokewood/pokewood_senario.h"
 
 /*------------------------------------------------------------------------------*/
 /* ÉãÅ[ÉãÇ»Ç«äÓñ{èÓïÒ                                                           */
@@ -58,6 +59,7 @@ extern u16 BTL_MAIN_GetClientUseItem( const BTL_MAIN_MODULE* wk, u8 clientID, u8
 extern int BTL_MAIN_GetPokewoodMode( const BTL_MAIN_MODULE* wk );
 extern int BTL_MAIN_GetPokewoodSenarioNo( const BTL_MAIN_MODULE* wk );
 extern int BTL_MAIN_GetPlayerClientSelectWaza( const BTL_MAIN_MODULE *wk );
+extern POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE *wk );
 
 
 /*------------------------------------------------------------------------------*/

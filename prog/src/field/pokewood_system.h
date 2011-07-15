@@ -46,8 +46,13 @@ extern void PKWDSYS_SetScriptAnswerWork( PKWDSYS * pkwdsys, u16 * scr_answer_wor
 extern u16* PKWDSYS_GetScriptAnswerWork( PKWDSYS * pkwdsys );
 
 
+extern void PKWDSYS_SetJoinMypoke( PKWDSYS *pkwdsys, u16 flag );
+extern  int PKWDSYS_GetJoinMypoke( PKWDSYS *pkwdsys );
 
-//extern POKEPARTY * PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata );
+extern void PKWDSYS_SetScenarioNo( PKWDSYS *pkwdsys, int no );
+extern u16 PKWDSYS_GetScenarioNo( PKWDSYS *pkwdsys );
+
+extern void PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEPARTY *entry_party );
 //extern BATTLE_SETUP_PARAM * PKWDSYS_CreateBattleSetupParam( PKWDSYS * pkwdsys, GAMESYS_WORK * gsys );
 
 //extern void PKWDSYS_ReflectBattleResult(

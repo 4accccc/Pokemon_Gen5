@@ -115,7 +115,6 @@ typedef struct{
   POKEWOOD_EVENT_DATA event[EVENT_DATA_MAX];      ///< イベントデータ
 }POKEWOOD_SENARIO;
 
-extern POKEWOOD_SENARIO *BTL_MAIN_GetPokewoodSenario( const BTL_MAIN_MODULE *wk );
 
 
 #endif

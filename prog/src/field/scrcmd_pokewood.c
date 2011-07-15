@@ -150,11 +150,11 @@ VMCMD_RESULT EvCmdPokewoodRec( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPKWDSelectPokemon( VMHANDLE * core, void * wk )
 {
-  SCRCMD_WORK  *work   = wk;
-  SCRIPT_WORK  *sc     = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK *gsys   = SCRIPT_GetGameSysWork( sc );
-  u16          *ret_wk = SCRCMD_GetVMWork( core, wk );
-  PKWDSYS       *pkwdsys = getPOKEWOODSys( wk );
+  SCRCMD_WORK  *work    = wk;
+  SCRIPT_WORK  *sc      = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys    = SCRIPT_GetGameSysWork( sc );
+  u16          *ret_wk  = SCRCMD_GetVMWork( core, wk );
+  PKWDSYS      *pkwdsys = getPOKEWOODSys( wk );
   GMEVENT      *event;
 
   event = GMEVENT_CreateOverlayEventCall( gsys,
@@ -166,6 +166,23 @@ VMCMD_RESULT EvCmdPKWDSelectPokemon( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  手持ちポケモンを参加させるかどうかをスクリプトからもらう
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPKWDSetJoinMypoke( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
+  PKWDSYS   *pkwdsys = getPOKEWOODSys( wk );
+
+  PKWDSYS_SetJoinMypoke( pkwdsys, SCRCMD_GetVMWorkValue( core, work ));
+
+  return VMCMD_RESULT_SUSPEND;
+}
 
 
 //----------------------------------------------------------------------------
@@ -220,6 +237,7 @@ VMCMD_RESULT EvCmdPokewoodSelectScenario( VMHANDLE *core, void *wk )
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  
+  PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gdata );
 
 	GMEVENT *new_event;
 	PKWD_BOOK_PARAM 	*pkwd_param = PKWD_BOOK_PARAM_Create( heapID, gsys, ret_wk );

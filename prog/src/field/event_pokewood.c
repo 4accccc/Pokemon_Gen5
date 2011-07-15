@@ -312,6 +312,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
 
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
   const MYSTATUS *  mystatus =  GAMEDATA_GetMyStatus( gamedata );
+  PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
 
   int i;
 
@@ -334,7 +335,13 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam(
     
     // プレイヤーパーティーの登録
 //    setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, myData[senario_no], myDataNum[senario_no] );
-    setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, senario_no, 0 );
+    if(PKWDSYS_GetJoinMypoke(*pkwdsys)==TRUE){
+      // 手持ちから出す
+      PKWDSYS_CreateBattleParty( *pkwdsys, gamedata, bsp->party[BTL_CLIENT_PLAYER] );
+    }else{
+      // レンタルポケモン
+      setupPokemon( mystatus, bsp->party[BTL_CLIENT_PLAYER], heapID, senario_no, 0 );
+    }
   }
 
   GFL_HEAP_FreeMemory( pp );
@@ -552,9 +559,26 @@ static GMEVENT * createPokewoodSaveEvent(
 }
 //============================================================================================
 //============================================================================================
+
+
+enum{
+  PW_SHOW_SEQ_START=0,
+  PW_SHOW_SEQ_ENCOUNT_EFFECT,
+  PW_SHOW_SEQ_FIELDMAP_EXIT,
+  PW_SHOW_SEQ_TITLE_APP,
+  PW_SHOW_SEQ_TITLE_APP_END,
+  PW_SHOW_SEQ_CALL_BATTLE,
+  PW_SHOW_SEQ_FREE_BSP,
+  PW_SHOW_SEQ_FIELD_BGM_PLAY,
+  PW_SHOW_SEQ_FIELD_OPEN,
+  PW_SHOW_SEQ_FIELD_BGM_WAIT,
+  PW_SHOW_SEQ_FADEIN,
+  PW_SHOW_SEQ_END,
+};
 //-----------------------------------------------------------------------------
+// ポケウッド撮影イベント
 //-----------------------------------------------------------------------------
-static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * work )
+static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void * work )
 {
   PBEW * pbew = (PBEW*)work;
   PREW * prew = pbew->prew;
@@ -566,7 +590,7 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
 
   switch( *seq ) {
   // 戦闘用ＢＧＭセット
-  case 0:
+  case PW_SHOW_SEQ_START:
     // BATTLE_SETUP_PARAM生成
     pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
     // プレイヤーボリュームをフェードアウト
@@ -576,59 +600,135 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
     break;
 
   //エンカウントエフェクト
-  case 1:
+  case PW_SHOW_SEQ_ENCOUNT_EFFECT:
     ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
     (*seq)++;
     break;
 
   // フィールドマップ終了
-  case 2:
+  case PW_SHOW_SEQ_FIELDMAP_EXIT:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
     (*seq)++;
     break;
   // 撮影ならバトルへ、上映なら事前アプリの後バトルへ
-  case 3:
-//    pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
-    //侵入システムに戦闘中であることを伝える
-    TAMADA_Printf(" BSP ADDRESS %08x\n", pbew->bp );
-    if ( prew->PokewoodMode == BTL_POKEWOOD_REC ){
-      (*seq)=102;
-    }else{
-#ifdef PM_DEBUG
-      if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
-        (*seq)=102;   //直接バトルへ
-      }else{
-        (*seq)=100;   //上映前アプリを実行してからバトルへ
-      }
-#else
-      (*seq)=100;   //上映前アプリを実行してからバトルへ
-#endif
-    }
-    break;
-  // 事前アプリ
-  case 100:
-//    prew->pkwd_count_param.gamesys = gsys;
+  case PW_SHOW_SEQ_TITLE_APP:
     _init_pkwd_count_param( &prew->pkwd_count_param, pbew->bp );
     GMEVENT_CallProc( event, FS_OVERLAY_ID(pkwd_announce), &PkwdCountProcData, &prew->pkwd_count_param );
-    (*seq) = 101;
+    (*seq)++;
     break;
-  case 101:
+
+  // タイトルアプリ終了待ち
+  case PW_SHOW_SEQ_TITLE_APP_END:
     _delete_pkwd_count_param( &prew->pkwd_count_param );
-    (*seq) = 102;
+    (*seq)++;
     break;
   // バトル呼び出し
-  case 102:
+  case PW_SHOW_SEQ_CALL_BATTLE:
     // BGM切り替え
     FIELD_SOUND_ChangePlayerVolume( fsnd, MAX_VOLUME, 1 );  
-
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
-    (*seq) = 4;
+    (*seq)++;
+    break;
+
+  // 呼び出しパラメーター解放
+  case PW_SHOW_SEQ_FREE_BSP:
+    deletePokewoodBSP( pbew->bp );
+    (*seq) ++;
+    break;
+
+  // フィールドBGMを復帰
+  case PW_SHOW_SEQ_FIELD_BGM_PLAY:
+    GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
+    (*seq) ++;
+    break;
+
+  case PW_SHOW_SEQ_FIELD_OPEN: 
+    //勝ち負け判定
+    GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
+    (*seq) ++;
+    break;
+
+  // BGMの復帰待ち
+  case PW_SHOW_SEQ_FIELD_BGM_WAIT:
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
+    (*seq) ++;
+    break;
+
+  // フェードイン処理
+  case PW_SHOW_SEQ_FADEIN:
+    GMEVENT_CallEvent( event, 
+        EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+    (*seq) ++;
+    break;
+
+  case PW_SHOW_SEQ_END:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+enum{
+  PW_REC_SEQ_START=0,
+  PW_REC_SEQ_ENCOUNT_EFFECT,
+  PW_REC_SEQ_FIELDMAP_EXIT,
+  PW_REC_SEQ_CALL_BATTLE,
+  PW_REC_SEQ_SAVE,
+  PW_REC_SEQ_FREE_BSP,
+  PW_REC_SEQ_FIELD_BGM_PLAY,
+  PW_REC_SEQ_FIELD_OPEN,
+  PW_REC_SEQ_FIELD_BGM_WAIT,
+  PW_REC_SEQ_FADEIN,
+  PW_REC_SEQ_END,
+};
+
+//-----------------------------------------------------------------------------
+// ポケウッド上映イベント
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * work )
+{
+  PBEW * pbew = (PBEW*)work;
+  PREW * prew = pbew->prew;
+
+  GAMESYS_WORK * gsys = prew->gsys;
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND * fsnd  = GAMEDATA_GetFieldSound( gamedata );
+
+  switch( *seq ) {
+  // 戦闘用ＢＧＭセット
+  case PW_REC_SEQ_START:
+    // BATTLE_SETUP_PARAM生成
+    pbew->bp = createPokewoodBSP( prew, gsys, fieldmap, prew->heapID );
+    // プレイヤーボリュームをフェードアウト
+    FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, pbew->bp->musicDefault));
+    (*seq)++;
+    break;
+
+  //エンカウントエフェクト
+  case PW_REC_SEQ_ENCOUNT_EFFECT:
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
+    (*seq)++;
+    break;
+
+  // フィールドマップ終了
+  case PW_REC_SEQ_FIELDMAP_EXIT:
+    GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
+    (*seq)++;
+    break;
+  // バトル呼び出し
+  case PW_REC_SEQ_CALL_BATTLE:
+    // BGM切り替え
+    FIELD_SOUND_ChangePlayerVolume( fsnd, MAX_VOLUME, 1 );  
+    //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
+    GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
+    (*seq)++;
     break;
   // 撮影時はセーブ
-  case 4:
-    if ( prew->PokewoodMode == BTL_POKEWOOD_REC )
-    { //とりあえず無理やりセーブしてみる
+  case PW_REC_SEQ_SAVE:
+    if(pbew->bp->result!=BTL_RESULT_RUN)
+    { // 逃げてなかったらセーブする
       u8 bufID = prew->rec_id;
       GMEVENT * new_event = createPokewoodSaveEvent( gsys, bufID, pbew->bp, GFL_HEAPID_APP );
       GMEVENT_CallEvent( event, new_event );
@@ -636,54 +736,59 @@ static GMEVENT_RESULT pokewoodBattleEvent( GMEVENT * event, int *seq, void * wor
     (*seq)++;
     break;
 
-  case 5:
+  // バトル呼び出しパラメータを解放
+  case PW_REC_SEQ_FREE_BSP:
     deletePokewoodBSP( pbew->bp );
     //侵入システムにフィールド中であることを伝える
     (*seq) ++;
     break;
 
-  case 6: 
-    //戦闘結果反映処理
-    (*seq) ++;
-    break;
-
-  case 7:
+  case PW_REC_SEQ_FIELD_BGM_PLAY:
     // フィールドBGMを復帰
     GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
     (*seq) ++;
     break;
 
-  case 8: 
+  case PW_REC_SEQ_FIELD_OPEN: 
     //勝ち負け判定
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
 
   // BGMの復帰待ち
-  case 9:
+  case PW_REC_SEQ_FIELD_BGM_WAIT:
     GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
     (*seq) ++;
     break;
 
-  case 10:
+  case PW_REC_SEQ_FADEIN:
     GMEVENT_CallEvent( event, 
         EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
     (*seq) ++;
     break;
 
-  case 11:
+  case PW_REC_SEQ_END:
     //BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
 }
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static GMEVENT * createPokewoodBattleEvent(
     GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, PREW * prew )
 {
-  GMEVENT * event = GMEVENT_Create( gsys, NULL, pokewoodBattleEvent, sizeof(PBEW) );
-  PBEW * pbew = GMEVENT_GetEventWork( event );
+  GMEVENT * event;
+  PBEW * pbew;
+
+  // 撮影・上映で別イベントを起動
+  if(  prew->PokewoodMode==BTL_POKEWOOD_REC ){
+    event = GMEVENT_Create( gsys, NULL, pokewoodRecBattleEvent,  sizeof(PBEW) );
+  }else{
+    event = GMEVENT_Create( gsys, NULL, pokewoodShowBattleEvent, sizeof(PBEW) );
+  }
+  pbew = GMEVENT_GetEventWork( event );
   pbew->prew = prew;
   return event;
 }
@@ -957,6 +1062,10 @@ static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_ad
     if ( p_wk->book_param.result != NULL && *(p_wk->book_param.result) == PKWD_BOOK_NOSELECT )
     {
       *(p_wk->book_param.result) = POKEWOOD_SCENEARIO_MAX;
+    }else{
+      GAMEDATA * gamedata = GAMESYSTEM_GetGameData( p_wk->gsys );
+      PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
+      PKWDSYS_SetScenarioNo( *pkwdsys, *(p_wk->book_param.result) );
     }
     return GMEVENT_RES_FINISH;
   }

@@ -188,21 +188,20 @@ _RET
 /**************************************************************/
 /**************************************************************/
 ev_pkwd_rec_select_poke:
-  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
-  _RET
-
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_08, SCWK_TARGET_OBJID, POS_DOWN )
   _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_PKWD_MENU )
-  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_04, 0 ) //自分のポケモン
-  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_05, 1 ) //レンタルポケモン
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_05, 0 ) //レンタルポケモン
+  _BMPMENU_MAKE_LIST( msg_pw_studio_sel_04, 1 ) //自分のポケモン
   _BMPMENU_MAKE_LIST( msg_pw_studio_sel_03, 2 ) //やめる
   _BMPMENU_START()
 
   SWITCH $LWK_PKWD_MENU
   CASE 0 THEN
-    $LWK_PKWD_SEQ = PKWD_REC_SEQ_POKELIST
-  CASE 1 THEN
     $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
+    _PKWD_SET_JOIN_MYPOKE( FALSE )	// レンタルポケモンで参加
+  CASE 1 THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_POKELIST
+    _PKWD_SET_JOIN_MYPOKE( TRUE )	// 自分の手持ちポケモンをだす
   DEFAULT
     $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
   ENDSWITCH
@@ -213,6 +212,7 @@ _RET
 /**************************************************************/
 ev_pkwd_rec_shooting:
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_12, SCWK_TARGET_OBJID, POS_DOWN )
+  _TIME_WAIT( 30 )
   _MSGWIN_CLOSE()
   //仮：ここで録画アプリ呼び出し
   _PKWD_REC( LWK_PKWD_REC_POS, LWK_PKWD_SCENARIO, SCWK_ANSWER )
@@ -230,7 +230,15 @@ _RET
 // ポケウッド：ポケモンリスト呼び出し
 /**************************************************************/
 ev_pkwd_rec_pokelist:
+  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_09, SCWK_TARGET_OBJID, POS_DOWN )
+  _MSGWIN_CLOSE()
   _PKWD_SELECT_POKEMON( SCWK_ANSWER )
+  IF $SCWK_ANSWER ==FALSE THEN
+    $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+    _RET
+  ENDIF
+  $LWK_PKWD_SEQ = PKWD_REC_SEQ_SHOOTING
+
 _RET
 
 /**************************************************************/

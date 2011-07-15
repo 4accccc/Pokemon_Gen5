@@ -19,6 +19,7 @@ extern VMCMD_RESULT EvCmdPokewoodSystemStart( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPokewoodSystemEnd( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdPKWDSelectPokemon( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdPKWDSetJoinMypoke( VMHANDLE *core, void *wk );
 
 
 // ポケウッド　再生

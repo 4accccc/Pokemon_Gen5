@@ -20,7 +20,7 @@
 
 #include "fld_btl_inst_tool.h"
 #include "tr_tool/ex_trainer_def.h" //TRID_OFFSET_WBT
-
+#include "battle/pokewood/pokewood_senario.h"
 
 //============================================================================================
 //============================================================================================
@@ -93,12 +93,12 @@ void PKWDSYS_SetPokelistResult( PKWDSYS * pkwdsys, PLIST_DATA * plist_data )
 #ifdef  PM_DEBUG
   {
     int i;
-    TAMADA_Printf("Select Mons:");
+    MORI_Printf("Select Mons:");
     for (i = 0; i < 6; i ++ )
     {
-      TAMADA_Printf("%02d ", pkwdsys->pokelist_select_num[i] );
+      MORI_Printf("%02d ", pkwdsys->pokelist_select_num[i] );
     }
-    TAMADA_Printf("\n ret_sel(%d) ret_mode(%d) script_return(%d)\n",
+    MORI_Printf("\n ret_sel(%d) ret_mode(%d) script_return(%d)\n",
         pkwdsys->pokelist_result_select, pkwdsys->pokelist_return_mode, *pkwdsys->scr_answer_work );
   }
 #endif
@@ -114,7 +114,18 @@ void PKWDSYS_SetupPokeListData( PKWDSYS * pkwdsys, GAMEDATA * gamedata, PLIST_DA
 
   PLIST_DATA_Init( plist_data, gamedata, PL_MODE_BATTLE_SUBWAY, party );
 
-  PokeRegulation_LoadData( REG_WBT_SINGLE, &pkwdsys->reg );
+  // 基本レギュレーテョンデータ読み込み
+  PokeRegulation_LoadData( REG_FREE_SINGLE, &pkwdsys->reg );
+
+  // ポケウッドシナリオデータから参戦可能数を書き換える
+  {
+    POKEWOOD_SENARIO *senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, pkwdsys->scenario_no, HEAPID_PROC);
+    pkwdsys->reg.NUM_LO = senario->pokenum_limit;   // @TODO:上限・下限ともに同数じゃなくなるかも
+    pkwdsys->reg.NUM_HI = senario->pokenum_limit;
+    GFL_HEAP_FreeMemory(senario);
+  }
+  
+  // パラメータに引渡し
   plist_data->reg = (void *)&pkwdsys->reg;
   plist_data->type = PL_TYPE_SINGLE;
 }
@@ -151,44 +162,51 @@ u16 * PKWDSYS_GetScriptAnswerWork( PKWDSYS * pkwdsys )
 }
 
 
+void PKWDSYS_SetJoinMypoke( PKWDSYS *pkwdsys, u16 flag )
+{
+  OS_Printf("手持ちポケモンでポケウッド参加？ = %d\n", flag);
+  pkwdsys->join_mypoke = flag;
+}
+int PKWDSYS_GetJoinMypoke( PKWDSYS *pkwdsys )
+{
+  return pkwdsys->join_mypoke;
+}
 
-#if 0
 
+void PKWDSYS_SetScenarioNo( PKWDSYS *pkwdsys, int no )
+{
+  OS_Printf("選択したシナリオ = %d\n", no);
+  pkwdsys->scenario_no = no;
+}
+
+u16 PKWDSYS_GetScenarioNo( PKWDSYS *pkwdsys )
+{
+  return pkwdsys->scenario_no;
+}
 //------------------------------------------------------------------
 /**
  * @brief 参戦するポケモンパーティを生成する
- * @param pkwdsys
- * @param gamedata
+ * @param pkwdsys     
+ * @param gamedata    
+ * @param entry_party 書き出すPOKEPARTYポインタ（確保済みであること）
  *
  * @return  POKEPARTY 生成したポケモンパーティ
  *
  * @note    呼び出し元で責任を持ってメモリを開放する必要がある
  */
 //------------------------------------------------------------------
-POKEPARTY * PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata )
+void PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEPARTY *entry_party )
 {
-  POKEPARTY * entry_party;
   POKEPARTY * base_party;
   POKEMON_PARAM * entry_pp;
   u32 cnt, max;
   u8 revise_level;
 
-  entry_party = GFL_HEAP_AllocMemory( pkwdsys->heapID, PokeParty_GetWorkSize() );
   PokeParty_Init( entry_party, TEMOTI_POKEMAX );
   base_party = GAMEDATA_GetMyPokemon( gamedata );
   entry_pp = GFL_HEAP_AllocMemoryLo( pkwdsys->heapID, POKETOOL_GetWorkSize() );
   PP_Clear( entry_pp );
-  max = WBTTOOL_GetPartyMaxByRule( pkwdsys->rule );
-#ifdef DEBUG_WEAK_PARTY
-  max = 1;
-#endif
-#ifdef  DEBUG_STRONG_PARTY
-  max = PokeParty_GetPokeCount( base_party );
-#endif
-  revise_level = PKWDSYS_GetRevisePokeLevel( pkwdsys );
-#ifdef  DEBUG_STRONG_PARTY
-  revise_level = 100;
-#endif
+  max = pkwdsys->reg.NUM_HI;
   for ( cnt = 0; cnt < max; cnt ++ )
   {
     POKEMON_PARAM * base_pp;
@@ -201,17 +219,8 @@ POKEPARTY * PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata )
     pos -= 1; //1 origin --> 0 origin
     base_pp = PokeParty_GetMemberPointer( base_party, pos );
     POKETOOL_CopyPPtoPP( base_pp, entry_pp );
-    if ( revise_level != 0 && PP_Get( entry_pp, ID_PARA_level, NULL ) != revise_level )
-    { //必要な場合はレベルを補正する
-      POKETOOL_MakeLevelRevise( entry_pp, revise_level );
-    }
-#ifdef DEBUG_WEAK_PARTY
-    PP_Put( entry_pp, ID_PARA_hp, 1 );  //負けやすくする！
-#endif
     PokeParty_Add( entry_party, entry_pp );
   }
   GFL_HEAP_FreeMemory( entry_pp );
 
-  return entry_party;
 }
-#endif

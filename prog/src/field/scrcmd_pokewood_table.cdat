@@ -30,6 +30,7 @@
   DEF_CMD( EvCmdPokewoodSystemStart,            EV_SEQ_PKWD_SYSTEM_START )
   DEF_CMD( EvCmdPokewoodSystemEnd,              EV_SEQ_PKWD_SYSTEM_END )
   DEF_CMD( EvCmdPKWDSelectPokemon,              EV_SEQ_PKWD_SELECT_POKEMON )
+  DEF_CMD( EvCmdPKWDSetJoinMypoke,              EV_SEQ_PKWD_SET_JOIN_MYPOKE ) // 手持ちポケモンでポケウッドに参加するか？
   
   END_CMD
   //スクリプトコマンドテーブル終了
