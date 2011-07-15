@@ -14177,7 +14177,7 @@
  * @def _HIDE_SHIP_GATE_SET
  * @brief エンジン部屋でのゲートの状態を設定する
  * @param id    ゲートのID 0～3
- * @param state  0:OFF 1:ON
+ * @param state  0:解除していない 1:解除した
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
@@ -14198,7 +14198,8 @@
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
 //--------------------------------------------------------------
-#define _HIDE_SHIP_GATE_OFF( id ) _ASM_HIDE_SHIP_GATE_OFF id
+#define _HIDE_SHIP_GATE_OFF( id ) \
+    _ASM_HIDE_SHIP_GATE_OFF id
 
   .macro  _ASM_HIDE_SHIP_GATE_OFF id
   .short  EV_SEQ_HIDE_SHIP_GATE_OFF

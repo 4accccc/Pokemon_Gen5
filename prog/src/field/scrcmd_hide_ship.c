@@ -92,10 +92,10 @@ VMCMD_RESULT EvCmdHideShip_GateSet( VMHANDLE *core, void *wk )
 
   // ƒQ[ƒgID
   id  = VMGetU16( core );
-  // ON/OFF
-  state  = VMGetU16( core );
-  if( state == 0 ){ flag = FALSE; }
-  else            { flag = TRUE;  }
+  // ‰ğœ‚µ‚Ä‚¢‚é‚©
+  state  = SCRCMD_GetVMWorkValue( core, work );
+  if( state == 1 ){ flag = FALSE; }   // ‰ğœ‚µ‚½
+  else            { flag = TRUE;  }   // ‰ğœ‚µ‚Ä‚¢‚È‚¢
 
   HIDE_SHIP_GateSet( gsys, id, flag );
 
