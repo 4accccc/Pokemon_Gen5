@@ -67,9 +67,9 @@ u32 POKEICON_GetCgxArcIndex( const POKEMON_PASO_PARAM* ppp )
 
 
 //#define MONSNO_WB_MAX ( 651 )
-#define MONSNO_SWANICON_MAX ( 664 )
-#define MONS_GRANO_TAMAGO ( 663 )
-#define MONS_PALNO_TAMAGO ( 676 )
+#define MONSNO_SWANICON_MAX ( 661 )
+#define MONS_GRANO_TAMAGO ( 660 )
+#define MONS_PALNO_TAMAGO ( 662 )
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -144,7 +144,6 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
       if( form_no )
       { 
         file_start = NARC_poke_icon_poke_icon_000_m_NCGR + POKEICON_FILE_MAX * ( MONSNO_SWANICON_MAX + 1 ) + POKEICON_FILE_MAX * ( gra_index + form_no - 1 );
-        OS_Printf("gra_index=%d, form_no=%d, file_start=%d\n", gra_index, form_no, file_start);
       }
     }
   }
