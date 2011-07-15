@@ -8,14 +8,11 @@
 			Language="JPN">
 			<Text>あなたの　ポケモンさん
 たいりょくは　ばっちり　かしら？▼
-どうろの　まんなかで　ポケモンさんの
-たいりょくが　へると▽
-たいへんだから　これを　あげる▼
-あなたの　バッグの
+まだ　はいるなら　あなたの　バッグの
 かいふくポケットに　いれておいてね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T12:15:38" />
+				Time="2011-07-15T11:49:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,14 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>あなたの　ポケモンさん
 体力は　ばっちり　かしら？▼
-道路の　真ん中で
-ポケモンさんの　体力が　減ると▽
-大変だから　これを　あげる▼
-あなたの　バッグの
+まだ　はいるなら　あなたの　バッグの
 回復ポケットに　いれておいてね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T12:16:23" />
+				Time="2011-07-15T11:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43,10 +37,10 @@
 			<Comment>♀
 ・アイテム入手処理
 　No017「キズぐすり」
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T11:17:34" />
+				Time="2011-07-15T11:50:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -76,12 +70,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンさんの　たいりょくが　へると
-たたかう　げんきが　なくなっちゃうから▼
+たたかう　げんきが　なくなっちゃう！▼
 ムリせず　こまめに
 ポケモンさんを　やすませてね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T12:15:46" />
+				Time="2011-07-15T12:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,12 +84,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンさんの　体力が　減ると
-戦う　元気が　なくなっちゃうから▼
+戦う　元気が　なくなっちゃう！▼
 ムリせず　こまめに
 ポケモンさんを　休ませてね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T12:16:14" />
+				Time="2011-07-15T12:03:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -105,10 +99,10 @@
 			Language="JPN">
 			<Comment>♀
 ・会話後「キズぐすり」入手後
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:52:11" />
+				Time="2011-07-15T11:50:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
