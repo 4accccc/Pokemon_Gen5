@@ -9,6 +9,7 @@
 #define DOOR_ID_D11R0101_D11R0401_EXIT01  4
 #define DOOR_ID_D11R0101_D11R0501_EXIT01  5
 #define DOOR_ID_D11R0101_D11R0301_EXIT01  6
+#define DOOR_ID_D11R0101_C03P19_EXIT01    7
 
 #endif //ZONE_D11R0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d11r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
