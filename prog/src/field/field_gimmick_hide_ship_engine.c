@@ -105,42 +105,51 @@ static const PIPE_INIT_PARAM pipe_init_tbl[ PIPE_NUM ] = {
 
 
 // 拡張高さ
-#define EX_HEIGHT_NUM             (14)    // 総数
+#define EX_HEIGHT_NUM             (16)    // 総数
 
 //-------------------------------------
 ///	拡張高さ設定構造体
 //=====================================
 typedef struct {
-  int   start_x;    // 領域開始グリッドX座標
-  int   start_z;    // 領域開始グリッドZ座標
-  int   size_x;     // 領域グリッド横幅
-  int   size_z;     // 領域グリッド縦幅
+  u8    start_x;    // 領域開始グリッドX座標
+  u8    start_z;    // 領域開始グリッドZ座標
+  u8    size_x;     // 領域グリッド横幅
+  u8    size_z;     // 領域グリッド縦幅
 } EX_HEIGHT_DATA;
 
 // 拡張高さのデータは上からの連番です。
 //
-//   ①　｜　⑧
-// ②■③■⑨■⑩
-//　 ④　｜　⑪
-// ⑤■⑥■⑫■⑬
-// 　⑦　｜　⑭
+//   ①　｜　⑨
+// ②■③■⑩■⑪
+//　 ④　｜　⑫
+//   ⑤  ｜  ⑬
+// ⑥■⑦■⑭■⑮
+// 　⑧　｜　⑯
 //
 static const EX_HEIGHT_DATA ex_height_tbl[ EX_HEIGHT_NUM ] =
 {
   { 8, 41, 1, 2 },    // 1
   { 5, 44, 2, 1 },    // 2
   {10, 44, 2, 1 },    // 3
-  { 8, 46, 1, 4 },    // 4
-  { 5, 51, 2, 1 },    // 5
-  {10, 51, 2, 1 },    // 6
-  { 8, 53, 1, 2 },    // 7
-  {22, 41, 1, 2 },    // 8
-  {19, 44, 2, 1 },    // 9
-  {24, 44, 2, 1 },    // 10
-  {22, 46, 1, 4 },    // 11
-  {19, 51, 2, 1 },    // 12
-  {24, 51, 2, 1 },    // 13
-  {22, 53, 1, 2 },    // 14
+  { 8, 46, 1, 2 },    // 4
+  { 8, 48, 1, 2 },    // 5
+  { 5, 51, 2, 1 },    // 6
+  {10, 51, 2, 1 },    // 7
+  { 8, 53, 1, 2 },    // 8
+  {22, 41, 1, 2 },    // 9
+  {19, 44, 2, 1 },    // 10
+  {24, 44, 2, 1 },    // 11
+  {22, 46, 1, 2 },    // 12
+  {22, 48, 1, 2 },    // 13
+  {19, 51, 2, 1 },    // 14
+  {24, 51, 2, 1 },    // 15
+  {22, 53, 1, 2 },    // 16
+};
+
+// 拡張高さの高さ
+static const fx32 ex_height_y[ 2 ] = {
+  (-49*FX32_ONE), // 地面の高さ
+  (-8*FX32_ONE),  // パイプの高さ
 };
 
 
@@ -586,8 +595,9 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk );
 static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk );
 
-// 終了
-static void HIDE_SHIP_Exit( HIDE_SHIP_TMP *p_wk );
+// セーブ
+static void HIDE_SHIP_Save( HIDE_SHIP_TMP *p_wk );
+
 
 // EXPOBJ
 static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk );
@@ -638,7 +648,9 @@ static void PIPE_OUT_TASK_Add( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk );
 
 // 拡張高さ
-static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk );
+static void EX_HEIGHT_Reset( HIDE_SHIP_TMP *p_wk );
+static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx );
+static void EX_HEIGHT_SetHeight( HIDE_SHIP_TMP *p_wk, int idx, int height_idx );
 
 //-------------------------------------
 ///	セーブ情報
@@ -679,9 +691,6 @@ void HIDE_SHIP_Setup( FIELDMAP_WORK *p_fieldmap )
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
-  // 拡張高さセット
-  EX_HEIGHT_Set( p_wk );
-
   // 初期化
   HIDE_SHIP_Init( p_wk );
 }
@@ -697,8 +706,11 @@ void HIDE_SHIP_End( FIELDMAP_WORK *p_fieldmap )
 {
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
 
-  // 終了処理(セーブとか)
-  HIDE_SHIP_Exit( p_wk );
+  // セーブ処理
+  HIDE_SHIP_Save( p_wk );
+
+  // 拡張高さリセット
+  EX_HEIGHT_Reset( p_wk );
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -906,6 +918,14 @@ static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk )
     }
   }
 
+  //=====================================
+  // 拡張高さの設定
+  //
+  for( i=0; i<EX_HEIGHT_NUM; i++ )
+  {
+    // 拡張高さセット
+    EX_HEIGHT_Set( p_wk, i, p_wk->pipe_flag[i] );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -997,12 +1017,12 @@ static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  終了  セーブ含む
+ *	@brief  セーブ処理
  *
  *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク 
  */
 //-----------------------------------------------------------------------------
-static void HIDE_SHIP_Exit( HIDE_SHIP_TMP *p_wk )
+static void HIDE_SHIP_Save( HIDE_SHIP_TMP *p_wk )
 {
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
   GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
@@ -1717,6 +1737,7 @@ static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk )
   enum {
     SEQ_START,      // 
     SEQ_WAIT,       // 
+    SEQ_SAVE,       //
     SEQ_END,        // 
   };
 
@@ -1740,11 +1761,15 @@ static GMEVENT_RESULT ButtonEvent( GMEVENT* event, int* seq, void* wk )
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( p_fieldmap );
       if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) == TRUE ) {
-        *seq = SEQ_END;
+        *seq = SEQ_SAVE;
       }
     }
     break;
 
+  case SEQ_SAVE:
+    HIDE_SHIP_Save( p_gmk_wk );
+    *seq = SEQ_END;
+    break;
   case SEQ_END:
     return GMEVENT_RES_FINISH;
   }
@@ -1802,6 +1827,9 @@ static void BUTTON_EVENT_PipeStartup( HIDE_SHIP_TMP *p_wk, int pipe_idx )
 
   // フラグ反転
   p_wk->pipe_flag[ pipe_idx ] = !p_wk->pipe_flag[ pipe_idx ];
+
+  // 拡張高さの高さのみ再設定
+  EX_HEIGHT_SetHeight( p_wk, pipe_idx, p_wk->pipe_flag[ pipe_idx ] );
 }
 
 //----------------------------------------------------------------------------
@@ -1966,31 +1994,72 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
   return FIELD_TASK_RETVAL_CONTINUE;
 }
 
+//=============================================================================
+/**
+ *          拡張高さ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  設定されている拡張高さをリセット
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void EX_HEIGHT_Reset( HIDE_SHIP_TMP *p_wk )
+{
+  FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
+  EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
+
+  int num = EXH_GetDatNum( ex_height_list );
+  int i;
+
+  for( i=0; i<num; i++ )
+  {
+    // データ無効
+    EXH_SetHeightValid( i, FALSE, ex_height_list );
+  }
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張高さを設定
  *
- *	@param	HIDE_SHIP_TMP *p_wk 
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param  int idx         拡張高さデータのインデックス
+ *	@param  int height_idx  領域内の高さのテーブルインデックス
  */
 //-----------------------------------------------------------------------------
-static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk )
+static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
 {
   FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
   EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
-  int i;
 
-  for( i=0; i<EX_HEIGHT_NUM; i++ )
-  {
-    EXH_SetUpHeightData( i,
-        ex_height_tbl[i].start_x,
-        ex_height_tbl[i].start_z,
-        ex_height_tbl[i].size_x,
-        ex_height_tbl[i].size_z,
-        -GRID_HALF_SIZE,
-        (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
-        ex_height_list);
-  }
+  EXH_SetUpHeightData( idx,
+      ex_height_tbl[ idx ].start_x,
+      ex_height_tbl[ idx ].start_z,
+      ex_height_tbl[ idx ].size_x,
+      ex_height_tbl[ idx ].size_z,
+      ex_height_y[ height_idx ],
+      (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
+      ex_height_list);
 
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  拡張高さの高さセット
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param  int idx         拡張高さデータのインデックス
+ *	@param  int height_idx  領域内の高さのテーブルインデックス
+ */
+//-----------------------------------------------------------------------------
+static void EX_HEIGHT_SetHeight( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
+{
+  FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
+  EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
+
+  // 高さのみ設定
+  EXH_SetHeight( idx, ex_height_y[ height_idx ], ex_height_list );
 }
 
 //=============================================================================
