@@ -371,6 +371,8 @@ enum{
 
 #define ACT_LOGNUM_WIN_PX  (0)
 #define ACT_LOGNUM_WIN_PY  (19*8)
+#define ACT_LOGNUM_WIN_SX  (7*8)
+#define ACT_LOGNUM_WIN_SY  (8*2)
 
 /////////////////////////////////////////////
 //タッチパネル
@@ -381,6 +383,11 @@ enum{
 #define TP_PANEL_BOTTOM (TP_PANEL_TOP+ACT_PANEL_SY)
 #define TP_PANEL_LEFT   (ACT_PANEL_PX)
 #define TP_PANEL_RIGHT  (TP_PANEL_LEFT+ACT_PANEL_SX)
+
+#define TP_LOGNUM_WIN_TOP     (ACT_LOGNUM_WIN_PY)
+#define TP_LOGNUM_WIN_BOTTOM  (TP_LOGNUM_WIN_TOP + ACT_LOGNUM_WIN_SY)
+#define TP_LOGNUM_WIN_LEFT    (ACT_LOGNUM_WIN_PX)
+#define TP_LOGNUM_WIN_RIGHT   (TP_LOGNUM_WIN_LEFT + ACT_LOGNUM_WIN_SX)
 
 #define TP_MEDAL_R      (8)
 #define TP_MEDAL_X      (ACT_PANEL_PX+ACT_MEDAL_OX+TP_MEDAL_R)
