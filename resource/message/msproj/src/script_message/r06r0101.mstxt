@@ -1987,4 +1987,2121 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらあら　あなたの　[Name:PokemonName ]
+「[Name:Move Idx="1" ]」を　おぼえていますね！▼
+そんな　あなたに
+ポケモン　てんきよほう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:24:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらあら　あなたの　[Name:PokemonName ]
+「[Name:Move Idx="1" ]」を　おぼえていますね！▼
+そんな　あなたに
+ポケモン　てんきよほう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・0＝ポケモン種族名
+・1＝わざ名
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:24:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:08:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらあら　めずらしい！
+あなたの　[Name:PokemonName ]▼
+「[Name:Ability Idx="2" ]」の　とくせいを
+おもち　なのですね！▼
+そんな　あなたに
+ポケモン　てんきよほう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:25:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらあら　めずらしい！
+あなたの　[Name:PokemonName ]▼
+「[Name:Ability Idx="2" ]」の　とくせいを
+おもち　なのですね！▼
+そんな　あなたに
+ポケモン　てんきよほう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・0＝ポケモン種族名
+・2＝とくせい名
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:25:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴホン……！▼
+「あまごい」の　わざを　つかったり
+「あめふらし」の　とくせいを　もつ▼
+ポケモンを　くりだすことで
+あめが　ふりはじめるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:25:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴホン……！▼
+「あまごい」の　わざを　つかったり
+「あめふらし」の　とくせいを　もつ▼
+ポケモンを　くりだすことで
+あめが　ふりはじめるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あめが　ふりつづいている　ときは
+みずタイプの　わざの　いりょくが▽
+５０パーセント　アップするでしょう！▼
+そして　ほのおタイプの　わざと
+ソーラービームの　いりょくは▽
+５０パーセント　ダウンします！▼
+さらに　ウェザーボールの　タイプが
+みずに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:26:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あめが　ふりつづいている　ときは
+みずタイプの　わざの　いりょくが▽
+５０パーセント　アップするでしょう！▼
+そして　ほのおタイプの　わざと
+ソーラービームの　いりょくは▽
+５０パーセント　ダウンします！▼
+さらに　ウェザーボールの　タイプが
+みずに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:28:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　ポワルンという　ポケモンは
+あめが　ふりつづいていると▽
+すがたが　かわり▽
+みずタイプに　なることでも▽
+しられております</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　ポワルンという　ポケモンは
+あめが　ふりつづいていると▽
+すがたが　かわり▽
+みずタイプに　なることでも▽
+しられております</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そらが　よどみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+すくなく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:27:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そらが　よどみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+すくなく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つづいて　ちゅういほうです！▼
+かみなり　と　ぼうふう　が
+かならず　めいちゅう　しますので▽
+おきをつけ　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つづいて　ちゅういほうです！▼
+かみなり　と　ぼうふう　が
+かならず　めいちゅう　しますので▽
+おきをつけ　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　すいすい　あめうけざら
+かんそうはだ　てんきや　など▼
+あめが　ふりつづいていると
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:27:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　すいすい　あめうけざら
+かんそうはだ　てんきや　など▼
+あめが　ふりつづいていると
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_ame_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんな　あめの　ひの
+ラッキーアイテムは　しめったいわ！▼
+ちなみに　わたくしを　はじめとする
+パラソルおねえさん　は▼
+あめが　ふっていると
+みずを　えた　バスラオのように▽
+とっても　げんきに　なるのです！　</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:27:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんな　あめの　ひの
+ラッキーアイテムは　しめったいわ！▼
+ちなみに　わたくしを　はじめとする
+パラソルおねえさん　は▼
+あめが　ふっていると
+みずを　えた　バスラオのように▽
+とっても　げんきに　なるのです！　</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴホン……！▼
+「にほんばれ」の　わざを　つかったり
+「ひでり」の　とくせいを　もつ▼
+ポケモンを　くりだすことで
+ひざしが　つよくなるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:28:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:15:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴホン……！▼
+「にほんばれ」の　わざを　つかったり
+「ひでり」の　とくせいを　もつ▼
+ポケモンを　くりだすことで
+ひざしが　つよくなるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひざしが　つよい　ときは
+ほのおタイプの　わざの　いりょくが▽
+５０パーセント　アップするでしょう！▼
+そして　みずタイプの　わざの
+いりょくが　５０パーセント▽
+ダウンします！▼
+さらに　ウェザーボールの　タイプが
+ほのおに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！▼
+また　せいちょう　を　つかったときの
+のうりょくの　じょうしょうりつが▽
+２００パーセントと　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:29:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひざしが　つよい　ときは
+ほのおタイプの　わざの　いりょくが▽
+５０パーセント　アップするでしょう！▼
+そして　みずタイプの　わざの
+いりょくが　５０パーセント▽
+ダウンします！▼
+さらに　ウェザーボールの　タイプが
+ほのおに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！▼
+また　せいちょう　を　つかったときの
+のうりょくの　じょうしょうりつが▽
+２００パーセントと　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:29:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひざしが　つよい　ため
+ポケモンが▽
+こおり　じょうたいに　ならず▼
+すでに　こおっている　ポケモンの
+こおりが　とける　げんしょうが▽
+ほうこく　されています！▼
+なお　ポワルンという　ポケモンは
+ひざしが　つよいと▽
+すがたが　かわり▽
+ほのおタイプに　なることでも▽
+しられております</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひざしが　つよい　ため
+ポケモンが▽
+こおり　じょうたいに　ならず▼
+すでに　こおっている　ポケモンの
+こおりが　とける　げんしょうが▽
+ほうこく　されています！▼
+なお　ポワルンという　ポケモンは
+ひざしが　つよいと▽
+すがたが　かわり▽
+ほのおタイプに　なることでも▽
+しられております</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そらが　すみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+おおきく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そらが　すみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+おおきく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つづいて　ちゅういほうです！▼
+ソーラービームを
+わずか　１ターンで▽
+はなつことが　できます！▼
+また　かみなり　と　ぼうふう　は
+めいちゅう　しづらく　なりますので▽
+おきをつけ　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つづいて　ちゅういほうです！▼
+ソーラービームを
+わずか　１ターンで▽
+はなつことが　できます！▼
+また　かみなり　と　ぼうふう　は
+めいちゅう　しづらく　なりますので▽
+おきをつけ　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　ようりょくそ　しゅうかく
+サンパワー　てんきや　など▼
+ひざしが　つよいと
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:29:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　ようりょくそ　しゅうかく
+サンパワー　てんきや　など▼
+ひざしが　つよいと
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_hare_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんな　はれの　ひの
+ラッキーアイテムは　あついいわ！▼
+ちなみに　はれわたる
+きもちよい　てんきでも▼
+しがいせんは　ふりそそぐので
+おはだの　ケアは　わすれずに！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:30:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:16:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんな　はれの　ひの
+ラッキーアイテムは　あついいわ！▼
+ちなみに　はれわたる
+きもちよい　てんきでも▼
+しがいせんは　ふりそそぐので
+おはだの　ケアは　わすれずに！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴホン……！▼
+「あられ」の　わざを　つかったり
+「ゆきふらし」の　とくせいを　もつ▼
+ポケモンを　くりだすことで
+あられが　ふりはじめるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:30:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:17:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴホン……！▼
+「あられ」の　わざを　つかったり
+「ゆきふらし」の　とくせいを　もつ▼
+ポケモンを　くりだすことで
+あられが　ふりはじめるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あられが　ふりつづいている　ときは
+こおりタイプ　いがいの▽
+ポケモンは　ターンの　おわりに▽
+ダメージを　うけてしまいます！▼
+また　ソーラービームの　いりょくが▽
+５０パーセント　ダウンします！▼
+さらに　ウェザーボールの　タイプが
+こおりに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:30:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あられが　ふりつづいている　ときは
+こおりタイプ　いがいの▽
+ポケモンは　ターンの　おわりに▽
+ダメージを　うけてしまいます！▼
+また　ソーラービームの　いりょくが▽
+５０パーセント　ダウンします！▼
+さらに　ウェザーボールの　タイプが
+こおりに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:30:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　ポワルンという　ポケモンは
+あられが　ふりつづいていると▽
+すがたが　かわり▽
+こおりタイプに　なることでも▽
+しられております</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　ポワルンという　ポケモンは
+あられが　ふりつづいていると▽
+すがたが　かわり▽
+こおりタイプに　なることでも▽
+しられております</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そらが　よどみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+すくなく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そらが　よどみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+すくなく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つづいて　ちゅういほうです！▼
+ふぶき　が　かならず
+めいちゅう　しますので▽
+おきをつけ　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>つづいて　ちゅういほうです！▼
+ふぶき　が　かならず
+めいちゅう　しますので▽
+おきをつけ　ください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　アイスボディ　ゆきがくれ
+てんきや　など▼
+あられが　ふりつづいていると
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:31:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　アイスボディ　ゆきがくれ
+てんきや　など▼
+あられが　ふりつづいていると
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_arare_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんな　あられの　ひの
+ラッキーアイテムは　つめたいいわ！▼
+ちなみに　ゆきがふると
+しずかに　なるのは▼
+ちいさな　こおりのつぶが　おとを
+きゅうしゅう　するからなのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:34:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんな　あられの　ひの
+ラッキーアイテムは　つめたいいわ！▼
+ちなみに　ゆきがふると
+しずかに　なるのは▼
+ちいさな　こおりのつぶが　おとを
+きゅうしゅう　するからなのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴホン……！▼
+「すなあらし」の　わざを　つかったり
+「すなおこし」の　とくせいを　もつ▽
+ポケモンを　くりだすことで▼
+すなあらしが　ふきはじめるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:23:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:23:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴホン……！▼
+「すなあらし」の　わざを　つかったり
+「すなおこし」の　とくせいを　もつ▽
+ポケモンを　くりだすことで▼
+すなあらしが　ふきはじめるでしょう</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すなあらしが　ふいている　ときは
+いわ　じめん　はがねタイプ　いがいの▽
+ポケモンは　ターンの　おわりに▽
+ダメージを　うけてしまいます！▼
+また　ソーラービームの　いりょくが
+５０パーセント　ダウンします！▼
+さらに　ウェザーボールの　タイプが
+いわに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:34:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:22:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すなあらしが　ふいている　ときは
+いわ　じめん　はがねタイプ　いがいの▽
+ポケモンは　ターンの　おわりに▽
+ダメージを　うけてしまいます！▼
+また　ソーラービームの　いりょくが
+５０パーセント　ダウンします！▼
+さらに　ウェザーボールの　タイプが
+いわに　かわり　いりょくは▽
+１００パーセント　アップするでしょう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:34:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すなあらしの　とき
+いわタイプの　ポケモンの▼
+とくぼうが　５０パーセント
+アップする　げんしょうが▽
+ほうこく　されています！▼
+なお　ポワルンという　ポケモンは
+てんきが　かわると▽
+すがたが　かわりますが▼
+すなあらしには
+えいきょうを　うけないようです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:22:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:22:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すなあらしの　とき
+いわタイプの　ポケモンの▼
+とくぼうが　５０パーセント
+アップする　げんしょうが▽
+ほうこく　されています！▼
+なお　ポワルンという　ポケモンは
+てんきが　かわると▽
+すがたが　かわりますが▼
+すなあらしには
+えいきょうを　うけないようです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そらが　よどみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+すくなく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:22:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:22:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そらが　よどみますので
+あさのひざし　こうごうせい▽
+つきのひかり　で　たいりょくが▽
+かいふくする　りょうが▽
+すくなく　なります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:21:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:21:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:21:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:21:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　すなかき　すながくれ
+すなのちから　てんきや　など▼
+すなあらしが　ふきあれていると
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:35:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:20:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　すなかき　すながくれ
+すなのちから　てんきや　など▼
+すなあらしが　ふきあれていると
+こうかを　はっきする▽
+とくせいが　ございますので▼
+ポケモンの　ステータスを
+チェックして　くださいませ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_suna_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんな　すなあらしの　ひの
+ラッキーアイテムは　さらさらいわ！▼
+ちなみに　わたくし
+かぜにふかれ　まいあがり▼
+ながれゆく　すなのように　じゆうな
+じんせいに　あこがれて　おります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:35:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:20:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんな　すなあらしの　ひの
+ラッキーアイテムは　さらさらいわ！▼
+ちなみに　わたくし
+かぜにふかれ　まいあがり▼
+ながれゆく　すなのように　じゆうな
+じんせいに　あこがれて　おります！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたくしの　ポケモン　てんきよほう
+いかがでしたか？▼
+ほかの　よほうが　ききたいときは
+べつの　わざや　とくせいを　もった▽
+ポケモンを　つれてきて　くださいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:19:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:19:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたくしの　ポケモン　てんきよほう
+いかがでしたか？▼
+ほかの　よほうが　ききたいときは
+べつの　わざや　とくせいを　もった▽
+ポケモンを　つれてきて　くださいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらあら　あなたの　ポケモン
+てんきを　かえる　わざや▽
+とくせいを　もっていないのですね▼
+もし　てんきを　かえる　わざや
+とくせいを　もつ　ポケモンが　いたら▼
+わたくしの　オハコ！▼
+ポケモン　てんきよほうを
+おきかせして　さしあげますね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:20:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:19:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらあら　あなたの　ポケモン
+てんきを　かえる　わざや▽
+とくせいを　もっていないのですね▼
+もし　てんきを　かえる　わざや
+とくせいを　もつ　ポケモンが　いたら▼
+わたくしの　オハコ！▼
+ポケモン　てんきよほうを
+おきかせして　さしあげますね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたに　おとどけ
+ポケモン　てんきよほう！▼
+……と　いきたいところ　ですけど
+あらあら　あなたの　[Name:PokemonName ]▽
+まさかの　「[Name:Ability Idx="2" ]」　ですね！▼
+うーん　こまりましたわ……▼
+てんきの　こうかを
+すべて　うちけしてしまう▽
+「[Name:Ability Idx="2" ]」が　あいてでは▼
+ポケモン　てんきよほうも
+おてあげ　ですわ！　うふふ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:36:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:19:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたに　おとどけ
+ポケモン　てんきよほう！▼
+……と　いきたいところ　ですけど
+あらあら　あなたの　[Name:PokemonName ]▽
+まさかの　「[Name:Ability Idx="2" ]」　ですね！▼
+うーん　こまりましたわ……▼
+てんきの　こうかを
+すべて　うちけしてしまう▽
+「[Name:Ability Idx="2" ]」が　あいてでは▼
+ポケモン　てんきよほうも
+おてあげ　ですわ！　うふふ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうは　なにか
+とくべつな　ひ　でしたっけ？▼
+なんだか　わたくし
+きりが　はれた　みたいに▽
+さわやかな　きぶんなんです！▼
+わたしの　こころと　おなじように
+どこかの　そらも▼
+はれやかで　あることを
+ねがいますわ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうは　なにか
+とくべつな　ひ　でしたっけ？▼
+なんだか　わたくし
+きりが　はれた　みたいに▽
+さわやかな　きぶんなんです！▼
+わたしの　こころと　おなじように
+どこかの　そらも▼
+はれやかで　あることを
+ねがいますわ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r06r0101_ambrella_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ところで　ダイヤモンドダストを
+ごぞんじ　ですか？▼
+そらから　こおりの　けっしょうが
+かがやきながら　ふりそそぐ▽
+げんそうてきな　げんしょうです！▼
+なんでも　いまくらいの　じきに
+どこかの　まちで▼
+みられる　という　はなしを
+きいたことが　あります▼
+ああ……　わたくしも
+ステキな　かたと　いっしょに▼
+ダイヤモンドダストを
+みてみたい　ですわ！　うふふ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:18:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ところで　ダイヤモンドダストを
+ごぞんじ　ですか？▼
+そらから　こおりの　けっしょうが
+かがやきながら　ふりそそぐ▽
+げんそうてきな　げんしょうです！▼
+なんでも　いまくらいの　じきに
+どこかの　まちで▼
+みられる　という　はなしを
+きいたことが　あります▼
+ああ……　わたくしも
+ステキな　かたと　いっしょに▼
+ダイヤモンドダストを
+みてみたい　ですわ！　うふふ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:37:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T09:12:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
