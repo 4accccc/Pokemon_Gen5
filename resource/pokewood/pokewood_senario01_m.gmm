@@ -797,6 +797,26 @@
 		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
 ヒウンも　キミも　もうおしまいね……</language>
 	</row>
+	<row id="pw_event5_hero_0">
+		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
+		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">じゃま　するからよ……　　
+ヒウンも　キミも　もうおしまいね……</language>
+		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
+ヒウンも　キミも　もうおしまいね……</language>
+	</row>
+	<row id="pw_event6_hero_0">
+		<language name="JPN" width="256">クッ……　ヒウンの　まちが……</language>
+		<language name="JPN_KANJI" width="256">クッ……　ヒウンの　まちが……</language>
+	</row>
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">じゃま　するからよ……　　
+ヒウンも　キミも　もうおしまいね……</language>
+		<language name="JPN_KANJI" width="256">じゃま　するからよ……　　
+ヒウンも　キミも　もうおしまいね……</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
