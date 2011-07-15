@@ -1186,6 +1186,7 @@ static void panel_Overwrite( PANEL_WORK* pp, u8 data_idx,u8 line )
     pp->tcb_print = NULL;
   }
   if( pp->tcb_icon != NULL ){ //アイコン描画中もキャンセル
+    panel_IconVisibleSet( pp, FALSE );
     GFL_TCBL_Delete( pp->tcb_icon );
     pp->tcb_icon = NULL;
   }
