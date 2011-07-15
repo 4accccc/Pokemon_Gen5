@@ -671,7 +671,6 @@
 #define		MONSNO_670		( 662 )		//しろいかべ
 #define		MONSNO_671		( 663 )		//くろいかべ
 #define		MONSNO_672		( 664 )		//セットＡ
-
 //別フォルム定義
 //アンノーン
 #define		FORMNO_201_UNA				( 0 )

@@ -603,6 +603,7 @@ end
   oshie2 = []   #技教え swan追加
   pokelist = []
   chihou_zukan = []
+  write_monsnum_num_array = []
   chihou_zukan << 999
   issyu_max = 0
   
@@ -739,7 +740,7 @@ end
           issyu_max = split_data[ PARA::CHIHOU_NO ].to_i
         end
       end
-
+      
       fp_monsno.print( "#define\t\t" )
       label_str = label.make_label( "MONSNO_", split_data[ PARA::POKENAME ] )
       fp_monsno.print( label_str )
@@ -751,7 +752,10 @@ end
 
       # 「タマゴ」「ダメタマゴ」はmonsnum_def.hに出力しない
       if split_data[ PARA::GRA_NO ].to_i!=0 then
-        fp_monsnum.printf( "#define\t\tMONSNO_%03d\t\t( %d )\t\t//%s\n", split_data[ PARA::GRA_NO ].to_i, cnt, split_data[ PARA::POKENAME ] )
+        unless write_monsnum_num_array.include?( split_data[ PARA::GRA_NO ] ) then
+          fp_monsnum.printf( "#define\t\tMONSNO_%03d\t\t( %d )\t\t//%s\n", split_data[ PARA::GRA_NO ].to_i, cnt, split_data[ PARA::POKENAME ] )
+          write_monsnum_num_array << split_data[ PARA::GRA_NO ]
+        end
       end
 
       if split_data[ PARA::FORM_NAME ] == "" || split_data[ PARA::FORM_NAME ] == nil
@@ -1442,6 +1446,29 @@ end
   }
   fp_wothash.printf("\t}\n" )
   fp_wothash.close
+
+  #ポケモンタイプHASHを生成
+  fp_hash = open( "monstype_hash.rb", "w" )
+  fp_hash.printf("#! ruby -Ks\n\n" )
+  fp_hash.printf("$monstype_hash = {\n" )
+  monsno.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t%d=>[%d,%d],#%s\n",split_data[ PARA::ZENKOKU_NO ].to_i ,type_table[split_data[ PARA::TYPE1 ]] ,type_table[split_data[ PARA::TYPE2 ]], split_data[ PARA::POKENAME ])
+  }
+  fp_hash.printf("}\n" )
+  fp_hash.close
+
+  #ポケモン地方図鑑NOHASHを生成
+  fp_hash = open( "chihou_zukanno_hash.rb", "w" )
+  fp_hash.printf("#! ruby -Ks\n\n" )
+  fp_hash.printf("$NO_CHIHOU_ID = 999\n\n" )
+  fp_hash.printf("$chihou_zukanno_hash = {\n" )
+  monsno.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t%d=>[%d],#%s\n",split_data[ PARA::ZENKOKU_NO ].to_i ,chihou_zukan[split_data[ PARA::ZENKOKU_NO ].to_i],split_data[ PARA::POKENAME ])
+  }
+  fp_hash.printf("}\n" )
+  fp_hash.close
 
   print "パーソナルデータ生成終了\n"
 
