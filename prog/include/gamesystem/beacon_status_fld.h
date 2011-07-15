@@ -31,7 +31,7 @@ extern SP_GPOWER_REQ BEACON_STATUS_SpGPowerGet( BEACON_STATUS* wk );
  *  @brief  特殊Gパワー　一番古いリクエストを削除
  */
 //----------------------------------------------------
-extern SP_GPOWER_REQ BEACON_STATUS_SpGPowerDel( BEACON_STATUS* wk );
+extern void BEACON_STATUS_SpGPowerDel( BEACON_STATUS* wk );
 
 //----------------------------------------------------
 /*
