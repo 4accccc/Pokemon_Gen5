@@ -57,6 +57,7 @@ typedef struct {
   GPOWER_APP_PARAM param;
   u8 target;
   GPOWER_APP_MODE mode;
+  INTRUDE_CONNECT hilink_state;
 } EVENT_GPOWER_APP_WORK;
 
 //============================================================================================
@@ -157,10 +158,19 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
+      FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
 
-      if( gaw->param.ret_mode == GPOWER_APP_RET_COMM_OFF ){
-        FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
+      if( gaw->param.ret_mode == GPOWER_APP_RET_COMM_OFF )
+      {
         FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NORMAL );
+      }
+      else if( gaw->param.ret_mode == GPOWER_APP_RET_HILINK )
+      {
+        gaw->hilink_state = Intrude_GetIntrudeStatus( GAMESYSTEM_GetGameCommSysPtr(gsys) );
+     
+        if( gaw->hilink_state == INTRUDE_CONNECT_MISSION_TARGET){
+          GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
+        }
       }
       fade_event = EVENT_FieldFadeIn_Black(gsys, fwork, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
@@ -196,10 +206,7 @@ static GMEVENT_RESULT EVENT_GPowerAppMain(GMEVENT * event, int *  seq, void * wo
     return GMEVENT_RES_CONTINUE;
   
   case _HILINK_JUMP:
-    {
-      u32 state = Intrude_GetIntrudeStatus( GAMESYSTEM_GetGameCommSysPtr(gsys) );
-      GMEVENT_ChangeEvent( event, EVENT_MoveHilink( gsys, state ) );
-    }
+    GMEVENT_ChangeEvent( event, EVENT_MoveHilink( gsys, gaw->hilink_state ) );
     return GMEVENT_RES_CONTINUE;
 
   case _FIELD_END: 
