@@ -725,9 +725,9 @@ static const PKWD_BOOK_CANVAS_DATA pwb_canvas_01_tbl[] = {
 // トレーナー
 static const PKWD_BOOK_CANVAS_DATA pwb_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME0_S,	2,	1,	28,	2,	10,},		// CAST
-	{ GFL_BG_FRAME0_S,	1,	15,	12,	2,	10,},		// 役名(fix)
-	{ GFL_BG_FRAME0_S,	1,	17,	12,	2,	10,},		// 職業名
-	{ GFL_BG_FRAME0_S,	1,	19,	12,	2,	10,},		// 職業
+	{ GFL_BG_FRAME0_S,	1,	15,	14,	2,	10,},		// 役名(fix)
+	{ GFL_BG_FRAME0_S,	1,	17,	14,	2,	10,},		// 職業名
+	{ GFL_BG_FRAME0_S,	1,	19,	14,	2,	10,},		// 職業
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -901,13 +901,13 @@ static const GFL_UI_TP_HITTBL *pwb_rect_tbl[] = {
 static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
 {
 #if 1		// 後日、余力があればSLIDEでタッチにも対応を検討
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
+  { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+  { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
+  { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
+  { {  72,  95, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
+  { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
+  { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
+  { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 #else
   { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
   { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
@@ -928,13 +928,13 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp_tbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA pwb_list_tp2_tbl[] =
 {
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
+  { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+  { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
+  { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
+  { {  72,  95, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
+  { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
+  { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
+  { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
   { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
@@ -1107,7 +1107,7 @@ static s32  pwb_get_scenario_curpos( PKWD_BOOK_MAIN_WORK * wk, const s32 num );
 static void pwb_chg_up_pal( PKWD_BOOK_MAIN_WORK * wk, const s32 num );
 static void pwb_init_up_pal( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_exit_up_pal( PKWD_BOOK_MAIN_WORK * wk );
-static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk );
+static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk, const s32 smode );
 //
 // フレーム関連
 static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk );
@@ -1519,7 +1519,8 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//------------
 	// 上画面表示
 	//------------
-	pwb_disp_up_bg( wk );
+	// 本来は引き継ぐのだがタッチで入ることはないのでは..
+	pwb_disp_up_bg( wk, 1 );
 	
 	//---------------------------
 	// 半透明設定(フィルムのobj)
@@ -2946,7 +2947,7 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 	pwb_scroll_newmark( wk, 0 );
 	//
 	// 上画面表示
-	pwb_disp_up_bg( wk );
+	pwb_disp_up_bg( wk, 0 );
 	//
 	wk->Flag |= FLG_SET_INIT;
 }
@@ -4295,24 +4296,33 @@ static void pwb_exit_up_pal( PKWD_BOOK_MAIN_WORK * wk )
  * @brief	上画面のBGのon/off
  *
  * @param	PKWD_BOOK_MAIN_WORK*		wk
+ * @param	const s32					(0:引き継ぐ、1:表示)
  *
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk )
+static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk, const s32 smode )
 {
 	u8		vflg = VISIBLE_ON;
 	int		mode;
 	//
-	// 限定で大丈夫なはずなのでここで判定
-	mode = GFL_UI_CheckTouchOrKey();
-	//
-	// タッチはoff
-	if(mode == GFL_APP_END_TOUCH){
-		vflg = VISIBLE_OFF;
+	// 引き継ぐ
+	if(smode == 0){
+		// 限定で大丈夫なはずなのでここで判定
+		mode = GFL_UI_CheckTouchOrKey();
+		//
+		// タッチはoff
+		if(mode == GFL_APP_END_TOUCH){
+			vflg = VISIBLE_OFF;
+		}
+		// フォント面のみを考慮にいれる
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, vflg );
 	}
-	// フォント面のみを考慮にいれる
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, vflg );
+	// 表示
+	else{
+		// フォント面のみを考慮にいれる
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, vflg );
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -4494,7 +4504,9 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 	//
 	// ここでなくてもいいはず
 	// 上画面表示
-	pwb_disp_up_bg( wk );
+	if(flg != 0){
+		pwb_disp_up_bg( wk, 1 );
+	}
 	return( flg );
 }
 
