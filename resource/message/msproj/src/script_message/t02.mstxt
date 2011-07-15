@@ -8,10 +8,12 @@
 			Language="JPN">
 			<Text>あら？▼
 あなたと　あなたのポケモン
-どことなく　にてるって　かんじ！</Text>
+どことなく　ふんいきが　にてるわね！▼
+ながいあいだ　つれそっている　うちに
+おたがい　にちゃって　きたのね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:33:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,10 +23,12 @@
 			Language="JPN_KANJI">
 			<Text>あら？▼
 あなたと　あなたのポケモン
-どことなく　似てるって　感じ！</Text>
+どことなく　雰囲気が　似てるわね！▼
+長い間　連れ添っている　うちに
+お互い　似ちゃって　きたのね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,17 +37,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
+・手持ちに最初に選んだポケモンがいる場合
+　ただしひん死のときはwoman1_02
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:11:49" />
+				Time="2011-07-15T08:32:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>女性１</Text>
+			<Text>WOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:20:11" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -52,19 +58,76 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_woman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら？▼
+あなたと　あなたのポケモン
+どことなく　ふんいきが　にてるわね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:31:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:31:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら？▼
+あなたと　あなたのポケモン
+どことなく　雰囲気が　似てるわね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:31:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:31:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・手持ちに最初に選んだポケモンがいない場合
+※swanでメッセージ新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:34:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:46:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t01_oldman1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おじいちゃんが
-いいことを　おしえてあげよう▼
-いいかね？　いちどに　つれあるける
-ポケモンは　６ひきまで　なんじゃ！</Text>
+			<Text>きみは　ポケモンが　すきかね？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -72,13 +135,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おじいちゃんが
-いいことを　教えてあげよう▼
-いいかね？　一度に　連れ歩ける
-ポケモンは　６匹まで　なんじゃ！</Text>
+			<Text>きみは　ポケモンが　好きかね？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:53:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87,17 +147,20 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+・はい/いいえの選択肢表示
+　はい　→oldman1_02
+　いいえ→oldman1_03
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:11:47" />
+				Time="2011-07-15T08:49:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>老人１</Text>
+			<Text>OLDMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:20:05" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -106,21 +169,127 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_oldman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うんうん　だろうね
+だから　ポケモンと　いるんじゃろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:49:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:48:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うんうん　だろうね
+だから　ポケモンと　いるんじゃろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:49:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:49:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:50:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_oldman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほう！　それでは　なぜ
+ポケモンと　たびを　してるんだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:49:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:49:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほう！　それでは　なぜ
+ポケモンと　旅を　してるんだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:53:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:49:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:50:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t01_oldwoman1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　ひとのため
-ちからのかぎり　がんばる▼
-ひとは　そんな　ポケモンのため
-あいをもって　せっする▼
-それが　おたがいの　かんけいだよ
-わたしは　そう　おもってるよ</Text>
+			<Text>せかいで　いちばん　さいしょに
+ポケモンと　なかよしに　なったのは▽
+どんな　ひと　だったのかねえ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:45:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -128,15 +297,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　人のため
-ちからのかぎり　がんばる▼
-人は　そんな　ポケモンのため
-愛をもって　接する▼
-それが　お互いの　関係だよ
-わたしは　そう思ってるよ</Text>
+			<Text>世界で　一番　最初に
+ポケモンと　仲良しに　なったのは▽
+どんな　人だったのかねえ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:45:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -145,74 +311,17 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正予定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-14T09:11:46" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>老婆１</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t01_bigman_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すばらしい　けしきと
-すてきな　ねいろ……▼
-ぼかぁ　しあわせきぶんに　なれる
-ここが　ずっと　すきなんだなぁ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>素晴らしい　景色と
-素敵な　音色……▼
-ぼかぁ　幸せ気分に　なれる
-ここが　ずっと　好きなんだなぁ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・t02r0401近辺
-　ISSのヒント
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:11:44" />
+				Time="2011-07-15T08:43:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BIGMAN
-太った青年</Text>
+			<Text>OLDWOMAN1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:20:01" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -318,14 +427,24 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t01_poke36_02"
+		Label="msg_t01_boy2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>とつぜん　だけど　ぼくね……
+ここみたいに　ひくい　ばしょや▽
+ちいさい　ものが　すきなんだ▼
+ポケモンも　ちいさい　ポケモンに
+ひときわ　きょうみが　わくんだ▼
+そうだなあ……　ぐたいてきに　いうと
+たかさが　０．２ｍか　もっと　ひくい▽
+ポケモンが　とくに　すきだな▼
+ところで　きみ……
+ちいさい　ポケモン　もってるかい？▽
+もっていたら　みせてほしいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:29" />
+				Time="2011-07-15T08:16:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -333,10 +452,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>とつぜん　だけど　ぼくね……
+ここみたいに　ひくい　ばしょや▽
+ちいさい　ものが　すきなんだ▼
+ポケモンも　ちいさい　ポケモンに
+ひときわ　きょうみが　わくんだ▼
+そうだなあ……　ぐたいてきに　いうと
+たかさが　０．２ｍか　もっと　ひくい▽
+ポケモンが　とくに　すきだな▼
+ところで　きみ……
+ちいさい　ポケモン　もってるかい？▽
+もっていたら　みせてほしいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T08:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -345,113 +474,557 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・演説イベント</Comment>
+・デコボコイベント
+・GRIDX＝778、GRIDZ＝640
+・初回</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:13:44" />
+				Time="2011-07-15T08:17:30" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t01_poke36_03"
+		Label="msg_t01_boy2_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ちいさい　ポケモン……
+みせてくれるのかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:49:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ちいさい　ポケモン……
+みせてくれるのかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T08:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:49:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・演説イベント</Comment>
+・デコボコイベント
+・初回会話表示済み</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:13:51" />
+				Time="2011-07-15T08:03:43" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t01_poke36_04"
+		Label="msg_t01_boy2_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>おお！　すごい！
+[Name:PokemonName ]　ちいさいなあ！▼
+もし　[Name:PokemonName ]に　なったら
+どんな　きぶん　だろう……？▼
+いつもの　せいかつが　ひとあじも
+ふたあじも　ちがっちゃうよね……▼
+そうぞう　したら　ゾクゾクするよ！
+やっぱり　ちいさいのは　おもしろい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:49:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>おお！　すごい！
+[Name:PokemonName ]　ちいさいなあ！▼
+もし　[Name:PokemonName ]に　なったら
+どんな　きぶん　だろう……？▼
+いつもの　せいかつが　ひとあじも
+ふたあじも　ちがっちゃうよね……▼
+そうぞう　したら　ゾクゾクするよ！
+やっぱり　ちいさいのは　おもしろい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T08:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:49:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・演説イベント</Comment>
+・デコボコイベント
+・手持ちに条件を満たしたポケモンがいる
+・アイテム入手処理
+　No063「ピッピにんぎょう」
+・0＝ポケモン種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:13:51" />
+				Time="2011-07-15T08:15:53" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t01_poke36_05"
+		Label="msg_t01_boy2_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>うーん……▼
+ちいさい　ポケモン
+もってないんだね……▼
+０．２ｍより
+ちいさい　ポケモン　みたいなあ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:55:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:49:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>うーん……▼
+ちいさい　ポケモン
+もってないんだね……▼
+０．２ｍより
+ちいさい　ポケモン　みたいなあ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T08:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:14:32" />
+				Time="2011-07-15T07:49:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・デコボコイベント
+・手持ちに条件を満たしたポケモンがいない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:14:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_boy2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちいさい　ポケモンを
+みせてくれて　ありがとう▼
+また　あしたも　みせてくれると
+とても　うれしいな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:55:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちいさい　ポケモンを
+みせてくれて　ありがとう▼
+また　あしたも　みせてくれると
+とても　うれしいな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・デコボコイベント
+・アイテム入手後、日付が変わるまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:15:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:49:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_girl2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのね！　わたしね！
+ここみたいに　たかい　ところとか▽
+おっきいものが　だいすきなの！▼
+ポケモンも　おっきい　ポケモンが
+すき　なんだよ！▼
+あのね
+おっきい　って　いうのはね▼
+たかさが　５ｍ　より　たかーい
+ポケモンの　ことを　いうんだよ！▼
+ねえねえ！　おっきい　ポケモン
+もってたら　みせて！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:59:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのね！　わたしね！
+ここみたいに　たかい　ところとか▽
+おっきいものが　だいすきなの！▼
+ポケモンも　おっきい　ポケモンが
+すき　なんだよ！▼
+あのね
+おっきい　って　いうのはね▼
+たかさが　５ｍ　より　たかーい
+ポケモンの　ことを　いうんだよ！▼
+ねえねえ！　おっきい　ポケモン
+もってたら　みせて！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・演説イベント</Comment>
+・デコボコイベント
+・GRIDX＝790、GRIDZ＝642
+・初回</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T09:15:06" />
+				Time="2011-07-15T08:17:04" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_girl2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっきい　ポケモン！
+みせに　きてくれたの！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:59:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっきい　ポケモン！
+みせに　きてくれたの！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・デコボコイベント
+・初回会話表示済み</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:15:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_girl2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わー！　すっごーい！
+[Name:PokemonName ]　おっきーい！▼
+[Name:PokemonName ]の　うえに　のったら
+とっても　きもちよさそう！▼
+たかい　ところ　からだと
+とおくの　やま　とか▽
+おうちの　やねのうえ　とか▼
+いつもは　みられない　ものが　みえて
+だから　おっきいもの　だいすき！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:02:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わー！　すっごーい！
+[Name:PokemonName ]　おっきーい！▼
+[Name:PokemonName ]の　うえに　のったら
+とっても　きもちよさそう！▼
+たかい　ところ　からだと
+とおくの　やま　とか▽
+おうちの　やねのうえ　とか▼
+いつもは　みられない　ものが　みえて
+だから　おっきいもの　だいすき！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・デコボコイベント
+・手持ちに条件を満たしたポケモンがいる
+・アイテム入手処理
+　No064「エネコのシッポ」
+・0＝ポケモン種族名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:15:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_girl2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えーっ！？▼
+おっきい　ポケモン
+もってないのー？▼
+５ｍより
+おっきい　ポケモン　みたーい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:02:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えーっ！？▼
+おっきい　ポケモン
+もってないのー？▼
+５ｍより
+おっきい　ポケモン　みたーい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・デコボコイベント
+・手持ちに条件を満たしたポケモンがいない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:15:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_girl2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっきい　ポケモン
+みせてくれて　ありがとう！▼
+また　あしたも　みせてくれると
+もっともっと　うれしいな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっきい　ポケモン
+みせてくれて　ありがとう！▼
+また　あしたも　みせてくれると
+もっともっと　うれしいな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:16:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・デコボコイベント
+・アイテム入手後、日付が変わるまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T08:15:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-15T07:50:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t02_sign1_01"
