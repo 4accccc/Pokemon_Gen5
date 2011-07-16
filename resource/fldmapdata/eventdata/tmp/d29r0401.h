@@ -2,6 +2,7 @@
 #ifndef ZONE_D29R0401_EVD_H
 #define ZONE_D29R0401_EVD_H
 
+#define DOOR_ID_D29R0401_D29R0301_EXIT01  0
 
 #endif //ZONE_D29R0401_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
