@@ -2,14 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c14r0601_01_01"
+		Label="msg_c14r0601_infomationw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>どうでしたか？　うみの　なかの
+ポケモンには　あんなふうに▽
+せかいが　みえているんですよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T09:38:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>どうでしたか？　海中で　暮らす
+ポケモンには　あんな風に▽
+世界が　みえているんですよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T09:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +32,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T09:36:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>INFORMATIONW
+受付嬢</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T09:36:19" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -56,7 +61,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0601_02_01"
+		Label="msg_c14r0601_oldman_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -82,17 +87,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:41" />
+				Time="2011-07-16T09:36:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:41" />
+				Time="2011-07-16T09:36:48" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -101,5 +106,238 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0601_dpleader5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リングは　おれの　うみ♪
+あれる　うなばら　おおなみこなみ▼
+マックス！　マックス！　マキシマム！
+マックス！　マックス！　マキシマム！▼
+ウォーター　ストリーム
+すべてを　のみこみ　ながしさる！▼
+ほのおを　けしされ　マキシマム！
+でんきは　にがてだ　マキシマム！▼
+あー　あー　あー
+リングは　おれの　うみ～♪▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リングは　おれの　うみ♪
+あれる　うなばら　おおなみこなみ▼
+マックス！　マックス！　マキシマム！
+マックス！　マックス！　マキシマム！▼
+ウォーター　ストリーム
+すべてを　のみこみ　ながしさる！▼
+ほのおを　けしされ　マキシマム！
+でんきは　にがてだ　マキシマム！▼
+あー　あー　あー
+リングは　おれの　うみ～♪▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>仮で貼ってます</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DPLEADER5</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:10:49" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0601_dpleader5_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いま　うたっていたのは　おれさま……▼
+いや　シンオウちじょうは
+ノモセシティの　ジムリーダーにしてぇ▼
+プロレスラー　マキシマムかめんの▽
+テーマソング　だが　しっているかぁ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いま　うたっていたのは　おれさま……▼
+いや　シンオウちじょうは
+ノモセシティの　ジムリーダーにしてぇ▼
+プロレスラー　マキシマムかめんの▽
+テーマソング　だが　しっているかぁ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>仮で貼ってます
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:43" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0601_dpleader5_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうだぁ！▼
+ポケモン　プロレス　そして　うたの
+さんびょうし　そろった　ジムリーダー▽
+ノモセジムの　マキシマムかめん　だ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうだぁ！▼
+ポケモン　プロレス　そして　うたの
+さんびょうし　そろった　ジムリーダー▽
+ノモセジムの　マキシマムかめん　だ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>仮で貼ってます
+・はい選択時
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0601_dpleader5_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんと　しらないのかぁ！！▼
+ポケモン　プロレス　そして　うたの
+さんびょうし　そろった　ジムリーダー▽
+ノモセジムの　マキシマムかめん　を！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんと　しらないのかぁ！！▼
+ポケモン　プロレス　そして　うたの
+さんびょうし　そろった　ジムリーダー▽
+ノモセジムの　マキシマムかめん　を！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>仮で貼ってます
+・いいえ選択時
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0601_dpleader5_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここで　とうとつに
+マキシマムかめん　まめちしき　だぁ▼
+かれは　がいこく　しゅっしんの
+プロレスラーと　いわれているがな▼
+ほんとうは　シンオウうまれ
+シンオウそだち　なのだぞぉ！！▽
+いわゆる　ギミック　だな！▼
+さあて　ホドモエに　いくかぁ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここで　とうとつに
+マキシマムかめん　まめちしき　だぁ▼
+かれは　がいこく　しゅっしんの
+プロレスラーと　いわれているがな▼
+ほんとうは　シンオウうまれ
+シンオウそだち　なのだぞぉ！！▽
+いわゆる　ギミック　だな！▼
+さあて　ホドモエに　いくかぁ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:11:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>仮で貼ってます
+・画面外に退場したら
+　主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T10:12:05" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
