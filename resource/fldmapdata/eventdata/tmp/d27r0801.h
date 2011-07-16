@@ -13,6 +13,8 @@
 #ifndef ZONE_D27R0801_EVC_H
 #define ZONE_D27R0801_EVC_H
 
+#define SWPLAZMAM_11                       0
+#define SWPLAZMAM_12                       1
 
 #endif //ZONE_D27R0801_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0801.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

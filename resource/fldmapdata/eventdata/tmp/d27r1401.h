@@ -13,6 +13,8 @@
 #ifndef ZONE_D27R1401_EVC_H
 #define ZONE_D27R1401_EVC_H
 
+#define SWPLAZMAW_01                       0
+#define SWPLAZMAW_02                       1
 
 #endif //ZONE_D27R1401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r1401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

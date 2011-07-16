@@ -8,6 +8,14 @@
 #ifndef ZONE_D27R1001_EVC_H
 #define ZONE_D27R1001_EVC_H
 
+#define SWPLAZMAW_04                       0
+#define SWPLAZMAW_05                       1
+#define SWPLAZMAM_15                       2
+#define SWPLAZMAM_16                       3
+#define SWPLAZMAM_17                       4
+#define SWPLAZMAM_18                       5
+#define SWPLAZMAM_19                       6
+#define SWPLAZMAM_20                       7
 
 #endif //ZONE_D27R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
