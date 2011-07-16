@@ -6,12 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いまは　よわい　ポケモンでも
-そだてれば　つよくなる！▽
-だいじなのは　あいじょう　だね！</Text>
+			<Text>トレーナーが　ポケモンを　そだて
+ポケモンが　トレーナーを　きたえる▼
+これまでも　これからも……
+そうかんがえると　なんか　いいなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T08:00:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いまは　弱い　ポケモンでも
-育てれば　強くなる！▽
-大事なのは　愛情だね！</Text>
+			<Text>トレーナーが　ポケモンを　育て
+ポケモンが　トレーナーを　鍛える▼
+これまでも　これからも……
+そう考えると　なんか　いいなあ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T08:00:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T08:39:41" />
+				Time="2011-07-16T07:57:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -59,13 +61,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たくましくなれば　さきにすすめる
-さきにすすめば　また　たくましくなる▼
-いいわね！
-ぼうけんの　たびって！</Text>
+			<Text>うれしいときも　かなしいときも
+ポケモンが　そばに　いてくれる……▽
+それだけで　じゅうぶん　でしょ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T08:23:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,13 +74,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たくましくなれば　先に進める
-先に進めば　また　たくましくなる▼
-いいわね！
-冒険の　旅って！</Text>
+			<Text>うれしいときも　悲しいときも
+ポケモンが　そばに　いてくれる……▽
+それだけで　充分でしょ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T08:23:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -110,57 +110,94 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t02r0301_babyboy1_01"
+		Label="msg_t02r0301_boy1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せかいを　みちびく　えいゆうの　もと
-その　ポケモン　すがたを　あらわし▽
-えいゆうの　たすけと　なる……▼
-イッシュちほうの　おはなし　だよ！</Text>
+			<Text>イッシュの　ひとたちは
+くにを　つくった　えいゆうと▽
+ポケモンに　あこがれを　いだいている▼
+それを　りようしようと　したのが
+かの　プラズマだん　さ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:37:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:34:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せかいを　みちびく　えいゆうの　もと
-その　ポケモン　すがたを　あらわし▽
-えいゆうの　たすけと　なる……▼
-イッシュちほうの　おはなし　だよ！</Text>
+			<Text>イッシュの　ひとたちは
+くにを　つくった　えいゆうと▽
+ポケモンに　あこがれを　いだいている▼
+それを　りようしようと　したのが
+かの　プラズマだん　さ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:37:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:34:33" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ変更予定</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T08:39:36" />
+				Time="2011-07-16T07:38:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>男の子１</Text>
+			<Text>BOY1</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:38:06" />
 		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0301_poke49_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だごっ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T08:10:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:59:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だごっ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T08:10:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:59:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:59:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE49
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:59:24" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

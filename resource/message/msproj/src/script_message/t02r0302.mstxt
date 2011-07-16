@@ -2,6 +2,755 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_t02r0302_woman3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたが　パートナーとして　はじめに
+えらんだ　ポケモンは　なあに？▼
+……　……　……
+……　……　……▼
+へえ！　[Name:PokemonName ]　なんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:08:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:32:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたが　パートナーとして　はじめに
+選んだ　ポケモンは　なあに？▼
+……　……　……
+……　……　……▼
+へえ！　[Name:PokemonName ]　なんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:08:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:07:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・最初の会話
+・ツタージャ→woman3_02
+　ポカブ　　→woman3_02
+　ミジュマル→woman3_02
+・0＝最初に選んだポケモン
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:48:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:32:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　ツタージャ　クイズです！！
+ツタージャの　たかさは　０．７ｍ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:47:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:38:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　ツタージャ　クイズです！！
+ツタージャの　高さは　０．７ｍ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:08:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:08:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ツタージャ選択時or
+　ごほうびをもらう前に再度会話
+・はい/いいえの選択肢表示
+　はい　→woman3_03
+　いいえ→woman3_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:52:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:33:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねーん！　そうなんだよね
+いがいと　おぼえて　いないのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:47:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:40:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ざんねーん！　そうなんだよね
+意外と　覚えて　いないのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ツタージャ選択時
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:33:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！　では　つづけて
+ツタージャの　おもさは　８．２ｋｇ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:47:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:40:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！　では　続けて
+ツタージャの　重さは　８．２ｋｇ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:08:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ツタージャ選択時
+・いいえ選択時
+・はい/いいえの選択肢表示
+　はい　→woman3_03
+　いいえ→woman3_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:52:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:33:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！　さすがね！
+なんだか　うれしいから　これあげる！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:52:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:47:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！　さすがね！
+なんだか　うれしいから　これあげる！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ツタージャ選択時
+・いいえ選択時
+・アイテム入手処理
+　No551「くさのジュエル」（仮）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:26:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:33:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　ポカブ　クイズです！！
+ポカブの　たかさは　０．５ｍ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:52:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:49:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　ポカブ　クイズです！！
+ポカブの　高さは　０．５ｍ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポカブ選択時
+・はい選択時or
+　ごほうびをもらう前に再度会話
+・はい/いいえの選択肢表示
+　はい　→woman3_07
+　いいえ→woman3_09</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:57:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:48:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！　では　つづけて
+ポカブの　おもさは　９．９ｋｇ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:56:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:51:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！　では　続けて
+ポカブの　重さは　９．９ｋｇ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポカブ選択時
+・はい選択時
+・はい/いいえの選択肢表示
+　はい　→woman3_08
+　いいえ→woman3_09</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:58:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:53:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！　さすがね！
+なんだか　うれしいから　プレゼント！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:04:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:52:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！　さすがね！
+なんだか　うれしいから　プレゼント！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポカブ選択時
+・はい選択時
+・アイテム入手処理
+　No548「ほのおのジュエル」（仮）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:25:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:53:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねーん！　そうなんだよね
+いがいと　きにして　いないのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:57:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:51:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ざんねーん！　そうなんだよね
+意外と　気にして　いないのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:09:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポカブ選択時
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:53:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　ミジュマル　クイズです！！
+ミジュマルの　たかさは　０．６ｍ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:59:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:57:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　ミジュマル　クイズです！！
+ミジュマルの　高さは　０．６ｍ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ミジュマル選択時or
+　ごほうびをもらう前に再度会話
+・はい/いいえの選択肢表示
+　はい　→woman3_11
+　いいえ→woman3_11</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:01:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:53:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ざんねーん！　そうなんだよね
+いがいと　みおとしちゃってるのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:20:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ざんねーん！　そうなんだよね
+意外と　見落としちゃってるのよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:20:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ミジュマル選択時
+・終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:53:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！　では　つづけて
+ミジュマルの　おもさは　５．９ｋｇ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:00:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:00:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！　では　続けて
+ミジュマルの　重さは　５．９ｋｇ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ミジュマル選択時
+・はい/いいえの選択肢表示
+　はい　→woman3_13
+　いいえ→woman3_11</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T06:53:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！　さすがね！
+なんだか　うれしいから　これどうぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:04:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:04:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！　さすがね！
+なんだか　うれしいから　これどうぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:19:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ミジュマル選択時
+・はい選択時
+・アイテム入手処理
+　No549「みずのジュエル」（仮）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:25:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:06:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0302_woman3_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ずかんを　ながめると　おもしろいわよ▼
+いがいな　ポケモンが　おおきかったり
+イメージより　ちいさかったり　して</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:31:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:29:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>図鑑を　ながめると　おもしろいわよ▼
+意外な　ポケモンが　大きかったり
+イメージより　小さかったり　して</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:32:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:31:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ごほうび入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:30:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:06:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t02r0302_middleman1_01"
 		Style="Large">
 		<LanguageCell
@@ -34,10 +783,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アイテム入手処理
-・No004「モンスターボール」</Comment>
+・No004「モンスターボール」×１０</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T07:32:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -67,13 +816,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モンスターボールが　ないと
-ポケモンは　つかまえられない！▼
-いろんな　モンスターボールがあるから
-うまく　つかいわけなさいよ</Text>
+			<Text>ぜんぶの　ポケモンを
+モンスターボールで　つかまえる▽
+それが　わたしの　こだわり　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T08:32:47" />
+				Time="2011-07-16T07:33:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -81,13 +829,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モンスターボールが　ないと
-ポケモンは　捕まえられない！▼
-いろんな　モンスターボールがあるから
-うまく　使い分けなさいよ</Text>
+			<Text>全部の　ポケモンを
+モンスターボールで　捕まえる▽
+それが　わたしの　こだわり　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T08:32:53" />
+				Time="2011-07-16T07:33:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
