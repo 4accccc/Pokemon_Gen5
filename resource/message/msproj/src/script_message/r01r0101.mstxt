@@ -6,13 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　さいきん　ここの
-たんとうに　なったのですけれど▼
-あの　でんこうけいじばん　って
-いつから　まっくろ　なんでしょう？</Text>
+			<Text>あの　でんこうけいじばん
+ずっと　まっくろ　なんですよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:33:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたし　最近　ここの
-担当に　なったのですけれど▼
-あの　電光掲示板って
-いつから　真っ黒　なんでしょう？</Text>
+			<Text>あの　電光掲示板
+ずっと　真っ黒　なんですよね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:33:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -35,10 +31,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanではメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:29:04" />
+				Time="2011-07-16T05:29:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -56,61 +52,95 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r01r0101_backpackerw_01"
+		Label="msg_r01r0101_backpackerm_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おかねの　むだづかいは
-ダメなこと　だけど▼
-じかんの　むだづかいは
-もっともっと　ダメだよね！▼
-いましか　できないことって
-ぜったいに　あるはずだもん！</Text>
+			<Text>あちこち　たびをして　わかったのは
+うまれこきょうも　いいってこと……！▽
+とびだしたくて　しかたなかったのにな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:38:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:38:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お金の　無駄遣いは
-ダメなこと　だけど▼
-時間の　無駄遣いは
-もっともっと　ダメだよね！▼
-いましか　できないことって
-絶対に　あるはずだもん！</Text>
+			<Text>あちこち　旅をして　わかったのは
+生まれ故郷も　いいってこと……！▽
+飛びだしたくて　仕方なかったのにな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:38:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:38:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:33:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:33:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r01r0101_trainerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　ポケモンたち
+とにかく　しょうぶが　すきすぎて……▼
+あたし　クタクタ……　で
+ここで　ひとやすみ　してるの……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:55:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:55:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　ポケモンたち
+とにかく　勝負が　好きすぎて……▼
+あたし　クタクタ……　で
+ここで　一休み　してるの……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:55:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:55:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanではメッセージ変更予定</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:29:16" />
+				Time="2011-07-16T05:38:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>BACKPACKERW</Text>
+			<Text>TRAINERW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-16T05:43:56" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
