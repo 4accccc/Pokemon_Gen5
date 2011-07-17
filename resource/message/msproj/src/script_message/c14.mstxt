@@ -444,10 +444,10 @@
 イッシュを　氷漬けに　して▽
 支配しようと　目論んでいる▼
 悪い　連中だよ
-というか　しらないのか？▼</Text>
+というか　知らないのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-18T04:55:51" />
+				Time="2011-07-17T05:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -801,10 +801,11 @@
 			Language="JPN">
 			<Comment>♂
 ・表示後、w21方面へ移動
-・画面外に消えると操作可能</Comment>
+・画面外に消えると操作可能
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-16T07:08:50" />
+				Time="2011-07-17T05:12:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1144,6 +1145,57 @@
 				User="matsumiya:W00224"
 				Time="2011-06-11T08:55:22" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_man3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあー！　きみの　おかげで
+あの　きゃくしつに　きゃくが　きたよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:13:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:13:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やあー！　きみの　おかげで
+あの客室も　ご利用中さ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:15:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:13:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後出現
+・c14r0301にいたNPC</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:13:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:12:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c14_sign1_01"

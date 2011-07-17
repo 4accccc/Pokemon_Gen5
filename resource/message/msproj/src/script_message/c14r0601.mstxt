@@ -65,10 +65,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>いどうする　ためでは　なく
+みる　ための　つうろ　じゃな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:41" />
+				Time="2011-07-17T04:14:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -76,10 +77,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>移動する　ためでは　なく
+みる　ための　通路じゃな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:41" />
+				Time="2011-07-17T04:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -108,236 +110,111 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0601_dpleader5_01"
+		Label="msg_c14r0601_ambrella_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リングは　おれの　うみ♪
-あれる　うなばら　おおなみこなみ▼
-マックス！　マックス！　マキシマム！
-マックス！　マックス！　マキシマム！▼
-ウォーター　ストリーム
-すべてを　のみこみ　ながしさる！▼
-ほのおを　けしされ　マキシマム！
-でんきは　にがてだ　マキシマム！▼
-あー　あー　あー
-リングは　おれの　うみ～♪▼</Text>
+			<Text>あたしの　パラソルの　なかには
+わざマシンが　いっぱい　なの！▽
+あなたも　おひとつ　いかが？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
+				Time="2011-07-17T02:54:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
+				Time="2011-07-17T02:54:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リングは　おれの　うみ♪
-あれる　うなばら　おおなみこなみ▼
-マックス！　マックス！　マキシマム！
-マックス！　マックス！　マキシマム！▼
-ウォーター　ストリーム
-すべてを　のみこみ　ながしさる！▼
-ほのおを　けしされ　マキシマム！
-でんきは　にがてだ　マキシマム！▼
-あー　あー　あー
-リングは　おれの　うみ～♪▼</Text>
+			<Text>あたしの　パラソルの　中には
+わざマシンが　いっぱい　なの！▽
+あなたも　おひとつ　いかが？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
+				Time="2011-07-17T02:54:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
+				Time="2011-07-17T02:54:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>仮で貼ってます</Comment>
+			<Comment>♀
+・アイテム入手処理
+　No369「からげんき」
+※BWでr08にいたNPC</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:17" />
+				Time="2011-07-17T02:54:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>DPLEADER5</Text>
+			<Text>AMBRELLA
+パラソル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:10:49" />
+				Time="2011-07-17T02:54:05" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0601_dpleader5_02"
+		Label="msg_c14r0601_ambrella_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いま　うたっていたのは　おれさま……▼
-いや　シンオウちじょうは
-ノモセシティの　ジムリーダーにしてぇ▼
-プロレスラー　マキシマムかめんの▽
-テーマソング　だが　しっているかぁ？▼</Text>
+			<Text>からげんき！　からげんき！
+どく　まひ　やけどの　ときは▽
+こうげきりょくが　２ばい　なの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
+				Time="2011-07-17T02:54:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
+				Time="2011-07-17T02:54:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いま　うたっていたのは　おれさま……▼
-いや　シンオウちじょうは
-ノモセシティの　ジムリーダーにしてぇ▼
-プロレスラー　マキシマムかめんの▽
-テーマソング　だが　しっているかぁ？▼</Text>
+			<Text>からげんき！　からげんき！
+どく　まひ　やけどの　ときは▽
+なんと！　攻撃力が　２倍なの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
+				Time="2011-07-17T02:54:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
+				Time="2011-07-17T02:54:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>仮で貼ってます
-・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+			<Comment>♀
+・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:43" />
+				Time="2011-07-17T02:54:05" />
 		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c14r0601_dpleader5_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>そうだぁ！▼
-ポケモン　プロレス　そして　うたの
-さんびょうし　そろった　ジムリーダー▽
-ノモセジムの　マキシマムかめん　だ！▼</Text>
+		<AttributeCell
+			Name="Character">
+			<Text>AMBRELLA
+パラソル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>そうだぁ！▼
-ポケモン　プロレス　そして　うたの
-さんびょうし　そろった　ジムリーダー▽
-ノモセジムの　マキシマムかめん　だ！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>仮で貼ってます
-・はい選択時
-・続けて</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:51" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c14r0601_dpleader5_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なんと　しらないのかぁ！！▼
-ポケモン　プロレス　そして　うたの
-さんびょうし　そろった　ジムリーダー▽
-ノモセジムの　マキシマムかめん　を！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なんと　しらないのかぁ！！▼
-ポケモン　プロレス　そして　うたの
-さんびょうし　そろった　ジムリーダー▽
-ノモセジムの　マキシマムかめん　を！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>仮で貼ってます
-・いいえ選択時
-・続けて</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:55" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c14r0601_dpleader5_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ここで　とうとつに
-マキシマムかめん　まめちしき　だぁ▼
-かれは　がいこく　しゅっしんの
-プロレスラーと　いわれているがな▼
-ほんとうは　シンオウうまれ
-シンオウそだち　なのだぞぉ！！▽
-いわゆる　ギミック　だな！▼
-さあて　ホドモエに　いくかぁ！！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ここで　とうとつに
-マキシマムかめん　まめちしき　だぁ▼
-かれは　がいこく　しゅっしんの
-プロレスラーと　いわれているがな▼
-ほんとうは　シンオウうまれ
-シンオウそだち　なのだぞぉ！！▽
-いわゆる　ギミック　だな！▼
-さあて　ホドモエに　いくかぁ！！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:11:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>仮で貼ってます
-・画面外に退場したら
-　主人公操作可能に</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-16T10:12:05" />
-		</CommentCell>
+				Time="2011-07-17T02:54:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
