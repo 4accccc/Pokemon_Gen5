@@ -19052,88 +19052,32 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
-	<row id="TRID_WAITRESS_05_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
-	</row>
-
 	<row id="TRID_WAITRESS_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_WAITRESS_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_CHILDCARE_08_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">とどかなかった　おもいは
+どこへ　きえてゆくのでしょう……</language>
+		<language name="JPN_KANJI" width="216">届かなかった　想いは
+どこへ　消えてゆくのでしょう……</language>
 	</row>
 
 	<row id="TRID_CHILDCARE_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_CHILDCARE_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_OL_08_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">そう……　にくしみで　ポケモンを
+たたかわせては　いけないのね……</language>
+		<language name="JPN_KANJI" width="216">そう……　憎しみで　ポケモンを
+戦わせては　いけないのね……</language>
 	</row>
 
 	<row id="TRID_OL_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_OL_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_MAID_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">せんとうまえ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘前
-仮メッセージ</language>
+		<language name="JPN" width="216">え……　にくしみより
+あいの　ほうが　つよいの！？</language>
+		<language name="JPN_KANJI" width="216">え……　憎しみより
+愛の　ほうが　強いの！？</language>
 	</row>
 
 	<row id="TRID_MAID_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">せんとうまけ
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘負け
-テストメッセージ</language>
-	</row>
-
-	<row id="TRID_MAID_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">せんとうご
-テストメッセージ</language>
-		<language name="JPN_KANJI" width="216">戦闘後
-テストメッセージ</language>
+		<language name="JPN" width="216">なぜ！　どうして？
+ひとの　ために　がんばれるの！？</language>
+		<language name="JPN_KANJI" width="216">なぜ！　どうして？
+他人の　ために　がんばれるの！？</language>
 	</row>
 
 	<row id="TRID_CLEANING_04_TRMSG_FIGHT_START">
