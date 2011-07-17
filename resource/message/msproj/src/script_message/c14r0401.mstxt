@@ -6,12 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マッギョの　たいらな　ところも
-かなり　みりょくてき　なんだけど……▽
-ちょっと　しっくり　こないのよね</Text>
+			<Text>マッギョの　たいらな　ところって
+かなり　チャーミング　だよねー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:25:37" />
+				Time="2011-07-17T03:29:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>マッギョの　平らな　ところって
+かなり　チャーミング　だよねー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:54:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,11 +31,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・クリア前
-・クリア後</Comment>
+・クリア前のセリフ
+・クリア後はnurse_02
+※クリア後も来るようなセリフに要修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:19:03" />
+				Time="2011-07-17T03:58:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -53,7 +54,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -64,11 +65,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハート型の　ポケモン
-・メロメロラブカス</Text>
+			<Text>マッギョの　たいらな　ところって
+かなり　チャーミング　だよねー！▼
+ほかにも　うすーい　ボディの
+みずポケモン　しらないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:25:59" />
+				Time="2011-07-17T03:33:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -76,10 +79,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>マッギョの　平らな　ところって
+かなり　チャーミング　だよねー！▼
+他にも　薄ーい　ボディの
+みずポケモン　知らないかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:26:05" />
+				Time="2011-07-17T03:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -88,22 +94,258 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・クリア前
-・クリア後</Comment>
+・クリア後
+・手持ちに
+　ラブカスがいる→
+　ラブカスがいない→</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T10:26:07" />
+				Time="2011-07-17T03:30:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NURSE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:58:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0401_nurse_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっ！
+その　ハートがたの　ポケモン！▼
+へー！　ラブカスって　いうんだ！
+すごーい！　うすー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:47:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:47:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっ！
+その　ハート型の　ポケモン！▼
+へー！　ラブカスって　いうんだ！
+すごーい！　薄ー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:54:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:47:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・手持ちにラブカスがいる
+・アイテム入手処理
+　No000「ハートのウロコ」×５
+・入手不可能事は</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:34:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NURSE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:58:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0401_nurse_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　バッグいっぱいに
+ハートのウロコを　もっているんだね！▼
+ラブカスを　つれて
+また　こんど　あそびに　きてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:55:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:37:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　バッグ一杯に
+ハートのウロコを　持っているんだね！▼
+ラブカスを　連れて
+また　今度　遊びに　来てね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:55:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:47:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・手持ちにラブカスがいるが
+　アイテム入手不可能事</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:34:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NURSE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:58:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0401_nurse_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マッギョも　ラブカスも
+うすーい　からだは　おんなじ！▼
+だけど　たてに　うすいか
+よこに　うすいかで　ぜんぜん▽
+ちがった　いんしょうに　なるよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:43:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:42:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マッギョも　ラブカスも
+薄ーい　からだは　おんなじ！▼
+だけど　縦に　うすいか
+横に　薄いかで　全然▽
+違った　印象に　なるよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:55:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:47:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:35:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NURSE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:58:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0401_nurse_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>たしか　「ラ」で　はじまる　なまえで
+ハートの　かたちを　しているの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:35:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:35:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たしか　「ラ」で　はじまる　名前で
+ハートの　形を　しているの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:55:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:47:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クリア後
+・手持ちにラブカスがいない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:35:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NURSE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T03:58:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c14r0401_doctor_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>マッギョの　うえで　ねるとね
+でんきで　からだが　ほぐれるんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:07" />
+				Time="2011-07-17T04:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,10 +353,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>マッギョの　上で　寝るとね
+微弱電流で　体が　ほぐれるんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:28:07" />
+				Time="2011-07-17T04:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
