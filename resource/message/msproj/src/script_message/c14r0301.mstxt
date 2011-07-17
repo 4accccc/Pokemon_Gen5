@@ -2,15 +2,72 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c14r0301_01_01"
+		Label="msg_c14r0301_man3_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-・新婚カップル　タワーオブヘブン</Text>
+			<Text>ここは　なぜだか
+おきゃくさんが　こないなー▼
+おっ！　そうだ！
+きみ　トレーナーでしょ！▼
+がんばって
+チャンピオンに　なってよ！▼
+ここは　チャンピオンが　きた
+へやって　せんでん　しちゃうから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-16T09:44:32" />
+				Time="2011-07-17T04:35:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:27:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　なぜだか
+お客さんが　こないなー▼
+おっ！　そうだ！
+きみ　トレーナーでしょ！▼
+がんばって
+チャンピオンに　なってよ！▼
+ここは　チャンピオンが　来た
+部屋って　宣伝しちゃうから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:37:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:35:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア前
+・クリアすると削除し代わりに
+　GIRL4、BOY4を配置</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:34:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:26:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_girl4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハネムーンで　ここを　えらぶなんて
+さすが　あたしの　えらんだ　ひと！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,10 +75,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ハネムーンで　ここを　選ぶなんて
+さすが　あたしの　選んだ　人！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:37:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29,17 +87,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀
+・クリア後に出現
+・イベントクリア前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:35:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>GIRL4
+お嬢様（金髪）</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:26:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -50,21 +111,82 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0301_02_01"
+		Label="msg_c14r0301_girl4_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>あなたは　ステキな　ひと
+だれかのために　なにかできる　ひと▼
+そのひとが　ならした　かねなら
+ここまで　きこえるに　きまってる……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:52" />
+				Time="2011-07-17T05:57:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:42:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたは　ステキな人
+だれかのために　なにかできる人▼
+その人が　鳴らした　鐘なら
+ここまで　きこえるに　決まってる……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:57:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:42:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クリア後に出現
+・イベントクリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:35:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様（金髪）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:35:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_boy4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　へやに　７ばんどうろの
+タワーオブヘブンの　かねの　ねいろが▽
+とどくと　しあわせに　なれるって！▼
+そんな　うわさを　きいてさ
+かのじょのために　ならしてほしいな▽
+きみ　おねがい　できるかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:39:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,10 +194,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>この部屋に　７番道路の
+タワーオブヘブンの　鐘の　音色が▽
+届くと　しあわせに　なれるって！▼
+そんな　ウワサを　きいてさ
+彼女のために　鳴らしてほしいな▽
+きみ　お願い　できるかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:52" />
+				Time="2011-07-17T05:38:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83,21 +210,297 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・クリア後に出現
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:52" />
+				Time="2011-07-17T04:42:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BOY4
+お坊ちゃま（金髪）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T06:27:52" />
+				Time="2011-07-17T04:25:55" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_boy4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいね！　きみ！▼
+よのなか　きみの　ように
+やさしい　ひと　ばかりだと　いいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:56:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:53:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいね！　きみ！▼
+世の中　きみの　ように
+優しい人　ばかりだと　いいね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:56:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:43:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4
+お坊ちゃま（金髪）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_boy4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんなこと　いわずにさ　ぼくたちを
+しあわせに　するため　おねがいだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:53:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:49:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんなこと　いわずにさ　ぼくたちを
+しあわせに　するため　お願いだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:38:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:43:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4
+お坊ちゃま（金髪）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_boy4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>７ばんどうろ　から　ここまで
+かねの　おとが　きこえるのかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:50:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:50:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>７番道路から　ここまで
+鐘の　音が　届くのかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:39:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択後、条件未達成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:46:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4
+お坊ちゃま（金髪）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_boy4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ　きみ！　かねの　おとだけど
+まだ　きこえないような……▼
+……　……　……
+……　……　……▼
+えっ？　タワーオブヘブンで
+かのじょたちが　そんなことを……？▼
+まあ　それは　それさ
+これは　きみへの　おれいだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:58:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:56:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ　きみ！　鐘の　音だけど
+まだ　きこえないような……▼
+……　……　……
+……　……　……▼
+えっ？　タワーオブヘブンで
+彼女たちが　そんなことを……？▼
+まあ　それは　それさ
+これは　きみへの　お礼だよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:58:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T05:08:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択後、条件達成
+・アイテム入手処理
+　No000「」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4
+お坊ちゃま（金髪）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0301_boy4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンだったら　６ひきまで
+どうじに　つれあるけるのにな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:48:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンだったら　６匹まで
+同時に　連れ歩けるのにな……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:48:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4
+お坊ちゃま（金髪）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-17T04:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
