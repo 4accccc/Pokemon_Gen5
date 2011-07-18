@@ -31,12 +31,13 @@
 			<Comment>♂
 ・アジト船：２回目
 ・主人公がこの部屋に到達すると
-　ライバルもワープパネルから出現
+　まずカメラを移動し、キュレムをみせる
+　続けてライバルもワープパネルから出現
 ・続けてswrival_02_02
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:06:18" />
+				Time="2011-07-18T06:29:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
