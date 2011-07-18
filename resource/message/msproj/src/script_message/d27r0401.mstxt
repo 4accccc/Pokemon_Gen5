@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『まってましたよ！▼</Text>
+			<Text>アクロマ『きましたね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:29" />
+				Time="2011-07-18T09:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -55,18 +55,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>前振りその２
-・アクロマのポジション、していたこと
-
-知り合いに頼まれて
-研究を手伝っていたのです
-わたくしの望みは
-ポケモンの力を引き出すこと
-それができうるなら
-手段はなんでもいいのです</Text>
+			<Text>わたくしは　しりあいに　たのまれ
+けんきゅうを　てつだっていたのです！▼
+わたくしの　のぞみは
+ポケモンの　ちからを　ひきだすこと！▼
+それが　できうるなら
+しゅだんは　なんでも　いいのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:37:47" />
+				Time="2011-07-18T09:07:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -112,16 +109,79 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>→心の交流でも
-　無慈悲な科学的なアプローチでも
-　結果、世界が滅んでも
+			<Text>あなたがた　トレーナーの　ように
+こころと　こころの　こうりゅうで
+ポケモンの　つよさを　はっきさせても！
 
-色んなトレーナーと
-勝負して
-適性をみていた？</Text>
+プラズマだんの　ように
+むじひな　アプローチで
+ポケモンの　つよさを　はっきさせても！
+
+けっか　せかいが　ほろんでも！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:37:38" />
+				Time="2011-07-18T09:10:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T09:08:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T09:09:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T09:09:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船３回目</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T09:09:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T09:07:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_03_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それは　さておき！▼
+わたくしが　かずおおくの
+ポケモントレーナーと
+しょうぶを　していたのは
+
+ポケモンの　つよさを　ひきだす
+その　ちからを　みていたからです
+
+そういう　いみで
+あなたは　ゆうしゅう　といえます！
+
+あなたが　わたくしの　のぞむ
+こたえを　もっているか　たしかめたい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T09:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -163,7 +223,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0401_swboss_03_04"
+		Label="msg_d27r0401_swboss_03_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -218,7 +278,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0401_swboss_03_05"
+		Label="msg_d27r0401_swboss_03_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -272,7 +332,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0401_swboss_03_06"
+		Label="msg_d27r0401_swboss_03_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -326,7 +386,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0401_swboss_03_07"
+		Label="msg_d27r0401_swboss_03_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -337,10 +397,11 @@
 
 モンスターボールは
 あくまでも　システムです
-大切なのは～</Text>
+大切なのは～
+（これ不要）</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:12:19" />
+				Time="2011-07-18T09:12:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -382,23 +443,22 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0401_swboss_03_08"
+		Label="msg_d27r0401_swboss_03_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたが　勝つのか
 プラズマ団が　勝つのか
 
-それは　人と　ポケモンの
+わたくしにとって
+人と　ポケモンの
 かかわりは　どう　あるべきかを
 決める　戦いでも　あるのです
 
-もっとも　わたくしが
-勝手に　そう　思うだけですがね
 では　武運を</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:18:32" />
+				Time="2011-07-18T09:17:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -407,10 +467,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>テストメッセージ
-・二元論じゃないけど</Text>
+・二元論じゃないけど
+・もっとも　わたくしが
+勝手に　そう　思うだけですがね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:18:42" />
+				Time="2011-07-18T09:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
