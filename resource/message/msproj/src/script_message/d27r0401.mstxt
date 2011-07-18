@@ -55,10 +55,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>前振りその２</Text>
+			<Text>前振りその２
+・アクロマのポジション、していたこと
+
+知り合いに頼まれて
+研究を手伝っていたのです
+わたくしの望みは
+ポケモンの力を引き出すこと
+それができうるなら
+手段はなんでもいいのです
+→心の交流でも
+　無慈悲な科学的なアプローチでも
+　結果、世界が滅んでも</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:49:41" />
+				Time="2011-07-18T08:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -104,10 +115,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>色んなトレーナーと
+勝負して
+適性をみていた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:47:04" />
+				Time="2011-07-18T08:12:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -153,10 +166,70 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>テストメッセージ
+トレーナー戦後
+・はい･いいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T08:12:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:46:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
 			<Text>テストメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-18T06:47:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:46:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船３回目
+・トレーナー戦闘後
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T08:16:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:46:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_03_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+・はい選択
+
+科学と心は
+対立するものではないのですがね！
+真実と理想は～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T08:12:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -198,29 +271,34 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0401_swboss_03_05"
+		Label="msg_d27r0401_swboss_03_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>テストメッセージ
+・いいえ選択
+
+科学と心は
+対立するものではないのですがね！
+真実と理想は～</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:47:04" />
+				Time="2011-07-18T08:12:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-07-18T07:47:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>テストメッセージ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:47:04" />
+				Time="2011-07-18T07:47:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-07-18T07:47:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -228,7 +306,7 @@
 ・アジト船３回目</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-07-18T07:47:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -236,7 +314,122 @@
 アクロマ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-07-18T07:47:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_03_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キュレムの真の力
+科学的なアプローチ
+　心の交流など　いらないとする考え方
+あなたと　ポケモンとの　むすびつき
+
+モンスターボールは
+あくまでも　システムです
+大切なのは～</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T08:12:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船３回目</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_03_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたが　勝つのか
+プラズマ団が　勝つのか
+
+それは　人と　ポケモンの
+かかわりは　どう　あるべきかを
+決める　戦いでも　あるのです
+
+もっとも　わたくしが
+勝手に　そう　思うだけですがね
+では　武運を</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T08:18:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テストメッセージ
+・二元論じゃないけど</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T08:18:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船３回目</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T07:47:21" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
