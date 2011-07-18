@@ -175,13 +175,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュレムは　からっぽ
-レシラム　ゼクロムの　あまり▼
+			<Text>キュレムは　からっぽの　そんざい▼
+ある　ポケモンが　レシラムと
+ゼクロムに　わかれたときの　あまり……▼
 ワタクシの　よくぼうは
 イッシュの　かんぜんなる　しはい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:57:48" />
+				Time="2011-07-18T08:43:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -189,13 +190,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キュレムは　虚無
-レシラム　ゼクロムの　余り……▼
+			<Text>キュレムは　虚無▼
+ある　ポケモンが　レシラムと
+ゼクロムに　分かれたときの　余り……▼
 ワタクシの　欲望は
 イッシュの　完全なる　支配！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:58:13" />
+				Time="2011-07-18T08:44:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -235,11 +237,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうです！　キュレムという　うつわに
-ワタクシの　よくぼうを　そそぐのです</Text>
+			<Text>そうです！　キュレムという　器に
+ワタクシの　欲望を　注ぐのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:53:01" />
+				Time="2011-07-18T08:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -250,10 +252,10 @@
 			<Comment>♂
 ・アジト船３回目
 ・退場する
-　画面外に消えると主人公、操作可能に</Comment>
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:58:48" />
+				Time="2011-07-18T08:39:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -295,10 +297,11 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船３回目
-・トレーナー戦闘前</Comment>
+・ゲーチス退場後に登場
+・強制でトレーナー戦闘前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:00:43" />
+				Time="2011-07-18T08:39:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
