@@ -1,3 +1,610 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r0501_swrival_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ここ　は……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:32:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:49:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ここ　は……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:29:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:49:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・主人公がこの部屋に到達すると
+　ライバルもワープパネルから出現
+・続けてswrival_02
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:55:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:49:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0501_swrival_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あの　ポケモンは……▼
+こおりついて　いる……▼
+まさか……　ソウリュウの……！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:29:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:52:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの　ポケモンは……▼
+凍りついて　いる……▼
+まさか……　ソウリュウの……！？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:29:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:52:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・！マーク表示後、メッセージ
+・続けてsage7_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:55:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:52:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『そうだとも</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:32:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:58:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『そうだとも</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:32:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・画面下からメッセージのみ表示
+・主人公、ライバルに！マーク表示させてから
+　ヴィオ登場させる
+・続けてsage7_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:55:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:58:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぞんがい　さとい　トレーナーだ▼
+それほど　ふんべつが　あるのに
+なぜ　われらの　アジトに　のりこむ▽
+そんな　きけんを　おかすのか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:33:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:02:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>存外　さとい　トレーナーだ▼
+それほど　分別が　あるのに
+なぜ　われらの　アジトに　乗りこむ▽
+そんな　危険を　冒すのか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:47:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・続けてswrival_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:55:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:02:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0501_swrival_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『きまってるだろ！
+ポケモンを　とりもどすためだ！▼
+５ねんまえ　ヒオウギで　オレの
+チョロネコを　うばったのは　おまえか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:41:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:02:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『決まってるだろ！
+ポケモンを　取り戻すためだ！▼
+５年前　ヒオウギで　オレの
+チョロネコを　奪ったのは　おまえか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:47:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・続けてsage7_03
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:55:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:02:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『チョロネコぐらい
+だれかが　うばい　つかっているだろう▼
+だが　げせぬな……？▼
+チョロネコなら　ほかにも　いるのに
+なぜ　そこまで　こだわるのだ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:41:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:02:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『チョロネコぐらい
+だれかが　奪い　使っているだろう▼
+だが　解せぬな……？▼
+チョロネコなら　他にも　いるのに
+なぜ　そこまで　こだわるのだ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:48:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ライバル頭上に！
+　そして一歩前進
+・続けてswrival_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:55:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:02:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0501_swrival_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……しんだ　じいちゃんが
+いもうとと　オレの　ために▼
+つかまえてくれた　チョロネコは
+せかいに　そいつだけ　だからだよ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:49:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:08:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……死んだ　じいちゃんが
+妹と　オレの　ために▼
+捕まえてくれた　チョロネコは
+世界に　そいつだけ　だからだよ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:50:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:08:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・続けてsage7_04
+・1＝ライバル名
+※仮メッセージ、仮設定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:56:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:07:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『こじんの　おもいか……▼
+それは　おまえに　とって
+とても　おおきいだろうが▼
+ひとから　みれば
+どうにも　ちいさな　ものだぞ▼
+それにくらべ　この　おおきな
+ふねを　ごらんなさい！▼
+この　ふね　そのものが　でんせつの
+ポケモン　キュレムの　ちからを▽
+りようする　ための　そうち！▼
+これで　こんどこそ！
+イッシュを　せいあつ　するのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:10:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『個人の　想いか……▼
+それは　おまえに　とって
+とても　大きな　ことだろうが▼
+他人から　みれば
+どうにも　小さな　ものだぞ▼
+それに比べ　この　船の
+威容を　ご覧なさい！▼
+この船　そのものが　伝説の
+ポケモン　キュレムの　力を▽
+利用する　ための　装置！▼
+これで　今度こそ！
+イッシュを　制圧するのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:51:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・続けてsage7_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:56:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:10:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……さて　キュレムも
+すっかり　かいふく　したようだ▼
+あとは　まかせましたよ
+ダークトリニティの　みなさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:23:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:19:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……さて　キュレムも
+すっかり　回復したようだ▼
+あとは　任せましたよ
+ダークトリニティの　みなさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:52:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・続けてpoke10_01
+・続けてswrival_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:19:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0501_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『ふざけるな！
+せいせいどうどうと　しょうぶ　しろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:14:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:17:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『ふざけるな！
+正々堂々と　勝負しろ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:14:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:26:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・続けてpoke10_01
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:14:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T04:19:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0501_poke10_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュララ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュララ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・アジト船：２回目
+・あわせて鳴き声再生
+・ダークトリニティ出現後、
+　画面暗転しw21へ
+※アジト船2回目イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE10
+ポケモン・キュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T05:11:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
