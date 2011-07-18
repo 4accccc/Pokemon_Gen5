@@ -6,11 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『
-・ギミック説明</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きたか▼
+この　ふねの　なかは
+ワープパネルを　つかって　いどうする▼
+ということで　きをつけろよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:44:20" />
+				Time="2011-07-18T06:17:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『
-・ギミック説明</Text>
+			<Text>[Name:TrainerName Idx="1" ]『きたか▼
+この　ふねの　なかは
+ワープパネルを　つかって　いどうする▼
+ということで　きをつけろよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:44:24" />
+				Time="2011-07-18T06:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

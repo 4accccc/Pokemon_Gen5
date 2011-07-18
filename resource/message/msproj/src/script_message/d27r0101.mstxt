@@ -1757,4 +1757,117 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swleader1_02_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
+さきに　せんにゅう　したよ▼
+どうやら　うえの　ほうにある
+ハッチが　あいている　みたいだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:12:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:10:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
+先に　潜入したよ▼
+どうやら　上の　方にある
+ハッチが　開いている　みたいだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:12:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:12:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船２回目
+・BLACK2用
+　WHITE2ならswleader1_02_01w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:11:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:09:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swleader1_02_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
+さきに　せんにゅう　したよ▼
+どうやら　したの　ほうにある
+ハッチが　あいている　みたいだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:12:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:11:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
+先に　潜入したよ▼
+どうやら　下の　方にある
+ハッチが　開いている　みたいだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:13:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:12:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船２回目
+・WHITE2用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:13:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T06:11:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
