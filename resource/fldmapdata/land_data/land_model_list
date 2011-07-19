@@ -741,6 +741,10 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_dun2718_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun2719_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun2720_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun3501_00_00.nsbmd \
+	$(DIR_TEMP)/m_dun3501_00_01.nsbmd \
+	$(DIR_TEMP)/m_dun3501_01_00.nsbmd \
+	$(DIR_TEMP)/m_dun3501_01_01.nsbmd \
 	$(DIR_TEMP)/m_ruin01_00_00.nsbmd \
 	$(DIR_TEMP)/m_gate01_00_00.nsbmd \
 	$(DIR_TEMP)/m_pc01_00_00.nsbmd \
