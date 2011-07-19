@@ -1,0 +1,43 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: c_gear_sw.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_C_GEAR_SW_NAIX_
+#define NARC_C_GEAR_SW_NAIX_
+
+enum {
+	NARC_c_gear_sw_no_gear_m_nclr = 0,
+	NARC_c_gear_sw_no_gear_f_nclr = 1,
+	NARC_c_gear_sw_no_gear_ncgr = 2,
+	NARC_c_gear_sw_no_gear_nscr = 3,
+	NARC_c_gear_sw_c_gear_m_nclr = 4,
+	NARC_c_gear_sw_c_gear_f_nclr = 5,
+	NARC_c_gear_sw_c_gear_ncgr = 6,
+	NARC_c_gear_sw_c_gear01_nscr = 7,
+	NARC_c_gear_sw_c_gear02_nscr = 8,
+	NARC_c_gear_sw_c_gear_m_obj_nclr = 9,
+	NARC_c_gear_sw_c_gear_f_obj_nclr = 10,
+	NARC_c_gear_sw_c_gear_obj_ncgr = 11,
+	NARC_c_gear_sw_c_gear_obj_ncer = 12,
+	NARC_c_gear_sw_c_gear_obj_nanr = 13,
+	NARC_c_gear_sw_c_gear_btn_m1_ncgr = 14,
+	NARC_c_gear_sw_c_gear_btn_m2_ncgr = 15,
+	NARC_c_gear_sw_c_gear_btn_m3_ncgr = 16,
+	NARC_c_gear_sw_c_gear_btn_m4_ncgr = 17,
+	NARC_c_gear_sw_c_gear_btn_m5_ncgr = 18,
+	NARC_c_gear_sw_c_gear_btn_f1_ncgr = 19,
+	NARC_c_gear_sw_c_gear_btn_f2_ncgr = 20,
+	NARC_c_gear_sw_c_gear_btn_f3_ncgr = 21,
+	NARC_c_gear_sw_c_gear_btn_f4_ncgr = 22,
+	NARC_c_gear_sw_c_gear_btn_f5_ncgr = 23,
+	NARC_c_gear_sw_c_gear_btn_m1_ncer = 24,
+	NARC_c_gear_sw_c_gear_btn_m1_nanr = 25
+};
+
+/* NARC_C_GEAR_SW_NAIX_ */
+#endif
