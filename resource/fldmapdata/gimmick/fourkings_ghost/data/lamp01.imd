@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-07-12T12:31:18" source="lamp01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-07-16T17:10:25" source="lamp01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-07-12T12:31:18" source="lamp01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-07-16T17:10:25" source="lamp01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -230,14 +230,14 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="16"
+		polygon_id="5"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -254,14 +254,14 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="2"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -278,14 +278,14 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="1"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
