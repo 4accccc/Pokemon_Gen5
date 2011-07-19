@@ -29,6 +29,7 @@
 #include "key_system_graphic.h"
 #include "key_system_net.h"
 #include "key_system_main.h"
+#include "key_system_snd.h"
 
 //ƒZ[ƒu
 #include "savedata/save_outside.h"
@@ -606,6 +607,8 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   case SEQ_DISPLAY_CREATE:
     p_wk->ret = FALSE;
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrc );
+
+    PMSND_PlaySE( KEYSYS_SE_NET );
     (*p_seq)++;
     break;
   case SEQ_NET_START:
@@ -633,12 +636,15 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 
       KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_49, KEYSYS_TEXT_TYPE_WAIT );
 
+      PMSND_StopSE();
+      PMSND_PlaySE( KEYSYS_SE_CONNECT_OK );
       p_wk->ret = FALSE;
     }
     else
     {
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
       {
+        PMSND_StopSE();
         (*p_seq) = SEQ_NET_END_DISPLAY_DELETE;
       }
     }
@@ -3375,6 +3381,8 @@ static BOOL KeySys_Demo_MainModeUnLock( KEYSYS_DEMO_WORK *p_wk )
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_key, TRUE );
       GFL_CLACT_WK_SetAnmSeq( p_wk->p_key, 8 );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_key, TRUE );
+
+      PMSND_PlaySE( KEYSYS_SE_FALLKEY );
       p_wk->seq++;
     }
     /* fallthrow */
@@ -3425,6 +3433,7 @@ static BOOL KeySys_Demo_MainModeUnLock( KEYSYS_DEMO_WORK *p_wk )
     if( KEYSYS_VEL_Main( &p_wk->vel )
       && !GFL_CLACT_WK_CheckAnmActive(p_wk->p_key) )
     {
+      PMSND_PlaySE( KEYSYS_SE_OPENKEY );
       GFL_CLACT_WK_SetDrawEnable(p_wk->p_key, FALSE );
       p_wk->seq++;
     }
@@ -3604,6 +3613,8 @@ static BOOL KeySys_Demo_MainModeGet( KEYSYS_DEMO_WORK *p_wk )
       //•`‰æON
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_key, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_key, TRUE );
+
+      PMSND_PlaySE( KEYSYS_SE_FALLKEY );
       p_wk->seq++;
     }
     /* fallthrow */

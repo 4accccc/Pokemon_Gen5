@@ -29,6 +29,7 @@
 #include "key_system_graphic.h"
 #include "key_system_net.h"
 #include "key_system_main.h"
+#include "key_system_snd.h"
 
 //ƒZ[ƒu
 #include "savedata/save_outside.h"
@@ -211,6 +212,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_CONNECT_ROM_WAIT,
     SEQ_CONNECT_ROM_RESULT,
     SEQ_CONVERT_CHECK,
+    SEQ_CONVERT_YESNO_MSG,
     SEQ_CONVERT_YESNO_START,
     SEQ_CONVERT_YESNO_WAIT,
     SEQ_CONVERT_MAIN,
@@ -219,6 +221,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_SAVE_WAIT,
     SEQ_SAVE_COMPLETE,
     SEQ_COMPLETE_MSG_START,
+    SEQ_CANCEL_MSG_START,
     SEQ_COMPLETE_MSG_WAIT,
     SEQ_ERR_MESSAGE_END,
 
@@ -391,10 +394,15 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     else
     {
-      *p_seq = SEQ_CONVERT_YESNO_START;
+      *p_seq = SEQ_CONVERT_YESNO_MSG;
     }
     break;
+  case SEQ_CONVERT_YESNO_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_07, KEYSYS_TEXT_TYPE_STREAM );
+    *p_seq = SEQ_CONVERT_YESNO_START;
+    break;
   case SEQ_CONVERT_YESNO_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
     {
       KEYSYS_LIST_SETUP setup;
       GFL_STD_MemClear( &setup, sizeof(KEYSYS_LIST_SETUP) );
@@ -411,7 +419,8 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       setup.is_cancel = TRUE;
       setup.cancel_idx = 1;
       setup.default_idx = 0;
-      p_wk->p_list = KEYSYS_LIST_Init( &setup, HEAPID_KEY_SYSTEM );
+      p_wk->p_list = KEYSYS_LIST_InitEx( &setup,32-10-1,24-4-1,10,4,HEAPID_KEY_SYSTEM );
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
       (*p_seq)++;
     }
     break;
@@ -431,7 +440,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
         default:
           GF_ASSERT(0);
         case 1:
-          *p_seq = SEQ_END;
+          *p_seq = SEQ_CANCEL_MSG_START;
           break;
         }
       }
@@ -471,6 +480,11 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   case SEQ_COMPLETE_MSG_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    *p_seq = SEQ_COMPLETE_MSG_WAIT;
+    break;
+    
+  case SEQ_CANCEL_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_08, KEYSYS_TEXT_TYPE_STREAM_FIX );
     *p_seq = SEQ_COMPLETE_MSG_WAIT;
     break;
 
@@ -721,10 +735,31 @@ static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID )
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   KEYSYS_TEXT_Exit( p_wk->p_text );
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 10, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 12, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
-  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_00, KEYSYS_TEXT_TYPE_QUE ); 
+
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+    if( !SaveData_GetExistFlag( p_sv ) )
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_00_2, KEYSYS_TEXT_TYPE_QUE ); 
+    }
+    else
+    {
+      MYSTATUS *p_mystatus = GAMEDATA_GetMyStatus(p_wk->p_param->p_gamedata);
+      STRBUF *p_src = GFL_MSG_CreateString( p_wk->p_msg, DATACONV_STR_00 );
+      STRBUF *p_dst = GFL_STR_CreateBuffer( 128, heapID );
+
+      WORDSET_RegisterNumber( p_wk->p_word, 0, MyStatus_GetID_Low(p_mystatus), 5, STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( p_wk->p_word, p_dst, p_src );
+
+      KEYSYS_TEXT_PrintBuf( p_wk->p_text, p_dst, KEYSYS_TEXT_TYPE_QUE ); 
+
+      GFL_STR_DeleteBuffer( p_dst );
+      GFL_STR_DeleteBuffer( p_src );    
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**

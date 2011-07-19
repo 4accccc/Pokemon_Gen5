@@ -30,6 +30,7 @@
 #include "key_system_net.h"
 #include "key_system_main.h"
 #include "key_system_flow.h"
+#include "key_system_snd.h"
 #include "data_convert_flow.h"
 
 //セーブ
@@ -195,7 +196,7 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
 
   //上画面タイトル作成
-  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 1,14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
 
   KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
@@ -337,7 +338,7 @@ static GFL_PROC_RESULT Key_System_Proc_Main
     case KEYSYS_NET_ERROR_TYPE_RETURN:      //再度通信をすればつながります。
     case KEYSYS_NET_ERROR_TYPE_DISCONNECT:  //切断したらメインメニューに戻る
       KEYSYS_NET_ClearError( p_wk->p_net );
-
+      PMSND_StopSE(); //通信のループ音を消す
       if( p_wk->p_mb )
       {
         MB_PARENT_DATACONV_Exit( p_wk->p_mb );

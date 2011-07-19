@@ -19,7 +19,6 @@
 #include "poke_tool/poke_tool.h"
 #include "multiboot/mb_data_main.h"
 #include "mb_data_wb.h"
-#include "wb_save.h"
 
 
 //=============================================================================

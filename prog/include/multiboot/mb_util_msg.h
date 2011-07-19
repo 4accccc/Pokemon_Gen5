@@ -52,6 +52,12 @@
 #define MB_MSG_YESNO_SEL_X ( 24 )
 #define MB_MSG_YESNO_SEL_Y ( 12 )
 
+
+#define MB_MSG_TITLEWIN_TOP    (1)
+#define MB_MSG_TITLEWIN_LEFT   (1)
+#define MB_MSG_TITLEWIN_WIDTH (14)
+#define MB_MSG_TITLEWIN_HEIGHT  (2)
+
 //======================================================================
 //	enum
 //======================================================================
@@ -131,5 +137,9 @@ extern const BOOL MB_MSG_CheckPrintQueIsFinish( MB_MSG_WORK *msgWork );
 extern const BOOL MB_MSG_CheckPrintStreamIsFinish( MB_MSG_WORK *msgWork );
 extern void MB_MSG_SetDispKeyCursor( MB_MSG_WORK *msgWork , const BOOL flg );
 extern void MB_MSG_SetDispTimeIcon( MB_MSG_WORK *msgWork , const BOOL flg );
+
+extern void MB_MSG_TitleCreateWindow( MB_MSG_WORK *msgWork );
+extern void MB_MSG_TitleDeleteWindow( MB_MSG_WORK *msgWork );
+extern void MB_MSG_TitleDisp( MB_MSG_WORK *work , const u16 msgId );
 
 

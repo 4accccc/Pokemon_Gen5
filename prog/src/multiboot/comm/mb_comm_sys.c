@@ -243,6 +243,7 @@ void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
       {
         commWork->state = MCS_CONNECT;
         GFL_NET_SetNoChildErrorCheck( TRUE );
+        GFL_NET_SetAutoErrorCheck( TRUE );
       }
     }
     break;
@@ -253,6 +254,7 @@ void MB_COMM_UpdateSystem( MB_COMM_WORK* commWork )
       if( GFL_NET_HANDLE_IsTimeSync( selfHandle , MB_COMM_TIMMING_EXIT , WB_NET_MULTIBOOT_SERVICEID ) == TRUE )
       {
         commWork->state = MCS_DISCONNECT;
+        GFL_NET_SetAutoErrorCheck( FALSE );
         GFL_NET_SetNoChildErrorCheck( FALSE );
       }
     }

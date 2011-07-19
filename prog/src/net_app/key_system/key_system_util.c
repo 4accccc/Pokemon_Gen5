@@ -25,6 +25,9 @@
 //文字表示
 #include "print/printsys.h"
 
+//SE
+#include "key_system_snd.h"
+
 //外部公開
 #include "key_system_util.h"
 
@@ -628,7 +631,7 @@ BOOL KEYSYS_TEXTSET_IsDrawEnd( const KEYSYS_TEXTSET_WORK* cp_wk )
 //-------------------------------------
 /// 定数
 //=====================================/
-#define KEYSYS_LIST_W  (12)
+#define KEYSYS_LIST_W  (10)
 //-------------------------------------
 /// 選択リスト
 //=====================================
@@ -953,12 +956,14 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
       //キー操作
       if( repeat & PAD_KEY_UP )
       {
+        PMSND_PlaySE( KEYSYS_SE_SELCT );
         p_wk->cursor--;
         p_wk->cursor = p_wk->cursor < 0 ?  p_wk->param.max-1: p_wk->cursor; 
         is_key = TRUE;
       }
       else if( repeat & PAD_KEY_DOWN )
       {
+        PMSND_PlaySE( KEYSYS_SE_SELCT );
         p_wk->cursor++;
         p_wk->cursor %= p_wk->param.max;
         is_key = TRUE;
@@ -973,12 +978,21 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
             is_trg = FALSE;
           }
         }
+        if( is_trg )
+        {
+          PMSND_PlaySE( KEYSYS_SE_DECIDE );
+        }
+        else
+        {
+          PMSND_PlaySE( KEYSYS_SE_CANCEL );
+        }
       }
       else if( repeat & PAD_BUTTON_CANCEL )
       {
         p_wk->cursor = p_wk->param.max-1;
         is_trg = TRUE;
         p_wk->is_change = TRUE;
+        PMSND_PlaySE( KEYSYS_SE_CANCEL );
       }
 
       if ( p_wk->bganm_cnt + 0x400 >= 0x10000 )

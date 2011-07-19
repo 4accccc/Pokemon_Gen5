@@ -56,14 +56,14 @@
 //âfâÊîzêM
 #include "font/font_dl.naix"
 #include "message_dl_movie.naix"
-#include "msg/msg_mb_child_movie.h"
+#include "msg/msg_mb_child_dataconv.h"
 #define ARCID_FONT_MB (ARCID_FONT)
 #define ARCID_MESSAGE_MB (ARCID_MESSAGE)
-#define FILE_MSGID_MB (NARC_message_dl_movie_mb_child_movie_dat)
+#define FILE_MSGID_MB (NARC_message_dl_movie_mb_child_dataconv_dat)
 #define FILE_FONT_LARGE_MB (NARC_font_dl_large_gftr)
 #define FILE_FONT_PLT_MB (NARC_font_dl_default_nclr)
-#define MSGID_YES_MB (MSG_MB_MOVIE_SYS_01)
-#define MSGID_NO_MB (MSG_MB_MOVIE_SYS_02)
+#define MSGID_YES_MB (MSG_MB_DC_SYS_01)
+#define MSGID_NO_MB (MSG_MB_DC_SYS_02)
 
 #endif  // MB_TYPE_POKE_SHIFTER
 

@@ -18,9 +18,9 @@
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
-#include "mystery.naix"
 #include "multiboot/swan_sound_palpark.sadl"
 #include "sound/pm_sndsys.h"
+#include "../prog/arc/key_system_gra.naix"
 
 #include "multiboot/mb_util.h"
 #include "multiboot/mb_util_msg.h"
@@ -40,8 +40,11 @@
 //=============================================================================
 enum
 {
-  MB_DATACONV_FRAME_MSG = GFL_BG_FRAME1_M,
-  MB_DATACONV_FRAME_BG  = GFL_BG_FRAME2_M,
+  MB_DATACONV_BG_MSG_M  = GFL_BG_FRAME0_M,
+  MB_DATACONV_BG_WND_M  = GFL_BG_FRAME2_M,
+  MB_DATACONV_BG_BACK_M = GFL_BG_FRAME3_M,
+  
+  MB_DATACONV_BG_BACK_S = GFL_BG_FRAME3_S,
 };
 
 #define MB_DATACONV_FIRST_TIMEOUT (60*30) //通常5秒以内で接続するのができなかった。
@@ -73,8 +76,10 @@ struct _MB_DATA_CONVERT_WORK
 
   BOOL          is_net_err;
   HEAPID        heapID;
+  fx32          scroll;
 
   WB_SAVE_CONV_ALL_DATA *p_conv_data;
+
 } ;
 
 
@@ -106,6 +111,11 @@ static BOOL Mb_DataConv_SeqFunc_FadeIn( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
 static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq );
 static BOOL Mb_DataConv_SeqFunc_FadeOut( MB_DATA_CONVERT_WORK *p_wk, int *p_seq );
 
+//-------------------------------------
+/// BG
+//=====================================
+static void Mb_DataConv_Bg_Load( MB_DATA_CONVERT_WORK *p_wk, HEAPID heapID );
+static void Mb_DataConv_Bg_Main( MB_DATA_CONVERT_WORK *p_wk );
 
 //-------------------------------------
 /// エラー
@@ -152,10 +162,6 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Init
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT, 0xF8000 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MULTIBOOT_DATA, 0x70000 );
 
-  {
-    OS_Printf( "messagedl_movie %d\n", _start_message_dl_movie );
-  }
-
 #if 0
   {
     int i, j;
@@ -178,9 +184,12 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Init
   p_wk->heapID  = HEAPID_MULTIBOOT;
   p_wk->p_graphic = MB_DATA_CONVERT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_MULTIBOOT );
   p_wk->p_comm  = MB_COMM_CreateSystem( p_wk->heapID );
-  p_wk->p_msg   = MB_MSG_MessageInit( p_wk->heapID, MB_DATACONV_FRAME_MSG, MB_DATACONV_FRAME_MSG, FILE_MSGID_MB , TRUE , TRUE );
+  p_wk->p_msg   = MB_MSG_MessageInit( p_wk->heapID, MB_DATACONV_BG_MSG_M, MB_DATACONV_BG_MSG_M, FILE_MSGID_MB , TRUE , TRUE );
 
   MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
+  MB_MSG_TitleCreateWindow( p_wk->p_msg );
+  MB_MSG_TitleDisp( p_wk->p_msg, MSG_MB_DC_TITLE );
+
   p_wk->p_snd_buff = GFL_ARC_UTIL_Load( ARCID_MB_CHILD ,
       NARC_mb_child_gra_swan_sound_palpark_sdat ,
       FALSE ,
@@ -188,7 +197,10 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Init
 
   PMSND_InitMultiBoot( p_wk->p_snd_buff );
 
+  Mb_DataConv_Bg_Load( p_wk, p_wk->heapID );
+
   Mb_DataConv_Seq_Set( p_wk, Mb_DataConv_SeqFunc_FadeIn, p_seq );
+
 
   return GFL_PROC_RES_FINISH;
 }
@@ -208,6 +220,7 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Exit
   ( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {
   MB_DATA_CONVERT_WORK *p_wk = p_wk_adrs;
+
 
   PMSND_Exit();
   GFL_HEAP_FreeMemory( p_wk->p_snd_buff );
@@ -273,6 +286,8 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Main
   {
     MB_MSG_MessageMain( p_wk->p_msg );
   }
+
+  Mb_DataConv_Bg_Main( p_wk );
 
   //シーケンス処理
   if( Mb_DataConv_Seq_Main( p_wk, p_seq ) )
@@ -388,7 +403,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   {
   case SEQ_COMM_INIT:
     MB_COMM_InitComm( p_wk->p_comm );
-    MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_MOVIE_01 );
+    MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_DC_01 );
     MB_MSG_SetDispTimeIcon( p_wk->p_msg, TRUE );
     (*p_seq)++;
     break;
@@ -403,7 +418,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
         MB_COMM_InitChild( p_wk->p_comm, (u8*)desc->bssid );
       }
       
-      MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_MOVIE_01 );
+      MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_DC_01 );
       MB_MSG_SetDispTimeIcon( p_wk->p_msg , TRUE );
       (*p_seq)++;
     }
@@ -415,8 +430,9 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     }
     if( p_wk->timeout_cnt >= MB_DATACONV_FIRST_TIMEOUT )
     {
-      //TODO
-      GF_ASSERT( 0 );
+      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_07, 1 );
+      OS_TPrintf( "初回タイムアウト\n" );
+      (*p_seq) = SEQ_WAIT_NEXT_GAME_ERROR_MSG;
     }
     else if( MB_COMM_IsPostInitData( p_wk->p_comm ) )
     {
@@ -446,8 +462,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     {
       //ROM違う！
 
-      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_MOVIE_02 , p_wk->p_comm_init->msgSpeed );
-      MB_MSG_SetDispKeyCursor( p_wk->p_msg, TRUE );
+      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_02 , p_wk->p_comm_init->msgSpeed );
 
       MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR );
 
@@ -466,7 +481,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       {
         (*p_seq) = SEQ_DATA_CONV;
         MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
-        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_MOVIE_09 , p_wk->p_comm_init->msgSpeed );
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_09 , p_wk->p_comm_init->msgSpeed );
       }
       else
       {
@@ -488,6 +503,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
         MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR );
         break;
       }
+      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_06 , p_wk->p_comm_init->msgSpeed );
       (*p_seq) = SEQ_WAIT_NEXT_GAME_ERROR_MSG;
     }
     break;
@@ -517,7 +533,7 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       {
         MB_MSG_MessageHide( p_wk->p_msg );
         MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
-        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_MOVIE_05 , p_wk->p_comm_init->msgSpeed );
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05 , p_wk->p_comm_init->msgSpeed );
         MB_COMM_ReqDisconnect( p_wk->p_comm );
         (*p_seq) = SEQ_WAIT_EXIT_COMM;
       }
@@ -528,8 +544,8 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) )
     {
       //初期タイムアウトから来るとmsgSpdもらってない。
-      const int msgSpd = ( p_wk->p_comm_init != NULL ? p_wk->p_comm_init->msgSpeed : 1 );
-      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_MOVIE_05 , msgSpd );
+      //const int msgSpd = ( p_wk->p_comm_init != NULL ? p_wk->p_comm_init->msgSpeed : 1 );
+      //MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05 , msgSpd );
       MB_COMM_ReqDisconnect( p_wk->p_comm );
       (*p_seq)++;
     }
@@ -589,6 +605,62 @@ static BOOL Mb_DataConv_SeqFunc_FadeOut( MB_DATA_CONVERT_WORK *p_wk, int *p_seq 
   }
 
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG読み込み
+ *
+ *	@param	MB_DATA_CONVERT_WORK *p_wk  ワーク
+ *	@param	heapID                      ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Mb_DataConv_Bg_Load( MB_DATA_CONVERT_WORK *p_wk, HEAPID heapID )
+{
+  {
+    int i;
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_GRAPHIC, heapID );
+
+    //----背景----
+    //PLT
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_key_system_gra_back00_NCLR,
+        PALTYPE_MAIN_BG, 0*0x20, 0x20, heapID );
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_key_system_gra_back00_NCLR,
+        PALTYPE_SUB_BG, 0*0x20, 0x20, heapID );
+    //CHR
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_back00_NCGR, 
+        MB_DATACONV_BG_BACK_M, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_back00_NCGR, 
+        MB_DATACONV_BG_WND_M, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_back00_NCGR, 
+        MB_DATACONV_BG_BACK_S, 0, 0, FALSE, heapID );
+    //SCR
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_key_system_gra_back00_NSCR,
+        MB_DATACONV_BG_BACK_M, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_key_system_gra_back00_NSCR,
+        MB_DATACONV_BG_BACK_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_key_system_gra_back01_NSCR,
+        MB_DATACONV_BG_WND_M, 0, 0, FALSE, heapID );
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGメイン
+ *
+ *	@param	MB_DATA_CONVERT_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Mb_DataConv_Bg_Main( MB_DATA_CONVERT_WORK *p_wk )
+{
+  enum
+  {
+    KEYSYS_BG_SCROLL_SPEED  = (-FX32_CONST(0.2)),
+  };
+  p_wk->scroll += KEYSYS_BG_SCROLL_SPEED;
+  GFL_BG_SetScrollReq( MB_DATACONV_BG_BACK_M, GFL_BG_SCROLL_Y_SET, p_wk->scroll >> FX32_SHIFT );
+  GFL_BG_SetScrollReq( MB_DATACONV_BG_BACK_S, GFL_BG_SCROLL_Y_SET, p_wk->scroll >> FX32_SHIFT );
 }
 
 //----------------------------------------------------------------------------

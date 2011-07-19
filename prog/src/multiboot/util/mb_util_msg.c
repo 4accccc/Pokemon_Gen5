@@ -55,6 +55,7 @@ struct _MB_MSG_WORK
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
   GFL_BMPWIN      *msgWin;
+  GFL_BMPWIN      *titleWin;
   GFL_FONT        *fontHandle;
   PRINT_STREAM    *printHandle;
   GFL_MSGDATA     *msgHandle;
@@ -65,6 +66,7 @@ struct _MB_MSG_WORK
   PRINT_QUE *printQue;
   BOOL      isUpdateQue;
   BOOL      isUseCursor;
+  PRINT_UTIL  printUtil;
   
   APP_TASKMENU_WORK *yesNoWork;
   APP_TASKMENU_RES  *takmenures;
@@ -219,6 +221,7 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   {
     GFL_BMPWIN_Delete( msgWork->msgWin );
   }
+  MB_MSG_TitleDeleteWindow( msgWork );
   GFL_FONT_Delete( msgWork->fontHandle );
   GFL_TCBL_Exit( msgWork->tcblSys );
   
@@ -269,6 +272,10 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
     */
   }
   PRINTSYS_QUE_Main( msgWork->printQue );
+  if(msgWork->printUtil.win)
+  {
+    PRINT_UTIL_Trans( &msgWork->printUtil, msgWork->printQue );
+  }
   if( msgWork->isUpdateQue == TRUE &&
       PRINTSYS_QUE_IsFinished( msgWork->printQue ) == TRUE )
   {
@@ -787,3 +794,47 @@ void MB_MSG_SetDispTimeIcon( MB_MSG_WORK *msgWork , const BOOL flg )
   msgWork->reqDispTimerIcon = flg;
 }
 
+//--------------------------------------------------------------------------
+//  タイトルウィンドウ作成
+//--------------------------------------------------------------------------
+void MB_MSG_TitleCreateWindow( MB_MSG_WORK *msgWork )
+{
+  GF_ASSERT( msgWork->titleWin == NULL );
+
+  msgWork->titleWin = GFL_BMPWIN_Create( msgWork->frame , 
+                                        MB_MSG_TITLEWIN_LEFT , 
+                                        MB_MSG_TITLEWIN_TOP ,
+                                        MB_MSG_TITLEWIN_WIDTH , 
+                                        MB_MSG_TITLEWIN_HEIGHT , 
+                                        MB_MSG_PLT_MAIN_FONT ,
+                                        GFL_BMP_CHRAREA_GET_B );
+
+  PRINT_UTIL_Setup( &msgWork->printUtil, msgWork->titleWin );
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( msgWork->titleWin ) , 0x0 );
+  GFL_BMPWIN_TransVramCharacter( msgWork->titleWin );
+  GFL_BMPWIN_MakeScreen( msgWork->titleWin );
+  GFL_BG_LoadScreenReq(msgWork->frame);
+}
+//--------------------------------------------------------------------------
+//  タイトルウィンドウ破棄
+//--------------------------------------------------------------------------
+void MB_MSG_TitleDeleteWindow( MB_MSG_WORK *msgWork )
+{
+  if( msgWork->titleWin )
+  {
+    GFL_BMPWIN_Delete( msgWork->titleWin );
+    msgWork->titleWin = NULL;
+
+    msgWork->printUtil.win = NULL;
+  }
+}
+//--------------------------------------------------------------------------
+//  タイトルウィンドウ文字描画
+//--------------------------------------------------------------------------
+void MB_MSG_TitleDisp( MB_MSG_WORK *work , const u16 msgId )
+{
+  STRBUF *msgStr = GFL_MSG_CreateString( work->msgHandle , msgId );
+  PRINT_UTIL_Print( &work->printUtil, work->printQue, 0, 0, msgStr, work->fontHandle );
+  GFL_STR_DeleteBuffer( msgStr );
+}

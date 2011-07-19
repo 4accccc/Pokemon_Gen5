@@ -406,6 +406,7 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
     SEQ_WAIT,
     SEQ_EXIT_START,
     SEQ_EXIT_WAIT,
+    SEQ_EXIT_WAIT2,
     SEQ_END,
   };
 
@@ -486,6 +487,13 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
     if( MB_COMM_IsDisconnect( p_wk->p_comm ) )
     {
       MB_COMM_ExitComm( p_wk->p_comm );
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_EXIT_WAIT2:
+    if( GFL_NET_IsExit() )
+    {
       (*p_seq)++;
     }
     break;

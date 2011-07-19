@@ -514,7 +514,7 @@ static void KeySys_Net_Seq_DisConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int 
     (*p_seq)++;
     break;
   case SEQ_NET_EXIT_WAIT:
-    if( !GFL_NET_IsInit() )
+    if( GFL_NET_IsExit() )
     {
       (*p_seq)++;
     }
