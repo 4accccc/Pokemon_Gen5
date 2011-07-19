@@ -1216,5 +1216,7 @@ SCRIPTFILES += \
 	sp_d27r2101.ev \
 	d27r2201.ev \
 	sp_d27r2201.ev \
+	d35r0101.ev \
+	sp_d35r0101.ev \
 
 #©“®¶¬ƒtƒ@ƒCƒ‹ zone_script.list ––”ö
