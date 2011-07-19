@@ -1855,6 +1855,8 @@
 			<ContentItem
 				Name="manual.mstxt" />
 			<ContentItem
+				Name="mb_child_dataconv.mstxt" />
+			<ContentItem
 				Name="mb_child_movie.mstxt" />
 			<ContentItem
 				Name="medalbox.mstxt" />
