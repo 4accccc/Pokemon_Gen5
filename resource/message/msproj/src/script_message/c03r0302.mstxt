@@ -121,6 +121,312 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c03r0302_businessman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっ！？　かいしゃけんがく？
+とにかく　しょうぶ　しようよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっ！？　会社見学？
+とにかく　勝負しようよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0302_businessman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんという　じつりょく！
+かんどう　したから　プレゼントだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんという　実力！
+感動したから　プレゼントだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No015「クイックボール」×１０</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0302_businessman1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クイックボールは　ポケモンと
+であって　すぐに　なげたほうが▽
+つかまえやすさが　アップするよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クイックボールは　ポケモンと
+であって　すぐに　投げたほうが▽
+捕まえやすさが　アップするよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0302_businessman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしかして　ポケモンしゅぎょう？
+だったら　よろこんで　つきあうよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしかして　ポケモン修行？
+だったら　喜んで　つきあうよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0302_businessman2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　うでまえ　なら
+これも　つかいこなせるよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　腕前なら
+これも　使いこなせるよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No010「タイマーボール」×１０</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0302_businessman2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タイマーボールは　ポケモンと
+ながく　たたかった　ほうが▽
+つかまえやすさが　アップするんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タイマーボールは　ポケモンと
+長く　戦った　ほうが▽
+捕まえやすさが　アップするんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BUSINESSMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T11:30:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r0302_businessman_01"
 		Style="Large">
 		<LanguageCell
@@ -177,7 +483,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -235,7 +541,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -300,7 +606,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
