@@ -17250,9 +17250,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_WB, // camera_area
 		19,   // padding > placeicon
     0,
-		145,
-		0,
-		210,
+		620,
+		5,
+		79,
 	},
 	{//ZONE_ID_C03GYM0201 = 493
 		RSC_GRID_DEFAULT,
