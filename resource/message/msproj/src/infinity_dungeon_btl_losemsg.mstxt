@@ -3037,11 +3037,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぎゃああああああっ！▽
+			<Text>ぎゃああああああっ！▼
 ……さけびごえだって　とくいだぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T03:28:35" />
+				Time="2011-07-19T01:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3049,11 +3049,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぎゃああああああっ！▽
+			<Text>ぎゃああああああっ！▼
 ……叫び声だって　得意だぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T03:28:54" />
+				Time="2011-07-19T01:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
