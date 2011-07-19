@@ -346,9 +346,9 @@
 #define FE_R22_POKE5_GET_01                330 /* 0x014a 22番道路：テラキオンを捕まえた */
 #define FE_D02R0201_RANGERM_01             331 /* 0x014b D02R0201：レンジャー初回会話フラグ */
 #define FE_C06_APPRAISAL_TALK              332 /* 0x014c フキヨセシティ：こやし買取人初回会話フラグ */
-		/* not used   333(0x014d) */
-		/* not used   334(0x014e) */
-		/* not used   335(0x014f) */
+#define FE_T02_LOW_TALK_01                 333 /* 0x014d カラクサタウン：１日１回小ささチェック初回話しかけ */
+#define FE_T02_HIGH_TALK_01                334 /* 0x014e カラクサタウン：１日１回大きさチェック初回話しかけ */
+#define FE_T02R0202_ITEMGET_01             335 /* 0x014f カラクサタウン：アイテム入手フラグ */
 		/* not used   336(0x0150) */
 		/* not used   337(0x0151) */
 		/* not used   338(0x0152) */
@@ -630,6 +630,7 @@
 #define FV_D02R0201_POKE6_01               712 /* 0x02c8 思索の原：ビリジオン */
 #define FV_D02R0201_RANGERM_01             713 /* 0x02c9 思索の原：レンジャー */
 #define FV_C03R0601_SWBELL_01              714 /* 0x02ca ヒウンシティゲート：ベル */
+#define FV_C01_POKE44_01                   715 /* 0x02cb サンヨウシティ：マッギョ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2258,8 +2259,8 @@
 #define TMFLG_C13_ITEM_TRADE              2763 /* 0x0acb タチワキシティ：１日１回アイテムトレードイベント */
 #define TMFLG_R9R0201_ITEMBUY             2764 /* 0x0acc アールナイン：お買い物お嬢様イベント起動 */
 #define TMFLG_R9R0201_ITEMBUY_CLEAR       2765 /* 0x0acd アールナイン：お買い物お嬢様イベント起動クリア */
-		/* not used  2766(0x0ace) */
-		/* not used  2767(0x0acf) */
+#define TMFLG_T02_LOW                     2766 /* 0x0ace カラクサタウン：１日１回小ささチェックイベント */
+#define TMFLG_T02_HIGH                    2767 /* 0x0acf カラクサタウン：１日１回大きさチェックイベント */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
