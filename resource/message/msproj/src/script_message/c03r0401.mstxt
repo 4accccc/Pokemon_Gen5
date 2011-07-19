@@ -46,10 +46,10 @@
 　200～254　→boy3_07
 　255　→boy3_08
 ・0＝メダル所有数
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:50" />
+				Time="2011-07-19T09:35:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -97,10 +97,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が1～9
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:56:59" />
+				Time="2011-07-19T09:35:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -150,10 +150,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が10～29
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:04" />
+				Time="2011-07-19T09:35:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -203,10 +203,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が30～49
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:07" />
+				Time="2011-07-19T09:35:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -260,10 +260,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が50～99
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:11" />
+				Time="2011-07-19T09:35:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -317,10 +317,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が100～199
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:15" />
+				Time="2011-07-19T09:35:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -378,10 +378,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が200～254
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:20" />
+				Time="2011-07-19T09:35:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -439,10 +439,10 @@
 			Language="JPN">
 			<Comment>♂
 ・メダル個数が255
-・swanで新規作成</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:57:25" />
+				Time="2011-07-19T09:35:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
