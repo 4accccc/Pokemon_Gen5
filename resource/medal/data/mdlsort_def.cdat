@@ -79,10 +79,10 @@ u32 MedalSortList[] = {
     MDLID_MUSICALWIN_LV1,	//‚©‚¯‚¾‚µ‚·‚½[
     MDLID_WAZA_MUKOU,	//‚©‚ç‚Ô‚è‚ß‚¢‚¶‚ñ
     MDLID_BILLBOARD_COUNT_LV1,	//‚©‚ñ‚Î‚ñ‚ß‚¢‚¶‚ñ
-    MDLID_FIELD_DUMMY_00,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚P
-    MDLID_FIELD_DUMMY_01,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚Q
-    MDLID_FIELD_DUMMY_02,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚R
-    MDLID_FIELD_DUMMY_03,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚S
+    MDLID_GUIDANCE_CNT_LV1,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚P
+    MDLID_GUIDANCE_CNT_LV2,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚Q
+    MDLID_GUIDANCE_CNT_LV3,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚R
+    MDLID_GUIDANCE_CNT_LV4,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚S
     MDLID_GOMIBAKO_LV1,	//‚ª‚³‚¢‚ê‚Ì‚½‚Â‚¶‚ñ
     MDLID_COMM_TRADE_LV3,	//‚ª‚Á‚¿‚è‚Æ‚ê[‚Ç
     MDLID_REPORT_MAX,	//‚«‚¹‚«‚Ì‚Ø‚ñ‚³‚«
@@ -150,7 +150,7 @@ u32 MedalSortList[] = {
     MDLID_CHAMPION_NORMAL,	//‚Ì[‚Ü‚é‚¿‚á‚ñ‚Õ
     MDLID_AFFINITY_CHECK_POINT,	//‚Í[‚Æ‚Ì‚¦[‚·
     MDLID_CYCLE_LV3,	//‚Í[‚Ç‚ç‚¢‚¾[
-    MDLID_MUSICALDL,	//‚Í‚¢‚Ä‚­‚¨‚ñ‚·‚Ä[‚¶
+    MDLID_MUSICAL_DL,	//‚Í‚¢‚Ä‚­‚¨‚ñ‚·‚Ä[‚¶
     MDLID_COMPLETE_HAGANE,	//‚Í‚ª‚Ë‚±‚ê‚­‚½[
     MDLID_BOX_LV2,	//‚Í‚±‚¢‚è‚P‚Q‚O
     MDLID_BOX_LV1,	//‚Í‚±‚¢‚è‚R‚O
@@ -202,14 +202,14 @@ u32 MedalSortList[] = {
     MDLID_COMPLETE_MIZU,	//‚Ý‚¸‚±‚ê‚­‚½[
     MDLID_WALK_LV2,	//‚Ý‚Ç‚é‚¤‚§[‚©[
     MDLID_MUSICALWIN_MAX,	//‚Ý‚ã[‚¶‚©‚é‚Õ‚è‚Ü
-    MDLID_BATTLE_DUMMY_63,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚P
-    MDLID_BATTLE_DUMMY_64,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚Q
-    MDLID_BATTLE_DUMMY_65,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚R
-    MDLID_BATTLE_DUMMY_66,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚S
-    MDLID_BATTLE_DUMMY_67,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚T
-    MDLID_BATTLE_DUMMY_68,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚U
-    MDLID_BATTLE_DUMMY_69,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚V
-    MDLID_BATTLE_DUMMY_70,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚W
+    MDLID_MUGEN_AREA_LV1,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚P
+    MDLID_MUGEN_AREA_LV2,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚Q
+    MDLID_MUGEN_AREA_LV3,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚R
+    MDLID_MUGEN_AREA_LV4,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚S
+    MDLID_MUGEN_WIN_LV1,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚T
+    MDLID_MUGEN_WIN_LV2,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚U
+    MDLID_MUGEN_WIN_LV3,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚V
+    MDLID_MUGEN_WIN_LV4,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚W
     MDLID_COMPLETE_MUSHI,	//‚Þ‚µ‚±‚ê‚­‚½[
     MDLID_WALK_MAX,	//‚ß‚¢‚æ‚Ì‚ ‚µ‚ ‚Æ
     MDLID_CHAMPION_HAGANE,	//‚ß‚½‚é‚¿‚á‚ñ‚Õ

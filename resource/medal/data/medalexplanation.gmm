@@ -1504,252 +1504,272 @@
 
 	<row id="MDL_EXP_BATTLE_029">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　オールＴ
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　オールＴ
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_030">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　オールＴ
-ゆうしょうすう　だんかい２</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　オールＴ
-優勝数　段階２</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_031">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　オールＴ
-ゆうしょうすう　だんかい３</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　オールＴ
-優勝数　段階３</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_032">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　オールＴ
-ゆうしょうすう　だんかい４</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　オールＴ
-優勝数　段階４</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_033">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　ノーマル
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　ノーマル
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_034">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　ほのお
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　ほのお
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_035">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　みず
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　みず
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_036">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　でんき
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　でんき
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_037">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　くさ
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　くさ
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_038">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　こおり
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　こおり
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_039">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　かくとう
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　かくとう
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_040">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　どく
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　どく
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_041">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　じめん
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　じめん
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_042">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　ひこう
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　ひこう
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_043">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　エスパー
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　エスパー
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_044">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　むし
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　むし
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_045">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　いわ
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　いわ
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_046">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　ゴースト
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　ゴースト
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_047">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　ドラゴン
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　ドラゴン
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_048">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　あく
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　あく
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_049">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　タイプＴ　はがね
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　タイプＴ　はがね
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_050">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　チャンピオンＴ
-ゆうしょうすう　だんかい１</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　チャンピオンＴ
-優勝数　段階１</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_051">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　チャンピオンＴ
-ゆうしょうすう　だんかい２</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　チャンピオンＴ
-優勝数　段階２</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_052">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　チャンピオンＴ
-ゆうしょうすう　だんかい３</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　チャンピオンＴ
-優勝数　段階３</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_053">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ　チャンピオンＴ
-ゆうしょうすう　だんかい４</language>
+ＷＢＴ
+みてい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ　チャンピオンＴ
-優勝数　段階４</language>
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_054">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">かりメダル
+ＷＢＴ
+みてい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_055">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">かりメダル
+ＷＢＴ
+みてい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_056">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">かりメダル
+ＷＢＴ
+みてい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_057">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">かりメダル
+ＷＢＴ
+みてい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_058">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">かりメダル
+ＷＢＴ
+みてい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＷＢＴ
+未定</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_059">
@@ -1889,7 +1909,7 @@
 ぶたいに　かかせない　ひととなった
 トレーナーに　おくられる　メダル。</language>
 		<language name="JPN_KANJI" width="216">何度も　ミュージカルに　参加し
-舞台に　欠かせない　人となった
+舞台に　欠かせない人となった
 トレーナーに　贈られる　メダル。</language>
 	</row>
 
