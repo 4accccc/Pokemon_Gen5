@@ -6041,4 +6041,45 @@ R14R0101/R15R0101</Comment>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="MAPNAME_D35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうち（かり）</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-19T02:18:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-19T02:18:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>高地（仮）</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-19T02:18:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-19T02:18:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>D35
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-19T02:18:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
