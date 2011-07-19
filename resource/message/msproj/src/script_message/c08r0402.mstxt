@@ -2,7 +2,7 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c08_man3_01"
+		Label="msg_c08r0402_man3_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -23,14 +23,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぼくは　オタマロを　だれよりも
-あいする　オタマロマニア！▼
-あと　１ひき　オタマロが　いれば
-オタマロが　がっしょう　するのに！▼
+愛する　オタマロマニア！▼
+あと　１匹　オタマロが　いれば
+オタマロが　合唱するのに！▼
 きみ　オタマロが　いたら
 みせてくれないかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:32:56" />
+				Time="2011-07-19T07:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64,7 +64,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_02"
+		Label="msg_c08r0402_man3_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -116,17 +116,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_03"
+		Label="msg_c08r0402_man3_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そっか……　しかたがない……▼
-もしも　オタマロ　つかまえたら
-みせてくれよー▽
+もしも　つかまえたら
+オタマロ　みせてくれよー▽
 いい　うた　きかせるからさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:36:32" />
+				Time="2011-07-19T07:14:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,12 +135,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そっか……　しかたがない……▼
-もしも　オタマロ　つかまえたら
-みせてくれよー▽
-いい　うた　きかせるからさ！</Text>
+もしも　捕まえたら
+オタマロ　みせてくれよー▽
+いい　歌　聴かせるからさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:36:36" />
+				Time="2011-07-19T07:15:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -171,7 +171,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_04"
+		Label="msg_c08r0402_man3_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -223,7 +223,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_05"
+		Label="msg_c08r0402_man3_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -245,13 +245,13 @@
 			Language="JPN_KANJI">
 			<Text>オオオオオオオタマロ！！！！！▼
 これで！
-やっと！　６ひき▽
+やっと！　６匹▽
 オタマロが　そろった！！！▼
 さあ！　オタマロたち！　キュートで
 ナイスな　ボイスを　カモン！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:32:56" />
+				Time="2011-07-19T07:14:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -284,7 +284,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_06"
+		Label="msg_c08r0402_man3_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -309,18 +309,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いや～……　すばらしい
-がっしょう　だったね▼
-ふかまる　オタマロへの　おもい！▼
+合唱だったね▼
+深まる　オタマロへの　想い！▼
 きみが　いなかったら
-いっしょう　きけなかったよ▽
-ほんとうに　マジ　サンキュー！▼
+一生　聴けなかったよ▽
+本当に　マジ　サンキュー！▼
 また　オタマロたちの
-オタマロ　ソングが　ききたくなったら▼
-オタマロを　つれて
+オタマロ　ソングが　聴きたくなったら▼
+オタマロを　連れて
 ぼくの　ところに　きてよねー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:32:56" />
+				Time="2011-07-19T07:15:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -351,7 +351,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_07"
+		Label="msg_c08r0402_man3_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -368,10 +368,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うん？　オタマロの　キュートで
-ナイスな　ボイスを　きくのかい？</Text>
+ナイスな　ボイスを　聴くのかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:32:56" />
+				Time="2011-07-19T07:15:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -405,7 +405,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_08"
+		Label="msg_c08r0402_man3_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -458,7 +458,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_man3_09"
+		Label="msg_c08r0402_man3_09"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -476,13 +476,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやー　ほんとうに
+			<Text>いやー　本当に
 オタマロって　かわいいね▼
-なんど　きいても　キュンとする……
-ふかまる　オタマロへの　おもい！</Text>
+何度　聴いても　キュンとする……
+深まる　オタマロへの　想い！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T10:32:56" />
+				Time="2011-07-19T07:16:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -513,7 +513,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_poke37_01_01"
+		Label="msg_c08r0402_poke37_01_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -555,7 +555,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_poke37_02_01"
+		Label="msg_c08r0402_poke37_02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -597,7 +597,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_poke37_03_01"
+		Label="msg_c08r0402_poke37_03_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -639,7 +639,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_poke37_04_01"
+		Label="msg_c08r0402_poke37_04_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -681,7 +681,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c08_poke37_05_01"
+		Label="msg_c08r0402_poke37_05_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
