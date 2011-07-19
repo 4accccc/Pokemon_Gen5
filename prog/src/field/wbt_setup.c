@@ -338,7 +338,7 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
 	WIN_RECORD_PARAM * wr_param;
 	
 	wr_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(WIN_RECORD_PARAM) );
-	wr_param->gamesys	= gsys;
+//	wr_param->gamesys	= gsys;
 	// ‰Šú‰»
 	wr_param->status	  = WIN_RECORD_STATUS_LV1;
   wr_param->wbtsave   = GAMEDATA_GetWBTSave( gamedata );  //WBT—DŸ‰ñ”

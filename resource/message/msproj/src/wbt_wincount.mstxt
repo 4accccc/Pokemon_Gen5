@@ -1028,4 +1028,434 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_000"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:05:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:05:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:05:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:05:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:05:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:26" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カントー</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:06:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カントー</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジョウト</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジョウト</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホウエン</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:07:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホウエン</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シンオウ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シンオウ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:08:48" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワールド</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワールド</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:28" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャンピオンズ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:09:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャンピオンズ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_008"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＷＣＳ２００１</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＷＣＳ２００１</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:10:51" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_009"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタル</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタル</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_010"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レンタルマスター</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レンタルマスター</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:11:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_011"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフル</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフル</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:12" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_012"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャッフルマスター</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャッフルマスター</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名称</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-19T06:12:38" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

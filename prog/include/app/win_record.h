@@ -56,7 +56,7 @@ typedef enum {
 //
 // エントリーチェッカー(優勝記録)
 typedef struct{
-	GAMESYS_WORK		*gamesys;		///<システム
+//	GAMESYS_WORK		*gamesys;		///<システム
 	//
 	WIN_RECORD_STATUS	status;			///<クリア状態
 	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)

@@ -103,6 +103,7 @@ enum{
 // パレット
 // 上：BG  (0-2:BG)
 // 上：OBJ (0:キャラ)
+//
 // 下：BG  (0,1:BG、8:FONT)
 // 下：OBJ (0-10:パネル、11-14:cmn)
 enum{
@@ -127,6 +128,7 @@ enum{
 	WIN_RECORD_OBJ_MAXNUM		= 5,		// obj
 	//
 	WIN_RECORD_BGNUM_MAXNUM		= 8,		// bg
+	WIN_RECORD_MES_MAXNUM		= 2,		// msg
 	//
 	WIN_RECORD_UP_OBJ_MAXNUM	= 1,		// obj(up)
 	//
@@ -197,8 +199,20 @@ enum{
 
 // トーナメントの番号
 enum{
-	TMT_ALL 	= 0,						// オール
+	TMT_HODOMOE = 0,						// ホドモエ
+	TMT_ISSYU,								// イッシュ
+	TMT_KANTO,								// カントー
+	TMT_JOUTO,								// ジョウト
+	TMT_HOUEN,								// ホウエン
+	TMT_SINOU,								// シンオウ
+	TMT_WORLD,								// ワールド
 	TMT_CHAMPION,							// チャンピオン
+	TMT_WCS,								// WCS2011
+	TMT_RENTAL,								// レンタル
+	//
+	TMT_RENTAL_MASTER,						// レンタルマスター
+	TMT_SHAFFLE,							// シャッフル
+	TMT_SHAFFLE_MASTER,						// シャッフルマスター
 	TMT_NORMAL,								// ノーマル
 	TMT_FIRE,								// ほのお
 	TMT_WATER,								// みず
@@ -206,8 +220,8 @@ enum{
 	TMT_ELEC,								// でんき
 	TMT_ICE,								// こおり
 	TMT_BATTLE,								// かくとう
-	TMT_POISON,								// どく
 	//
+	TMT_POISON,								// どく
 	TMT_GROUND,								// じめん
 	TMT_FLY,								// ひこう
 	TMT_ESPER,								// エスパー
@@ -333,7 +347,7 @@ typedef struct
 	GFL_FONT				*font;
 	//プリントキュー
 	PRINT_QUE				*print_que;
-	GFL_MSGDATA				*msg[2];								// 0:メッセージ,1:未使用
+	GFL_MSGDATA				*msg[WIN_RECORD_MES_MAXNUM];			// 0:メッセージ,1:未使用
 	PRINT_UTIL				PrintUtil[WIN_RECORD_CANVAS_MAXNUM];	// 文字表示用
 	//
 	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
@@ -345,7 +359,9 @@ typedef struct
 	s32						TopNum;							// 先頭の番号
 	u32						Flag;							// フラグ
 	s32						TrainerId;						// トレーナーID
-	s32						CountBuffer[TMT_MAX];			// カウント
+	s32						DispMaxNum;						// 最大数
+	s16						CountBuffer[TMT_MAX];			// カウント
+	s16						DispBuffer[TMT_MAX];			// 表示のバッファ
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
@@ -570,102 +586,78 @@ static const u8 wr_gmm_tbl[] = {
 
 // トーナメント名
 // (TMT_)と対応
-static const u8 wr_tmt_gmm_tbl[] = {
-	msg_wbt_wincount_all,			// 0
-	msg_wbt_wincount_champ,
-	msg_wbt_wincount_normal,
-	msg_wbt_wincount_honoo,
-	msg_wbt_wincount_mizu,
-	msg_wbt_wincount_kusa,
-	msg_wbt_wincount_denki,
-	msg_wbt_wincount_koori,
-	msg_wbt_wincount_kakutou,
-	msg_wbt_wincount_doku,
+static const s16 wr_tmt_gmm_tbl[] = {
+	msg_wbt_wincount_000,			// ホドモエ
+	msg_wbt_wincount_001,			// イッシュ
+	msg_wbt_wincount_002,			// カントー
+	msg_wbt_wincount_003,			// ジョウト
+	msg_wbt_wincount_004,			// ホウエン
+	msg_wbt_wincount_005,			// シンオウ
+	msg_wbt_wincount_006,			// ワールド
+	msg_wbt_wincount_007,			// チャンピオン
+	msg_wbt_wincount_008,			// WCS
+	msg_wbt_wincount_009,			// レンタル
 	//
-	msg_wbt_wincount_zimen,
-	msg_wbt_wincount_hikou,
-	msg_wbt_wincount_esper,
-	msg_wbt_wincount_musi,
-	msg_wbt_wincount_iwa,
-	msg_wbt_wincount_gorst,
-	msg_wbt_wincount_dragon,
-	msg_wbt_wincount_aku,
-	msg_wbt_wincount_hagane,
-	msg_wbt_wincount_hagane,		// pad
-};
-
-// シナリオクリア前
-static const u8 wr_gmm_00_tbl[] = {
-	TMT_ALL,
-	0xff,
-};
-
-// シナリオクリア後
-static const u8 wr_gmm_01_tbl[] = {
-	TMT_ALL,
-	TMT_NORMAL,
-	TMT_FIRE,
-	TMT_WATER,
-	TMT_GRASS,
-	TMT_ELEC,
-	TMT_ICE,
-	TMT_BATTLE,
-	TMT_POISON,
-	TMT_GROUND,
+	msg_wbt_wincount_010,			// レンタルマスター
+	msg_wbt_wincount_011,			// シャッフル
+	msg_wbt_wincount_012,			// シャッフルマスター
+	msg_wbt_wincount_normal,		// ノーマル
+	msg_wbt_wincount_honoo,			// ほのお
+	msg_wbt_wincount_mizu,			// みず
+	msg_wbt_wincount_kusa,			// くさ
+	msg_wbt_wincount_denki,			// でんき
+	msg_wbt_wincount_koori,			// こおり
+	msg_wbt_wincount_kakutou,		// かくとう
 	//
-	TMT_FLY,
-	TMT_ESPER,
-	TMT_INSECT,
-	TMT_ROCK,
-	TMT_GHOST,
-	TMT_DRAGON,
-	TMT_EVIL,
-	TMT_IRON,
-	0xff,
-	0xff,
+	msg_wbt_wincount_doku,			// どく
+	msg_wbt_wincount_zimen,			// じめん
+	msg_wbt_wincount_hikou,			// ひこう
+	msg_wbt_wincount_esper,			// エスパー
+	msg_wbt_wincount_musi,			// むし
+	msg_wbt_wincount_iwa,			// いわ
+	msg_wbt_wincount_gorst,			// ゴースト
+	msg_wbt_wincount_dragon,		// ドラゴン
+	msg_wbt_wincount_aku,			// あく
+	msg_wbt_wincount_hagane,		// はがね
 };
 
-// シナリオクリアかつチャンピオン後
-static const u8 wr_gmm_02_tbl[] = {
-	TMT_ALL,
-	TMT_CHAMPION,
-	TMT_NORMAL,
-	TMT_FIRE,
-	TMT_WATER,
-	TMT_GRASS,
-	TMT_ELEC,
-	TMT_ICE,
-	TMT_BATTLE,
-	TMT_POISON,
+//-------------------------
+// 優勝回数の対応状況
+// (ここでの並びとの対応)
+//-------------------------
+static const s16 wbtwin_tbl[] = {
+	WBTWIN_COUNT_HODOMOE,			// ホドモエ
+	WBTWIN_COUNT_ISSYU,				// イッシュ
+	WBTWIN_COUNT_KANTO,				// カントー
+	WBTWIN_COUNT_JOUTO,				// ジョウト
+	WBTWIN_COUNT_HOUEN,				// ホウエン
+	WBTWIN_COUNT_SINOU,				// シンオウ
+	WBTWIN_COUNT_WORLD,				// ワールド
+	WBTWIN_COUNT_CHAMPION,			// チャンピオンズ
+	WBTWIN_COUNT_WCS,				// WCS
+	WBTWIN_COUNT_WCS,				// レンタル
 	//
-	TMT_GROUND,
-	TMT_FLY,
-	TMT_ESPER,
-	TMT_INSECT,
-	TMT_ROCK,
-	TMT_GHOST,
-	TMT_DRAGON,
-	TMT_EVIL,
-	TMT_IRON,
-	0xff,
-};
-
-//----------------
-// まとめテーブル
-// (Modeで参照)
-//----------------
-static const u8 *wr_gmm_all_tbl[] = {
-	wr_gmm_00_tbl,			// シナリオクリア前
-	wr_gmm_01_tbl,			// シナリオクリア後
-	wr_gmm_02_tbl,			// シナリオクリア、チャンピオン後
-};
-
-// 個数最大(要調整)
-static const s16 wr_gmm_max_tbl[] = {
-	1,						// シナリオクリア前
-	18,						// シナリオクリア後
-	19,						// シナリオクリア&チャンピオン後
-	-1,						// pad
+	WBTWIN_COUNT_WCS,				// レンタルマスター
+	WBTWIN_COUNT_WCS,				// シャッフル
+	WBTWIN_COUNT_WCS,				// シャッフルマスター
+	WBTWIN_COUNT_POKETYPE_NORMAL,	// ノーマル
+	WBTWIN_COUNT_POKETYPE_HONOO,	// ほのお
+	WBTWIN_COUNT_POKETYPE_MIZU,		// みず
+	WBTWIN_COUNT_POKETYPE_KUSA,		// くさ
+	WBTWIN_COUNT_POKETYPE_DENKI,	// でんき
+	WBTWIN_COUNT_POKETYPE_KOORI,	// こおり
+	WBTWIN_COUNT_POKETYPE_KAKUTOU,	// かくとう
+	//
+	WBTWIN_COUNT_POKETYPE_DOKU,		// どく
+	WBTWIN_COUNT_POKETYPE_JIMEN,	// じめん
+	WBTWIN_COUNT_POKETYPE_HIKOU,	// ひこう
+	WBTWIN_COUNT_POKETYPE_ESPER,	// エスパー
+	WBTWIN_COUNT_POKETYPE_MUSHI,	// むし
+	WBTWIN_COUNT_POKETYPE_IWA,		// いわ
+	WBTWIN_COUNT_POKETYPE_GHOST,	// ゴースト
+	WBTWIN_COUNT_POKETYPE_DRAGON,	// ドラゴン
+	WBTWIN_COUNT_POKETYPE_AKU,		// あく
+	WBTWIN_COUNT_POKETYPE_HAGANE,	// はがね
 };
 
 //---------------------------------
@@ -677,34 +669,6 @@ static const s16 wr_cmn_btn_tbl[] = {
 	CMN_RIGHT_SEQ,  CMN_RIGHT_ON_SEQ,  CMN_RIGHT_OFF_SEQ, 0,	// 右
 	CMN_CROSS_SEQ,  CMN_CROSS_ON_SEQ,  CMN_CROSS_SEQ,     0,	// ×
 	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ, CMN_RETURN_SEQ,    0,	// 戻る
-};
-
-//-------------------------
-// 優勝回数の対応状況
-// (ここでの並びとの対応)
-//-------------------------
-static const u8 wbtwin_tbl[] = {
-	WBTWIN_COUNT_ALLTOURNAMENT,		// オール
-	WBTWIN_COUNT_CHAMPION,			// チャンピオン
-	WBTWIN_COUNT_POKETYPE_NORMAL,	// ノーマル
-	WBTWIN_COUNT_POKETYPE_HONOO,	// ほのお
-	WBTWIN_COUNT_POKETYPE_MIZU,		// みず
-	WBTWIN_COUNT_POKETYPE_KUSA,		// くさ
-	WBTWIN_COUNT_POKETYPE_DENKI,	// でんき
-	WBTWIN_COUNT_POKETYPE_KOORI,	// こおり
-	WBTWIN_COUNT_POKETYPE_KAKUTOU,	// かくとう
-	WBTWIN_COUNT_POKETYPE_DOKU,		// どく
-	//
-	WBTWIN_COUNT_POKETYPE_JIMEN,	// じめん
-	WBTWIN_COUNT_POKETYPE_HIKOU,	// ひこう
-	WBTWIN_COUNT_POKETYPE_ESPER,	// エスパー
-	WBTWIN_COUNT_POKETYPE_MUSHI,	// むし
-	WBTWIN_COUNT_POKETYPE_IWA,		// いわ
-	WBTWIN_COUNT_POKETYPE_GHOST,	// ゴースト
-	WBTWIN_COUNT_POKETYPE_DRAGON,	// ドラゴン
-	WBTWIN_COUNT_POKETYPE_AKU,		// あく
-	WBTWIN_COUNT_POKETYPE_HAGANE,	// はがね
-	WBTWIN_COUNT_POKETYPE_NORMAL,	// pad
 };
 
 //=============================================================================
@@ -725,7 +689,6 @@ static GFL_PROC_RESULT WinRecordProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 static void wr_init( WIN_RECORD_MAIN_WORK* wk );
 static void wr_main( WIN_RECORD_MAIN_WORK* wk );
 static void wr_exit( WIN_RECORD_MAIN_WORK* wk );
-static void wr_up(   WIN_RECORD_MAIN_WORK* wk );
 static void wr_down( WIN_RECORD_MAIN_WORK* wk );
 static void wr_key_all( WIN_RECORD_MAIN_WORK* wk );
 static void wr_main_print( WIN_RECORD_MAIN_WORK* wk );
@@ -750,7 +713,6 @@ static void wr_disp_bmpoam( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const STRB
 // 文字列関連
 static void wr_init_string( WIN_RECORD_MAIN_WORK* wk );
 static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode );
-static void wr_update_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
 static void wr_exit_string( WIN_RECORD_MAIN_WORK* wk );
 static void wr_clear_canvas( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
 static void wr_disp_playername( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 xpos, const s32 ypos, const u32 dispmode );
@@ -775,6 +737,9 @@ static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk );
 // スクロールバーの処理
 static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk );
 //
+// フラグ
+static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
+
 //=============================================================================
 /**
  *								外部公開
@@ -861,6 +826,7 @@ static GFL_PROC_RESULT WinRecordProc_Init( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WinRecordProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
+	s32		i;
 	WIN_RECORD_MAIN_WORK* wk = mywk;
 	
 	//----------------
@@ -869,11 +835,11 @@ static GFL_PROC_RESULT WinRecordProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 	wr_exit( wk );
 	
 	//メッセージ破棄
-	if(wk->msg[0]){
-		GFL_MSG_Delete( wk->msg[0] );
-	}
-	if(wk->msg[1]){
-		GFL_MSG_Delete( wk->msg[1] );
+	for(i=0;i<WIN_RECORD_MES_MAXNUM;i++){
+		if(wk->msg[i]){
+			GFL_MSG_Delete( wk->msg[0] );
+			wk->msg[i] = 0;
+		}
 	}
 	
 	//PRINT_QUE
@@ -986,10 +952,12 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	wk->TopNum		= 0;
 	wk->Flag		= 0;
 	wk->TrainerId	= 0;
+	wk->DispMaxNum	= 0;
 	//
 	// カウント表示用バッファ
 	for(i=0;i<TMT_MAX;i++){
 		wk->CountBuffer[i] = i;
+		wk->DispBuffer[i] = 0;
 	}
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_WIN_RECORD_GRA, NARC_win_record_gra_win_record_pos_tblbin, wk->heapID );
@@ -1033,8 +1001,6 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wr_main( WIN_RECORD_MAIN_WORK* wk )
 {
-	// 上画面
-	wr_up( wk );
 	// 下画面
 	wr_down( wk );
 }
@@ -1082,19 +1048,6 @@ static void wr_exit( WIN_RECORD_MAIN_WORK* wk )
 	wr_exit_string( wk );
 	// OBJ破棄
 	wr_exit_obj( wk );
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  処理の流れ(main)(上画面)
- *
- *	@param	WIN_RECORD_MAIN_WORK* wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_up( WIN_RECORD_MAIN_WORK* wk )
-{
 }
 
 //-----------------------------------------------------------------------------
@@ -1747,6 +1700,12 @@ static void wr_init_string( WIN_RECORD_MAIN_WORK* wk )
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_BG_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
+#if 1
+	// ゆうしょう回数
+//	buf[0] = wr_get_empty( wk, EMPTY_TITLE_NAME*2 );
+//	buf[1] = wr_get_empty( wk, EMPTY_TITLE_NAME*2+1 );
+	wr_disp_string_id( wk, 0, wr_gmm_tbl[1], 0, 0, PRINTTOOL_MODE_LEFT );
+#else
 	// プレイヤ名
 	buf[0] = wr_get_empty( wk, EMPTY_PLAYER_NAME*2 );
 	buf[1] = wr_get_empty( wk, EMPTY_PLAYER_NAME*2+1 );
@@ -1755,8 +1714,7 @@ static void wr_init_string( WIN_RECORD_MAIN_WORK* wk )
 	buf[0] = wr_get_empty( wk, EMPTY_TITLE_NAME*2 );
 	buf[1] = wr_get_empty( wk, EMPTY_TITLE_NAME*2+1 );
 	wr_disp_string_id( wk, 0, wr_gmm_tbl[1], buf[0], buf[1], PRINTTOOL_MODE_RIGHT );
-	// 更新
-	wr_update_string( wk, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1785,30 +1743,6 @@ static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 
 				PRINTSYS_LSB_Make(15,2,0),		// カラー
 //				PRINTSYS_LSB_Make(9,8,0),		// カラー
 				dispmode );						// 位置
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  文字表示更新(clear -> disp -> updateの流れ)
- *
- *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	const s32				Canvasの番号
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_update_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
-{
-#if 0
-	// 転送
-	GFL_BMPWIN * bmpwin = wk->PrintUtil[mode].win;
-	//
-	// これは入れないとだめらしい
-	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
-	//
-	GFL_BMPWIN_TransVramCharacter( bmpwin );					//transfer characters
-	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( bmpwin ) );	//transfer screen
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1861,18 +1795,15 @@ static void wr_clear_canvas( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 //-----------------------------------------------------------------------------
 static void wr_disp_playername( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 xpos, const s32 ypos, const u32 dispmode )
 {
-#if 1
 	GFL_BMPWIN 	*bmpwin		= wk->PrintUtil[mode].win;
 	// 名前取得用
-	GAMEDATA 	*gamedata 	= GAMESYSTEM_GetGameData( wk->Param->gamesys );
-	const MYSTATUS *mystat	= GAMEDATA_GetMyStatus( gamedata );
 	WORDSET		*wordset	= WORDSET_Create( wk->heapID );
 	STRBUF 		*strbuf		= GFL_STR_CreateBuffer( 64, wk->heapID );	// src
 	STRBUF		*strbuf2;
 	STRBUF 		*destbuf;
 	//
 	// プレイヤの名前(strbuf)をwordsetに登録
-	MyStatus_CopyNameString( mystat, strbuf );
+	MyStatus_CopyNameString( wk->Param->my_status, strbuf );
 	WORDSET_RegisterWord( wordset, 0, strbuf, 0, TRUE, PM_LANG );
 	// 最終セットバッファ
 	destbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -1889,18 +1820,6 @@ static void wr_disp_playername( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const 
 	GFL_STR_DeleteBuffer( strbuf );
 	GFL_STR_DeleteBuffer( strbuf2 );
 	GFL_STR_DeleteBuffer( destbuf );
-#else
-	GFL_BMPWIN 	*bmpwin	= wk->PrintUtil[mode].win;
-	STRBUF 	*strbuf		= GFL_STR_CreateBuffer( 64, wk->heapID );
-	
-	// 名前取得
-	GAMEDATA 	*gamedata 	= GAMESYSTEM_GetGameData( wk->Param->gamesys );
-	const MYSTATUS *mystat	= GAMEDATA_GetMyStatus( gamedata );
-	MyStatus_CopyNameString( mystat, strbuf );
-	wr_disp_string( wk, mode, xpos, ypos, strbuf, dispmode );
-	// 破棄
-	GFL_STR_DeleteBuffer( strbuf );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1965,7 +1884,12 @@ static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 nu
 	wordset	= WORDSET_Create( wk->heapID );
 	
 	// シーケンスの変更
-	wr_chg_objseq( wk, CLWKMODE_NORMAL, wnum, num );
+	tmp = num;
+	if(tmp >= 18){
+		tmp = 18;
+	}
+//	wr_chg_objseq( wk, CLWKMODE_NORMAL, wnum, num );
+	wr_chg_objseq( wk, CLWKMODE_NORMAL, wnum, tmp );
 	
 	//-------------------------------------
 	// 対応するbmpoamも文字列は固定なので
@@ -1982,7 +1906,6 @@ static void wr_set_panel( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s32 nu
 	//----------
 	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
 	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-//	STRTOOL_SetNumber( strbuf2, wk->CountBuffer[num], 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	WORDSET_RegisterWord( wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 	// 最終出力バッファ
 	expandbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -2033,14 +1956,12 @@ static void wr_set_panel_all( WIN_RECORD_MAIN_WORK* wk, const s32 wnum, const s3
 {
 	s16				tmp=0;
 	BOOL			bflg=FALSE;
-	const u8		*adr = wr_gmm_all_tbl[wk->Mode];
 	
 	// 範囲のチェック
-	if((wr_gmm_max_tbl[wk->Mode] <= num)||(num < 0)){
+	if((wk->DispMaxNum <= num)||(num < 0)){
 		bflg = FALSE;
 	}else{
-		// テーブルから変更するシーケンス番号を求める
-		tmp = adr[num];
+		tmp = wk->DispBuffer[num];
 		bflg = TRUE;
 	}
 	// 強制フラグ
@@ -2073,7 +1994,7 @@ static void wr_init_param( WIN_RECORD_MAIN_WORK* wk )
 	//-----------------
 	// 最大数を調べる
 	num = DISP_PANEL_MAXNUM;			// 表示パネル数
-	nmax = wr_gmm_max_tbl[wk->Mode];
+	nmax = wk->DispMaxNum;
 	if(nmax < DISP_PANEL_MAXNUM){
 		num = nmax;
 	}
@@ -2104,11 +2025,6 @@ static void wr_init_param( WIN_RECORD_MAIN_WORK* wk )
 	//--------------------
 	// スクロール関連
 	//--------------------
-	// フラグも用意しておく
-	if(wk->Mode == MODE_LV1){
-		wk->Flag |= FLG_MW_NO_SCROLL;
-	}
-	//
 	// スクロール関連を非表示
 	if(wk->Flag & FLG_MW_NO_SCROLL){
 		// バー非表示
@@ -2132,7 +2048,9 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 {
 	u16		cnt;
 	s32		i;
+	s32		j;
 	u32		tmp;
+	BOOL	bflg;
 	
 	//------------
 	// 性別を取得
@@ -2153,6 +2071,22 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 		}
 		wk->CountBuffer[i] = cnt;
 	}
+	// 判定
+	j=0;
+	for(i=0;i<TMT_MAX;i++){
+		// 表示の判定
+		bflg = wr_chk_dispflag( wk, i );
+		if(bflg == TRUE){
+			// 表示
+			wk->DispBuffer[j] = i;
+			j++;
+		}
+	}
+	wk->DispMaxNum = j;
+	if(wk->DispMaxNum <= 4){
+		wk->Flag |= FLG_MW_NO_SCROLL;
+	}
+	
 #if 0
 	OS_Printf("boy :%d\n",wk->TrainerId);
 	for(i=0;i<TMT_MAX;i++){
@@ -2183,7 +2117,7 @@ static void wr_update_param( WIN_RECORD_MAIN_WORK* wk )
 	if(wk->Flag & FLG_MW_BAR_UPDATE){
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			py = SCROLLBAR_GetPosY( wr_gmm_max_tbl[wk->Mode]-4, wk->TopNum, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
+			py = SCROLLBAR_GetPosY( wk->DispMaxNum-4, wk->TopNum, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
 			// 座標の更新
 			GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
 //			pos.x = 238;	// test
@@ -2197,7 +2131,7 @@ static void wr_update_param( WIN_RECORD_MAIN_WORK* wk )
 	if(wk->Flag & FLG_MW_UPDATE){
 		// 最大数を調べる
 		num = DISP_PANEL_MAXNUM;			// 表示パネル数
-		nmax = wr_gmm_max_tbl[wk->Mode];
+		nmax = wk->DispMaxNum;
 		if(nmax < DISP_PANEL_MAXNUM){
 			num = nmax;
 		}
@@ -2278,8 +2212,8 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
 			wk->TopNum++;
-			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+			if(wk->TopNum >= (wk->DispMaxNum-3)){
+				wk->TopNum = wk->DispMaxNum-3-1;
 			}
 			flg = 1;
 		}
@@ -2304,8 +2238,8 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
 			// 1画面分
 			wk->TopNum += DISP_PANEL_MAXNUM;
-			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+			if(wk->TopNum >= (wk->DispMaxNum-3)){
+				wk->TopNum = wk->DispMaxNum-3-1;
 			}
 			flg = 1;
 			// アニメ再生
@@ -2417,8 +2351,8 @@ static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 		// スクロールありの対応
 		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
 			wk->TopNum += DISP_PANEL_MAXNUM;
-			if(wk->TopNum >= (wr_gmm_max_tbl[wk->Mode]-3)){
-				wk->TopNum = wr_gmm_max_tbl[wk->Mode]-3-1;
+			if(wk->TopNum >= (wk->DispMaxNum-3)){
+				wk->TopNum = wk->DispMaxNum-3-1;
 			}
 			// アニメ再生
 			wr_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
@@ -2544,7 +2478,7 @@ static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk )
 	// タッチした座標を取得
 	if( GFL_UI_TP_GetPointCont( &buf[0], &buf[1] ) == TRUE ){
 		// どの段階かが求まる
-		cnt = SCROLLBAR_GetCount( wr_gmm_max_tbl[wk->Mode]-4, buf[1], SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
+		cnt = SCROLLBAR_GetCount( wk->DispMaxNum-4, buf[1], SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
 //		OS_Printf("pos :%d\n",cnt);
 		// 現在の位置をセット
 		wk->TopNum = cnt;
@@ -2552,6 +2486,38 @@ static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk )
 		wk->Flag |= FLG_MW_BAR_UPDATE;
 		//
 		bflg = TRUE;
+	}
+	return( bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  表示の判定
+ *
+ *	@param	WIN_RECORD_MAIN_WORK* wk
+ *	@param	const s32				(番号)
+ *
+ *	@retval BOOL					(TRUE:変更あり、FALSE:なし)
+ */
+//-----------------------------------------------------------------------------
+static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
+{
+	BOOL		bflg=FALSE;
+	
+	// 判定
+	switch(mode){
+		//
+		// 初期
+		case TMT_HODOMOE:		// ホドモエ
+		case TMT_RENTAL:		// レンタル
+		case TMT_SHAFFLE:		// シャッフル
+			bflg = TRUE;
+			break;
+		//
+		// 条件を満たす(test)
+		default:
+			bflg = TRUE;
+			break;
 	}
 	return( bflg );
 }
