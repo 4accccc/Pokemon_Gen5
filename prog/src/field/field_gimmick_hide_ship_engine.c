@@ -75,6 +75,14 @@
 #define EFFECT_01_NUM      (4)
 #define EFFECT_02_NUM      (4)
 
+// 接続が動作するパイプのID
+// (エフェクトの有無をチェックするため)
+#define PIPE_CONNECT_NUM    (2)     // パイプ同士の接続がある総数
+static const int pipe_connect_tbl[ PIPE_CONNECT_NUM ][2] = {
+  { 3, 4 },
+  { 11, 12 },
+};
+
 //-------------------------------------
 ///	パイプ初期設定データ
 //=====================================
@@ -166,7 +174,7 @@ typedef struct {
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
   HIDE_SHIP_SV_WORK   *p_sv_wk;       // セーブワーク
 
-  BOOL                pipe_flag[ PIPE_NUM ];    // パイプ状態フラグ
+  BOOL                pipe_flag[ PIPE_NUM ];    // パイプ状態フラグ FALSEで引っ込み
 
 } HIDE_SHIP_TMP;
 
@@ -1124,7 +1132,7 @@ static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
 
       // 回転
       {
-        u16 rtbl[DIR_MAX4][3] = {{0,0xc000,0},{0,0x4000,0},{0,0x8000,0},{0,0,0}};
+        u16 rtbl[DIR_MAX4][3] = {{0,0x4000,0},{0,0xc000,0},{0,0x8000,0},{0,0,0}};
         u16 *rot = rtbl[ pipe_init_tbl[i].dir ];
         GFL_G3D_OBJSTATUS *status;
 
@@ -1974,12 +1982,66 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
     break;
   // くっつくアニメ
   case 2:
+    // 反対側のパイプが引っ込んでいるならエフェクトを飛ばす
+    // かつ反対側のパイプが突き出しているなら、光らせる
+    {
+      int i;
+
+
+      // 反対のパイプがあるかチェック
+      for( i=0; i<PIPE_CONNECT_NUM; i++ )
+      {
+        int pipe_idx = pipe_connect_tbl[i][0];
+
+        // 接続同士のパイプかチェック
+        if( pipe_idx == (p_wk->obj_idx - OBJ_PIPE_1) )
+        {
+          pipe_idx = pipe_connect_tbl[i][1];    // 反対側
+          // 反対側が引っ込んでいるかチェック
+          if( p_wk->p_gmk_wk->pipe_flag[ pipe_idx ] == FALSE )
+          {
+            ICHI_Printf("接続パイプ エフェクトなし %d i=%d \n", p_wk->obj_idx, i);
+            // エフェクトなし終了
+            return FIELD_TASK_RETVAL_FINISH;
+          }
+          else
+          // エフェクトを表示
+          {
+            ICHI_Printf("接続パイプ 反対側エフェクト有り %d i=%d \n", pipe_idx, i);
+            ANM_PIPE_ON_Play( p_wk->p_gmk_wk, (OBJ_PIPE_1 + pipe_idx) );
+          }
+        }
+
+        pipe_idx = pipe_connect_tbl[i][1];
+
+        // 接続同士のパイプかチェック
+        if( pipe_idx == (p_wk->obj_idx - OBJ_PIPE_1) )
+        {
+          pipe_idx = pipe_connect_tbl[i][0];    // 反対側
+          // 反対側が引っ込んでいるかチェック
+          if( p_wk->p_gmk_wk->pipe_flag[ pipe_idx ] == FALSE )
+          {
+            ICHI_Printf("接続パイプ エフェクトなし %d i=%d \n", p_wk->obj_idx, i);
+            // エフェクトなし終了
+            return FIELD_TASK_RETVAL_FINISH;
+          }
+          else
+          // エフェクトを表示
+          {
+            ICHI_Printf("接続パイプ 反対側エフェクト有り %d i=%d \n", pipe_idx, i);
+            ANM_PIPE_ON_Play( p_wk->p_gmk_wk, (OBJ_PIPE_1 + pipe_idx) );
+          }
+        }
+      }
+    }
+
     ANM_PIPE_ON_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
 
     // エフェクトも表示
     {
       ANM_EFFECT_02_Play( p_wk->p_gmk_wk, p_wk->obj_idx );
     }
+    // 反対側のパイプが存在するもののみチェック
 
     // SE 再生
     PMSND_PlaySE( HIDE_SHIP_SE_PIPE_JOINT );
