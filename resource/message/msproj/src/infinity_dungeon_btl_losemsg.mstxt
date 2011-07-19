@@ -809,10 +809,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まだまだ　さきは　ながい！
-あせらず　すすむがよいさ！</Text>
+あせらず　すすむがよいさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T08:13:08" />
+				Time="2011-07-15T02:57:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -821,10 +821,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだまだ　先は　長い！
-焦らず　進むがよいさ！</Text>
+焦らず　進むがよいさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T08:13:21" />
+				Time="2011-07-15T02:57:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
