@@ -112,7 +112,7 @@ EVENT_START ev_vending_machine01
           IF  $SCWK_ANSWER == TRUE THEN   //入る
             DEFINE_LOCAL ans
             //抽選する
-            _GET_RND( ans, 32 )
+            _GET_RND( ans, 2 )
             IF $ans == 0 THEN //あたり
               //飲み物出てくる音
               _SE_PLAY( SEQ_SE_FLD_06 )
@@ -125,6 +125,10 @@ EVENT_START ev_vending_machine01
               _SYSWIN_CLOSE()
               //アイテム加算
               _ITEM_EVENT_SUCCESS_KEYWAIT(item, 1)
+  
+              // メダル:ワンモアドリンク
+              _SET_MEDAL_ACHIVE( MDLID_VENDOR_ATARI )
+  
             ENDIF 
           ENDIF
           //もう一本かう？

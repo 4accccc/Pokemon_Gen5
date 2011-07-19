@@ -74,6 +74,9 @@ _RET
 EVENT_START  ev_animal_trail_01
   $LWK_ANIMAL_TRAIL_ID = 0
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_01 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -82,6 +85,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_02
   $LWK_ANIMAL_TRAIL_ID = 1
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_02 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -90,6 +96,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_03
   $LWK_ANIMAL_TRAIL_ID = 2
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_03 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -98,6 +107,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_04
   $LWK_ANIMAL_TRAIL_ID = 3
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_04 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -106,6 +118,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_05
   $LWK_ANIMAL_TRAIL_ID = 4
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_05 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -114,6 +129,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_06
   $LWK_ANIMAL_TRAIL_ID = 5
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_06 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -122,6 +140,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_07
   $LWK_ANIMAL_TRAIL_ID = 6
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_07 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -130,6 +151,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_08
   $LWK_ANIMAL_TRAIL_ID = 7
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_08 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -138,6 +162,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_09
   $LWK_ANIMAL_TRAIL_ID = 8
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_09 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -146,6 +173,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_10
   $LWK_ANIMAL_TRAIL_ID = 9
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_10 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -154,6 +184,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_11
   $LWK_ANIMAL_TRAIL_ID = 10
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_11 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -162,6 +195,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_12
   $LWK_ANIMAL_TRAIL_ID = 11
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_12 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -170,6 +206,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_13
   $LWK_ANIMAL_TRAIL_ID = 12
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_13 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -178,6 +217,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_14
   $LWK_ANIMAL_TRAIL_ID = 13
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_14 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -186,6 +228,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_15
   $LWK_ANIMAL_TRAIL_ID = 14
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_15 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -194,6 +239,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_16
   $LWK_ANIMAL_TRAIL_ID = 15
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_16 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -202,6 +250,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_17
   $LWK_ANIMAL_TRAIL_ID = 16
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_17 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -210,6 +261,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_18
   $LWK_ANIMAL_TRAIL_ID = 17
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_18 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -218,6 +272,9 @@ EVENT_END
 EVENT_START  ev_animal_trail_19
   $LWK_ANIMAL_TRAIL_ID = 18
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_19 )
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -226,5 +283,8 @@ EVENT_END
 EVENT_START  ev_animal_trail_20
   $LWK_ANIMAL_TRAIL_ID = 19
   _CALL animal_trail_call
+
+  // メダル:けものみちのたつじん
+  _FLAG_SET( MDL_FLAG_ANIMALTRAIL_20 )
 EVENT_END
 

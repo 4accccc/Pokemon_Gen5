@@ -25,6 +25,7 @@
 #include "fldmmdl.h"  // for MMDL_GetFallRockCnt
 #include "poke_tool/poketype_def.h" // for POKETYPE_MAX
 #include "medal_achieve_data.naix"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"                          // MDL_FLAG_ANIMALTRAIL_～
 
 // セーブデータ
 #include "savedata/musical_save.h"
@@ -122,6 +123,10 @@ static BOOL MDLREC_CHECK_n_poke( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata,
 static BOOL MDLREC_CHECK_rare_poke( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_pokerus_poke( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 static BOOL MDLREC_CHECK_fall_rock( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_SuretigaiCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_BattleCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_TradeCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
+static BOOL MDLREC_CHECK_AnimalTrailCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID );
 
 // 判定用関数テーブル読み込み
 typedef BOOL (*MDLACHIEVEPROC)( MEDALREC_DATA* ,GAMEDATA* ,u32 ,HEAPID );
@@ -334,7 +339,6 @@ void MEDAL_InitHintMedal( SAVE_CONTROL_WORK *p_sv , HEAPID heapID )
   MEDALBOX    *p_medal_box;
   ARCHANDLE   *p_handle;
   MEDALDATA   medal_data[MDLID_MAX];
-  RECORD      *p_rec;
   RTCDate     rtc;
   u8          medal_state;
 
@@ -348,7 +352,6 @@ void MEDAL_InitHintMedal( SAVE_CONTROL_WORK *p_sv , HEAPID heapID )
 
   // セーブデータの取得
   p_medal_box = SaveData_GetMedalBox( p_sv );
-  p_rec = SaveData_GetRecord(p_sv);
   
   // 現在の時間を取得する
   GFL_RTC_GetDate(&rtc);
@@ -1095,5 +1098,83 @@ static BOOL MDLREC_CHECK_fall_rock( MEDALREC_DATA* p_recdata, GAMEDATA* p_gameda
   fall_rock_cnt = MMDL_GetFallRockCnt( p_mmdlsys );
   ONOUE_Printf("落とした岩の数：%d\n",fall_rock_cnt);
   return cmp_target( fall_rock_cnt , target_cnt );
+}
+
+// すれ違い人数チェック
+static BOOL MDLREC_CHECK_SuretigaiCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  u32 suretigai_cnt = 0;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  const MISC *p_misc = SaveData_GetMiscConst( p_svc );
+  suretigai_cnt = MISC_CrossComm_GetSuretigaiCount( p_misc );
+  ONOUE_Printf("すれ違い人数：%d\n",suretigai_cnt);
+  return cmp_target( suretigai_cnt , target_cnt );
+}
+
+// 対戦数チェック
+static BOOL MDLREC_CHECK_BattleCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  u32 rec_sum = 0;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  RECORD      *p_rec = SaveData_GetRecord(p_svc);
+  rec_sum += RECORD_Get( p_rec , RECID_COMM_BATTLE );
+  rec_sum += RECORD_Get( p_rec , RECID_WIFI_BATTLE );
+  rec_sum += RECORD_Get( p_rec , RECID_IRC_BATTLE );
+  return cmp_target( rec_sum , target_cnt );
+}
+
+// 通信交換数チェック
+static BOOL MDLREC_CHECK_TradeCount( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  u32 rec_sum = 0;
+  SAVE_CONTROL_WORK* p_svc = GAMEDATA_GetSaveControlWork( p_gamedata );
+  RECORD      *p_rec = SaveData_GetRecord(p_svc);
+  rec_sum += RECORD_Get( p_rec , RECID_COMM_TRADE );
+  rec_sum += RECORD_Get( p_rec , RECID_WIFI_TRADE );
+  rec_sum += RECORD_Get( p_rec , RECID_IRC_TRADE );
+  return cmp_target( rec_sum , target_cnt );
+}
+
+// 獣道チェック
+static BOOL MDLREC_CHECK_AnimalTrailCheck( MEDALREC_DATA* p_recdata, GAMEDATA* p_gamedata, u32 target_cnt , HEAPID heapID )
+{
+  s32 i;
+  u32 animal_trail_cnt = 0;
+  const s32 at_flag_tbl[] =
+  {
+    MDL_FLAG_ANIMALTRAIL_01,
+    MDL_FLAG_ANIMALTRAIL_02,
+    MDL_FLAG_ANIMALTRAIL_03,
+    MDL_FLAG_ANIMALTRAIL_04,
+    MDL_FLAG_ANIMALTRAIL_05,
+    MDL_FLAG_ANIMALTRAIL_06,
+    MDL_FLAG_ANIMALTRAIL_07,
+    MDL_FLAG_ANIMALTRAIL_08,
+    MDL_FLAG_ANIMALTRAIL_09,
+    MDL_FLAG_ANIMALTRAIL_10,
+    MDL_FLAG_ANIMALTRAIL_11,
+    MDL_FLAG_ANIMALTRAIL_12,
+    MDL_FLAG_ANIMALTRAIL_13,
+    MDL_FLAG_ANIMALTRAIL_14,
+    MDL_FLAG_ANIMALTRAIL_15,
+    MDL_FLAG_ANIMALTRAIL_16,
+    MDL_FLAG_ANIMALTRAIL_17,
+    MDL_FLAG_ANIMALTRAIL_18,
+    MDL_FLAG_ANIMALTRAIL_19,
+    MDL_FLAG_ANIMALTRAIL_20,
+  };
+  s32 table_cnt = NELEMS(at_flag_tbl);
+  EVENTWORK* p_event_wk = GAMEDATA_GetEventWork( p_gamedata );
+
+  for( i = 0;  i < table_cnt ; i++ )
+  {
+    BOOL is_set = EVENTWORK_CheckEventFlag( p_event_wk ,at_flag_tbl[i]);
+    if( is_set == TRUE )
+    {
+      animal_trail_cnt++;
+    }
+  }
+  ONOUE_Printf("獣道到達数%u\n",animal_trail_cnt);
+  return cmp_target( animal_trail_cnt , target_cnt );
 }
 

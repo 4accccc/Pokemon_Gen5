@@ -12337,6 +12337,19 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief メダルの達成処理
+ */
+//--------------------------------------------------------------
+#define _SET_MEDAL_ACHIVE( medal_id ) \
+    _ASM_SET_MEDAL_ACHIVE medal_id
+
+    .macro  _ASM_SET_MEDAL_ACHIVE medal_id
+    .short  EV_SEQ_SET_MEDAL_ACHIVE
+    .short  \medal_id
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief メダルおやじのOBJID取得
  * @param[out]  ret_wk  TRUEのとき、OBJが存在する
  * @param[out]  obj_id  OBJIDを受け取るワーク

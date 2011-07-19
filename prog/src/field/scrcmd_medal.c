@@ -225,6 +225,30 @@ VMCMD_RESULT EvCmdGetMedalOyajiObjID( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：メダルを達成状態にする
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetMedalAchive( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK * work = wk;
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( SCRCMD_WORK_GetGameSysWork( work ) );
+  GAMEDATA * gamedata         = SCRCMD_WORK_GetGameData( wk );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gamedata );
+  MEDALBOX * medalbox   = SaveData_GetMedalBox( save );
+
+  u16 medal_id = SCRCMD_GetVMWorkValue( core, wk );
+  u8  medal_status = MEDALBOX_GetMedalState( medalbox, medal_id );
+
+  if ( medal_status < MEDAL_STATE_TITLE_ACHIVE )
+  {
+    ONOUE_Printf("EvCmdSetMedalAchive:%u\n",medal_id);
+    MEDALBOX_SetTitleMedalAchive( medalbox, medal_id );
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
