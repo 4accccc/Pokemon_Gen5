@@ -9305,6 +9305,10 @@
 		<language name="JPN" width="256">SW-KEYSYS-03</language>
 		<language name="JPN_KANJI" width="256">SW-KEYSYS-03</language>
 	</row>
+	<row id="msg_seq_se_sw_keysys_04">
+		<language name="JPN" width="256">SW-KEYSYS-04</language>
+		<language name="JPN_KANJI" width="256">SW-KEYSYS-04</language>
+	</row>
 	<row id="msg_seq_se_sw_plazmaship_01">
 		<language name="JPN" width="256">SW-PLAZMASHIP-01</language>
 		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-01</language>
