@@ -46,6 +46,7 @@ data_h.each_with_index{|line,index|
 
 size = table_hash.size
 table_arry = Array.new( size ,"NULL")
+id_table_arry = Array.new( size )
 MDLRECID_INDEX  = 0
 PROC_NAME_INDEX = 1
 # CSVƒtƒ@ƒCƒ‹‚Ì‰ðŽß
@@ -57,6 +58,7 @@ data_csv.each_with_index{|line,index|
   end
   array_index = table_hash[ line[MDLRECID_INDEX] ]
   table_arry[array_index] = line[PROC_NAME_INDEX]
+  id_table_arry[array_index] = line[MDLRECID_INDEX]
 }
 
 header =<<EOS
@@ -78,8 +80,12 @@ EOS
 out_file.puts header%[File.basename(__FILE__)]
 
 # ŠÖ”–¼‚ð‘‚«ž‚Þ
-table_arry.each{|proc_name|
-  out_file.puts "  "+proc_name +","
+table_arry.each_with_index{|proc_name,i|
+  unless id_table_arry[i] == nil then
+    out_file.puts "  "+proc_name +", // " + id_table_arry[i].to_s
+  else
+    out_file.puts "  "+proc_name +","
+  end
 }
 out_file.puts "};"
 

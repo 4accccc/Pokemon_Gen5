@@ -5361,6 +5361,31 @@ BOOL MMDL_CheckOBJCodeKairiki( const u16 code )
   return( FALSE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Šâ‚ÌƒZƒbƒg‚³‚ê‚Ä‚¢‚é”‚ğæ“¾
+ *
+ *	@param	MMDLSYS *mmdlsys 
+ *
+ *	@retval —‚¿‚Ä‚¢‚éŠâ‚Ì”
+ */
+//-----------------------------------------------------------------------------
+u32 MMDL_GetFallRockCnt( const MMDLSYS *mmdlsys )
+{
+  int i;
+  u32 set_cnt = 0; 
+  for( i = 0; i < MMDL_ROCKPOS_MAX; i++ )
+  {
+    const MMDL_ROCKPOS *rockpos = &mmdlsys->rockpos[i];
+    if( mmdl_rockpos_CheckSetPos(rockpos) )
+    {
+      set_cnt++;
+    }
+  }
+  
+  return( set_cnt );
+}
+
 //======================================================================
 //
 //======================================================================

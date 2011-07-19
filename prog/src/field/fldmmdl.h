@@ -1017,6 +1017,7 @@ extern void MMDL_ROCKPOS_SavePos( const MMDL *mmdl );
 extern BOOL MMDLSYS_ROCKPOS_CheckRockFalled(
     const MMDLSYS *mmdlsys, const VecFx32 *pos );
 extern BOOL MMDL_CheckOBJCodeKairiki( const u16 code );
+extern u32 MMDL_GetFallRockCnt( const MMDLSYS *mmdlsys );
 
 
 extern void MMDLHEADER_SetGridPos( MMDL_HEADER* head, u16 gx, u16 gz, int y );

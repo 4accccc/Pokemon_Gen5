@@ -25,7 +25,7 @@ data_csv = CSV.open( CSV_FILE_NAME ,"r")
 
 
 # モンスターナンバーの解釈
-MONS_MAX = 0
+monster_def_cnt = 0
 monsno_h = open( MONSNO_FILE_NAME ,"r")
 monsno_h.each{|line|
   if line.include?("ZUKANNO_ISSHU_END") then
@@ -35,7 +35,7 @@ monsno_h.each{|line|
   end
   if line.include?("MONSNO_END") then
     if /\(.([0-9]+).\)/ =~ line then
-      MONS_MAX = $1.to_i
+      monster_def_cnt = $1.to_i
     end
   end
 }
@@ -59,9 +59,8 @@ data_csv.each { |item|
 
 # タイプデータアーカイブ作成
 out_file = open( OUT_FILE_NAME ,"w" )
-1.upto(MONS_MAX){|i|
+1.upto(monster_def_cnt){|i|
   unless $chihou_zukanno_hash[i].to_i == $NO_CHIHOU_ID then
-    puts $chihou_zukanno_hash[i].to_s+" "+$monsname[i].to_s
     out_file << [ i ].pack( "S" )  # 全国図鑑NO
     out_file << [ $monstype_hash[i][0] ].pack( "C" )  # タイプ１
     out_file << [ $monstype_hash[i][1] ].pack( "C" )  # タイプ２

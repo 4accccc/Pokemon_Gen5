@@ -122,8 +122,8 @@ VMCMD_RESULT EvCmdUpdateMedalInfo( VMHANDLE * core, void * wk )
  	u16 idx = VMGetU16( core );
   switch ( idx )
   {
-  case SCR_MEDALUPDATE_INFO://メダル状態の更新（レコードを参照）
-    MEDAL_AchiveCheck( save , heapID );
+  case SCR_MEDALUPDATE_INFO://メダル状態の更新（レコードやセーブデータなどを参照）
+    MEDAL_AchiveCheck( gameData ,save , heapID );
     break;
   case SCR_MEDALUPDATE_TITLE://タイトルメダルの更新（達成→取得）
     updateTitleMedal( work );
