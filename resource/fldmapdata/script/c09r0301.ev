@@ -100,13 +100,13 @@ EVENT_START	ev_pos_c09r0301_enter_01
   _FOURKINGS_FIGHT_DOOR()
 	_SE_PLAY( SEQ_SE_SW_RENBU_01 )    // 重い金網の扉が開く音
 
-  _TIME_WAIT( 20 )
+  _TIME_WAIT( 60 )
 
   // 階段せりあがる
   _FOURKINGS_FIGHT_STAIRS( 0 )
 	_SE_PLAY( SEQ_SE_SW_RENBU_02 )    // 機械仕掛けの階段が競りあがる音
 
-  _TIME_WAIT( 10 )
+  _TIME_WAIT( 20 )
 
   //--------------------------------------
   // 演出終了
@@ -142,13 +142,13 @@ EVENT_START	ev_pos_c09r0301_enter_02
   _FOURKINGS_FIGHT_STAIRS( 1 )
 	_SE_PLAY( SEQ_SE_SW_RENBU_03 )    // 機械仕掛けの階段が消える音
 
-  _TIME_WAIT( 15 )
+  _TIME_WAIT( 30 )
 
   // ステージ落下
   _FOURKINGS_FIGHT_STAGE()
 	_SE_PLAY( SEQ_SE_SW_RENBU_04 )    // ステージが振ってくる音 
 
-  _TIME_WAIT( 10 ) 
+  _TIME_WAIT( 40 ) 
 
   // ライト点灯
   _FOURKINGS_FIGHT_LIGHT()
