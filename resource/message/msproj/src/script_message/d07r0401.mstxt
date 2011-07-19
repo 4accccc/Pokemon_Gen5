@@ -38,10 +38,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>WORKER</Text>
+			<Text>WORKMAN2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:41" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -107,10 +107,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>WORKER</Text>
+			<Text>WORKMAN2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:41" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -166,10 +166,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>WORKER</Text>
+			<Text>WORKMAN2</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:41" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -181,6 +181,1793 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どーも　こんにちは！
+おじさん　じゅうきマニア　だよ！▼
+と　いうわけで　キミ！
+はたらく　くるまは　すきかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どーも　こんにちは！
+おじさん　じゅうきマニア　だよ！▼
+と　いうわけで　キミ！
+はたらく　くるまは　すきかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX=52、GRIDX＝13
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:39:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！　やっぱり！？
+いいよね！　はたらく　くるま！▼
+そんな　キミに　いきなり　だけど
+クイズ　だしちゃうよ！▼
+クイズは　ぜんぶで　５もん！
+ぜんもん　せいかい　したら▽
+プレゼント　あげちゃうかもよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！　やっぱり！？
+いいよね！　はたらく　くるま！▼
+そんな　キミに　いきなり　だけど
+クイズ　だしちゃうよ！▼
+クイズは　ぜんぶで　５もん！
+ぜんもん　せいかい　したら▽
+プレゼント　あげちゃうかもよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:39:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっ！？　ゴメン
+よく　きこえなかったんだけど▼
+もう１ど　きくよ！
+はたらく　くるまは　すきかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっ！？　ゴメン
+よく　きこえなかったんだけど▼
+もう１ど　きくよ！
+はたらく　くるまは　すきかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:39:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やあ！　まってたよ！
+それじゃあ　さっそく　はじめようか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:39:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やあ！　まってたよ！
+それじゃあ　さっそく　はじめようか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・２回目以降
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:39:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+ねんきの　はいった
+さびた　クレーンしゃが▽
+めいぶつなのは　ズバリ　どこ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+ねんきの　はいった
+さびた　クレーンしゃが▽
+めいぶつなのは　ズバリ　どこ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以下の選択肢表示
+１：タチワキシティ（正解）
+２：ホドモエシティ
+３：サザナミタウン
+４：セイガイハシティ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:40:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タチワキシティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タチワキシティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:10" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエシティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエシティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サザナミタウン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サザナミタウン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セイガイハシティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セイガイハシティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:41:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+４ばんどうろを　とおる
+トレーラーは　ぜんぶで▽
+３つの　ボディカラーが　ありますが▽
+それは　あか　あお▽
+あとは　ズバリ　なにいろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+４ばんどうろを　とおる
+トレーラーは　ぜんぶで▽
+３つの　ボディカラーが　ありますが▽
+それは　あか　あお▽
+あとは　ズバリ　なにいろ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以下の選択肢表示
+１：みどり
+２：きいろ（正解）
+３：しろ
+４：くろ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みどり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みどり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きいろ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きいろ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しろ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しろ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くろ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:42:35" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+ズバリ！
+いま　なんもんめ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+ズバリ！
+いま　なんもんめ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以下の選択肢表示
+１：１もんめ
+２：２もんめ
+３：３もんめ（正解）
+４：４もんめ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>１もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>１もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>３もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>３もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>４もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>４もんめ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:43:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+きいろい　ドリルカーが　あるのは
+ズバリ！　どこの　ジム？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+きいろい　ドリルカーが　あるのは
+ズバリ！　どこの　ジム？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以下の選択肢表示
+１：セイガイハシティジム
+２：ソウリュウシティジム
+３：フキヨセシティジム
+４：ホドモエシティジム（正解）
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セイガイハシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セイガイハシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>４問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:44:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソウリュウシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソウリュウシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>４問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フキヨセシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フキヨセシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>４問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホドモエシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホドモエシティジム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>４問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:45:01" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+ズバリ！　この　ネジやまに
+ブルドーザーは▽
+なんだい　あるんだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はたらく　くるま　クイズ！▼
+りゃく　して
+はたらＱ！▼
+それでは　もんだいです！▼
+ズバリ！　この　ネジやまに
+ブルドーザーは▽
+なんだい　あるんだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以下の選択肢表示
+１：１だい
+２：２だい（正解）
+３：３だい
+４：４だい
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>１だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>１だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>５問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select5_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>５問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:48:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select5_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>３だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>３だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>５問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_select5_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>４だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>４だい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>５問めの選択肢
+・不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:47:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……▼
+おみごと！
+だいせいかい！▼
+さえてるねえ　キミ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……▼
+おみごと！
+だいせいかい！▼
+さえてるねえ　キミ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・正解
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……▼
+ンー　おしい！
+ざんねん！▼
+でも　いいせん　いってたよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……▼
+ンー　おしい！
+ざんねん！▼
+でも　いいせん　いってたよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・不正解
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よっ　みらいの　じゅうきマニア！
+あした　また　きてくれれば▽
+つぎの　もんだい　を▽
+しゅつだい　するから▽
+ぜひ　ちょうせんしてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よっ　みらいの　じゅうきマニア！
+あした　また　きてくれれば▽
+つぎの　もんだい　を▽
+しゅつだい　するから▽
+ぜひ　ちょうせんしてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・正解
+・日付変更まで
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まちがえた　もんだいは
+あした　また　きてくれれば▽
+もういちど　ちょうせんできるよ▼
+おじさん　きみのこと
+まってるからね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まちがえた　もんだいは
+あした　また　きてくれれば▽
+もういちど　ちょうせんできるよ▼
+おじさん　きみのこと
+まってるからね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・不正解
+・日付変更まで
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おおっ！　キミ　すごいよ！▼
+まさか　おじさん　こんしんの
+はたらＱを　ぜんもん　せいかい▽
+してしまうなんて！▼
+きみは　しょうしん　しょうめいの
+じゅうきマニア　だね……▼
+そう　メダルじむきょく
+さすらいの　しんさいん　である▽
+おじさんが　みとめた▽
+じゅうきマニア　だよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おおっ！　キミ　すごいよ！▼
+まさか　おじさん　こんしんの
+はたらＱを　ぜんもん　せいかい▽
+してしまうなんて！▼
+きみは　しょうしん　しょうめいの
+じゅうきマニア　だね……▼
+そう　メダルじむきょく
+さすらいの　しんさいん　である▽
+おじさんが　みとめた▽
+じゅうきマニア　だよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・全問正解
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅうきマニアとしての
+キミの　さいのうを▽
+メダルおやじに　つたえておくよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゅうきマニアとしての
+キミの　さいのうを▽
+メダルおやじに　つたえておくよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・全問正解後に会話
+・メダル未開放
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0401_workman2_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんじだいの　じゅうきマニア
+たんじょうの　しゅんかんに▽
+たちあうことが　できて▽
+おじさんは　しあわせだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しんじだいの　じゅうきマニア
+たんじょうの　しゅんかんに▽
+たちあうことが　できて▽
+おじさんは　しあわせだよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:49:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・全問正解後に会話
+・メダル開放
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:50:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T12:38:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
