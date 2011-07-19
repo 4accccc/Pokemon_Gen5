@@ -277,11 +277,11 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-・はい　→pilot_03
-・いいえ→pilot_04</Comment>
+　はい　→pilot_03
+　いいえ→pilot_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:59:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -336,11 +336,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・はい選択
+・はい選択時
 ・セリフ後、画面フェードアウト→出航デモへ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:59:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -395,11 +395,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・いいえ選択
+・いいえ選択時
 ・再度会話時はmsg_c03p15_01_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:59:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -745,10 +745,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※SWANでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:57:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -804,10 +804,10 @@
 			<Comment>♂
 ・プラズマ団アジト船について
 ・ホドモエ到着まで（仮）
-※SWANでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:57:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -863,10 +863,10 @@
 			<Comment>♂
 ・プラズマ団アジト船について
 ・ホドモエ到着後から（仮）
-※SWANでメッセージ変更</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:57:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -36,13 +36,15 @@
 			Language="JPN">
 			<Comment>♀
 ・遊覧船乗り場案内人
+・夕方のとき
+　夕方以外はcabinguide_01b
 ・はい/いいえの選択肢表示
-・はい　→cabinguide_01a
+　はい　→cabinguide_01a
 　いいえ→cabinguide_06
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T10:02:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -132,10 +134,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>ロイヤルイッシュごうの　うんこうは
+ゆうがた　のみと　なっております▽
+あらためて　おこし　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:48:07" />
+				Time="2011-07-19T10:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -143,10 +147,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ロイヤルイッシュ号の　運行は
+夕方のみと　なっております▽
+あらためて　お越し　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:48:10" />
+				Time="2011-07-19T10:01:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -154,14 +160,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀
+・時間外の場合</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:48:22" />
+				Time="2011-07-19T10:00:47" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T10:00:29" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -759,10 +774,10 @@
 			<Comment>♀
 ・全抜き時
 　景品入手処理
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T10:02:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
