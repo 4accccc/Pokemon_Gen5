@@ -23,5 +23,6 @@
 #define SCRID_BG_C13_SIGN2_01 (16)
 #define SCRID_BG_C13_GYMSIGN_01 (17)
 #define SCRID_C13_POKE29_01 (18)
+#define SCRID_C13_BADMAN_02 (19)
 
 #endif //_C13_DEF_H_

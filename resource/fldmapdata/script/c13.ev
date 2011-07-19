@@ -37,6 +37,7 @@ _EVENT_DATA   ev_bg_c13_sign1_01
 _EVENT_DATA   ev_bg_c13_sign2_01
 _EVENT_DATA   ev_bg_c13_gymsign_01
 _EVENT_DATA   ev_c13_poke29_01
+_EVENT_DATA   ev_c13_badman_02
 _EVENT_DATA_END
 
 
@@ -756,4 +757,105 @@ EVENT_END
 EVENT_START   ev_c13_poke29_01
   _EASY_TALK_POKEVOICE( MONSNO_538, msg_c13_poke29_01 )
 EVENT_END
+
+/**************************************************************/
+/*  スキンヘッド：話しかけ（道具交換）                        */
+/**************************************************************/
+EVENT_START   ev_c13_badman_02
+
+  //道具交換用ワーク
+  DEFINE_LOCAL  lwk_trade_result
+
+  _TALK_OBJ_START()
+
+  //アイテム交換済みか？（交換は１日１回）
+  IF FLAG_OFF( TMFLG_C13_ITEM_TRADE ) THEN
+
+    //スキンヘッド：よぉ！　いい　はなし　だぜ▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_c13_badman1_01 )
+
+    //アイテム交換する？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+      //交換処理へ
+      _CALL ev_trade_item
+
+      SWITCH $lwk_trade_result
+      CASE 0 THEN   //道具不足で失敗
+        //スキンヘッド：モンスターボール　もってないのかよ！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c13_badman1_03 )
+
+      CASE 1 THEN   //道具MAXで失敗
+        //スキンヘッド：ハイパーボール　もちすぎだろ！
+        _BALLOONWIN_TALKOBJ_MSG( msg_c13_badman1_06 )
+
+      DEFAULT  //交換成立
+        //スキンヘッド：へっへっへ！　きになるだろうが
+        _BALLOONWIN_TALKOBJ_MSG( msg_c13_badman1_02 )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //メッセージ：《モンスターボール》をゆずって《ハイパーボール》をもらった
+        _ITEM_NAME( 0, ITEM_MONSUTAABOORU )
+        _ITEM_NAME( 2, ITEM_HAIPAABOORU )
+        _ME_PLAY( SEQ_ME_ITEM )
+        _SYSWIN_MSG( msg_c13_badman1_07, POS_DEFAULT )
+        _ME_WAIT()
+
+       //========================================//
+        //タイムフラグをON
+        _FLAG_SET( TMFLG_C13_ITEM_TRADE )
+        //========================================//
+
+      ENDSWITCH
+
+    ELSE    //いいえ
+
+      //スキンヘッド：ふつー　とりかえっこ　するだろ！！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c13_badman1_04 )
+
+    ENDIF
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE    //交換済み
+
+    //スキンヘッド：いい　はなし　だったろ？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c13_badman1_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//道具交換処理
+ev_trade_item:
+  //アイテムが足りているかチェック
+  _ITEM_CHK( ITEM_MONSUTAABOORU, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    //道具不足で失敗
+    $lwk_trade_result = 0
+    _RET
+  ENDIF
+
+  //アイテムが追加できるかチェック
+  _ADD_ITEM_CHK( ITEM_HAIPAABOORU, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    //道具MAXで失敗
+    $lwk_trade_result = 1
+    _RET
+  ENDIF
+
+  //道具を減らす
+  _SUB_ITEM( ITEM_MONSUTAABOORU, 1, SCWK_ANSWER )
+  //道具を追加
+  _ADD_ITEM( ITEM_HAIPAABOORU, 1, SCWK_ANSWER ) 
+  //交換成立で終了
+  $lwk_trade_result = 2
+_RET
+
 

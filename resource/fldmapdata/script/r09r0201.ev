@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_r09r0201.h"
   .include  "r09r0201.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,26 +21,437 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
 _EVENT_DATA    ev_bg_r09r0201_statue_01
-
-
+_EVENT_DATA    ev_r09r0201_breederm_01
+_EVENT_DATA    ev_r09r0201_boy3_01
+_EVENT_DATA    ev_r09r0201_middlewoman1_01
+_EVENT_DATA    ev_r09r0201_woman3_01
+_EVENT_DATA    ev_r09r0201_waitress_01
+_EVENT_DATA    ev_r09r0201_trainerm_01
+_EVENT_DATA    ev_r09r0201_babyboy_01
+_EVENT_DATA    ev_r09r0201_informationw_01
+_EVENT_DATA    ev_r09r0201_baker_01
+_EVENT_DATA    ev_r09r0201_girl4_01
 _EVENT_DATA_END
+
+//時間変数
+DEFINE_LOCAL  LWK_TIMEZONE
+//曜日取得変数
+DEFINE_LOCAL LWK_WEEKCK
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  FLAG_CHANGE_LABEL                                         */
 /**************************************************************/
 //ev_r09r0201_flag_change:
 //  _END
 
 /**************************************************************/
-/*  R09R0201　スタチュー用スクリプト                      */
+/*  スタチュー用スクリプト                                    */
 /**************************************************************/
 EVENT_START   ev_bg_r09r0201_statue_01
- 	_TALK_START_SE_PLAY()
-	_PLAINWIN_MSG_DOWN ( msg_r09r0201_statue_01)
-	_LAST_KEYWAIT()	
-	_MSGWIN_CLOSE()
-	
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN ( msg_r09r0201_statue_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
 EVENT_END
+
+/**************************************************************/
+/*  ブリーダー♂：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_r09r0201_breederm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_breederm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  塾帰り♂：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r09r0201_boy3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_boy3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばさん：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_r09r0201_middlewoman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_middlewoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  保育師：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r09r0201_woman3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_woman3_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ウェイトレス：話しかけ（タイムセール）                    */
+/**************************************************************/
+EVENT_START   ev_r09r0201_waitress_01
+
+//タイムセール用変数
+DEFINE_LOCAL  LWK_ITEM_GOLD
+DEFINE_LOCAL  LWK_GOLD_CHK
+DEFINE_LOCAL  LWK_BAG_CHK
+
+  //時間と曜日取得
+  _GET_TIMEZONE( LWK_TIMEZONE )
+  _GET_WEEK( LWK_WEEKCK )
+
+  //今は夕方か
+  IF $LWK_TIMEZONE == TIMEZONE_EVENING THEN
+
+    //曜日でタイムセールスの品分岐
+    SWITCH $LWK_WEEKCK
+    CASE RTC_WEEK_SUNDAY THEN     //日曜日
+      _CALL ev_r09r0201_waitress_call_02
+
+    CASE RTC_WEEK_MONDAY THEN     //月曜日
+      _CALL ev_r09r0201_waitress_call_01
+
+    CASE RTC_WEEK_TUESDAY THEN    //火曜日
+      _CALL ev_r09r0201_waitress_call_02
+
+    CASE RTC_WEEK_WEDNESDAY THEN  //水曜日
+      _CALL ev_r09r0201_waitress_call_01
+
+    CASE RTC_WEEK_THURSDAY THEN   //木曜日
+      _CALL ev_r09r0201_waitress_call_02
+
+    CASE RTC_WEEK_FRIDAY THEN     //金曜日
+      _CALL ev_r09r0201_waitress_call_01
+
+    CASE RTC_WEEK_SATURDAY THEN   //土曜日
+      _CALL ev_r09r0201_waitress_call_02
+
+    ENDSWITCH
+
+  ELSE
+
+  //ウェイトレス：ゆうがたが　まちどおしいです
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_waitress_01 )
+
+  ENDIF
+
+EVENT_END
+
+
+//タイムセール（月水金）
+ev_r09r0201_waitress_call_01:
+
+  //アイテム「モンスターボール」の値段（10%OFF）
+  $LWK_ITEM_GOLD  = 180
+
+  _TALK_OBJ_START()
+  //ウェイトレス：あの　モンスターボールがッ！▼
+  _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_02, R09R0201_WAITRESS_01, POS_DEFAULT )
+
+  //所持金の表示
+  _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+  //モンスターボールを買う？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+    //バッグ空きチェック
+    _ADD_ITEM_CHK( ITEM_MONSUTAABOORU, 1, LWK_BAG_CHK )
+    //金額チェック
+    _CHECK_GOLD( LWK_GOLD_CHK, LWK_ITEM_GOLD )
+
+    //お金が足りない
+    IF $LWK_GOLD_CHK == 0 THEN
+      _GOLD_WIN_CLOSE()
+
+      //ウェイトレス：おかねが　たりないですってー！！
+      _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_07, R09R0201_WAITRESS_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //バッグがいっぱい
+    ELSIF $LWK_BAG_CHK == 0 THEN
+      _GOLD_WIN_CLOSE()
+
+      //ウェイトレス：これいじょう　もてないですってー！！
+      _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_08, R09R0201_WAITRESS_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //購入条件は満たしている
+    ELSE
+
+      //レジ音再生
+      _SE_PLAY( SEQ_SE_SYS_22 )
+      _SUBTRACT_GOLD( LWK_ITEM_GOLD )
+      _GOLD_WIN_UPDATE()
+      _SE_WAIT()
+
+      //ウェイトレス：１０パーセントオフの　１８０円！
+      _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_05, R09R0201_WAITRESS_01, POS_DEFAULT )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //金額ウィンドウを消す
+      _GOLD_WIN_CLOSE()
+
+      //アイテム「モンスターボール」入手
+      _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_MONSUTAABOORU, 1 )
+
+    ENDIF
+
+  ELSE    //いいえ（買い物しない）
+
+    //金額ウィンドウを消す
+    _GOLD_WIN_CLOSE()
+
+    //ウェイトレス：あたしの　みせば　を……！▼
+    _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_04, R09R0201_WAITRESS_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
+//タイムセール（火木土日）
+ev_r09r0201_waitress_call_02:
+
+  //アイテム「キズぐすり」の値段（10%OFF）
+  $LWK_ITEM_GOLD  = 270
+
+  _TALK_OBJ_START()
+  //ウェイトレス：あの　キズぐすりがッ！▼
+  _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_03, R09R0201_WAITRESS_01, POS_DEFAULT )
+
+  //所持金の表示
+  _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+  //キズぐすりを買う？
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+    //バッグ空きチェック
+    _ADD_ITEM_CHK( ITEM_KIZUGUSURI, 1, LWK_BAG_CHK )
+    //金額チェック
+    _CHECK_GOLD( LWK_GOLD_CHK, LWK_ITEM_GOLD )
+
+    //お金が足りない
+    IF $LWK_GOLD_CHK == 0 THEN
+      _GOLD_WIN_CLOSE()
+
+      //ウェイトレス：おかねが　たりないですってー！！
+      _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_07, R09R0201_WAITRESS_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //バッグがいっぱい
+    ELSIF $LWK_BAG_CHK == 0 THEN
+      _GOLD_WIN_CLOSE()
+
+      //ウェイトレス：これいじょう　もてないですってー！！
+      _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_08, R09R0201_WAITRESS_01, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    //購入条件は満たしている
+    ELSE
+
+      //レジ音再生
+      _SE_PLAY( SEQ_SE_SYS_22 )
+      _SUBTRACT_GOLD( LWK_ITEM_GOLD )
+      _GOLD_WIN_UPDATE()
+      _SE_WAIT()
+
+      //ウェイトレス：１０パーセントオフの　２７０円！
+      _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_06, R09R0201_WAITRESS_01, POS_DEFAULT )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //金額ウィンドウを消す
+      _GOLD_WIN_CLOSE()
+
+      //アイテム「キズぐすり」入手
+      _ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_KIZUGUSURI, 1 )
+
+    ENDIF
+
+  ELSE    //いいえ（買い物しない）
+
+    //金額ウィンドウを消す
+    _GOLD_WIN_CLOSE()
+
+    //ウェイトレス：あたしの　みせば　を……！▼
+    _BALLOONWIN_OBJMSG_POS( msg_r09r0201_waitress_04, R09R0201_WAITRESS_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
+/**************************************************************/
+/*  エリート♂：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_r09r0201_trainerm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_trainerm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♂：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r09r0201_babyboy_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_babyboy_01 )
+EVENT_END
+
+/**************************************************************/
+/*  受付嬢：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_r09r0201_informationw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ベーカリー：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_r09r0201_baker_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_baker_01 )
+EVENT_END
+
+/**************************************************************/
+/*  お嬢様：話しかけ  （買い物お願いお嬢様）                  */
+/**************************************************************/
+EVENT_START   ev_r09r0201_girl4_01
+
+  _TALK_OBJ_START()
+
+  //お使いを頼まれていない
+  IF $WK_OTHER_R9R0201_ITEMBUY == 0 && FLAG_OFF( TMFLG_R9R0201_ITEMBUY_CLEAR ) THEN
+
+    //お嬢様：わたし……　おじょうさま　よ▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_01 )
+
+    //すごいキズぐすりを買ってくる？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+      //お嬢様：ありがとう！
+      _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_02 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //主人公名代入
+      _PLAYER_NAME( 0 )
+      //メッセージ：1200円　を　うけとった！
+      _SYSWIN_MSG( msg_r09r0201_girl4_03, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+      //1200円増やす（所持金が最大でもこの処理）
+      _ADD_GOLD( 1200 ) 
+
+      //========================================//
+      //タイムフラグON、ワーク制御
+      _FLAG_SET( TMFLG_R9R0201_ITEMBUY )
+      $WK_OTHER_R9R0201_ITEMBUY = 1
+      //========================================//
+
+    ELSE    //いいえ
+
+      //お嬢様：わたしの　たのみを　ことわれる
+      _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベント中
+  ELSIF $WK_OTHER_R9R0201_ITEMBUY == 1 && FLAG_OFF( TMFLG_R9R0201_ITEMBUY_CLEAR ) THEN
+
+    //お嬢様：それとも　もう　かってきてくれた？
+    _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_05 )
+
+    //すごいキズぐすりを買ってきた？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN  //はい
+
+      //アイテムチェック（すごいキズぐすり）
+      _ITEM_CHK( ITEM_SUGOIKIZUGUSURI, 1, SCWK_ANSWER )
+
+      //すごいキズグスリを買ってきて、なおかつ日付が変わっていない
+      IF $SCWK_ANSWER == FALSE && FLAG_ON( TMFLG_R9R0201_ITEMBUY ) THEN
+
+        //お嬢様：すぐに　かってきてくれて　ありがと！▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_07 )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //アイテム（ちからのねっこ）を取得【仮】取得アイテムは仮です
+        _ITEM_EVENT_NOWAIT( ITEM_TIKARANONEKKO, 1 )
+
+        //========================================//
+        //タイムフラグ（イベントクリア）ON
+        _FLAG_SET( TMFLG_R9R0201_ITEMBUY_CLEAR )
+        //タイムフラグ（イベント中）OFF
+        _FLAG_RESET( TMFLG_R9R0201_ITEMBUY )
+        //ワーク制御
+        $WK_OTHER_R9R0201_ITEMBUY = 0
+        //========================================//
+
+      //すごいキズグスリを買ってきたが、日付が変わっている
+      ELSIF $SCWK_ANSWER == FALSE && FLAG_OFF( TMFLG_R9R0201_ITEMBUY ) THEN
+
+        //お嬢様：ずいぶん　まった　きがするけど▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_08 )
+        _AB_KEYWAIT_MARK()
+        _MSGWIN_CLOSE()
+
+        //アイテム（ちからのこな）を取得【仮】取得アイテムは仮です
+        _ITEM_EVENT_NOWAIT( ITEM_TIKARANOKONA, 1 )
+
+        //========================================//
+        //タイムフラグ（イベントクリア）ON
+        _FLAG_SET( TMFLG_R9R0201_ITEMBUY_CLEAR )
+        //タイムフラグ（イベント中）OFF
+        _FLAG_RESET( TMFLG_R9R0201_ITEMBUY )
+        //ワーク制御
+        $WK_OTHER_R9R0201_ITEMBUY = 0
+        //========================================//
+
+      //すごいキズぐすりを買ってきていない
+      ELSE
+
+        //お嬢様：バッグに　ないみたいね▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_09 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //お嬢様：おねがいね！　まってるから……
+      _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_10 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベントクリア
+  ELSIF FLAG_ON( TMFLG_R9R0201_ITEMBUY_CLEAR ) THEN
+
+    //お嬢様：まんきつ　しちゃった
+    _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_11 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+

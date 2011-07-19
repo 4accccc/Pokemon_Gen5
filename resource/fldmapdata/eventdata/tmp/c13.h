@@ -31,6 +31,7 @@
 #define FLD_ITEM_16                       12
 #define C13_WOMAN2_01                     13
 #define C13_POKE29_01                     14
+#define C13_BADMAN_02                     15
 
 #endif //ZONE_C13_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

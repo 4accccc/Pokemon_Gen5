@@ -10,6 +10,16 @@
 #ifndef ZONE_R09R0201_EVC_H
 #define ZONE_R09R0201_EVC_H
 
+#define R09R0201_INFORMATIONW_01           0
+#define R09R0201_BREEDERM_01               1
+#define R09R0201_MIDDLEWOMAN1_01           2
+#define R09R0201_WAITRESS_01               3
+#define R09R0201_WOMAN3_01                 4
+#define R09R0201_TRAINERM_01               5
+#define R09R0201_BABYBOY_01                6
+#define R09R0201_BAKER_01                  7
+#define R09R0201_GIRL4_01                  8
+#define R09R0201_BOY3_01                   9
 
 #endif //ZONE_R09R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
