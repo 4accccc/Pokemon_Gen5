@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d24.h"
-  //.include  "d24.h"
+  .include  "d24.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,46 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d24
+_EVENT_DATA    ev_zone_d24
+_EVENT_DATA    ev_init_d24
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d24:
-//  _END
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d24
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //バージョンごとに異なる接続を配置
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0701_EXIT01, 655, -2, 289 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R1101_EXIT01, 667, -1, 304 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R1101_EXIT02, 671, -1, 299 )
+  //W2
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0101_EXIT01, 655, -2, 289 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0501_EXIT01, 667, -1, 304 )
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0501_EXIT02, 671, -1, 299 )
+  ENDIF
+  
+INIT_EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d24:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_d24
 
+//
+
+INIT_EVENT_END

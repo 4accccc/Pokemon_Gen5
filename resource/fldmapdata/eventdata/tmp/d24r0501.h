@@ -3,6 +3,8 @@
 #define ZONE_D24R0501_EVD_H
 
 #define DOOR_ID_D24R0501_D24R0301_EXIT01  0
+#define DOOR_ID_D24R0501_D24_EXIT02       1
+#define DOOR_ID_D24R0501_D24_EXIT01       2
 
 #endif //ZONE_D24R0501_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d24r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

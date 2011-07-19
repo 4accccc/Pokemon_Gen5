@@ -36,10 +36,26 @@ DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+
 /************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_t04
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //バージョンごとに異なる接続を配置
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_T04_D24R1201_EXIT01, 707, -4, 299 )
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_T04_D24R0601_EXIT01, 707, -4, 299 )
+  ENDIF
+  
 	
 	_FLAG_SET( FV_T04_SUMMER )
 {

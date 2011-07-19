@@ -7,6 +7,8 @@
 #define DOOR_ID_T04_T04R0101_EXIT01       2
 #define DOOR_ID_T04_R13R0201_EXIT01       3
 #define DOOR_ID_T04_T04R0301_EXIT01       4
+#define DOOR_ID_T04_D24R0601_EXIT01       5
+#define DOOR_ID_T04_D24R1201_EXIT01       6
 
 #endif //ZONE_T04_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
