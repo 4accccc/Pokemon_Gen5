@@ -3467,6 +3467,7 @@ static BOOL KeySys_Demo_MainModeUnLock( KEYSYS_DEMO_WORK *p_wk )
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_effect, TRUE );
     GFL_CLACT_WK_SetAnmSeq( p_wk->p_effect, 11 );
     GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_effect, TRUE );
+    PMSND_PlaySE( KEYSYS_SE_KIRAKIRA );
     p_wk->seq++;
     break;
   case SEQ_MOVE_KIRAKIRA_WAIT:

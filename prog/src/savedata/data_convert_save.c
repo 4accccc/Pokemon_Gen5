@@ -105,6 +105,39 @@ BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAV
 //-----------------------------------------------------------------------------
 u32 DATA_CONVERT_SAVE_GetData( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_GET_ID id, void *p_data_adrs )
 {
+  switch( id )
+  {
+  case DATA_CONVERT_GET_ID_MUSICAL_POINT:
+    return cp_wk->data.musical_sum_point;
+  case DATA_CONVERT_GET_ID_MUSICAL_ENTRY:
+    return cp_wk->data.musical_entry_num;
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_00: //p_data_adrs‚©‚çWB_SAVE_CONV_DENDOU_POKEMON_DATA\‘¢‘Ì‚ÅŽó‚¯Žæ‚é
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_01: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_02: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_03: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_04: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_05: //U
+    {
+      u16 idx = id - DATA_CONVERT_GET_ID_DENDOU_POKE_00;
+      GFL_STD_MemCopy( &cp_wk->data.pokemon[idx], p_data_adrs, sizeof(WB_SAVE_CONV_DENDOU_POKEMON_DATA) );
+    }
+    return 0;
+
+  case DATA_CONVERT_GET_ID_OWNER:  //p_data_adrs‚©‚çWB_SAVE_CONV_OWNER\‘¢‘Ì‚ÅŽó‚¯Žæ‚é
+    GFL_STD_MemCopy( &cp_wk->owner, p_data_adrs, sizeof(WB_SAVE_CONV_OWNER) );
+    return 0;
+  case DATA_CONVERT_GET_ID_MUSICAL_ITEMBIT:  //p_data_adrs‚©‚çu8‚ÌWB_SAVE_CONV_MUSICAL_ITEM_BIT”z—ñ‚ÅŽó‚¯Žæ‚é
+    GFL_STD_MemCopy( cp_wk->data.musical_item, p_data_adrs, sizeof(u8)*WB_SAVE_CONV_MUSICAL_ITEM_BIT);
+    return 0;
+  default:
+    GF_ASSERT(0);
+  }
+
   return 0;
 }
 //----------------------------------------------------------------------------
@@ -137,3 +170,60 @@ u16 DATA_CONVERT_SAVE_GetWork( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_WORK
   GF_ASSERT( wk < WB_SAVE_CONV_WORK_MAX );
   return cp_wk->data.work[ wk ];
 }
+
+#ifdef PM_DEBUG
+void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id, u32 data )
+{
+  switch( id )
+  {
+  case DATA_CONVERT_GET_ID_MUSICAL_POINT:
+    p_wk->data.musical_sum_point  = data;
+    break;
+  case DATA_CONVERT_GET_ID_MUSICAL_ENTRY:
+    p_wk->data.musical_entry_num  = data;
+    break;
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_00: //p_data_adrs‚©‚çWB_SAVE_CONV_DENDOU_POKEMON_DATA\‘¢‘Ì‚ÅŽó‚¯Žæ‚é
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_01: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_02: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_03: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_04: //U
+    /* fall though */
+  case DATA_CONVERT_GET_ID_DENDOU_POKE_05: //U
+    {
+      u16 idx = id - DATA_CONVERT_GET_ID_DENDOU_POKE_00;
+      GFL_STD_MemCopy( (void*)data, &p_wk->data.pokemon[idx], sizeof(WB_SAVE_CONV_DENDOU_POKEMON_DATA) );
+    }
+    break;
+  case DATA_CONVERT_GET_ID_OWNER:  //p_data_adrs‚©‚çWB_SAVE_CONV_OWNER\‘¢‘Ì‚ÅŽó‚¯Žæ‚é
+    GFL_STD_MemCopy( (void*)data, &p_wk->owner, sizeof(WB_SAVE_CONV_OWNER) );
+    break;
+  case DATA_CONVERT_GET_ID_MUSICAL_ITEMBIT:  //p_data_adrs‚©‚çu8‚ÌWB_SAVE_CONV_MUSICAL_ITEM_BIT”z—ñ‚ÅŽó‚¯Žæ‚é
+    GFL_STD_MemCopy( (void*)data, p_wk->data.musical_item, sizeof(u8)*WB_SAVE_CONV_MUSICAL_ITEM_BIT);
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+void DATA_CONVERT_SAVE_SetFlag( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_FLAG flag, BOOL on_off )
+{
+  GF_ASSERT( flag < WB_SAVE_CONV_FLAG_MAX );
+
+  if( on_off )
+  {
+    p_wk->data.flag[ flag/8 ] |= (1<<(flag%8));
+  }
+  else
+  {
+    p_wk->data.flag[ flag/8 ] &= ~(1<<(flag%8));
+  }
+}
+void DATA_CONVERT_SAVE_SetWork( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_WORK wk, u16 value )
+{
+  GF_ASSERT( wk < WB_SAVE_CONV_WORK_MAX );
+  p_wk->data.work[ wk ]  = value;
+}
+#endif

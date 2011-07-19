@@ -31,6 +31,7 @@
 #include "debug_util.h"
 #include "debug/debugwin_sys.h"
 #include "debugwin_keysystem.h"
+#include "debugwin_data_convert.h"
 
 //外部公開
 #include "debug_outside.h"
@@ -171,7 +172,9 @@ static GFL_PROC_RESULT Debug_Outside_Proc_Init( GFL_PROC *p_proc, int *p_seq, vo
     {
       OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr(p_wk->p_outside_sv);
       KEY_SYSTEM_SAVE *p_key_system = OUTSIDE_PERMANENT_GetKeySystem(p_per);
+      DATA_CONVERT_SAVE *p_data_conv = OUTSIDE_PERMANENT_GetDataConvert(p_per);
       DEBUGWIN_KEY_SYSTEM_Init( p_key_system, HEAPID_NAGI_DEBUG_SUB );
+      DEBUGWIN_DATA_CONVERT_Init( p_data_conv, HEAPID_NAGI_DEBUG_SUB );
     }
   }
 
@@ -198,6 +201,7 @@ static GFL_PROC_RESULT Debug_Outside_Proc_Exit( GFL_PROC *p_proc, int *p_seq, vo
   OS_ResetSystem(0);
 
   //デバッグウィンドウ
+  DEBUGWIN_DATA_CONVERT_Exit();
   DEBUGWIN_KEY_SYSTEM_Exit();
   DEBUGWIN_ExitProc();
 

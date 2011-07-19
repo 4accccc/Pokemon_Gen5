@@ -43,7 +43,6 @@ SRCS	+= \
 		$(PARENT_SRC)/multiboot/util/mb_util.c \
 		$(PARENT_SRC)/multiboot/util/mb_util_msg.c \
 		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \
-		$(PARENT_SRC)/multiboot/movie/mb_movie_sys.c \
 		$(PARENT_SRC)/multiboot/data_convert/mb_data_convert_sys.c \
     $(PARENT_SRC)/multiboot/data_convert/mb_data_convert_graphic.c
 				

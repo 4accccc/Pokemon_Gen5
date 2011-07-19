@@ -50,6 +50,8 @@ typedef enum
   WB_SAVE_CONV_WORK_MAX
 } WB_SAVE_CONV_WORK;
 
+#define WB_SAVE_CONV_MUSICAL_ITEM_BIT (256/8)
+
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ
@@ -92,7 +94,7 @@ typedef struct
   u8  flag[ MATH_ROUNDUP(WB_SAVE_CONV_FLAG_MAX,8) / 8 ];
   u16 work[WB_SAVE_CONV_WORK_MAX];
 
-  u8  musical_item[256/8];
+  u8  musical_item[WB_SAVE_CONV_MUSICAL_ITEM_BIT];
   u16 musical_sum_point;
   u16 musical_entry_num;
 
