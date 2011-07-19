@@ -134,7 +134,8 @@ typedef struct {
 // ⑥■⑦■⑭■⑮
 // 　⑧　｜　⑯
 //
-static const EX_HEIGHT_DATA ex_height_tbl[ EX_HEIGHT_NUM ] =
+// パイプの上にいるときの拡張たかさ
+static const EX_HEIGHT_DATA ex_height_tbl_up[ EX_HEIGHT_NUM ] =
 {
   { 8, 41, 1, 2 },    // 1
   { 5, 44, 2, 1 },    // 2
@@ -143,7 +144,7 @@ static const EX_HEIGHT_DATA ex_height_tbl[ EX_HEIGHT_NUM ] =
   { 8, 48, 1, 2 },    // 5
   { 5, 51, 2, 1 },    // 6
   {10, 51, 2, 1 },    // 7
-  { 8, 53, 1, 2 },    // 8
+  { 8, 53, 1, 3 },    // 8
   {22, 41, 1, 2 },    // 9
   {19, 44, 2, 1 },    // 10
   {24, 44, 2, 1 },    // 11
@@ -151,12 +152,34 @@ static const EX_HEIGHT_DATA ex_height_tbl[ EX_HEIGHT_NUM ] =
   {22, 48, 1, 2 },    // 13
   {19, 51, 2, 1 },    // 14
   {24, 51, 2, 1 },    // 15
-  {22, 53, 1, 2 },    // 16
+  {22, 53, 1, 3 },    // 16
+};
+
+// 地面の上にいるときの拡張たかさ
+static const EX_HEIGHT_DATA ex_height_tbl_down[ EX_HEIGHT_NUM ] =
+{
+  { 7, 41, 3, 1 },    // 1
+  { 5, 43, 2, 3 },    // 2
+  {10, 43, 2, 3 },    // 3
+  { 7, 47, 3, 1 },    // 4
+  { 7, 48, 3, 1 },    // 5
+  { 5, 50, 2, 3 },    // 6
+  {10, 50, 2, 3 },    // 7
+  { 7, 54, 3, 1 },    // 8
+  {21, 41, 3, 1 },    // 9
+  {19, 43, 2, 3 },    // 10
+  {24, 43, 2, 3 },    // 11
+  {21, 47, 3, 1 },    // 12
+  {21, 48, 3, 1 },    // 13
+  {19, 50, 2, 3 },    // 14
+  {24, 50, 2, 3 },    // 15
+  {21, 54, 3, 1 },    // 16
 };
 
 // 拡張高さの高さ
 static const fx32 ex_height_y[ 2 ] = {
-  (-49*FX32_ONE), // 地面の高さ
+  //(-48*FX32_ONE), // 地面の高さ
+  0xFFFCFFD1,
   (-8*FX32_ONE),  // パイプの高さ
 };
 
@@ -624,6 +647,7 @@ static BOOL ANM_PIPE_IN_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_OUT_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static BOOL ANM_PIPE_OUT_CheckEnd( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
+static void ANM_PIPE_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_SET_IN( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static void ANM_PIPE_SET_OUT( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 
@@ -654,6 +678,10 @@ static void PIPE_IN_TASK_Add( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static FIELD_TASK_RETVAL tcb_PipeInTask( void* wk );
 static void PIPE_OUT_TASK_Add( HIDE_SHIP_TMP *p_wk, u16 obj_idx );
 static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk );
+
+// 接続があるパイプ
+static BOOL PIPE_CONNECT_CheckMatch( u16 pipe_obj_idx );
+static BOOL PIPE_CONNECT_GetFlag( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx, u16 *p_connect_idx );
 
 // 拡張高さ
 static void EX_HEIGHT_Reset( HIDE_SHIP_TMP *p_wk );
@@ -886,6 +914,9 @@ static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk )
   //=====================================
   // パイプの設定
   //
+  // 1.フラグの設定
+  // 2.パイプ状態の設定
+  //
   if( SAVE_GetSaveFlag( p_wk->p_sv_wk ) == FALSE )
   {
     // セーブデータがないなら初期設定
@@ -896,18 +927,29 @@ static void HIDE_SHIP_Init( HIDE_SHIP_TMP *p_wk )
     // 全パイプ状態の設定
     for( i=0; i<PIPE_NUM; i++ )
     {
-      u16 obj_idx = OBJ_PIPE_1 + i;
-
       if( SAVE_GetPipe( p_wk->p_sv_wk, i ) == 0 )
       {
-        ANM_PIPE_SET_IN( p_wk, obj_idx );
         p_wk->pipe_flag[i] = FALSE;
       }
       else
       {
-        ANM_PIPE_SET_OUT( p_wk, obj_idx );
         p_wk->pipe_flag[i] = TRUE;
       }
+    }
+  }
+
+  // 全パイプモデルの設定
+  for( i=0; i<PIPE_NUM; i++ )
+  {
+    u16 obj_idx = OBJ_PIPE_1 + i;
+
+    if( p_wk->pipe_flag[ i ] == TRUE )
+    {
+      ANM_PIPE_SET_OUT( p_wk, obj_idx );
+    }
+    else
+    {
+      ANM_PIPE_SET_IN( p_wk, obj_idx );
     }
   }
 
@@ -1012,12 +1054,10 @@ static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk )
 
     if( state_tbl[ i ] == 0 )
     {
-      ANM_PIPE_SET_IN( p_wk, obj_idx );
       p_wk->pipe_flag[i] = FALSE;
     }
     else
     {
-      ANM_PIPE_SET_OUT( p_wk, obj_idx );
       p_wk->pipe_flag[i] = TRUE;
     }
   }
@@ -1367,6 +1407,18 @@ static void ANM_PIPE_ON_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
   ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
   ANM_Stop( p_wk->exp_obj, obj_idx, 2 );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  離れたとき時のアニメ再生
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 obj_idx   OBJインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_PIPE_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
+{
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1423,14 +1475,30 @@ static void ANM_PIPE_SET_OUT( HIDE_SHIP_TMP *p_wk, u16 obj_idx )
 
   // くっついた時のアニメ
   {
-    anm_idx = 1;
-    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+    BOOL  is_effect = TRUE;  // 光ってるエフェクトがon/off TRUEでon
+    // 接続
+    if( PIPE_CONNECT_CheckMatch( obj_idx ) == TRUE )
+    {
+      u16 connect_idx = 0;
+      ICHI_Printf("接続パイプ %d\n", obj_idx);
+      if( PIPE_CONNECT_GetFlag( p_wk, obj_idx, &connect_idx ) == FALSE )
+      {
+        // 反対側のパイプが出ていないならエフェクトOFF
+        is_effect = FALSE;
+      }
+    }
 
-    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
-    // 最終フレーム取得
-    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
-    // ラストフレームにする
-    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+    if( is_effect == TRUE )
+    {
+      anm_idx = 1;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+      // 最終フレーム取得
+      last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+      // ラストフレームにする
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+    }
   }
 
   // 他のアニメはSTOP
@@ -1837,7 +1905,7 @@ static void BUTTON_EVENT_PipeStartup( HIDE_SHIP_TMP *p_wk, int pipe_idx )
   p_wk->pipe_flag[ pipe_idx ] = !p_wk->pipe_flag[ pipe_idx ];
 
   // 拡張高さの高さのみ再設定
-  EX_HEIGHT_SetHeight( p_wk, pipe_idx, p_wk->pipe_flag[ pipe_idx ] );
+  EX_HEIGHT_Set( p_wk, pipe_idx, p_wk->pipe_flag[ pipe_idx ] );
 }
 
 //----------------------------------------------------------------------------
@@ -1908,6 +1976,21 @@ static FIELD_TASK_RETVAL tcb_PipeInTask( void* wk )
 
     // SE 再生
     PMSND_PlaySE( HIDE_SHIP_SE_PIPE_JOINT );
+
+    // 反対側にパイプがある場合は
+    // 光らせるのをOFFにする
+    {
+      // 接続パイプかチェック
+      if( PIPE_CONNECT_CheckMatch( p_wk->obj_idx ) )
+      {
+        u16 connect_idx = 0;
+        if( PIPE_CONNECT_GetFlag( p_wk->p_gmk_wk, p_wk->obj_idx, &connect_idx ) == TRUE )
+        {
+          GF_ASSERT( connect_idx );
+          ANM_PIPE_OFF_Play( p_wk->p_gmk_wk, connect_idx );
+        }
+      }
+    }
 
     p_wk->seq++;
     break;
@@ -1985,52 +2068,20 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
     // 反対側のパイプが引っ込んでいるならエフェクトを飛ばす
     // かつ反対側のパイプが突き出しているなら、光らせる
     {
-      int i;
-
-
-      // 反対のパイプがあるかチェック
-      for( i=0; i<PIPE_CONNECT_NUM; i++ )
+      // 接続パイプかチェック
+      if( PIPE_CONNECT_CheckMatch( p_wk->obj_idx ) )
       {
-        int pipe_idx = pipe_connect_tbl[i][0];
-
-        // 接続同士のパイプかチェック
-        if( pipe_idx == (p_wk->obj_idx - OBJ_PIPE_1) )
+        u16 connect_idx = 0;
+        if( PIPE_CONNECT_GetFlag( p_wk->p_gmk_wk, p_wk->obj_idx, &connect_idx ) == FALSE )
         {
-          pipe_idx = pipe_connect_tbl[i][1];    // 反対側
-          // 反対側が引っ込んでいるかチェック
-          if( p_wk->p_gmk_wk->pipe_flag[ pipe_idx ] == FALSE )
-          {
-            ICHI_Printf("接続パイプ エフェクトなし %d i=%d \n", p_wk->obj_idx, i);
-            // エフェクトなし終了
-            return FIELD_TASK_RETVAL_FINISH;
-          }
-          else
-          // エフェクトを表示
-          {
-            ICHI_Printf("接続パイプ 反対側エフェクト有り %d i=%d \n", pipe_idx, i);
-            ANM_PIPE_ON_Play( p_wk->p_gmk_wk, (OBJ_PIPE_1 + pipe_idx) );
-          }
+          // エフェクトなし終了
+          return FIELD_TASK_RETVAL_FINISH;
         }
-
-        pipe_idx = pipe_connect_tbl[i][1];
-
-        // 接続同士のパイプかチェック
-        if( pipe_idx == (p_wk->obj_idx - OBJ_PIPE_1) )
+        else
         {
-          pipe_idx = pipe_connect_tbl[i][0];    // 反対側
-          // 反対側が引っ込んでいるかチェック
-          if( p_wk->p_gmk_wk->pipe_flag[ pipe_idx ] == FALSE )
-          {
-            ICHI_Printf("接続パイプ エフェクトなし %d i=%d \n", p_wk->obj_idx, i);
-            // エフェクトなし終了
-            return FIELD_TASK_RETVAL_FINISH;
-          }
-          else
-          // エフェクトを表示
-          {
-            ICHI_Printf("接続パイプ 反対側エフェクト有り %d i=%d \n", pipe_idx, i);
-            ANM_PIPE_ON_Play( p_wk->p_gmk_wk, (OBJ_PIPE_1 + pipe_idx) );
-          }
+          GF_ASSERT( connect_idx );
+          // 反対側も光らせる
+          ANM_PIPE_ON_Play( p_wk->p_gmk_wk, connect_idx );
         }
       }
     }
@@ -2054,6 +2105,90 @@ static FIELD_TASK_RETVAL tcb_PipeOutTask( void* wk )
   }
 
   return FIELD_TASK_RETVAL_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パイプが接続パイプかチェック
+ *
+ *	@param	pipe_obj_idx  パイプのOBJインデックス
+ *
+ *	@return TRUEで接続パイプ
+ */
+//-----------------------------------------------------------------------------
+static BOOL PIPE_CONNECT_CheckMatch( u16 pipe_obj_idx )
+{
+  int i, j;
+
+  // 反対のパイプがあるかチェック
+  for( i=0; i<PIPE_CONNECT_NUM; i++ )
+  {
+    for( j=0; j<2; j++ )
+    {
+      int pipe_idx = pipe_connect_tbl[i][j];
+
+      // 接続同士のパイプかチェック
+      if( pipe_idx == (pipe_obj_idx - OBJ_PIPE_1) )
+      {
+        return TRUE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  接続パイプが突き出てるか引っ込んでるか
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk ギミックワーク
+ *	@param	pipe_obj_idx  パイプOBJインデックス
+ *	@param  p_connct_idx  接続先のパイプOBJインデックス
+ *
+ *	@return TRUEで突き出ている
+ *
+ *	@note   PIPE_CONNECT_CheckMatchで接続パイプかチェックした後でかく
+ */
+//-----------------------------------------------------------------------------
+static BOOL PIPE_CONNECT_GetFlag( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx, u16 *p_connect_idx )
+{
+  int i;
+
+  // 接続パイプチェック
+  if( PIPE_CONNECT_CheckMatch( pipe_obj_idx ) == FALSE )
+  {
+    GF_ASSERT_MSG( 0, "not connect pipe \n");
+  }
+
+
+  for( i=0; i<PIPE_CONNECT_NUM; i++ )
+  {
+    int pipe_idx = pipe_connect_tbl[i][0];
+
+    // 接続同士のパイプかチェック
+    if( pipe_idx == (pipe_obj_idx - OBJ_PIPE_1) )
+    {
+      pipe_idx = pipe_connect_tbl[i][1];    // 反対側
+      *p_connect_idx = (OBJ_PIPE_1 + pipe_idx);
+      // 反対側のフラグを返す
+      return p_wk->pipe_flag[ pipe_idx ];
+    }
+
+    pipe_idx = pipe_connect_tbl[i][1];
+
+    // 接続同士のパイプかチェック
+    if( pipe_idx == (pipe_obj_idx - OBJ_PIPE_1) )
+    {
+      pipe_idx = pipe_connect_tbl[i][0];    // 反対側
+      *p_connect_idx = (OBJ_PIPE_1 + pipe_idx);
+      // 反対側のフラグを返す
+      return p_wk->pipe_flag[ pipe_idx ];
+    }
+  }
+
+  // ここにはこないはず
+  GF_ASSERT(0);
+  return FALSE;
 }
 
 //=============================================================================
@@ -2095,12 +2230,27 @@ static void EX_HEIGHT_Set( HIDE_SHIP_TMP *p_wk, int idx, int height_idx )
 {
   FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( p_wk->p_fieldmap );
   EHL_PTR	ex_height_list = FLDMAPPER_GetExHegihtPtr( mapper );
+  const EX_HEIGHT_DATA *ex_height_data;
+
+  if( height_idx == 0 )
+  {
+    OS_Printf("拡張高さ %d　下\n", idx);
+    ex_height_data = &ex_height_tbl_down[idx];
+  }
+  else
+  {
+    OS_Printf("拡張高さ %d　上\n", idx);
+    ex_height_data = &ex_height_tbl_up[idx];
+  }
+
+  // 一旦データ無効
+  EXH_SetHeightValid( idx, FALSE, ex_height_list );
 
   EXH_SetUpHeightData( idx,
-      ex_height_tbl[ idx ].start_x,
-      ex_height_tbl[ idx ].start_z,
-      ex_height_tbl[ idx ].size_x,
-      ex_height_tbl[ idx ].size_z,
+      ex_height_data->start_x,
+      ex_height_data->start_z,
+      ex_height_data->size_x,
+      ex_height_data->size_z,
       ex_height_y[ height_idx ],
       (((MAPATTR_FLAGBIT_SHADOW)<<16)|MATTR_NORMAL), // アトリビュート
       ex_height_list);
