@@ -31,6 +31,7 @@
 #include "multiboot/mb_data_convert_sys.h"
 #include "mb_data_convert_graphic.h"
 #include "arc/arc_extern.h"
+#include "multiboot/wb_save_convert.h"
 
 //=============================================================================
 /**
@@ -72,6 +73,8 @@ struct _MB_DATA_CONVERT_WORK
 
   BOOL          is_net_err;
   HEAPID        heapID;
+
+  WB_SAVE_CONV_ALL_DATA *p_conv_data;
 } ;
 
 
@@ -218,6 +221,11 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Exit
   if( p_wk->p_msg != NULL )
   {
     MB_MSG_MessageTerm( p_wk->p_msg );
+  }
+
+  if( p_wk->p_conv_data != NULL )
+  {
+    GFL_HEAP_FreeMemory( p_wk->p_conv_data );
   }
 
   MB_DATA_CONVERT_GRAPHIC_Exit( p_wk->p_graphic );
@@ -428,8 +436,8 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
 #if PM_DEBUG
     if( p_wk->card_type == CARD_TYPE_DUMMY )
     {
-      MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_MOVIE_DEB_01 );
       MB_DATA_SetCardType( p_wk->p_data, CARD_TYPE_WB );
+      OS_TPrintf( "ダミーカードなのでWBとして認識させるよ\n" );
       (*p_seq)++;
     }
     else
@@ -442,6 +450,8 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
       MB_MSG_SetDispKeyCursor( p_wk->p_msg, TRUE );
 
       MB_COMM_SetChildState( p_wk->p_comm, MCCS_END_GAME_ERROR );
+
+      OS_TPrintf( "ROM違う\n" );
       (*p_seq) = SEQ_WAIT_NEXT_GAME_ERROR_MSG;
     }
     else
@@ -483,19 +493,15 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     break;
   case SEQ_DATA_CONV:
     {
-      //TODO この当たりでセーブデータをコンバートデータに変換
+      p_wk->p_conv_data = WB_SAVE_CONV_AllocConvertAllData( MB_DATA_GetSaveData(p_wk->p_data), p_wk->heapID );
       (*p_seq)++;
     }
     break;
 
   case SEQ_TRANS_SAVE_SEND:
-    //TODO データとサイズ
-    {
-      u8 a = 0;
-    if( MB_COMM_Send_CommonData( p_wk->p_comm, &a, 1 ) == TRUE )
+    if( MB_COMM_Send_CommonData( p_wk->p_comm, &p_wk->p_conv_data, sizeof(WB_SAVE_CONV_ALL_DATA) ) == TRUE )
     {
       (*p_seq)++;
-    }
     }
     break;
   case SEQ_TRANS_SAVE_SEND_WAIT:
@@ -507,11 +513,14 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_TRANS_SAVE_FINISH_WAIT:
     if( MB_COMM_IsPostMovieFinishMachine( p_wk->p_comm ) )
     {
-      MB_MSG_MessageHide( p_wk->p_msg );
-      MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
-      MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_MOVIE_05 , p_wk->p_comm_init->msgSpeed );
-      MB_COMM_ReqDisconnect( p_wk->p_comm );
-      (*p_seq) = SEQ_WAIT_EXIT_COMM;
+      if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) )
+      {
+        MB_MSG_MessageHide( p_wk->p_msg );
+        MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
+        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_MOVIE_05 , p_wk->p_comm_init->msgSpeed );
+        MB_COMM_ReqDisconnect( p_wk->p_comm );
+        (*p_seq) = SEQ_WAIT_EXIT_COMM;
+      }
     }
     break;
     
@@ -535,6 +544,8 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_EXIT_GAME:
     /* 無限ループ */
     break;
+  default:
+    GF_ASSERT(0);
   }
 
   return FALSE;

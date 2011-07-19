@@ -70,7 +70,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/wbt_ex_save.c \
         savedata/outside_permanent.c \
         savedata/key_system_save.c \
-        savedata/pokewood_rec.c
+        savedata/pokewood_rec.c \
+        savedata/data_convert_save.c
 
 
 #通信の常駐
@@ -2711,7 +2712,9 @@ SRCS_OVERLAY_KEY_SYSTEM = net_app/key_system/key_system_main.c \
                           net_app/key_system/key_system_util.c \
                           net_app/key_system/key_system_net.c \
                           net_app/key_system/key_system_flow.c \
-                          net_app/key_system/data_convert_flow.c
+                          net_app/key_system/data_convert_flow.c \
+		                      multiboot/util/wb_save.c \
+		                      multiboot/util/wb_save_convert.c
 
 #	名木橋デバッグ
 #===> SRCS_OVERLAY_DEV_WIFI

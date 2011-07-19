@@ -541,6 +541,29 @@ const BOOL MB_DATA_CheckRomCode( MB_DATA_WORK *dataWork )
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブデータ生データ取得
+ *
+ *	@param	MB_DATA_WORK *dataWork  データワーク
+ *
+ *	@return セーブデータ
+ */
+//-----------------------------------------------------------------------------
+void * MB_DATA_GetSaveData( MB_DATA_WORK *dataWork )
+{
+  switch( dataWork->mainLoadPos )
+  {
+  case DDS_FIRST: 
+    return dataWork->pData;
+  case DDS_SECOND: 
+    GF_ASSERT( dataWork->pDataMirror );
+    return dataWork->pDataMirror;
+  default: 
+    GF_ASSERT_HEAVY(0); 
+    return NULL;
+  }
+}
 
 #pragma mark [>CardInit
 

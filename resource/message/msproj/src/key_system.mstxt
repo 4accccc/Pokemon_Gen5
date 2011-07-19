@@ -2578,4 +2578,373 @@ DSシステムフォントなので
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もう１つのＤＳに　ポケットモンスターの
+ブラック・ホワイト
+いずれかの　ソフトを　セットして
+でんげんを　いれた　あとに
+『ＤＳダウンロードプレイ』から
+『データコンバート　ＩＤ：[Digit:5digits Idx="0" ]』を
+えらんでください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もう１つのＤＳに　ポケットモンスターの
+ダイヤモンド・パール・プラチナ・
+ハートゴールド・ソウルシルバー
+いずれかの　ソフトを　セットして
+でんげんを　いれた　あとに
+『ＤＳダウンロードプレイ』から
+『データコンバート　ＩＤ：[Digit:5digits Idx="0" ]』を
+えらんでください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T11:40:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データコンバート　きどうちゅう！
+しばらく　おまちください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T11:42:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データコンバート　きどうちゅう！
+しばらく　おまちください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T11:42:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T11:40:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もう１つの　ＤＳの
+せつぞくに　しっぱい　しました▼
+データコンバートを　しゅうりょうします▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:43:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もう１つの　ＤＳの
+せつぞくに　しっぱい　しました▼
+データコンバートを　しゅうりょうします▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>初回接続時、子機落ち
+(ROM転送後・NET接続前)</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T11:41:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワイヤレスつうしんを　かいしします
+よろしいですか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:36:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワイヤレス通信を　開始します
+よろしいですか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:36:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:36:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ただしい　ソフトが　ささっていません
+でんげんをきり　ただしい　ソフトを
+さしてから　てんそうマシンを
+きどうしなおして　ください▼
+データコンバートを　しゅうりょうします▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>正しい　ソフトが　ささっていません
+電源を切り　正しい　ソフトを
+さしてから　転送マシンを
+起動し直してください▼
+データコンバートを　終了します▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>子機に正しいソフトが刺さっていない</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レポートを　よみこむことが
+できませんでした
+レポートが　かかれていないか
+こわれている　かのうせいがあります▼
+データコンバートを　しゅうりょうします▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レポートを　読み込むことが
+できませんでした
+レポートが　書かれていないか
+壊れている　可能性があります▼
+データコンバートを　終了します▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:44:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>データコンバートが　かんりょうしました
+なにかが　へんかしているかもしれません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:45:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データコンバートが　完了しました
+何かが　変化しているかもしれません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:45:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

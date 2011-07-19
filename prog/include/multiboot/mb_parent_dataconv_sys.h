@@ -26,6 +26,19 @@ typedef enum
   MB_PARENT_DATACONV_REQ_CONNECT_ROM, //送信したROMと通信開始
 }MB_PARENT_DATACONV_REQ;
 
+//-------------------------------------
+///	結果
+//=====================================
+typedef enum
+{
+  MB_PARENT_DATACONV_RESULT_NONE, //とくになにもない
+  MB_PARENT_DATACONV_RESULT_TIMEOUT,  //タイムアウト
+  MB_PARENT_DATACONV_RESULT_GAME_ERROR, //ROMが違う
+  MB_PARENT_DATACONV_RESULT_BACKUP_ERROR, //CRCが違う
+  MB_PARENT_DATACONV_RESULT_CONTRY_ERROR, //国が違う
+} MB_PARENT_DATACONV_RESULT;
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -50,3 +63,5 @@ extern BOOL MB_PARENT_DATACONV_IsEndRequest( const MB_PARENT_DATACONV *cp_wk );
 
 extern void MB_PARENT_DATACONV_SetUpRomImage( MB_PARENT_DATACONV *p_wk, const STRBUF *cp_title, const STRBUF *cp_info );
 
+extern MB_PARENT_DATACONV_RESULT MB_PARENT_DATACONV_GetResult( const MB_PARENT_DATACONV *cp_wk );
+extern void *MB_PARENT_DATACONV_GetRecvData( MB_PARENT_DATACONV *p_wk );

@@ -13,10 +13,10 @@
 
 #ifndef MULTI_BOOT_MAKE
 #include "test/ariizumi/ari_debug.h"
-#define MB_DATA_TPrintf(...) (void)((ARI_TPrintf(__VA_ARGS__)))
+#define MB_DATA_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
 #else
 #include "../../src/test/ariizumi/ari_debug.h"
-#define MB_DATA_TPrintf(...) (void)((ARI_TPrintf(__VA_ARGS__)))
+#define MB_DATA_TPrintf(...) (void)((OS_TPrintf(__VA_ARGS__)))
 #endif //MULTI_BOOT_MAKE
 #else
 
@@ -96,5 +96,7 @@ struct _MB_DATA_WORK
   u8  *pItemData;   //読み込み対象のアイテムデータアドレス(まだアイテムデータじゃない！
   u8  *pMysteryData;//読み込み対象の不思議な贈り物データアドレス
   u8  *pMyStatus;   //読み込み対象のマイステータすデータアドレス(初回国コードのみ
+  u8  *pDendou;       //殿堂入りデータ
+  u8  *pDendouMirror; //殿堂入りデータミラー
 };
 

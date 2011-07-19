@@ -45,7 +45,7 @@
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
 #define SAVESIZE_OUTSIDE_MYSTERY          (0x400)
 ///管理外領域で永続使用するセーブサイズ
-#define SAVESIZE_OUTSIDE_PERMANENT        (0x100)
+#define SAVESIZE_OUTSIDE_PERMANENT        (0x500)
 
 
 //--------------------------------------------------------------

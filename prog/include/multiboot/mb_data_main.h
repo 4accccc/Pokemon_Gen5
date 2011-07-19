@@ -48,3 +48,5 @@ extern  void  MB_DATA_PermitLastSaveFirst( MB_DATA_WORK *dataWork );
 extern  void  MB_DATA_PermitLastSaveSecond( MB_DATA_WORK *dataWork );
 
 extern  const BOOL MB_DATA_CheckRomCode( MB_DATA_WORK *dataWork );
+
+extern void * MB_DATA_GetSaveData( MB_DATA_WORK *dataWork ); 

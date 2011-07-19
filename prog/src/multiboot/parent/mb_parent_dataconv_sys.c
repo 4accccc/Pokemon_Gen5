@@ -78,6 +78,8 @@ struct _MB_PARENT_DATACONV
   u32             is_wh_init;
   MB_COMM_INIT_DATA init_data;
   BOOL  (*state)( MB_PARENT_DATACONV *p_wk, u32 *p_seq );
+
+  MB_PARENT_DATACONV_RESULT result; 
 };
 
 
@@ -228,6 +230,32 @@ void MB_PARENT_DATACONV_SetUpRomImage( MB_PARENT_DATACONV *p_wk, const STRBUF *c
   GF_ASSERT( p_wk->p_game_registry == NULL );
   p_wk->p_game_registry = Mp_Parent_MBGameRegistry_Create( cp_title, cp_info, p_wk->heapID );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信結果を取得
+ *
+ *	@param	const MB_PARENT_DATACONV *cp_wk   ワーク
+ *
+ *	@return 通信結果
+ */
+//-----------------------------------------------------------------------------
+MB_PARENT_DATACONV_RESULT MB_PARENT_DATACONV_GetResult( const MB_PARENT_DATACONV *cp_wk )
+{
+  return cp_wk->result;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信データを取得
+ *
+ *	@param	MB_PARENT_DATACONV *p_wk  ワーク
+ *
+ *	@return 受信データ
+ */
+//-----------------------------------------------------------------------------
+void *MB_PARENT_DATACONV_GetRecvData( MB_PARENT_DATACONV *p_wk )
+{
+  return MB_COMM_GetCommonData( p_wk->p_comm );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -358,7 +386,7 @@ static BOOL Mb_Parent_DataConv_State_SendRom( MB_PARENT_DATACONV *p_wk, u32 *p_s
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ROMと通信開始
+ *	@brief  ROMと通信
  *
  *	@param	MB_PARENT_DATACONV *p_wk  ワーク
  *	@param	*p_seq  ローカルシーケンス
@@ -375,6 +403,9 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
     SEQ_CONNECT_START,
     SEQ_CONNECT_WAIT,
     SEQ_SEND_INITDATA,
+    SEQ_WAIT,
+    SEQ_EXIT_START,
+    SEQ_EXIT_WAIT,
     SEQ_END,
   };
 
@@ -398,7 +429,9 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
   case SEQ_CONNECT_WAIT:
     if( p_wk->timeout_cnt++ >= MB_PARENT_FIRST_TIMEOUT )
     {
-      //TODO err
+      p_wk->result = MB_PARENT_DATACONV_RESULT_TIMEOUT;
+      MB_COMM_ExitComm( p_wk->p_comm );
+      (*p_seq) = SEQ_END;
     }
     else if( MB_COMM_IsSendEnable( p_wk->p_comm ) )
     {
@@ -411,6 +444,52 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
       (*p_seq)++;
     }
     break;
+
+  case SEQ_WAIT:
+    if( MB_COMM_GetChildState(p_wk->p_comm) == MCCS_END_GAME_ERROR ) //ROMorCRCが違う
+    {
+      p_wk->result = MB_PARENT_DATACONV_RESULT_GAME_ERROR;
+      MB_COMM_ReqDisconnect( p_wk->p_comm );
+      (*p_seq) = SEQ_EXIT_WAIT;
+    }
+    else if( MB_COMM_GetChildState(p_wk->p_comm) == MCCS_END_GAME_ERROR_BACKUP_LOAD ) //セーブ読めない
+    {
+      p_wk->result = MB_PARENT_DATACONV_RESULT_BACKUP_ERROR;
+      MB_COMM_ReqDisconnect( p_wk->p_comm );
+      (*p_seq) = SEQ_EXIT_WAIT;
+    }
+    else if( MB_COMM_GetChildState(p_wk->p_comm) == MCCS_END_GAME_ERROR_ANOTHER_COUNTRY ) //国が違う
+    {
+      p_wk->result = MB_PARENT_DATACONV_RESULT_CONTRY_ERROR;
+      MB_COMM_ReqDisconnect( p_wk->p_comm );
+      (*p_seq) = SEQ_EXIT_WAIT;
+    }
+    else if( MB_COMM_IsPostCommonData(p_wk->p_comm) )
+    {
+      OS_TPrintf( "受け取った\n" );
+      if( MB_COMM_Send_Flag( p_wk->p_comm , MCFT_PERMIT_FINISH_COMMON_DATA, 0 ) == TRUE )
+      {
+        (*p_seq)++;
+      }
+    }
+    break;
+
+  case SEQ_EXIT_START:
+    if( MB_COMM_Send_Flag( p_wk->p_comm , MCFT_MOVIE_FINISH_MACHINE, 0 ) == TRUE )
+    {
+      MB_COMM_ReqDisconnect( p_wk->p_comm );
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_EXIT_WAIT:
+    if( MB_COMM_IsDisconnect( p_wk->p_comm ) )
+    {
+      MB_COMM_ExitComm( p_wk->p_comm );
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_END:
     return TRUE;
   default:

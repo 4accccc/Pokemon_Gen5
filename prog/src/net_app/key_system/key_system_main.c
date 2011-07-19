@@ -152,6 +152,7 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   {
     OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr( p_wk->p_outside_sv );
     p_wk->p_key_sv = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+    p_wk->p_data_sv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
   }
 
   //グラフィック初期化
@@ -336,6 +337,12 @@ static GFL_PROC_RESULT Key_System_Proc_Main
     case KEYSYS_NET_ERROR_TYPE_RETURN:      //再度通信をすればつながります。
     case KEYSYS_NET_ERROR_TYPE_DISCONNECT:  //切断したらメインメニューに戻る
       KEYSYS_NET_ClearError( p_wk->p_net );
+
+      if( p_wk->p_mb )
+      {
+        MB_PARENT_DATACONV_Exit( p_wk->p_mb );
+        p_wk->p_mb = NULL;
+      }
       //通信エラーが起こったら強制的にメインメニューへ
       KEYSYS_SEQ_Clear( p_wk->p_seq );  //積んだシーケンスを全部クリア
       KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );  //どんな画面も強制クリア

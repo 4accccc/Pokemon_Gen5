@@ -39,7 +39,7 @@
 
 #define MB_COMM_TIMMING_EXIT (64)
 
-#define MB_COMM_COMMON_BUFFER_SIZE  (0x100)
+#define MB_COMM_COMMON_BUFFER_SIZE  (0x500)
 //======================================================================
 //  enum
 //======================================================================
@@ -124,7 +124,8 @@ struct _MB_COMM_WORK
   u16    isMoviePostStartSaveCheck:1;
   u16    isMovieFinishMachine:1;
   u16    isPostCommonData:1;
-  u16    pad:9;
+  u16    isPost_PostCommonData:1;
+  u16    pad:8;
   
   u8      saveWaitCnt;
   u16     boxLeast;
@@ -470,8 +471,10 @@ const MB_COMM_CHILD_STATE MB_COMM_GetChildState( const MB_COMM_WORK* commWork )
 void MB_COMM_ResetFlag( MB_COMM_WORK* commWork )
 {
   commWork->isPostPokeData = FALSE;
+  commWork->isPostCommonData = FALSE;
 
   commWork->isPost_PostPokeData = FALSE;
+  commWork->isPost_PostCommonData = FALSE;
 
   commWork->isReadyChildStatSave = FALSE;
   commWork->isFinishChildFirstSave = FALSE;
@@ -657,6 +660,13 @@ const BOOL MB_COMM_IsPostPoke( MB_COMM_WORK* commWork )
 {
   return commWork->isPostPokeData;
 }
+//--------------------------------------------------------------
+// 共通データ確認
+//--------------------------------------------------------------
+const BOOL MB_COMM_IsPostCommonData( MB_COMM_WORK* commWork )
+{
+  return commWork->isPostCommonData;
+}
 
 //--------------------------------------------------------------
 // 受信ポケモン数取得
@@ -695,7 +705,7 @@ const BOOL MB_COMM_IsPost_PostPoke( MB_COMM_WORK* commWork )
 }
 const BOOL MB_COMM_IsPost_PostCommon( MB_COMM_WORK* commWork )
 {
-  return commWork->isPostCommonData;
+  return commWork->isPost_PostCommonData;
 }
 
 #pragma mark [>SendFunc
@@ -767,6 +777,9 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
     break;
   case MCFT_PERMIT_FINISH_SAVE:
     commWork->isPermitFinishSave = TRUE;
+    break;
+  case MCFT_PERMIT_FINISH_COMMON_DATA:
+    commWork->isPost_PostCommonData = TRUE;
     break;
 
   case MCFT_LEAST_BOX:
@@ -913,7 +926,7 @@ const BOOL MB_COMM_Send_CommonData( MB_COMM_WORK *commWork, const void *cp_data,
   BOOL ret;
   //GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
-  MB_COMM_TPrintf("Send PokeData.\n");
+  MB_COMM_TPrintf("Send CommonData.\n");
 
   GF_ASSERT( size < MB_COMM_COMMON_BUFFER_SIZE );
 
@@ -923,9 +936,22 @@ const BOOL MB_COMM_Send_CommonData( MB_COMM_WORK *commWork, const void *cp_data,
                             cp_data, TRUE , FALSE , TRUE );
   if( ret == FALSE )
   {
-    MB_COMM_TPrintf("Send PokeData is failued!!\n");
+    MB_COMM_TPrintf("Send CommonData is failued!!\n");
   }
   return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  受信バッファ取得
+ *
+ *	@param	MB_COMM_WORK *commWork  ワーク
+ *
+ *	@return 共通受信バッファー
+ */
+//-----------------------------------------------------------------------------
+void * MB_COMM_GetCommonData( MB_COMM_WORK *commWork )
+{
+  return commWork->common_data;
 }
 
 //--------------------------------------------------------------

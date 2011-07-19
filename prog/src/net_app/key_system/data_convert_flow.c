@@ -142,6 +142,12 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     if( KEYSYS_MENU_IsDecide( p_wk->p_menu ) )
     {
       p_wk->ret = KEYSYS_MENU_GetSelect( p_wk->p_menu );
+
+      //もどる以外は記憶
+      if( p_wk->ret < 2 )
+      {
+        KEYSYS_MAP_Insert( &p_wk->select, "DNM", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
+      }
       (*p_seq)++;
     }
     break;
@@ -203,6 +209,19 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_SEND_ROM_CANCEL_WAIT,
     SEQ_CONNECT_ROM_START,
     SEQ_CONNECT_ROM_WAIT,
+    SEQ_CONNECT_ROM_RESULT,
+    SEQ_CONVERT_CHECK,
+    SEQ_CONVERT_YESNO_START,
+    SEQ_CONVERT_YESNO_WAIT,
+    SEQ_CONVERT_MAIN,
+    SEQ_SAVE_MSG,
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT,
+    SEQ_SAVE_COMPLETE,
+    SEQ_COMPLETE_MSG_START,
+    SEQ_COMPLETE_MSG_WAIT,
+    SEQ_ERR_MESSAGE_END,
+
     SEQ_DISPLAY_DELETE,
     SEQ_END,
   };
@@ -235,7 +254,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       setup.default_idx = 0;
       p_wk->p_list = KEYSYS_LIST_Init( &setup, HEAPID_KEY_SYSTEM );
       
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_60, KEYSYS_TEXT_TYPE_QUE ); 
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_03, KEYSYS_TEXT_TYPE_QUE ); 
       (*p_seq)++;
     }
     break;
@@ -270,6 +289,8 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_DISPLAY_CREATE:
     GF_ASSERT( p_wk->p_mb == NULL );
+
+    p_wk->p_recv_data = NULL;
     p_wk->p_mb = MB_PARENT_DATACONV_Init( HEAPID_KEY_SYSTEM );
     {
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
@@ -314,7 +335,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     {
       *p_seq = SEQ_CONNECT_ROM_START;
     }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
     {
       MB_PARENT_DATACONV_ReqestState( p_wk->p_mb, MB_PARENT_DATACONV_REQ_SEND_ROM_CANCEL );
       (*p_seq) = SEQ_SEND_ROM_CANCEL_WAIT;
@@ -327,6 +348,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     break;
   case SEQ_CONNECT_ROM_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_01, KEYSYS_TEXT_TYPE_WAIT );
     MB_PARENT_DATACONV_ReqestState( p_wk->p_mb, MB_PARENT_DATACONV_REQ_CONNECT_ROM );
     (*p_seq)++;
     break;
@@ -336,10 +358,143 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       (*p_seq)++;
     }
     break;
+  case SEQ_CONNECT_ROM_RESULT:
+    switch( MB_PARENT_DATACONV_GetResult(p_wk->p_mb ) )
+    {
+    case MB_PARENT_DATACONV_RESULT_NONE: //とくになにもない
+      {
+        p_wk->p_recv_data = MB_PARENT_DATACONV_GetRecvData(p_wk->p_mb);
+        *p_seq = SEQ_CONVERT_CHECK;
+      }
+      break;
+    case MB_PARENT_DATACONV_RESULT_TIMEOUT: //タイムアウト
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_02, KEYSYS_TEXT_TYPE_WAIT );
+      *p_seq = SEQ_ERR_MESSAGE_END;
+      break;
+    case MB_PARENT_DATACONV_RESULT_BACKUP_ERROR: //CRCが違う
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_05, KEYSYS_TEXT_TYPE_WAIT );
+      *p_seq = SEQ_ERR_MESSAGE_END;
+      break;
+    default:
+      GF_ASSERT(0);
+    case MB_PARENT_DATACONV_RESULT_CONTRY_ERROR: //国が違う
+    case MB_PARENT_DATACONV_RESULT_GAME_ERROR: //ROMが違う
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_04, KEYSYS_TEXT_TYPE_WAIT );
+      *p_seq = SEQ_ERR_MESSAGE_END;
+      break;
+    }
+    break;
+  case SEQ_CONVERT_CHECK:
+    if( DATA_CONVERT_SAVE_IsSameOwner( p_wk->p_data_sv, &p_wk->p_recv_data->owner ) )
+    {
+      *p_seq = SEQ_CONVERT_MAIN;
+    }
+    else
+    {
+      *p_seq = SEQ_CONVERT_YESNO_START;
+    }
+    break;
+  case SEQ_CONVERT_YESNO_START:
+    {
+      KEYSYS_LIST_SETUP setup;
+      GFL_STD_MemClear( &setup, sizeof(KEYSYS_LIST_SETUP) );
+      setup.p_msg   = p_wk->p_msg;
+      setup.p_font  = p_wk->p_font;
+      setup.p_que   = p_wk->p_que;
+      setup.frm     = KEYSYS_BG_FRAME_TEXT_M;
+      setup.font_plt = KEYSYS_PLT_BG_FONT_M;
+      setup.frm_plt = KEYSYS_PLT_BG_FRAME_M;
+      setup.frm_chr = KEYSYS_CGR_TEXT_M;
+      setup.strID[0]  = KEYSYS_STR_58;
+      setup.strID[1]  = KEYSYS_STR_59;
+      setup.list_max  = 2;
+      setup.is_cancel = TRUE;
+      setup.cancel_idx = 1;
+      setup.default_idx = 0;
+      p_wk->p_list = KEYSYS_LIST_Init( &setup, HEAPID_KEY_SYSTEM );
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CONVERT_YESNO_WAIT:
+    {
+      u32 ret = KEYSYS_LIST_Main(p_wk->p_list );
+      if( ret != KEYSYS_LIST_SELECT_NULL )
+      {
+        KEYSYS_LIST_Exit(p_wk->p_list);
+        p_wk->p_list = NULL;
+
+        switch( ret )
+        {
+        case 0:
+          (*p_seq)++;
+          break;
+        default:
+          GF_ASSERT(0);
+        case 1:
+          *p_seq = SEQ_END;
+          break;
+        }
+      }
+    }
+    break;
+  case SEQ_CONVERT_MAIN:
+    DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data );
+    (*p_seq)++;
+    break;
+ case SEQ_SAVE_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+      p_wk->cnt = 0;
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_WAIT:
+    p_wk->cnt++;
+    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_COMPLETE:
+    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
+    {
+      p_wk->cnt = 0;
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    (*p_seq) = SEQ_COMPLETE_MSG_START;
+    }
+    break;
+
+  case SEQ_COMPLETE_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    *p_seq = SEQ_COMPLETE_MSG_WAIT;
+    break;
+
+  case SEQ_COMPLETE_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq) = SEQ_DISPLAY_DELETE;
+    }
+    break;
+
+  case SEQ_ERR_MESSAGE_END:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq) = SEQ_DISPLAY_DELETE;
+    }
+    break;
+
   case SEQ_DISPLAY_DELETE:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
-    MB_PARENT_DATACONV_Exit( p_wk->p_mb );
-    p_wk->p_mb = NULL;
+    if( p_wk->p_mb )
+    {
+      MB_PARENT_DATACONV_Exit( p_wk->p_mb );
+      p_wk->p_mb = NULL;
+    }
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -543,8 +698,6 @@ static void DataConv_Display_DeleteNetMenu( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  //破棄前にカーソル位置を登録
-  KEYSYS_MAP_Insert( &p_wk->select, "DNM", KEYSYS_MENU_GetSelect( p_wk->p_menu ) );
   //メニュー破棄
   KEYSYS_MENU_Exit( p_wk->p_menu );
   p_wk->p_menu = NULL;    
@@ -571,7 +724,7 @@ static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID )
   p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 10, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
   KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
-  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_65, KEYSYS_TEXT_TYPE_QUE ); 
+  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_00, KEYSYS_TEXT_TYPE_QUE ); 
 }
 //----------------------------------------------------------------------------
 /**

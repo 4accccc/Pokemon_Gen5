@@ -271,13 +271,17 @@ typedef struct
 
   KEYSYS_OBJ_WORK         obj;
 
-  KEYSYS_MAP            select;
+  KEYSYS_MAP              select;
 
   KEYSYS_SELECT_MENU      selmenu;
 
   OUTSIDE_SAVE_CONTROL    *p_outside_sv;
 
   KEY_SYSTEM_SAVE         *p_key_sv;
+
+  DATA_CONVERT_SAVE       *p_data_sv;
+
+  WB_SAVE_CONV_ALL_DATA   *p_recv_data;
 
   KEYSYS_NET_WORK         *p_net;
 

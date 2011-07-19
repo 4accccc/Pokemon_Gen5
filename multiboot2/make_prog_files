@@ -39,6 +39,7 @@ SRCS	+= \
 		$(PARENT_SRC)/multiboot/util/mb_data_gs.c \
 		$(PARENT_SRC)/multiboot/util/mb_data_wb.c \
 		$(PARENT_SRC)/multiboot/util/wb_save.c \
+		$(PARENT_SRC)/multiboot/util/wb_save_convert.c \
 		$(PARENT_SRC)/multiboot/util/mb_util.c \
 		$(PARENT_SRC)/multiboot/util/mb_util_msg.c \
 		$(PARENT_SRC)/multiboot/comm/mb_comm_sys.c \

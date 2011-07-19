@@ -394,6 +394,7 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   case SEQ_COMPLETE_MSG_START:
     if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
     {
+      p_wk->cnt = 0;
       KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
     (*p_seq)++;
     }
@@ -777,6 +778,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   case SEQ_COMPLETE_MSG_START:
     if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
     {
+      p_wk->cnt = 0;
       KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_46, KEYSYS_TEXT_TYPE_STREAM_FIX );
     (*p_seq)++;
     }
@@ -1091,6 +1093,7 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   case SEQ_SAVE_END_MSG:
     if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
     {
+      p_wk->cnt = 0;
       (*p_seq)++;
     }
     break;
@@ -1922,7 +1925,7 @@ static void KeySys_Display_CreateIrc( void *p_wk_adrs, HEAPID heapID )
 
 
   //OBJをアルファに
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ,  GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 9, 14);
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ,  GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 16, 6);
 
   //通信アイコンにウィンドウマスク
   GX_SetVisibleWnd(GX_WNDMASK_W0);
@@ -3176,6 +3179,29 @@ static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_
   p_wk->cnt = 0;
 
   GFL_STR_CopyBuffer( p_wk->p_info_msg, p_info_msg );
+
+  {
+    static const u8 sc_plt_ofs[]  =
+    {
+      0,
+      1,
+      0,
+    };
+    u8 plt_ofs  = sc_plt_ofs[ key ];
+
+    if( key == KEY_SYSTEM_TYPE_CITY_WFBC )
+    {
+      if( is_get )
+      {
+        plt_ofs = (GET_VERSION() == VERSION_B2) ? 1: 0;
+      }
+      else
+      {
+        plt_ofs = (GET_VERSION() == VERSION_B2) ? 0: 1;
+      }
+    }
+    GFL_CLACT_WK_SetPlttOffs( p_wk->p_key, plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  }
 
   if( is_get )
   {

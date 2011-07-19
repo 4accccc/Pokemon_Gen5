@@ -10,80 +10,83 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+//高速化のために本来のサイズをアライメントしている処理
+#define ALIGN256(x) (x+(x%256==0?0:256-(x%256)))
+
 static const u32 WB_BLOCK_SIZE_TABLE[] =
 {
- 996  	,		//WB_GMDATA_ID_BOXDATA,        //ボックスデータグループ
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_01,     //ボックストレーデータ
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_02,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_03,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_04,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_05,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_06,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_07,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_08,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_09,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_10,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_11,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_12,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_13,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_14,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_15,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_16,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_17,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_18,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_19,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_20,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_21,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_22,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_23,
- 4084 	,		//WB_GMDATA_ID_BOXTRAY_24,
- 2500 	,		//WB_GMDATA_ID_MYITEM,           // どうぐ
- 1336 	,		//WB_GMDATA_ID_MYPOKE,           // てもちポケモン
- 108  	,		//WB_GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
- 160  	,		//WB_GMDATA_ID_SITUATION,        // フィールド状況データ
- 4924 	,		//WB_GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
- 1992 	,		//WB_GMDATA_ID_WIFILIST,         // ともだちコード
- 3416 	,		//WB_GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
- 48   	,		//WB_GMDATA_ID_CGEAR,            // C-GEAR
- 1628 	,		//WB_GMDATA_ID_TRCARD,           // トレーナーカード(サイン
- 2712 	,		//WB_GMDATA_ID_MYSTERYDATA,      // 不思議な贈り物
- 432  	,		//WB_GMDATA_ID_DREAMWORLD,       // PDW
- 1008 	,		//WB_GMDATA_ID_PERAPVOICE,       // ぺラップヴォイス
- 96   	,		//WB_GMDATA_ID_SYSTEM_DATA,      // システムデータ
- 484  	,		//WB_GMDATA_ID_RECORD,           // レコード(スコア
- 172  	,		//WB_GMDATA_ID_PMS,              // 簡易文
- 1124 	,		//WB_GMDATA_ID_MAILDATA,         // メールデータ
- 5124 	,		//WB_GMDATA_ID_MMDL,             // 動作モデル
- 680  	,		//WB_GMDATA_ID_MUSICAL,          // ミュージカル
- 736  	,		//WB_GMDATA_ID_RANDOMMAP,        // ランダム生成マップ
- 848  	,		//WB_GMDATA_ID_IRCCOMPATIBLE,    // 相性チェック
- 1008 	,		//WB_GMDATA_ID_EVENT_WORK,       // イベントワーク
- 252  	,		//WB_GMDATA_ID_WORLDTRADEDATA,   // GTS
- 768  	,		//WB_GMDATA_ID_REGULATION_DATA,  // レギュレーション
- 152  	,		//WB_GMDATA_ID_GIMMICK_WORK,     // ギミック
- 864  	,		//WB_GMDATA_ID_BATTLE_BOX,       // バトルボックス
- 464  	,		//WB_GMDATA_ID_SODATEYA_WORK,    // 育て屋ワーク
- 364  	,		//WB_GMDATA_ID_ROCKPOS,          // かいりき岩
- 240  	,		//WB_GMDATA_ID_MISC,             // 未分類(小さいデータの集まり）
- 436  	,		//WB_GMDATA_ID_INTRUDE,          // 侵入
- 32   	,		//WB_GMDATA_ID_SHORTCUT,         // Yボタン登録
- 1240 	,		//WB_GMDATA_ID_ZUKAN,            // ポケモン図鑑
- 56   	,		//WB_GMDATA_ID_ENCOUNT,          // エンカウント関連セーブデータ
- 64   	,		//WB_GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
- 432  	,		//WB_GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
- 2964 	,		//WB_GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
- 160  	,		//WB_GMDATA_ID_BATTLEMATCH,      // バトル大会
- 2132 	,		//WB_GMDATA_ID_SYMBOL,           // シンボルエンカウント
- 44   	,		//WB_GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
- 648  	,		//WB_GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
- 20   	,		//WB_GMDATA_ID_UNSV,             // 国連
- 96   	,		//WB_GMDATA_ID_THSV,             // トライアルハウスランキング表示用
- 368  	,		//WB_GMDATA_ID_GAMECLEAR_POKE,   // ゲームクリアてもちポケモンデータ
- 68   	,		//WB_GMDATA_ID_TRPOKE_AFTER,     // 交換ポケモンのその後
- 256  	,		//WB_GMDATA_ID_ETC,              // 未分類ワークその２
+ 996 ,		//WB_GMDATA_ID_BOXDATA,        //ボックスデータグループ
+ 4084,		//WB_GMDATA_ID_BOXTRAY_01,     //ボックストレーデータ
+ 4084,		//WB_GMDATA_ID_BOXTRAY_02,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_03,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_04,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_05,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_06,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_07,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_08,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_09,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_10,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_11,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_12,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_13,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_14,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_15,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_16,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_17,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_18,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_19,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_20,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_21,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_22,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_23,
+ 4084,		//WB_GMDATA_ID_BOXTRAY_24,
+ 2500,		//WB_GMDATA_ID_MYITEM,           // どうぐ
+ 1336,		//WB_GMDATA_ID_MYPOKE,           // てもちポケモン
+ 108 ,		//WB_GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
+ 160 ,		//WB_GMDATA_ID_SITUATION,        // フィールド状況データ
+ 4924,		//WB_GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
+ 1992,		//WB_GMDATA_ID_WIFILIST,         // ともだちコード
+ 3416,		//WB_GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
+ 48  ,		//WB_GMDATA_ID_CGEAR,            // C-GEAR
+ 1628,		//WB_GMDATA_ID_TRCARD,           // トレーナーカード(サイン
+ 2712,		//WB_GMDATA_ID_MYSTERYDATA,      // 不思議な贈り物
+ 432 ,		//WB_GMDATA_ID_DREAMWORLD,       // PDW
+ 1008,		//WB_GMDATA_ID_PERAPVOICE,       // ぺラップヴォイス
+ 96  ,		//WB_GMDATA_ID_SYSTEM_DATA,      // システムデータ
+ 484 ,		//WB_GMDATA_ID_RECORD,           // レコード(スコア
+ 172 ,		//WB_GMDATA_ID_PMS,              // 簡易文
+ 1124,		//WB_GMDATA_ID_MAILDATA,         // メールデータ
+ 5124,		//WB_GMDATA_ID_MMDL,             // 動作モデル
+ 680 ,		//WB_GMDATA_ID_MUSICAL,          // ミュージカル
+ 736 ,		//WB_GMDATA_ID_RANDOMMAP,        // ランダム生成マップ
+ 848 ,		//WB_GMDATA_ID_IRCCOMPATIBLE,    // 相性チェック
+ 1008,		//WB_GMDATA_ID_EVENT_WORK,       // イベントワーク
+ 252 ,		//WB_GMDATA_ID_WORLDTRADEDATA,   // GTS
+ 768 ,		//WB_GMDATA_ID_REGULATION_DATA,  // レギュレーション
+ 152 ,		//WB_GMDATA_ID_GIMMICK_WORK,     // ギミック
+ 864 ,		//WB_GMDATA_ID_BATTLE_BOX,       // バトルボックス
+ 464 ,		//WB_GMDATA_ID_SODATEYA_WORK,    // 育て屋ワーク
+ 364 ,		//WB_GMDATA_ID_ROCKPOS,          // かいりき岩
+ 240 ,		//WB_GMDATA_ID_MISC,             // 未分類(小さいデータの集まり）
+ 436 ,		//WB_GMDATA_ID_INTRUDE,          // 侵入
+ 32  ,		//WB_GMDATA_ID_SHORTCUT,         // Yボタン登録
+ 1240,		//WB_GMDATA_ID_ZUKAN,            // ポケモン図鑑
+ 56  ,		//WB_GMDATA_ID_ENCOUNT,          // エンカウント関連セーブデータ
+ 64  ,		//WB_GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
+ 432 ,		//WB_GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
+ 2964,		//WB_GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
+ 160 ,		//WB_GMDATA_ID_BATTLEMATCH,      // バトル大会
+ 2132,		//WB_GMDATA_ID_SYMBOL,           // シンボルエンカウント
+ 44  ,		//WB_GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
+ 648 ,		//WB_GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
+ 20  ,		//WB_GMDATA_ID_UNSV,             // 国連
+ 96  ,		//WB_GMDATA_ID_THSV,             // トライアルハウスランキング表示用
+ 368 ,		//WB_GMDATA_ID_GAMECLEAR_POKE,   // ゲームクリアてもちポケモンデータ
+ 68  ,		//WB_GMDATA_ID_TRPOKE_AFTER,     // 交換ポケモンのその後
+ 256 ,		//WB_GMDATA_ID_ETC,              // 未分類ワークその２
 
- 140    ,   //WB_GMDATA_ID_CRC = WB_GMDATA_ID_MAX,  //SWANで追加：各ブロックのCRCテーブル
- 16     ,   //WB_GMDATA_ID_FOOTER,              // SWANで追加：最後尾フッターデータが存在する
+ 140 ,   //WB_GMDATA_ID_CRC = WB_GMDATA_ID_MAX,  //SWANで追加：各ブロックのCRCテーブル
+ 16  ,   //WB_GMDATA_ID_FOOTER,              // SWANで追加：最後尾フッターデータが存在する
 };
 
  

@@ -282,8 +282,6 @@ typedef struct
   
   MBGameRegistry gameRegistry;  //MB配信用のデータ
   
-  
-  
 }MB_PARENT_WORK;
 
 //======================================================================

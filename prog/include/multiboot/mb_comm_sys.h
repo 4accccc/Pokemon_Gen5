@@ -29,7 +29,6 @@ typedef enum
   MCFT_PERMIT_FIRST_SAVE,
   MCFT_PERMIT_SECOND_SAVE,
   MCFT_PERMIT_FINISH_SAVE,
-
   MCFT_LEAST_BOX,
 
   //éqÅ®êe
@@ -51,7 +50,7 @@ typedef enum
   MCFT_MOVIE_HAVE_LOCK_CAPSULE,
 
   //
-  MCGT_DATACONV_,
+  MCFT_PERMIT_FINISH_COMMON_DATA,
 
   MCFT_MAX,
 }MB_COMM_FLG_TYPE;
@@ -163,6 +162,7 @@ extern void MB_COMM_AddSendPokeData( MB_COMM_WORK* commWork , const POKEMON_PASO
 extern void MB_COMM_SetScore( MB_COMM_WORK* commWork , const u16 score );
 
 extern const BOOL MB_COMM_IsPostPoke( MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostCommonData( MB_COMM_WORK* commWork );
 extern const u8 MB_COMM_GetPostPokeNum( MB_COMM_WORK* commWork );
 extern POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , const u8 idx );
 extern const u16 MB_COMM_GetScore( MB_COMM_WORK* commWork );
@@ -176,4 +176,5 @@ extern const BOOL MB_COMM_Send_InitData( MB_COMM_WORK *commWork , MB_COMM_INIT_D
 extern const BOOL MB_COMM_Send_GameData( MB_COMM_WORK *commWork , void *gameData , const u32 size );
 extern const BOOL MB_COMM_Send_PokeData( MB_COMM_WORK *commWork );
 extern const BOOL MB_COMM_Send_CommonData( MB_COMM_WORK *commWork, const void *cp_data, u32 size );
+extern void * MB_COMM_GetCommonData( MB_COMM_WORK *commWork );
 

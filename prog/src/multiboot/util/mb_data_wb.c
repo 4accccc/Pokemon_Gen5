@@ -39,14 +39,26 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-
+#ifdef PM_DEBUG
+static u32 debug_seq = 0;
+#endif
 
 BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
 {
+  enum
+  {
+    SEQ_INIT,
+    SEQ_LOAD_MAIN,
+    SEQ_LOAD_MIRROR,
+    SEQ_CHECK_ILLIGAL,
+    SEQ_CHECK_COUNTRY,
+    SEQ_END,
+  };
+
   const u32 saveSize = MB_DATA_GetSavedataSize( dataWork->cardType );
   switch( dataWork->subSeq )
   {
-  case 0: //初期化およびデータ読み込み
+  case SEQ_INIT: //初期化およびデータ読み込み
     WB_SAVE_Init();
     {
 #if DLPLAY_FUNC_USE_PRINT
@@ -99,7 +111,7 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
     dataWork->subSeq++;
     }
     break;
-  case 1: //ミラーリングデータ読み込み
+  case SEQ_LOAD_MAIN: //ミラーリングデータ読み込み
     //読み込みの完了を待つ
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
@@ -115,7 +127,7 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
     }
 
     break;
-  case 2: //読み込みの完了を待つ
+  case SEQ_LOAD_MIRROR: //読み込みの完了を待つ
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
       if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
@@ -126,12 +138,35 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
       OS_ReleaseLockID( (u16)dataWork->lockID_ );
       dataWork->subSeq++;
+
+#ifdef PM_DEBUG
+      {
+        WB_PLAYER_DATA *player = MB_DATA_WB_GetSaveAddress( dataWork, WB_GMDATA_ID_PLAYER_DATA );
+        WB_MYSTATUS *myStatus = &player->mystatus;
+        MB_DATA_TPrintf("Name[%x %x %x]\n",myStatus->name[0],myStatus->name[1],myStatus->name[2]);
+        MB_DATA_TPrintf("TrainerID[%d]\n",myStatus->id);
+        MB_DATA_TPrintf("RegionCode[%d]\n",myStatus->region_code);
+        MB_DATA_TPrintf("RomCode[%d]\n",myStatus->rom_code);
+
+        debug_seq = 0;
+      }
+#endif
       
       //DLPlayFunc_PutString("Data2 load complete.",dataWork->msgSys );
     }
     break;
-  case 3: //各ブロックの正当性チェック
+  case SEQ_CHECK_ILLIGAL: //各ブロックの正当性チェック
     {
+
+#ifdef PM_DEBUG
+#if 0
+      if( !DEBUG_WB_SAVE_Dump( dataWork->pData, &debug_seq ) )
+      {
+        break;
+      }
+#endif
+#endif
+
       {
         const BOOL isCorrectData = WB_SAVE_CheckIllegal( dataWork->pData );
         const BOOL isCorrectDataMirror = WB_SAVE_CheckIllegal( dataWork->pDataMirror );
@@ -165,11 +200,13 @@ BOOL MB_DATA_WB_LoadData( MB_DATA_WORK *dataWork )
     dataWork->subSeq++;
     break;
   
-  case 4: 
+  case SEQ_CHECK_COUNTRY: 
     //国コードチェック
     if( dataWork->errorState == DES_NONE )
     {
-      WB_MYSTATUS *myStatus = MB_DATA_WB_GetSaveAddress( dataWork, WB_GMDATA_ID_PLAYER_DATA );
+      WB_PLAYER_DATA *player = MB_DATA_WB_GetSaveAddress( dataWork, WB_GMDATA_ID_PLAYER_DATA );
+      WB_MYSTATUS *myStatus = &player->mystatus;
+
       MB_DATA_TPrintf("RegionCode[%d]\n",myStatus->region_code);
       if( myStatus->region_code != PM_LANG )
       {

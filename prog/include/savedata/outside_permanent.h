@@ -14,6 +14,7 @@
 #pragma once
 
 #include "savedata/key_system_save.h"
+#include "savedata/data_convert_save.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -22,7 +23,7 @@
 //-------------------------------------
 ///	ワークサイズ
 //=====================================
-#define OUTSIDE_PERMANENT_WORK_SIZE (KEY_SYSTEM_SAVE_WORK_SIZE)
+#define OUTSIDE_PERMANENT_WORK_SIZE (KEY_SYSTEM_SAVE_WORK_SIZE+DATA_CONVERT_SAVE_WORK_SIZE)
 
 //=============================================================================
 /**
@@ -46,3 +47,4 @@ extern void OUTSIDE_PERMANENT_Init( OUTSIDE_PERMANENT *p_wk );
 
 //キーシステムのデータ
 extern KEY_SYSTEM_SAVE * OUTSIDE_PERMANENT_GetKeySystem( OUTSIDE_PERMANENT *p_wk );
+extern DATA_CONVERT_SAVE * OUTSIDE_PERMANENT_GetDataConvert( OUTSIDE_PERMANENT *p_wk );
