@@ -37,11 +37,10 @@
 			<Comment>♀
 ・アイテム入手前
 　No003「スーパーボール」入手処理
-
-※SWANで内容、メッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -103,11 +102,10 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手後
-
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -138,11 +136,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ばあさんとの　であいは
-ポケモンしょうぶが　きっかけ　だった[Ctrl2:PageClear ]
+ポケモンしょうぶが　きっかけ　だった▼
 なんど　いどんでも　かてなかったな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,11 +149,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ばあさんとの　出会いは
-ポケモン勝負が　きっかけ　だった[Ctrl2:PageClear ]
+ポケモン勝負が　きっかけ　だった▼
 何度　挑んでも　勝てなかったな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -164,11 +162,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -192,11 +189,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そういう　いみ　では
-あたしと　じいさんは[Ctrl2:LineFeed ]
+あたしと　じいさんは▽
 あいしょうが　よかったのよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -205,11 +202,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そういう意味では
-あたしと　じいさんは[Ctrl2:LineFeed ]
+あたしと　じいさんは▽
 相性が　良かったのよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -218,11 +215,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:00:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -2223,4 +2223,733 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>サンヨウブリッジ　めいぶつ
+ポケモンショー　みていかない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:43:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サンヨウレストラン　名物
+ポケモンショー　見ていかない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:44:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:43:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい/いいえ選択肢表示
+　はい　→woman2_02
+　いいえ→woman2_03
+※swanで新規作成
+　h05からの移植＋変更</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:45:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:43:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オッケー　おねえさん
+はりきっちゃうわよー！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オッケー　お姉さん
+はりきっちゃうわよー！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そっかー……　おもしろさには
+じしんが　あるから　また　きてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そっかー……　おもしろさには
+自信が　あるから　また　来てね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヤナップ！　バオップ！　ヒヤップ！
+ぜんいん　しゅうごーう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヤナップ！　バオップ！　ヒヤップ！
+全員　集合！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ後
+　ポケモン３匹出現（お姉さんの後ろから）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ポケモンたちの　なかで
+あなたに　あててもらう　こは……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ポケモンたちの　中で
+あなたに　当ててもらう　子は……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・乱数取得後
+　以下のmsgに分岐</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:48:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+[Name:Item ]を　もってまーす！
+では　スタートッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:53:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+[Name:Item ]を　もってまーす！
+では　スタートッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+　このメッセージ後、入れ替えアニメ
+　アニメ後・2_07へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:49:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+[Name:Item ]を　もってまーす！
+では　スタートッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+[Name:Item ]を　もってまーす！
+では　スタートッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+　このメッセージ後、入れ替えアニメ
+　アニメ後・2_07へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:49:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+[Name:Item ]を　もってまーす！
+では　スタートッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+[Name:Item ]を　もってまーす！
+では　スタートッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:54:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+　このメッセージ後、入れ替えアニメ
+　アニメ後・2_07へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:49:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ！　さっきの
+ミネズミちゃんを　あててみて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ！　さっきの
+ミネズミちゃんを　当ててみて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　ミネズミちゃんが
+を　もっているのね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　ミネズミちゃんが
+を　持っているのね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:51:45" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こたえは……！！
+……▽
+…………▽
+………………▽
+……………………▽
+おおあたりー！▼
+けいひんの　[Name:Item ]は
+ミネズミちゃんから　もらえまーす！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>答えは……！！
+……▽
+…………▽
+………………▽
+……………………▽
+大当たりー！▼
+景品の　[Name:Item ]は
+ミネズミちゃんから　もらえまーす！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:53:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・あたりの場合
+・0＝アイテム名（No584「こだいのどうか」）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こたえは……！！
+……▽
+…………▽
+………………▽
+ざんねん！　はずれです……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>答えは……！！
+……▽
+…………▽
+………………▽
+残念！　はずれです……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はずれの場合</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　ミネズミショー
+しゅうりょうに　なります！▽
+ありがとう　ございましたー！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　ミネズミショー
+終了に　なります！▽
+ありがとう　ございましたー！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_woman2_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　ミネズミショー　みたいの？▼
+いろいろ　じゅんびとか　あるから
+あした　また　きてね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　ミネズミショー　観たいの？▼
+いろいろ　準備とか　あるから
+明日　また　来てね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・一度ショーを見ている場合
+　途中退場した場合も、このメッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:52:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

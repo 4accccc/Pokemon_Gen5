@@ -7,12 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンのことを　あいしているから
-もっと　ポケモンについて　しりたい[Ctrl2:PageClear ]
+もっと　ポケモンについて　しりたい▼
 そんな　よっきゅうを　みたすため
 この　トレーナーズスクールが　ある！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:55:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,12 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンのことを　愛しているから
-もっと　ポケモンについて　知りたい[Ctrl2:PageClear ]
+もっと　ポケモンについて　知りたい▼
 そんな　欲求を　満たすため
 この　トレーナーズスクールが　ある！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34,10 +34,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:01:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -91,10 +92,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:01:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -148,10 +150,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:01:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -174,14 +177,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざマシンを　つかうことでしか
-おぼえない　わざも　ある[Ctrl2:PageClear ]
+おぼえない　わざも　ある▼
 わざマシンは　なんどでも　つかえるから
-どんどん　つかうのも　いいかもな[Ctrl2:PageClear ]
+どんどん　つかうのも　いいかもな▼
 おぼえさせた　わざが　いまいちだったら
 べつの　わざマシンを　つかえばいいし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:55:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -190,14 +193,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざマシンを　使うことでしか
-覚えない　技も　ある[Ctrl2:PageClear ]
+覚えない　技も　ある▼
 わざマシンは　何度でも　使えるから
-どんどん使うのも　いいかもな[Ctrl2:PageClear ]
+どんどん使うのも　いいかもな▼
 覚えさせた　技が　気に入らなければ
 別の　わざマシンを　使えばいいし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -205,10 +208,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:01:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -231,11 +235,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よろしければ　ポケモンの
-じょうたいいじょうに　ついて[Ctrl2:LineFeed ]
+じょうたいいじょうに　ついて▽
 クイズを　してみませんか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -244,11 +248,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よろしければ　ポケモンの
-状態異常に　ついて[Ctrl2:LineFeed ]
+状態異常に　ついて▽
 クイズを　してみませんか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -852,12 +856,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こくばんに　ポケモンが
-たたかっているときに　おこる[Ctrl2:PageClear ]
+たたかっているときに　おこる▼
 たいちょうの　へんかに
-ついて　かかれてます[Ctrl2:PageClear ]</Text>
+ついて　かかれてます▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -866,12 +870,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>黒板に　ポケモンが
-戦っているときに　おこる[Ctrl2:PageClear ]
+戦っているときに　おこる▼
 体調の　変化に
-ついて　書かれています[Ctrl2:PageClear ]</Text>
+ついて　書かれています▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -881,11 +885,10 @@
 			Language="JPN">
 			<Comment>ＢＧメッセージ
 ・続けてboard_02表示
-
-※メッセージ内容変更予定</Comment>
+※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T09:01:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1038,13 +1041,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まひすると　すばやさが　さがり
-ときどき　わざが　だせなくなります[Ctrl2:PageClear ]
+ときどき　わざが　だせなくなります▼
 せんとうの　あとも
-まひした　ままです[Ctrl2:PageClear ]
-まひなおしで　なおしましょう[Ctrl2:PageClear ]</Text>
+まひした　ままです▼
+まひなおしで　なおしましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:57:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1053,13 +1056,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まひすると　すばやさが　さがり
-ときどき　技が　だせなくなります[Ctrl2:PageClear ]
+ときどき　技が　だせなくなります▼
 戦闘のあとも
-まひした　ままです[Ctrl2:PageClear ]
-まひなおしで　治しましょう[Ctrl2:PageClear ]</Text>
+まひした　ままです▼
+まひなおしで　治しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1102,14 +1105,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ねむって　しまうと
-その　あいだ　こうげき　できません[Ctrl2:PageClear ]
+その　あいだ　こうげき　できません▼
 じぶんで　おきることも　ありますが
-ねむったまま　せんとうが　おわると[Ctrl2:LineFeed ]
-ずっと　ねむっています[Ctrl2:PageClear ]
-ねむけざましで　おこしましょう[Ctrl2:PageClear ]</Text>
+ねむったまま　せんとうが　おわると▽
+ずっと　ねむっています▼
+ねむけざましで　おこしましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:57:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1118,14 +1121,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ねむって　しまうと
-その　あいだ　攻撃できません[Ctrl2:PageClear ]
+その　あいだ　攻撃できません▼
 自分で　起きることも　ありますが
-ねむったまま　戦闘が　終わると[Ctrl2:LineFeed ]
-ずっと　ねむっています[Ctrl2:PageClear ]
-ねむけざましで　起こしましょう[Ctrl2:PageClear ]</Text>
+ねむったまま　戦闘が　終わると▽
+ずっと　ねむっています▼
+ねむけざましで　起こしましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1168,14 +1171,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>やけどに　なると
-こうげきりょくが　さがるだけでなく[Ctrl2:LineFeed ]
-たいりょくも　どんどん　へります[Ctrl2:PageClear ]
+こうげきりょくが　さがるだけでなく▽
+たいりょくも　どんどん　へります▼
 せんとうが　おわっても
-やけどの　ままです[Ctrl2:PageClear ]
-やけどなおしで　なおしましょう[Ctrl2:PageClear ]</Text>
+やけどの　ままです▼
+やけどなおしで　なおしましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:57:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1184,14 +1187,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>やけどに　なると
-攻撃力が　さがるだけでなく[Ctrl2:LineFeed ]
-体力も　どんどん　減ります[Ctrl2:PageClear ]
+攻撃力が　さがるだけでなく▽
+体力も　どんどん　減ります▼
 戦闘が　終わっても
-やけどの　ままです[Ctrl2:PageClear ]
-やけどなおしで　治しましょう[Ctrl2:PageClear ]</Text>
+やけどの　ままです▼
+やけどなおしで　治しましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1234,14 +1237,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こおって　しまうと
-なにも　できなくなります[Ctrl2:PageClear ]
+なにも　できなくなります▼
 しぜんに　とけることも　ありますが
-こおったまま　せんとうが　おわると[Ctrl2:LineFeed ]
-こおりついた　ままです[Ctrl2:PageClear ]
-こおりなおしで　とかしましょう[Ctrl2:PageClear ]</Text>
+こおったまま　せんとうが　おわると▽
+こおりついた　ままです▼
+こおりなおしで　とかしましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:57:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1250,14 +1253,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こおって　しまうと
-なにも　できなくなります[Ctrl2:PageClear ]
+なにも　できなくなります▼
 自然に　溶けることも　ありますが
-こおったまま　戦闘が　終わると[Ctrl2:LineFeed ]
-こおりついた　ままです[Ctrl2:PageClear ]
-こおりなおしで　溶かしましょう[Ctrl2:PageClear ]</Text>
+こおったまま　戦闘が　終わると▽
+こおりついた　ままです▼
+こおりなおしで　溶かしましょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-19T08:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
