@@ -200,113 +200,113 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res[MDL_RESID_MAX] =
   // 像1
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_02_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_02_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_02_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   // 像2
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_03_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_03_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_03_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   // 像3
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_04_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_04_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_04_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   // 像4
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_05_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_05_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_05_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   // 像5
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_06_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_06_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_06_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   // 像6
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_07_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_07_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_07_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
   // 像7
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbmd,
+    NARC_badge_gate_gmk_swanbg_08_nsbmd,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbca,
+    NARC_badge_gate_gmk_swanbg_08_nsbca,
     GFL_G3D_UTIL_RESARC,
   },
   {
     ARCID_BADGE_GATE,
-    NARC_badge_gate_gmk_swanbg_01_nsbta,
+    NARC_badge_gate_gmk_swanbg_08_nsbta,
     GFL_G3D_UTIL_RESARC,
   },
 };
@@ -898,15 +898,15 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_on =
 // 配置情報
 static const VecFx32 d3obj_pos_table[] =
 {
-  { GRID_TO_FX32(36), GRID_TO_FX32(5), GRID_TO_FX32(45) },
-  { GRID_TO_FX32(77), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(72), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(67), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(62), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(57), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(52), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(47), GRID_TO_FX32(5), GRID_TO_FX32(51) },
-  { GRID_TO_FX32(42), GRID_TO_FX32(5), GRID_TO_FX32(51) },
+  { GRID_TO_FX32(36), GRID_TO_FX32(5), GRID_TO_FX32(43) },
+  { GRID_TO_FX32(77), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(72), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(67), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(62), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(57), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(52), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(47), GRID_TO_FX32(5), GRID_TO_FX32(49) },
+  { GRID_TO_FX32(42), GRID_TO_FX32(5), GRID_TO_FX32(49) },
 };
 
 // モデルIDに対応したスクリプトIDテーブル

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/13 16:15:05
+#save date:2011/07/15 20:02:06
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d26r0101.wms
 #SECTION START:OBJ_EVENT
@@ -32,56 +32,22 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d26r0101.wms
 9
 #event number: 0
 #Pos Event Label
-POSID_D26R0101_BADGE_CHECK_03
+POSID_D26R0101_BADGE_CHECK_02
 #Pos Script Name
-SCRID_POS_D26R0101_BADGE_CHECK_03
+SCRID_POS_D26R0101_BADGE_CHECK_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D26R0101_GATE_03
+WK_SCENE_D26R0101_GATE_02
 #Event Trigger Work Value
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-792 80 -488
+872 80 -456
 #size
 1 3
 #event number: 1
-#Pos Event Label
-POSID_D26R0101_BADGE_CHECK_05
-#Pos Script Name
-SCRID_POS_D26R0101_BADGE_CHECK_05
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D26R0101_GATE_05
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-632 80 -488
-#size
-1 3
-#event number: 2
-#Pos Event Label
-POSID_D26R0101_BADGE_CHECK_08
-#Pos Script Name
-SCRID_POS_D26R0101_BADGE_CHECK_08
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D26R0101_GATE_08
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-392 80 -488
-#size
-1 3
-#event number: 3
 #Pos Event Label
 POSID_D26R0101_BADGE_CHECK_04
 #Pos Script Name
@@ -95,44 +61,10 @@ WK_SCENE_D26R0101_GATE_04
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-712 80 -488
+712 80 -456
 #size
 1 3
-#event number: 4
-#Pos Event Label
-POSID_D26R0101_BADGE_CHECK_02
-#Pos Script Name
-SCRID_POS_D26R0101_BADGE_CHECK_02
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D26R0101_GATE_02
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-872 80 -488
-#size
-1 3
-#event number: 5
-#Pos Event Label
-POSID_D26R0101_BADGE_CHECK_06
-#Pos Script Name
-SCRID_POS_D26R0101_BADGE_CHECK_06
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_D26R0101_GATE_06
-#Event Trigger Work Value
-1
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-552 80 -488
-#size
-1 3
-#event number: 6
+#event number: 2
 #Pos Event Label
 POSID_D26R0101_BADGE_CHECK_07
 #Pos Script Name
@@ -146,27 +78,27 @@ WK_SCENE_D26R0101_GATE_07
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-472 80 -488
+472 80 -456
 #size
 1 3
-#event number: 7
+#event number: 3
 #Pos Event Label
-POSID_D26R0101_BADGE_GATE
+POSID_D26R0101_BADGE_CHECK_03
 #Pos Script Name
-SCRID_POS_D26R0101_OPEN_GATE
+SCRID_POS_D26R0101_BADGE_CHECK_03
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_D26R0101_GATE_09
+WK_SCENE_D26R0101_GATE_03
 #Event Trigger Work Value
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 92 -424
+792 80 -456
 #size
-7 1
-#event number: 8
+1 3
+#event number: 4
 #Pos Event Label
 POSID_D26R0101_BADGE_CHECK_01
 #Pos Script Name
@@ -180,9 +112,77 @@ WK_SCENE_D26R0101_GATE_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-952 80 -488
+952 80 -456
 #size
 1 3
+#event number: 5
+#Pos Event Label
+POSID_D26R0101_BADGE_CHECK_05
+#Pos Script Name
+SCRID_POS_D26R0101_BADGE_CHECK_05
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D26R0101_GATE_05
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+632 80 -456
+#size
+1 3
+#event number: 6
+#Pos Event Label
+POSID_D26R0101_BADGE_CHECK_06
+#Pos Script Name
+SCRID_POS_D26R0101_BADGE_CHECK_06
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D26R0101_GATE_06
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 80 -456
+#size
+1 3
+#event number: 7
+#Pos Event Label
+POSID_D26R0101_BADGE_CHECK_08
+#Pos Script Name
+SCRID_POS_D26R0101_BADGE_CHECK_08
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D26R0101_GATE_08
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 80 -456
+#size
+1 3
+#event number: 8
+#Pos Event Label
+POSID_D26R0101_BADGE_GATE
+#Pos Script Name
+SCRID_POS_D26R0101_OPEN_GATE
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D26R0101_GATE_09
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+200 96 -392
+#size
+7 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

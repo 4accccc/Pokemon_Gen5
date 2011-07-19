@@ -438,7 +438,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_flagcontrol.c \
         field/itemuse_event.c \
         field/script_hideitem.c \
-        field/scrcmd_gimmick_st.c \
         field/calender.c \
         field/scrcmd_faceup.c \
         field/field_comm/game_beacon_search.c \
@@ -1179,8 +1178,7 @@ SRCS_OVERLAY_FIELD_GYM_WATER = field/gym_water.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c \
-                                   field/field_gimmick_bgate.c
+SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

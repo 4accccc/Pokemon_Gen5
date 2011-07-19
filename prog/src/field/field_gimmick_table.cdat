@@ -97,12 +97,6 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     LEAGUE_FRONT_02_GIMMICK_Move,
   },
   {
-    FS_OVERLAY_ID(field_gimmick_bgate),
-    FLD_GIMMICK_JetBadgeGate_Setup,  //R10R0701
-    FLD_GIMMICK_JetBadgeGate_End,  //R10R0701
-    FLD_GIMMICK_JetBadgeGate_Move,  //R10R0701
-  },
-  {
     FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01002
     BSUBWAY_GIMMICK_Setup, //C04R0102
     BSUBWAY_GIMMICK_End, //C04R0102

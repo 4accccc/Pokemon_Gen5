@@ -68,7 +68,6 @@
 #include "scrcmd_league_front.h"
 #include "scrcmd_palpark.h"
 #include "scrcmd_wfbc.h"
-#include "scrcmd_gimmick_st.h"
 #include "scrcmd_crowd_people.h"
 #include "scrcmd_pokeid_search.h"
 #include "scrcmd_faceup.h"

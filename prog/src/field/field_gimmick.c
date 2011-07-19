@@ -27,7 +27,6 @@
 #include "field_gimmick_d06.h"
 #include "field_gimmick_league_front01.h"
 #include "field_gimmick_league_front02.h"
-#include "field_gimmick_bgate_jet.h"
 #include "field_gimmick_bsubway.h"
 #include "field_gimmick_r04d03.h"
 #include "sp_poke_gimmick.h"

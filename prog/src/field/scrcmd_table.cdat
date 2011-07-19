@@ -629,7 +629,7 @@
   NO_CMD()
 
   //バッジチェックゲート関連
-  DEF_CMD( EvCmdJetBadgeGateGimmickInit, EV_SEQ_JET_BADGE_GATE_GIMMICK_INIT )
+  NO_CMD()
   
   //エレベーター
   DEF_CMD( EvCmdElevatorEntryList, EV_SEQ_ELEVATOR_ENTRY_LIST )

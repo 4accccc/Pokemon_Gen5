@@ -325,6 +325,9 @@ static void setup_model_data( BADGEGATE_WK *p_wk )
 
       // 位置を設定
       p_status->trans = d3obj_pos_table[i];
+      
+      // アニメーションを有効に
+      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA, TRUE);
 
       if( get_is_action_end( i, p_wk->p_event_wk ) )
       {
@@ -342,10 +345,9 @@ static void setup_model_data( BADGEGATE_WK *p_wk )
       //カリングする
       FLD_EXP_OBJ_SetCulling( p_model->p_ex_obj, p_model->unitID, p_model->modelID, TRUE);
       // フレームの初期化
-      FLD_EXP_OBJ_ValidCntAnm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA, TRUE);
       FLD_EXP_OBJ_SetObjAnmFrm(p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA ,0);
       exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,FALSE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm ,TRUE );
     }
   }
 }
@@ -503,8 +505,8 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
           p_on_model->unitID , p_on_model->modelID, FALSE );
 
       // フレームを設定
-      SetAnmStopFlag( p_on_model ,MDL_ANM_LOOP_ITA, FALSE );
       FLD_EXP_OBJ_SetObjAnmFrm(p_on_model->p_ex_obj, p_on_model->unitID, p_on_model->modelID, MDL_ANM_LOOP_ITA ,GetSynchroAnmFrame( p_wk->p_gmk_wk ) );
+      SetAnmStopFlag( p_on_model ,MDL_ANM_LOOP_ITA, FALSE );
       return GMEVENT_RES_FINISH;
     }
     break;
@@ -577,15 +579,19 @@ static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk )
     EXP_OBJ_ANM_CNT_PTR exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model->p_ex_obj, p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA );
     is_stop = FLD_EXP_OBJ_GetAnmStopFlg( exobj_anm );
 
+    ONOUE_Printf("起動状況%d:%d\n",i,is_stop);
+
     // 停止していないものをチェックする
     if( is_stop == FALSE )
     {
       fx32 anm_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_model->p_ex_obj ,p_model->unitID, p_model->modelID, MDL_ANM_LOOP_ITA );
+      ONOUE_Printf("同期番号:%d\n",i);
       return anm_frame;
     }
   }
 
   // 全てのアニメーションが停止している場合はいつでも同期タイミング
+  ONOUE_Printf("ゼロフレーム同期\n");
   return 0;
 }
 
