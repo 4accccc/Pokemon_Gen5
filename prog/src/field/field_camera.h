@@ -387,6 +387,13 @@ extern void FIELD_CAMERA_BindCamera(FIELD_CAMERA * camera, const VecFx32 * watch
 extern void FIELD_CAMERA_FreeCamera(FIELD_CAMERA * camera);
 extern BOOL FIELD_CAMERA_IsBindCamera(const FIELD_CAMERA * camera);
 
+//------------------------------------------------------------------
+//  デフォルトターゲット操作
+//
+//  ※レールのカメラ設定を上書きしたい場合以外は使う必要がない
+//------------------------------------------------------------------
+extern void FIELD_CAMERA_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target );
+extern const VecFx32* FIELD_CAMERA_GetDefaultTarget( const FIELD_CAMERA* camera );
 
 
 //-----------------------------------------------------------------------------
@@ -467,13 +474,6 @@ typedef enum{
 //  WIPEを表示するひつようがあるか？
 //------------------------------------------------------------------
 extern BOOL FIELD_CAMERA_DEBUG_IsWipeDraw( const FIELD_CAMERA* camera);
-
-
-//------------------------------------------------------------------
-//  デフォルトターゲット操作
-//------------------------------------------------------------------
-extern void FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target );
-extern const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera );
 
 extern void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result);
 

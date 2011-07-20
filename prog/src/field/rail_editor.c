@@ -414,12 +414,12 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
     }
 
 		// デフォルトターゲットの変更
-		p_wk->cp_field_default_target = FIELD_CAMERA_DEBUG_GetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ) );
+		p_wk->cp_field_default_target = FIELD_CAMERA_GetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ) );
 
 		// デフォルトターゲットオフセット取得
 		FIELD_CAMERA_GetTargetOffset( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->default_target_offset );
 
-		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
+		FIELD_CAMERA_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
 
     // レール動作ワークの取得
     {
@@ -527,7 +527,7 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 
 		// デフォルトターゲットをもとにもどす
-		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), p_wk->cp_field_default_target );
+		FIELD_CAMERA_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), p_wk->cp_field_default_target );
 
     // ベースタイプの成りすましを元に戻す
     if( FIELDMAP_GetMapControlType( p_wk->p_fieldmap ) == FLDMAP_CTRLTYPE_HYBRID ){

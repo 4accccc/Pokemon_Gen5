@@ -1289,6 +1289,28 @@ BOOL FIELD_CAMERA_IsBindCamera(const FIELD_CAMERA * camera)
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルトターゲットの設定
+ *	@note   ※レールのカメラ設定を上書きしたい場合以外は使う必要がない
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target )
+{
+	camera->default_target = target;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	デフォルトターゲットの取得
+ *	@note   ※レールのカメラ設定を上書きしたい場合以外は使う必要がない
+ */
+//-----------------------------------------------------------------------------
+const VecFx32* FIELD_CAMERA_GetDefaultTarget( const FIELD_CAMERA* camera )
+{
+	return camera->default_target;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -3312,25 +3334,6 @@ BOOL FIELD_CAMERA_DEBUG_IsWipeDraw( const FIELD_CAMERA* camera)
 }
 
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	デフォルトターゲットの設定
- */
-//-----------------------------------------------------------------------------
-void FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELD_CAMERA* camera, const VecFx32* target )
-{
-	camera->default_target = target;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	デフォルトターゲットの取得
- */
-//-----------------------------------------------------------------------------
-const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* camera )
-{
-	return camera->default_target;
-}
 
 //----------------------------------------------------------------------------
 /**
