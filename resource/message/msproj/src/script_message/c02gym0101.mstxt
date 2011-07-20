@@ -332,19 +332,718 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c02gym0101_leader2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『あんた　[Name:TrainerName ]だろ！
+わざわざ　きてくれたんだね！▼
+そうだ　あんた！
+ふたのカセキと　はねのカセキ▽
+どっちが　すきだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:46:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:12:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『あんた　[Name:TrainerName ]だろ！
+わざわざ　来てくれたんだね！▼
+そうだ　あんた！
+ふたのカセキと　はねのカセキ▽
+どっちが　好きだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:46:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・画面奥から登場
+　主人公に隣接してメッセージ表示
+・選択肢表示
+・ふたのカセキ→leader2_02
+　はねのカセキ→leader2_03
+　やめる→leader2_05
+・0＝主人公名前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:58:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:12:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_select_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふたのカセキ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふたのカセキ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢ウインドウ用
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:47:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_select_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はねのカセキ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はねのカセキ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢ウインドウ用
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:47:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_select_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢ウインドウ用
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:47:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:17:31" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんとうに
+ふたのカセキに　するんだね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:18:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:18:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本当に
+ふたのカセキに　するんだね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:46:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい/いいえの選択肢表示
+・はい　→leader2_06
+　いいえ→leader2_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:59:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:19:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんとうに
+はねのカセキで　いいんだね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:18:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:18:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほんとうに
+はねのカセキで　いいんだね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい/いいえの選択肢表示
+・はい　→leader2_07
+　いいえ→leader2_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:59:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:19:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふたのカセキと　はねのカセキ
+どっちが　すきだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:46:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:19:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふたのカセキと　はねのカセキ
+どっちが　好きだい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:46:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・選択肢表示
+・ふたのカセキ→leader2_02
+　はねのカセキ→leader2_03
+　やめる→leader2_05
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:47:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:19:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんだい　なんだい！▼
+わかいんだから　えんりょ　なんか
+しなくたって　いいのにさ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:30:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:22:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんだい　なんだい！▼
+若いんだから　遠慮なんか
+しなくたって　いいのにさ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:53:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてad_07
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:01:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:25:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふたのカセキ　なんだね！
+いい　チョイスじゃないか！▼
+そいつを　ふくげん　するなら
+うちの　うけつけに　たのむと　いいよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:54:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:26:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふたのカセキ　なんだね！
+いい　チョイスじゃないか！▼
+そいつを　復元するなら
+うちの　受付に　頼むと　いいよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:54:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手処理
+　No572「ふたのカセキ」
+・続けてad_07
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:01:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:25:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はねのカセキ　かい！
+めのつけどころが　ちがうね！▼
+そいつを　ふくげん　するなら
+うちの　うけつけに　たのむと　いいよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:55:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:26:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はねのカセキ　かい！
+めのつけどころが　違うね！▼
+そいつを　復元するなら
+うちの　受付に　頼むと　いいよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:55:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手処理
+　No573.「はねのカセキ」
+・続けてad_07
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:01:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:25:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_ad_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キダチ『ちょっと　ママ！▼
+あんないを　していたのに
+とつぜん　わりこんだら　おどろきますよ▼
+それに　ママ
+じこしょうかいも　してないでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:55:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:31:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キダチ『ちょっと　ママ！▼
+案内を　していたのに
+突然　わりこんだら　驚きますよ▼
+それに　ママ
+自己紹介も　してないでしょ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:55:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてleader2_08</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:01:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM
+副館長（Assistant Director）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:30:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ　そうだったね▼
+あたしは　アロエ
+この　はくぶつかんの　かんちょうさ！▼
+いつもは　おくに　こもっているから
+ヒマなら　あそびに　おいで！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:37:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:35:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ　そうだったね▼
+あたしは　アロエ
+この　はくぶつかんの　かんちょうさ！▼
+いつもは　おくに　こもっているから
+ヒマなら　あそびに　おいで！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・カセキ入手した
+・メッセージ表示後、画面奥に消えて行く
+・続けてad_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:04:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:25:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02gym0101_leader2_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ　そうだったね▼
+あたしは　アロエ
+この　はくぶつかんの　かんちょうさ！▼
+いつもは　おくに　こもっているから
+カセキが　ほしくなったら▽
+あそびに　おいで！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:37:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:36:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ　そうだったね▼
+あたしは　アロエ
+この　はくぶつかんの　かんちょうさ！▼
+いつもは　おくに　こもっているから
+カセキが　ほしくなったら▽
+あそびに　おいで！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:44:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・カセキ入手していない
+・メッセージ表示後、画面奥に消えて行く
+・続けてad_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:04:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:25:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c02gym0101_ad_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こちらの　こっかく……
+			<Text>キダチ『ママったら……
+では　きを　とりなおして▼
+こちらの　こっかく……
 ドラゴンタイプの　ポケモンですね▼
 おそらく　せかいかくちを
 とびまわっている　うちに▽
 なんらかの　じこにあって▽
 そのまま　カセキに　なったようです▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:38:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -352,15 +1051,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちらの　骨格……
+			<Text>キダチ『ママったら……
+では　気を　取り直して▼
+こちらの　骨格……
 ドラゴンタイプの　ポケモンですね▼
 おそらく　世界各地を
 飛び回っている　うちに▽
 なんらかの　事故にあって▽
 そのまま　カセキに　なったようです▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:38:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -618,10 +1319,10 @@
 			<Text>つぎの　へやは　としょしつ
 その　おくは　かんちょうしつ　です▼
 ちなみに　かんちょうの　アロエは
-わたくしの　おくさん　なのです</Text>
+もと　ジムリーダー　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:20:13" />
+				Time="2011-07-20T10:39:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -632,10 +1333,10 @@
 			<Text>次の部屋は　図書室
 その奥は　館長室です▼
 ちなみに　館長の　アロエは
-わたくしの　奥さん　なのです</Text>
+元ジムリーダー　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:20:16" />
+				Time="2011-07-20T10:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -645,10 +1346,11 @@
 			Language="JPN">
 			<Comment>♂
 ・階段付近
+・c02gym0202でアロエと会話するまで
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T05:43:31" />
+				Time="2011-07-20T10:43:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -711,10 +1413,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・現状未使用</Comment>
+・c02gym0202でアロエと会話してから</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:20:43" />
+				Time="2011-07-20T10:43:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -733,7 +1435,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
