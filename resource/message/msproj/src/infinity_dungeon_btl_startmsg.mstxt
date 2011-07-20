@@ -1880,11 +1880,11 @@
 			Language="JPN_KANJI">
 			<Text>もうっ！
 わたしは　立派な　レディーなの！▼
-こども扱いしたら
+こどもあつかいしたら
 承知しないから！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T08:07:57" />
+				Time="2011-07-20T06:12:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2934,11 +2934,11 @@
 			Language="JPN">
 			<Text>モグモグ……モグ……▼
 おひるごはんに　ほっかほかパン！
-はらが　へっては　いくさはできぬ！▼
+はらが　へっては　いくさはできぬ！▽
 しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T10:54:58" />
+				Time="2011-07-20T06:26:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2948,11 +2948,11 @@
 			Language="JPN_KANJI">
 			<Text>モグモグ……モグ……▼
 お昼ごはんに　ほっかほかパン！
-腹が　減っては　戦はできぬ！▼
+腹が　減っては　戦はできぬ！▽
 勝負よ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T10:54:45" />
+				Time="2011-07-20T06:26:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4150,11 +4150,11 @@
 さいじょうかいに　とべぇぇぇっ！▼
 ……っと　なんかい　やっても
 しゅんかんいどうが　つかえない……▼
-ズルせず　じぶんで　のぼっていけと
+ズルせず　のぼっていけと
 いうことね！　やるわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T07:37:39" />
+				Time="2011-07-20T06:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4166,11 +4166,11 @@
 最上階に　飛べぇぇぇっ！▼
 ……っと　何回やっても
 瞬間移動が　使えない……▼
-ズルせず　自分で　登っていけと
+ズルせず　登っていけと
 いうことね！　やるわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T07:38:14" />
+				Time="2011-07-20T06:46:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6252,11 +6252,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やまのような　ゆうだいな
+			<Text>やまのように　ゆうだいな
 わたしに　かてるかな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-07-20T07:03:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6264,11 +6264,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>山のような　雄大な
+			<Text>山のように　雄大な
 私に　勝てるかな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-07-20T07:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7025,12 +7025,12 @@
 			<Text>この　あやしいビル……
 いんぼうの　においが　するわね……▼
 ……えっ？　いんぼうの　においって
-どんなにおい　だって？▼
-えーと　えーと……
+どんなにおい　だって？▽
+えーと　えーと……▽
 うるさいっ　しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T06:10:00" />
+				Time="2011-07-20T07:11:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7041,12 +7041,12 @@
 			<Text>この　怪しいビル……
 陰謀の　においが　するわね……▼
 ……えっ？　陰謀の　においって
-どんなにおい　だって？▼
-えーと　えーと……
+どんなにおい　だって？▽
+えーと　えーと……▽
 うるさいっ　勝負よ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-07T06:10:05" />
+				Time="2011-07-20T07:11:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8046,7 +8046,7 @@
 トレーナーにも　負けは　しない！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:27:00" />
+				Time="2011-07-20T07:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8572,13 +8572,13 @@
 			Language="JPN">
 			<Text>でんせつの　からておうが
 したの　エリアに　いくのをみたぜ▼
-あのまがまがしい　けはい……
+あの　まがまがしい　けはい……
 ちかづいただけでも　ブルっちまった▼
 ……なさけないって？
 おれだって　そこそこ　つよいんだぜ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T08:19:29" />
+				Time="2011-07-20T07:32:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8588,13 +8588,13 @@
 			Language="JPN_KANJI">
 			<Text>伝説の　からておうが
 下のエリアに　行くのを見たぜ▼
-あの禍々しい　気配……
+あの　禍々しい気配……
 近づいただけでも　ブルっちまった▼
 ……なさけないって？
-おれだって　そこそこ　つよいんだぜ？▼</Text>
+おれだって　そこそこ　強いんだぜ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T08:19:37" />
+				Time="2011-07-20T07:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9145,10 +9145,10 @@
 			<Text>悪い事は　言わない
 もう　引き返したほうがいい▼
 それが　ボクに　言える
-唯一の　忠告だ！▼</Text>
+唯一の忠告だ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T09:46:13" />
+				Time="2011-07-20T07:39:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10385,14 +10385,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめて　ここに　ちょうせんしてから
-どれくらいが　たったろう……▼
+どれくらいに　なんのかな？▼
 ひよっこだった　おいらも　いまじゃ
 すっかり　ベテラントレーナーさ▼
 よしっ！
 ひとつ　けいこを　つけてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-11T11:01:00" />
+				Time="2011-07-20T07:59:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10401,14 +10401,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>初めて　ここに　挑戦してから
-どれくらいが　たったろう……▼
+どれくらいに　なんのかな？▼
 ひよっこだった　おいらも　いまじゃ
 すっかり　ベテラントレーナーさ▼
 よしっ！
 ひとつ　けいこを　つけてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:56:21" />
+				Time="2011-07-20T07:59:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10681,10 +10681,10 @@
 せんとうも　きつくなってきたし
 なんか　ヤバイ　においがするんだ▼
 ……だから　さいごにさ
-ぼくと　たたかってくれないか？▼</Text>
+おれと　たたかってくれないか？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T02:15:34" />
+				Time="2011-07-20T08:02:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10697,10 +10697,10 @@
 戦闘も　きつくなってきたし
 なんか　ヤバイ　においがするんだ▼
 ……だから　最後にさ
-記念に　ぼくと　戦ってくれないか？▼</Text>
+記念に　と　戦ってくれないか？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T02:15:39" />
+				Time="2011-07-20T08:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10971,10 +10971,10 @@
 			<Text>むすうの　ポケモンたちと
 であい　そして　わかれ……▼
 そして　さいごに　のこったのが
-このこ　たちよ！▼</Text>
+このこたちよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-15T01:59:50" />
+				Time="2011-07-20T08:09:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12081,12 +12081,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わしゃ　むすめが　あやまるまで
-そとには　でないぞ！▼
-おぬし　むすめの　てさきか！
-ゆるさん！　プリンの　うらみ！▼</Text>
+そとには　でないぞ！▽
+おぬし　むすめの　てさきか！▼
+とっておきの　まんじゅうを
+たべられた　うらみ　おもいしれ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T02:59:52" />
+				Time="2011-07-20T08:26:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12095,12 +12096,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わしゃ　娘が　謝りにくるまで
-外には　出ないぞ！▼
-おぬし　娘の　手先か！
-許さん！　プリンの　恨み！▼</Text>
+外には　出ないぞ！▽
+おぬし　娘の　手先か！▼
+とっておきの　まんじゅうを
+食べられた恨み　思い知れ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T03:00:44" />
+				Time="2011-07-20T08:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12219,12 +12221,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　はるか　くもの　うえ……
-うちゅうから　ちからが　ふりそそぐ▼
+うちゅうから　ちからが　ふりそそぐ！▼
 いまの　ぼくらは　いつもとちがうよ？
 ためしてみるかい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T03:49:08" />
+				Time="2011-07-20T08:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12233,12 +12235,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　はるか　雲の上……
-宇宙から　力が　ふりそそぐ▼
+宇宙から　力が　ふりそそぐ！▼
 いまの　ぼくらは　いつもと違うよ？
 試してみるかい！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T03:49:19" />
+				Time="2011-07-20T08:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13181,12 +13183,12 @@
 			<Text>あああっ！　みつけたー！
 おれさ　まえに　おまえに　まけてから▼
 メチャクチャ　がんばって
-ここまで　のぼってきたんだ！▼
+ここまで　あがってきたんだ！▼
 ……ちぇっ　おぼえてないのかよ！
 こんどは　わすれられなく　してやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T08:34:43" />
+				Time="2011-07-20T08:43:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13197,12 +13199,12 @@
 			<Text>あああっ！　見つけたー！
 おれさ　前に　おまえに　負けてから▼
 メチャクチャ　がんばって
-ここまで　のぼってきたんだ！▼
+ここまで　上がってきたんだ！▼
 ……ちぇっ　覚えてないのかよ！
 今度は　忘れられなく　してやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T08:35:38" />
+				Time="2011-07-20T08:43:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13684,7 +13686,7 @@
 いっかいだけ　かいふくできるよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T02:13:00" />
+				Time="2011-07-20T08:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13696,7 +13698,7 @@
 一回だけ　回復できるよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T02:13:26" />
+				Time="2011-07-20T08:49:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13984,11 +13986,11 @@
 			Language="JPN">
 			<Text>どんな　ポケモンか　ふかくしらないと
 ただしい　ちりょうは　できない！▼
-それが　ぼくの　ポリシーだ！
+それが　ぼくの　やりかただ！
 たたかいながら　しんだんするよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T03:17:45" />
+				Time="2011-07-20T08:52:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13998,11 +14000,11 @@
 			Language="JPN_KANJI">
 			<Text>どんな　ポケモンか　深く知らないと
 正しい　治療は　できない！▼
-それが　ぼくの　ポリシーだ！
+それが　ぼくの　やり方だ！
 戦いながら　診断するよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T03:17:48" />
+				Time="2011-07-20T08:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
