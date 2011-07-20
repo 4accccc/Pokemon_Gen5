@@ -465,5 +465,9 @@ static const DEBUG_NUMINPUT_LIST DNI_WBTSaveCount[] = {
   { dni_wbtsave_sinou,   WBTWIN_COUNT_SINOU,             &DNI_WBTSaveCounter },
   { dni_wbtsave_world,   WBTWIN_COUNT_WORLD,             &DNI_WBTSaveCounter },
   { dni_wbtsave_wcs,     WBTWIN_COUNT_WCS,               &DNI_WBTSaveCounter },
+  { dni_wbtsave_rental,  WBTWIN_COUNT_RENTAL,            &DNI_WBTSaveCounter },
+  { dni_wbtsave_rentalmaster,  WBTWIN_COUNT_RENTALMASTER,            &DNI_WBTSaveCounter },
+  { dni_wbtsave_shuffle,  WBTWIN_COUNT_SHUFFLE,            &DNI_WBTSaveCounter },
+  { dni_wbtsave_shufflemaster,  WBTWIN_COUNT_SHUFFLEMASTER,            &DNI_WBTSaveCounter },
 };
 #endif  //PM_DEBUG
