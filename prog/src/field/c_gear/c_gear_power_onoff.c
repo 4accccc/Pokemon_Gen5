@@ -609,9 +609,7 @@ static void PowerOnOff_InitWin( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
   p_sys->p_tcbl = GFL_TCBL_Init( heapID, heapID, 1, 4 );
 
   // キーカーソル
-  p_sys->p_keycursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, heapID );
-  
-
+  p_sys->p_keycursor = APP_KEYCURSOR_Create( 15, TRUE, TRUE, heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -891,11 +889,13 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
 
   case SEQ_ON_MSG_PRINT01:
     PowerOnOff_PrintMsgYSize( p_sys, p_sys->p_talkmsg, cg_power_02, TALK_MSG_POS_SIZY );
+    APP_KEYCURSOR_Write( p_sys->p_keycursor, GFL_BMPWIN_GetBmp( p_sys->p_talkmsg ), 15 );
     p_sys->seq ++;
     break;
 
   case SEQ_ON_MSG_PRINT01_TOUCHWAIT:
-    if( GFL_UI_TP_GetTrg() || (GAMESYSTEM_IsBatt10Sleep( p_sys->p_gamesys )) ){
+    if( APP_KEYCURSOR_MainNotStream( p_sys->p_keycursor, p_sys->p_talkmsg ) || (GAMESYSTEM_IsBatt10Sleep( p_sys->p_gamesys )) ){
+      APP_KEYCURSOR_Clear( p_sys->p_keycursor, GFL_BMPWIN_GetBmp( p_sys->p_talkmsg ), 15 );
       p_sys->seq ++;
     }
     break;
