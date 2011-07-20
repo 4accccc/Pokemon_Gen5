@@ -349,4 +349,5 @@
   ARCID_BADGE_GATE "fieldmap/badge_gate_gmk.narc" #バッジチェックゲート
   ARCID_GPOWER_APP "gpower_app_gra.narc" #デルパワー使用画面
   ARCID_HIDE_SHIP_ENGINE "fieldmap/hide_ship_engine.narc"  #アジト船（エンジン）
+  ARCID_C_GEAR_SW    "c_gear_sw.narc"           #コミュニケーションギア スワン
   

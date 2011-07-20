@@ -18,6 +18,7 @@
 #include "system/wipe.h"
 #include "infowin/infowin.h"
 #include "c_gear/c_gear.h"
+#include "c_gear/c_gear_sw.h"
 #include "c_gear/no_gear.h"
 #include "c_gear/c_gear_power_onoff.h"
 #include "field_menu.h"
@@ -36,6 +37,7 @@
 #include "net_app/union/union_main.h"
 
 #include "report.h"
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -778,9 +780,13 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 
   pCGSV = CGEAR_SV_GetCGearSaveData( GAMEDATA_GetSaveControlWork( p_gdata) );
   
+#ifdef CGEAR_SWAN_ON
+  // Overlay
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear_sw) );
+#else
   // Overlay
   GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
-
+#endif
   power_flag  = CGEAR_SV_GetPowerFlag( pCGSV );
   net_flag    = GAMESYSTEM_GetAlwaysNetFlag( p_gsys );
   
@@ -789,10 +795,14 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
   }else{
     effect_on = FALSE;
   }
-  
+ 
+#ifdef CGEAR_SWAN_ON
+  pWork->cgearWork = CGEAR_SW_Init( pCGSV,
+      pWork, p_gsys, effect_on );
+#else
   pWork->cgearWork = CGEAR_Init( pCGSV,
       pWork, p_gsys, effect_on );
-
+#endif
   CGEAR_SV_SetPowerFlag( pCGSV, net_flag );
 
   // 10% 以下　スリープフラグOFF
@@ -819,17 +829,27 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
   CGEAR_SAVEDATA* pCGSV;
   BOOL effect;
   
+#ifdef CGEAR_SWAN_ON
+  // Overlay
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear_sw) );
+#else
   // Overlay
   GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
-
+#endif
   // もし、通信中ならば、エフェクトあり、ないならエフェクトなし。
   effect = GAMESYSTEM_GetAlwaysNetFlag( p_gsys );
 
   pCGSV = CGEAR_SV_GetCGearSaveData( pSave );
+
+#ifdef CGEAR_SWAN_ON
+  pWork->cgearWork = CGEAR_SW_FirstInit(pCGSV,
+                                     pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
+                                     pWork->endCallback, pWork->endCallbackWork , effect);
+#else
   pWork->cgearWork = CGEAR_FirstInit(pCGSV,
                                      pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
                                      pWork->endCallback, pWork->endCallbackWork , effect);
-
+#endif
 
   CGEAR_SV_SetPowerFlag( pCGSV, effect );
 
@@ -855,10 +875,15 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
 //-----------------------------------------------------------------------------
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
+#ifdef CGEAR_SWAN_ON
+  CGEAR_SW_Exit(pWork->cgearWork);
+  // Overlay
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(cgear_sw) );
+#else
   CGEAR_Exit(pWork->cgearWork);
-
   // Overlay
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(cgear) );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -868,7 +893,11 @@ static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void actioncallback_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 {
+#ifdef CGEAR_SWAN_ON
+  CGEAR_SW_ActionCallback(pWork->cgearWork, actionno);
+#else
   CGEAR_ActionCallback(pWork->cgearWork, actionno);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -897,8 +926,12 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
         GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
       }else{
 
+#ifdef CGEAR_SWAN_ON
         // CGEARをOFFにする。
+        if( CGEAR_SW_ChangePowerOff( pWork->cgearWork ) ){
+#else
         if( CGEAR_ChangePowerOff( pWork->cgearWork ) ){
+#endif
           CGEAR_SV_SetPowerFlag( pCGSV, FALSE );
           GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
         }
@@ -906,7 +939,11 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
     }
   }
   
+#ifdef CGEAR_SWAN_ON
+  CGEAR_SW_Main(pWork->cgearWork,bActive);
+#else
   CGEAR_Main(pWork->cgearWork,bActive);
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -916,7 +953,11 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 //-----------------------------------------------------------------------------
 static GMEVENT* evcheck_nomal_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
 {
+#ifdef CGEAR_SWAN_ON
+  return CGEAR_SW_EventCheck(pWork->cgearWork, bEvReqOK, pWork );
+#else
   return CGEAR_EventCheck(pWork->cgearWork, bEvReqOK, pWork );
+#endif
 }
 
 

@@ -1068,6 +1068,11 @@ SRCS_OVERLAY_FIELD_WEATHER_MIST = field/weather_mist.c
 SRCS_OVERLAY_CGEAR = field/c_gear/c_gear.c \
                      field/c_gear/c_gear_pattern.c
 
+#CGEAR_SW
+#===> GROUP_OVERLAY_FIELD_WEATHER
+#GROUP_OVERLAY_SUBSCREEN
+SRCS_OVERLAY_CGEAR_SW = field/c_gear/c_gear_sw.c
+
 #NO GEAR
 #===> GROUP_OVERLAY_FIELD_WEATHER
 #GROUP_OVERLAY_SUBSCREEN
