@@ -1222,10 +1222,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＷＢＴ（仮）</Text>
+			<Text>ＷＢＴ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:36:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1233,10 +1233,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＷＢＴ（仮）</Text>
+			<Text>ＷＢＴ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:36:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4812,10 +4812,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レゾナンスリゾート</Text>
+			<Text>ジョインアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4823,10 +4823,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レゾナンスリゾート</Text>
+			<Text>ジョインアベニュー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:19:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5196,10 +5196,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンげすいどう仮</Text>
+			<Text>ヒウンげすいどう</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:47" />
+				Time="2011-07-20T05:19:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5207,10 +5207,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウン下水道仮</Text>
+			<Text>ヒウン下水道</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:48" />
+				Time="2011-07-20T05:19:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5244,10 +5244,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼくじょう（仮）</Text>
+			<Text>サンギぼくじょう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5255,10 +5255,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>牧場（仮）</Text>
+			<Text>サンギ牧場</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:19:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5292,10 +5292,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コンビナート（仮）</Text>
+			<Text>タチワキコンビナート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5303,10 +5303,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コンビナート（仮）</Text>
+			<Text>タチワキコンビナート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5340,10 +5340,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かざん（仮）</Text>
+			<Text>リバースマウンテン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:20:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5351,10 +5351,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>火山（仮）</Text>
+			<Text>リバースマウンテン</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5388,10 +5388,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミステリーハウス仮</Text>
+			<Text>ストレンジャーハウス</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:39" />
+				Time="2011-07-20T05:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5399,10 +5399,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミステリーハウス仮</Text>
+			<Text>ストレンジャーハウス</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:40" />
+				Time="2011-07-20T05:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5484,10 +5484,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アジトせん（仮）</Text>
+			<Text>プラズマフリゲート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:20:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5495,10 +5495,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アジト船（仮）</Text>
+			<Text>プラズマフリゲート</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:20:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5532,10 +5532,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬけみち（仮）</Text>
+			<Text>こだいのぬけみち</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5543,10 +5543,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>抜け道（仮）</Text>
+			<Text>古代の抜け道</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5580,10 +5580,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうどう（仮）</Text>
+			<Text>ヤーコンロード</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5591,10 +5591,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>坑道（仮）</Text>
+			<Text>ヤーコンロード</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5676,10 +5676,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのたいじゅ（仮）</Text>
+			<Text>しろのじゅどう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5687,10 +5687,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白の大樹（仮）</Text>
+			<Text>白の樹洞</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5724,10 +5724,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのまてんろう仮</Text>
+			<Text>くろのまてんろう</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:25" />
+				Time="2011-07-20T05:21:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5735,10 +5735,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒の摩天楼（仮）</Text>
+			<Text>黒の摩天楼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:21:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5772,10 +5772,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲートどうくつ（仮）</Text>
+			<Text>うみべのどうけつ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5783,10 +5783,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲート洞くつ（仮）</Text>
+			<Text>海辺の洞穴</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:22:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5820,10 +5820,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かがみのどうくつ仮</Text>
+			<Text>こころのくうどう</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:13" />
+				Time="2011-07-20T05:22:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5831,10 +5831,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>鏡の洞くつ（仮）</Text>
+			<Text>心の空洞</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:22:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5868,10 +5868,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>けものみち（仮）</Text>
+			<Text>かくしあな</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:13:56" />
+				Time="2011-07-20T05:22:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5879,10 +5879,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>獣道（仮）</Text>
+			<Text>隠し穴</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
-				Time="2011-06-24T10:14:01" />
+				Time="2011-07-20T05:22:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5916,10 +5916,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すいちゅうばし（仮）</Text>
+			<Text>マリンチューブ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5927,10 +5927,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>水中橋（仮）</Text>
+			<Text>マリンチューブ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6081,5 +6081,38 @@ R14R0101/R15R0101</Comment>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="MAPNAME_C03R1102"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルじむきょく</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:23:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:23:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダル事務局</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:23:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:23:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>C03R1102</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:23:59" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
