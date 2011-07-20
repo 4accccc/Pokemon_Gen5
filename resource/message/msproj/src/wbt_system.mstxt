@@ -204,10 +204,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チャンピオントーナメント</Text>
+			<Text>チャンピオンズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:50:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -215,10 +215,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チャンピオントーナメント</Text>
+			<Text>チャンピオンズトーナメント</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:50:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -569,10 +569,10 @@
 		Label="msg_wbtsys_title_17">
 		<LanguageCell
 			Language="JPN">
-			<Text>WCS２０１１トーナメント</Text>
+			<Text>ＷＣＳ２０１１トーナメント</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-07T10:47:28" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:50:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -580,10 +580,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>WCS２０１１トーナメント</Text>
+			<Text>ＷＣＳ２０１１トーナメント</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-07T10:47:30" />
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-20T05:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
