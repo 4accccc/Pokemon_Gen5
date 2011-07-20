@@ -3186,9 +3186,9 @@ static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_
   {
     static const u8 sc_plt_ofs[]  =
     {
-      0,
+      2,  //しろのかんたんキー
+      1,  //くろのむずかしいキー
       1,
-      0,
     };
     u8 plt_ofs  = sc_plt_ofs[ key ];
 
@@ -3196,11 +3196,13 @@ static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_
     {
       if( is_get )
       {
-        plt_ofs = (GET_VERSION() == VERSION_B2) ? 1: 0;
+        //取得の場合は黒バージョンは黒
+        plt_ofs = (GET_VERSION() == VERSION_B2) ? 1: 2;
       }
       else
       {
-        plt_ofs = (GET_VERSION() == VERSION_B2) ? 0: 1;
+        //受け取りの場合は黒バージョンは白
+        plt_ofs = (GET_VERSION() == VERSION_B2) ? 2: 1;
       }
     }
     GFL_CLACT_WK_SetPlttOffs( p_wk->p_key, plt_ofs, CLWK_PLTTOFFS_MODE_PLTT_TOP );
