@@ -2,6 +2,1568 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_c01r0501_trainerm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　いいかい！？▼
+なんだか　とっても　ポケモンに
+くわしそうな　そこの　キミ！▼
+ぼくに　ちえを
+かしてくれないか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:19:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　いいかい！？▼
+なんだか　とっても　ポケモンに
+くわしそうな　そこの　キミ！▼
+ぼくに　ちえを
+かしてくれないか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:19:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:06:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:55:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！　ありがとう▼
+さっそくだけど
+なやみを　きいてくれ！▼
+ぼく　とくせい　ふゆう　の
+ポケモンに　じめんタイプの▽
+わざを　あてたいんだ！▼
+でも　どうしても　ほうほうが
+おもいつかなくって……▼
+いくつか　アイデアは　あるけど
+きめられなくて……▼
+そこで　キミの　いけんを
+きかせて　ほしいんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:06:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！　ありがとう▼
+さっそくだけど
+なやみを　きいてくれ！▼
+ぼく　とくせい　ふゆう　の
+ポケモンに　じめんタイプの▽
+わざを　あてたいんだ！▼
+でも　どうしても　ほうほうが
+おもいつかなくって……▼
+いくつか　アイデアは　あるけど
+きめられなくて……▼
+そこで　キミの　いけんを
+きかせて　ほしいんだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:06:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか……　しかたない▼
+もし　きが　むいたら
+ちえを　かしてくれよ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:07:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか……　しかたない▼
+もし　きが　むいたら
+ちえを　かしてくれよ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:07:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まずは　どうぐ　について
+アドバイスを　もらいたい▼
+とくせい　ふゆう　の　ポケモンに
+トリックや　すりかえ　などで▽
+どうぐを　わたす　ことで▼
+じめんタイプの　わざが
+あたるように　したいんだ！▼
+どんな　どうぐを　わたそうか
+かんがえた　すえ▼
+くろいてっきゅう　が　いいと
+おもってるんだけど▽
+じしんが　ないんだ……▼
+どうかな？　くろいてっきゅう
+いい　アイデア　かな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:07:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:04:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まずは　どうぐ　について
+アドバイスを　もらいたい▼
+とくせい　ふゆう　の　ポケモンに
+トリックや　すりかえ　などで▽
+どうぐを　わたす　ことで▼
+じめんタイプの　わざが
+あたるように　したいんだ！▼
+どんな　どうぐを　わたそうか
+かんがえた　すえ▼
+くろいてっきゅう　が　いいと
+おもってるんだけど▽
+じしんが　ないんだ……▼
+どうかな？　くろいてっきゅう
+いい　アイデア　かな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・以下の選択肢表示
+１：いい（正解）
+２：ＯＫ（正解）
+３：だいじょうぶ（正解）
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:07:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:04:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いい</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:46" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＯＫ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＯＫ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいじょうぶ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいじょうぶ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>１問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！　やっぱり！？▼
+なんだか　キミに　いわれると
+いちだんと　じしんが　もてるよ！▼
+ふゆう　ポケモンに
+くろいてっきゅう　を　わたせば▽
+じめんタイプの　わざも　あたる！▼
+ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！　やっぱり！？▼
+なんだか　キミに　いわれると
+いちだんと　じしんが　もてるよ！▼
+ふゆう　ポケモンに
+くろいてっきゅう　を　わたせば▽
+じめんタイプの　わざも　あたる！▼
+ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・1問め正解
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:10:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>また　キミの　ちえを
+かして　ほしいんだ！▽
+おねがい　できるかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:08:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:57:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また　キミの　ちえを
+かして　ほしいんだ！▽
+おねがい　できるかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+　はい　→trainerm_07（1問正解時）
+　　　　　→trainerm_11（２問正解時）
+　いいえ→trainerm_03
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:12:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんどは　わざに　ついて
+アドバイスを　もらいたい▼
+とくせい　ふゆうの　ポケモンに
+じめんタイプの　わざを▽
+つかう　まえに▽
+つかっておくと　いい　わざを▽
+さがして　いるんだけど……▼
+うちおとす　じゅうりょく　いえき
+この　３つの　わざの　うち▽
+どれを　つかうと　いいかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:00:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:00:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんどは　わざに　ついて
+アドバイスを　もらいたい▼
+とくせい　ふゆうの　ポケモンに
+じめんタイプの　わざを▽
+つかう　まえに▽
+つかっておくと　いい　わざを▽
+さがして　いるんだけど……▼
+うちおとす　じゅうりょく　いえき
+この　３つの　わざの　うち▽
+どれを　つかうと　いいかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+１：うちおとす
+２：じゅうりょく
+３：いえき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:00:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:59:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うちおとす</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うちおとす</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅうりょく</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゅうりょく</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いえき</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いえき</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>２問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:05" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか　うちおとす　か！▼
+たしかに　うちおとす　を
+うけた　ポケモンは▼
+ふゆうの　とくせいや
+ひこうタイプを　もっていても▼
+じめんタイプの　わざが
+あたるように　なる！▼
+ふゆう　ポケモンには
+うちおとすを　あててから▽
+じめんタイプの　わざを　つかう！▼
+なるほど　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:11:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか　うちおとす　か！▼
+たしかに　うちおとす　を
+うけた　ポケモンは▼
+ふゆうの　とくせいや
+ひこうタイプを　もっていても▼
+じめんタイプの　わざが
+あたるように　なる！▼
+ふゆう　ポケモンには
+うちおとすを　あててから▽
+じめんタイプの　わざを　つかう！▼
+なるほど　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・２問め正解
+・select2_01選択時
+・この次に表示するのはtrainerm_06
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:13:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか　じゅうりょく　か！▼
+たしかに　じゅうりょくを　つかうと
+じゅうりょくが　つよくなって▼
+ふゆうの　とくせいや
+ひこうタイプを　もっていても▽
+じめんタイプの　わざが▽
+あたるように　なる！▼
+ふゆう　ポケモンには
+じゅうりょくを　つかってから▽
+じめんタイプの　わざを　つかう！▼
+なるほど　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:11:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか　じゅうりょく　か！▼
+たしかに　じゅうりょくを　つかうと
+じゅうりょくが　つよくなって▼
+ふゆうの　とくせいや
+ひこうタイプを　もっていても▽
+じめんタイプの　わざが▽
+あたるように　なる！▼
+ふゆう　ポケモンには
+じゅうりょくを　つかってから▽
+じめんタイプの　わざを　つかう！▼
+なるほど　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・２問め正解
+・select2_02選択時
+・この次に表示するのはtrainerm_06
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:13:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうか　いえき　か！▼
+たしかに　いえき　を
+うけた　ポケモンは▽
+とくせいを　けされてしまう！▼
+ふゆうの　とくせいも
+こうかを　はっき　しないから▼
+じめんタイプの　わざが
+あたるように　なる！▼
+ふゆう　ポケモンには
+いえきを　あててから▽
+じめんタイプの　わざを　つかう！▼
+なるほど　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:58:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうか　いえき　か！▼
+たしかに　いえき　を
+うけた　ポケモンは▽
+とくせいを　けされてしまう！▼
+ふゆうの　とくせいも
+こうかを　はっき　しないから▼
+じめんタイプの　わざが
+あたるように　なる！▼
+ふゆう　ポケモンには
+いえきを　あててから▽
+じめんタイプの　わざを　つかう！▼
+なるほど　ありがとう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・２問め正解
+・select2_03選択時
+・この次に表示するのはtrainerm_06
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:13:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいごは　とくせいに　ついて
+アドバイスを　もらいたい▼
+とくせい　ふゆうの　ポケモンに
+じめんタイプの　わざを▽
+あてられる　とくせいが　あるらしい▼
+……だけど
+サッパリ　けんとうが　つかない！▼
+なんとなく　かたやぶり
+テラボルテージ　ターボブレイズ▽
+あたりが　あやしいな……と▼
+ふんでいるんだけど
+きめてが　なくて……▼
+ああ！　キミが　きめてくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:14:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:00:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さいごは　とくせいに　ついて
+アドバイスを　もらいたい▼
+とくせい　ふゆうの　ポケモンに
+じめんタイプの　わざを▽
+あてられる　とくせいが　あるらしい▼
+……だけど
+サッパリ　けんとうが　つかない！▼
+なんとなく　かたやぶり
+テラボルテージ　ターボブレイズ▽
+あたりが　あやしいな……と▼
+ふんでいるんだけど
+きめてが　なくて……▼
+ああ！　キミが　きめてくれ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・
+※swanで新規作成
+
+選択肢
+１：かたやぶり
+２：テラボルテージ
+３：ターボブレイズ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かたやぶり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かたやぶり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テラボルテージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テラボルテージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_select3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ターボブレイズ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ターボブレイズ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>３問めの選択肢
+・正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:01:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やっぱり　かたやぶり　かあ！▼
+そうだよね　かたやぶり　は
+あいての　とくせいに　かんけいなく▽
+わざを　だせる　とくせい！▼
+ふゆうだって　なんのそので
+じめんタイプの　わざを▽
+ガンガン　あてほうだい　だね！▼
+かたやぶり　カッコイイぜ！
+ビバ　かたやぶり！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:15:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:02:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やっぱり　かたやぶり　かあ！▼
+そうだよね　かたやぶり　は
+あいての　とくせいに　かんけいなく▽
+わざを　だせる　とくせい！▼
+ふゆうだって　なんのそので
+じめんタイプの　わざを▽
+ガンガン　あてほうだい　だね！▼
+かたやぶり　カッコイイぜ！
+ビバ　かたやぶり！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３問め正解
+・select3_01選択時
+・続けてtrainerm_15
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:15:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やっぱり　テラボルテージ　かあ！▼
+そうだよね　テラボルテージ　は
+あいての　とくせいに　かんけいなく▽
+わざを　だせる　とくせい！▼
+ふゆうだって　なんのそので
+じめんタイプの　わざを▽
+ガンガン　あてほうだい　だね！▼
+テラボルテージ　カッコイイぜ！
+ビバ　テラボルテージ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:14:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:02:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やっぱり　テラボルテージ　かあ！▼
+そうだよね　テラボルテージ　は
+あいての　とくせいに　かんけいなく▽
+わざを　だせる　とくせい！▼
+ふゆうだって　なんのそので
+じめんタイプの　わざを▽
+ガンガン　あてほうだい　だね！▼
+テラボルテージ　カッコイイぜ！
+ビバ　テラボルテージ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３問め正解
+・select3_02選択時
+・続けてtrainerm_15
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:15:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やっぱり　ターボブレイズ　かあ！▼
+そうだよね　ターボブレイズ　は
+あいての　とくせいに　かんけいなく▽
+わざを　だせる　とくせい！▼
+ふゆうだって　なんのそので
+じめんタイプの　わざを▽
+ガンガン　あてほうだい　だね！▼
+ターボブレイズ　カッコイイぜ！
+ビバ　ターボブレイズ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:15:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:02:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やっぱり　ターボブレイズ　かあ！▼
+そうだよね　ターボブレイズ　は
+あいての　とくせいに　かんけいなく▽
+わざを　だせる　とくせい！▼
+ふゆうだって　なんのそので
+じめんタイプの　わざを▽
+ガンガン　あてほうだい　だね！▼
+ターボブレイズ　カッコイイぜ！
+ビバ　ターボブレイズ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３問め正解
+・select3_03選択時
+・続けてtrainerm_15
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:15:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありがとう！　キミの　おかげで
+ふゆう　たいさくは　バッチリ！▼
+さらに　ふゆう　たいさくの
+たいさくも　バッチリだ！▼
+フフフ……▼
+これで　どんな　ポケモンを
+あいてに　しても▼
+ボクの　ふゆう　ポケモンは
+ぜったい　まけない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:02:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:02:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ありがとう！　キミの　おかげで
+ふゆう　たいさくは　バッチリ！▼
+さらに　ふゆう　たいさくの
+たいさくも　バッチリだ！▼
+フフフ……▼
+これで　どんな　ポケモンを
+あいてに　しても▼
+ボクの　ふゆう　ポケモンは
+ぜったい　まけない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３問正解したあと
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:15:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ！　ボクの　むてきの
+ふゆう　ポケモンと　たたかうかい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:17:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:03:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ！　ボクの　むてきの
+ふゆう　ポケモンと　たたかうかい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３問正解後に会話
+・はい/いいえの選択肢表示
+　はい　→トレーナー戦闘へ
+　いいえ→trainerm_18
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:16:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うーん……▼
+ふゆう　たいさくの　たいさく
+バッチリだった　はずなのに……▼
+いざ　じっせんになると
+うまいこと　いかないなあ……▼
+それだけ　キミが
+つよかった　って　ことか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:17:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:03:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うーん……▼
+ふゆう　たいさくの　たいさく
+バッチリだった　はずなのに……▼
+いざ　じっせんになると
+うまいこと　いかないなあ……▼
+それだけ　キミが
+つよかった　って　ことか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・トレーナー勝負後
+　以降、繰り返し
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:16:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_trainerm_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくと　たたかうなら　また　きてくれ
+いつでも　うけてたつよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:17:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:03:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくと　たたかうなら　また　きてくれ
+いつでも　うけてたつよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:18:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T12:16:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T11:56:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c01r0501_gentleman_01"
 		Style="Large">
 		<LanguageCell
@@ -159,64 +1721,6 @@
 		<AttributeCell
 			Name="Character">
 			<Text>BOY2</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c01r0501_trainerm_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>わざマシンを　つかうことでしか
-おぼえない　わざも　ある▼
-わざマシンは　なんどでも　つかえるから
-どんどん　つかうのも　いいかもな▼
-おぼえさせた　わざが　いまいちだったら
-べつの　わざマシンを　つかえばいいし</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-19T08:55:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>わざマシンを　使うことでしか
-覚えない　技も　ある▼
-わざマシンは　何度でも　使えるから
-どんどん使うのも　いいかもな▼
-覚えさせた　技が　気に入らなければ
-別の　わざマシンを　使えばいいし</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-19T08:56:02" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-※swanでメッセージ修正予定</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:38" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>TRAINERM</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
