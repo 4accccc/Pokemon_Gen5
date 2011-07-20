@@ -866,10 +866,11 @@
 ・ポケモン勝負前
 ・はい/いいえの選択肢表示
 　はい　→04_02
-　いいえ→04_04</Comment>
+　いいえ→04_04
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-25T05:21:04" />
+				Time="2011-07-20T07:17:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

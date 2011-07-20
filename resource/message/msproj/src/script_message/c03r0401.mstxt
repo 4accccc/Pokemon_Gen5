@@ -460,6 +460,65 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c03r0401_ol_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうぐマニアって　ふしぎね！▼
+ふつうの　どうぐ　なのに
+たかい　ねだんで　かってくれるの！▼
+つかいみちが　ない　どうぐでも
+たいせつに　もっていれば▽
+マニアに　たかく　うれるかもよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T06:14:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T06:10:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうぐマニアって　不思議ね！▼
+普通の　道具なのに
+高い　値段で　買ってくれるの！▼
+使い道が　ない　どうぐでも
+大切に　持っていれば▽
+マニアに　高く　売れるかもよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T06:15:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T06:10:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+※swanで新規作成
+※h01r0101にいたNPC</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T06:10:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T06:10:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c03r0401_boy1_01"
 		Style="Large">
 		<LanguageCell
