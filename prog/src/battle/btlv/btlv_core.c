@@ -3314,6 +3314,7 @@ BOOL BTLC_CORE_CheckRecTurnBarEnd( const BTLV_CORE *core )
   if(BTL_MAIN_GetPokewoodMode(core->mainModule)==BTL_POKEWOOD_REC){
     return BTLV_CLACT_CheckPokewoodTCBExcecute( BTLV_EFFECT_GetCLWK() );
   }
+  return FALSE;
 }
 
 #ifdef PM_DEBUG
