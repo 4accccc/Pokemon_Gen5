@@ -20,14 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>博物館の　その奥で
-挑戦者を　待つ　ポケモンジム……▽
-なんだか　雰囲気あるっすよね▼
-というわけで
-これを　さしあげるっす！▼</Text>
+			<Text>やー　どうもっす！
+あっ　おいしいみずは　ないっすよ▼
+ここは　ポケモンジム　ではなく
+図書室　ですからね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T12:20:15" />
+				Time="2011-07-20T05:45:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -152,10 +151,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:35:40" />
+				Time="2011-07-20T05:45:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

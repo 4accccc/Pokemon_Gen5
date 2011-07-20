@@ -84,11 +84,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・BLACKver
-※swanでメッセージ調整</Comment>
+・Black2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:11:46" />
+				Time="2011-07-20T05:43:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -146,11 +146,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・WHITEver
-※swanでメッセージ調整</Comment>
+・White2ver
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:11:53" />
+				Time="2011-07-20T05:43:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -416,11 +416,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デオキシスという　ポケモンは
-いんせきの　パワーを　あびて▽
-すがたを　かえることが　わかりました▼</Text>
+いん石の　パワーを　浴びて▽
+姿を　変えることが　わかりました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:42:30" />
+				Time="2011-07-20T05:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -506,10 +506,10 @@
 			<Comment>♂
 ・BLACKver
 ・「ダークストーン（黒）」
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:18:02" />
+				Time="2011-07-20T05:43:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -582,10 +582,10 @@
 			<Comment>♂
 ・WHITEver
 ・「ライトストーン（白）」
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:18:10" />
+				Time="2011-07-20T05:43:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -645,10 +645,10 @@
 			Language="JPN">
 			<Comment>♂
 ・階段付近
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:11:09" />
+				Time="2011-07-20T05:43:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -770,10 +770,10 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX＝15、GRIDZ＝22、下向き
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T08:00:16" />
+				Time="2011-07-20T05:43:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -825,10 +825,10 @@ MAN1</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:29:47" />
+				Time="2011-07-20T05:43:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -878,10 +878,10 @@ GIRL3</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:29:43" />
+				Time="2011-07-20T05:43:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1209,12 +1209,12 @@ RANGERW</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・BLACKver
+・Black2ver
 ・ダークストーンのレプリカ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:29:12" />
+				Time="2011-07-20T05:45:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1263,12 +1263,12 @@ RANGERW</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・WHITEver
+・White2ver
 ・ライトストーンのレプリカ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:29:18" />
+				Time="2011-07-20T05:45:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

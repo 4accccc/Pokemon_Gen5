@@ -206,12 +206,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どーも　こんにちは！
-おじさん　じゅうきマニア　だよ！▼
+おじさん　重機マニア　だよ！▼
 と　いうわけで　キミ！
-はたらく　くるまは　すきかな？</Text>
+働く　車は　好きかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:49" />
+				Time="2011-07-20T05:28:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -222,12 +222,12 @@
 			<Comment>♂
 ・GRIDX=52、GRIDX＝13
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→
+　はい　→workman2_02
+　いいえ→workman2_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:39:28" />
+				Time="2011-07-20T05:27:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -267,15 +267,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おお！　やっぱり！？
-いいよね！　はたらく　くるま！▼
+いいよね！　働く　車！▼
 そんな　キミに　いきなり　だけど
 クイズ　だしちゃうよ！▼
-クイズは　ぜんぶで　５もん！
-ぜんもん　せいかい　したら▽
+クイズは　全部で　５問！
+全問　正解したら▽
 プレゼント　あげちゃうかもよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:49" />
+				Time="2011-07-20T05:28:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -326,11 +326,11 @@
 			Language="JPN_KANJI">
 			<Text>えっ！？　ゴメン
 よく　きこえなかったんだけど▼
-もう１ど　きくよ！
-はたらく　くるまは　すきかな？</Text>
+もう１度　きくよ！
+働く　車は　好きかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:49" />
+				Time="2011-07-20T05:28:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -377,11 +377,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ！　まってたよ！
+			<Text>やあ！　待ってたよ！
 それじゃあ　さっそく　はじめようか！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:49" />
+				Time="2011-07-20T05:29:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -433,16 +433,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はたらく　くるま　クイズ！▼
-りゃく　して
+			<Text>働く　車　クイズ！▼
+略して
 はたらＱ！▼
-それでは　もんだいです！▼
-ねんきの　はいった
-さびた　クレーンしゃが▽
-めいぶつなのは　ズバリ　どこ？</Text>
+それでは　問題です！▼
+年季の　はいった
+さびた　クレーン車が▽
+名物なのは　ズバリ　どこ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:49" />
+				Time="2011-07-20T05:29:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -664,18 +664,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はたらく　くるま　クイズ！▼
-りゃく　して
+			<Text>働く　車　クイズ！▼
+略して
 はたらＱ！▼
-それでは　もんだいです！▼
-４ばんどうろを　とおる
-トレーラーは　ぜんぶで▽
+それでは　問題です！▼
+４番道路を　通る
+トレーラーは　全部で▽
 ３つの　ボディカラーが　ありますが▽
-それは　あか　あお▽
-あとは　ズバリ　なにいろ？</Text>
+それは　赤　青▽
+あとは　ズバリ　何色？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:53" />
+				Time="2011-07-20T05:37:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -725,10 +725,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みどり</Text>
+			<Text>緑</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:43:30" />
+				Time="2011-07-20T05:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -766,10 +766,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きいろ</Text>
+			<Text>黄色</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:43:30" />
+				Time="2011-07-20T05:37:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -807,10 +807,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろ</Text>
+			<Text>白</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:43:30" />
+				Time="2011-07-20T05:37:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -848,10 +848,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろ</Text>
+			<Text>黒</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:43:30" />
+				Time="2011-07-20T05:37:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -883,10 +883,10 @@
 はたらＱ！▼
 それでは　もんだいです！▼
 ズバリ！
-いま　なんもんめ？</Text>
+いま　なんもん　め？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:38:21" />
+				Time="2011-07-20T05:37:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -894,15 +894,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はたらく　くるま　クイズ！▼
-りゃく　して
+			<Text>働く　車　クイズ！▼
+略して
 はたらＱ！▼
-それでは　もんだいです！▼
+それでは　問題です！▼
 ズバリ！
-いま　なんもんめ？</Text>
+いま　何問め？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:55" />
+				Time="2011-07-20T05:37:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -952,10 +952,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１もんめ</Text>
+			<Text>１問め</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:44:30" />
+				Time="2011-07-20T05:37:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1000,10 +1000,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２もんめ</Text>
+			<Text>２問め</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:44:30" />
+				Time="2011-07-20T05:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1041,10 +1041,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３もんめ</Text>
+			<Text>３問め</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:44:30" />
+				Time="2011-07-20T05:38:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1082,10 +1082,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４もんめ</Text>
+			<Text>４問め</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:44:30" />
+				Time="2011-07-20T05:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1128,15 +1128,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はたらく　くるま　クイズ！▼
-りゃく　して
+			<Text>働く　車　クイズ！▼
+略して
 はたらＱ！▼
-それでは　もんだいです！▼
-きいろい　ドリルカーが　あるのは
+それでは　問題です！▼
+黄色い　ドリルカーが　あるのは
 ズバリ！　どこの　ジム？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:57" />
+				Time="2011-07-20T05:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1363,16 +1363,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はたらく　くるま　クイズ！▼
-りゃく　して
+			<Text>働く　車　クイズ！▼
+略して
 はたらＱ！▼
-それでは　もんだいです！▼
-ズバリ！　この　ネジやまに
+それでは　問題です！▼
+ズバリ！　この　ネジ山に
 ブルドーザーは▽
-なんだい　あるんだい？</Text>
+何台　あるんだい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:48:58" />
+				Time="2011-07-20T05:35:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1422,10 +1422,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１だい</Text>
+			<Text>１台</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:47:45" />
+				Time="2011-07-20T05:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1463,10 +1463,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２だい</Text>
+			<Text>２台</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:47:45" />
+				Time="2011-07-20T05:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1504,10 +1504,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３だい</Text>
+			<Text>３台</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:47:45" />
+				Time="2011-07-20T05:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1545,10 +1545,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４だい</Text>
+			<Text>４台</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:47:45" />
+				Time="2011-07-20T05:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1591,11 +1591,11 @@
 			Language="JPN_KANJI">
 			<Text>……▼
 おみごと！
-だいせいかい！▼
+大正解！▼
 さえてるねえ　キミ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1645,12 +1645,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……▼
-ンー　おしい！
-ざんねん！▼
-でも　いいせん　いってたよ！</Text>
+ンー　惜しい！
+残念！▼
+でも　いい線　いってたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1685,14 +1685,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よっ　みらいの　じゅうきマニア！
-あした　また　きてくれれば▽
+			<Text>よっ　みらいの　じゅうきマニア！▼
+あした　また　きてくれれば
 つぎの　もんだい　を▽
 しゅつだい　するから▽
 ぜひ　ちょうせんしてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:38:21" />
+				Time="2011-07-20T05:31:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1700,14 +1700,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よっ　みらいの　じゅうきマニア！
-あした　また　きてくれれば▽
-つぎの　もんだい　を▽
-しゅつだい　するから▽
-ぜひ　ちょうせんしてね！</Text>
+			<Text>よっ　未来の　重機マニア！▼
+明日　また　来てくれれば
+次の　問題を　出題するから▽
+ぜひ　挑戦してね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:31:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1745,12 +1744,11 @@
 			Language="JPN">
 			<Text>まちがえた　もんだいは
 あした　また　きてくれれば▽
-もういちど　ちょうせんできるよ▼
-おじさん　きみのこと
-まってるからね！</Text>
+もういちど　ちょうせん　できるよ▼
+きみのこと　まってるからね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:38:21" />
+				Time="2011-07-20T05:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1758,14 +1756,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちがえた　もんだいは
-あした　また　きてくれれば▽
-もういちど　ちょうせんできるよ▼
-おじさん　きみのこと
-まってるからね！</Text>
+			<Text>間違えた　問題は
+明日　また　来てくれれば▽
+もう一度　挑戦できるよ▼
+きみのこと　待ってるからね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:32:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1803,8 +1800,8 @@
 			Language="JPN">
 			<Text>おおっ！　キミ　すごいよ！▼
 まさか　おじさん　こんしんの
-はたらＱを　ぜんもん　せいかい▽
-してしまうなんて！▼
+はたらＱを　ぜんもん▽
+せいかい　してしまうなんて！▼
 きみは　しょうしん　しょうめいの
 じゅうきマニア　だね……▼
 そう　メダルじむきょく
@@ -1813,7 +1810,7 @@
 じゅうきマニア　だよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:38:21" />
+				Time="2011-07-20T05:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1823,17 +1820,16 @@
 			Language="JPN_KANJI">
 			<Text>おおっ！　キミ　すごいよ！▼
 まさか　おじさん　こんしんの
-はたらＱを　ぜんもん　せいかい▽
-してしまうなんて！▼
-きみは　しょうしん　しょうめいの
-じゅうきマニア　だね……▼
-そう　メダルじむきょく
-さすらいの　しんさいん　である▽
-おじさんが　みとめた▽
-じゅうきマニア　だよ！</Text>
+はたらＱを　全問▽
+正解　してしまうなんて！▼
+きみは　正真正銘の
+重機マニア　だね……▼
+そう　メダル事務局
+さすらいの　審査員である▽
+おじさんが　認めた　重機マニアだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:33:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1881,12 +1877,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゅうきマニアとしての
-キミの　さいのうを▽
-メダルおやじに　つたえておくよ</Text>
+			<Text>重機マニア　としての
+きみの　才能を▽
+メダルおやじに　伝えておくよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1925,10 +1921,10 @@
 			<Text>しんじだいの　じゅうきマニア
 たんじょうの　しゅんかんに▽
 たちあうことが　できて▽
-おじさんは　しあわせだよ！</Text>
+おじさんは　しあわせ　だよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:38:21" />
+				Time="2011-07-20T05:35:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1936,13 +1932,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しんじだいの　じゅうきマニア
-たんじょうの　しゅんかんに▽
-たちあうことが　できて▽
-おじさんは　しあわせだよ！</Text>
+			<Text>新時代の　重機マニア
+誕生の　瞬間に▽
+立ち会うことが　できて▽
+おじさんは　しあわせ　だよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T12:49:03" />
+				Time="2011-07-20T05:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
