@@ -1731,10 +1731,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほうこうおんちの　ボクには
-このめいろは　きびしいぞ！▼</Text>
+このめいろは　きついぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T06:58:33" />
+				Time="2011-07-20T02:06:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1743,10 +1743,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>方向音痴の　ボクには
-この迷路は　厳しいぞ！▼</Text>
+この迷路は　きついぞ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T06:58:45" />
+				Time="2011-07-20T02:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2113,11 +2113,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うぎゃあ～！　つえーな　アンタ！
+			<Text>うぎゃあ～！　つえーな　あんた！
 オイラのなわばり　あんたにやるよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T07:11:28" />
+				Time="2011-07-20T02:55:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2125,11 +2125,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うぎゃあ～！　つえーな　アンタ！
+			<Text>うぎゃあ～！　つえーな　あんた！
 オイラの縄張り　あんたにやるよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T07:11:46" />
+				Time="2011-07-20T02:55:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2155,11 +2155,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やるじゃん！　この　たたかい
-すっごい　さんこうになったよ！▼</Text>
+			<Text>もっと　もっと　たいせんして
+いつか　ゆめを　かなえてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T07:19:54" />
+				Time="2011-07-20T02:27:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2167,11 +2167,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やるじゃん！　この戦い
-すっごい　参考になったよ！▼</Text>
+			<Text>もっと　もっと　対戦して
+いつか　夢を　かなえてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T07:20:12" />
+				Time="2011-07-20T02:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
