@@ -371,3 +371,5 @@
 "DUN2719.bin"
 "DUN2720.bin"
 "DUN3501.bin"
+"gate11.bin"
+"dining01.bin"

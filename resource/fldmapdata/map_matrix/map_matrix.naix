@@ -383,7 +383,9 @@ enum {
 	NARC_map_matrix_dun2718_mat_bin = 369,
 	NARC_map_matrix_dun2719_mat_bin = 370,
 	NARC_map_matrix_dun2720_mat_bin = 371,
-	NARC_map_matrix_dun3501_mat_bin = 372
+	NARC_map_matrix_dun3501_mat_bin = 372,
+	NARC_map_matrix_gate11_mat_bin = 373,
+	NARC_map_matrix_dining01_mat_bin = 374
 };
 
 /* NARC_MAP_MATRIX_NAIX_ */

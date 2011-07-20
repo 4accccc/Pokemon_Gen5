@@ -375,6 +375,24 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/swbc_00_01.nsbmd \
 	$(DIR_TEMP)/swbc_01_01.nsbmd \
 	$(DIR_TEMP)/c04_a02_00.nsbmd \
+	$(DIR_TEMP)/map01_20.nsbmd \
+	$(DIR_TEMP)/map03_19.nsbmd \
+	$(DIR_TEMP)/map06_19.nsbmd \
+	$(DIR_TEMP)/map07_19.nsbmd \
+	$(DIR_TEMP)/map08_20.nsbmd \
+	$(DIR_TEMP)/map17_01.nsbmd \
+	$(DIR_TEMP)/map18_01.nsbmd \
+	$(DIR_TEMP)/map19_01.nsbmd \
+	$(DIR_TEMP)/map17_03.nsbmd \
+	$(DIR_TEMP)/map18_03.nsbmd \
+	$(DIR_TEMP)/map19_03.nsbmd \
+	$(DIR_TEMP)/map19_04.nsbmd \
+	$(DIR_TEMP)/map21_02.nsbmd \
+	$(DIR_TEMP)/map23_03.nsbmd \
+	$(DIR_TEMP)/map24_03.nsbmd \
+	$(DIR_TEMP)/map25_03.nsbmd \
+	$(DIR_TEMP)/map25_04.nsbmd \
+	$(DIR_TEMP)/map25_05.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_01_00.nsbmd \
 	$(DIR_TEMP)/m_dun0101_00_01.nsbmd \
@@ -948,6 +966,8 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_pwood02_00_00.nsbmd \
 	$(DIR_TEMP)/m_pwood03_00_00.nsbmd \
 	$(DIR_TEMP)/m_champ01_00_01.nsbmd \
+	$(DIR_TEMP)/m_dining01_00_00.nsbmd \
+	$(DIR_TEMP)/m_gate11_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \
