@@ -1051,6 +1051,14 @@
   NO_CMD()
   NO_CMD()
 
+  //データコンバート
+  DEF_CMD( EvCmdDataConv_GetFlag, EV_SEQ_DATACONV_GET_FLAG )
+  DEF_CMD( EvCmdDataConv_GetWork, EV_SEQ_DATACONV_GET_WORK )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

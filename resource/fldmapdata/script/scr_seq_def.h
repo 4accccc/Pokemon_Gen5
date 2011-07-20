@@ -13903,6 +13903,62 @@
   .short  EV_SEQ_KEYSYS_GET_DIFFICULTY
   .short  \ret_wk
   .endm
+//======================================================================
+//
+//  キーシステム
+//
+//======================================================================
+.include "../../../prog/src/field/scrcmd_dataconvert.h"
+//--------------------------------------------------------------
+/**
+ * _DATACONV_GET_FLAG コンバートした状況
+ * @param flag      調べるフラグ
+ *            DATACONV_FLAG_GAME_CLEAR        ゲームクリアしているか
+ *            DATACONV_FLAG_FIRST_POKE_GET    最初のポケモンゲットしたか
+ *            DATACONV_FLAG_CHAMPION_WIN      チャンピオンに勝ったか
+ *            DATACONV_FLAG_BSUBWAY_AWARD_01  イッシュ図鑑埋めたか
+ *            DATACONV_FLAG_BSUBWAY_AWARD_02  全国図鑑埋めたか
+ *            DATACONV_FLAG_BSUBWAY_TROPHY_01 サブウェイトロフィー１を貰ったか
+ *            DATACONV_FLAG_BSUBWAY_TROPHY_02 サブウェイトロフィー２を貰ったか
+ *            DATACONV_FLAG_BSUBWAY_TROPHY_03 サブウェイトロフィー３を貰ったか
+ *            DATACONV_FLAG_BADGE_01          バッジ１を取得したか
+ *            DATACONV_FLAG_BADGE_02          バッジ２を取得したか
+ *            DATACONV_FLAG_BADGE_03          バッジ３を取得したか
+ *            DATACONV_FLAG_BADGE_04          バッジ４を取得したか
+ *            DATACONV_FLAG_BADGE_05          バッジ５を取得したか
+ *            DATACONV_FLAG_BADGE_06          バッジ６を取得したか
+ *            DATACONV_FLAG_BADGE_07          バッジ７を取得したか
+ *            DATACONV_FLAG_BADGE_08          バッジ８を取得したか
+ *
+ * @param ret_wk    フラグの状態  TRUE…ふらぐON  FALSE…ふらぐOFF
+ */
+//--------------------------------------------------------------
+#define _DATACONV_GET_FLAG( flag, ret_wk ) \
+      _ASM_DATACONV_GET_FLAG flag, ret_wk
+
+  .macro  _ASM_DATACONV_GET_FLAG flag, ret_wk
+  .short  EV_SEQ_DATACONV_GET_FLAG
+  .short  \flag
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * _DATACONV_GET_FLAG コンバートした状況
+ * @param wk_num    調べるワーク
+ *            DATACONV_N_BATTLE_RAIMON  ライモンシティでのN戦とのワーク
+ *
+ * @param ret_wk    ワークの中身
+ */
+//--------------------------------------------------------------
+#define _DATACONV_GET_WORK( wk_num, ret_wk ) \
+      _ASM_DATACONV_GET_WORK wk_num, ret_wk
+
+  .macro  _ASM_DATACONV_GET_WORK wk_num, ret_wk
+  .short  EV_SEQ_DATACONV_GET_WORK
+  .short  \wk_num
+  .short  \ret_wk
+  .endm
 
 //======================================================================
 //

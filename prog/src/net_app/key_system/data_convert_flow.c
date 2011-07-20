@@ -24,6 +24,7 @@
 #include "arc_def.h"
 #include "font/font.naix"
 #include "arc/key_system_gra.naix"
+#include "arc/mb_parent.naix"
 #include "msg/msg_key_system.h"
 #include "message.naix"
 
@@ -1063,6 +1064,29 @@ static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID )
       GFL_STR_DeleteBuffer( p_src );    
     }
   }
+
+  //BG“Ç‚İ‚İ
+ {
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MB_PARENT, heapID );
+
+    //----”wŒi----
+    //PLT
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_mb_parent_ss_NCLR,
+        PALTYPE_SUB_BG, KEYSYS_PLT_BG_DLPLAY_S*0x20, KEYSYS_PLT_BG_DLPLAY_S*0x20, 0x20*3, heapID );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_mb_parent_ss_msg_NCLR,
+        PALTYPE_SUB_BG, KEYSYS_PLT_BG_DLMSG_S*0x20, KEYSYS_PLT_BG_DLMSG_S*0x20, 0x20, heapID );
+    //CHR
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mb_parent_ss_msg_NCGR, 
+        KEYSYS_BG_FRAME_SUB_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_mb_parent_ss_NCGR, 
+        KEYSYS_BG_FRAME_WND_S, 0, 32*24*32, FALSE, heapID );
+    //SCR
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mb_parent_ss_msg_NSCR,
+        KEYSYS_BG_FRAME_SUB_S, 0, 0, FALSE, heapID );
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_mb_parent_ss_NSCR,
+        KEYSYS_BG_FRAME_WND_S, 0, 0, FALSE, heapID );
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1080,6 +1104,8 @@ static BOOL DataConv_Display_IsEndCreateDlPlay( void *p_wk_adrs )
   if( is_end_text )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_SUB_S );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
     return TRUE;
   }
   return FALSE;
@@ -1095,6 +1121,16 @@ static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
+  //‘OŒÄ‚ñ‚Å‚¢‚½‚Ì‚ªã‘‚«‚³‚ê‚Ä‚µ‚Ü‚Á‚½‚Ì‚Å“Ç‚İ’¼‚µ
+  {
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_KEY_SYSTEM, HEAPID_KEY_SYSTEM );
+
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_back00_NCGR, 
+        KEYSYS_BG_FRAME_WND_S, 0, 0, FALSE, HEAPID_KEY_SYSTEM );
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+
   KEYSYS_TEXT_Exit( p_wk->p_text );
   GFL_BG_LoadScreenReq( KEYSYS_BG_FRAME_TEXT_M );
 
@@ -1104,4 +1140,10 @@ static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs )
 
   //GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
   //‚±‚±‚Å‚Í‚¿‚ç‚Â‚­‚Ì‚ÅAŸ‚Ì•¶š•`‰æ‚Æˆê‚ÉLoadScreen‚·‚é
+
+  GFL_BG_ClearScreen( KEYSYS_BG_FRAME_SUB_S );
+  GFL_BG_ClearScreen( KEYSYS_BG_FRAME_WND_S );
+
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_SUB_S );
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
 }
