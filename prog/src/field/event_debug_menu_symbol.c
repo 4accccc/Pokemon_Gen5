@@ -51,6 +51,8 @@ static BOOL debugMenuCallProc_SymbolPokeKeepLargeFull( DEBUG_MENU_EVENT_WORK * w
 static BOOL debugMenuCallProc_SymbolPokeKeepSmallFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_SymbolPokeIssyuFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_SymbolPokeIssyuFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk );
 
 
@@ -77,6 +79,71 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_Default =
   0,    //表示サイズX キャラ単位
   0,    //表示サイズY キャラ単位
 };
+
+typedef struct TPOKE_PARAM{
+  u16 monsno:12;
+  u16 form:4;
+}TPOKE_PARAM;
+
+static const TPOKE_PARAM DATA_IssyuTpokeList[] = {
+  { MONSNO_MIRUHOGGU, 0 },	///<ミルホッグ
+  { MONSNO_HAADERIA, 0 },	///<ハーデリア
+  { MONSNO_REPARUDASU, 0 },	///<レパルダス
+  { MONSNO_YANAPPU, 0 },	///<ヤナップ
+  { MONSNO_BAOPPU, 0 },	///<バオップ
+  { MONSNO_HIYAPPU, 0 },	///<ヒヤップ
+  { MONSNO_MAMEPATO, 0 },	///<マメパト
+  { MONSNO_ZEBURAIKA, 0 },	///<ゼブライカ
+  { MONSNO_GANTORU, 0 },	///<ガントル
+  { MONSNO_KOROMORI, 0 },	///<コロモリ
+  { MONSNO_MOGURYUU, 0 },	///<モグリュー
+  { MONSNO_TABUNNE, 0 },	///<タブンネ
+  { MONSNO_DOTEKKOTU, 0 },	///<ドテッコツ
+  { MONSNO_OTAMARO, 0 },	///<オタマロ
+  { MONSNO_NAGEKI, 0 },	///<ナゲキ
+  { MONSNO_DAGEKI, 0 },	///<ダゲキ
+  { MONSNO_HAHAKOMORI, 0 },	///<ハハコモリ
+  { MONSNO_PENDORAA, 0 },	///<ペンドラー
+  { MONSNO_MONMEN, 0 },	///<モンメン
+  { MONSNO_TYURINE, 0 },	///<チュリネ
+  { MONSNO_BASURAO, 0 },	///<バスラオ・赤
+  { MONSNO_BASURAO, 1 },	///<バスラオ・青
+  { MONSNO_WARUBIARU, 0 },	///<ワルビアル
+  { MONSNO_MARAKATTI, 0 },	///<マラカッチ
+  { MONSNO_IWAPARESU, 0 },	///<イワパレス
+  { MONSNO_ZURUGGU, 0 },	///<ズルッグ
+  { MONSNO_SINBORAA, 0 },	///<シンボラー
+  { MONSNO_PUROTOOGA, 0 },	///<プロトーガ
+  { MONSNO_DASUTODASU, 0 },	///<ダストダス
+  { MONSNO_TIRAAMHI, 0 },	///<チラーミィ
+  { MONSNO_GOTIMIRU, 0 },	///<ゴチミル
+  { MONSNO_DABURAN, 0 },	///<ダブラン
+  { MONSNO_KOARUHII, 0 },	///<コアルヒー
+  { MONSNO_BANIRITTI, 0 },	///<バニリッチ
+  { MONSNO_EMONGA, 0 },	///<エモンガ
+  { MONSNO_KABURUMO, 0 },	///<カブルモ
+  { MONSNO_MAMANBOU, 0 },	///<ママンボウ
+  { MONSNO_DENTYURA, 0 },	///<デンチュラ
+  { MONSNO_GIGIARU, 0 },	///<ギギアル
+  { MONSNO_RIGUREE, 0 },	///<リグレー
+  { MONSNO_HITOMOSI, 0 },	///<ヒトモシ
+  { MONSNO_KIBAGO, 0 },	///<キバゴ
+  { MONSNO_KUMASYUN, 0 },	///<クマシュン
+  { MONSNO_TYOBOMAKI, 0 },	///<チョボマキ
+  { MONSNO_MAGGYO, 0 },	///<マッギョ
+  { MONSNO_KOZYOHUU, 0 },	///<コジョフー
+  { MONSNO_KURIMUGAN, 0 },	///<クリムガン
+  { MONSNO_GOBITTO, 0 },	///<ゴビット
+  { MONSNO_KOMATANA, 0 },	///<コマタナ
+  { MONSNO_BAHHURON, 0 },	///<バッフロン
+  { MONSNO_WHOOGURU, 0 },	///<ウォーグル
+  { MONSNO_BARUZIINA, 0 },	///<バルジーナ
+  { MONSNO_KUITARAN, 0 },	///<クイタラン
+  { MONSNO_AIANTO, 0 },	///<アイアント
+};
+
+#define ADD_ISSYU_POKE_MAX  (NELEMS(DATA_IssyuTpokeList))
+#define ADD_POKE_RND  (0xFFFF)
 //--------------------------------------------------------------
 /// proto
 //--------------------------------------------------------------
@@ -90,6 +157,8 @@ static const DEBUG_MENU_LIST DATA_SubSymbolPokeList[] =
   { DEBUG_FIELD_SYMBOL_06, debugMenuCallProc_SymbolPokeKeepSmallFull, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_SYMBOL_07, debugMenuCallProc_SymbolPokeFreeLargeFull, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_SYMBOL_08, debugMenuCallProc_SymbolPokeFreeSmallFull, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_07_01, debugMenuCallProc_SymbolPokeIssyuFreeLargeFull, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_FIELD_SYMBOL_08_01, debugMenuCallProc_SymbolPokeIssyuFreeSmallFull, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_SYMBOL_09, debugMenuCallProc_SymbolPokeCountup, GFL_OVERLAY_BLANK_ID },
 };
 
@@ -184,7 +253,7 @@ static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, voi
  * @brief シンボルポケモンを1体追加する
  */
 //--------------------------------------------------------------
-static void addSymbolPokemon_single( GAMEDATA* gamedata, SYMBOL_ZONE_TYPE zone_type )
+static void addSymbolPokemon_single( GAMEDATA* gamedata, SYMBOL_ZONE_TYPE zone_type, u16 data_idx )
 {
   SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
   SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
@@ -204,12 +273,25 @@ static void addSymbolPokemon_single( GAMEDATA* gamedata, SYMBOL_ZONE_TYPE zone_t
     TPOKE_DATA * tpdata = TPOKE_DATA_Create( HEAPID_FIELDMAP );
     u16 monsno;
     u8 sex;
+    u8 form = 0;
     u8 move_type = GFUser_GetPublicRand0( 8 );
-    do {
-      monsno = GFUser_GetPublicRand0( 492 ) + 1;
-      sex = POKETOOL_GetSex( monsno, 0, 0 );
-    } while ( need_large != TPOKE_DATA_IsSizeBig( gamedata, tpdata, monsno, sex, 0 ) );
-    SymbolSave_Field_Set( symbol_save, monsno, 0, sex, 0, move_type, zone_type );
+    
+    if( data_idx >= ADD_ISSYU_POKE_MAX ){
+      do {
+        monsno = GFUser_GetPublicRand0( 492 ) + 1;
+        sex = POKETOOL_GetSex( monsno, form, 0 );
+      } while ( need_large != TPOKE_DATA_IsSizeBig( gamedata, tpdata, monsno, sex, form ) );
+    }else{
+      monsno = DATA_IssyuTpokeList[data_idx].monsno;
+      form = DATA_IssyuTpokeList[data_idx].form;
+      sex = POKETOOL_GetSex( monsno, form, 0 );
+
+      if( need_large != TPOKE_DATA_IsSizeBig( gamedata, tpdata, monsno, sex, form ) ){
+        TPOKE_DATA_Delete( tpdata );
+        return;
+      }
+    }
+    SymbolSave_Field_Set( symbol_save, monsno, 0, sex, form, move_type, zone_type );
     TPOKE_DATA_Delete( tpdata );
   }
 }
@@ -226,9 +308,29 @@ static void addSymbolPokemons_full( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_t
 
   while ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE )
   {
-    addSymbolPokemon_single( gamedata, zone_type );
+    addSymbolPokemon_single( gamedata, zone_type, ADD_POKE_RND );
   }
 }
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンを満タンにする(イッシュ)
+ */
+//--------------------------------------------------------------
+static void addSymbolPokemons_issyu_full( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
+{
+  int i;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
+  SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
+  
+  for(i = 0;i < ADD_ISSYU_POKE_MAX;i++){
+    if ( SymbolSave_CheckSpace( symbol_save, zone_type ) == SYMBOL_SPACE_NONE ){
+      break;
+    }
+    addSymbolPokemon_single( gamedata, zone_type, i );
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief シンボルポケモンを任意の数だけ追加する
@@ -244,7 +346,7 @@ static void addSymbolPokemons_multi( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_
   while( ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE ) &&
          ( add_count < num ) )
   {
-    addSymbolPokemon_single( gamedata, zone_type );
+    addSymbolPokemon_single( gamedata, zone_type, ADD_POKE_RND );
     add_count++;
   }
 } 
@@ -327,6 +429,20 @@ static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * w
 static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk )
 {
   addSymbolPokemons_full( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_SMALL );
+  return FALSE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeIssyuFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk )
+{
+  addSymbolPokemons_issyu_full( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_LARGE );
+  return FALSE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeIssyuFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk )
+{
+  addSymbolPokemons_issyu_full( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_SMALL );
   return FALSE;
 }
 //--------------------------------------------------------------
