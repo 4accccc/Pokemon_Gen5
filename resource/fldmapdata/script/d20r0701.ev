@@ -141,6 +141,9 @@ EVENT_START		ev_pos_d20r0701_exit_01
 
 		//マップチェンジ
 		_MAP_CHANGE_NO_FADE( ZONE_ID_D20R0801, 13, 3, 22, DIR_UP )
+
+    // メダル:いせきマイスター
+    _SET_MEDAL_ACHIVE( MDLID_ISEKI )
 	
 	ELSE
 	
