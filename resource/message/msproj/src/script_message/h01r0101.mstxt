@@ -58,12 +58,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうぶに　ひつよう　なのは
-せんてひっしょう　だな！▽
-ということで　これを！！▼</Text>
+			<Text>スカイアローブリッジは
+ひたすら　つよさを　もとめて▽
+つくられた　はし　なんだってよ▼
+どんな　ポケモンたちが
+どんな　きもちで　つくったんだろうな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:57:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71,12 +73,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝負に　必要なのは
-先手必勝　だな！▽
-ということで　これを！！▼</Text>
+			<Text>スカイアローブリッジは
+ひたすら　強度を　求めて▽
+造られた　橋なんだってよ▼
+どんな　ポケモンたちが
+どんな　気持ちで　造ったんだろうな</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:57:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85,75 +89,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アイテム入手処理
-　No217「せんせいのツメ」</Comment>
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>MOUNTAIN
-山男</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_h01r0101_mountain_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ポケモンに　もたせておけば
-あいてより　はやく　わざをだせる▼
-かもしれない　どうぐ▼
-それが　いま　わたした
-せんせいのツメ　だよ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモンに　所持させれば
-相手より　速く　技をだせる▼
-かもしれない　道具▼
-それが　今　渡した
-せんせいのツメ　だよ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・アイテム入手後</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:55:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -183,15 +122,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よのなかには　どうぐマニアがいて
-ごくごく　ふつうの　どうぐでも▽
-すごく　たかくで　かってくれるの！▼
-つかいみちが　ない　どうぐでも
-マニアに　うれるかも　しれないし▽
-たいせつに　もっていたら？</Text>
+			<Text>そらをとぶを　つかえば　ひとっとび▼
+でも　あえて　あの　はしを　わたって
+ヒウンへ　いく　ひとも　いるのよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:01:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,15 +135,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>世の中には　道具マニアがいて
-ごくごく　普通の　道具でも▽
-すごく　高価で　買いとってくれるの！▼
-使い道がない　道具でも
-マニアに　売れるかも　しれないし▽
-大切に　持っていたら？</Text>
+			<Text>そらをとぶを　使えば　ひとっとび▼
+でも　あえて　あの橋を　渡って
+ヒウンへ　行く　人も　いるのよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T10:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -215,10 +148,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀</Comment>
+			<Comment>♀
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:55:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
