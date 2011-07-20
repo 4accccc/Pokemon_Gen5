@@ -54,7 +54,7 @@
 #define STAGE_Y_LOW   (12*FIELD_CONST_GRID_FX32_SIZE)
 #define STAGE_Z       (7*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 
-#define STAGE_MOVE_SPD  (10*FX32_ONE)    // 落下速度
+#define STAGE_MOVE_SPD  (12*FX32_ONE)    // 落下速度
 
 // ステージの反動
 #define STAGE_REACTION_SYNC       ( 1 )   // 1周期のシンク数
@@ -300,13 +300,13 @@ static FIELD_TASK_RETVAL CameraShake( void* wk );
 static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
 static void DEBUGMENU_Exit( void );
 
-static u32  debug_spd   = 10;
+static u32  debug_spd   = 12;
 static s16  debug_height = STAGE_REACTION_HEIGHT;
 static s16  debug_height_sub = STAGE_REACTION_HEIGHT_SUB;
 static u32  debug_sync = STAGE_REACTION_SYNC;
-static u32  debug_cam_width = 8;
+static u32  debug_cam_width = 4;
 static u32  debug_cam_sync = 3;
-static u32  debug_cam_time = 8;
+static u32  debug_cam_time = 10;
 
 #endif // FIGHT_DEBUG_MENU
 
@@ -911,9 +911,9 @@ static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk )
       shakeParam.Sync            = debug_cam_sync;
       shakeParam.Time            = debug_cam_time;
 #else
-      shakeParam.Height           = 8;
+      shakeParam.Height           = 4;
       shakeParam.Sync            = 3;
-      shakeParam.Time            = 8;
+      shakeParam.Time            = 10;
 #endif
 
       // ステージの落ちるフレーム数計算
