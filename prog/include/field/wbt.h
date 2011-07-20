@@ -33,7 +33,6 @@ enum {
 //------------------------------------------------------------------
 typedef enum {
   WBTCUP_NULL,     ///<トーナメント未指定
-  WBTCUP_ALL,      ///<オールトーナメント
   WBTCUP_CHAMPION, ///<チャンピオントーナメント
   WBTCUP_POKETYPE, ///<タイプトーナメント
   WBTCUP_DOWNLOAD, ///<ダウンロードトーナメント
@@ -47,6 +46,10 @@ typedef enum {
   WBTCUP_WORLD,       ///<ワールドトーナメント     
   WBTCUP_WCS,         ///<WCSトーナメント
   WBTCUP_HODOMOE_EVENT, ///<ホドモエトーナメント（イベント）           
+  WBTCUP_RENTAL,        ///<レンタルトーナメント
+  WBTCUP_RENTALMASTER,  ///<レンタルマスタートーナメント
+  WBTCUP_SHUFFLE,       ///<シャッフルトーナメント
+  WBTCUP_SHUFFLEMASTER, ///<シャッフルマスタートーナメント
 
   WBTCUP_MAX,
 }WBTCUP;

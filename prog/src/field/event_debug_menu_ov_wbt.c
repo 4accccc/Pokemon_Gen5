@@ -468,7 +468,7 @@ static BOOL debugMenuCallProc_WBTList( DEBUG_WBT_WORK *p_wk )
   wbtlist_param = WBTLIST_PARAM_Create( HEAPID_PROC, p_wk->gmSys );
   WBTLIST_PARAM_Setup_Debug(
       p_wk->gmSys, wbtlist_param,
-      WBTCUP_ALL, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
+      WBTCUP_HODOMOE, WBTRULE_SINGLE, p_wk->stage, p_wk->Trbuffer, p_wk->DebugNum );
   wbtlist_param->call_fade_flag = TRUE; //呼び出し前後でフィールドフェード実行
   new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_ShowTournamentList, (void *)wbtlist_param );

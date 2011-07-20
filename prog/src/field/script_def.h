@@ -640,19 +640,22 @@
 //  WBT関連定義
 //--------------------------------------------------------------
 #define SCR_WBT_CUP_NULL              (0) ///<トーナメント未選択
-#define SCR_WBT_CUP_ALL               (1) ///<オールトーナメント
-#define SCR_WBT_CUP_CHAMPION          (2) ///<チャンピオントーナメント
-#define SCR_WBT_CUP_POKETYPE          (3) ///<タイプトーナメント
-#define SCR_WBT_CUP_DOWNLOAD          (4) ///<ダウンロードトーナメント
-#define SCR_WBT_CUP_HODOMOE           (5) ///<ホドモエトーナメント
-#define SCR_WBT_CUP_ISSYU             (6) ///<イッシュリーダーズトーナメント
-#define SCR_WBT_CUP_KANTO             (7) ///<カントーリーダーズトーナメント
-#define SCR_WBT_CUP_JOUTO             (8) ///<ジョウトリーダーズトーナメント
-#define SCR_WBT_CUP_HOUEN             (9) ///<ホウエンリーダーズトーナメント
-#define SCR_WBT_CUP_SINOU            (10) ///<シンオウリーダーズトーナメント
-#define SCR_WBT_CUP_WORLD            (11) ///<ワールドバトルトーナメント
-#define SCR_WBT_CUP_WCS              (12) ///<WCSトーナメント
-#define SCR_WBT_CUP_HODOMOE_EVENT    (13) ///<ホドモエトーナメント（イベント）
+#define SCR_WBT_CUP_CHAMPION          (1) ///<チャンピオントーナメント
+#define SCR_WBT_CUP_POKETYPE          (2) ///<タイプエキスパートトーナメント
+#define SCR_WBT_CUP_DOWNLOAD          (3) ///<ダウンロードトーナメント
+#define SCR_WBT_CUP_HODOMOE           (4) ///<ホドモエトーナメント
+#define SCR_WBT_CUP_ISSYU             (5) ///<イッシュリーダーズトーナメント
+#define SCR_WBT_CUP_KANTO             (6) ///<カントーリーダーズトーナメント
+#define SCR_WBT_CUP_JOUTO             (7) ///<ジョウトリーダーズトーナメント
+#define SCR_WBT_CUP_HOUEN             (8) ///<ホウエンリーダーズトーナメント
+#define SCR_WBT_CUP_SINOU             (9) ///<シンオウリーダーズトーナメント
+#define SCR_WBT_CUP_WORLD            (10) ///<ワールドバトルトーナメント
+#define SCR_WBT_CUP_WCS              (11) ///<WCSトーナメント
+#define SCR_WBT_CUP_HODOMOE_EVENT    (12) ///<ホドモエトーナメント（イベント）
+#define SCR_WBT_CUP_RENTAL           (13) ///<レンタルトーナメント
+#define SCR_WBT_CUP_RENTALMASTER     (14) ///<レンタルマスタートーナメント
+#define SCR_WBT_CUP_SHUFFLE          (15) ///<シャッフルトーナメント
+#define SCR_WBT_CUP_SHUFFLEMASTER    (16) ///<シャッフルマスタートーナメント
 
 
 #define SCR_WBT_RULE_NULL             (0) ///<ルールなし

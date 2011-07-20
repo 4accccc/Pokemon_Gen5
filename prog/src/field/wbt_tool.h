@@ -36,6 +36,16 @@ enum {
   WBT_TRCODE_MOB_LAST = 114,
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef enum {
+  WBTREG_ALL = 0,
+  WBTREG_SUBWAY,
+  WBTREG_POKETYPE,
+  WBTREG_WCS,
+  WBTREG_DOWNLOAD,
+}WBTREG_ID;
+
 //-----------------------------------------------------------------------------
 /**
  * @brief WBTÇ…Ç‹Ç¬ÇÌÇÈîªíËèàóù
@@ -76,6 +86,7 @@ extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID h
 extern u8 WBTTOOL_GetPartyMaxByRule( WBTRULE rule );
 extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
 extern WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype );
+extern WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

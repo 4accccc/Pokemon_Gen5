@@ -22,6 +22,10 @@
 #include "battle/battle.h"
 
 
+/**
+ * trainer script ID ( Single 3000Å`ÅA2vs2 5000Å`Åj
+ * --> trainer ID( 0 org ) <--> trainer flag ID ( TR_FLAG_STARTÅ`Åj
+ */
 
 
 //============================================================================================
