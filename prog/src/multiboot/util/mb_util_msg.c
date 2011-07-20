@@ -277,7 +277,7 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
     PRINT_UTIL_Trans( &msgWork->printUtil, msgWork->printQue );
   }
   if( msgWork->isUpdateQue == TRUE &&
-      PRINTSYS_QUE_IsFinished( msgWork->printQue ) == TRUE )
+      !PRINTSYS_QUE_IsExistTarget(msgWork->printQue, GFL_BMPWIN_GetBmp(msgWork->msgWin)) )
   {
     GFL_BMPWIN_TransVramCharacter( msgWork->msgWin );
     msgWork->isUpdateQue = FALSE;

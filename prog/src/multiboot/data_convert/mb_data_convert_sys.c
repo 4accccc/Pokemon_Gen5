@@ -33,6 +33,14 @@
 #include "arc/arc_extern.h"
 #include "multiboot/wb_save_convert.h"
 
+
+#ifdef PM_DEBUG
+
+#define DEBUG_MB_IDENTIFY_DUMMYCARD //ダミーカードを認識する
+//#define DEBUG_MB_ERROR_KEYINPUT     //デバッグ操作でエラーをだす
+
+#endif
+
 //=============================================================================
 /**
  *					定数宣言
@@ -77,6 +85,7 @@ struct _MB_DATA_CONVERT_WORK
   BOOL          is_net_err;
   HEAPID        heapID;
   fx32          scroll;
+  u32           cnt;
 
   WB_SAVE_CONV_ALL_DATA *p_conv_data;
 
@@ -185,8 +194,10 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Init
   p_wk->p_graphic = MB_DATA_CONVERT_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_MULTIBOOT );
   p_wk->p_comm  = MB_COMM_CreateSystem( p_wk->heapID );
   p_wk->p_msg   = MB_MSG_MessageInit( p_wk->heapID, MB_DATACONV_BG_MSG_M, MB_DATACONV_BG_MSG_M, FILE_MSGID_MB , TRUE , TRUE );
-
   MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
+  MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_DC_01 );
+  MB_MSG_SetDispTimeIcon( p_wk->p_msg, TRUE );
+
   MB_MSG_TitleCreateWindow( p_wk->p_msg );
   MB_MSG_TitleDisp( p_wk->p_msg, MSG_MB_DC_TITLE );
 
@@ -198,6 +209,11 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Init
   PMSND_InitMultiBoot( p_wk->p_snd_buff );
 
   Mb_DataConv_Bg_Load( p_wk, p_wk->heapID );
+
+  WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+  WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  WIPE_ResetWndMask(WIPE_DISP_MAIN);
+  WIPE_ResetWndMask(WIPE_DISP_SUB);
 
   Mb_DataConv_Seq_Set( p_wk, Mb_DataConv_SeqFunc_FadeIn, p_seq );
 
@@ -231,10 +247,7 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Exit
     MB_DATA_TermSystem( p_wk->p_data );
   }
 
-  if( p_wk->p_msg != NULL )
-  {
-    MB_MSG_MessageTerm( p_wk->p_msg );
-  }
+  MB_MSG_MessageTerm( p_wk->p_msg );
 
   if( p_wk->p_conv_data != NULL )
   {
@@ -282,11 +295,10 @@ static GFL_PROC_RESULT Mb_Data_Convert_Proc_Main
   //サウンドメイン
   PMSND_Main();
 
-  if( p_wk->p_msg != NULL )
-  {
-    MB_MSG_MessageMain( p_wk->p_msg );
-  }
+  //メッセージ描画
+  MB_MSG_MessageMain( p_wk->p_msg );
 
+  //BG移動
   Mb_DataConv_Bg_Main( p_wk );
 
   //シーケンス処理
@@ -349,11 +361,12 @@ static BOOL Mb_DataConv_SeqFunc_FadeIn( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   switch( *p_seq )
   {
   case SEQ_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
     (*p_seq)++;
     break;
   case SEQ_WAIT:
-		if( !GFL_FADE_CheckFade() )
+    if( WIPE_SYS_EndCheck() == TRUE )
 		{	
 		  (*p_seq)++;
 		}
@@ -403,8 +416,6 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   {
   case SEQ_COMM_INIT:
     MB_COMM_InitComm( p_wk->p_comm );
-    MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_DC_01 );
-    MB_MSG_SetDispTimeIcon( p_wk->p_msg, TRUE );
     (*p_seq)++;
     break;
   case SEQ_COMM_WAIT:
@@ -449,7 +460,13 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
 
     MB_DATA_ResetSaveLoad( p_wk->p_data );
 
-#if PM_DEBUG
+#ifdef DEBUG_MB_ERROR_KEYINPUT
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_B )
+    {
+      p_wk->card_type = CARD_TYPE_INVALID;
+    }
+#endif
+#ifdef DEBUG_MB_IDENTIFY_DUMMYCARD
     if( p_wk->card_type == CARD_TYPE_DUMMY )
     {
       MB_DATA_SetCardType( p_wk->p_data, CARD_TYPE_WB );
@@ -477,11 +494,23 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_LOAD_DATA:
     if( MB_DATA_LoadDataFirst( p_wk->p_data ) == TRUE )
     {
+#ifdef DEBUG_MB_ERROR_KEYINPUT
+      if( GFL_UI_KEY_GetCont() == PAD_BUTTON_X )
+      {
+        MB_DATA_SetErrorState( p_wk->p_data, DES_MISS_LOAD_BACKUP );
+      }
+      else if( GFL_UI_KEY_GetCont() == PAD_BUTTON_Y )
+      {
+        MB_DATA_SetErrorState( p_wk->p_data, DES_ANOTHER_COUNTRY );
+      }
+#endif
+
       if( MB_DATA_GetErrorState( p_wk->p_data ) == DES_NONE )
       {
+        MB_MSG_MessageDispNoWait( p_wk->p_msg, MSG_MB_DC_09 );
+        MB_MSG_SetDispTimeIcon( p_wk->p_msg, TRUE );
+        p_wk->cnt = 0;
         (*p_seq) = SEQ_DATA_CONV;
-        MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
-        MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_09 , p_wk->p_comm_init->msgSpeed );
       }
       else
       {
@@ -511,28 +540,30 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
     {
       p_wk->p_conv_data = WB_SAVE_CONV_AllocConvertAllData( MB_DATA_GetSaveData(p_wk->p_data), p_wk->heapID );
       (*p_seq)++;
+      p_wk->cnt++;
     }
     break;
 
   case SEQ_TRANS_SAVE_SEND:
-    if( MB_COMM_Send_CommonData( p_wk->p_comm, &p_wk->p_conv_data, sizeof(WB_SAVE_CONV_ALL_DATA) ) == TRUE )
+    p_wk->cnt++;
+    if( MB_COMM_Send_CommonData( p_wk->p_comm, p_wk->p_conv_data, sizeof(WB_SAVE_CONV_ALL_DATA) ) == TRUE )
     {
       (*p_seq)++;
     }
     break;
   case SEQ_TRANS_SAVE_SEND_WAIT:
+    p_wk->cnt++;
     if( MB_COMM_IsPost_PostCommon( p_wk->p_comm ) )
     {
       (*p_seq)++;
     }
     break;
   case SEQ_TRANS_SAVE_FINISH_WAIT:
+    p_wk->cnt++;
     if( MB_COMM_IsPostMovieFinishMachine( p_wk->p_comm ) )
     {
-      if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) )
+      if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) && p_wk->cnt > 120 )
       {
-        MB_MSG_MessageHide( p_wk->p_msg );
-        MB_MSG_MessageCreateWindow( p_wk->p_msg, MMWT_NORMAL );
         MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05 , p_wk->p_comm_init->msgSpeed );
         MB_COMM_ReqDisconnect( p_wk->p_comm );
         (*p_seq) = SEQ_WAIT_EXIT_COMM;
@@ -543,9 +574,6 @@ static BOOL Mb_DataConv_SeqFunc_Main( MB_DATA_CONVERT_WORK *p_wk, int *p_seq )
   case SEQ_WAIT_NEXT_GAME_ERROR_MSG:
     if( MB_MSG_CheckPrintStreamIsFinish(p_wk->p_msg) )
     {
-      //初期タイムアウトから来るとmsgSpdもらってない。
-      //const int msgSpd = ( p_wk->p_comm_init != NULL ? p_wk->p_comm_init->msgSpeed : 1 );
-      //MB_MSG_MessageDisp( p_wk->p_msg, MSG_MB_DC_05 , msgSpd );
       MB_COMM_ReqDisconnect( p_wk->p_comm );
       (*p_seq)++;
     }
@@ -589,11 +617,12 @@ static BOOL Mb_DataConv_SeqFunc_FadeOut( MB_DATA_CONVERT_WORK *p_wk, int *p_seq 
   switch( *p_seq )
   {
   case SEQ_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
     (*p_seq)++;
     break;
   case SEQ_WAIT:
-		if( !GFL_FADE_CheckFade() )
+    if( WIPE_SYS_EndCheck() == TRUE )
 		{	
 		  (*p_seq)++;
 		}

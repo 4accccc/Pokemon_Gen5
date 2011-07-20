@@ -478,6 +478,11 @@ u8  MB_DATA_GetErrorState( MB_DATA_WORK *dataWork )
   return dataWork->errorState;
 }
 
+void  MB_DATA_SetErrorState( MB_DATA_WORK *dataWork, u8 error )
+{
+  dataWork->errorState  = error;
+}
+
 BOOL  MB_DATA_IsFinishSaveFirst( MB_DATA_WORK *dataWork )
 {
   return dataWork->isFinishSaveFirst;

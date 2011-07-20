@@ -25,6 +25,7 @@ extern  BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork );
 extern  BOOL  MB_DATA_SaveData( MB_DATA_WORK *dataWork );
 extern  void  MB_DATA_CancelSave( MB_DATA_WORK *dataWork );
 extern  u8    MB_DATA_GetErrorState( MB_DATA_WORK *dataWork );
+extern  void  MB_DATA_SetErrorState( MB_DATA_WORK *dataWork, u8 error );
 extern  BOOL  MB_DATA_LoadRomCRC( MB_DATA_WORK *dataWork );
 extern  BOOL  MB_DATA_CheckRomCRC( MB_DATA_WORK *dataWork );
 

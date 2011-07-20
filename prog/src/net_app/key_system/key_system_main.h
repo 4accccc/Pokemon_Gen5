@@ -267,7 +267,7 @@ typedef struct
 
   WORDSET                 *p_word;
 
-  KEYSYS_BG_WORK          bg;
+  KEYSYS_BG_WORK          *p_bg;
 
   KEYSYS_OBJ_WORK         obj;
 
@@ -301,6 +301,9 @@ typedef struct
 
   BOOL                    is_parent;
 
+  GFL_PROCSYS					    *p_procsys;
+  void                    *p_proc_param;
+
 }KEY_SYSTEM_WORK;
 
 //-------------------------------------
@@ -314,6 +317,8 @@ extern void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
 //-------------------------------------
 /// BG
 //=====================================
+extern KEYSYS_BG_WORK * KEYSYS_BG_Init( HEAPID heapID );
+extern void KEYSYS_BG_Exit( KEYSYS_BG_WORK *p_wk );
 extern void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID );
 extern void KEYSYS_BG_Main( KEYSYS_BG_WORK *p_wk );
 
@@ -346,3 +351,9 @@ extern void KEYSYS_MAP_Erase( KEYSYS_MAP *p_wk, const char *cp_key );
 extern BOOL KEYSYS_MAP_IsExist( const KEYSYS_MAP *cp_wk, const char *cp_key );
 extern u32 KEYSYS_MAP_GetValue( const KEYSYS_MAP *cp_wk, const char *cp_key );
 extern void KEYSYS_MAP_Clear( KEYSYS_MAP *p_wk );
+
+//-------------------------------------
+/// ETC
+//=====================================
+extern void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID );
+extern void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk );

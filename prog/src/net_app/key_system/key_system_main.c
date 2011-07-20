@@ -39,6 +39,7 @@
 
 //デバッグ
 #include "test/nagihashi/debugwin_keysystem.h"
+#include "test/nagihashi/debugwin_data_convert.h"
 
 //外部公開
 #include "net_app/key_system.h"
@@ -129,15 +130,15 @@ static GFL_PROC_RESULT Key_System_Proc_Init
 {
   KEY_SYSTEM_WORK *p_wk;
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(multiboot) );
-
   //ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, 0x40000 );
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(KEY_SYSTEM_WORK), HEAPID_KEY_SYSTEM );
   GFL_STD_MemClear( p_wk, sizeof(KEY_SYSTEM_WORK) );
   p_wk->p_param = p_param_adrs;
+
+  //サブプロセス
+  p_wk->p_procsys				= GFL_PROC_LOCAL_boot( HEAPID_KEY_SYSTEM );
 
   //もし引数がNULLならばタイトルから呼び出された＝APPモード
   if( p_param_adrs == NULL )
@@ -148,17 +149,6 @@ static GFL_PROC_RESULT Key_System_Proc_Init
     ZONEDATA_Open( HEAPID_KEY_SYSTEM );
   }
 
-  //管理外セーブシステム
-  p_wk->p_outside_sv = OutsideSave_SystemLoad( HEAPID_KEY_SYSTEM );
-  {
-    OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr( p_wk->p_outside_sv );
-    p_wk->p_key_sv = OUTSIDE_PERMANENT_GetKeySystem( p_per );
-    p_wk->p_data_sv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
-  }
-
-  //グラフィック初期化
-  p_wk->p_graphic = KEY_SYSTEM_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_KEY_SYSTEM );
-
   //ネット初期化
   {
     KEYSYS_NET_INIT_PARAM param;
@@ -167,40 +157,12 @@ static GFL_PROC_RESULT Key_System_Proc_Init
     p_wk->p_net = KEYSYS_NET_Init( &param, HEAPID_KEY_SYSTEM );
   }
 
-  //共通モジュールの初期化
-  p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_KEY_SYSTEM );
-  p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_KEY_SYSTEM );
-  p_wk->p_msg		  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_key_system_dat, HEAPID_KEY_SYSTEM );
-  p_wk->p_word    = WORDSET_Create( HEAPID_KEY_SYSTEM );
-  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 128, HEAPID_KEY_SYSTEM );
-
-  //BG
-  KEYSYS_BG_Load( &p_wk->bg, HEAPID_KEY_SYSTEM );
-
-  //OBJ
-  KEYSYS_OBJ_Init( &p_wk->obj, p_wk->p_graphic, HEAPID_KEY_SYSTEM );
-  KEYSYS_OBJ_Load( &p_wk->obj, HEAPID_KEY_SYSTEM );
-
   //選択履歴
   KEYSYS_MAP_Init( &p_wk->select, HEAPID_KEY_SYSTEM );
 
   //シーケンス
   p_wk->p_seq = KEYSYS_SEQ_Init( 8, p_wk, NULL, HEAPID_KEY_SYSTEM );
 
-  //ディスプレイ作成
-  p_wk->p_display = KEYSYS_DISPLAY_Init( p_wk, HEAPID_KEY_SYSTEM );
- 
-  //上画面、下部テキスト作成
-  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
-  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
-  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
-
-  //上画面タイトル作成
-  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
-  KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
-
-  KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
-  KEYSYS_DATACONVFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
 
   {
     //初回シーケンス
@@ -213,11 +175,9 @@ static GFL_PROC_RESULT Key_System_Proc_Init
     KEYSYS_SEQ_Next( p_wk->p_seq, sc_init_seq[p_wk->p_param->mode] );
   }
 
-#ifdef PM_DEBUG
-  //デバッグウィンドウ
-  DEBUGWIN_InitProc( KEYSYS_BG_FRAME_TEXT_M, p_wk->p_font );
-  DEBUGWIN_KEY_SYSTEM_Init( p_wk->p_key_sv, HEAPID_KEY_SYSTEM );
-#endif //PM_DEBUG
+  //一時モジュールの作成
+  KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
+
 
   return GFL_PROC_RES_FINISH;
 }
@@ -238,53 +198,14 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-#ifdef PM_DEBUG
-  //デバッグウィンドウ
-  DEBUGWIN_KEY_SYSTEM_Exit();
-  DEBUGWIN_ExitProc();
-#endif //PM_DEBUG
-
-  //念のためディスプレイ消去
-  KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );
-
-  //テキスト破棄
-  if( p_wk->p_title )
-  {
-    KEYSYS_TEXT_Exit( p_wk->p_title );
-    p_wk->p_title = NULL;
-  }
-
-  //テキスト破棄
-  if( p_wk->p_text )
-  {
-    KEYSYS_TEXT_Exit( p_wk->p_text );
-    p_wk->p_text = NULL;
-  }
-
-  //ディスプレイ
-  KEYSYS_DISPLAY_Exit( p_wk->p_display );
+  //一時モジュールの破棄
+  KEYSYS_ExitTemporaryModules( p_wk );
 
   //シーケンス破棄
   KEYSYS_SEQ_Exit( p_wk->p_seq );
 
-  //OBJ破棄
-  KEYSYS_OBJ_Release( &p_wk->obj );
-
-  //共通モジュール破棄
-  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
-  WORDSET_Delete( p_wk->p_word );
-	GFL_MSG_Delete( p_wk->p_msg );
-	PRINTSYS_QUE_Delete( p_wk->p_que );
-	GFL_FONT_Delete( p_wk->p_font );
-
   //通信処理破棄
   KEYSYS_NET_Exit( p_wk->p_net );
-
-  //グラフィック破棄
-  KEY_SYSTEM_GRAPHIC_Exit( p_wk->p_graphic );
-
-  //管理外セーブ
-  OutsideSave_SystemUnload( p_wk->p_outside_sv );
 
   //もし引数がNULLならばタイトルから呼び出された＝APPモード
   if( p_param_adrs == NULL )
@@ -297,14 +218,13 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
     OS_ResetSystem(0);
   }
 
+  //サブプロセス
+	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
+
   //プロセスワーク破棄
   GFL_PROC_FreeWork( p_proc );
   //ヒープ破棄
   GFL_HEAP_DeleteHeap( HEAPID_KEY_SYSTEM );
-
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(multiboot) );
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
-
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -326,6 +246,7 @@ static GFL_PROC_RESULT Key_System_Proc_Main
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   //通信エラー処理
+  if( p_wk->p_net )
   {
     KEYSYS_NET_ERROR_TYPE err = KEYSYS_NET_HandleError( p_wk->p_net );
     switch( err )
@@ -357,19 +278,34 @@ static GFL_PROC_RESULT Key_System_Proc_Main
   KEYSYS_SEQ_Main( p_wk->p_seq );
 
   //グラフィック描画
-  KEY_SYSTEM_GRAPHIC_2D_Draw( p_wk->p_graphic );
+  if( p_wk->p_graphic )
+  {
+    KEY_SYSTEM_GRAPHIC_2D_Draw( p_wk->p_graphic );
+  }
 
   //画面作成・破棄メイン
-  KEYSYS_DISPLAY_Main( p_wk->p_display );
+  if( p_wk->p_display )
+  {
+    KEYSYS_DISPLAY_Main( p_wk->p_display );
+  }
 
   //BG処理メイン
-  KEYSYS_BG_Main( &p_wk->bg );
+  if( p_wk->p_bg )
+  {
+    KEYSYS_BG_Main( p_wk->p_bg );
+  }
 
   //キューメイン
-  PRINTSYS_QUE_Main( p_wk->p_que );
+  if( p_wk->p_que )
+  {
+    PRINTSYS_QUE_Main( p_wk->p_que );
+  }
 
   //タイトル描画
-  KEYSYS_TEXT_Draw( p_wk->p_title );
+  if( p_wk->p_title )
+  {
+    KEYSYS_TEXT_Draw( p_wk->p_title );
+  }
 
   //テキスト描画
   if( p_wk->p_text )
@@ -396,7 +332,10 @@ static GFL_PROC_RESULT Key_System_Proc_Main
   }
 
   //通信処理
-  KEYSYS_NET_Main( p_wk->p_net );
+  if( p_wk->p_net )
+  {
+    KEYSYS_NET_Main( p_wk->p_net );
+  }
 
   //終了チェック
   if( KEYSYS_SEQ_IsEnd( p_wk->p_seq ) )
@@ -582,6 +521,31 @@ void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 #define KEYSYS_BG_SCROLL_SPEED     (-FX32_CONST(0.2))
 //----------------------------------------------------------------------------
 /**
+ *	@brief  BG初期化
+ *
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+KEYSYS_BG_WORK * KEYSYS_BG_Init( HEAPID heapID )
+{
+  KEYSYS_BG_WORK *p_wk = GFL_HEAP_AllocClearMemory(heapID,sizeof(KEYSYS_BG_WORK));
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG破棄
+ *
+ *	@param	KEYSYS_BG_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_BG_Exit( KEYSYS_BG_WORK *p_wk )
+{
+  GFL_HEAP_FreeMemory(p_wk);
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  BG読み込み
  *
  *	@param	KEYSYS_WORK *p_wk  ワーク
@@ -590,7 +554,6 @@ void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 //-----------------------------------------------------------------------------
 void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
 {
-  GFL_STD_MemClear( p_wk, sizeof(KEYSYS_BG_WORK));
   p_wk->heapID = heapID;
 
   //最初にクリアキャラセット
@@ -1083,6 +1046,141 @@ void KEYSYS_MAP_Clear( KEYSYS_MAP *p_wk )
     p_wk->data[i].value = 0;
   }
 }
+//=============================================================================
+/**
+ *  その他
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一時モジュールの作成（別プロセスから帰ってきた際に作成すること）
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ *	@param	heapID ヒープID
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
+{
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(multiboot) );
+
+  //管理外セーブシステム
+  p_wk->p_outside_sv = OutsideSave_SystemLoad( heapID );
+  {
+    OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr( p_wk->p_outside_sv );
+    p_wk->p_key_sv = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+    p_wk->p_data_sv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
+  }
+  
+  //それぞれの初期化
+  KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
+  KEYSYS_DATACONVFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
+
+  //グラフィック初期化
+  p_wk->p_graphic = KEY_SYSTEM_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, heapID );
+
+  //共通モジュールの初期化
+  p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+  p_wk->p_que			= PRINTSYS_QUE_Create( heapID );
+  p_wk->p_msg		  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_key_system_dat, heapID );
+  p_wk->p_word    = WORDSET_Create( heapID );
+  p_wk->p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
+
+  //BG
+  p_wk->p_bg = KEYSYS_BG_Init( heapID );
+  KEYSYS_BG_Load( p_wk->p_bg, heapID );
+
+  //OBJ
+  KEYSYS_OBJ_Init( &p_wk->obj, p_wk->p_graphic, heapID );
+  KEYSYS_OBJ_Load( &p_wk->obj, heapID );
+
+  //ディスプレイ作成
+  p_wk->p_display = KEYSYS_DISPLAY_Init( p_wk, heapID );
+
+ 
+  //上画面、下部テキスト作成
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+
+  //上画面タイトル作成
+  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+
+#ifdef PM_DEBUG
+  //デバッグウィンドウ
+  DEBUGWIN_InitProc( KEYSYS_BG_FRAME_TEXT_M, p_wk->p_font );
+  DEBUGWIN_KEY_SYSTEM_Init( p_wk->p_key_sv, heapID );
+  DEBUGWIN_DATA_CONVERT_Init( p_wk->p_data_sv, heapID );
+#endif //PM_DEBUG
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  一時モジュールの破棄（別プロセスの際に破棄すること）
+ *
+ *	@param	KEY_SYSTEM_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
+{
+#ifdef PM_DEBUG
+  //デバッグウィンドウ
+  DEBUGWIN_DATA_CONVERT_Exit();
+  DEBUGWIN_KEY_SYSTEM_Exit();
+  DEBUGWIN_ExitProc();
+#endif //PM_DEBUG
+
+  //念のためディスプレイ消去
+  KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );
+
+  //タイトル破棄
+  if( p_wk->p_title )
+  {
+    KEYSYS_TEXT_Exit( p_wk->p_title );
+    p_wk->p_title = NULL;
+  }
+
+  //テキスト破棄
+  if( p_wk->p_text )
+  {
+    KEYSYS_TEXT_Exit( p_wk->p_text );
+    p_wk->p_text = NULL;
+  }
+
+  //ディスプレイ
+  KEYSYS_DISPLAY_Exit( p_wk->p_display );
+  p_wk->p_display = NULL;
+
+  KEYSYS_BG_Exit( p_wk->p_bg );
+  p_wk->p_bg = NULL;
+
+  //OBJ破棄
+  KEYSYS_OBJ_Release( &p_wk->obj );
+
+  //グラフィック破棄
+  KEY_SYSTEM_GRAPHIC_Exit( p_wk->p_graphic );
+  p_wk->p_graphic = NULL;
+
+  //管理外セーブ
+  OutsideSave_SystemUnload( p_wk->p_outside_sv );
+  p_wk->p_outside_sv = NULL;
+
+  //共通モジュール破棄
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+  p_wk->p_strbuf = NULL;
+  WORDSET_Delete( p_wk->p_word );
+  p_wk->p_word = NULL;
+	GFL_MSG_Delete( p_wk->p_msg );
+  p_wk->p_msg = NULL;
+	PRINTSYS_QUE_Delete( p_wk->p_que );
+  p_wk->p_que = NULL;
+	GFL_FONT_Delete( p_wk->p_font );
+  p_wk->p_font = NULL;
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(multiboot) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+}
 
 //=============================================================================
 /**
@@ -1340,7 +1438,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
   //タイトル
   KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, KEYSYS_STR_76, KEYSYS_TEXT_TYPE_QUE );
 
-  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
 }
 //----------------------------------------------------------------------------
 /**

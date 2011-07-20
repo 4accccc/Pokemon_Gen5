@@ -263,6 +263,7 @@ typedef enum  {
   WB_NET_PALACE2_SERVICEID, ///< SWANでしか繋がらないハイリンク
   WB_NET_WBT_DOWNLOAD,  ///< WBTのダウンロード画面
   WB_NET_KEY_SYSTEM,    ///< キーシステムの赤外線ワイヤレス
+  WB_NET_WIFI_DATACONV, ///< データコンバートWi-Fi
 
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;
@@ -318,6 +319,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_PALACE2 = (WB_NET_PALACE2_SERVICEID<<8),   ///< パレスのベース開始番号
   GFL_NET_CMD_WBT_DOWNLOAD = (WB_NET_WBT_DOWNLOAD<<8), ///< WBTダウンロードの開始番号
   GFL_NET_CMD_KEY_SYSTEM  = (WB_NET_KEY_SYSTEM<<8),    ///< キーシステムの赤外線ワイヤレス
+  GFL_NET_CMD_WIFI_DATACONV  = (WB_NET_WIFI_DATACONV<<8),    ///< キーシステムの赤外線ワイヤレス
 };
 
 

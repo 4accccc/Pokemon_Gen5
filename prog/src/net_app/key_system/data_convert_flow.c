@@ -16,6 +16,9 @@
 #include "system/bmp_winframe.h"
 #include "print/wordset.h"
 #include "field/zonedata.h"
+#include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
+#include "system/net_err.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -34,9 +37,6 @@
 //セーブ
 #include "savedata/save_outside.h"
 #include "savedata/outside_permanent.h"
-
-//デバッグ
-#include "test/nagihashi/debugwin_keysystem.h"
 
 //外部公開
 #include "data_convert_flow.h"
@@ -63,9 +63,18 @@
 //=====================================
 //サブシーケンス
 static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //画面構築シーケンス
 static void DataConv_Seq_CreateDisplayNetMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_CreateDisplayDLPlayInfo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//プロセス関係シーケンス
+static void DataConv_Seq_OpenProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_CloseProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SubProc_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -166,7 +175,7 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       (*p_seq ) = 0;
       break;
     case 1://Wi-Fi
-      //KEYSYS_SEQ_Call( p_seqwk, KEYSYS_DATACONVFLOW_SEQ_Main );
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Wifi );
       //もう一度メインメニュー
       (*p_seq ) = 0;
       break;
@@ -521,6 +530,43 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  WiFiフロー
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_SUBPROC_WIFI_LOGIN,
+    SEQ_SUBPROC_WIFI_LOGOUT,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_SUBPROC_WIFI_LOGIN:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_WifiLogin );
+    (*p_seq)++;
+    break;
+  case SEQ_SUBPROC_WIFI_LOGOUT:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_WifiLogout );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  通信方式メニュー画面の作成
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
@@ -620,6 +666,263 @@ static void DataConv_Seq_CreateDisplayDLPlayInfo( KEYSYS_SEQ_WORK *p_seqwk, int 
   default:
     GF_ASSERT(0);
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プロセス開始
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_OpenProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_OPEN_PROC,
+    SEQ_FADEIN,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_OPEN_PROC:
+    KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
+    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+    (*p_seq)++;
+    break;
+
+  case SEQ_FADEIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
+    (*p_seq)++;
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プロセス終了
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_CloseProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_FADEOUT,
+    SEQ_CLOSE_PROC,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_FADEOUT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
+    (*p_seq)++;
+    break;
+    
+  case SEQ_CLOSE_PROC:
+    KEYSYS_ExitTemporaryModules( p_wk );
+    (*p_seq)++;
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WIFIログイン
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CLOSE_PROC,
+    SEQ_NEXT_PROC,
+    SEQ_MAIN,
+    SEQ_FINISH_PROC,
+    SEQ_OPEN_PROC,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_CLOSE_PROC:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CloseProc );
+    (*p_seq)++;
+    break;
+  case SEQ_NEXT_PROC:
+    {
+      WIFILOGIN_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(WIFILOGIN_PARAM) );
+      p_param->gamedata     = p_wk->p_param->p_gamedata;
+      p_param->bg           = WIFILOGIN_BG_NORMAL;
+      p_param->display      = WIFILOGIN_DISPLAY_UP;
+      p_param->pSvl         = NULL;
+      p_param->bgm          = WIFILOGIN_BGM_NORMAL;
+      p_param->nsid         = WB_NET_WIFI_DATACONV;
+      p_param->mode         = WIFILOGIN_MODE_NORMAL;
+      GF_ASSERT( p_wk->p_proc_param == NULL );
+      p_wk->p_proc_param = p_param;
+      GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, FS_OVERLAY_ID(wifi_login),
+          &WiFiLogin_ProcData, p_wk->p_proc_param );
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_MAIN:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_Main );
+    (*p_seq)++;
+    break;
+  case SEQ_FINISH_PROC:
+    GFL_HEAP_FreeMemory( p_wk->p_proc_param );
+    p_wk->p_proc_param = NULL;
+    (*p_seq)++;
+    break;
+  case SEQ_OPEN_PROC:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_OpenProc );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WIFIログアウト
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CLOSE_PROC,
+    SEQ_NEXT_PROC,
+    SEQ_MAIN,
+    SEQ_FINISH_PROC,
+    SEQ_OPEN_PROC,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_CLOSE_PROC:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CloseProc );
+    (*p_seq)++;
+    break;
+  case SEQ_NEXT_PROC:
+    {
+      WIFILOGOUT_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(WIFILOGOUT_PARAM) );
+      p_param->gamedata = p_wk->p_param->p_gamedata;
+      p_param->bg       = WIFILOGIN_BG_NORMAL;
+      p_param->display  = WIFILOGIN_DISPLAY_UP;
+      p_param->bgm      = WIFILOGIN_BGM_NORMAL;
+      p_param->fade     = WIFILOGIN_FADE_DEFAULT;
+      GF_ASSERT( p_wk->p_proc_param == NULL );
+      p_wk->p_proc_param = p_param;
+      GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, FS_OVERLAY_ID(wifi_login),
+          &WiFiLogout_ProcData, p_wk->p_proc_param );
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_MAIN:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_Main );
+    (*p_seq)++;
+    break;
+  case SEQ_FINISH_PROC:
+    GFL_HEAP_FreeMemory( p_wk->p_proc_param );
+    p_wk->p_proc_param = NULL;
+    (*p_seq)++;
+    break;
+  case SEQ_OPEN_PROC:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_OpenProc );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プロセスメイン処理  GFL_PROC_LOCAL_CallProcをしてから呼び出すこと
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_SubProc_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_MAIN,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_MAIN:
+    {
+      GFL_PROC_MAIN_STATUS result;
+      result  = GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+
+      if( result == GFL_PROC_MAIN_NULL || result == GFL_PROC_MAIN_CHANGE )
+      {
+        NetErr_DispCall(FALSE);
+      }
+
+      if( GFL_PROC_MAIN_NULL == result )
+      {
+        (*p_seq)++;
+      }
+    }
+    break;
+    
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  } 
 }
 //=============================================================================
 /**

@@ -72,16 +72,15 @@ struct _MB_PARENT_DATACONV
   u32             timeout_cnt;
 
   u32             seq;
-  u32             is_wait;
-  u32             is_cancel;
-  u32             is_send_rom;
-  u32             is_wh_init;
+  BOOL            is_wait;
+  BOOL            is_cancel;
+  BOOL            is_send_rom;
+  BOOL            is_wh_init;
   MB_COMM_INIT_DATA init_data;
   BOOL  (*state)( MB_PARENT_DATACONV *p_wk, u32 *p_seq );
 
   MB_PARENT_DATACONV_RESULT result; 
 };
-
 
 static BOOL WhCallBackFlg = FALSE;
 
@@ -99,6 +98,7 @@ static MBGameRegistry * Mp_Parent_MBGameRegistry_Create( const STRBUF *cp_title_
 static void Mp_Parent_MBGameRegistry_Delete( MBGameRegistry *p_registry );
 static MP_PARENT_SENDMAIN_RET Mp_Parent_MBGameRegistry_SendMain( MB_PARENT_DATACONV *p_wk );
 static BOOL MP_PARENT_WhCallBack( BOOL bResult );
+static void MB_PARENT_SoftResetCallBack( void *pWork );
 
 //----------------------------------------------------------------------------
 /**
@@ -316,8 +316,10 @@ static BOOL Mb_Parent_DataConv_State_SendRom( MB_PARENT_DATACONV *p_wk, u32 *p_s
     WhCallBackFlg = FALSE;
     WH_Initialize( p_wk->heapID, &MP_PARENT_WhCallBack, FALSE );
     
+    //アイコン強制出し
+    GFL_NET_WirelessIconEasyXY( 256-16,0,FALSE,p_wk->heapID );
     GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
-    //GFL_UI_SoftResetSetFunc( MB_PARENT_SoftResetCallBack , p_wk );
+    GFL_UI_SoftResetSetFunc( MB_PARENT_SoftResetCallBack , p_wk );
     (*p_seq)++;
     break;
   case SEQ_INIT_WAIT:
@@ -414,7 +416,7 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
   {
   case SEQ_INIT_START:
     MB_COMM_InitComm( p_wk->p_comm );
-    GFL_NET_ReloadIconTopOrBottom(FALSE , p_wk->heapID );
+    GFL_NET_ReloadIconTopOrBottom(TRUE , p_wk->heapID );
     (*p_seq)++;
     break;
   case SEQ_INIT_WAIT:
@@ -492,7 +494,7 @@ static BOOL Mb_Parent_DataConv_State_ConnectRom( MB_PARENT_DATACONV *p_wk, u32 *
     break;
 
   case SEQ_EXIT_WAIT2:
-    if( GFL_NET_IsExit() )
+    if( MB_COMM_IsFinishComm( p_wk->p_comm ) )
     {
       (*p_seq)++;
     }
@@ -716,4 +718,43 @@ static BOOL MP_PARENT_WhCallBack( BOOL bResult )
 {
   WhCallBackFlg = TRUE;
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ソフトリセットコールバック
+ *
+ *	@param	void *pWork ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MB_PARENT_SoftResetCallBack( void *pWork )
+{
+  //ソフトリセット時、自前で終了処理
+  MB_PARENT_DATACONV *p_wk  = pWork;
+  
+  if( MBP_IsInitNet() == TRUE )
+  {
+    MBP_Cancel();
+  }
+  while( MBP_GetState() != MBP_STATE_STOP &&
+         MBP_GetState() != MBP_STATE_COMPLETE )
+  {
+    OS_TPrintf("WaitA!\n");
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  if( p_wk->is_wh_init == TRUE )
+  {
+    WhCallBackFlg = FALSE;
+    while( WH_End( &MP_PARENT_WhCallBack ) )
+    {
+      OS_TPrintf("WaitC!\n");
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
+    
+    while( WhCallBackFlg == FALSE )
+    {
+      OS_TPrintf("WaitB!\n");
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
+  }
 }

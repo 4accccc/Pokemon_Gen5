@@ -61,7 +61,7 @@ static inline BOOL DebugWin_Util_DC_ChangeDataU32( u32 *p_param, u32 min, u32 ma
 
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   { 
-    if( *p_param - value >= min )
+    if( (s64)*p_param - (s64)value >= (s64)min )
     { 
       (*p_param)-=value;
     }
@@ -101,7 +101,7 @@ static void DebugWin_D_DC_Owner_Name( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )
   DATA_CONVERT_SAVE_GetData( p_sv, DATA_CONVERT_GET_ID_OWNER, &owner );
   GFL_STR_CONV_StrcodeToSjis( owner.name, sjis, PERSON_NAME_SIZE+EOM_SIZE );
 
-  DEBUGWIN_ITEM_SetNameV( p_item , "–¼‘O=%s", sjis );
+  DEBUGWIN_ITEM_SetNameV( p_item , "‚È‚Ü‚¦=%s", sjis );
 }
 
 static void DebugWin_U_DC_Owner_TrainerID( void* p_wk_adrs, DEBUGWIN_ITEM* p_item )

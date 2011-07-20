@@ -35,9 +35,6 @@
 #include "savedata/save_outside.h"
 #include "savedata/outside_permanent.h"
 
-//デバッグ
-#include "test/nagihashi/debugwin_keysystem.h"
-
 //外部公開
 #include "key_system_flow.h"
 
@@ -1856,7 +1853,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
     p_wk->p_textset = KEYSYS_TEXTSET_Init( wnd_data, cnt+1, KEYSYS_BG_FRAME_TEXT_S, KEYSYS_PLT_BG_FONT_S, p_wk->p_font, p_wk->p_msg, heapID );
   }
 
-  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_S, KEYSYS_BG_SCR_HAVEKEY_S );
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_S, KEYSYS_BG_SCR_HAVEKEY_S );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2320,7 +2317,7 @@ static void KeySys_Display_CreateSendDemo( void *p_wk_adrs, HEAPID heapID )
   }
 
 
-  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_HAVEKEY_M );
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_HAVEKEY_M );
 
   //メッセージ
   KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_31, KEYSYS_TEXT_TYPE_STREAM_FIX );
@@ -2367,7 +2364,7 @@ static void KeySys_Display_DeleteSendDemo( void *p_wk_adrs )
 
   KEYSYS_TEXT_EndWait( p_wk->p_text );
 
-  KEYSYS_BG_TransScreen( &p_wk->bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
 
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
@@ -3206,7 +3203,7 @@ static void KeySys_Demo_Start( KEYSYS_DEMO_WORK *p_wk, KEY_SYSTEM_TYPE key, GFL_
         plt_ofs = (GET_VERSION() == VERSION_B2) ? 0: 1;
       }
     }
-    GFL_CLACT_WK_SetPlttOffs( p_wk->p_key, plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+    GFL_CLACT_WK_SetPlttOffs( p_wk->p_key, plt_ofs, CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
 
   if( is_get )
