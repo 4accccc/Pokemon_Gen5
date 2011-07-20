@@ -1,6 +1,7 @@
 DATA_LIST = \
     door01.nsbmd \
     door01.nsbca \
+    door01.nsbta \
     light01.nsbmd \
     light01.nsbca \
     light01.nsbta \

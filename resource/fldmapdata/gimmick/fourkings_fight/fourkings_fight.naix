@@ -13,14 +13,15 @@
 enum {
 	NARC_fourkings_fight_door01_nsbmd = 0,
 	NARC_fourkings_fight_door01_nsbca = 1,
-	NARC_fourkings_fight_light01_nsbmd = 2,
-	NARC_fourkings_fight_light01_nsbca = 3,
-	NARC_fourkings_fight_light01_nsbta = 4,
-	NARC_fourkings_fight_light01_nsbtp = 5,
-	NARC_fourkings_fight_stage_nsbmd = 6,
-	NARC_fourkings_fight_stair01_nsbmd = 7,
-	NARC_fourkings_fight_stair01_nsbca = 8,
-	NARC_fourkings_fight_stair02_nsbca = 9
+	NARC_fourkings_fight_door01_nsbta = 2,
+	NARC_fourkings_fight_light01_nsbmd = 3,
+	NARC_fourkings_fight_light01_nsbca = 4,
+	NARC_fourkings_fight_light01_nsbta = 5,
+	NARC_fourkings_fight_light01_nsbtp = 6,
+	NARC_fourkings_fight_stage_nsbmd = 7,
+	NARC_fourkings_fight_stair01_nsbmd = 8,
+	NARC_fourkings_fight_stair01_nsbca = 9,
+	NARC_fourkings_fight_stair02_nsbca = 10
 };
 
 /* NARC_FOURKINGS_FIGHT_NAIX_ */

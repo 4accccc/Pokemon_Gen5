@@ -16,7 +16,6 @@
 
 // field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
-#include "field_task_camera_shake.h"  // for FIELD_TASK_ShakeCamera
 
 // gimmick
 #include "field_gimmick_def.h"
@@ -55,12 +54,12 @@
 #define STAGE_Y_LOW   (12*FIELD_CONST_GRID_FX32_SIZE)
 #define STAGE_Z       (7*FIELD_CONST_GRID_FX32_SIZE+GRID_HALF_SIZE)
 
-#define STAGE_MOVE_SPD  (4*FX32_ONE)    // 落下速度
+#define STAGE_MOVE_SPD  (10*FX32_ONE)    // 落下速度
 
 // ステージの反動
-#define STAGE_REACTION_SYNC       ( 10 )   // 1周期のシンク数
-#define STAGE_REACTION_HEIGHT     ( 32 )   // 高さ
-#define STAGE_REACTION_HEIGHT_SUB ( 8 )    // 高さの減算値
+#define STAGE_REACTION_SYNC       ( 1 )   // 1周期のシンク数
+#define STAGE_REACTION_HEIGHT     ( 30 )   // 高さ
+#define STAGE_REACTION_HEIGHT_SUB ( 11 )    // 高さの減算値
 
 //=============================================================================
 /**
@@ -103,6 +102,7 @@ typedef struct {
 enum {
   RESID_DOOR_MDL = 0,       // ドアモデル    
   RESID_DOOR_ANM_ICA,       // ドアアニメ    
+  RESID_DOOR_ANM_ITA,       // ドアアニメ    
   RESID_LIGHT_MDL,          // ライトモデル
   RESID_LIGHT_ANM_ICA,      // ライトアニメ
   RESID_LIGHT_ANM_ITA,      // ライトアニメ
@@ -128,6 +128,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
   { ARCID_FOURKINGS_FIGHT, NARC_fourkings_fight_door01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_FIGHT, NARC_fourkings_fight_door01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_FOURKINGS_FIGHT, NARC_fourkings_fight_door01_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_FIGHT, NARC_fourkings_fight_light01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_FIGHT, NARC_fourkings_fight_light01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_FOURKINGS_FIGHT, NARC_fourkings_fight_light01_nsbta, GFL_G3D_UTIL_RESARC },
@@ -143,6 +144,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 static const GFL_G3D_UTIL_ANM anm_door[] =
 {
   { RESID_DOOR_ANM_ICA, 0 },
+  { RESID_DOOR_ANM_ITA, 0 },
 };
 #define ANM_DOOR_NUM  ( NELEMS(anm_door) )
 
@@ -250,6 +252,47 @@ static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag );
 static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk );
 
 
+//=============================================================================
+/**
+ *          カメラゆれ
+ */
+//=============================================================================
+//-------------------------------------
+///	カメラ振動パラメータ
+//=====================================
+typedef struct {
+
+  s16 Height;             // ゆれ高さ
+  u8  Time;               // ゆれ回数
+
+  u32 Sync;               // 1周期するのにかかるシンク数
+  u32 NowSync;            // 現在のシンク
+  
+  s16 WaitStartFrame;     // 開始まで何フレーム待つか
+
+} CAMERA_SHAKE_PARAM;
+
+// カメラ揺れるタスク作成
+static FIELD_TASK* FIELD_TASK_CameraShake( FIELDMAP_WORK* p_fieldmap, const CAMERA_SHAKE_PARAM* shakeParam );
+
+//-------------------------------------
+///	カメラ振動ワーク
+//=====================================
+typedef struct {
+  FIELDMAP_WORK*  p_fieldmap;
+  FIELD_CAMERA*   camera;
+
+  u32             seq;
+  CAMERA_SHAKE_PARAM shakeParam;
+  const VecFx32   *WatchTarget;
+  const VecFx32   *DefaultWatchTarget;
+
+} CAMERA_SHAKE_WORK;
+// カメラ揺れるタスク
+static FIELD_TASK_RETVAL CameraShake( void* wk );
+
+
+
 #ifdef FIGHT_DEBUG_MENU
 //-------------------------------------
 ///	デバッグメニュー
@@ -257,13 +300,13 @@ static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk );
 static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
 static void DEBUGMENU_Exit( void );
 
-static u32  debug_spd   = 4;
+static u32  debug_spd   = 10;
 static s16  debug_height = STAGE_REACTION_HEIGHT;
 static s16  debug_height_sub = STAGE_REACTION_HEIGHT_SUB;
 static u32  debug_sync = STAGE_REACTION_SYNC;
-static u32  debug_cam_width = 6;
-static u32  debug_cam_sync = 4;
-static u32  debug_cam_time = 3;
+static u32  debug_cam_width = 8;
+static u32  debug_cam_sync = 3;
+static u32  debug_cam_time = 8;
 
 #endif // FIGHT_DEBUG_MENU
 
@@ -370,6 +413,7 @@ void FOURKINGS_FIGHT_DoorAnm( GAMESYS_WORK *gsys )
 
   // ドアアニメ再生
   ANM_Play( p_wk->exp_obj, OBJ_DOOR, 0, FALSE );
+  ANM_Play( p_wk->exp_obj, OBJ_DOOR, 1, FALSE );
 
   // 下段のPOSを踏んだ
   SAVE_SetPos1Flag( p_wk->p_sv_wk, TRUE );
@@ -860,18 +904,17 @@ static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk )
       FIELD_TASK* cam;
       FIELD_TASK_MAN* taskMan;
 
-      CAM_SHAKE_PARAM shakeParam;
+      CAMERA_SHAKE_PARAM shakeParam;
       GFL_STD_MemFill(&shakeParam, 0, sizeof(shakeParam)); // パラメータの初期化
 #ifdef FIGHT_DEBUG_MENU
-      shakeParam.Width           = debug_cam_width;
+      shakeParam.Height           = debug_cam_width;
       shakeParam.Sync            = debug_cam_sync;
       shakeParam.Time            = debug_cam_time;
 #else
-      shakeParam.Width           = 6;
-      shakeParam.Sync            = 4;
-      shakeParam.Time            = 3;
+      shakeParam.Height           = 8;
+      shakeParam.Sync            = 3;
+      shakeParam.Time            = 8;
 #endif
-      shakeParam.ShakeType       = CAM_SHAKE_TYPE_ALL;
 
       // ステージの落ちるフレーム数計算
       {
@@ -891,7 +934,7 @@ static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk )
         shakeParam.WaitStartFrame = cnt - 5;
       }
 
-      cam = FIELD_TASK_ShakeCamera( p_wk->p_fieldmap, &shakeParam );
+      cam = FIELD_TASK_CameraShake( p_wk->p_fieldmap, &shakeParam );
       taskMan = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
       FIELD_TASK_MAN_AddTask( taskMan, cam, NULL );
     }
@@ -1049,6 +1092,176 @@ static void SAVE_SetPos2Flag( FOURKINGS_SV_WORK *p_wk, BOOL flag )
 static BOOL SAVE_GetPos2Flag( const FOURKINGS_SV_WORK *p_wk )
 {
   return p_wk->pos2_flag;
+}
+
+//=============================================================================
+/**
+ *          カメラゆれ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ揺れるタスクを作成する
+ *
+ *	@param	FIELDMAP_WORK* fieldmap   フィールドマップ
+ *	@param	CAMERA_SHAKE_PARAM* shakeParam  ゆれパラメータ
+ *
+ *	@return 作成したタスク
+ */
+//-----------------------------------------------------------------------------
+static FIELD_TASK* FIELD_TASK_CameraShake( FIELDMAP_WORK* p_fieldmap, const CAMERA_SHAKE_PARAM* shakeParam )
+{
+  FIELD_TASK* task;
+  CAMERA_SHAKE_WORK* work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( p_fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(CAMERA_SHAKE_WORK), CameraShake );
+  // 初期化
+  work              = FIELD_TASK_GetWork( task );
+  work->p_fieldmap  = p_fieldmap;
+  work->camera      = FIELDMAP_GetFieldCamera( p_fieldmap );
+  work->shakeParam  = *shakeParam;
+  work->seq         = 0;
+
+  return task;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ揺れるタスク
+ */
+//-----------------------------------------------------------------------------
+static FIELD_TASK_RETVAL CameraShake( void* wk )
+{
+  FIELD_CAMERA * camera;
+  BOOL end = FALSE;
+  CAMERA_SHAKE_WORK   *work = wk;
+  CAMERA_SHAKE_PARAM  *param = &(work->shakeParam);
+
+  camera = FIELDMAP_GetFieldCamera( work->p_fieldmap );
+
+  // 開始フレーム経過まで待つ
+  if( param->WaitStartFrame > 0 )
+  {
+    param->WaitStartFrame--;
+    return FIELD_TASK_RETVAL_CONTINUE;
+  }
+
+  switch(work->seq){
+  case 0:
+    //トレース終了
+    FIELD_CAMERA_StopTraceRequest(camera);
+    work->seq++;
+    break;
+    /* break through */
+  case 1:
+    if ( FIELD_CAMERA_CheckTrace(work->camera) )
+    {
+      break;
+    }
+    {
+      //復帰パラメータをセットする
+      FIELD_CAMERA_SetRecvCamParam(work->camera);
+
+      //カメラのターゲットを取得
+      work->WatchTarget = FIELD_CAMERA_GetWatchTarget(camera);
+      /*
+      // レールカメラは
+      // 毎フレームwatch_targetがdefault_targetにバインドされているので
+      // 注視点を変えようと思っても上書きされてしまう。
+      // その処理を打ち消すために、一時的にNULLにして、
+      // targetが上書きされないようにする
+      //
+      // field_rail_func.c
+      // field_camera.c
+      */
+      {
+        FLDNOGRID_MAPPER* mapper = FIELDMAP_GetFldNoGridMapper( work->p_fieldmap );
+        BOOL is_rail = FLDNOGRID_MAPPER_IsResistData( mapper );
+
+        if( is_rail )
+        {
+          work->DefaultWatchTarget = FIELD_CAMERA_GetDefaultTarget(camera);
+          FIELD_CAMERA_SetDefaultTarget( camera, NULL );
+        }
+      }
+
+      //バインド解除
+      FIELD_CAMERA_FreeTarget(camera);
+      
+      work->seq++;
+    }
+    /* break through */
+  case 2:
+    {
+      //ターゲットを動かす
+      int tmp;
+      u16 rad;
+      param->NowSync++;
+      tmp = (param->NowSync * 0x10000) / param->Sync;
+      rad = tmp;
+
+      if (param->NowSync >= param->Sync)
+      {
+        param->Time--;
+        param->NowSync = 0;
+      }
+      if (param->Time == 0)
+      {
+        param->NowSync = 0;
+        end = TRUE;
+      }
+
+      if (end)
+      {
+        //カメラオフセットクリア
+        {
+          VecFx32 cam_ofs = {0,0,0};
+          FIELD_CAMERA_SetCamPosOffset( camera, &cam_ofs );
+        }
+
+        //復帰パラメータをクリアする
+        FIELD_CAMERA_ClearRecvCamParam(camera);
+        
+        // レールの時
+        // default_targetを戻す
+        {
+          FLDNOGRID_MAPPER* mapper = FIELDMAP_GetFldNoGridMapper( work->p_fieldmap );
+          BOOL is_rail = FLDNOGRID_MAPPER_IsResistData( mapper );
+
+          if( is_rail )
+          {
+            FIELD_CAMERA_SetDefaultTarget( camera, work->DefaultWatchTarget );
+          }
+        }
+
+        //際バインド
+        FIELD_CAMERA_BindTarget(camera, work->WatchTarget);
+
+        //トレース再開
+        FIELD_CAMERA_RestartTrace(camera);
+        work->seq++;
+      }
+      else
+      {
+        fx32 h;
+        VecFx32 target;
+        h = param->Height * FX_SinIdx(rad);
+        target = *work->WatchTarget;
+        target.y += h;
+
+        //座標セット
+        {
+          FIELD_CAMERA_SetTargetPos( camera, &target );
+        }
+      }
+    }
+    break;
+  case 3:
+    return FIELD_TASK_RETVAL_FINISH;
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 
 
