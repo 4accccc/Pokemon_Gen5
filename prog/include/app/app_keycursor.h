@@ -82,6 +82,18 @@ extern void APP_KEYCURSOR_Delete( APP_KEYCURSOR_WORK *work );
 //-----------------------------------------------------------------------------
 extern void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMPWIN* msgwin );
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キーカーソル 主処理(非ストリーム監視バージョン キーorタッチ待ちのみ)
+ *
+ *	@param	work メインワーク
+ *	@param	stream プリントストリーム
+ *	@param	msgwin メッセージウィンドウのBMPWIN
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern BOOL APP_KEYCURSOR_MainNotStream( APP_KEYCURSOR_WORK* work, GFL_BMPWIN* msgwin );
 
 //====================================================================================
 // 以下、Mainに内包されているので、基本的には外部から使用しない関数。念のため公開

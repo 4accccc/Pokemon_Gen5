@@ -306,6 +306,49 @@ void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMP
 
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  キーカーソル 主処理(非ストリーム監視バージョン キーorタッチ待ちのみ)
+ *
+ *	@param	work メインワーク
+ *	@param	stream プリントストリーム
+ *	@param	msgwin メッセージウィンドウのBMPWIN
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL APP_KEYCURSOR_MainNotStream( APP_KEYCURSOR_WORK* work, GFL_BMPWIN* msgwin )
+{
+  BOOL is_decide = FALSE;
+  GF_ASSERT( work );
+  GF_ASSERT( msgwin );
+
+  // キー入力待ち
+  if( work->decide_key_flag )
+  {
+    // キー入力
+    is_decide = ( GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY );
+  }
+
+  if( is_decide == FALSE && work->decide_tp_flag )
+  {
+    // タッチ入力
+    is_decide = GFL_UI_TP_GetTrg();
+  }
+
+  if( is_decide )
+  {
+    APP_KEYCURSOR_Clear( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+	  GFL_BMPWIN_TransVramCharacter( msgwin );
+  }
+  else
+  {
+    APP_KEYCURSOR_Write( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
+	  GFL_BMPWIN_TransVramCharacter( msgwin );
+  }
+  return is_decide;
+}
+
 //=============================================================================
 /**
  *								static関数
