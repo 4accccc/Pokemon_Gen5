@@ -518,4 +518,97 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_boy2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくの　ポケモン　ダンゴロは
+がんじょう　という　とくせい！▼
+ＨＰが　まんタン　なら　いちげきで
+ひんしに　なるほどの　ダメージでも▽
+ＨＰ１で　たえてくれるんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:21:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:07:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくの　ポケモン　ダンゴロは
+がんじょう　という　とくせい！▼
+ＨＰが　まんタン　なら　いちげきで
+ひんしに　なるほどの　ダメージでも▽
+ＨＰ１で　たえてくれるんだぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:21:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:21:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:21:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:14:47" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0401_poke49_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ガンッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:13:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:13:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ガンッ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:13:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:13:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・上記動作モデルのそば
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:21:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE49
+ポケモン・ダンゴロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-20T09:13:32" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>
