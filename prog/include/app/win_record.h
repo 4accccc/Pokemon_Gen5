@@ -63,5 +63,8 @@ typedef struct{
 	//
 	const WBTSAVE		*wbtsave;		///<セーブデータ：優勝回数参照用(include/savedata/wbt_save.h)
 	const MYSTATUS		*my_status;		///<セーブデータ：自分情報（include/savedata/mystatus.h)
+
+  u8 open_flag[ WBTWIN_COUNT_MAX ]; ///<そのトーナメントを表示するかどうか
+
 }WIN_RECORD_PARAM;
 

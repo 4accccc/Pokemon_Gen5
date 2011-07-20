@@ -336,6 +336,7 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	WIN_RECORD_PARAM * wr_param;
+  int i;
 	
 	wr_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(WIN_RECORD_PARAM) );
 //	wr_param->gamesys	= gsys;
@@ -357,6 +358,14 @@ WIN_RECORD_PARAM * WIN_RECORD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
   { //タイプトーナメント、チャンピオントーナメントともにOK→LV3
     wr_param->status = WIN_RECORD_STATUS_LV3;
   }
+
+  //すべての優勝回数カウンタ用のオープン条件をセット
+  for ( i = 0; i < WBTWIN_COUNT_MAX; i ++ )
+  {
+    WBTCUP wbtcup = WBTTOOL_WBTWinCountToCup( i );
+    wr_param->open_flag[ i ] = WBTTOOL_CheckCupEnable( gamedata, wbtcup );
+  }
+
   wr_param->result_work = res_work;
 	return wr_param;
 }

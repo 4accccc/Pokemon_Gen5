@@ -1005,6 +1005,32 @@ WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype )
   GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
   return WBTWIN_COUNT_MAX;
 }
+//-----------------------------------------------------------------------------
+/**
+ * @brief 優勝回数カウンタ指定IDから開催トーナメントIDを取得する
+ * @param counter_id　WBTWIN_COUNT（include/savedata/wbt_save.h参照）
+ * @retval  WBTCUP（include/field/wbt.h参照）
+ */
+//-----------------------------------------------------------------------------
+WBTCUP WBTTOOL_WBTWinCountToCup( WBTWIN_COUNT counter_id )
+{
+  int i;
+
+  if ( counter_id <= WBTWIN_COUNT_POKETYPE_AKU )
+  { //タイプエキスパートのカウンタ→タイプエキスパートで
+    return WBTCUP_POKETYPE;
+  }
+
+  for ( i = 0; i < NELEMS(WBTTournamentData); i ++ )
+  {
+    if ( WBTTournamentData[i].win_count_id == counter_id )
+    {
+      return i + 1; //WBTTournamentDataはWBTCUP_NULL分がないので
+    }
+  }
+  GF_ASSERT_MSG( 0, "error wbt win count id = %d\n", counter_id );
+  return WBTCUP_HODOMOE;  //念のため
+}
 
 //-----------------------------------------------------------------------------
 /**
