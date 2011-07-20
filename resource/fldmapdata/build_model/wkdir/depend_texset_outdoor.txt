@@ -461,7 +461,8 @@ DEP_TEXSET_IMD_OUTDOOR009 = \
 	$(SRCDIR)/c5_rbuild_01.imd \
 	$(SRCDIR)/c5_rbuild_02.imd \
 	$(SRCDIR)/c5_rbuild_03.imd \
-	$(SRCDIR)/door_c05_hotel.imd
+	$(SRCDIR)/door_c05_hotel.imd \
+	$(SRCDIR)/wbtgate_01.imd
 
 texset/outdoor009.imd: $(DEP_TEXSET_IMD_OUTDOOR009) texset/tmp/outdoor009.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor009.list
@@ -1345,8 +1346,7 @@ DEP_TEXSET_IMD_OUTDOOR031 = \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/door_auto01.imd \
-	$(SRCDIR)/c03_ship_03_01.imd \
-	$(SRCDIR)/c03_ship_03_03.imd
+	$(SRCDIR)/c03_ship_03_02.imd
 
 texset/outdoor031.imd: $(DEP_TEXSET_IMD_OUTDOOR031) texset/tmp/outdoor031.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor031.list
@@ -1941,7 +1941,8 @@ DEP_TEXSET_IMD_OUTDOOR047 = \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/door_bar.imd \
 	$(SRCDIR)/c03_cloud.imd \
-	$(SRCDIR)/c03_kanban.imd
+	$(SRCDIR)/c03_kanban.imd \
+	$(SRCDIR)/c03_ship_03_01.imd
 
 texset/outdoor047.imd: $(DEP_TEXSET_IMD_OUTDOOR047) texset/tmp/outdoor047.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor047.list
@@ -2143,7 +2144,7 @@ DEP_TEXSET_IMD_OUTDOOR052 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/c03_ship_03_02.imd
+	$(SRCDIR)/c03_ship_03_03.imd
 
 texset/outdoor052.imd: $(DEP_TEXSET_IMD_OUTDOOR052) texset/tmp/outdoor052.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor052.list
@@ -2307,7 +2308,8 @@ DEP_TEXSET_IMD_OUTDOOR056 = \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/c13_ship_01.imd \
 	$(SRCDIR)/c5_wbt_01.imd \
-	$(SRCDIR)/wbt_fountain.imd
+	$(SRCDIR)/wbt_fountain.imd \
+	$(SRCDIR)/wbtgate_01.imd
 
 texset/outdoor056.imd: $(DEP_TEXSET_IMD_OUTDOOR056) texset/tmp/outdoor056.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor056.list
@@ -2373,7 +2375,6 @@ DEP_TEXSET_IMD_OUTDOOR058 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
-	$(SRCDIR)/c03_ship_03.imd \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
@@ -2382,7 +2383,8 @@ DEP_TEXSET_IMD_OUTDOOR058 = \
 	$(SRCDIR)/bigicicle_01.imd \
 	$(SRCDIR)/c14_house_01.imd \
 	$(SRCDIR)/c14_house_02.imd \
-	$(SRCDIR)/c14_gym_01.imd
+	$(SRCDIR)/c14_gym_01.imd \
+	$(SRCDIR)/c03_ship_03_02.imd
 
 texset/outdoor058.imd: $(DEP_TEXSET_IMD_OUTDOOR058) texset/tmp/outdoor058.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor058.list

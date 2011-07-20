@@ -425,3 +425,4 @@
 "nsbmdfiles/c03_ship_03_03.nsbmd"
 "nsbmdfiles/c04_gym_02.nsbmd"
 "nsbmdfiles/nschool_02.nsbmd"
+"nsbmdfiles/wbtgate_01.nsbmd"
