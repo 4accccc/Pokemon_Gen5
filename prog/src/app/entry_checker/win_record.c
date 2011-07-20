@@ -357,6 +357,7 @@ typedef struct
 	s32						TopNum;							// 先頭の番号
 	u32						Flag;							// フラグ
 	s32						TrainerId;						// トレーナーID
+	s32						ScrollOffy;						// オフセット
 	s32						DispMaxNum;						// 最大数
 	s16						CountBuffer[TMT_MAX+2];			// カウント
 	s16						DispBuffer[TMT_MAX+2];			// 表示のバッファ
@@ -607,11 +608,11 @@ static const s16 wbtwin_tbl[] = {
 	WBTWIN_COUNT_WORLD,				// ワールド
 	WBTWIN_COUNT_CHAMPION,			// チャンピオンズ
 	WBTWIN_COUNT_WCS,				// WCS
-	WBTWIN_COUNT_WCS,				// レンタル
+	WBTWIN_COUNT_RENTAL,			// レンタル
 	//
-	WBTWIN_COUNT_WCS,				// レンタルマスター
-	WBTWIN_COUNT_WCS,				// シャッフル
-	WBTWIN_COUNT_WCS,				// シャッフルマスター
+	WBTWIN_COUNT_RENTALMASTER,		// レンタルマスター
+	WBTWIN_COUNT_SHUFFLE,			// シャッフル
+	WBTWIN_COUNT_SHUFFLEMASTER,		// シャッフルマスター
 	WBTWIN_COUNT_POKETYPE_NORMAL,	// ノーマル
 	WBTWIN_COUNT_POKETYPE_HONOO,	// ほのお
 	WBTWIN_COUNT_POKETYPE_MIZU,		// みず
@@ -649,24 +650,23 @@ static const s16 wr_cmn_btn_tbl[] = {
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 {
-#if 1		// 後日、余力があればSLIDEでタッチにも対応を検討
-  { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
+#if 0		// 後日、余力があればSLIDEでタッチにも対応を検討
+  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
+  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
+  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
+  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
+  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
+  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 #else
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
+  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
 #endif
-//  { {   4, 164, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
   { {  32, 160, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
@@ -678,22 +678,22 @@ static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp2_tbl[] =
 {
-#if 1
-  { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
+#if 0
+  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
+  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
+  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
+  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
+  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
+  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 #else
-  { {   0,  23, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 16, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
+  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
 #endif
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
   { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
@@ -706,8 +706,9 @@ static const FRAMELIST_HEADER wr_frame_list_header = {
   GFL_BG_FRAME2_M,			// 上
   FRAMELIST_SUB_BG_NONE,	// 下
   
-  2,   // 項目フレーム表示開始Ｘ座標
+  1,   // 項目フレーム表示開始Ｘ座標
   0,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
+//  3,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
   28,   // 項目フレーム表示Ｘサイズ
   3,    // 項目フレーム表示Ｙサイズ
   
@@ -724,6 +725,7 @@ static const FRAMELIST_HEADER wr_frame_list_header = {
    1,   // 背景登録数
    0,   // 初期カーソル位置
    7,   // カーソル移動範囲
+//   6,   // カーソル移動範囲
    0,   // 初期スクロール値
   
   wr_list_tp_tbl,  // タッチデータ
@@ -815,6 +817,7 @@ static void PrintStrBuf( WIN_RECORD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT
 static void _strbuf_print( WIN_RECORD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param, int pos );
 //
 static void wr_main_scrollbar( WIN_RECORD_MAIN_WORK * wk );
+static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk );
 
 //=============================================================================
 /**
@@ -1044,6 +1047,7 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	wk->Flag		= 0;
 	wk->TrainerId	= 0;
 	wk->DispMaxNum	= 0;
+	wk->ScrollOffy	= 0;
 	//
 	wk->ScenarioCurPos = 0;
 	wk->ListCurPos	= 0;
@@ -1104,6 +1108,9 @@ static void wr_main( WIN_RECORD_MAIN_WORK* wk )
 {
 	// 下画面
 	wr_down( wk );
+	//
+	// 背景bgスクロール
+	wr_main_bg_scroll( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -1924,16 +1931,18 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 	}
 	// 判定
 	j=0;
-#if 0		// test
+#if 1
+	// リストの処理でoffyが0以外だと
+	// 正しく動作しないようだ
+	// 0番にダミーで表示させ
+	// 上に黒帯を出して調整した
 	wk->DispBuffer[j] = 0;		// 0番をダミーで登録
 	j++;
 #endif
 	for(i=0;i<TMT_MAX;i++){
 		// 表示の判定
-		bflg = wr_chk_dispflag( wk, i );
-//		if(i%2==0){
-//			bflg = FALSE;
-//		}
+//		bflg = wr_chk_dispflag( wk, i );
+		bflg = TRUE;		// test
 		if(bflg == TRUE){
 			// 表示
 			wk->DispBuffer[j] = i;
@@ -2349,21 +2358,25 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 {
 	BOOL		bflg=FALSE;
 	
+	// フラグを返す
+	if( wk->Param->open_flag[mode] == 1 ){
+		bflg = TRUE;
+	}
+	//
 	// 判定
 	switch(mode){
 		//
-		// 初期
+		// 初期(念のため)
 		case TMT_HODOMOE:		// ホドモエ
 		case TMT_RENTAL:		// レンタル
 		case TMT_SHAFFLE:		// シャッフル
 			bflg = TRUE;
 			break;
 		//
-		// 条件を満たす(test)
 		default:
-			bflg = TRUE;
 			break;
 	}
+	//
 	return( bflg );
 }
 
@@ -2699,5 +2712,29 @@ static void wr_main_scrollbar( WIN_RECORD_MAIN_WORK * wk )
 		cp_pos.y = 152;
 	}
 	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	背景BGスクロール
+ *
+ * @param	WIN_RECORD_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk )
+{
+	// 背景スクロール
+	int		offy;
+	//
+	wk->ScrollOffy += 0x40;
+	if(wk->ScrollOffy >= 0x1000){
+		wk->ScrollOffy = 0;
+	}
+	offy = (wk->ScrollOffy>>8)&0xff;
+	// セット
+	GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, -offy );
+	GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, -offy );
 }
 
