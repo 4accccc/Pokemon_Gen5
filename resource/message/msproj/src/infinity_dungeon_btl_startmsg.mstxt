@@ -416,7 +416,7 @@
 させてもらいますよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T06:24:39" />
+				Time="2011-07-20T03:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -916,11 +916,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やまおとこの　じつりょくを
-おみせしよう！▼</Text>
+			<Text>これが　うわさに　なだかい
+しろのたいじゅの　どうくつか！▼
+とおくから　きたかいが　あったな
+さいかそうまで　たんけんするぞ！▼
+そして　すべての　トレーナーを
+たおしてやるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-07-20T05:51:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -928,10 +932,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>山男の　実力を　お見せしよう！▼</Text>
+			<Text>これが　うわさに　名高い
+白の大樹の　どうくつか！▼
+遠くから　来たかいが　あったな
+最下層まで　探検するぞ！▼
+そして　全ての　トレーナーを
+倒してやるわ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="swan_scenario:W00293"
+				Time="2011-07-20T05:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1255,15 +1264,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここの　どうくつってよ
-どこまで　つづいてるんだろうな？▼
-ほんとに　さいかそうになんか
-いけるのかね？▼
-まっ　おれみたいな　ひよっこは
+			<Text>イッシュじゅうから　とんでもない
+トレーナーが　あつまってるみたいだな▼
+……まっ　おれみたいな　ひよっこは
 こつこつ　しょうぶしていくさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T08:29:20" />
+				Time="2011-07-20T05:40:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1271,15 +1278,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここの　どうくつってよ
-どこまで　続いてるんだろうな？▼
-本当に　最下層になんか
-行けるのかね？▼
-まっ　おれみたいな　ひよっこは
+			<Text>イッシュ中から　とんでもない
+トレーナーが　集まってるみたいだな▼
+……まっ　おれみたいな　ひよっこは
 こつこつ　勝負していくさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T08:29:22" />
+				Time="2011-07-20T05:40:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1604,10 +1609,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>けいさんだと　ボクが　しょうりする
-かのうせいは１２０％！▼</Text>
+かのうせいは　１２０パーセント！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:46:25" />
+				Time="2011-07-20T05:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1615,11 +1620,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>計算によれば　ボクが
-勝つ可能性は　１２０％！▼</Text>
+			<Text>計算によれば　ボクの勝率は
+１２０パーセント！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T06:35:25" />
+				Time="2011-07-20T05:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2245,12 +2250,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さっさと　このエリアを　せいはして
-みんなに　じまんして　やるんだ！▼
+みんなに　じまんしてやるんだ！▼
 クラスの　ヒーローに　なるのは
 このオレだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T07:22:46" />
+				Time="2011-07-20T03:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2259,12 +2264,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さっさと　このエリアを　制覇して
-みんなに　自慢して　やるんだ！▼
+みんなに　自慢してやるんだ！▼
 クラスの　ヒーローに　なるのは
 このオレだ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T07:22:45" />
+				Time="2011-07-20T03:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3555,11 +3560,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そんな　そうびで　たんけんだと？
+			<Text>テントにねぶくろ　ライトにハンマー！
+ひつようなものは　すべて　もってきた▼
+そんな　そうびで　たんけんだと？
 もっと　ちゃんとしろよ！　なあ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T09:25:37" />
+				Time="2011-07-20T05:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3567,11 +3574,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな　軽装で　探検だと？
+			<Text>テントに寝袋　ライトにハンマー！
+必要なものは　すべて　持ってきた！▼
+そんな　軽装で　探検だと？
 もっと　ちゃんとしろよ！　なあ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T09:25:49" />
+				Time="2011-07-20T05:48:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3659,7 +3668,7 @@
 そんなボクと　ぜひ　一勝負！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T06:14:00" />
+				Time="2011-07-20T03:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5119,10 +5128,10 @@
 			<Text>こっちじゃないか……
 おっ　あんたも　まよったのかい？▼
 まよえる　こひつじどうし
-ポケモンしょうぶでも　やろうか▼</Text>
+ポケモンしょうぶでも　やろうか！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T07:42:21" />
+				Time="2011-07-20T03:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5133,10 +5142,10 @@
 			<Text>こっちじゃないか……
 おっ　あんたも　迷ったのかい？▼
 迷える　子羊同士
-ポケモン勝負でも　やろうか▼</Text>
+ポケモン勝負でも　やろうか！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T07:42:26" />
+				Time="2011-07-20T03:58:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5215,11 +5224,11 @@
 			<Text>このビルに　はいると　コンパスが
 クルクルまわって　つかえなくなるの▼
 たたかいの　なかで　とぎすまされた
-かんだけが　たよりね……▼
+かんだけが　たよりね……▽
 いくわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T06:40:37" />
+				Time="2011-07-20T03:21:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5229,12 +5238,12 @@
 			Language="JPN_KANJI">
 			<Text>このビルに　入ると　コンパスが
 クルクル回って　使えなくなるの▼
-戦いの　中で　研ぎ澄まされた
-勘だけが　頼りね……▼
+戦いの中で　研ぎ澄まされた
+勘だけが　頼りね……▽
 行くわよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-06T06:40:29" />
+				Time="2011-07-20T03:21:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8398,14 +8407,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>遠足に　連れてきた
-こどもたちに　置いて行かれました……▼
+子供たちに　置いて行かれました……▼
 一生懸命　探していたら
 こんな　落書きを　見つけたんです▼
 『せんせい　の　のろまー！』ですって
 キーッ！　ばかに　しないでください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-08T06:33:57" />
+				Time="2011-07-20T05:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8626,12 +8635,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>次から次へと　エリアのボスを
-倒している　こども……▼
+倒している　子供……▼
 まさか　あんたが　そのトレーナー！？
 やっつけて　名を　あげてやるわ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-14T10:34:56" />
+				Time="2011-07-20T05:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12500,12 +12509,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふふふっ　迷っているみたいだね
-ぼくは　嬉しくてたまらないよ！▼
+ぼくは　うれしくてたまらないよ！▼
 ……なんでだって？　それは　ぼくが
 このビルの　設計者だからさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-13T05:49:19" />
+				Time="2011-07-20T03:37:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
