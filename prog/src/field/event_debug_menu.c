@@ -253,9 +253,9 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #define QuickJumpSelect  DEBUG_FIELD_INFINITY
 #elif defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
 #define QuickJumpStart   DEBUG_FIELD_MOBICLIP
-#define QuickJumpSelect  DEBUG_FIELD_MOBICLIP
+#define QuickJumpSelect  DEBUG_FIELD_WBT
 #elif defined DEBUG_ONLY_FOR_tsuruta_saya
-#define QuickJumpStart   DEBUG_FIELD_STR13
+#define QuickJumpStart   DEBUG_FIELD_WBT
 #define QuickJumpSelect  DEBUG_FIELD_STR13
 #elif defined DEBUG_ONLY_FOR_nakatsui || defined DEBUG_ONLY_FOR_mori || defined DEBUG_ONLY_FOR_yoshida || defined DEBUG_ONLY_FOR_mizutani_megumi || defined DEBUG_ONLY_FOR_toyama_kenkichi
 #define QuickJumpStart   DEBUG_FIELD_POKEWOOD
