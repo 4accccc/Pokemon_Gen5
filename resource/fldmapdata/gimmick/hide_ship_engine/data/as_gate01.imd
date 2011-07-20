@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-07-12T15:21:29" source="as_gate01.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-07-20T19:54:57" source="as_gate01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-07-12T15:21:29" source="as_gate01.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-07-20T19:54:57" source="as_gate01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -37,12 +37,6 @@
 		path="C:/home/swan_data3d/gimmick/ajito_ship/in/tex/as_gate1.tga"
 	>
 		<bitmap size="256">
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
 			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
 			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
 			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
@@ -51,24 +45,30 @@
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3
-			f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3
-			f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3
-			f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3 f3f3
-			d3d3 d3d3 d3d3 ebe3 f3f3 ebf3 ebeb e3e3
-			dbe3 dbdb dbdb dbdb d3d3 d3d3 d3d3 d3d3
-			c2c2 c2c2 dac2 eaea eaea e2e2 d2da d2d2
-			d2d2 caca caca c2ca c2c2 c2c2 c2c2 c2c2
-			b1b1 b1b1 e1d1 e1e9 d9e1 c9d1 c1c1 b1b9
-			b1b1 b1b1 b1b1 b1b1 b1b1 b1b1 b1b1 b1b1
-			6161 8161 c9b1 c1c9 a9b9 91a1 8189 7179
-			6971 6969 6969 6161 6161 6161 6161 6161
-			3838 6038 b8b0 a8b0 9098 7080 6060 5050
-			4048 4040 3840 3838 3838 3838 3030 3030
-			2828 6030 b0a8 98a8 7888 6068 4850 3840
-			3030 2828 2828 2828 2828 2828 2828 2828
-			2828 6030 a8a0 90a0 7080 5860 4048 3038
-			2830 2828 2828 2828 2828 2828 2828 2828
+			0129 0101 0101 0101 0101 2929 0129 0101
+			0101 0101 2901 2929 0101 0101 0101 2901
+			2939 0129 0101 2901 2929 3939 2939 2929
+			0101 2901 2929 2931 2929 0101 2929 4129
+			4242 3232 2a2a 3232 423a 6242 3242 3232
+			2a32 322a 4232 42c2 3232 2a2a 3232 8242
+			82f2 6a72 626a 8272 b282 f2b2 82f2 7282
+			626a 726a c282 82c2 626a 6262 826a c282
+			f2f2 8282 7272 c282 f2b2 d2f2 f2d2 82f2
+			7282 8272 f2c2 c2f2 6a82 826a c282 f2f2
+			f3b3 f3f3 8383 f3bb abd3 83b3 f383 bbf3
+			83bb f383 f3f3 f3f3 83f3 8383 f3f3 b3f3
+			b373 e3f3 f3f3 b3b3 83d3 8383 b383 f3d3
+			b3f3 f3c3 d3d3 f3c3 c3f3 c383 b3f3 7383
+			726a b282 bada d2d2 8282 6a82 8282 b282
+			f2f2 d2f2 8282 8282 f2c2 f2f2 82f2 6a6a
+			6a3a 7272 6272 6262 7272 6a6a 6a6a 8272
+			b2b2 7a9a 6a72 6a6a c272 f2f2 7282 3a6a
+			3129 3131 3131 3939 3131 2931 3131 4139
+			8181 3139 2931 2929 4131 b1b1 3141 3131
+			2901 2929 2929 2929 2929 0101 2901 4129
+			4141 2929 0101 0101 2901 4141 2929 0129
+			0101 0101 0101 2929 0101 0101 0101 0101
+			2929 0101 0101 0101 0101 2929 0101 0101
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="as_gate2"
@@ -397,46 +397,46 @@
 			<primitive_array size="3">
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
-					<tex st="28.000000 6.000000"/>
+					<tex st="28.000000 35.000000"/>
 					<clr rgb="31 31 31"/>
 					<pos_s xyz="-5.750000 1.250000 -0.750000"/>
-					<tex st="28.000000 1.000000"/>
+					<tex st="28.000000 29.000000"/>
 					<pos_xy xy="-5.750000 1.750000"/>
-					<tex st="20.000000 6.000000"/>
+					<tex st="20.000000 35.000000"/>
 					<pos_yz yz="1.250000 0.750000"/>
-					<tex st="20.000000 1.000000"/>
+					<tex st="20.000000 29.000000"/>
 					<pos_xy xy="-5.750000 1.750000"/>
-					<tex st="12.000000 6.000000"/>
+					<tex st="12.000000 35.000000"/>
 					<pos_xy xy="-6.250000 1.250000"/>
-					<tex st="12.000000 1.000000"/>
+					<tex st="12.000000 29.000000"/>
 					<pos_xy xy="-6.250000 1.750000"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="6">
-					<tex st="4.000000 1.000000"/>
+					<tex st="4.000000 29.000000"/>
 					<pos_xz xz="5.750000 -0.750000"/>
-					<tex st="4.000000 6.000000"/>
+					<tex st="4.000000 35.000000"/>
 					<pos_xy xy="5.750000 1.250000"/>
-					<tex st="12.000000 1.000000"/>
+					<tex st="12.000000 29.000000"/>
 					<pos_yz yz="1.750000 0.750000"/>
-					<tex st="12.000000 6.000000"/>
+					<tex st="12.000000 35.000000"/>
 					<pos_xy xy="5.750000 1.250000"/>
-					<tex st="20.000000 1.000000"/>
+					<tex st="20.000000 29.000000"/>
 					<pos_xy xy="6.250000 1.750000"/>
-					<tex st="20.000000 6.000000"/>
+					<tex st="20.000000 35.000000"/>
 					<pos_xy xy="6.250000 1.250000"/>
 				</primitive>
 				<primitive index="2" type="quad_strip" vertex_size="6">
-					<tex st="0.000000 24.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<pos_s xyz="5.750000 1.500000 0.500000"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 5.000000"/>
 					<pos_xz xz="5.750000 -0.500000"/>
-					<tex st="-64.000000 24.000000"/>
+					<tex st="-64.000000 16.000000"/>
 					<pos_xz xz="0.000000 0.500000"/>
-					<tex st="-64.000000 8.000000"/>
+					<tex st="-64.000000 5.000000"/>
 					<pos_xz xz="0.000000 -0.500000"/>
-					<tex st="0.000000 24.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<pos_xz xz="-5.750000 0.500000"/>
-					<tex st="0.000000 8.000000"/>
+					<tex st="0.000000 5.000000"/>
 					<pos_xz xz="-5.750000 -0.500000"/>
 				</primitive>
 			</primitive_array>
