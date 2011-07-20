@@ -112,7 +112,7 @@ EVENT_START ev_vending_machine01
           IF  $SCWK_ANSWER == TRUE THEN   //ì¸ÇÈ
             DEFINE_LOCAL ans
             //íäëIÇ∑ÇÈ
-            _GET_RND( ans, 2 )
+            _GET_RND( ans, 32 )
             IF $ans == 0 THEN //Ç†ÇΩÇË
               //à˘Ç›ï®èoÇƒÇ≠ÇÈâπ
               _SE_PLAY( SEQ_SE_FLD_06 )
