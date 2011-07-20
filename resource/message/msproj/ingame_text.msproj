@@ -1955,11 +1955,15 @@
 			<ContentItem
 				Name="waza_oboe.mstxt" />
 			<ContentItem
+				Name="wbt_download.mstxt" />
+			<ContentItem
 				Name="wbt_system.mstxt" />
 			<ContentItem
 				Name="wbt_tournament.mstxt" />
 			<ContentItem
 				Name="wbt_trmsg.mstxt" />
+			<ContentItem
+				Name="wbt_trmsg_dl.mstxt" />
 			<ContentItem
 				Name="wbt_wincount.mstxt" />
 			<ContentItem
