@@ -19609,6 +19609,31 @@ può accadere ancora di tutto!</language>
 テストメッセージ</language>
 	</row>
 
+	<row id="TRID_WORKER2_36_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">パトロールを　していたら
+つよそうな　トレーナー　はっけん！▽
+いくぞ！　シンボラー！！▼</language>
+		<language name="JPN_KANJI" width="216">パトロールを　していたら
+強そうな　トレーナー　発見！▽
+いくぞ！　シンボラー！！▼</language>
+	</row>
+
+	<row id="TRID_WORKER2_36_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">オラが　かんじたとおり
+オニつよい　トレーナーだった！</language>
+		<language name="JPN_KANJI" width="216">オラが　感じたとおり
+オニ強い　トレーナーだった！</language>
+	</row>
+
+	<row id="TRID_WORKER2_36_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">オラの　シンボラー　だけどよ▼
+いつも　おんなじ　ルートを
+とおりたがるんだけど　なんでだ？</language>
+		<language name="JPN_KANJI" width="216">オラの　シンボラー　だけどよ▼
+いつも　おんなじ　ルートを
+通りたがるんだけど　なんでだ？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
