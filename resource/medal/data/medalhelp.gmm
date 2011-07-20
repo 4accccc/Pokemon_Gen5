@@ -1918,11 +1918,112 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_051">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３１かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３１回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_052">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３２かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３２回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_053">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３３かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３３回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_054">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３４かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３４回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_055">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３５かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３５回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_056">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３６かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３６回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_057">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+２８かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+２８回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_058">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+２９かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+２９回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_059">
+		<language name="JPN" width="216">ダミーのヒントです
+メールを
+３０かい　かいてください</language>
+		<language name="JPN_KANJI" width="216">ダミーのヒントです
+メールを
+３０回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_060">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_052">
+	<row id="MDL_HINT_APPLICATION_061">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_062">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_063">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_064">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_065">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2160,71 +2261,6 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_097">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_098">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_099">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_100">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_101">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_102">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_103">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_104">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_105">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_106">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_107">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_108">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_109">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_110">
 		<language name="JPN" width="216">あき</language>
 		<language name="JPN_KANJI" width="216">空き</language>
 	</row>

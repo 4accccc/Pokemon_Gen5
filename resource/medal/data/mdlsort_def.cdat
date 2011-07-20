@@ -85,6 +85,7 @@ u32 MedalSortList[] = {
     MDLID_GUIDANCE_CNT_LV4,	//がいだんすめだる４
     MDLID_GOMIBAKO_LV1,	//がさいれのたつじん
     MDLID_COMM_TRADE_LV3,	//がっちりとれーど
+    MDLID_APPLICATION_DUMMY_34,	//がっぽりでぃれくたー
     MDLID_REPORT_MAX,	//きせきのぺんさき
     MDLID_ALL_COMPLETE,	//きんぐおぶめだりすと
     MDLID_CHAMPION_KOORI,	//くーるちゃんぷ
@@ -102,6 +103,18 @@ u32 MedalSortList[] = {
     MDLID_GOAL,	//ごーるいんぷらいず
     MDLID_NICKNAME_LV1,	//ごっどふぁーざー
     MDLID_YUURANSEN_LV1,	//さんせっとくるーず
+    MDLID_APPLICATION_DUMMY_22,	//しりーずかんけつ１
+    MDLID_APPLICATION_DUMMY_31,	//しりーずかんけつ１０
+    MDLID_APPLICATION_DUMMY_32,	//しりーずかんけつ１１
+    MDLID_APPLICATION_DUMMY_23,	//しりーずかんけつ２
+    MDLID_APPLICATION_DUMMY_24,	//しりーずかんけつ３
+    MDLID_APPLICATION_DUMMY_25,	//しりーずかんけつ４
+    MDLID_APPLICATION_DUMMY_26,	//しりーずかんけつ５
+    MDLID_APPLICATION_DUMMY_27,	//しりーずかんけつ６
+    MDLID_APPLICATION_DUMMY_28,	//しりーずかんけつ７
+    MDLID_APPLICATION_DUMMY_29,	//しりーずかんけつ８
+    MDLID_APPLICATION_DUMMY_30,	//しりーずかんけつ９
+    MDLID_APPLICATION_DUMMY_33,	//しりーずこんぷりーと
     MDLID_SUBWAY_SINGLE_LV1,	//しんぐるえくすぷれす
     MDLID_COMPLETE_JIMEN,	//じめんこれくたー
     MDLID_SHOPPING_CNT_LV1,	//じょうれんかすたまー
@@ -130,6 +143,10 @@ u32 MedalSortList[] = {
     MDLID_COMM_TRADE_LV2,	//ちょこちょことれーど
     MDLID_TRAIN_ALL,	//てつどうまにあ
     MDLID_WATCH_TV_LV1,	//てれびっこ
+    MDLID_DATACONVERT_LV1,	//でーたこんばーと１
+    MDLID_DATACONVERT_LV2,	//でーたこんばーと２
+    MDLID_DATACONVERT_LV3,	//でーたこんばーと３
+    MDLID_DATACONVERT_LV4,	//でーたこんばーと４
     MDLID_KANRANSHA,	//でーとのたつじん
     MDLID_MAIL_WRITE_LV1,	//でぃあふれんど
     MDLID_DELPOWER_USE_LV1,	//でるぱわー＋
@@ -176,9 +193,9 @@ u32 MedalSortList[] = {
     MDLID_CHAMPION_KAKUTOU,	//ふぁいとちゃんぷ
     MDLID_KANOKOTOWN,	//ふぁんおぶひーろー
     MDLID_AFFINITY_CHECK_LV1,	//ふぃーりんぐますたー
-    MDLID_APPLICATION_DUMMY_27,	//ふぇすめだる１
-    MDLID_APPLICATION_DUMMY_28,	//ふぇすめだる２
-    MDLID_APPLICATION_DUMMY_29,	//ふぇすめだる３
+    MDLID_APPLICATION_DUMMY_35,	//ふぇすめだる１
+    MDLID_APPLICATION_DUMMY_36,	//ふぇすめだる２
+    MDLID_APPLICATION_DUMMY_37,	//ふぇすめだる３
     MDLID_CHAMPION_KUSA,	//ふろーらるちゃんぷ
     MDLID_BRIDGE_ALL,	//ぶりっじますたー
     MDLID_CHAMPION_HONOO,	//ぶれいずちゃんぷ
@@ -191,10 +208,6 @@ u32 MedalSortList[] = {
     MDLID_SUBWAY_CHALLENGE_LV4,	//ぼうそうとっきゅう
     MDLID_BOX_MAX,	//ぼっくすまっくす
     MDLID_FISHING_LV1,	//ぼろのつりびと
-    MDLID_APPLICATION_DUMMY_23,	//ぽけうっどめだる１
-    MDLID_APPLICATION_DUMMY_24,	//ぽけうっどめだる２
-    MDLID_APPLICATION_DUMMY_25,	//ぽけうっどめだる３
-    MDLID_APPLICATION_DUMMY_26,	//ぽけうっどめだる４
     MDLID_POKECEN,	//ぽけせんふぁん
     MDLID_ＰＯＫＥＲＵＳ,	//ぽけるすはんたー
     MDLID_RANK_GOLD,	//ますたーめだりすと
@@ -247,24 +260,11 @@ u32 MedalSortList[] = {
     MDLID_DAYMAX_CAPTURE_LV1,	//わんでーきゃぷちゃー
     MDLID_VENDOR_ATARI,	//わんもあどりんく
     MDLID_BLANK_1,	//空きめだる１
-    MDLID_BLANK_10,	//空きめだる１０
-    MDLID_BLANK_11,	//空きめだる１１
-    MDLID_BLANK_12,	//空きめだる１２
-    MDLID_BLANK_13,	//空きめだる１３
-    MDLID_BLANK_14,	//空きめだる１４
-    MDLID_BLANK_15,	//空きめだる１５
-    MDLID_BLANK_16,	//空きめだる１６
-    MDLID_BLANK_17,	//空きめだる１７
-    MDLID_BLANK_18,	//空きめだる１８
-    MDLID_BLANK_19,	//空きめだる１９
     MDLID_BLANK_2,	//空きめだる２
-    MDLID_BLANK_20,	//空きめだる２０
-    MDLID_BLANK_21,	//空きめだる２１
     MDLID_BLANK_3,	//空きめだる３
     MDLID_BLANK_4,	//空きめだる４
     MDLID_BLANK_5,	//空きめだる５
     MDLID_BLANK_6,	//空きめだる６
     MDLID_BLANK_7,	//空きめだる７
     MDLID_BLANK_8,	//空きめだる８
-    MDLID_BLANK_9,	//空きめだる９
 };

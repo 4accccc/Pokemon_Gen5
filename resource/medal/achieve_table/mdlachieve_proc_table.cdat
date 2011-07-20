@@ -70,6 +70,7 @@ MDLACHIEVEPROC sc_achieve_proc[] = {
   MDLREC_CHECK_FriendCodeCnt, // MDLRECID_FRIEND_CODE
   NULL,
   NULL,
+  NULL,
   MDLREC_CHECK_AmusementMedalCnt, // MDLRECID_APLMDL_GET
   NULL,
   NULL,

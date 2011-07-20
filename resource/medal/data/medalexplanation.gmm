@@ -2239,41 +2239,122 @@
 
 	<row id="MDL_EXP_APPLICATION_044">
 		<language name="JPN" width="216">かりメダル
-ポケウッド　みてい
-わく　だけ　かくほ</language>
+ポケウッド　えいが１を
+ぜんシリーズ　さつえい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ポケウッド　未定
-枠だけ　確保</language>
+ポケウッド　映画１を
+全シリーズ　撮影</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_045">
 		<language name="JPN" width="216">かりメダル
-ポケウッド　みてい
-わく　だけ　かくほ</language>
+ポケウッド　えいが２を
+ぜんシリーズ　さつえい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ポケウッド　未定
-枠だけ　確保</language>
+ポケウッド　映画２を
+全シリーズ　撮影</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_046">
 		<language name="JPN" width="216">かりメダル
-ポケウッド　みてい
-わく　だけ　かくほ</language>
+ポケウッド　えいが３を
+ぜんシリーズ　さつえい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ポケウッド　未定
-枠だけ　確保</language>
+ポケウッド　映画３を
+全シリーズ　撮影</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_047">
 		<language name="JPN" width="216">かりメダル
-ポケウッド　みてい
-わく　だけ　かくほ</language>
+ポケウッド　えいが４を
+ぜんシリーズ　さつえい</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ポケウッド　未定
-枠だけ　確保</language>
+ポケウッド　映画４を
+全シリーズ　撮影</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_048">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが５を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画５を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_049">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが６を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画６を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_050">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが７を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画７を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_051">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが８を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画８を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_052">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが９を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画９を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_053">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが１０を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画１０を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_054">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　えいが１１を
+ぜんシリーズ　さつえい</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　映画１１を
+全シリーズ　撮影</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_055">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　ぜんぶの
+えいがを　さつえいした</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　全部の
+映画を　撮影した</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_056">
+		<language name="JPN" width="216">かりメダル
+ポケウッド　ハイスコア
+こうぎょうしゅうにゅう</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ポケウッド　ハイスコア
+興行収入</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_057">
 		<language name="JPN" width="216">かりメダル
 フェスミッション
 かいさい　かいすう</language>
@@ -2282,7 +2363,7 @@
 開催回数</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_049">
+	<row id="MDL_EXP_APPLICATION_058">
 		<language name="JPN" width="216">かりメダル
 フェスミッション
 クリアした　かいすう</language>
@@ -2291,7 +2372,7 @@
 クリアした回数</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_050">
+	<row id="MDL_EXP_APPLICATION_059">
 		<language name="JPN" width="216">かりメダル
 フェスミッション
 さんかした　かいすう</language>
@@ -2300,7 +2381,7 @@
 参加した回数</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_051">
+	<row id="MDL_EXP_APPLICATION_060">
 		<language name="JPN" width="216">ゲームシンクを　して　ポケモンを
 ゆめの　せかいで　あそばせた
 よい　ねむりを　たたえる　メダル。</language>
@@ -2309,7 +2390,43 @@
 良い　眠りを　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_052">
+	<row id="MDL_EXP_APPLICATION_061">
+		<language name="JPN" width="216">かりメダル
+データコンバート
+だんかい１</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+データコンバート
+段階１</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_062">
+		<language name="JPN" width="216">かりメダル
+データコンバート
+だんかい２</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+データコンバート
+段階２</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_063">
+		<language name="JPN" width="216">かりメダル
+データコンバート
+だんかい３</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+データコンバート
+段階３</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_064">
+		<language name="JPN" width="216">かりメダル
+データコンバート
+だんかい４</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+データコンバート
+段階４</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_065">
 		<language name="JPN" width="216">『おたのしみ』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『お楽しみ』メダルを　すべて　
@@ -2575,71 +2692,6 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_097">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_098">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_099">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_100">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_101">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_102">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_103">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_104">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_105">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_106">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_107">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_108">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_109">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_110">
 		<language name="JPN" width="216">あき</language>
 		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
