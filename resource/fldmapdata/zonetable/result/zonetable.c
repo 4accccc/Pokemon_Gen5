@@ -2009,7 +2009,7 @@ static const ZONEDATA ZoneData[] = {
 		enc_dummy,
 		NARC_eventdata_c03r1102_bin,
     ZONE_ID_C03,
-		MAPNAME_C3YAGURUMA,
+		MAPNAME_C03R1102,
 		ZONEDATA_PLACENAME_FLAG_ALL_HIDE,
 		WEATHER_NO_SUNNY,
     FALSE,
