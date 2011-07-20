@@ -2145,24 +2145,24 @@
 #define MDL_FLAG_ANIMALTRAIL_18           2657 /* 0x0a61 けものみちチェック済みその18 */
 #define MDL_FLAG_ANIMALTRAIL_19           2658 /* 0x0a62 けものみちチェック済みその19 */
 #define MDL_FLAG_ANIMALTRAIL_20           2659 /* 0x0a63 けものみちチェック済みその20 */
-		/* not used  2660(0x0a64) */
-		/* not used  2661(0x0a65) */
-		/* not used  2662(0x0a66) */
-		/* not used  2663(0x0a67) */
-		/* not used  2664(0x0a68) */
-		/* not used  2665(0x0a69) */
-		/* not used  2666(0x0a6a) */
-		/* not used  2667(0x0a6b) */
-		/* not used  2668(0x0a6c) */
-		/* not used  2669(0x0a6d) */
-		/* not used  2670(0x0a6e) */
-		/* not used  2671(0x0a6f) */
-		/* not used  2672(0x0a70) */
-		/* not used  2673(0x0a71) */
-		/* not used  2674(0x0a72) */
-		/* not used  2675(0x0a73) */
-		/* not used  2676(0x0a74) */
-		/* not used  2677(0x0a75) */
+#define MDL_FLAG_BOARD_C04_06             2660 /* 0x0a64 お得な掲示板チェック済み01 */
+#define MDL_FLAG_BOARD_C04_07             2661 /* 0x0a65 お得な掲示板チェック済み02 */
+#define MDL_FLAG_BOARD_C08_04             2662 /* 0x0a66 お得な掲示板チェック済み03 */
+#define MDL_FLAG_BOARD_D02R0101_01        2663 /* 0x0a67 お得な掲示板チェック済み04 */
+#define MDL_FLAG_BOARD_R01_03             2664 /* 0x0a68 お得な掲示板チェック済み05 */
+#define MDL_FLAG_BOARD_R02_03             2665 /* 0x0a69 お得な掲示板チェック済み06 */
+#define MDL_FLAG_BOARD_R03_03             2666 /* 0x0a6a お得な掲示板チェック済み07 */
+#define MDL_FLAG_BOARD_R04_03             2667 /* 0x0a6b お得な掲示板チェック済み08 */
+#define MDL_FLAG_BOARD_R05_04             2668 /* 0x0a6c お得な掲示板チェック済み09 */
+#define MDL_FLAG_BOARD_R06_03             2669 /* 0x0a6d お得な掲示板チェック済み10 */
+#define MDL_FLAG_BOARD_R07_03             2670 /* 0x0a6e お得な掲示板チェック済み11 */
+#define MDL_FLAG_BOARD_R08_03             2671 /* 0x0a6f お得な掲示板チェック済み12 */
+#define MDL_FLAG_BOARD_R09_03             2672 /* 0x0a70 お得な掲示板チェック済み13 */
+#define MDL_FLAG_BOARD_R12_03             2673 /* 0x0a71 お得な掲示板チェック済み14 */
+#define MDL_FLAG_BOARD_R13_03             2674 /* 0x0a72 お得な掲示板チェック済み15 */
+#define MDL_FLAG_BOARD_R14_02             2675 /* 0x0a73 お得な掲示板チェック済み16 */
+#define MDL_FLAG_BOARD_R14_03             2676 /* 0x0a74 お得な掲示板チェック済み17 */
+#define MDL_FLAG_BOARD_R19_03             2677 /* 0x0a75 お得な掲示板チェック済み18 */
 		/* not used  2678(0x0a76) */
 		/* not used  2679(0x0a77) */
 		/* not used  2680(0x0a78) */

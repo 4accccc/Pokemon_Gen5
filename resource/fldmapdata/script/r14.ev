@@ -36,6 +36,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_r14_sign2_01
 	_EASY_BGWIN_MSG( msg_r14_sign2_01, TYPE_INFO )
+  _FLAG_SET( MDL_FLAG_BOARD_R14_02 )
 EVENT_END
 
 /**************************************************************/
@@ -43,4 +44,5 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_r14_sign3_01
 	_EASY_BGWIN_MSG( msg_r14_sign3_01, TYPE_INFO )
+  _FLAG_SET( MDL_FLAG_BOARD_R14_03 )
 EVENT_END
