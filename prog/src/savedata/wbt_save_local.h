@@ -19,7 +19,7 @@
  */
 //------------------------------------------------------------------
 enum {
-  LOCAL_WBTWIN_COUNT_MAX = 26,
+  LOCAL_WBTWIN_COUNT_MAX = 30,
 
   LOCAL_WBTSAVE_FLAG_MAX = 64,
 };

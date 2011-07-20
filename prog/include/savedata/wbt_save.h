@@ -50,6 +50,10 @@ typedef enum {
   WBTWIN_COUNT_SINOU             = 23,
   WBTWIN_COUNT_WORLD             = 24,
   WBTWIN_COUNT_WCS               = 25,
+  WBTWIN_COUNT_RENTAL            = 26,
+  WBTWIN_COUNT_RENTALMASTER      = 27,
+  WBTWIN_COUNT_SHUFFLE           = 28,
+  WBTWIN_COUNT_SHUFFLEMASTER     = 29,
 
   WBTWIN_COUNT_MAX,
 
