@@ -16,7 +16,8 @@ enum {
 	NARC_medalinfo_gra_medalinfo_bgd1_NSCR = 2,
 	NARC_medalinfo_gra_medalinfo_bgd2_NSCR = 3,
 	NARC_medalinfo_gra_medalinfo_bgd3_NSCR = 4,
-	NARC_medalinfo_gra_medalinfo_bgu1_NSCR = 5
+	NARC_medalinfo_gra_medalinfo_bgd4_NSCR = 5,
+	NARC_medalinfo_gra_medalinfo_bgu1_NSCR = 6
 };
 
 /* NARC_MEDALINFO_GRA_NAIX_ */
