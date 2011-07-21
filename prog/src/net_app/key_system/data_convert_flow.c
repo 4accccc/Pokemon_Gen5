@@ -770,7 +770,7 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     (*p_seq)++;
     break;
   case SEQ_CREATE_DISPLAY_TO_WIFI_LOGOUT:
-    //KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayWifi );
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayNetMenu );
     (*p_seq)++;
     break;
   case SEQ_OPEN_PROC_TO_WIFI_LOGOUT:
@@ -778,7 +778,6 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     (*p_seq)++;
     break;
   case SEQ_DELETE_DISPLAY:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
     (*p_seq)++;
     break;
   case SEQ_END:
