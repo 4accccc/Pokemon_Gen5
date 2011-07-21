@@ -61,6 +61,11 @@ NAMEIN_PARAM *NAMEIN_AllocParam( HEAPID heapId, NAMEIN_MODE mode, int param1, in
   p_param->p_misc = p_misc;
   p_param->prof_flag  = NAMEIN_PROF_DISABLE;
 
+  if( mode == NAMEIN_GAMESYNC_ID_CODE )
+  {
+    p_param->prof_flag  = NAMEIN_PROF_ALL_ENABLE;
+  }
+
   //バッファ作成
   p_param->strbuf = GFL_STR_CreateBuffer( NAMEIN_STR_BUFFER_LENGTH + 1, heapId );
 

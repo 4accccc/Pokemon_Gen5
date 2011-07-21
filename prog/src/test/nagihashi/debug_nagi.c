@@ -446,9 +446,11 @@ static const LIST_SETUP_TBL sc_list_data_home[] =
   { 
     L"レギュレーション赤外線送信", LISTDATA_SEQ_SEND_IRC_REGULATION,
   },
+#endif
   { 
     L"名前入力", LISTDATA_SEQ_PROC_NAMEIN,
   },
+#if 0
   { 
     L"ログアウト", LISTDATA_SEQ_PROC_WIFILOGOUT,
   },
@@ -547,7 +549,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
   p_wk->p_gamedata = GAMEDATA_Create(HEAPID_NAGI_DEBUG);
 
   CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-  p_wk->p_namein_param  = NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_FRIENDNAME, NAMEIN_TRAINER_VIEW_UNKNOWN, 0, NAMEIN_FREE_WORD_LENGTH, NULL, p_misc );
+  p_wk->p_namein_param  = NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_GAMESYNC_ID_CODE, 0, 0, GAMESYNC_ID_CODE_LENGTH, NULL, p_misc );
 
   NAGI_Printf( "pokeparty size=[%d]\n", PokeParty_GetWorkSize() );
 

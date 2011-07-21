@@ -502,6 +502,8 @@ typedef struct
 
   NAMEIN_KEYMAP_HANDLE *p_keymap_handle;
 
+  BOOL              is_disable_keytype;
+
 } KEYBOARD_WORK;
 //-------------------------------------
 /// ÉAÉCÉRÉì

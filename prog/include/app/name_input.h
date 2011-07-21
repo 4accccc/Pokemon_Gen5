@@ -45,6 +45,8 @@ typedef enum
   NAMEIN_FREE_RESORT_PHRASE,  //リゾート口癖  param1 自分の性別
 
   NAMEIN_FREE_PASSWORD,       // アジト船パスワード入力
+  NAMEIN_GAMESYNC_ID_CODE,   //ゲームシンクIDコード入力
+
 
 	NAMEIN_MAX,
 }NAMEIN_MODE;
@@ -115,6 +117,9 @@ typedef enum
 #else
 #define NAMEIN_FREE_WORD_LENGTH		( 8 )
 #endif
+
+//すれ違いIDコード
+#define GAMESYNC_ID_CODE_LENGTH   (10)
 
 //=============================================================================
 /**

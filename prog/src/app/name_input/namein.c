@@ -89,10 +89,6 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 
 #define NAMEIN_KEY_TOUCH  //キーとタッチの操作わけ処理ON
 
-//#define NAMEIN_STRINPUT_CENTERING
-//センタリングしていたが、最大文字数が１０になったので、
-//センタリングできなくなった -> 最大文字が８にへりましたので戻します
-
 //この文字で埋まっていたら不許可文字
 #define NAMEIN_STR_ILLEGAL_STR  (L'　')
 
@@ -151,6 +147,7 @@ static u32  STRINPUT_GetStrLength( const STRINPUT_WORK *cp_wk );
 static u32  STRINPUT_GetChangeStrLength( const STRINPUT_WORK *cp_wk );
 static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
 static BOOL STRINPUT_IsValidStr( const STRINPUT_WORK *cp_wk);
+static BOOL STRINPUT_IsGameSyncIDCodeStr( const STRINPUT_WORK *cp_wk);
 //-------------------------------------
 /// KEYMAP
 //=====================================
@@ -182,9 +179,11 @@ static KEYBOARD_INPUT KEYBOARD_GetInput( const KEYBOARD_WORK *cp_wk, STRCODE *p_
 static BOOL KEYBOARD_IsShift( const KEYBOARD_WORK *cp_wk );
 static BOOL KEYBOARD_PrintMain( KEYBOARD_WORK *p_wk );
 static NAMEIN_INPUTTYPE KEYBOARD_GetInputType( const KEYBOARD_WORK *cp_wk );
+static void KEYBOARD_SetDisableKeyType( KEYBOARD_WORK *p_wk, BOOL disable );
 static BOOL Keyboard_StartMove( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
 static BOOL Keyboard_MainMove( KEYBOARD_WORK *p_wk );
 static void Keyboard_ChangeMode( KEYBOARD_WORK *p_wk, NAMEIN_INPUTTYPE mode );
+
 
 typedef struct
 { 
@@ -239,6 +238,8 @@ static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_p
 static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID );
 static void FinishInput( NAMEIN_WORK *p_wk );
 static BOOL CanDecide( NAMEIN_WORK *p_wk );
+static BOOL CheckGameSyncIDCode( NAMEIN_WORK *p_wk );
+static void ConvertZenkakuStrToHankakuLargeStr( STRBUF *p_str );
 //-------------------------------------
 /// SEQ
 //=====================================
@@ -317,10 +318,19 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   //引数受け取り
   p_param = p_param_adrs;
 
-  //セーブデータ受け取り
-  if( p_param->p_misc )
-  { 
-    mode    = MISC_GetNameInMode( p_param->p_misc, p_param->mode );
+  
+  //モードがNAMEIN_GAMESYNC_ID_CODEの場合は英数
+  if( p_param->mode == NAMEIN_GAMESYNC_ID_CODE )
+  {
+    mode    = NAMEIN_INPUTTYPE_ABC;
+  }
+  else
+  {
+    //セーブデータ受け取り
+    if( p_param->p_misc )
+    { 
+      mode    = MISC_GetNameInMode( p_param->p_misc, p_param->mode );
+    }
   }
   
   //なぜここが１か。
@@ -393,6 +403,12 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_WaitPrint );
   STRINPUT_Init( &p_wk->strinput, p_wk->p_initdraw_str, p_param->wordmax, p_wk->p_font, p_wk->p_que, &p_wk->obj, HEAPID_NAME_INPUT );
   KEYBOARD_Init( &p_wk->keyboard, mode, p_wk->p_font, p_wk->p_que, p_wk->p_keymap_handle, &p_wk->obj, HEAPID_NAME_INPUT );
+
+  if( p_param->mode == NAMEIN_GAMESYNC_ID_CODE )
+  {
+    KEYBOARD_SetDisableKeyType( &p_wk->keyboard, TRUE );
+  }
+
   MSGWND_Init( &p_wk->msgwnd, p_wk->p_font, p_wk->p_msg, p_wk->p_que, p_wk->p_word, HEAPID_NAME_INPUT );
   PS_Init( &p_wk->ps, HEAPID_NAME_INPUT );
   p_wk->p_prof  = PROF_WORD_AllocWork( HEAPID_NAME_INPUT );
@@ -1767,6 +1783,46 @@ static BOOL STRINPUT_IsValidStr( const STRINPUT_WORK *cp_wk )
 
   return i != cnt;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字が許可できるかチェック  （主人公名では決定できず、それ以外ではデフォルトに戻る）
+ *
+ *	@param	const STRINPUT_WORK *cp_wk  ワーク
+ *
+ *	@return TRUE許可文字  FASE不許可文字
+ */
+//-----------------------------------------------------------------------------
+static BOOL STRINPUT_IsGameSyncIDCodeStr( const STRINPUT_WORK *cp_wk)
+{
+  static const STRCODE sc_illigal_code[]  =
+  {
+    L'Ｏ',
+    L'ｏ',
+    L'Ｉ',
+    L'ｉ',
+    L'　',
+    L'，',
+    L'．',
+    L'１',
+    L'０',
+  };
+
+  int i, j;
+
+  for( i = 0; i < cp_wk->input_idx; i++ )
+  { 
+    for( j = 0; j < NELEMS(sc_illigal_code); j++ )
+    {
+      if(  cp_wk->input_str[ i ] == sc_illigal_code[j] )
+      { 
+        return FALSE;
+      }
+    }
+  }
+
+  return TRUE;
+}
+
 //=============================================================================
 /**
  *          KEYMAP
@@ -3187,6 +3243,18 @@ static NAMEIN_INPUTTYPE KEYBOARD_GetInputType( const KEYBOARD_WORK *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  キーボード  キータイプ無効モード
+ *
+ *	@param	KEYBOARD_WORK *p_wk ワーク
+ *	@param	disable   TRUEならばキータイプ変更無効  FALSEならば通常
+ */
+//-----------------------------------------------------------------------------
+static void KEYBOARD_SetDisableKeyType( KEYBOARD_WORK *p_wk, BOOL disable )
+{
+  p_wk->is_disable_keytype  = disable;
+}
+//----------------------------------------------------------------------------
+/**
  *  @brief  キーボード  入力モード変更時の動作アニメ開始
  *
  *  @param  KEYBOARD_WORK *p_wk ワーク
@@ -3617,6 +3685,13 @@ static void Keyboard_Decide( KEYBOARD_WORK *p_wk, const KEYBOARD_INPUT_REQUEST *
   case KEYMAP_KEYTYPE_KIGOU:    //記号モード
     /* fallthrough */
   case KEYMAP_KEYTYPE_QWERTY: //ローマ字モード
+    
+    if( p_wk->is_disable_keytype )
+    {
+      PMSND_PlaySE( NAMEIN_SE_BEEP );
+      break;
+    }
+
     if( Keyboard_StartMove( p_wk, type - KEYMAP_KEYTYPE_KANA ) )
     { 
       PMSND_PlaySE( NAMEIN_SE_CHANGE_MODE );
@@ -4630,6 +4705,9 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
 
   case NAMEIN_FREE_RESORT_CITY:
     return ICON_TYPE_CITY;
+    
+  case NAMEIN_GAMESYNC_ID_CODE:
+    return ICON_TYPE_HATENA;
 
   case NAMEIN_FREE_PASSWORD:
     return ICON_TYPE_HATENA;
@@ -4737,6 +4815,14 @@ static void FinishInput( NAMEIN_WORK *p_wk )
     //今回の文字列を返す
     STRINPUT_CopyStr( &p_wk->strinput, p_wk->p_param->strbuf );
 
+    //ゲームシンクIDコードは最後半角大文字へ変換する
+    if( p_wk->p_param->mode == NAMEIN_GAMESYNC_ID_CODE )
+    {
+      ConvertZenkakuStrToHankakuLargeStr( p_wk->p_param->strbuf );
+      STRINPUT_Delete( &p_wk->strinput );
+      STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_wk->p_param->strbuf) );
+    }
+
     //以前の文字列と一致したもしくはならば、キャンセルとみなす
     { 
       if( GFL_STR_CompareBuffer( p_src_str, p_wk->p_param->strbuf ) )
@@ -4803,6 +4889,57 @@ static BOOL CanDecide( NAMEIN_WORK *p_wk )
   }
 
   return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字列中にゲームシンクIDコードで使われていないものが入っているかどうか
+ *
+ *	@param	NAMEIN_WORK *p_wk ワーク
+ *
+ *	@return TRUE　問題なし  FALSE 不正文字が履いている
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckGameSyncIDCode( NAMEIN_WORK *p_wk )
+{
+  return STRINPUT_IsGameSyncIDCodeStr( &p_wk->strinput );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全角英数から半角大文字英数へ変換
+ *
+ *	@param	STRBUF *p_str 変換する文字列
+ */
+//-----------------------------------------------------------------------------
+static void ConvertZenkakuStrToHankakuLargeStr( STRBUF *p_str )
+{
+  int i;
+  STRCODE strcode[STRINPUT_STR_LEN+1];
+
+  GFL_STR_GetStringCode( p_str, strcode, STRINPUT_STR_LEN+1 );
+
+  for( i = 0; strcode[i] != GFL_STR_GetEOMCode(); i++ )
+  {
+    //小文字を大文字に
+    if( strcode[i] >= L'ａ' &&
+        strcode[i] <= L'ｚ')
+    {
+      strcode[i]  = strcode[i]-L'ａ'+L'Ａ';
+    }
+
+    //全角を半角に
+    if( strcode[i] >= L'Ａ' &&
+        strcode[i] <= L'Ｚ')
+    {
+      strcode[i]  = strcode[i]-L'ａ'+L'a';
+    }
+    else if( strcode[i] >= L'０' &&
+        strcode[i] <= L'９')
+    {
+      strcode[i] = strcode[i]-L'０'+L'0';
+    }
+  }
+
+  GFL_STR_SetStringCode( p_str, strcode );
 }
 //=============================================================================
 /**
@@ -5249,6 +5386,18 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
           break;
         }
 
+        //ゲームシンクIDコード入力のチェック
+        if( p_wk->p_param->mode == NAMEIN_GAMESYNC_ID_CODE )
+        {
+          if( !CheckGameSyncIDCode( p_wk ) )
+          {
+            PMSND_PlaySE( NAMEIN_SE_BEEP );
+            MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_010 );
+            p_wk->is_illegal_msg  = TRUE;
+            break;
+          }
+        }
+
         //不正文字チェック
         if( ( p_wk->p_param->prof_flag & NAMEIN_PROF_STRING_ENABLE ) == 0 )
         {
@@ -5312,7 +5461,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
         //デフォルト名入力
         if( p_default != NULL )
-        { 
+        {
           STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
           GFL_STR_DeleteBuffer( p_default );
         }
@@ -5363,11 +5512,15 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   //SEQFUNC_Mainへ移動FinishInput( p_wk );
 
   //入力モードを保存する
-  if( p_wk->p_param->p_misc )
-  { 
-    NAMEIN_INPUTTYPE input_type;
-    input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
-    MISC_SetNameInMode( p_wk->p_param->p_misc, p_wk->p_param->mode, input_type );
+
+  if( p_wk->p_param->mode != NAMEIN_GAMESYNC_ID_CODE )
+  {
+    if( p_wk->p_param->p_misc )
+    { 
+      NAMEIN_INPUTTYPE input_type;
+      input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
+      MISC_SetNameInMode( p_wk->p_param->p_misc, p_wk->p_param->mode, input_type );
+    }
   }
 
   //終了
