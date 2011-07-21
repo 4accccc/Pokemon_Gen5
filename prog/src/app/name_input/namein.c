@@ -4631,6 +4631,9 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
   case NAMEIN_FREE_RESORT_CITY:
     return ICON_TYPE_CITY;
 
+  case NAMEIN_FREE_PASSWORD:
+    return ICON_TYPE_HATENA;
+
   default:
     GF_ASSERT( 0 );
     return 0;
@@ -4703,6 +4706,9 @@ static STRBUF* INITNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, H
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
 
   case NAMEIN_FREE_WORD:
+    return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
+
+  case NAMEIN_FREE_PASSWORD:
     return GFL_STR_CreateCopyBuffer( cp_wk->p_initdraw_str, heapID );
   }
 
