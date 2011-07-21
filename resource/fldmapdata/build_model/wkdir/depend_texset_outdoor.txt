@@ -2309,6 +2309,7 @@ DEP_TEXSET_IMD_OUTDOOR056 = \
 	$(SRCDIR)/c13_ship_01.imd \
 	$(SRCDIR)/c5_wbt_01.imd \
 	$(SRCDIR)/wbt_fountain.imd \
+	$(SRCDIR)/c03_ship_03_02.imd \
 	$(SRCDIR)/wbtgate_01.imd
 
 texset/outdoor056.imd: $(DEP_TEXSET_IMD_OUTDOOR056) texset/tmp/outdoor056.list

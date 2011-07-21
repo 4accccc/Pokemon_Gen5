@@ -20162,7 +20162,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D27R0101 = 576
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN77,
+		AREA_ID_OUT70,
 		MATRIX_ID_DUN2701,
 		NARC_script_seq_d27r0101_bin,
 		NARC_script_seq_sp_d27r0101_bin,	//NARC_script_seq_sp_d27r0101_bin,
@@ -20512,7 +20512,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_D27R1101 = 586
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_IN77,
+		AREA_ID_OUT70,
 		MATRIX_ID_DUN2711,
 		NARC_script_seq_d27r1101_bin,
 		NARC_script_seq_sp_d27r1101_bin,	//NARC_script_seq_sp_d27r1101_bin,
