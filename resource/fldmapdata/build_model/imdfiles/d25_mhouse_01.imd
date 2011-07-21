@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara" host="W00251" date="2011-06-30T20:23:41" source="d25_mhouse_01.mb"/>
+	<create user="fujiwara" host="W00251" date="2011-07-21T13:18:40" source="d25_mhouse_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara" host="W00251" date="2011-06-30T20:23:41" source="d25_mhouse_01.mb"/>
+<original_create user="fujiwara" host="W00251" date="2011-07-21T13:18:40" source="d25_mhouse_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -194,31 +194,31 @@
 			eeee 2222 9976 caaa dccc cddd accc 999a
 			2222 2222 5692 1222 4444 4444 2212 4444
 			4444 2222 9976 ccaa dddc dddd accc 99aa
-			bbbe fffe 569f 1222 4444 4444 2212 4444
+			2221 fff1 569f 1222 4444 4444 2212 4444
 			4444 2222 9976 ccaa dddd dddd accd 99aa
-			bbbe fffe 569f 1222 1111 bb11 1212 bbb4
+			2221 fff1 569f 1222 1111 bb11 1212 bbb4
 			bbbb 2222 9976 ccaa dddd dddd cccd 99aa
-			bbbe fffe 569f 1222 1111 e111 1212 bbb4
+			2221 fff1 569f 1222 1111 e111 1212 bbb4
 			bbbb 2222 9976 ccaa dddd dddd ccdd 99aa
-			bbbe fffe 569f 1222 1111 e111 1212 eeeb
+			2221 fff1 569f 1222 1111 e111 1212 eeeb
 			eeee 2222 9976 dcca dddd dddd ccdd 9aaa
-			bbbe fffe 569f 1222 1111 e111 1212 eeeb
+			2221 fff1 569f 1222 1111 e111 1212 eeeb
 			eeee 2222 9976 dcca dddd dddd cddd 9aac
-			bbbe fffe 567f 1222 4444 4444 1212 4444
+			2221 fff1 567f 1222 4444 4444 1212 4444
 			4444 2222 9976 dcca dddd dddd cddd 9aac
-			bbbe fffe 667f 1222 4444 4444 1212 4444
+			2221 fff1 667f 1222 4444 4444 1212 4444
 			4444 2222 9976 dcca dddd dddd cddd 9aac
-			bbbe fffe 667f 1222 bbb4 bbbb 1212 bbb4
+			2221 fff1 667f 1222 bbb4 bbbb 1212 bbb4
 			bbbb 2222 9976 dcca dddd dddd cddd 9aac
-			bbbe fffe 667f 1222 bbb4 bbbb 1212 bbb4
+			2221 fff1 667f 1222 bbb4 bbbb 1212 bbb4
 			bbbb 2222 9976 ccca dddd dddd cddd 99ac
-			bbbe fffe 677f 1222 eeeb eeee 1212 eeeb
+			2221 fff1 677f 1222 eeeb eeee 1212 eeeb
 			eeee 2222 9976 ccaa dddd dddd cddd 99aa
-			eeee fffe 679f 1222 eeeb eeee 1212 eeeb
+			3331 fff1 679f 1222 eeeb eeee 1212 eeeb
 			eeee 2222 a976 ccaa dddd dddd ccdd 99aa
-			bbbb fffb 779f 1111 1111 1111 1111 1111
+			1111 fff1 779f 1111 1111 1111 1111 1111
 			1111 1111 a976 ccaa dddd dddd ccdd 9aaa
-			bbbb fffb 799f 2222 2222 2222 2222 2222
+			1111 fff1 799f 2222 2222 2222 2222 2222
 			2222 2222 a976 dcaa dddd dddd ccdd 9aac
 			ffff ffff 799f 2222 2222 2222 2222 2222
 			2222 2222 9976 dcca dddd dddd cddd 9aac
@@ -1245,7 +1245,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="model" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
