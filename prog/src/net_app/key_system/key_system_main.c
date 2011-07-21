@@ -1151,11 +1151,6 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
     p_wk->p_key_sv = OUTSIDE_PERMANENT_GetKeySystem( p_per );
     p_wk->p_data_sv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
   }
-  
-  //それぞれの初期化
-  KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
-  KEYSYS_DATACONVFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
-
   //グラフィック初期化
   p_wk->p_graphic = KEY_SYSTEM_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, heapID );
 
@@ -1176,6 +1171,11 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 
   //ディスプレイ作成
   p_wk->p_display = KEYSYS_DISPLAY_Init( p_wk, heapID );
+
+  
+  //それぞれの初期化
+  KEYSYS_KEYFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
+  KEYSYS_DATACONVFLOW_Init( p_wk, HEAPID_KEY_SYSTEM );
 
  
   //上画面、下部テキスト作成
