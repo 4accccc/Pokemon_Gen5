@@ -969,6 +969,10 @@ LAND_DEPEND_LIST = \
 	$(DIR_OUTPUT)/m_champ01_00_01.3dppack \
 	$(DIR_OUTPUT)/m_dining01_00_00.3dppack \
 	$(DIR_OUTPUT)/m_gate11_00_00.3dppack \
+	$(DIR_OUTPUT)/m_resonance01_00_00.3dppack \
+	$(DIR_OUTPUT)/m_resonance02_00_00.3dppack \
+	$(DIR_OUTPUT)/m_resonance02_00_01.3dppack \
+	$(DIR_OUTPUT)/m_resonance02_00_02.3dppack \
 	$(DIR_OUTPUT)/C3_00_00.ngpack \
 	$(DIR_OUTPUT)/C3_00_01.ngpack \
 	$(DIR_OUTPUT)/C3_01_00.ngpack \

@@ -373,3 +373,5 @@
 "DUN3501.bin"
 "gate11.bin"
 "dining01.bin"
+"resonance01.bin"
+"resonance02.bin"

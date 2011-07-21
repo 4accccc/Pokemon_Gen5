@@ -4042,3 +4042,19 @@ $(DIR_WBTMP)/m_gate11_00_00.tbl: $(DIR_RES)/m_gate11_00_00.bin
 	@echo create_bintbl m_gate11_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_gate11_00_00.bin
 
+$(DIR_WBTMP)/m_resonance01_00_00.tbl: $(DIR_RES)/m_resonance01_00_00.bin
+	@echo create_bintbl m_resonance01_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_resonance01_00_00.bin
+
+$(DIR_WBTMP)/m_resonance02_00_00.tbl: $(DIR_RES)/m_resonance02_00_00.bin
+	@echo create_bintbl m_resonance02_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_resonance02_00_00.bin
+
+$(DIR_WBTMP)/m_resonance02_00_01.tbl: $(DIR_RES)/m_resonance02_00_01.bin
+	@echo create_bintbl m_resonance02_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_resonance02_00_01.bin
+
+$(DIR_WBTMP)/m_resonance02_00_02.tbl: $(DIR_RES)/m_resonance02_00_02.bin
+	@echo create_bintbl m_resonance02_00_02
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_resonance02_00_02.bin
+
