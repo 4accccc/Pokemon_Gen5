@@ -312,4 +312,31 @@
 				Time="2011-06-24T03:33:34" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_SELECT_SCREEN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>上映選択アプリ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-07-19T08:37:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-19T08:37:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>上映選択アプリ
+</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-07-19T08:37:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-19T08:37:19" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

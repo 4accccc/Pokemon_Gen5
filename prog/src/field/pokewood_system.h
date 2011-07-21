@@ -50,7 +50,11 @@ extern void PKWDSYS_SetJoinMypoke( PKWDSYS *pkwdsys, u16 flag );
 extern  int PKWDSYS_GetJoinMypoke( PKWDSYS *pkwdsys );
 
 extern void PKWDSYS_SetScenarioNo( PKWDSYS *pkwdsys, int no );
-extern u16 PKWDSYS_GetScenarioNo( PKWDSYS *pkwdsys );
+extern  u16 PKWDSYS_GetScenarioNo( PKWDSYS *pkwdsys );
+
+extern void PKWDSYS_SetPlayNo( PKWDSYS *pkwdsys, int no );
+extern  u16 PKWDSYS_GetPlayNo( PKWDSYS *pkwdsys );
+
 
 extern void PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEPARTY *entry_party );
 //extern BATTLE_SETUP_PARAM * PKWDSYS_CreateBattleSetupParam( PKWDSYS * pkwdsys, GAMESYS_WORK * gsys );

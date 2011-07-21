@@ -77,6 +77,7 @@ static BOOL debugMenuCallProc_PokewoodShow3( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodShow4( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodAnnounce( POKEWOOD_FUNC_WORK * wk );
 static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk );
+static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk );
 
 //-----------------------------------------------------------------------------
 ///リスト メニューヘッダー
@@ -118,6 +119,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
 //  { DEBUG_STRID_POKEWOOD_SHOW_ROM, (void*)debugMenuCallProc_PokewoodShow4, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_POKEWOOD_SELECT_SCREEN, (void*)debugMenuCallProc_PokewoodSelect, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -416,5 +418,32 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
 	return TRUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用ポケウッド上映選択アプリ呼び出し
+ *
+ *  @param  POKEWOOD_FUNC_WORK *p_wk   ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk )
+{
+  GMEVENT *event = wk->gmEvent;
+	GMEVENT *new_event;
+	PKWD_SELECT_SCREEN_PARAM  *pkwd_param = PKWD_SELECT_SCREEN_PARAM_Create( HEAPID_PROC, wk->gmSys, NULL );
+
+	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_SELECT_SCREEN_EVENT_Call, (void *)pkwd_param );
+
+  PKWD_SELECT_SCREEN_PARAM_Delete( pkwd_param );
+
+	GMEVENT_ChangeEvent( event, new_event );
+
+	OS_Printf( "Pkwd Select Screen Start\n" );
+  
+	return TRUE;
+}
 
 

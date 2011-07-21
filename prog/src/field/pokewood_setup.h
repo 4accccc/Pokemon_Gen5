@@ -12,6 +12,7 @@
 
 #include "app/pkwd_count.h"
 #include "app/pkwd_book.h"
+#include "app/pkwd_selectscreen.h"
 
 //=============================================================================
 //    ŠO•”ŒöŠJ
@@ -27,4 +28,6 @@ extern PKWD_BOOK_PARAM * PKWD_BOOK_PARAM_Create( HEAPID heapID, GAMESYS_WORK * g
 extern void PKWD_BOOK_PARAM_Delete( PKWD_BOOK_PARAM * pkwd_param );
 
 
+extern PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work );
+extern void PKWD_SELECT_SCREEN_PARAM_Delete( PKWD_SELECT_SCREEN_PARAM * param );
 

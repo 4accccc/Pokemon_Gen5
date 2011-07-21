@@ -2664,6 +2664,11 @@ SRCS_OVERLAY_PKWD_ANNOUNCE = app/pkwd_announce/pkwd_count.c \
 SRCS_OVERLAY_PKWD_BOOK = app/pkwd_book/pkwd_book.c \
                       app/pkwd_book/pkwd_book_graphic.c
 
+# ポケウッド上映選択アプリ
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PKWD_SELECTSCREEN = app/pkwd_selectscreen/pkwd_selectscreen.c \
+                      app/pkwd_selectscreen/pkwd_selectscreen_graphic.c
+
 # エントリーチェッカー
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_ENTRY_CHECKER = app/entry_checker/win_record.c \

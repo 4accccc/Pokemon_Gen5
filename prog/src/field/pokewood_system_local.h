@@ -53,5 +53,9 @@ struct _POKEWOOD_SYSTEM {
   u16 * scr_answer_work;
   
   u16 join_mypoke; //手持ちでポケウッド撮影を行うか？ 
+
+  // ポケウッド上映画面関連
+  u16 play_no;     // セーブデータ何番を上映するか
+
 };
 

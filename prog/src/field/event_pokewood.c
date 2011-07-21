@@ -22,6 +22,7 @@
 #include "battle/battle.h"
 #include "app/pkwd_count.h"
 #include "app/pkwd_book.h"
+#include "app/pkwd_selectscreen.h"
 #include "field_sound_system.h"
 #include "message.naix"
 
@@ -1066,6 +1067,100 @@ static GMEVENT_RESULT eventPkwdBook( GMEVENT *p_event, int *p_seq, void *p_wk_ad
       GAMEDATA * gamedata = GAMESYSTEM_GetGameData( p_wk->gsys );
       PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
       PKWDSYS_SetScenarioNo( *pkwdsys, *(p_wk->book_param.result) );
+    }
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE ;
+}
+
+//============================================================================================
+//
+//    ポケウッド上映選択画面呼び出し
+//
+//============================================================================================
+//-------------------------------------
+///   PKWD_SELECT_SCREEN_EVENT_PARAM定義
+//=====================================
+typedef struct
+{
+  GAMESYS_WORK       *gsys;
+  FIELDMAP_WORK      *fieldmap;
+  PKWD_SELECT_SCREEN_PARAM    param;
+} PKWD_SELECT_SCREEN_EVENT_WORK;
+
+static GMEVENT_RESULT eventPkwdSelectScreen( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PKWD_BOOK呼び出し
+ *
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * PKWD_SELECT_SCREEN_EVENT_Call( GAMESYS_WORK * gsys, void * parent_work )
+{
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PKWD_SELECT_SCREEN_PARAM *param = (PKWD_SELECT_SCREEN_PARAM *)parent_work;
+  PKWD_SELECT_SCREEN_EVENT_WORK *p_param;
+  GMEVENT * new_event;
+
+  //イベント作成
+  new_event = GMEVENT_Create( gsys, NULL, eventPkwdSelectScreen, sizeof(PKWD_SELECT_SCREEN_EVENT_WORK) );
+  p_param = GMEVENT_GetEventWork( new_event );
+  GFL_STD_MemClear( p_param, sizeof(PKWD_SELECT_SCREEN_EVENT_WORK) );
+
+  p_param->gsys       = gsys;
+  p_param->fieldmap   = fieldmap;
+  p_param->param      = *param;
+
+  OS_Printf( "PKWD SELECT START Start\n" );
+
+  return new_event;
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  PkwdSelectScreen呼び出し用イベント
+ *
+ *  @param  GMEVENT *event  GMEVENT
+ *  @param  *seq            シーケンス
+ *  @param  *work           ワーク
+ *
+ *  @return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT eventPkwdSelectScreen( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CALL_PROC,
+    SEQ_EXIT,
+  };
+
+  PKWD_SELECT_SCREEN_EVENT_WORK *p_wk = p_wk_adrs;
+  GMEVENT * call_event;
+
+  switch(*p_seq )
+  {
+  case SEQ_CALL_PROC:
+    call_event = EVENT_FieldSubProc( p_wk->gsys, p_wk->fieldmap,
+        FS_OVERLAY_ID( pkwd_selectscreen ), &PkwdSelectScreenProcData, &p_wk->param );
+    GMEVENT_CallEvent( p_event, call_event );
+    *p_seq  = SEQ_EXIT;
+    break;
+
+  case SEQ_EXIT:
+    OS_Printf( "p_wk = %08x\n", p_wk );
+    if ( p_wk->param.result != NULL && *(p_wk->param.result) == -1 )
+    {
+      *(p_wk->param.result) = POKEWOOD_SAVEDATA_MAX;
+    }else{
+      GAMEDATA * gamedata = GAMESYSTEM_GetGameData( p_wk->gsys );
+      PKWDSYS **pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
+      PKWDSYS_SetPlayNo( *pkwdsys, *(p_wk->param.result) );
     }
     return GMEVENT_RES_FINISH;
   }

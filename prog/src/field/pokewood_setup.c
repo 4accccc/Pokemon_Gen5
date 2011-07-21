@@ -90,3 +90,38 @@ void PKWD_BOOK_PARAM_Delete( PKWD_BOOK_PARAM * pkwd_param )
 	GFL_HEAP_FreeMemory( pkwd_param );
 }
 
+
+//============================================================================================
+//
+//  PKWD SELECT SCREEN画面関連
+//
+//============================================================================================
+//------------------------------------------------------------------
+///  PKWD_BOOK用パラメータOBJECT生成
+//------------------------------------------------------------------
+PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
+{
+	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+	MISC * misc         = GAMEDATA_GetMiscWork( gamedata );
+	PKWD_SELECT_SCREEN_PARAM 	*param;
+	
+	param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_SELECT_SCREEN_PARAM) );
+	// 初期化
+  param->gamesys = gsys;
+//  param->mystatus = mystatus;
+//  param->misc     = misc;
+  param->result = (s16*)res_work;
+	//
+	return param;
+}
+
+//------------------------------------------------------------------
+///  PKWD BOOK用パラメータOBJECT削除
+//------------------------------------------------------------------
+void PKWD_SELECT_SCREEN_PARAM_Delete( PKWD_SELECT_SCREEN_PARAM * param )
+{
+	// 必要であれば削除を追加
+	GFL_HEAP_FreeMemory( param );
+}
+
