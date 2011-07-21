@@ -20,7 +20,10 @@
 //=====================================
 typedef enum
 {
+  KEYSYS_NET_TYPE_NONE,
   KEYSYS_NET_TYPE_IRCWIRELESS,
+  KEYSYS_NET_TYPE_WIRELESS_DLPLAY,
+  KEYSYS_NET_TYPE_WIFI_NTTP,
 
   KEYSYS_NET_TYPE_MAX
 } KEYSYS_NET_TYPE;
@@ -79,7 +82,6 @@ typedef struct _KEYSYS_NET_WORK KEYSYS_NET_WORK;
 //=====================================
 typedef struct
 {
-  KEYSYS_NET_TYPE net_type;  //通信タイプ
   GAMEDATA *p_gamedata;               //ゲームデータ
 } KEYSYS_NET_INIT_PARAM;
 
@@ -114,6 +116,7 @@ typedef struct
 extern KEYSYS_NET_WORK * KEYSYS_NET_Init( const KEYSYS_NET_INIT_PARAM *cp_param, HEAPID heapID );
 extern void KEYSYS_NET_Exit( KEYSYS_NET_WORK *p_wk );
 extern void KEYSYS_NET_Main( KEYSYS_NET_WORK *p_wk );
+extern void KEYSYS_NET_Start( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_TYPE net_type );
 
 //状態変移.状態取得
 extern void KEYSYS_NET_RequestState( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_REQ req, const void *cp_param_adrs );

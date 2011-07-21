@@ -36,6 +36,7 @@
 //セーブ
 #include "savedata/save_outside.h"
 #include "savedata/outside_permanent.h"
+#include "multiboot/wb_save.h"
 
 //デバッグ
 #include "test/nagihashi/debugwin_keysystem.h"
@@ -131,14 +132,14 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   KEY_SYSTEM_WORK *p_wk;
 
   //ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, 0x40000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KEY_SYSTEM, 0x70000 );
   //プロセスワーク作成
   p_wk  = GFL_PROC_AllocWork( p_proc, sizeof(KEY_SYSTEM_WORK), HEAPID_KEY_SYSTEM );
   GFL_STD_MemClear( p_wk, sizeof(KEY_SYSTEM_WORK) );
   p_wk->p_param = p_param_adrs;
 
-  //サブプロセス
-  p_wk->p_procsys				= GFL_PROC_LOCAL_boot( HEAPID_KEY_SYSTEM );
+  //ダウンロードデータ
+  p_wk->p_download_data = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, WB_SAVE_SIZE );
 
   //もし引数がNULLならばタイトルから呼び出された＝APPモード
   if( p_param_adrs == NULL )
@@ -152,7 +153,6 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   //ネット初期化
   {
     KEYSYS_NET_INIT_PARAM param;
-    param.net_type = KEYSYS_NET_TYPE_IRCWIRELESS;
     param.p_gamedata = p_wk->p_param->p_gamedata;
     p_wk->p_net = KEYSYS_NET_Init( &param, HEAPID_KEY_SYSTEM );
   }
@@ -197,6 +197,11 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
+  if( p_wk->p_gamesync_id_code == NULL )
+  {
+    GFL_STR_DeleteBuffer( p_wk->p_gamesync_id_code );
+  }
+
   //一時モジュールの破棄
   KEYSYS_ExitTemporaryModules( p_wk );
 
@@ -217,8 +222,8 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
     OS_ResetSystem(0);
   }
 
-  //サブプロセス
-	GFL_PROC_LOCAL_Exit( p_wk->p_procsys );
+  //ダウンロードデータ
+  GFL_HEAP_FreeMemory( p_wk->p_download_data );
 
   //プロセスワーク破棄
   GFL_PROC_FreeWork( p_proc );
@@ -264,6 +269,7 @@ static GFL_PROC_RESULT Key_System_Proc_Main
         MB_PARENT_DATACONV_Exit( p_wk->p_mb );
         p_wk->p_mb = NULL;
       }
+      KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
       //通信エラーが起こったら強制的にメインメニューへ
       KEYSYS_SEQ_Clear( p_wk->p_seq );  //積んだシーケンスを全部クリア
       KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );  //どんな画面も強制クリア
@@ -1104,8 +1110,9 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
 
   //上画面タイトル作成
-  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, 12, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+  KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
 
   PMSND_PlayBGM( KEYSYS_BGM_MAIN );
 

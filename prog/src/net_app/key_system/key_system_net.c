@@ -62,6 +62,7 @@ enum
 //=====================================
 struct _KEYSYS_NET_WORK
 {
+  KEYSYS_NET_TYPE net_type;
   KEYSYS_NET_INIT_PARAM   param;
   u8 recv_buffer[ KEYSYS_NET_RECV_BUFFER_SIZE ];
   u8 param_buffer[KEYSYS_NET_REQUEST_STATE_PARAM];
@@ -228,6 +229,21 @@ void KEYSYS_NET_Main( KEYSYS_NET_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  開始
+ *
+ *	@param	KEYSYS_NET_WORK *p_wk ワーク
+ *	@param	net_type 通信モード
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_NET_Start( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_TYPE net_type )
+{
+  if( KEYSYS_NET_GetState(p_wk) == KEYSYS_NET_STATE_WAIT )
+  {
+    p_wk->net_type = net_type;
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief リクエストを送る
  *
  *	@param	KEYSYS_NET_WORK *p_wk ワーク
@@ -339,13 +355,43 @@ BOOL KEYSYS_NET_GetRecvData( const KEYSYS_NET_WORK *cp_wk, void *p_data, u32 siz
 //-----------------------------------------------------------------------------
 KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
 {
-  switch( p_wk->param.net_type )
+  if( GAMEDATA_GetIsSave( p_wk->param.p_gamedata ) )
+  {
+    return KEYSYS_NET_ERROR_TYPE_NONE;
+  }
+
+  switch( p_wk->net_type )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
+  case KEYSYS_NET_TYPE_WIRELESS_DLPLAY:
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
     {
       NetErr_DispCallPushPop();
       return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
+    }
+    break;
+
+  case KEYSYS_NET_TYPE_WIFI_NTTP:
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
+    {
+      const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+
+      switch( cp_error->errorType )
+      { 
+      case DWC_ETYPE_LIGHT:
+      case DWC_ETYPE_SHOW_ERROR:
+      case DWC_ETYPE_SHUTDOWN_FM:
+      case DWC_ETYPE_SHUTDOWN_GHTTP:
+      case DWC_ETYPE_SHUTDOWN_ND:
+      case DWC_ETYPE_DISCONNECT:
+        NetErr_DispCallPushPop();
+        return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
+
+      case DWC_ETYPE_FATAL:
+        NetErr_DispCallFatal();
+        GF_ASSERT(0);
+        return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
+      }
     }
     break;
   }
@@ -361,12 +407,22 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
 {
-  switch( p_wk->param.net_type )
+  switch( p_wk->net_type )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
+  case KEYSYS_NET_TYPE_WIRELESS_DLPLAY:
     GFL_NET_IRCWIRELESS_ResetSystemError();
     NetErr_ExitNetSystem();
     NetErr_ErrWorkInit();
+    KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Net_Seq_Wait );
+    break;
+
+  case KEYSYS_NET_TYPE_WIFI_NTTP:
+    NetErr_ExitNetSystem();
+    NetErr_DispCallPushPop();
+    NetErr_ErrWorkInit();
+    GFL_NET_StateClearWifiError();
+    DWC_ClearError(); 
     KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Net_Seq_Wait );
     break;
   }
@@ -821,13 +877,16 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
 
   static const u8 sc_type_enable_tbl[KEYSYS_NET_TYPE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
+    { FALSE, FALSE, FALSE, FALSE, },//NONE
     { TRUE, TRUE, TRUE, TRUE, },//IRCWIRELESS
+    { FALSE, FALSE, FALSE, FALSE, },//WIRELESS_DLPLAY
+    { FALSE, FALSE, FALSE, FALSE, },//WIFI_NTTP
   };
 
   KEYSYS_NET_STATE state = KEYSYS_NET_GetState( cp_wk );
 
   GF_ASSERT_MSG( sc_state_enable_tbl[state][request], "リクエスト可能な状態ではありません。state%d, request%d", state, request);
-  GF_ASSERT_MSG( sc_type_enable_tbl[cp_wk->param.net_type][request], "現在の通信タイプではこのリクエストは使えません net_type%d request%d",cp_wk->param.net_type, request );
+  GF_ASSERT_MSG( sc_type_enable_tbl[cp_wk->net_type][request], "現在の通信タイプではこのリクエストは使えません net_type%d request%d",cp_wk->net_type, request );
 
-  return sc_state_enable_tbl[state][request] && sc_type_enable_tbl[cp_wk->param.net_type][request];
+  return sc_state_enable_tbl[state][request] && sc_type_enable_tbl[cp_wk->net_type][request];
 }

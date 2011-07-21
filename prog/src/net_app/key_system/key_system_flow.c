@@ -605,6 +605,9 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->ret = FALSE;
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrc );
 
+    //通信をIRCワイヤレスモードで開始
+    KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_IRCWIRELESS );
+
     PMSND_PlaySE( KEYSYS_SE_NET );
     (*p_seq)++;
     break;
@@ -793,6 +796,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
   case SEQ_END:
+    KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:

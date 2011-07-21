@@ -18,6 +18,7 @@
 #include "field/zonedata.h"
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
+#include "app/name_input.h"
 #include "system/net_err.h"
 
 //アーカイブ
@@ -66,16 +67,17 @@
 static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
+static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //画面構築シーケンス
 static void DataConv_Seq_CreateDisplayNetMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_CreateDisplayDLPlayInfo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_CreateDisplayWifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //プロセス関係シーケンス
-static void DataConv_Seq_OpenProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void DataConv_Seq_CloseProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void DataConv_Seq_SubProc_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -88,6 +90,10 @@ static void DataConv_Display_DeleteNetMenu( void *p_wk_adrs );
 static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID );
 static BOOL DataConv_Display_IsEndCreateDlPlay( void *p_wk_adrs );
 static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs );
+//WiFIダウンロード画面
+static void DataConv_Display_CreateWifi( void *p_wk_adrs, HEAPID heapID );
+static BOOL DataConv_Display_IsEndCreateWifi( void *p_wk_adrs );
+static void DataConv_Display_DeleteWifi( void *p_wk_adrs );
 
 //=============================================================================
 /**
@@ -104,6 +110,7 @@ static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs );
 //-----------------------------------------------------------------------------
 void KEYSYS_DATACONVFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 {
+  //KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE net_type );
 }
 //=============================================================================
 /**
@@ -226,10 +233,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_CONVERT_YESNO_START,
     SEQ_CONVERT_YESNO_WAIT,
     SEQ_CONVERT_MAIN,
-    SEQ_SAVE_MSG,
-    SEQ_SAVE_START,
-    SEQ_SAVE_WAIT,
-    SEQ_SAVE_COMPLETE,
+    SEQ_SAVE,
     SEQ_COMPLETE_MSG_START,
     SEQ_CANCEL_MSG_START,
     SEQ_COMPLETE_MSG_WAIT,
@@ -336,6 +340,10 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       GFL_STR_DeleteBuffer( p_title_str );
       GFL_STR_DeleteBuffer( p_title );
     }
+
+    //通信モードをDLPLAYに
+    KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_WIRELESS_DLPLAY );
+
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayDLPlayInfo );
     (*p_seq)++;
     break;
@@ -460,32 +468,9 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data );
     (*p_seq)++;
     break;
- case SEQ_SAVE_MSG:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+ case SEQ_SAVE:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Save );
     (*p_seq)++;
-    break;
-  case SEQ_SAVE_START:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
-    {
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      p_wk->cnt = 0;
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_SAVE_WAIT:
-    p_wk->cnt++;
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
-    {
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_SAVE_COMPLETE:
-    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
-    {
-      p_wk->cnt = 0;
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
-    (*p_seq) = SEQ_COMPLETE_MSG_START;
-    }
     break;
 
   case SEQ_COMPLETE_MSG_START:
@@ -519,6 +504,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
       MB_PARENT_DATACONV_Exit( p_wk->p_mb );
       p_wk->p_mb = NULL;
     }
+    KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -542,8 +528,46 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 {
   enum
   {
+    SEQ_CLOSE_PROC_TO_WIFI_LOGIN,
+    SEQ_DELETE_DISPLAY_TO_WIFI_LOGIN,
     SEQ_SUBPROC_WIFI_LOGIN,
+    SEQ_CREATE_DISPLAY_TO_WIFI_LOGIN,
+    SEQ_OPEN_PROC_TO_WIFI_LOGIN,
+    SEQ_CHECK_LOGIN,
+
+    SEQ_MSG_INPUT_START,
+    SEQ_MSG_INPUT_WAIT,
+
+    SEQ_CLOSE_PROC_TO_NAMEIN,
+    SEQ_DELETE_DISPLAY_TO_NAMEIN,
+    SEQ_SUBPROC_NAMEIN,
+    SEQ_CREATE_DISPLAY_TO_NAMEIN,
+    SEQ_OPEN_PROC_TO_NAMEIN,
+
+    SEQ_CHECK_INPUT,
+
+    SEQ_MSG_COMM_START,
+    SEQ_MSG_COMM_WAIT,
+
+    SEQ_SAVE_CONVERT,
+    SEQ_CHECK_OWNER,
+    SEQ_CONVERT_YESNO_MSG,
+    SEQ_CONVERT_YESNO_START,
+    SEQ_CONVERT_YESNO_WAIT,
+    SEQ_CONVERT_MAIN,
+
+    SEQ_SAVE,
+    SEQ_COMPLETE_MSG_START,
+
+    SEQ_MSG_CANCEL_START,
+    SEQ_MSG_END_WAIT,
+
+    SEQ_CLOSE_PROC_TO_WIFI_LOGOUT,
+    SEQ_DELETE_DISPLAY_TO_WIFI_LOGOUT,
     SEQ_SUBPROC_WIFI_LOGOUT,
+    SEQ_CREATE_DISPLAY_TO_WIFI_LOGOUT,
+    SEQ_OPEN_PROC_TO_WIFI_LOGOUT,
+    SEQ_DELETE_DISPLAY,
     SEQ_END,
   };
 
@@ -551,19 +575,286 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   switch( *p_seq )
   {
+  case SEQ_CLOSE_PROC_TO_WIFI_LOGIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
+    (*p_seq)++;
+    break;
+  case SEQ_DELETE_DISPLAY_TO_WIFI_LOGIN:
+    //KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
   case SEQ_SUBPROC_WIFI_LOGIN:
+    KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_WIFI_NTTP );
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_WifiLogin );
+    (*p_seq)++;
+    break;
+  case SEQ_CREATE_DISPLAY_TO_WIFI_LOGIN:
+    if( p_wk->is_wifi_start )
+    {
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayWifi );
+    }
+    (*p_seq)++;
+    break;
+  case SEQ_OPEN_PROC_TO_WIFI_LOGIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
+    (*p_seq)++;
+    break;
+  case SEQ_CHECK_LOGIN:
+    if( p_wk->is_wifi_start )
+    {
+      (*p_seq)++;
+    }
+    else
+    {
+      *p_seq = SEQ_END;
+    }
+    break;
+    
+  case SEQ_MSG_INPUT_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_09, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_MSG_INPUT_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CLOSE_PROC_TO_NAMEIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
+    (*p_seq)++;
+    break;
+  case SEQ_DELETE_DISPLAY_TO_NAMEIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_SUBPROC_NAMEIN:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_NameIn );
+    (*p_seq)++;
+    break;
+  case SEQ_CREATE_DISPLAY_TO_NAMEIN:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayWifi );
+    (*p_seq)++;
+    break;
+  case SEQ_OPEN_PROC_TO_NAMEIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
+    (*p_seq)++;
+    break;
+
+  case SEQ_CHECK_INPUT:
+    if( p_wk->p_gamesync_id_code == NULL )
+    {
+      *p_seq = SEQ_MSG_CANCEL_START;
+    }
+    else
+    {
+      *p_seq = SEQ_MSG_COMM_START;
+    }
+    break;
+  case SEQ_MSG_COMM_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_13, KEYSYS_TEXT_TYPE_WAIT );
+    (*p_seq)++;
+    break;
+  case SEQ_MSG_COMM_WAIT:
+    {
+      *p_seq = SEQ_SAVE_CONVERT;
+    }
+    break;
+  case SEQ_SAVE_CONVERT:
+    {
+      if( p_wk->p_recv_data )
+      {
+        GFL_HEAP_FreeMemory( p_wk->p_recv_data );
+      }
+      p_wk->p_recv_data = WB_SAVE_CONV_AllocConvertAllData( p_wk->p_download_data, HEAPID_KEY_SYSTEM );
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CHECK_OWNER:
+    if( DATA_CONVERT_SAVE_IsSameOwner( p_wk->p_data_sv, &p_wk->p_recv_data->owner ) )
+    {
+      *p_seq = SEQ_CONVERT_MAIN;
+    }
+    else
+    {
+      *p_seq = SEQ_CONVERT_YESNO_MSG;
+    }
+    break;
+  case SEQ_CONVERT_YESNO_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_07, KEYSYS_TEXT_TYPE_STREAM );
+    *p_seq = SEQ_CONVERT_YESNO_START;
+    break;
+  case SEQ_CONVERT_YESNO_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      KEYSYS_LIST_SETUP setup;
+      GFL_STD_MemClear( &setup, sizeof(KEYSYS_LIST_SETUP) );
+      setup.p_msg   = p_wk->p_msg;
+      setup.p_font  = p_wk->p_font;
+      setup.p_que   = p_wk->p_que;
+      setup.frm     = KEYSYS_BG_FRAME_TEXT_M;
+      setup.font_plt = KEYSYS_PLT_BG_FONT_M;
+      setup.frm_plt = KEYSYS_PLT_BG_FRAME_M;
+      setup.frm_chr = KEYSYS_CGR_TEXT_M;
+      setup.strID[0]  = KEYSYS_STR_58;
+      setup.strID[1]  = KEYSYS_STR_59;
+      setup.list_max  = 2;
+      setup.is_cancel = TRUE;
+      setup.cancel_idx = 1;
+      setup.default_idx = 0;
+      p_wk->p_list = KEYSYS_LIST_InitEx( &setup,32-10-1,24-4-1,10,4,HEAPID_KEY_SYSTEM );
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CONVERT_YESNO_WAIT:
+    {
+      u32 ret = KEYSYS_LIST_Main(p_wk->p_list );
+      if( ret != KEYSYS_LIST_SELECT_NULL )
+      {
+        KEYSYS_LIST_Exit(p_wk->p_list);
+        p_wk->p_list = NULL;
+
+        switch( ret )
+        {
+        case 0:
+          (*p_seq)++;
+          break;
+        default:
+          GF_ASSERT(0);
+        case 1:
+          *p_seq = SEQ_MSG_CANCEL_START;
+          break;
+        }
+      }
+    }
+    break;
+  case SEQ_CONVERT_MAIN:
+    DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data );
+    (*p_seq)++;
+    break;
+
+ case SEQ_SAVE:
+    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_Save );
+    (*p_seq)++;
+    break;
+
+  case SEQ_COMPLETE_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    *p_seq = SEQ_MSG_END_WAIT;
+    break;
+
+
+  case SEQ_MSG_CANCEL_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_08, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_MSG_END_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      *p_seq = SEQ_CLOSE_PROC_TO_WIFI_LOGOUT;
+    }
+    break;
+
+  case SEQ_CLOSE_PROC_TO_WIFI_LOGOUT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
+    (*p_seq)++;
+    break;
+  case SEQ_DELETE_DISPLAY_TO_WIFI_LOGOUT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
     (*p_seq)++;
     break;
   case SEQ_SUBPROC_WIFI_LOGOUT:
     KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_WifiLogout );
     (*p_seq)++;
     break;
+  case SEQ_CREATE_DISPLAY_TO_WIFI_LOGOUT:
+    //KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayWifi );
+    (*p_seq)++;
+    break;
+  case SEQ_OPEN_PROC_TO_WIFI_LOGOUT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
+    (*p_seq)++;
+    break;
+  case SEQ_DELETE_DISPLAY:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
   case SEQ_END:
+    KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_NONE );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
     GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブシーケンス
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_SAVE_MSG,
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT,
+    SEQ_SAVE_COMPLETE,
+    SEQ_SAVE_COMPLETE_WAIT,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_SAVE_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+      p_wk->cnt = 0;
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_WAIT:
+    p_wk->cnt++;
+    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_COMPLETE:
+    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
+    {
+      p_wk->cnt = 0;
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
+      (*p_seq) = SEQ_SAVE_COMPLETE_WAIT;
+    }
+    break;
+
+  case SEQ_SAVE_COMPLETE_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq) = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+
+  default:
+    GF_ASSERT(0);
+
   }
 }
 //----------------------------------------------------------------------------
@@ -670,35 +961,45 @@ static void DataConv_Seq_CreateDisplayDLPlayInfo( KEYSYS_SEQ_WORK *p_seqwk, int 
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  プロセス開始
+ *	@brief  WiFI画面
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
  *	@param	*p_seq                    シーケンス
  *	@param	*p_wk_adrs                ワークアドレス
  */
 //-----------------------------------------------------------------------------
-static void DataConv_Seq_OpenProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void DataConv_Seq_CreateDisplayWifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
   enum
   {
-    SEQ_OPEN_PROC,
-    SEQ_FADEIN,
+    SEQ_DISPLAY_CREATE_START,
+    SEQ_DISPLAY_CREATE_WAIT,
     SEQ_END,
+  };
+
+  static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl =
+  {
+    DataConv_Display_CreateWifi,
+    DataConv_Display_IsEndCreateWifi,
+    DataConv_Display_DeleteWifi,
+    NULL,
   };
 
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
   switch( *p_seq )
   {
-  case SEQ_OPEN_PROC:
-    KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
-    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+  case SEQ_DISPLAY_CREATE_START:
+    //最初はメインメニュー作成
+    KEYSYS_DISPLAY_Create( p_wk->p_display, &sc_display_tbl, HEAPID_KEY_SYSTEM );
     (*p_seq)++;
     break;
 
-  case SEQ_FADEIN:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
-    (*p_seq)++;
+  case SEQ_DISPLAY_CREATE_WAIT:
+    if( KEYSYS_DISPLAY_IsComplete(p_wk->p_display) )
+    {
+      (*p_seq)++;
+    }
     break;
 
   case SEQ_END:
@@ -709,46 +1010,7 @@ static void DataConv_Seq_OpenProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     GF_ASSERT(0);
   }
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  プロセス終了
- *
- *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
- *	@param	*p_seq                    シーケンス
- *	@param	*p_wk_adrs                ワークアドレス
- */
-//-----------------------------------------------------------------------------
-static void DataConv_Seq_CloseProc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_FADEOUT,
-    SEQ_CLOSE_PROC,
-    SEQ_END,
-  };
 
-  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
-
-  switch( *p_seq )
-  {
-  case SEQ_FADEOUT:
-    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
-    (*p_seq)++;
-    break;
-    
-  case SEQ_CLOSE_PROC:
-    KEYSYS_ExitTemporaryModules( p_wk );
-    (*p_seq)++;
-    break;
-
-  case SEQ_END:
-    KEYSYS_SEQ_Return( p_seqwk );
-		break;
-
-  default:
-    GF_ASSERT(0);
-  }
-}
 //----------------------------------------------------------------------------
 /**
  *	@brief  WIFIログイン
@@ -762,11 +1024,9 @@ static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
 {
   enum
   {
-    SEQ_CLOSE_PROC,
     SEQ_NEXT_PROC,
     SEQ_MAIN,
     SEQ_FINISH_PROC,
-    SEQ_OPEN_PROC,
     SEQ_END,
   };
 
@@ -774,12 +1034,10 @@ static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
 
   switch( *p_seq )
   {
-  case SEQ_CLOSE_PROC:
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CloseProc );
-    (*p_seq)++;
-    break;
   case SEQ_NEXT_PROC:
+    KEYSYS_ExitTemporaryModules( p_wk );
     {
+
       WIFILOGIN_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(WIFILOGIN_PARAM) );
       p_param->gamedata     = p_wk->p_param->p_gamedata;
       p_param->bg           = WIFILOGIN_BG_NORMAL;
@@ -787,25 +1045,45 @@ static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
       p_param->pSvl         = NULL;
       p_param->bgm          = WIFILOGIN_BGM_NORMAL;
       p_param->nsid         = WB_NET_WIFI_DATACONV;
-      p_param->mode         = WIFILOGIN_MODE_NORMAL;
+
+      if( SaveData_GetExistFlag( GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata) ) )
+      {
+        p_param->mode         = WIFILOGIN_MODE_NORMAL;
+      }
+      else
+      {
+        p_param->mode         = WIFILOGIN_MODE_NOTSAVE;
+      }
+
       GF_ASSERT( p_wk->p_proc_param == NULL );
       p_wk->p_proc_param = p_param;
-      GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, FS_OVERLAY_ID(wifi_login),
+
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login),
           &WiFiLogin_ProcData, p_wk->p_proc_param );
       (*p_seq)++;
     }
     break;
   case SEQ_MAIN:
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_Main );
     (*p_seq)++;
     break;
   case SEQ_FINISH_PROC:
+    {
+      WIFILOGIN_PARAM *p_param  = p_wk->p_proc_param;
+      if( p_param->result == WIFILOGIN_RESULT_LOGIN )
+      {
+        p_wk->is_wifi_start = TRUE;
+      }
+      else
+      {
+        p_wk->is_wifi_start = FALSE;
+      }
+    }
     GFL_HEAP_FreeMemory( p_wk->p_proc_param );
     p_wk->p_proc_param = NULL;
-    (*p_seq)++;
-    break;
-  case SEQ_OPEN_PROC:
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_OpenProc );
+
+    KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
+    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -828,11 +1106,9 @@ static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
 {
   enum
   {
-    SEQ_CLOSE_PROC,
     SEQ_NEXT_PROC,
     SEQ_MAIN,
     SEQ_FINISH_PROC,
-    SEQ_OPEN_PROC,
     SEQ_END,
   };
 
@@ -840,11 +1116,8 @@ static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
 
   switch( *p_seq )
   {
-  case SEQ_CLOSE_PROC:
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CloseProc );
-    (*p_seq)++;
-    break;
   case SEQ_NEXT_PROC:
+    KEYSYS_ExitTemporaryModules( p_wk );
     {
       WIFILOGOUT_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(WIFILOGOUT_PARAM) );
       p_param->gamedata = p_wk->p_param->p_gamedata;
@@ -854,22 +1127,21 @@ static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
       p_param->fade     = WIFILOGIN_FADE_DEFAULT;
       GF_ASSERT( p_wk->p_proc_param == NULL );
       p_wk->p_proc_param = p_param;
-      GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, FS_OVERLAY_ID(wifi_login),
+
+      GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login),
           &WiFiLogout_ProcData, p_wk->p_proc_param );
       (*p_seq)++;
     }
     break;
   case SEQ_MAIN:
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_SubProc_Main );
     (*p_seq)++;
     break;
   case SEQ_FINISH_PROC:
     GFL_HEAP_FreeMemory( p_wk->p_proc_param );
     p_wk->p_proc_param = NULL;
-    (*p_seq)++;
-    break;
-  case SEQ_OPEN_PROC:
-    KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_OpenProc );
+
+    KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
+    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -881,18 +1153,20 @@ static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  プロセスメイン処理  GFL_PROC_LOCAL_CallProcをしてから呼び出すこと
+ *	@brief  名前入力
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
  *	@param	*p_seq                    シーケンス
  *	@param	*p_wk_adrs                ワークアドレス
  */
 //-----------------------------------------------------------------------------
-static void DataConv_Seq_SubProc_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 {
   enum
   {
+    SEQ_NEXT_PROC,
     SEQ_MAIN,
+    SEQ_FINISH_PROC,
     SEQ_END,
   };
 
@@ -900,30 +1174,58 @@ static void DataConv_Seq_SubProc_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
 
   switch( *p_seq )
   {
-  case SEQ_MAIN:
+  case SEQ_NEXT_PROC:
+    KEYSYS_ExitTemporaryModules( p_wk );
     {
-      GFL_PROC_MAIN_STATUS result;
-      result  = GFL_PROC_LOCAL_Main( p_wk->p_procsys );
+      NAMEIN_PARAM *p_param = GFL_HEAP_AllocClearMemory( HEAPID_KEY_SYSTEM, sizeof(NAMEIN_PARAM) );
+      p_param->mode = NAMEIN_GAMESYNC_ID_CODE;
+      p_param->wordmax = GAMESYNC_ID_CODE_LENGTH;
+      p_param->prof_flag = NAMEIN_PROF_ALL_ENABLE;
+      p_param->strbuf = GFL_STR_CreateBuffer( NAMEIN_STR_BUFFER_LENGTH + 1, HEAPID_KEY_SYSTEM );
 
-      if( result == GFL_PROC_MAIN_NULL || result == GFL_PROC_MAIN_CHANGE )
-      {
-        NetErr_DispCall(FALSE);
-      }
+      GF_ASSERT( p_wk->p_proc_param == NULL );
+      p_wk->p_proc_param = p_param;
 
-      if( GFL_PROC_MAIN_NULL == result )
-      {
-        (*p_seq)++;
-      }
+      GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein),
+          &NameInputProcData, p_wk->p_proc_param );
+      (*p_seq)++;
     }
     break;
-    
+  case SEQ_MAIN:
+    (*p_seq)++;
+    break;
+  case SEQ_FINISH_PROC:
+    {
+      NAMEIN_PARAM *p_param = p_wk->p_proc_param;
+      if( p_param->cancel )
+      {
+        GFL_STR_DeleteBuffer( p_wk->p_gamesync_id_code );
+        p_wk->p_gamesync_id_code = NULL;
+      }
+      else
+      {
+        if( p_wk->p_gamesync_id_code == NULL )
+        {
+          p_wk->p_gamesync_id_code = GFL_STR_CreateBuffer( GAMESYNC_ID_CODE_LENGTH + EOM_SIZE, HEAPID_KEY_SYSTEM );
+        }
+        GFL_STR_CopyBuffer( p_wk->p_gamesync_id_code, p_param->strbuf );
+      }
+      GFL_STR_DeleteBuffer( p_param->strbuf );
+      GFL_HEAP_FreeMemory( p_param );
+    }
+    p_wk->p_proc_param = NULL;
+
+    KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
+    KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+
+    (*p_seq)++;
+    break;
   case SEQ_END:
     KEYSYS_SEQ_Return( p_seqwk );
 		break;
-
   default:
     GF_ASSERT(0);
-  } 
+  }
 }
 //=============================================================================
 /**
@@ -1087,6 +1389,7 @@ static void DataConv_Display_CreateDlPlay( void *p_wk_adrs, HEAPID heapID )
         KEYSYS_BG_FRAME_WND_S, 0, 0, FALSE, heapID );
     GFL_ARC_CloseDataHandle( p_handle );
   }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -1146,4 +1449,62 @@ static void DataConv_Display_DeleteDlPlay( void *p_wk_adrs )
 
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_SUB_S );
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_S );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WiFi画面作成
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *	@param	heapID          ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Display_CreateWifi( void *p_wk_adrs, HEAPID heapID )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  KEYSYS_TEXT_Exit( p_wk->p_text );
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 2, 4, 28, 12, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
+  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, 0, KEYSYS_TEXT_TYPE_QUE ); 
+
+  KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, KEYSYS_STR_68, KEYSYS_TEXT_TYPE_QUE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WiFi画面作成完了待ち
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *
+ *	@return TRUE作成完了  FALSE作成中
+ */
+//-----------------------------------------------------------------------------
+static BOOL DataConv_Display_IsEndCreateWifi( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
+  BOOL is_end_title = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
+
+  if( is_end_text && is_end_title )
+  {
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WiFi画面破棄
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DataConv_Display_DeleteWifi( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  p_wk->p_text = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 19, 30, 4, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, HEAPID_KEY_SYSTEM );
+  KEYSYS_TEXT_SetColor( p_wk->p_text, PRINTSYS_LSB_Make( 1, 2, 0xF ) );
+  KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
 }

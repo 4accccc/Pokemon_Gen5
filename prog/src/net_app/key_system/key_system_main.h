@@ -303,9 +303,12 @@ typedef struct
   STRBUF                  *p_strbuf;
 
   BOOL                    is_parent;
+  BOOL                    is_wifi_start;
+  STRBUF                  *p_gamesync_id_code;
 
-  GFL_PROCSYS					    *p_procsys;
   void                    *p_proc_param;
+
+  void                    *p_download_data;
 
 }KEY_SYSTEM_WORK;
 
