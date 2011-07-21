@@ -197,7 +197,7 @@ static GFL_PROC_RESULT Key_System_Proc_Exit
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  if( p_wk->p_gamesync_id_code == NULL )
+  if( p_wk->p_gamesync_id_code )
   {
     GFL_STR_DeleteBuffer( p_wk->p_gamesync_id_code );
   }
