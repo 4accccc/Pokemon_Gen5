@@ -19,5 +19,8 @@
   DEF_CMD( EvCmdHideShip_GateSet, EV_SEQ_HIDE_SHIP_GATE_SET )
   DEF_CMD( EvCmdHideShip_GateOff, EV_SEQ_HIDE_SHIP_GATE_OFF )
 
+  DEF_CMD( EvCmdHideShip_PasswordInput, EV_SEQ_HIDE_SHIP_PASSWORD_INPUT )
+  DEF_CMD( EvCmdHideShip_PasswordIdGet, EV_SEQ_HIDE_SHIP_PASSWORD_ID_GET )
+
   END_CMD
   //スクリプトコマンドテーブル終了

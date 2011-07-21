@@ -14276,6 +14276,39 @@
   .short  \id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_PASSWORD_INPUT
+ * @brief エンジン部屋でのパスワード入力
+ * @param ret_wk  TRUE:正解   FALSE:不正解
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_PASSWORD_INPUT( ret_wk ) \
+    _ASM_HIDE_SHIP_PASSWORD_INPUT ret_wk
+
+  .macro  _ASM_HIDE_SHIP_PASSWORD_INPUT ret_wk
+  .short  EV_SEQ_HIDE_SHIP_PASSWORD_INPUT
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_PASSWORD_ID_GET
+ * @brief エンジン部屋でのパスワードID取得
+ * @param ret_wk  どのパスワードを使用するかのID
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_PASSWORD_ID_GET( ret_wk ) \
+    _ASM_HIDE_SHIP_PASSWORD_ID_GET ret_wk
+
+  .macro  _ASM_HIDE_SHIP_PASSWORD_ID_GET ret_wk
+  .short  EV_SEQ_HIDE_SHIP_PASSWORD_ID_GET
+  .short  \ret_wk
+  .endm
+
+
 //======================================================================
 //======================================================================
 
