@@ -133,7 +133,6 @@ SUBDIRS	=	wmi \
             gf_logo \
 			battle_recorder \
 			monolith \
-			fourkings_scene \
 			multiboot \
 			mail \
 			season_display \
