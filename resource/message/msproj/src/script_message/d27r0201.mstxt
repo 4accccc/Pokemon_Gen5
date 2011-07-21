@@ -2,53 +2,89 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_d27r0201_swrival_02_01"
+		Label="msg_d27r0201_switch_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>バリアが　かいじょ　された！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:02:11" />
+				Time="2011-07-21T07:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:00:48" />
+				Time="2011-07-21T07:36:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『</Text>
+			<Text>バリアが　解除された！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:02:16" />
+				Time="2011-07-21T07:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:00:48" />
+				Time="2011-07-21T07:38:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アジト船：２回目
-・1＝ライバル名</Comment>
+			<Comment>イベント
+・Black2ver
+・バリアーが解除されたとき
+・すべて解除されたときは続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:02:21" />
+				Time="2011-07-21T07:54:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
+			<Text>装置</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:00:48" />
+				Time="2011-07-21T07:41:34" />
 		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_switch_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すべての　バリアが　かいじょ　され
+さきに　すすめるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:40:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:38:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すべての　バリアが　解除され
+先に　進めるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:41:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:38:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・すべてのバリアーが解除されたとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:37:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>装置</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:41:36" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
