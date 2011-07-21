@@ -2049,3 +2049,34 @@ void KEYSYS_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt
     GF_ASSERT(ret);
   }
 }
+
+void KEYSYS_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, GXRgb start[], GXRgb end[] )
+{ 
+  int i;
+ //0Å`ÇPÇ…ïœä∑
+  for( i = 0; i < 0x10; i++ )
+  { 
+    const fx16 cos = (FX_CosIdx(cnt)+FX16_ONE)/2;
+    const u8 start_r  = (start[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    const u8 start_g  = (start[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    const u8 start_b  = (start[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+    const u8 end_r  = (end[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    const u8 end_g  = (end[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    const u8 end_b  = (end[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+    const u8 r = start_r + (((end_r-start_r)*cos)>>FX16_SHIFT);
+    const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
+    const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
+
+    p_buff[i] = GX_RGB(r, g, b);
+  }
+
+  { 
+    BOOL ret;
+    ret = NNS_GfdRegisterNewVramTransferTask( type,
+        plt_num * 32,
+        p_buff, 32 );
+    GF_ASSERT(ret);
+  }
+
+}

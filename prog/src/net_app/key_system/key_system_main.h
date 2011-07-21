@@ -136,6 +136,15 @@ typedef enum
   KEYSYS_SELECT_MENU_RET_SP_UNSELECT,  //ì¡éÍÇ»èÛë‘Ç≈ëIëÇ≈Ç´Ç»Ç¢
 } KEYSYS_SELECT_MENU_RET;
 
+typedef enum
+{
+  KEYSYS_BG_PLTFADE_REQ_NONE,
+  KEYSYS_BG_PLTFADE_REQ_KEYSYS_TO_MAIN,
+  KEYSYS_BG_PLTFADE_REQ_DATACONV_TO_MAIN,
+  KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS,
+  KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV,
+} KEYSYS_BG_PLTFADE_REQ;
+
 //=============================================================================
 /**
  *					ç\ë¢ëÃêÈåæ
@@ -148,6 +157,14 @@ typedef struct
 {
   fx32 scroll_now;
   HEAPID heapID;
+  KEYSYS_BG_PLTFADE_REQ req;
+  u16 plt_cnt;
+  u16 cnt_max;
+  u16 plt_main[0x10];
+  u16 plt_sub[0x10];
+  u16 main_menu_plt[0x10];
+  u16 key_system_plt[0x10];
+  u16 data_convert_plt[0x10];
 } KEYSYS_BG_WORK;
 
 //-------------------------------------
@@ -327,6 +344,7 @@ extern KEYSYS_BG_WORK * KEYSYS_BG_Init( HEAPID heapID );
 extern void KEYSYS_BG_Exit( KEYSYS_BG_WORK *p_wk );
 extern void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID );
 extern void KEYSYS_BG_Main( KEYSYS_BG_WORK *p_wk );
+extern void KEYSYS_BG_RequestPltFade( KEYSYS_BG_WORK *p_wk, KEYSYS_BG_PLTFADE_REQ req, u16 cnt_max );
 
 typedef enum
 {

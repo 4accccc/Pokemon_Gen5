@@ -259,6 +259,11 @@ void KEYSYS_KEYFLOW_Init( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   //Ž©•ª‚Ìî•ñ‚ðÝ’è
   KeySys_KeyData_Init( &p_wk->key_data[KEYSYS_DATA_SELF], p_wk->p_key_sv );
   KeySys_PlayerData_Init( &p_wk->player_data[KEYSYS_DATA_SELF], p_wk->p_param->p_gamedata );
+
+  if( p_wk->p_param->mode == KEY_SYSTEM_MODE_GET )
+  {
+    KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS, 1 );
+  }
 }
 
 
@@ -498,6 +503,7 @@ void KEYSYS_KEYFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_END:
+    KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_KEYSYS_TO_MAIN, 30 );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:

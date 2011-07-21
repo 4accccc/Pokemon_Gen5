@@ -599,6 +599,24 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_menu_frame_NCGR, 
         KEYSYS_BG_FRAME_TEXT_M, KEYSYS_CGR_MENU_M, 0, FALSE, heapID );
 
+
+    //パレットを保存
+    {
+      void *p_buff;
+      NNSG2dPaletteData *p_plt;
+      const u16 *cp_plt_adrs;
+
+      //もとのパレットから色情報を保存
+      p_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_key_system_gra_back00_NCLR, &p_plt, heapID );
+      cp_plt_adrs = p_plt->pRawData;
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 0 * 0x20, p_wk->main_menu_plt, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->key_system_plt, sizeof(u16) * 0x10 );
+      GFL_STD_MemCopy( (u8*)cp_plt_adrs + 2 * 0x20, p_wk->data_convert_plt, sizeof(u16) * 0x10 );
+
+      //パレット破棄
+      GFL_HEAP_FreeMemory( p_buff );
+    }
+
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
@@ -627,10 +645,66 @@ void KEYSYS_BG_Load( KEYSYS_BG_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 void KEYSYS_BG_Main( KEYSYS_BG_WORK *p_wk )
 {
-  p_wk->scroll_now += KEYSYS_BG_SCROLL_SPEED;
-  GFL_BG_SetScrollReq( KEYSYS_BG_FRAME_BACK_M, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
-  GFL_BG_SetScrollReq( KEYSYS_BG_FRAME_BACK_S, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+  //背景動作
+  {
+    p_wk->scroll_now += KEYSYS_BG_SCROLL_SPEED;
+    GFL_BG_SetScrollReq( KEYSYS_BG_FRAME_BACK_M, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+    GFL_BG_SetScrollReq( KEYSYS_BG_FRAME_BACK_S, GFL_BG_SCROLL_Y_SET, p_wk->scroll_now >> FX32_SHIFT );
+  }
 
+  //パレットフェード
+  if( p_wk->req != KEYSYS_BG_PLTFADE_REQ_NONE )
+  {
+    GXRgb *p_start;
+    GXRgb *p_end;
+
+    u16 plt_cnt = 0 + 0x7FFF * p_wk->plt_cnt / p_wk->cnt_max;
+
+    switch(p_wk->req)
+    {
+    case KEYSYS_BG_PLTFADE_REQ_KEYSYS_TO_MAIN:
+      p_start   = p_wk->key_system_plt;
+      p_end     = p_wk->main_menu_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_DATACONV_TO_MAIN:
+      p_start   = p_wk->data_convert_plt;
+      p_end     = p_wk->main_menu_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS:
+      p_start   = p_wk->main_menu_plt;
+      p_end     = p_wk->key_system_plt;
+      break;
+    case KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV:
+      p_start   = p_wk->main_menu_plt;
+      p_end     = p_wk->data_convert_plt;
+      break;
+    }
+
+    KEYSYS_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_MAIN, p_wk->plt_main, plt_cnt, 0, p_end, p_start );
+    KEYSYS_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_SUB, p_wk->plt_sub, plt_cnt, 0, p_end, p_start );
+
+    if( p_wk->plt_cnt++ >= p_wk->cnt_max )
+    {
+      p_wk->req = KEYSYS_BG_PLTFADE_REQ_NONE;
+    }
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェードリクエスト
+ *
+ *	@param	KEYSYS_BG_WORK *p_wk    ワーク
+ *	@param	req                     リクエスト状態
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_BG_RequestPltFade( KEYSYS_BG_WORK *p_wk, KEYSYS_BG_PLTFADE_REQ req, u16 cnt_max )
+{
+  GF_ASSERT( cnt_max > 0 );
+
+  p_wk->req = req;
+  p_wk->plt_cnt = 0;
+  p_wk->cnt_max = cnt_max;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1315,10 +1389,12 @@ static void KeySys_Seq_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     {
     case 0://キーシステム
       //カーソル位置を登録
+      KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_KEYSYS, 30 );
       KEYSYS_SEQ_Call( p_seqwk, KEYSYS_KEYFLOW_SEQ_Main );
       break;
     case 1://データコンバート
       //カーソル位置を登録
+      KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 30 );
       KEYSYS_SEQ_Call( p_seqwk, KEYSYS_DATACONVFLOW_SEQ_Main );
       break;
     default:

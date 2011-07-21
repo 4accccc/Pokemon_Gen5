@@ -197,6 +197,7 @@ void KEYSYS_DATACONVFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_END:
+    KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_DATACONV_TO_MAIN, 30 );
     KEYSYS_SEQ_Return( p_seqwk );
     break;
   default:
@@ -1083,6 +1084,7 @@ static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
 
     KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+    KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 1 );
 
     (*p_seq)++;
     break;
@@ -1142,6 +1144,7 @@ static void DataConv_Seq_SubProc_WifiLogout( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
 
     KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+    KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 1 );
     (*p_seq)++;
     break;
   case SEQ_END:
@@ -1217,6 +1220,7 @@ static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, v
 
     KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+    KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 1 );
 
     (*p_seq)++;
     break;
