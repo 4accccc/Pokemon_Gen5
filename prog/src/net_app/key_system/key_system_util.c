@@ -984,7 +984,7 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
         }
         else
         {
-          PMSND_PlaySE( KEYSYS_SE_CANCEL );
+          PMSND_PlaySE( KEYSYS_SE_BEEP );
         }
       }
       else if( repeat & PAD_BUTTON_CANCEL )

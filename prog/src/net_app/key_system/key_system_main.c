@@ -178,7 +178,6 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   //一時モジュールの作成
   KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
 
-
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -411,6 +410,7 @@ void KeySys_Seq_FadeOutBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 	{	
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    PMSND_FadeOutBGM( 8 );
     (*p_seq)++;
 		break;
 
@@ -451,6 +451,7 @@ void KeySys_Seq_FadeOutWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 	{	
 	case SEQ_FADEIN_START:
 		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
+    PMSND_FadeOutBGM( 8 );
     (*p_seq)++;
 		break;
 
@@ -1106,13 +1107,14 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 1, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
 
+  PMSND_PlayBGM( KEYSYS_BGM_MAIN );
+
 #ifdef PM_DEBUG
   //デバッグウィンドウ
   DEBUGWIN_InitProc( KEYSYS_BG_FRAME_TEXT_M, p_wk->p_font );
   DEBUGWIN_KEY_SYSTEM_Init( p_wk->p_key_sv, heapID );
   DEBUGWIN_DATA_CONVERT_Init( p_wk->p_data_sv, heapID );
 #endif //PM_DEBUG
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -1129,6 +1131,8 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
   DEBUGWIN_KEY_SYSTEM_Exit();
   DEBUGWIN_ExitProc();
 #endif //PM_DEBUG
+
+  PMSND_StopBGM();
 
   //念のためディスプレイ消去
   KEYSYS_DISPLAY_DeleteForce( p_wk->p_display );
