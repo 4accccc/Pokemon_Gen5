@@ -558,13 +558,8 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
   if( gsys->event == NULL && gsys->proc_result != GFL_PROC_MAIN_NULL ){
     u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
     
-    //リークチェックを除外するマップ
-    if( ZONEDATA_IsUnionRoom(zone_id) == FALSE && //ユニオン
-        ZONEDATA_IsColosseum(zone_id) == FALSE && //コロシアム
-        ZONEDATA_IsWBTHall(zone_id) == FALSE &&   //WBT会場
-        ZONEDATA_IsBattleSubway(zone_id) == FALSE &&  //バトルサブウェイ
-        ZONEDATA_IsResonanceResortRoom(zone_id) == FALSE //レゾナンスリゾート室内
-        ) 
+    //リークチェックを除外するマップかどうか
+    if( ZONEDATA_DEBUG_IsDisableLeakCheck(zone_id) == FALSE )
     {
       heapLeakCheck();
     }

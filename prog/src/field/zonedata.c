@@ -1552,6 +1552,44 @@ BOOL ZONEDATA_IsBattleSubway( u16 zone_id )
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
 }
 
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief ヒープのリークチェックを除外するマップかどうか
+ */
+//------------------------------------------------------------------
+BOOL ZONEDATA_DEBUG_IsDisableLeakCheck( u16 zone_id )
+{
+  // ZONEIDのすり替え
+  zone_id = ControlZoneID(zone_id);
+  if( zone_id == ZONE_ID_D05R0101 ) //WBTロビー
+  {
+    return TRUE;
+  }
+  if( ZONEDATA_IsUnionRoom(zone_id) == TRUE )//ユニオン
+  {
+    return TRUE;
+  }
+  if( ZONEDATA_IsColosseum(zone_id) == TRUE ) //コロシアム
+  {
+    return TRUE;
+  }
+  if( ZONEDATA_IsWBTHall(zone_id) == TRUE )   //WBT会場
+  {
+    return TRUE;
+  }
+  if( ZONEDATA_IsBattleSubway(zone_id) == TRUE )  //バトルサブウェイ
+  {
+    return TRUE;
+  }
+  if( ZONEDATA_IsResonanceResortRoom(zone_id) == TRUE ) //レゾナンスリゾート室内
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+#endif
+
 //============================================================================================
 //============================================================================================
 
