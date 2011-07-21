@@ -238,9 +238,9 @@ EVENT_START   ev_pos_d26r0101_open_gate
     _CALL move_camera_start
 
     // すでに中央にいるとき以外は、中央まで歩かせる
-    IF (($LWK_X != 31) || ($LWK_Y != 40)) THEN
+    IF (($LWK_X != 31) || ($LWK_Y != 44)) THEN
       // オブジェクトの移動待ち
-      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 40, FORCE_TYPE_NOT, 8, DIR_LR)
+      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 44, FORCE_TYPE_NOT, 8, DIR_LR)
       _OBJ_ANIME_WAIT()
 
       // 上に向くアニメーション再生
