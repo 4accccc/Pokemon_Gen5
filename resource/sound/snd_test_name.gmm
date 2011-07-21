@@ -9173,6 +9173,10 @@
 		<language name="JPN" width="256">SW-BCG-05</language>
 		<language name="JPN_KANJI" width="256">SW-BCG-05</language>
 	</row>
+	<row id="msg_seq_se_sw_bcg_06">
+		<language name="JPN" width="256">SW-BCG-06</language>
+		<language name="JPN_KANJI" width="256">SW-BCG-06</language>
+	</row>
 	<row id="msg_seq_se_sw_wbt_10">
 		<language name="JPN" width="256">SW-WBT-10</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-10</language>
