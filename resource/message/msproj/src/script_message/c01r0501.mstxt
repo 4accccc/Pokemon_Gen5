@@ -8,12 +8,11 @@
 			Language="JPN">
 			<Text>ちょっと　いいかい！？▼
 なんだか　とっても　ポケモンに
-くわしそうな　そこの　キミ！▼
-ぼくに　ちえを
-かしてくれないか？</Text>
+くわしそうな　そこの　キミ！▽
+ぼくに　ちえを　かしてくれないか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:19:22" />
+				Time="2011-07-21T03:43:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,12 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>ちょっと　いいかい！？▼
 なんだか　とっても　ポケモンに
-くわしそうな　そこの　キミ！▼
-ぼくに　ちえを
-かしてくれないか？</Text>
+詳しそうな　そこの　キミ！▽
+ぼくに　知恵を　貸してくれないか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:19:19" />
+				Time="2011-07-21T03:43:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -38,12 +36,12 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→
+　はい　→trainerm_02
+　いいえ→trainerm_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:06:36" />
+				Time="2011-07-21T03:42:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -71,15 +69,15 @@
 ぼく　とくせい　ふゆう　の
 ポケモンに　じめんタイプの▽
 わざを　あてたいんだ！▼
-でも　どうしても　ほうほうが
-おもいつかなくって……▼
+でも　どうしても
+ほうほうが　おもいつかなくって……▼
 いくつか　アイデアは　あるけど
 きめられなくて……▼
 そこで　キミの　いけんを
 きかせて　ほしいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:06:08" />
+				Time="2011-07-21T03:44:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -89,19 +87,19 @@
 			Language="JPN_KANJI">
 			<Text>おお！　ありがとう▼
 さっそくだけど
-なやみを　きいてくれ！▼
-ぼく　とくせい　ふゆう　の
+悩みを　きいてくれ！▼
+ぼく　特性　ふゆう　の
 ポケモンに　じめんタイプの▽
-わざを　あてたいんだ！▼
-でも　どうしても　ほうほうが
-おもいつかなくって……▼
+技を　当てたいんだ！▼
+でも　どうしても
+方法が　思いつかなくって……▼
 いくつか　アイデアは　あるけど
 きめられなくて……▼
-そこで　キミの　いけんを
+そこで　キミの　意見を
 きかせて　ほしいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -150,11 +148,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか……　しかたない▼
-もし　きが　むいたら
-ちえを　かしてくれよ……</Text>
+もし　気が　向いたら
+知恵を　貸してくれよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:44:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -213,23 +211,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　どうぐ　について
+			<Text>まずは　道具について
 アドバイスを　もらいたい▼
-とくせい　ふゆう　の　ポケモンに
+浮遊　ふゆう　の　ポケモンに
 トリックや　すりかえ　などで▽
-どうぐを　わたす　ことで▼
-じめんタイプの　わざが
-あたるように　したいんだ！▼
-どんな　どうぐを　わたそうか
-かんがえた　すえ▼
+道具を　渡すことで▼
+じめんタイプの　技が
+当たるように　したいんだ！▼
+どんな　道具を　渡そうか
+考えた　すえ▼
 くろいてっきゅう　が　いいと
-おもってるんだけど▽
-じしんが　ないんだ……▼
+思ってるんだけど▽
+自信が　ないんだ……▼
 どうかな？　くろいてっきゅう
 いい　アイデア　かな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:45:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -409,14 +407,14 @@
 			Language="JPN_KANJI">
 			<Text>おお！　やっぱり！？▼
 なんだか　キミに　いわれると
-いちだんと　じしんが　もてるよ！▼
+一段と　自信が　持てるよ！▼
 ふゆう　ポケモンに
-くろいてっきゅう　を　わたせば▽
-じめんタイプの　わざも　あたる！▼
+くろいてっきゅう　を　渡せば▽
+じめんタイプの　技も　当たる！▼
 ありがとう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -464,12 +462,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また　キミの　ちえを
-かして　ほしいんだ！▽
-おねがい　できるかな？</Text>
+			<Text>また　キミの　知恵を
+貸して　ほしいんだ！▽
+お願い　できるかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -510,16 +508,15 @@
 			<Text>こんどは　わざに　ついて
 アドバイスを　もらいたい▼
 とくせい　ふゆうの　ポケモンに
-じめんタイプの　わざを▽
-つかう　まえに▽
-つかっておくと　いい　わざを▽
+じめんタイプの　わざを　つかうまえに▼
+つかっておくと　いい　わざを
 さがして　いるんだけど……▼
 うちおとす　じゅうりょく　いえき
 この　３つの　わざの　うち▽
 どれを　つかうと　いいかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:00:01" />
+				Time="2011-07-21T03:47:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -527,19 +524,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんどは　わざに　ついて
+			<Text>こんどは　技に　ついて
 アドバイスを　もらいたい▼
-とくせい　ふゆうの　ポケモンに
-じめんタイプの　わざを▽
-つかう　まえに▽
-つかっておくと　いい　わざを▽
-さがして　いるんだけど……▼
+特性　ふゆうの　ポケモンに
+じめんタイプの　技を　使う前に▼
+使っておくと　いい　技を
+探して　いるんだけど……▼
 うちおとす　じゅうりょく　いえき
-この　３つの　わざの　うち▽
-どれを　つかうと　いいかな？</Text>
+この　３つの　技の　うち▽
+どれを　選ぶと　いいかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:47:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -720,19 +716,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか　うちおとす　か！▼
-たしかに　うちおとす　を
-うけた　ポケモンは▼
-ふゆうの　とくせいや
-ひこうタイプを　もっていても▼
-じめんタイプの　わざが
-あたるように　なる！▼
+確かに　うちおとす　を
+受けた　ポケモンは▼
+ふゆうの　特性や
+ひこうタイプを　持っていても▼
+じめんタイプの　技が
+当たるように　なる！▼
 ふゆう　ポケモンには
-うちおとすを　あててから▽
-じめんタイプの　わざを　つかう！▼
+うちおとすを　当ててから▽
+じめんタイプの　技を　使う！▼
 なるほど　ありがとう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T05:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -791,19 +787,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか　じゅうりょく　か！▼
-たしかに　じゅうりょくを　つかうと
-じゅうりょくが　つよくなって▼
+確かに　じゅうりょくを　使うと
+じゅうりょくが　強くなって▼
 ふゆうの　とくせいや
-ひこうタイプを　もっていても▽
-じめんタイプの　わざが▽
-あたるように　なる！▼
+ひこうタイプを　持っていても▽
+じめんタイプの　技が▽
+当たるように　なる！▼
 ふゆう　ポケモンには
-じゅうりょくを　つかってから▽
-じめんタイプの　わざを　つかう！▼
+じゅうりょくを　使ってから▽
+じめんタイプの　技を　使う！▼
 なるほど　ありがとう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T05:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -863,20 +859,20 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか　いえき　か！▼
-たしかに　いえき　を
-うけた　ポケモンは▽
-とくせいを　けされてしまう！▼
-ふゆうの　とくせいも
-こうかを　はっき　しないから▼
-じめんタイプの　わざが
-あたるように　なる！▼
+確かに　いえき　を
+受けた　ポケモンは▽
+特性を　消されてしまう！▼
+ふゆうの　特性も
+効果を　発揮しないから▼
+じめんタイプの　技が
+当たるように　なる！▼
 ふゆう　ポケモンには
-いえきを　あててから▽
-じめんタイプの　わざを　つかう！▼
+いえきを　当ててから▽
+じめんタイプの　技を　使う！▼
 なるほど　ありがとう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T05:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -936,22 +932,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいごは　とくせいに　ついて
+			<Text>最後は　特性に　ついて
 アドバイスを　もらいたい▼
-とくせい　ふゆうの　ポケモンに
-じめんタイプの　わざを▽
-あてられる　とくせいが　あるらしい▼
+特性　ふゆうの　ポケモンに
+じめんタイプの　技を▽
+当てられる　特性が　あるらしい▼
 ……だけど
-サッパリ　けんとうが　つかない！▼
+サッパリ　見当が　つかない！▼
 なんとなく　かたやぶり
 テラボルテージ　ターボブレイズ▽
-あたりが　あやしいな……と▼
+あたりが　怪しいな……と▼
 ふんでいるんだけど
-きめてが　なくて……▼
-ああ！　キミが　きめてくれ！</Text>
+決め手が　なくて……▼
+ああ！　キミが　決めてくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T06:00:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1156,16 +1152,16 @@
 			Language="JPN_KANJI">
 			<Text>やっぱり　かたやぶり　かあ！▼
 そうだよね　かたやぶり　は
-あいての　とくせいに　かんけいなく▽
-わざを　だせる　とくせい！▼
+相手の　特性に　関係なく▽
+技を　だせる　特性！▼
 ふゆうだって　なんのそので
-じめんタイプの　わざを▽
-ガンガン　あてほうだい　だね！▼
+じめんタイプの　技を▽
+ガンガン　当て放題だね！▼
 かたやぶり　カッコイイぜ！
 ビバ　かたやぶり！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1223,16 +1219,16 @@
 			Language="JPN_KANJI">
 			<Text>やっぱり　テラボルテージ　かあ！▼
 そうだよね　テラボルテージ　は
-あいての　とくせいに　かんけいなく▽
-わざを　だせる　とくせい！▼
+相手の　特性に　関係なく▽
+技を　だせる　特性！▼
 ふゆうだって　なんのそので
-じめんタイプの　わざを▽
-ガンガン　あてほうだい　だね！▼
+じめんタイプの　技を▽
+ガンガン　当て放題だね！▼
 テラボルテージ　カッコイイぜ！
 ビバ　テラボルテージ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:53:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1290,16 +1286,16 @@
 			Language="JPN_KANJI">
 			<Text>やっぱり　ターボブレイズ　かあ！▼
 そうだよね　ターボブレイズ　は
-あいての　とくせいに　かんけいなく▽
-わざを　だせる　とくせい！▼
+相手の　特性に　関係なく▽
+技を　だせる　特性！▼
 ふゆうだって　なんのそので
-じめんタイプの　わざを▽
-ガンガン　あてほうだい　だね！▼
+じめんタイプの　技を▽
+ガンガン　当て放題だね！▼
 ターボブレイズ　カッコイイぜ！
 ビバ　ターボブレイズ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:53:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1356,17 +1352,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありがとう！　キミの　おかげで
-ふゆう　たいさくは　バッチリ！▼
-さらに　ふゆう　たいさくの
-たいさくも　バッチリだ！▼
+ふゆう　対策は　バッチリ！▼
+さらに　ふゆう　対策の
+対策も　バッチリだ！▼
 フフフ……▼
 これで　どんな　ポケモンを
-あいてに　しても▼
+相手に　しても▼
 ボクの　ふゆう　ポケモンは
-ぜったい　まけない！</Text>
+絶対　負けない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1413,11 +1409,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ！　ボクの　むてきの
-ふゆう　ポケモンと　たたかうかい？</Text>
+			<Text>さあ！　ボクの　無敵の
+ふゆう　ポケモンと　戦うかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:54:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1458,13 +1454,13 @@
 			<Text>うーん……▼
 ふゆう　たいさくの　たいさく
 バッチリだった　はずなのに……▼
-いざ　じっせんになると
+いざ　じっせんに　なると
 うまいこと　いかないなあ……▼
 それだけ　キミが
-つよかった　って　ことか</Text>
+つよかった！　って　ことか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:17:05" />
+				Time="2011-07-21T03:56:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1473,15 +1469,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うーん……▼
-ふゆう　たいさくの　たいさく
+ふゆう　対策の　対策
 バッチリだった　はずなのに……▼
-いざ　じっせんになると
+いざ　実戦に　なると
 うまいこと　いかないなあ……▼
 それだけ　キミが
-つよかった　って　ことか</Text>
+強かった！　って　ことか</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1529,11 +1525,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくと　たたかうなら　また　きてくれ
-いつでも　うけてたつよ！</Text>
+			<Text>ぼくと　戦うなら　また　来てくれ
+いつでも　受けて立つよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T12:18:00" />
+				Time="2011-07-21T03:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1570,11 +1566,11 @@
 			Language="JPN">
 			<Text>ポケモンのことを　あいしているから
 もっと　ポケモンについて　しりたい▼
-そんな　よっきゅうを　みたすため
-この　トレーナーズスクールが　ある！</Text>
+そんな　よっきゅうに　こたえるため
+トレーナーズスクールを　ふやします！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:55:44" />
+				Time="2011-07-21T03:57:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1584,11 +1580,11 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンのことを　愛しているから
 もっと　ポケモンについて　知りたい▼
-そんな　欲求を　満たすため
-この　トレーナーズスクールが　ある！</Text>
+そんな　欲求に　応えるため
+トレーナーズスクールを　増やします！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:55:50" />
+				Time="2011-07-21T03:57:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1597,10 +1593,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:34" />
+				Time="2011-07-21T03:57:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1624,13 +1620,15 @@
 			Language="JPN">
 			<Text>ポケモンには　とくせい　と　よばれる
 ふしぎな　ちからが　そなわってるよ▼
-とくせいの　こうかには
-いろんな　しゅるいが　あって▼
-その　おおくは　たたかっているときに
-こうかを　はっき　するよ！</Text>
+たたかっていない　ときでも
+こうかを　はっきするものも　あるわね▼
+たとえば　きゅうばん　ねんちゃくの
+とくせいを　もつ　ポケモンを▼
+てもちの　せんとうに　していると
+つりが　せいこう　しやすいんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:04:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1640,13 +1638,15 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンには　特性と　呼ばれる
 不思議な　能力が　備わってるよ▼
-特性の　効果には
-いろんな　種類が　あって▼
-その　多くは　戦っているときに
-効果を　発揮するよ！</Text>
+戦っていない　ときでも
+効果を　発揮するものも　あるわね▼
+例えば　きゅうばん　ねんちゃくの
+特性を　持つ　ポケモンを▼
+手持ちの　先頭に　していると
+釣りが　成功しやすいんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T07:04:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1680,15 +1680,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんかキャンセル　という
-テクニックが　あるんだよね▽
-いいかい？　ほんを　よむよ▼
-「ポケモンが　しんかする　しゅんかん
-　Ｂボタンを　おすことで▽
-　ポケモンは　おどろき　しんかをやめる」</Text>
+			<Text>こうかくレンズと　フォーカスレンズ▼
+よく　にた　どうぐ　だけど
+なまえも　ちがうし　こうかも　ちがう▼
+こうかくレンズは
+めいちゅうりつが　１１０パーセントに▼
+フォーカスレンズは
+あとから　わざを　だすときに▽
+めいちゅうりつが　１２０パーセントに▼
+ということは　すばやくない
+ポケモンなら　フォーカスレンズ　だね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:07:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1696,15 +1700,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>進化キャンセル　という
-テクニックが　あるんだよね▽
-いいかい？　本を　読むよ▼
-「ポケモンが　進化する　瞬間
-　Ｂボタンを　押すことで▽
-　ポケモンは　おどろき　進化をやめる」</Text>
+			<Text>こうかくレンズと　フォーカスレンズ▼
+よく　にた　どうぐ　だけど
+なまえも　ちがうし　こうかも　ちがう▼
+こうかくレンズは
+めいちゅうりつが　１１０パーセントに▼
+フォーカスレンズは
+あとから　わざを　だすときに▽
+めいちゅうりつが　１２０パーセントに▼
+ということは　すばやくない
+ポケモンなら　フォーカスレンズ　だね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1713,10 +1721,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T09:01:37" />
+				Time="2011-07-21T06:08:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1738,12 +1746,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よろしければ　ポケモンの
-じょうたいいじょうに　ついて▽
+			<Text>よろしければ　かんたんな
 クイズを　してみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:56:08" />
+				Time="2011-07-21T06:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1751,12 +1758,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よろしければ　ポケモンの
-状態異常に　ついて▽
+			<Text>よろしければ　簡単な
 クイズを　してみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:56:13" />
+				Time="2011-07-21T06:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1767,10 +1773,11 @@
 			<Comment>♂
 ・はい/いいえの選択肢表示
 ・はい　→boy3_02
-　いいえ→boy3_07</Comment>
+　いいえ→boy3_07
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:46:54" />
+				Time="2011-07-21T06:20:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1801,11 +1808,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>では　もんだい　です▼
-どくを　なおす　ポケモンの　どうぐは
+こんらんを　なおす　きのみは
 つぎのうち　どれでしょう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1814,11 +1821,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>では　問題です▼
-どくを　治す　ポケモンの道具は
+こんらんを　治す　きのみは
 次のうち　どれでしょう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1827,10 +1834,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・三択（quiz_01~03）表示</Comment>
+・以下の選択肢表示
+１キーのみ（正解）
+２ナナシのみ
+３モモンのみ
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:39:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1856,14 +1867,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01r0501_quiz_01"
+		Label="msg_c01r0501_quiz1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくけし</Text>
+			<Text>キーのみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1871,15 +1882,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どくけし</Text>
+			<Text>キーのみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:35" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢</Text>
@@ -1896,21 +1914,21 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01r0501_quiz_02"
+		Label="msg_c01r0501_quiz1_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まひなおし</Text>
+			<Text>ナナシのみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:19:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1918,15 +1936,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まひなおし</Text>
+			<Text>ナナシのみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:37" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢</Text>
@@ -1943,21 +1968,21 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c01r0501_quiz_03"
+		Label="msg_c01r0501_quiz1_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねむけざまし</Text>
+			<Text>モモンのみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1965,15 +1990,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねむけざまし</Text>
+			<Text>モモンのみ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanでメッセージ修正</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:37" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢</Text>
@@ -1990,7 +2022,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2028,11 +2060,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・どくけしを選択時
+・キーのみを選択時
 　続いてboy03_04へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:20:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2061,13 +2093,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まひを　なおす　ポケモンの　どうぐは▼
-……まひなおし　ですが▼
-ねむった　ポケモンを　おこす
-どうぐは　つぎのうち　どれでしょう？</Text>
+			<Text>では　ポケモンの　わざ
+いばるは　こうげきした　あいての▽
+こうげきりょくを　あげますが▼
+そのとき　つかわれた　ポケモンは
+どんな　じょうたいに　なるでしょう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:43:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2075,13 +2108,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まひを　治す　ポケモンの道具は▼
-……まひなおし　ですが▼
-眠った　ポケモンを　起こす
-道具は　次のうち　どれでしょう？</Text>
+			<Text>では　ポケモンの　技
+いばるは　攻撃した　相手の▽
+攻撃力を　あげますが▼
+そのとき　使われた　ポケモンは
+どんな　状態に　なるでしょう？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:44:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2090,10 +2124,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・三択（quiz_01~03）表示</Comment>
+・以下の選択肢表示
+１ねむり
+２ひるみ
+３こんらん（正解）
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:39:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2118,17 +2156,136 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c01r0501_quiz2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねむり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねむり</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:37:14" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_quiz2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひるみ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひるみ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:37:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01r0501_quiz2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんらん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:37:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:37:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんらん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:38:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:37:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c01r0501_boy3_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ピンポン！　ピンポーン！！▼
-だいせいかい　です！▼
-じょうたいいじょうに　くわしい
-あなたに　これを　プレゼントします▼</Text>
+だいせいかい　です！
+あなたに　これを　プレゼント！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:49:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2137,12 +2294,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ピンポン！　ピンポーン！！▼
-大正解です！▼
-状態異常に　詳しい
-あなたに　これを　プレゼントします▼</Text>
+だいせいかい　です！
+あなたに　これを　プレゼント！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2151,11 +2307,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ねむけざまし選択時
-　続いてboy03_06へ</Comment>
+・こんらん選択時
+・アイテム入手処理
+　No156「キーのみ」×３
+　続いてboy03_06へ
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:50:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2184,12 +2343,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんでもなおしは　そのなのとおり
-どんな　じょうたいいじょう　も▽
-なおすことが　できます！</Text>
+			<Text>ダブルバトルで　キーのみを　もった
+みかたの　ポケモンに▽
+いばるの　わざを　つかうと▼
+わざを　うけた　みかたの
+こうげきりょくが　あがり▽
+キーのみで　こんらんが　なおります！▼
+そして　こうげきりょくの　あがった
+ポケモンで　あいてを　こうげき！▼
+ダブルバトルって　くみあわせで
+いろんな　ことが　できますよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2197,12 +2363,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんでもなおしは　その名の通り
-どんな　状態異常も▽
-治すことが　できます！</Text>
+			<Text>ダブルバトルで　キーのみを　持った
+味方の　ポケモンに▽
+いばるの　技を　使う▼
+すると　技を　受けた　味方の
+攻撃力が　あがり▽
+キーのみで　こんらんが　治ります！▼
+そして　攻撃力の　あがった
+ポケモンで　相手を　攻撃！▼
+ダブルバトルって　組み合わせで
+いろんな　ことが　できますよ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2211,10 +2384,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・クイズ正解＝アイテム入手後はこれを繰り返す</Comment>
+・クイズ正解＝アイテム入手後はこれを繰り返す
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T06:50:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
