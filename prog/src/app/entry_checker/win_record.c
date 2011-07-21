@@ -93,10 +93,10 @@ enum{
 
 // パレット
 // 上：BG  (0-2:BG)
-// 上：OBJ (0:キャラ)
+// 上：OBJ (0:キャラ、14:通信アイコン)
 //
 // 下：BG  (0,1:BG、2:パネル、8:FONT)
-// 下：OBJ (0-10:パネル、11-14:cmn)
+// 下：OBJ (0,1:obj、11-14:cmn)
 enum{
 	// 何本目か(bg)
 	PLTID_BG_FONT				= 8,		// font
@@ -128,7 +128,7 @@ enum{
 	WIN_RECORD_MAX_COUNT		= 9999,		// 最大数
 	//
 	DISP_PANEL_MAXNUM			= 4,		// 1画面のpanel最大表示数
-	WIN_RECORD_DISP_PANEL_MAX	= 7,		// 1画面内の表示数
+	WIN_RECORD_DISP_PANEL_MAX	= 6,		// 1画面内の表示数
 };
 
 
@@ -281,6 +281,8 @@ enum{
 	//
 	FLG_MW_RET_END		= (1<<8),			// RETURNで終了
 	FLG_MW_CROSS_END	= (1<<9),			// ×で終了
+	FLG_MW_KEY_END		= (1<<10),			// キーで終了
+	FLG_MW_1ST_CHK		= (1<<11),			// 1回チェック
 	//
 	FLG_MW_END			= (1<<12),			// 終了
 	//
@@ -330,7 +332,6 @@ typedef struct
 	//
 	s32						Step;							// ステップ
 	s32						Mode;							// モード(0-2)
-	s32						TopNum;							// 先頭の番号
 	u32						Flag;							// フラグ
 	s32						TrainerId;						// トレーナーID
 	s32						ScrollOffy;						// オフセット
@@ -338,10 +339,7 @@ typedef struct
 	s16						CountBuffer[TMT_MAX+2];			// カウント
 	s16						DispBuffer[TMT_MAX+2];			// 表示のバッファ
 	// list
-	FRAMELIST_WORK			*frame_list_work;				///< リスト
-	s32						ScenarioCurPos;					// リスト用
-	s32						ListCurPos;						// 
-	s32						ListScrollPos;					// 
+	FRAMELIST_WORK			*frame_list_work;				// リスト
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
@@ -628,18 +626,20 @@ static const s16 wr_cmn_btn_tbl[] = {
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 {
-  { {   0,  23, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+  // スライドの数は上からのパネル分(7)にしないどだめらしい
+  // (リストの処理で問題が起こるようだ...)
+  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00:(ダミー)
+  { {  24,  47, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  48,  71, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  72,  95, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  96, 119, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { { 120, 143, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 144, 167, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
   //
-  { {  32, 160, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
+  { {  32, 160, 244, 252 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 06: レール
 
-  { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
-  { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
+  { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 07: 左
+  { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 08: 右
 
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
@@ -647,17 +647,18 @@ static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp2_tbl[] =
 {
-  { {   0,  23, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+#if 1	// なしでよい
+  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  24,  47, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  48,  71, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  72,  95, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  96, 119, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { { 120, 143, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 144, 167, 8, 232 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
   //
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
   { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
-
+#endif
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
 
@@ -667,8 +668,8 @@ static const FRAMELIST_HEADER wr_frame_list_header = {
   FRAMELIST_SUB_BG_NONE,	// 下
   
   1,   // 項目フレーム表示開始Ｘ座標
-  0,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
-//  3,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
+//  0,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
+  3,    // 項目フレーム表示開始Ｙ座標(●0以外だとリストが長い場合にうまくいかない?)
   28,   // 項目フレーム表示Ｘサイズ
   3,    // 項目フレーム表示Ｙサイズ
   
@@ -684,8 +685,8 @@ static const FRAMELIST_HEADER wr_frame_list_header = {
    7,   // 項目登録数(●初期化前に変更すればよい)
    1,   // 背景登録数
    0,   // 初期カーソル位置
-   7,   // カーソル移動範囲
-//   6,   // カーソル移動範囲
+//   7,   // カーソル移動範囲
+   6,   // カーソル移動範囲
    0,   // 初期スクロール値
   
   wr_list_tp_tbl,  // タッチデータ
@@ -697,6 +698,12 @@ static const FRAMELIST_HEADER wr_frame_list_header = {
 // パネル上の表示位置(x座標)
 static const s16 wr_mes_pos_tbl[] = {
 	0, 144,
+};
+
+// (0x100 = 1)
+// (0.25ずつ移動で32dotでスクロール)
+static const s16 wr_scroll_tbl[] = {
+	0x40, 0x2000,
 };
 
 
@@ -763,7 +770,6 @@ static void wr_init_framelist( WIN_RECORD_MAIN_WORK * wk );
 static u32  wr_main_framelist( WIN_RECORD_MAIN_WORK * wk );
 static s32  wr_is_main_framelist( WIN_RECORD_MAIN_WORK * wk, const u32 mode );
 static void wr_exit_framelist( WIN_RECORD_MAIN_WORK * wk );
-static void wr_calc_framelist( WIN_RECORD_MAIN_WORK * wk );
 //
 static void wr_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void wr_listcallback_move(void *work, u32 pos, BOOL flag);
@@ -775,6 +781,7 @@ static void _strbuf_print( WIN_RECORD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRI
 //
 static void wr_main_scrollbar( WIN_RECORD_MAIN_WORK * wk );
 static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk );
+static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk );
 
 //=============================================================================
 /**
@@ -877,6 +884,13 @@ static GFL_PROC_RESULT WinRecordProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
 {
 	s32		i;
 	WIN_RECORD_MAIN_WORK* wk = mywk;
+	
+	// 終了判定
+	if(wk->Flag & FLG_MW_KEY_END){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+	}else{
+		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+	}
 	
 	//----------------
 	// 処理を記述
@@ -1000,15 +1014,11 @@ static void wr_init( WIN_RECORD_MAIN_WORK* wk )
 	// 上、下画面をまとめて処理
 	wk->Step 		= STEP_INIT;
 	wk->Mode		= wk->Param->status;	// 外部から
-	wk->TopNum		= 0;
 	wk->Flag		= 0;
 	wk->TrainerId	= 0;
 	wk->DispMaxNum	= 0;
 	wk->ScrollOffy	= 0;
 	//
-	wk->ScenarioCurPos = 0;
-	wk->ListCurPos	= 0;
-	wk->ListScrollPos = 0;
 	// カウント表示用バッファ
 	for(i=0;i<TMT_MAX+2;i++){
 		wk->CountBuffer[i] = i;
@@ -1905,9 +1915,9 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 	}
 	// 判定
 	j=0;
-#if 1
+#if 0
 	// リストの処理でoffyが0以外だと
-	// 正しく動作しないようだ
+	// 正しく動作しないようだ(暫定処理)
 	// 0番にダミーで表示させ
 	// 上に黒帯を出して調整した
 	wk->DispBuffer[j] = 0;		// 0番をダミーで登録
@@ -2019,9 +2029,16 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	if(wk->Flag & FLG_MW_ANM_ALL){
 		return( bflg );
 	}
-	
+	// ×
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+		// アニメ再生
+		wr_set_cmn_anim( wk, CLWKID_CMN_CROSS );
+		flg = 1;
+		// SE
+		PMSND_PlaySE( SND_WIN_RECORD_CANCEL );
+	}
 	// 戻る
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		// アニメ再生
 		wr_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		flg = 1;
@@ -2033,6 +2050,8 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	if(flg == 1){
 		bflg = TRUE;
 		wk->Step = STEP_LV2;
+		// キーで終了
+		wk->Flag |= FLG_MW_KEY_END;
 	}
 	return( bflg );
 }
@@ -2214,11 +2233,12 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 		default:
 			break;
 	}
-#if 1
-	// test
-//	if(mode%2 == 0){
+	//
+#ifdef PM_DEBUG
+	// テスト
+	if(wk->Mode == MODE_LV3){
 		bflg = TRUE;
-//	}
+	}
 #endif
 	
 	//
@@ -2263,8 +2283,8 @@ static void wr_init_framelist( WIN_RECORD_MAIN_WORK * wk )
 	// パラメータ設定
 	header.cbFunc  		= &wr_list_callback;
 	header.itemMax 		= wk->DispMaxNum;			// 重要
-	header.initPos		= wk->ListCurPos;
-	header.initScroll	= wk->ListScrollPos;
+	header.initPos		= 0;
+	header.initScroll	= 0;
 	if(wk->DispMaxNum <= WIN_RECORD_DISP_PANEL_MAX){
 		header.touch = wr_list_tp2_tbl;
 	}
@@ -2281,9 +2301,7 @@ static void wr_init_framelist( WIN_RECORD_MAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( arc_handle );
 	//
 	// 項目追加(タイトル文字をセット)
-	// ここではセットだけのようだ
 	for(i=0;i<header.itemMax;i++){
-//		FRAMELIST_AddItem( wk->frame_list_work, 0, wr_tmt_gmm_tbl[i] );
 		FRAMELIST_AddItem( wk->frame_list_work, 0, wr_tmt_gmm_tbl[wk->DispBuffer[i]] );
 	}
 	// 初期化
@@ -2302,14 +2320,29 @@ static void wr_init_framelist( WIN_RECORD_MAIN_WORK * wk )
 static u32 wr_main_framelist( WIN_RECORD_MAIN_WORK * wk )
 {
 	u32		ret = FRAMELIST_RET_NONE;
+	
+	// 1回チェック済み=>リストの処理はしない
+	if(wk->Flag & FLG_MW_1ST_CHK){
+		return( ret );
+	}
+	
+	// リスト処理をだます処理
+	wr_main_etc_input( wk );
+	
 	// Main
 	if( wk->frame_list_work ){
 		// PAGEUP、PAGEDOWNの場合は、スクロールが終了時に、
 		// パラメータをセットする必要がある(タイミング注意)
 		ret = FRAMELIST_Main( wk->frame_list_work );
 	}
+	// スクロールなしの場合は、
+	// リストは表示のみで、処理はしない
+	if(wk->Flag & FLG_MW_NO_SCROLL){
+		wk->Flag |= FLG_MW_1ST_CHK;
+	}
+	
 #if 0	// debug
-	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){		// 左右
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){		//
 		u32		buf[3];
 		
 		buf[0] = FRAMELIST_GetListPos(     wk->frame_list_work );
@@ -2378,8 +2411,8 @@ static s32 wr_is_main_framelist( WIN_RECORD_MAIN_WORK * wk, const u32 mode )
 	}
 	// 決定
 	else if(flg == 2){
-		// カーソル位置の取得
-		wr_calc_framelist( wk );
+//		// カーソル位置の取得
+//		wr_calc_framelist( wk );
 	}
 	return( flg );
 }
@@ -2399,25 +2432,6 @@ static void wr_exit_framelist( WIN_RECORD_MAIN_WORK * wk )
 	if( wk->frame_list_work ){
 		FRAMELIST_Exit( wk->frame_list_work );
 		wk->frame_list_work = 0;
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief	リストカーソル位置再計算
- *
- * @param	WIN_RECORD_MAIN_WORK*		wk
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static void wr_calc_framelist( WIN_RECORD_MAIN_WORK * wk )
-{
-	// 初期化
-	if(wk->frame_list_work){
-		wk->ScenarioCurPos = FRAMELIST_GetListPos(  wk->frame_list_work );		// 通しカーソル位置
-		wk->ListCurPos     = FRAMELIST_GetCursorPos(wk->frame_list_work );		// 画面上の位置
-		wk->ListScrollPos  = FRAMELIST_GetScrollCount(wk->frame_list_work );	// スクロール位置
 	}
 }
 
@@ -2560,13 +2574,52 @@ static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk )
 	int		offy;
 	//
 	// 0.25ずつ移動、32dotで戻し(0x100 = 1.0)
-	wk->ScrollOffy += 0x40;
-	if(wk->ScrollOffy >= 0x2000){
+//	wk->ScrollOffy += 0x40;
+//	if(wk->ScrollOffy >= 0x2000){
+	wk->ScrollOffy += wr_scroll_tbl[0];
+	if(wk->ScrollOffy >= wr_scroll_tbl[1]){
 		wk->ScrollOffy = 0;
 	}
 	offy = (wk->ScrollOffy>>8)&0xff;
 	// セット
 	GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, -offy );
 	GFL_BG_SetScrollReq( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_SET, -offy );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	リスト処理用の補正
+ *
+ * @param	WIN_RECORD_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void wr_main_etc_input( WIN_RECORD_MAIN_WORK * wk )
+{
+	u32		buf[2];
+	int		kflg= GFL_UI_CheckTouchOrKey();
+	//
+	// スクロールなし
+	if(wk->Flag & FLG_MW_NO_SCROLL){
+		return;
+	}
+	//
+	// タッチで終了の場合はキーで終了にしておく
+	// 内部的には常にキーで終了とさせておく
+	if(kflg == GFL_APP_END_TOUCH){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+	}
+	// 上下のボタンを押したらすぐに、
+	// スクロールが開始するようにするための処理
+	// =>(カーソル位置を両端に移動)
+	// 上
+	if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+		FRAMELIST_SetCursorPos( wk->frame_list_work, 0 );
+	}
+	// 下
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+		FRAMELIST_SetCursorPos( wk->frame_list_work, WIN_RECORD_DISP_PANEL_MAX-1 );
+	}
 }
 
