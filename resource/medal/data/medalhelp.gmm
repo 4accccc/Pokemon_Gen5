@@ -995,6 +995,11 @@
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
+	<row id="MDL_HINT_FIELD_090">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
 	<row id="MDL_HINT_BATTLE_001">
 		<language name="JPN" width="216">しょうぶの　ときは
 ゆうきを　みせるのも
@@ -1598,8 +1603,12 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_013">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">ミュージカルに　たくさん
+さんかして　めざせ
+でまちファン　１０にん！</language>
+		<language name="JPN_KANJI" width="216">ミュージカルに　たくさん
+参加して　目指せ
+出待ちファン　１０人！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_014">
@@ -2223,11 +2232,6 @@
 	<row id="MDL_HINT_SPECIAL_007">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_090">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_091">

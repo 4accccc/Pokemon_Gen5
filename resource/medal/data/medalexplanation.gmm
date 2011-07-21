@@ -1236,6 +1236,15 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_088">
+		<language name="JPN" width="216">はたらく　くるまの　ことなら
+なんでも　しっている
+ものしりの　ための　メダル。</language>
+		<language name="JPN_KANJI" width="216">働く車の　ことなら
+なんでも　知っている
+物知りの　ための　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_089">
 		<language name="JPN" width="216">イッシュちほうの　すべての　まちを
 おとずれた　さいこうの　たびびとに
 あたえられる　メダル。</language>
@@ -1244,7 +1253,7 @@
 与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_089">
+	<row id="MDL_EXP_FIELD_090">
 		<language name="JPN" width="216">『ぼうけん』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『冒険』メダルを　すべて　
@@ -1959,12 +1968,12 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_013">
-		<language name="JPN" width="216">ダウンロードした　ミュージカルの
-えんもくに　さんかした　スターに
-あたえられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">ダウンロードした　ミュージカルの
-演目に　参加した　スターに
-与えられる　メダル。</language>
+		<language name="JPN" width="216">ミュージカルの　でまちファンが
+１０にんに　たっした　ふどうの
+にんきを　たたえる　メダル。</language>
+		<language name="JPN_KANJI" width="216">ミュージカルの　出待ちファンが
+１０人に　達した　不動の
+人気を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_014">
@@ -2654,11 +2663,6 @@
 		<language name="JPN_KANJI" width="216">すべての　メダルを　集め
 メダリストの　頂点に　立った
 栄誉の　証しの　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_090">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_091">

@@ -12,6 +12,7 @@
 #pragma once
 
 u32 MedalSortList[] = {
+    MDLID_MUSICAL_TOTAL_POINT,	//‚P‚O‚É‚ñ‚Ì‚Å‚Ü‚¿
     MDLID_WIN_BP_LV1,	//‚a‚o‚Ý‚è‚¨‚Ë‚ 
     MDLID_DAYMAX_EXP_LV1,	//‚d‚w‚o‚Ý‚è‚¨‚Ë‚ 
     MDLID_APPLICATION_DUMMY_16,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚P
@@ -117,6 +118,7 @@ u32 MedalSortList[] = {
     MDLID_APPLICATION_DUMMY_33,	//‚µ‚è[‚¸‚±‚ñ‚Õ‚è[‚Æ
     MDLID_SUBWAY_SINGLE_LV1,	//‚µ‚ñ‚®‚é‚¦‚­‚·‚Õ‚ê‚·
     MDLID_COMPLETE_JIMEN,	//‚¶‚ß‚ñ‚±‚ê‚­‚½[
+    MDLID_JUUKIMANIA,	//‚¶‚ã‚¤‚«‚Ü‚É‚ 
     MDLID_SHOPPING_CNT_LV1,	//‚¶‚å‚¤‚ê‚ñ‚©‚·‚½‚Ü[
     MDLID_SURECHIGAI_CNT_LV1,	//‚·‚­‚ç‚ñ‚Ô‚é‚P
     MDLID_SURECHIGAI_CNT_LV2,	//‚·‚­‚ç‚ñ‚Ô‚é‚Q
@@ -167,7 +169,6 @@ u32 MedalSortList[] = {
     MDLID_CHAMPION_NORMAL,	//‚Ì[‚Ü‚é‚¿‚á‚ñ‚Õ
     MDLID_AFFINITY_CHECK_POINT,	//‚Í[‚Æ‚Ì‚¦[‚·
     MDLID_CYCLE_LV3,	//‚Í[‚Ç‚ç‚¢‚¾[
-    MDLID_MUSICAL_DL,	//‚Í‚¢‚Ä‚­‚¨‚ñ‚·‚Ä[‚¶
     MDLID_COMPLETE_HAGANE,	//‚Í‚ª‚Ë‚±‚ê‚­‚½[
     MDLID_BOX_LV2,	//‚Í‚±‚¢‚è‚P‚Q‚O
     MDLID_BOX_LV1,	//‚Í‚±‚¢‚è‚R‚O
@@ -266,5 +267,4 @@ u32 MedalSortList[] = {
     MDLID_BLANK_5,	//‹ó‚«‚ß‚¾‚é‚T
     MDLID_BLANK_6,	//‹ó‚«‚ß‚¾‚é‚U
     MDLID_BLANK_7,	//‹ó‚«‚ß‚¾‚é‚V
-    MDLID_BLANK_8,	//‹ó‚«‚ß‚¾‚é‚W
 };

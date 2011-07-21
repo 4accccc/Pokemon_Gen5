@@ -886,11 +886,16 @@
 	</row>
 
 	<row id="MDL_NAME_FIELD_088">
+		<language name="JPN" width="216">じゅうきマニア</language>
+		<language name="JPN_KANJI" width="216">じゅうきマニア</language>
+	</row>
+
+	<row id="MDL_NAME_FIELD_089">
 		<language name="JPN" width="216">イッシュいっしゅう</language>
 		<language name="JPN_KANJI" width="216">イッシュいっしゅう</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_089">
+	<row id="MDL_NAME_FIELD_090">
 		<language name="JPN" width="216">アドベンチャーキング</language>
 		<language name="JPN_KANJI" width="216">アドベンチャーキング</language>
 	</row>
@@ -1291,8 +1296,8 @@
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_013">
-		<language name="JPN" width="216">ハイテクオンステージ</language>
-		<language name="JPN_KANJI" width="216">ハイテクオンステージ</language>
+		<language name="JPN" width="216">１０にんのでまち</language>
+		<language name="JPN_KANJI" width="216">１０にんのでまち</language>
 	</row>
 
 	<row id="MDL_NAME_APPLICATION_014">
@@ -1680,44 +1685,39 @@
 		<language name="JPN_KANJI" width="216">キングオブメダリスト</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_090">
+	<row id="MDL_NAME_FIELD_091">
 		<language name="JPN" width="216">空きメダル１</language>
 		<language name="JPN_KANJI" width="216">空きメダル１</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_091">
+	<row id="MDL_NAME_FIELD_092">
 		<language name="JPN" width="216">空きメダル２</language>
 		<language name="JPN_KANJI" width="216">空きメダル２</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_092">
+	<row id="MDL_NAME_FIELD_093">
 		<language name="JPN" width="216">空きメダル３</language>
 		<language name="JPN_KANJI" width="216">空きメダル３</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_093">
+	<row id="MDL_NAME_FIELD_094">
 		<language name="JPN" width="216">空きメダル４</language>
 		<language name="JPN_KANJI" width="216">空きメダル４</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_094">
+	<row id="MDL_NAME_FIELD_095">
 		<language name="JPN" width="216">空きメダル５</language>
 		<language name="JPN_KANJI" width="216">空きメダル５</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_095">
+	<row id="MDL_NAME_FIELD_096">
 		<language name="JPN" width="216">空きメダル６</language>
 		<language name="JPN_KANJI" width="216">空きメダル６</language>
 	</row>
 
-	<row id="MDL_NAME_FIELD_096">
+	<row id="MDL_NAME_FIELD_097">
 		<language name="JPN" width="216">空きメダル７</language>
 		<language name="JPN_KANJI" width="216">空きメダル７</language>
-	</row>
-
-	<row id="MDL_NAME_FIELD_097">
-		<language name="JPN" width="216">空きメダル８</language>
-		<language name="JPN_KANJI" width="216">空きメダル８</language>
 	</row>
 
 	<row id="MDL_NAME_HINT_000">
