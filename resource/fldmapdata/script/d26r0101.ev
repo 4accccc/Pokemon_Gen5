@@ -132,7 +132,6 @@ INIT_EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_01
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 0 )
   $WK_SCENE_D26R0101_GATE_01 = 2
 }
@@ -144,7 +143,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_02
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 1 )
   $WK_SCENE_D26R0101_GATE_02 = 2
 }
@@ -156,7 +154,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_03
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 2 )
   $WK_SCENE_D26R0101_GATE_03 = 2
 }
@@ -168,7 +165,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_04
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 3 )
   $WK_SCENE_D26R0101_GATE_04 = 2
 }
@@ -180,7 +176,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_05
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 4 )
   $WK_SCENE_D26R0101_GATE_05 = 2
 }
@@ -192,7 +187,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_06
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 5 )
   $WK_SCENE_D26R0101_GATE_06 = 2
 }
@@ -204,7 +198,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_07
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 6 )
   $WK_SCENE_D26R0101_GATE_07 = 2
 }
@@ -216,7 +209,6 @@ EVENT_END
 EVENT_START   ev_pos_d26r0101_badge_check_08
 {
   //ジムバッジを取得している場合のみ起動
-  _SE_PLAY( SEQ_SE_SW_BCG_01 )
   _BGATE_START_MONUMENT( 7 )
   $WK_SCENE_D26R0101_GATE_08 = 2
 }

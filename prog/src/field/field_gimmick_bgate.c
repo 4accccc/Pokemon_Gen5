@@ -51,6 +51,7 @@
 //=====================================
 typedef enum{
   BADGEGATE_SE_SEQ_MONUMENT_START   = SEQ_SE_SW_BCG_01,
+  BADGEGATE_SE_SEQ_MONUMENT_LASER   = SEQ_SE_SW_BCG_06,
   BADGEGATE_SE_SEQ_GATE_START       = SEQ_SE_SW_BCG_03,
   BADGEGATE_SE_SEQ_GATE_LIGHT       = SEQ_SE_SW_BCG_02,
   BADGEGATE_SE_SEQ_GATE_COLUMN_DOWN = SEQ_SE_SW_BCG_04,
@@ -103,6 +104,7 @@ typedef struct MONUMENT_START_WK_tag
 
   // data
   u16 monument_id;
+  u32 event_frame;
 }MONUMENT_START_WK;
 
 //-------------------------------------
@@ -152,6 +154,7 @@ static void GateOpen_CameraShakeMain( GATE_START_WK *p_wk );
 static fx32 GetSynchroAnmFrame( BADGEGATE_WK *p_wk );
 static BOOL get_is_action_end( u32 id, EVENTWORK *p_event_wk );
 static void GateOpen_SePlayMain( GATE_START_WK *p_wk );
+static void MonumentStart_SePlayMain( MONUMENT_START_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -435,6 +438,7 @@ GMEVENT* BADGEGATE_CreateMonumentStartEvent( GAMESYS_WORK *p_gamesys, u16 monume
   {
     GFL_STD_MemClear( p_wk, sizeof(MONUMENT_START_WK) );
     p_wk->monument_id = monument_id;
+    p_wk->event_frame = 0;
     p_wk->p_gmk_wk    = GMK_TMP_WK_GetWork( p_fld_wk, BADGEGATE_WORK_ASSIGN_ID);
   }
 
@@ -463,6 +467,11 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
   p_ev_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_MONUMENT_0 + p_wk->monument_id ,MMANAGER_FEXPOBJ_EV_UID);
   p_off_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_MONUMENT_0 + p_wk->monument_id ,MMANAGER_FEXPOBJ_OFF_UID);
   p_on_model = GetModelData( p_wk->p_gmk_wk ,BADGEGATE_MDLID_MONUMENT_0 + p_wk->monument_id ,MMANAGER_FEXPOBJ_ON_UID);
+
+  // SEを再生する
+  MonumentStart_SePlayMain( p_wk );
+
+  p_wk->event_frame++;
 
   switch( *p_seq )
   {
@@ -512,6 +521,29 @@ static GMEVENT_RESULT MonumentStart_Event( GMEVENT* p_event, int* p_seq, void* p
     break;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モニュメントのSEを鳴らすメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MonumentStart_SePlayMain( MONUMENT_START_WK *p_wk )
+{
+  // レーザー音
+  if( p_wk->event_frame == MONUMENT_SE_LASER_FRAME )
+  {
+    PMSND_PlaySE( BADGEGATE_SE_SEQ_MONUMENT_LASER );
+  }
+  // せりあがる音
+  if( p_wk->event_frame == MONUMENT_SE_OPNE_FRAME )
+  {
+    PMSND_PlaySE( BADGEGATE_SE_SEQ_MONUMENT_START );
+  }
 }
 
 //----------------------------------------------------------------------------
