@@ -397,7 +397,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   }
 
   // 1フレーム短縮するため, イベントの終了をココで判定する
-  if( GetCurrentSeq( work ) == SEQ_DOOROUT_END ) {
+  if( GAMESYSTEM_GetEvent(gameSystem) == event 
+      && GetCurrentSeq( work ) == SEQ_DOOROUT_END ) {
     if( FIELD_TASK_MAN_IsAllTaskEnd( task_man ) ) {
       ENTRANCE_CAMERA_Recover( work->ECamWork );
       FIELD_CAMERA_SetDefaultParameter( camera );
