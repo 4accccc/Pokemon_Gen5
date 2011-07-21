@@ -217,12 +217,7 @@ static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
     u16     rot[ OBJ_NUM ] = { 0 };
 
     // バージョン別で位置が反対
-#ifdef PM_DEBUG
-    // Lボタン押しながらで別バージョン
-    if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L)
-#else
     if( GET_VERSION() == VERSION_B2 )
-#endif
     {
       VEC_Set( &pos[0], HATCH_1_X, HATCH_1_Y, HATCH_1_Z );
       VEC_Set( &pos[1], HATCH_2_X, HATCH_2_Y, HATCH_2_Z );
