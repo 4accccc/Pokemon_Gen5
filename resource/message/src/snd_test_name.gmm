@@ -9341,6 +9341,10 @@
 		<language name="JPN" width="256">SW-PLAZMASHIP-07</language>
 		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-07</language>
 	</row>
+	<row id="msg_seq_se_sw_plazmaship_08">
+		<language name="JPN" width="256">SW-PLAZMASHIP-08</language>
+		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-08</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
