@@ -3,21 +3,15 @@
  *
  *	@file		win_record.c
  *	@brief  エントリーチェッカー(優勝記録)
- *	@author	tamada
- *	@date		2011.03.02
+ *	@author
+ *	@date
  *
- * 2011.03.02 ui_templateから派生、作成開始
  */
 //=============================================================================
 //必ず必要なインクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
-
-//テクスチャをOAMに転送
-#include "system/nsbtx_to_clwk.h"
-#include "system/bmp_oam.h"
-#include "system/bmp_winframe.h"
 
 //FONT
 #include "print/gf_font.h"
@@ -35,7 +29,6 @@
 #include "ui/ui_easy_clwk.h"
 // print
 #include "ui/print_tool.h"
-#include "gamesystem/msgspeed.h"
 
 //アプリ共通素材
 #include "app/app_menu_common.h"
@@ -44,6 +37,7 @@
 
 // サウンド
 #include "sound/pm_sndsys.h"
+#include "win_record_snd_def.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -51,8 +45,6 @@
 
 #include "system/wipe.h"
 
-#include "app/app_keycursor.h"
-#include "app/app_printsys_common.h"
 #include "ui/frame_list.h"
 
 #include "app/win_record.h"
@@ -88,8 +80,6 @@ enum{
 	STEP_LV4 	= 400,
 	STEP_LV5 	= 500,
 	STEP_LV6 	= 600,
-	STEP_LV7 	= 700,
-	STEP_LV_MAX = 1000,
 	//
 	STEP_END	= 10000,
 };
@@ -175,14 +165,6 @@ enum{
 	CLWKMODE_CMN,							// 共通(down)
 	//
 	CLWKMODE_UP,							// トレーナー(up)
-};
-
-// empty
-enum{
-	EMPTY_PANEL_OFFSET 	= 5,				// パネル(5:トーナメント名、6:回数)
-	//
-	EMPTY_PLAYER_NAME	= 11,				// プレイヤ名
-	EMPTY_TITLE_NAME	= 12,				// 「ゆうしょうかいすう」
 };
 
 // タッチペンエリア
@@ -279,12 +261,6 @@ enum{
 //-------------------
 // フラグ
 //-------------------
-// 移動のフラグ(MoveWork.flag)
-enum{
-	FLG_MOVE_INIT		= (1<<0),			// 初期化
-	FLG_MOVE_END		= (1<<1),			// 終了
-};
-
 // OBJのフラグ(WIN_RECORD_OBJ_DATA.dispflag)
 enum{
 	FLG_OBJ_ANIM		= (1<<0),			// アニメあり
@@ -448,6 +424,7 @@ static const WIN_RECORD_BGPAL_DATA wr_bgpal_tbl[] = {
 static const WIN_RECORD_BGCHR_DATA wr_bgchr_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_win_record_gra_win_record_bg_u_NCGR,	0,	0,},		// 上、BG
 	{ GFL_BG_FRAME2_S,	NARC_win_record_gra_win_record_bg_u_NCGR,	0,	0,},		// 上、BG
+	{ GFL_BG_FRAME1_S,	NARC_win_record_gra_win_record_bg_u_NCGR,	0,	0,},		// 上、BG
 	{ GFL_BG_FRAME3_M,	NARC_win_record_gra_win_record_bg_d_NCGR,	0,	0,},		// 下、BG
 	{ GFL_BG_FRAME1_M,	NARC_win_record_gra_win_record_bg_d_NCGR,	0,	0,},		// 下、BG
 
@@ -458,6 +435,7 @@ static const WIN_RECORD_BGCHR_DATA wr_bgchr_tbl[] = {
 static const WIN_RECORD_BGSCN_DATA wr_bgscn_tbl[] = {
 	{ GFL_BG_FRAME3_S,	NARC_win_record_gra_win_record_bg_u_01_NSCR,	0,	0,},		// 上、下地
 	{ GFL_BG_FRAME2_S,	NARC_win_record_gra_win_record_bg_u_02_NSCR,	0,	0,},		// 上、中間
+	{ GFL_BG_FRAME1_S,	NARC_win_record_gra_win_record_bg_u_03_NSCR,	0,	0,},		// 上、中間
 	{ GFL_BG_FRAME3_M,	NARC_win_record_gra_win_record_bg_d_01_NSCR,	0,	0,},		// 下、下地
 	{ GFL_BG_FRAME1_M,	NARC_win_record_gra_win_record_bg_d_02_NSCR,	0,	0,},		// 下、下地
 
@@ -531,7 +509,7 @@ static const s16 wr_obj_up_itbl[] = {
 
 // OBJのテーブルデータ(up)
 static const WIN_RECORD_OBJ_DATA wr_obj_up_tbl[] = {
-	{ 0,	0x30,	2,	1,	0,	1,	13,	0,},		// トレーナー
+	{ 0,	0x30,	1,	1,	0,	1,	13,	0,},		// トレーナー
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -650,23 +628,14 @@ static const s16 wr_cmn_btn_tbl[] = {
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 {
-#if 0		// 後日、余力があればSLIDEでタッチにも対応を検討
-  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
-#else
-  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
-#endif
+  { {   0,  23, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  24,  47, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  48,  71, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  72,  95, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { {  96, 119, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 120, 143, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
+  { { 144, 167, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+  //
   { {  32, 160, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
@@ -678,23 +647,14 @@ static const FRAMELIST_TOUCH_DATA wr_list_tp_tbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA wr_list_tp2_tbl[] =
 {
-#if 0
-  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
-#else
-  { {   0,  23, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
-  { {  24,  47, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
-  { {  48,  71, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
-  { {  72,  95, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
-  { {  96, 119, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
-  { { 120, 143, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
-  { { 144, 167, 8, 231-8 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
-#endif
+  { {   0,  23, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  24,  47, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  48,  71, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  72,  95, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { {  96, 119, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 120, 143, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
+  { { 144, 167, 8, 223 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+  //
   { { 168, 192, 136, 160 }, FRAMELIST_TOUCH_PARAM_PAGE_UP },  // 08: 左
   { { 168, 192, 168, 192 }, FRAMELIST_TOUCH_PARAM_PAGE_DOWN },// 09: 右
 
@@ -786,17 +746,14 @@ static void wr_disp_string_id( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s
 // パラメータ関連
 static void wr_init_param( WIN_RECORD_MAIN_WORK* wk );
 static void wr_set_param( WIN_RECORD_MAIN_WORK* wk );
-static void wr_update_param( WIN_RECORD_MAIN_WORK* wk );
 static void wr_set_cmn_anim( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
 //
 // 入力(キー、タッチペン)
+static void wr_chk_input( WIN_RECORD_MAIN_WORK* wk );
 static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk );
 static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_HITTBL *tpbuffer );
 static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk );
 static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk );
-//
-// スクロールバーの処理
-static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk );
 //
 // フラグ
 static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
@@ -1139,13 +1096,12 @@ static void wr_exit( WIN_RECORD_MAIN_WORK* wk )
 			*wk->Param->result_work = FALSE;
 		}
 	}
-#if 1	// 結果
 	if(wk->Param->result_work != NULL){
 		OS_Printf("result : %d\n",*wk->Param->result_work);
 	}else{
 		OS_Printf("result : null(debug)\n");
 	}
-#endif
+	
 	// 上、下画面をまとめて処理
 	// emptyのバッファクリア
 	GFL_HEAP_FreeMemory( wk->EmptyBuffer );
@@ -1186,6 +1142,7 @@ static void wr_down( WIN_RECORD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static void wr_key_all( WIN_RECORD_MAIN_WORK* wk )
 {
+	s32		wnum;
 	BOOL	bflg;
 	
 	// 処理
@@ -1195,25 +1152,42 @@ static void wr_key_all( WIN_RECORD_MAIN_WORK* wk )
 		case STEP_INIT:
 			wk->Step = STEP_LV1;
 			break;
-		
-		// LV1
+		//
+		// 入力まとめ
 		case STEP_LV1:
-			// アニメ待ち
-			wr_chk_anim( wk );
-			//
-			// キー入力
-			bflg = wr_chk_key_input( wk );
+			wr_chk_input( wk );
+			break;
+		//
+		// 右アニメ
+		case STEP_LV1+10:
+			wnum = CLWKID_CMN_RIGHT;
+			bflg = wr_is_anime_end( wk, CLWKMODE_CMN, wnum );
 			if(bflg == FALSE){
-				// ないときだけタッチペン
-				wr_chk_tp_input( wk );
+				wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4] );
+				wk->Flag &= ~(1<<wnum);
+				wk->Step = STEP_LV1;
 			}
-			// パラメータ更新
-//			wr_update_param( wk );
-			//
-			// スクロールバー
-			wr_main_scrollbar( wk );
+			break;
+		//
+		// 左アニメ
+		case STEP_LV1+20:
+			wnum = CLWKID_CMN_LEFT;
+			bflg = wr_is_anime_end( wk, CLWKMODE_CMN, wnum );
+			if(bflg == FALSE){
+				wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4] );
+				wk->Flag &= ~(1<<wnum);
+				wk->Step = STEP_LV1;
+			}
 			break;
 		
+		// 終了アニメ待ち
+		case STEP_LV2:
+			wr_chk_anim( wk );
+			if( wk->Flag & FLG_MW_END ){
+				wk->Step = STEP_END;
+			}
+			break;
+		//
 		// END
 		case STEP_END:
 			break;
@@ -1926,8 +1900,8 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 		if( cnt >= WIN_RECORD_MAX_COUNT ){
 			cnt = WIN_RECORD_MAX_COUNT;
 		}
-//		wk->CountBuffer[i] = cnt;
-		wk->CountBuffer[i] = i;		// test
+		wk->CountBuffer[i] = cnt;
+//		wk->CountBuffer[i] = i;		// test
 	}
 	// 判定
 	j=0;
@@ -1941,8 +1915,7 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 #endif
 	for(i=0;i<TMT_MAX;i++){
 		// 表示の判定
-//		bflg = wr_chk_dispflag( wk, i );
-		bflg = TRUE;		// test
+		bflg = wr_chk_dispflag( wk, i );
 		if(bflg == TRUE){
 			// 表示
 			wk->DispBuffer[j] = i;
@@ -1960,40 +1933,6 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 		OS_Printf("%d, %d: %d\n",i,wbtwin_tbl[i],wk->CountBuffer[i]);
 	}
 #endif
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  更新(主にwk->TopNumが更新したときに呼ばれる)
- *
- *	@param	WIN_RECORD_MAIN_WORK* wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void wr_update_param( WIN_RECORD_MAIN_WORK* wk )
-{
-	s16				num;
-	s16				nmax;
-	s32				i;
-	u32				py;
-	GFL_CLACTPOS	pos;
-	BOOL			bflg;
-	
-	// バー更新
-	if(wk->Flag & FLG_MW_BAR_UPDATE){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			py = SCROLLBAR_GetPosY( wk->DispMaxNum-4, wk->TopNum, SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
-			// 座標の更新
-			GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-//			pos.x = 238;	// test
-			pos.y = py;
-			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[CLWKID_BAR], &pos, CLSYS_DEFREND_MAIN );
-			//
-			wk->Flag &= ~FLG_MW_BAR_UPDATE;
-		}
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -2020,6 +1959,46 @@ static void wr_set_cmn_anim( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  キー入力まとめ
+ *
+ *	@param	WIN_RECORD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wr_chk_input( WIN_RECORD_MAIN_WORK* wk )
+{
+	s32		flg=0;
+	u32		ret;
+	s32		listflg=0;
+	BOOL	bflg;
+	
+	// アニメ待ち
+	wr_chk_anim( wk );
+	
+	// リスト処理
+	ret = wr_main_framelist( wk );
+	listflg = wr_is_main_framelist( wk, ret );
+	if(listflg != 0){
+		flg = 1;
+	}
+	
+	// 判定
+	// (ほとんどがリストのシステムでやってくれる)
+	if(flg == 0){
+		// タッチペン
+		bflg = wr_chk_tp_input( wk );
+		if(bflg == FALSE){
+			// キー
+			wr_chk_key_input( wk );
+		}
+	}
+	// スクロールバー
+	wr_main_scrollbar( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  キー入力(上下)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
@@ -2029,15 +2008,10 @@ static void wr_set_cmn_anim( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 //-----------------------------------------------------------------------------
 static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 {
-	s16		i;
 	s16		flg=0;
-	s32		wnum;
-	s32		tmp;
-	u32		ret;
-	s32		listflg=0;
 	BOOL	bflg=FALSE;
 	
-	// 終了判定
+	// 終了判定(なくても大丈夫のはず)
 	if(wk->Flag & FLG_MW_END){
 		return( bflg );
 	}
@@ -2045,72 +2019,20 @@ static BOOL wr_chk_key_input( WIN_RECORD_MAIN_WORK* wk )
 	if(wk->Flag & FLG_MW_ANM_ALL){
 		return( bflg );
 	}
-	// リスト処理
-	ret = wr_main_framelist( wk );
-	listflg = wr_is_main_framelist( wk, ret );
 	
-	//
-	// 上
-	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum--;
-			if(wk->TopNum < 0){
-				wk->TopNum = 0;
-			}
-			flg = 1;
-		}
-	}
-	// 下
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum++;
-			if(wk->TopNum >= (wk->DispMaxNum-3)){
-				wk->TopNum = wk->DispMaxNum-3-1;
-			}
-			flg = 1;
-		}
-	}
-	// 左
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			// 1画面分
-			wk->TopNum -= DISP_PANEL_MAXNUM;
-			if(wk->TopNum < 0){
-				wk->TopNum = 0;
-			}
-			flg = 1;
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_LEFT );
-		}
-	}
-	// 右
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			// 1画面分
-			wk->TopNum += DISP_PANEL_MAXNUM;
-			if(wk->TopNum >= (wk->DispMaxNum-3)){
-				wk->TopNum = wk->DispMaxNum-3-1;
-			}
-			flg = 1;
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
-		}
-	}
 	// 戻る
-	else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
 		// アニメ再生
 		wr_set_cmn_anim( wk, CLWKID_CMN_RETURN );
+		flg = 1;
+		// SE
+		PMSND_PlaySE( SND_WIN_RECORD_CANCEL );
 	}
 	//
 	// 更新
 	if(flg == 1){
-		wk->Flag |= FLG_MW_UPDATE;
-		wk->Flag |= FLG_MW_BAR_UPDATE;
 		bflg = TRUE;
+		wk->Step = STEP_LV2;
 	}
 	return( bflg );
 }
@@ -2162,23 +2084,20 @@ static void wr_get_tp_area( WIN_RECORD_MAIN_WORK* wk, const s32 num, GFL_UI_TP_H
  *	@brief  タッチペン入力
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
- *	@param	BOOL					(TRUE:タッチあり、FALSE:なし)
+ *	@param
  *
- *	@retval
+ *	@retval BOOL					(TRUE:タッチあり、FALSE:なし)
  */
 //-----------------------------------------------------------------------------
 static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 {
-	s16		i;
 	s16		flg=0;
-	s32		wnum;
 	const GFL_UI_TP_HITTBL	*adr = &wk->HitBuffer[0];
 	const int ret  = GFL_UI_TP_HitTrg( adr );
-	const int cret = GFL_UI_TP_HitCont( adr );
 	// なければ、TP_HIT_NONE
 	BOOL	bflg=FALSE;
 	
-	// 終了判定
+	// 終了判定(なくても大丈夫のはず)
 	if(wk->Flag & FLG_MW_END){
 		return( bflg );
 	}
@@ -2187,71 +2106,34 @@ static BOOL wr_chk_tp_input( WIN_RECORD_MAIN_WORK* wk )
 		return( bflg );
 	}
 	
-	// 左
-	if(ret == AREA_TP_LEFT){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum -= DISP_PANEL_MAXNUM;
-			if(wk->TopNum < 0){
-				wk->TopNum = 0;
-			}
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_LEFT );
-			flg = 1;
-		}
-	}
-	// 右
-	else if(ret == AREA_TP_RIGHT){
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			wk->TopNum += DISP_PANEL_MAXNUM;
-			if(wk->TopNum >= (wk->DispMaxNum-3)){
-				wk->TopNum = wk->DispMaxNum-3-1;
-			}
-			// アニメ再生
-			wr_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
-			flg = 1;
-		}
-	}
 	// ×
-	else if(ret == AREA_TP_CROSS){
+	if(ret == AREA_TP_CROSS){
 		// アニメ再生
 		wr_set_cmn_anim( wk, CLWKID_CMN_CROSS );
 		flg = 2;
+		// SE
+		PMSND_PlaySE( SND_WIN_RECORD_CANCEL );
 	}
 	// RETURN
 	else if(ret == AREA_TP_RETURN){
 		// アニメ再生
 		wr_set_cmn_anim( wk, CLWKID_CMN_RETURN );
 		flg = 2;
-	}
-	// スクロールバー
-	else{
-		// スクロールありの対応
-		if(!(wk->Flag & FLG_MW_NO_SCROLL)){
-			// contで取得
-			if(cret == AREA_TP_SCROLL){
-				wr_set_scrollbar( wk );
-				flg = 3;
-			}
-		}
+		// SE
+		PMSND_PlaySE( SND_WIN_RECORD_CANCEL );
 	}
 	//
 	// 更新
 	if(flg != 0){
-		// 左右の場合は更新
-		if(flg == 1){
-			wk->Flag |= FLG_MW_BAR_UPDATE;
-		}
-		wk->Flag |= FLG_MW_UPDATE;
 		bflg = TRUE;
+		wk->Step = STEP_LV2;
 	}
 	return( bflg );
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  アニメの終了判定
+ *	@brief  アニメの終了判定(左右は別で管理)
  *
  *	@param	WIN_RECORD_MAIN_WORK* wk
  *
@@ -2264,18 +2146,8 @@ static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk )
 	s16		wnum=0;
 	BOOL	bflg=FALSE;
 	
-	// 左アニメ再生中
-	if(wk->Flag & FLG_MW_ANM_LEFT){
-		wnum = CLWKID_CMN_LEFT;
-		flg = 1;
-	}
-	// 右アニメ再生中
-	else if(wk->Flag & FLG_MW_ANM_RIGHT){
-		wnum = CLWKID_CMN_RIGHT;
-		flg = 1;
-	}
 	// ×アニメ再生中
-	else if(wk->Flag & FLG_MW_ANM_CROSS){
+	if(wk->Flag & FLG_MW_ANM_CROSS){
 		wnum = CLWKID_CMN_CROSS;
 		flg = 1;
 	}
@@ -2305,43 +2177,9 @@ static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk )
 				else if(wnum == CLWKID_CMN_RETURN){
 					wk->Flag |= FLG_MW_RET_END;
 				}
-				// 終了処理
-				wk->Step = STEP_END;
 			}
 		}
 	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  スクロールバーの処理
- *
- *	@param	WIN_RECORD_MAIN_WORK* wk
- *
- *	@retval BOOL					(TRUE:変更あり、FALSE:なし)
- */
-//-----------------------------------------------------------------------------
-static BOOL wr_set_scrollbar( WIN_RECORD_MAIN_WORK* wk )
-{
-	u32				cnt;
-	u32				buf[2];
-	BOOL			bflg=FALSE;
-	
-	// ここにくるまでにスクロールバーの領域を
-	// タッチしたかの判定は済んでいる
-	// タッチした座標を取得
-	if( GFL_UI_TP_GetPointCont( &buf[0], &buf[1] ) == TRUE ){
-		// どの段階かが求まる
-		cnt = SCROLLBAR_GetCount( wk->DispMaxNum-4, buf[1], SCRL_TOP_Y, SCRL_DOWN_Y, SCRL_BAR_SIZE );
-//		OS_Printf("pos :%d\n",cnt);
-		// 現在の位置をセット
-		wk->TopNum = cnt;
-		wk->Flag |= FLG_MW_UPDATE;
-		wk->Flag |= FLG_MW_BAR_UPDATE;
-		//
-		bflg = TRUE;
-	}
-	return( bflg );
 }
 
 //-----------------------------------------------------------------------------
@@ -2376,6 +2214,13 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 		default:
 			break;
 	}
+#if 1
+	// test
+//	if(mode%2 == 0){
+		bflg = TRUE;
+//	}
+#endif
+	
 	//
 	return( bflg );
 }
@@ -2503,13 +2348,17 @@ static s32 wr_is_main_framelist( WIN_RECORD_MAIN_WORK * wk, const u32 mode )
 		//
 		case FRAMELIST_RET_PAGE_UP:			// page up
 		case FRAMELIST_RET_PAGE_UP_NONE:	// page up 2
-//			wk->Flag |= FLG_LEFT_ANIM;
+			// アニメ再生
+			wr_set_cmn_anim( wk, CLWKID_CMN_LEFT );
 			flg = 1;
+			wk->Step = STEP_LV1+20;
 			break;
 		case FRAMELIST_RET_PAGE_DOWN:		// page down
 		case FRAMELIST_RET_PAGE_DOWN_NONE:	// page down 2
-//			wk->Flag |= FLG_RIGHT_ANIM;
+			// アニメ再生
+			wr_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
 			flg = 1;
+			wk->Step = STEP_LV1+10;
 			break;
 		//
 		case FRAMELIST_RET_JUMP_TOP:		// top
@@ -2526,29 +2375,11 @@ static s32 wr_is_main_framelist( WIN_RECORD_MAIN_WORK * wk, const u32 mode )
 	}
 	// リスト移動
 	if(flg == 1){
-#if 0
-		wk->SubMode = STEP_LV3;
-		// 要整理
-		if(wk->Flag & FLG_LEFT_ANIM){
-			// 左シーケンス変更
-			wr_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_LEFT, SEQ_CMN_LEFT_ANIM );
-		}
-		else if(wk->Flag & FLG_RIGHT_ANIM){
-			// 右シーケンス変更
-			wr_chg_objseq( wk, CLWKMODE_CMN, CLWK_CMN_RIGHT, SEQ_CMN_RIGHT_ANIM );
-		}
-#endif
 	}
 	// 決定
 	else if(flg == 2){
 		// カーソル位置の取得
 		wr_calc_framelist( wk );
-		//
-//		wr_init_meswin( wk );
-//		wr_init_selectwin( wk );
-//		wk->SubMode = STEP_LV4;
-		// SE
-//		PMSND_PlaySE( SND_PKWD_BOOK_DECIDE );
 	}
 	return( flg );
 }
@@ -2728,8 +2559,9 @@ static void wr_main_bg_scroll( WIN_RECORD_MAIN_WORK * wk )
 	// 背景スクロール
 	int		offy;
 	//
+	// 0.25ずつ移動、32dotで戻し(0x100 = 1.0)
 	wk->ScrollOffy += 0x40;
-	if(wk->ScrollOffy >= 0x1000){
+	if(wk->ScrollOffy >= 0x2000){
 		wk->ScrollOffy = 0;
 	}
 	offy = (wk->ScrollOffy>>8)&0xff;

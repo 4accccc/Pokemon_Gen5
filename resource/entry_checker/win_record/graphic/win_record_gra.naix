@@ -23,11 +23,12 @@ enum {
 	NARC_win_record_gra_win_record_bg_d_03_NSCR = 9,
 	NARC_win_record_gra_win_record_bg_u_01_NSCR = 10,
 	NARC_win_record_gra_win_record_bg_u_02_NSCR = 11,
-	NARC_win_record_gra_win_record_obj_d_NANR = 12,
-	NARC_win_record_gra_t_download_param_tblbin = 13,
-	NARC_win_record_gra_t_download_pos_tblbin = 14,
-	NARC_win_record_gra_win_record_param_tblbin = 15,
-	NARC_win_record_gra_win_record_pos_tblbin = 16
+	NARC_win_record_gra_win_record_bg_u_03_NSCR = 12,
+	NARC_win_record_gra_win_record_obj_d_NANR = 13,
+	NARC_win_record_gra_t_download_param_tblbin = 14,
+	NARC_win_record_gra_t_download_pos_tblbin = 15,
+	NARC_win_record_gra_win_record_param_tblbin = 16,
+	NARC_win_record_gra_win_record_pos_tblbin = 17
 };
 
 /* NARC_WIN_RECORD_GRA_NAIX_ */
