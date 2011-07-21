@@ -2163,16 +2163,16 @@
 #define MDL_FLAG_BOARD_R14_02             2675 /* 0x0a73 お得な掲示板チェック済み16 */
 #define MDL_FLAG_BOARD_R14_03             2676 /* 0x0a74 お得な掲示板チェック済み17 */
 #define MDL_FLAG_BOARD_R19_03             2677 /* 0x0a75 お得な掲示板チェック済み18 */
-		/* not used  2678(0x0a76) */
-		/* not used  2679(0x0a77) */
-		/* not used  2680(0x0a78) */
-		/* not used  2681(0x0a79) */
-		/* not used  2682(0x0a7a) */
-		/* not used  2683(0x0a7b) */
-		/* not used  2684(0x0a7c) */
-		/* not used  2685(0x0a7d) */
-		/* not used  2686(0x0a7e) */
-		/* not used  2687(0x0a7f) */
+#define MDL_FLAG_TRAIN_SINGLE             2678 /* 0x0a76 列車説明を受けた01 */
+#define MDL_FLAG_TRAIN_S_SINGLE           2679 /* 0x0a77 列車説明を受けた02 */
+#define MDL_FLAG_TRAIN_DOUBLE             2680 /* 0x0a78 列車説明を受けた03 */
+#define MDL_FLAG_TRAIN_S_DOUBLE           2681 /* 0x0a79 列車説明を受けた04 */
+#define MDL_FLAG_TRAIN_MULTI              2682 /* 0x0a7a 列車説明を受けた05 */
+#define MDL_FLAG_TRAIN_S_MULTI            2683 /* 0x0a7b 列車説明を受けた06 */
+#define MDL_FLAG_TRAIN_WIFI               2684 /* 0x0a7c 列車説明を受けた07 */
+#define MDL_FLAG_TRAIN_LOCAL              2685 /* 0x0a7d 列車説明を受けた08 */
+#define MDL_FLAG_TRAIN_OLD                2686 /* 0x0a7e 列車説明を受けた09 */
+#define MDL_FLAG_TRAIN_NEW                2687 /* 0x0a7f 列車説明を受けた10 */
 		/* not used  2688(0x0a80) */
 		/* not used  2689(0x0a81) */
 		/* not used  2690(0x0a82) */
