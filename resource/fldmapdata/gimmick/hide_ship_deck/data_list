@@ -1,0 +1,4 @@
+DATA_LIST = \
+    hatch_off.nsbmd \
+    hatch_on.nsbmd
+

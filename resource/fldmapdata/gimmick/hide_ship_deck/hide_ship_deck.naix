@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: hide_ship_deck.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_HIDE_SHIP_DECK_NAIX_
+#define NARC_HIDE_SHIP_DECK_NAIX_
+
+enum {
+	NARC_hide_ship_deck_hatch_off_nsbmd = 0,
+	NARC_hide_ship_deck_hatch_on_nsbmd = 1
+};
+
+/* NARC_HIDE_SHIP_DECK_NAIX_ */
+#endif
