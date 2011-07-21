@@ -1819,6 +1819,8 @@
 			<ContentItem
 				Name="guru2_receipt.mstxt" />
 			<ContentItem
+				Name="hide_ship_password.mstxt" />
+			<ContentItem
 				Name="infinity_dungeon_btl_losemsg.mstxt" />
 			<ContentItem
 				Name="infinity_dungeon_btl_startmsg.mstxt" />
