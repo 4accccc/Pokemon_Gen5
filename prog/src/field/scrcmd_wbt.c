@@ -49,12 +49,6 @@
 
 //============================================================================================
 //============================================================================================
-SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
-SDK_COMPILER_ASSERT( SCR_WBT_RULE_SINGLE == WBTRULE_SINGLE );
-SDK_COMPILER_ASSERT( SCR_WBT_RULE_DOUBLE == WBTRULE_DOUBLE );
-SDK_COMPILER_ASSERT( SCR_WBT_RULE_TRIPLE == WBTRULE_TRIPLE );
-SDK_COMPILER_ASSERT( SCR_WBT_RULE_ROTATION == WBTRULE_ROTATION );
-
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_NULL == WBTCUP_NULL );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_CHAMPION == WBTCUP_CHAMPION );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_POKETYPE == WBTCUP_POKETYPE );
@@ -68,6 +62,15 @@ SDK_COMPILER_ASSERT( SCR_WBT_CUP_SINOU == WBTCUP_SINOU );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_WORLD == WBTCUP_WORLD );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_WCS == WBTCUP_WCS );
 SDK_COMPILER_ASSERT( SCR_WBT_CUP_HODOMOE_EVENT == WBTCUP_HODOMOE_EVENT );
+
+SDK_COMPILER_ASSERT( SCR_WBT_RULE_NULL == WBTRULE_NULL );
+SDK_COMPILER_ASSERT( SCR_WBT_RULE_SINGLE == WBTRULE_SINGLE );
+SDK_COMPILER_ASSERT( SCR_WBT_RULE_DOUBLE == WBTRULE_DOUBLE );
+SDK_COMPILER_ASSERT( SCR_WBT_RULE_TRIPLE == WBTRULE_TRIPLE );
+SDK_COMPILER_ASSERT( SCR_WBT_RULE_ROTATION == WBTRULE_ROTATION );
+
+SDK_COMPILER_ASSERT( SCR_WBT_RECEPTION1 == WBTRECEPT_1 );
+SDK_COMPILER_ASSERT( SCR_WBT_RECEPTION2 == WBTRECEPT_2 );
 
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_RECEPTION == WBTSTAGE_RECEPTION );
 SDK_COMPILER_ASSERT( SCR_WBT_STAGE_ENTRY == WBTSTAGE_ENTRY );
@@ -124,16 +127,34 @@ static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static u16 calcTotalVictory( SCRCMD_WORK * work )
+static u16 calcTotalVictory( SCRCMD_WORK * work, WBTCUP wbtcup )
 {
   u32 count = 0;
 
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
-  u32 id;
-  for ( id = 0; id < WBTWIN_COUNT_MAX; id ++ )
+  u32 id_start, id_end;
+
+  if ( wbtcup == WBTCUP_NULL || wbtcup >= WBTCUP_MAX )
   {
-    count += WBTSAVE_GetWinCount( wbtsave, id );
+    GF_ASSERT( wbtcup < WBTCUP_MAX );
+    id_start = 0;
+    id_end = WBTWIN_COUNT_MAX;
+  }
+  else if ( wbtcup == WBTCUP_POKETYPE )
+  {
+    id_start = 0;
+    id_end = WBTWIN_COUNT_POKETYPE_AKU + 1;
+  }
+  else
+  {
+    id_start = WBTTOOL_WBTCupToWinCount( wbtcup, 0 );
+    id_end = id_start;
+  }
+
+  for ( id_start = 0; id_start < id_end; id_start ++ )
+  {
+    count += WBTSAVE_GetWinCount( wbtsave, id_start );
     if ( count >= WBTWIN_MAX )
     {
       count = WBTWIN_MAX;
@@ -184,7 +205,29 @@ VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：状態設定
+ * @brief スクリプトコマンド：WBTシステム起動状態の取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSystemCheckEnable( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gamedata = SCRCMD_WORK_GetGameData( work );
+  WBTSYS ** wbtsys_work = GAMEDATA_GetWBTSysPointer( gamedata );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  if ( *wbtsys_work != NULL )
+  {
+    *ret_wk = TRUE;
+  }
+  else
+  {
+    *ret_wk = FALSE;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：状態セット
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
@@ -194,6 +237,21 @@ VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk )
 
   TAMADA_Printf("EvCmdWBTSystemSetStage(%d)\n", stage);
   WBTSYS_SetStage( wbtsys, stage );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：状態取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSystemGetStage( VMHANDLE * core, void * wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+
+  *ret_wk = WBTSYS_GetStage( wbtsys );
+  TAMADA_Printf("EvCmdWBTSystemGetStage(%d)\n", *ret_wk);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -222,13 +280,22 @@ VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk )
 {
+  WBTSYS * wbtsys = getWBTSys( wk );
   u16 wbtcup = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   SCRCMD_WORK   *work = wk;
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
 
-  *ret_wk = WBTTOOL_CheckCupEnable( gamedata, wbtcup );
+  if ( WBTTOOL_CheckReceptionID( wbtcup, WBTSYS_GetReceptionID( wbtsys ) ) == TRUE
+      && WBTTOOL_CheckCupEnable( gamedata, wbtcup ) == TRUE )
+  {
+    *ret_wk = TRUE;
+  }
+  else
+  {
+    *ret_wk = FALSE;
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -344,6 +411,33 @@ VMCMD_RESULT EvCmdWBTGetTournamentPokeType( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：WBT受付のIDセット
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetReceptionID( VMHANDLE * core, void * wk )
+{
+  u16 reception_id = SCRCMD_GetVMWorkValue( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  WBTSYS_SetReceptionID( wbtsys, reception_id );
+  TAMADA_Printf("EvCmdWBTSetReceptionID == %d\n", reception_id);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：WBT受付のID取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetReceptionID( VMHANDLE * core, void * wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  *ret_wk = WBTSYS_GetReceptionID( wbtsys );
+  TAMADA_Printf("EvCmdWBTGetReceptionID == %d\n", *ret_wk);
+  return VMCMD_RESULT_CONTINUE;
+}
+//--------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：優勝回数のインクリメント
  */
 //--------------------------------------------------------------
@@ -368,13 +462,14 @@ VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk )
 {
   SCRCMD_WORK * work = wk;
+  u16   wbtcup = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   u32 count = 0;
 
-  count = calcTotalVictory( work );
+  count = calcTotalVictory( work, wbtcup );
   *ret_wk = count;
 
-  TAMADA_Printf("EvCmdWBTGetVictoryCount == %d\n", *ret_wk );
+  TAMADA_Printf("EvCmdWBTGetVictoryCount(%d) == %d\n", wbtcup, *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
 

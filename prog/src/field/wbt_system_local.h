@@ -83,6 +83,9 @@ struct _WBT_SYSTEM {
   WBTCUP wbtcup;
   ///バトルルール（シングル、ダブル、トリプル、ローテーション）
   WBTRULE rule;
+  ///話しかけた受付
+  WBTRECEPT reception_id;
+
   ///WBTの進行段階
   WBTSTAGE stage;
 
@@ -90,6 +93,7 @@ struct _WBT_SYSTEM {
   PokeType poketype;
   ///選択したダウンロードデータ
   u8 select_dl_data;
+
 
   u64 seed64;
   GFL_STD_RandContext rand_context;

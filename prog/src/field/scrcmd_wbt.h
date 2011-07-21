@@ -12,7 +12,9 @@
 
 extern VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemEnd( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTSystemCheckEnable( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemSetStage( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTSystemGetStage( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk );
@@ -23,6 +25,8 @@ extern VMCMD_RESULT EvCmdWBTSetWBTCup( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetWBTCup( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetTournamentPokeType( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetTournamentPokeType( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTSetReceptionID( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetReceptionID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetVictoryCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTIncVictoryCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk );

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/04/23 12:18:07
+#save date:2011/07/20 21:04:16
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d05r0101.wms
 #hold event type:
 1
 #hold event number:
-9
+10
 #event number: 0
 #type
 1
@@ -18,13 +18,13 @@ D05R0101_INFOMATIONW_01
 #OBJ CODE Number
 INFORMATIONW
 #MOVE CODE Number
-MV_DMY
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_WBT_RECEPTION
+SCRID_WBT_RECEPTION_L
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 168
+-24 0 152
 #event number: 1
 #type
 1
@@ -289,6 +289,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 152 48 152
+#event number: 9
+#type
+1
+#ID name
+D05R0101_INFOMATIONW_02
+#OBJ CODE Number
+INFORMATIONW
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_WBT_RECEPTION_R
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -321,24 +352,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Pos Event Label
-POSID_WBT_RECEPTION
-#Pos Script Name
-SCRID_POS_WBT_RECEPTION
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK0
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--24 0 152
-#size
-3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

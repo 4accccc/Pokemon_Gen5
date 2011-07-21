@@ -145,6 +145,18 @@ PokeType WBTSYS_GetPokeType( const WBTSYS * wbtsys )
 {
   return wbtsys->poketype;
 }
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTSYS_SetReceptionID( WBTSYS * wbtsys, WBTRECEPT reception_id )
+{
+  wbtsys->reception_id = reception_id;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+WBTRECEPT WBTSYS_GetReceptionID( const WBTSYS * wbtsys )
+{
+  return wbtsys->reception_id;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

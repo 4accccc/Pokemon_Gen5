@@ -38,6 +38,7 @@ typedef struct {
   u16 title_id;       ///<トーナメント名のMsgID
   u8 win_count_id;    ///<WBTSAVE::WBTWIN_COUNT
   u8 reg_type;        ///<WBTREG_ID
+  u8 reception_id;    ///<WBTRECEPT
 
 }WBT_TOURNAMENT_DATA;
 
@@ -48,82 +49,98 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     msg_wbtsys_title_02,
     WBTWIN_COUNT_CHAMPION,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   { //WBTCUP_POKETYPE, //タイプトーナメント
     msg_wbtsys_title_03,
     POKETYPE_NORMAL,   //ダミー
     WBTREG_POKETYPE,
+    WBTRECEPT_2,
   },
   {//WBTCUP_DOWNLOAD, //ダウンロードトーナメント
     msg_wbtsys_title_04,
     WBTWIN_COUNT_MAX,   //ダミー
     WBTREG_DOWNLOAD,
+    WBTRECEPT_1,
   },
 
   {//WBTCUP_HODOMOE,     //ホドモエトーナメント           
     msg_wbtsys_title_05,
     WBTWIN_COUNT_HODOMOE,
     WBTREG_ALL,
+    WBTRECEPT_1,
   },
   {//WBTCUP_ISSYU,       //イッシュリーダーズトーナメント 
     msg_wbtsys_title_06,
     WBTWIN_COUNT_ISSYU,
     WBTREG_ALL,
+    WBTRECEPT_2,
   },
   {//WBTCUP_KANTO,       //カントーリーダーズトーナメント 
     msg_wbtsys_title_07,
     WBTWIN_COUNT_KANTO,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   {//WBTCUP_JOUTO,       //ジョウトリーダーズトーナメント 
     msg_wbtsys_title_08,
     WBTWIN_COUNT_JOUTO,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   {//WBTCUP_HOUEN,       //ホウエンリーダーズトーナメント 
     msg_wbtsys_title_09,
     WBTWIN_COUNT_HOUEN,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   {//WBTCUP_SINOU,       //シンオウリーダーズトーナメント 
     msg_wbtsys_title_10,
     WBTWIN_COUNT_SINOU,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   {//WBTCUP_WORLD,       //ワールドトーナメント     
     msg_wbtsys_title_11,
     WBTWIN_COUNT_WORLD,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   {//WBTCUP_WCS,         //WCSトーナメント
     msg_wbtsys_title_17,
     WBTWIN_COUNT_WCS,
     WBTREG_WCS,
+    WBTRECEPT_2,
   },
   {//WBTCUP_HODOMOE_EVENT, //ホドモエトーナメント（イベント）           
     msg_wbtsys_title_05,
     WBTWIN_COUNT_HODOMOE,
     WBTREG_ALL,
+    WBTRECEPT_1,
   },
   {//WBTCUP_RENTAL,         //レンタルトーナメント
     msg_wbtsys_title_12,
     WBTWIN_COUNT_RENTAL,
     WBTREG_SUBWAY,
+    WBTRECEPT_1,
   },
   {//WBTCUP_RENTALMASTER,         //レンタルマスタートーナメント
     msg_wbtsys_title_13,
     WBTWIN_COUNT_RENTALMASTER,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
   {//WBTCUP_SHUFFLE,         //シャッフルトーナメント
     msg_wbtsys_title_14,
     WBTWIN_COUNT_SHUFFLE,
     WBTREG_SUBWAY,
+    WBTRECEPT_1,
   },
   {//WBTCUP_SHUFFLEMASTER,         //シャッフルマスタートーナメント
     msg_wbtsys_title_15,
     WBTWIN_COUNT_SHUFFLEMASTER,
     WBTREG_SUBWAY,
+    WBTRECEPT_2,
   },
 
 };
@@ -908,7 +925,7 @@ BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
   switch ( cond_id )
   {
   case WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT:
-    return FALSE;  //仮：ダウンロードデータには未対応
+    return TRUE;  //仮：ダウンロードデータには未対応
     break;
   default:
     GF_ASSERT( 0 );
@@ -962,15 +979,15 @@ BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup )
   case WBTCUP_JOUTO:       //ジョウトリーダーズトーナメント 
   case WBTCUP_HOUEN:       //ホウエンリーダーズトーナメント 
   case WBTCUP_SINOU:       //シンオウリーダーズトーナメント 
-    return WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU );
+    return (WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU ) != 0);
 
   case WBTCUP_WORLD:        //ワールドバトルトーナメント     
     return (
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU ) &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_KANTO ) &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_JOUTO ) &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HOUEN ) &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_SINOU ) );
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU ) != 0 &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_KANTO ) != 0 &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_JOUTO ) != 0 &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HOUEN ) != 0 &&
+        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_SINOU ) != 0 );
 
   case WBTCUP_WCS:          //WCSトーナメント
     return FALSE;
@@ -1049,6 +1066,22 @@ WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup )
   return WBTREG_ALL;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief 指定トーナメントが指定受付IDから呼び出し可能かどうかのチェック
+ * @param wbtcup
+ * @param reception_id
+ */
+//-----------------------------------------------------------------------------
+BOOL WBTTOOL_CheckReceptionID( WBTCUP wbtcup, WBTRECEPT reception_id )
+{
+  if ( 0 <= wbtcup && wbtcup < WBTCUP_MAX )
+  {
+    return ( WBTTournamentData[ wbtcup - 1 ].reception_id == reception_id );
+  }
+  GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
+  return FALSE;
+}
 
 
 

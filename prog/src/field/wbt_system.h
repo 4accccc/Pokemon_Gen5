@@ -64,6 +64,9 @@ extern WBTRULE WBTSYS_GetRule( const WBTSYS * wbtsys );
 extern void WBTSYS_SetPokeType( WBTSYS * wbtsys, PokeType poketype );
 extern PokeType WBTSYS_GetPokeType( const WBTSYS * wbtsys );
 
+extern WBTRECEPT WBTSYS_GetReceptionID( const WBTSYS * wbtsys );
+extern void WBTSYS_SetReceptionID( WBTSYS * wbtsys, WBTRECEPT reception_id );
+
 extern void WBTSYS_SetStage( WBTSYS * wbtsys, WBTSTAGE stage );
 extern WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys );
 

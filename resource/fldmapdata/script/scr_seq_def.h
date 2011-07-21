@@ -12426,6 +12426,20 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:システム起動状態の取得
+ * @param ret_wk  TRUEのとき、WBTシステム起動中
+ */
+//--------------------------------------------------------------
+#define _WBT_SYSTEM_CHECK_ENABLE( ret_wk ) \
+    _ASM_WBT_SYSTEM_CHECK_ENABLE ret_wk
+
+    .macro  _ASM_WBT_SYSTEM_CHECK_ENABLE ret_wk
+    .short  EV_SEQ_WBT_SYSTEM_CHECK_ENABLE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT：システムに状態を通知
  * @param stage 状態指定（script_def.hのSCR_WBT_STAGE_～を参照）
  */
@@ -12436,6 +12450,20 @@
     .macro  _ASM_WBT_SYSTEM_SET_STAGE stage
     .short  EV_SEQ_WBT_SYSTEM_SET_STAGE
     .short  \stage
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：システムから状態を取得
+ * @param ret_wk 取得した状態指定（script_def.hのSCR_WBT_STAGE_～を参照）
+ */
+//--------------------------------------------------------------
+#define _WBT_SYSTEM_GET_STAGE( ret_wk )  \
+    _ASM_WBT_SYSTEM_GET_STAGE ret_wk
+
+    .macro  _ASM_WBT_SYSTEM_GET_STAGE ret_wk
+    .short  EV_SEQ_WBT_SYSTEM_GET_STAGE
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
@@ -12568,6 +12596,34 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:受付識別IDをセット
+ * @param reception_id  受付識別ID（script_def.hのSCR_WBT_RECEPTION～）
+ */
+//--------------------------------------------------------------
+#define _WBT_SET_RECEPTION_ID( reception_id ) \
+    _ASM_WBT_SET_RECEPTION_ID reception_id
+
+    .macro  _ASM_WBT_SET_RECEPTION_ID reception_id
+    .short  EV_SEQ_WBT_SET_RECEPTION_ID
+    .short  \reception_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT:受付識別IDを取得
+ * @param ret_wk  受付識別ID（script_def.hのSCR_WBT_RECEPTION～）
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_RECEPTION_ID( ret_wk ) \
+    _ASM_WBT_GET_RECEPTION_ID ret_wk
+
+    .macro  _ASM_WBT_GET_RECEPTION_ID ret_wk
+    .short  EV_SEQ_WBT_GET_RECEPTION_ID
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief WBT:優勝回数のインクリメント
  */
 //--------------------------------------------------------------
@@ -12581,14 +12637,16 @@
 //--------------------------------------------------------------
 /**
  * @brief WBT:優勝回数の取得
+ * @param[in]   wbtcup  トーナメントの指定
  * @param[out]  ret_wk
  */
 //--------------------------------------------------------------
-#define _WBT_GET_VICTORY_COUNT( ret_wk ) \
-    _ASM_WBT_GET_VICTORY_COUNT ret_wk
+#define _WBT_GET_VICTORY_COUNT( wbtcup, ret_wk ) \
+    _ASM_WBT_GET_VICTORY_COUNT wbtcup, ret_wk
 
-    .macro  _ASM_WBT_GET_VICTORY_COUNT ret_wk
+    .macro  _ASM_WBT_GET_VICTORY_COUNT wbtcup, ret_wk
     .short  EV_SEQ_WBT_GET_VICTORY_COUNT
+    .short  \wbtcup
     .short  \ret_wk
     .endm
 

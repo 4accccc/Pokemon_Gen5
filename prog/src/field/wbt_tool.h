@@ -92,6 +92,7 @@ extern WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup );
+extern BOOL WBTTOOL_CheckReceptionID( WBTCUP wbtcup, WBTRECEPT reception_id );
 extern BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id );
 
 

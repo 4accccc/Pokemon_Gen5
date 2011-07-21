@@ -639,6 +639,9 @@
 //  scrcmd_wbt.c
 //  WBT関連定義
 //--------------------------------------------------------------
+#define SCR_WBT_RECEPTION1            (1) ///<受付が1
+#define SCR_WBT_RECEPTION2            (2) ///<受付が2
+
 #define SCR_WBT_CUP_NULL              (0) ///<トーナメント未選択
 #define SCR_WBT_CUP_CHAMPION          (1) ///<チャンピオントーナメント
 #define SCR_WBT_CUP_POKETYPE          (2) ///<タイプエキスパートトーナメント

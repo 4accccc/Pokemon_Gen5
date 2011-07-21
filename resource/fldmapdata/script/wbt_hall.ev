@@ -135,15 +135,12 @@ ev_wbt_hall_exit:
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_WBT_EXIT )
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 0, DIR_DOWN )
 
 	//マップ切り替え完了後なので、LOCALWORKの値はクリアされず
 	//受付スクリプトに引き渡すことができる
 	$LOCALWORK1 = 0   //仮：結果を渡すための戻り値
 
-	//WBTシステム終了
-	_WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
-  
 _RET
 
 
@@ -174,11 +171,13 @@ EVENT_START		ev_debug_wbt_second_game
 	_CALL ev_second_game
 
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 0, DIR_DOWN )
 
 	_CAMERA_END()
 
-  _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_WBT_EXIT )
+  //_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 
 EVENT_END
 
@@ -217,12 +216,14 @@ EVENT_START		ev_debug_wbt_final_game
   ENDIF
 
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 6, DIR_UP )
+	_MAP_CHANGE( ZONE_ID_D05R0101, 15, 0, DIR_DOWN )
 
 	_CAMERA_END()
 
 
-  _WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_WBT_EXIT )
+  //_WBT_SYSTEM_END()   //とりあえず・受付で後処理が必要な場合は移動する
 EVENT_END
 
 /**************************************************************/
@@ -547,7 +548,7 @@ _ANIME_LABEL	anm_enemy_2nd_in
 /**************************************************************/
 ev_first_yell:
 
-_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
 
 //優勝回数が１以下の場合
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -988,7 +989,7 @@ ev_introductory_remarks:
 
 _PLAYER_NAME( 0 ) //タグ０にプレイヤー名を登録
 
-_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
 
 //優勝回数が０の場合
 IF $LWK_WIN_COUNT == 0 THEN
@@ -1152,7 +1153,7 @@ _RET
 /**************************************************************/
 ev_yell_final_player:
 
-_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
 
 //優勝回数が１以下の場合
 IF $LWK_WIN_COUNT <= 1 THEN
@@ -1517,7 +1518,7 @@ _RET
 /**************************************************************/
 ev_yell_final_enemy:
 
-_WBT_GET_VICTORY_COUNT( LWK_WIN_COUNT )
+_WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_NULL, LWK_WIN_COUNT )
 
 //優勝回数が１以下の場合
 IF $LWK_WIN_COUNT <= 1 THEN

@@ -23,16 +23,31 @@
 //----------------------------------------------------------------------
 //               スクリプトテーブル
 //----------------------------------------------------------------------
-_EVENT_DATA		ev_wbt_reception
+_EVENT_DATA		ev_wbt_reception_l
 _EVENT_DATA   ev_wbt_entry_checker
-_EVENT_DATA   ev_pos_wbt_reception
+_EVENT_DATA   ev_wbt_reception_r
 _EVENT_DATA   ev_reserve_wbt_exit
+_EVENT_DATA   ev_init_wbt_lobby
 _EVENT_DATA_END
+
 
 
 /********************************************************************/
 /*						FIELD_INIT_LABEL                            */
 /********************************************************************/
+INIT_EVENT_START  ev_init_wbt_lobby
+  _WBT_SYSTEM_CHECK_ENABLE( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
+      $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
+      _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 15, 0, 5, DIR_LEFT )
+    ELSIF $SCWK_ANSWER == SCR_WBT_RECEPTION2 THEN
+      $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_02
+      _OBJ_POS_CHANGE( SCWK_TARGET_OBJID, 15, 0, 5, DIR_RIGHT )
+    ENDIF
+  ENDIF
+INIT_EVENT_END
 
 /********************************************************************/
 /*						FIELD_RECOVER_LABEL                         */
@@ -42,38 +57,35 @@ _EVENT_DATA_END
 /*		ＷＢＴ・受付スクリプト								  */
 /**************************************************************/
 
-EVENT_START	ev_wbt_reception
+EVENT_START	ev_wbt_reception_l
 
   _TALK_OBJ_START()
+
+  //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
+  _WBT_SYSTEM_START()
+  _WBT_SET_RECEPTION_ID( SCR_WBT_RECEPTION1 )
 
   //ＷＢＴ受付メイン処理
   _CALL ev_wbt_main
 
 EVENT_END
+
+EVENT_START ev_wbt_reception_r
+
+  _TALK_OBJ_START()
+
+  //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
+  _WBT_SYSTEM_START()
+  _WBT_SET_RECEPTION_ID( SCR_WBT_RECEPTION2 )
+
+  //ＷＢＴ受付メイン処理
+  _CALL ev_wbt_main
+EVENT_END
+
 
 /**************************************************************/
 /*    ＷＢＴ・ＰＯＳスクリプト                */
 /**************************************************************/
-EVENT_START   ev_pos_wbt_reception
-
-DEFINE_LOCAL  LWK_POSX
-DEFINE_LOCAL  LWK_POSZ
-
-  _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
-  IF $LWK_POSX == 14 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_reception_l )
-    _OBJ_ANIME_WAIT()
-  ELSIF $LWK_POSX == 16 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_reception_r )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-  //話しかけていないのでちゃんと指定してあげる
-  $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
-
-  //ＷＢＴ受付メイン処理
-  _CALL ev_wbt_main
-
-EVENT_END
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
@@ -110,8 +122,6 @@ DEFINE_LOCAL  LWK_REG
 DEFINE_LOCAL	LWK_CHK_RULE
 DEFINE_LOCAL	LWK_DL_COUNT
 
-  //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
-  _WBT_SYSTEM_START()
   _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_RECEPTION )
 
   $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_FIRST_MENU
@@ -140,7 +150,7 @@ DEFINE_LOCAL	LWK_DL_COUNT
       //トーナメント選択
       _CALL ev_select_tournament
       SWITCH $LWK_MENU
-      CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_HODOMOE_EVENT, SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
+      CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_HODOMOE_EVENT, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
         _WBT_SET_WBT_CUP( LWK_MENU )
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_RULE
       CASE SCR_WBT_CUP_POKETYPE THEN
@@ -206,7 +216,7 @@ DEFINE_LOCAL	LWK_DL_COUNT
         //ルール未選択→適宜前のシーケンスに戻る
         _WBT_GET_WBT_CUP( LWK_WBT_SELECT_TOURNAMENT )
         SWITCH $LWK_WBT_SELECT_TOURNAMENT
-        CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_HODOMOE_EVENT, SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
+        CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_HODOMOE_EVENT, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
         CASE SCR_WBT_CUP_POKETYPE THEN
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_POKETYPE
@@ -306,7 +316,6 @@ _BALLOONWIN_OBJMSG_POS( msg_wbt_info_10, SCWK_TARGET_OBJID, POS_DL )
 
 //BMPMENU表示
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
-//_BMPMENU_MAKE_LIST( msg_wbt_menu_all, SCR_WBT_CUP_ALL )		//オールトーナメント
 
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HODOMOE_EVENT, SCWK_ANSWER ) //ホドモエトーナメント（イベント）
 IF $SCWK_ANSWER == TRUE THEN
@@ -479,8 +488,14 @@ ev_enter_hall:
 	//_MSGWIN_CLOSE()
 	
 
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_infowoman_move_r )
-  _OBJ_ANIME_WAIT()
+  _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_infowoman_l_move )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_infowoman_r_move )
+    _OBJ_ANIME_WAIT()
+  ENDIF
 
 	//誘導アニメ
 	//会場へマップ移動
@@ -500,8 +515,18 @@ ev_enter_hall:
 //--------------------------------------------------------------------
 //  受付嬢    プレイヤーに道をあけるアニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL  anm_infowoman_move_r
+_ANIME_LABEL  anm_infowoman_l_move
+  _ANIME_DATA  AC_WALK_U_8F, 1
   _ANIME_DATA  AC_WALK_R_8F, 1
+  _ANIME_DATA  AC_STAY_WALK_L_8F,1
+  _ANIME_DATA  ACMD_END, 0
+
+//--------------------------------------------------------------------
+//  受付嬢    プレイヤーに道をあけるアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_infowoman_r_move
+  _ANIME_DATA  AC_WALK_U_8F, 1
+  _ANIME_DATA  AC_WALK_L_8F, 1
   _ANIME_DATA  AC_STAY_WALK_L_8F,1
   _ANIME_DATA  ACMD_END, 0
 
@@ -523,7 +548,6 @@ _BALLOONWIN_OBJMSG_POS( msg_wbt_info_03, SCWK_TARGET_OBJID, POS_DL )
 //BMPMENU表示
 _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
 
-//_BMPMENU_MAKE_LIST( msg_wbt_menu_explain_all, msg_wbt_menu_explain_all )	//オールトーナメントについて
 _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_rule, msg_wbt_menu_explain_rule )	//バトルルールについて
 
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_POKETYPE, SCWK_ANSWER )
@@ -733,27 +757,72 @@ _RET
 /********************************************************************/
 EVENT_START	ev_reserve_wbt_exit
 
-  $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
+  _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_l_exit )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_info_l_return )
+    _OBJ_ANIME_WAIT()
+  ELSIF $SCWK_ANSWER == SCR_WBT_RECEPTION2 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_r_exit )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_info_r_return )
+    _OBJ_ANIME_WAIT()
+  ENDIF
 
-  //本当はwbt_hall.ev::ev_wbt_hall_exitで設定した戻り値で分岐する
+  _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WBT_STAGE_WIN THEN
+    //優勝
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09c, SCWK_TARGET_OBJID, POS_DL )
 
-  //仮当て：「またの　参加を～」
-  _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09, SCWK_TARGET_OBJID, POS_DL )
+  CASE SCR_WBT_STAGE_FINAL THEN
+    //準優勝
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09b, SCWK_TARGET_OBJID, POS_DL )
+
+  CASE SCR_WBT_STAGE_2ND THEN
+    //1回戦突破
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09a, SCWK_TARGET_OBJID, POS_DL )
+  DEFAULT
+    //念のため
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09, SCWK_TARGET_OBJID, POS_DL )
+
+  ENDSWITCH
+
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_exit )
-  _OBJ_ANIME_WAIT()
-
+	//WBTシステム終了
+	_WBT_SYSTEM_END() //_WBT_SYSTEM_STARTと対
+  
 EVENT_END
 
 //--------------------------------------------------------------------
 //  プレイヤー　WBT終了後
 //--------------------------------------------------------------------
-_ANIME_LABEL  anm_player_exit
+_ANIME_LABEL  anm_player_l_exit
   _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END, 0
 
+_ANIME_LABEL  anm_player_r_exit
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_info_l_return
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_info_r_return
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END, 0
 
 
 //======================================================================
