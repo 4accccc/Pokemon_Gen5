@@ -1983,7 +1983,8 @@ static s8 GetItemFramePosY( FRAMELIST_WORK * wk, s8 vec )
 	
 	while( 1 ){
 		py += prm;
-		if( py < 0 || py >= BGSCRN_CHR_SIZE_Y ){
+//		if( py < 0 || py >= BGSCRN_CHR_SIZE_Y ){
+		if( py < wk->hed.itemPosY || py >= BGSCRN_CHR_SIZE_Y ){
 			break;
 		}
 	}
