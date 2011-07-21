@@ -15918,6 +15918,60 @@
             the contents of this method with the code editor.
             </summary>
         </member>
+        <member name="T:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste">
+            <summary>
+            編集完了ステータスの言語セルを含む場合に表示されるペースト前の確認ダイアログです。
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.#ctor">
+            <summary>
+            コンストラクタです。
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.#ctor(System.String)">
+            <summary>
+            コンストラクタです。
+            </summary>
+            <param name="infoText">表示する情報</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.btnUpdate_Click(System.Object,System.EventArgs)">
+            <summary>
+            ステータスを更新して処理を続行するボタンを押下した場合の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.btnIgnore_Click(System.Object,System.EventArgs)">
+            <summary>
+            編集完了セルを無視して処理を続行するボタンを押下した場合の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            処理を中止するボタンを押下した場合の処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Dialogs.FormConfirmPaste.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
         <member name="T:Nintendo.MessageStudio.Core.Dialogs.FormCriticalError">
             <summary>
             致命的なエラーが発生したときに表示されるフォーム
@@ -27427,7 +27481,7 @@
             指定された<paramref name="row"/>が<see langword="null"/>のときにスローされます。
             </exception>
             <exception cref="T:System.InvalidOperationException">
-            このカラムオブジェクトに親が存在しない場合にスローされます。
+            このカラムオブジェクトに親となるグリッドが存在しないか廃棄された状態の場合にスローされます。
             </exception>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Grid.MessageColumn`1.AdjustColumnWidth">
@@ -29075,6 +29129,21 @@
             <exception cref="T:System.InvalidOperationException">
             コマンドマネージャの準備が整っていない場合にスローされます。
             </exception>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.Grid.MessageGrid`1.PreparePasteFromTSV(System.Int32,System.Int32,System.Int32,System.Int32,Nintendo.MessageStudio.Core.Message.Util.TabSeparatedValues,Nintendo.MessageStudio.Core.Util.MultipleCommands)">
+            <summary>
+            TSVペースト前の核に処理を実行します。
+            </summary>
+            <param name="leftIndex">ペースト先となる選択位置のインデックス（左）</param>
+            <param name="topIndex">ペースト先となる選択位置のインデックス（上）</param>
+            <param name="areaWidth">幅</param>
+            <param name="areaHeight">高さ</param>
+            <param name="tsv">ペーストするTSV</param>
+            <param name="pasteCommand">ペースト前に実行するコマンド</param>
+            <returns><see langword="true">の場合ペースト続行します。</see></returns>
+            <remarks>
+            必要に応じてサブクラスでオーバーライドしてください。
+            </remarks>
         </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.Grid.MessageGrid`1.ExecCut">
             <summary>
@@ -34473,6 +34542,18 @@
 		</item>
             </list>
             </remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.Grid.MessageTextGridView.PreparePasteFromTSV(System.Int32,System.Int32,System.Int32,System.Int32,Nintendo.MessageStudio.Core.Message.Util.TabSeparatedValues,Nintendo.MessageStudio.Core.Util.MultipleCommands)">
+            <summary>
+            TSVペースト前の核に処理を実行します。
+            </summary>
+            <param name="leftIndex">ペースト先となる選択位置のインデックス（左）</param>
+            <param name="topIndex">ペースト先となる選択位置のインデックス（上）</param>
+            <param name="areaWidth">幅</param>
+            <param name="areaHeight">高さ</param>
+            <param name="tsv">ペーストするTSV</param>
+            <param name="pasteCommand">ペースト前に実行するコマンド</param>
+            <returns><see langword="true">の場合ペースト続行します。</see></returns>
         </member>
         <member name="E:Nintendo.MessageStudio.Core.Message.Grid.MessageTextGridView.StartMessageEdit">
             <summary>
@@ -40631,6 +40712,33 @@
             <param name="tagGroup">タググループ</param>
             <param name="enableRangeTag">範囲指定タグを有効にするかどうか</param>
         </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.InitDeleteSystemTagMenu(System.Windows.Forms.ToolStripMenuItem)">
+            <summary>
+            システムタグの削除メニューを初期化します。
+            </summary>
+            <remarks>#2100対応で追加</remarks>
+            <param name="delMenu"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.mnuDeleteRuby_Click(System.Object,System.EventArgs)">
+            <summary>ルビ削除メニューを選んだ場合</summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.mnuDeleteFont_Click(System.Object,System.EventArgs)">
+            <summary>フォント削除メニューを選んだ場合</summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.mnuDeleteSize_Click(System.Object,System.EventArgs)">
+            <summary>サイズ削除メニューを選んだ場合</summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.mnuDeleteColor_Click(System.Object,System.EventArgs)">
+            <summary>カラー削除メニューを選んだ場合</summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
         <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditor.AddRubyMenuEventHandler(System.Windows.Forms.ToolStripMenuItem)">
             <summary>
             ルビ選択時のイベントハンドリングを追加する処理です。
@@ -41474,6 +41582,31 @@
             </summary>
             <param name="newTextPos">新しいカレット位置</param>
             <param name="newTextPart">新しい選択中の文字</param>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditTextBox.DeleteSystemElement(Nintendo.MessageStudio.Core.TagText.TagStringNodeType)">
+            <summary>
+            範囲にかかっている指定のシステムタグ要素を削除します。
+            </summary>
+            <param name="nodeType">削除するシステムタグ要素のノードタイプ</param>
+            <remarks>1.2系ではinternalです。#2100対応で追加されました。</remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditTextBox.GetParentSystemElements(Nintendo.MessageStudio.Core.TagText.TagStringNodeType)">
+            <summary>
+            現在の位置に影響しているシステムエレメントを取得します。
+            </summary>
+            <param name="nodeType">ノードタイプ</param>
+            <returns>エレメントのリスト</returns>
+            <remarks>1.2系ではinternalです。#2100対応で追加されました。</remarks>
+        </member>
+        <member name="M:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditTextBox.GetParentSystemElements(Nintendo.MessageStudio.Core.TagText.TagStringNodeType,System.Int32,System.Int32)">
+            <summary>
+            指定の位置に影響している指定のシステムエレメントを取得します。
+            </summary>
+            <param name="nodeType">ノードタイプ</param>
+            <param name="pos">現在位置</param>
+            <param name="len">選択中テキストの長さ</param>
+            <returns>エレメントのリスト</returns>
+            <remarks>1.2系ではinternalです。#2100対応で追加されました。</remarks>
         </member>
         <member name="E:Nintendo.MessageStudio.Core.Message.PopupEditor.RichEditTextBox.SourceTextChanged">
             <summary>
@@ -54632,7 +54765,7 @@
             単語に分割する正規表現
             </summary>
         </member>
-        <member name="F:Nintendo.MessageStudio.Core.Project.Spelling.DictionaryManager.tagPattern">
+        <member name="F:Nintendo.MessageStudio.Core.Project.Spelling.DictionaryManager.tagFinishPattern">
             <summary>
             タグ部分の終わりにマッチする正規表現
             </summary>
