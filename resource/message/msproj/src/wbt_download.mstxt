@@ -1,3 +1,1799 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="wbt_dl_cap_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントダウンロード</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T10:53:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T10:53:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントダウンロード</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T10:53:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T10:53:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キャプション
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T10:53:51" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:12:21" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:WBTTournament ]トーナメント</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:02:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:00:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:WBTTournament ]トーナメント</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:03:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:03:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメント名
+リストや見出しで使用
+0：ＤＬトーナメント名</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:08:52" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_003">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルルール：</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:03:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:03:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトルルール：</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面の見出し
+
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:14" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_004">
+		<LanguageCell
+			Language="JPN">
+			<Text>シングル</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シングル</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面見出し
+バトル種類
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_005">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダブル</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダブル</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面見出し
+バトル種類
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:06:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_006">
+		<LanguageCell
+			Language="JPN">
+			<Text>トリプル</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:04:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トリプル</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面見出し
+バトル種類
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:06:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_007">
+		<LanguageCell
+			Language="JPN">
+			<Text>ローテーション</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ローテーション</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:05:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面見出し
+バトル種類
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:06:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_008">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントないよう：</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:07:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:07:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメント内容：</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:07:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:07:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上画面見出し
+トーナメント説明
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:12:15" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_009">
+		<LanguageCell
+			Language="JPN">
+			<Text>保存した　トーナメント</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:09:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>保存したトーナメント</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:10:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:10:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ詳細画面見出し
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:12:41" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_010">
+		<LanguageCell
+			Language="JPN">
+			<Text>でられないポケモン</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:10:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:10:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>出られないポケモン</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:10:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:10:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ詳細画面見出し
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:12:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_011">
+		<LanguageCell
+			Language="JPN">
+			<Text>もたせられない　どうぐ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>持たせられない　どうぐ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ詳細画面見出し
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:12:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_cap_012">
+		<LanguageCell
+			Language="JPN">
+			<Text>もたせられない　わざ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>持たせられない　わざ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:11:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ詳細画面見出し
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:12:47" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>データを　さがしています……
+しばらく　おまちください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:14:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データを　探しています……
+しばらく　お待ちください</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:29:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬサーバへアクセス中</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>保存したい　トーナメントを
+えらんで　ください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>保存したい　トーナメントを
+えらんで　ください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬリストをアップロード完了後の告知</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｗｉ－Ｆｉコネクションを
+おわりに　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｗｉ－Ｆｉコネクションを
+おわりに　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬアプリから抜ける際に確認</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_03_yes"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_03_no"
+		Style="">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:42:10" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>（0：トーナメント名）トーナメントを
+保存　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>（0：トーナメント名）トーナメントを
+保存　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬリストにあるトーナメント保存確認</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_04_yes">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_04_no">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:43:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　トーナメントは
+すでに　保存　しています▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:20:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　トーナメントは
+すでに　保存　しています▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選んだトーナメントＩＤと同じＩＤを保存済み</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントを　うけとっています
+しばらく　おまちください……</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:23:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントを　うけとっています
+しばらく　おまちください……</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬサーバへアクセス中</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントを　保存　しています
+でんげんを　きらないでください……</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:24:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントを　保存　しています
+でんげんを　きらないでください……</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメントデータを保存中</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントデータを
+保存　しました▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントデータを
+保存　しました▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トーナメントデータを保存完了</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントデータが　いっぱいです
+データを　うわがき　してください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントデータが　いっぱいです
+データを　うわがき　してください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ済みリストで3件ある</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントデータを
+けすのを　やめますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントデータを
+消すのを　やめますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:31:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ済みリストで削除やめるの際の確認</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_10_yes">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_10_no">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:44:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:WBTTournament ]トーナメントを
+さくじょ　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:WBTTournament ]トーナメントを
+削除　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:31:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ済みリストで削除リストの決定確認１</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_11_yes">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_11_no">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:WBTTournament ]トーナメントを
+ほんとうに　さくじょ　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:WBTTournament ]トーナメントを
+本当に　削除　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:31:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ済みリストで削除リストの決定確認２</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_12_yes">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_12_no">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいえ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:45:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントデータを
+さくじょ　しました▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:22:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:16:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントデータを
+削除　しました▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:31:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント参加用メッセージ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:18:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+リストデータのＣＲＣがおかしい</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+リストデータがない</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+リストデータ取得中のタイムアウト</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+リストデータのカセットバージョンが一致しない</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+リストデータの言語コードがおかしい</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+選んだトーナメントデータのＣＲＣがおかしい</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+選んだトーナメンデータがない</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+選んだトーナメンデータ取得中のタイムアウト</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+選んだトーナメンデータカセットバージョンが違う</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_error_10">
+		<LanguageCell
+			Language="JPN">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>データが　みつかりませんでした▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:30:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>エラー
+選んだトーナメントデータの言語コードがおかしい</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:25:50" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:WBTTournament ]トーナメントを
+どうしますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:34:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:32:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:WBTTournament ]トーナメントを
+どうしますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:35:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:35:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメントリスト　リスト選択時</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:35:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>くわしく　みる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>詳しくみる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント　保存リストの選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:53:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:52:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント　保存リストの選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:53:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかする　トーナメントを
+えらんでください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:36:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:36:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加する　トーナメントを
+選んででください▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント参加リスト呼び出し時の説明</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:WBTTournament ]トーナメントに
+さんか　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:36:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:WBTTournament ]トーナメントに
+参加　しますか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント参加最終確認</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:37:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_03_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんか　する</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加する</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント参加最終確認の選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:51:54" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_03_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>くわしく　みる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>詳しくみる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント参加最終確認の選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:51:57" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_03_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:50:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント参加最終確認の選択肢
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-21T11:51:57" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>
