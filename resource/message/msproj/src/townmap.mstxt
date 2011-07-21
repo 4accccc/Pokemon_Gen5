@@ -5105,10 +5105,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>しゅぎょうのいわや</Comment>
+			<Comment>しゅぎょうのいわや
+※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:24" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5154,10 +5155,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ヒオウギシティ</Comment>
+			<Comment>ヒオウギシティ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:41:26" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5201,10 +5203,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:42:01" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5248,10 +5251,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所２</Comment>
+			<Comment>名所２
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:42:41" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5295,10 +5299,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所３</Comment>
+			<Comment>名所３
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:43:08" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5344,10 +5349,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>タチワキシティ</Comment>
+			<Comment>タチワキシティ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:43:52" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5391,10 +5397,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:44:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5438,10 +5445,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所２</Comment>
+			<Comment>名所２
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:44:34" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5487,10 +5495,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>セイガイハシティ</Comment>
+			<Comment>セイガイハシティ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:44:58" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5534,10 +5543,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:45:26" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5581,10 +5591,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所２</Comment>
+			<Comment>名所２
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5630,10 +5641,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケウッド（仮）</Comment>
+			<Comment>ポケウッド
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:46:22" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:24:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5656,10 +5668,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-レゾナンスリゾート</Text>
+ジョインアベニュー</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:46:50" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5668,10 +5680,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-レゾナンスリゾート</Text>
+ジョインアベニュー</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:46:50" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5679,10 +5691,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>レゾナンスリゾート（仮）</Comment>
+			<Comment>ジョインアベニュー
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:46:46" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5728,10 +5741,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>サンギタウン</Comment>
+			<Comment>サンギタウン
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:37:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5775,10 +5789,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:37:50" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5824,10 +5839,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ヤマジタウン</Comment>
+			<Comment>ヤマジタウン
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:38:23" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5871,10 +5887,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:39:01" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5896,10 +5913,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのまてんろう（かり）</Text>
+			<Text>くろのまてんろう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:39:40" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:26:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5907,10 +5924,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒の摩天楼（仮）</Text>
+			<Text>黒の摩天楼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:39:45" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5918,10 +5935,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所２</Comment>
+			<Comment>名所２
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:39:35" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -5943,10 +5961,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのたいじゅ（かり）</Text>
+			<Text>しろのじゅどう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:40:07" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:26:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5954,10 +5972,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白の大樹（仮）</Text>
+			<Text>白の樹洞</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:40:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5965,10 +5983,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所２</Comment>
+			<Comment>名所２
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:39:59" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6015,10 +6034,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>リゾートデザ－ト
-ブラック</Comment>
+ブラック
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:47:26" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6065,10 +6085,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>こだいのしろ
-ブラック</Comment>
+ブラック
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:49:11" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6091,10 +6112,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-げすいどう</Text>
+ヒウンげすいどう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:51:47" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:26:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6103,10 +6124,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-下水道</Text>
+ヒウン下水道</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:51:47" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6114,10 +6135,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>げすいどう（仮）</Comment>
+			<Comment>ヒウンげすいどう
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:51:42" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:32:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6140,10 +6162,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-ぼくじょう</Text>
+サンギぼくじょう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:52:45" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6152,10 +6174,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-牧場</Text>
+サンギ牧場</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:52:45" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6163,10 +6185,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ぼくじょう（仮）</Comment>
+			<Comment>サンギぼくじょう
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:52:39" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:32:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6189,10 +6212,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-コンビナート</Text>
+タチワキコンビナート</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:53:06" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6201,10 +6224,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-コンビナート</Text>
+タチワキコンビナート</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:53:06" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6212,10 +6235,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>コンビナート（仮）</Comment>
+			<Comment>タチワキコンビナート
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:53:03" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:32:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6238,10 +6262,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-かざん　Ｗ</Text>
+リバースマウンテンＷ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:54:45" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6250,10 +6274,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-火山　Ｗ</Text>
+リバースマウンテンＷ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:54:47" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6261,11 +6285,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>かざん（仮）
-ホワイト</Comment>
+			<Comment>リバースマウンテン
+・White2ver
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:53:45" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:28:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6288,10 +6313,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-かざん　Ｂ</Text>
+リバースマウンテンＢ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:54:31" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6300,10 +6325,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-火山　Ｂ</Text>
+リバースマウンテンＢ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:54:31" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6311,11 +6336,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>かざん（仮）
-ブラック</Comment>
+			<Comment>リバースマウンテン
+ブラック
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:53:52" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:27:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6338,10 +6364,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-ミステリーハウス</Text>
+ストレンジャーハウス</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:55:31" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:32:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6350,10 +6376,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-ミステリーハウス</Text>
+ストレンジャーハウス</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:55:31" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:32:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6361,10 +6387,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミステリ－ハウス（仮）</Comment>
+			<Comment>ストレンジャーハウス
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:55:28" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6387,10 +6414,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-ネオチャンピオンロード</Text>
+チャンピオンロード</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:55:59" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6399,10 +6426,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-新チャンピオンロード</Text>
+チャンピオンロード</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:55:59" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6410,10 +6437,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ネオチャンピオンロード（仮）</Comment>
+			<Comment>チャンピオンロード
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:55:57" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6436,10 +6464,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-アジトせん</Text>
+プラズマフリゲート</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:56:42" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6448,10 +6476,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-アジト船</Text>
+プラズマフリゲート</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:56:42" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6459,10 +6487,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>アジトせん（仮）</Comment>
+			<Comment>プラズマフリゲート
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:56:40" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6485,10 +6514,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-ぬけみち</Text>
+こだいのぬけみち</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:55:36" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6497,10 +6526,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-抜け道</Text>
+古代の抜け道</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:55:36" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6508,10 +6537,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ぬけみち（仮）</Comment>
+			<Comment>こだいのぬけみち
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:55:34" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6534,10 +6564,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-こうどう</Text>
+ヤーコンロード</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:55:52" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6546,10 +6576,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-坑道</Text>
+ヤーコンロード</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:55:59" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:33:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6557,10 +6587,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>こうどう（仮）</Comment>
+			<Comment>ヤーコンロード
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:55:43" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:34:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6606,10 +6637,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>Ｎのしろ（仮）</Comment>
+			<Comment>Ｎのしろ（仮）
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T01:57:57" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6632,10 +6664,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-ゲートどうくつ</Text>
+うみべのどうけつ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:11:47" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:34:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6644,10 +6676,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-ゲートどうくつ</Text>
+海辺の同穴</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:11:47" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6655,10 +6687,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ゲートどうくつ（仮）</Comment>
+			<Comment>うみべのどうけつ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:11:44" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:34:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6681,10 +6714,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-かがみのどうくつ</Text>
+こころのくうどう</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:12:04" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6693,10 +6726,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-鏡のどうくつ</Text>
+心の空洞</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:12:04" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:35:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6704,10 +6737,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>かがみのどうくつ（仮）</Comment>
+			<Comment>こころのくうどう
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:12:01" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:35:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6754,10 +6788,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>４ばんどうろ
-ブラック</Comment>
+ブラック
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:13:20" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6803,10 +6838,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>１９ばんどうろ</Comment>
+			<Comment>１９ばんどうろ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:13:55" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6852,10 +6888,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２０ばんどうろ</Comment>
+			<Comment>２０ばんどうろ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:14:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6901,10 +6938,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２１ばんすいどう</Comment>
+			<Comment>２１ばんすいどう
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:14:26" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6950,10 +6988,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２２ばんどうろ</Comment>
+			<Comment>２２ばんどうろ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -6999,10 +7038,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>２３ばんどうろ</Comment>
+			<Comment>２３ばんどうろ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:30" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7025,10 +7065,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かりメッセージ
-すいちゅうばし</Text>
+マリンチューブ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:56" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:35:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7037,10 +7077,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>仮メッセージ
-水中橋</Text>
+マリンチューブ</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:56" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7048,10 +7088,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>すいちゅうばし（仮）</Comment>
+			<Comment>マリンチューブ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-23T02:16:53" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:35:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -7095,10 +7136,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>名所１</Comment>
+			<Comment>名所１
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-05-26T03:48:20" />
+				User="matsumiya:W00224"
+				Time="2011-07-21T03:25:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
