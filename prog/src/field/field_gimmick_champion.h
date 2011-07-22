@@ -1,0 +1,22 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		field_gimmick_champion.h
+ *	@brief  チャンピオン部屋
+ *	@author	Katsuhiko=Ichiraku
+ *	@date		2011.07.22
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#pragma once
+
+//=============================================================================
+/**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
+
+extern void CHAMPION_Setup( FIELDMAP_WORK *p_fieldmap );
+extern void CHAMPION_End( FIELDMAP_WORK *p_fieldmap );
+extern void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap );
+

@@ -294,5 +294,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     HIDE_SHIP_DECK_End,    // アジト船　甲板
     HIDE_SHIP_DECK_Move,   // アジト船　甲板
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_champion),//C09R0501
+    CHAMPION_Setup, // チャンピオン部屋
+    CHAMPION_End,   // チャンピオン部屋
+    CHAMPION_Move,  // チャンピオン部屋
+  },
 };
 
