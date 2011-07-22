@@ -11,6 +11,10 @@
 
 #define R02_ROCK_01                        0
 #define R02_TREE_01                        1
+#define TR_VETERANM_12                     2
+#define TR_TANPAN_25                       3
+#define TR_VETERANW_09                     4
+#define TR_MINI_19                         5
 
 #endif //ZONE_R02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
