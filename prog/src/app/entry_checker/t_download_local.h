@@ -21,10 +21,10 @@
 enum{
 	T_DOWNLOAD_CANVAS_MAXNUM 	= 9,				// canvas
 	T_DOWNLOAD_BMPOAM_MAXNUM	= 4,				// bmpoam
-	T_DOWNLOAD_EMPTY_MAXNUM		= 17*2,				// empty
+	T_DOWNLOAD_EMPTY_MAXNUM		= 24*2,				// empty
 	//
 	T_DOWNLOAD_CMN_OBJ_MAXNUM	= 4,				// common(obj)
-	T_DOWNLOAD_OBJ_MAXNUM		= 6,				// obj
+	T_DOWNLOAD_OBJ_MAXNUM		= 3,				// obj
 	//
 	T_DOWNLOAD_BGNUM_MAXNUM		= 8,				// bg
 	//
@@ -32,6 +32,8 @@ enum{
 	//
 	T_DOWNLOAD_SAVE_BUFFER_MAX	= 3,				// セーブ個数最大
 	T_DOWNLOAD_ITEM_BUFFER_MAX	= 30,				// バッファ最大数
+	//
+	T_DOWNLOAD_DISP_PANEL_MAX	= 6,				// パネル最大
 };
 
 // OBJのリソースのインデックス
@@ -148,6 +150,7 @@ typedef struct
 	STRBUF					*MsgBuffer;						// メッセージ用バッファ
 //	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
 	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
+	WORDSET					*Wordset;						// wordset
 	//
 	APP_TASKMENU_WORK		*pAppTask;
 	APP_TASKMENU_ITEMWORK	appitem[2];
@@ -163,8 +166,14 @@ typedef struct
 	s32						CurPos;							// カーソル位置(view)
 	s32						TopNum;							// 先頭番号(select)
 	s32						SubNum;							// カーソル位置(select)
+	s32						ScrollOffy;
 	s32						SaveBuffer[T_DOWNLOAD_SAVE_BUFFER_MAX];	// セーブ領域
 	T_DOWNLOAD_ITEM			ItemBuffer[T_DOWNLOAD_ITEM_BUFFER_MAX];	// アイテム領域
+	//
+	// list
+	FRAMELIST_WORK			*frame_list_work;				// リスト
+	//
+	s32						DispMaxNum;						// 表示最大数
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)

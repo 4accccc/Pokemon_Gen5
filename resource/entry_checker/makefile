@@ -2,7 +2,7 @@
 include $(PROJECT_RSCDIR)\macro_define
 
 
-SUBDIRS	= win_record
+SUBDIRS	= win_record t_download
 
 					
 

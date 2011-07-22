@@ -10,6 +10,9 @@
 //=============================================================================
 #pragma once
 
+//-----------------
+// êÈåæ
+//-----------------
 // ÉfÅ[É^èâä˙âª
 extern void TdCmn_init_data( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_exit_data( T_DOWNLOAD_MAIN_WORK* wk );
@@ -26,7 +29,7 @@ extern void TdCmn_set_obj_visible( T_DOWNLOAD_MAIN_WORK *wk, const s32 wmode, co
 extern BOOL TdCmn_is_anime_end( T_DOWNLOAD_MAIN_WORK *wk, const s32 wmode, const s32 wnum );
 
 // bmpoam
-extern void TdCmn_disp_bmpoam( T_DOWNLOAD_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf );
+//extern void TdCmn_disp_bmpoam( T_DOWNLOAD_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf );
 
 // empty
 extern s16  TdCmn_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num );
@@ -39,6 +42,18 @@ extern void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s3
 extern BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_init_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 extern void TdCmn_disp_centermes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid );
+
+//
+extern void TdCmn_main_bg_scroll( T_DOWNLOAD_MAIN_WORK * wk );
+
+//
+extern void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
+
+//
+extern void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk );
+extern u32  TdCmn_main_framelist( T_DOWNLOAD_MAIN_WORK * wk );
+extern s32  TdCmn_is_main_framelist( T_DOWNLOAD_MAIN_WORK * wk, const u32 mode );
+extern void TdCmn_exit_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 
 
 
