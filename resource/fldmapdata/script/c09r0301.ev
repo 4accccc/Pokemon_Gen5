@@ -146,7 +146,6 @@ EVENT_START	ev_pos_c09r0301_enter_02
 
   // ステージ落下
   _FOURKINGS_FIGHT_STAGE()
-	_SE_PLAY( SEQ_SE_SW_RENBU_04 )    // ステージが振ってくる音 
 
   _TIME_WAIT( 40 ) 
 

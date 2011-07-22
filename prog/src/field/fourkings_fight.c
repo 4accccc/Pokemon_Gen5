@@ -954,6 +954,9 @@ static GMEVENT_RESULT StageFallEvent( GMEVENT* event, int* seq, void* wk )
         //目的高さで上書き
         p_wk->now_height = p_wk->dst_height;
 
+        // SE再生
+        PMSND_PlaySE( SEQ_SE_SW_RENBU_04 );   // ステージが振ってくる音
+
         // 次のシーケンスへ
         *seq = SEQ_REACTION;
       }
