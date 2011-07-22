@@ -12,6 +12,8 @@
   .include  "../../message/dst/script/msg_c08r0402.h"
   .include  "c08r0402.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -19,4 +21,230 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA    ev_c08r0402_man3_01
+_EVENT_DATA    ev_c08r0402_poke37_01
+_EVENT_DATA    ev_c08r0402_poke37_02
+_EVENT_DATA    ev_c08r0402_poke37_03
+_EVENT_DATA    ev_c08r0402_poke37_04
+_EVENT_DATA    ev_c08r0402_poke37_05
 _EVENT_DATA_END
+
+//ポケモン選択変数一式
+DEFINE_LOCAL LWK_POKE_SELECT
+DEFINE_LOCAL LWK_POKE_SELECT_CHK
+DEFINE_LOCAL LWK_MONSNO
+
+
+/**************************************************************/
+/*  男性：話しかけ（オタマロ見せイベント）                    */
+/**************************************************************/
+EVENT_START   ev_c08r0402_man3_01
+
+  _TALK_OBJ_START()
+
+  //イベントクリア済みか
+  IF FLAG_OFF( FE_C08R0402_MAN3_01 ) THEN
+
+    //男性：ぼくは　オタマロを　だれよりも
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_01 )
+
+    //オタマロを見せる？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //男性：ありがとう！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_02 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //手持ちのポケモンを選択する
+      _SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK, LWK_POKE_SELECT, 0 )
+
+      IF $LWK_POKE_SELECT_CHK == TRUE THEN
+
+        //選んだポケモンのナンバーを取得する
+        _GET_PARTY_POKE_MONSNO( LWK_MONSNO, LWK_POKE_SELECT )
+
+        //選択したポケモンは「オタマロ」か
+        IF $LWK_MONSNO == 535 THEN
+
+          //男性：ナイスな　ボイスを　カモン！！
+          _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_05 )
+          _AB_KEYWAIT_MARK()
+          _MSGWIN_CLOSE()
+
+          //合唱イベントへジャンプ
+          _CALL ev_c08r0402_me_call_01
+
+          //男性：いや～……　すばらしい
+          _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_06 )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+          //========================================//
+          //イベントクリアフラグON
+          _FLAG_SET( FE_C08R0402_MAN3_01 )
+          //========================================//
+
+        //選んだポケモンは「オタマロ」ではない
+        ELSE
+
+          //男性：そのコは　オタマロじゃないよね
+          _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_04 )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+        ENDIF
+
+      ELSE    //キャンセル
+
+        //男性：そっか……　しかたがない……▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //男性：そっか……　しかたがない……▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //イベントクリア後（２回目以降）
+  ELSE
+
+    //男性：ナイスな　ボイスを　きくのかい？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_07 )
+
+    //オタマロを見せる？
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //男性：ありがとう！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_02 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //手持ちのポケモンを選択する
+      _SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK, LWK_POKE_SELECT, 0 )
+
+      IF $LWK_POKE_SELECT_CHK == TRUE THEN
+
+        //選んだポケモンのナンバーを取得する
+        _GET_PARTY_POKE_MONSNO( LWK_MONSNO, LWK_POKE_SELECT )
+
+        //選択したポケモンは「オタマロ」か
+        IF $LWK_MONSNO == 535 THEN
+
+          //男性：レッツ！　ハーモニー！！！
+          _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_08 )
+          _AB_KEYWAIT_MARK()
+          _MSGWIN_CLOSE()
+
+          //合唱イベントへジャンプ
+          _CALL ev_c08r0402_me_call_01
+
+          //男性：いや～……　ほんとうに
+          _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_09 )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+          //========================================//
+          //イベントクリアフラグON
+          _FLAG_SET( FE_C08R0402_MAN3_01 )
+          //========================================//
+
+        //選んだポケモンは「オタマロ」ではない
+        ELSE
+
+          //男性：そのコは　オタマロじゃないよね
+          _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_04 )
+          _LAST_KEYWAIT()
+          _MSGWIN_CLOSE()
+
+        ENDIF
+
+      ELSE    //キャンセル
+
+        //男性：そっか……　しかたがない……▼
+        _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE    //いいえ
+
+      //男性：そっか……　しかたがない……▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c08r0402_man3_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+//オタマロ合唱イベント【仮】演出は借り・ME待ち
+ev_c08r0402_me_call_01:
+
+  _TIME_WAIT( 15 )
+
+  //暗転
+  _BLACK_OUT_SLOW()
+  _DISP_FADE_END_CHECK()
+
+
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+
+  _TIME_WAIT( 45 )
+
+_RET
+
+
+/**************************************************************/
+/*  オタマロ01：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c08r0402_poke37_01
+  _EASY_TALK_POKEVOICE( MONSNO_586, msg_c08r0402_poke37_01_01 )
+EVENT_END
+
+/**************************************************************/
+/*  オタマロ02：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c08r0402_poke37_02
+  _EASY_TALK_POKEVOICE( MONSNO_586, msg_c08r0402_poke37_02_01 )
+EVENT_END
+
+/**************************************************************/
+/*  オタマロ03：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c08r0402_poke37_03
+  _EASY_TALK_POKEVOICE( MONSNO_586, msg_c08r0402_poke37_03_01 )
+EVENT_END
+
+/**************************************************************/
+/*  オタマロ04：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c08r0402_poke37_04
+  _EASY_TALK_POKEVOICE( MONSNO_586, msg_c08r0402_poke37_04_01 )
+EVENT_END
+
+/**************************************************************/
+/*  オタマロ05：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_c08r0402_poke37_05
+  _EASY_TALK_POKEVOICE( MONSNO_586, msg_c08r0402_poke37_05_01 )
+EVENT_END
+
+

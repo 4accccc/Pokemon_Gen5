@@ -10,6 +10,8 @@
   .include  "../../message/dst/script/msg_c01.h"
   .include  "c01.h"
 
+  //@author fujimura_souichirou（マッギョ祭）
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -17,55 +19,145 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_c01_sign1_01
-_EVENT_DATA		ev_bg_c01_sign2_01
-_EVENT_DATA		ev_bg_c01_sign3_01
-_EVENT_DATA		ev_bg_c01_gymsign_01
-_EVENT_DATA		ev_c01_fising_01
-_EVENT_DATA		ev_c01_badman_01
+_EVENT_DATA   ev_zone_c01
+_EVENT_DATA   ev_bg_c01_sign1_01
+_EVENT_DATA   ev_bg_c01_sign2_01
+_EVENT_DATA   ev_bg_c01_sign3_01
+_EVENT_DATA   ev_bg_c01_gymsign_01
+_EVENT_DATA   ev_c01_fising_01
+_EVENT_DATA   ev_c01_badman_01
+_EVENT_DATA   ev_c01_breederm_01
+_EVENT_DATA   ev_c01_poke44_01
 _EVENT_DATA_END
-  
+
+//季節と時間変数
+DEFINE_LOCAL SCWK_SEASON
+DEFINE_LOCAL LWK_TIMEZONE
+
+/************************************************************/
+/*  ZONE_CHANGE_SCRIPT                                      */
+/************************************************************/
+INIT_EVENT_START  ev_zone_c01
+
+  //季節と時間帯を取得
+  _GET_SEASON_ID( SCWK_SEASON )
+  _GET_TIMEZONE( LWK_TIMEZONE )
+
+  //夏だった場合
+  IF $SCWK_SEASON == PMSEASON_SUMMER THEN
+    //夜のにのみマッギョが出現
+    IF $LWK_TIMEZONE == TIMEZONE_NIGHT || $LWK_TIMEZONE == TIMEZONE_MIDNIGHT THEN
+      //========================================//
+      //マッギョ表示
+      _FLAG_RESET( FV_C01_POKE44_01 )
+      //========================================//
+
+    //昼の場合はマッギョを非表示
+    ELSE
+      //========================================//
+      //マッギョ非表示
+      _FLAG_SET( FV_C01_POKE44_01 )
+      //========================================//
+
+    ENDIF
+
+  //それ以外の季節
+  ELSE
+
+    //========================================//
+    //マッギョ非表示
+    _FLAG_SET( FV_C01_POKE44_01 )
+    //========================================//
+
+  ENDIF
+
+INIT_EVENT_END
+
+
 /**************************************************************/
-/*  C01 SIGN1用イベントスクリプト    		                  */
+/*  C01 SIGN1用イベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_c01_sign1_01
-	_EASY_BGWIN_MSG( msg_c01_sign1_01,TYPE_TOWN )
+  _EASY_BGWIN_MSG( msg_c01_sign1_01, TYPE_TOWN )
 EVENT_END
 
 /**************************************************************/
-/*  C01 SIGN2用イベントスクリプト  		                      */
+/*  C01 SIGN2用イベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_c01_sign2_01
-	_EASY_BGWIN_MSG( msg_c01_sign2_01,TYPE_POST )
+  _EASY_BGWIN_MSG( msg_c01_sign2_01, TYPE_POST )
 EVENT_END
 
 /**************************************************************/
-/*  C01 SIGN3用イベントスクリプト		                      */
+/*  C01 SIGN3用イベントスクリプト                             */
 /**************************************************************/
 EVENT_START   ev_bg_c01_sign3_01
-	_EASY_BGWIN_MSG( msg_c01_sign3_01,TYPE_POST )
-EVENT_END
-
-
-/**************************************************************/
-/*	C01	ジム看板											  */
-/**************************************************************/
-EVENT_START		ev_bg_c01_gymsign_01
-	_EASY_BGWIN_MSG( msg_c01_gymsign_01, TYPE_POST )
+  _EASY_BGWIN_MSG( msg_c01_sign3_01, TYPE_POST )
 EVENT_END
 
 /**************************************************************/
-/*	C01 FISING	アイテム入手イベントスクリプト				  */
+/*  C01 ジム看板                                              */
 /**************************************************************/
-EVENT_START		ev_c01_fising_01
+EVENT_START   ev_bg_c01_gymsign_01
+  _EASY_BGWIN_MSG( msg_c01_gymsign_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/*  C01 FISING  アイテム入手イベントスクリプト                */
+/**************************************************************/
+EVENT_START   ev_c01_fising_01
   //【仮】入手アイテムが仮
-	_EASY_TALK_ITEM_EVENT( ITEM_OOKINASINZYU, 1, FE_C01_ITEMGET_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02)
+  _EASY_TALK_ITEM_EVENT( ITEM_OOKINASINZYU, 1, FE_C01_ITEMGET_01, msg_c01_fising_01, msg_c01_fising_02, msg_c01_fising_02 )
 EVENT_END
 
 /**************************************************************/
-/*	C01	BADMAN	アイテム入手イベント						  */
+/*  C01 BADMAN  アイテム入手イベント                          */
 /**************************************************************/
-EVENT_START		ev_c01_badman_01
+EVENT_START   ev_c01_badman_01
   //【仮】入手アイテムが仮
-	_EASY_TALK_ITEM_EVENT( ITEM_DAAKUBOORU, 1, FE_C01_ITEMGET_02, msg_c01_badman1_01, msg_c01_badman1_02, msg_c01_badman1_02 )
+  _EASY_TALK_ITEM_EVENT( ITEM_DAAKUBOORU, 1, FE_C01_ITEMGET_02, msg_c01_badman1_01, msg_c01_badman1_02, msg_c01_badman1_02 )
 EVENT_END
+
+/**************************************************************/
+/*  ブリーダー♂：話しかけ                                    */
+/**************************************************************/
+EVENT_START   ev_c01_breederm_01
+
+  //季節と時間帯を取得
+  _GET_SEASON_ID( SCWK_SEASON )
+  _GET_TIMEZONE( LWK_TIMEZONE )
+
+  //夏だった場合
+  IF $SCWK_SEASON == PMSEASON_SUMMER THEN
+
+    //夜の場合
+    IF $LWK_TIMEZONE == TIMEZONE_NIGHT || $LWK_TIMEZONE == TIMEZONE_MIDNIGHT THEN
+
+      //ブリーダー：このごろ　はやりといえば
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_badman2_03 )
+
+    //昼の場合
+    ELSE
+
+      //ブリーダー：さいきん　よるになると
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_badman2_02 )
+
+    ENDIF
+
+  ELSE
+
+    //ブリーダー：なつが　まちどおしいな
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_badman2_01 )
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  マッギョ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c01_poke44_01
+  _EASY_TALK_POKEVOICE( MONSNO_589, msg_c01_poke44_01 )
+EVENT_END
+
+

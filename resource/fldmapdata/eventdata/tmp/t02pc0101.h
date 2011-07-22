@@ -17,6 +17,8 @@
 #define T02PC0101_CONNECT_02               5
 #define T02PC0101_DELIVERY                 6
 #define T02PC0101_MEDALOYAJI               7
+#define T02PC0101_WOMAN1_01                8
+#define T02PC0101_GIRL2_01                 9
 
 #endif //ZONE_T02PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

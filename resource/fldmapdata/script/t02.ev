@@ -8,6 +8,8 @@
   .include  "msg_t02.h"
   .include  "t02.h"
 
+  //@author fujimura_souichirou
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -15,22 +17,480 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA		ev_bg_t02_sign1_01
-_EVENT_DATA		ev_bg_t02_sign2_01
+_EVENT_DATA   ev_bg_t02_sign1_01
+_EVENT_DATA   ev_bg_t02_sign2_01
+_EVENT_DATA   ev_t02_woman1_01
+_EVENT_DATA   ev_t02_oldman1_01
+_EVENT_DATA   ev_t02_oldwoman1_01
+_EVENT_DATA   ev_t02_girl1_01
+_EVENT_DATA   ev_t02_poke36_01
+_EVENT_DATA   ev_t02_boy2_01
+_EVENT_DATA   ev_t02_girl2_01
 _EVENT_DATA_END
 
+//手持ちに最初に選んだポケモンが要るか用変数定義
+DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
+DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
+DEFINE_LOCAL LWK_FIRST_POKE   //最初に選んだポケモンの有無
+
+//ポケモンの大きさチェック用変数定義
+DEFINE_LOCAL LWK_LOW_POKE     //小さいポケモンの有無
+DEFINE_LOCAL LWK_HIGH_POKE    //大きいポケモンの有無
+DEFINE_LOCAL LWK_CLEAR_POKE   //条件を満たしたポケモンの種族名（繰り返し処理なので最後のポケモン名になるかも）
+DEFINE_LOCAL LWK_POKE_FORMNO  //ポケモンのフォルム
 
 
 /**************************************************************/
-/*  			T02 看板：街								  */
+/*  T02 看板：街                                              */
 /**************************************************************/
 EVENT_START   ev_bg_t02_sign1_01
-	_EASY_BGWIN_MSG( msg_t02_sign1_01,TYPE_TOWN )
+  _EASY_BGWIN_MSG( msg_t02_sign1_01, TYPE_TOWN )
 EVENT_END
 
 /**************************************************************/
-/*  			T02 看板：ポケセン							  */
+/*  T02 看板：ポケセン                                        */
 /**************************************************************/
 EVENT_START   ev_bg_t02_sign2_01
-	//_EASY_BGWIN_MSG( msg_t02_sign2_01,TYPE_POST )
+//  _EASY_BGWIN_MSG( msg_t02_sign2_01, TYPE_POST )
 EVENT_END
+
+/**************************************************************/
+/*  女性：話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_t02_woman1_01
+
+  _TALK_OBJ_START()
+
+  //手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+
+  //手持ちのポケモンの中に最初の３匹のポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのNOを取得
+    _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+    //チェックしたポケモンのNOはツタージャ、ジャノビー、ジャローダのどれかか
+    IF $LWK_RET_MONSNO == 495 || $LWK_RET_MONSNO == 496 || $LWK_RET_MONSNO == 497 THEN
+      IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+        //条件を満たしていたら「１」
+        $LWK_FIRST_POKE = 1
+      ENDIF
+
+    //チェックしたポケモンのNOはポカブ、チャオブー、エンブオーのどれかか
+    ELSIF $LWK_RET_MONSNO == 498 || $LWK_RET_MONSNO == 499 || $LWK_RET_MONSNO == 500 THEN
+      IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+        //条件を満たしていたら「１」
+        $LWK_FIRST_POKE = 1
+      ENDIF
+
+    //チェックしたポケモンのNOはミジュマル、フタチマル、ダイケンキのどれかか
+    ELSIF $LWK_RET_MONSNO == 501 || $LWK_RET_MONSNO == 502 || $LWK_RET_MONSNO == 503 THEN
+      IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
+        //条件を満たしていたら「１」
+        $LWK_FIRST_POKE = 1
+      ENDIF
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+  //手持ちに条件を満たしたポケモンがいた場合
+  IF $LWK_FIRST_POKE == 1 THEN
+
+    //女性：おたがい　にちゃって　きたのね！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_woman1_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+
+    //女性：どことなく　ふんいきが　にてるわね！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_woman1_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  おじいさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t02_oldman1_01
+
+  _TALK_OBJ_START()
+  //おじいさん：きみは　ポケモンが　すきかね？
+  _BALLOONWIN_TALKOBJ_MSG( msg_t01_oldman1_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //おじいさん：うんうん　だろうね
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_oldman1_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE    //いいえ
+
+    //おじいさん：ほう！　それでは　なぜ
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_oldman1_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*  おばあさん：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t02_oldwoman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_oldwoman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_t02_girl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01_girl1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  タブンネ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_t02_poke36_01
+  _EASY_TALK_POKEVOICE( MONSNO_599, msg_t01_poke36_01 )
+EVENT_END
+
+/**************************************************************/
+/*  男の子：話しかけ（小さいポケモンチェック）                */
+/**************************************************************/
+EVENT_START   ev_t02_boy2_01
+
+  _TALK_OBJ_START()
+
+  //小さいポケモンを見せた（１日１回）
+  IF FLAG_OFF( TMFLG_T02_LOW ) THEN
+
+    //会話するのは初めてか？
+    IF FLAG_OFF( FE_T02_LOW_TALK_01 ) THEN
+      //男の子：とつぜん　だけど　ぼくね……
+      _BALLOONWIN_TALKOBJ_MSG( msg_t01_boy2_01 )
+      _AB_KEYWAIT_MARK()
+
+      //========================================//
+      //会話済みフラグON
+      _FLAG_SET( FE_T02_LOW_TALK_01 )
+      //========================================//
+
+    ELSE
+      //男の子：ちいさい　ポケモン……
+      _BALLOONWIN_TALKOBJ_MSG( msg_t01_boy2_02 )
+      _AB_KEYWAIT_MARK()
+
+    ENDIF
+
+    //小さいポケモンチェックへ
+    _CALL ev_t02_low_call_01
+
+  ELSE
+
+    //男の子：とても　うれしいな……
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_boy2_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//小さいポケモンチェック
+ev_t02_low_call_01:
+
+  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+  //手持ちのポケモンの中に小さいポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのNOを取得
+    _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+    //チェックしたポケモンはディグダか
+    IF $LWK_RET_MONSNO == 50 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をディグダに
+      _MONS_NAME( 0, MONSNO_050 )
+
+    //チェックしたポケモンはネイティか
+    ELSIF $LWK_RET_MONSNO == 177 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をネイティに
+      _MONS_NAME( 0, MONSNO_177 )
+
+    //チェックしたポケモンはルリリか
+    ELSIF $LWK_RET_MONSNO == 298 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をルリリに
+      _MONS_NAME( 0, MONSNO_298 )
+
+    //チェックしたポケモンはスボミーか
+    ELSIF $LWK_RET_MONSNO == 406 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をスボミーに
+      _MONS_NAME( 0, MONSNO_406 )
+
+    //チェックしたポケモンはミノムッチか
+    ELSIF $LWK_RET_MONSNO == 412 THEN
+      //ミノムッチのフォルムを取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_COUNT_NUM, SCR_POKEPARA_FORMNO )
+      //ミノムッチは草、砂、ゴミか（念のため全てチェック）
+      IF $LWK_POKE_FORMNO == 0 || $LWK_POKE_FORMNO == 1 || $LWK_POKE_FORMNO == 2 THEN
+        //条件を満たしていたら「１」
+        $LWK_LOW_POKE = 1
+      ENDIF
+
+    //チェックしたポケモンはリーシャンか
+    ELSIF $LWK_RET_MONSNO == 433 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をリーシャンに
+      _MONS_NAME( 0, MONSNO_433 )
+
+    //チェックしたポケモンはシェイミか
+    ELSIF $LWK_RET_MONSNO == 492 THEN
+      //シェイミのフォルムを取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_COUNT_NUM, SCR_POKEPARA_FORMNO )
+      //シェイミはランドフォルムか
+      IF $LWK_POKE_FORMNO == 0 THEN
+        //条件を満たしていたら「１」
+        $LWK_LOW_POKE = 1
+        //条件を満たしたポケモンの名前をシェイミに
+        _MONS_NAME( 0, MONSNO_492 )
+      ENDIF
+
+    //チェックしたポケモンはタマゲタケか
+    ELSIF $LWK_RET_MONSNO == 590 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をタマゲタケに
+      _MONS_NAME( 0, MONSNO_580 )
+
+    //チェックしたポケモンはバチュルか
+    ELSIF $LWK_RET_MONSNO == 595 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をバチュルに
+      _MONS_NAME( 0, MONSNO_577 )
+
+    //チェックしたポケモンはシビシラスか
+    ELSIF $LWK_RET_MONSNO == 602 THEN
+      //条件を満たしていたら「１」
+      $LWK_LOW_POKE = 1
+      //条件を満たしたポケモンの名前をシビシラスに
+      _MONS_NAME( 0, MONSNO_614 )
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+  //手持ちに条件を満たしたポケモンがいた場合
+  IF $LWK_LOW_POKE == 1 THEN
+
+    //男の子：おお！　すごい！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_boy2_03 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //アイテム（ピッピ人形）
+    _ITEM_EVENT_NOWAIT( ITEM_PIPPININGYOU, 1 )
+
+    //========================================//
+    //タイムフラグON
+    _FLAG_SET( TMFLG_T02_LOW )
+    //========================================//
+
+  ELSE
+
+    //男の子：うーん……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_boy2_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+/**************************************************************/
+/*  女の子：話しかけ（大きいポケモンチェック）                */
+/**************************************************************/
+EVENT_START   ev_t02_girl2_01
+
+  _TALK_OBJ_START()
+
+  //大きいポケモンを見せた（１日１回）
+  IF FLAG_OFF( TMFLG_T02_HIGH ) THEN
+
+    //会話するのは初めてか？
+    IF FLAG_OFF( FE_T02_HIGH_TALK_01 ) THEN
+      //女の子：あのね！　わたしね！
+      _BALLOONWIN_TALKOBJ_MSG( msg_t01_girl2_01 )
+      _AB_KEYWAIT_MARK()
+
+      //========================================//
+      //会話済みフラグON
+      _FLAG_SET( FE_T02_HIGH_TALK_01 )
+      //========================================//
+
+    ELSE
+      //女の子：おっきい　ポケモン！
+      _BALLOONWIN_TALKOBJ_MSG( msg_t01_girl2_02 )
+      _AB_KEYWAIT_MARK()
+
+    ENDIF
+
+    //小さいポケモンチェックへ
+    _CALL ev_t02_high_call_01
+
+  ELSE
+
+    //女の子：もっともっと　うれしいな！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_girl2_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//大きいポケモンチェック
+ev_t02_high_call_01:
+
+  //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+  _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+  //手持ちのポケモンの中に大きいポケモンがいるか確認（繰り返し処理）
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+    //指定POSのポケモンのNOを取得
+    _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+    //チェックしたポケモンはイワークか
+    IF $LWK_RET_MONSNO == 95 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をイワークに
+      _MONS_NAME( 0, MONSNO_095 )
+
+    //チェックしたポケモンはギャラドスか
+    ELSIF $LWK_RET_MONSNO == 130 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をギャラドスに
+      _MONS_NAME( 0, MONSNO_130 )
+
+    //チェックしたポケモンはハガネールか
+    ELSIF $LWK_RET_MONSNO == 208 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をハガネールに
+      _MONS_NAME( 0, MONSNO_208 )
+
+    //チェックしたポケモンはルギアか
+    ELSIF $LWK_RET_MONSNO == 249 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をルギアに
+      _MONS_NAME( 0, MONSNO_249 )
+
+    //チェックしたポケモンはホエルオーか
+    ELSIF $LWK_RET_MONSNO == 321 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をホエルオーに
+      _MONS_NAME( 0, MONSNO_321 )
+
+    //チェックしたポケモンはミロカロスか
+    ELSIF $LWK_RET_MONSNO == 350 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をミロカロスに
+      _MONS_NAME( 0, MONSNO_350 )
+
+    //チェックしたポケモンはレックウザか
+    ELSIF $LWK_RET_MONSNO == 384 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をレックウザに
+      _MONS_NAME( 0, MONSNO_384 )
+
+    //チェックしたポケモンはディアルガか
+    ELSIF $LWK_RET_MONSNO == 483 THEN
+      //条件を満たしていたら「１」
+      $LWK_HIGH_POKE = 1
+      //条件を満たしたポケモンの名前をディアルガに
+      _MONS_NAME( 0, MONSNO_483 )
+
+    //チェックしたポケモンはギラティナか
+    ELSIF $LWK_RET_MONSNO == 487 THEN
+      //ギラティナのフォルムを取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_FORMNO, LWK_COUNT_NUM, SCR_POKEPARA_FORMNO )
+      //ギラティナはオリジンフォルムか
+      IF $LWK_POKE_FORMNO == 1 THEN
+        //条件を満たしていたら「１」
+        $LWK_HIGH_POKE = 1
+        //条件を満たしたポケモンの名前をギラティナに
+        _MONS_NAME( 0, MONSNO_487 )
+      ENDIF
+
+    ENDIF
+
+    //カウント
+    $LWK_COUNT_NUM += 1
+
+  ENDWHILE
+
+  //手持ちに条件を満たしたポケモンがいた場合
+  IF $LWK_HIGH_POKE == 1 THEN
+
+    //女の子：わー！　すっごーい！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_girl2_03 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //アイテム（エネコのシッポ）
+    _ITEM_EVENT_NOWAIT( ITEM_ENEKONOSIPPO, 1 )
+
+    //========================================//
+    //タイムフラグON
+    _FLAG_SET( TMFLG_T02_HIGH )
+    //========================================//
+
+  ELSE
+
+    //女の子：えーっ！？▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01_girl2_04 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
+
+

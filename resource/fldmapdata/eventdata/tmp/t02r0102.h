@@ -9,6 +9,9 @@
 #ifndef ZONE_T02R0102_EVC_H
 #define ZONE_T02R0102_EVC_H
 
+#define T02R0102_WOMAN1_01                 0
+#define T02R0102_MAN1_01                   1
+#define T02R0102_BABYGIRL1_01              2
 
 #endif //ZONE_T02R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t02r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -9,6 +9,12 @@
 #ifndef ZONE_C08R0402_EVC_H
 #define ZONE_C08R0402_EVC_H
 
+#define C08R0402_MAN3_01                   0
+#define C08R0402_POKE37_01                 1
+#define C08R0402_POKE37_02                 2
+#define C08R0402_POKE37_03                 3
+#define C08R0402_POKE37_05                 4
+#define C08R0402_POKE37_04                 5
 
 #endif //ZONE_C08R0402_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

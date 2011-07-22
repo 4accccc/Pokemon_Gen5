@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/14 16:19:54
+#save date:2011/07/20 19:32:58
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c01.wms
 #hold event type:
 1
 #hold event number:
-4
+13
 #event number: 0
 #type
 1
@@ -134,6 +134,285 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 360 0 -216
+#event number: 4
+#type
+1
+#ID name
+C01_BREEDERM_01
+#OBJ CODE Number
+BREEDERM
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C01_BREEDERM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+24 0 88
+#event number: 5
+#type
+1
+#ID name
+C01_POKE44_01
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 152
+#event number: 6
+#type
+1
+#ID name
+C01_POKE44_02
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 -120
+#event number: 7
+#type
+1
+#ID name
+C01_POKE44_03
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -104
+#event number: 8
+#type
+1
+#ID name
+C01_POKE44_04
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 -40
+#event number: 9
+#type
+1
+#ID name
+C01_POKE44_05
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 -8
+#event number: 10
+#type
+1
+#ID name
+C01_POKE44_06
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_SPINS_L
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+2
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 88
+#event number: 11
+#type
+1
+#ID name
+C01_POKE44_07
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_RTLU         
+#EVENT TYPE Number
+EV_TYPE_SPINS_L
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+2
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 56
+#event number: 12
+#type
+1
+#ID name
+C01_POKE44_08
+#OBJ CODE Number
+POKE44
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C01_POKE44_01
+#Event Script Name
+SCRID_C01_POKE44_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

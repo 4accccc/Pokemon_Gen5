@@ -14,6 +14,13 @@
 #ifndef ZONE_T02_EVC_H
 #define ZONE_T02_EVC_H
 
+#define T02_BOY2_01                        0
+#define T02_WOMAN1_01                      1
+#define T02_OLDMAN1_01                     2
+#define T02_GIRL1_01                       3
+#define T02_POKE36_01                      4
+#define T02_OLDWOMAN1_01                   5
+#define T02_GIRL2_01                       6
 
 #endif //ZONE_T02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

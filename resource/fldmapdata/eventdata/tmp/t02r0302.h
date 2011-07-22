@@ -10,6 +10,9 @@
 #define ZONE_T02R0302_EVC_H
 
 #define T02R0302_MIDDLEMAN1_01             0
+#define T02R0302_WOMAN1_01                 1
+#define T02R0302_BABYGIRL1_01              2
+#define T02R0302_POKE29_01                 3
 
 #endif //ZONE_T02R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

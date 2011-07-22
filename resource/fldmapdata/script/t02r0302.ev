@@ -8,21 +8,370 @@
   .include  "../../../prog/include/msg/script/msg_t02r0302.h"
   .include  "t02r0302.h"  
 
-
-//--------------------------------------------------------------
-//               スクリプトテーブル
-//--------------------------------------------------------------
-_EVENT_DATA		ev_t02r0302_middleman1_01
-_EVENT_DATA_END
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
 
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_t02r0302_woman1_01
+_EVENT_DATA   ev_t02r0302_middleman1_01
+_EVENT_DATA   ev_t02r0302_poke29_01
+_EVENT_DATA   ev_t02r0302_babygirl1_01
+_EVENT_DATA_END
+
+
 /**************************************************************/
-/*  T02R0302 MIDDLEMAN1の会話用イベントスクリプト			  */
+/*  女性：話しかけ（パートナークイズ）                        */
+/**************************************************************/
+EVENT_START   ev_t02r0302_woman1_01
+
+  _TALK_OBJ_START()
+
+  //ごほうび（ジュエル）入手した
+  IF FLAG_OFF( FE_T02R0302_ITEMGET_01 ) THEN
+
+    //最初に選んだポケモン名取得
+    IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN   //草
+      //ツタージャクイズへ
+      _CALL ev_t02r0302_kusa_quiz_call_01
+
+    ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN  //炎
+      //ポカブクイズへ
+      _CALL ev_t02r0302_honoo_quiz_call_01
+
+    ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN    //水
+      //ミジュマルクイズへ
+      _CALL ev_t02r0302_mizu_quiz_call_01
+
+    ENDIF
+
+  ELSE
+
+    //女性：ずかんを　ながめると　おもしろいわよ▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_14 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
+//ツタージャクイズ
+ev_t02r0302_kusa_quiz_call_01:
+
+  //会話するのは初めて？
+  IF FLAG_OFF( FE_T02R0302_WOMAN3_TALK_01 ) THEN
+
+    //パートナー名《ツタージャ》代入
+    _MONS_NAME( 0, MONSNO_551 )
+    //女性：へえ！　《ツタージャ》なんだ！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_01 )
+    _AB_KEYWAIT_MARK()
+
+    //========================================//
+    //会話済みフラグON
+    _FLAG_SET( FE_T02R0302_WOMAN3_TALK_01 ) 
+    //========================================//
+
+  ENDIF
+
+  //女性：ツタージャの　たかさは　0.7ｍ？
+  _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_02 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //女性：ざんねーん！　そうなんだよね
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE    //いいえ
+
+    //女性：ツタージャの　おもさは　8.2ｋｇ？
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_04 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //女性：ざんねーん！　そうなんだよね
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_03 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE    //いいえ
+
+      //女性：せいかーい！　さすがね！
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_05 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム「草のジュエル」入手
+      _ITEM_EVENT_NOWAIT( ITEM_KUSANOZYUERU, 1 )
+
+      //========================================//
+      //アイテム入手フラグON
+      _FLAG_SET( FE_T02R0302_ITEMGET_01 )
+      //========================================//
+
+    ENDIF
+
+  ENDIF
+
+_RET
+
+
+//ポカブクイズ
+ev_t02r0302_honoo_quiz_call_01:
+
+  //会話するのは初めて？
+  IF FLAG_OFF( FE_T02R0302_WOMAN3_TALK_01 ) THEN
+
+    //パートナー名《ポカブ》代入
+    _MONS_NAME( 0, MONSNO_554 )
+    //女性：へえ！　《ポカブ》なんだ！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_01 )
+    _AB_KEYWAIT_MARK()
+
+    //========================================//
+    //会話済みフラグON
+    _FLAG_SET( FE_T02R0302_WOMAN3_TALK_01 )
+    //========================================//
+
+  ENDIF
+
+  //女性：ポカブの　たかさは　0.5ｍ？
+  _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_06 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //女性：ポカブの　おもさは　9.9ｋｇ？
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_07 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //女性：せいかーい！　さすがね！
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_08 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム「炎のジュエル」入手
+      _ITEM_EVENT_NOWAIT( ITEM_HONOONOZYUERU, 1 )
+
+      //========================================//
+      //アイテム入手フラグON
+      _FLAG_SET( FE_T02R0302_ITEMGET_01 )
+      //========================================//
+
+    ELSE    //いいえ
+
+      //女性：ざんねーん！　そうなんだよね
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_09 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE    //いいえ
+
+    //女性：ざんねーん！　そうなんだよね
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_09 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+_RET
+
+
+//ミジュマルクイズ
+ev_t02r0302_mizu_quiz_call_01:
+
+  //会話するのは初めて？
+  IF FLAG_OFF( FE_T02R0302_WOMAN3_TALK_01 ) THEN
+
+    //パートナー名《ミジュマル》代入
+    _MONS_NAME( 0, MONSNO_557 )
+    //女性：へえ！　《ミジュマル》なんだ！
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_01 )
+    _AB_KEYWAIT_MARK()
+
+    //========================================//
+    //会話済みフラグON
+    _FLAG_SET( FE_T02R0302_WOMAN3_TALK_01 )
+    //========================================//
+
+  ENDIF
+
+  //女性：ミジュマルの　たかさは　0.6ｍ？
+  _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_10 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //女性：ざんねーん！　そうなんだよね
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_11 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE    //いいえ
+
+    //女性：ミジュマルの　おもさは　5.9ｋｇ？
+    _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_12 )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+      //女性：せいかーい！　さすがね！
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_13 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム「水のジュエル」入手
+      _ITEM_EVENT_NOWAIT( ITEM_MIZUNOZYUERU, 1 )
+
+      //========================================//
+      //アイテム入手フラグON
+      _FLAG_SET( FE_T02R0302_ITEMGET_01 )
+      //========================================//
+
+    ELSE    //いいえ
+
+      //女性：ざんねーん！　そうなんだよね
+      _BALLOONWIN_TALKOBJ_MSG( msg_t02r0302_woman3_11 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+_RET
+
+
+/**************************************************************/
+/*  おじさん：話しかけ（アイテム入手）                        */
 /**************************************************************/
 EVENT_START   ev_t02r0302_middleman1_01
-  //【仮】アイテム変更予定
-	_EASY_TALK_ITEM_EVENT( ITEM_MONSUTAABOORU, 1, FE_T02R0302_BALLGET, msg_t02r0302_middleman1_01, msg_t02r0302_middleman1_02, msg_t02r0302_middleman1_02)
+  //【仮】アイテム変更予定（追記：変更済み？）
+  _EASY_TALK_ITEM_EVENT( ITEM_MONSUTAABOORU, 10, FE_T02R0302_BALLGET, msg_t02r0302_middleman1_01, msg_t02r0302_middleman1_02, msg_t02r0302_middleman1_02)
 EVENT_END
+
+/**************************************************************/
+/*  ミルホッグ：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t02r0302_poke29_01
+  _EASY_TALK_POKEVOICE( MONSNO_538, msg_t02r0302_poke29_01 )
+EVENT_END
+
+/**************************************************************/
+/*  幼児♀：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_t02r0302_babygirl1_01
+
+  _TALK_OBJ_START()
+
+  //幼児♀：ポケモンじゃんけん　しようよ！
+  _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_01, T02R0302_BABYGIRL1_01, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+    //幼児♀：ポケモン　じゃんけん　いっせーの……
+    _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_03, T02R0302_BABYGIRL1_01, POS_DOWN )
+
+    //ランダム数取得（じゃんけん用）
+    DEFINE_LOCAL  LWK_RND_SELECT
+    _GET_RND( LWK_RND_SELECT, 100 )
+
+    //タイプセレクト変数
+    DEFINE_LOCAL  LWK_TYPE_NUM_SELECT
+    //たいぴ選択画面作成（Bボタンキャンセル無効）
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_TYPE_NUM_SELECT )
+
+    _BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_10, 0 ) //ほのお
+    _BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_11, 1 ) //くさ
+    _BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_12, 2 ) //みず
+
+    _BMPMENU_START()
+
+    //「ほのお」を選択
+    IF $LWK_TYPE_NUM_SELECT == 0 THEN
+      //乱数で勝敗を決める（数値が50%以上で勝利）
+      IF $LWK_RND_SELECT >= 50 THEN
+
+        //幼児♀：ということで　あたしの　まけね
+        _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_04, T02R0302_BABYGIRL1_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+
+        //幼児♀：ということで　あたしの　かちね
+        _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_05, T02R0302_BABYGIRL1_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //「くさ」を選択
+    ELSIF $LWK_TYPE_NUM_SELECT == 1 THEN
+      //乱数で勝敗を決める（数値が50%以上で勝利）
+      IF $LWK_RND_SELECT >= 50 THEN
+
+        //幼児♀：ということで　あたしの　まけね
+        _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_08, T02R0302_BABYGIRL1_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+
+        //幼児♀：ということで　あたしの　かちね
+        _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_09, T02R0302_BABYGIRL1_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    //「みず」を選択
+    ELSIF $LWK_TYPE_NUM_SELECT == 2 THEN
+      //乱数で勝敗を決める（数値が50%以上で勝利）
+      IF $LWK_RND_SELECT >= 50 THEN
+
+        //幼児♀：ということで　あたしの　まけね
+        _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_06, T02R0302_BABYGIRL1_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+
+        //幼児♀：ということで　あたしの　かちね
+        _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_07, T02R0302_BABYGIRL1_01, POS_DOWN )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+
+    ELSE
+
+    ENDIF
+
+  ELSE    //いいえ
+
+    //幼児♀：なんだ　がっかり……
+    _BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_02, T02R0302_BABYGIRL1_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+
