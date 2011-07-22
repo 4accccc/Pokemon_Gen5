@@ -1639,13 +1639,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カレン『あなた！　[Name:TrainerName ]ね！▼
+			<Text>カレン『あなた　[Name:TrainerName ]　ね！▼
 くろのまてんろうを　だいぶ
 こうりゃく　したみたいだけど▽
 わたしも　まけないから！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:35:35" />
+				Time="2011-07-22T07:18:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1653,13 +1653,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレン『あなた！　[Name:TrainerName ]ね！▼
+			<Text>カレン『あなた　[Name:TrainerName ]　ね！▼
 黒の摩天楼を　だいぶ
 攻略したみたいだけど▽
 わたしも　負けないから！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:36:01" />
+				Time="2011-07-22T07:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1701,15 +1701,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カレン『おめでとう！！
-くろのまてんろうを　クリアしたってね！▼
-クリアを　おいわいして　ショップが
-アイテムを　にゅうかしたみたいよ！▼
-いってみたら　どうかしら？
-うーん　わたしも　がんばらないと！▼</Text>
+			<Text>カレン『くろのまてんろうの
+クリアおめでとう　[Name:TrainerName ]！！▽
+まちは　あなたの　うわさでもちきりよ！▼
+ショップでも　クリアきねんに
+しんせいひんを　にゅうかしたってさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:52:29" />
+				Time="2011-07-22T07:26:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1717,15 +1716,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレン『おめでとう！！
-黒の摩天楼を　クリアしたってね！▼
-クリア記念に　ショップが
-新製品を　入荷したみたいよ！▼
-行ってみたら　どうかしら？
-うーん　わたしも　がんばらないと！▼</Text>
+			<Text>カレン『黒の摩天楼の
+クリアおめでとう　[Name:TrainerName ]！！▽
+町は　あなたの　うわさでもちきりよ！▼
+ショップでも　クリア記念に
+新製品を　入荷したってさ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:52:35" />
+				Time="2011-07-22T07:27:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2329,16 +2327,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カズホ『ブラックシティで
-ちょうさしていた　ろんぶんが▽
+ちょうさしていた　けんきゅうが▽
 やっと　まとまったの！▼
 やっぱり　とかいでも　いちばんの
 ストレスかいしょうほうは▽
-ポケモンと　ふれあうことだったのよ！▼
-よーし！　つぎの　フィールドワークは
-ホワイトフォレストに　いこうかな？▼</Text>
+ポケモンと　ふれあうことだったのよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T07:30:14" />
+				Time="2011-07-22T07:38:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2347,16 +2343,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カズホ『ブラックシティで
-調査していた　論文が▽
+調査していた　研究が▽
 やっと　まとまったの！▼
 やっぱり　都会でも　一番の
 ストレス解消法は▽
-ポケモンと　触れ合うことだったのよ！▼
-よーし！　次の　フィールドワークは
-ホワイトフォレストに　行こうかな？▼</Text>
+ポケモンと　触れ合うことだったのよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T07:34:34" />
+				Time="2011-07-22T07:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4964,13 +4958,13 @@
 			<Text>エリザ『とみと　めいせいを　もとめて
 このよくぼうのまちに　やってきたの！▼
 まずは　くろのまてんろう　ってのを
-だれよりも　はやくクリアーして▽
+だれよりも　はやくクリアして▽
 ゆうめいじんに　なってやるんだから！▼
-って　うそ……あなた　クリアーしたの？
+って　うそ……あなた　クリアしたの？
 えー！　わたしの　けいかくがぁ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T09:12:09" />
+				Time="2011-07-22T07:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4981,13 +4975,13 @@
 			<Text>エリザ『富と　名声を　求めて
 この欲望の町に　やってきたの！▼
 まずは　黒の摩天楼　ってのを
-だれよりも　はやくクリアーして▽
+だれよりも　はやくクリアして▽
 有名人に　なってやるんだから！▼
-って　うそ……あなた　クリアーしたの？
+って　うそ……あなた　クリアしたの？
 えー！　わたしの　計画がぁ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T09:12:16" />
+				Time="2011-07-22T07:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5590,10 +5584,10 @@
 だけど　そのたびに　しっぱいして▽
 いつしか　あきらめちまってた……▼
 ポケモンと　じぶんを　しんじつづけた
-おまえを　そんけい　するぜ▼</Text>
+おまえを　そんけい　するぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T09:14:56" />
+				Time="2011-07-22T07:34:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5609,10 +5603,10 @@
 だけど　その度に　失敗して▽
 いつしか　あきらめちまってた……▼
 ポケモンと　自分を　信じ続けた
-おまえを　尊敬するぜ▼</Text>
+おまえを　尊敬するぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T09:15:04" />
+				Time="2011-07-22T07:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
