@@ -1588,3 +1588,19 @@ resource/wifi_earth/wifi_earth.narc
  修正担当　一楽
  */
 
+
+/*
+ PRODUCT01
+ 戦闘に参加したポケモンには全員に努力値が割り振られるはずだが、
+ GFBTS2028は実際には戦闘に勝ったときに場にいたポケモンが取得する努力値が戦闘参加ポケモンに振られていてた。
+ これは、大爆発などで先頭ポケモンが瀕死になってしまうと、後ろのポケモンに努力値が加算されなくなる
+ 誤動作を引き起こす。
+
+ ■修正ファイル
+   src/battle/btl_server_flow.c
+   src/battle/btl_client.c
+ ■修正：田谷、（スワンでコミット）森
+
+ */
+#define BUGFIX_AF_PRODUCT01_110722
+

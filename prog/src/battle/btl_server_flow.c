@@ -10328,8 +10328,22 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
 
         #ifdef BUGFIX_AF_GFBTS2028_101007
-        SCQUE_PUT_OP_Doryoku( wk->que, pokeID, calcExp->hp, calcExp->pow, calcExp->def, calcExp->agi,
-                calcExp->sp_pow, calcExp->sp_def );
+          /*
+           PRODUCT01
+           戦闘に参加したポケモンには全員に努力値が割り振られるはずだが、
+           GFBTS2028は実際には戦闘に勝ったときに場にいたポケモンが取得する努力値が戦闘参加ポケモンに振られていてた。
+           これは、大爆発などで先頭ポケモンが瀕死になってしまうと、後ろのポケモンに努力値が加算されなくなる
+           誤動作を引き起こす。
+          */
+          #ifdef BUGFIX_AF_PRODUCT01_110722
+            // こうしないと先頭のポケモンへの努力値が全員に加算されてしまう
+            SCQUE_PUT_OP_Doryoku( wk->que, pokeID, calcExp[i].hp, calcExp[i].pow, calcExp[i].def, calcExp[i].agi,
+                                calcExp[i].sp_pow, calcExp[i].sp_def );
+          #else
+            // これは間違い
+            SCQUE_PUT_OP_Doryoku( wk->que, pokeID, calcExp->hp, calcExp->pow, calcExp->def, calcExp->agi,
+                                calcExp->sp_pow, calcExp->sp_def );
+          #endif
         #endif
 
         {

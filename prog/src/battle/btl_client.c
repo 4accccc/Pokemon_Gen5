@@ -8391,7 +8391,19 @@ static BOOL scProc_OP_SetDoryoku( BTL_CLIENT* wk, int* seq, const int* args )
 
   for(i=0; i<NELEMS(param); ++i)
   {
-    if( param[i+1] )
+
+/*
+ PRODUCT01
+ 戦闘に参加したポケモンには全員に努力値が割り振られるはずだが、
+ GFBTS2028は実際には戦闘に勝ったときに場にいたポケモンが取得する努力値が戦闘参加ポケモンに振られていてた。
+ これは、大爆発などで先頭ポケモンが瀕死になってしまうと、後ろのポケモンに努力値が加算されなくなる
+ 誤動作を引き起こす。
+*/
+#ifdef BUGFIX_AF_PRODUCT01_110722
+    if( args[i+1] )   //これが正しい
+#else
+    if( param[i+1] )  // これは間違い（たまたまうまく動いていた）
+#endif
     {
       u32 exp = args[1+i] + PP_Get( pp, param[i], NULL );
       if( exp > PARA_EXP_MAX ){
