@@ -56,8 +56,6 @@ typedef enum {
   WBTWIN_COUNT_SHUFFLEMASTER     = 29,
 
   WBTWIN_COUNT_MAX,
-
-  WBTWIN_COUNT_ALLTOURNAMENT     = WBTWIN_COUNT_WCS,  ///<オールトーナメント優勝回数：削除予定
 }WBTWIN_COUNT;
 
 //----------------------------------------------------------
