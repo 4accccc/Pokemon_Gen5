@@ -427,4 +427,6 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/c04_gym_02.nsbmd \
 	$(RESDIR)/nschool_02.nsbmd \
 	$(RESDIR)/wbtgate_01.nsbmd \
+	$(RESDIR)/icepc_01.nsbmd \
+	$(RESDIR)/jagate_01.nsbmd \
 

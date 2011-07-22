@@ -3104,7 +3104,8 @@ DEP_TEXSET_IMD_INDOOR066 = \
 	$(SRCDIR)/warp03.imd \
 	$(SRCDIR)/shelf06.imd \
 	$(SRCDIR)/d25_obj01.imd \
-	$(SRCDIR)/d25_obj02.imd
+	$(SRCDIR)/d25_obj02.imd \
+	$(SRCDIR)/d25_obj03.imd
 
 texset/indoor066.imd: $(DEP_TEXSET_IMD_INDOOR066) texset/tmp/indoor066.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor066.list
@@ -3857,6 +3858,7 @@ DEP_TEXSET_IMD_INDOOR083 = \
 	$(SRCDIR)/box02.imd \
 	$(SRCDIR)/chushion01.imd \
 	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/m_gym02_light.imd \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
@@ -3896,6 +3898,11 @@ DEP_TEXSET_IMD_INDOOR084 = \
 	$(SRCDIR)/d0stair_u01.imd \
 	$(SRCDIR)/d0stair_d01.imd \
 	$(SRCDIR)/in_vender01.imd \
+	$(SRCDIR)/c04_object01.imd \
+	$(SRCDIR)/c04_object02.imd \
+	$(SRCDIR)/c04_object03.imd \
+	$(SRCDIR)/c04_object04.imd \
+	$(SRCDIR)/c04_object05.imd \
 	$(SRCDIR)/box01.imd \
 	$(SRCDIR)/box02.imd \
 	$(SRCDIR)/chushion01.imd \

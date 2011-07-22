@@ -323,7 +323,8 @@ DEP_TEXSET_IMD_OUTDOOR006 = \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
 	$(SRCDIR)/r4_build_03.imd \
-	$(SRCDIR)/r4_build_04.imd
+	$(SRCDIR)/r4_build_04.imd \
+	$(SRCDIR)/jagate_01.imd
 
 texset/outdoor006.imd: $(DEP_TEXSET_IMD_OUTDOOR006) texset/tmp/outdoor006.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor006.list
@@ -369,7 +370,8 @@ DEP_TEXSET_IMD_OUTDOOR007 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/c04_gym_02.imd
+	$(SRCDIR)/c04_gym_02.imd \
+	$(SRCDIR)/jagate_01.imd
 
 texset/outdoor007.imd: $(DEP_TEXSET_IMD_OUTDOOR007) texset/tmp/outdoor007.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor007.list
@@ -2611,7 +2613,8 @@ DEP_TEXSET_IMD_OUTDOOR063 = \
 	$(SRCDIR)/r4_ruins_01.imd \
 	$(SRCDIR)/r4_ruins_02.imd \
 	$(SRCDIR)/r4_ruins_03.imd \
-	$(SRCDIR)/r4_ruins_04.imd
+	$(SRCDIR)/r4_ruins_04.imd \
+	$(SRCDIR)/jagate_01.imd
 
 texset/outdoor063.imd: $(DEP_TEXSET_IMD_OUTDOOR063) texset/tmp/outdoor063.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor063.list
@@ -2772,7 +2775,8 @@ DEP_TEXSET_IMD_OUTDOOR067 = \
 	$(SRCDIR)/c8_lbuildb_04.imd \
 	$(SRCDIR)/c8_lbuildb_05.imd \
 	$(SRCDIR)/c8_gym_03.imd \
-	$(SRCDIR)/bigicicle_01.imd
+	$(SRCDIR)/bigicicle_01.imd \
+	$(SRCDIR)/icepc_01.imd
 
 texset/outdoor067.imd: $(DEP_TEXSET_IMD_OUTDOOR067) texset/tmp/outdoor067.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor067.list
@@ -2821,7 +2825,8 @@ DEP_TEXSET_IMD_OUTDOOR068 = \
 	$(SRCDIR)/c8_lbuildw_05.imd \
 	$(SRCDIR)/c8_gym_03.imd \
 	$(SRCDIR)/bigicicle_01.imd \
-	$(SRCDIR)/c8_gym_04.imd
+	$(SRCDIR)/c8_gym_04.imd \
+	$(SRCDIR)/icepc_01.imd
 
 texset/outdoor068.imd: $(DEP_TEXSET_IMD_OUTDOOR068) texset/tmp/outdoor068.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor068.list

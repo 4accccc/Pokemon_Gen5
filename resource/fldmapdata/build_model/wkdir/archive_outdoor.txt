@@ -426,3 +426,5 @@
 "nsbmdfiles/c04_gym_02.nsbmd"
 "nsbmdfiles/nschool_02.nsbmd"
 "nsbmdfiles/wbtgate_01.nsbmd"
+"nsbmdfiles/icepc_01.nsbmd"
+"nsbmdfiles/jagate_01.nsbmd"

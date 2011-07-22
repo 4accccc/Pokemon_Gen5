@@ -167,3 +167,5 @@
 "nsbmdfiles/mado_c5hs.nsbmd"
 "nsbmdfiles/d25_obj01.nsbmd"
 "nsbmdfiles/d25_obj02.nsbmd"
+"nsbmdfiles/d25_obj03.nsbmd"
+"nsbmdfiles/ja_build01.nsbmd"
