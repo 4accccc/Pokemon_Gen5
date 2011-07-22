@@ -31,16 +31,16 @@ SUBDIRS	=
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
 do-build:
-	$(MAKE) -f cpfile.mk
-	$(MAKE) -f mknarc.mk
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f cpfile.mk
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f mknarc.mk
 
 #------------------------------------------------------------------------------
 #	make cleanÉãÅ[Éã
 #------------------------------------------------------------------------------
 clean:
-	$(MAKE) -f cpfile.mk clean
-	$(MAKE) -f mknarc.mk clean
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f cpfile.mk clean
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f mknarc.mk clean
 
 fake:
-	$(MAKE) -f cpfile.mk fake
-	$(MAKE) -f mknarc.mk
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f cpfile.mk fake
+	$(MAKE) -j $(NUMBER_OF_PROCESSORS) -f mknarc.mk
