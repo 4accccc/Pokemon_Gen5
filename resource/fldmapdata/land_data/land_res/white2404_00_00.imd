@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-07-06T14:26:46" source="white2404_00_00.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-07-20T12:46:39" source="white2404_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-07-06T14:26:46" source="white2404_00_00.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-07-20T12:46:39" source="white2404_00_00.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1350,10 +1350,10 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="in81_hinoko_1"
+	<material index="10" name="in81_hinoko_2"
 		light0="off" light1="off" light2="off" light3="off"
-		face="both"
-		alpha="19"
+		face="front"
+		alpha="9"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -1374,10 +1374,10 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="in81_hinoko_2"
+	<material index="11" name="in81_hinoko_3"
 		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="9"
+		face="both"
+		alpha="19"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -1518,7 +1518,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="in81_magu03_1"
+	<material index="17" name="in81_magu03_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1596,7 +1596,7 @@
 		alpha="22"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="1"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1614,7 +1614,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="21" name="in81_magu06_1"
+	<material index="21" name="in81_magu06_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="16"
@@ -1638,7 +1638,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="22" name="in81_magu06_2"
+	<material index="22" name="in81_magu06_5"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="6"
@@ -8782,8 +8782,8 @@
 		volume_r="2.741943"
 	>
 		<display index="0" material="9" polygon="9" priority="0"/>
-		<display index="1" material="10" polygon="10" priority="0"/>
-		<display index="2" material="11" polygon="8" priority="0"/>
+		<display index="1" material="10" polygon="8" priority="0"/>
+		<display index="2" material="11" polygon="10" priority="0"/>
 	</node>
 	<node index="5" name="polySurface75" kind="mesh"
 		parent="0"
