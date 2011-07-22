@@ -15,6 +15,9 @@
 #include "app/mdlid_def.h" // for MDLID_MAX
 
 #include "savedata/medalbox_rank_def.h" // rankに関する定義ファイル
+
+
+#include "savedata/habitat_list_save.h"
 //=============================================================================
 /**
  *					定数定義
@@ -89,6 +92,9 @@ extern int MEDALBOX_GetWorkSize(void);
  
 // セーブデータのポインタを返す
 extern MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK *p_sv );
+
+// メダルボックスの中にせいそくちリストがある
+extern HABITATLIST_SAVE* MEDALBOX_GetHabitatListSave( MEDALBOX *p_mdlbox );
 
 #ifdef PM_DEBUG
 extern void DEBUG_SetMedalState(MEDALBOX * p_mdlbox, MedalID medal_id , u8 state);

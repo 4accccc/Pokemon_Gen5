@@ -71,7 +71,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/outside_permanent.c \
         savedata/key_system_save.c \
         savedata/pokewood_rec.c \
-        savedata/data_convert_save.c
+        savedata/data_convert_save.c \
+        savedata/habitat_list_save.c
 
 
 #’ÊM‚Ìí’“

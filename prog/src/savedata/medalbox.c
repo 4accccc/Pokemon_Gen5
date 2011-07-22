@@ -40,6 +40,10 @@ struct _MEDALBOX{
   u8        push_medal;       // イチオシメダル番号
   u8        box_rank;         // メダルボックスランク
   u16       padding;
+
+  //メダルボックス内にせいそくちリストセーブデータを配置する。
+  //せいそくちリストワークをPRIVATEにするため構造体を入れずサイズ分だけ確保
+  u8        habitat_list_save_area[HABITATLIST_SAVE_WORK_SIZE];
 };
 
 //=============================================================================
@@ -127,6 +131,8 @@ void MEDALBOX_Init(MEDALBOX *p_mdlbox)
 {
   GFL_STD_MemFill(p_mdlbox, 0, sizeof(MEDALBOX));
   p_mdlbox->push_medal = MDLID_MAX;
+
+  HABITATLIST_SAVE_Init( MEDALBOX_GetHabitatListSave(p_mdlbox) );
 }
 
 //----------------------------------------------------------------------------
@@ -474,6 +480,19 @@ MEDALBOX* SaveData_GetMedalBox( SAVE_CONTROL_WORK * p_sv )
 	return SaveControl_DataPtrGet(p_sv, GMDATA_ID_MEDALBOX);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  せいそくちリストセーブデータを取得
+ *
+ *	@param	MEDALBOX *p_mdlbox  メダルボックスセーブワーク
+ *
+ *	@return せいそくちリストセーブデータ
+ */
+//-----------------------------------------------------------------------------
+HABITATLIST_SAVE* MEDALBOX_GetHabitatListSave( MEDALBOX *p_mdlbox )
+{
+  return (HABITATLIST_SAVE*)p_mdlbox->habitat_list_save_area;
+}
 
 //==============================================================================
 //  デバッグ用
