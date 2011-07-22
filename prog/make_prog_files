@@ -1689,7 +1689,9 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_PMSINPUT
 #===> GROUP_OVERLAY_SCRCMD
-SRCS_OVERLAY_MEDALINFO = app/medal_info/medal_info.c
+SRCS_OVERLAY_MEDALINFO = app/medal_info/medal_info.c \
+                         app/medal_info/medal_info_beacon.c \
+                         app/medal_info/medal_info_viewer.c
 
 
 #ƒpƒŒƒX

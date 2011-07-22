@@ -25,12 +25,12 @@
 #include "sound/pm_sndsys.h"
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
 
-#include "app/beacon_detail.h"
+#include "app/medal_info_beacon.h"
 
 //============================================================================================
 //============================================================================================
 
-FS_EXTERN_OVERLAY(beacon_detail);
+FS_EXTERN_OVERLAY(medalinfo);
 FS_EXTERN_OVERLAY(fieldmap);
 
 enum _EVENT_CG_WIRELESS {
@@ -49,7 +49,7 @@ typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gdata;
   SAVE_CONTROL_WORK *save;
-  BEACON_DETAIL_PARAM prm;
+  BEACON_MEDALINFO_INIT_PARAM prm;
   u8 target;
 } EVWORK_PUSH_MEDAL;
 
@@ -83,11 +83,11 @@ static GMEVENT_RESULT EVENT_PushMedalMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     //break throw
   case _CALL_PUSH_MEDAL:
-    MI_CpuClear8(&bdw->prm,sizeof(BEACON_DETAIL_PARAM));
+    MI_CpuClear8(&bdw->prm,sizeof(BEACON_MEDALINFO_INIT_PARAM));
     bdw->prm.gsys = bdw->gsys;
     bdw->prm.gdata = bdw->gdata;
     bdw->prm.target = bdw->target;
-    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(beacon_detail), &BeaconDetailProcData, &bdw->prm);
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(medalinfo), &beacon_medalInfo_ProcData, &bdw->prm);
     (*seq)++;
     break;
   case _WAIT_PUSH_MEDAL:
