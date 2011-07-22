@@ -658,14 +658,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロコ『ポワーン……▼
+			<Text>ヒロコ『ポワ～ン……▼
 あっ！　すいません　ひなたぼっこ
 してて　つい　ポワポワしてました▼
 ん～　いいてんき　ですね！
 ここで　いっしょに　ポワりませんか？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T02:28:43" />
+				Time="2011-07-22T09:50:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -673,14 +673,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロコ『ポワーン……▼
+			<Text>ヒロコ『ポワ～ン……▼
 あっ！　すいません　ひなたぼっこ
 してて　つい　ポワポワしてました▼
 ん～　いい天気　ですね！
 ここで　一緒に　ポワりませんか？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:39:59" />
+				Time="2011-07-22T09:50:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -723,14 +723,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒロコ『わわっ！　みました！？
-ずーっと　しょうひんが　かわってなかった▼
-あの　ぐうたらショップに
+ずーっと　しょうひんが　かわってなかった▽
+あの　ぐうたらショップに▽
 しんしょうひんが　ならんだんです！▼
 うーん……
 あめでも　ふらなきゃいいんですけど▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T02:20:45" />
+				Time="2011-07-22T09:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -739,14 +739,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒロコ『わわっ！　見ました！？
-ずーっと　商品が　変わってなかった▼
-あの　ぐうたらショップに
+ずーっと　商品が　変わってなかった▽
+あの　ぐうたらショップに▽
 新商品が　並んだんです！▼
 うーん……
 大雨でも　振らなきゃいいんですけど▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T02:20:25" />
+				Time="2011-07-22T09:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1348,14 +1348,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>マサオ『おれの　にいちゃんは
-ショップで　はたらいてるんだー！▼
-のんびりやさんだから　なかなか
+ショップで　はたらいてるんだけど▼
+めんどうくさがって　なかなか
 しんせいひんを　ならべないのさ▼
 どうくつ　たんけんでも　しながら
 きながに　まっておくれよ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T08:06:10" />
+				Time="2011-07-22T09:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1364,14 +1364,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>マサオ『おれの　兄ちゃんは
-ショップで　働いてるんだー！▼
-のんびり屋さんだから　なかなか
+ショップで　働いてるんだけど▼
+面倒臭がって　なかなか
 新製品を　並べないのさ▼
 どうくつ探検でも　しながら
 気長に　待っておくれよ▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T08:06:22" />
+				Time="2011-07-22T09:55:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3294,12 +3294,12 @@
 			<Text>カルロス『たびの　じゅんびをしようと
 ショップに　いってみたら▽
 ずいぶん　しなぞろえが　よくなってたよ▼
-それで　ショップの　にいちゃんが
+でさ　ショップの　にいちゃんが
 [Name:TrainerName ]に　まけてられないって▽
 いってたけど　どういういみだろ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T08:07:58" />
+				Time="2011-07-22T09:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3310,12 +3310,12 @@
 			<Text>カルロス『旅の準備を　しようと思って
 ショップに　行ってみたら▽
 ずいぶん　品ぞろえが　良くなってたよ▼
-それで　ショップの　にいちゃんが
+でさ　ショップの　にいちゃんが
 [Name:TrainerName ]に　負けてられないって▽
 言ってたけど　どういう意味だろ？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T08:08:04" />
+				Time="2011-07-22T09:58:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4831,13 +4831,13 @@
 			Language="JPN">
 			<Text>ミホ『こっちに　ひっこしてきたら
 おはだが　つるつるになったの！▼
-しんせんな　たべものを　まいにち
+とれたての　きのみを　まいにち
 たべているおかげかな？▼
 だいしぜんって　すごいね！
 だいしぜん　ばんざーい！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:09:27" />
+				Time="2011-07-22T09:34:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4847,13 +4847,13 @@
 			Language="JPN_KANJI">
 			<Text>ミホ『こっちに　引っ越してきたら
 お肌が　つるつるになったの！▼
-新鮮な　食べ物を
+取れたての　木の実を
 毎日　食べているおかげかな？▼
 大自然って　すごいね！
 大自然　ばんざーい！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T06:25:54" />
+				Time="2011-07-22T09:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

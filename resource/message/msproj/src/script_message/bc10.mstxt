@@ -529,12 +529,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タクロウ『最高に　キマってる
-おれたちの　いきつけの　ショップに▼
+おれたちの　行きつけの　ショップに▼
 最新の　アイテムが
 入荷されたみたいだぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:57:32" />
+				Time="2011-07-22T08:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6499,16 +6499,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>エミ『おかねを　かせぐためとはいえ
-こんなながく　おなじまちに　いたのは▽
+こんなに　おなじまちに　いたのは▽
 はじめてだな！▼
 いろんなひととも　しりあったし
 おきにいりの　おみせもできた……▼
 でも　そろそろ　たびにでなきゃ
-ホワイトフォレストで▽
+つぎは　ホワイトフォレストで▽
 のんびりってのも　いいかもね！▼　</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T08:03:42" />
+				Time="2011-07-22T09:47:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6522,11 +6522,11 @@
 色んな人とも　知り合ったし
 お気に入りの　お店もできた……▼
 でも　そろそろ　旅にでなきゃ
-ホワイトフォレストで▽
+次は　ホワイトフォレストで▽
 のんびりってのも　いいかもね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T08:03:20" />
+				Time="2011-07-22T09:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
