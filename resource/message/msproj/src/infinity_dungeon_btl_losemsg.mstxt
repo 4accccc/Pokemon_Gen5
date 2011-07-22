@@ -1920,10 +1920,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>つっよ～い！　ふふっ　アリガト！
-良い　息抜きになったよ！▼</Text>
+いい　息抜きになったよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T09:05:17" />
+				Time="2011-07-21T02:22:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2589,11 +2589,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぐぅ！　やっぱり　実力も
-必要だったか……▼</Text>
+			<Text>ぐぅ！
+やっぱり　実力も　必要だったか……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T06:19:09" />
+				Time="2011-07-21T03:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3505,7 +3505,7 @@
 さきに　すすんでください！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T06:15:05" />
+				Time="2011-07-21T03:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3530,6 +3530,13 @@
 				User="swan_scenario:W00293"
 				Time="2011-07-01T09:20:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="swan_scenario:W00293"
+				Time="2011-07-21T03:14:49" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>216</Text>

@@ -446,10 +446,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タクロウ『</Text>
+			<Text>タクロウ『キマってるやつってのはさ
+ほしいものは　ぜったいに▽
+てにいれるんだ！▼
+おまえも　ほしいポケモンが　いたら
+ぜったい　あきらめるなよ！▼
+きよくただしく　よくぼうに　したがって
+てっていてきに　キメていこうぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:01" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -457,10 +463,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タクロウ『</Text>
+			<Text>タクロウ『キマってる奴ってのはさ
+欲しいものは　絶対に▽
+手に入れるんだ！▼
+おまえも　欲しいポケモンが　いたら
+ぜったい　あきらめるなよ！▼
+清く正しく　欲望に　正直に
+徹底的に　キメていこうぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:04" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:07:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -502,10 +514,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タクロウ『</Text>
+			<Text>タクロウ『さいこうに　キマってる
+おれたちの　いきつけの　ショップに▼
+さいしんの　アイテムが
+にゅうかされたみたいだぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:04" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:57:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -513,10 +528,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タクロウ『</Text>
+			<Text>タクロウ『最高に　キマってる
+おれたちの　いきつけの　ショップに▼
+最新の　アイテムが
+入荷されたみたいだぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:04" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -558,10 +576,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タクロウ『</Text>
+			<Text>タクロウ『むかしは　かねめあての
+わるいやつらが　ウロチョロしてたがな▽
+おれが　ほとんど　たいじしてやった！▼
+へっ！　ブラックシティの　へいわを
+キメるのは　おれだぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:04" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:09:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -569,10 +591,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タクロウ『</Text>
+			<Text>タクロウ『昔は　金目当ての
+悪い奴らが　ウロチョロしてたがな▽
+おれが　ほとんど　退治してやった！▼
+へっ！　ブラックシティの　平和を
+キメるのは　おれだぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:04" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:09:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1549,10 +1575,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カレン『</Text>
+			<Text>カレン『つわものたちが　あつまる
+しゅぎょうじょうが　あるときいて▽
+ポケモンたちを　つれてきたの！▼
+あなたも　トレーナーね！
+ともに　はげみましょう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:14" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1560,10 +1590,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレン『</Text>
+			<Text>カレン『つわものたちが集まる
+修行場が　あると聞いて▽
+ポケモンたちを　連れてきたの！▼
+あなたも　トレーナーね！
+共に　励みましょう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:16" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:10:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1605,10 +1639,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カレン『</Text>
+			<Text>カレン『あなた！　[Name:TrainerName ]ね！▼
+くろのまてんろうを　だいぶ
+こうりゃく　したみたいだけど▽
+わたしも　まけないから！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:16" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1616,10 +1653,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレン『</Text>
+			<Text>カレン『あなた！　[Name:TrainerName ]ね！▼
+黒の摩天楼を　だいぶ
+攻略したみたいだけど▽
+わたしも　負けないから！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:16" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1661,10 +1701,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カレン『</Text>
+			<Text>カレン『おめでとう！！
+くろのまてんろうを　クリアしたってね！▼
+クリアを　おいわいして　ショップが
+アイテムを　にゅうかしたみたいよ！▼
+いってみたら　どうかしら？
+うーん　わたしも　がんばらないと！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:16" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:52:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1672,10 +1717,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレン『</Text>
+			<Text>カレン『おめでとう！！
+黒の摩天楼を　クリアしたってね！▼
+クリア記念に　ショップが
+新製品を　入荷したみたいよ！▼
+行ってみたら　どうかしら？
+うーん　わたしも　がんばらないと！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:16" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2212,10 +2262,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カズホ『</Text>
+			<Text>カズホ『ろんぶんを　かくために
+ブラックシティに　きたんです▼
+テーマは　としせいかつと　ポケモン！▼
+とかいで　つかれた　ひとびとに
+ポケモンが　あたえる▽
+いやしの　こうかを　しらべにきたの！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:42:29" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T07:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2223,10 +2278,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カズホ『</Text>
+			<Text>カズホ『論文を　書くために
+ブラックシティに　来たんです▼
+テーマは　都市生活とポケモン！▼
+都会で疲れた　人々に
+ポケモンが　与える▽
+癒しの　効果を　調べにきたの！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:42:34" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T07:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2268,10 +2328,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カズホ『</Text>
+			<Text>カズホ『ブラックシティで
+ちょうさしていた　ろんぶんが▽
+やっと　まとまったの！▼
+やっぱり　とかいでも　いちばんの
+ストレスかいしょうほうは▽
+ポケモンと　ふれあうことだったのよ！▼
+よーし！　つぎの　フィールドワークは
+ホワイトフォレストに　いこうかな？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:42:34" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T07:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2279,10 +2346,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カズホ『</Text>
+			<Text>カズホ『ブラックシティで
+調査していた　論文が▽
+やっと　まとまったの！▼
+やっぱり　都会でも　一番の
+ストレス解消法は▽
+ポケモンと　触れ合うことだったのよ！▼
+よーし！　次の　フィールドワークは
+ホワイトフォレストに　行こうかな？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:42:34" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T07:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3974,10 +4048,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユミコ『</Text>
+			<Text>ユミコ『なだたる　かいしゃが　あつまる
+このブラックシティでも　ゆびおりの▽
+きぎょうに　しゅうしょく　したの！▼
+バリバリはたらいて
+しゅっせ　しちゃうんだから！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:35" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:17:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3985,10 +4063,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユミコ『</Text>
+			<Text>ユミコ『名だたる会社が　集まる
+このブラックシティでも▽
+指折りの　企業に　就職したの！▼
+バリバリ働いて
+出世　しちゃうんだから！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:38" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:17:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4030,10 +4112,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユミコ『</Text>
+			<Text>ユミコ『わたし　もうだめ！　だめなの！
+うわぁああああああああああん！▼
+ひぐっ……しごとでは　しっぱいするし
+こいびとには　ふられちゃうし……▼
+ホワイトフォレストに　にげたい……
+もりと　ポケモンに　いやされたい……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:38" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:43:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4041,10 +4128,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユミコ『</Text>
+			<Text>ユミコ『わたし　もうだめ！　だめなの！
+うわぁああああああああああん！▼
+ひぐっ……仕事では　失敗するし
+恋人には　振られちゃうし……▼
+ホワイトフォレストに　逃げたい……
+森と　ポケモンに　癒されたい……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:38" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:45:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4086,10 +4178,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユミコ『</Text>
+			<Text>ユミコ『このあいだ　かいしゃで
+おおきなトラブルを　かいけつしてね▽
+みんなに　ほめられちゃった♪▼
+いろいろあったけど　やめないで
+つづけてて　よかったな！▼
+これからも　このブラックシティで
+バリバリおかねを　かせいでいくわよ～▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:38" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:51:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4097,10 +4195,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユミコ『</Text>
+			<Text>ユミコ『この間　会社で
+おおきなトラブルを　解決してね▽
+みんなに　褒められちゃった♪▼
+色々あったけど　辞めないで
+続けてて　良かったな！▼
+これからも　このブラックシティで
+バリバリお金を　稼いでいくわよ～▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:33:38" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:53:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4857,10 +4961,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリザ『</Text>
+			<Text>エリザ『とみと　めいせいを　もとめて
+このよくぼうのまちに　やってきたの！▼
+まずは　くろのまてんろう　ってのを
+だれよりも　はやくクリアーして▽
+ゆうめいじんに　なってやるんだから！▼
+って　うそ……あなた　クリアーしたの？
+えー！　わたしの　けいかくがぁ！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:50:18" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:12:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4868,10 +4978,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリザ『</Text>
+			<Text>エリザ『富と　名声を　求めて
+この欲望の町に　やってきたの！▼
+まずは　黒の摩天楼　ってのを
+だれよりも　はやくクリアーして▽
+有名人に　なってやるんだから！▼
+って　うそ……あなた　クリアーしたの？
+えー！　わたしの　計画がぁ！！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:50:21" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:12:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5078,10 +5194,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロノリ『</Text>
+			<Text>ヒロノリ『ほしいものが　あるんスけど
+なかなか　ショップに▽
+にゅうか　されないんスよね！▼
+しばらくしたら　しいれてくれるって
+ショップの　ひとは　いってたッスけど▽
+まちきれないッス！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:32" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:19:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5089,10 +5210,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロノリ『</Text>
+			<Text>ヒロノリ『欲しいものが　あるんスけど
+なかなか　ショップに▽
+入荷されないんスよね！▼
+しばらくしたら　仕入れてくれるって
+ショップの人は　言ってたッスけど▽
+待ちきれないッス！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:35" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5134,10 +5260,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロノリ『</Text>
+			<Text>ヒロノリ『ショップに　いってみたッスか？
+しんしょうひんが　にゅうかされてたッス！▼
+でも　まだ　オレのほしい
+アレは　にゅうかされて　ないッス……▼
+はやく　アレが　てに　はいらないと
+オレは　たいへんなことに　なるッス！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:35" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:24:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5145,10 +5276,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロノリ『</Text>
+			<Text>ヒロノリ『ショップに　行ってみたッスか？
+新商品が　入荷されてたッス！▼
+でも　まだ　オレの欲しい
+アレは　入荷されて　ないッス……▼
+はやく　アレが　手に　入らないと
+オレは　大変なことに　なるッス！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:35" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:24:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5190,10 +5326,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロノリ『</Text>
+			<Text>ヒロノリ『やっとショップに
+アレが　にゅうかされたッス！▽
+ずーっと　まってたッスよぉ～▼
+……えっ　アレってなにかって？▼
+プライバシーッス！
+ぜったい　おしえられないッス！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:35" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:27:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5201,10 +5342,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロノリ『</Text>
+			<Text>ヒロノリ『やっとショップに
+アレが　入荷されたッス！▽
+ずーっと　待ってたッスよぉ～▼
+……えっ　アレってなにかって？▼
+プライバシーッス！
+絶対　教えられないッス！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:35" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5301,10 +5447,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ケン『</Text>
+			<Text>ケン『くろのまてんろうに
+いどもうって　トレーナーが▽
+せかいじゅうから　あつまってきてる▼
+[Name:TrainerName ]も　ちょうせんするのか？▼
+ハードな　たたかいが　まっているぞ
+とびきりの　ポケモンを　つれていけよ▼
+</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:43" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T05:57:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5312,10 +5464,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ケン『</Text>
+			<Text>ケン『黒の摩天楼に
+挑もうって　トレーナーが▽
+世界中から　集まってきてる▼
+[Name:TrainerName ]も　挑戦するのか？▼
+ハードな　戦いが　待っているぞ
+とびきりの　ポケモンを　連れていけよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:47" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T05:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5357,10 +5514,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ケン『</Text>
+			<Text>ケン『くろのまてんろうでの
+[Name:TrainerName ]の　かつやく　きいてるぜ▼
+だけど　ゆだんするなよ
+エリアが　あがればあがるほど▽
+ひとくせある　あいてが　ふえてくる……▼
+まっ　けいけんしゃの　ちゅうこくさ
+がんばって　うえを　めざせよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:47" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5368,10 +5531,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ケン『</Text>
+			<Text>ケン『黒の摩天楼での
+[Name:TrainerName ]の　活躍　聞いてるぜ▼
+だけど　油断するなよ
+エリアが　上がれば上がるほど▽
+一癖ある相手が　増えてくる……▼
+まっ　経験者の　忠告さ
+頑張って　上を　目指せよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:47" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T06:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5413,10 +5582,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ケン『</Text>
+			<Text>ケン『くろのまてんろうを
+ついに　せいは　したんだってな！▼
+[Name:TrainerName ]……
+すごいよ　おまえ……▼
+おれだって　なんども　ちょうせんした
+だけど　そのたびに　しっぱいして▽
+いつしか　あきらめちまってた……▼
+ポケモンと　じぶんを　しんじつづけた
+おまえを　そんけい　するぜ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:47" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:14:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5424,10 +5601,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ケン『</Text>
+			<Text>ケン『黒の摩天楼を
+ついに　制覇　したんだってな！▼
+[Name:TrainerName ]……
+すごいよ　おまえ……▼
+おれだって　何度も　挑戦した
+だけど　その度に　失敗して▽
+いつしか　あきらめちまってた……▼
+ポケモンと　自分を　信じ続けた
+おまえを　尊敬するぜ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:34:47" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6184,10 +6369,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エミ『</Text>
+			<Text>エミ『アルバイトを　してないときは
+くろのまてんろうで　しょうきんを▽
+がっぽり　かせいでいるの！▼
+こっちにきて　よかったわ
+のどかな　ところは　すきだけど▼
+ホワイトフォレストじゃ
+こうは　もうけられないもの▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:43:46" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T07:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6195,10 +6386,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エミ『</Text>
+			<Text>エミ『アルバイトを　してないときは
+黒の摩天楼で　賞金を▽
+がっぽり　稼いでいるの！▼
+こっちにきて　良かったわ
+のどかな　ところは　好きだけど▼
+ホワイトフォレストじゃ
+こうは　もうけられないもの▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:43:49" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6240,10 +6437,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エミ『</Text>
+			<Text>エミ『[Name:TrainerName ]って
+くろのまてんろうで▽
+かなり　うえまで　いったんだって？▼
+すごいよね　わたしなんか
+さいしょのエリアで　げんかい！▼
+それでも　じゅうぶん　おこづかいは
+かせげるからいいけどさ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:43:49" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:43:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6251,10 +6454,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エミ『</Text>
+			<Text>エミ『[Name:TrainerName ]って　黒の摩天楼で
+かなり　上まで　行ったんだって？▼
+すごいよね　わたしなんか
+最初のエリアで　限界！▼
+それでも　十分　おこづかいは
+稼げるからいいけどさ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:43:49" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:43:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6296,10 +6504,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エミ『</Text>
+			<Text>エミ『おかねを　かせぐためとはいえ
+こんなに　おなじまちに　いたのは▽
+はじめてだな！▼
+いろんなひととも　しりあったし
+おきにいりの　おみせもできた……▼
+でも　そろそろ　たびにでなきゃ
+ホワイトフォレストで▽
+のんびりってのも　いいかもね！▼　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:43:49" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6307,10 +6522,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エミ『</Text>
+			<Text>エミ『お金を　稼ぐためとはいえ
+こんなに　同じ町に　いたのは▽
+初めてだな！▼
+色んな人とも　知り合ったし
+お気に入りの　お店もできた……▼
+でも　そろそろ　旅にでなきゃ
+ホワイトフォレストで▽
+のんびりってのも　いいかもね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:43:49" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T08:43:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

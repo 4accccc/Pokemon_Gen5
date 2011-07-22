@@ -10,8 +10,6 @@
 			<Directory
 				Name="battle">
 				<ContentItem
-					Name="btl_pw_std.mstxt" />
-				<ContentItem
 					Name="btl_std.mstxt" />
 				<ContentItem
 					Name="btl_ui.mstxt" />
@@ -791,8 +789,6 @@
 				<ContentItem
 					Name="c15r0201.mstxt" />
 				<ContentItem
-					Name="c15r0301.mstxt" />
-				<ContentItem
 					Name="c16.mstxt" />
 				<ContentItem
 					Name="c16r0101.mstxt" />
@@ -1103,8 +1099,6 @@
 				<ContentItem
 					Name="d26.mstxt" />
 				<ContentItem
-					Name="d26r0101.mstxt" />
-				<ContentItem
 					Name="d27.mstxt" />
 				<ContentItem
 					Name="d27r0101.mstxt" />
@@ -1372,8 +1366,6 @@
 					Name="poke_waza.mstxt" />
 				<ContentItem
 					Name="pokecen_scr.mstxt" />
-				<ContentItem
-					Name="pokewood_scr.mstxt" />
 				<ContentItem
 					Name="postman.mstxt" />
 				<ContentItem
@@ -1857,8 +1849,6 @@
 			<ContentItem
 				Name="manual.mstxt" />
 			<ContentItem
-				Name="mb_child_dataconv.mstxt" />
-			<ContentItem
 				Name="mb_child_movie.mstxt" />
 			<ContentItem
 				Name="medalbox.mstxt" />
@@ -1957,15 +1947,11 @@
 			<ContentItem
 				Name="waza_oboe.mstxt" />
 			<ContentItem
-				Name="wbt_download.mstxt" />
-			<ContentItem
 				Name="wbt_system.mstxt" />
 			<ContentItem
 				Name="wbt_tournament.mstxt" />
 			<ContentItem
 				Name="wbt_trmsg.mstxt" />
-			<ContentItem
-				Name="wbt_trmsg_dl.mstxt" />
 			<ContentItem
 				Name="wbt_wincount.mstxt" />
 			<ContentItem

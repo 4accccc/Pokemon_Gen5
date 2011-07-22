@@ -312,11 +312,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たまごサンドに　クリームパン！
+			<Text>カレーパンに　クリームパン！
 グルメなしょうぶを　しましょうよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T02:18:06" />
+				Time="2011-07-21T02:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -324,11 +324,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たまごサンドに　クリームパン！
+			<Text>カレーパンに　クリームパン！
 グルメな勝負を　しましょうよ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-19T02:18:23" />
+				Time="2011-07-21T02:30:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1777,12 +1777,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ウウーッ！　まよったー！
-どこから　すすめばいいんだ！▼
+どこへ　すすめばいいんだ！▼
 ……なんだい　キミは　このボクより
 さきに　いこう　っていうの！？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-04T10:35:51" />
+				Time="2011-07-21T02:46:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1791,12 +1791,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ウウーッ！　迷ったー！
-どこから　進めばいいんだー！▼
+どこへ　進めばいいんだー！▼
 ……なんだい　キミは　このボクより
 先に　行こうって言うの！？▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T09:38:35" />
+				Time="2011-07-21T02:46:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1880,11 +1880,11 @@
 			Language="JPN_KANJI">
 			<Text>もうっ！
 わたしは　立派な　レディーなの！▼
-こどもあつかいしたら
+こども扱いしたら
 承知しないから！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-20T06:12:48" />
+				Time="2011-07-21T02:47:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3486,13 +3486,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さいきん　ここで　悪さを　行う
+			<Text>さいきん　ここで　悪さを行う
 トレーナーが　いるらしい……▼
 まさか　おまえじゃ　ないだろうな！？
 ちょっと　こっちに来い！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-05T05:32:50" />
+				Time="2011-07-21T03:05:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

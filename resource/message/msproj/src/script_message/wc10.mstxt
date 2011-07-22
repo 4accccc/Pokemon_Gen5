@@ -658,10 +658,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロコ『</Text>
+			<Text>ヒロコ『ポワーン……▼
+あっ！　すいません　ひなたぼっこ
+してて　つい　ポワポワしてました▼
+ん～　いいてんき　ですね！
+ここで　いっしょに　ポワりませんか？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:28" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:28:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -669,10 +673,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロコ『</Text>
+			<Text>ヒロコ『ポワーン……▼
+あっ！　すいません　ひなたぼっこ
+してて　つい　ポワポワしてました▼
+ん～　いい天気　ですね！
+ここで　一緒に　ポワりませんか？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:32:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -714,10 +722,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロコ『</Text>
+			<Text>ヒロコ『わわっ！　みました！？
+ずーっと　しょうひんが　かわってなかった▼
+あの　ぐうたらショップに
+しんしょうひんが　ならんだんです！▼
+うーん……
+あめでも　ふらなきゃいいんですけど▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:20:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -725,10 +738,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロコ『</Text>
+			<Text>ヒロコ『わわっ！　見ました！？
+ずーっと　商品が　変わってなかった▼
+あの　ぐうたらショップに
+新商品が　並んだんです！▼
+うーん……
+大雨でも　振らなきゃいいんですけど▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:20:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -770,10 +788,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒロコ『</Text>
+			<Text>ヒロコ『ポケモンが　あそんでいるのを
+あさから　ボーっと　ながめていたら▽
+しあわせな　きぶんに　なってきました▼
+あしたも　こんなふうに
+きもちのいいひだと　いいですね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:42:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -781,10 +803,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒロコ『</Text>
+			<Text>ヒロコ『ポケモンたちが　遊んでいるのを
+朝から　ボーっと　眺めていたら▽
+幸せな　気分に　なってきました▼
+明日も　こんな風に
+気持ちの良い日だと　いいですね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:42:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1321,10 +1347,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マサオ『</Text>
+			<Text>マサオ『おれの　にいちゃんは
+ショップで　はたらいてるんだー！▼
+のんびりやさんだから　なかなか
+しんせいひんを　ならべないんだ▼
+どうくつ　たんけんでも　しながら
+きながに　まっておくれよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:44" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:07:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1332,10 +1363,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マサオ『</Text>
+			<Text>マサオ『おれの　兄ちゃんは
+ショップで　働いてるんだー！▼
+のんびり屋さんだから　なかなか
+新製品を　並べないんだよ▼
+どうくつ探検でも　しながら
+気長に　待っておくれよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:50" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:07:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1377,10 +1413,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マサオ『</Text>
+			<Text>マサオ『すーっごい　ひさしぶりに！
+にいちゃんが　はたらくショップに▽
+しんせいひんが　ならんだんだよ！▼
+おれの　にいちゃんは　やればできる
+にいちゃんなんだー！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:50" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:47:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1388,10 +1428,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マサオ『</Text>
+			<Text>マサオ『すーっごい　久しぶりに！
+兄ちゃんが　働くショップに▽
+新製品が　並んだんだよ！▼
+おれの　兄ちゃんは　やればできる
+兄ちゃんなんだー！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:50" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:48:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1433,10 +1477,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マサオ『</Text>
+			<Text>マサオ『にいちゃんが　さいきん
+めちゃくちゃ　やるきなんだー！▼
+はたらいてる　ショップにも　ガンガン
+しんせいひん　ならべたりしてさー！▼
+あのどうくつを　クリアした　[Name:TrainerName ]
+ってひとに　しげきされたんだって！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:50" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:53:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1444,10 +1493,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マサオ『</Text>
+			<Text>マサオ『兄ちゃんが最近
+めちゃくちゃ　やる気なんだー！▼
+働いてる　ショップにも　ガンガン
+新製品を　並べたりしてさー！▼
+あのどうくつを　クリアした　[Name:TrainerName ]
+って人に　刺激されたんだって！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:50" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:54:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1764,10 +1818,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タクマ『</Text>
+			<Text>タクマ『しゅぎょう</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:46:54" />
+				User="swan_scenario:W00293"
+				Time="2011-07-22T02:45:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3086,10 +3140,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カルロス『</Text>
+			<Text>カルロス『￥ホワイトフォレストとか
+</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:04" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4189,10 +4244,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガクト『</Text>
+			<Text>ガクト『しんせいなる　しろのたいじゅの
+したに　とつぜん　どうくつができた！▼
+ちょうさいんや　トレーナーが
+たくさん　きているみたいだけど▼
+じもとみんの　われわれが　いちばんに
+さいかそうに　いくぞ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:13" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:11:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4200,10 +4260,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガクト『</Text>
+			<Text>ガクト『神聖なる　白の大樹の下に
+突然　どうくつが現れた！▼
+調査員や　トレーナーが
+沢山　来ているみたいだけど▼
+地元民の我々が
+一番に　最下層に行くぞ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:17" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:12:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4245,10 +4310,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガクト『</Text>
+			<Text>ガクト『おお！　[Name:TrainerName ]じゃないか！▼
+はなしには　きいてるよ
+どうくつ　だいぶ　ふかいところまで▽
+もぐったみたいだな！▼
+はやくも　あきらめぎみの　わしに
+かわって　さいかそうまで　いってくれ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:17" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:05:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4256,10 +4326,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガクト『</Text>
+			<Text>ガクト『おお！　[Name:TrainerName ]じゃないか！▼
+話には　聞いてるよ
+どうくつ　だいぶ　深い所まで▽
+潜ったみたいだな！▼
+早くも　あきらめ気味の　わしに
+変わって　最下層まで　行ってくれ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:17" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:07:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4301,10 +4376,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガクト『</Text>
+			<Text>ガクト『おめでとう！
+じもとの　みんなを　だいひょうして▼
+[Name:TrainerName ]の　しろのたいじゅ
+クリアを　いわわせてもらうよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:17" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4312,10 +4390,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガクト『</Text>
+			<Text>ガクト『おめでとう！
+地元の　みんなを　代表して▼
+[Name:TrainerName ]の　白の大樹クリアを
+祝わせてもらうよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:17" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T10:25:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4632,10 +4713,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミホ『</Text>
+			<Text>ミホ『￥おもしろばなしけい</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:53:09" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:33:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6175,10 +6256,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローザ『</Text>
+			<Text>ローザ『￥白の大樹がらみの話</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:28" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6838,10 +6919,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グレース『</Text>
+			<Text>グレース『￥しろのたいじゅかショップ
+ショップすくないから
+いれたほうがいいかも</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:47:34" />
+				User="swan_scenario:W00293"
+				Time="2011-07-21T09:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
