@@ -115,10 +115,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『そうだとも</Text>
+			<Text>ヴィオ『そうだとも▼
+あの　ポケモン……
+キュレムの　ちからと▼
+プラズマだんの　かがくりょくで
+つくりだした　こおりの　ミサイルです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:32:33" />
+				Time="2011-07-22T11:26:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -126,10 +130,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『そうだとも</Text>
+			<Text>ヴィオ『そうだとも▼
+あの　ポケモン……
+キュレムの　ちからと▼
+プラズマだんの　かがくりょくで
+つくりだした　こおりの　ミサイルです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:32:36" />
+				Time="2011-07-22T11:26:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -217,13 +225,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『きまってるだろ！
+			<Text>[Name:TrainerName Idx="1" ]『きまってるだろ！　オレの
 ポケモンを　とりもどすためだ！▼
-５ねんまえ　ヒオウギで　オレの
+５ねんまえ　ヒオウギで
 チョロネコを　うばったのは　おまえか！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:41:09" />
+				Time="2011-07-22T11:26:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -231,13 +239,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『決まってるだろ！
+			<Text>[Name:TrainerName Idx="1" ]『決まってるだろ！　オレの
 ポケモンを　取り戻すためだ！▼
-５年前　ヒオウギで　オレの
+５年前　ヒオウギで
 チョロネコを　奪ったのは　おまえか！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:47:47" />
+				Time="2011-07-22T11:26:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
