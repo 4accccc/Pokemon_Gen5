@@ -6,13 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんちゅーの？▼
-シリンダーブリッジで　あしうらに
-つたわってくる　あの　しんどう？[Ctrl2:LineFeed ]
-さいきょうに　クールだよな！</Text>
+			<Text>おっと！　てつどうファンと　いっても
+それぞれ　ちがうからよ！▼
+のりてつ　おりてつ▼
+えきてつ　しゃりょうてつ▼
+じこくひょうてつ　とりてつ　とりてつ▼
+まだまだ　あるけど
+いっしょくたに　するんじゃねーぞ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:55:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,13 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんちゅーの？▼
-シリンダーブリッジで　足裏に
-伝わってくる　あの　振動？[Ctrl2:LineFeed ]
-最強に　クールだよな！</Text>
+			<Text>おっと！　鉄道ファンと　いっても
+それぞれ　違うからよ！▼
+乗り鉄　降り鉄▼
+駅鉄　車両鉄▼
+時刻表鉄　撮り鉄　録り鉄▼
+まだまだ　あるけど
+いっしょくたに　するんじゃねーぞ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:56:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -61,15 +67,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てつどうマニアに　とって
-しかも　ボクのような▽
-しゃしんずき　には▼
-シリンダーブリッジと
-カナワタウンは　かっこうの▽
-さつえいポイント　さ！</Text>
+			<Text>せかいの　てつどうを　みている
+ボクとしては　おおくの　しゃりょうを▼
+チェックできる　カナワタウンは
+やはり　ポイントが　たかいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,14 +81,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>鉄道マニアに　とって
-しかも　ボクのような　撮り鉄には▼
-シリンダーブリッジと
-カナワタウンは　格好の▽
-撮影ポイント　さ！</Text>
+			<Text>世界の　鉄道を　みている
+ボクとしては　多くの　鉄道車両を▼
+チェックできる　カナワタウンは
+やはり　ポイントが　高いね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:12:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -122,11 +125,13 @@
 			Language="JPN">
 			<Text>ゆくてに　そびえる
 きょだいな　てつのはし……▼
-この　シリンダーブリッジの
-もけいを　みているだけで　もえるっす</Text>
+この　シリンダーブリッジの　もけいを
+みているだけで　ちからが　わくっす！▼
+ちからと　いえば……
+これを　あげるっす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -136,11 +141,13 @@
 			Language="JPN_KANJI">
 			<Text>行く手に　そびえる
 巨大な　鉄の橋……▼
-この　シリンダーブリッジの
-模型を　みているだけで　燃えるっす</Text>
+この　シリンダーブリッジの　模型を
+みているだけで　ちからが　わくっす！▼
+ちからと　いえば……
+これを　あげるっす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -150,10 +157,12 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=8、GRIDZ=3、下向き
-※swanでメッセージ修正予定</Comment>
+・アイテム入手処理
+　No034「ちからのこな」
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:10:48" />
+				Time="2011-07-22T03:07:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -168,6 +177,53 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r08r0201_assistantm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちからのこな！　それを　あげると
+ポケモンの　ＨＰが　かいふくっす！▼
+ただし　にがいので
+ポケモンは　すきじゃないようです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:08:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:48:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちからのこな！　それを　あげると
+ポケモンの　ＨＰが　回復っす！▼
+ただし　苦いので
+ポケモンは　好きじゃないようです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:48:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:08:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T03:08:20" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
