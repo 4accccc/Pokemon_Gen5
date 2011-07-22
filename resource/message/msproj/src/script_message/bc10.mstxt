@@ -4958,13 +4958,13 @@
 			<Text>エリザ『とみと　めいせいを　もとめて
 このよくぼうのまちに　やってきたの！▼
 まずは　くろのまてんろう　ってのを
-だれよりも　はやくクリアして▽
+だれよりも　はやく　クリアして▽
 ゆうめいじんに　なってやるんだから！▼
 って　うそ……あなた　クリアしたの？
 えー！　わたしの　けいかくがぁ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:31:42" />
+				Time="2011-07-22T08:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4975,13 +4975,13 @@
 			<Text>エリザ『富と　名声を　求めて
 この欲望の町に　やってきたの！▼
 まずは　黒の摩天楼　ってのを
-だれよりも　はやくクリアして▽
+だれよりも　早く　クリアして▽
 有名人に　なってやるんだから！▼
 って　うそ……あなた　クリアしたの？
 えー！　わたしの　計画がぁ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:31:47" />
+				Time="2011-07-22T08:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5596,7 +5596,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ケン『黒の摩天楼を
-ついに　制覇　したんだってな！▼
+ついに　制覇したんだってな！▼
 [Name:TrainerName ]……
 すごいよ　おまえ……▼
 おれだって　何度も　挑戦した
@@ -5606,7 +5606,7 @@
 おまえを　尊敬するぜ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-22T07:34:08" />
+				Time="2011-07-22T08:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6499,7 +6499,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>エミ『おかねを　かせぐためとはいえ
-こんなに　おなじまちに　いたのは▽
+こんなながく　おなじまちに　いたのは▽
 はじめてだな！▼
 いろんなひととも　しりあったし
 おきにいりの　おみせもできた……▼
@@ -6508,7 +6508,7 @@
 のんびりってのも　いいかもね！▼　</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:43:52" />
+				Time="2011-07-22T08:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6517,7 +6517,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>エミ『お金を　稼ぐためとはいえ
-こんなに　同じ町に　いたのは▽
+こんなに長く　同じ町に　いたのは▽
 初めてだな！▼
 色んな人とも　知り合ったし
 お気に入りの　お店もできた……▼
@@ -6526,7 +6526,7 @@
 のんびりってのも　いいかもね！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-21T08:43:56" />
+				Time="2011-07-22T08:03:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
