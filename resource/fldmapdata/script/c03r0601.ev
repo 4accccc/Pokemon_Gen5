@@ -24,14 +24,46 @@
 _EVENT_DATA   ev_bg_c03r0601_board_01
 _EVENT_DATA   ev_pos_c03r0601_swbell_01
 _EVENT_DATA   ev_c03r0601_middleman2_01
-_EVENT_DATA   ev_c03r0601_INFORMATIONW_01
+_EVENT_DATA   ev_c03r0601_informationw_01
+_EVENT_DATA   ev_zone_c03r0601
+_EVENT_DATA   ev_init_c03r0601
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
 //主人公座標取得変数
 DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c03r0601
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //バージョンごとに異なる接続を配置
+  
+  //B2
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_C03R0601_R04W_EXIT01, 9, 0, 11 )
+  //W2
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_C03R0601_R04_EXIT01, 9, 0, 11 )
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c03r0601
+
+//
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  電光掲示板のイベントスクリプト                            */
@@ -114,7 +146,7 @@ EVENT_END
 /**************************************************************/
 /*  受付嬢：話しかけ                                          */
 /**************************************************************/
-EVENT_START   ev_c03r0601_INFORMATIONW_01
+EVENT_START   ev_c03r0601_informationw_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0601_infomatinonw_01 )
 EVENT_END
 

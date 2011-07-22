@@ -1,5 +1,5 @@
 #../data/r04w.mev
-../tmp/r04w.bin:../data/r04w.mev ../../script/sp_r04w.bin $(UNIQ_SCRIPTHEADER) ../tmp/r04w.h ../../zonetable/zone_id.h ../tmp/r04r0601.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/r04r0701.h ../tmp/r04r0801.h ../tmp/r04r0901.h ../tmp/r04r1001.h 
+../tmp/r04w.bin:../data/r04w.mev ../../script/sp_r04w.bin $(UNIQ_SCRIPTHEADER) ../tmp/r04w.h ../../zonetable/zone_id.h ../tmp/r04r0601.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/r04r0701.h ../tmp/r04r0801.h ../tmp/r04r0901.h ../tmp/r04r1001.h ../tmp/c04r0601.h ../tmp/c03r0601.h 
 	@echo ../data/r04w.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r04w.h ../../zonetable/zone_id.h ../tmp/r04r0601.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/r04r0701.h ../tmp/r04r0801.h ../tmp/r04r0901.h ../tmp/r04r1001.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r04w.h ../../zonetable/zone_id.h ../tmp/r04r0601.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/r04r0701.h ../tmp/r04r0801.h ../tmp/r04r0901.h ../tmp/r04r1001.h ../tmp/c04r0601.h ../tmp/c03r0601.h 
 
