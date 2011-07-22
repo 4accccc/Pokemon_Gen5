@@ -2095,14 +2095,14 @@
 #define SYS_FLAG_ARRIVE_T04               2485 /* 0x09b5 到着フラグ：T04 */
 #define SYS_FLAG_ARRIVE_C11               2486 /* 0x09b6 到着フラグ：C11（国連） */
 #define SYS_FLAG_ARRIVE_D09               2487 /* 0x09b7 到着フラグ：チャンピオンロード */
-		/* not used  2488(0x09b8) */
-		/* not used  2489(0x09b9) */
-		/* not used  2490(0x09ba) */
-		/* not used  2491(0x09bb) */
-		/* not used  2492(0x09bc) */
-		/* not used  2493(0x09bd) */
-		/* not used  2494(0x09be) */
-		/* not used  2495(0x09bf) */
+#define SYS_FLAG_ARRIVE_C12               2488 /* 0x09b8 到着フラグ：C12 */
+#define SYS_FLAG_ARRIVE_C13               2489 /* 0x09b9 到着フラグ：C13 */
+#define SYS_FLAG_ARRIVE_C14               2490 /* 0x09ba 到着フラグ：C14 */
+#define SYS_FLAG_ARRIVE_T06               2491 /* 0x09bb 到着フラグ：T06 */
+#define SYS_FLAG_ARRIVE_T07               2492 /* 0x09bc 到着フラグ：T07 */
+#define SYS_FLAG_ARRIVE_H01               2493 /* 0x09bd 到着フラグ：H01 */
+#define SYS_FLAG_ARRIVE_H03               2494 /* 0x09be 到着フラグ：H03 */
+#define SYS_FLAG_ARRIVE_H05               2495 /* 0x09bf 到着フラグ：H05 */
 		/* not used  2496(0x09c0) */
 		/* not used  2497(0x09c1) */
 		/* not used  2498(0x09c2) */
