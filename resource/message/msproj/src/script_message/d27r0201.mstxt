@@ -31,10 +31,12 @@
 			<Comment>イベント
 ・Black2ver
 ・バリアーが解除されたとき
-・すべて解除されたときは続けて</Comment>
+・すべて解除されたときは
+　続けてswitch_02
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T07:54:03" />
+				Time="2011-07-22T10:51:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -85,6 +87,56 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-21T07:41:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_pass_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうちが　ある……
+パスワードを　いれるみたいだ▼
+パスワードを　いれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T10:55:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T10:49:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>装置が　ある……
+パスワードを　入力するみたいだ▼
+パスワードを　入力しますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T10:55:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T10:49:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・White2ver
+・はい/いいえの選択肢表示
+　はい　→入力画面へ
+　いいえ→終了
+・パスワード関連は
+　hide_ship_passwordで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T10:56:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>入力端末</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T10:49:30" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
