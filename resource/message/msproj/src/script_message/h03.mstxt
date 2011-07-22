@@ -541,11 +541,10 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手処理
-　No355「ニトロチャージ」
-・とにかく走り回って移動させてください＞担当の方</Comment>
+　No355「ニトロチャージ」</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -563,7 +562,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -624,7 +623,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -635,14 +634,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっと　アンタ！▼
-しゅうまつの　よるは
-ここには　こないほうが　いいわよ▼
-きんじょの　わるガキが　あつまって
-くだらないこと　してるから</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -650,14 +645,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　アンタ！▼
-週末の　夜は
-ここには　来ないほうが　いいわよ▼
-近所の　悪ガキが　集まって
-くだらないこと　してるから</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -666,11 +657,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※金曜日の夜のみいない
-※消すタイミングはzoneチェンジ＋時間参照</Comment>
+※swanで削除</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:11:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -688,127 +678,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_h03_badrider1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>テメー　どこの　だれの　きょかで
-ここ　とおるつもりだァ　コラ！？▼
-はなの　きんようびの　ミッドナイトは
-ここは　オイラたち　ばくそうチーム▽
-ブラック[Name:PokemonName Idx="0" ]の▽
-シマ　なんだよお！▼
-テメーみたいに そだちが　よさげで
-うらやましい　かんじの　チビっこは▽
-とっとと　マミーんとこへ　かえんなァ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>テメー　どこの　だれの　許可で
-ここ　通るつもりだァ　コラ！？▼
-花の　金曜日の　ミッドナイトは
-ここは　オイラたち　爆走チーム▽
-ブラック[Name:PokemonName Idx="0" ]の▽
-シマ　なんだよお！▼
-テメーみたいに　育ちが　良さげで
-うらやましい　感じの　ジャリは▽
-とっとと　マミーんとこに　帰んなァ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・データ引継ぎあり
-・なしは</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:52:46" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BADRIDER</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_h03_badrider1_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:52:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:52:50" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:52:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:52:50" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・データ引継ぎなし</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:53:01" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BADRIDER</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T12:53:20" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -819,19 +689,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだ　オマエは……？▼
-ここは……▼
-ブラック[Name:PokemonName Idx="0" ]の
-さいごの　らくえん……▼
-きさまの　ような　ガキには
-えんのない　ばしょさ……▼
-それとも　まさか　オマエ……▼
-ブラック[Name:PokemonName Idx="0" ]の
-そうちょうである　このオレと▽
-しょうぶでも　するってのか……？</Text>
+			<Text>オレたち　こころが　さけぶまま
+はしりたいから　はしってた……▼
+いつまでも　どこまでも
+はしれると　しんじていた……▼
+そう　インフィニティ
+むげんの　ばくそうロード……▼
+ばくそうチーム　ブラックエンペルト
+[Name:TrainerName Idx="1" ]と　タイマンしてたころ▼
+あれが　オレたちの　おうごんじだい
+エイジ　オブ　ゴールド　だったのさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -839,20 +709,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだ　オマエは……？▼
-ここは……▼
-ブラック[Name:PokemonName Idx="0" ]の
-最後の　楽園（パラダイス）……▼
-貴様の　ような　ガキには
-縁のない　場所さ……▼
-それとも　まさか　オマエ……▼
-ブラック[Name:PokemonName Idx="0" ]の
-総長（ヘッド）である　このオレと▽
-勝負（タイマン）でも▽
-するってのか……？</Text>
+			<Text>オレたち　心が　叫ぶまま
+走りたいから　走ってた……▼
+いつまでも　どこまでも
+走れると　信じていた……▼
+そう　インフィニティ
+無限の　爆走ロード……▼
+爆走チーム　ブラックエンペルト
+[Name:TrainerName Idx="1" ]と　タイマンしてたころ▼
+あれが　オレたちの　黄金時代
+エイジ　オブ　ゴールド　だったのさ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -861,23 +730,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※金曜日の夜のみ出現
-
-・選択肢
-　はい→msg_h03_badrider1_02
-　いいえ→msg_h03_badrider1_03
-
-
-※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-※種族名はbadrider2に勝利後、
-　手持ち先頭のポケモンと差し替え
-　デフォルトでは「エンペルト」です
-
-※再戦可能。次回登場は再戦できます。</Comment>
+・データ引継ぎあり
+・1＝前作主人公名
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-22T02:06:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -906,10 +764,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>オレたち　こころが　さけぶまま
+はしりたいから　はしってた……▼
+いつまでも　どこまでも
+はしれると　しんじていた……▼
+そう　インフィニティ
+むげんの　ばくそうロード……▼
+ばくそうチーム　ブラックエンペルト
+アイツと　タイマンしてたころ▼
+あれが　オレたちの　おうごんじだい
+エイジ　オブ　ゴールド　だったのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T12:53:13" />
+				Time="2011-07-22T02:07:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -917,10 +784,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>オレたち　心が　叫ぶまま
+走りたいから　走ってた……▼
+いつまでも　どこまでも
+走れると　信じていた……▼
+そう　インフィニティ
+無限の　爆走ロード……▼
+爆走チーム　ブラックエンペルト
+アイツと　タイマンしてたころ▼
+あれが　オレたちの　黄金時代
+エイジ　オブ　ゴールド　だったのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T12:53:13" />
+				Time="2011-07-22T02:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -928,10 +804,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♂
+・データ引継ぎなし
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T12:53:13" />
+				Time="2011-07-22T02:07:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -943,6 +821,100 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h03_badrider1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h03_badrider1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text />
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-22T01:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
