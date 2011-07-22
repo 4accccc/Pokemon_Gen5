@@ -17327,8 +17327,8 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_C16 = 495
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
-		AREA_ID_OUT60,
-		MATRIX_ID_RESORT01,
+		AREA_ID_IN72,
+		MATRIX_ID_RESONANCE02,
 		NARC_script_seq_c16_bin,
 		NARC_script_seq_sp_c16_bin,	//NARC_script_seq_sp_c16_bin,
 		NARC_script_message_c16_dat,
@@ -17343,27 +17343,27 @@ static const ZONEDATA ZoneData[] = {
 		ZONEDATA_PLACENAME_FLAG_ALL_VIEW,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
-		MC_TYPE_FIELD,  // map_chg_type
-		3,
+		15,        // camera id
+		MC_TYPE_ROOM,  // map_chg_type
+		9,
 		TRUE,
 		TRUE,
 		FALSE,
-		TRUE,
+		FALSE,
     TRUE,
-    TRUE,
-		MATRIX_ID_RESORT01, // camera_area
+    FALSE,
+		MATRIX_ID_RESONANCE02, // camera_area
 		15,   // padding > placeicon
     0,
-		22,
+		5,
 		0,
-		52,
+		4,
 	},
 	{//ZONE_ID_C16R0101 = 496
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_IN72,
-		MATRIX_ID_RRESORT01,
+		MATRIX_ID_RESONANCE01,
 		NARC_script_seq_c16r0101_bin,
 		NARC_script_seq_sp_c16r0101_bin,	//NARC_script_seq_sp_c16r0101_bin,
 		NARC_script_message_c16r0101_dat,
@@ -17387,7 +17387,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     TRUE,
     FALSE,
-		MATRIX_ID_RRESORT01, // camera_area
+		MATRIX_ID_RESONANCE01, // camera_area
 		19,   // padding > placeicon
     0,
 		5,
