@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/14 17:57:33
+#save date:2011/07/22 14:29:23
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r04.wms
 #SECTION START:OBJ_EVENT
@@ -952,59 +952,8 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
-#Door Event Label
-DOOR_ID_R04_C04R0601_EXIT01
-#Next Zone ID Name
-ZONE_ID_C04R0601
-#Next Door ID Name
-DOOR_ID_C04R0601_R04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-472 0 104
-#size
-3 1
-#event number: 1
-#Door Event Label
-DOOR_ID_R04_C03R0601_EXIT01
-#Next Zone ID Name
-ZONE_ID_C03R0601
-#Next Door ID Name
-DOOR_ID_C03R0601_R04_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-472 0 -1656
-#size
-3 1
-#event number: 2
-#Door Event Label
-DOOR_ID_R04_R04R0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_R04R0101
-#Next Door ID Name
-DOOR_ID_R04R0101_R04_EXIT02
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 0 -1304
-#size
-1 1
-#event number: 3
 #Door Event Label
 DOOR_ID_R04_R04R0201_EXIT01
 #Next Zone ID Name
@@ -1019,6 +968,74 @@ EXIT_TYPE_DOOR
 EVENTDATA_POSTYPE_GRID
 #position
 -88 0 -648
+#size
+1 1
+#event number: 1
+#Door Event Label
+DOOR_ID_R04_R04R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_R04R0101
+#Next Door ID Name
+DOOR_ID_R04R0101_R04_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -1144
+#size
+1 1
+#event number: 2
+#Door Event Label
+DOOR_ID_R04_R04R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_R04R0301
+#Next Door ID Name
+DOOR_ID_R04R0301_R04_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -1000
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_R04_R04R0501_EXIT01
+#Next Zone ID Name
+ZONE_ID_R04R0501
+#Next Door ID Name
+DOOR_ID_R04R0501_R04_EXIT01
+#Door Direction
+EXIT_DIR_LEFT
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+552 0 -664
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_R04_R04R0401_EXIT01
+#Next Zone ID Name
+ZONE_ID_R04R0401
+#Next Door ID Name
+DOOR_ID_R04R0401_R04_EXIT01
+#Door Direction
+EXIT_DIR_RIGHT
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+424 0 -840
 #size
 1 1
 #Map Event List Data End

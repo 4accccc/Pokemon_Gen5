@@ -1,5 +1,5 @@
 #../data/r04r0402.mev
-../tmp/r04r0402.bin:../data/r04r0402.mev ../../script/sp_r04r0402.bin $(UNIQ_SCRIPTHEADER) ../tmp/r04r0402.h 
+../tmp/r04r0402.bin:../data/r04r0402.mev ../../script/sp_r04r0402.bin $(UNIQ_SCRIPTHEADER) ../tmp/r04r0402.h ../../zonetable/zone_id.h ../tmp/r04r0401.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
 	@echo ../data/r04r0402.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r04r0402.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/r04r0402.h ../../zonetable/zone_id.h ../tmp/r04r0401.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h 
 
