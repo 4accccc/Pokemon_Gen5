@@ -3,7 +3,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_NORMAL, //ノーマル
 		PM_MALE, //男
 		SWLEADER1       ,// 動作モデル指定
-		TRTYPE_RIVAL       , //トレーナータイプ指定
+		TRTYPE_SWLEADER1   , //トレーナータイプ指定
 		FALSE, //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		TRUE , //ワールドトーナメント参加
@@ -25,7 +25,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DOKU, //どく
 		PM_FEMALE, //女
 		SWLEADER2       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_SWLEADER2   , //トレーナータイプ指定
 		FALSE, //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		TRUE , //ワールドトーナメント参加
@@ -91,7 +91,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_JIMEN, //じめん
 		PM_MALE, //男
 		SWLEADER5       ,// 動作モデル指定
-		TRTYPE_LEADER5     , //トレーナータイプ指定
+		TRTYPE_SWLEADER5   , //トレーナータイプ指定
 		FALSE, //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		TRUE , //ワールドトーナメント参加
@@ -135,7 +135,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DRAGON, //ドラゴン
 		PM_MALE, //男
 		SWLEADER7       ,// 動作モデル指定
-		TRTYPE_LEADER8A    , //トレーナータイプ指定
+		TRTYPE_SWLEADER7   , //トレーナータイプ指定
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		TRUE , //ワールドトーナメント参加
@@ -157,7 +157,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MIZU, //みず
 		PM_MALE, //男
 		SWLEADER8       ,// 動作モデル指定
-		TRTYPE_HERO        , //トレーナータイプ指定
+		TRTYPE_SWLEADER8   , //トレーナータイプ指定
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		TRUE , //ワールドトーナメント参加
@@ -1649,10 +1649,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //075 未定
+	{ //075 シュウセイ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BOY2            ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1671,10 +1671,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //076 未定
+	{ //076 サイセイ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BOY2            ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1693,10 +1693,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //077 未定
+	{ //077 キョウカ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		GIRL2           ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1715,10 +1715,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //078 未定
+	{ //078 ウノ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		GIRL2           ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1737,10 +1737,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //079 未定
+	{ //079 ナナカ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		WOMAN3          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1759,10 +1759,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //080 未定
+	{ //080 ツバタ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		WOMAN3          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1781,10 +1781,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //081 未定
+	{ //081 ハクイ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		MIDDLEMAN1      ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1803,10 +1803,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //082 未定
+	{ //082 モンジロウ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		MIDDLEMAN1      ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1825,10 +1825,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //083 未定
+	{ //083 ヤマナ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		MIDDLEWOMAN1    ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1847,10 +1847,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //084 未定
+	{ //084 マシロ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		MIDDLEWOMAN2    ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1869,10 +1869,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //085 未定
+	{ //085 ケンロック
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BREEDERM        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1891,10 +1891,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //086 未定
+	{ //086 ユウゼン
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BREEDERM        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1913,10 +1913,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //087 未定
+	{ //087 カブラ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		BREEDERW        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1935,10 +1935,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //088 未定
+	{ //088 ワクラ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		BREEDERW        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1957,10 +1957,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //089 未定
+	{ //089 トシイエ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		RANGERM         ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -1979,10 +1979,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //090 未定
+	{ //090 ナオユキ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		RANGERM         ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2001,10 +2001,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //091 未定
+	{ //091 ノイチ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		RANGERW         ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2023,10 +2023,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //092 未定
+	{ //092 ナナオ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		RANGERW         ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2045,10 +2045,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //093 未定
+	{ //093 タカマツ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		WAITER          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2067,10 +2067,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //094 未定
+	{ //094 メンデン
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		WAITER          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2089,10 +2089,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //095 未定
+	{ //095 カガ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		WAITRESS        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2111,10 +2111,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //096 未定
+	{ //096 ヘシコ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		WAITRESS        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2133,10 +2133,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //097 未定
+	{ //097 クリカラ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		FIGHTERM        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2155,10 +2155,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //098 未定
+	{ //098 ホウダツ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		FIGHTERM        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2177,10 +2177,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //099 未定
+	{ //099 テドリ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		FIGHTERW        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2199,10 +2199,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //100 未定
+	{ //100 アサノ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		FIGHTERW        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2221,10 +2221,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //101 未定
+	{ //101 ナパー
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BACKPACKERM     ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2243,10 +2243,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //102 未定
+	{ //102 サムット
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BACKPACKERM     ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2265,10 +2265,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //103 未定
+	{ //103 スダポーン
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		BACKPACKERW     ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2287,10 +2287,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //104 未定
+	{ //104 パナラット
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		BACKPACKERW     ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2309,10 +2309,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //105 未定
+	{ //105 ジョーキチ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BUSINESSMAN     ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2331,10 +2331,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //106 未定
+	{ //106 フクゾウ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BUSINESSMAN     ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2353,10 +2353,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //107 未定
+	{ //107 ハマッコ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		OL              ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2375,10 +2375,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //108 未定
+	{ //108 リンダ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		OL              ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2397,10 +2397,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //109 未定
+	{ //109 ボブヒコ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		POLICEMAN       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2419,10 +2419,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //110 未定
+	{ //110 ボブマサ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		POLICEMAN       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2441,10 +2441,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //111 未定
+	{ //111 ノッコ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		MUSICIANW       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2463,10 +2463,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //112 未定
+	{ //112 カオリ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		MUSICIANW       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2485,10 +2485,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //113 未定
+	{ //113 エン
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		GENTLEMAN       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2507,10 +2507,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //114 未定
+	{ //114 ドル
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		GENTLEMAN       ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2529,10 +2529,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //115 未定
+	{ //115 ウォン
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		LADY            ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2551,10 +2551,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //116 未定
+	{ //116 ユーロ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		LADY            ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2573,10 +2573,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //117 未定
+	{ //117 スポー
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		CYCLEM          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2595,10 +2595,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //118 未定
+	{ //118 サトル
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		CYCLEM          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2617,10 +2617,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //119 未定
+	{ //119 レーキ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		CYCLEW          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2639,10 +2639,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //120 未定
+	{ //120 ダイナ
 		POKETYPE_MAX, //オールマイティ
-		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		PM_FEMALE, //女
+		CYCLEW          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2661,10 +2661,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //121 未定
+	{ //121 ショー
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BADMAN          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2683,10 +2683,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //122 未定
+	{ //122 チカラ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BADMAN          ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2705,10 +2705,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //123 未定
+	{ //123 チハル
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BADRIDER        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
@@ -2727,10 +2727,10 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		0                                       , //対戦負メッセージ
 		0                                       , //前口上メッセージ
 	},
-	{ //124 未定
+	{ //124 カオル
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		TRAINERM        ,// 動作モデル指定
+		BADRIDER        ,// 動作モデル指定
 		TRTYPE_HERO        , //トレーナータイプ指定
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
