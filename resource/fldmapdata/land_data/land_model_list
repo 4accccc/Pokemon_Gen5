@@ -975,6 +975,12 @@ LAND_TEMP_LIST = \
 	$(DIR_TEMP)/m_resonance02_00_00.nsbmd \
 	$(DIR_TEMP)/m_resonance02_00_01.nsbmd \
 	$(DIR_TEMP)/m_resonance02_00_02.nsbmd \
+	$(DIR_TEMP)/m_bwgym0201_00_00.nsbmd \
+	$(DIR_TEMP)/m_bwgym0202_00_00.nsbmd \
+	$(DIR_TEMP)/m_bwgym0401_00_00.nsbmd \
+	$(DIR_TEMP)/m_bwgym0401_01_00.nsbmd \
+	$(DIR_TEMP)/m_bwgym0401_00_01.nsbmd \
+	$(DIR_TEMP)/m_bwgym0401_01_01.nsbmd \
 	$(DIR_TEMP)/C3_00_00.nsbmd \
 	$(DIR_TEMP)/C3_00_01.nsbmd \
 	$(DIR_TEMP)/C3_01_00.nsbmd \

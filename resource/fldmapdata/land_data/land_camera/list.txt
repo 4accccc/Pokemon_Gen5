@@ -375,3 +375,6 @@
 "dining01.bin"
 "resonance01.bin"
 "resonance02.bin"
+"bwgym0201.bin"
+"bwgym0202.bin"
+"bwgym0401.bin"
