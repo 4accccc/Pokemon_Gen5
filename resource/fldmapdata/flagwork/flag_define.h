@@ -352,8 +352,8 @@
 #define FE_T02R0302_WOMAN3_TALK_01         336 /* 0x0150 カラクサタウン：クイズ初回話しかけ */
 #define FE_T02R0302_ITEMGET_01             337 /* 0x0151 カラクサタウン：アイテム入手フラグ */
 #define FE_C08R0402_MAN3_01                338 /* 0x0152 カラクサタウン：オタマロマニアクリアフラグ */
-		/* not used   339(0x0153) */
-		/* not used   340(0x0154) */
+#define FE_R06R0101_ITEMGET_01             339 /* 0x0153 季節研究所：シキジカイベント終了フラグ */
+#define FE_R06R0101_EVENT_ON_01            340 /* 0x0154 季節研究所：シキジカイベント開始フラグ */
 		/* not used   341(0x0155) */
 		/* not used   342(0x0156) */
 		/* not used   343(0x0157) */
@@ -631,6 +631,10 @@
 #define FV_D02R0201_RANGERM_01             713 /* 0x02c9 思索の原：レンジャー */
 #define FV_C03R0601_SWBELL_01              714 /* 0x02ca ヒウンシティゲート：ベル */
 #define FV_C01_POKE44_01                   715 /* 0x02cb サンヨウシティ：マッギョ */
+#define FV_R06R0101_POKE_SPRING_01         716 /* 0x02cc 季節研究所：シキジカ（春） */
+#define FV_R06R0101_POKE_SUMMER_01         717 /* 0x02cd 季節研究所：シキジカ（夏） */
+#define FV_R06R0101_POKE_AUTUMN_01         718 /* 0x02ce 季節研究所：シキジカ（秋） */
+#define FV_R06R0101_POKE_WINTER_01         719 /* 0x02cf 季節研究所：シキジカ（冬） */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
