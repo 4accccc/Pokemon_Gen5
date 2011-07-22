@@ -195,6 +195,10 @@ static const SHINKA_DATA sc_item_use_data[]=
     ITEM_HIKARINOISI,
     SHINKA_STR_049,
   },
+  {
+    ITEM_YAMINOISI,
+    SHINKA_STR_049_1,
+  },
 };
 
 //-------------------------------------
