@@ -30,6 +30,7 @@
 #define SWPLAZMAW_09                       5
 #define SWPLAZMAW_10                       6
 #define SWPLAZMAM_30                       7
+#define D27_POKE10_03                      8
 
 #endif //ZONE_D27R1301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

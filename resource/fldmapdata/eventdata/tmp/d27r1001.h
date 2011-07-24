@@ -16,6 +16,7 @@
 #define SWPLAZMAM_18                       5
 #define SWPLAZMAM_19                       6
 #define SWPLAZMAM_20                       7
+#define D27_POKE10_02                      8
 
 #endif //ZONE_D27R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

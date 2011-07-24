@@ -9,6 +9,7 @@
 #ifndef ZONE_D27R0501_EVC_H
 #define ZONE_D27R0501_EVC_H
 
+#define D27_POKE10_01                      0
 
 #endif //ZONE_D27R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
