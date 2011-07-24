@@ -74,6 +74,9 @@ EVENT_START   ev_bg_msg_scrap_01
   _PLAINWIN_MSG_DOWN( bg_msg_scrap_01 )
   _LAST_KEYWAIT()
   _PLAINWIN_CLOSE()
+ 
+  // レコードを加算：ゴミ箱を調べた回数
+  _ADD_RECORD( RECID_GARBAGE_CHECK, 1 )
 EVENT_END
 
 EVENT_START   ev_bg_msg_shoprack1_01
