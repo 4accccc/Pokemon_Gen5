@@ -71,10 +71,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>前振りその２</Text>
+			<Text>わたくしは　しりあいに　たのまれ
+けんきゅうを　てつだっていました！▼
+わたくしの　のぞみは　ポケモンの
+ちからを　かんぜんに　ひきだすこと！▼
+それが　できるなら
+しゅだんは　なんでも　いいのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:49:44" />
+				Time="2011-07-24T08:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,10 +132,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ</Text>
+			<Text>あなたがた　トレーナーの　ように
+こころと　こころの　こうりゅうで▽
+ポケモンの　つよさを　はっきさせても！▼
+プラズマだんの　ように
+むじひな　アプローチで　むりやり▽
+ポケモンの　つよさを　ひきだしても！▼
+そう　そして　そのけっか
+せかいが　ほろんだ　としても！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:09:14" />
+				Time="2011-07-24T08:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -165,22 +177,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それは　さておき！▼
-わたくしが　かずおおくの
-ポケモントレーナーと
-しょうぶを　していたのは
-
-ポケモンの　つよさを　ひきだす
-その　ちからを　みていたからです
-
+			<Text>それは　さておきッ！▼
+わたくしが　イッシュの　かくちで
+かずおおくの　ポケモントレーナーと▽
+しょうぶを　していたのは▼
+ポケモンの　つよさを　ひきだす……
+その　ちからを　みていたからです！▼
 そういう　いみで
-あなたは　ゆうしゅう　といえます！
-
+あなたは　ゆうしゅう　です！▼
 あなたが　わたくしの　のぞむ
-こたえを　もっているか　たしかめたい！</Text>
+こたえを　もっているか　たしかめる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:11:17" />
+				Time="2011-07-24T08:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -188,10 +197,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ</Text>
+			<Text>それは　さておきッ！▼
+わたくしが　イッシュの　かくちで
+かずおおくの　ポケモントレーナーと▽
+しょうぶを　していたのは▼
+ポケモンの　つよさを　ひきだす……
+その　ちからを　みていたからです！▼
+そういう　いみで
+あなたは　ゆうしゅう　です！▼
+あなたが　わたくしの　のぞむ
+こたえを　もっているか　たしかめる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:47:04" />
+				Time="2011-07-24T08:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -200,10 +218,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・トレーナー戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:46:54" />
+				Time="2011-07-24T08:39:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -226,12 +245,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-トレーナー戦後
-・はい･いいえ</Text>
+			<Text>アクロマ『……つよい！▼
+あなたは　つよい　トレーナーだ！▼
+そこで　たずねたいことが　ある！
+あなたは　ポケモンと　トレーナーは▼
+わかりあうことで　さらなる　たかみを
+めざせると　かんがえていますかっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:12:19" />
+				Time="2011-07-24T08:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -239,10 +261,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ</Text>
+			<Text>アクロマ『……つよい！▼
+あなたは　つよい　トレーナーだ！▼
+そこで　たずねたいことが　ある！
+あなたは　ポケモンと　トレーナーは▼
+わかりあうことで　さらなる　たかみを
+めざせると　かんがえていますかっ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:47:04" />
+				Time="2011-07-24T08:50:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -281,15 +308,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-・はい選択
-
-科学と心は
-対立するものではないのですがね！
-真実と理想は～</Text>
+			<Text>なるほど……！▼
+それは　りそう　かもしれない
+だが　その　しんねんを　もって！▼
+ポケモンと　むきあっていることが
+つよさの　りゆうには　なる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:12:19" />
+				Time="2011-07-24T08:51:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -297,10 +323,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ</Text>
+			<Text>なるほど……！▼
+それは　りそう　かもしれない
+だが　その　しんねんを　もって！▼
+ポケモンと　むきあっていることが
+つよさの　りゆうには　なる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:47:04" />
+				Time="2011-07-24T08:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -335,15 +365,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-・いいえ選択
-
-科学と心は
-対立するものではないのですがね！
-真実と理想は～</Text>
+			<Text>なるほど……！▼
+それは　しんじつ　かもしれない
+だが　その　かくごを　もって！▼
+ポケモンと　むきあっていることが
+つよさの　りゆうに　なる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T08:12:19" />
+				Time="2011-07-24T08:51:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -351,10 +380,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ</Text>
+			<Text>なるほど……！▼
+それは　しんじつ　かもしれない
+だが　その　かくごを　もって！▼
+ポケモンと　むきあっていることが
+つよさの　りゆうに　なる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:47:21" />
+				Time="2011-07-24T08:51:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -389,18 +422,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キュレムの真の力
-科学的なアプローチ
-　心の交流など　いらないとする考え方
-あなたと　ポケモンとの　むすびつき
-
-モンスターボールは
-あくまでも　システムです
-大切なのは～
-（これ不要）</Text>
+			<Text>くりかえしますが　わたしは
+ポケモンを　つよくするなら▽
+しゅだんは　なんでも　いいのです！▼
+ひとと　ポケモンの　こうりゅう　だけ
+とどかない　たかみが　あるなら▼
+そこに　こころは　なくても
+かがくてきアプローチのみで▽
+ちからを　はっき　させてもいいのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:12:35" />
+				Time="2011-07-24T08:57:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -408,10 +440,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ</Text>
+			<Text>くりかえしますが　わたしは
+ポケモンを　つよくするなら▽
+しゅだんは　なんでも　いいのです！▼
+ひとと　ポケモンの　こうりゅう　だけ
+とどかない　たかみが　あるなら▼
+そこに　こころは　なくても
+かがくてきアプローチのみで▽
+ちからを　はっき　させてもいいのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T07:47:21" />
+				Time="2011-07-24T08:57:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -446,18 +485,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたが　勝つのか
-プラズマ団が　勝つのか
-
+			<Text>ですが　あなたは　わたしに
+かのうせいを　みせてくれた！▼
+あなたが　かつのか
+プラズマだんが　かつのか▼
 わたくしにとって
-人と　ポケモンの
+ひとと　ポケモンの！▼
 かかわりは　どう　あるべきかを
-決める　戦いでも　あるのです
-
-では　武運を</Text>
+きめる　たたかいでも　あるのです▼
+では　ぶうんを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:17:13" />
+				Time="2011-07-24T08:57:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -465,13 +504,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テストメッセージ
-・二元論じゃないけど
-・もっとも　わたくしが
-勝手に　そう　思うだけですがね</Text>
+			<Text>ですが　あなたは　わたしに
+かのうせいを　みせてくれた！▼
+あなたが　かつのか
+プラズマだんが　かつのか▼
+わたくしにとって
+ひとと　ポケモンの！▼
+かかわりは　どう　あるべきかを
+きめる　たたかいでも　あるのです▼
+では　ぶうんを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T09:16:56" />
+				Time="2011-07-24T08:57:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
