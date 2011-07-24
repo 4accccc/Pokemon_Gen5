@@ -1758,116 +1758,399 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swleader1_02_01b"
+		Label="msg_d27r0101_hatch_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
-さきに　せんにゅう　したよ▼
-どうやら　うえの　ほうにある
-ハッチが　あいている　みたいだね</Text>
+			<Text>ハッチは　かたく　とじている</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:12:30" />
+				Time="2011-07-24T05:12:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:10:12" />
+				Time="2011-07-24T05:11:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
-先に　潜入したよ▼
-どうやら　上の　方にある
-ハッチが　開いている　みたいだね</Text>
+			<Text>ハッチは　固く　閉じている</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:12:58" />
+				Time="2011-07-24T05:12:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:12:40" />
+				Time="2011-07-24T05:12:03" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・アジト船２回目
-・Black2ver
-　WHITE2ならswleader1_02_01w</Comment>
+			<Comment>BGメッセージ
+・1回目は閉じている</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:29:55" />
+				Time="2011-07-24T05:13:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1
-ジムリーダー・チェレン</Text>
+			<Text>ハッチ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:09:57" />
+				Time="2011-07-24T05:13:07" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0101_swleader1_02_01w"
+		Label="msg_d27r0101_swrival_02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
-さきに　せんにゅう　したよ▼
-どうやら　したの　ほうにある
-ハッチが　あいている　みたいだね</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そっちは　まかせる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:12:37" />
+				Time="2011-07-24T05:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:11:44" />
+				Time="2011-07-24T05:08:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName Idx="1" ]くんなら
-先に　潜入したよ▼
-どうやら　下の　方にある
-ハッチが　開いている　みたいだね</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そっちは　まかせる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:13:05" />
+				Time="2011-07-24T05:08:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:12:40" />
+				Time="2011-07-24T05:08:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船２回目
-・White2ver</Comment>
+・アジト船：２回目
+・posイベント
+・ライバルはしたっぱ２と戦闘中</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:30:02" />
+				Time="2011-07-24T05:19:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWLEADER1
-ジムリーダー・チェレン</Text>
+			<Text>SWRIVAL
+ライバル</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:11:44" />
+				Time="2011-07-24T05:06:08" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swrival_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ！▼
+オレは　だいじょうぶ　だから
+なかへの　いりぐちを　さがせよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:33:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:32:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ！▼
+オレは　大丈夫だから
+船内への　入り口を　探せよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:34:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:33:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・主人公がしたっぱに勝利して
+　ハッチ前のposに移動するまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:29:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:19:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swrival_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……フゥ
+いくぜ……！　きをつけろよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:33:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:32:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……フゥ
+いくぜ……！　きをつけろよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:33:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:32:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・posイベント
+　Black2とWhite2でposが異なる
+・ハッチが開いている状態</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:32:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:22:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam1_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『おまえらか！
+タラップを　おろしたのはよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:19:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『おまえらか！
+タラップを　降ろしたのはよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:30:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:19:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・主人公と戦闘前
+・続けてトレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:13:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam1_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『しまった！
+ハッチを　あけたままに　してきた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:24:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『しまった！
+ハッチを　開けたままに　してきた！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:24:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・主人公と戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:29:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:19:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam2_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『しらないよ！
+オマエの　チョロネコなんか！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:26:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『知らないよ！
+オマエの　チョロネコなんか！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:26:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ライバルと戦闘中</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam2_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『まけた……！
+なんなんだよ　オマエらは！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:26:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『負けた……！
+なんなんだよ　オマエらは！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:26:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ライバルと戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T05:20:45" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
