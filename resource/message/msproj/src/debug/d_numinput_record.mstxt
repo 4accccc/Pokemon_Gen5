@@ -5088,4 +5088,354 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="dni_record_118">
+		<LanguageCell
+			Language="JPN">
+			<Text>そらをとぶ使った回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そらをとぶ使った回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:40" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_119">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴミ箱調べた回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴミ箱調べた回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_120">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダウジングアイテムを入手した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダウジングアイテムを入手した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_121">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーを使用した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーを使用した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_122">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクでポケモンを捕まえた回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクでポケモンを捕まえた回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:50:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_123">
+		<LanguageCell
+			Language="JPN">
+			<Text>効果がバツグンのわざが命中した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T02:38:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>効果がバツグンのわざが命中した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T02:38:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:03" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_124">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルサブウェイに挑戦した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトルサブウェイに挑戦した回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:08" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_125">
+		<LanguageCell
+			Language="JPN">
+			<Text>無限ダンジョンでトレーナーを倒した数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>無限ダンジョンでトレーナーを倒した数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_126">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスターミニゲームで風船を割った数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスターミニゲームで風船を割った数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:26" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_127">
+		<LanguageCell
+			Language="JPN">
+			<Text>自販機で飲み物買った回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>自販機で飲み物買った回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:30" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_128">
+		<LanguageCell
+			Language="JPN">
+			<Text>遊覧船に乗った回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>遊覧船に乗った回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_129">
+		<LanguageCell
+			Language="JPN">
+			<Text>レゾナンスリゾートで観光客を街に案内した数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レゾナンスリゾートで観光客を街に案内した数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_130">
+		<LanguageCell
+			Language="JPN">
+			<Text>レゾナンスリゾートでお店を作った数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レゾナンスリゾートでお店を作った数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:46" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_131">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライブキャスターミニゲームのプレイ回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライブキャスターミニゲームのプレイ回数</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-22T03:51:59" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

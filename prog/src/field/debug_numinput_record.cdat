@@ -54,6 +54,14 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   { dni_record_94, RECID_TRIALHOUSE_SCORE,    &DNP_Record_4 },         // トライアルハウス最高スコア
   { dni_record_96, 0,                         &DNP_Record_Palpark },   // パルゲート最高得点
   { dni_record_97, 0,                         &DNP_Record_SeaTemple }, // 海底遺跡内の歩数カウント
+
+  { dni_record_118, RECID_SORAWOTOBU,         &DNP_Record_1 },        // そらをとぶ使った回数
+  { dni_record_119, RECID_GARBAGE_CHECK,      &DNP_Record_1 },        // ゴミ箱調べた回数
+  { dni_record_120, RECID_DOWSINGITEM_GET,    &DNP_Record_1 },        // ダウジングアイテムを入手した回数
+  { dni_record_127, RECID_VENDING_MACHINE_DRINK,     &DNP_Record_4 }, // 自販機で飲み物買った回数
+  { dni_record_128, RECID_PLEASURE_BOAT_CNT,    &DNP_Record_4 },      // 遊覧船に乗った回数
+  { dni_record_129, RECID_RESORT_GUID_CNT,      &DNP_Record_4 },      // レゾナンスリゾートで観光客を街に案内した数
+  { dni_record_130, RECID_RESORT_SHOP_MAKE_CNT, &DNP_Record_4 },      // レゾナンスリゾートでお店を作った数
 };
 //-------------------------
 // 通信関連レコード
@@ -77,6 +85,8 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Comm[] = {
   { dni_record_60, RECID_GURUGURU_COUNT,    &DNP_Record_4 }, // ぐるぐる交換をした回数
   { dni_record_34, RECID_SURECHIGAI_NUM,    &DNP_Record_1 }, // すれちがい通信をした回数
   { dni_record_92, RECID_SURECHIGAI_THANKS, &DNP_Record_4 }, // すれちがい通信でお礼を受けた回数
+  { dni_record_131, RECID_CTVT_GAME_PLAY,   &DNP_Record_4 }, // ライブキャスターミニゲームのプレイ回数
+  { dni_record_126, RECID_CTVT_BALLOON,     &DNP_Record_1 }, // ライブキャスターミニゲームで風船を割った数
 };
 //-------------------------
 // パレス関連レコード
@@ -85,6 +95,8 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Palace[] = {
   //gmm_id, param, dni_param
   { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_2 }, // パレス訪問時間合計
   { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_5 }, // パレスクリアしたミッションの数
+  { dni_record_121, RECID_GPOWER_USE,     &DNP_Record_1 }, // デルパワーを使用した回数
+  { dni_record_122, RECID_HILINK_POKE_GET,&DNP_Record_1 }, // ハイリンクでポケモンを捕まえた回数
 };
 //-------------------------
 // バトル関連レコード
@@ -106,6 +118,8 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Battle[] = {
   { dni_record_48, RECID_NIGERU_SIPPAI,      &DNP_Record_4 }, // 逃げそこなった回数
   { dni_record_49, RECID_NIGERARETA,         &DNP_Record_4 }, // 逃げられたポケモンの数
   { dni_record_81, RECID_USE_SHOOTER_COUNT,  &DNP_Record_4 }, // シューター使用回数
+  { dni_record_123, RECID_WEAK_ATTACK,       &DNP_Record_1 }, // 効果がバツグンのわざが命中した回数。（野性戦・フィールド上トレーナー戦）
+  { dni_record_125, RECID_INF_TRAINER_WIN,   &DNP_Record_1 }, // 無限ダンジョンでトレーナーを倒した数
 };
 //-------------------------
 // ランダムマッチ関連
@@ -163,6 +177,7 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_BSubway[] = {
   { dni_record_115, 11, &DNP_Record_BSubway }, // Sマルチトレイン現在連勝数
   { dni_record_116, 12, &DNP_Record_BSubway }, // WiFiトレイン最大連勝数
   { dni_record_117, 13, &DNP_Record_BSubway }, // WiFiトレイン現在連勝数
+  { dni_record_124, RECID_BSUB_CHALLENGE,     &DNP_Record_1 }, // バトルサブウェイに挑戦した回数
 };
 //-------------------------
 // 一日データ関連レコード

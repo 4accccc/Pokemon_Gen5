@@ -131,16 +131,18 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_PALACE_TIME       (LARGE_REC_START+39)  ///< @パレス訪問時間合計 40(未使用）
 #define RECID_PALACE_MISSION     (LARGE_REC_START+40) ///< @パレスクリアしたミッションの数(未使用）
 
-#define RECID_LARGE_42   ( LARGE_REC_START+41 )   ///< 4バイトレコード 未使用領域の定義
-#define RECID_LARGE_43   ( LARGE_REC_START+42 )   ///< 次回作用に…
-#define RECID_LARGE_44   ( LARGE_REC_START+43 )
-#define RECID_LARGE_45   ( LARGE_REC_START+44 )
-#define RECID_LARGE_46   ( LARGE_REC_START+45 )
-#define RECID_LARGE_47   ( LARGE_REC_START+46 )
-#define RECID_LARGE_48   ( LARGE_REC_START+47 )
-#define RECID_LARGE_49   ( LARGE_REC_START+48 )
-#define RECID_LARGE_50   ( LARGE_REC_START+49 )
-#define RECID_LARGE_51   ( LARGE_REC_START+50 )
+//以下は、スワン追加
+#define RECID_SORAWOTOBU      ( LARGE_REC_START+41 )   ///< @そらをとぶ使った回数
+#define RECID_GARBAGE_CHECK   ( LARGE_REC_START+42 )   ///< @ゴミ箱調べた回数
+#define RECID_DOWSINGITEM_GET ( LARGE_REC_START+43 )   ///< @ダウジングアイテムを入手した回数
+#define RECID_GPOWER_USE      ( LARGE_REC_START+44 )   ///< @デルパワーを使用した回数
+#define RECID_HILINK_POKE_GET ( LARGE_REC_START+45 )   ///< @ハイリンクでポケモンを捕まえた回数
+#define RECID_WEAK_ATTACK     ( LARGE_REC_START+46 )   ///< @効果がバツグンのわざが命中した回数。（野性戦・フィールド上トレーナー戦）
+#define RECID_BSUB_CHALLENGE  ( LARGE_REC_START+47 )   ///< @バトルサブウェイに挑戦した回数
+#define RECID_INF_TRAINER_WIN ( LARGE_REC_START+48 )   ///< @無限ダンジョンでトレーナーを倒した数
+#define RECID_CTVT_BALLOON    ( LARGE_REC_START+49 )   ///< @ライブキャスターミニゲームで風船を割った数
+
+#define RECID_LARGE_51   ( LARGE_REC_START+50 ) ///< 以下は未使用
 #define RECID_LARGE_52   ( LARGE_REC_START+51 )
 #define RECID_LARGE_53   ( LARGE_REC_START+52 )
 #define RECID_LARGE_54   ( LARGE_REC_START+53 )
@@ -161,7 +163,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_LARGE_69   ( LARGE_REC_START+68 )
 #define RECID_LARGE_70   ( LARGE_REC_START+69 )
 
-#define LARGE_REC_NUM    ( LARGE_REC_START+70 )  ///< WBで41+1個使用。残り29個
+#define LARGE_REC_NUM    ( LARGE_REC_START+70 )  ///< WBで41+1個使用。+スワンで9個使用残り20個
 #define LARGE_REC_MAX    ( LARGE_REC_NUM ) 
 
 //以下は、2バイトしかカウンタを持たない
@@ -222,11 +224,12 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_TRIALHOUSE_RANK          (SMALL_REC_START+52)  ///< @トライアルハウス最高ランク
 #define RECID_TRIALHOUSE_SCORE         (SMALL_REC_START+53)  ///< @トライアルハウス最高スコア 124
 
-#define RECID_SMALL_54                 (SMALL_REC_START+54)  ///< 2バイトレコード　未使用領域定義
-#define RECID_SMALL_55                 (SMALL_REC_START+55)  ///< 次回作用
-#define RECID_SMALL_56                 (SMALL_REC_START+56)
-#define RECID_SMALL_57                 (SMALL_REC_START+57)
-#define RECID_SMALL_58                 (SMALL_REC_START+58)
+#define RECID_VENDING_MACHINE_DRINK    (SMALL_REC_START+54)  ///< @自販機で飲み物買った回数
+#define RECID_PLEASURE_BOAT_CNT        (SMALL_REC_START+55)  ///< @遊覧船に乗った回数
+#define RECID_RESORT_GUID_CNT          (SMALL_REC_START+56)  ///< @レゾナンスリゾートで観光客を街に案内した数
+#define RECID_RESORT_SHOP_MAKE_CNT     (SMALL_REC_START+57)  ///< @レゾナンスリゾートでお店を作った数
+#define RECID_CTVT_GAME_PLAY           (SMALL_REC_START+58)  ///< @ライブキャスターミニゲームのプレイ回数
+
 #define RECID_SMALL_59                 (SMALL_REC_START+59)
 #define RECID_SMALL_60                 (SMALL_REC_START+60)
 #define RECID_SMALL_61                 (SMALL_REC_START+61)
@@ -266,7 +269,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_SMALL_95                 (SMALL_REC_START+95)
 
 
-#define SMALL_REC_NUM                   (96)  // 54+42 42箇所分余り    
+#define SMALL_REC_NUM                   (96)  // 59+37 37箇所分余り    
 #define SMALL_REC_MAX                   (SMALL_REC_NUM+LARGE_REC_MAX)
 
 
@@ -325,15 +328,17 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_PALACE_TIME_FLAG      ( 1 )  ///< パレス訪問時間合計 999,59,59
 #define RECID_PALACE_MISSION_FLAG   ( 1 )  ///< パレスクリアしたミッションの数 999,59,59
 
-#define RECID_LARGE_42_FLAG   ( 1 )   ///< 4バイトレコード 未使用領域のMAX定義
-#define RECID_LARGE_43_FLAG   ( 1 )   ///< 0 origin
-#define RECID_LARGE_44_FLAG   ( 1 )
-#define RECID_LARGE_45_FLAG   ( 1 )
-#define RECID_LARGE_46_FLAG   ( 1 )
-#define RECID_LARGE_47_FLAG   ( 1 )
-#define RECID_LARGE_48_FLAG   ( 1 )
-#define RECID_LARGE_49_FLAG   ( 1 )
-#define RECID_LARGE_50_FLAG   ( 1 )
+//以下は、スワン追加
+#define RECID_SORAWOTOBU_FLAG       ( 0 )   ///< @そらをとぶ使った回数 999,999,999
+#define RECID_GARBAGE_CHECK_FLAG    ( 0 )   ///< @ゴミ箱調べた回数 999,999,999
+#define RECID_DOWSINGITEM_GET_FLAG  ( 0 )   ///< @ダウジングアイテムを入手した回数 999,999,999
+#define RECID_GPOWER_USE_FLAG       ( 0 )   ///< @デルパワーを使用した回数 999,999,999
+#define RECID_HILINK_POKE_GET_FLAG  ( 0 )   ///< @ハイリンクでポケモンを捕まえた回数 999,999,999
+#define RECID_WEAK_ATTACK_FLAG      ( 0 )   ///< @効果がバツグンのわざが命中した回数。（野性戦・フィールド上トレーナー戦） 999,999,999
+#define RECID_BSUB_CHALLENGE_FLAG   ( 0 )   ///< @バトルサブウェイに挑戦した回数 999,999,999
+#define RECID_INF_TRAINER_WIN_FLAG  ( 0 )   ///< @無限ダンジョンでトレーナーを倒した数 999,999,999
+#define RECID_CTVT_BALLOON_FLAG     ( 0 )   ///< @ライブキャスターミニゲームで風船を割った数 999,999,999
+
 #define RECID_LARGE_51_FLAG   ( 1 )
 #define RECID_LARGE_52_FLAG   ( 1 )
 #define RECID_LARGE_53_FLAG   ( 1 )
@@ -411,11 +416,13 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_TRIALHOUSE_RANK_FLAG         ( 5 )  ///< トライアルハウス最高ランク
 #define RECID_TRIALHOUSE_SCORE_FLAG        ( 3 )  ///< トライアルハウス最高スコア 124
 
-#define RECID_SMALL_54_FLAG                ( 2 )  ///< 2バイトレコード　未使用領域MAX定義
-#define RECID_SMALL_55_FLAG                ( 2 )  ///< 0 origin
-#define RECID_SMALL_56_FLAG                ( 2 )
-#define RECID_SMALL_57_FLAG                ( 2 )
-#define RECID_SMALL_58_FLAG                ( 2 )
+// 以下はスワン追加
+#define RECID_VENDING_MACHINE_DRINK_FLAG   ( 3 )  ///< @自販機で飲み物買った回数
+#define RECID_PLEASURE_BOAT_CNT_FLAG       ( 3 )  ///< @遊覧船に乗った回数
+#define RECID_RESORT_GUID_CNT_FLAG         ( 3 )  ///< @レゾナンスリゾートで観光客を街に案内した数
+#define RECID_RESORT_SHOP_MAKE_CNT_FLAG    ( 3 )  ///< @レゾナンスリゾートでお店を作った数
+#define RECID_CTVT_GAME_PLAY_FLAG          ( 3 )  ///< @ライブキャスターミニゲームのプレイ回数
+
 #define RECID_SMALL_59_FLAG                ( 2 )
 #define RECID_SMALL_60_FLAG                ( 2 )
 #define RECID_SMALL_61_FLAG                ( 2 )
