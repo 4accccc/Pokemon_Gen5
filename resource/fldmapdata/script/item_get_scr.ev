@@ -208,6 +208,9 @@ ev_item_event_hideitem:
   IF $SCWK_ANSWER == TRUE THEN
     //フラグ操作
     _FLAG_SET( SCWK_PARAM2 )
+   
+    // レコードを加算：隠しアイテムを入手した
+    _ADD_RECORD( RECID_DOWSINGITEM_GET, 1 )
   ENDIF
 _CHG_LOCAL_SCR
 _END
