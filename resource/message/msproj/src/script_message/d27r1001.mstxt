@@ -168,11 +168,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『おっと！
-また　あいましたね！▽
+また　あいましたね！▼
+おれです　もとプラズマだん　の！
 というか　まっていましたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:07:34" />
+				Time="2011-07-24T07:22:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -181,11 +182,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマだん『おっと！
-また　あいましたね！▽
-というか　まっていましたよ！</Text>
+また　会いましたね！▼
+おれです　元プラズマ団の！
+というか　待っていましたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:14:02" />
+				Time="2011-07-24T07:22:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -231,14 +233,15 @@
 それに　ツライんですよ
 まわりの　れんちゅう　ったら▽
 Ｎさまの　ことを　ののしって……▼
-Ｎさまは　じぶんの　みちを
-じぶんで　きめて　すすまれたのに▽
+Ｎさまは　あやまちに　きづかれ
+じぶんの　みちを▼
+じぶんで　きめて　すすまれたのに
 それを　うらぎり　と　いうんですよ▼
 かってに　きたいして
 かってに　しつぼう　してね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:12:42" />
+				Time="2011-07-24T07:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -246,19 +249,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロットさまに　れんらく　したのに
-だれも　たすけに　こないし……▼
+			<Text>ロットさまに　連絡したのに
+だれも　助けに　こないし……▼
 それに　ツライんですよ
-まわりの　れんちゅう　ったら▽
+周りの　連中ったら▽
 Ｎさまの　ことを　ののしって……▼
-Ｎさまは　じぶんの　みちを
-じぶんで　きめて　すすまれたのに▽
-それを　うらぎり　と　いうんですよ▼
-かってに　きたいして
-かってに　しつぼう　してね……</Text>
+Ｎさまは　過ちに　気づかれ
+自分の　道を▼
+自分で　決めて　進まれたのに
+それを　裏切りと　いうんですよ▼
+勝手に　期待して
+勝手に　失望してね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:14:02" />
+				Time="2011-07-24T07:23:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -314,14 +318,14 @@
 			Language="JPN_KANJI">
 			<Text>ああ！　そうでした！▼
 この　フロアはですね
-パイプの　めいろと　なっています▼
-スイッチを　ふむことで
+パイプの　迷路と　なっています▼
+スイッチを　踏むことで
 パイプが　つながったり　とぎれたり▼
-ちなみに　パイプの　うえを
-あるいて　すすめますよ</Text>
+ちなみに　パイプの　上を
+歩いて　進めますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:14:02" />
+				Time="2011-07-24T07:23:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -362,10 +366,16 @@
 おれたち　もとプラズマだんと
 いまも　プラズマだんの　れんちゅう▼
 どうして　おなじ　なかま　だったのに
-こんなに　ちがっちゃったのかな……？</Text>
+こんなに　ちがっちゃったのかな……？▼
+ああ！　この　フロアはですね
+パイプの　めいろと　なっています▼
+スイッチを　ふむことで
+パイプが　つながったり　とぎれたり▼
+ちなみに　パイプの　うえを
+あるいて　すすめますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:13:58" />
+				Time="2011-07-24T07:24:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,13 +384,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それにしても……▼
-おれたち　もとプラズマだんと
-いまも　プラズマだんの　れんちゅう▼
-どうして　おなじ　なかま　だったのに
-こんなに　ちがっちゃったのかな……？</Text>
+おれたち　元プラズマ団と
+いまも　プラズマ団の　連中▼
+どうして　同じ　仲間だったのに
+こんなに　違っちゃったのかな……？▼
+ああ！　この　フロアはですね
+パイプの　迷路と　なっています▼
+スイッチを　踏むことで
+パイプが　つながったり　とぎれたり▼
+ちなみに　パイプの　上を
+歩いて　進めますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:14:02" />
+				Time="2011-07-24T07:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -407,6 +423,57 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1001_poke10_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュララ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:31:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:31:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュララ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:31:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:31:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声
+・装置を調べたとき用
+※暫定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:32:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE10
+ポケモン・キュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:31:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
