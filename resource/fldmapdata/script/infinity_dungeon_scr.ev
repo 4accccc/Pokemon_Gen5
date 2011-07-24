@@ -601,6 +601,8 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
       _TRAINER_WIN()
       _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID_POS , TRUE )
+      // レコードを加算：無限ダンジョントレーナーを倒した数
+      _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
     ELSE
       _TRAINER_LOSE()
     ENDIF
@@ -668,6 +670,8 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
       _TRAINER_WIN()
       _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID_POS , TRUE )
+      // レコードを加算：無限ダンジョントレーナーを倒した数
+      _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
     ELSE
       _TRAINER_LOSE()
     ENDIF
@@ -748,6 +752,8 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 	  _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+    // レコードを加算：無限ダンジョントレーナーを倒した数
+    _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
 	ELSE
 	  _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
