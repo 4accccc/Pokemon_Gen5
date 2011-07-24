@@ -429,6 +429,122 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r0101_sage7_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『その　そうちは　こわせぬ▼
+ということは　キュレムを
+そこから　すくいだすことは　できない▼
+といっても　あきらめきれぬだろう？
+いんどうを　わたすのが　やさしさだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:34:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:31:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『その装置は　壊せぬ▼
+ということは　キュレムを
+そこから　救い出すことは　できない▼
+といっても　あきらめきれぬだろう？
+引導を　渡すのが　優しさだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:35:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:31:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・バリア解除後のposイベント
+　画面下から来てメッセージ表示
+・メッセージ表示後、トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:34:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:31:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_03_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『むうう！
+またしても　まけるとは……！▼
+だが　さいごに　わらうのは
+われわれ　プラズマだんで　ある！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:33:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:31:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『むうう！
+またしても　負けるとは……！▼
+だが　最後に　笑うのは
+われわれ　プラズマ団で　ある！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:33:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:31:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・戦闘後メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:32:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T08:31:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r1001_poke10_02_01"
 		Style="Large">
 		<LanguageCell
