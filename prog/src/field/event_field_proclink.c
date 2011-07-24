@@ -52,6 +52,9 @@
 //自分の外部公開
 #include "field/event_field_proclink.h"
 
+// レコード
+#include "savedata/record.h"
+
 //-------------------------------------
 /// 各アプリのオーバーレイ
 //=====================================
@@ -1791,6 +1794,12 @@ static RETURNFUNC_RESULT FMenuReturnProc_TownMap(PROCLINK_WORK* wk,void* param_a
         wk->param->grid_x       = param->grid.x;
         wk->param->grid_y       = param->grid.y;
         wk->param->grid_z       = 0;
+        { // 空を飛んだ数インクリメント
+          GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(param->p_gamesys);
+          RECORD *record = GAMEDATA_GetRecordPtr(p_gamedata);
+          RECORD_Inc(record,RECID_SORAWOTOBU);
+        }
+
         return RETURNFUNC_RESULT_USE_SKILL;
   
       default:
