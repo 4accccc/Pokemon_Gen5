@@ -1917,10 +1917,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……フゥ
-いくぜ……！　きをつけろよ</Text>
+いくぜ！　きを　つけろよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:33:09" />
+				Time="2011-07-24T06:00:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1929,10 +1929,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……フゥ
-いくぜ……！　きをつけろよ</Text>
+いくぜ！　きを　つけろよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:33:06" />
+				Time="2011-07-24T06:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1944,10 +1944,11 @@
 ・アジト船：２回目
 ・posイベント
 　Black2とWhite2でposが異なる
-・ハッチが開いている状態</Comment>
+・ハッチが開いている状態
+・メッセージ後、ライバルが先に侵入する</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:32:37" />
+				Time="2011-07-24T06:00:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

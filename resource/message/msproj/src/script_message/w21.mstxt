@@ -749,12 +749,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・表示後、ライバル、チェレンの順で
-　タラップを上がっていく
+・表示後、ライバルがタラップを上がっていく
 ・彼らが移動を終えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:50:11" />
+				Time="2011-07-24T05:08:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

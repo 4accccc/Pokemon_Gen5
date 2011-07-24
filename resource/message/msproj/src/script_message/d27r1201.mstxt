@@ -1,3 +1,112 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r1001_pass_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうちが　ある……
+パスワードを　いれるみたいだ▼
+パスワードを　いれますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>装置が　ある……
+パスワードを　入力するみたいだ▼
+パスワードを　入力しますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント：船首楼
+・White2ver
+・はい/いいえの選択肢表示
+　はい　→入力画面へ
+　いいえ→終了
+・パスワード関連は
+　hide_ship_passwordで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>入力端末</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:01" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_switch_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すべての　バリアが　かいじょ　され
+さきに　すすめるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すべての　バリアが　解除され
+先に　進めるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント：船首楼
+・White2ver
+・すべてのバリアーが解除されたとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>装置</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-24T07:01:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
