@@ -213,6 +213,7 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 
 static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 static void incWalkCount( GAMEDATA * gamedata );
+static void incScWalkCount( GAMEDATA * gamedata );
 //--------------------------------------------------------------
 //  個別イベントチェック
 //--------------------------------------------------------------
@@ -404,6 +405,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   if( req.moveRequest )
   {
     incWalkCount( req.gamedata );
+  }
+  // 歩数カウントスクリプトインクリメント
+  if( req.moveRequest )
+  {
+    incScWalkCount( req.gamedata );
   }
   //座標イベントチェック
   if( req.moveRequest )
@@ -1513,6 +1519,24 @@ static void incWalkCount( GAMEDATA * gamedata )
     walk_count = 0;
   }
   GAMEDATA_SetFieldMapWalkCount( gamedata ,walk_count );
+}
+//--------------------------------------------------------------
+/// スクリプト歩数カウンタをインクリメントする
+//--------------------------------------------------------------
+static void incScWalkCount( GAMEDATA * gamedata )
+{
+  SITUATION* situation;
+  SAVE_CONTROL_WORK* saveData;
+
+  // 状況データ取得
+  saveData  = GAMEDATA_GetSaveControlWork( gamedata );
+  situation = SaveData_GetSituation( saveData );
+
+  // 起動時のみインクリメント
+  if( Situation_GetIsWalkCoutStart( situation ) )
+  {
+    Situation_IncScWalkCout( situation );
+  }
 }
 
 //======================================================================

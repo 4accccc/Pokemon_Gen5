@@ -41,6 +41,9 @@ struct _SITUATION {
 	PLAYERWORK_SAVE plsv;
   //PAIR_SYSTEM_WORKzからセーブに必要なものだけを抜粋
   PAIRSYS_WORK_SAVE pair_sv;
+
+  // 歩数カウントスクリプト用カウンタ
+  u16 sc_walk_cnt;
 };
 
 
@@ -74,6 +77,9 @@ int Situation_GetWorkSize(void)
 void Situation_Init(SITUATION * st)
 {
 	GFL_STD_MemClear(st, sizeof(SITUATION));
+
+  // 歩数カウントスクリプト歩数の初期化
+  st->sc_walk_cnt = DEFAULT_SC_WALK_CNT;
 
   st->placeNameLastDispID = ZONE_ID_MAX;
 }
@@ -430,5 +436,101 @@ void Situation_SetPlaceNameLastDispID( SITUATION* st, u16 zone_id )
   st->placeNameLastDispID = zone_id;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントステップカウント  インクリメント
+ *
+ *	@param	st        シチュエーションワーク
+ *	@param	count     カウント数
+ */
+//-----------------------------------------------------------------------------
+void Situation_IncScWalkCout(SITUATION * st)
+{
+  if( st->sc_walk_cnt != DEFAULT_SC_WALK_CNT )
+  {
+    if( st->sc_walk_cnt < SC_WALK_CNT_MAX )
+    {
+      st->sc_walk_cnt++;
+    }
+  }
+  else
+  {
+    GF_ASSERT_MSG(0,"歩数カウントイベントが未起動です\n");
+  }
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントステップカウント  取得
+ *
+ *	@param	st  シチュエーションワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+u16 Situation_GetScWalkCout(const SITUATION * st)
+{
+  if( st->sc_walk_cnt != DEFAULT_SC_WALK_CNT )
+  {
+    return st->sc_walk_cnt;
+  }
+  GF_ASSERT_MSG(0,"歩数カウントイベントが起動していません\n");
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントステップカウント  開始
+ *
+ *	@param	st  シチュエーションワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+void Situation_ScWalkCoutStart( SITUATION * st)
+{
+  if( st->sc_walk_cnt == DEFAULT_SC_WALK_CNT )
+  {
+    st->sc_walk_cnt = 0;
+  }
+  else
+  {
+    GF_ASSERT_MSG(0,"歩数カウントイベントが既に起動しています\n");
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントステップカウント  終了
+ *
+ *	@param	st  シチュエーションワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+void Situation_ScWalkCoutStop( SITUATION * st)
+{
+  st->sc_walk_cnt = DEFAULT_SC_WALK_CNT;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベントステップカウント  起動状態を取得
+ *
+ *	@param	st  シチュエーションワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+BOOL Situation_GetIsWalkCoutStart(const SITUATION * st)
+{
+  if( st->sc_walk_cnt == DEFAULT_SC_WALK_CNT )
+  {
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
 

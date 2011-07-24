@@ -692,4 +692,7 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (689)
   { FALSE, FALSE, FALSE }, // NO_CMD (690)
   { FALSE, FALSE, FALSE }, // NO_CMD (691)
+  { TRUE, FALSE, FALSE }, // _SC_WALK_COUNT_START (692)
+  { TRUE, FALSE, FALSE }, // _SC_WALK_COUNT_STOP (693)
+  { TRUE, FALSE, FALSE }, // _SC_WALK_COUNT_GET (694)
 };

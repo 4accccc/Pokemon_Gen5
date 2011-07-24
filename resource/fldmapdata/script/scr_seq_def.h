@@ -14366,6 +14366,45 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 歩数カウントスタート
+ */
+//--------------------------------------------------------------
+#define _SC_WALK_COUNT_START() \
+    _ASM_SC_WALK_COUNT_START
+
+    .macro  _ASM_SC_WALK_COUNT_START
+    .short  EV_SEQ_SC_WALK_CNT_START
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 歩数カウントストップ
+ */
+//--------------------------------------------------------------
+#define _SC_WALK_COUNT_STOP() \
+    _ASM_SC_WALK_COUNT_STOP
+
+    .macro  _ASM_SC_WALK_COUNT_STOP
+    .short  EV_SEQ_SC_WALK_CNT_STOP
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 歩数カウント取得
+ * @param ret_wk    スタートしてからの歩数合計
+ *
+ * FIELD_RECOVER_LABEL/FIELD_INIT_LABELからのスクリプト以外では常にFALSEになる
+ */
+//--------------------------------------------------------------
+#define _SC_WALK_COUNT_GET( ret_wk ) \
+    _ASM_SC_WALK_COUNT_GET ret_wk
+
+    .macro  _ASM_SC_WALK_COUNT_GET ret_wk
+    .short  EV_SEQ_SC_WALK_CNT_GET
+    .short  \ret_wk
+    .endm
 
 //======================================================================
 //======================================================================

@@ -21,6 +21,11 @@
 ///状況データの不定形アクセス型
 typedef struct _SITUATION SITUATION;
 
+// 歩数カウントスクリプト未起動時の値
+#define DEFAULT_SC_WALK_CNT (0xFFFF)
+// 歩数カウンタの最大値
+#define SC_WALK_CNT_MAX (99999)
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
@@ -81,5 +86,11 @@ extern u16 Situation_GetSeaTempleStepCount(const SITUATION * st);
 
 extern u16 Situation_GetPlaceNameLastDispID( SITUATION* st );
 extern void Situation_SetPlaceNameLastDispID( SITUATION* st, u16 zone_id );
+
+extern void Situation_IncScWalkCout(SITUATION * st);
+extern u16 Situation_GetScWalkCout(const SITUATION * st);
+extern void Situation_ScWalkCoutStart( SITUATION * st);
+extern void Situation_ScWalkCoutStop( SITUATION * st );
+extern BOOL Situation_GetIsWalkCoutStart(const SITUATION * st);
 
 #endif	//__SITUATION_H__

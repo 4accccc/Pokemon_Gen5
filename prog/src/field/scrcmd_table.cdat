@@ -1059,6 +1059,11 @@
   NO_CMD()
   NO_CMD()
 
+  // 歩数カウント
+  DEF_CMD( EvCmdWalkCountStart, EV_SEQ_SC_WALK_CNT_START )
+  DEF_CMD( EvCmdWalkCountStop, EV_SEQ_SC_WALK_CNT_STOP )
+  DEF_CMD( EvCmdGetWalkCount, EV_SEQ_SC_WALK_CNT_GET )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

@@ -4507,4 +4507,79 @@
 				Time="2011-05-27T09:49:56" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>歩数カウント監視開始</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>歩数カウント監視開始</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:18" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>歩数カウント監視終了</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>歩数カウント監視終了</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_onoue_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>歩数カウント取得</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>歩数カウント取得</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-07-24T06:23:33" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

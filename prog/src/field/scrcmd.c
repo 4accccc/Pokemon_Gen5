@@ -112,6 +112,7 @@
 #include "scrcmd_ochiba.h"
 #include "scrcmd_keysystem.h"
 #include "scrcmd_dataconvert.h"
+#include "scrcmd_walk_count.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
