@@ -30,13 +30,14 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：２回目
-・主人公が部屋に入ると
-　続けて入ってきてメッセージ表示
+・posイベント
+　GRIDX＝11～13、GRIDZ＝16を踏むと
+　入ってきてメッセージ表示
 ・このとき主人公に！マーク表示し振りむかせる
 ・続けてsage7_02_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:52:05" />
+				Time="2011-07-24T05:44:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -291,13 +292,13 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：２回目
-・イバルもワープパネルから出現
+・ライバルもワープパネルから出現
 ・続けてswrival_02_02
 ・0＝主人公名
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T04:46:27" />
+				Time="2011-07-24T05:45:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
