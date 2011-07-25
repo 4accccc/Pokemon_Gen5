@@ -37,7 +37,7 @@
 
 #include "t_download_sub.h"
 
-#include "t_download_gra.naix"		// データは流用
+#include "t_download_gra.naix"
 
 #include "message.naix"
 #include "msg/msg_wbt_download.h"
@@ -51,6 +51,7 @@
 // パレット
 // 上：BG (0-2:BG、3:FONT)
 // 上：OBJ
+//
 // 下：BG (0,1:BG、8,9,11,12:FONT,WIN)
 // 下：OBJ(0-10:パネル、11-14:cmn)
 enum{
@@ -67,6 +68,11 @@ enum{
 	// 何番目か
 	MES_CLEAR_COLOR				= 0,	// (通常)クリアカラー
 	MES_SYSWIN_CLEAR_COLOR		= 15,	// (システムウインドウの)クリアカラー
+};
+
+// いろいろ
+enum{
+	EMPTY_CURPOS				= 18,	// カーソル上の位置
 };
 
 //--------------
@@ -93,6 +99,22 @@ enum{
 	TDMSG_DOWN_TITLE,					// タイトル
 	TDMSG_DOWN_MESWIN_00,				// win00
 	TDMSG_DOWN_MESWIN_01,				// win01
+};
+
+// シーケンス
+enum{
+	CMN_LEFT_SEQ 		= 4,			// 左
+	CMN_RIGHT_SEQ 		= 5,			// 右
+	CMN_CROSS_SEQ 		= 0,			// ×
+	CMN_RETURN_SEQ 		= 1,			// 戻る
+	//
+	CMN_LEFT_ON_SEQ 	= 12,			// 左オン
+	CMN_LEFT_OFF_SEQ 	= 18,			// 左オフ
+	CMN_RIGHT_ON_SEQ 	= 13,			// 右オン
+	CMN_RIGHT_OFF_SEQ 	= 19,			// 右オフ
+	//
+	CMN_CROSS_ON_SEQ	= 8,			// ×オン
+	CMN_RETURN_ON_SEQ	= 9,			// 戻るオン
 };
 
 //=============================================================================
@@ -181,7 +203,7 @@ typedef struct{
 // BGPAL
 static const T_DOWNLOAD_BGPAL_DATA td_bgpal_tbl[] = {
 	{ PALTYPE_SUB_BG,	NARC_t_download_gra_t_download_bg_u_NCLR,	0,	2,},		// 上、BG
-	{ PALTYPE_MAIN_BG,	NARC_t_download_gra_t_download_bg_d_NCLR,	0,	4,},		// 下、BG
+	{ PALTYPE_MAIN_BG,	NARC_t_download_gra_t_download_bg_d_NCLR,	0,	5,},		// 下、BG
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -208,6 +230,23 @@ static const T_DOWNLOAD_BGSCN_DATA td_bgscn_tbl[] = {
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
+//--------
+// info用
+//--------
+// BGCHR
+static const T_DOWNLOAD_BGCHR_DATA td_bgchr_00_tbl[] = {
+	{ GFL_BG_FRAME2_M,	NARC_t_download_gra_t_download_bg_d_NCGR,	0,	0,},		// 下、BG
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
+// BGSCN
+static const T_DOWNLOAD_BGSCN_DATA td_bgscn_00_tbl[] = {
+	{ GFL_BG_FRAME2_M,	NARC_t_download_gra_t_download_bg_d_05_NSCR,	0,	0,},	// 下、下地
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
 //---------------
 // CANVASの設定
 //---------------
@@ -222,7 +261,7 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 	//
 	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	9,},		// 下：タイトル(まずいかも)
 	{ GFL_BG_FRAME0_M,	1,	1,	30,	4,	9,},		// 下：meswin
-	{ GFL_BG_FRAME0_M,	1,	10,	30,	4,	9,},		// 下：中央win
+	{ GFL_BG_FRAME0_M,	1,	19,	30,	4,	9,},		// 下：中央win
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -253,6 +292,10 @@ static const T_DOWNLOAD_OBJ_DATA td_obj_tbl[] = {
 	{ 0,	0x30,	1,	1,	0,	1,	4,	0,},		// スクロールボタン
 	{ 1,	0x38,	1,	1,	0,	1,	17,	0,},		// スクロールバー
 	{ 2,	0x30,	1,	1,	0,	1,	18,	0,},		// カーソル
+	//
+	{ 4,	0x30,	1,	0,	0,	1,	24,	0,},		// アイコン00(詳細で使用)
+	{ 6,	0x30,	1,	0,	0,	1,	25,	0,},		// アイコン01(詳細で使用)
+	{ 8,	0x30,	1,	0,	0,	1,	26,	0,},		// アイコン02(詳細で使用)
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -279,20 +322,6 @@ static const T_DOWNLOAD_OBJ_DATA td_obj_cmn_tbl[] = {
 
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
-
-#if 0
-//------------------
-// BMPOAMの情報
-//------------------
-static const T_DOWNLOAD_BMPOAM_DATA td_bmpoam_tbl[] = {
-	{ 24,	2,	0x38,	1,	1,	4,	5,	0,},		// パネル00
-	{ 24,	2,	0x38,	1,	1,	4,	6,	0,},		// パネル01
-	{ 24,	2,	0x38,	1,	1,	4,	5,	0,},		// パネル02
-	{ 24,	2,	0x38,	1,	1,	4,	6,	0,},		// パネル03
-
-	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
-};
-#endif
 
 // (0x100 = 1)
 // (0.25ずつ移動で32dotでスクロール)
@@ -339,7 +368,7 @@ static const FRAMELIST_TOUCH_DATA td_list_tp_tbl[] =
 {
   // スライドの数は上からのパネル分(7)にしないどだめらしい
   // (リストの処理で問題が起こるようだ...)
-  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00:(ダミー)
+//  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00:(ダミー)
   { {  24,  47, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
   { {  48,  71, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
   { {  72,  95, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
@@ -358,7 +387,7 @@ static const FRAMELIST_TOUCH_DATA td_list_tp_tbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA td_list_tp2_tbl[] =
 {
-  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+//  { {   0,  23, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
   { {  24,  47, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
   { {  48,  71, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
   { {  72,  95, 8, 232 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
@@ -403,6 +432,18 @@ static const FRAMELIST_HEADER td_frame_list_header = {
   NULL, // コールバック関数に渡されるワーク
 };
 
+//---------------------------------
+// 共通ボタン
+// (通常、オン、オフ(操作不可)、0)
+// 全部は必要ないが、念のため用意しておく
+//---------------------------------
+static const s16 td_cmn_btn_tbl[] = {
+	CMN_LEFT_SEQ,   CMN_LEFT_ON_SEQ,   CMN_LEFT_OFF_SEQ,  0,	// 左
+	CMN_RIGHT_SEQ,  CMN_RIGHT_ON_SEQ,  CMN_RIGHT_OFF_SEQ, 0,	// 右
+	CMN_CROSS_SEQ,  CMN_CROSS_ON_SEQ,  CMN_CROSS_SEQ,     0,	// ×
+	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ, CMN_RETURN_SEQ,    0,	// 戻る
+};
+
 //=============================================================================
 /**
  *								宣言
@@ -422,12 +463,10 @@ static void td_init_obj_res_cmn( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype );
 static void td_init_obj( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 //
-// bmpoam
-//static void td_init_obj_bmpoam( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype, const T_DOWNLOAD_BMPOAM_DATA *bmp_adr, const s16 *info_adr );
-//
 // yes/no win
-static void td_clear_frame( T_DOWNLOAD_MAIN_WORK* wk );
 static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
+//
+//static void td_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 //
 static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void td_listcallback_move( void *work, u32 pos, BOOL flag );
@@ -465,7 +504,7 @@ void TdCmn_init_data( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	// yes/noウインドウ用
 	wk->pAppTask 	= 0;
-	wk->pAppTaskRes = APP_TASKMENU_RES_Create( GFL_BG_FRAME1_M, PLTID_YESNO_WIN_BASE, wk->font, wk->print_que, wk->heapID );
+	wk->pAppTaskRes = APP_TASKMENU_RES_Create( GFL_BG_FRAME0_M, PLTID_YESNO_WIN_BASE, wk->font, wk->print_que, wk->heapID );
 	
 	// bg初期化
 	td_init_bg( wk );
@@ -473,6 +512,9 @@ void TdCmn_init_data( T_DOWNLOAD_MAIN_WORK* wk )
 	td_init_string( wk );
 	// obj
 	td_init_obj( wk );
+	//
+	// 一旦クリアしておく
+//	td_clear_frame( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -550,6 +592,48 @@ static void td_init_bg( T_DOWNLOAD_MAIN_WORK* wk )
 		sadr++;
 	}
 	
+	// 終了
+	GFL_ARC_CloseDataHandle( handle );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BG関連の初期化
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_init_bg_info( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	s32		i;
+	s32		tmp;
+	const T_DOWNLOAD_BGCHR_DATA	*cadr = &td_bgchr_00_tbl[0];
+	const T_DOWNLOAD_BGSCN_DATA	*sadr = &td_bgscn_00_tbl[0];
+	//
+	ARCHANDLE		*handle;
+	//
+	handle	= GFL_ARC_OpenDataHandle( ARCID_T_DOWNLOAD_GRA, wk->heapID );
+	//
+	// キャラ転送
+	for(i=0;i<T_DOWNLOAD_BGNUM_MAXNUM;i++){
+		// 終了条件
+		if(cadr->frmnumber == 0xff){
+			break;
+		}
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, cadr->arcid, cadr->frmnumber, cadr->offset, 0, 0, wk->heapID );
+		cadr++;
+	}
+	// スクリーン転送
+	for(i=0;i<T_DOWNLOAD_BGNUM_MAXNUM;i++){
+		// 終了条件
+		if(sadr->frmnumber == 0xff){
+			break;
+		}
+		GFL_ARCHDL_UTIL_TransVramScreen( handle, sadr->arcid, sadr->frmnumber, sadr->offset, 0, 0, wk->heapID );
+		sadr++;
+	}
 	// 終了
 	GFL_ARC_CloseDataHandle( handle );
 }
@@ -879,10 +963,8 @@ static void td_init_obj( T_DOWNLOAD_MAIN_WORK* wk )
 	// CLWK登録(cmn)
 	td_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &td_obj_cmn_tbl[0], &td_obj_cmn_itbl[0] );
 	//
-	// BmpOAM初期化
-//	wk->BmpOamSys = BmpOam_Init( wk->heapID, p_clunit );
-	// BMPOAM登録
-//	td_init_obj_bmpoam( wk, CLSYS_DRAW_MAIN, &td_bmpoam_tbl[0], &td_obj_main_info_tbl[0] );
+	// 通信アイコンセット(上画面)
+	GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
 }
 
 //-----------------------------------------------------------------------------
@@ -913,13 +995,6 @@ static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk )
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[T_DOWNLOAD_RESID_CMN_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[T_DOWNLOAD_RESID_CMN_OBJ_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[T_DOWNLOAD_RESID_CMN_OBJ_CEL] );
-	//
-	// BmpOAM後処理
-//	for(i=0;i<T_DOWNLOAD_BMPOAM_MAXNUM;i++){
-//		BmpOam_ActorDel( wk->BmpOamWork[i] );
-//		GFL_BMP_Delete( wk->BmpData[i] );
-//	}
-//	BmpOam_Exit( wk->BmpOamSys );
 }
 
 //-----------------------------------------------------------------------------
@@ -1026,88 +1101,6 @@ BOOL TdCmn_is_anime_end( T_DOWNLOAD_MAIN_WORK *wk, const s32 wmode, const s32 wn
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------
-#if 0
-//-----------------------------------------------------------------------------
-/**
- *	@brief  OBJ初期化(bmpoam)
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *	@param	const s32				drawtype
- *	@param	const T_DOWNLOAD_BMPOAM_DATA*	アドレス
- *	@param	const s16*					アドレス
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void td_init_obj_bmpoam( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype, const T_DOWNLOAD_BMPOAM_DATA *bmp_adr, const s16 *info_adr )
-{
-	s16							tmp;
-	s32							i;
-	s32							buf[2];
-	BMPOAM_ACT_DATA				actdata;
-	const T_DOWNLOAD_BMPOAM_DATA	*adr  = bmp_adr;
-	const s16					*iadr = info_adr;
-	GFL_CLACTPOS				cpos;
-	//
-	for(i=0;i<T_DOWNLOAD_BMPOAM_MAXNUM;i++){
-		// 終了判定
-		if(adr->width == 0xff){
-			break;
-		}
-		// サイズ(colormodeは16で大丈夫だろう)
-		buf[0] = (s32)(adr->width);
-		buf[1] = (s32)(adr->height);
-		wk->BmpData[i] = GFL_BMP_Create( buf[0], buf[1], GFL_BMP_16_COLOR, wk->heapID );
-		// 左側
-		tmp = adr->empty_num;
-		cpos.x = TdCmn_get_empty( wk, tmp*2 );
-		cpos.y = TdCmn_get_empty( wk, tmp*2+1 );
-		//
-		GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
-		actdata.bmp			= wk->BmpData[i];
-		actdata.x 			= cpos.x;
-		actdata.y 			= cpos.y;
-		actdata.pltt_index	= wk->wk_obj.res[ iadr[0+1] ];		// plt
-		actdata.soft_pri	= adr->softpri;
-		actdata.bg_pri		= adr->bgpri;
-		actdata.pal_offset	= adr->paloffset;
-		actdata.setSerface	= drawtype;
-		actdata.draw_type	= drawtype;		// ?
-		// 作成
-		wk->BmpOamWork[i]	= BmpOam_ActorAdd( wk->BmpOamSys, &actdata );
-		// visible
-		if(adr->visible == 0){
-			BmpOam_ActorSetDrawEnable( wk->BmpOamWork[i], FALSE );
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  OB文字列表示(bmpoam)
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *	@param	const s32				ワーク番号
- *	@param	const STRBUF*			表示文字列
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void TdCmn_disp_bmpoam( T_DOWNLOAD_MAIN_WORK* wk, const s32 wnum, const STRBUF *strbuf )
-{
-	if(wnum >= T_DOWNLOAD_BMPOAM_MAXNUM){
-		OS_Printf("bmpoamj max error:%d\n",wnum);
-		return;
-	}
-	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
-	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,14,0) );
-	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
-}
-#endif
-
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /**
  *	@brief  emptyの取得
@@ -1147,44 +1140,33 @@ s16 TdCmn_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num )
 void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	APP_TASKMENU_INITWORK appinit;
+	s32		i;
 	
 	appinit.heapId		= wk->heapID;
-	appinit.itemNum		= 2;					// アイテム数
+	appinit.itemNum		= 3;					// アイテム数
 	appinit.itemWork	= &wk->appitem[0];		// 情報セットのバッファ
 	//
 	appinit.posType		= ATPT_RIGHT_DOWN;
 	appinit.charPosX	= 32;
-	appinit.charPosY	= 12;
-	appinit.w			= APP_TASKMENU_PLATE_WIDTH_YN_WIN;
-	appinit.h			= APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
+	appinit.charPosY	= 24;
+	appinit.w			= APP_TASKMENU_PLATE_WIDTH;
+	appinit.h			= APP_TASKMENU_PLATE_HEIGHT;
 	//
-	// 「はい」の設定
-	wk->appitem[0].str		= GFL_STR_CreateBuffer(100, wk->heapID);
-	// test(00)
-	STRTOOL_SetNumber( wk->appitem[0].str, 0, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	wk->appitem[0].msgColor	= PRINTSYS_LSB_Make( 0xe, 0xf, 0 );
-	wk->appitem[0].type		= APP_TASKMENU_WIN_TYPE_NORMAL;
-	//
-	// 「いいえ」の設定
-	wk->appitem[1].str		= GFL_STR_CreateBuffer(100, wk->heapID);
-	// test(01)
-	STRTOOL_SetNumber( wk->appitem[1].str, 1, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	wk->appitem[1].msgColor	= PRINTSYS_LSB_Make( 0xe, 0xf, 0 );
-	wk->appitem[1].type		= APP_TASKMENU_WIN_TYPE_NORMAL;
-	//
+	for(i=0;i<3;i++){
+		wk->appitem[i].str = GFL_STR_CreateBuffer(100, wk->heapID);
+		GFL_MSG_GetString( wk->msg[0], td_mes_d00_tbl[2+i], wk->appitem[i].str);
+		wk->appitem[i].msgColor	= PRINTSYS_LSB_Make( 0xe, 0xf, 0 );
+		if(i == 2){
+			wk->appitem[i].type		= APP_TASKMENU_WIN_TYPE_RETURN;
+		}else{
+			wk->appitem[i].type		= APP_TASKMENU_WIN_TYPE_NORMAL;
+		}
+	}
 	wk->pAppTask = APP_TASKMENU_OpenMenu( &appinit, wk->pAppTaskRes );
 	//
-	GFL_STR_DeleteBuffer( wk->appitem[0].str );
-	GFL_STR_DeleteBuffer( wk->appitem[1].str );
-	//
-	// defaultでnoにする
-	// (activeもあわせて変更)
-	// yes側
-	APP_TASKMENU_SetCursorPos( wk->pAppTask, 0 );
-	APP_TASKMENU_SetActive( wk->pAppTask, FALSE );
-	// no側
-	APP_TASKMENU_SetCursorPos( wk->pAppTask, 1 );
-	APP_TASKMENU_SetActive( wk->pAppTask, TRUE );
+	for(i=0;i<3;i++){
+		GFL_STR_DeleteBuffer( wk->appitem[i].str );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1211,7 +1193,7 @@ void TdCmn_exit_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
  *
  *  @param  T_DOWNLOAD_MAIN_WORK	*wk
  *
- *  @retval s32				(-1:未処理、0:NO、1:YES)
+ *  @retval s32				(-1:未処理、0:項目番号)
  */
 //-----------------------------------------------------------------------------
 s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
@@ -1223,19 +1205,14 @@ s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
 	if(wk->pAppTask == 0){
 		return( flg );
 	}
+	//
+	APP_TASKMENU_UpdateMenu( wk->pAppTask );
+	
 	// 選択中
 	if( APP_TASKMENU_IsFinish( wk->pAppTask ) ){
 		pos = APP_TASKMENU_GetCursorPos( wk->pAppTask );
-		if(pos == 0){		// yes
-			flg = 1;
-		}else{				// no
-			flg = 0;
-		}
-		// 終了
-		TdCmn_exit_yesnowin( wk );
-		//
-		// clear
-		td_clear_frame( wk );
+		// 項目番号を返す
+		return( pos );
 	}
 	//
 	return( flg );
@@ -1266,8 +1243,9 @@ void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid
 	if(wk->MsgBuffer){
 		GFL_STR_DeleteBuffer( wk->MsgBuffer );
 	}
-	// メッセージ仮バッファセット
-	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[0], mesid );
+	// メッセージ仮バッファセット(仮)
+//	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[0], mesid );
+	wk->MsgBuffer = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[0] );
 	//
 	// stream設定=>ここのwk->MsgBufferは終わるまで削除してはいけない
 	wk->PrintStream = PRINTSYS_PrintStream(
@@ -1345,7 +1323,7 @@ void TdCmn_init_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void td_clear_frame( T_DOWNLOAD_MAIN_WORK* wk )
+void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	// clear
 	GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
@@ -1414,10 +1392,51 @@ void TdCmn_disp_centermes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 m
 	GFL_STR_DeleteBuffer( strbuf );
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  winにメッセージ表示
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32				(canvasの番号)
+ *	@param	const s32				(メッセージ番号)(0:選択してください、1:さんかしますか?)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
+{
+	STRBUF		*strbuf;
+	
+	// 中央の文字表示
+	TdCmn_init_meswin( wk, mode );
+	//
+	// メッセージ表示
+	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
+	TdCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+}
+
 //----------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメのセット
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const s32				(CMNの番号:フラグと対応)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_set_cmn_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+{
+	// アニメ再生
+	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_CMN, mode, td_cmn_btn_tbl[mode*4+1] );
+	wk->Flag |= (1<<mode);
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief	背景BGスクロール
@@ -1566,25 +1585,13 @@ u32 TdCmn_main_framelist( T_DOWNLOAD_MAIN_WORK * wk )
 {
 	u32		ret = FRAMELIST_RET_NONE;
 	
-	// 1回チェック済み=>リストの処理はしない
-//	if(wk->Flag & FLG_MW_1ST_CHK){
-//		return( ret );
-//	}
-	
-	// リスト処理をだます処理
-//	TdCmn_main_etc_input( wk );
-	
 	// Main
 	if( wk->frame_list_work ){
 		// PAGEUP、PAGEDOWNの場合は、スクロールが終了時に、
 		// パラメータをセットする必要がある(タイミング注意)
 		ret = FRAMELIST_Main( wk->frame_list_work );
+//		OS_Printf("ret :%x\n",ret);
 	}
-	// スクロールなしの場合は、
-	// リストは表示のみで、処理はしない
-//	if(wk->Flag & FLG_MW_NO_SCROLL){
-//		wk->Flag |= FLG_MW_1ST_CHK;
-//	}
 	
 #if 0	// debug
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){		//
@@ -1614,29 +1621,27 @@ s32 TdCmn_is_main_framelist( T_DOWNLOAD_MAIN_WORK * wk, const u32 mode )
 	s16			flg=0;
 	
 	switch(mode){
-//		case 0:								// 項目をタッチ
+		case 0:								// 項目をタッチ
 		case 1:
 		case 2:
 		case 3:
 		case 4:
 		case 5:
-		case 6:
+//		case 6:
 			flg = 2;
 			break;
 		//
 		case FRAMELIST_RET_PAGE_UP:			// page up
 		case FRAMELIST_RET_PAGE_UP_NONE:	// page up 2
 			// アニメ再生
-//			TdCmn_set_cmn_anim( wk, CLWKID_CMN_LEFT );
-			flg = 1;
-//			wk->Step = STEP_LV1+20;
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_LEFT );
+			flg = 3;
 			break;
 		case FRAMELIST_RET_PAGE_DOWN:		// page down
 		case FRAMELIST_RET_PAGE_DOWN_NONE:	// page down 2
 			// アニメ再生
-//			TdCmn_set_cmn_anim( wk, CLWKID_CMN_RIGHT );
-			flg = 1;
-//			wk->Step = STEP_LV1+10;
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RIGHT );
+			flg = 3;
 			break;
 		//
 		case FRAMELIST_RET_JUMP_TOP:		// top
@@ -1656,8 +1661,9 @@ s32 TdCmn_is_main_framelist( T_DOWNLOAD_MAIN_WORK * wk, const u32 mode )
 	}
 	// 決定
 	else if(flg == 2){
-//		// カーソル位置の取得
-//		TdCmn_calc_framelist( wk );
+		// カーソル位置の取得
+		TdCmn_calc_framelist( wk );
+		wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 	}
 	return( flg );
 }
@@ -1682,6 +1688,25 @@ void TdCmn_exit_framelist( T_DOWNLOAD_MAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief	リストカーソル位置再計算
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void TdCmn_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk )
+{
+	// 初期化
+	if(wk->frame_list_work){
+		wk->AllCurPos      = FRAMELIST_GetListPos(  wk->frame_list_work );		// 通しカーソル位置
+		wk->ListCurPos     = FRAMELIST_GetCursorPos(wk->frame_list_work );		// 画面上の位置
+		wk->ListScrollPos  = FRAMELIST_GetScrollCount(wk->frame_list_work );	// スクロール位置
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief	フレームのcallback関数(draw,move,scroll)
  *
  * @param	T_DOWNLOAD_MAIN_WORK*		wk
@@ -1701,8 +1726,9 @@ static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s
 static void td_listcallback_move( void *work, u32 pos, BOOL flag )
 {
 	T_DOWNLOAD_MAIN_WORK * wk = (T_DOWNLOAD_MAIN_WORK *)work;
-	// 再計算
-//	TdCmn_calc_framelist( wk );
+	// 再計算(カーソルをobjで処理する際は必要)
+	TdCmn_calc_framelist( wk );
+	wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 }
 
 // scroll
@@ -1769,4 +1795,22 @@ static void td_strbuf_print( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, P
 	td_PrintStrBuf( wk, print_util, que, msg, param, PRINTSYS_MACRO_LSB(14,15,0), 4, pos );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	リストカーソル表示
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ * @param	const s32					(番号)
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void TdCmn_disp_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
+{
+	GFL_CLACTPOS	pos;
+	//
+	pos.x = TdCmn_get_empty( wk, (EMPTY_CURPOS+num)*2 );
+	pos.y = TdCmn_get_empty( wk, (EMPTY_CURPOS+num)*2+1 );
+	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+}
 

@@ -21,10 +21,10 @@
 enum{
 	T_DOWNLOAD_CANVAS_MAXNUM 	= 9,				// canvas
 	T_DOWNLOAD_BMPOAM_MAXNUM	= 4,				// bmpoam
-	T_DOWNLOAD_EMPTY_MAXNUM		= 24*2,				// empty
+	T_DOWNLOAD_EMPTY_MAXNUM		= 27*2,				// empty
 	//
 	T_DOWNLOAD_CMN_OBJ_MAXNUM	= 4,				// common(obj)
-	T_DOWNLOAD_OBJ_MAXNUM		= 3,				// obj
+	T_DOWNLOAD_OBJ_MAXNUM		= 6,				// obj
 	//
 	T_DOWNLOAD_BGNUM_MAXNUM		= 8,				// bg
 	//
@@ -82,12 +82,13 @@ enum{
 // CLWK(下画面)
 enum
 {
-	T_DOWNLOAD_CLWKID_PANEL_00 = 0,					// パネル(00)
-	T_DOWNLOAD_CLWKID_PANEL_01,						// パネル
-	T_DOWNLOAD_CLWKID_PANEL_02,						// パネル
-	T_DOWNLOAD_CLWKID_PANEL_03,						// パネル
-	T_DOWNLOAD_CLWKID_BAR,							// スクロールバー
+	T_DOWNLOAD_CLWKID_BAR = 0,						// スクロールバー
+	T_DOWNLOAD_CLWKID_BAR_BASE,						// スクローバー下地
 	T_DOWNLOAD_CLWKID_CURSOR,						// カーソル(仮)
+	//
+	T_DOWNLOAD_CLWKID_ICON_00,						// アイコン
+	T_DOWNLOAD_CLWKID_ICON_01,
+	T_DOWNLOAD_CLWKID_ICON_02,
 	//
 	T_DOWNLOAD_CLWKID_MAX,
 };
@@ -100,6 +101,11 @@ enum{
 	T_DOWNLOAD_CLWKID_CMN_RETURN,					// 戻る
 	//
 	T_DOWNLOAD_CLWKID_CMN_MAX,
+};
+
+// フラグ
+enum{
+	T_DOWNLOAD_FLG_UPDATE	= (1<<0),	// 更新
 };
 
 //=============================================================================
@@ -153,7 +159,7 @@ typedef struct
 	WORDSET					*Wordset;						// wordset
 	//
 	APP_TASKMENU_WORK		*pAppTask;
-	APP_TASKMENU_ITEMWORK	appitem[2];
+	APP_TASKMENU_ITEMWORK	appitem[3];
 	APP_TASKMENU_RES		*pAppTaskRes;
 	//
 	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
@@ -163,6 +169,7 @@ typedef struct
 	s32						Step;							// ステップ
 	s32						Mode;							// モード
 	u32						Flag;							// フラグ
+	u32						CmnFlag;						// 共通フラグ
 	s32						CurPos;							// カーソル位置(view)
 	s32						TopNum;							// 先頭番号(select)
 	s32						SubNum;							// カーソル位置(select)
@@ -174,6 +181,9 @@ typedef struct
 	FRAMELIST_WORK			*frame_list_work;				// リスト
 	//
 	s32						DispMaxNum;						// 表示最大数
+	s32						AllCurPos;						// 通し番号
+	s32						ListCurPos;						// 画面上の位置
+	s32						ListScrollPos;					// スクロールの位置
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
