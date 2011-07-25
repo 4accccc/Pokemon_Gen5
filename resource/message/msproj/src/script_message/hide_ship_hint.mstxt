@@ -1,3 +1,1231 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_hide_ship_hint1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント1-1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:39:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント1-2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:39:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント1-3</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:39:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント1-4</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:39:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント2-1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:43:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント2-2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント2-3</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint2_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント2-4</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント3-1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:43:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント3-2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント3-3</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint3_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント3-4</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント4-1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:43:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント4-2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント4-3</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:47:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント4-4</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint5_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きを　つけな
+おんなは　うそつき　だぜ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きを　つけな
+おんなは　うそつき　だぜ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント5-1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:43:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+ネオプラズマ団♂・したっぱ５</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:45:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint6_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント6-1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:42:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint6_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント6-2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint6_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント6-3</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint6_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント6-4</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint7_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント7_1</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:42:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ７</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint7_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント7_2</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ７</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint7_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント7_3</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ７</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint7_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークストーンの　ヒント</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:48:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント7_4</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+ネオプラズマ団♀・したっぱ７</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T10:46:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
