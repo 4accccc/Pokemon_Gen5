@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: fmission_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_FMISSION_DATA_NAIX_
+#define NARC_FMISSION_DATA_NAIX_
+
+enum {
+	NARC_fmission_data_fmission_data_bin = 0
+};
+
+/* NARC_FMISSION_DATA_NAIX_ */
+#endif
