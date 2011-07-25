@@ -1835,10 +1835,11 @@
 			<Comment>♂
 ・アジト船：２回目
 ・posイベント
-・ライバルはしたっぱ２と戦闘中</Comment>
+・ライバルはしたっぱ２と戦闘中
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:19:42" />
+				Time="2011-07-25T11:39:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1890,10 +1891,11 @@
 			<Comment>♂
 ・アジト船：２回目
 ・主人公がしたっぱに勝利して
-　ハッチ前のposに移動するまで</Comment>
+　ハッチ前のposに移動するまで
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:29:34" />
+				Time="2011-07-25T11:39:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1929,10 +1931,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……フゥ
-いくぜ！　きを　つけろよな</Text>
+いくぜ！　気を　つけろよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:00:15" />
+				Time="2011-07-25T11:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1945,10 +1947,12 @@
 ・posイベント
 　Black2とWhite2でposが異なる
 ・ハッチが開いている状態
-・メッセージ後、ライバルが先に侵入する</Comment>
+・メッセージ後、ライバルが先に侵入する
+　主人公も同行する
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T06:00:32" />
+				Time="2011-07-25T11:39:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1957,6 +1961,61 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T05:22:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swrival_02_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……おい！
+こっちだ！　ちょっと　きてくれよ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:40:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:39:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……おい！
+こっちだ！　ちょっと　来てくれよ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:40:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:40:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・船首楼に行く前に
+　船内に下りようとしたとき
+・posイベント
+　Black2とWhite2でposが異なる
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:39:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:38:38" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

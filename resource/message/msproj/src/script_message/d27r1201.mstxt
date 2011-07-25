@@ -2,7 +2,177 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_d27r1001_pass_01"
+		Label="msg_d27r1201_swrival_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……バリアだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……バリアだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Whitek2ver
+・アジト船：2回目
+　マップ切り替えでイベント開始
+・バリア前でメッセージ
+・続けてswrival_02_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:58:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1201_swrival_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しかも　こちらには
+パスワードを　いれる　そうち……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:57:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しかも　こちらには
+パスワードを　いれる　そうち……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:57:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Whitek2ver
+・アジト船：2回目
+・入力装置前に移動してメッセージ
+・続けてswrival_02_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:58:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:53:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1201_swrival_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ということはだ▼
+パスワードを　さがすか　ききだして
+バリアを　けすしかないか▼
+[Name:TrainerName ]！　てわけして
+パスワードを　さがすぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:59:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:57:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ということはだ▼
+パスワードを　探すか　ききだして
+バリアを　解除しないとな▼
+[Name:TrainerName ]　手分けして
+パスワードを　探すぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:59:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:57:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Whitek2ver
+・アジト船：2回目
+・主人公を向いてメッセージ表示
+　メッセージ表示後、ライバル退場
+　ライバルが画面外に消えると
+　主人公操作可能に
+・0＝主人公名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:57:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-25T11:57:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1201_pass_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -55,7 +225,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r1001_pass_02"
+		Label="msg_d27r1201_pass_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -106,7 +276,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d27r0201_switch_01"
+		Label="msg_d27r1201_switch_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
