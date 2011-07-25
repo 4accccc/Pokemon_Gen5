@@ -352,4 +352,5 @@
   ARCID_C_GEAR_SW    "c_gear_sw.narc"           #コミュニケーションギア スワン
   ARCID_HIDE_SHIP_DECK "fieldmap/hide_ship_deck.narc"  #アジト船（甲板）
   ARCID_FMISSION_DATA    "fmission_data.narc"   #フェスミッションデータアーカイブ
+  ARCID_CHAMPION "fieldmap/champion.narc"  #チャンピオン部屋
   
