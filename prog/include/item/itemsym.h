@@ -619,8 +619,13 @@
 #define ITEM_MEDARUBOKKUSU		( 627 )		// メダルボックス
 #define ITEM_IDENSINOKUSABI		( 628 )		// いでんしのくさび
 #define ITEM_IDENSINOKUSABI_1		( 629 )		// いでんしのくさび
+#define ITEM_KYOKASYOU		( 630 )		// きょかしょう
+#define ITEM_MARUIOMAMORI		( 631 )		// まるいおまもり
+#define ITEM_HIKARUOMAMORI		( 632 )		// ひかるおまもり
+#define ITEM_PURAZUMAKAADO		( 633 )		// プラズマカード
+#define ITEM_YOGORETAHANKATI		( 634 )		// よごれたハンカチ
 
-#define ITEM_DATA_MAX		( 629 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 634 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

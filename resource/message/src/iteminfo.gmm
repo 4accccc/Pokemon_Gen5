@@ -5796,6 +5796,51 @@
 仮説明文</language>
 	</row>
 
+	<row id="ITEMINFO_630">
+		<language name="JPN" width="256">きょかしょう
+かりせつめいぶん
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">許可証
+仮説明文
+仮説明文</language>
+	</row>
+
+	<row id="ITEMINFO_631">
+		<language name="JPN" width="256">まるいおまもり
+かりせつめいぶん
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">丸いお守り
+仮説明文
+仮説明文</language>
+	</row>
+
+	<row id="ITEMINFO_632">
+		<language name="JPN" width="256">ひかるおまもり
+かりせつめいぶん
+かりせつめいぶん</language>
+		<language name="JPN_KANJI" width="256">光るお守り
+仮説明文
+仮説明文</language>
+	</row>
+
+	<row id="ITEMINFO_633">
+		<language name="JPN" width="256">プラズマフリゲートの　せんないで
+パスワードを　にゅうりょくするときに
+ひつようとなる　カードキー。</language>
+		<language name="JPN_KANJI" width="256">プラズマフリゲートの　船内で
+パスワードを　入力するときに
+必要となる　カードキー。</language>
+	</row>
+
+	<row id="ITEMINFO_634">
+		<language name="JPN" width="256">シッポウシティにある　カフェソーコの
+じょうれんが　おとした　ハンカチ。
+ほのかに　ポケモンの　かおりがする。</language>
+		<language name="JPN_KANJI" width="256">シッポウシティにある　カフェソーコの
+常連が　落とした　ハンカチ。
+ほのかに　ポケモンの　香りがする。</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

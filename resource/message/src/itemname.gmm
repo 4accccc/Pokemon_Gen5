@@ -3280,6 +3280,31 @@
 		<language name="JPN_KANJI" width="256">いでんしのくさび</language>
 	</row>
 
+	<row id="ITEMNAME_630">
+		<language name="JPN" width="256">きょかしょう</language>
+		<language name="JPN_KANJI" width="256">きょかしょう</language>
+	</row>
+
+	<row id="ITEMNAME_631">
+		<language name="JPN" width="256">まるいおまもり</language>
+		<language name="JPN_KANJI" width="256">まるいおまもり</language>
+	</row>
+
+	<row id="ITEMNAME_632">
+		<language name="JPN" width="256">ひかるおまもり</language>
+		<language name="JPN_KANJI" width="256">ひかるおまもり</language>
+	</row>
+
+	<row id="ITEMNAME_633">
+		<language name="JPN" width="256">プラズマカード</language>
+		<language name="JPN_KANJI" width="256">プラズマカード</language>
+	</row>
+
+	<row id="ITEMNAME_634">
+		<language name="JPN" width="256">よごれたハンカチ</language>
+		<language name="JPN_KANJI" width="256">よごれたハンカチ</language>
+	</row>
+
 
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
