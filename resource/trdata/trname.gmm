@@ -4086,8 +4086,8 @@
 	</row>
 
 	<row id="swsage3_01">
-		<language name="JPN" width="216">ＳＡＧＥ３</language>
-		<language name="JPN_KANJI" width="216">ＳＡＧＥ３</language>
+		<language name="JPN" width="216">ヴィオ</language>
+		<language name="JPN_KANJI" width="216">ヴィオ</language>
 	</row>
 
 	<row id="ninja_01">
@@ -4866,6 +4866,61 @@
 	</row>
 
 	<row id="worker2_36">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="elitem_33">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="leader1a_01">
+		<language name="JPN" width="216">ポッド</language>
+		<language name="JPN_KANJI" width="216">ポッド</language>
+	</row>
+
+	<row id="leader1b_01">
+		<language name="JPN" width="216">コーン</language>
+		<language name="JPN_KANJI" width="216">コーン</language>
+	</row>
+
+	<row id="leader1c_01">
+		<language name="JPN" width="216">デント</language>
+		<language name="JPN_KANJI" width="216">デント</language>
+	</row>
+
+	<row id="swsage3_02">
+		<language name="JPN" width="216">ヴィオ</language>
+		<language name="JPN_KANJI" width="216">ヴィオ</language>
+	</row>
+
+	<row id="ninja_02">
+		<language name="JPN" width="216">ＮＩＮＪＡ</language>
+		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
+	</row>
+
+	<row id="ninja_03">
+		<language name="JPN" width="216">ＮＩＮＪＡ</language>
+		<language name="JPN_KANJI" width="216">ＮＩＮＪＡ</language>
+	</row>
+
+	<row id="swplazmam_31">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="business1_10">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="business1_11">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="schoolb_14">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>

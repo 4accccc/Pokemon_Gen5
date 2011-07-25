@@ -895,7 +895,18 @@
 #define	TRID_WORKER2_34   ( 882 ) 
 #define	TRID_WORKER2_35   ( 883 ) 
 #define	TRID_WORKER2_36   ( 884 ) 
-#define TRID_MAX  ( 885 )
+#define	TRID_ELITEM_33   ( 885 ) 
+#define	TRID_LEADER1A_01   ( 886 ) 
+#define	TRID_LEADER1B_01   ( 887 ) 
+#define	TRID_LEADER1C_01   ( 888 ) 
+#define	TRID_SWSAGE3_02   ( 889 ) 
+#define	TRID_NINJA_02   ( 890 ) 
+#define	TRID_NINJA_03   ( 891 ) 
+#define	TRID_SWPLAZMAM_31   ( 892 ) 
+#define	TRID_BUSINESS1_10   ( 893 ) 
+#define	TRID_BUSINESS1_11   ( 894 ) 
+#define	TRID_SCHOOLB_14   ( 895 ) 
+#define TRID_MAX  ( 896 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
