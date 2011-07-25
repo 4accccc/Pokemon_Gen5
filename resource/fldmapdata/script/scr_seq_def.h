@@ -12496,6 +12496,25 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief WBT:トーナメント解禁チェック
+ * @param wbtcup  解禁されるかどうか調べるトーナメント
+ * @param ret_wk  TRUEのとき、解禁される
+ *
+ * ※現在のトーナメントに優勝したら、という条件で調べているので
+ * 　初回優勝の場合は現在優勝回数が0回かどうか、ということになる
+ */
+//--------------------------------------------------------------
+#define _WBT_CHECK_CUP_UNLOCK( wbtcup, ret_wk ) \
+    _ASM_WBT_CHECK_CUP_UNLOCK wbtcup, ret_wk
+
+    .macro  _ASM_WBT_CHECK_CUP_UNLOCK wbtcup, ret_wk
+    .short  EV_SEQ_WBT_CHECK_CUP_UNLOCK
+    .short  \wbtcup
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @brief   WBT:手持ちポケモンのルール適用チェック
  * @param[out]  ret_wk
  * @retval  TRUE  ルールに適合している
@@ -12770,14 +12789,16 @@
 /**
  * @brief WBT:トーナメント名のセット
  * @param[in] idx セットするタグナンバー
+ * @param[in] wbtcup  トーナメント指定
  */
 //--------------------------------------------------------------
-#define _WBT_SET_TOURNAMENT_NAME( idx ) \
-    _ASM_WBT_SET_TOURNAMENT_NAME idx
+#define _WBT_SET_TOURNAMENT_NAME( idx, wbtcup ) \
+    _ASM_WBT_SET_TOURNAMENT_NAME idx, wbtcup
 
-    .macro _ASM_WBT_SET_TOURNAMENT_NAME idx
+    .macro _ASM_WBT_SET_TOURNAMENT_NAME idx, wbtcup
     .short  EV_SEQ_WBT_SET_TOURNAMENT_NAME
     .byte   \idx
+    .short  \wbtcup
     .endm
 
 //--------------------------------------------------------------

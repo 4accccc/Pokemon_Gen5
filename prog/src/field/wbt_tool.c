@@ -110,7 +110,7 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
     msg_wbtsys_title_17,
     WBTWIN_COUNT_WCS,
     WBTREG_WCS,
-    WBTRECEPT_2,
+    WBTRECEPT_1,
   },
   {//WBTCUP_HODOMOE_EVENT, //ホドモエトーナメント（イベント）           
     msg_wbtsys_title_05,
@@ -925,8 +925,6 @@ BOOL WBTTOOL_GetStatus( GAMEDATA * gamedata, WBT_COND_ID cond_id )
   switch ( cond_id )
   {
   case WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT:
-    return TRUE;  //仮：ダウンロードデータには未対応
-    break;
   default:
     GF_ASSERT( 0 );
   }
@@ -942,6 +940,84 @@ enum {
 };
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static void makeWinCountArray( GAMEDATA * gamedata, u16 * win_count_array )
+{
+  int i;
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+
+  for ( i = 0; i < WBTWIN_COUNT_MAX; i ++ )
+  {
+    win_count_array[i] = WBTSAVE_GetWinCount( wbtsave, i );
+  }
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_count )
+{
+  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+
+  switch ( (WBTCUP)wbtcup )
+  {
+  case WBTCUP_NULL:     //トーナメント未指定
+    GF_ASSERT( 0 );
+    break;
+  case WBTCUP_CHAMPION: //チャンピオントーナメント
+    return ( win_count[ WBTWIN_COUNT_WORLD ] >= CHAMP_OPEN_COUNT );
+
+  case WBTCUP_POKETYPE: //タイプトーナメント
+    //すべてのリーダーズトーナメント
+    return ( win_count[ WBTWIN_COUNT_ISSYU ] != 0 &&
+        win_count[ WBTWIN_COUNT_KANTO ] != 0 &&
+        win_count[ WBTWIN_COUNT_JOUTO ] != 0 &&
+        win_count[ WBTWIN_COUNT_HOUEN ] != 0 &&
+        win_count[ WBTWIN_COUNT_SINOU ] != 0 );
+
+  case WBTCUP_DOWNLOAD: //ダウンロードトーナメント
+    return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
+
+  case WBTCUP_HODOMOE_EVENT:  ///ホドモエトーナメント（イベント）           
+    return ( win_count[ WBTWIN_COUNT_HODOMOE ] == 0 );
+
+  case WBTCUP_RENTAL:
+  case WBTCUP_SHUFFLE:
+  case WBTCUP_HODOMOE:     //ホドモエトーナメント           
+    return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
+  case WBTCUP_ISSYU:       //イッシュリーダーズトーナメント 
+    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+
+  case WBTCUP_KANTO:       //カントーリーダーズトーナメント 
+  case WBTCUP_JOUTO:       //ジョウトリーダーズトーナメント 
+  case WBTCUP_HOUEN:       //ホウエンリーダーズトーナメント 
+  case WBTCUP_SINOU:       //シンオウリーダーズトーナメント 
+    return (win_count[ WBTWIN_COUNT_ISSYU ] != 0);
+
+  case WBTCUP_RENTALMASTER:
+    return ( win_count[ WBTWIN_COUNT_RENTAL ] != 0
+        && win_count[ WBTWIN_COUNT_ISSYU ] != 0);
+
+  case WBTCUP_SHUFFLEMASTER:
+    return ( win_count[ WBTWIN_COUNT_SHUFFLE ] != 0
+        && win_count[ WBTWIN_COUNT_ISSYU ] != 0);
+
+  case WBTCUP_WORLD:        //ワールドリーダーズトーナメント     
+    return (
+        win_count[ WBTWIN_COUNT_ISSYU ] != 0 &&
+        win_count[ WBTWIN_COUNT_KANTO ] != 0 &&
+        win_count[ WBTWIN_COUNT_JOUTO ] != 0 &&
+        win_count[ WBTWIN_COUNT_HOUEN ] != 0 &&
+        win_count[ WBTWIN_COUNT_SINOU ] != 0 );
+
+  case WBTCUP_WCS:          //WCSトーナメント
+    //return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
+    return FALSE;
+  }
+  //よくわからないものは開催できない
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
 /**
  * @brief トーナメントが開催可能かどうかの判定処理
  * @param gamedata
@@ -951,50 +1027,42 @@ enum {
 //-----------------------------------------------------------------------------
 BOOL WBTTOOL_CheckCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup )
 {
-  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
-  EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+  u16 win_count[ WBTWIN_COUNT_MAX ];
 
-  switch ( (WBTCUP)wbtcup )
+  makeWinCountArray( gamedata, win_count );
+  return checkCupEnable( gamedata, wbtcup, win_count );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief トーナメントが解除されるかどうかの判定処理
+ * @param gamedata
+ * @param try_cup     現在挑戦しようとしているトーナメント
+ * @param check_cup   解除されるかどうか判定する対象のトーナメント
+ *
+ * トーナメント勝利以外で解除されるものは判定できない
+ */
+//-----------------------------------------------------------------------------
+BOOL WBTTOOL_CheckCupUnlock( GAMEDATA * gamedata, WBTCUP try_cup, WBTCUP check_cup )
+{
+  u16 win_count[ WBTWIN_COUNT_MAX ];
+  WBTWIN_COUNT count_id;
+  BOOL before_status, after_status;
+
+  makeWinCountArray( gamedata, win_count );
+  //現在、開催可能かどうか
+  before_status = checkCupEnable( gamedata, check_cup, win_count );
+
+  //現在のトーナメントに勝ったら…という条件にする
+  count_id = WBTTOOL_WBTCupToWinCount( try_cup, 0 );
+  if ( count_id != WBTWIN_COUNT_MAX )
   {
-  case WBTCUP_NULL:     //トーナメント未指定
-    GF_ASSERT( 0 );
-    break;
-  case WBTCUP_CHAMPION: //チャンピオントーナメント
-    return ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_WORLD ) >= CHAMP_OPEN_COUNT );
-  case WBTCUP_POKETYPE: //タイプトーナメント
-    //ゲームクリアしていたらタイプトーナメントは開催する
-    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
-
-  case WBTCUP_DOWNLOAD: //ダウンロードトーナメント
-    return WBTTOOL_GetStatus( gamedata, WBT_COND_ID_ENABLE_DOWNLOAD_TOURNAMENT );
-
-  case WBTCUP_HODOMOE_EVENT:  ///ホドモエトーナメント（イベント）           
-    return ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HODOMOE ) == 0 );
-  case WBTCUP_HODOMOE:     //ホドモエトーナメント           
-    return ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HODOMOE ) != 0 );
-  case WBTCUP_ISSYU:       //イッシュリーダーズトーナメント 
-    return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
-
-  case WBTCUP_KANTO:       //カントーリーダーズトーナメント 
-  case WBTCUP_JOUTO:       //ジョウトリーダーズトーナメント 
-  case WBTCUP_HOUEN:       //ホウエンリーダーズトーナメント 
-  case WBTCUP_SINOU:       //シンオウリーダーズトーナメント 
-    return (WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU ) != 0);
-
-  case WBTCUP_WORLD:        //ワールドバトルトーナメント     
-    return (
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_ISSYU ) != 0 &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_KANTO ) != 0 &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_JOUTO ) != 0 &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_HOUEN ) != 0 &&
-        WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_SINOU ) != 0 );
-
-  case WBTCUP_WCS:          //WCSトーナメント
-    return FALSE;
-    //return EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR );
+    win_count[ count_id ] ++;
   }
-  //よくわからないものは開催できない
-  return FALSE;
+  after_status = checkCupEnable( gamedata, check_cup, win_count );
+
+  //現在開催不可能で、トーナメントに勝ったら開催可能の場合→解除
+  return ( before_status == FALSE && after_status != before_status );
 }
 
 

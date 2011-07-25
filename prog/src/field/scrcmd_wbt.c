@@ -287,6 +287,7 @@ VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk )
   SCRCMD_WORK   *work = wk;
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
 
+  //受付があっていて、開催可能な場合のみTRUE
   if ( WBTTOOL_CheckReceptionID( wbtcup, WBTSYS_GetReceptionID( wbtsys ) ) == TRUE
       && WBTTOOL_CheckCupEnable( gamedata, wbtcup ) == TRUE )
   {
@@ -297,6 +298,25 @@ VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk )
     *ret_wk = FALSE;
   }
 
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：トーナメント解禁条件チェック
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTCheckCupUnlock( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = getWBTSys( wk );
+  GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
+
+  u16 wbtcup = SCRCMD_GetVMWorkValue( core, wk );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  //現在のトーナメントに勝ったら解禁されるものだけチェック
+  *ret_wk = WBTTOOL_CheckCupUnlock( gamedata, WBTSYS_GetWBTCup( wbtsys ), wbtcup );
+  //TAMADA_Printf("EvCmdWBTCheckCupUnlock(%d) == %d\n", wbtcup, *ret_wk);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -679,16 +699,15 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
   WORDSET*     wordset = SCRIPT_GetWordSet( sc );
   WBTSYS * wbtsys = getWBTSys( wk );
   u8 idx = VMGetU8(core);
-  WBTCUP wbtcup;
+  WBTCUP wbtcup = SCRCMD_GetVMWorkValue( core, wk );
   u16 msg_id;
 
-  TAMADA_Printf("EvCmdWBTSetTournamentName\n");
-  wbtcup = WBTSYS_GetWBTCup(wbtsys);
   {
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
     WBTTOOL_SetTournamentName( wbtcup, strbuf );
     WORDSET_RegisterWord( wordset, idx, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
   }
+  TAMADA_Printf("EvCmdWBTSetTournamentName(%d,%d)\n", idx, wbtcup);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -771,36 +790,6 @@ VMCMD_RESULT EvCmdWBTSelectPokemon( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
-//----------------------------------------------------------------------------
-//----------------------------------------------------------------------------
-static GMEVENT * createDummyEvent( HEAPID heapID, GAMESYS_WORK * gsys )
-{
-  GMEVENT * new_event;
-  WBTLIST_PARAM * wbtlist_param;
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-
-  wbtlist_param = WBTLIST_PARAM_Create( heapID, gsys );
-  {
-    GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-    WBTSYS * wbtsys;
-
-    wbtsys = WBTSYS_Create( heapID );
-    WBTSYS_SetWBTCup( wbtsys, WBTCUP_HODOMOE );
-    WBTSYS_SetRule( wbtsys, WBTRULE_SINGLE );
-    WBTSYS_SetStage( wbtsys, WBTSTAGE_ENTRY );
-    WBTSYS_MakeMatch( wbtsys, gamedata );
-
-    WBTLIST_PARAM_Setup( gsys, wbtsys, wbtlist_param );
-    //wbtlist_param->debug_value = debug_value;
-    wbtlist_param->call_fade_flag = TRUE; //呼び出し前後でフィールドフェード実行
-
-    WBTSYS_Delete( wbtsys );
-  }
-  new_event = GMEVENT_CreateOverlayEventCall( gsys,
-      FS_OVERLAY_ID(notwifi_event_wbt), WBT_EVENT_ShowTournamentList, (void *)wbtlist_param );
-  return new_event;
-}
-
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：WBTDLデータのナンバー選択
@@ -808,16 +797,20 @@ static GMEVENT * createDummyEvent( HEAPID heapID, GAMESYS_WORK * gsys )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
 {
-  WBTSYS * wbtsys = getWBTSys( wk );
   SCRCMD_WORK   *work = wk;
   GAMESYS_WORK  *gsys = SCRCMD_WORK_GetGameSysWork( work );
   HEAPID      heap_id = SCRCMD_WORK_GetHeapID( work );
-  GMEVENT * new_event = createDummyEvent( heap_id, gsys );
   SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
+  GMEVENT * new_event;
+	T_DOWNLOAD_PARAM * td_param;
 
+  //u16 app_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 app_id = T_DOWNLOAD_STATUS_SELECT;
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = 0;  //仮：選択せず
-  //仮：ここで別画面アプリ呼び出し
+
+  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, ret_wk );
+	new_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
   TAMADA_Printf("EvCmdWBTSelectDLData\n");
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;

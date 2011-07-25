@@ -18,6 +18,7 @@ extern VMCMD_RESULT EvCmdWBTSystemGetStage( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk );
 
 extern VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTCheckCupUnlock( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetBattleRule( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetBattleRule( VMHANDLE * core, void * wk );

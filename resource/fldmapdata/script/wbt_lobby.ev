@@ -121,6 +121,7 @@ DEFINE_LOCAL	LWK_RULE
 DEFINE_LOCAL  LWK_REG
 DEFINE_LOCAL	LWK_CHK_RULE
 DEFINE_LOCAL	LWK_DL_COUNT
+DEFINE_LOCAL  LWK_TEMP
 
   _WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_RECEPTION )
 
@@ -150,7 +151,13 @@ DEFINE_LOCAL	LWK_DL_COUNT
       //トーナメント選択
       _CALL ev_select_tournament
       SWITCH $LWK_MENU
-      CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_HODOMOE_EVENT, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
+      CASE SCR_WBT_CUP_HODOMOE_EVENT THEN
+        //ホドモエイベントではルール選択せずシングル固定
+        _WBT_SET_WBT_CUP( LWK_MENU )
+        _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
+        $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_POKE
+
+      CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
         _WBT_SET_WBT_CUP( LWK_MENU )
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_RULE
       CASE SCR_WBT_CUP_POKETYPE THEN
@@ -216,7 +223,11 @@ DEFINE_LOCAL	LWK_DL_COUNT
         //ルール未選択→適宜前のシーケンスに戻る
         _WBT_GET_WBT_CUP( LWK_WBT_SELECT_TOURNAMENT )
         SWITCH $LWK_WBT_SELECT_TOURNAMENT
-        CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_HODOMOE_EVENT, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
+        CASE SCR_WBT_CUP_HODOMOE_EVENT THEN
+          //ホドモエイベントはここに来ないはずだが、念のため
+          $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
+
+        CASE SCR_WBT_CUP_HODOMOE, SCR_WBT_CUP_ISSYU, SCR_WBT_CUP_KANTO, SCR_WBT_CUP_JOUTO, SCR_WBT_CUP_HOUEN, SCR_WBT_CUP_SINOU, SCR_WBT_CUP_WORLD THEN
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
         CASE SCR_WBT_CUP_POKETYPE THEN
           $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_POKETYPE
@@ -260,7 +271,7 @@ DEFINE_LOCAL	LWK_DL_COUNT
 	IF $LWK_WBT_LOBBY_SEQ == WBT_LOBBY_SEQ_END THEN
     //やめる場合
 		//またの御利用をおまちしております
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_09, SCWK_TARGET_OBJID, POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_04, SCWK_TARGET_OBJID, POS_DL )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
@@ -469,24 +480,35 @@ _RET
 //  エントリー→会場へ入場する
 /**************************************************************/
 ev_enter_hall:
+  //地方トーナメント解除チェック：カントーだけでチェック
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_KANTO, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_notice_01, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  //ワールドリーダーズ解除チェック
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_WORLD, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_notice_02, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  //チャンピオン解除チェック
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_CHAMPION, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_notice_03, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  //レンタルマスター解除チェック
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_RENTALMASTER, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_notice_04, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  //シャッフルマスター解除チェック
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_SHUFFLEMASTER, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_notice_05, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
 
 	//参加受付が終わりました！
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_17, SCWK_TARGET_OBJID, POS_DL )
 	_MSGWIN_CLOSE()
-
-  //_MAP_FADE_BLACK_OUT()
-  //_MAP_FADE_END_CHECK()
-
-	////トーナメントリスト表示
-	//_WBT_LIST_CALL( SCR_WBT_LIST_1ST_START )
-	
-  //_MAP_FADE_BLACK_IN()
-  //_MAP_FADE_END_CHECK()
-
-	////それでは第一回戦を開始します！
-	//_BALLOONWIN_OBJMSG_POS( msg_wbt_info_18, SCWK_TARGET_OBJID, POS_DL )
-	//_MSGWIN_CLOSE()
-	
 
   _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
@@ -527,7 +549,7 @@ _ANIME_LABEL  anm_infowoman_l_move
 _ANIME_LABEL  anm_infowoman_r_move
   _ANIME_DATA  AC_WALK_U_8F, 1
   _ANIME_DATA  AC_WALK_L_8F, 1
-  _ANIME_DATA  AC_STAY_WALK_L_8F,1
+  _ANIME_DATA  AC_STAY_WALK_R_8F,1
   _ANIME_DATA  ACMD_END, 0
 
 //--------------------------------------------------------------------
@@ -606,16 +628,16 @@ _BMPMENU_START()
 	//選択結果で分岐
 	SWITCH $LWK_MENU
 	CASE msg_wbt_menu_explain_type THEN		//タイプトーナメントについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_05, SCWK_TARGET_OBJID, POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_poketype, SCWK_TARGET_OBJID, POS_DL )
 
 	CASE msg_wbt_menu_explain_champ THEN		//チャンピオントーナメントについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_06, SCWK_TARGET_OBJID, POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_champ, SCWK_TARGET_OBJID, POS_DL )
 
 	CASE msg_wbt_menu_explain_dl THEN		//ダウンロードトーナメントについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_07, SCWK_TARGET_OBJID, POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_download, SCWK_TARGET_OBJID, POS_DL )
 
 	CASE msg_wbt_menu_explain_rule THEN		//バトルルールについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_08, SCWK_TARGET_OBJID, POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_rule, SCWK_TARGET_OBJID, POS_DL )
 
   CASE msg_wbt_menu_explain_hodomoe THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_hodomoe, SCWK_TARGET_OBJID, POS_DL )
@@ -679,18 +701,9 @@ _BMPMENU_MAKE_LIST( msg_wbt_menu_back, POKETYPE_NULL )		//もどる
 //メニュー表示
 _BMPMENU_START()
 
-//選択結果で分岐
-//$LWK_MENU
-
 IF $LWK_MENU == EV_WIN_B_CANCEL THEN
   $LWK_MENU = POKETYPE_NULL
 ENDIF
-_RET
-
-/**************************************************************/
-/*		チャンピオントーナメントの参加						  */
-/**************************************************************/
-ev_champ:
 _RET
 
 /**************************************************************/
@@ -714,37 +727,9 @@ ELSE
 
 	//参加できるトーナメントはこちらになります
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_14, SCWK_TARGET_OBJID, POS_DL )
+  _MSGWIN_CLOSE()
 
-	//BMPMENU表示
-	_BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
-
-	SWITCH $LWK_DL_COUNT
-		CASE 1 THEN		//ダウンロード数が１の場合
-			//ダウンロードデータの名前をセット
-			_WBT_SET_DL_NAME( 1, 1 )
-			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
-		CASE 2 THEN		//ダウンロード数が２の場合
-			//ダウンロードデータの名前をセット
-			_WBT_SET_DL_NAME( 1, 1 )
-			_WBT_SET_DL_NAME( 2, 2 )
-			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
-			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl02, 2 )	//ダウンロードトーナメント２
-		CASE 3 THEN		//ダウンロード数が３の場合
-			//ダウンロードデータの名前をセット
-			_WBT_SET_DL_NAME( 1, 1 )
-			_WBT_SET_DL_NAME( 2, 2 )
-			_WBT_SET_DL_NAME( 3, 3 )
-			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl01, 1 )	//ダウンロードトーナメント１
-			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl02, 2 )	//ダウンロードトーナメント２
-			_BMPMENU_MAKE_LIST( msg_wbt_menu_dl03, 3 )	//ダウンロードトーナメント３
-	ENDSWITCH
-
-	_BMPMENU_MAKE_LIST( msg_wbt_menu_back, 0 )	//もどる
-
-	//メニュー表示
-	_BMPMENU_START()
-
-  //_WBT_SELECT_DL_DATA( LWK_MENU )
+  _WBT_SELECT_DL_DATA( LWK_MENU )
 
 ENDIF
 
@@ -759,37 +744,51 @@ EVENT_START	ev_reserve_wbt_exit
 
   _WBT_GET_RECEPTION_ID( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_WBT_RECEPTION1 THEN
+    $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_01
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_l_exit )
     _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_info_l_return )
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_infowoman_l_return )
     _OBJ_ANIME_WAIT()
   ELSIF $SCWK_ANSWER == SCR_WBT_RECEPTION2 THEN
+    $SCWK_TARGET_OBJID = D05R0101_INFOMATIONW_02
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_r_exit )
     _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_info_r_return )
+    _OBJ_ANIME( SCWK_TARGET_OBJID, anm_infowoman_r_return )
     _OBJ_ANIME_WAIT()
   ENDIF
 
   _WBT_SYSTEM_GET_STAGE( SCWK_ANSWER )
   SWITCH $SCWK_ANSWER
-  CASE SCR_WBT_STAGE_WIN THEN
-    //優勝
-    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09c, SCWK_TARGET_OBJID, POS_DL )
-
-  CASE SCR_WBT_STAGE_FINAL THEN
-    //準優勝
-    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09b, SCWK_TARGET_OBJID, POS_DL )
+  CASE SCR_WBT_STAGE_1ST THEN
+    //初戦敗退
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_20, SCWK_TARGET_OBJID, POS_DL )
 
   CASE SCR_WBT_STAGE_2ND THEN
     //1回戦突破
-    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09a, SCWK_TARGET_OBJID, POS_DL )
-  DEFAULT
-    //念のため
-    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_09, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_21, SCWK_TARGET_OBJID, POS_DL )
+
+  CASE SCR_WBT_STAGE_FINAL THEN
+    //準優勝
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_22, SCWK_TARGET_OBJID, POS_DL )
+
+  CASE SCR_WBT_STAGE_WIN THEN
+    //優勝おめでとうございます！
+    _WBT_GET_WBT_CUP( LWK_WBT_SELECT_TOURNAMENT )
+    _WBT_SET_TOURNAMENT_NAME( 0, LWK_WBT_SELECT_TOURNAMENT )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_23, SCWK_TARGET_OBJID, POS_DL )
+
+    _CALL ev_wbt_get_reward
+
+    _CALL ev_wbt_unlock_tournament
+
+    //優勝回数をカウントアップ
+    _WBT_INC_VICTORY_COUNT()
 
   ENDSWITCH
 
-  _AB_KEYWAIT_MARK()
+  //念のため
+  _BALLOONWIN_OBJMSG_POS( msg_wbt_info_04, SCWK_TARGET_OBJID, POS_DL )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
 	//WBTシステム終了
@@ -814,15 +813,92 @@ _ANIME_LABEL  anm_player_r_exit
   _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END, 0
 
-_ANIME_LABEL  anm_info_l_return
+_ANIME_LABEL  anm_infowoman_l_return
   _ANIME_DATA AC_WALK_L_8F,1
   _ANIME_DATA AC_WALK_D_8F,1
   _ANIME_DATA ACMD_END, 0
 
-_ANIME_LABEL  anm_info_r_return
+_ANIME_LABEL  anm_infowoman_r_return
   _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_WALK_D_8F,1
   _ANIME_DATA ACMD_END, 0
+
+
+
+ev_wbt_get_reward:
+  //仮：優勝の褒美
+  _BALLOONWIN_OBJMSG_POS( msg_wbt_info_26, SCWK_TARGET_OBJID, POS_DL )
+  _RET
+
+
+ev_wbt_unlock_tournament:
+  //地方トーナメント解禁チェック
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_KANTO, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_KANTO )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_JOUTO, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_JOUTO )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_HOUEN, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_HOUEN )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_SINOU, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_SINOU )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+
+  //ワールド
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_WORLD, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_WORLD )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+  
+  //レンタルマスター
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_RENTALMASTER, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_RENTALMASTER )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+
+  //シャッフルマスター
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_SHUFFLEMASTER, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_SHUFFLEMASTER )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+
+  //タイプエキスパート
+  _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_POKETYPE, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_POKETYPE )
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+  ENDIF
+    
+  _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_CHAMPION, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE && $LWK_WBT_SELECT_TOURNAMENT == SCR_WBT_CUP_WORLD THEN
+    _WBT_CHECK_CUP_UNLOCK( SCR_WBT_CUP_CHAMPION, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _WBT_SET_TOURNAMENT_NAME( 0, SCR_WBT_CUP_CHAMPION )
+      _BALLOONWIN_OBJMSG_POS( msg_wbt_info_24, SCWK_TARGET_OBJID, POS_DL )
+    ELSE
+      _WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_WORLD, SCWK_ANSWER )
+      $LWK_TEMP = 10
+      $LWK_TEMP -= $SCWK_ANSWER
+      _NUMBER( 0, LWK_TEMP, 2 )
+      _BALLOONWIN_OBJMSG_POS( msg_wbt_info_25, SCWK_TARGET_OBJID, POS_DL )
+    ENDIF
+  ENDIF
+
+  _RET
+
 
 
 //======================================================================
@@ -851,9 +927,9 @@ EVENT_START ev_wbt_entry_checker
   WHILE $LOG_OUT == FALSE
     _SYSWIN_MSG( msg_wbt_pc_blank, POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
-    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_01, msg_wbt_pc_info_01, msg_wbt_pc_menu_01 )
-    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_02, msg_wbt_pc_info_02, msg_wbt_pc_menu_02 )
-    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_03, msg_wbt_pc_info_03, msg_wbt_pc_menu_03 )
+    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_01, msg_wbt_pc_info_01, msg_wbt_pc_menu_01 )//優勝記録
+    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_02, msg_wbt_pc_info_02, msg_wbt_pc_menu_02 )//ダウンロード
+    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_03, msg_wbt_pc_info_03, msg_wbt_pc_menu_03 )//やめる
     _BMPMENU_START()
 
     _TIME_WAIT(3) //なんとなくPCのまねをしてSE待ち
@@ -861,18 +937,19 @@ EVENT_START ev_wbt_entry_checker
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_pc_menu_01 THEN
       _CALL ev_victory_checker
-      IF $SCWK_ANSWER == TRUE THEN
-      ENDIF
+
     CASE msg_wbt_pc_menu_02 THEN
       _CALL ev_downloader
-    CASE msg_wbt_pc_menu_03 THEN
-      $LOG_OUT = TRUE
+
     DEFAULT
+      _PLAYER_NAME( 0 )
+      _SYSWIN_MSG( msg_wbt_pc_off, POS_DOWN )
+      _LAST_KEYWAIT()
+      _SYSWIN_CLOSE()
       $LOG_OUT = TRUE
     ENDSWITCH
 
   ENDWHILE
-  _SYSWIN_CLOSE()
 
 EVENT_END
 
@@ -896,75 +973,12 @@ ev_victory_checker:
 //
 /********************************************************************/
 ev_downloader:
-DEFINE_LOCAL  LOG_OUT_DL
-
-  $LOG_OUT_DL = FALSE
   _SYSWIN_MSG( msg_wbt_pc_select_02, POS_DOWN )
-
-  WHILE $LOG_OUT_DL == FALSE && $LOG_OUT == FALSE
-    _SYSWIN_MSG( msg_wbt_pc_blank, POS_DOWN )
-    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
-    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_dl_01, msg_wbt_pc_info_dl_01, msg_wbt_pc_menu_dl_01 )
-    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_dl_02, msg_wbt_pc_info_dl_02, msg_wbt_pc_menu_dl_02 )
-    _BMPMENU_MAKE_LIST_EX( msg_wbt_pc_menu_dl_03, msg_wbt_pc_blank,      msg_wbt_pc_menu_dl_03 )
-    _BMPMENU_START()
-
-    SWITCH $LWK_SELECT_POS
-    CASE msg_wbt_pc_menu_dl_01 THEN
-        _CALL ev_downloader_2
-    CASE msg_wbt_pc_menu_dl_02 THEN
-        _SYSWIN_CLOSE()
-        _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_LIST, SCWK_ANSWER )
-        IF $SCWK_ANSWER == TRUE THEN
-          $LOG_OUT = TRUE
-        ENDIF
-    CASE msg_wbt_pc_menu_dl_03 THEN
-      $LOG_OUT_DL = TRUE
-    DEFAULT
-      $LOG_OUT_DL = TRUE
-    ENDSWITCH
-
-  ENDWHILE
   _SYSWIN_CLOSE()
-  _RET
-
-ev_downloader_2:
-DEFINE_LOCAL  LOG_OUT_DL2
-  $LOG_OUT_DL2 = FALSE
-  _SYSWIN_MSG( msg_wbt_pc_info_dl_00, POS_DOWN )
-
-  WHILE $LOG_OUT_DL2 == FALSE && $LOG_OUT == FALSE
-
-    _SYSWIN_MSG( msg_wbt_pc_blank, POS_DOWN )
-    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
-    _BMPMENU_MAKE_LIST( msg_wbt_pc_menu_dl_04, msg_wbt_pc_menu_dl_04 )  //WIFIで
-    _BMPMENU_MAKE_LIST( msg_wbt_pc_menu_dl_05, msg_wbt_pc_menu_dl_05 )  //Wirelessで
-    _BMPMENU_MAKE_LIST( msg_wbt_pc_menu_03, msg_wbt_pc_menu_03 )        //やめる
-    _BMPMENU_START()
-
-    SWITCH $LWK_SELECT_POS
-    CASE msg_wbt_pc_menu_dl_04 THEN
-        _SYSWIN_CLOSE()
-        _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_WIFI,     SCWK_ANSWER )
-        IF $SCWK_ANSWER == TRUE THEN
-          $LOG_OUT = TRUE
-        ENDIF
-    CASE msg_wbt_pc_menu_dl_05 THEN
-        _SYSWIN_CLOSE()
-        _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_WIRELESS, SCWK_ANSWER )
-        IF $SCWK_ANSWER == TRUE THEN
-          $LOG_OUT = TRUE
-        ENDIF
-    CASE msg_wbt_pc_menu_03 THEN
-      $LOG_OUT_DL2 = TRUE
-    DEFAULT
-      $LOG_OUT_DL2 = TRUE
-    ENDSWITCH
-
-  ENDWHILE
-
-  _SYSWIN_CLOSE()
-
+  _WBT_ENTRY_CHECKER_DOWNLOAD( SCR_WBT_DL_APP_WIFI,     SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    $LOG_OUT = TRUE
+  ENDIF
   _RET
 
 
