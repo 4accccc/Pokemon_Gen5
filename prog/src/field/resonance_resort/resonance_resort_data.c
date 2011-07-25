@@ -2659,6 +2659,29 @@ u32 RESORT_RECV_BUFF_GetMax( const RESORT_RECV_BUFF *cp_wk )
 {
   return cp_wk->max;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファにあるデータ数
+ *
+ *	@param	const RESORT_RECV_BUFF *cp_wk ワーク
+ *
+ *	@return バッファにあるデータ数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_RECV_BUFF_GetCnt( const RESORT_RECV_BUFF *cp_wk )
+{
+  int i;
+  int cnt = 0;
+  for( i = 0; i < cp_wk->max; i++ )
+  {
+    const RESORT_RECV_DATA *cp_data  = &cp_wk->data[i];
+    if( !RESORT_RECV_DATA_IsEmpty( cp_data ) )
+    {
+      cnt++;
+    }
+  }
+  return cnt;
+}
 
 //----------------------------------------------------------------------------
 /**

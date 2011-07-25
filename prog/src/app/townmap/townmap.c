@@ -32,6 +32,7 @@
 #include "app/townmap_data_sys.h"
 #include "ui/touchbar.h"	//タッチバー
 #include "field/field_wfbc_data.h"
+#include "savedata/resonance_resort_sv.h"
 
 //mine
 #include "townmap_grh.h"
@@ -205,6 +206,9 @@ enum
 #define INFO_STR_PLACE6_X	(136)
 #define INFO_STR_PLACE6_Y	(160)
 
+#define INFO_STR_PLACE4_RR_X	(30)
+#define INFO_STR_PLACE5_RR_X	(30)
+#define INFO_STR_PLACE6_RR_X	(30)
 //-------------------------------------
 ///	MSGWND
 //=====================================
@@ -350,9 +354,11 @@ typedef struct
 //=====================================
 typedef struct
 {
+  GAMEDATA    *p_gamedata;
 	GFL_BMPWIN	*p_bmpwin;
 	STRBUF			*p_strbuf;			//汎用バッファ
 	GFL_FONT		*p_font;				//受け取る
+  WORDSET     *p_wordset;
 	const GFL_MSGDATA	*cp_place_msg;		//受け取り
 	const GFL_MSGDATA	*cp_guide_msg;		//受け取り
 } INFO_WORK;
@@ -371,6 +377,7 @@ typedef struct
 //=====================================
 typedef struct 
 {
+  GAMEDATA    *p_gamedata;
 	MSGWND_WORK	msgwnd;
 	GFL_CLWK		*p_clwk;	//受け取り
 	const PLACE_DATA *cp_data;
@@ -574,7 +581,7 @@ static void MAP_SetVisibleRoadFrm( const MAP_WORK *cp_wk, BOOL is_visible );
 //-------------------------------------
 ///	INFO
 //=====================================
-static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, const GFL_MSGDATA *cp_place_msg, const GFL_MSGDATA *cp_guide_msg, HEAPID heapID );
+static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, const GFL_MSGDATA *cp_place_msg, const GFL_MSGDATA *cp_guide_msg, GAMEDATA *p_gamedata, HEAPID heapID );
 static void INFO_Exit( INFO_WORK *p_wk );
 static void INFO_Main( INFO_WORK *p_wk );
 static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data );
@@ -585,12 +592,13 @@ static void INFO_Clear( INFO_WORK *p_wk );
 static void MSGWND_Init( MSGWND_WORK* p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
 static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y );
+static void MSGWND_PrintBuf( MSGWND_WORK* p_wk, const STRBUF *cp_strbuf, u16 x, u16 y );
 static void MSGWND_PrintCode( MSGWND_WORK* p_wk, const STRCODE *cp_code, u16 x, u16 y );
 static void MSGWND_Clear( MSGWND_WORK* p_wk );
 //-------------------------------------
 ///	PLACEWND
 //=====================================
-static void PLACEWND_Init( PLACEWND_WORK *p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, GFL_CLWK *p_clwk, HEAPID heapID );
+static void PLACEWND_Init( PLACEWND_WORK *p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, GFL_CLWK *p_clwk, GAMEDATA *p_gamedata, HEAPID heapID );
 static void PLACEWND_Exit( PLACEWND_WORK *p_wk );
 static void PLACEWND_Main( PLACEWND_WORK *p_wk );
 static void PLACEWND_Start( PLACEWND_WORK *p_wk, const PLACE_DATA *cp_data );
@@ -772,6 +780,21 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	TOWNMAP_WORK	*p_wk;
 	TOWNMAP_PARAM	*p_param	= p_param_adrs;
 	u16	data_len;
+  GAMEDATA	*p_gdata;
+
+#ifdef DEBUG_GAMESYS_NONE
+  if( p_param->p_gamesys == NULL )
+  {	
+    p_gdata = NULL;
+  }
+  else
+  {	
+    p_gdata	= GAMESYSTEM_GetGameData( p_param->p_gamesys );
+  }
+#else
+  p_gdata	= GAMESYSTEM_GetGameData( p_param->p_gamesys );
+#endif //DEBUG_GAMESYS_NONE
+
 
 	//オーバーレイ読み込み
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
@@ -825,9 +848,6 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//アプリケーションバー作成
 	{	
-		GAMEDATA	*p_gdata;
-
-		p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
 		if( p_wk->p_param->mode == TOWNMAP_MODE_MAP )
 		{	
 		}
@@ -863,6 +883,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 			TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_M),
 			p_wk->p_font, p_wk->p_place_msg, 
 			TOWNMAP_GRAPHIC_GetClwk( p_wk->p_grh, TOWNMAP_OBJ_CLWK_WINDOW ),
+      p_gdata,
 			HEAPID_TOWNMAP );
 	//FONT面をずらす
 	GFL_BG_SetScroll( TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_M),
@@ -870,19 +891,6 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//場所作成
 	{	
-		GAMEDATA	*p_gdata;
-#ifdef DEBUG_GAMESYS_NONE
-		if( p_wk->p_param->p_gamesys == NULL )
-		{	
-			p_gdata = NULL;
-		}
-		else
-		{	
-			p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-		}
-#else
-		p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-#endif //DEBUG_GAMESYS_NONE
 		PLACE_Init( &p_wk->place, p_param->zoneID, p_param->escapeID, p_wk->p_data, p_wk->p_grh,
 				p_gdata, HEAPID_TOWNMAP, is_debug );
 	}
@@ -915,7 +923,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//上画面情報作成
 	INFO_Init( &p_wk->info, TOWNMAP_GRAPHIC_GetFrame( p_wk->p_grh, TOWNMAP_BG_FRAME_FONT_S ),
-			p_wk->p_font, p_wk->p_place_msg, p_wk->p_guide_msg, HEAPID_TOWNMAP );
+			p_wk->p_font, p_wk->p_place_msg, p_wk->p_guide_msg, p_gdata, HEAPID_TOWNMAP );
 
 	//タッチ
 	UI_Init( &p_wk->ui, HEAPID_TOWNMAP );
@@ -3609,13 +3617,16 @@ static void MAP_SetVisibleRoadFrm( const MAP_WORK *cp_wk, BOOL is_visible )
  *
  */
 //-----------------------------------------------------------------------------
-static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, const GFL_MSGDATA *cp_place_msg, const GFL_MSGDATA *cp_guide_msg, HEAPID heapID )
+static void INFO_Init( INFO_WORK *p_wk, u8 frm, GFL_FONT *p_font, const GFL_MSGDATA *cp_place_msg, const GFL_MSGDATA *cp_guide_msg, GAMEDATA *p_gamedata, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(INFO_WORK) );
 	p_wk->p_font			= p_font;
 	p_wk->cp_place_msg	= cp_place_msg;
 	p_wk->cp_guide_msg	= cp_guide_msg;
+  p_wk->p_gamedata    = p_gamedata;
+
+  p_wk->p_wordset = WORDSET_Create( heapID );
 
 	//文字面作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, INFO_BMPWIN_X, INFO_BMPWIN_Y, INFO_BMPWIN_W, INFO_BMPWIN_H,
@@ -3638,6 +3649,8 @@ static void INFO_Exit( INFO_WORK *p_wk )
 
 	//文字面削除
 	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
+
+  WORDSET_Delete( p_wk->p_wordset );
 
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(INFO_WORK) );
@@ -3665,6 +3678,12 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
 {	
 	GFL_BMP_DATA	*p_bmp	= GFL_BMPWIN_GetBmp( p_wk->p_bmpwin );
 
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_gamedata );
+  RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
+  RESORT_PEOPLE_ALL_DATA *p_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_reso );
+  RESORT_RECV_BUFF *p_buff = RESONANCE_RESORT_SV_GetDataBuff( p_reso );
+
 	//クリア
 	GFL_BMP_Clear( p_bmp, 0 );
 
@@ -3676,7 +3695,16 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
 		//地名
 		zoneID	= PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID );
 		GF_ASSERT( zoneID != TOWNMAP_DATA_ERROR );
-		GFL_MSG_GetString( p_wk->cp_place_msg, ZONEDATA_GetPlaceNameID( zoneID ), p_wk->p_strbuf );
+
+    if( ZONEDATA_IsResonanceResort( zoneID ) )
+    {
+      const STRCODE *cp_code = (const STRCODE *)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
+      GFL_STR_SetStringCode( p_wk->p_strbuf, cp_code );
+    }
+    else
+    {
+		  GFL_MSG_GetString( p_wk->cp_place_msg, ZONEDATA_GetPlaceNameID( zoneID ), p_wk->p_strbuf );
+    }
 #ifdef INFO_STR_PLACE_CENTERING
 		{	
 			s16 x	= GFL_BMPWIN_GetSizeX( p_wk->p_bmpwin )*4;
@@ -3698,52 +3726,112 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
     //名所表示
     if( PLACEDATA_IsVisiblePlaceName( cp_data ) )
     { 
-			//PLACE1
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE1_MSGID);
-			if( msgID != TOWNMAP_DATA_ERROR )
-			{	
-				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
-				PRINTSYS_Print( p_bmp, INFO_STR_PLACE1_X, INFO_STR_PLACE1_Y, p_wk->p_strbuf, p_wk->p_font );
-			}
+      //PLACE1
+      msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE1_MSGID);
+      if( msgID != TOWNMAP_DATA_ERROR )
+      {	
+        GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+        PRINTSYS_Print( p_bmp, INFO_STR_PLACE1_X, INFO_STR_PLACE1_Y, p_wk->p_strbuf, p_wk->p_font );
+      }
 
-			//PLACE2
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE2_MSGID);
-			if( msgID != TOWNMAP_DATA_ERROR )
-			{	
-				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
-				PRINTSYS_Print( p_bmp, INFO_STR_PLACE2_X, INFO_STR_PLACE2_Y, p_wk->p_strbuf, p_wk->p_font );
-			}
-			//PLACE3
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE3_MSGID);
-			if( msgID != TOWNMAP_DATA_ERROR )
-			{	
-				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
-				PRINTSYS_Print( p_bmp, INFO_STR_PLACE3_X, INFO_STR_PLACE3_Y, p_wk->p_strbuf, p_wk->p_font );
-			}
-			//PLACE4
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE4_MSGID);
-			if( msgID != TOWNMAP_DATA_ERROR )
-			{	
-				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
-				PRINTSYS_Print( p_bmp, INFO_STR_PLACE4_X, INFO_STR_PLACE4_Y, p_wk->p_strbuf, p_wk->p_font );
-			}
-			//PLACE5
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID);
-			if( msgID != TOWNMAP_DATA_ERROR )
-			{	
-				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
-				PRINTSYS_Print( p_bmp, INFO_STR_PLACE5_X, INFO_STR_PLACE5_Y, p_wk->p_strbuf, p_wk->p_font );
-			}
-			//PLACE6
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE6_MSGID);
-			if( msgID != TOWNMAP_DATA_ERROR )
-			{	
-				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
-				PRINTSYS_Print( p_bmp, INFO_STR_PLACE6_X, INFO_STR_PLACE6_Y, p_wk->p_strbuf, p_wk->p_font );
-			}
+      //PLACE2
+      msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE2_MSGID);
+      if( msgID != TOWNMAP_DATA_ERROR )
+      {	
+        GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+        PRINTSYS_Print( p_bmp, INFO_STR_PLACE2_X, INFO_STR_PLACE2_Y, p_wk->p_strbuf, p_wk->p_font );
+      }
+      //PLACE3
+      msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE3_MSGID);
+      if( msgID != TOWNMAP_DATA_ERROR )
+      {	
+        GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+        PRINTSYS_Print( p_bmp, INFO_STR_PLACE3_X, INFO_STR_PLACE3_Y, p_wk->p_strbuf, p_wk->p_font );
+      }
+
+
+      if( ZONEDATA_IsResonanceResort( zoneID ) )
+      {
+        RECORD * p_rec  = SaveData_GetRecord( p_sv );
+        u32 city_lv = 1 + RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+        u32 come_cnt = RECORD_Get( p_rec, RECID_RESORT_GUID_CNT ) + RECORD_Get( p_rec, RECID_RESORT_SHOP_MAKE_CNT );
+        u32 now_cnt = RESORT_RECV_BUFF_GetCnt( p_buff );  //TODO これ以外のバッファもみる？
+
+        STRBUF *p_strbuf = GFL_STR_CreateBuffer( 128, HEAPID_TOWNMAP );
+
+        //PLACE4
+        msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE4_MSGID);
+        if( msgID != TOWNMAP_DATA_ERROR )
+        {
+          s32 x;
+
+          GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_strbuf );
+          WORDSET_RegisterNumber( p_wk->p_wordset, 0, city_lv, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_strbuf );
+
+          x = GFL_BMP_GetSizeX( p_bmp );
+          x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 );
+
+          PRINTSYS_Print( p_bmp, x - INFO_STR_PLACE4_RR_X, INFO_STR_PLACE4_Y, p_wk->p_strbuf, p_wk->p_font );
+        }
+        //PLACE5
+        msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID);
+        if( msgID != TOWNMAP_DATA_ERROR )
+        {	
+          s32 x;
+          GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_strbuf );
+          WORDSET_RegisterNumber( p_wk->p_wordset, 0, come_cnt, 7, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_strbuf );
+
+          x = GFL_BMP_GetSizeX( p_bmp );
+          x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 );
+
+          PRINTSYS_Print( p_bmp, x - INFO_STR_PLACE5_RR_X, INFO_STR_PLACE5_Y, p_wk->p_strbuf, p_wk->p_font );
+        }
+        //PLACE6
+        msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE6_MSGID);
+        if( msgID != TOWNMAP_DATA_ERROR )
+        {	
+          s32 x;
+          GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_strbuf );
+          WORDSET_RegisterNumber( p_wk->p_wordset, 0, now_cnt, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuf, p_strbuf );
+
+          x = GFL_BMP_GetSizeX( p_bmp );
+          x -= PRINTSYS_GetStrWidth( p_wk->p_strbuf, p_wk->p_font, 0 );
+
+          PRINTSYS_Print( p_bmp, x - INFO_STR_PLACE6_RR_X, INFO_STR_PLACE6_Y, p_wk->p_strbuf, p_wk->p_font );
+        }
+
+        GFL_STR_DeleteBuffer( p_strbuf );
+      }
+      else
+      {
+        //PLACE4
+        msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE4_MSGID);
+        if( msgID != TOWNMAP_DATA_ERROR )
+        {	
+          GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+          PRINTSYS_Print( p_bmp, INFO_STR_PLACE4_X, INFO_STR_PLACE4_Y, p_wk->p_strbuf, p_wk->p_font );
+        }
+        //PLACE5
+        msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID);
+        if( msgID != TOWNMAP_DATA_ERROR )
+        {	
+          GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+          PRINTSYS_Print( p_bmp, INFO_STR_PLACE5_X, INFO_STR_PLACE5_Y, p_wk->p_strbuf, p_wk->p_font );
+        }
+        //PLACE6
+        msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE6_MSGID);
+        if( msgID != TOWNMAP_DATA_ERROR )
+        {	
+          GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
+          PRINTSYS_Print( p_bmp, INFO_STR_PLACE6_X, INFO_STR_PLACE6_Y, p_wk->p_strbuf, p_wk->p_font );
+        }
+      }
     }
-	}
-	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
+  }
+  GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
 }
 //----------------------------------------------------------------------------
 /**
@@ -3825,6 +3913,28 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, u16 x, u16 y )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  メッセージ面  プリント
+ *
+ *	@param	MSGWND_WORK* p_wk ワーク
+ *	@param	STRBUF *cp_strbuf 文字列
+ *	@param	x                 座標X
+ *	@param	y                 座標Y
+ */
+//-----------------------------------------------------------------------------
+static void MSGWND_PrintBuf( MSGWND_WORK* p_wk, const STRBUF *cp_strbuf, u16 x, u16 y )
+{
+	//一端消去
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), 0 );	
+
+	//文字列作成
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), x, y, p_wk->p_strbuf, p_wk->p_font );
+
+	GFL_BMPWIN_MakeTransWindow_VBlank( p_wk->p_bmpwin );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	メッセージ面	プリント
  *
  *	@param	MSGWND_WORK* p_wk	ワーク
@@ -3873,11 +3983,12 @@ static void MSGWND_Clear( MSGWND_WORK* p_wk )
  *	@param	heapID								ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PLACEWND_Init( PLACEWND_WORK *p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, GFL_CLWK *p_clwk, HEAPID heapID )
+static void PLACEWND_Init( PLACEWND_WORK *p_wk, u8 bgframe, GFL_FONT *p_font, const GFL_MSGDATA *cp_msg, GFL_CLWK *p_clwk, GAMEDATA *p_gamedata, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(PLACEWND_WORK) );
-	p_wk->p_clwk	= p_clwk;
+	p_wk->p_clwk	    = p_clwk;
+  p_wk->p_gamedata  = p_gamedata;
 
 	//フォント面設定
 	MSGWND_Init( &p_wk->msgwnd, bgframe, p_font, cp_msg, PLACEWND_BMPWIN_X, PLACEWND_BMPWIN_Y,
@@ -3970,6 +4081,24 @@ static void PLACEWND_Main( PLACEWND_WORK *p_wk )
       }
       else
 #endif 
+      if( ZONEDATA_IsResonanceResort( zoneID ) )
+      {
+
+        SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_gamedata );
+        RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
+        RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
+        STRBUF *p_city_name = GFL_STR_CreateBuffer( 128, HEAPID_TOWNMAP );
+
+        const STRCODE *cp_code = (const STRCODE *)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
+
+        GFL_STR_SetStringCode( p_city_name, cp_code );
+
+        //文字描画
+        MSGWND_PrintBuf( &p_wk->msgwnd, p_city_name, PLACEWND_STR_X, PLACEWND_STR_Y );
+
+        GFL_STR_DeleteBuffer( p_city_name );
+      }
+      else
       { 
         //文字描画
         MSGWND_Print( &p_wk->msgwnd, ZONEDATA_GetPlaceNameID( zoneID ), PLACEWND_STR_X, PLACEWND_STR_Y );

@@ -1809,6 +1809,13 @@ static BOOL STRINPUT_IsGameSyncIDCodeStr( const STRINPUT_WORK *cp_wk)
 
   int i, j;
 
+  //長さチェック
+  if( cp_wk->input_idx != 0 && cp_wk->input_idx != GAMESYNC_ID_CODE_LENGTH )
+  {
+    return FALSE;
+  }
+
+  //文字チェック
   for( i = 0; i < cp_wk->input_idx; i++ )
   { 
     for( j = 0; j < NELEMS(sc_illigal_code); j++ )

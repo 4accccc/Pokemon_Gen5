@@ -463,6 +463,7 @@ extern void RESORT_RECV_BUFF_InitInstance( RESORT_RECV_BUFF *p_wk, u32 num );
 extern void RESORT_RECV_BUFF_Lock( RESORT_RECV_BUFF *p_wk );
 extern void RESORT_RECV_BUFF_UnLock( RESORT_RECV_BUFF *p_wk );
 extern u32 RESORT_RECV_BUFF_GetMax( const RESORT_RECV_BUFF *cp_wk );
+extern u32 RESORT_RECV_BUFF_GetCnt( const RESORT_RECV_BUFF *cp_wk );
 
 extern RESORT_RECV_DATA * RESORT_RECV_BUFF_GetData( RESORT_RECV_BUFF *p_wk, u32 index );
 extern void RESORT_RECV_BUFF_Clear( RESORT_RECV_BUFF *p_wk, u32 index );
@@ -598,6 +599,7 @@ extern BOOL RESORT_PEOPLE_ALL_DATA_MergeRecv( RESORT_PEOPLE_ALL_DATA *p_wk, cons
 extern void RESORT_PEOPLE_ALL_DATA_UpdateDay( RESORT_PEOPLE_ALL_DATA *p_wk );
 
 extern RESORT_RECV_DATA * RESORT_PEOPLE_ALL_DATA_GetOwnerData( RESORT_PEOPLE_ALL_DATA *p_wk );
+
 //=============================================================================
 /**
  *	リゾート街データ
