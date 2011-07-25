@@ -3280,12 +3280,12 @@
 		<language name="JPN_KANJI" width="216">４０Ｂ</language>
 	</row>
 
-	<row id="bchamp_1_01">
+	<row id="veteranm_3_03">
 		<language name="JPN" width="216">５０Ｗ</language>
 		<language name="JPN_KANJI" width="216">５０Ｗ</language>
 	</row>
 
-	<row id="bchamp_2_01">
+	<row id="veteranm_4_03">
 		<language name="JPN" width="216">５０Ｂ</language>
 		<language name="JPN_KANJI" width="216">５０Ｂ</language>
 	</row>
@@ -3330,14 +3330,14 @@
 		<language name="JPN_KANJI" width="216">９０Ｂ</language>
 	</row>
 
-	<row id="bchamp2_1_01">
-		<language name="JPN" width="216">１００Ｗ</language>
-		<language name="JPN_KANJI" width="216">１００Ｗ</language>
+	<row id="mugenboss_01">
+		<language name="JPN" width="216">バンジロウ</language>
+		<language name="JPN_KANJI" width="216">バンジロウ</language>
 	</row>
 
-	<row id="bchamp2_2_01">
-		<language name="JPN" width="216">１００Ｂ</language>
-		<language name="JPN_KANJI" width="216">１００Ｂ</language>
+	<row id="mugenboss_02">
+		<language name="JPN" width="216">バンジロウ</language>
+		<language name="JPN_KANJI" width="216">バンジロウ</language>
 	</row>
 
 	<row id="worker2_18">
@@ -4921,6 +4921,36 @@
 	</row>
 
 	<row id="schoolb_14">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="veteranm_3_02">
+		<language name="JPN" width="216">１００Ｗ</language>
+		<language name="JPN_KANJI" width="216">１００Ｗ</language>
+	</row>
+
+	<row id="veteranm_4_02">
+		<language name="JPN" width="216">１００Ｂ</language>
+		<language name="JPN_KANJI" width="216">１００Ｂ</language>
+	</row>
+
+	<row id="bchamp_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="bchamp2_1_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="bchamp_2_01">
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
+	</row>
+
+	<row id="bchamp2_2_01">
 		<language name="JPN" width="216">●</language>
 		<language name="JPN_KANJI" width="216">●</language>
 	</row>

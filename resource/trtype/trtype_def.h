@@ -237,4 +237,5 @@
 #define	TRTYPE_PKWD_MOB_F    ( 224 )    //PKWD_MOB_F♀ダミースーツ
 #define	TRTYPE_PKWD_PLAYERMOB_M    ( 225 )    //PKWD_PLAYERMOB_M♂ダミースーツ
 #define	TRTYPE_PKWD_PLAYERMOB_F    ( 226 )    //PKWD_PLAYERMOB_F♀ダミースーツ
-#define	TRTYPE_MAX	( 227 )
+#define	TRTYPE_MUGENBOSS    ( 227 )    //MUGENBOSS♂ボストレーナー
+#define	TRTYPE_MAX	( 228 )

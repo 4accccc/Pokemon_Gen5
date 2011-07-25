@@ -915,6 +915,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		184,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
+	{ // No.227 MUGENBOSS♂ボストレーナー
+		185,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {

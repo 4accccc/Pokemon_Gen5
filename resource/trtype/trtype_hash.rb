@@ -228,6 +228,7 @@
 		"PKWD_MOB_F♀ダミースーツ"=>224,
 		"PKWD_PLAYERMOB_M♂ダミースーツ"=>225,
 		"PKWD_PLAYERMOB_F♀ダミースーツ"=>226,
+		"MUGENBOSS♂ボストレーナー"=>227,
 	}
 #
 	$trtype_id_hash = {
@@ -458,4 +459,5 @@
 		"TRTYPE_PKWD_MOB_F" =>224,
 		"TRTYPE_PKWD_PLAYERMOB_M" =>225,
 		"TRTYPE_PKWD_PLAYERMOB_F" =>226,
+		"TRTYPE_MUGENBOSS" =>227,
 	}

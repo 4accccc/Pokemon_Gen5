@@ -1490,7 +1490,15 @@ enum {
 	NARC_trfgra_trwb_pkwd_playermob_f_NMCR = 1476,
 	NARC_trfgra_trwb_pkwd_playermob_f_NMAR = 1477,
 	NARC_trfgra_trwb_pkwd_playermob_f_NCEC = 1478,
-	NARC_trfgra_trwb_pkwd_playermob_f_NCLR = 1479
+	NARC_trfgra_trwb_pkwd_playermob_f_NCLR = 1479,
+	NARC_trfgra_trwb_mugenboss_NCGR = 1480,
+	NARC_trfgra_trwb_mugenboss_NCBR = 1481,
+	NARC_trfgra_trwb_mugenboss_NCER = 1482,
+	NARC_trfgra_trwb_mugenboss_NANR = 1483,
+	NARC_trfgra_trwb_mugenboss_NMCR = 1484,
+	NARC_trfgra_trwb_mugenboss_NMAR = 1485,
+	NARC_trfgra_trwb_mugenboss_NCEC = 1486,
+	NARC_trfgra_trwb_mugenboss_NCLR = 1487
 };
 
 /* NARC_TRFGRA_NAIX_ */
