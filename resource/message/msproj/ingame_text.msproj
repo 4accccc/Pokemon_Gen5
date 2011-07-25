@@ -1253,6 +1253,8 @@
 				<ContentItem
 					Name="h06.mstxt" />
 				<ContentItem
+					Name="hide_ship_hint.mstxt" />
+				<ContentItem
 					Name="hiden.mstxt" />
 				<ContentItem
 					Name="hyouka_scr.mstxt" />
