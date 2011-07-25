@@ -17,6 +17,7 @@
 #include "gamesystem/g_power.h"
 #include "poke_tool/poke_tool.h"
 #include "item/itemsym.h"
+#include "savedata/record.h"
 
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
@@ -103,8 +104,11 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
     GF_ASSERT(0);
   }
   {
+    RECORD * record_sv = SaveData_GetRecord( GAMEDATA_GetSaveControlWork(gdata) );
+
     GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, power );
     GPOWER_Set_OccurID( power, p_data, prm->mine_f );
+    RECORD_Add( record_sv, RECID_GPOWER_USE, 1 );
 
     //HP全快パワーは固定メッセージ
     if( power == GPOWER_ID_HP_RESTORE_MAX){
