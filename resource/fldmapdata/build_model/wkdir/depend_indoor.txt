@@ -170,4 +170,13 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d25_obj02.nsbmd \
 	$(RESDIR)/d25_obj03.nsbmd \
 	$(RESDIR)/ja_build01.nsbmd \
+	$(RESDIR)/ja_board01.nsbmd \
+	$(RESDIR)/ja_board02.nsbmd \
+	$(RESDIR)/ja_board03.nsbmd \
+	$(RESDIR)/ja_board04.nsbmd \
+	$(RESDIR)/ja_board05.nsbmd \
+	$(RESDIR)/ja_board06.nsbmd \
+	$(RESDIR)/ja_board07.nsbmd \
+	$(RESDIR)/ja_board08.nsbmd \
+	$(RESDIR)/ja_board09.nsbmd \
 

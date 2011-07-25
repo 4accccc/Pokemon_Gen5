@@ -3378,7 +3378,17 @@ DEP_TEXSET_IMD_INDOOR072 = \
 	$(SRCDIR)/rrobj02.imd \
 	$(SRCDIR)/rrobj03.imd \
 	$(SRCDIR)/rrobj04.imd \
-	$(SRCDIR)/rrobj05.imd
+	$(SRCDIR)/rrobj05.imd \
+	$(SRCDIR)/ja_build01.imd \
+	$(SRCDIR)/ja_board01.imd \
+	$(SRCDIR)/ja_board02.imd \
+	$(SRCDIR)/ja_board03.imd \
+	$(SRCDIR)/ja_board04.imd \
+	$(SRCDIR)/ja_board05.imd \
+	$(SRCDIR)/ja_board06.imd \
+	$(SRCDIR)/ja_board07.imd \
+	$(SRCDIR)/ja_board08.imd \
+	$(SRCDIR)/ja_board09.imd
 
 texset/indoor072.imd: $(DEP_TEXSET_IMD_INDOOR072) texset/tmp/indoor072.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/indoor072.list
