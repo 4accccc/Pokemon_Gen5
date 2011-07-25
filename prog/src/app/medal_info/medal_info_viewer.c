@@ -62,9 +62,9 @@ struct MEDALVIEWER_WK_tag{
 	GFL_CLUNIT			  *p_clunit;
 	GFL_CLWK				  *p_clwk[OBJ_CLWK_MAX];
   u32							  obj_res[OBJRESID_MAX];
-  MEDALVIEWER_INITPARAM init_param;        // 初期化用パラメータ
   BOOL              is_push_medal;
   u16               main_seq;
+  u16               sub_seq;
  
   // 文字表示
   PRINT_QUE         *p_print_que;
@@ -88,6 +88,7 @@ struct MEDALVIEWER_WK_tag{
   // アプリデータ
   MEDALVIEWER_INITPARAM *p_init_param;
   MEDAL_INFO *p_now_medal_info;
+  s32         data_index;
 };
 
 //=============================================================================
@@ -112,11 +113,17 @@ static void MEDALVIEWER_PrintInit( MEDALVIEWER_WK *p_wk );
 static void MEDALVIEWER_PrintDelete( MEDALVIEWER_WK *p_wk );
 static void DrawMedalInfo( MEDALVIEWER_WK *p_wk );
 static void DrawMedalInfo_no_pushMedal( MEDALVIEWER_WK *p_wk );
+static void MEDALVIEWER_PageChangeMain( MEDALVIEWER_WK *p_wk );
 static void MEDALVIEWER_ScrollMain( MEDALVIEWER_WK *p_wk );
 static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk );
 static void MEDALVIEWER_SetNextSeq( MEDALVIEWER_WK *p_wk ,u32 next_seq );
 static void SetReturnButton( MEDALVIEWER_WK *p_wk );
+static void SetUpButton( MEDALVIEWER_WK *p_wk );
+static void SetDownButton( MEDALVIEWER_WK *p_wk );
 static void SetExitButton( MEDALVIEWER_WK *p_wk );
+static void SetDataIndex( MEDALVIEWER_WK *p_wk ,u32 data_index );
+static void SetBeforeData( MEDALVIEWER_WK *p_wk );
+static void SetNextData( MEDALVIEWER_WK *p_wk );
 
 //=============================================================================
 
@@ -137,7 +144,6 @@ MEDALVIEWER_WK* MEDALVIEWER_Setup( MEDALVIEWER_INITPARAM *p_init_param )
   // VIEWERワークを生成
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MEDALVIEWER_WK) );
   GFL_STD_MemClear( p_wk, sizeof(MEDALVIEWER_WK) );
-
 
   // ヒープ設定
   p_wk->heapID = heapID;
@@ -213,6 +219,15 @@ GFL_PROC_RESULT MEDALVIEWER_Main( MEDALVIEWER_WK *p_wk )
 
       // キー入力メイン
       MEDALVIEWER_InputCheck( p_wk );
+    }
+    break;
+  case SEQ_PAGE_CHANGE:
+    {
+      // スクロールメイン
+      MEDALVIEWER_ScrollMain( p_wk );
+
+      // ページ切り替えメイン
+      MEDALVIEWER_PageChangeMain( p_wk );
     }
     break;
   case SEQ_FADE_OUT_START:
@@ -310,7 +325,21 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
 {
   const int trg = GFL_UI_KEY_GetTrg();
   int tp_hit;
+ 
+  // リストモード処理
+  if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_LIST )
+  {
+    if( trg & PAD_KEY_UP )
+    {
+      SetUpButton( p_wk );
+    }
 
+    if( trg & PAD_KEY_DOWN )
+    {
+      SetDownButton( p_wk );
+    }
+  }
+  
   // キャンセル
   if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_SUB )
   {
@@ -348,7 +377,7 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
       break;
     }
   }
-  else
+  else if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_TOP )
   {
     // 右側のボタンのみ判定
     switch( tp_hit )
@@ -358,6 +387,27 @@ static void MEDALVIEWER_InputCheck( MEDALVIEWER_WK *p_wk )
       GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       break;
     }
+  }
+  else if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_LIST )
+  {
+     // リスト状態
+    switch( tp_hit )
+    {
+    case UI_HIT_TABLE_TRG_R:
+      SetReturnButton( p_wk );
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
+      break;
+    case UI_HIT_TABLE_TRG_UP:
+      SetUpButton( p_wk );
+      break;
+    case UI_HIT_TABLE_TRG_DOWN:
+      SetDownButton( p_wk );
+      break;
+    }
+  }
+  else
+  {
+    GF_ASSERT( 0 );
   }
 
 }
@@ -407,6 +457,241 @@ static void SetReturnButton( MEDALVIEWER_WK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  上ボタン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetUpButton( MEDALVIEWER_WK *p_wk )
+{
+  if( (p_wk->data_index > 0) && ( p_wk->p_init_param->list_size > 1) )
+  {
+    // アニメーション
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[OBJ_CLWK_UP] , TRUE);
+    GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk[OBJ_CLWK_UP], 0 );
+    PMSND_PlaySystemSE(SE_SELECT);
+
+    SetNextData( p_wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  下ボタン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetDownButton( MEDALVIEWER_WK *p_wk )
+{
+  if( p_wk->p_init_param->list_size > (p_wk->data_index + 1) )
+  {
+    // アニメーション
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
+    GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[OBJ_CLWK_DOWN] , TRUE);
+    GFL_CLACT_WK_SetAnmFrame( p_wk->p_clwk[OBJ_CLWK_DOWN], 0 );
+    PMSND_PlaySystemSE(SE_SELECT);
+    SetBeforeData( p_wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  前のページのデータを表示する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetBeforeData( MEDALVIEWER_WK *p_wk )
+{
+  p_wk->data_index++;
+  if( p_wk->data_index >= p_wk->p_init_param->list_size )
+  {
+    p_wk->data_index = 0;
+  }
+  p_wk->p_now_medal_info = &p_wk->p_init_param->p_info_list[p_wk->data_index];
+  
+  // ページ切り替えシーケンスに移行
+  MEDALVIEWER_SetNextSeq( p_wk ,SEQ_PAGE_CHANGE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  次のページのデータを表示する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetNextData( MEDALVIEWER_WK *p_wk )
+{
+  p_wk->data_index--;
+  if( p_wk->data_index < 0 )
+  {
+    p_wk->data_index = p_wk->p_init_param->list_size - 1;
+  }
+  p_wk->p_now_medal_info = &p_wk->p_init_param->p_info_list[p_wk->data_index];
+
+  // ページ切り替えシーケンスに移行
+  MEDALVIEWER_SetNextSeq( p_wk ,SEQ_PAGE_CHANGE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ページ切り替えメイン
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void MEDALVIEWER_PageChangeMain( MEDALVIEWER_WK *p_wk )
+{
+  switch( p_wk->sub_seq )
+  {
+  case 0:
+    {
+      if( (GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[OBJ_CLWK_UP]) == FALSE ) || 
+          (GFL_CLACT_WK_CheckAnmActive(p_wk->p_clwk[OBJ_CLWK_DOWN]) == FALSE ) )
+      {
+        // アニメーションをOFFにする
+        if( p_wk->data_index <= 0 )
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_UP] , APP_COMMON_BARICON_CURSOR_UP );
+        }
+
+        if( p_wk->p_init_param->list_size == (p_wk->data_index + 1) )
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+        }
+
+        // 背景のクリア
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_text_win), 0 );
+        p_wk->sub_seq++;
+      }
+      else
+      {
+        // アニメーション終了を待つ
+        break;
+      }
+    }
+    // through break;
+  case 1:
+    {
+      MEDALDATA arc_data;
+
+      // イチオシ登録状況を設定
+      if( p_wk->p_now_medal_info->medal_id >= MDLID_MAX )
+      {
+        p_wk->is_push_medal = FALSE;
+      }
+      else
+      {
+        p_wk->is_push_medal = TRUE;
+      }
+
+      // イチオシメダルが登録されていないときはダミーデータを読み込み
+      {
+        ARCHANDLE	*p_handle	= GFL_ARC_OpenDataHandle( ARCID_MEDALDATA , p_wk->heapID );
+        if( p_wk->is_push_medal == TRUE )
+        {
+          GFL_ARC_LoadDataByHandle( p_handle , p_wk->p_now_medal_info->medal_id , &arc_data);
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_MEDAL], TRUE );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_MEDAL], FALSE );
+          GFL_ARC_LoadDataByHandle( p_handle , 0 , &arc_data);
+        }
+
+        GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_MEDAL] , arc_data.graphic_type );
+        GFL_ARC_CloseDataHandle( p_handle );
+      }
+
+      // 表示状況の切り替え
+      if( p_wk->is_push_medal == TRUE )
+      {
+        DrawMedalInfo( p_wk );
+      }
+      else
+      {
+        DrawMedalInfo_no_pushMedal( p_wk );
+      }
+     
+      // 文字盤のさしかえ
+      {
+        ARCHANDLE	*p_handle;
+        p_handle	= GFL_ARC_OpenDataHandle( ARCID_MEDALINFOGRA , p_wk->heapID );
+
+        if( p_wk->is_push_medal == TRUE )
+        {
+          GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalinfo_gra_medalinfo_bgd4_NSCR,
+              MEDALVIEWER_BG_GetFrame(MEDALVIEWER_BG_FRAME_FONTBORD_M), 0, 0, FALSE, p_wk->heapID );
+        }
+        else
+        {
+          GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalinfo_gra_medalinfo_bgd3_NSCR,
+              MEDALVIEWER_BG_GetFrame(MEDALVIEWER_BG_FRAME_FONTBORD_M), 0, 0, FALSE, p_wk->heapID );
+        }
+        GFL_ARC_CloseDataHandle( p_handle );
+      }
+      // 描画待ちフラグを初期化
+      p_wk->is_print_util_wait = TRUE;
+
+      p_wk->sub_seq++;
+    }
+    // through break;
+  case 2:
+    {
+      if( p_wk->is_print_util_wait == FALSE )
+      {
+        // 文字転送
+        GFL_BMPWIN_TransVramCharacter( p_wk->p_text_win );
+        GFL_BG_LoadScreenV_Req(MEDALVIEWER_BG_GetFrame(MEDALVIEWER_BG_FRAME_FONT_M));
+        MEDALVIEWER_SetNextSeq( p_wk , SEQ_MAIN );
+      }
+    }
+    break;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示するデータインデックスを設定
+ *
+ *	@param	*p_wk 
+ *	@param	data_index 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetDataIndex( MEDALVIEWER_WK *p_wk ,u32 data_index )
+{
+  p_wk->data_index = data_index;
+  p_wk->p_now_medal_info = &p_wk->p_init_param->p_info_list[p_wk->data_index];
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  シーケンス切り替え
  *
  *	@param	*p_wk 
@@ -418,6 +703,7 @@ static void SetReturnButton( MEDALVIEWER_WK *p_wk )
 static void MEDALVIEWER_SetNextSeq( MEDALVIEWER_WK *p_wk ,u32 next_seq )
 {
   p_wk->main_seq = next_seq;
+  p_wk->sub_seq  = 0;
 }
 
 //----------------------------------------------------------------------------
@@ -431,7 +717,6 @@ static void MEDALVIEWER_SetNextSeq( MEDALVIEWER_WK *p_wk ,u32 next_seq )
 //-----------------------------------------------------------------------------
 static void MEDALVIEWER_ScrollMain( MEDALVIEWER_WK *p_wk )
 {
-
   p_wk->scroll_pos += BACK_SCROLL_SPEED;
   if( FX_Whole(p_wk->scroll_pos) > 256 )
   {
@@ -453,19 +738,16 @@ static void MEDALVIEWER_ScrollMain( MEDALVIEWER_WK *p_wk )
 //-----------------------------------------------------------------------------
 static void MEDALVIEWER_CommonDataInit( MEDALVIEWER_WK *p_wk ,MEDALVIEWER_INITPARAM *p_init_param )
 {
-  u32 target;
   HEAPID heapID = p_wk->heapID;
   
   // 初期化パラメータを保存
   p_wk->p_init_param = p_init_param;
-  ONOUE_Printf("残りヒープサイズ%x\n",GFL_HEAP_GetHeapFreeSize( heapID ));
   
   // 初回ターゲットを設定
-  target = p_init_param->target;
-  p_wk->p_now_medal_info = &p_init_param->p_info_list[target];
+  SetDataIndex( p_wk, p_init_param->target );
 
   // イチオシメダルがあるかどうかの判定
-  if( p_wk->p_now_medal_info->medal_id == MDLID_MAX )
+  if( p_wk->p_now_medal_info->medal_id >= MDLID_MAX )
   {
     p_wk->is_push_medal = FALSE;
   }else
@@ -476,7 +758,6 @@ static void MEDALVIEWER_CommonDataInit( MEDALVIEWER_WK *p_wk ,MEDALVIEWER_INITPA
 	// フォント
 	p_wk->p_large_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 	p_wk->p_small_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-
 
   // アプリケーション用メッセージ
   p_wk->p_app_msg =GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_medalinfo_dat, heapID );
@@ -612,14 +893,21 @@ static void MEDALVIEWER_BGInit( MEDALVIEWER_WK *p_wk )
 		p_common_handle	= GFL_ARC_OpenDataHandle( ARCID_APP_MENU_COMMON , heapID );
 
     // カラーオフセット取得
-    color_offset = p_wk->p_now_medal_info->box_rank;
-    if( MEDALBOX_RANK_BW == p_wk->p_now_medal_info->box_rank )
+    if( p_wk->p_init_param->call_mode != MEDALVIEWER_CALL_LIST )
     {
-      // ブラックバージョンのときはカラーを黒に変更
-      if(GetVersion()==VERSION_B2)
+      color_offset = p_wk->p_now_medal_info->box_rank;
+      if( MEDALBOX_RANK_BW == p_wk->p_now_medal_info->box_rank )
       {
-        color_offset += 1;
+        // ブラックバージョンのときはカラーを黒に変更
+        if(GetVersion()==VERSION_B2)
+        {
+          color_offset += 1;
+        }
       }
+    }
+    else
+    {
+      color_offset = 7;
     }
 
     // パレット読み込み
@@ -658,8 +946,17 @@ static void MEDALVIEWER_BGInit( MEDALVIEWER_WK *p_wk )
       // 文字盤
       if( p_wk->is_push_medal == TRUE )
       {
-        GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalinfo_gra_medalinfo_bgd2_NSCR,
-            MEDALVIEWER_BG_GetFrame(MEDALVIEWER_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
+        // リストの時は、日付枠がない
+        if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_LIST )
+        {
+          GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalinfo_gra_medalinfo_bgd4_NSCR,
+              MEDALVIEWER_BG_GetFrame(MEDALVIEWER_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
+        }
+        else
+        {
+          GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_medalinfo_gra_medalinfo_bgd2_NSCR,
+              MEDALVIEWER_BG_GetFrame(MEDALVIEWER_BG_FRAME_FONTBORD_M), 0, 0, FALSE, heapID );
+        }
       }
       else
       {
@@ -951,38 +1248,42 @@ static void DrawMedalInfo( MEDALVIEWER_WK *p_wk )
     GFL_STR_DeleteBuffer( str_buf );
   }
  
-  // 獲得した日付(タイトル）
+  // リスト表示の時は日付を表示しない
+  if( p_wk->p_init_param->call_mode != MEDALVIEWER_CALL_LIST )
   {
-    str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALINFO_05 );
+    // 獲得した日付(タイトル）
+    {
+      str = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALINFO_05 );
 
-    // 文字列を描画
-    PRINT_UTIL_PrintColor( &p_wk->print_util ,
-        p_wk->p_print_que , STR_POS_TITLE_GET_DAY_X , STR_POS_TITLE_GET_DAY_Y ,
-        str ,p_wk->p_small_font , font_colro);
+      // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util ,
+          p_wk->p_print_que , STR_POS_TITLE_GET_DAY_X , STR_POS_TITLE_GET_DAY_Y ,
+          str ,p_wk->p_small_font , font_colro);
 
-    // バッファーの消去 
-    GFL_STR_DeleteBuffer( str );
-  }
- 
-  // 獲得した日付
-  {
-    str = GFL_STR_CreateBuffer( 20, p_wk->heapID );
-    str_buf = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALINFO_06 );
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+    }
 
-    // 日付を登録
-    WORDSET_RegisterNumber( p_word_set , 0 , p_wk->p_now_medal_info->get_year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_ZENKAKU);
-    WORDSET_RegisterNumber( p_word_set , 1 , p_wk->p_now_medal_info->get_month , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
-    WORDSET_RegisterNumber( p_word_set , 2 , p_wk->p_now_medal_info->get_day , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
-    WORDSET_ExpandStr( p_word_set, str , str_buf  );
+    // 獲得した日付
+    {
+      str = GFL_STR_CreateBuffer( 20, p_wk->heapID );
+      str_buf = GFL_MSG_CreateString( p_wk->p_app_msg , MSG_MEDALINFO_06 );
 
-    // 文字列を描画
-    PRINT_UTIL_PrintColor( &p_wk->print_util ,
-        p_wk->p_print_que , STR_POS_GET_DAY_X , STR_POS_GET_DAY_Y ,
-        str ,p_wk->p_large_font , font_colro);
+      // 日付を登録
+      WORDSET_RegisterNumber( p_word_set , 0 , p_wk->p_now_medal_info->get_year , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( p_word_set , 1 , p_wk->p_now_medal_info->get_month , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( p_word_set , 2 , p_wk->p_now_medal_info->get_day , 2 , STR_NUM_DISP_SPACE , STR_NUM_CODE_ZENKAKU);
+      WORDSET_ExpandStr( p_word_set, str , str_buf  );
 
-    // バッファーの消去 
-    GFL_STR_DeleteBuffer( str );
-    GFL_STR_DeleteBuffer( str_buf );
+      // 文字列を描画
+      PRINT_UTIL_PrintColor( &p_wk->print_util ,
+          p_wk->p_print_que , STR_POS_GET_DAY_X , STR_POS_GET_DAY_Y ,
+          str ,p_wk->p_large_font , font_colro);
+
+      // バッファーの消去 
+      GFL_STR_DeleteBuffer( str );
+      GFL_STR_DeleteBuffer( str_buf );
+    }
   }
 
   // 説明文
@@ -1284,6 +1585,71 @@ static void MEDALVIEWER_OBJInit( MEDALVIEWER_WK *p_wk )
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_EXIT], FALSE );
       }
     }
+
+
+    // 上下ボタン
+    if( p_wk->p_init_param->call_mode == MEDALVIEWER_CALL_LIST )
+    {
+      // 上ボタン
+      {
+        GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+        cldata.bgpri   = MEDALVIEWER_OBJ_PRIORITY_UI;
+        cldata.softpri = 0;
+
+        // 位置データの書き込み
+        cldata.pos_x = OBJ_POS_UP_X;
+        cldata.pos_y = OBJ_POS_UP_Y;
+
+        // ワークの作成
+        p_wk->p_clwk[OBJ_CLWK_UP]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
+            p_wk->obj_res[OBJRESID_COMMONUI_CGR],
+            p_wk->obj_res[OBJRESID_COMMONUI_PLTT],
+            p_wk->obj_res[OBJRESID_COMMONUI_CELLANM],
+            &cldata, CLSYS_DEFREND_MAIN, heapID );
+
+        // アニメーションをOFFにする
+        if( p_wk->data_index == 0 )
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_UP] , APP_COMMON_BARICON_CURSOR_UP );
+        } 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_UP], TRUE );
+      }
+
+      // 下ボタン
+      {
+        // 下ボタン
+        GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+        cldata.bgpri   = MEDALVIEWER_OBJ_PRIORITY_UI;
+        cldata.softpri = 0;
+
+        // 位置データの書き込み
+        cldata.pos_x = OBJ_POS_DOWN_X;
+        cldata.pos_y = OBJ_POS_DOWN_Y;
+
+        // ワークの作成
+        p_wk->p_clwk[OBJ_CLWK_DOWN]	= GFL_CLACT_WK_Create( p_wk->p_clunit,
+            p_wk->obj_res[OBJRESID_COMMONUI_CGR],
+            p_wk->obj_res[OBJRESID_COMMONUI_PLTT],
+            p_wk->obj_res[OBJRESID_COMMONUI_CELLANM],
+            &cldata, CLSYS_DEFREND_MAIN, heapID );
+
+
+        if( p_wk->p_init_param->list_size == (p_wk->data_index + 1) )
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[OBJ_CLWK_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+        }
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[OBJ_CLWK_DOWN], TRUE );
+      }
+    }
+
   }
 }
 

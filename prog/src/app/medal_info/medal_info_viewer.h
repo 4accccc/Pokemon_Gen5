@@ -32,6 +32,7 @@ typedef enum
 {
   MEDALVIEWER_CALL_TOP,  // 直接呼出し(戻るボタンなし)
   MEDALVIEWER_CALL_SUB,  // 戻る先がある場合(トレーナーカードなどからの呼び出し)
+  MEDALVIEWER_CALL_LIST,  // 複数のデータが存在するモード
 } MEDALVIEWER_CALL_MODE;
 
 //=============================================================================

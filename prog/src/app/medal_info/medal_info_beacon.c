@@ -66,7 +66,7 @@ GFL_PROC_DATA beacon_medalInfo_ProcData =
 //-------------------------------------
 ///	ヒープサイズ
 //=====================================
-#define MEDALINFO_HEAP_SIZE (0x21000)
+#define MEDALINFO_HEAP_SIZE (0x31000)
 
 //----------------------------------------------------------------------------
 /**
@@ -107,17 +107,6 @@ static GFL_PROC_RESULT BEACON_MEDALINFO_ProcInit( GFL_PROC * p_proc, int * seq ,
 
   // パラメータの設定
   p_wk->init_param.heapID     = heapID;
-
-//  if(  p_param->call_mode == MEDALINFO_CALL_TOP )
-//  {
-//    p_wk->init_param.call_mode  = MEDALINFO_CALL_TOP;
-//  }
-//  else
-//  {
-//    p_wk->init_param.call_mode = MEDALINFO_CALL_SUB;
-//  }
-
-
 
   // viewerの生成
   p_wk->p_viewer_wk = MEDALVIEWER_Setup( &p_wk->init_param );
@@ -225,6 +214,7 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
   // 初期用データを設定
   p_wk->init_param.target     = p_wk->p_param->target;
   p_wk->init_param.list_size  = 0;
+  p_wk->init_param.call_mode  = MEDALVIEWER_CALL_LIST;
 
   max = GAMEBEACON_InfoTblRing_GetEntryNum( infoLog );
 
