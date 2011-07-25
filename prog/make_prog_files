@@ -2689,6 +2689,15 @@ SRCS_OVERLAY_ENTRY_CHECKER = app/entry_checker/win_record.c \
                              app/entry_checker/t_download.c \
                              app/entry_checker/t_download_sub.c \
                              app/entry_checker/t_download_graphic.c
+
+#WBTダウンロード画面
+#===> SRCS_OVERLAY_DPW_COMMON
+#===> SRCS_OVERLAY_COMMON_DOWNLOAD
+#===> SRCS_OVERLAY_ENTRY_CHECKER
+SRCS_OVERLAY_WBT_DOWNLOAD =     net_app/wbt_download/wbt_download_sys.c \
+                                net_app/wbt_download/wbt_download_net_graphic.c \
+                                net_app/wbt_download/wbt_download_net_util.c \
+                                net_app/wbt_download/wbt_download_net.c
 # デルパワー使用画面
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_GPOWER_APP = app/gpower_app/gpower_app.c \
@@ -2745,9 +2754,9 @@ SRCS_OVERLAY_KEY_SYSTEM = net_app/key_system/key_system_main.c \
 #===> SRCS_OVERLAY_IRC_RHYTHM
 #===> SRCS_OVERLAY_IRC_RESULT
 #===> SRCS_OVERLAY_IRC_RANKING
-#===> SRCS_OVERLAY_COMMON_DOWNLOAD
 #===> SRCS_OVERLAY_OUTSIDE_SAVE
 #===> SRCS_OVERLAY_KEY_SYSTEM
+#===> SRCS_OVERLAY_WBT_DOWNLOAD
 SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 																test/nagihashi/debug_irc_name.c \
 																test/nagihashi/debug_poke2dcheck.c \
@@ -2755,7 +2764,6 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
                                 test/nagihashi/debug_util.c \
                                 test/nagihashi/debug_graphic.c \
                                 test/nagihashi/debug_common_net.c \
-                                test/nagihashi/wbt_download_sys.c \
                                 test/nagihashi/debug_outside.c
 
 # 任天堂デバッグ

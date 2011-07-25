@@ -52,7 +52,7 @@
 #include "savedata/shortcut.h"
 
 #include "debug_utilproc.h"
-#include "wbt_download_sys.h"
+#include "net_app/wbt_download_sys.h"
 
 //=============================================================================
 /**
@@ -1490,7 +1490,7 @@ static void LISTDATA_CallCommonDownload( DEBUG_NAGI_MAIN_WORK *p_wk )
 static void LISTDATA_CallWbtDownload( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
   p_wk->wbt_download_param.p_gamedata = p_wk->p_gamedata;
-  DEBUG_NAGI_COMMAND_CallProc( p_wk, NO_OVERLAY_ID, &WBT_DOWNLOAD_SYS_ProcData, &p_wk->wbt_download_param );
+  DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(wbt_download), &WBT_DOWNLOAD_SYS_ProcData, &p_wk->wbt_download_param );
 }
 //----------------------------------------------------------------------------
 /**
