@@ -1133,6 +1133,24 @@
 				<ContentItem
 					Name="d27r1301.mstxt" />
 				<ContentItem
+					Name="d27r1401.mstxt" />
+				<ContentItem
+					Name="d27r1501.mstxt" />
+				<ContentItem
+					Name="d27r1601.mstxt" />
+				<ContentItem
+					Name="d27r1701.mstxt" />
+				<ContentItem
+					Name="d27r1801.mstxt" />
+				<ContentItem
+					Name="d27r1901.mstxt" />
+				<ContentItem
+					Name="d27r2001.mstxt" />
+				<ContentItem
+					Name="d27r2101.mstxt" />
+				<ContentItem
+					Name="d27r2201.mstxt" />
+				<ContentItem
 					Name="d28r0101.mstxt" />
 				<ContentItem
 					Name="d28r0201.mstxt" />
@@ -1178,6 +1196,8 @@
 					Name="d33r0101.mstxt" />
 				<ContentItem
 					Name="d34r0101.mstxt" />
+				<ContentItem
+					Name="d35r0101.mstxt" />
 				<ContentItem
 					Name="deox_change_scr.mstxt" />
 				<ContentItem
