@@ -31,6 +31,7 @@ close( FILEIN );
 @STONE_MANIA_LIST = undef;    #石マニアお金データ
 @RICH_LIST = undef;           #大富豪　お金データ
 @KOUKO_LIST = undef;          #考古学者　お金データ
+@KOYASHI_LIST = undef;        #こやし　お金データ
 
 $DATA_NUM = 0;
 
@@ -63,6 +64,7 @@ foreach $one ( @EXCEL_FILE )
       $STONE_MANIA_LIST[ $DATA_NUM ] = $line[3];
       $RICH_LIST[ $DATA_NUM ] = $line[4];
       $KOUKO_LIST[ $DATA_NUM ] = $line[5];
+      $KOYASHI_LIST[ $DATA_NUM ] = $line[6];
       $DATA_NUM ++;
     }
   }
@@ -122,6 +124,18 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
     &DEBUG_Puts($KOUKO_LIST[ $i ]."\n");
     print( FILEOUT pack( "I", $ITEM_LIST[ $i ] ) );
     print( FILEOUT pack( "I", $KOUKO_LIST[ $i ] ) );
+  }
+}
+close( FILEOUT );
+
+open( FILEOUT, ">koyashi.dat" );
+binmode( FILEOUT );
+for( $i=0; $i<$DATA_NUM; $i++ ){
+  if( $KOYASHI_LIST[ $i ] > 0 ){
+    &DEBUG_Puts($ITEM_LIST[ $i ]."\n");
+    &DEBUG_Puts($KOYASHI_LIST[ $i ]."\n");
+    print( FILEOUT pack( "I", $ITEM_LIST[ $i ] ) );
+    print( FILEOUT pack( "I", $KOYASHI_LIST[ $i ] ) );
   }
 }
 close( FILEOUT );

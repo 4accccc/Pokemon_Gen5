@@ -11323,6 +11323,7 @@
  *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
  *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
  *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOYASI       (4)   // こやし
  *  @param  ret_money 金額格納ワーク      
  *
  *  ret_moneyが0なら興味なし
@@ -11347,6 +11348,7 @@
  *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
  *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
  *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOYASI       (4)   // こやし
  *  @param  buf_id    ワードセットのバッファID
  *  @param  keta      桁
  *
@@ -11372,6 +11374,7 @@
  *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
  *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
  *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOYASI       (4)   // こやし
  *
  */
 //--------------------------------------------------------------
