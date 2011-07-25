@@ -2,8 +2,8 @@
 #ifndef ZONE_C09R0501_EVD_H
 #define ZONE_C09R0501_EVD_H
 
-#define DOOR_ID_C09R0501_C09P02_EXIT01    0
-#define DOOR_ID_C09R0501_C09P03_EXIT01    1
+#define DOOR_ID_C09R0501_C09P03_EXIT01    0
+#define DOOR_ID_C09R0501_C09P02_EXIT01    1
 
 #endif //ZONE_C09R0501_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c09r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
