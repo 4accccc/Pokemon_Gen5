@@ -41,5 +41,9 @@
   DEF_CMD( EvCmdFourKings_Fight_Light, EV_SEQ_FOURKINGS_FIGHT_LIGHT )
   DEF_CMD( EvCmdFourKings_Fight_Stage, EV_SEQ_FOURKINGS_FIGHT_STAGE )
   
+  // チャンピオン部屋
+  DEF_CMD( EvCmdChampion_Lighting, EV_SEQ_CHAMPION_LIGHTING )
+  DEF_CMD( EvCmdChampion_HallRoom, EV_SEQ_CHAMPION_HALL_ROOM )
+
   END_CMD
   //スクリプトコマンドテーブル終了

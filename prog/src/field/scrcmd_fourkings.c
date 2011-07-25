@@ -29,6 +29,7 @@
 #include "fourkings_esp.h"
 #include "fourkings_ghost.h"
 #include "fourkings_fight.h"
+#include "field_gimmick_champion.h"
 
 #include "rail_line/c09r0101.h" //for RAIL
 #include "rail_line/c09r0201.h" //for RAIL
@@ -450,3 +451,54 @@ VMCMD_RESULT EvCmdFourKings_Fight_Stage( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
+
+//=== チャンピオン部屋 ===
+//----------------------------------------------------------------------------
+/**
+ *	@brief  照明が点灯するイベント
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdChampion_Lighting( VMHANDLE *core, void *wk )
+{
+  GMEVENT *event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  event = CHAMPION_Lighting( gsys );
+
+  if( event == NULL )
+  {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  殿堂入り部屋出現イベント
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdChampion_HallRoom( VMHANDLE *core, void *wk )
+{
+  GMEVENT *event;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  event = CHAMPION_HallRoom( gsys );
+
+  if( event == NULL )
+  {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+

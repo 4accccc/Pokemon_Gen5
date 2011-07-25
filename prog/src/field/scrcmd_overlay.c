@@ -102,7 +102,7 @@ static const ZONEID UseZoneIDTbl_pl_boat[] =
 };
 
 //-------------------------------------
-///	四天王部屋
+///	四天王部屋　と　チャンピオン部屋
 //=====================================
 static const ZONEID UseZoneIDTbl_fourkings[]  =
 {
@@ -110,6 +110,7 @@ static const ZONEID UseZoneIDTbl_fourkings[]  =
   ZONE_ID_C09R0201,
   ZONE_ID_C09R0301,
   ZONE_ID_C09R0401,
+  ZONE_ID_C09R0501,   // チャンピオン部屋
 };
 
 //-------------------------------------

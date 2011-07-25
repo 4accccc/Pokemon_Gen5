@@ -9754,6 +9754,35 @@
   .short  EV_SEQ_FOURKINGS_FIGHT_STAGE
   .endm
 
+// チャンピオン部屋
+//--------------------------------------------------------------
+/**
+ * @def _CHAMPION_LIGHTING
+ * @brief チャンピオン部屋  照明が点灯する演出
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _CHAMPION_LIGHTING() _ASM_CHAMPION_LIGHTING
+
+  .macro  _ASM_CHAMPION_LIGHTING
+  .short  EV_SEQ_CHAMPION_LIGHTING
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHAMPION_HALL_ROOM
+ * @brief チャンピオン部屋  殿堂入り部屋への通路出現
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _CHAMPION_HALL_ROOM() _ASM_CHAMPION_HALL_ROOM
+
+  .macro  _ASM_CHAMPION_HALL_ROOM
+  .short  EV_SEQ_CHAMPION_HALL_ROOM
+  .endm
+
+
+
 //======================================================================
 //
 //

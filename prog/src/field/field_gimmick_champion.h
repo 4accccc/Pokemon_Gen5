@@ -20,3 +20,7 @@ extern void CHAMPION_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void CHAMPION_End( FIELDMAP_WORK *p_fieldmap );
 extern void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap );
 
+// スクリプトコマンドで呼ばれる
+extern GMEVENT* CHAMPION_Lighting( GAMESYS_WORK *gsys );
+extern GMEVENT* CHAMPION_HallRoom( GAMESYS_WORK *gsys );
+

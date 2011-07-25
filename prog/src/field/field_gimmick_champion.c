@@ -53,6 +53,18 @@ typedef struct {
 
 } CHAMPION_TMP;
 
+#if 0
+//-------------------------------------
+///	照明点灯イベント用ワーク
+//=====================================
+typedef struct {
+  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
+  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+
+} LIGHTING_EVENT_WORK;
+#endif
+
+
 //=============================================================================
 /**
  *          3Dリソース
@@ -151,8 +163,16 @@ static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_
 
 // アニメ管理
 // 共通
-static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop );
+static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, fx32 frame, BOOL loop );
 static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
+
+// 照明が点灯するイベント
+static GMEVENT * LIGHTING_CreateEvent( GAMESYS_WORK* gsys );
+static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk );
+
+// 殿堂入り部屋出現イベント
+static GMEVENT * HALL_ROOM_CreateEvent( GAMESYS_WORK* gsys );
+static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk );
 
 //=============================================================================
 /**
@@ -226,11 +246,59 @@ void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap )
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, TRUE );
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_2, FALSE );
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      GMEVENT *event;
+      event = LIGHTING_CreateEvent(gsys);
+      GAMESYSTEM_SetEvent(gsys, event);
+      OS_Printf("照明点灯イベント\n");
+    }
   }
 #endif
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
+}
+
+//=============================================================================
+/**
+ *        スクリプトコマンド
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  照明点灯イベント
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ 
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* CHAMPION_Lighting( GAMESYS_WORK *gsys )
+{
+  GMEVENT *event;
+
+  event = LIGHTING_CreateEvent( gsys );
+
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  殿堂入り部屋出現イベント
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* CHAMPION_HallRoom( GAMESYS_WORK *gsys )
+{
+  GMEVENT *event;
+
+  event = HALL_ROOM_CreateEvent( gsys );
+
+  return event;
 }
 
 //=============================================================================
@@ -252,6 +320,8 @@ void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjSet( CHAMPION_TMP *p_wk )
 {
+  int i;
+
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, CHAMPION_UNIT_IDX);
 
@@ -263,8 +333,11 @@ static void EXPOBJ_ObjSet( CHAMPION_TMP *p_wk )
   //=====================================
   // レリーフ
   EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_RELIEF_1, ANM_RELIEF_NUM, FALSE );
-  // ループアニメは再生しておく
-  ANM_Play( p_wk->exp_obj, OBJ_RELIEF_1, 0, TRUE );
+  for( i=0; i<ANM_RELIEF_NUM; i++ )
+  {
+    // ループアニメは再生しておく
+    ANM_Play( p_wk->exp_obj, OBJ_RELIEF_1, i, 0, TRUE );
+  }
 
   EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_RELIEF_2, ANM_RELIEF_NUM, TRUE );
 
@@ -350,10 +423,11 @@ static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_
  *	@param	FLD_EXP_OBJ_CNT_PTR exp_obj
  *	@param	obj_idx   OBJインデックス
  *	@param	anm_idx   アニメインデックス
+ *	@param  frame     現在のフレーム
  *	@param	loop      ループ再生フラグ(TRUEでループ
  */
 //-----------------------------------------------------------------------------
-static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOOL loop )
+static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, fx32 frame, BOOL loop )
 {
   EXP_OBJ_ANM_CNT_PTR exp_anm;
   exp_anm = FLD_EXP_OBJ_GetAnmCnt( exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx );
@@ -364,8 +438,8 @@ static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, BOO
 
   // 無効化解除
   FLD_EXP_OBJ_ValidCntAnm( exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, TRUE );
-  // 頭だし
-  FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, 0 );
+  // フレーム設定
+  FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, frame );
 }
 
 //----------------------------------------------------------------------------
@@ -389,4 +463,161 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
   FLD_EXP_OBJ_SetObjAnmFrm( exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, 0 );
 }
 
+//=============================================================================
+/**
+ *          イベント
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  照明が点灯するイベント作成
+ *
+ *	@param	GAMESYS_WORK* gsys ゲームシステムポインタ
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT * LIGHTING_CreateEvent( GAMESYS_WORK* gsys )
+{
+  GMEVENT*  event;
+  // イベント生成
+  event = GMEVENT_Create( gsys, NULL, LightingEvent, 0 );
+
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  照明が点灯するイベント関数
+ *
+ *	@param	event イベントポインタ
+ *	@param	seq   シーケンス
+ *	@param	wk    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//----------------------------------------------------------------------------
+static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
+{
+  GAMESYS_WORK  *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  CHAMPION_TMP  *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
+
+  // 処理シーケンス
+  enum{
+    SEQ_START,          // イベント開始
+    SEQ_FOUR_CORNERS,   // 四隅ライト点灯
+    SEQ_EXCHANGER,      // ルームモデル切り替え
+    SEQ_END,            // イベント終了
+  };
+
+  switch( *seq ){
+  case SEQ_START:
+    *seq = SEQ_FOUR_CORNERS;
+    break;
+
+  // 四隅ライト点灯
+  case SEQ_FOUR_CORNERS:
+    *seq = SEQ_EXCHANGER;
+    break;
+
+  // ルームモデル切り替え
+  case SEQ_EXCHANGER:
+    {
+      // ルーム表示切り替え
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, TRUE );
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_2, FALSE );
+
+      // レリーフ表示切り替え
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, TRUE );
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, FALSE );
+      // アニメはフレーム経過を引き継ぐ
+      {
+        int i;
+
+        for( i=0; i<ANM_RELIEF_NUM; i++ )
+        {
+          fx32  tmp_frame;
+          EXP_OBJ_ANM_CNT_PTR exp_anm;
+          exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, i );
+
+          // 点灯前の経過フレーム取得
+          tmp_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, i );
+
+          // 点灯後再生
+          ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, i, tmp_frame, TRUE );
+          
+          // 点灯前停止
+          ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, i );
+
+        }
+      }
+
+      *seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  殿堂入り部屋出現イベント作成
+ *
+ *	@param	GAMESYS_WORK* gsys ゲームシステムポインタ
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT * HALL_ROOM_CreateEvent( GAMESYS_WORK* gsys )
+{
+  GMEVENT*  event;
+  // イベント生成
+  event = GMEVENT_Create( gsys, NULL, HallRoomEvent, 0 );
+
+  return event;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  殿堂入り部屋出現イベント関数
+ *
+ *	@param	event イベントポインタ
+ *	@param	seq   シーケンス
+ *	@param	wk    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//----------------------------------------------------------------------------
+static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
+{
+  GAMESYS_WORK  *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  CHAMPION_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
+
+  // 処理シーケンス
+  enum{
+    SEQ_START,          // イベント開始
+    SEQ_END,            // イベント終了
+  };
+
+  switch( *seq ){
+  case SEQ_START:
+    *seq = SEQ_END;
+    break;
+
+  case SEQ_END:
+    return GMEVENT_RES_FINISH;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
 

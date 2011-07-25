@@ -32,6 +32,9 @@ _EVENT_DATA    ev_pos_c09r0501_lighting_01
 
 EVENT_START ev_pos_c09r0501_lighting_01
 
+  // Æ–¾‚ª“_“”
+  _CHAMPION_LIGHTING()
+
   //=====================================
   //‚±‚ÌPOS‚Ì‹N“®‚ð‚³‚¹‚È‚­‚·‚é
   $LOCALWORK0 = 1

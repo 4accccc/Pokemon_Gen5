@@ -65,6 +65,10 @@ extern VMCMD_RESULT EvCmdFourKings_Fight_Stairs( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Fight_Light( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFourKings_Fight_Stage( VMHANDLE *core, void *wk );
 
+// ƒ`ƒƒƒ“ƒsƒIƒ“•”‰®
+extern VMCMD_RESULT EvCmdChampion_Lighting( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdChampion_HallRoom( VMHANDLE *core, void *wk );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif
