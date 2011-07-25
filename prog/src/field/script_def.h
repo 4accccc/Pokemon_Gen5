@@ -496,6 +496,8 @@
 #define SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
 #define SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
 #define SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
+#define SCR_ITEM_JUDGE_OBJTYPE_KOYASI       (4)   // こやし
+#define SCR_ITEM_JUDGE_OBJTYPE_MAX          (SCR_ITEM_JUDGE_OBJTYPE_KOYASI+1)   // 鑑定士の最大数
 
 //--------------------------------------------------------------
 //    シンボルエンカウント：情報取得用
