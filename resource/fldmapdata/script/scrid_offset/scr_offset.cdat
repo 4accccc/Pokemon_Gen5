@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2011 07/06 (Wed) 17:49
+ * @date  2011 07/25 (Mon) 18:30
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,6 +21,13 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_debug_message_debug_scr_dat
     },
 #endif //PM_DEBUG
+    {//アジト船パスワードのヒント用スクリプト
+      ID_HIDE_SHIP_HINT_OFFSET,       //(10835),
+      ID_HIDE_SHIP_HINT_OFFSET_END,   //(10849),
+      NARC_script_seq_hide_ship_hint_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
+      NARC_script_message_hide_ship_hint_dat
+    },
     {//ポケウッド用スクリプト
       ID_POKEWOOD_SCR_OFFSET,         //(10815),
       ID_POKEWOOD_SCR_OFFSET_END,     //(10834),

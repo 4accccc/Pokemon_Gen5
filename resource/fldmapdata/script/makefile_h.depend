@@ -165,6 +165,9 @@ animal_trail_scr_def.h: animal_trail_scr.ev
 pokewood_scr_def.h: pokewood_scr.ev
 	$(EV_DEF) pokewood_scr.ev $(SCR_OFFS_ID_H)
 
+hide_ship_hint_scr_def.h: hide_ship_hint_scr.ev
+	$(EV_DEF) hide_ship_hint_scr.ev $(SCR_OFFS_ID_H)
+
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 
