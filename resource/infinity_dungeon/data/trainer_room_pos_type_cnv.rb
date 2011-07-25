@@ -17,14 +17,24 @@ MOVE_TYPE_COLUMN_INDEX = 1
 POS_X_COLUMN_INDEX = 2
 POS_Z_COLUMN_INDEX = 3
 ZONE_COLUMN_INDEX = 4
+VERSION_COLUMN_INDEX = 5
+
+BW2_MULTI  = "WB"
+B2_ONLY = "B"
+W2_ONLY = "W"
+
+BW2_MULTI_DEF_WORD  = "INF_MULTI_DUNGEON"
+B2_ONLY_DEF_WORD    = "INF_B2_ONLY_DUNGEON"
+W2_ONLY_DEF_WORD    = "INF_W2_ONLY_DUNGEON"
 
 class POS_DATA
   attr_accessor :move_type, :pos_x, :pos_z
 end
 
 class ROOM_DATA
-  attr_accessor :type_name, :member_num, :pos_data, :zone
+  attr_accessor :type_name, :member_num, :pos_data, :zone, :version
   def initialize
+    @version = nil
     @zone = nil
     @member_num = 0
     @pos_data = Array.new
@@ -58,7 +68,7 @@ data_csv.shift
 room_data_list = Array.new
 rd = nil
 end_flg = FALSE
-data_csv.each { |item|
+data_csv.each_with_index { |item,index|
   unless item[0] == nil then
     if item[0].include?("#END") then
       room_data_list.push(rd)
@@ -84,6 +94,17 @@ data_csv.each { |item|
       pos.pos_z = item[POS_Z_COLUMN_INDEX]
       rd.type_name = item[TYPE_COLUMN_INDEX]
       rd.zone = item[ZONE_COLUMN_INDEX]
+
+      # Version判定
+      if item[VERSION_COLUMN_INDEX] == BW2_MULTI then
+        rd.version = BW2_MULTI_DEF_WORD
+      elsif item[VERSION_COLUMN_INDEX] == B2_ONLY then
+        rd.version = B2_ONLY_DEF_WORD
+      elsif item[VERSION_COLUMN_INDEX] == W2_ONLY then
+        rd.version = W2_ONLY_DEF_WORD
+      else
+        raise "%d行目->バージョン指定文字に誤りがあります"%(index+2)  # インデックスは０スタートでかつ、1行目はタイトル行なので+2
+      end
       rd.push_data(pos)
     end
   end
@@ -104,6 +125,10 @@ header =  <<EOS
 
 #define ROOM_TR_MAX (4)
 
+#define %s (0)
+#define %s (1)
+#define %s (2)
+
 //-------------------------------------
 ///	部屋データ
 //=====================================
@@ -117,6 +142,7 @@ typedef struct {
 ///	配置パラメータ
 //=====================================
 typedef struct {
+  u8  version;
   u8  member_num;
   u32 room_type;
   INF_ROOM_TR_DATA tr_move_data[ROOM_TR_MAX];
@@ -124,7 +150,7 @@ typedef struct {
 
 static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
 EOS
-out_file.puts header % OUT_FILE
+out_file.puts header % [OUT_FILE ,BW2_MULTI_DEF_WORD ,B2_ONLY_DEF_WORD ,W2_ONLY_DEF_WORD]
 
 cmt = <<EOS
   { // INF_ROOM_POS_TYPE_%s
@@ -134,6 +160,7 @@ room_data_list.each { |item|
 
   out_file.print cmt % item.type_name
   out_file.print "    "
+  put_str( item.version  ,out_file)
   put_value( item.member_num ,out_file )
   put_str( "ROOM_TYPE_" +item.zone,out_file )
   out_file.print "\n    { " 

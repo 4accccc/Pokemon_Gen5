@@ -12,6 +12,10 @@
 
 #define ROOM_TR_MAX (4)
 
+#define INF_MULTI_DUNGEON (0)
+#define INF_B2_ONLY_DUNGEON (1)
+#define INF_W2_ONLY_DUNGEON (2)
+
 //-------------------------------------
 ///	部屋データ
 //=====================================
@@ -25,6 +29,7 @@ typedef struct {
 ///	配置パラメータ
 //=====================================
 typedef struct {
+  u8  version;
   u8  member_num;
   u32 room_type;
   INF_ROOM_TR_DATA tr_move_data[ROOM_TR_MAX];
@@ -32,42 +37,42 @@ typedef struct {
 
 static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
   { // INF_ROOM_POS_TYPE_B_1
-    1 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_C_1
-    1 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_RNDDOM1 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_D_1
-    1 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_E_1
-    1 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_RNDDOM2 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_F_1
-    1 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY2 ,4 ,5 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_G_1
-    2 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY3 ,4 ,5 ,}, 
 
@@ -76,7 +81,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_H_1
-    2 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROUND1 ,4 ,5 ,}, 
 
@@ -85,7 +90,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_I_1
-    2 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROUND3 ,8 ,5 ,}, 
 
@@ -94,7 +99,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_J_1
-    2 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
 
@@ -103,7 +108,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_K_1
-    3 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP2 ,6 ,5 ,}, 
 
@@ -114,7 +119,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_L_1
-    3 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY7 ,7 ,6 ,}, 
 
@@ -125,7 +130,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_M_1
-    3 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP2 ,6 ,7 ,}, 
 
@@ -136,7 +141,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_N_1
-    4 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP2 ,7 ,5 ,}, 
 
@@ -149,7 +154,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_O_1
-    4 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
 
@@ -162,7 +167,7 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_P_1
-    4 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_ROUND7 ,3 ,9 ,}, 
 
@@ -175,35 +180,35 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     },
   }, 
   { // INF_ROOM_POS_TYPE_Q_1
-    1 ,ROOM_TYPE_SPECIAL1 ,
+    INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL1 ,
     { 
       { INF_MOVE_CODE_TYPE_ROTARY11 ,3 ,4 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_R_1
-    1 ,ROOM_TYPE_SPECIAL1 ,
+    INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL1 ,
     { 
       { INF_MOVE_CODE_TYPE_STOP3 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_S_1
-    1 ,ROOM_TYPE_SPECIAL2 ,
+    INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL2 ,
     { 
       { INF_MOVE_CODE_TYPE_STOP3 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_T_1
-    1 ,ROOM_TYPE_SPECIAL2 ,
+    INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL2 ,
     { 
       { INF_MOVE_CODE_TYPE_RNDDOM3 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_EX_1
-    1 ,ROOM_TYPE_DEFAULT ,
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
 

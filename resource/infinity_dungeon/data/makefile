@@ -21,6 +21,11 @@ ROOM_FILE = infinity_dungeon_room_pos_type.cdat
 ROOM_DATA_CSV_FILE = room_data.csv
 ROOM_DATA_FILE = infinity_dungeon_room_setup_data.cdat
 
+# トレーナー抽選データ
+TR_XLS_FILE = tr_area_data.xls
+TR_DATA_CSV_FILE = tr_area_data.csv
+TR_DATA_FILE = infinity_dungeon_tr_area_data.cdat
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
@@ -45,7 +50,7 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE)
+LDIRT_CLEAN += $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE) $(TR_DATA_CSV_FILE)
 endif
 
 .PHONY:	do-build
@@ -53,7 +58,7 @@ endif
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #パーソナルデータ生成
-do-build: $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE)
+do-build: $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(TR_DATA_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(ROOM_DATA_FILE)  $(TR_DATA_FILE)
 
 $(POS_CSV_FILE): $(XLS_FILE) trainer_move_type_cnv.rb
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 0 -s > $(POS_CSV_FILE)
@@ -64,6 +69,9 @@ $(ROOM_CSV_FILE): $(XLS_FILE) trainer_room_pos_type_cnv.rb
 $(ROOM_DATA_CSV_FILE): $(XLS_FILE) room_data_cnv.rb
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 2 -s > $(ROOM_DATA_CSV_FILE)
 
+$(TR_DATA_CSV_FILE): $(TR_XLS_FILE) trainer_area_data_cnv.rb
+	@ruby $(EXCELCONV) $(TR_XLS_FILE) -n 0 -s > $(TR_DATA_CSV_FILE)
+
 $(POS_FILE):$(POS_CSV_FILE)
 	@ruby trainer_move_type_cnv.rb $(POS_FILE) $(POS_CSV_FILE)
 
@@ -72,6 +80,9 @@ $(ROOM_FILE):$(ROOM_CSV_FILE)
 
 $(ROOM_DATA_FILE):$(ROOM_DATA_CSV_FILE)
 	@ruby room_data_cnv.rb $(ROOM_DATA_FILE) $(ROOM_DATA_CSV_FILE)
+
+$(TR_DATA_FILE):$(TR_DATA_CSV_FILE)
+	@ruby trainer_area_data_cnv.rb $(TR_DATA_FILE) $(TR_DATA_CSV_FILE)
 
 endif
 
