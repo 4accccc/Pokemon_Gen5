@@ -74,12 +74,22 @@ EVENT_START ev_wbt_reception_r
 
   _TALK_OBJ_START()
 
-  //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
-  _WBT_SYSTEM_START()
-  _WBT_SET_RECEPTION_ID( SCR_WBT_RECEPTION2 )
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 
-  //ＷＢＴ受付メイン処理
-  _CALL ev_wbt_main
+    //WBT制御システム開始：終了するときは必ず対で_WBT_SYSTEM_END()をよぶこと！
+    _WBT_SYSTEM_START()
+    _WBT_SET_RECEPTION_ID( SCR_WBT_RECEPTION2 )
+
+    //ＷＢＴ受付メイン処理
+    _CALL ev_wbt_main
+
+  ELSE
+    //クリアまでこの受付では参加できないことを知らせるメッセージ
+    _BALLOONWIN_OBJMSG_POS( msg_wbt_info_19, SCWK_TARGET_OBJID, POS_DL )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+
 EVENT_END
 
 
@@ -201,12 +211,13 @@ DEFINE_LOCAL  LWK_TEMP
       //DLデータ選択
       $LWK_WBT_SELECT_DL = 0
       _CALL ev_select_download
-      IF $LWK_MENU == 0 THEN
+      IF $LWK_WBT_SELECT_DL == 0 THEN
         //未選択→トーナメント選択へ戻る
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_TOURNAMENT
       ELSE
+        //仮：ここでルールの設定処理を呼び出す
+        _WBT_SET_BATTLE_RULE( SCR_WBT_RULE_SINGLE )
         //DLデータ選択→ポケモンのチェック＆選択へ
-        $LWK_WBT_SELECT_DL = $LWK_MENU
         $LWK_WBT_LOBBY_SEQ = WBT_LOBBY_SEQ_SELECT_POKE
       ENDIF
 
@@ -336,6 +347,7 @@ _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HODOMOE, SCWK_ANSWER ) //ホドモエトーナメント
 IF $SCWK_ANSWER == TRUE THEN
   _BMPMENU_MAKE_LIST( msg_wbt_menu_hodomoe, SCR_WBT_CUP_HODOMOE )
 ENDIF
+
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_ISSYU, SCWK_ANSWER ) //イッシュトーナメント
 IF $SCWK_ANSWER == TRUE THEN
   _BMPMENU_MAKE_LIST( msg_wbt_menu_issyu, SCR_WBT_CUP_ISSYU )
@@ -361,18 +373,41 @@ IF $SCWK_ANSWER == TRUE THEN
   _BMPMENU_MAKE_LIST( msg_wbt_menu_world, SCR_WBT_CUP_WORLD )
 ENDIF
 
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_POKETYPE, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_type, SCR_WBT_CUP_POKETYPE )		//タイプトーナメント
-ENDIF
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_CHAMPION, SCWK_ANSWER )
 IF $SCWK_ANSWER == TRUE THEN
   _BMPMENU_MAKE_LIST( msg_wbt_menu_champ, SCR_WBT_CUP_CHAMPION )		//チャンピオントーナメント
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_RENTALMASTER, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_rental_m, SCR_WBT_CUP_RENTALMASTER )		//レンタルマスタートーナメント
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_SHUFFLEMASTER, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_shuffle_m, SCR_WBT_CUP_SHUFFLEMASTER )		//シャッフルマスタートーナメント
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_POKETYPE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_type, SCR_WBT_CUP_POKETYPE )		//タイプエキスパートトーナメント
+ENDIF
+
+//以下は受付１追加
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_RENTAL, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_rental, SCR_WBT_CUP_RENTAL )		//レンタルトーナメント
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_SHUFFLE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_shuffle, SCR_WBT_CUP_SHUFFLE )		//シャッフルトーナメント
 ENDIF
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_DOWNLOAD, SCWK_ANSWER )
 IF $SCWK_ANSWER == TRUE THEN
   _BMPMENU_MAKE_LIST( msg_wbt_menu_dl, SCR_WBT_CUP_DOWNLOAD )		//ダウンロードトーナメント
 ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_WCS, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_wcs, SCR_WBT_CUP_WCS )		//WCS2011トーナメント
+ENDIF
+
 _BMPMENU_MAKE_LIST( msg_wbt_menu_back, SCR_WBT_CUP_NULL )		//もどる
 
 //メニュー表示
@@ -572,54 +607,84 @@ _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_MENU )
 
 _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_rule, msg_wbt_menu_explain_rule )	//バトルルールについて
 
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_POKETYPE, SCWK_ANSWER )
+
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HODOMOE_EVENT, SCWK_ANSWER )
 IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_type, msg_wbt_menu_explain_type )	//タイプトーナメントについて
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_hodomoe, msg_wbt_menu_hodomoe )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HODOMOE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_hodomoe, msg_wbt_menu_hodomoe )
+ENDIF
+
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_ISSYU, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_issyu, msg_wbt_menu_issyu )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_KANTO, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_kanto, msg_wbt_menu_kanto )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_JOUTO, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_jouto, msg_wbt_menu_jouto )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HOUEN, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_houen, msg_wbt_menu_houen )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_SINOU, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_sinou, msg_wbt_menu_sinou )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_WORLD, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_world, msg_wbt_menu_world )
 ENDIF
 
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_CHAMPION, SCWK_ANSWER )
 IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_champ, msg_wbt_menu_explain_champ )	//チャンピオントーナメントについて
+  //チャンピオントーナメント
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_champ, msg_wbt_menu_champ )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_RENTALMASTER, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  //レンタルマスタートーナメント
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_rental_m, msg_wbt_menu_rental_m )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_SHUFFLEMASTER, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  //シャッフルマスタートーナメント
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_shuffle_m, msg_wbt_menu_shuffle_m )
+ENDIF
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_POKETYPE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  //タイプエキスパートトーナメント
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_type, msg_wbt_menu_type )
 ENDIF
 
+//レンタルトーナメント
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_RENTAL, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_rental, msg_wbt_menu_rental )
+ENDIF
+//シャッフルトーナメント
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_SHUFFLE, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_shuffle, msg_wbt_menu_shuffle )
+ENDIF
+//ダウンロードトーナメント
 _WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_DOWNLOAD, SCWK_ANSWER )
 IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_dl, msg_wbt_menu_explain_dl )	//ダウンロードトーナメントについて
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_dl, msg_wbt_menu_dl )
+ENDIF
+//WCSトーナメント
+_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_WCS, SCWK_ANSWER )
+IF $SCWK_ANSWER == TRUE THEN
+  _BMPMENU_MAKE_LIST( msg_wbt_menu_wcs, msg_wbt_menu_wcs )
 ENDIF
 
 
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HODOMOE_EVENT, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_hodomoe, msg_wbt_menu_explain_hodomoe )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HODOMOE, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_hodomoe, msg_wbt_menu_explain_hodomoe )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_ISSYU, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_issyu, msg_wbt_menu_explain_issyu )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_KANTO, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_kanto, msg_wbt_menu_explain_kanto )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_JOUTO, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_jouto, msg_wbt_menu_explain_jouto )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_HOUEN, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_houen, msg_wbt_menu_explain_houen )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_SINOU, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_sinou, msg_wbt_menu_explain_sinou )
-ENDIF
-_WBT_CHECK_CUP_ENABLE( SCR_WBT_CUP_WORLD, SCWK_ANSWER )
-IF $SCWK_ANSWER == TRUE THEN
-  _BMPMENU_MAKE_LIST( msg_wbt_menu_explain_world, msg_wbt_menu_explain_world )
-ENDIF
 _BMPMENU_MAKE_LIST( msg_wbt_menu_back, msg_wbt_menu_back )			//もどる
 
 //メニュー表示
@@ -627,38 +692,53 @@ _BMPMENU_START()
 
 	//選択結果で分岐
 	SWITCH $LWK_MENU
-	CASE msg_wbt_menu_explain_type THEN		//タイプトーナメントについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_poketype, SCWK_TARGET_OBJID, POS_DL )
-
-	CASE msg_wbt_menu_explain_champ THEN		//チャンピオントーナメントについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_champ, SCWK_TARGET_OBJID, POS_DL )
-
-	CASE msg_wbt_menu_explain_dl THEN		//ダウンロードトーナメントについて
-		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_download, SCWK_TARGET_OBJID, POS_DL )
-
 	CASE msg_wbt_menu_explain_rule THEN		//バトルルールについて
 		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_rule, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_hodomoe THEN
+  CASE msg_wbt_menu_hodomoe THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_hodomoe, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_issyu THEN
+  CASE msg_wbt_menu_issyu THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_issyu, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_kanto THEN
+  CASE msg_wbt_menu_kanto THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_kanto, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_jouto THEN
+  CASE msg_wbt_menu_jouto THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_jouto, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_houen THEN
+  CASE msg_wbt_menu_houen THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_houen, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_sinou THEN
+  CASE msg_wbt_menu_sinou THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_sinou, SCWK_TARGET_OBJID, POS_DL )
 
-  CASE msg_wbt_menu_explain_world THEN
+  CASE msg_wbt_menu_world THEN
     _BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_world, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_champ THEN		//チャンピオントーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_champ, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_rental_m THEN		//レンタルマスタートーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_rental_m, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_shuffle_m THEN		//シャッフルマスタートーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_shuffle_m, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_type THEN		//タイプエキスパートトーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_poketype, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_rental THEN		//レンタルトーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_rental, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_shuffle THEN		//シャッフルトーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_shuffle, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_dl THEN		//ダウンロードトーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_download, SCWK_TARGET_OBJID, POS_DL )
+
+	CASE msg_wbt_menu_wcs THEN		//WCS2011トーナメント
+		_BALLOONWIN_OBJMSG_POS( msg_wbt_info_explain_wcs, SCWK_TARGET_OBJID, POS_DL )
 
 	DEFAULT			//もどる・Bボタン
 
@@ -729,7 +809,7 @@ ELSE
 	_BALLOONWIN_OBJMSG_POS( msg_wbt_info_14, SCWK_TARGET_OBJID, POS_DL )
   _MSGWIN_CLOSE()
 
-  _WBT_SELECT_DL_DATA( LWK_MENU )
+  _WBT_SELECT_DL_DATA( LWK_WBT_SELECT_DL )
 
 ENDIF
 
