@@ -2207,8 +2207,8 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_C04GYM0101 = 63
 		RSC_GRID_GYM_ELEC,
 		MMLID_NOENTRY,
-		AREA_ID_IN84,
-		MATRIX_ID_BWGYM0401,
+		AREA_ID_IN23,
+		MATRIX_ID_GYM0401,
 		NARC_script_seq_c04gym0101_bin,
 		NARC_script_seq_sp_c04gym0101_bin,	//NARC_script_seq_sp_c04gym0101_bin,
 		NARC_script_message_c04gym0101_dat,
