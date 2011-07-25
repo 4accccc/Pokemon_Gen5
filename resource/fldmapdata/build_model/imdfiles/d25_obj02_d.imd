@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-07-25T19:04:53" source="d25_obj02_d.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-07-25T21:35:21" source="d25_obj02_d.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-07-25T19:04:53" source="d25_obj02_d.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-07-25T21:35:21" source="d25_obj02_d.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -43,12 +43,12 @@
 			4040 4040 4040 4040 4040 4040 4040 4040
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="idr_plant01"
+	<tex_image index="1" name="in66_plant"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="idr_plant01_pl"
-		path="C:/home/swan_data3d/build_model/indoor/d25_obj02_d/tex/idr_plant01.tga"
+		palette_name="in66_plant_pl"
+		path="C:/home/swan_data3d/build_model/indoor/d25_obj02_d/tex/in66_plant.tga"
 	>
 		<bitmap size="128">
 			6655 6666 6666 5566 6658 6555 6666 8856
@@ -75,7 +75,7 @@
 	<tex_palette index="0" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="idr_plant01_pl" color_size="16">
+	<tex_palette index="1" name="in66_plant_pl" color_size="16">
 		7fff 327a 10ea 2a17 2e38 192d 150c 25d5
 		1d4f 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
