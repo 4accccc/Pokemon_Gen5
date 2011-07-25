@@ -103,7 +103,9 @@ ev_symbol_pokemon_main:
         _WILD_WIN() //フィールド復帰
         //マップに入り直す
         _SYMBOL_MAP_WARP( DIR_NOT )
-    ELSE
+        // レコードを加算：ハイリンクでポケモンを捕まえた回数
+        _ADD_RECORD( RECID_HILINK_POKE_GET_FLAG, 1 )
+ELSE
         _WILD_WIN() //フィールド復帰
     ENDIF
     _RET

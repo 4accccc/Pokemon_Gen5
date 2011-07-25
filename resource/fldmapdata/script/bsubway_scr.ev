@@ -2635,6 +2635,8 @@ _RET
 //--------------------------------------------------------------
 sub_common_map_change_train:
 {
+  // レコードを加算：バトルサブウェイに挑戦した回数
+  _ADD_RECORD( RECID_BSUB_CHALLENGE, 1 )
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _OBJ_ANIME_WAIT()

@@ -303,6 +303,9 @@ ev_cabin:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
   _OBJ_ANIME_WAIT()
 
+  // レコードを加算：遊覧船に乗った回数
+  _ADD_RECORD( RECID_PLEASURE_BOAT_CNT, 1 )
+
   //========================================/
   //乗船アニメ用ワークを０にする
   $WK_OTHER_PASSENGERBOAT = 0
