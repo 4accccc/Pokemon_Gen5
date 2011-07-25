@@ -10,6 +10,10 @@
 #include "field/research_team.h" 
 #include "field/research_team_def.h"
 #include "../app/research_radar/question_id.h"
+#include "savedata/misc.h" 
+#include "savedata/questionnaire_save.h" 
+#include "savedata/questionnaire_index.h" 
+#include "gamesystem/game_beacon.h"
 
 
 typedef struct {
@@ -76,6 +80,10 @@ static const RESEARCH_REQUEST_DATA RequestData[ RESEARCH_REQ_ID_NUM ] =
   { RESEARCH_REQ_TYPE_COUNT, 1, QUESTION_ID_POKEMON,          QUESTION_ID_DUMMY,      QUESTION_ID_DUMMY,    100,  0 }, //「ポケモンのおもしろいところは？」( 人数 )
 };
 
+static BOOL CheckNormCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID );
+static BOOL CheckMaxCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID );
+static BOOL CheckNormTime( SAVE_CONTROL_WORK* save );
+static BOOL CheckResearchOne( SAVE_CONTROL_WORK* save );
 
 //--------------------------------------------------------------------
 /**
@@ -153,4 +161,315 @@ int RESEARCH_TEAM_GetNormTime( u8 requestID )
   GF_ASSERT( requestID < RESEARCH_REQ_ID_NUM );
 
   return RequestData[ requestID ].normTime;
-} 
+}
+
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼の達成をチェックする(受けた依頼の達成チェックに使用)
+ *
+ * @param save
+ * @return 調査状況 RESEARCH_REQ_STATE_ACHIEVE他
+ */
+//=============================================================================
+u16 RESEARCH_TEAM_CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  u8 RID;
+  u8 RType;
+
+  RID = MISC_GetResearchRequestID( misc ); // 調査依頼IDを取得
+  RType = RESEARCH_TEAM_GetResearchType( RID ); // 依頼タイプを取得
+
+  // 人数調査の場合
+  if( RType == RESEARCH_REQ_TYPE_COUNT ) {
+    // ノルマ達成
+    if( CheckNormCount( QSave, RID ) ) {
+      return RESEARCH_REQ_STATE_ACHIEVE;
+    }
+    // ノルマ未達成
+    else {
+      return RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+    }
+  }
+  // 時間調査の場合
+  else if( RType == RESEARCH_REQ_TYPE_TIME ) {
+    // ノルマ時間が経過
+    if( CheckNormTime( save ) ) {
+      // 1人以上調査した
+      if( CheckResearchOne( save ) ) {
+        return RESEARCH_REQ_STATE_ACHIEVE;
+      }
+      // 1人も調査していない
+      else {
+        return RESEARCH_REQ_STATE_FALSE_ZERO_COUNT;
+      }
+    }
+    // ノルマ時間が経過していない
+    else {
+      return RESEARCH_REQ_STATE_FALSE_NORM_TIME;
+    }
+  }
+  else {
+    GF_ASSERT(0);
+  }
+  return RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+}
+
+//=============================================================================
+/**
+ * @brief 指定した依頼をすでに達成しているかどうかをチェックする(依頼を受けようとした際の事前チェックに使用)
+ *
+ * @param save
+ * @param RID    チェックする依頼のID
+ * @return 調査状況 RESEARCH_REQ_STATE_ACHIEVE他
+ */
+//=============================================================================
+u16 RESEARCH_TEAM_CheckRequestFinishInAdvance( SAVE_CONTROL_WORK* save, u8 RID )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  u8 RType;
+
+  RType = RESEARCH_TEAM_GetResearchType( RID ); // 依頼タイプを取得
+
+  // 人数調査の場合
+  if( RType == RESEARCH_REQ_TYPE_COUNT ) {
+    // ノルマ達成
+    if( CheckNormCount( QSave, RID ) ) {
+      return RESEARCH_REQ_STATE_ACHIEVE;
+    }
+    // ノルマ未達成
+    else {
+      return RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+    }
+  }
+  // 時間調査の場合
+  else if( RType == RESEARCH_REQ_TYPE_TIME ) {
+    // MAXカウントまで調査している
+    if( CheckMaxCount( QSave, RID ) ) {
+      return RESEARCH_REQ_STATE_ACHIEVE;
+    }
+    // ノルマ時間が経過していない
+    else {
+      return RESEARCH_REQ_STATE_FALSE_NORM_TIME;
+    }
+  }
+  else {
+    GF_ASSERT(0);
+  }
+  return RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼の経過時間を取得する
+ */
+//=============================================================================
+u16 RESEARCH_TEAM_GetPassedTime( SAVE_CONTROL_WORK* save )
+{
+  MISC* misc = SaveData_GetMisc( save );
+
+  s64 startSec;
+  u16 passedHour;
+
+  // 調査中でない
+  if( MISC_GetResearchRequestID( misc ) == RESEARCH_REQ_ID_NONE ) {
+    GF_ASSERT(0);
+    return 0;
+  }
+  
+  // 調査の開始時刻を取得
+  startSec = MISC_GetResearchStartTimeBySecond( misc );
+
+  { 
+    s64 nowSec, passedSec;
+    RTCDate passedDate;
+    RTCTime passedTime;
+
+    // 現在時刻を取得
+    nowSec = GFL_RTC_GetDateTimeBySecond();
+
+    // 経過時間[h]を算出
+    passedSec = nowSec - startSec;
+    RTC_ConvertSecondToDateTime( &passedDate, &passedTime, passedSec );
+
+    if( (0 < passedDate.year) ||  // 1年以上が経過
+        (1 < passedDate.month) || // 1月以上が経過
+        (1 < passedDate.day) )    // 1日以上が経過
+    { 
+      passedHour = 24; // 最大24時間とする ( それ以上は必要ないので )
+    }
+    else
+    {
+      passedHour = passedTime.hour;
+    }
+  }
+
+  return passedHour;
+}
+//=============================================================================
+/**
+ * @brief 現在の調査人数を取得する
+ *
+ * @param QID 質問ID ( QUESTION_ID_xxxx )
+ *
+ * @return 指定した質問の, 現時点での調査人数 ( いままで + 今日 )
+ */
+//=============================================================================
+u32 RESEARCH_TEAM_GetCurrentCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 QID )
+{
+  u32 today = QuestionnaireWork_GetTodayCount( QSave, QID );
+  u32 total = QuestionnaireWork_GetTotalCount( QSave, QID );
+  u32 current = today + total;
+  if( QUESTIONNAIRE_TOTAL_COUNT_MAX < current ) { 
+    current = QUESTIONNAIRE_TOTAL_COUNT_MAX; 
+  }
+  return current;
+}
+
+//=============================================================================
+/**
+ * @brief ノルマ人数の達成をチェックする
+ *
+ * @param QSave
+ * @param RID   チェックする調査依頼のID ( RESEARCH_REQ_ID_xxxx )
+ *
+ * @return 指定した依頼を達成している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckNormCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
+{
+  int i;
+  int norm;
+  u8 QID[ MAX_QNUM_PER_RESEARCH_REQ ];
+  u8 QNum;
+
+  RESEARCH_TEAM_GetQuestionID( RID, QID );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+  norm = RESEARCH_TEAM_GetNormCount( RID );
+
+  for( i=0; i<QNum; i++ )
+  {
+    u32 count = RESEARCH_TEAM_GetCurrentCount( QSave, QID[i] );
+
+#ifdef DEBUG_PRINT_ON
+    OS_TFPrintf( 3, 
+        "CheckNormCount: QID=%d, norm=%d, count=%d\n", QID[i], norm, count );
+#endif
+
+    // ノルマを達成していない
+    if( count < norm ) {
+      return FALSE;
+    }
+  } 
+  return TRUE;
+}
+
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼について, ノルマ時間の達成をチェックする
+ *
+ * @param save
+ *
+ * @return 調査中の依頼がノルマ時間を達成している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckNormTime( SAVE_CONTROL_WORK* save )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  int RID;
+  int pass;
+  int norm;
+
+  RID  = MISC_GetResearchRequestID( misc );
+  pass = RESEARCH_TEAM_GetPassedTime( save ); // 経過時間を取得
+  norm = RESEARCH_TEAM_GetNormTime( RID ); // ノルマ時間を取得
+
+  GF_ASSERT( RESEARCH_TEAM_GetResearchType(RID) == RESEARCH_REQ_TYPE_TIME );
+
+  // 経過している
+  if( norm <= pass ) {
+    return TRUE;
+  }
+  // 経過していない
+  else {
+    return FALSE;
+  }
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼について, 調査の開始から１人でも調査したかどうかをチェックする
+ *
+ * @param save
+ *
+ * @return 調査中の依頼を開始してから, １人以上の調査を行っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckResearchOne( SAVE_CONTROL_WORK* save )
+{
+  int i;
+  u8 RID;
+  u8 QNum;
+  const MISC* misc;
+
+  // 調査中の質問数を取得
+  misc = SaveData_GetMiscConst( save );
+  RID  = MISC_GetResearchRequestID( misc );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+
+  // 調査開始からの, 各質問の調査人数をチェック
+  for( i=0; i<QNum; i++ )
+  {
+    // １人も調査していない質問を発見
+    if( MISC_GetResearchCount( misc, i ) == 0 ) {
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+//=============================================================================
+/**
+ * @brief MAXカウントの達成をチェックする
+ *
+ * @param QSave
+ * @param RID  チェックする依頼のID
+ *
+ * @return 指定した依頼に該当する全質問をMAXカウントまで調査している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckMaxCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
+{
+  int i;
+  u8 QID[ MAX_QNUM_PER_RESEARCH_REQ ];
+  u8 QNum;
+  int norm;
+
+  RESEARCH_TEAM_GetQuestionID( RID, QID );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+  norm = RESEARCH_TEAM_GetNormCount( RID );
+
+  for( i=0; i<QNum; i++ )
+  {
+    u32 count = RESEARCH_TEAM_GetCurrentCount( QSave, QID[i] );
+
+    // MAXカウントに達していない
+    if( count < QUESTIONNAIRE_TOTAL_COUNT_MAX ) {
+      return FALSE;
+    }
+  } 
+  return TRUE;
+}
+
