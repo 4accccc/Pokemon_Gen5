@@ -404,7 +404,7 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
 
   //スタックにすでに積まれているミッションと同一なら無視か上書き
   for( i = 0;i < tbl->entry_num;i++){
-    if( tbl->entry[i].mission.type == fmwk->type &&
+    if( tbl->entry[i].mission.m_id == fmwk->m_id &&
         tbl->entry[i].mission.key == fmwk->key ){
       if( tbl->entry[i].mission.life < fmwk->life ){  //新しい方がライフが長ければ上書き
         return ENTRY_UPDATE0+i;
@@ -414,7 +414,7 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
   }
   //現在のミッションと同一なら積まない
   if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-    if( fmwk->type == fest_sys->mission.type  && 
+    if( fmwk->m_id == fest_sys->mission.m_id  && 
         fmwk->key == fest_sys->mission.key ){
       return ENTRY_NONE;
     }

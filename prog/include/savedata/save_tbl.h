@@ -195,6 +195,7 @@ enum{
   GMDATA_ID_RESORT,           // レゾナンスリゾート
   GMDATA_ID_MEDALBOX,         // メダルボックス
   GMDATA_ID_INFINITYDUNGEON,  // 無限ダンジョン
+  GMDATA_ID_FMISSION_SAVE,    // フェスミッション
   GMDATA_ID_MAX,
 };
 

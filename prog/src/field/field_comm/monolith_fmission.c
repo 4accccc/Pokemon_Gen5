@@ -160,7 +160,6 @@ typedef struct{
   GFL_CLWK *act_arrow_up;       ///<上矢印
   GFL_CLWK *act_arrow_down;     ///<下矢印
   
-  GFL_MSGDATA *mm_fmission;     ///<フェスミッション名gmm
   GFL_BMP_DATA *bmp_power_name[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];
   GPOWER_ID use_gpower_id[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];      ///<bmp_power_nameに対応したGPOWER_IDが入っている
   MONO_USE_POWER use_power[GPOWER_ID_MAX + _DUMMY_PANEL_NUM];         ///<use_gpower_idの習得状況
@@ -603,7 +602,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
 
         //ミッション開始
         IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no%4);
-        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no%4, &mission);
+        FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no%4, 0, &mission);
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
 
 //        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
@@ -718,8 +717,6 @@ static void _Setup_DataSetting( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
 
   mfw->fmd_man = FMISSION_DATA_Init( HEAPID_MONOLITH );
 
-  mfw->mm_fmission = GFL_MSG_Create(
-    GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_fest_mission_dat, HEAPID_MONOLITH);
 }
 
 //--------------------------------------------------------------
@@ -730,7 +727,6 @@ static void _Setup_DataSetting( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
 static void _Setup_DataExit( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
   FMISSION_DATA_Release( mfw->fmd_man );
-  GFL_MSG_Delete(mfw->mm_fmission);
 }
 
 
@@ -1110,10 +1106,9 @@ static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *set
     if(i >= _DUMMY_PANEL_UP_NUM && i < mfw->power_list_num - _DUMMY_PANEL_DOWN_NUM){
       GF_ASSERT(mfw->use_power[i] < NELEMS(print_color));
      
-      FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->use_gpower_id[i]%4, &mission );
-      FEST_MISSION_GetTitleStr( mfw->mm_fmission, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
+      FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->use_gpower_id[i]%4, 0, &mission );
+      FMISSION_DATA_GetTitleStr( mfw->fmd_man, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
 
-//      GFL_MSG_GetString(mfw->mm_fmission, /*mfw->use_gpower_id[i]*/, str);
       PRINTSYS_PrintColor( mfw->bmp_power_name[i], 0, 0, str, 
         setup->font_handle, print_color[mfw->use_power[i]] );
     }

@@ -36,22 +36,23 @@ typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
 typedef struct _LINKFEST_LOG{
   union{  //8byteのログ領域
     struct{ //スコアログ
-      u16 tr_id;
-      u16 tmap_root;
-      u32 value;
+      u16 tr_id;      ///<トレーナーID
+      u16 tmap_root;  ///<現在地のゾーン
+      u32 value;      ///<スコア
     }score;
 
     struct{ //受信ミッションログ
-      u8  type;
-      u16 param;
-      u32 key;
+      u8  m_id;   //<ミッションID
+      u16 param;  //<ミッションパラメータ
+      u32 key;    ///<ミッションマジックキー
     }mission;
   };
 }LINKFEST_LOG;
 
 //フェスタログ受け渡し構造体
 typedef struct _LINKFEST_LOG_PARAM{
-  u8  type; ///<ミッションタイプ FMISSION_TYPE_ID型
+  FEST_MISSION_ID  m_id; ///<ミッションID
+  FMISSION_TYPE_ID m_type; ///<ミッションタイプ
   u32 key;  ///<ミッションマジックキー
   LINKFEST_LOG prm;
 }LINKFEST_LOG_PARAM;

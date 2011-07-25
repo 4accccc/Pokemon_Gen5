@@ -518,7 +518,7 @@ static void panel_ScrollInit( FIELD_FMISSION_INFO* wk )
 
   //•`‰æó‘ÔƒZƒbƒg
   panel_TimeUpdate( wk, TRUE );
-  panel_ScoreUpdate( wk, wk->fmwk->target, ACT_MSN01 );
+  panel_ScoreUpdate( wk, wk->fmwk->goal, ACT_MSN01 );
   panel_ScoreUpdate( wk, LINK_FESTIVAL_FInfoScoreGet( wk->fest_sys ), ACT_TSN01 );
 
   wk->visible_f = TRUE;

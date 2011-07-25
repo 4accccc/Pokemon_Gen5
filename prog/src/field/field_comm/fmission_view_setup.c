@@ -420,6 +420,8 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
+  //フェスデータ取得
+  wk->fm_data_man = FMISSION_DATA_Init( wk->heap_sID );
 }
 
 //--------------------------------------------------------------
@@ -431,6 +433,7 @@ static void _sub_DataSetup(FMISSION_VIEW_PTR wk)
 //--------------------------------------------------------------
 static void _sub_DataExit(FMISSION_VIEW_PTR wk)
 {
+  FMISSION_DATA_Release( wk->fm_data_man );
   GPOWER_PowerData_Unload( wk->gpower_data );
 
   GFL_HEAP_FreeMemory( wk->newLog );
@@ -467,8 +470,6 @@ static void _sub_SystemSetup(FMISSION_VIEW_PTR wk)
 
 	wk->mm_sys = GFL_MSG_Create(
 		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fmission_log_dat, wk->heap_sID );
-	wk->mm_fmission = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fest_mission_dat, wk->heap_sID );
 
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
@@ -489,7 +490,6 @@ static void _sub_SystemExit(FMISSION_VIEW_PTR wk)
   GFL_STR_DeleteBuffer(wk->str_expand);
   GFL_STR_DeleteBuffer(wk->str_tmp);
 
-  GFL_MSG_Delete(wk->mm_fmission);
   GFL_MSG_Delete(wk->mm_sys);
 	WORDSET_Delete(wk->wordset);
 

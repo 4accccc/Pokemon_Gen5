@@ -147,6 +147,7 @@ SUBDIRS	=	wmi \
 			fmission \
 			fmission_log \
 			fmission_app \
+			fmission_data \
 			tr_ai \
 			enceff_imd \
 			pl_boat \

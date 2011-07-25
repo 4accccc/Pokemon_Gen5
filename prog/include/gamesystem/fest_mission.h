@@ -18,6 +18,8 @@
 ///ŠO•”QÆ—p
 typedef struct _FEST_MISSION FEST_MISSION;
 
+#include "gamesystem/fmission_data_id.h"
+#include "gamesystem/fmission_data_def.h"
 #include "gamesystem/fmission_log.h"
 
 //---------------------------------------------------------

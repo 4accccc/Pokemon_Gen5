@@ -9,6 +9,7 @@
 
 #pragma once
 
+#if 0
 //---------------------------------------------------------
 /*
  * @brief ミッションパラメータ一括ワードセット
@@ -34,3 +35,4 @@ extern void FEST_MISSION_GetTitleStr( GFL_MSGDATA* man, STRBUF* str, const FEST_
 //---------------------------------------------------------
 extern void FEST_MISSION_GetExpStr( GFL_MSGDATA* man, STRBUF* str, const FEST_MISSION* mission, HEAPID heapID );
 
+#endif

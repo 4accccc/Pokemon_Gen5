@@ -610,7 +610,7 @@ static void print_PopupWindow( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct )
  */
 static void draw_MissionInfo( FMISSION_VIEW_PTR wk )
 {
-  FEST_MISSION_GetTitleStr( wk->mm_fmission, wk->str_expand, wk->fmwk, wk->tmpHeapID );
+  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_expand, wk->fmwk, wk->tmpHeapID );
   BVCPrintReq_BmpwinPrint( &wk->win[WIN_TITLE], wk->str_expand,
       BMP_TITLE_OX, BMP_TITLE_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
 

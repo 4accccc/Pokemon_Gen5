@@ -119,10 +119,10 @@ typedef enum{
 typedef enum{
   FAKE_ID,
   FAKE_TIME,
-  FAKE_TARGET,
+  FAKE_GOAL,
   FAKE_PARAM,
   FAKE_ITEM,
-  FAKE_ITEM_NUM,
+  FAKE_PAY,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -365,10 +365,10 @@ static const  D_MISSION_PRM_SET DATA_DebugMissionParamSet[MISSION_PSET_MAX] = {
 static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_TIME,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_TARGET,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_GOAL,
   { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_PARAM,
   { BPRM_WSET_ITEMNAME, 5, 1, ITEM_DATA_MAX}, //FAKE_ITEM,
-  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ITEM_NUM,
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_PAY,
   { BPRM_WSET_TRNAME_EX, 3, 0, TRID_MAX-1,}, //FAKE_NAME,
   { BPRM_WSET_ZONE, 3, 0, ZONE_ID_MAX-1,}, //FAKE_ZONE,
   { BPRM_WSET_SEX, 1, PM_MALE, PM_FEMALE,}, //FAKE_SEX,
@@ -549,10 +549,10 @@ static void dmenu_WorkInit( DMENU_LINK_FEST* wk )
  
     fake[FAKE_ID] = MyStatus_GetID_Low( wk->my_status );
     fake[FAKE_TIME] = 3;
-    fake[FAKE_TARGET] = 10;
+    fake[FAKE_GOAL] = 10;
     fake[FAKE_PARAM] = 0;
     fake[FAKE_ITEM] = ITEM_DERUDAMA;
-    fake[FAKE_ITEM_NUM] = 3;
+    fake[FAKE_PAY] = 3;
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
    
@@ -710,7 +710,7 @@ static GMEVENT_RESULT event_LinkFestFromFieldMain( GMEVENT * event, int *seq, vo
           FMISSION_START_PARAM param;
 
           MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
-          FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_ITEM_SEARCH_01, &param.mission );
+          FMISSION_DATA_GetMissionParamDirect( FMISSION_ID_ITEM_KAKERA01, 0, &param.mission, wk->tmpHeapID );
           LINK_FESTIVAL_MissionStart( wk->fest_sys, &param.mission, FALSE );
 
           param.succeed_f = FALSE;
@@ -1568,13 +1568,13 @@ static void mreq_MissionStart( DMENU_LINK_FEST* wk, EVWK_MISSION_REQ* evwk, u8 d
     value = wk->mission_prm[ evwk->m_prm->prm_type ];
   }
   MI_CpuClear8(&param,sizeof(FMISSION_START_PARAM));
-  FMISSION_DATA_GetMissionParam( NULL, FMISSION_ID_POKE_SEARCH_TABUNNE, &param.mission );
-  param.mission.type = evwk->action;
+  FMISSION_DATA_GetMissionParamDirect( FMISSION_ID_POKEBTL_TABUNNE01, 0, &param.mission, wk->tmpHeapID );
+  param.mission.m_type = evwk->action;
   param.mission.item = fake[FAKE_ITEM];
-  param.mission.item_num = fake[FAKE_ITEM_NUM];
-  param.mission.target = fake[FAKE_TARGET];
+  param.mission.pay = fake[FAKE_PAY];
+  param.mission.goal = fake[FAKE_GOAL];
   param.mission.param = fake[FAKE_PARAM];
-  param.mission.time = fake[FAKE_TIME];
+  param.mission.m_time = fake[FAKE_TIME];
 
   param.succeed_f = FALSE;
 

@@ -8,30 +8,7 @@
 
 #pragma once
 
-#if 0
-typedef enum{
- FEST_MISSION_NULL,
- FEST_MISSION_WILDBTL_WIN,
- FEST_MISSION_ID_MAX,
- FEST_MISSION_ID_END = FEST_MISSION_ID_MAX-1,
-}FEST_MISSION_ID;
-#endif
-
-/*
- *  増やすとき
- *  1, 定義を追加
- *  3, check src/field/event_debug_linkfest.c
- */
-typedef enum{
-  FMISSION_TYPE_NULL,
-  FMISSION_TYPE_POKE_SEARCH,  ///<指定ポケモンを倒すか捕まえる
-  FMISSION_TYPE_EVENT,        ///<指定イベントをクリアする
-  FMISSION_TYPE_BALL_ITEM,    ///<ボールアイテムをゲットする
-  FMISSION_TYPE_MAX,
-  FMISSION_TYPE_END = FMISSION_TYPE_MAX-1,
-
-  FMISSION_TYPE_EX_WITHOUT_PARAM = 0xFF,  ///<ログセット処理用の特殊コード。実際のミッションタイプとしては使いません
-}FMISSION_TYPE_ID;
+#include "fmission_data_def.h"
 
 typedef enum{
  FMISSION_WSET_DEFAULT,   ///<デフォルト
@@ -41,16 +18,31 @@ typedef enum{
  FMISSION_WSET_MAX,
 }FMISSION_WSET;
 
-///ミッション終了条件タイプ
-typedef enum{
-  FMISSION_ENDTYPE_TIME,  ///<時間終了まで継続
-  FMISSION_ENDTYPE_CLEAR, ///<目標達成時点で終了
-}FMISSION_ENDTYPE;
-
-///typedef宣言はfest_mission.h内
+///typedef宣言はfest_mission.h内(構造体サイズが20byteを越えてはいけない)
 struct _FEST_MISSION{
+#if 1
+  u16 param;      ///<汎用パラメータ
+  u16 item;       ///<報酬のアイテムNo
+
+  u8  pay;        ///<報酬の基礎値
+  u8  m_id;       ///<ミッションNo
+  u8  m_level;    ///<ミッションレベル
+  u8  m_type:4;   ///<ミッションタイプ
+  u8  time_bonus:4;     ///<スコアアップ時のタイムボーナス
+
+  u32 goal:14;          ///<達成目標(9999)
+  u32 my_score:14;      ///<マイスコア(9999)
+  u32 distribution_f:1; ///<配信ミッションフラグ
+  u32 end_type:1;       ///<ミッション終了条件タイプ
+  u32 pay_bonus:2;      ///<報酬の計算式タイプ
+
+  u32 life:18;         ///<ミッションの残り時間(frame)
+  u32 m_time:12;       ///<ミッション制限時間(秒 4095秒まで)
+  u32 :2;
+  u32 key;             ///<マジックキー
+#else
   u16 type:4;     ///<ミッションタイプ
-  u16 time:12;    ///<ミッション制限時間(秒)
+  u16 time:12;    ///<ミッション制限時間(秒 4095秒まで)
   u16 param;      ///<汎用パラメータ
   
   u32 target:10;    ///<達成目標
@@ -65,11 +57,14 @@ struct _FEST_MISSION{
 
   u32 key;          ///<マジックキー
 
-  u16 act_no;       ///<アクションNo
-  u16 act_prm;      ///<アクションパラメータ
+  u16 dummy1;
+  u16 dummy2;
+//  u16 act_no;       ///<アクションNo
+//  u16 act_prm;      ///<アクションパラメータ
+#endif
 };
 
-#define FMISSION_TARGET_NULL (0x3FF)  //ミッション目標無効値
+#define FMISSION_GOAL_NULL  (0x3FFF)  //ミッション目標無効値
 #define FMISSION_SCORE_MAX  (999)     //ミッションスコア最大値
 #define FMISSION_LIFE_MAX   (0x3FFFF) //ミッションライフMax
 

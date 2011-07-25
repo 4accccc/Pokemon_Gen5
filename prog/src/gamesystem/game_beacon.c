@@ -500,11 +500,12 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   log.prm.score.tmap_root = info->townmap_root_zone_id;
 
   if( GAMEBEACON_Check_FestMissionWithParam( info ) ){
-    log.type = info->action.fmission.type;
+    log.m_id = info->action.fmission.m_id;
+    log.m_type = info->action.fmission.m_type;
     log.key = info->action.fmission.key;
     log.prm.score.value = info->action.fmission.my_score;
   }else{
-    log.type = FMISSION_TYPE_EX_WITHOUT_PARAM;
+    log.m_type = FMISSION_TYPE_EX_WITHOUT_PARAM;
   }  
   
   ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log );

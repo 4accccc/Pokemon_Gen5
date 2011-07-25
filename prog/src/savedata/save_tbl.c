@@ -64,6 +64,7 @@
 #include "savedata/gear_3ds_save.h"
 #include "savedata/wbt_ex_save.h"
 #include "savedata/pokewood_rec.h"
+#include "savedata/fmission_save.h"
 
 //--------------------------------------------------------------
 //  通常セーブデータのテーブル
@@ -428,6 +429,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_INFINITYDUNGEON,
     (FUNC_GET_SIZE)INFINITYDUNGEON_SAVE_GetWorkSize,
     (FUNC_INIT_WORK)INFINITYDUNGEON_SAVE_Init,
+  },
+  { //無限ダンジョン
+    GMDATA_ID_FMISSION_SAVE,
+    (FUNC_GET_SIZE)FMISSION_SAVE_GetWorkSize,
+    (FUNC_INIT_WORK)FMISSION_SAVE_Init,
   },
 };
 

@@ -17,7 +17,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/g_power.h"
 #include "gamesystem/link_festival.h"
-#include "gamesystem/fest_mission_nw.h"
+#include "gamesystem/fest_mission_data.h"
 #include "poke_tool/poke_tool.h"
 #include "item/itemsym.h"
 
@@ -92,13 +92,13 @@ typedef struct _FMISSION_EVWORK{
   FLDSYSWIN_STREAM* winStream;
   GFL_BMPWIN* bmpwin;
   GFL_MSGDATA* msgData;
-  GFL_MSGDATA* msgFmis;
   WORDSET* wset;
   POWER_CONV_DATA* p_data;
   TIMEICON_WORK* timeIcon;
 
   LINK_FESTIVAL* fest_sys;
   FEST_MISSION mission;
+  FMISSION_DATA_MAN* fm_data_man;
 
   BOOL  result;
   u32   res_score;
@@ -262,12 +262,12 @@ static void sub_InitFMissionWork( FMISSION_EVWORK* wk, GAMESYS_WORK * gsys, FIEL
   
   wk->fest_sys = GAMESYSTEM_GetLinkFestivalWork( gsys );
 
+  wk->fm_data_man = FMISSION_DATA_Init( wk->heapID );
   wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
+
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
           NARC_script_message_festmission_event_dat, wk->heapID );
-  wk->msgFmis = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-          NARC_message_fest_mission_dat, wk->heapID );
- 
+   
   wk->wset = WORDSET_Create( wk->heapID );
  
   wk->s_buf = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
@@ -286,9 +286,9 @@ static void sub_ReleaseFMissionWork( FMISSION_EVWORK* wk )
   GFL_STR_DeleteBuffer( wk->s_tmp );
   GFL_STR_DeleteBuffer( wk->s_buf );
   WORDSET_Delete( wk->wset );
-  GFL_MSG_Delete( wk->msgFmis );
   GFL_MSG_Delete( wk->msgData );
   GPOWER_PowerData_Unload( wk->p_data );
+  FMISSION_DATA_Release( wk->fm_data_man );
 
   MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 }
@@ -578,8 +578,8 @@ static GMEVENT_RESULT event_FestMissionRetireMain(GMEVENT * event, int *  seq, v
 //-----------------------------------------------------------------
 static void sub_FMissionParamWordExpand( FMISSION_EVWORK* wk )
 {
-  IWASAWA_Printf("Mission %d Time = %d\n",wk->mission.time);
-  FEST_MISSION_WordsetParamAll( wk->wset, &wk->mission );
+  IWASAWA_Printf("Mission %d Time = %d\n",wk->mission.m_time);
+  FMISSION_DATA_WordsetParamAll( wk->wset, &wk->mission );
   WORDSET_RegisterNumber( wk->wset, 7, wk->res_score, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 }
 
@@ -604,7 +604,7 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
   int sec = LINKFEST_FRAME2SEC(wk->mission.life);
 
   //パラメータ
-  FEST_MISSION_GetExpStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   
   //パラメータまとめてWordset
@@ -634,7 +634,7 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk )
 {
   //パラメータ
-  FEST_MISSION_GetExpStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 5 );
   
   //パラメータまとめてWordset
@@ -662,11 +662,11 @@ static void sub_FMissionEndParamDraw( FMISSION_EVWORK* wk )
 static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk )
 {
   //タイトル
-  FEST_MISSION_GetTitleStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
   
   //説明文
-  FEST_MISSION_GetExpStr( wk->msgFmis, wk->s_buf, &wk->mission, wk->heapID );
+  FMISSION_DATA_GetExpStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
  
   //パラメータまとめてWordset

@@ -457,6 +457,8 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
+  //フェスミッションアーカイブデータ
+  wk->fm_data_man = FMISSION_DATA_Init( wk->heap_sID );
 
   //ログ内カウンター取得
   BeaconView_LogCounterGet( wk, &wk->old_sex_ct, &wk->old_version_ct);
@@ -473,6 +475,7 @@ static void _sub_DataExit(BEACON_VIEW_PTR wk)
 {
   GAMEBEACON_Stack_PutBack( wk->infoStack );
 
+  FMISSION_DATA_Release( wk->fm_data_man );
   GPOWER_PowerData_Unload( wk->gpower_data );
 
   GFL_HEAP_FreeMemory( wk->newLogInfo );
@@ -511,9 +514,7 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 
 	wk->mm_status = GFL_MSG_Create(
 		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );
-	wk->mm_fmission = GFL_MSG_Create(
-		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_fest_mission_dat, wk->heap_sID );
-
+  
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
   wk->str_popup = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
@@ -533,7 +534,6 @@ static void _sub_SystemExit(BEACON_VIEW_PTR wk)
   GFL_STR_DeleteBuffer(wk->str_expand);
   GFL_STR_DeleteBuffer(wk->str_tmp);
 
-  GFL_MSG_Delete(wk->mm_fmission);
   GFL_MSG_Delete(wk->mm_status);
 	WORDSET_Delete(wk->wordset);
   

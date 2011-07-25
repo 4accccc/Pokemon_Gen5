@@ -395,7 +395,7 @@ BOOL BeaconView_CheckSpecialFMissionEntry( BEACON_VIEW_PTR wk )
   //名前ワードセット展開
   WORDSET_RegisterWord( wk->wordset, 0, wk->str_tmp, 0, TRUE, PM_LANG );
   //ミッション名ワードセット展開
-  FEST_MISSION_GetTitleStr( wk->mm_fmission, wk->str_tmp, &mission, wk->tmpHeapID);
+  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->str_tmp, &mission, wk->tmpHeapID );
   WORDSET_RegisterWord( wk->wordset, 1, wk->str_tmp, 0, TRUE, PM_LANG );
 
   //ポップアップをリクエスト
@@ -2306,7 +2306,7 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
     }
     return;
   case 4: //使うイベント待ち
-    if( bvp->ctrl.mission.type != FMISSION_TYPE_NULL ) {
+    if( bvp->ctrl.mission.m_id != FMISSION_ID_NULL ) {
       //途中キャンセルされていたら、選択しなおし
       FEST_MISSION_Clear( &bvp->ctrl.mission );
       twk->seq = 3;

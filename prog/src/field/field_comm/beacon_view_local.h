@@ -15,7 +15,7 @@
 #include "gamesystem/g_power.h"
 #include "gamesystem/link_festival.h"
 #include "gamesystem/fest_mission.h"
-#include "gamesystem/fest_mission_nw.h"
+#include "gamesystem/fest_mission_data.h"
 #include "gamesystem/fmission_log.h"
 #include "gamesystem/fmission_log_accessor_bv.h"
 #include "net/wih_dwc.h"
@@ -125,6 +125,7 @@ typedef struct _BEACON_VIEW{
   LINK_FESTIVAL*  fest_sys;
   FEST_MISSION*  fmwk;
   FMISSION_ENTRY_TBL* fmission_entry_tbl;
+  FMISSION_DATA_MAN* fm_data_man;
   POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////
@@ -192,7 +193,6 @@ typedef struct _BEACON_VIEW{
 
   WORDSET *wordset;
   GFL_MSGDATA *mm_status;
-  GFL_MSGDATA *mm_fmission;
   STRBUF *str_tmp;
   STRBUF *str_expand;
   STRBUF *str_popup;  //ポップアップ用テンポラリ

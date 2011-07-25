@@ -120,7 +120,7 @@ void FMISSION_GIMMICK_MapChangeSetup( LINK_FESTIVAL* fest_sys, GAMESYS_WORK* gsy
 {
   const FEST_MISSION* fmwk = (const FEST_MISSION*)LINK_FESTIVAL_GetMissionWork( fest_sys );
 
-  if( fmwk->type == FMISSION_TYPE_BALL_ITEM ){
+  if( fmwk->m_type == FMISSION_TYPE_ITEM ){
     itemball_Setup( fest_sys, fmwk, gsys, zone_id );
   }
 }
