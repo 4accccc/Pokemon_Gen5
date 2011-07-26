@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_r04r1001_waitress_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ね！　ポケモンなきごえモノマネ
+ぜひ　きいていってください！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ね！　ポケモンなきごえモノマネ
+ぜひ　きいていってください！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・White2ver</Comment>
+			<Comment>♀
+・White2ver
+・はい/いいえの選択肢表示
+　はい　→waitress_02
+　いいえ→waitress_03
+・手持ちポケモンが1種類のときは
+　続けてwaitress_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:01:45" />
+				Time="2011-07-26T11:52:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>WAITRESS</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:27:25" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -47,5 +55,676 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>では　あなたが　つれている
+ポケモンの　なきごえを……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>では　あなたが　つれている
+ポケモンの　なきごえを……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・はい選択時
+・続けて鳴き声再生
+　手持ちの中から
+　タマゴを除いてランダム抽出
+・再生後waitress_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:53:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほんもの　ソックリですよ？
+きいて　くれないんですか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>本物　ソックリですよ？
+きいて　くれないんですか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきの　なきごえモノマネは
+あなたが　つれている▽
+どの　ポケモン　だったでしょう？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきの　なきごえモノマネは
+あなたが　つれている▽
+どの　ポケモン　だったでしょう？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・選択肢表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:53:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかい　でーす！▼
+いつも　きいている　ポケモンの
+なきごえを　わかりますよね！▼
+あそんでくれて　ありがとうなの！
+これ　くだらないけど　どうぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>正解でーす！▼
+いつも　きいている　ポケモンの
+鳴き声なら　わかりますよね！▼
+遊んでくれて　ありがとうなの！
+これ　くだらないけど　どうぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・正解１回目
+・正解SE再生後にメッセージ表示
+・アイテム入手処理
+　No000「」（仮）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかい　でーす！▼
+ですよね！　パートナ－の　なきごえを
+まちがったりなんて　ないですよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>正解でーす！▼
+ですよね！　パートナ－の　鳴き声を
+間違ったりなんて　ないですよね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・正解２回目以降
+・正解SE再生後にメッセージ表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おしい！　くやしい！　かなしいです！
+いまのは　[Name:PokemonName ]　でした！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>惜しい！　くやしい！　悲しいです！
+いまのは　[Name:PokemonName ]　でした！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・不正解
+・不正解SE再生後にメッセージ表示
+・タマゴも含む</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_waitress_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>って　ポケモンが　すくなすぎ……！
+それじゃあ　クイズが　できませんね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>って　ポケモンが　少なすぎ……！
+それじゃあ　クイズが　できませんね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・手持ちポケモンが1種類のとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_select_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・0＝1匹目のポケモン
+※タマゴもOK</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_select_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・0＝２匹目のポケモン
+※タマゴもOK</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_select_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="2" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="2" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・0＝３匹目のポケモン
+※タマゴもOK</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_select_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="3" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="3" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・0＝４匹目のポケモン
+※タマゴもOK</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_select_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="4" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="4" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・0＝５匹目のポケモン
+※タマゴもOK</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r1001_select_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="5" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="5" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・0＝６匹目のポケモン
+※タマゴもOK</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:52:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
