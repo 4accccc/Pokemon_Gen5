@@ -1290,4 +1290,104 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_tv_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホームビデオ　かな？
+コジョフーが　うつっている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:10:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:10:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホームビデオ　かな？
+コジョフーが　映っている！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:10:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:10:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・コジョフーを連れ歩いていないとき専用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:12:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>専用BGメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:09:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14r0501_trash_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そこはかとなく　たかそうな……
+でも　ふつうの　ゴミばこ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:12:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:10:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そこはかとなく　高そうな……
+でも　普通の　ゴミばこ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:12:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:12:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント
+・コジョフーを連れ歩いていないとき専用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:12:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>専用BGメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:09:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
