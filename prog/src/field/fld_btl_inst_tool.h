@@ -46,7 +46,7 @@ extern BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
     BSUBWAY_PARTNER_DATA *tr_data, ARCID tr_arcID, u16 zero_org_tr_no,u16 msg_trname_data_id, HEAPID inHeapID );
 
 extern BOOL FBI_TOOL_SetBSWayPokemonParam(
-    BSUBWAY_TRAINER_ROM_DATA *trd,
+    const BSUBWAY_TRAINER_ROM_DATA *trd,
     u16 tr_no, BSUBWAY_POKEMON *pwd, u8 cnt,
     ARCID poke_arc_id,u16 *set_poke_no, u16 *set_item_no,
     BSUBWAY_PAREPOKE_PARAM *poke,GFL_STD_RandContext *rand_context ,u8 pow_rnd, HEAPID heapID );
@@ -65,9 +65,11 @@ extern u16 FBI_TOOL_GetTrtype(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 
 //WBT‚ÅŽg—p
 extern BATTLE_SETUP_PARAM * FBI_TOOL_WBT_CreateBattleParam(
-    GAMESYS_WORK *gsys, const POKEPARTY *my_party, BtlRule rule,
-    BSUBWAY_PARTNER_DATA *partner_data,
-    const int inMemNum );
+    GAMESYS_WORK *gsys, const POKEPARTY *my_party, BtlRule rule );
+extern void FBI_TOOL_WBT_SetEnemyData( BATTLE_SETUP_PARAM * bsp,
+    const BSUBWAY_TRAINER * bt_trd,
+    const BSUBWAY_POKEMON * btpwd,
+    int inMemNum, int level, HEAPID temp_heapID );
 
 extern u16 FBI_TOOL_GetOBJCode(ARCID tr_arcID, u16 tr_no, HEAPID heapID );
 
