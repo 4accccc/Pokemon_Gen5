@@ -1757,6 +1757,10 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk )
     if( MMDL_CheckEndAcmd(p_wk->mmdl) )
     {
       ANM_BOOK_PlayJump( p_gmk_wk );
+      
+      // SE 再生 
+      PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_03 );   // 本がビョーン音
+
       *seq = SEQ_BOOK_FALL;
     }
     break;
@@ -1771,9 +1775,6 @@ static GMEVENT_RESULT BookFallEvent( GMEVENT* event, int* seq, void* wk )
 
       // 本が落ちるアニメ再生
       ANM_BOOK_Play( p_gmk_wk );
-
-      // SE 再生 
-      PMSND_PlaySE( SEQ_SE_SW_SHIKIMI_03 );   // 本が落ちる音
 
       *seq = SEQ_WAIT;
     }
