@@ -381,9 +381,9 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 		(*seq)++;
 		break;
 	//
-	case DEBUG_STR_WBT_11:		// ダウンロード：1(閲覧)
+	case DEBUG_STR_WBT_11:		// ダウンロード：1(セーブ)
 		work->call_func = debugMenuCallProc_TDownload;
-		work->t_status = T_DOWNLOAD_STATUS_VIEW;
+		work->t_status = T_DOWNLOAD_STATUS_SAVE;
 		(*seq)++;
 		break;
 	//

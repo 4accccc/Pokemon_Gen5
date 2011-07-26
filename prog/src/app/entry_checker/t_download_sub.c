@@ -49,18 +49,21 @@
  */
 //=============================================================================
 // パレット
-// 上：BG (0-2:BG、3:FONT)
-// 上：OBJ
+// (sub)
+// 上：BG (0-3:BG、8:FONT)
+// 上：OBJ(14:通信)
 //
-// 下：BG (0,1:BG、8,9,11,12:FONT,WIN)
-// 下：OBJ(0-10:パネル、11-14:cmn)
+// (main)
+// 下：BG (0-4:BG、8,9,11,12:FONT,WIN)
+// 下：OBJ(0-4:パネル、11-14:cmn)
 enum{
-	// 何本目か
+	// (main)
 	PLTID_SYSWIN_BASE			= 8,	// font(syswin)
 	PLTID_SYSWIN_FONT			= 9,	// font(syswin)
 	PLTID_YESNO_WIN_BASE		= 11,	// win(yes/no window)(注：2本使用する(色変え含む:11,12))
 	//
-	PLTID_UP_FONT				= 3,	// font(up)
+	// (sub)
+	PLTID_UP_FONT				= 8,	// font(up)
 	//
 	// (obj)
 	PLTID_OBJ_CMN				= 11,	// cmnのpalのoffset
@@ -101,7 +104,9 @@ enum{
 	TDMSG_DOWN_MESWIN_01,				// win01
 };
 
-// シーケンス
+//-----------------
+// シーケンス(cmn)
+//-----------------
 enum{
 	CMN_LEFT_SEQ 		= 4,			// 左
 	CMN_RIGHT_SEQ 		= 5,			// 右
@@ -115,6 +120,18 @@ enum{
 	//
 	CMN_CROSS_ON_SEQ	= 8,			// ×オン
 	CMN_RETURN_ON_SEQ	= 9,			// 戻るオン
+};
+
+//------------------
+// シーケンス(通常)
+//------------------
+enum{
+	OBJ_BTN00_OFF_SEQ	= 4,			// (00)off
+	OBJ_BTN00_ON_SEQ	= 5,			// (00)on
+	OBJ_BTN01_OFF_SEQ	= 6,			// (01)off
+	OBJ_BTN01_ON_SEQ	= 7,			// (01)on
+	OBJ_BTN02_OFF_SEQ	= 8,			// (02)off
+	OBJ_BTN02_ON_SEQ	= 9,			// (02)on
 };
 
 //=============================================================================
@@ -202,7 +219,7 @@ typedef struct{
 //---------------
 // BGPAL
 static const T_DOWNLOAD_BGPAL_DATA td_bgpal_tbl[] = {
-	{ PALTYPE_SUB_BG,	NARC_t_download_gra_t_download_bg_u_NCLR,	0,	2,},		// 上、BG
+	{ PALTYPE_SUB_BG,	NARC_t_download_gra_t_download_bg_u_NCLR,	0,	4,},		// 上、BG
 	{ PALTYPE_MAIN_BG,	NARC_t_download_gra_t_download_bg_d_NCLR,	0,	5,},		// 下、BG
 
 	{ 0xff, 0, 0, 0,}, // end code
@@ -252,12 +269,12 @@ static const T_DOWNLOAD_BGSCN_DATA td_bgscn_00_tbl[] = {
 //---------------
 // (printutilと対応)
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
-	{ GFL_BG_FRAME1_S,	4,	3,	26,	2,	1,},		// 上：トーナメントリスト名
-	{ GFL_BG_FRAME1_S,	2,	7,	12,	2,	1,},		// 上：ルール(左)
-	{ GFL_BG_FRAME1_S,	18,	7,	12,	2,	1,},		// 上：ルール(右)
-	{ GFL_BG_FRAME1_S,	2,	9,	28,	6,	1,},		// 上：レベル制限
-	{ GFL_BG_FRAME1_S,	2,	16,	18,	2,	1,},		// 上：トーナメント名
-	{ GFL_BG_FRAME1_S,	2,	18,	28,	4,	1,},		// 上：内容
+	{ GFL_BG_FRAME1_S,	4,	3,	26,	2,	2,},		// 上：トーナメントリスト名
+	{ GFL_BG_FRAME1_S,	2,	7,	12,	2,	2,},		// 上：ルール(左)
+	{ GFL_BG_FRAME1_S,	18,	7,	12,	2,	2,},		// 上：ルール(右)
+	{ GFL_BG_FRAME1_S,	2,	9,	28,	6,	2,},		// 上：レベル制限
+	{ GFL_BG_FRAME1_S,	2,	16,	18,	2,	2,},		// 上：トーナメント名
+	{ GFL_BG_FRAME1_S,	2,	18,	28,	4,	2,},		// 上：内容
 	//
 	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	9,},		// 下：タイトル(まずいかも)
 	{ GFL_BG_FRAME0_M,	1,	1,	30,	4,	9,},		// 下：meswin
@@ -271,7 +288,7 @@ static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 //------------------
 // narc, resid, paloffset, palnum
 static const s16 td_obj_main_info_tbl[] = {
-	NARC_t_download_gra_t_download_obj_d_NCLR, T_DOWNLOAD_RESID_OBJ_PLT, 0, 4, // NCL
+	NARC_t_download_gra_t_download_obj_d_NCLR, T_DOWNLOAD_RESID_OBJ_PLT, 0, 5, // NCL
 	NARC_t_download_gra_t_download_obj_d_NCGR, T_DOWNLOAD_RESID_OBJ_CHR, 0, 0,	// NCG
 	NARC_t_download_gra_t_download_obj_d_NCER, T_DOWNLOAD_RESID_OBJ_CEL, 0, 0, // NCE
 	NARC_t_download_gra_t_download_obj_d_NANR, -1, 0, 0,			// NAR?
@@ -444,6 +461,16 @@ static const s16 td_cmn_btn_tbl[] = {
 	CMN_RETURN_SEQ, CMN_RETURN_ON_SEQ, CMN_RETURN_SEQ,    0,	// 戻る
 };
 
+//---------------------------------
+// ボタン
+// (通常、選択)
+//---------------------------------
+static const s16 td_info_btn_tbl[] = {
+	OBJ_BTN00_OFF_SEQ, OBJ_BTN00_ON_SEQ,		// 00
+	OBJ_BTN01_OFF_SEQ, OBJ_BTN01_ON_SEQ,		// 01
+	OBJ_BTN02_OFF_SEQ, OBJ_BTN02_ON_SEQ,		// 02
+};
+
 //=============================================================================
 /**
  *								宣言
@@ -475,7 +502,10 @@ static void td_listcallback_scroll( void *work, s8 mv );
 static void td_liststr_print( T_DOWNLOAD_MAIN_WORK *wk, int pos, PRINT_UTIL *print_util, GFL_MSGDATA *msg );
 static void td_PrintStrBuf( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int strIdx, PRINTSYS_LSB col, int y, int pos );
 static void td_strbuf_print( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param, int pos );
-
+//
+// パレットチェンジ
+static void td_init_chgpal( T_DOWNLOAD_MAIN_WORK* wk );
+static void td_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk );
 
 //=============================================================================
 /**
@@ -512,6 +542,8 @@ void TdCmn_init_data( T_DOWNLOAD_MAIN_WORK* wk )
 	td_init_string( wk );
 	// obj
 	td_init_obj( wk );
+	// パレットチェンジ用(obj)
+	td_init_chgpal( wk );
 	//
 	// 一旦クリアしておく
 //	td_clear_frame( wk );
@@ -1476,9 +1508,9 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 {
 	STRBUF		*strbuf;
 	//
-	// トーナメント名
+	// トーナメント名(中央そろえ)
 	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_u00_tbl[0] );
-	TdCmn_disp_string( wk, TDMSG_UP_TNAME, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(14,15,0));
+	TdCmn_disp_string( wk, TDMSG_UP_TNAME, 120, 0, strbuf, PRINTTOOL_MODE_CENTER, PRINTSYS_LSB_Make(12,13,0));
 	GFL_STR_DeleteBuffer( strbuf );
 	//
 	// ルール(左)
@@ -1813,4 +1845,128 @@ void TdCmn_disp_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 	pos.y = TdCmn_get_empty( wk, (EMPTY_CURPOS+num)*2+1 );
 	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR], &pos, CLSYS_DEFREND_MAIN );
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ初期化
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void td_init_chgpal( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	// パレット取得
+	NNSG2dPaletteData* pal_data;
+	void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_T_DOWNLOAD_GRA, NARC_t_download_gra_t_download_obj_d_NCLR, &pal_data, wk->heapID );
+	u16* raw_data = pal_data->pRawData;
+	//
+	// パレットをコピー
+	GFL_STD_MemCopy( &raw_data[0x30], wk->PBufStart, 0x20 );		// 3番
+	GFL_STD_MemCopy( &raw_data[0x40], wk->PBufEnd,   0x20 );		// 4番
+	// 破棄
+	GFL_HEAP_FreeMemory( buf );
+	//
+	wk->PCount = 0;
+	//
+	wk->CmnFlag |= T_DOWNLOAD_FLG_PALCHG;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ(main)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+void TdCmn_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	u8			cbuf[10];
+	s32			i;
+	s32			rate;
+	fx16		cos;
+	
+	// 念のため
+	if(!(wk->CmnFlag & T_DOWNLOAD_FLG_PALCHG)){
+		return;
+	}
+	
+	// 速度
+	rate = 0x400;
+	
+	// 加算(0 .. 1.0)にするようだ
+	wk->PCount += rate;
+	if(wk->PCount >= 0x10000){
+		wk->PCount -= 0x10000;
+	}
+	cos = ( FX_CosIdx(wk->PCount) + FX16_ONE )/2;
+	//
+	// カラーの計算
+	// (start -> end)への補正で(2)に書き込む
+	for(i=0;i<16;i++){
+		// 開始
+		cbuf[0] = ( wk->PBufStart[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[1] = ( wk->PBufStart[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[2] = ( wk->PBufStart[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// 終了
+		cbuf[3] = ( wk->PBufEnd[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+		cbuf[4] = ( wk->PBufEnd[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+		cbuf[5] = ( wk->PBufEnd[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+		// RGBを求める
+		cbuf[6] = cbuf[0] + (((cbuf[3]-cbuf[0])*cos)>>FX16_SHIFT);
+		cbuf[7] = cbuf[1] + (((cbuf[4]-cbuf[1])*cos)>>FX16_SHIFT);
+		cbuf[8] = cbuf[2] + (((cbuf[5]-cbuf[2])*cos)>>FX16_SHIFT);
+		//
+		wk->PBufNow[i] = GX_RGB( cbuf[6], cbuf[7], cbuf[8] );
+	}
+	// Main(4番に転送決めうち)
+	NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN , 0x20*4, wk->PBufNow, 0x20 );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ(main)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*	wk
+ *
+ * @retval
+ */
+//----------------------------------------------------------------------------------
+static void td_set_chgpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
+{
+	// フラグのon/off
+	if(bflg == TRUE){
+		wk->CmnFlag |= T_DOWNLOAD_FLG_PALCHG;
+	}else{
+		wk->CmnFlag &= ~T_DOWNLOAD_FLG_PALCHG;
+	}
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル位置修正(Info)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk 
+ *	@param	const s32			(0-2)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
+{
+	s32		i;
+	
+	// パレットアニメなので
+	// シーケンスを切り替えても変にはならないはず
+	// 一旦全部off
+	for(i=0;i<3;i++){
+		TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_ICON_00+i, td_info_btn_tbl[2*i] );
+	}
+	// 該当をon
+	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_ICON_00+mode, td_info_btn_tbl[2*mode+1] );
+}
+
 

@@ -46,7 +46,7 @@ extern const GFL_PROC_DATA TDownloadProcData;
 /// 状態
 //-------------------------------------
 typedef enum {
-	T_DOWNLOAD_STATUS_VIEW = 0,		///<見るだけ
+	T_DOWNLOAD_STATUS_SAVE = 0,		///<セーブ
 	T_DOWNLOAD_STATUS_SELECT,		///<選択
 	T_DOWNLOAD_STATUS_JOIN,			///<参加
 	T_DOWNLOAD_STATUS_INFO,			///<詳細

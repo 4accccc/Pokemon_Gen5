@@ -61,6 +61,10 @@ extern void TdCmn_exit_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 extern void TdCmn_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 //
 extern void TdCmn_disp_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
+//
+extern void TdCmn_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk );
+//
+extern void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 
 
 

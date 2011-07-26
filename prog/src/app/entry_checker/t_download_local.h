@@ -103,9 +103,11 @@ enum{
 	T_DOWNLOAD_CLWKID_CMN_MAX,
 };
 
-// フラグ
+// CmnFlag(共通)
 enum{
-	T_DOWNLOAD_FLG_UPDATE	= (1<<0),	// 更新
+	T_DOWNLOAD_FLG_UPDATE		= (1<<0),			// 更新
+	T_DOWNLOAD_FLG_PALCHG		= (1<<1),			// パレットチェンジ
+	T_DOWNLOAD_FLG_INFOUPDATE 	= (1<<2),			// (Info)更新
 };
 
 //=============================================================================
@@ -173,9 +175,16 @@ typedef struct
 	s32						CurPos;							// カーソル位置(view)
 	s32						TopNum;							// 先頭番号(select)
 	s32						SubNum;							// カーソル位置(select)
+	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
 	s32						ScrollOffy;
 	s32						SaveBuffer[T_DOWNLOAD_SAVE_BUFFER_MAX];	// セーブ領域
 	T_DOWNLOAD_ITEM			ItemBuffer[T_DOWNLOAD_ITEM_BUFFER_MAX];	// アイテム領域
+	//
+	// パレットチェンジ用
+	s32						PCount;							///< カウンタ
+	u16						PBufStart[0x10];				///< 開始
+	u16						PBufEnd[0x10];					///< 終了
+	u16						PBufNow[0x10];					///< 現在
 	//
 	// list
 	FRAMELIST_WORK			*frame_list_work;				// リスト

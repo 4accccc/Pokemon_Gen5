@@ -410,7 +410,7 @@ T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
 	td_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(T_DOWNLOAD_PARAM) );
 	td_param->gamesys	= gsys;
 	// 初期化
-	td_param->status	  = T_DOWNLOAD_STATUS_VIEW;
+	td_param->status	  = T_DOWNLOAD_STATUS_SELECT;
 	// 戻り値を返す先のポインタ
   td_param->result_work = res_work;
 	return td_param;
