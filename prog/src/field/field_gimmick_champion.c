@@ -39,6 +39,9 @@
 #define MAP_SIZE          (512 << FX32_SHIFT )
 #define MAP_HALF_SIZE     (256 << FX32_SHIFT )
 
+// 光アニメの最終フレームと仮定するフレーム
+#define LIGHT_LAST_FRAME  ( 75 * FX32_ONE )
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -77,6 +80,8 @@ enum{
   RESID_RELIEF_00_MDL,      // 照明点灯前レリーフモデル
   RESID_RELIEF_01_MDL,      // 照明点灯後レリーフ
   RESID_RELIEF_01_ANM_ICA,  // 通常時レリーフ回転アニメ
+  RESID_LIGHT_MDL,          // 差し込む光モデル
+  RESID_LIGHT_ANM_ICA,      // 差し込む光アニメ
 };
 
 // OBJインデックス
@@ -85,6 +90,7 @@ enum{
   OBJ_ROOM_2,               // マップ(点灯後)
   OBJ_RELIEF_1,             // レリーフ(点灯前)
   OBJ_RELIEF_2,             // レリーフ(点灯後)
+  OBJ_LIGHT,                // 光
 };
 
 // RES
@@ -95,6 +101,8 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_CHAMPION, NARC_champion_c_relief00_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_CHAMPION, NARC_champion_c_light_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_CHAMPION, NARC_champion_c_light_nsbca, GFL_G3D_UTIL_RESARC },
 };
 
 // ANIME
@@ -103,6 +111,12 @@ static const GFL_G3D_UTIL_ANM anm_relief[] =
   { RESID_RELIEF_01_ANM_ICA, 0 },
 };
 #define ANM_RELIEF_NUM  ( NELEMS(anm_relief) )
+
+static const GFL_G3D_UTIL_ANM anm_light[] =
+{
+  { RESID_LIGHT_ANM_ICA, 0 },
+};
+#define ANM_LIGHT_NUM  ( NELEMS(anm_light) )
 
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
@@ -139,6 +153,14 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_relief,             // アニメテーブル(複数指定のため)
     ANM_RELIEF_NUM,         // アニメリソース数
   },
+  // OBJ_LIGHT
+  {
+    RESID_LIGHT_MDL,        // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_LIGHT_MDL,        // テクスチャリソースID
+    anm_light,              // アニメテーブル(複数指定のため)
+    ANM_LIGHT_NUM,          // アニメリソース数
+  },
 };
 
 // セットアップデータ
@@ -165,6 +187,10 @@ static void EXPOBJ_ObjSetOne( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, int anm_
 // 共通
 static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx, fx32 frame, BOOL loop );
 static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
+
+// LIGHT
+static void ANM_LIGHT_Play( CHAMPION_TMP *p_wk );
+static BOOL ANM_LIGHT_CheckEnd( CHAMPION_TMP *p_wk );
 
 // 照明が点灯するイベント
 static GMEVENT * LIGHTING_CreateEvent( GAMESYS_WORK* gsys );
@@ -254,6 +280,24 @@ void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap )
       GAMESYSTEM_SetEvent(gsys, event);
       OS_Printf("照明点灯イベント\n");
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      ANM_LIGHT_Play( p_wk );
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+      MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
+      MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
+      OS_Printf("アトリビュートライト無効\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+      MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
+      MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
+      OS_Printf("アトリビュートライト有効\n");
+    }
   }
 #endif
 
@@ -340,6 +384,12 @@ static void EXPOBJ_ObjSet( CHAMPION_TMP *p_wk )
   }
 
   EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_RELIEF_2, ANM_RELIEF_NUM, TRUE );
+
+  //=====================================
+  // 差し込む光
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_LIGHT, ANM_LIGHT_NUM, TRUE );
+  // カリングしない
+  FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_LIGHT, FALSE );
 
 }
 //----------------------------------------------------------------------------
@@ -465,6 +515,52 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
 
 //=============================================================================
 /**
+ *          LIGHT
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  差し込む光アニメ再生
+ *
+ *	@param	CHAMPION_TMP *p_wk  ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void ANM_LIGHT_Play( CHAMPION_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_LIGHT;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, FALSE );
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, 0, FALSE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  差し込む光アニメ終了チェック
+ *
+ *	@param	CHAMPION_TMP *p_wk  ギミックワーク
+ *
+ *	@return TRUEで終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL ANM_LIGHT_CheckEnd( CHAMPION_TMP *p_wk )
+{
+  u16 obj_idx = OBJ_LIGHT;
+  u16 anm_idx = 0;
+  fx32  now_frame;
+
+  now_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx );
+
+  if( now_frame >= LIGHT_LAST_FRAME )
+  {
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//=============================================================================
+/**
  *          イベント
  */
 //=============================================================================
@@ -505,19 +601,29 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_START,          // イベント開始
-    SEQ_FOUR_CORNERS,   // 四隅ライト点灯
+    SEQ_LIGHT_ANIME,    // 光アニメ
+    SEQ_LIGHT_WAIT,     // 光アニメ待ち
     SEQ_EXCHANGER,      // ルームモデル切り替え
     SEQ_END,            // イベント終了
   };
 
   switch( *seq ){
   case SEQ_START:
-    *seq = SEQ_FOUR_CORNERS;
+    *seq = SEQ_LIGHT_ANIME;
     break;
 
   // 四隅ライト点灯
-  case SEQ_FOUR_CORNERS:
-    *seq = SEQ_EXCHANGER;
+  case SEQ_LIGHT_ANIME:
+    ANM_LIGHT_Play( p_wk );
+    *seq = SEQ_LIGHT_WAIT;
+    break;
+
+  // 光アニメ待ち
+  case SEQ_LIGHT_WAIT:
+    if( ANM_LIGHT_CheckEnd( p_wk ) == TRUE )
+    {
+      *seq = SEQ_EXCHANGER;
+    }
     break;
 
   // ルームモデル切り替え
@@ -550,6 +656,21 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
           ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, i );
 
         }
+      }
+
+      // ビル影を無効にする
+      {
+        // アイリス
+        //const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+        //MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0401_BIGFOUR4_01 );  // アイリス
+        //GF_ASSERT( mmdl );
+        
+        // 主人公
+        FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+        MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
+
+        // アトリビュートライト無効
+        MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
       }
 
       *seq = SEQ_END;
@@ -612,6 +733,14 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case SEQ_END:
+    {
+      // 主人公
+      FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+      MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
+
+      // アトリビュートライト有効
+      MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
+    }
     return GMEVENT_RES_FINISH;
 
   default:

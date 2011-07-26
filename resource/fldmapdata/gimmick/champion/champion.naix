@@ -15,7 +15,9 @@ enum {
 	NARC_champion_m_champ01_nsbmd = 1,
 	NARC_champion_c_relief00_nsbmd = 2,
 	NARC_champion_c_relief01_nsbmd = 3,
-	NARC_champion_c_relief_01_nsbca = 4
+	NARC_champion_c_relief_01_nsbca = 4,
+	NARC_champion_c_light_nsbmd = 5,
+	NARC_champion_c_light_nsbca = 6
 };
 
 /* NARC_CHAMPION_NAIX_ */

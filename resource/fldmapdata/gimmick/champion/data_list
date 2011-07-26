@@ -3,5 +3,7 @@ DATA_LIST = \
     m_champ01.nsbmd \
     c_relief00.nsbmd \
     c_relief01.nsbmd \
-    c_relief_01.nsbca
+    c_relief_01.nsbca \
+    c_light.nsbmd \
+    c_light.nsbca
 
