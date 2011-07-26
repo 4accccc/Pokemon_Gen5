@@ -12,15 +12,20 @@
 #pragma once
 
 u32 MedalSortList[] = {
+    MDLID_MUGEN_WIN_LV3,	//‚P‚O‚O‚É‚ñ‚¬‚è
     MDLID_MUSICAL_TOTAL_POINT,	//‚P‚O‚É‚ñ‚Ì‚Å‚Ü‚¿
+    MDLID_MUGEN_WIN_LV1,	//‚Q‚O‚É‚ñ‚¬‚è
+    MDLID_MUGEN_WIN_LV2,	//‚T‚O‚É‚ñ‚¬‚è
     MDLID_WIN_BP_LV1,	//‚a‚o‚Ý‚è‚¨‚Ë‚ 
     MDLID_DAYMAX_EXP_LV1,	//‚d‚w‚o‚Ý‚è‚¨‚Ë‚ 
-    MDLID_APPLICATION_DUMMY_16,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚P
-    MDLID_APPLICATION_DUMMY_17,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚Q
-    MDLID_APPLICATION_DUMMY_18,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚R
-    MDLID_APPLICATION_DUMMY_19,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚S
-    MDLID_APPLICATION_DUMMY_20,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚T
-    MDLID_APPLICATION_DUMMY_21,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚U
+    MDLID_CTVT_GAME_PLAY_LV1,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚P
+    MDLID_CTVT_GAME_PLAY_LV2,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚Q
+    MDLID_CTVT_GAME_PLAY_LV3,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚R
+    MDLID_CTVT_GAME_PLAY_LV4,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚S
+    MDLID_CTVT_BALLOON_LV1,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚T
+    MDLID_CTVT_BALLOON_LV2,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚U
+    MDLID_CTVT_BALLOON_LV3,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚V
+    MDLID_CTVT_BALLOON_LV4,	//‚k‚b‚Ý‚É‚f‚ß‚¾‚é‚W
     MDLID_BATTLE_DUMMY_00,	//‚v‚a‚s‚ß‚¾‚é‚P
     MDLID_BATTLE_DUMMY_09,	//‚v‚a‚s‚ß‚¾‚é‚P‚O
     MDLID_BATTLE_DUMMY_10,	//‚v‚a‚s‚ß‚¾‚é‚P‚P
@@ -37,24 +42,25 @@ u32 MedalSortList[] = {
     MDLID_BATTLE_DUMMY_20,	//‚v‚a‚s‚ß‚¾‚é‚Q‚P
     MDLID_BATTLE_DUMMY_21,	//‚v‚a‚s‚ß‚¾‚é‚Q‚Q
     MDLID_BATTLE_DUMMY_22,	//‚v‚a‚s‚ß‚¾‚é‚Q‚R
-    MDLID_BATTLE_DUMMY_23,	//‚v‚a‚s‚ß‚¾‚é‚Q‚S
-    MDLID_BATTLE_DUMMY_24,	//‚v‚a‚s‚ß‚¾‚é‚Q‚T
-    MDLID_BATTLE_DUMMY_25,	//‚v‚a‚s‚ß‚¾‚é‚Q‚U
-    MDLID_BATTLE_DUMMY_26,	//‚v‚a‚s‚ß‚¾‚é‚Q‚V
-    MDLID_BATTLE_DUMMY_27,	//‚v‚a‚s‚ß‚¾‚é‚Q‚W
-    MDLID_BATTLE_DUMMY_28,	//‚v‚a‚s‚ß‚¾‚é‚Q‚X
     MDLID_BATTLE_DUMMY_02,	//‚v‚a‚s‚ß‚¾‚é‚R
-    MDLID_BATTLE_DUMMY_29,	//‚v‚a‚s‚ß‚¾‚é‚R‚O
     MDLID_BATTLE_DUMMY_03,	//‚v‚a‚s‚ß‚¾‚é‚S
     MDLID_BATTLE_DUMMY_04,	//‚v‚a‚s‚ß‚¾‚é‚T
     MDLID_BATTLE_DUMMY_05,	//‚v‚a‚s‚ß‚¾‚é‚U
     MDLID_BATTLE_DUMMY_06,	//‚v‚a‚s‚ß‚¾‚é‚V
     MDLID_BATTLE_DUMMY_07,	//‚v‚a‚s‚ß‚¾‚é‚W
     MDLID_BATTLE_DUMMY_08,	//‚v‚a‚s‚ß‚¾‚é‚X
+    MDLID_FIELD_DUMMY_04,	//‚ ‚«‚ß‚¾‚é
+    MDLID_FIELD_DUMMY_01,	//‚ ‚«‚ß‚¾‚é
+    MDLID_FIELD_DUMMY_02,	//‚ ‚«‚ß‚¾‚é
+    MDLID_FIELD_DUMMY_03,	//‚ ‚«‚ß‚¾‚é
     MDLID_CHAMPION_MIZU,	//‚ ‚­‚ ‚¿‚á‚ñ‚Õ
     MDLID_COMPLETE_AKU,	//‚ ‚­‚±‚ê‚­‚½[
     MDLID_FIELD_COMPLETE,	//‚ ‚Ç‚×‚ñ‚¿‚á[‚«‚ñ‚®
     MDLID_EVOLUTION_MAX,	//‚ ‚é‚­‚µ‚ñ‚©‚ë‚ñ
+    MDLID_MUGEN_SPEEDY_B_LV1,	//‚¢[‚¶[‚ ‚³‚é‚Æ‚a
+    MDLID_MUGEN_SPEEDY_W_LV1,	//‚¢[‚¶[‚ ‚³‚é‚Æ‚v
+    MDLID_MUGEN_BOSS_ONLY_B_LV1,	//‚¢[‚¶[‚·‚È‚¢‚Ï[‚a
+    MDLID_MUGEN_BOSS_ONLY_W_LV1,	//‚¢[‚¶[‚·‚È‚¢‚Ï[‚v
     MDLID_CYCLE_LV2,	//‚¢[‚¶[‚ç‚¢‚¾[
     MDLID_FISHING_LV2,	//‚¢‚¢‚Â‚è‚Ñ‚Æ
     MDLID_ISEKI,	//‚¢‚¹‚«‚Ü‚¢‚·‚½[
@@ -86,7 +92,7 @@ u32 MedalSortList[] = {
     MDLID_GUIDANCE_CNT_LV4,	//‚ª‚¢‚¾‚ñ‚·‚ß‚¾‚é‚S
     MDLID_GOMIBAKO_LV1,	//‚ª‚³‚¢‚ê‚Ì‚½‚Â‚¶‚ñ
     MDLID_COMM_TRADE_LV3,	//‚ª‚Á‚¿‚è‚Æ‚ê[‚Ç
-    MDLID_APPLICATION_DUMMY_34,	//‚ª‚Á‚Û‚è‚Å‚¡‚ê‚­‚½[
+    MDLID_APPLICATION_DUMMY_17,	//‚ª‚Á‚Û‚è‚Å‚¡‚ê‚­‚½[
     MDLID_REPORT_MAX,	//‚«‚¹‚«‚Ì‚Ø‚ñ‚³‚«
     MDLID_ALL_COMPLETE,	//‚«‚ñ‚®‚¨‚Ô‚ß‚¾‚è‚·‚Æ
     MDLID_CHAMPION_KOORI,	//‚­[‚é‚¿‚á‚ñ‚Õ
@@ -103,19 +109,20 @@ u32 MedalSortList[] = {
     MDLID_CHAMPION_GHOST,	//‚²[‚·‚Æ‚¿‚á‚ñ‚Õ
     MDLID_GOAL,	//‚²[‚é‚¢‚ñ‚Õ‚ç‚¢‚¸
     MDLID_NICKNAME_LV1,	//‚²‚Á‚Ç‚Ó‚Ÿ[‚´[
+    MDLID_MUGEN_WIN_LV4,	//‚³‚¤‚´‚ñ‚Ç‚¤‚¡‚È[
     MDLID_YUURANSEN_LV1,	//‚³‚ñ‚¹‚Á‚Æ‚­‚é[‚¸
-    MDLID_APPLICATION_DUMMY_22,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚P
-    MDLID_APPLICATION_DUMMY_31,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚P‚O
-    MDLID_APPLICATION_DUMMY_32,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚P‚P
-    MDLID_APPLICATION_DUMMY_23,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚Q
-    MDLID_APPLICATION_DUMMY_24,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚R
-    MDLID_APPLICATION_DUMMY_25,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚S
-    MDLID_APPLICATION_DUMMY_26,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚T
-    MDLID_APPLICATION_DUMMY_27,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚U
-    MDLID_APPLICATION_DUMMY_28,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚V
-    MDLID_APPLICATION_DUMMY_29,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚W
-    MDLID_APPLICATION_DUMMY_30,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚X
-    MDLID_APPLICATION_DUMMY_33,	//‚µ‚è[‚¸‚±‚ñ‚Õ‚è[‚Æ
+    MDLID_APPLICATION_DUMMY_05,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚P
+    MDLID_APPLICATION_DUMMY_14,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚P‚O
+    MDLID_APPLICATION_DUMMY_15,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚P‚P
+    MDLID_APPLICATION_DUMMY_06,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚Q
+    MDLID_APPLICATION_DUMMY_07,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚R
+    MDLID_APPLICATION_DUMMY_08,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚S
+    MDLID_APPLICATION_DUMMY_09,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚T
+    MDLID_APPLICATION_DUMMY_10,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚U
+    MDLID_APPLICATION_DUMMY_11,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚V
+    MDLID_APPLICATION_DUMMY_12,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚W
+    MDLID_APPLICATION_DUMMY_13,	//‚µ‚è[‚¸‚©‚ñ‚¯‚Â‚X
+    MDLID_APPLICATION_DUMMY_16,	//‚µ‚è[‚¸‚±‚ñ‚Õ‚è[‚Æ
     MDLID_SUBWAY_SINGLE_LV1,	//‚µ‚ñ‚®‚é‚¦‚­‚·‚Õ‚ê‚·
     MDLID_COMPLETE_JIMEN,	//‚¶‚ß‚ñ‚±‚ê‚­‚½[
     MDLID_JUUKIMANIA,	//‚¶‚ã‚¤‚«‚Ü‚É‚ 
@@ -129,6 +136,10 @@ u32 MedalSortList[] = {
     MDLID_TAMAGO_MAX,	//‚¹‚¢‚ß‚¢‚Ì‚µ‚ñ‚Ò
     MDLID_REPORT_LV2,	//‚¹‚©‚¹‚©‚ê‚Û[‚½[
     MDLID_SHOPPING_MONEY_LV1,	//‚º‚¢‚½‚­‚©‚·‚½‚Ü[
+    MDLID_MUGEN_ALL_WIN_B_LV1,	//‚º‚ñ‚Ê‚«‚¢[‚¶[‚a
+    MDLID_MUGEN_ALL_WIN_W_LV1,	//‚º‚ñ‚Ê‚«‚¢[‚¶[‚v
+    MDLID_MUGEN_ALL_WIN_B_LV2,	//‚º‚ñ‚Ê‚«‚Í[‚Ç‚a
+    MDLID_MUGEN_ALL_WIN_W_LV2,	//‚º‚ñ‚Ê‚«‚Í[‚Ç‚v
     MDLID_SODATEYA_CNT_LV1,	//‚»‚¾‚Ä‚â‚Ü‚É‚ 
     MDLID_FOSSILE_LV1,	//‚½‚¢‚±‚Ì‚ë‚Ü‚ñ‚¿‚·‚Æ
     MDLID_COMM_BATTLE_LV3,	//‚½‚¢‚¹‚ñ‚¦‚«‚·‚Ï[‚Æ
@@ -168,6 +179,10 @@ u32 MedalSortList[] = {
     MDLID_COMPLETE_NORMAL,	//‚Ì[‚Ü‚é‚±‚ê‚­‚½[
     MDLID_CHAMPION_NORMAL,	//‚Ì[‚Ü‚é‚¿‚á‚ñ‚Õ
     MDLID_AFFINITY_CHECK_POINT,	//‚Í[‚Æ‚Ì‚¦[‚·
+    MDLID_MUGEN_SPEEDY_B_LV2,	//‚Í[‚Ç‚ ‚³‚é‚Æ‚a
+    MDLID_MUGEN_SPEEDY_W_LV2,	//‚Í[‚Ç‚ ‚³‚é‚Æ‚v
+    MDLID_MUGEN_BOSS_ONLY_B_LV2,	//‚Í[‚Ç‚·‚È‚¢‚Ï[‚a
+    MDLID_MUGEN_BOSS_ONLY_W_LV2,	//‚Í[‚Ç‚·‚È‚¢‚Ï[‚v
     MDLID_CYCLE_LV3,	//‚Í[‚Ç‚ç‚¢‚¾[
     MDLID_COMPLETE_HAGANE,	//‚Í‚ª‚Ë‚±‚ê‚­‚½[
     MDLID_BOX_LV2,	//‚Í‚±‚¢‚è‚P‚Q‚O
@@ -194,9 +209,9 @@ u32 MedalSortList[] = {
     MDLID_CHAMPION_KAKUTOU,	//‚Ó‚Ÿ‚¢‚Æ‚¿‚á‚ñ‚Õ
     MDLID_KANOKOTOWN,	//‚Ó‚Ÿ‚ñ‚¨‚Ô‚Ð[‚ë[
     MDLID_AFFINITY_CHECK_LV1,	//‚Ó‚¡[‚è‚ñ‚®‚Ü‚·‚½[
-    MDLID_APPLICATION_DUMMY_35,	//‚Ó‚¥‚·‚ß‚¾‚é‚P
-    MDLID_APPLICATION_DUMMY_36,	//‚Ó‚¥‚·‚ß‚¾‚é‚Q
-    MDLID_APPLICATION_DUMMY_37,	//‚Ó‚¥‚·‚ß‚¾‚é‚R
+    MDLID_APPLICATION_DUMMY_18,	//‚Ó‚¥‚·‚ß‚¾‚é‚P
+    MDLID_APPLICATION_DUMMY_19,	//‚Ó‚¥‚·‚ß‚¾‚é‚Q
+    MDLID_APPLICATION_DUMMY_20,	//‚Ó‚¥‚·‚ß‚¾‚é‚R
     MDLID_CHAMPION_KUSA,	//‚Ó‚ë[‚ç‚é‚¿‚á‚ñ‚Õ
     MDLID_BRIDGE_ALL,	//‚Ô‚è‚Á‚¶‚Ü‚·‚½[
     MDLID_CHAMPION_HONOO,	//‚Ô‚ê‚¢‚¸‚¿‚á‚ñ‚Õ
@@ -210,20 +225,16 @@ u32 MedalSortList[] = {
     MDLID_BOX_MAX,	//‚Ú‚Á‚­‚·‚Ü‚Á‚­‚·
     MDLID_FISHING_LV1,	//‚Ú‚ë‚Ì‚Â‚è‚Ñ‚Æ
     MDLID_POKECEN,	//‚Û‚¯‚¹‚ñ‚Ó‚Ÿ‚ñ
-    MDLID_‚o‚n‚j‚d‚q‚t‚r,	//‚Û‚¯‚é‚·‚Í‚ñ‚½[
+    MDLID_POKERUS,	//‚Û‚¯‚é‚·‚Í‚ñ‚½[
     MDLID_RANK_GOLD,	//‚Ü‚·‚½[‚ß‚¾‚è‚·‚Æ
     MDLID_SUBWAY_MULTI_LV1,	//‚Ü‚é‚¿‚¦‚­‚·‚Õ‚ê‚·
     MDLID_COMPLETE_MIZU,	//‚Ý‚¸‚±‚ê‚­‚½[
     MDLID_WALK_LV2,	//‚Ý‚Ç‚é‚¤‚§[‚©[
     MDLID_MUSICALWIN_MAX,	//‚Ý‚ã[‚¶‚©‚é‚Õ‚è‚Ü
-    MDLID_MUGEN_AREA_LV1,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚P
-    MDLID_MUGEN_AREA_LV2,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚Q
-    MDLID_MUGEN_AREA_LV3,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚R
-    MDLID_MUGEN_AREA_LV4,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚S
-    MDLID_MUGEN_WIN_LV1,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚T
-    MDLID_MUGEN_WIN_LV2,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚U
-    MDLID_MUGEN_WIN_LV3,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚V
-    MDLID_MUGEN_WIN_LV4,	//‚Þ‚°‚ñ‚c‚ß‚¾‚é‚W
+    MDLID_MUGEN_AREA_B_LV2,	//‚Þ‚°‚ñ‚Ô‚ç‚Á‚­‚P‚O
+    MDLID_MUGEN_AREA_B_LV1,	//‚Þ‚°‚ñ‚Ô‚ç‚Á‚­‚T
+    MDLID_MUGEN_AREA_W_LV2,	//‚Þ‚°‚ñ‚Ù‚í‚¢‚Æ‚P‚O
+    MDLID_MUGEN_AREA_W_LV1,	//‚Þ‚°‚ñ‚Ù‚í‚¢‚Æ‚T
     MDLID_COMPLETE_MUSHI,	//‚Þ‚µ‚±‚ê‚­‚½[
     MDLID_WALK_MAX,	//‚ß‚¢‚æ‚Ì‚ ‚µ‚ ‚Æ
     MDLID_CHAMPION_HAGANE,	//‚ß‚½‚é‚¿‚á‚ñ‚Õ
@@ -234,22 +245,18 @@ u32 MedalSortList[] = {
     MDLID_BILLBOARD_BACK,	//‚ç‚­‚ª‚«‚¹‚ñ‚è‚ª‚ñ
     MDLID_IROCHIGAI,	//‚ç‚Á‚«[‚©‚ç[
     MDLID_SURECHIGAI_CNT_MAX,	//‚ç‚Á‚µ‚ã‚ ‚í[
-    MDLID_APPLICATION_DUMMY_00,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P
-    MDLID_APPLICATION_DUMMY_09,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚O
-    MDLID_APPLICATION_DUMMY_10,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚P
-    MDLID_APPLICATION_DUMMY_11,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚Q
-    MDLID_APPLICATION_DUMMY_12,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚R
-    MDLID_APPLICATION_DUMMY_13,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚S
-    MDLID_APPLICATION_DUMMY_14,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚T
-    MDLID_APPLICATION_DUMMY_15,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚U
-    MDLID_APPLICATION_DUMMY_01,	//‚è‚¼[‚Æ‚ß‚¾‚é‚Q
-    MDLID_APPLICATION_DUMMY_02,	//‚è‚¼[‚Æ‚ß‚¾‚é‚R
-    MDLID_APPLICATION_DUMMY_03,	//‚è‚¼[‚Æ‚ß‚¾‚é‚S
-    MDLID_APPLICATION_DUMMY_04,	//‚è‚¼[‚Æ‚ß‚¾‚é‚T
-    MDLID_APPLICATION_DUMMY_05,	//‚è‚¼[‚Æ‚ß‚¾‚é‚U
-    MDLID_APPLICATION_DUMMY_06,	//‚è‚¼[‚Æ‚ß‚¾‚é‚V
-    MDLID_APPLICATION_DUMMY_07,	//‚è‚¼[‚Æ‚ß‚¾‚é‚W
-    MDLID_APPLICATION_DUMMY_08,	//‚è‚¼[‚Æ‚ß‚¾‚é‚X
+    MDLID_RESORT_GUID_CNT_LV1,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P
+    MDLID_APPLICATION_DUMMY_01,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚R
+    MDLID_APPLICATION_DUMMY_02,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚S
+    MDLID_APPLICATION_DUMMY_03,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚T
+    MDLID_APPLICATION_DUMMY_04,	//‚è‚¼[‚Æ‚ß‚¾‚é‚P‚U
+    MDLID_RESORT_GUID_CNT_LV2,	//‚è‚¼[‚Æ‚ß‚¾‚é‚Q
+    MDLID_RESORT_GUID_CNT_LV3,	//‚è‚¼[‚Æ‚ß‚¾‚é‚R
+    MDLID_RESORT_GUID_CNT_LV4,	//‚è‚¼[‚Æ‚ß‚¾‚é‚S
+    MDLID_RESORT_SHOP_MAKE_CNT_LV1,	//‚è‚¼[‚Æ‚ß‚¾‚é‚T
+    MDLID_RESORT_SHOP_MAKE_CNT_LV2,	//‚è‚¼[‚Æ‚ß‚¾‚é‚U
+    MDLID_RESORT_SHOP_MAKE_CNT_LV3,	//‚è‚¼[‚Æ‚ß‚¾‚é‚V
+    MDLID_RESORT_SHOP_MAKE_CNT_LV4,	//‚è‚¼[‚Æ‚ß‚¾‚é‚W
     MDLID_TRADE_VERSION,	//‚è‚Î[‚·‚Æ‚ê[‚¾[
     MDLID_RANK_COPPER,	//‚é[‚«[‚ß‚¾‚è‚·‚Æ
     MDLID_ALL_BATTLE_LV4,	//‚ê‚«‚¹‚ñ‚Ì‚à‚³
@@ -260,11 +267,4 @@ u32 MedalSortList[] = {
     MDLID_LONELY_CHAMPION,	//‚í‚ñ‚ ‚ñ‚Ç‚¨‚ñ‚è[
     MDLID_DAYMAX_CAPTURE_LV1,	//‚í‚ñ‚Å[‚«‚á‚Õ‚¿‚á[
     MDLID_VENDOR_ATARI,	//‚í‚ñ‚à‚ ‚Ç‚è‚ñ‚­
-    MDLID_BLANK_1,	//‹ó‚«‚ß‚¾‚é‚P
-    MDLID_BLANK_2,	//‹ó‚«‚ß‚¾‚é‚Q
-    MDLID_BLANK_3,	//‹ó‚«‚ß‚¾‚é‚R
-    MDLID_BLANK_4,	//‹ó‚«‚ß‚¾‚é‚S
-    MDLID_BLANK_5,	//‹ó‚«‚ß‚¾‚é‚T
-    MDLID_BLANK_6,	//‹ó‚«‚ß‚¾‚é‚U
-    MDLID_BLANK_7,	//‹ó‚«‚ß‚¾‚é‚V
 };

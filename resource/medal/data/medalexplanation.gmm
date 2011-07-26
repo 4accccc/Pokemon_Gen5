@@ -1720,140 +1720,185 @@
 
 	<row id="MDL_EXP_BATTLE_052">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　エリアクリアすう
+くろ　だんかい１</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　エリアクリア数
+黒　段階１</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_053">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　エリアクリアすう
+くろ　だんかい２</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　エリアクリア数
+黒　段階２</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_054">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　エリアクリアすう
+しろ　だんかい１</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　エリアクリア数
+白　段階１</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_055">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　エリアクリアすう
+しろ　だんかい２</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　エリアクリア数
+白　段階２</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_056">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　げきはトレーナー
+だんかい１</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　撃破トレーナー
+だんかい１</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_057">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　げきはトレーナー
+だんかい２</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　撃破トレーナー
+だんかい２</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_058">
 		<language name="JPN" width="216">かりメダル
-ＷＢＴ
-みてい</language>
+むげんＤ　げきはトレーナー
+だんかい３</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＷＢＴ
-未定</language>
+無限Ｄ　撃破トレーナー
+だんかい３</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_059">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　エリアクリアすう
-だんかい１</language>
+むげんＤ　げきはトレーナー
+だんかい４</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　エリアクリア数
-段階１</language>
+無限Ｄ　撃破トレーナー
+だんかい４</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_060">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　エリアクリアすう
-だんかい２</language>
+むげんＤ　ぜんいんたおす
+イージー　くろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　エリアクリア数
-段階２</language>
+無限Ｄ　全員倒す
+イージー　黒</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_061">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　エリアクリアすう
-だんかい３</language>
+むげんＤ　ぜんいんたおす
+ハード　くろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　エリアクリア数
-段階３</language>
+無限Ｄ　全員倒す
+ハード　黒</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_062">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　エリアクリアすう
-だんかい４</language>
+むげんＤ　ぜんいんたおす
+イージー　しろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　エリアクリア数
-段階４</language>
+無限Ｄ　全員倒す
+イージー　白</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_063">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　げきはトレーナー
-だんかい１</language>
+むげんＤ　ぜんいんたおす
+ハード　しろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　撃破トレーナー
-だんかい１</language>
+無限Ｄ　全員倒す
+ハード　白</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_064">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　げきはトレーナー
-だんかい２</language>
+むげんＤ　ボスだけたおす
+イージー　くろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　撃破トレーナー
-だんかい２</language>
+無限Ｄ　ボスだけ倒す
+イージー　黒</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_065">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　げきはトレーナー
-だんかい３</language>
+むげんＤ　ボスだけたおす
+ハード　くろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　撃破トレーナー
-だんかい３</language>
+無限Ｄ　ボスだけ倒す
+ハード　黒</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_066">
 		<language name="JPN" width="216">かりメダル
-むげんＤ　げきはトレーナー
-だんかい４</language>
+むげんＤ　ボスだけたおす
+イージー　しろ</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-無限Ｄ　撃破トレーナー
-だんかい４</language>
+無限Ｄ　ボスだけ倒す
+イージー　白</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_067">
+		<language name="JPN" width="216">かりメダル
+むげんＤ　ボスだけたおす
+ハード　しろ</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+無限Ｄ　ボスだけ倒す
+ハード　白</language>
+	</row>
+
+	<row id="MDL_EXP_BATTLE_068">
+		<language name="JPN" width="216">かりメダル
+むげんＤ　きていほすうでクリア
+イージー　くろ</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+無限Ｄ　規定歩数でクリア
+イージー　黒</language>
+	</row>
+
+	<row id="MDL_EXP_BATTLE_069">
+		<language name="JPN" width="216">かりメダル
+むげんＤ　きていほすうでクリア
+ハード　くろ</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+無限Ｄ　規定歩数でクリア
+ハード　黒</language>
+	</row>
+
+	<row id="MDL_EXP_BATTLE_070">
+		<language name="JPN" width="216">かりメダル
+むげんＤ　きていほすうでクリア
+イージー　しろ</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+無限Ｄ　規定歩数でクリア
+イージー　白</language>
+	</row>
+
+	<row id="MDL_EXP_BATTLE_071">
+		<language name="JPN" width="216">かりメダル
+むげんＤ　きていほすうでクリア
+ハード　しろ</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+無限Ｄ　規定歩数でクリア
+ハード　白</language>
+	</row>
+
+	<row id="MDL_EXP_BATTLE_072">
 		<language name="JPN" width="216">『せんとう』メダルを　すべて
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『戦闘』メダルを　すべて
@@ -2077,23 +2122,32 @@
 
 	<row id="MDL_EXP_APPLICATION_025">
 		<language name="JPN" width="216">かりメダル
-おみせつくったかず
-だんかい１</language>
+かんこうきゃく　あんないすう
+だんかい４</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-お店作った数
-段階１</language>
+観光客　案内数
+段階４</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_026">
 		<language name="JPN" width="216">かりメダル
 おみせつくったかず
+だんかい１</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+お店作った数
+段階１</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_027">
+		<language name="JPN" width="216">かりメダル
+おみせつくったかず
 だんかい２</language>
 		<language name="JPN_KANJI" width="216">仮メダル
 お店作った数
 段階２</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_027">
+	<row id="MDL_EXP_APPLICATION_028">
 		<language name="JPN" width="216">かりメダル
 おみせつくったかず
 だんかい３</language>
@@ -2102,151 +2156,124 @@
 段階３</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_028">
-		<language name="JPN" width="216">かりメダル
-まちレベル
-だんかい１</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-街レベル
-段階１</language>
-	</row>
-
 	<row id="MDL_EXP_APPLICATION_029">
 		<language name="JPN" width="216">かりメダル
-まちレベル
-だんかい２</language>
+おみせつくったかず
+だんかい４</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-街レベル
-段階２</language>
+お店作った数
+段階４</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_030">
-		<language name="JPN" width="216">かりメダル
-まちレベル
-だんかい３</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-街レベル
-段階３</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_031">
-		<language name="JPN" width="216">かりメダル
-あんないコンボかいすう
+		<language name="JPN" width="216">かりメダル　ゲストから
+おみやげを　もらった　かず
 だんかい１</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-案内コンボ回数
+		<language name="JPN_KANJI" width="216">仮メダル　ゲストから
+お土産を　もらった数
 段階１</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_032">
-		<language name="JPN" width="216">かりメダル
-あんないコンボかいすう
+	<row id="MDL_EXP_APPLICATION_031">
+		<language name="JPN" width="216">かりメダル　ゲストから
+おみやげを　もらった　かず
 だんかい２</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-案内コンボ回数
+		<language name="JPN_KANJI" width="216">仮メダル　ゲストから
+お土産を　もらった数
 段階２</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_033">
-		<language name="JPN" width="216">かりメダル
-あんないコンボかいすう
+	<row id="MDL_EXP_APPLICATION_032">
+		<language name="JPN" width="216">かりメダル　ゲストから
+おみやげを　もらった　かず
 だんかい３</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-案内コンボ回数
+		<language name="JPN_KANJI" width="216">仮メダル　ゲストから
+お土産を　もらった数
 段階３</language>
 	</row>
 
+	<row id="MDL_EXP_APPLICATION_033">
+		<language name="JPN" width="216">かりメダル　ゲストから
+おみやげを　もらった　かず
+だんかい４</language>
+		<language name="JPN_KANJI" width="216">仮メダル　ゲストから
+お土産を　もらった数
+段階４</language>
+	</row>
+
 	<row id="MDL_EXP_APPLICATION_034">
-		<language name="JPN" width="216">かりメダル
-すべての　しせつの
-レベルＭＡＸ</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-すべての　施設の
-レベルＭＡＸ</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_035">
-		<language name="JPN" width="216">かりメダル
-すべての　しゅるいの
-しせつを　たてた</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-すべての　種類の
-施設を　建てた</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_036">
-		<language name="JPN" width="216">かりメダル
-ゆうめいじんが
-たくさん　きた</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-有名人が
-たくさん　来た</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_037">
-		<language name="JPN" width="216">かりメダル
-かんこうきゃくから
-おみやげを　たくさんもらった</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-観光客から
-お土産を　たくさんもらった</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_038">
 		<language name="JPN" width="216">かりメダル
 ＬＣミニゲーム　プレイかいすう
 だんかい１</language>
 		<language name="JPN_KANJI" width="216">仮メダル
 ＬＣミニゲーム　プレイ回数
+段階１</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_035">
+		<language name="JPN" width="216">かりメダル
+ＬＣミニゲーム　プレイかいすう
+だんかい２</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＬＣミニゲーム　プレイ回数
+段階２</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_036">
+		<language name="JPN" width="216">かりメダル
+ＬＣミニゲーム　プレイかいすう
+だんかい３</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＬＣミニゲーム　プレイ回数
+段階３</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_037">
+		<language name="JPN" width="216">かりメダル
+ＬＣミニゲーム　プレイかいすう
+だんかい４</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＬＣミニゲーム　プレイ回数
+段階４</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_038">
+		<language name="JPN" width="216">かりメダル
+ＬＣミニゲーム　わったふうせん
+だんかい１</language>
+		<language name="JPN_KANJI" width="216">仮メダル
+ＬＣミニゲーム　割った風船
 段階１</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_039">
 		<language name="JPN" width="216">かりメダル
-ＬＣミニゲーム　プレイかいすう
+ＬＣミニゲーム　わったふうせん
 だんかい２</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＬＣミニゲーム　プレイ回数
+ＬＣミニゲーム　割った風船
 段階２</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_040">
 		<language name="JPN" width="216">かりメダル
-ＬＣミニゲーム　プレイかいすう
+ＬＣミニゲーム　わったふうせん
 だんかい３</language>
 		<language name="JPN_KANJI" width="216">仮メダル
-ＬＣミニゲーム　プレイ回数
+ＬＣミニゲーム　割った風船
 段階３</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_041">
 		<language name="JPN" width="216">かりメダル
 ＬＣミニゲーム　わったふうせん
-だんかい１</language>
+だんかい４</language>
 		<language name="JPN_KANJI" width="216">仮メダル
 ＬＣミニゲーム　割った風船
-段階１</language>
+段階４</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_042">
-		<language name="JPN" width="216">かりメダル
-ＬＣミニゲーム　わったふうせん
-だんかい２</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-ＬＣミニゲーム　割った風船
-段階２</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_043">
-		<language name="JPN" width="216">かりメダル
-ＬＣミニゲーム　わったふうせん
-だんかい３</language>
-		<language name="JPN_KANJI" width="216">仮メダル
-ＬＣミニゲーム　割った風船
-段階３</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_044">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが１を
 ぜんシリーズ　さつえい</language>
@@ -2255,7 +2282,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_045">
+	<row id="MDL_EXP_APPLICATION_043">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが２を
 ぜんシリーズ　さつえい</language>
@@ -2264,7 +2291,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_046">
+	<row id="MDL_EXP_APPLICATION_044">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが３を
 ぜんシリーズ　さつえい</language>
@@ -2273,7 +2300,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_047">
+	<row id="MDL_EXP_APPLICATION_045">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが４を
 ぜんシリーズ　さつえい</language>
@@ -2282,7 +2309,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_048">
+	<row id="MDL_EXP_APPLICATION_046">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが５を
 ぜんシリーズ　さつえい</language>
@@ -2291,7 +2318,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_049">
+	<row id="MDL_EXP_APPLICATION_047">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが６を
 ぜんシリーズ　さつえい</language>
@@ -2300,7 +2327,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_050">
+	<row id="MDL_EXP_APPLICATION_048">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが７を
 ぜんシリーズ　さつえい</language>
@@ -2309,7 +2336,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_051">
+	<row id="MDL_EXP_APPLICATION_049">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが８を
 ぜんシリーズ　さつえい</language>
@@ -2318,7 +2345,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_052">
+	<row id="MDL_EXP_APPLICATION_050">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが９を
 ぜんシリーズ　さつえい</language>
@@ -2327,7 +2354,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_053">
+	<row id="MDL_EXP_APPLICATION_051">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが１０を
 ぜんシリーズ　さつえい</language>
@@ -2336,7 +2363,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_054">
+	<row id="MDL_EXP_APPLICATION_052">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　えいが１１を
 ぜんシリーズ　さつえい</language>
@@ -2345,7 +2372,7 @@
 全シリーズ　撮影</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_055">
+	<row id="MDL_EXP_APPLICATION_053">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　ぜんぶの
 えいがを　さつえいした</language>
@@ -2354,7 +2381,7 @@
 映画を　撮影した</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_056">
+	<row id="MDL_EXP_APPLICATION_054">
 		<language name="JPN" width="216">かりメダル
 ポケウッド　ハイスコア
 こうぎょうしゅうにゅう</language>
@@ -2363,7 +2390,7 @@
 興行収入</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_057">
+	<row id="MDL_EXP_APPLICATION_055">
 		<language name="JPN" width="216">かりメダル
 フェスミッション
 かいさい　かいすう</language>
@@ -2372,7 +2399,7 @@
 開催回数</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_058">
+	<row id="MDL_EXP_APPLICATION_056">
 		<language name="JPN" width="216">かりメダル
 フェスミッション
 クリアした　かいすう</language>
@@ -2381,7 +2408,7 @@
 クリアした回数</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_059">
+	<row id="MDL_EXP_APPLICATION_057">
 		<language name="JPN" width="216">かりメダル
 フェスミッション
 さんかした　かいすう</language>
@@ -2390,7 +2417,7 @@
 参加した回数</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_060">
+	<row id="MDL_EXP_APPLICATION_058">
 		<language name="JPN" width="216">ゲームシンクを　して　ポケモンを
 ゆめの　せかいで　あそばせた
 よい　ねむりを　たたえる　メダル。</language>
@@ -2399,7 +2426,7 @@
 良い　眠りを　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_061">
+	<row id="MDL_EXP_APPLICATION_059">
 		<language name="JPN" width="216">かりメダル
 データコンバート
 だんかい１</language>
@@ -2408,7 +2435,7 @@
 段階１</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_062">
+	<row id="MDL_EXP_APPLICATION_060">
 		<language name="JPN" width="216">かりメダル
 データコンバート
 だんかい２</language>
@@ -2417,7 +2444,7 @@
 段階２</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_063">
+	<row id="MDL_EXP_APPLICATION_061">
 		<language name="JPN" width="216">かりメダル
 データコンバート
 だんかい３</language>
@@ -2426,7 +2453,7 @@
 段階３</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_064">
+	<row id="MDL_EXP_APPLICATION_062">
 		<language name="JPN" width="216">かりメダル
 データコンバート
 だんかい４</language>
@@ -2435,7 +2462,7 @@
 段階４</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_065">
+	<row id="MDL_EXP_APPLICATION_063">
 		<language name="JPN" width="216">『おたのしみ』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『お楽しみ』メダルを　すべて　
@@ -2681,21 +2708,6 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_094">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_095">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_096">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_097">
 		<language name="JPN" width="216">あき</language>
 		<language name="JPN_KANJI" width="216">空き</language>
 	</row>

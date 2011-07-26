@@ -1002,11 +1002,9 @@
 
 	<row id="MDL_HINT_BATTLE_001">
 		<language name="JPN" width="216">しょうぶの　ときは
-ゆうきを　みせるのも
-トレーナーの　つとめ</language>
+ゆうきを　もって　たたかおう！</language>
 		<language name="JPN_KANJI" width="216">勝負の　時は
-勇気を　見せるのも
-トレーナーの　つとめ</language>
+勇気を　もって　戦おう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_002">
@@ -1401,121 +1399,166 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_052">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-１０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-１０回　してください</language>
+		<language name="JPN" width="216">はてなく　つづく　まてんろう
+じぶんの　ちからで
+すすんで　いこう！</language>
+		<language name="JPN_KANJI" width="216">果てなく　続く　摩天楼
+自分の　力で
+進んで　いこう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_053">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-１０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-１０回　してください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_054">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">はてなく　つづく　たいじゅのなか
+じぶんの　ちからで
+すすんで　いこう！</language>
+		<language name="JPN_KANJI" width="216">果てなく　続く　大樹の内部
+自分の　力で
+進んで　行こう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_055">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_056">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">はてなく　つづく　ダンジョンで
+たたかいに　かって！
+かって！　かちまくれ！</language>
+		<language name="JPN_KANJI" width="216">果てなく　続く　ダンジョンで
+戦いに　勝って！
+勝って！　勝ちまくれ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_057">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_058">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">あき</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_059">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_060">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">くろのまてんろうの
+エリア２〜５の　いずれかで
+すべての　トレーナーを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">黒の摩天楼の
+エリア２〜５の　いずれかで
+すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_061">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">くろのまてんろうの
+エリア６〜１０の　いずれかで
+すべての　トレーナーを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">黒の摩天楼の
+エリア６〜１０の　いずれかで
+すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_062">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">しろのじゅどうの
+エリア２〜５の　いずれかで
+すべての　トレーナーを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">白の樹洞の
+エリア２〜５の　いずれかで
+すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_063">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">しろのじゅどうの
+エリア６〜１０の　いずれかで
+すべての　トレーナーを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">白の樹洞の
+エリア６〜１０の　いずれかで
+すべての　トレーナーを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_064">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">くろのまてんろうの
+エリア２〜５の　いずれかで
+ボストレーナーだけを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">黒の摩天楼の
+エリア２〜５の　いずれかで
+ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_065">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">くろのまてんろうの
+エリア６〜１０の　いずれかで
+ボストレーナーだけを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">黒の摩天楼の
+エリア６〜１０の　いずれかで
+ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_066">
-		<language name="JPN" width="216">ダミーのヒントです
-せんとうを
-２０かい　してください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-戦闘を
-２０回　してください</language>
+		<language name="JPN" width="216">しろのじゅどうの
+エリア２〜５の　いずれかで
+ボストレーナーだけを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">白の樹洞の
+エリア２〜５の　いずれかで
+ボストレーナーだけを　倒せ！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_067">
+		<language name="JPN" width="216">しろのじゅどうの
+エリア６〜１０の　いずれかで
+ボストレーナーだけを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">白の樹洞の
+エリア６〜１０の　いずれかで
+ボストレーナーだけを　倒せ！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_068">
+		<language name="JPN" width="216">くろのまてんろうの
+エリア２〜５の　いずれかを
+１００ほ　いないに　クリアしろ！</language>
+		<language name="JPN_KANJI" width="216">黒の摩天楼の
+エリア２〜５の　いずれかを
+１００歩以内に　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_069">
+		<language name="JPN" width="216">くろのまてんろうの
+エリア６〜１０の　いずれかを
+１０００ほ　いないに　クリアしろ！</language>
+		<language name="JPN_KANJI" width="216">黒の摩天楼の
+エリア６〜１０の　いずれかを
+１０００歩以内に　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_070">
+		<language name="JPN" width="216">しろのじゅどうの
+エリア２〜５の　いずれかを
+１００ほ　いないに　クリアしろ！</language>
+		<language name="JPN_KANJI" width="216">白の樹洞の
+エリア２〜５の　いずれかを
+１００歩以内に　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_071">
+		<language name="JPN" width="216">しろのじゅどうの
+エリア６〜１０の　いずれかを
+１０００ほ　いないに　クリアしろ！</language>
+		<language name="JPN_KANJI" width="216">白の樹洞の
+エリア６〜１０の　いずれかを
+１０００歩以内に　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_072">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -1666,204 +1709,126 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_022">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１回　書いてください</language>
+		<language name="JPN" width="216">ジョインアベニューで
+たくさんの　かんこうきゃくを
+あんない　しよう！</language>
+		<language name="JPN_KANJI" width="216">ジョインアベニューで
+たくさんの　観光客を
+案内しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_023">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-２かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-２回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_024">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-３かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-３回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_025">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-４かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-４回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_026">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-５かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-５回　書いてください</language>
+		<language name="JPN" width="216">ジョインアベニューで
+たくさんの　おみせを
+つくってみよう！</language>
+		<language name="JPN_KANJI" width="216">ジョインアベニューで
+たくさんの　お店を
+作ってみよう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_027">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-６かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-６回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_028">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-７かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-７回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_029">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-８かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-８回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_030">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-９かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-９回　書いてください</language>
+		<language name="JPN" width="216">ジョインアベニューで
+おきゃくさんを　まねきいれると
+おみやげが　もらえるかも！</language>
+		<language name="JPN_KANJI" width="216">ジョインアベニューで
+お客さんを　招き入れると
+お土産が　もらえるかも！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_031">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１０かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１０回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_032">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１１かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１１回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_033">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１２かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１２回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_034">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１３かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１３回　書いてください</language>
+		<language name="JPN" width="216">ともだちと　あつまって
+ライブキャスターの
+ミニゲームで　あそぼう！</language>
+		<language name="JPN_KANJI" width="216">友達と　集まって
+ライブキャスターの
+ミニゲームで　遊ぼう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_035">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１４かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１４回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_036">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１５かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１５回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_037">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１６かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１６回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_038">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１７かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１７回　書いてください</language>
+		<language name="JPN" width="216">ライブキャスターの
+ミニゲームで　ふうせんを
+バンバン　わろう！</language>
+		<language name="JPN_KANJI" width="216">ライブキャスターの
+ミニゲームで　風船を
+バンバン　割ろう！</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_039">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１８かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１８回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_040">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-１９かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-１９回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_041">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-２０かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-２０回　書いてください</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_042">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-２１かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-２１回　書いてください</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_043">
-		<language name="JPN" width="216">ダミーのヒントです
-メールを
-２２かい　かいてください</language>
-		<language name="JPN_KANJI" width="216">ダミーのヒントです
-メールを
-２２回　書いてください</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_044">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２４かい　かいてください</language>
@@ -1872,7 +1837,7 @@
 ２４回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_045">
+	<row id="MDL_HINT_APPLICATION_043">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２５かい　かいてください</language>
@@ -1881,7 +1846,7 @@
 ２５回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_046">
+	<row id="MDL_HINT_APPLICATION_044">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２６かい　かいてください</language>
@@ -1890,7 +1855,7 @@
 ２６回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_047">
+	<row id="MDL_HINT_APPLICATION_045">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２７かい　かいてください</language>
@@ -1899,7 +1864,7 @@
 ２７回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_048">
+	<row id="MDL_HINT_APPLICATION_046">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２８かい　かいてください</language>
@@ -1908,7 +1873,7 @@
 ２８回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_049">
+	<row id="MDL_HINT_APPLICATION_047">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２９かい　かいてください</language>
@@ -1917,7 +1882,7 @@
 ２９回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_050">
+	<row id="MDL_HINT_APPLICATION_048">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３０かい　かいてください</language>
@@ -1926,7 +1891,7 @@
 ３０回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_051">
+	<row id="MDL_HINT_APPLICATION_049">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３１かい　かいてください</language>
@@ -1935,7 +1900,7 @@
 ３１回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_052">
+	<row id="MDL_HINT_APPLICATION_050">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３２かい　かいてください</language>
@@ -1944,7 +1909,7 @@
 ３２回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_053">
+	<row id="MDL_HINT_APPLICATION_051">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３３かい　かいてください</language>
@@ -1953,7 +1918,7 @@
 ３３回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_054">
+	<row id="MDL_HINT_APPLICATION_052">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３４かい　かいてください</language>
@@ -1962,7 +1927,7 @@
 ３４回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_055">
+	<row id="MDL_HINT_APPLICATION_053">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３５かい　かいてください</language>
@@ -1971,7 +1936,7 @@
 ３５回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_056">
+	<row id="MDL_HINT_APPLICATION_054">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３６かい　かいてください</language>
@@ -1980,7 +1945,7 @@
 ３６回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_057">
+	<row id="MDL_HINT_APPLICATION_055">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２８かい　かいてください</language>
@@ -1989,7 +1954,7 @@
 ２８回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_058">
+	<row id="MDL_HINT_APPLICATION_056">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ２９かい　かいてください</language>
@@ -1998,13 +1963,23 @@
 ２９回　書いてください</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_059">
+	<row id="MDL_HINT_APPLICATION_057">
 		<language name="JPN" width="216">ダミーのヒントです
 メールを
 ３０かい　かいてください</language>
 		<language name="JPN_KANJI" width="216">ダミーのヒントです
 メールを
 ３０回　書いてください</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_058">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_059">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_060">
@@ -2023,16 +1998,6 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_063">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_064">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_065">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2235,38 +2200,23 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_091">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_092">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_093">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_094">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_095">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_096">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_097">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<flowchart-group-list>
