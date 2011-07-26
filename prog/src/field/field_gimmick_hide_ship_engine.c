@@ -68,6 +68,17 @@
 #define GATE_4_X        (15 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE) // ゲート4 X座標
 #define GATE_4_Z        (17 * FIELD_CONST_GRID_FX32_SIZE ) // ゲート4 Z座標
 
+// ゲートを解除するボタン
+#define OFF_BTN_NUM     ( 4 )   // =GATE_NUM
+#define OFF_BTN_1_X     ( 9 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン1 X座標
+#define OFF_BTN_1_Z     (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン1 Z座標
+#define OFF_BTN_2_X     ( 9 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン2 X座標
+#define OFF_BTN_2_Z     (21 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン2 Z座標
+#define OFF_BTN_3_X     (21 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン3 X座標
+#define OFF_BTN_3_Z     (16 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン3 Z座標
+#define OFF_BTN_4_X     (21 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン4 X座標
+#define OFF_BTN_4_Z     (21 * FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE ) // ボタン4 Z座標
+
 // パイプ
 #define PIPE_NUM        ( 16 )  // パイプ数
 #define PIPE_Y          (-3 * FIELD_CONST_GRID_FX32_SIZE ) // パイプ Y座標
@@ -254,6 +265,10 @@ enum{
   OBJ_GATE_2,                   // ゲート
   OBJ_GATE_3,                   // ゲート
   OBJ_GATE_4,                   // ゲート
+  OBJ_OFF_BTN_1,                // ゲート解除ボタン
+  OBJ_OFF_BTN_2,                // ゲート解除ボタン
+  OBJ_OFF_BTN_3,                // ゲート解除ボタン
+  OBJ_OFF_BTN_4,                // ゲート解除ボタン
   OBJ_PIPE_1,                   // パイプ
   OBJ_PIPE_2,                   // パイプ
   OBJ_PIPE_3,                   // パイプ
@@ -413,6 +428,38 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_GATE_MDL,         // テクスチャリソースID
     anm_gate,               // アニメテーブル(複数指定のため)
     ANM_GATE_NUM,           // アニメリソース数
+  },
+  // OBJ_OFF_BTN_1
+  {
+    RESID_BUTTON_MDL,       // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BUTTON_MDL,       // テクスチャリソースID
+    anm_button,             // アニメテーブル(複数指定のため)
+    ANM_BUTTON_NUM,         // アニメリソース数
+  },
+  // OBJ_OFF_BTN_2
+  {
+    RESID_BUTTON_MDL,       // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BUTTON_MDL,       // テクスチャリソースID
+    anm_button,             // アニメテーブル(複数指定のため)
+    ANM_BUTTON_NUM,         // アニメリソース数
+  },
+  // OBJ_OFF_BTN_3
+  {
+    RESID_BUTTON_MDL,       // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BUTTON_MDL,       // テクスチャリソースID
+    anm_button,             // アニメテーブル(複数指定のため)
+    ANM_BUTTON_NUM,         // アニメリソース数
+  },
+  // OBJ_OFF_BTN_4
+  {
+    RESID_BUTTON_MDL,       // モデルリソースID
+    0,                      // モデルデータID(リソース内部INDEX)
+    RESID_BUTTON_MDL,       // テクスチャリソースID
+    anm_button,             // アニメテーブル(複数指定のため)
+    ANM_BUTTON_NUM,         // アニメリソース数
   },
   // OBJ_PIPE_1
   {
@@ -662,6 +709,11 @@ static void ANM_GATE_OFF_Play( HIDE_SHIP_TMP *p_wk, u16 id );
 static void ANM_GATE_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id );
 static void ANM_GATE_SET_On( HIDE_SHIP_TMP *p_wk, u16 id );
 
+// ゲート解除BUTTON
+static void ANM_OFF_BTN_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_OFF_BTN_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id );
+static void ANM_OFF_BTN_SET_On( HIDE_SHIP_TMP *p_wk, u16 id );
+
 // EFFECT
 static void ANM_EFFECT_01_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx );
 static void ANM_EFFECT_02_Play( HIDE_SHIP_TMP *p_wk, u16 pipe_obj_idx );
@@ -798,21 +850,25 @@ void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap )
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      ANM_GATE_SET_On( p_wk, 0 );
-      ANM_GATE_SET_On( p_wk, 1 );
-      ANM_GATE_SET_On( p_wk, 2 );
-      ANM_GATE_SET_On( p_wk, 3 );
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      HIDE_SHIP_GateSet( gsys, 0, TRUE );
+      HIDE_SHIP_GateSet( gsys, 1, TRUE );
+      HIDE_SHIP_GateSet( gsys, 2, TRUE );
+      HIDE_SHIP_GateSet( gsys, 3, TRUE );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
-      ANM_GATE_SET_Off( p_wk, 0 );
-      ANM_GATE_SET_Off( p_wk, 1 );
-      ANM_GATE_SET_Off( p_wk, 2 );
-      ANM_GATE_SET_Off( p_wk, 3 );
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      HIDE_SHIP_GateSet( gsys, 0, FALSE );
+      HIDE_SHIP_GateSet( gsys, 1, FALSE );
+      HIDE_SHIP_GateSet( gsys, 2, FALSE );
+      HIDE_SHIP_GateSet( gsys, 3, FALSE );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
     {
-      ANM_GATE_OFF_Play( p_wk, 0 );
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      HIDE_SHIP_ButtonOff( gsys, 0 );
+      HIDE_SHIP_GateOff( gsys, 0 );
     }
   }
 #endif
@@ -870,10 +926,12 @@ void HIDE_SHIP_GateSet( GAMESYS_WORK *gsys, int id, BOOL flag )
   if( flag == TRUE )
   {
     ANM_GATE_SET_On( p_wk, id );
+    ANM_OFF_BTN_SET_Off( p_wk, id );
   }
   else
   {
     ANM_GATE_SET_Off( p_wk, id );
+    ANM_OFF_BTN_SET_On( p_wk, id );
   }
 }
 //----------------------------------------------------------------------------
@@ -893,6 +951,25 @@ void HIDE_SHIP_GateOff( GAMESYS_WORK *gsys, int id )
 
   // SE 再生
   PMSND_PlaySE( HIDE_SHIP_SE_GATE_OFF );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン押下アニメ再生
+ *
+ *	@param	GAMESYS_WORK *gsys  ゲームシステムポインタ
+ *	@param	id      ボタンID  
+ */
+//-----------------------------------------------------------------------------
+void HIDE_SHIP_ButtonOff( GAMESYS_WORK *gsys, int id )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
+
+  ANM_OFF_BTN_ON_Play( p_wk, id );
+
+  // SE 再生
+  PMSND_PlaySE( HIDE_SHIP_SE_BTN );
 }
 
 //=============================================================================
@@ -991,12 +1068,7 @@ static void HIDE_SHIP_PIPE_Init( HIDE_SHIP_TMP *p_wk )
   u8 state_tbl[ PIPE_NUM ] = { 0 };
 
   //バージョンで白黒を変える
-#ifdef PM_DEBUG
-  // L
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L)
-#else
   if( GET_VERSION() == VERSION_B2 )
-#endif
   {
     const u8 tmp_tbl[ PIPE_NUM ] = {
       PIPE_1_B,
@@ -1155,6 +1227,31 @@ static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
       EXPOBJ_ObjSetOne( p_wk->exp_obj, obj_idx, ANM_GATE_NUM, pos[i] );
       // ループアニメは再生しておく
       ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
+    }
+  }
+
+  //=====================================
+  // ゲート解除ボタン
+  {
+    int i;
+    VecFx32 pos[ OFF_BTN_NUM ] = {
+      { OFF_BTN_1_X, 0, OFF_BTN_1_Z },
+      { OFF_BTN_2_X, 0, OFF_BTN_2_Z },
+      { OFF_BTN_3_X, 0, OFF_BTN_3_Z },
+      { OFF_BTN_4_X, 0, OFF_BTN_4_Z },
+    };
+
+    for( i=0; i<OFF_BTN_NUM; i++ )
+    {
+      int obj_idx = OBJ_OFF_BTN_1 + i;
+      
+      // 汎用設定
+      EXPOBJ_ObjSetOne( p_wk->exp_obj, obj_idx, ANM_BUTTON_NUM, pos[i] );
+      // ブラックバージョンならボタンはないので非表示
+      if( GET_VERSION() == VERSION_B2 )
+      {
+        FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, TRUE );
+      }
     }
   }
 
@@ -1669,6 +1766,82 @@ static void ANM_GATE_SET_On( HIDE_SHIP_TMP *p_wk, u16 id )
 
   ANM_Play( p_wk->exp_obj, obj_idx, 0, TRUE );
   ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+}
+
+//=============================================================================
+/**
+ *          ゲート解除ボタン
+ *          animeはボタンと同じ
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オンアニメ再生
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 idx   ボタンインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_OFF_BTN_ON_Play( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 obj_idx = OBJ_OFF_BTN_1 + id;
+
+  GF_ASSERT( id < OFF_BTN_NUM );
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE );
+  ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンをオフ状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 idx   ボタンインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_OFF_BTN_SET_Off( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 anm_idx = 0;
+  u16 obj_idx = OBJ_OFF_BTN_1 + id;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+
+  // 他のアニメはSTOP
+  ANM_Stop( p_wk->exp_obj, obj_idx, 1 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンをオン状態にする
+ *
+ *	@param	HIDE_SHIP_TMP *p_wk   ギミックワーク
+ *	@param  u16 idx   ボタンインデックス
+ */
+//-----------------------------------------------------------------------------
+static void ANM_OFF_BTN_SET_On( HIDE_SHIP_TMP *p_wk, u16 id )
+{
+  u16 anm_idx = 1;
+  u16 obj_idx = OBJ_OFF_BTN_1 + id;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, HIDE_SHIP_UNIT_IDX, obj_idx, anm_idx, last_frame );
+
+  // 他のアニメはSTOP
+  ANM_Stop( p_wk->exp_obj, obj_idx, 0 );
 }
 
 //=============================================================================

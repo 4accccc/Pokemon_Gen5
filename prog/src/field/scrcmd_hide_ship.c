@@ -162,6 +162,24 @@ VMCMD_RESULT EvCmdHideShip_GateOff( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン押下アニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdHideShip_ButtonOff( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // ボタンID
+  id  = VMGetU16( core );
+
+  HIDE_SHIP_ButtonOff( gsys, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //----------------------------------------------------------------------------
 /**

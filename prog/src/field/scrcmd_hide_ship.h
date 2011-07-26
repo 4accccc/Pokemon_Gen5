@@ -33,6 +33,7 @@
 extern VMCMD_RESULT EvCmdHideShip_Button( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdHideShip_GateSet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdHideShip_GateOff( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdHideShip_ButtonOff( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdHideShip_PasswordInput( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdHideShip_PasswordIdGet( VMHANDLE *core, void *wk );

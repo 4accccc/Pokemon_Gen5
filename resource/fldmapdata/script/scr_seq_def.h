@@ -14357,6 +14357,7 @@
 /**
  * @def _HIDE_SHIP_GATE_SET
  * @brief エンジン部屋でのゲートの状態を設定する
+ *        (ボタンの状態も設定される)
  * @param id    ゲートのID 0～3
  * @param state  0:解除していない 1:解除した
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
@@ -14384,6 +14385,22 @@
 
   .macro  _ASM_HIDE_SHIP_GATE_OFF id
   .short  EV_SEQ_HIDE_SHIP_GATE_OFF
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_BUTTON_OFF
+ * @brief エンジン部屋でのボタン押下アニメ再生
+ * @param id    ボタンのID 0～3
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_BUTTON_OFF( id ) \
+    _ASM_HIDE_SHIP_BUTTON_OFF id
+
+  .macro  _ASM_HIDE_SHIP_BUTTON_OFF  id
+  .short  EV_SEQ_HIDE_SHIP_BUTTON_OFF
   .short  \id
   .endm
 
