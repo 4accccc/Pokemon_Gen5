@@ -255,6 +255,7 @@ static void setupWBTLISTResultAll( WBTSYS * wbtsys, WBTLIST_PARAM * wbtlist_para
     list_res->msg_type   = comment_tbl[ wbt_res->msg_id ];
   }
 }
+#if 0
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void DEBUG_DumpWBTLISTResult( const WBTLIST_RESULT * result,
@@ -267,6 +268,7 @@ static void DEBUG_DumpWBTLISTResult( const WBTLIST_RESULT * result,
   TAMADA_Printf("tr_b:pri(%d) type(%d) sex(%d) id(%d)\n",
       tr_b->priority, tr_b->poketype, tr_b->sex, tr_b->mmdl_id );
 }
+#endif
 
 
 //============================================================================================
@@ -312,11 +314,13 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
   GFL_ARC_LoadDataOfsByHandle( handle, NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
       offs, size, &objcode_param );
 
+#if 0
   TAMADA_Printf("OBJCODE_PARAM:mmdl_id = %d\n",mmdl_id );
   TAMADA_Printf("OBJCODE_PARAM:offs = %d\n", (offs - OBJCODE_PARAM_TOTAL_NUMBER_SIZE) / size );
   TAMADA_Printf("OBJCODE_PARAM:anm_id = %d\n",objcode_param.anm_id );
   TAMADA_Printf("OBJCODE_PARAM:res_idx = %d\n",
       ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx );
+#endif
 
   *anm_id = getFrontAnimePatternNo( objcode_param.anm_id );
   *rsc_idx = ((OBJCODE_PARAM_BUF_BBD *)objcode_param.buf)->res_idx;
