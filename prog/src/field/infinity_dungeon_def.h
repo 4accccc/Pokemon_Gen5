@@ -10,6 +10,17 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#define INFINITYDUNGEON_FLOOR_AREA1_MAX   (1)  // エリア1の階数
+#define INFINITYDUNGEON_FLOOR_AREA2_MAX   (1)  // エリア2の階数
+#define INFINITYDUNGEON_FLOOR_AREA3_MAX   (2)  // エリア3の階数
+#define INFINITYDUNGEON_FLOOR_AREA4_MAX   (2)  // エリア4の階数
+#define INFINITYDUNGEON_FLOOR_AREA5_MAX   (3)  // エリア5の階数
+#define INFINITYDUNGEON_FLOOR_AREA6_MAX   (3)  // エリア6の階数
+#define INFINITYDUNGEON_FLOOR_AREA7_MAX   (4)  // エリア7の階数
+#define INFINITYDUNGEON_FLOOR_AREA8_MAX   (4)  // エリア8の階数
+#define INFINITYDUNGEON_FLOOR_AREA9_MAX   (5)  // エリア9の階数
+#define INFINITYDUNGEON_FLOOR_AREA10_MAX  (5)  // エリア10の階数
+
 #define INFINITYDUNGEON_FLOOR_MAX   (5)  // フロアの最大数
 
 #define INFINITY_DUNGEON_AREA_ID_1  (0)
@@ -47,7 +58,7 @@
 #define INF_TRID_CNT_MONEY  (15)
 #define INF_TRID_START_RECOVERY  (300)
 #define INF_TRID_CNT_RECOVERY  (15)
-#define INF_DUNGEON_TR_DATA_MAX  ((INF_TRID_CNT_NORMAL/2)+INF_TRID_CNT_MONEY)  // 抽選するトレーナーデータ数
+#define INF_DUNGEON_TR_DATA_MAX  (INF_TRID_CNT_NORMAL+INF_TRID_CNT_MONEY)  // 抽選するトレーナーデータ数
 #define INF_DUNGEON_TR_ID_MAX  (330)  // トレーナーIDの最大値
 
 // ヒントレベル

@@ -81,7 +81,7 @@ $(ROOM_FILE):$(ROOM_CSV_FILE)
 $(ROOM_DATA_FILE):$(ROOM_DATA_CSV_FILE)
 	@ruby room_data_cnv.rb $(ROOM_DATA_FILE) $(ROOM_DATA_CSV_FILE)
 
-$(TR_DATA_FILE):$(TR_DATA_CSV_FILE)
+$(TR_DATA_FILE):$(TR_DATA_CSV_FILE) trainer_area_data_cnv.rb
 	@ruby trainer_area_data_cnv.rb $(TR_DATA_FILE) $(TR_DATA_CSV_FILE)
 
 endif

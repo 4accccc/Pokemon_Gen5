@@ -496,7 +496,7 @@ static u8 GetTrainerTalkPattern( u16 obj_code );
 static u8 GetMemberNum( u8 pos_type );
 static u8 GetRoomType( u8 pos_type );
 static u8 GetRoomVersion( u8 pos_type );
-static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array );
+static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context);
 
 // ゾーン依存
 static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk);
@@ -2372,7 +2372,7 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
   GFL_STD_RandInit( &rand_context, seed );
   
   // トレーナーIDテーブル取得
-  tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array );
+  tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array, &rand_context  );
 
   // トレーナーIDのランダムデータを生成
   for( n = 0; n<INFINITYDUNGEON_FLOOR_MAX; n++)
@@ -2502,7 +2502,7 @@ static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array )
+static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context)
 {
   int i;
   u16 tr_id = 0;
@@ -2517,10 +2517,16 @@ static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,
     if( (area_no >= sc_tr_area_data[i].start_area ) &&
         (area_no <= sc_tr_area_data[i].end_area ) )
     {
-      if( sc_tr_area_data[i].version == version )
+      // バージョン指定なし=0
+      if( (sc_tr_area_data[i].version == version) ||
+          (sc_tr_area_data[i].version == 0) )
       {
-        p_trid_array[cnt] = i;
-        cnt++;
+        // 出現率計算
+        if( GFL_STD_Rand( rand_context ,100 ) < sc_tr_area_data[i].set_lv )
+        {
+          p_trid_array[cnt] = i;
+          cnt++;
+        }
       }
     }
   }

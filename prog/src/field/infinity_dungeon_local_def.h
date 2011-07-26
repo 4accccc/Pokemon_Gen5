@@ -20,6 +20,10 @@
 #define INFINITY_DUNGEON_TR_ROOM_MIN      (5)     // トレーナーが配置されている部屋数の際少数
 #define INFINITY_DUNGEON_BLOCK_OBJ_ID     (0xB0)     // 封鎖に使用する動作モデルID
 
+#define INF_TRAINER_SETLV_1 (100)     // 配置レベル1のトレーナーの出現率
+#define INF_TRAINER_SETLV_2 (30)      // 配置レベル2のトレーナーの出現率
+#define INF_TRAINER_SETLV_3 (10)      // 配置レベル3のトレーナーの出現率
+
 //-------------------------------------
 //	ダンジョン移動用定数
 //=====================================
