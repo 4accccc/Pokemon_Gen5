@@ -101,6 +101,9 @@ typedef enum
 }RESORT_DATA_MANAGER_CHECKCONVERT_DST;
 extern BOOL RESORT_DATA_MANAGER_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, RESORT_DATA_MANAGER_CHECKCONVERT_DST param, RESORT_PLACEID placeID, u16 *p_peopleID, void **pp_dst );
 
+
+extern void RESORT_DATA_MANAGER_CheckProfWord( RESORT_DATA_MANAGER *p_wk, HEAPID heapID );
+
 //=============================================================================
 /**
  *					ÉfÅ[É^íäè€å^

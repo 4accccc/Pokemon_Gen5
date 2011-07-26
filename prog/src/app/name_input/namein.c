@@ -318,6 +318,8 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   //à¯êîéÛÇØéÊÇË
   p_param = p_param_adrs;
 
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( prof_word ) );
+
   
   //ÉÇÅ[ÉhÇ™NAMEIN_GAMESYNC_ID_CODEÇÃèÍçáÇÕâpêî
   if( p_param->mode == NAMEIN_GAMESYNC_ID_CODE )
@@ -492,6 +494,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   //ÉqÅ[Évîjä¸
   GFL_HEAP_DeleteHeap( HEAPID_NAME_INPUT );
 
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( prof_word ) );
   
   return GFL_PROC_RES_FINISH;
 }

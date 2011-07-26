@@ -2410,8 +2410,12 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 #===> SRCS_OVERLAY_BOX
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
-											app/name_input/namein_data.c \
-											system/prof_word.c
+											app/name_input/namein_data.c
+
+#不正文字チェック
+#===> SRCS_OVERLAY_RESONANCE_RESORT_GIMMICK
+#===> SRCS_OVERLAY_NAMEIN
+SRCS_OVERLAY_PROF_WORD = system/prof_word.c
 
 #進化デモ
 #===> SRCS_OVERLAY_WIFINOTE

@@ -10,6 +10,8 @@
 //======================================================================
 #pragma once
 
+FS_EXTERN_OVERLAY( prof_word );
+
 typedef struct _PROF_WORD_WORK PROF_WORD_WORK;
 //イントロ用、初期化
 extern PROF_WORD_WORK* PROF_WORD_AllocWork( const HEAPID heapId );

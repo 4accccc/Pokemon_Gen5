@@ -11,8 +11,10 @@
 //ライブラリ
 #include <gflib.h>
 #include "gamesystem/game_data.h"
+#include "system/prof_word.h"
 #include "arc/arc_def.h"
 #include "arc/script_message.naix"
+#include "net/dwc_tool.h"
 
 #include "resort_data_manager.h"
 //=============================================================================
@@ -378,6 +380,62 @@ static BOOL RESORT_DATA_MANAGER_CheckConvert( const RESORT_DATA_MANAGER *cp_wk, 
   }
 
   return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  不正文字
+ *
+ *	@param	RESORT_DATA_MANAGER *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DATA_MANAGER_CheckProfWord( RESORT_DATA_MANAGER *p_wk, HEAPID heapID )
+{
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(prof_word) );
+
+  {
+    int i;
+    PROF_WORD_WORK *p_prof = PROF_WORD_AllocWork( heapID );
+
+    {
+      RESORT_RECV_BUFF  *p_recv_sv_buff = p_wk->param.p_recv_sv_buff;
+      RESORT_RECV_BUFF  *p_recv_tmp_buff = p_wk->param.p_recv_tmp_buff;
+
+      STRCODE src_name[PERSON_NAME_SIZE+EOM_SIZE];
+      STRCODE dst_name[PERSON_NAME_SIZE+EOM_SIZE];
+
+      DWC_TOOL_SetBadNickName( dst_name, PERSON_NAME_SIZE+EOM_SIZE, heapID );
+
+      for( i = 0; i < RESORT_RECV_BUFF_GetMax(p_recv_sv_buff); i++ )
+      {
+        RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_recv_sv_buff, i );
+        if( !RESORT_RECV_DATA_IsEmpty(p_recv) )
+        {
+          RESORT_RECV_DATA_GetData( p_recv, RESORT_DATA_PARAM_NAME, src_name );
+          if( PROF_WORD_CheckProfanityWordCode( p_prof, src_name, heapID ) )
+          {
+            RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_NAME, (u32)dst_name );
+          }
+        }
+      }
+      for( i = 0; i < RESORT_RECV_BUFF_GetMax(p_recv_tmp_buff); i++ )
+      {
+        RESORT_RECV_DATA *p_recv = RESORT_RECV_BUFF_GetData( p_recv_tmp_buff, i );
+        if( !RESORT_RECV_DATA_IsEmpty(p_recv) )
+        {
+          RESORT_RECV_DATA_GetData( p_recv, RESORT_DATA_PARAM_NAME, src_name );
+          if( PROF_WORD_CheckProfanityWordCode( p_prof, src_name, heapID ) )
+          {
+            RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_NAME, (u32)dst_name );
+          }
+        }
+      }
+    }
+
+    PROF_WORD_FreeWork( p_prof );
+  }
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(prof_word) );
 }
 
 //----------------------------------------------------------------------------

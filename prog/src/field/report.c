@@ -21,6 +21,7 @@
 #include "field/zonedata.h"
 #include "field/eventwork.h"
 #include "savedata/playtime.h"
+#include "savedata/resonance_resort_sv.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
@@ -672,12 +673,27 @@ static void InitBmp( REPORT_WORK * wk )
 
 	// 場所
 	str = GFL_MSG_CreateString( mman, REPORT_STR_04 );
-	{
-		u16	num = ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID(GAMESYSTEM_GetMyPlayerWork(wk->gameSys)) );
-		WORDSET_RegisterPlaceName( wset, 0, num );
-	}
-	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_PLACE], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
+  {
+    u16 zoneID = PLAYERWORK_getZoneID(GAMESYSTEM_GetMyPlayerWork(wk->gameSys));
+    if( ZONEDATA_IsResonanceResort(zoneID) )
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
+      RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
+      RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
+      STRBUF *p_city_name = GFL_STR_CreateBuffer( 64, wk->heapID );
+      const STRCODE *cp_code = (const STRCODE *)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
+      GFL_STR_SetStringCode( p_city_name, cp_code );
+      WORDSET_RegisterWord( wset, 0, p_city_name, PM_NEUTRAL, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer( p_city_name );
+    }
+    else
+    {
+      u16	num = ZONEDATA_GetPlaceNameID( zoneID );
+      WORDSET_RegisterPlaceName( wset, 0, num );
+    }
+    WORDSET_ExpandStr( wset, exp, str );
+  }
+  PRINT_UTIL_PrintColor( &wk->win[BMPWIN_PLACE], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// ジムバッジ
