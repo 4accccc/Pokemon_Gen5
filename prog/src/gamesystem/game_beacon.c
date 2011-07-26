@@ -64,8 +64,6 @@ static const u16 sc_extend_frame_max[RESORT_EXTEND_TYPE_MAX] =
   30,
   30,
   30,
-  30,
-  30,
 };
 
 //==============================================================================
@@ -2019,21 +2017,11 @@ static void GAMEBEACON_Set_ResortData( GAMEBEACON_SYSTEM *bsys )
 
       RESORT_BEACON_DATA *p_data  = RESORT_BEACON_DATA_Init( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
 
-      GAMEBEACON_INFO *info   = &bsys->send.info;
-
-      void * p_extend_adrs = (u8 *)info->action.extend_buff + RESORT_BASIC2_DATA_SIZE;
-
-      RESORT_EXTEND_TYPE  type;
-
+      //一旦ビーコンデータにデータ集積
       RESORT_BEACON_DATA_SetMyData( p_data, bsys->resort_extend_index, bsys->gamedata );
 
-      //TODO
-      //BASIC2をいれる
-
-      RESORT_BEACON_DATA_GetExtendData( p_data, 
-          p_extend_adrs, 
-          &type );
-      info->action.resort_extend_type = type;
+      //ビーコンデータからビーコンにデータ設定
+      RESORT_BEACON_DATA_GetBeaconInfo( p_data, &bsys->send.info );
 
       GAMEBEACON_SUB_SendBeaconSetCommon(&bsys->send);
 

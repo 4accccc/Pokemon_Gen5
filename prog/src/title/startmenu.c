@@ -57,6 +57,7 @@
 #include "field/eventwork.h"	//EVENTWORK_
 #include "field/location.h"
 
+#include "savedata/resonance_resort_sv.h"
 
 //============================================================================================
 //	定数定義
@@ -232,7 +233,6 @@ static void ClearContinueInfo( START_MENU_WORK * wk );
 //static BOOL CheckHushigiBeacon( START_MENU_WORK * wk );
 static int SetButtonAnm( START_MENU_WORK * wk, int next );
 static BOOL CheckSaveDataBreak( START_MENU_WORK * wk );
-
 
 //============================================================================================
 //	グローバル
@@ -1667,6 +1667,9 @@ static void InitBmp( START_MENU_WORK * wk )
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_10 );
 	{
 		u16	num;
+
+    BOOL is_resort = FALSE;
+
 		ZONEDATA_Open( HEAPID_STARTMENU_L );
 		// 特殊接続
 		if( EVENTWORK_CheckEventFlag( wk->evwk, SYS_FLAG_SPEXIT_REQUEST ) == TRUE ){
@@ -1674,15 +1677,42 @@ static void InitBmp( START_MENU_WORK * wk )
 			const LOCATION * spLoc;
 			situation = SaveData_GetSituation( wk->savedata );
 			spLoc = Situation_GetSpecialLocation( situation );
-			num = ZONEDATA_GetPlaceNameID( spLoc->zone_id );
+
+      if( ZONEDATA_IsResonanceResort( spLoc->zone_id ) )
+      {
+        is_resort = TRUE;
+      }
+      else
+      {
+			  num = ZONEDATA_GetPlaceNameID( spLoc->zone_id );
+        WORDSET_RegisterPlaceName( wk->wset, 0, num );
+      }
 		// 通常
 		}else{
 			PLAYERWORK_SAVE	plwk;
 			SaveData_SituationLoad_PlayerWorkSave( wk->savedata, &plwk );
-			num = ZONEDATA_GetPlaceNameID( plwk.zoneID );
+      if( ZONEDATA_IsResonanceResort( plwk.zoneID ) )
+      {
+        is_resort = TRUE;
+      }
+      else
+      {
+        num = ZONEDATA_GetPlaceNameID( plwk.zoneID );
+        WORDSET_RegisterPlaceName( wk->wset, 0, num );
+      }
 		}
 		ZONEDATA_Close();
-		WORDSET_RegisterPlaceName( wk->wset, 0, num );
+
+    if( is_resort )
+    {
+      RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( wk->savedata );
+      RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
+      STRBUF *p_city_name = GFL_STR_CreateBuffer( 64, HEAPID_STARTMENU );
+      const STRCODE *cp_code = (const STRCODE *)RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, NULL );
+      GFL_STR_SetStringCode( p_city_name, cp_code );
+      WORDSET_RegisterWord( wk->wset, 0, p_city_name, PM_NEUTRAL, TRUE, PM_LANG );
+      GFL_STR_DeleteBuffer( p_city_name );
+    }
 	}
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
 	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_PLACE], wk->que, 0, 0, wk->exp, wk->font, FCOL_WP05WN );

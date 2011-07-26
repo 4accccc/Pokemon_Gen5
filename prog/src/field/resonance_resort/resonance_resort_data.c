@@ -272,23 +272,18 @@ void RESORT_INSTITUTION_DATA_SetBit( RESORT_INSTITUTION_DATA *p_wk, RESORT_INSTI
 typedef struct
 {
   STRCODE name[PERSON_NAME_SIZE];   ///<トレーナー名(!! EOM除く !!) 14
-  u16 padding3;
   u8  nation;                       ///<国コード      1 15
   u8  area;                         ///<地域コード    1 16
-  u8  dummy1;//work;                         ///<仕事          1 17 使わなくなった
-  u8  dummy2;//hobby;                        ///<趣味          1 18 使わなくなった
-  STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; //<自己紹介(!! EOM除く !!) 16 34
-  u8  version;                      ///<バージョン    1 35
-  u8  language;                     ///<言語コード    1 36
-  u8  trainer_view  :4;                 ///<見た目        1 37
-  u8  sex           :1;
-  u8  padding1      :3;
-  u8  wnd_color;                    ///ウィンドウ背景色   1 38
-  u32 pass_cnt;                     //すれ違い回数        4 42
-  u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 44
-  u16 padding2;                       ///< 2 46
-  QUESTIONNAIRE_ANSWER_WORK qanswer;  ///<アンケート  10  56
-  u16 play_hour     :10;  ///< プレイ時間 2 58
+  STRCODE introduction[GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN]; //<自己紹介(!! EOM除く !!) 16 32
+  u8  version;                      ///<バージョン    1 33
+  u8  language;                     ///<言語コード    1 34
+  u8  trainer_view:4;                 ///<見た目        1 35
+  u8  sex:4;                          ///<性別          1 36
+  u8  dummy1;
+  u16 trainerID;                    ///<トレーナーID(下位16ビット)  2 38
+  u16 dummy2;                      ///<パディング  2 40
+  QUESTIONNAIRE_ANSWER_WORK qanswer;  ///<アンケート  10  50
+  u16 play_hour     :10;  ///< プレイ時間 2 52
   u16 play_min      :6;
 }RESORT_BASIC1_DATA;
 
@@ -331,8 +326,6 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     MISC *p_misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata) );
     const STRCODE *cp_src = MISC_CrossComm_GetSelfIntroduction(p_misc);
     GFL_STD_MemCopy( cp_src, p_wk->introduction, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN );
-
-    p_wk->pass_cnt  = MISC_CrossComm_GetSuretigaiCount(p_misc);
   }
 
   //アンケート
@@ -348,13 +341,6 @@ static void RESORT_BASIC1_DATA_SetMyData( RESORT_BASIC1_DATA *p_wk, const GAMEDA
     PLAYTIME *sv_playtime = GAMEDATA_GetPlayTimeWork( (GAMEDATA*)cp_gamedata );
     p_wk->play_hour      = PLAYTIME_GetHour( sv_playtime );
     p_wk->play_min       = PLAYTIME_GetMinute( sv_playtime );
-  }
-
-  //本体情報
-  {
-    OSOwnerInfo owner_info;
-    OS_GetOwnerInfo(&owner_info);
-    p_wk->wnd_color = owner_info.favoriteColor;
   }
 }
 //----------------------------------------------------------------------------
@@ -381,8 +367,6 @@ static void RESORT_BASIC1_DATA_SetBeaconInfo( RESORT_BASIC1_DATA *p_wk, const GA
   p_wk->qanswer   = cp_beacon_info->question_answer;
   p_wk->play_hour = cp_beacon_info->play_hour;
   p_wk->play_min  = cp_beacon_info->play_min;
-  p_wk->pass_cnt  = cp_beacon_info->suretigai_count;
-  p_wk->wnd_color = cp_beacon_info->favorite_color_index;
 }
 
 //----------------------------------------------------------------------------
@@ -402,14 +386,6 @@ static BOOL RESORT_BASIC1_DATA_IsValid( const RESORT_BASIC1_DATA *cp_wk )
     RESORT_VALID_ASSERT( "基本データ１：性別が不正です\n" );
     return FALSE;
   }
-  //言語チェックはローカライズを増やす可能性を考えてやらない
-#if 0
-  if( cp_wk->language )
-  {
-    RESORT_VALID_ASSERT( "基本データ１：言語が不正です\n" );
-    return FALSE;
-  }
-#endif
   //見た目
   if( cp_wk->trainer_view > UNION_VIEW_INDEX_MAN_END )
   {
@@ -469,7 +445,7 @@ static void RESORT_BASIC1_DATA_GetName( const RESORT_BASIC1_DATA *cp_data, STRCO
 
 //----------------------------------------------------------------------------
 /**
- *	@brief 名前を挨拶付きで取得
+ *	@brief 挨拶をEOM付きで取得
  *
  *	@param	const RESORT_BASIC1_DATA *cp_data ワーク
  *	@param	*p_str  受け取りバッファ
@@ -508,16 +484,12 @@ static void RESORT_BASIC1_DATA_PrintDebug( const RESORT_BASIC1_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u8  continue_data :1;
-  u8  personality   :5;
   u8  special_deliverly :1;
-  u8  padding1      :1;
-  u8  quest1        :4;
-  u8  quest2        :4;
-  u8  quest3        :4;
-  u8  quest4        :4;
-  u8  padding2;
-              //TODO WBから受け取ったときは中身がからなので何らかの認識をすること
+  u8  city_lv           :5;
+  u8  dummy             :2;
+  u8  want_job;       //なりたい施設IDが入っている
+  u8  dummy2;
+  u8  dummy3;
 }RESORT_BASIC2_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC2_DATA) == RESORT_BASIC2_DATA_SIZE );
@@ -534,16 +506,17 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_BASIC2_DATA) );
 
-  p_wk->continue_data = 0; //TODO
-  p_wk->special_deliverly = 0; // TODO
-  p_wk->quest1 = 0; // TODO
-  p_wk->quest2 = 0; // TODO
-  p_wk->quest3 = 0; // TODO
-  p_wk->quest4 = 0; // TODO
+  p_wk->special_deliverly = 0; //製品版でここが０以外はありえない
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+    RESONANCE_RESORT_SV *p_reso = RESONANCE_RESORT_SV_GetWork( p_sv );
+    RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_reso );
+    p_wk->city_lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+  }
 
   {
-    TR_CARD_SV_PTR p_tr_card = TRCSave_GetSaveDataPtr(GAMEDATA_GetSaveControlWork((GAMEDATA*)cp_gamedata));
-    p_wk->personality = TRCSave_GetPersonarity( p_tr_card );
+    MYSTATUS *p_mystatus  = GAMEDATA_GetMyStatus((GAMEDATA*)cp_gamedata);
+    p_wk->want_job = 0; //TODO
   }
 }
 
@@ -568,7 +541,7 @@ static BOOL RESORT_BASIC2_DATA_IsValid( const RESORT_BASIC2_DATA *cp_wk )
 typedef struct
 {
   u8  medal_bit[RESORT_RECV_MEDAL_BIT_BYTE];
-  u8  medal_box_rank;
+  u8  medal_rank;
   u8  recommend_medalID;
   u8  medal_num;
   RESORT_DATE recommend_date;
@@ -587,31 +560,55 @@ static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAME
 {
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
   MEDALBOX *p_mdlbox  = SaveData_GetMedalBox(p_sv);
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
-  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
 
-  //TODO このあたりでメダルビットたてるかも
-  {
-    const void *cp_src = (const void*)RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT1_MEDAL_BIT, NULL );
-    GFL_STD_MemCopy( cp_src, p_wk->medal_bit, RESORT_RECV_MEDAL_BIT_BYTE );
-  }
-
   p_wk->medal_num  = MEDALBOX_GetMedalCount(p_mdlbox,FALSE);
   p_wk->recommend_medalID = MEDALBOX_GetPushMedalID(p_mdlbox);
+
+  //TODO
+  //medal bit
+
+  p_wk->medal_rank = MEDALBOX_GetMedalBoxRank( p_mdlbox );
+
+  if( p_wk->recommend_medalID < MDLID_MAX )
+  {
+    u8 year;
+    u8 month;
+    u8 day;
+
+    MEDALBOX_GetDate( p_mdlbox, p_wk->recommend_medalID, &year , &month , &day );
+
+    p_wk->recommend_date = RESORT_DATE_SET( year, month, day );
+  }
 }
 
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ1の正当性チェック
  *
- *	@param	RESORT_EXTEND1_DATA *p_wk  ワーク
+ *	@param	RESORT_EXTEND1_DATA *cp_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static BOOL RESORT_EXTEND1_DATA_IsValid( const RESORT_EXTEND1_DATA *cp_wk )
 {
+  u8 year   = RESORT_DATE_GET_YEAR( cp_wk->recommend_date );
+  u8 month  = RESORT_DATE_GET_MONTH( cp_wk->recommend_date );
+  u8 day    = RESORT_DATE_GET_DAY( cp_wk->recommend_date );
+
+  if( !( 0 <= year && year <= 99) )
+  {
+    return FALSE;
+  }
+  if( !( 1 <= month && month <= 12 ) )
+  {
+    return FALSE;
+  }
+  if( !( 1<= day && day <= 31 ) )
+  {
+    return FALSE;
+  }
+
   return TRUE;
 }
 
@@ -628,7 +625,7 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND2_DATA) == RESORT_EXTEND2_DATA_SIZE );
 /**
  *	@brief  拡張データ2に自分のデータを設定
  *
- *	@param	RESORT_BASIC2_DATA *p_wk  ワーク
+ *	@param	RESORT_EXTEND2_DATA *p_wk  ワーク
  *	@param	GAMEDATA *cp_gamedata     ゲームデータ
  */
 //-----------------------------------------------------------------------------
@@ -665,7 +662,7 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND3_DATA) == RESORT_EXTEND3_DATA_SIZE );
 /**
  *	@brief  拡張データ3に自分のデータを設定
  *
- *	@param	RESORT_BASIC3_DATA *p_wk  ワーク
+ *	@param	RESORT_EXTEND3_DATA *p_wk  ワーク
  *	@param	GAMEDATA *cp_gamedata     ゲームデータ
  */
 //-----------------------------------------------------------------------------
@@ -706,7 +703,7 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND4_DATA) == RESORT_EXTEND4_DATA_SIZE );
 /**
  *	@brief  拡張データ4に自分のデータを設定
  *
- *	@param	RESORT_BASIC4_DATA *p_wk  ワーク
+ *	@param	RESORT_EXTEND4_DATA *p_wk  ワーク
  *	@param	GAMEDATA *cp_gamedata     ゲームデータ
  */
 //-----------------------------------------------------------------------------
@@ -742,27 +739,36 @@ static BOOL RESORT_EXTEND4_DATA_IsValid( const RESORT_EXTEND4_DATA *cp_wk )
 //=====================================
 typedef struct
 {
-  u16 monsno;
-  u8  form  :5;
-  u8  sex   :2;
-  u8  rare  :1;
-  u8  tokusei;
-  u16 waza[4];
-  u16 item;
-  u16 pad;
+  u8  record[4];
+  RESORT_DATE record_date[4];
+  u8  padding[4];
 } RESORT_EXTEND5_DATA;
 SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND5_DATA) == RESORT_EXTEND5_DATA_SIZE );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ5に自分のデータを設定
  *
- *	@param	RESORT_BASIC5_DATA *p_wk  ワーク
+ *	@param	RESORT_EXTEND5_DATA *p_wk  ワーク
  *	@param	GAMEDATA *cp_gamedata     ゲームデータ
  */
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND5_DATA_SetMyData( RESORT_EXTEND5_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+  int i;
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND5_DATA) );
+
+  for( i = 0; i < 4; i++ )
+  {
+    p_wk->record[i]       = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT5_RECORD_00+i,NULL);
+    p_wk->record_date[i]  = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i,NULL);
+  }
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -778,8 +784,12 @@ static BOOL RESORT_EXTEND5_DATA_IsValid( const RESORT_EXTEND5_DATA *cp_wk )
 //-------------------------------------
 ///	拡張データ6
 //=====================================
-typedef RESORT_EXTEND5_DATA RESORT_EXTEND6_DATA;
+typedef struct
+{
+  STRCODE  phrase[RESORT_PHRASE_LEN]; //EOMなし
+} RESORT_EXTEND6_DATA;
 SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND6_DATA) == RESORT_EXTEND6_DATA_SIZE );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ6に自分のデータを設定
@@ -790,7 +800,17 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND6_DATA) == RESORT_EXTEND6_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND6_DATA_SetMyData( RESORT_EXTEND6_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND6_DATA) );
+
+  {
+    const void *cp_src = (const void* )RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT6_PHRASE, NULL );
+    GFL_STD_MemCopy( cp_src, p_wk->phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -803,11 +823,28 @@ static BOOL RESORT_EXTEND6_DATA_IsValid( const RESORT_EXTEND6_DATA *cp_wk )
 {
   return TRUE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief 口癖をEOM付きで取得
+ *
+ *	@param	const RESORT_EXTEND6_DATA *cp_data ワーク
+ *	@param	*p_str  受け取りバッファ
+ */
+//-----------------------------------------------------------------------------
+static void RESORT_EXTEND6_DATA_GetPhrase( const RESORT_EXTEND6_DATA *cp_data, STRCODE *p_str )
+{
+  GFL_STD_MemCopy( cp_data->phrase, p_str, sizeof(STRCODE)*RESORT_PHRASE_LEN);
+  *((p_str)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
+}
 //-------------------------------------
 ///	拡張データ7
 //=====================================
-typedef RESORT_EXTEND5_DATA RESORT_EXTEND7_DATA;
+typedef struct
+{
+  STRCODE  thanks[RESORT_THANKS_LEN]; //EOMなし
+} RESORT_EXTEND7_DATA;
 SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND7_DATA) == RESORT_EXTEND7_DATA_SIZE );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  拡張データ7に自分のデータを設定
@@ -818,7 +855,17 @@ SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND7_DATA) == RESORT_EXTEND7_DATA_SIZE );
 //-----------------------------------------------------------------------------
 static void RESORT_EXTEND7_DATA_SetMyData( RESORT_EXTEND7_DATA *p_wk, const GAMEDATA *cp_gamedata )
 {
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
+  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
+  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND7_DATA) );
+
+  {
+    const void *cp_src = (const void* )RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT7_THANKS, NULL );
+    GFL_STD_MemCopy( cp_src, p_wk->thanks, sizeof(STRCODE)*RESORT_THANKS_LEN );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -831,108 +878,20 @@ static BOOL RESORT_EXTEND7_DATA_IsValid( const RESORT_EXTEND7_DATA *cp_wk )
 {
   return TRUE;
 }
-//-------------------------------------
-///	拡張データ8
-//=====================================
-typedef struct
-{
-  u8  record[4];
-  RESORT_DATE record_date[4];
-  u8  padding[4];
-} RESORT_EXTEND8_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND8_DATA) == RESORT_EXTEND8_DATA_SIZE );
-
 //----------------------------------------------------------------------------
 /**
- *	@brief  拡張データ8に自分のデータを設定
+ *	@brief 感謝をEOM付きで取得
  *
- *	@param	RESORT_BASIC8_DATA *p_wk  ワーク
- *	@param	GAMEDATA *cp_gamedata     ゲームデータ
- */
-//-----------------------------------------------------------------------------
-static void RESORT_EXTEND8_DATA_SetMyData( RESORT_EXTEND8_DATA *p_wk, const GAMEDATA *cp_gamedata )
-{
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
-  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
-  int i;
-
-  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND8_DATA) );
-
-  for( i = 0; i < 4; i++ )
-  {
-    p_wk->record[i]       = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT8_RECORD_00+i,NULL);
-    p_wk->record_date[i]  = RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT8_RECORD_DATE_00+i,NULL);
-  }
-
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  拡張データ8の正当性チェック
- *
- *	@param	RESORT_EXTEND7_DATA *p_wk  ワーク
- */
-//-----------------------------------------------------------------------------
-static BOOL RESORT_EXTEND8_DATA_IsValid( const RESORT_EXTEND8_DATA *cp_wk )
-{
-  return TRUE;
-}
-//-------------------------------------
-///	拡張データ9
-//=====================================
-typedef struct
-{
-  STRCODE  phrase[RESORT_PHRASE_LEN]; //EOMなし
-} RESORT_EXTEND9_DATA;
-SDK_COMPILER_ASSERT( sizeof(RESORT_EXTEND9_DATA) == RESORT_EXTEND9_DATA_SIZE );
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  拡張データ9に自分のデータを設定
- *
- *	@param	RESORT_BASIC9_DATA *p_wk  ワーク
- *	@param	GAMEDATA *cp_gamedata     ゲームデータ
- */
-//-----------------------------------------------------------------------------
-static void RESORT_EXTEND9_DATA_SetMyData( RESORT_EXTEND9_DATA *p_wk, const GAMEDATA *cp_gamedata )
-{
-  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
-  RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( p_sv );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData(p_resort);
-  RESORT_RECV_DATA *p_owner = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
-
-  GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND9_DATA) );
-
-  {
-    const void *cp_src = (const void* )RESORT_RECV_DATA_GetData(p_owner,RESORT_DATA_PARAM_EXT9_PHRASE, NULL );
-    GFL_STD_MemCopy( cp_src, p_wk->phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  拡張データ9の正当性チェック
- *
- *	@param	RESORT_EXTEND7_DATA *p_wk  ワーク
- */
-//-----------------------------------------------------------------------------
-static BOOL RESORT_EXTEND9_DATA_IsValid( const RESORT_EXTEND9_DATA *cp_wk )
-{
-  return TRUE;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief 口癖をEOM付きで取得
- *
- *	@param	const RESORT_BASIC1_DATA *cp_data ワーク
+ *	@param	const RESORT_EXTEND7_DATA *cp_data ワーク
  *	@param	*p_str  受け取りバッファ
  */
 //-----------------------------------------------------------------------------
-static void RESORT_EXTEND9_DATA_GetPhrase( const RESORT_EXTEND9_DATA *cp_data, STRCODE *p_str )
+static void RESORT_EXTEND7_DATA_GetThanks( const RESORT_EXTEND7_DATA *cp_data, STRCODE *p_str )
 {
-  GFL_STD_MemCopy( cp_data->phrase, p_str, sizeof(STRCODE)*RESORT_PHRASE_LEN);
-  *((p_str)+RESORT_PHRASE_LEN) = GFL_STR_GetEOMCode();
+  GFL_STD_MemCopy( cp_data->thanks, p_str, sizeof(STRCODE)*RESORT_THANKS_LEN);
+  *((p_str)+RESORT_THANKS_LEN) = GFL_STR_GetEOMCode();
 }
+
 
 //-------------------------------------
 ///	拡張データ関数
@@ -947,8 +906,6 @@ static const RESORT_EXTEND_DATA_SetMyData sc_ResortExtendData_SetMyData[RESORT_E
   (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND5_DATA_SetMyData,
   (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND6_DATA_SetMyData,
   (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND7_DATA_SetMyData,
-  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND8_DATA_SetMyData,
-  (RESORT_EXTEND_DATA_SetMyData)RESORT_EXTEND9_DATA_SetMyData,
 };
 
 typedef BOOL (*RESORT_EXTEND_DATA_IsValid)( const void *cp_wk_adrs );
@@ -962,8 +919,6 @@ static const RESORT_EXTEND_DATA_IsValid sc_ResortExtendData_IsValid[RESORT_EXTEN
   (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND5_DATA_IsValid,
   (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND6_DATA_IsValid,
   (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND7_DATA_IsValid,
-  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND8_DATA_IsValid,
-  (RESORT_EXTEND_DATA_IsValid)RESORT_EXTEND9_DATA_IsValid,
 };
 
 //=============================================================================
@@ -985,8 +940,6 @@ struct _RESORT_RECV_DATA
   RESORT_EXTEND5_DATA extend5;
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
-  RESORT_EXTEND8_DATA extend8;
-  RESORT_EXTEND9_DATA extend9;
   u16                 presentID;
   u8                  present_num;
   u8                  meet_year;         //4
@@ -999,7 +952,6 @@ struct _RESORT_RECV_DATA
   u8                  padding1  :5;
   u8                  day_flag  :1;
   u8                  keep_flag :1;
-  u8                  want_job;
   u8                  want_spot;
   RESORT_INSTITUTION_DATA institution;
 #if 0
@@ -1031,16 +983,33 @@ struct _RESORT_BEACON_DATA
 };
 
 //-------------------------------------
-///	３…共通構造体（）
+///	３…共通構造体（PDW／GTS／ファン／セレブ）
 //=====================================
 struct _RESORT_PROXY_DATA
 {
-  u8    type;
-  u8    present_num;
+  STRCODE name[PERSON_NAME_SIZE];
+  u16     trainerID;
+  u8      nation;
+  u8      area;
+
+  u8      language;
+  u8      version;
+  u8      trainer_view;
+  u8      sex;
+  u8      id;
+  u8      celevID;
+  u8      type;
+  u8      presentID;
+  
+  STRCODE  phrase[RESORT_PHRASE_LEN];
+  STRCODE  thanks[RESORT_THANKS_LEN];
+
+  u16   pokemon;
+  u16   want_job;
+  u16   goto_shop;
   u8    placeID;
   u8    peopleID;
-  u16   presentID;
-  u16   dummy;
+  u16   a;
 };
 
 SDK_COMPILER_ASSERT(sizeof(RESORT_PROXY_DATA)==RESORT_PROXY_DATA_SIZE);
@@ -1119,7 +1088,8 @@ void RESORT_RECV_DATA_SetMyData( RESORT_RECV_DATA *p_wk, const GAMEDATA *cp_game
 void RESORT_RECV_DATA_InitInstance( RESORT_RECV_DATA *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(RESORT_RECV_DATA) );
-  p_wk->extend9.phrase[0] = GFL_STR_GetEOMCode();
+  p_wk->extend6.phrase[0] = GFL_STR_GetEOMCode();
+  p_wk->extend7.thanks[0] = GFL_STR_GetEOMCode();
 
   RESORT_INSTITUTION_DATA_InitInstance( &p_wk->institution );
 }
@@ -1459,16 +1429,14 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_INTRODUCTION:
     RESORT_BASIC1_DATA_GetIntroduction( &cp_wk->basic1, p_ret_adrs );
     return 0;
-  case RESORT_DATA_PARAM_WANT_JOB:
-    return cp_wk->want_job;
   case RESORT_DATA_PARAM_EVENT_FLAG:
     return 0; //TODO
   case RESORT_DATA_PARAM_PHRASE:
     //もしパックがなかったら通常の挨拶文
-    if( ( cp_wk->extend_flag & 1<<RESORT_EXTEND_TYPE_09 )
-        && ( cp_wk->extend9.phrase[0] != GFL_STR_GetEOMCode() ) )
+    if( ( cp_wk->extend_flag & 1<<RESORT_EXTEND_TYPE_06 )
+        && ( cp_wk->extend6.phrase[0] != GFL_STR_GetEOMCode() ) )
     {
-      RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, p_ret_adrs );
+      RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, p_ret_adrs );
     }
     else
     {
@@ -1481,8 +1449,6 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->basic1.nation;
   case RESORT_DATA_PARAM_AREA:
     return cp_wk->basic1.area;
-  case RESORT_DATA_PARAM_WND_COLOR:
-    return cp_wk->basic1.wnd_color;
   case RESORT_DATA_PARAM_PLAY_HOUR:
     return cp_wk->basic1.play_hour;
   case RESORT_DATA_PARAM_PLAY_MIN:
@@ -1496,25 +1462,11 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     return cp_wk->basic1.version;
   case RESORT_DATA_PARAM_LANG:
     return cp_wk->basic1.language;
-  case RESORT_DATA_PARAM_PASS_CNT:
-    return cp_wk->basic1.pass_cnt;
-  case RESORT_DATA_PARAM_COLOR:
-    return cp_wk->basic1.wnd_color;
   //準基本データ
-  case RESORT_DATA_PARAM_CONTINUE:
-    return cp_wk->basic2.continue_data;
-  case RESORT_DATA_PARAM_PERSONAL:
-    return cp_wk->basic2.personality;
   case RESORT_DATA_PARAM_SPECIAL:
     return cp_wk->basic2.special_deliverly;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_00:
-    return cp_wk->basic2.quest1;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_01:
-    return cp_wk->basic2.quest2;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_02:
-    return cp_wk->basic2.quest3;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_03:
-    return cp_wk->basic2.quest4;
+  case RESORT_DATA_PARAM_WANT_JOB:
+    return cp_wk->basic2.want_job;
   //生成データ
   case RESORT_DATA_PARAM_PRESENT_ID:
     return cp_wk->presentID;
@@ -1547,15 +1499,6 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_KOSEI:
     return cp_wk->kosei;
   //拡張データ1
-  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:  //p_ret_adrsから取得 u8*12
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
-    if( p_ret_adrs )
-    {
-      GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, sizeof(u8)*RESORT_RECV_MEDAL_BIT_BYTE );
-    }
-    return (u32)cp_wk->extend1.medal_bit;
-  case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
-    return cp_wk->extend1.medal_box_rank;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
     return cp_wk->extend1.recommend_medalID;
@@ -1565,6 +1508,15 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
   case RESORT_DATA_PARAM_EXT1_MEDAL_NUM:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
     return cp_wk->extend1.medal_num;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_01 );
+    return cp_wk->extend1.medal_rank;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
+    if( p_ret_adrs )
+    {
+      GFL_STD_MemCopy( cp_wk->extend1.medal_bit, p_ret_adrs, RESORT_RECV_MEDAL_BIT_BYTE );
+    }
+    return (u32)cp_wk->extend1.medal_bit;
   //拡張データ2
   case RESORT_DATA_PARAM_EXT2_RANK_00:
   case RESORT_DATA_PARAM_EXT2_RANK_01:
@@ -1599,101 +1551,34 @@ u32 RESORT_RECV_DATA_GetData( const RESORT_RECV_DATA *cp_wk, RESORT_DATA_PARAM p
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_04 );
     return cp_wk->extend4.gossip[ param - RESORT_DATA_PARAM_EXT4_GOSSIP_00 ];
   //拡張データ5
-  case RESORT_DATA_PARAM_EXT5_MONSNO:
+  case RESORT_DATA_PARAM_EXT5_RECORD_00:
+  case RESORT_DATA_PARAM_EXT5_RECORD_01:
+  case RESORT_DATA_PARAM_EXT5_RECORD_02:
+  case RESORT_DATA_PARAM_EXT5_RECORD_03:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.monsno;
-  case RESORT_DATA_PARAM_EXT5_FORM:
+    return cp_wk->extend5.record[ param - RESORT_DATA_PARAM_EXT5_RECORD_00];
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_00:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_01:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_02:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_03:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.form;
-  case RESORT_DATA_PARAM_EXT5_SEX:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.sex;
-  case RESORT_DATA_PARAM_EXT5_RARE:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.rare;
-  case RESORT_DATA_PARAM_EXT5_TOKUSEI:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.tokusei;
-  case RESORT_DATA_PARAM_EXT5_WAZA_00:
-  case RESORT_DATA_PARAM_EXT5_WAZA_01:
-  case RESORT_DATA_PARAM_EXT5_WAZA_02:
-  case RESORT_DATA_PARAM_EXT5_WAZA_03:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.waza[ param - RESORT_DATA_PARAM_EXT5_WAZA_00];
-  case RESORT_DATA_PARAM_EXT5_ITEM:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_05 );
-    return cp_wk->extend5.item;
+    return cp_wk->extend5.record_date[ param - RESORT_DATA_PARAM_EXT5_RECORD_DATE_00];
   //拡張データ6
-  case RESORT_DATA_PARAM_EXT6_MONSNO:
+  case RESORT_DATA_PARAM_EXT6_PHRASE:
     RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.monsno;
-  case RESORT_DATA_PARAM_EXT6_FORM:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.form;
-  case RESORT_DATA_PARAM_EXT6_SEX:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.sex;
-  case RESORT_DATA_PARAM_EXT6_RARE:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.rare;
-  case RESORT_DATA_PARAM_EXT6_TOKUSEI:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.tokusei;
-  case RESORT_DATA_PARAM_EXT6_WAZA_00:
-  case RESORT_DATA_PARAM_EXT6_WAZA_01:
-  case RESORT_DATA_PARAM_EXT6_WAZA_02:
-  case RESORT_DATA_PARAM_EXT6_WAZA_03:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.waza[ param - RESORT_DATA_PARAM_EXT6_WAZA_00];
-  case RESORT_DATA_PARAM_EXT6_ITEM:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_06 );
-    return cp_wk->extend6.item;
-  //拡張データ7
-  case RESORT_DATA_PARAM_EXT7_MONSNO:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.monsno;
-  case RESORT_DATA_PARAM_EXT7_FORM:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.form;
-  case RESORT_DATA_PARAM_EXT7_SEX:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.sex;
-  case RESORT_DATA_PARAM_EXT7_RARE:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.rare;
-  case RESORT_DATA_PARAM_EXT7_TOKUSEI:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.tokusei;
-  case RESORT_DATA_PARAM_EXT7_WAZA_00:
-  case RESORT_DATA_PARAM_EXT7_WAZA_01:
-  case RESORT_DATA_PARAM_EXT7_WAZA_02:
-  case RESORT_DATA_PARAM_EXT7_WAZA_03:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.waza[ param - RESORT_DATA_PARAM_EXT7_WAZA_00 ];
-  case RESORT_DATA_PARAM_EXT7_ITEM:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
-    return cp_wk->extend7.item;
-  //拡張データ8
-  case RESORT_DATA_PARAM_EXT8_RECORD_00:
-  case RESORT_DATA_PARAM_EXT8_RECORD_01:
-  case RESORT_DATA_PARAM_EXT8_RECORD_02:
-  case RESORT_DATA_PARAM_EXT8_RECORD_03:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_08 );
-    return cp_wk->extend8.record[ param - RESORT_DATA_PARAM_EXT8_RECORD_00];
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_00:
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_01:
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_02:
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_03:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_08 );
-    return cp_wk->extend8.record_date[ param - RESORT_DATA_PARAM_EXT8_RECORD_DATE_00];
-  //拡張データ9
-  case RESORT_DATA_PARAM_EXT9_PHRASE:
-    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_09 );
     if( p_ret_adrs )
     {
-      RESORT_EXTEND9_DATA_GetPhrase( &cp_wk->extend9, (STRCODE *)p_ret_adrs );
+      RESORT_EXTEND6_DATA_GetPhrase( &cp_wk->extend6, (STRCODE *)p_ret_adrs );
     }
-    return (u32)cp_wk->extend9.phrase;
+    return (u32)cp_wk->extend6.phrase;
+  //拡張データ7
+  case RESORT_DATA_PARAM_EXT7_THANKS:
+    RESORT_EXT_CHECK( cp_wk, RESORT_EXTEND_TYPE_07 );
+    if( p_ret_adrs )
+    {
+      RESORT_EXTEND7_DATA_GetThanks( &cp_wk->extend7, (STRCODE *)p_ret_adrs );
+    }
+    return (u32)cp_wk->extend7.thanks;
   default:
     GF_ASSERT(0);
     return 0;
@@ -1727,9 +1612,6 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_AREA:
     p_wk->basic1.area = data;
     break;
-  case RESORT_DATA_PARAM_WND_COLOR:
-    p_wk->basic1.wnd_color = data;
-    break;
   case RESORT_DATA_PARAM_PLAY_HOUR:
     p_wk->basic1.play_hour = data;
     break;
@@ -1760,7 +1642,7 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     OS_TPrintf( "デバッグ用値設定\n" );
     break;
   case RESORT_DATA_PARAM_WANT_JOB:
-    p_wk->want_job  = data;
+    p_wk->basic2.want_job  = data;
     break;
   case RESORT_DATA_PARAM_TRAINERVIEW:
     if( data > UNION_VIEW_INDEX_MAN_END )
@@ -1774,34 +1656,9 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     p_wk->basic1.sex = data;
     OS_TPrintf( "デバッグ用値設定\n" );
     break;
-  case RESORT_DATA_PARAM_PASS_CNT:
-    p_wk->basic1.pass_cnt = data;
-    break;
-  case RESORT_DATA_PARAM_COLOR:
-    p_wk->basic1.wnd_color = data;
-    break;
-
   //準基本データ
-  case RESORT_DATA_PARAM_CONTINUE:
-    p_wk->basic2.continue_data = data;
-    break;
-  case RESORT_DATA_PARAM_PERSONAL:
-    p_wk->basic2.personality = data;
-    break;
   case RESORT_DATA_PARAM_SPECIAL:
     p_wk->basic2.special_deliverly = data;
-    break;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_00:
-    p_wk->basic2.quest1 = data;
-    break;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_01:
-    p_wk->basic2.quest2 = data;
-    break;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_02:
-    p_wk->basic2.quest3 = data;
-    break;
-  case RESORT_DATA_PARAM_RESORT_QANSWER_03:
-    p_wk->basic2.quest4 = data;
     break;
   //生成データ
   case RESORT_DATA_PARAM_PRESENT_ID:
@@ -1857,14 +1714,6 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_KOSEI:
     p_wk->kosei = data;
     break;
-  //拡張データ1
-  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
-    GFL_STD_MemCopy( (const void *)data, p_wk->extend1.medal_bit, sizeof(u8)*RESORT_RECV_MEDAL_BIT_BYTE );
-    break;
-  case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
-    p_wk->extend1.medal_box_rank = data;
-    break;
   case RESORT_DATA_PARAM_EXT1_RECOMMEND_MEDAL_ID:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
     p_wk->extend1.recommend_medalID = data;
@@ -1876,6 +1725,13 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
   case RESORT_DATA_PARAM_EXT1_MEDAL_NUM:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
     p_wk->extend1.medal_num = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BOX_RANK:
+    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_01 );
+    p_wk->extend1.medal_rank = data;
+    break;
+  case RESORT_DATA_PARAM_EXT1_MEDAL_BIT:
+    GFL_STD_MemCopy( (void*)data, p_wk->extend1.medal_bit, RESORT_RECV_MEDAL_BIT_BYTE );
     break;
   //拡張データ2
   case RESORT_DATA_PARAM_EXT2_RANK_00:
@@ -1914,120 +1770,29 @@ void RESORT_RECV_DATA_SetData( RESORT_RECV_DATA *p_wk, RESORT_DATA_PARAM param, 
     p_wk->extend4.gossip[ param - RESORT_DATA_PARAM_EXT4_GOSSIP_00 ] = data;
     break;
   //拡張データ5
-  case RESORT_DATA_PARAM_EXT5_MONSNO:
+  case RESORT_DATA_PARAM_EXT5_RECORD_00:
+  case RESORT_DATA_PARAM_EXT5_RECORD_01:
+  case RESORT_DATA_PARAM_EXT5_RECORD_02:
+  case RESORT_DATA_PARAM_EXT5_RECORD_03:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.monsno = data;
+    p_wk->extend5.record[ param - RESORT_DATA_PARAM_EXT5_RECORD_00] = data;
     break;
-  case RESORT_DATA_PARAM_EXT5_FORM:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_00:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_01:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_02:
+  case RESORT_DATA_PARAM_EXT5_RECORD_DATE_03:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.form = data;
-    break;
-  case RESORT_DATA_PARAM_EXT5_SEX:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.sex = data;
-    break;
-  case RESORT_DATA_PARAM_EXT5_RARE:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.rare = data;
-    break;
-  case RESORT_DATA_PARAM_EXT5_TOKUSEI:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.tokusei = data;
-    break;
-  case RESORT_DATA_PARAM_EXT5_WAZA_00:
-  case RESORT_DATA_PARAM_EXT5_WAZA_01:
-  case RESORT_DATA_PARAM_EXT5_WAZA_02:
-  case RESORT_DATA_PARAM_EXT5_WAZA_03:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.waza[ param - RESORT_DATA_PARAM_EXT5_WAZA_00] = data;
-    break;
-  case RESORT_DATA_PARAM_EXT5_ITEM:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_05 );
-    p_wk->extend5.item = data;
+    p_wk->extend5.record_date[ param - RESORT_DATA_PARAM_EXT5_RECORD_DATE_00] = data;
     break;
   //拡張データ6
-  case RESORT_DATA_PARAM_EXT6_MONSNO:
+  case RESORT_DATA_PARAM_EXT6_PHRASE:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.monsno = data;
-    break;
-  case RESORT_DATA_PARAM_EXT6_FORM:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.form = data;
-    break;
-  case RESORT_DATA_PARAM_EXT6_SEX:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.sex = data;
-    break;
-  case RESORT_DATA_PARAM_EXT6_RARE:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.rare = data;
-    break;
-  case RESORT_DATA_PARAM_EXT6_TOKUSEI:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.tokusei = data;
-    break;
-  case RESORT_DATA_PARAM_EXT6_WAZA_00:
-  case RESORT_DATA_PARAM_EXT6_WAZA_01:
-  case RESORT_DATA_PARAM_EXT6_WAZA_02:
-  case RESORT_DATA_PARAM_EXT6_WAZA_03:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.waza[ param - RESORT_DATA_PARAM_EXT6_WAZA_00] = data;
-    break;
-  case RESORT_DATA_PARAM_EXT6_ITEM:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_06 );
-    p_wk->extend6.item = data;
+    GFL_STD_MemCopy( (const void*)data, p_wk->extend6.phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
     break;
   //拡張データ7
-  case RESORT_DATA_PARAM_EXT7_MONSNO:
+  case RESORT_DATA_PARAM_EXT7_THANKS:
     RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.monsno = data;
-    break;
-  case RESORT_DATA_PARAM_EXT7_FORM:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.form = data;
-    break;
-  case RESORT_DATA_PARAM_EXT7_SEX:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.sex = data;
-    break;
-  case RESORT_DATA_PARAM_EXT7_RARE:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.rare = data;
-    break;
-  case RESORT_DATA_PARAM_EXT7_TOKUSEI:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.tokusei = data;
-    break;
-  case RESORT_DATA_PARAM_EXT7_WAZA_00:
-  case RESORT_DATA_PARAM_EXT7_WAZA_01:
-  case RESORT_DATA_PARAM_EXT7_WAZA_02:
-  case RESORT_DATA_PARAM_EXT7_WAZA_03:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.waza[ param - RESORT_DATA_PARAM_EXT7_WAZA_00 ] = data;
-    break;
-  case RESORT_DATA_PARAM_EXT7_ITEM:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_07 );
-    p_wk->extend7.item = data;
-    break;
-  //拡張データ8
-  case RESORT_DATA_PARAM_EXT8_RECORD_00:
-  case RESORT_DATA_PARAM_EXT8_RECORD_01:
-  case RESORT_DATA_PARAM_EXT8_RECORD_02:
-  case RESORT_DATA_PARAM_EXT8_RECORD_03:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_08 );
-    p_wk->extend8.record[ param - RESORT_DATA_PARAM_EXT8_RECORD_00] = data;
-    break;
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_00:
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_01:
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_02:
-  case RESORT_DATA_PARAM_EXT8_RECORD_DATE_03:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_08 );
-    p_wk->extend8.record_date[ param - RESORT_DATA_PARAM_EXT8_RECORD_DATE_00] = data;
-    break;
-  //拡張データ9
-  case RESORT_DATA_PARAM_EXT9_PHRASE:
-    RESORT_EXT_CHECK( p_wk, RESORT_EXTEND_TYPE_09 );
-    GFL_STD_MemCopy( (const void*)data, p_wk->extend9.phrase, sizeof(STRCODE)*RESORT_PHRASE_LEN );
+    GFL_STD_MemCopy( (const void*)data, p_wk->extend7.thanks, sizeof(STRCODE)*RESORT_THANKS_LEN );
     break;
 
   default:
@@ -2168,18 +1933,31 @@ void RESORT_BEACON_DATA_SetMyData( RESORT_BEACON_DATA *p_wk, RESORT_EXTEND_TYPE 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  拡張データを取得
+ *	@brief  ビーコンデータに拡張データをいれる（いれるのはaction.extend_buffのみ）
  *
  *  @param  cp_wk             ビーコンデータ
- *	@param	u8 *p_extend_buff 拡張データ（RESORT_EXTEND_DATA_SIZEサイズのバッファ）
- *	@param	*p_type           拡張データの種類
+ *	@param	GAMEBEACON_INFO   *p_beacon_info   ビーコン
  */
 //-----------------------------------------------------------------------------
-void RESORT_BEACON_DATA_GetExtendData( const RESORT_BEACON_DATA *cp_wk, u8 *p_extend_buff, RESORT_EXTEND_TYPE *p_type )
+void RESORT_BEACON_DATA_GetBeaconInfo( const RESORT_BEACON_DATA *cp_wk, GAMEBEACON_INFO *p_beacon_info )
 {
+
+  void * p_basic2_adrs = (u8 *)p_beacon_info->action.extend_buff;
+  void * p_extend_adrs = (u8 *)p_beacon_info->action.extend_buff + RESORT_BASIC2_DATA_SIZE;
+
   GF_ASSERT( cp_wk->extend_type < RESORT_EXTEND_TYPE_MAX );
-  GFL_STD_MemCopy( cp_wk->extend, p_extend_buff, RESORT_EXTEND_DATA_SIZE );
-  *p_type = cp_wk->extend_type;
+
+  //レゾ常駐を入れる
+  {
+    GFL_STD_MemCopy( &cp_wk->basic2, p_basic2_adrs, RESORT_BASIC2_DATA_SIZE );
+  }
+  //拡張データを入れる
+  {
+    GFL_STD_MemCopy( cp_wk->extend, p_extend_adrs, RESORT_EXTEND_DATA_SIZE );
+  }
+  //拡張データ番号を入れる
+
+  p_beacon_info->action.resort_extend_type = cp_wk->extend_type;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2355,28 +2133,18 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
   case RESORT_DATA_PARAM_PLACE_ID:
     return cp_wk->placeID; 
   case RESORT_DATA_PARAM_SEX:
-    return 1; //TODO
+    return cp_wk->sex;
   case RESORT_DATA_PARAM_TRAINERVIEW:
-    return 9; //TODO
+    return cp_wk->trainer_view;
   case RESORT_DATA_PARAM_NAME:
     {
-      //TODO
-      static const STRCODE sc_strcode[PERSON_NAME_SIZE+EOM_SIZE] =
-      {
-        L'だ',
-        L'い',
-        L'り',
-        L'に',
-        L'ん',
-        0xffff
-      };
-      GFL_STD_MemCopy( sc_strcode, p_ret_adrs, sizeof(u16)*(PERSON_NAME_SIZE+EOM_SIZE) );
+      STRCODE *p_str  = p_ret_adrs;
+      GFL_STD_MemCopy( cp_wk->name, p_str, sizeof(u16)*(PERSON_NAME_SIZE) );
+      p_str[PERSON_NAME_SIZE] = GFL_STR_GetEOMCode();
     }
     return 0;
   case RESORT_DATA_PARAM_PRESENT_ID:
     return cp_wk->presentID;
-  case RESORT_DATA_PARAM_PRESENT_NUM:
-    return cp_wk->present_num;
   case RESORT_DATA_PARAM_TYPE:
     return cp_wk->type;
   default:

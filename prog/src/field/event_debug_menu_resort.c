@@ -894,7 +894,7 @@ static BOOL PresenSetup_SetRecv( RESORT_RECV_DATA *p_recv, GFL_MSGDATA *p_msg, u
     STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, sc_presen_data[cnt].phrase );
     const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
     RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
-    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXT9_PHRASE, (u32)cp_strcode );
+    RESORT_RECV_DATA_SetData( p_recv, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
     GFL_STR_DeleteBuffer( p_strbuf );
   }
 
@@ -1027,7 +1027,7 @@ static BOOL debugMenuCallProc_PresenSetup( DEBUG_MENU_EVENT_WORK *p_wk )
       STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, RESORT_MYPHRASE_00 + GFUser_GetPublicRand(5) );
       RESORT_RECV_DATA *p_own = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_all_people );
       cp_strcode = GFL_STR_GetStringCodePointer(p_strbuf);
-      RESORT_RECV_DATA_SetData( p_own, RESORT_DATA_PARAM_EXT9_PHRASE, (u32)cp_strcode );
+      RESORT_RECV_DATA_SetData( p_own, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
       GFL_STR_DeleteBuffer( p_strbuf );
     }
 
