@@ -691,6 +691,398 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_h01_bridge_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はぁ……はぁ……
+のどが　かわいた……▼
+お……おいしいみず……
+くれません　か……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はぁ……はぁ……
+のどが　かわいた……▼
+お……おいしいみず……
+くれません　か……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・1回目
+・h01→h02→h03→h04→h05→h06→h01で
+・はい/いいえの選択肢表示
+　はい　→bridge_02
+　いいえ→bridge_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:09:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_bridge_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャキーン！！▼
+うるおい１００パーセント！
+げんき　でてきたー！　ありがとう▼
+ぼくは　ダッシュして
+つぎの　はしに　むかうのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャキーン！！▼
+潤い１００パーセント！
+元気　でてきたー！　ありがとう▼
+ぼくは　ダッシュして
+次の　橋に　向かうのです！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:06:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・はい選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:09:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_bridge_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>でも　おいしいみず　ないよね……
+きもちだけ　いただきます……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:06:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>でも　おいしいみず　ないよね……
+きもちだけ　いただきます……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:06:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・はい選択、だけど道具がない
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:09:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_bridge_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ありが……▼
+えっ？
+そっか……▼
+おいしいみずが　ないと……
+これいじょう　はしを　はしれない</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:05:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ありが……▼
+えっ？
+そっか……▼
+おいしいみずが　ないと……
+これいじょう　はしを　はしれない</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:05:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・いいえ選択時
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:09:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_bridge_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いやー！　イッシュちほうの
+すべての　はしを　はしったよ！！▼
+それもこれも　きみの　おかげ！
+どうぞ！　これを　もらってください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:07:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いやー！　イッシュ地方の
+すべての　橋を　走ったよ！！▼
+それもこれも　きみの　おかげ！
+どうぞ！　これを　もらってください！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:07:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:03:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・すべての橋で遭遇し
+　おいしいみずをあげたとき
+・アイテム入手処理
+　No000「モーモーミルク」×１２
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_bridge_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>って　バッグが　いっぱいだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:07:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>って　バッグが　一杯だね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:07:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・バッグが一杯
+・再度会話はbridge_05から</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:09:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_bridge_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いちばん　はしりやすい　はし　は
+シリンダーブリッジ　だね▼
+でんしゃと　きょうそう！　って
+かんじで　パワーが　わいてくるんだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>一番　走りやすい　橋は
+シリンダーブリッジ　だね▼
+電車と　競争！　って　感じで
+パワーが　わいてくるんだよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：橋マニア
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:08:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3
+太った兄さん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:10:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h01_girl2_01"
 		Style="Large">
 		<LanguageCell
