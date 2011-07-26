@@ -733,11 +733,11 @@
 		Label="wbt_dl_ev_msg_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>トーナメントを　うけとっています
-しばらく　おまちください……</Text>
+			<Text>トーナメントデータを
+うけとりました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:23:47" />
+				Time="2011-07-25T07:48:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -745,11 +745,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメントを　うけとっています
-しばらく　おまちください……</Text>
+			<Text>トーナメントデータを
+受け取りました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-07-21T11:30:24" />
+				Time="2011-07-25T07:48:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
