@@ -590,7 +590,7 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     
     {//ŽèŽ‚¿ƒ|ƒPƒ‚ƒ“
       POKEPARTY* Party = SaveData_GetTemotiPokemon(pWork->pSaveData);
-      for(i = 0 ; i < 6 ; i++){
+      for(i = 0 ; i < PokeParty_GetPokeCount( Party ) ; i++){
         pAddr = (u8*)PokeParty_GetMemberPointer( Party, i );
         OS_TPrintf("\"%s%d\",\"0x%x\",\"%d\"\n","PARTY_POKEMON",i, (u32)pAddr-(u32)topAddr, POKETOOL_GetWorkSize());
       }
