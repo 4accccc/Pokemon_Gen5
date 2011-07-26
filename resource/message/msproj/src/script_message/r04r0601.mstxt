@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_r04r0601_trainerw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>あたしね　ポケモンの
+すばやさに　こだわっているの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あたしね　ポケモンの
+すばやさに　こだわっているの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♀
+・White2ver</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>TRAINERW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -47,5 +50,351 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_trainerm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくはね　ポケモンの
+ＨＰに　こだわってるね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T06:58:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくはね　ポケモンの
+ＨＰに　こだわってるね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T06:58:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_trainerm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そういうわけで　きみ！▼
+[Digit:3digits Idx="1" ]より　ＨＰがある
+ポケモンを　つれていないかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T06:58:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そういうわけで　きみ！▼
+[Digit:3digits Idx="1" ]より　ＨＰがある
+ポケモンを　連れていないかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T06:58:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・手持ち（ひんし/タマゴを除く）をサーチ
+・？？？以上のポケモンが
+　いる　→trainerm_03、trainerm_04
+　いない→trainerm_06
+・0＝３桁の数字（050～200からランダムで決定）（仮）
+・数字は一日中固定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:56:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_trainerm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きみの　[Name:PokemonName ]！
+ぼく　ごのみの　ＨＰだね！▼
+うれしくなったから　これを　あげよう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きみの　[Name:PokemonName ]！
+ぼく好みの　ＨＰだね！▼
+うれしくなったから　これを　あげよう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・指定された数値以上のポケモンがいる
+・！マーク表示をしてからメッセージ表示
+・アイテム入手処理
+　No570「しゅんぱつのハネ」
+・0＝ポケモン種族名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T08:09:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_trainerm_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きみの　[Name:PokemonName ]！　まさに
+ぼく　ごのみの　ＨＰだね！▼
+すごく　うれしくなったよ！
+これを　たくさん　あげよう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きみの　[Name:PokemonName ]！　まさに
+ぼく好みの　ＨＰだね！▼
+すごく　うれしくなったよ！
+これを　たくさん　あげよう！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・指定された数値そのもののポケモンがいる
+・！マーク表示をしてから
+　２度その場ジャンプしてメッセージ表示
+・アイテム入手処理
+　No570「しゅんぱつのハネ」×5
+・0＝ポケモン種族名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T08:09:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_trainerm_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さまざまな　ＨＰ♪
+さまざまな　ポケモンたち♪▼
+なんだか　たのしいな！　きみ
+また　あしたも　あそびに　おいでよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さまざまな　ＨＰ♪
+さまざまな　ポケモンたち♪▼
+なんだか　楽しいな！　きみ
+また　明日も　遊びに　おいでよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・アイテム入手後
+　日付が変わるまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04r0601_trainerm_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいんだよ！　ポケモンの　よさは
+ＨＰ　だけじゃないからね▼
+でも　きょうは　なんだか
+ＨＰが　[Digit:3digits Idx="1" ]より▽
+たかい　ポケモンに　あいたいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T08:10:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいんだよ！　ポケモンの　よさは
+ＨＰ　だけじゃないからね▼
+でも　今日は　なんだか　ＨＰが
+[Digit:3digits Idx="1" ]より▽
+高い　ポケモンに　会いたいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T08:10:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・条件を満たすポケモンがいない
+・0＝３桁の数字（050～200からランダムで決定）（仮）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T07:55:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
