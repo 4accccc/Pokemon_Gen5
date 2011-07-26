@@ -49,6 +49,7 @@
 #include "field_gimmick_bgate.h"
 #include "field_gimmick_hide_ship_deck.h"
 #include "field_gimmick_champion.h"
+#include "field_gimmick_hide_ship_bow.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -86,6 +87,7 @@ FS_EXTERN_OVERLAY(field_fourkings_esp);
 FS_EXTERN_OVERLAY(field_gimmick_hide_ship_engine);
 FS_EXTERN_OVERLAY(field_gimmick_hide_ship_deck);
 FS_EXTERN_OVERLAY(field_gimmick_champion);
+FS_EXTERN_OVERLAY(field_gimmick_hide_ship_bow);
 
 
 #include "field_gimmick_table.cdat"

@@ -22,5 +22,9 @@
   DEF_CMD( EvCmdHideShip_PasswordInput, EV_SEQ_HIDE_SHIP_PASSWORD_INPUT )
   DEF_CMD( EvCmdHideShip_PasswordIdGet, EV_SEQ_HIDE_SHIP_PASSWORD_ID_GET )
 
+  DEF_CMD( EvCmdHideShipBow_ButtonSet, EV_SEQ_HIDE_SHIP_BOW_BUTTON_SET )
+  DEF_CMD( EvCmdHideShipBow_ButtonOff, EV_SEQ_HIDE_SHIP_BOW_BUTTON_OFF )
+  DEF_CMD( EvCmdHideShipBow_GateOff, EV_SEQ_HIDE_SHIP_BOW_GATE_OFF )
+
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -202,8 +202,10 @@ static const ZONEID UseZoneIDTbl_badge_gate[] =
 //=====================================
 static const ZONEID UseZoneIDTbl_hide_ship[] = 
 {
-  ZONE_ID_D27R1001,
-  ZONE_ID_D27R1301,
+  ZONE_ID_D27R1001,   // エンジン部屋
+  ZONE_ID_D27R1301,   // エンジン部屋
+  ZONE_ID_D27R0201,   // 船首
+  ZONE_ID_D27R1201,   // 船首
 };
 
 //=============================================================================

@@ -14390,7 +14390,7 @@
 //--------------------------------------------------------------
 /**
  * @def _HIDE_SHIP_PASSWORD_INPUT
- * @brief エンジン部屋でのパスワード入力
+ * @brief パスワード入力
  * @param ret_wk  TRUE:正解   FALSE:不正解
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
@@ -14406,7 +14406,7 @@
 //--------------------------------------------------------------
 /**
  * @def _HIDE_SHIP_PASSWORD_ID_GET
- * @brief エンジン部屋でのパスワードID取得
+ * @brief パスワードID取得
  * @param ret_wk  どのパスワードを使用するかのID
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  */
@@ -14417,6 +14417,57 @@
   .macro  _ASM_HIDE_SHIP_PASSWORD_ID_GET ret_wk
   .short  EV_SEQ_HIDE_SHIP_PASSWORD_ID_GET
   .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_BOW_BUTTON_SET
+ * @brief 船首部屋でのボタンの状態を設定する
+ *        （同時にゲートの状態も設定される）
+ * @param id    ボタンのID 0～3
+ * @param state  0:踏んでいる 凹 1:踏んでいない 凸
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_BOW_BUTTON_SET( id, state ) \
+    _ASM_HIDE_SHIP_BOW_BUTTON_SET id, state
+
+  .macro  _ASM_HIDE_SHIP_BOW_BUTTON_SET id, state
+  .short  EV_SEQ_HIDE_SHIP_BOW_BUTTON_SET
+  .short  \id
+  .short  \state
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_BOW_BUTTON_OFF
+ * @brief 船首部屋でのボタン押下再生
+ * @param id    ボタンのID 0～3
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_BOW_BUTTON_OFF( id ) \
+    _ASM_HIDE_SHIP_BOW_BUTTON_OFF id
+
+  .macro  _ASM_HIDE_SHIP_BOW_BUTTON_OFF  id
+  .short  EV_SEQ_HIDE_SHIP_BOW_BUTTON_OFF
+  .short  \id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _HIDE_SHIP_BOW_GATE_OFF
+ * @brief 船首部屋でのゲート解除再生
+ * @param id    ゲートのID 0～3
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ */
+//--------------------------------------------------------------
+#define _HIDE_SHIP_BOW_GATE_OFF( id ) \
+    _ASM_HIDE_SHIP_BOW_GATE_OFF id
+
+  .macro  _ASM_HIDE_SHIP_BOW_GATE_OFF id
+  .short  EV_SEQ_HIDE_SHIP_BOW_GATE_OFF
+  .short  \id
   .endm
 
 //--------------------------------------------------------------

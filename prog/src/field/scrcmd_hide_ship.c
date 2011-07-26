@@ -36,6 +36,7 @@
 // mine
 #include "scrcmd_hide_ship.h"
 #include "field_gimmick_hide_ship_engine.h"
+#include "field_gimmick_hide_ship_bow.h"
 
 // debug
 #include "debug/debug_str_conv.h"
@@ -207,6 +208,69 @@ VMCMD_RESULT EvCmdHideShip_PasswordIdGet( VMHANDLE *core, void *wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
   *ret_wk = password_id_get( mystatus );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンの状態セット
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdHideShipBow_ButtonSet( VMHANDLE *core, void *wk )
+{
+  int id;
+  int state;
+  BOOL  flag;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // ボタンID
+  id  = VMGetU16( core );
+  // 踏んでいるか
+  state  = SCRCMD_GetVMWorkValue( core, work );
+  if( state == 0 ){ flag = FALSE; }   // 踏んでいる
+  else            { flag = TRUE;  }   // 踏んでいない
+
+  HIDE_SHIP_BOW_ButtonSet( gsys, id, flag );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンの押下
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdHideShipBow_ButtonOff( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // ゲートID
+  id  = VMGetU16( core );
+
+  HIDE_SHIP_BOW_ButtonOff( gsys, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート解除アニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdHideShipBow_GateOff( VMHANDLE *core, void *wk )
+{
+  int id;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // ゲートID
+  id  = VMGetU16( core );
+
+  HIDE_SHIP_BOW_GateOff( gsys, id );
 
   return VMCMD_RESULT_CONTINUE;
 }

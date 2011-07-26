@@ -37,3 +37,7 @@ extern VMCMD_RESULT EvCmdHideShip_GateOff( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdHideShip_PasswordInput( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdHideShip_PasswordIdGet( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdHideShipBow_ButtonSet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdHideShipBow_ButtonOff( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdHideShipBow_GateOff( VMHANDLE *core, void *wk );
+

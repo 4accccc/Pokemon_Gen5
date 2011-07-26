@@ -1231,6 +1231,10 @@ SRCS_OVERLAY_FIELD_GIMMICK_HIDE_SHIP_DECK = field/field_gimmick_hide_ship_deck.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_HIDE_SHIP_BOW = field/field_gimmick_hide_ship_bow.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_GIMMICK_CHAMPION = field/field_gimmick_champion.c
 
 #群集は、C03の路地＋H03でも使用することになった。

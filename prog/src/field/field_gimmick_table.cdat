@@ -300,5 +300,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     CHAMPION_End,   // チャンピオン部屋
     CHAMPION_Move,  // チャンピオン部屋
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_hide_ship_bow),//D27R0201 D27R1201
+    HIDE_SHIP_BOW_Setup,  // アジト船　船首
+    HIDE_SHIP_BOW_End,    // アジト船　船首
+    HIDE_SHIP_BOW_Move,   // アジト船　船首
+  },
 };
 
