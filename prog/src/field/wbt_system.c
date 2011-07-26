@@ -347,12 +347,32 @@ WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr )
   return wbt_tr->wbt_tr_type;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static BOOL WBTTRAINER_HasAce( const WBTTRAINER * wbt_tr )
+{
+  WBT_TRDATA rom_data;
+  if (wbt_tr->wbt_tr_type != WBT_TRTYPE_ROM ) return FALSE;
+  WBTTOOL_GetTrRomData( HEAPID_PROC, wbt_tr->tr_id, &rom_data );
+  return ( rom_data.ace_poke_id != 0 );
+}
+
 //============================================================================================
 //
 //
 //
 //============================================================================================
 #ifdef  PM_DEBUG
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr )
+{
+  TAMADA_Printf("  wbt_tr_type(%d)tr_id(%03d)sex(%d)pri(%d)poketype(%2d)",
+      wbt_tr->wbt_tr_type, wbt_tr->tr_id, wbt_tr->sex, wbt_tr->pri, wbt_tr->poketype );
+  TAMADA_Printf("mmdl_id(%04x)btl_tr_type(%03d)\n",
+       wbt_tr->mmdl_id, wbt_tr->btl_tr_type );
+}
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys )
@@ -362,12 +382,10 @@ void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys )
   {
     const WBTTRAINER * wbt_tr = WBTSYS_GetTrainer( wbtsys, i );
     TAMADA_Printf("WBTTRAINER:POS=%02d", i );
-    TAMADA_Printf("  wbt_tr_type(%d)tr_id(%03d)sex(%d)pri(%d)poketype(%2d)",
-        wbt_tr->wbt_tr_type, wbt_tr->tr_id, wbt_tr->sex, wbt_tr->pri, wbt_tr->poketype );
-    TAMADA_Printf("mmdl_id(%04x)btl_tr_type(%03d)\n",
-         wbt_tr->mmdl_id, wbt_tr->btl_tr_type );
+    WBTTRAINER_DEBUG_dump( wbt_tr );
   }
 }
+
 #endif
 //------------------------------------------------------------------
 /**
@@ -645,6 +663,224 @@ POKEPARTY * WBTSYS_CreateBattleParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 
 //============================================================================================
 //============================================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static u16 GetRand( GFL_STD_RandContext *rand_context )
+{
+  if( rand_context == NULL )
+  {
+    return( GFUser_GetPublicRand(0xffffffff)/65535 );
+  }
+  else
+  {
+    return( GFL_STD_Rand( rand_context, 0xffffffff )/65535 );
+  }
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void GetPokemonRomData(
+    ARCID poke_arc_id,BSUBWAY_POKEMON_ROM_DATA *prd,int index)
+{
+//  index += BSW_PM_ARCDATANO_ORG;
+  GFL_ARC_LoadData( (void*)prd, poke_arc_id, index );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  ROM_POKE_MAX = 10,
+
+  NG_POKE_MAX = 10,
+  NG_ITEM_MAX = 10,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  u16 ng_mons_no[ NG_POKE_MAX ];
+  u16 ng_item_no[ NG_ITEM_MAX ];
+}WBT_MONS_CONDITION;
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  u8 available;
+  u16 index_no;
+  BSUBWAY_POKEMON_ROM_DATA prd;
+}SELECT_DATA;
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void initMonsCondition( WBT_MONS_CONDITION * cond )
+{
+  GFL_STD_MemClear( cond, sizeof(WBT_MONS_CONDITION) );
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void addNGItem( WBT_MONS_CONDITION * cond, u16 item_no )
+{
+  int i;
+  for ( i = 0; i < NG_ITEM_MAX; i ++ )
+  {
+    if (cond->ng_item_no[ i ] == 0 )
+    {
+      cond->ng_item_no[ i ] = item_no;
+      return;
+    }
+  }
+  GF_ASSERT(0);
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void addNGMons( WBT_MONS_CONDITION * cond, u16 mons_no )
+{
+  int i;
+  for ( i = 0; i < NG_POKE_MAX; i ++ )
+  {
+    if (cond->ng_mons_no[ i ] == 0 )
+    {
+      cond->ng_mons_no[ i ] = mons_no;
+      return;
+    }
+  }
+  GF_ASSERT(0);
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL checkNGData( const WBT_MONS_CONDITION * cond, const SELECT_DATA * select_data )
+{
+  int i;
+  //データ無し→チェックOKする
+  if ( cond == NULL ) return TRUE;
+
+  for ( i = 0; i < NG_POKE_MAX; i ++ )
+  {
+    u16 mons_no = select_data->prd.mons_no;
+    if ( mons_no != 0 && mons_no == cond->ng_mons_no[i] ) return TRUE;
+  }
+  for ( i = 0; i < NG_POKE_MAX; i ++ )
+  {
+    u16 item_no = select_data->prd.item_no;
+    if ( item_no != 0 && item_no == cond->ng_item_no[i] ) return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルサブウェイのポケモンを決める
+ *
+ * @param[in]     trd           BS形式トレーナーデータ
+ * @param[out]    pwd           BSUBWAY_POKEMON構造体
+ * @param[in]     cnt           トレーナーに持たせるポケモンの数
+ * @param[in]     poke_arc_id   ポケモンデータが格納されているアーカイブID
+ * @param[in]     cond          ペアトレーナーポケモン (NULLだとチェックなし）
+ * @param[in]     ng_item_no    ペアトレーナーポケモンアイテム (NULLだとチェックなし）
+ * @param[in]     rand_context  乱数値ポインタ(NULL GFUser_GetPublicRandを使用
+ * @param[in]     pow_rnd       ポケモンにセットするpow_rnd値
+ * @param[in]     heapID        ヒープID
+ *
+ * @retval  FALSE   抽選ループが50回以内で終わった
+ * @retval  TRUE    抽選ループが50回以内で終わらなかった
+ *
+ * TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理
+ */
+//--------------------------------------------------------------
+static BOOL setBSubwayPokemonParam(
+    const BSUBWAY_TRAINER_ROM_DATA *trd,
+     BSUBWAY_POKEMON *pwd, u8 cnt, u32 id,
+    ARCID poke_arc_id, const WBT_MONS_CONDITION * cond,
+    GFL_STD_RandContext *rand_context ,u8 pow_rnd, HEAPID heapID )
+{
+  int  i,j;
+  u8  poke_index;
+  int  set_count;
+  u8 selected[6];
+  int  loop_count;
+  BOOL  ret = 0;
+
+  BSUBWAY_POKEMON_ROM_DATA * prd_d;
+  SELECT_DATA * select_data;
+
+  select_data = GFL_HEAP_AllocMemoryLo( heapID, sizeof(SELECT_DATA) * ROM_POKE_MAX );
+  GF_ASSERT( trd->use_poke_cnt < ROM_POKE_MAX );
+
+  GFL_STD_MemClear( selected, 6 );
+
+  for ( i = 0; i < ROM_POKE_MAX; i ++ )
+  { 
+    SELECT_DATA * rd = &select_data[i];
+    rd->available = FALSE;
+
+    if ( i < trd->use_poke_cnt )
+    {
+      rd->available = TRUE;
+      rd->index_no = trd->use_poke_table[ i ];
+      GetPokemonRomData( poke_arc_id, &rd->prd, rd->index_no );
+      if ( checkNGData( cond, rd ) == TRUE )
+      {
+        rd->available = FALSE;
+      }
+    }
+  }
+#ifdef  PM_DEBUG
+  for ( j = 0, i = 0; i < ROM_POKE_MAX; i ++ )
+  {
+    SELECT_DATA * rd = &select_data[i];
+    if (rd->available) j ++;
+  }
+  GF_ASSERT( j >= cnt );
+#endif
+
+  set_count=0;
+  loop_count=0;
+
+  while(set_count!=cnt)
+  {
+    j = GetRand( rand_context ) % ( trd->use_poke_cnt - set_count );
+    for ( poke_index = 0; poke_index < ROM_POKE_MAX; poke_index ++ )
+    {
+      if ( select_data[poke_index].available )
+      {
+        if ( j == 0 ) break;
+        j --;
+      }
+    }
+    GF_ASSERT( poke_index < ROM_POKE_MAX );
+
+    prd_d = &select_data[ poke_index ].prd;
+
+    for ( i = 0; i < ROM_POKE_MAX; i ++ )
+    {
+      if ( i == poke_index ) continue;
+      if ( select_data[ i ].prd.mons_no == prd_d->mons_no )
+      { //同一のポケモンを含むデータは使えなくなる
+        select_data[ i ].available = FALSE;
+      }
+      if ( select_data[ i ].prd.item_no == prd_d->item_no )
+      { //同一のアイテムを持つデータは使えなくなる
+        select_data[ i ].available = FALSE;
+      }
+    }
+    //選ばれたデータは次の抽選で使えない
+    select_data[ poke_index ].available = FALSE;
+
+    selected[ set_count ] = poke_index;
+    set_count++;
+  }
+
+  for(i=0;i<set_count;i++)
+  {
+    u32 index_no = trd->use_poke_table[ selected[i] ];
+    FBI_TOOL_MakePokemonParam(&(pwd[i]),
+      poke_arc_id, index_no, id, 0, pow_rnd, i, ret, heapID);
+  }
+
+  GFL_HEAP_FreeMemory( select_data );
+  return ret;
+}
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static const u8 pri2pow_table[5] = {
@@ -653,38 +889,70 @@ static const u8 pri2pow_table[5] = {
 
 //-----------------------------------------------------------------------------
 /**
- * @param tr_data
+ * @param bt_trd
+ * @param btpwd
  * @param wbt_tr
  * @param cnt
  * @param inHeapID
  * @todo  バトルサブウェイは４体しかポケモンを選択できない。
  */
 //-----------------------------------------------------------------------------
-static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
+static BOOL makeRomTrainerData(
+    BSUBWAY_TRAINER * bt_trd,
+    BSUBWAY_POKEMON * btpwd,
     WBTCUP wbtcup, const WBTTRAINER * wbt_tr,
     u8 cnt, HEAPID inHeapID)
 {
   BOOL      ret = 0;
+  BSUBWAY_PARTNER_DATA * tr_data;
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   u8 pow_rnd;
-  u8 tr_pri = WBTTRAINER_GetPriority(wbt_tr);
-  u8 tr_no = WBTTRAINER_GetID(wbt_tr);
-  u32 arc_id = WBTTOOL_GetRomArcID( wbtcup );
+  u8 tr_pri   = WBTTRAINER_GetPriority(wbt_tr);
+  u8 tr_no    = WBTTRAINER_GetID(wbt_tr);
+  u32 arc_id  = WBTTOOL_GetRomArcID( wbtcup );
+  u32 id;
+  GFL_STD_RandContext * rand_context = NULL;
+  WBT_MONS_CONDITION cond;
+
+  initMonsCondition( &cond );
+  
+  // パワー乱数を決定する
+  pow_rnd= pri2pow_table[ tr_pri - 1 ];
+  id=(GetRand( rand_context )|(GetRand( rand_context )<<16));
+
+  tr_data = GFL_HEAP_AllocMemoryLo( inHeapID, sizeof(BSUBWAY_PARTNER_DATA) );
+
+  if (WBTTRAINER_HasAce(wbt_tr) )
+  { //切り札ポケモンセット処理
+    u16 index_no;
+    trd = FBI_TOOL_AllocTrainerRomData(tr_data,
+        arc_id + WBTBTD_ARCOFS_TR_ACE, tr_no, NARC_message_wbt_trname_dat, inHeapID);
+    //切り札ポケモンは１体だけなので０番決めうちで取得
+    index_no = trd->use_poke_table[0];
+    FBI_TOOL_MakePokemonParam( btpwd,
+        arc_id + WBTBTD_ARCOFS_PM_ACE, index_no, id, 0, pow_rnd, 0, FALSE, inHeapID );
+
+    addNGMons( &cond, btpwd->mons_no );
+    addNGItem( &cond, btpwd->item_no );
+    btpwd ++;
+    cnt --;
+    GFL_HEAP_FreeMemory( trd );
+  }
 
   //トレーナーデータセット
   trd = FBI_TOOL_AllocTrainerRomData(tr_data,
       arc_id + WBTBTD_ARCOFS_TR_NORMAL ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
-  // パワー乱数を決定する
-  pow_rnd= pri2pow_table[ tr_pri - 1 ];
-  tr_data->bt_trd.tr_type = WBTTRAINER_GetBattleTrainerType( wbt_tr );
-  //tr_data->bt_trd.player_id = tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
-  tr_data->bt_trd.player_id = tr_no + TRID_OFFSET_WBT;
+  *bt_trd = tr_data->bt_trd;
+  bt_trd->tr_type = WBTTRAINER_GetBattleTrainerType( wbt_tr );
+  bt_trd->player_id = tr_no + TRID_OFFSET_WBT;
 
   //ポケモンデータをセット
-  ret = FBI_TOOL_SetBSWayPokemonParam(
-      trd, tr_no, &tr_data->btpwd[0], cnt,
-      arc_id + WBTBTD_ARCOFS_PM_NORMAL, NULL, NULL, NULL, NULL ,pow_rnd ,inHeapID);
+  ret = setBSubwayPokemonParam(
+      trd, btpwd, cnt, id,
+      arc_id + WBTBTD_ARCOFS_PM_NORMAL, &cond, NULL, pow_rnd, inHeapID);
+
   GFL_HEAP_FreeMemory( trd );
+  GFL_HEAP_FreeMemory( tr_data );
   return ret;
 }
 
@@ -697,17 +965,23 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
 BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys )
 {
   BATTLE_SETUP_PARAM * bp;
-  BSUBWAY_PARTNER_DATA * tr_data;
+  //BSUBWAY_PARTNER_DATA * tr_data;
+  BSUBWAY_TRAINER * bt_trd;
+  BSUBWAY_POKEMON * btpwd;
+
   const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
   POKEPARTY *party;
   WBTRULE wbt_rule = WBTSYS_GetRule( wbtsys );
   BSWAY_PLAYMODE mode = WBTTOOL_WBTRuleToBtlRule( wbt_rule );
   int num = WBTTOOL_GetPartyMaxByRule( wbt_rule );
 
-  tr_data = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_PARTNER_DATA) );
+  bt_trd = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_TRAINER) );
+  btpwd = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_POKEMON) * 6 );
+
   party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
-  makeRomTrainerData( tr_data, WBTSYS_GetWBTCup( wbtsys ), wbt_tr, num, HEAPID_PROC );
-  bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
+  makeRomTrainerData( bt_trd, btpwd, WBTSYS_GetWBTCup( wbtsys ), wbt_tr, num, HEAPID_PROC );
+  bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode );
+  FBI_TOOL_WBT_SetEnemyData( bp, bt_trd, btpwd, num, 50, HEAPID_PROC );
 
   /* 仮：α版用BGM設定 */
   if ( wbtsys->stage == WBTSTAGE_FINAL )
@@ -720,7 +994,8 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
   }
 
   GFL_HEAP_FreeMemory( party );
-  GFL_HEAP_FreeMemory( tr_data );
+  GFL_HEAP_FreeMemory( btpwd );
+  GFL_HEAP_FreeMemory( bt_trd );
   return bp;
 }
 

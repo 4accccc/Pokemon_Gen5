@@ -82,6 +82,7 @@ extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 //============================================================================================
 //============================================================================================
 #ifdef  PM_DEBUG
+extern void WBTTRAINER_DEBUG_dump( const WBTTRAINER * wbt_tr );
 extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
 #endif
 //------------------------------------------------------------------

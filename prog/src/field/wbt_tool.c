@@ -598,7 +598,7 @@ static void setEntries( u16 * tr_list, const u8 * entry_table )
  * @todo  前作主人公の扱いが未実装
  */
 //-----------------------------------------------------------------------------
-static void entryChampTournament( u16 * tr_list )
+static void entryChampTournament(const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
   int tr_idx, j;
 
@@ -754,7 +754,7 @@ void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
     entryHodomoeTournament( cond, tr_list );
     break;
   case WBTCUP_CHAMPION:
-    entryChampTournament( tr_list );
+    entryChampTournament( cond, tr_list );
     break;
   case WBTCUP_POKETYPE:
     entryTypeTournament( cond, tr_list );
@@ -856,12 +856,13 @@ void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID )
     }
   }
   GF_ASSERT( player_pos >= 0 );
+  TAMADA_Printf("WBTSORT: player_pos = %d\n", player_pos );
   sort_by_pri[ WBT_TRAINER_NUM - 1 ] = NULL;
 
   //優先度でソートをする
   for ( i = 0; i < NUM_WITHOUT_PLAYER - 1; i++ )
   {
-    for ( j = i + 1; j < NUM_WITHOUT_PLAYER - 1; j ++ )
+    for ( j = i + 1; j < NUM_WITHOUT_PLAYER; j ++ )
     {
       u8 pri1 = WBTTRAINER_GetPriority( sort_by_pri[i] );
       u8 pri2 = WBTTRAINER_GetPriority( sort_by_pri[j] );
@@ -871,6 +872,13 @@ void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID )
       }
     }
   }
+#ifdef PM_DEBUG
+  for ( i = 0; i < NUM_WITHOUT_PLAYER; i ++ )
+  {
+    WBTTRAINER_DEBUG_dump( sort_by_pri[ i ] );
+  }
+#endif
+
 
   {//②優先順位の最も高いキャラをプレイヤーと逆側のブロックに配置
     static const u8 pri1_pos_table[ WBT_TRAINER_NUM ] = { 4,4, 4,4, 0,0, 0,0 };
