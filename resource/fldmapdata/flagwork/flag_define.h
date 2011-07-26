@@ -354,7 +354,7 @@
 #define FE_C08R0402_MAN3_01                338 /* 0x0152 カラクサタウン：オタマロマニアクリアフラグ */
 #define FE_R06R0101_ITEMGET_01             339 /* 0x0153 季節研究所：シキジカイベント終了フラグ */
 #define FE_R06R0101_EVENT_ON_01            340 /* 0x0154 季節研究所：シキジカイベント開始フラグ */
-		/* not used   341(0x0155) */
+#define FE_R07R0201_GIRL3_01               341 /* 0x0155 タワーオブヘブン：戦闘チェックフラグ */
 		/* not used   342(0x0156) */
 		/* not used   343(0x0157) */
 		/* not used   344(0x0158) */
@@ -635,6 +635,14 @@
 #define FV_R06R0101_POKE_SUMMER_01         717 /* 0x02cd 季節研究所：シキジカ（夏） */
 #define FV_R06R0101_POKE_AUTUMN_01         718 /* 0x02ce 季節研究所：シキジカ（秋） */
 #define FV_R06R0101_POKE_WINTER_01         719 /* 0x02cf 季節研究所：シキジカ（冬） */
+#define FV_C14R0301_MAN3_01                720 /* 0x02d0 セイガイハシティ：ペンションオーナー */
+#define FV_C14R0301_GIRL4_01               721 /* 0x02d1 セイガイハシティ：新婚カップル妻 */
+#define FV_C14R0301_BOY4_01                722 /* 0x02d2 セイガイハシティ：新婚カップル夫 */
+#define FV_R07R0101_WAITRESS_01            723 /* 0x02d3 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0102_WOMAN3_01              724 /* 0x02d4 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0103_OL_01                  725 /* 0x02d5 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0104_MAID_01                726 /* 0x02d6 タワーオブヘブン：死亡遊戯 */
+#define FV_R07R0102_GIRL3_01               727 /* 0x02d7 タワーオブヘブン：ヒトモシガール */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
@@ -2265,6 +2273,7 @@
 #define TMFLG_R9R0201_ITEMBUY_CLEAR       2765 /* 0x0acd アールナイン：お買い物お嬢様イベント起動クリア */
 #define TMFLG_T02_LOW                     2766 /* 0x0ace カラクサタウン：１日１回小ささチェックイベント */
 #define TMFLG_T02_HIGH                    2767 /* 0x0acf カラクサタウン：１日１回大きさチェックイベント */
+#define TMFLG_C14R0501_POKEWALK           2768 /* 0x0ad0 セイガイハシティ：１日１回散歩イベント */
 
 #define TMFLG_AREA_END                    2911 /* 0x0b5f  */
 
