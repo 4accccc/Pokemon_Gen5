@@ -242,9 +242,8 @@ typedef struct {
 */
 //=============================================================================
 static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fieldmap );
-static void MapModelInit( INF_ELEVATOR_WK *p_wk );
+static void MapModelInit( INF_DUNGEON_DATA  *p_dungeon_data ,INF_ELEVATOR_WK *p_wk );
 static const ELEVATOR_SET_DATA* GetElevatorTable( INF_ELEVATOR_WK *p_wk );
-static u32 GetDungeonColor();
 static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk );
 
 //----------------------------------------------------------------------------
@@ -260,8 +259,6 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
 {
   MMDLSYS               *p_mmdlsys;
   INF_GIMMICK_WK        *p_gmk_wk = NULL;
-  SAVE_CONTROL_WORK     *p_save_data;
-  INFINITYDUNGEON_SAVE  *p_save;
   const HEAPID  heapID = FIELDMAP_GetHeapID( p_fieldmap );
   GAMESYS_WORK  *p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
   GAMEDATA      *p_gdata = GAMESYSTEM_GetGameData( p_gsys );
@@ -273,17 +270,14 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
   // ワークの初期化
   InitElevatorGimmicWork( &p_gmk_wk->elev_wk , p_fieldmap );
 
-  // 無限ダンジョンのデータを生成
-  p_save_data = GAMEDATA_GetSaveControlWork( p_gdata );
-  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-
   // 無限ダンジョンワーク確保
   p_gmk_wk->p_dungeon_data = GFL_HEAP_AllocMemory( heapID , INF_GetDungeonDataSize() );
 
-  INF_MakeDungeonData( p_gmk_wk->p_dungeon_data ,p_save ,heapID );
+  // ダンジョンデータの生成
+  INF_MakeDungeonData( p_gmk_wk->p_dungeon_data ,p_gdata ,heapID );
 
   // モデルの読み込み
-  MapModelInit( &p_gmk_wk->elev_wk );
+  MapModelInit( p_gmk_wk->p_dungeon_data, &p_gmk_wk->elev_wk );
 
   // ビルボードアクターのライトを設定する（鏡面床の影）
   p_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
@@ -346,10 +340,10 @@ void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void MapModelInit( INF_ELEVATOR_WK *p_wk )
+static void MapModelInit( INF_DUNGEON_DATA  *p_dungeon_data ,INF_ELEVATOR_WK *p_wk )
 {
   //読込み
-  if( GetDungeonColor() == VERSION_B2 )
+  if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
   {
     FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup_b, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
   }
@@ -428,20 +422,6 @@ static void InitElevatorGimmicWork( INF_ELEVATOR_WK *p_wk ,FIELDMAP_WORK *p_fiel
   p_wk->p_fieldmap  = p_fieldmap;
   p_wk->zone_id     = FIELDMAP_GetZoneID( p_wk->p_fieldmap );
   p_wk->p_ex_obj    = FIELDMAP_GetExpObjCntPtr( p_wk->p_fieldmap );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  現在のダンジョンバージョンを返す
- *
- *	@param	*p_wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static u32 GetDungeonColor()
-{
-  return GET_VERSION();
 }
 
 //----------------------------------------------------------------------------
@@ -526,6 +506,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
   INF_ELEVTER_EVENT_WK *p_wk = wk;
   u8 mode_no = p_wk->model_no;
   MODEL *p_model = &p_wk->p_gimmick_wk->elev_wk.model[mode_no];
+  INF_DUNGEON_DATA  *p_dungeon_data = p_wk->p_gimmick_wk->p_dungeon_data;
   u32 sound_id; 
 
   // アニメーションの取得
@@ -537,7 +518,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
     start_frame = ELEVATOR_START_FRAME_OPEN << FX32_SHIFT;
     end_frame = ELEVATOR_END_FRAME_OPEN << FX32_SHIFT;
 
-    if( GetDungeonColor() == VERSION_B2 )
+    if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
     {
       sound_id = SEQ_SE_SW_MDUN_BL_01;  //エレベータの開く音
     }
@@ -551,7 +532,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
     start_frame = ELEVATOR_START_FRAME_CLOSE << FX32_SHIFT;
     end_frame = ELEVATOR_END_FRAME_CLOSE << FX32_SHIFT;
     
-    if( GetDungeonColor() == VERSION_B2 )
+    if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
     {
       sound_id = SEQ_SE_SW_MDUN_BL_02;  //エレベータのしまる音
     }

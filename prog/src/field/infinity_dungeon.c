@@ -33,7 +33,7 @@
 #include "msg/script/msg_infinity_dungeon_scr.h"
 #include "infinity_dungeon_gimmick.h"
 #include "gmk_tmp_wk.h"
-#include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
+#include "arc/fieldmap/fldmmdl_objcode.h"   //for OBJCODE
 
 // グローバル変数
 #ifdef PM_DEBUG
@@ -100,7 +100,7 @@ typedef struct
   s32 master_seed;
   s32 tr_data_seed;
   s32 dungeon_data_seed;
-  u16 tr_seed[FLOOR_MAX][INFINITY_DUNGEON_TRID_MAX]; // トレーナーシード
+  u16 tr_seed[INFINITYDUNGEON_FLOOR_MAX][INFINITY_DUNGEON_TRID_MAX]; // トレーナーシード
 }INF_DUNGEON_SEED;
 
 //-------------------------------------
@@ -108,10 +108,10 @@ typedef struct
 //=====================================
 struct _INF_DUNGEON_DATA{
   INF_DUNGEON_SEED  seed;
-  ROOM_DATA         room_data[FLOOR_MAX][ROOM_MAX];
-  DUNGEON_TRAINER   tr_data[FLOOR_MAX];
+  ROOM_DATA         room_data[INFINITYDUNGEON_FLOOR_MAX][ROOM_MAX];
+  DUNGEON_TRAINER   tr_data[INFINITYDUNGEON_FLOOR_MAX];
   u32               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
-
+  u8                version;
 };
 
 //-------------------------------------
@@ -415,18 +415,18 @@ static const struct
 {
   int fs_x;
   int fs_y;
-}sc_floor_size[FLOOR_MAX] =
+}sc_floor_size[INFINITY_DUNGEON_AREA_ID_MAX] =
 {
   { 3 ,3 }, // エリア 1
   { 3 ,3 }, // エリア 2
   { 3 ,3 }, // エリア 3
-  { 4 ,4 }, // エリア 4
-  { 4 ,4 }, // エリア 5
+  { 3 ,3 }, // エリア 4
+  { 3 ,3 }, // エリア 5
   { 4 ,4 }, // エリア 6
-  { 5 ,5 }, // エリア 7
-  { 5 ,5 }, // エリア 8
-  { 5 ,5 }, // エリア 9
-  { 5 ,5 }, // エリア 10
+  { 4 ,4 }, // エリア 7
+  { 4 ,4 }, // エリア 8
+  { 4 ,4 }, // エリア 9
+  { 4 ,4 }, // エリア 10
 };
 
 // 配置データ
@@ -488,7 +488,6 @@ typedef struct {
 
 // 共通
 static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys);
-static u32 GetDungeonColor();
 static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk );
 static void SetReceptionWarpData( MAP_CHAGE_EVENT_WORK *p_wk );
 static void GetFloorData( INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
@@ -497,7 +496,7 @@ static u8 GetTrainerTalkPattern( u16 obj_code );
 static u8 GetMemberNum( u8 pos_type );
 static u8 GetRoomType( u8 pos_type );
 static u8 GetRoomVersion( u8 pos_type );
-static int GetSetTrainerIDTable( u32 area_no ,u32 *p_trid_array );
+static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array );
 
 // ゾーン依存
 static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk);
@@ -565,19 +564,39 @@ static void INF_DEBUG_OverwritRoomData( ROOM_DATA *p_room_data );
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save ,HEAPID heapID)
+void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,GAMEDATA *p_gdata, HEAPID heapID )
 {
   u32 master_seed;
+  INFINITYDUNGEON_SAVE  *p_inf_save;
+  SAVE_CONTROL_WORK     *p_save;
+  FIELD_WFBC_CORE_TYPE wfbc_type;
+ 
+  // 無限ダンジョンのデータを取得
+  p_save = GAMEDATA_GetSaveControlWork( p_gdata );
+  p_inf_save  = SaveData_GetINFINITYDUNGEON( p_save );
   
+  // WFBCの状態を調べる
+  wfbc_type = GAMEDATA_GetMyWFBCType( p_gdata );
+
   // 初期化
   GFL_STD_MemFill(p_wk, 0, sizeof(INF_DUNGEON_DATA) );
-  
+
+  // WFBCの状態からバージョンデータを決定する
+  if( wfbc_type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    p_wk->version = VERSION_B2;
+  }
+  else
+  {
+    p_wk->version = VERSION_W2;
+  }
+
   // シードを生成
-  master_seed = INFINITYDUNGEON_SAVE_GetRandomSeed( p_save );
+  master_seed = INFINITYDUNGEON_SAVE_GetRandomSeed( p_inf_save );
   SetDungeonSeed(&p_wk->seed ,master_seed);
 
   // フロアデータの生成
-  GetFloorData( p_save , p_wk );
+  GetFloorData( p_inf_save , p_wk );
 }
 
 //----------------------------------------------------------------------------
@@ -681,7 +700,7 @@ extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WOR
     INF_ReCalcDungeonData(p_dungeon_data,p_save); 
   }
 
-  OS_TFPrintf(1,"p_wk->next_floor:%u\n",p_wk->next_floor);
+  //OS_TFPrintf(1,"p_wk->next_floor:%u\n",p_wk->next_floor);
 }
 
 //----------------------------------------------------------------------------
@@ -710,7 +729,7 @@ static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys)
   p_wk->p_mmdlsys     = FIELDMAP_GetMMdlSys( p_wk->p_field_work );
   p_wk->now_area      = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_wk->p_save );
 
-  OS_TFPrintf(1,"p_wk->now_floor:%u\n",p_wk->now_floor);
+  //OS_TFPrintf(1,"p_wk->now_floor:%u\n",p_wk->now_floor);
 }
 
 //----------------------------------------------------------------------------
@@ -845,7 +864,7 @@ static void SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
   p_seed->dungeon_data_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
 
   // トレーナーシード
-  for( i = 0; i < FLOOR_MAX ;i++ )
+  for( i = 0; i < INFINITYDUNGEON_FLOOR_MAX ;i++ )
   {
     for( n = 0; n < INFINITY_DUNGEON_TRID_MAX ;n++ )
     {
@@ -853,7 +872,7 @@ static void SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
     }
   }
 
-  OS_TFPrintf(1,"シード番号:%u\n",p_seed->master_seed);
+  //OS_TFPrintf(1,"シード番号:%u\n",p_seed->master_seed);
 }
 
 //----------------------------------------------------------------------------
@@ -1134,9 +1153,9 @@ static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static u32 GetDungeonColor()
+u8 INFINITY_DUNGEON_GetDungeonColor( INF_DUNGEON_DATA *p_wk )
 {
-  return GET_VERSION();
+  return p_wk->version;
 }
 
 //----------------------------------------------------------------------------
@@ -1150,7 +1169,7 @@ static u32 GetDungeonColor()
 //-----------------------------------------------------------------------------
 static const u16* GetZoneIdTable( MAP_CHAGE_EVENT_WORK *p_wk )
 {
-  u32 version = GetDungeonColor();
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   if( version == VERSION_B2 )
   {
@@ -1164,7 +1183,7 @@ static const u16* GetZoneIdTable( MAP_CHAGE_EVENT_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ROMバージョンごとのエレベータ位置を取得
+ *	@brief  バージョンごとのエレベータ位置を取得
  *
  *	@param	*p_wk 
  *
@@ -1173,7 +1192,7 @@ static const u16* GetZoneIdTable( MAP_CHAGE_EVENT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static const GRID_DATA* GetElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk )
 {
-  u32 version = GetDungeonColor();
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   if( version == VERSION_B2 )
   {
@@ -1211,7 +1230,7 @@ static const GRID_DATA* GetReceptionElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk ,int
 //-----------------------------------------------------------------------------
 static const GRID_DATA* GetWarpPosTable( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  )
 {
-  u32 version = GetDungeonColor();
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   if( version == VERSION_B2 )
   {
@@ -1288,7 +1307,7 @@ static u8 GetRoomVersion( u8 pos_type )
 //-----------------------------------------------------------------------------
 static const GRID_DATA* GetBmodelPos( MAP_CHAGE_EVENT_WORK *p_wk ,int room_type ,int warp_dir  )
 {
-  u32 version = GetDungeonColor();
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   if( version == VERSION_B2 )
   {
@@ -1753,7 +1772,7 @@ static BOOL CheckDigEnd( ROOM_DATA *p_room_data ,int fs_x ,int fs_y)
 static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 seed ,int fs_x ,int fs_y)
 {
   int i,j,k;
-  DIG_POS elv_pos[FLOOR_MAX];
+  DIG_POS elv_pos[INFINITYDUNGEON_FLOOR_MAX];
   DIG_POS boss_pos;
   s32 boss_floor;
   GFL_STD_RandContext rand_context;
@@ -1762,15 +1781,15 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, seed );
     
-  ONOUE_Printf("---------------------\n");
-  ONOUE_Printf("seed = %d\n",seed);
-  ONOUE_Printf("area_no = %d\n",area_no);
-  ONOUE_Printf("fs_x = %d\n",fs_x);
-  ONOUE_Printf("fs_y = %d\n",fs_y);
+//  ONOUE_Printf("---------------------\n");
+//  ONOUE_Printf("seed = %d\n",seed);
+//  ONOUE_Printf("area_no = %d\n",area_no);
+//  ONOUE_Printf("fs_x = %d\n",fs_x);
+//  ONOUE_Printf("fs_y = %d\n",fs_y);
  
   // 部屋タイプを初期化
   {
-    for( i = 0; i<FLOOR_MAX; i++ )
+    for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
     {
       u8  no_tr_room_data[ROOM_MAX];
       int no_tr_room_cnt = 0;
@@ -1801,10 +1820,10 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
             for( k = 0 ; k < sc_room_setup->member_num; k++ )
             {
               const INF_ROOM_DATA *p_rs_data = &sc_room_setup->room_setup_data[k];
-              const u32 dungeon_color = GetDungeonColor();
+              const u32 dungeon_color = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
               const u8 room_version = GetRoomVersion(p_rs_data->tr_pos_type);
               
-              // ROMバージョンでの制限
+              // バージョンでの制限
               if( (dungeon_color == VERSION_B2) && (room_version == INF_B2_ONLY_DUNGEON) || // ブラック専用
                   (dungeon_color == VERSION_W2) && (room_version == INF_W2_ONLY_DUNGEON) || // ホワイト専用
                   (room_version == INF_MULTI_DUNGEON) )
@@ -1890,12 +1909,12 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
     p_rd->room_type = ROOM_TYPE_BOSS;
     p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
     boss_floor = floor_no;
-    OS_TFPrintf(1,"ボス部屋:%d階 room_id = %u \n",boss_floor+1,p_rd->room_id);
+    //OS_TFPrintf(1,"ボス部屋:%d階 room_id = %u \n",boss_floor+1,p_rd->room_id);
   }
 
   // エレベータ設置配列を取得
   {
-    for( i = 0; i<FLOOR_MAX; i++ )
+    for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
     {
       ROOM_DATA *p_room_data = p_dungeon_data->room_data[i];
       int index_array[ROOM_MAX];
@@ -1912,7 +1931,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
       elv_pos[i].x = index_array[room_index]%ROOM_MAX_X;
       elv_pos[i].y = index_array[room_index]/ROOM_MAX_Y;
     
-      OS_TFPrintf(2,"エレベータ:no=%d\n",index_array[room_index]);
+      //OS_TFPrintf(2,"エレベータ:no=%d\n",index_array[room_index]);
     }
   }
 
@@ -1930,7 +1949,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
       dig_data.now_pos = elv_pos[floor_no];
       dig_data.data_index = -1;
 
-      OS_TFPrintf(2,"スタート地点:x=%d,y=%d\n",dig_data.now_pos.x,dig_data.now_pos.y);
+      //OS_TFPrintf(2,"スタート地点:x=%d,y=%d\n",dig_data.now_pos.x,dig_data.now_pos.y);
 
 
       for( i = 0; i< INF_MAX_SEARC_CNT; i++ )
@@ -1938,7 +1957,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
         int move_cnt;
         move_cnt = CheckCanMove( &dig_data.now_pos ,p_room_data,dir_array
             ,fs_x,fs_y,INF_CHECKMODE_FULL_CLOSE);
-        OS_TFPrintf(2,"dig_pos:x=%d,y=%d\n",dig_data.now_pos.x,dig_data.now_pos.y);
+        //OS_TFPrintf(2,"dig_pos:x=%d,y=%d\n",dig_data.now_pos.x,dig_data.now_pos.y);
         if( move_cnt > 0 )
         {
           dir_index = GFL_STD_Rand( &rand_context,move_cnt);
@@ -1948,13 +1967,13 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
         else
         {
           // 一歩戻る
-          OS_TFPrintf(2,"pop\n");
+          //OS_TFPrintf(2,"pop\n");
           pop_dig_pos( &dig_data );
 
           // 終了
           if( CheckDigEnd( p_room_data ,fs_x ,fs_y ) == TRUE )
           {
-            OS_TFPrintf(2,"終了\n");
+            //OS_TFPrintf(2,"終了\n");
             break;
           }
         }
@@ -2022,7 +2041,7 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
     // 部屋タイプを初期化
     {
     const INF_ROOM_SETUP_PARAM *sc_room_setup = &sc_room_setup_param[area_no];
-      for( i = 0; i<FLOOR_MAX; i++ )
+      for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
       {
         for( j = 0; j<ROOM_MAX; j++ )
         {
@@ -2353,10 +2372,10 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
   GFL_STD_RandInit( &rand_context, seed );
   
   // トレーナーIDテーブル取得
-  tr_cnt = GetSetTrainerIDTable( area_no ,trid_array );
+  tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array );
 
   // トレーナーIDのランダムデータを生成
-  for( n = 0; n<FLOOR_MAX; n++)
+  for( n = 0; n<INFINITYDUNGEON_FLOOR_MAX; n++)
   {
     // トレーナーデータ配列をランダム化
     RndArray( trid_array ,tr_cnt ,&rand_context);
@@ -2374,7 +2393,7 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
     u32 member_num[ROOM_MAX];
     u32 recover_index = 0;
 
-    for( n = 0; n<FLOOR_MAX; n++)
+    for( n = 0; n<INFINITYDUNGEON_FLOOR_MAX; n++)
     {
       int cnt = 0;
       for( i = 0; i<ROOM_MAX; i++)
@@ -2483,12 +2502,12 @@ static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static int GetSetTrainerIDTable( u32 area_no ,u32 *p_trid_array )
+static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array )
 {
   int i;
   u16 tr_id = 0;
   int cnt = 0;
-  u32 version = GetDungeonColor();
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   // 通常トレーナー
   for( i = 0 ; i < INF_TR_AREA_DATA_MAX; i++ )
@@ -2549,7 +2568,7 @@ static void SetBUildModel( MAP_CHAGE_EVENT_WORK *p_wk , ROOM_DATA* p_room_data)
 
   GFL_G3D_OBJSTATUS status;
   const BMODEL_ID *p_bmodel_id_table;
-  u32 version = GetDungeonColor();
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   // 表示座標を初期化
   status.trans.x = 0;
@@ -2701,11 +2720,11 @@ void INFINITY_DUNGEON_Recovery( GAMESYS_WORK *p_gsys ,INF_DUNGEON_DATA  *p_dunge
   // ワーク確保
   p_wk = GFL_HEAP_AllocMemoryLo( HEAPID_FIELDMAP, sizeof( MAP_CHAGE_EVENT_WORK ) );
 
-  // ワーク初期化
-  InitWorkData( p_wk ,p_gsys );
-
   // ダンジョンデータの設定
   p_wk->p_dungeon_data = p_dungeon_data;
+
+  // ワーク初期化
+  InitWorkData( p_wk ,p_gsys );
 
   // 配置モデルを配置
   p_room_data = GetNowRoomData( p_wk );
@@ -2971,7 +2990,7 @@ u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data )
   s32 boss_floor;
 
   // ボスの存在するフロアを検索する
-  for( boss_floor = 0; boss_floor<FLOOR_MAX; boss_floor++ )
+  for( boss_floor = 0; boss_floor<INFINITYDUNGEON_FLOOR_MAX; boss_floor++ )
   {
     for( boss_room = 0; boss_room<ROOM_MAX; boss_room++ )
     {
@@ -3333,7 +3352,7 @@ void DEBUG_INFINITY_DUNGEON_MakeDungeonData()
   // 生成テスト
   seed = GFUser_GetPublicRand( GFL_STD_RAND_MAX );
   OS_TFPrintf(3,"Seed = %u--------------\n",seed);
-  for( i = 3 ; i <= 5; i++ )
+  for( i = 3 ; i <= 4; i++ )
   {
     for( n = 0 ; n < INFINITY_DUNGEON_AREA_ID_MAX; n++ )
     {

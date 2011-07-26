@@ -40,4 +40,5 @@ extern VMCMD_RESULT EvCmdInfinityDungeonSetStatus( VMHANDLE *p_core, void *p_wk_
 extern VMCMD_RESULT EvCmdInfinityDungeonGetMapStatus( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdInfinityDungeonSetMapStatus( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdInfinityDungeonGetTrIDByIDPos( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdInfinityDungeonGetVersion( VMHANDLE *p_core, void *p_wk_adrs );
 

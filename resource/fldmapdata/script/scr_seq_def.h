@@ -13571,6 +13571,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _INFINITY_DUNGEON_GET_VERSION
+ * @brief 無限ダンジョンのバージョンを取得
+ * @param ret_wk    バージョンを受け取るワーク
+ *
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_VERSION( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_VERSION ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_VERSION ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_VERSION
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _INFINITY_DUNGEON_GET_DUNGEON_STATUS
  * @brief 無限ダンジョンの状態を取得
  * @param ret_wk    状態を受け取るワーク

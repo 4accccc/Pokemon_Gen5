@@ -26,9 +26,8 @@ typedef struct _INF_DUNGEON_DATA INF_DUNGEON_DATA;
 //					定数宣言
 //
 //=============================================================================
-#define ROOM_MAX_X  (5)    // 部屋X最大数
-#define ROOM_MAX_Y  (5)    // 部屋Y最大数
-#define FLOOR_MAX   (10)   // フロア最大数
+#define ROOM_MAX_X  (4)    // 部屋X最大数
+#define ROOM_MAX_Y  (4)    // 部屋Y最大数
 #define ROOM_MAX    (ROOM_MAX_X*ROOM_MAX_Y)   // 部屋最大数
 #define INF_MAX_SEARC_CNT (100) // 乱数生成時最高思考数
 
@@ -46,11 +45,12 @@ extern u32 INFINITY_DUNGEON_GetHintMessage( INFINITYDUNGEON_SAVE *p_save ,INF_DU
 extern void DEBUG_INFINITY_DUNGEON_MakeDungeonData();
 #endif
 
-extern void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save ,HEAPID heapID);
+extern void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,GAMEDATA *p_gdata, HEAPID heapID );
 extern void INF_ReCalcDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *p_save );
 extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id );
 extern u32 INFINITY_DUNGEON_GetBossFloor( INF_DUNGEON_DATA *p_dungeon_data );
 extern u32 INF_GetDungeonDataSize();
 extern u16 INFINITY_DUNGEON_GetTrIDByIDPos( INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos );
+extern u8 INFINITY_DUNGEON_GetDungeonColor( INF_DUNGEON_DATA *p_wk );
 
 

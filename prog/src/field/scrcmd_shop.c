@@ -1461,13 +1461,13 @@ static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
     if( SCR_SHOPID_BLACK_CITY0 <= type && type <=  SCR_SHOPID_BLACK_CITY3 )
     {
       //TODO
-      rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave );
+      rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave ,FIELD_WFBC_CORE_TYPE_BLACK_CITY );
       OS_TPrintf( "BCSHOP" );
     }
     else
     {
       //TODO
-      rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave );
+      rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave ,FIELD_WFBC_CORE_TYPE_WHITE_FOREST );
       OS_TPrintf( "WFSHOP" );
     }
     

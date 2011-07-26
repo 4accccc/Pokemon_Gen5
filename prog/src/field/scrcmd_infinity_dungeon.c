@@ -173,9 +173,12 @@ VMCMD_RESULT EvCmdInfinityDungeonGetStatus( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
-  
+   
+  // WFBCの状態を調べる
+  FIELD_WFBC_CORE_TYPE wfbc_type = GAMEDATA_GetMyWFBCType( p_gamedata );
+
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  *p_ret_wk = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save );
+  *p_ret_wk = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,wfbc_type );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -198,9 +201,10 @@ VMCMD_RESULT EvCmdInfinityDungeonSetStatus( VMHANDLE *p_core, void *p_wk_adrs )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u8 status  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  FIELD_WFBC_CORE_TYPE wfbc_type = GAMEDATA_GetMyWFBCType( p_gamedata );
 
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
-  INFINITYDUNGEON_SAVE_SetDungeonStatus( p_save ,status );
+  INFINITYDUNGEON_SAVE_SetDungeonStatus( p_save ,status ,wfbc_type );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -652,7 +656,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs
   boss_floor = INFINITY_DUNGEON_GetBossFloor( p_dungeon_data );
 
   // ボスのいるフロアを返す
-  *p_ret_wk = boss_floor + (area_id * FLOOR_MAX) + 1;
+  *p_ret_wk = boss_floor + (area_id * INFINITYDUNGEON_FLOOR_MAX) + 1;
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -766,6 +770,31 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrIDByIDPos( VMHANDLE *p_core, void *p_wk_ad
   p_save    = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id  = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
   *p_ret_wk = INFINITY_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダンジョンのバージョンを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetVersion( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK   *p_wk     = p_wk_adrs;
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  
+  // バージョンを設定する
+  *p_ret_wk = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   return VMCMD_RESULT_CONTINUE;
 }

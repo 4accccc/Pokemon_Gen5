@@ -10,7 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#define INFINITYDUNGEON_FLOOR_MAX (10)  // フロアの最大数
+#define INFINITYDUNGEON_FLOOR_MAX   (5)  // フロアの最大数
 
 #define INFINITY_DUNGEON_AREA_ID_1  (0)
 #define INFINITY_DUNGEON_AREA_ID_2  (1)

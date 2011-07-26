@@ -249,7 +249,10 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
       switch( p_wk->num_input_type)
       {
       case STR_NUM_CLEAR_RANK:
-        p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_wk->p_save );
+        {
+          FIELD_WFBC_CORE_TYPE wfbc_type = GAMEDATA_GetMyWFBCType( p_wk->p_gamedata );
+          p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_wk->p_save ,wfbc_type );
+        }
         break;
       case STR_NUM_AREA:
         p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_wk->p_save );
@@ -285,13 +288,16 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
       switch( p_wk->num_input_type)
       {
       case STR_NUM_CLEAR_RANK:
-        NumInput(p_wk);
-        if( p_wk->num < 0 )
         {
-          p_wk->num = 0;
+          FIELD_WFBC_CORE_TYPE wfbc_type = GAMEDATA_GetMyWFBCType( p_wk->p_gamedata );
+          NumInput(p_wk);
+          if( p_wk->num < 0 )
+          {
+            p_wk->num = 0;
+          }
+          INFINITYDUNGEON_SAVE_SetDungeonStatus( p_wk->p_save , p_wk->num ,wfbc_type );
+          DrawNum( p_wk );
         }
-        INFINITYDUNGEON_SAVE_SetDungeonStatus( p_wk->p_save , p_wk->num );
-        DrawNum( p_wk );
         break;
       case STR_NUM_AREA:
         {

@@ -12,6 +12,7 @@
 #include <gflib.h>
 #include "savedata/save_control.h"	        //SAVE_CONTROL_WORK参照のため
 #include "field/infinity_dungeon_def.h"
+#include "field/field_wfbc_data.h" 
 #include "savedata/infinity_dungeon_save.h"
 #include "savedata/save_tbl.h"
 #include "tr_tool/ex_trainer_def.h"
@@ -31,18 +32,20 @@ extern BOOL g_debug_inf_is_presentation;
 ///	無限ダンジョンセーブデータ構造体
 //=====================================
 struct _INFINITYDUNGEON_SAVE{
-  u8  dungeon_status;
-  u8  ex_dungeon_status;
-  u8  ex_mission_count;
-  u8  memento_status;       // 未使用
 
+  // ダンジョン用データ（白黒共通）
   u32 rand_seed;
   u32 trainer_flag[INFINITYDUNGEON_FLOOR_MAX];
   u32 recover_flag;
   u8  map_status;
   u8  floor_id;
   u8  room_id;
-  u8  partner_id;
+
+  // ダンジョンの状態
+  u8  dungeon_status_w; // 白バージョン用セーブデータ
+  u8  dungeon_status_b; // 黒バージョン用セーブデータ
+
+  u8  padding[3];       // あまり
 };
 
 //=============================================================================
@@ -98,7 +101,6 @@ void INFINITYDUNGEON_SAVE_InitDungeonData(INFINITYDUNGEON_SAVE *p_save)
   p_save->map_status    = 0;
   p_save->floor_id      = 0;
   p_save->room_id       = 0;
-  p_save->partner_id    = 0;
 }
 
 //----------------------------------------------------------------------------
@@ -120,54 +122,18 @@ INFINITYDUNGEON_SAVE* SaveData_GetINFINITYDUNGEON( SAVE_CONTROL_WORK *p_save )
  *	@brief  ダンジョンステータスを取得
  *
  *	@param	*p_save 
+ *	@param	wfbc_type 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetDungeonStatus( const INFINITYDUNGEON_SAVE *p_save )
+u8 INFINITYDUNGEON_SAVE_GetDungeonStatus( const INFINITYDUNGEON_SAVE *p_save ,FIELD_WFBC_CORE_TYPE wfbc_type )
 {
-  return p_save->dungeon_status;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  ダンジョンステータスを取得
- *
- *	@param	*p_save 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetExDungeonStatus( const INFINITYDUNGEON_SAVE *p_save )
-{
-  return p_save->ex_dungeon_status;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  EXダンジョン開放ミッションクリア回数を取得
- *
- *	@param	*p_save 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetExMissionCount( const INFINITYDUNGEON_SAVE *p_save )
-{
-  return p_save->ex_mission_count;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  記念品取得状態を取得
- *
- *	@param	*p_save 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetMementoFlag( const INFINITYDUNGEON_SAVE *p_save )
-{
-  return p_save->memento_status;
+  if( wfbc_type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    return p_save->dungeon_status_b;
+  }
+  return p_save->dungeon_status_w;
 }
 
 //----------------------------------------------------------------------------
@@ -250,78 +216,25 @@ u8 INFINITYDUNGEON_SAVE_GetRoomID( const INFINITYDUNGEON_SAVE *p_save )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  現在のパートナーIDを取得する
- *
- *	@param	*p_save 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetPartnerID( const INFINITYDUNGEON_SAVE *p_save )
-{
-  return p_save->partner_id;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  ダンジョン状態を設定する
  *
  *	@param	*p_save 
- *	@param	dungeon_status
+ *	@param	dungeon_status 
+ *	@param	wfbc_type
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_SetDungeonStatus( INFINITYDUNGEON_SAVE *p_save ,u8 dungeon_status)
+void INFINITYDUNGEON_SAVE_SetDungeonStatus( INFINITYDUNGEON_SAVE *p_save ,u8 dungeon_status ,FIELD_WFBC_CORE_TYPE wfbc_type)
 {
-  p_save->dungeon_status = dungeon_status;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  EXダンジョン状態を設定する
- *
- *	@param	*p_save 
- *	@param	ex_dungeon_status
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_SetExDungeonStatus( INFINITYDUNGEON_SAVE *p_save ,u8 ex_dungeon_status)
-{
-  p_save->ex_dungeon_status = ex_dungeon_status;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  EXダンジョン用ミッションクリア回数を加算
- *
- *	@param	*p_save 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_AddExMissionCount( INFINITYDUNGEON_SAVE *p_save )
-{
-  if( p_save->ex_mission_count < 255 )
+  if( wfbc_type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
   {
-    p_save->ex_mission_count = p_save->ex_mission_count + 1;
+    p_save->dungeon_status_b = dungeon_status;
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  景品取得状態を設定する
- *
- *	@param	*p_save 
- *	@param	memento_status
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_SetMementoFlag( INFINITYDUNGEON_SAVE *p_save ,u8 memento_status)
-{
-  p_save->memento_status = memento_status;
+  else
+  {
+    p_save->dungeon_status_w = dungeon_status;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -414,21 +327,6 @@ void INFINITYDUNGEON_SAVE_SetFloorID( INFINITYDUNGEON_SAVE *p_save ,u8 floor_id)
 void INFINITYDUNGEON_SAVE_SetRoomID( INFINITYDUNGEON_SAVE *p_save ,u8 room_id)
 {
   p_save->room_id = room_id;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  現在のパートナーIDを設定する
- *
- *	@param	*p_save 
- *	@param	partner_id
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void INFINITYDUNGEON_SAVE_SetPartnerID( INFINITYDUNGEON_SAVE *p_save ,u8 partner_id)
-{
-  p_save->partner_id = partner_id;
 }
 
 //----------------------------------------------------------------------------
