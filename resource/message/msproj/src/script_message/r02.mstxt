@@ -2,6 +2,322 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r02_hardrock_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしに　ピッタリの
+がっきって　なにかしら？▼
+この　がっきも　わたしには
+インパクトが　たりないの！▼
+たとえば……▼
+こうかばつぐんの　わざの
+いりょくを　よわめる▼
+タフな　とくせいの　ポケモンくらい
+つよい　インパクトが　ほしいわ！▼
+もし　あなたが　そんな　ポケモンを
+つれていたら　ぜひ　みせて……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:30:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:24:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしに　ピッタリの
+楽器って　なにかしら？▼
+この楽器も　わたしには
+インパクトが　足りないの！▼
+たとえば……▼
+効果バツグンの　技の
+威力を　弱める……▼
+タフな　特性の　ポケモンくらい
+強い　インパクトが　欲しいわ！▼
+もし　あなたが　そんな　ポケモンを
+連れていたら　ぜひ　みせて……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:30:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝797、GRIDZ＝618
+・手持ちに特性「ハードロック」がいたら
+　続けてhardrock_02
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:27:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>PIPE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:23:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r02_hardrock_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こ　この　[Name:PokemonName ]……
+とくせい　ハードロック……！▼
+[Name:PokemonName ]から　わきあがる
+この　ハードな　タフさ……▼
+そして　ハートを　ロック！▼
+つまり　ゆさぶる　インパクト！▼
+ハードロック……　これこそが
+わたしの　もとめていた　サウンド？▼
+とにかく　かんしゃ　してます
+これを　もらって　くださいな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:31:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:24:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こ　この　[Name:PokemonName ]……
+特性　ハードロック……！▼
+[Name:PokemonName ]から　わきあがる
+この　ハードな　タフさ……▼
+そして　ハートを　ロック！▼
+つまり　揺さぶる　インパクト！▼
+ハードロック……　これこそが
+わたしの　求めていた　サウンド？▼
+とにかく　感謝してます
+これを　もらって　くださいな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:31:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・手持ちに特性「ハードロック」がいる
+・アイテム入手処理
+　No000「」（仮）
+・0＝ポケモン種族名
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:29:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>PIPE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:23:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r02_hardrock_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>って　それいじょう
+バッグに　はいりませんね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:28:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:28:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>って　それ以上
+バッグに　入りませんね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:31:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・バッグが一杯
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:27:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>PIPE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:27:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r02_hardrock_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんでしょう……
+けつえきが　ざわつくのです……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:28:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:28:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんでしょう……
+血液が　ざわつくのです……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:31:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:29:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後、ゾーンチェンジ前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:24:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>PIPE</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:24:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r02_hardrock_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ギャリリーン！▼
+ドリュドリュドリュ！▼
+デレリデレリデレレ！▼
+ジャガーン！！▼
+ヘイ！　キミが　みせてくれた
+[Name:PokemonName ]の　ハードで▽
+ロックな　とくせいの　おかげで▽
+アタシ　めざめたわ！▼
+ババルババルバル
+デュルルーン　ギャス！▼
+そうだ！　ホミカちゃんの　バンドに
+いれてもらおうかな！　ツインギターよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:26:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:24:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ギャリリーン！▼
+ドリュドリュドリュ！▼
+デレリデレリデレレ！▼
+ジャガーン！！▼
+ヘイ！　キミが　みせてくれた
+[Name:PokemonName ]の　ハードで▽
+ロックな　とくせいの　おかげで▽
+アタシ　めざめたわ！▼
+ババルババルバル
+デュルルーン　ギャス！▼
+そうだ！　ホミカちゃんの　バンドに
+いれてもらおうかな！　ツインギターよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:26:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:26:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント終了
+　ゾーンチェンジ後
+・0＝ポケモン種族名
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:26:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GUITARW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T12:24:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r02_boy2a_01"
 		Style="Large">
 		<LanguageCell
