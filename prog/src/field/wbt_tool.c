@@ -30,6 +30,8 @@
 #include "tr_tool/trtype_def.h"
 #include "sound/pm_sndsys.h"
 
+#include "arc_def.h"  //ARCID_～
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -37,9 +39,11 @@
 typedef struct {
   u16 title_id;       ///<トーナメント名のMsgID
   u8 win_count_id;    ///<WBTSAVE::WBTWIN_COUNT
-  u8 reg_type;        ///<WBTREG_ID
   u8 reception_id;    ///<WBTRECEPT
+  u8 reg_type;        ///<WBTREG_ID
+  u8 btdata_id;       ///<WBTBTDATA
 
+  u8 reward[4];       ///<ごほうびのBP数
 }WBT_TOURNAMENT_DATA;
 
 //------------------------------------------------------------------
@@ -48,99 +52,115 @@ static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
   { //WBTCUP_CHAMPION, //チャンピオントーナメント
     msg_wbtsys_title_02,
     WBTWIN_COUNT_CHAMPION,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_3,
+    { 0, 0, 0, 0 },
   },
   { //WBTCUP_POKETYPE, //タイプトーナメント
     msg_wbtsys_title_03,
     POKETYPE_NORMAL,   //ダミー
-    WBTREG_POKETYPE,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_POKETYPE,
+    WBTBTDATA_3,
+    { 2, 2, 3, 3 },
   },
   {//WBTCUP_DOWNLOAD, //ダウンロードトーナメント
     msg_wbtsys_title_04,
     WBTWIN_COUNT_MAX,   //ダミー
-    WBTREG_DOWNLOAD,
-    WBTRECEPT_1,
+    WBTRECEPT_1, WBTREG_DOWNLOAD,
+    WBTBTDATA_3,
+    { 0, 0, 0, 0 },
   },
 
   {//WBTCUP_HODOMOE,     //ホドモエトーナメント           
     msg_wbtsys_title_05,
     WBTWIN_COUNT_HODOMOE,
-    WBTREG_ALL,
-    WBTRECEPT_1,
+    WBTRECEPT_1, WBTREG_ALL,
+    WBTBTDATA_3,
+    { 1, 1, 2, 2 },
   },
   {//WBTCUP_ISSYU,       //イッシュリーダーズトーナメント 
     msg_wbtsys_title_06,
     WBTWIN_COUNT_ISSYU,
-    WBTREG_ALL,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_ALL,
+    WBTBTDATA_3,
+    { 1, 1, 2, 2 },
   },
   {//WBTCUP_KANTO,       //カントーリーダーズトーナメント 
     msg_wbtsys_title_07,
     WBTWIN_COUNT_KANTO,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_3,
+    { 2, 2, 3, 3 },
   },
   {//WBTCUP_JOUTO,       //ジョウトリーダーズトーナメント 
     msg_wbtsys_title_08,
     WBTWIN_COUNT_JOUTO,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_2,
+    { 2, 2, 3, 3 },
   },
   {//WBTCUP_HOUEN,       //ホウエンリーダーズトーナメント 
     msg_wbtsys_title_09,
     WBTWIN_COUNT_HOUEN,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_2,
+    { 2, 2, 3, 3 },
   },
   {//WBTCUP_SINOU,       //シンオウリーダーズトーナメント 
     msg_wbtsys_title_10,
     WBTWIN_COUNT_SINOU,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_2,
+    { 2, 2, 3, 3 },
   },
   {//WBTCUP_WORLD,       //ワールドトーナメント     
     msg_wbtsys_title_11,
     WBTWIN_COUNT_WORLD,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_3,
+    { 0, 0, 0, 0 },
   },
   {//WBTCUP_WCS,         //WCSトーナメント
     msg_wbtsys_title_17,
     WBTWIN_COUNT_WCS,
-    WBTREG_WCS,
-    WBTRECEPT_1,
+    WBTRECEPT_1, WBTREG_WCS,
+    WBTBTDATA_1,
+    { 0, 0, 0, 0 },
   },
   {//WBTCUP_HODOMOE_EVENT, //ホドモエトーナメント（イベント）           
     msg_wbtsys_title_05,
     WBTWIN_COUNT_HODOMOE,
-    WBTREG_ALL,
-    WBTRECEPT_1,
+    WBTRECEPT_1, WBTREG_ALL,
+    WBTBTDATA_1,
+    { 1, 0, 0, 0 },
   },
   {//WBTCUP_RENTAL,         //レンタルトーナメント
     msg_wbtsys_title_12,
     WBTWIN_COUNT_RENTAL,
-    WBTREG_SUBWAY,
-    WBTRECEPT_1,
+    WBTRECEPT_1, WBTREG_SUBWAY,
+    WBTBTDATA_1,
+    { 1, 1, 2, 2 },
   },
   {//WBTCUP_RENTALMASTER,         //レンタルマスタートーナメント
     msg_wbtsys_title_13,
     WBTWIN_COUNT_RENTALMASTER,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_3,
+    { 2, 2, 3, 3 },
   },
   {//WBTCUP_SHUFFLE,         //シャッフルトーナメント
     msg_wbtsys_title_14,
     WBTWIN_COUNT_SHUFFLE,
-    WBTREG_SUBWAY,
-    WBTRECEPT_1,
+    WBTRECEPT_1, WBTREG_SUBWAY,
+    WBTBTDATA_1,
+    { 1, 1, 2, 2 },
   },
   {//WBTCUP_SHUFFLEMASTER,         //シャッフルマスタートーナメント
     msg_wbtsys_title_15,
     WBTWIN_COUNT_SHUFFLEMASTER,
-    WBTREG_SUBWAY,
-    WBTRECEPT_2,
+    WBTRECEPT_2, WBTREG_SUBWAY,
+    WBTBTDATA_3,
+    { 2, 2, 3, 3 },
   },
 
 };
@@ -957,6 +977,15 @@ static void makeWinCountArray( GAMEDATA * gamedata, u16 * win_count_array )
 static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_count )
 {
   EVENTWORK * evwork = GAMEDATA_GetEventWork( gamedata );
+  BOOL all_region_clear;
+
+  //全地方のリーダーズトーナメントをクリアか？
+  all_region_clear =
+    ( win_count[ WBTWIN_COUNT_ISSYU ] != 0 &&
+      win_count[ WBTWIN_COUNT_KANTO ] != 0 &&
+      win_count[ WBTWIN_COUNT_JOUTO ] != 0 &&
+      win_count[ WBTWIN_COUNT_HOUEN ] != 0 &&
+      win_count[ WBTWIN_COUNT_SINOU ] != 0 );
 
   switch ( (WBTCUP)wbtcup )
   {
@@ -968,11 +997,7 @@ static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_
 
   case WBTCUP_POKETYPE: //タイプトーナメント
     //すべてのリーダーズトーナメント
-    return ( win_count[ WBTWIN_COUNT_ISSYU ] != 0 &&
-        win_count[ WBTWIN_COUNT_KANTO ] != 0 &&
-        win_count[ WBTWIN_COUNT_JOUTO ] != 0 &&
-        win_count[ WBTWIN_COUNT_HOUEN ] != 0 &&
-        win_count[ WBTWIN_COUNT_SINOU ] != 0 );
+    return all_region_clear;
 
   case WBTCUP_DOWNLOAD: //ダウンロードトーナメント
     return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
@@ -994,24 +1019,16 @@ static BOOL checkCupEnable( GAMEDATA * gamedata, WBTCUP wbtcup, const u16 * win_
     return (win_count[ WBTWIN_COUNT_ISSYU ] != 0);
 
   case WBTCUP_RENTALMASTER:
-    return ( win_count[ WBTWIN_COUNT_RENTAL ] != 0
-        && win_count[ WBTWIN_COUNT_ISSYU ] != 0);
+    return ( win_count[ WBTWIN_COUNT_RENTAL ] != 0 && all_region_clear );
 
   case WBTCUP_SHUFFLEMASTER:
-    return ( win_count[ WBTWIN_COUNT_SHUFFLE ] != 0
-        && win_count[ WBTWIN_COUNT_ISSYU ] != 0);
+    return ( win_count[ WBTWIN_COUNT_SHUFFLE ] != 0 && all_region_clear );
 
   case WBTCUP_WORLD:        //ワールドリーダーズトーナメント     
-    return (
-        win_count[ WBTWIN_COUNT_ISSYU ] != 0 &&
-        win_count[ WBTWIN_COUNT_KANTO ] != 0 &&
-        win_count[ WBTWIN_COUNT_JOUTO ] != 0 &&
-        win_count[ WBTWIN_COUNT_HOUEN ] != 0 &&
-        win_count[ WBTWIN_COUNT_SINOU ] != 0 );
+    return all_region_clear;
 
   case WBTCUP_WCS:          //WCSトーナメント
-    //return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
-    return FALSE;
+    return ( win_count[ WBTWIN_COUNT_HODOMOE ] != 0 );
   }
   //よくわからないものは開催できない
   return FALSE;
@@ -1151,7 +1168,57 @@ BOOL WBTTOOL_CheckReceptionID( WBTCUP wbtcup, WBTRECEPT reception_id )
   return FALSE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief トレーナーデータのアーカイブ指定を取得する
+ * @param wbtcup
+ * @return  u32   アーカイブ指定ID
+ */
+//-----------------------------------------------------------------------------
+u32 WBTTOOL_GetRomArcID( WBTCUP wbtcup )
+{
+  static const u16 btdIdTable[WBTBTDATA_MAX] = {
+    ARCID_WBT_TD1A,
+    ARCID_WBT_TD2A,
+    ARCID_WBT_TD3A,
+  };
 
+  u32 index;
+
+  if ( 0 <= wbtcup && wbtcup < WBTCUP_MAX )
+  {
+    index = WBTTournamentData[ wbtcup - 1 ].btdata_id;
+  }
+  else
+  {
+    GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
+    index = WBTBTDATA_1;
+  }
+  return btdIdTable[ index ];
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief   ごほうびのBP数取得
+ * @param wbtcup
+ * @param wbtrule
+ * @return  u32   BPの数
+ */
+//-----------------------------------------------------------------------------
+u32 WBTTOOL_GetRewardCount( WBTCUP wbtcup, WBTRULE wbtrule )
+{
+  if ( wbtcup <= WBTCUP_NULL || wbtcup >= WBTCUP_MAX )
+  {
+    GF_ASSERT_MSG( 0, "error wbtcup == %d\n", wbtcup );
+    wbtcup = WBTCUP_HODOMOE;
+  }
+  if ( wbtrule <= WBTRULE_NULL || wbtrule >= WBTRULE_MAX )
+  {
+    GF_ASSERT_MSG( 0, "error wbtrule == %d\n", wbtrule );
+    wbtrule = WBTRULE_SINGLE;
+  }
+  return WBTTournamentData[ wbtcup - 1].reward[ wbtrule - 1];
+}
 
 
 

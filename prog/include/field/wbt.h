@@ -63,6 +63,8 @@ typedef enum {
   WBTRULE_DOUBLE,   ///<ダブルバトル
   WBTRULE_TRIPLE,   ///<トリプルバトル
   WBTRULE_ROTATION, ///<ローテーションバトル
+
+  WBTRULE_MAX,
 }WBTRULE;
 
 //------------------------------------------------------------------

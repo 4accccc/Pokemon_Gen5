@@ -46,6 +46,24 @@ typedef enum {
   WBTREG_DOWNLOAD,
 }WBTREG_ID;
 
+//------------------------------------------------------------------
+/// WBT用BTDデータの指定
+//------------------------------------------------------------------
+typedef enum {
+  WBTBTDATA_1,  ///<クリア前用データ
+  WBTBTDATA_2,  ///<クリア後用データ
+  WBTBTDATA_3,  ///<最強用データ
+
+  WBTBTDATA_MAX,
+}WBTBTDATA;
+
+typedef enum {
+  WBTBTD_ARCOFS_TR_ACE = 0,
+  WBTBTD_ARCOFS_PM_ACE,
+  WBTBTD_ARCOFS_TR_NORMAL,
+  WBTBTD_ARCOFS_PM_NORMAL,
+}WBTBTD_ARCOFS;
+
 //-----------------------------------------------------------------------------
 /**
  * @brief WBTにまつわる判定処理
@@ -88,6 +106,8 @@ extern BtlRule WBTTOOL_WBTRuleToBtlRule( WBTRULE wbt_rule );
 extern WBTWIN_COUNT WBTTOOL_WBTCupToWinCount( WBTCUP wbtcup, u8 poketype );
 extern WBTCUP WBTTOOL_WBTWinCountToCup( WBTWIN_COUNT counter_id );
 extern WBTREG_ID WBTTOOL_GetRegulationID( WBTCUP wbtcup );
+extern u32 WBTTOOL_GetRomArcID( WBTCUP wbtcup );
+extern u32 WBTTOOL_GetRewardCount( WBTCUP wbtcup, WBTRULE wbtrule );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

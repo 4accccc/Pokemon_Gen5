@@ -661,7 +661,7 @@ static const u8 pri2pow_table[5] = {
  */
 //-----------------------------------------------------------------------------
 static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
-    const WBTTRAINER * wbt_tr,
+    WBTCUP wbtcup, const WBTTRAINER * wbt_tr,
     u8 cnt, HEAPID inHeapID)
 {
   BOOL      ret = 0;
@@ -669,10 +669,11 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
   u8 pow_rnd;
   u8 tr_pri = WBTTRAINER_GetPriority(wbt_tr);
   u8 tr_no = WBTTRAINER_GetID(wbt_tr);
+  u32 arc_id = WBTTOOL_GetRomArcID( wbtcup );
 
   //トレーナーデータセット
   trd = FBI_TOOL_AllocTrainerRomData(tr_data,
-      ARCID_WBT_TD ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
+      arc_id + WBTBTD_ARCOFS_TR_NORMAL ,tr_no, NARC_message_wbt_trname_dat ,inHeapID);
   // パワー乱数を決定する
   pow_rnd= pri2pow_table[ tr_pri - 1 ];
   tr_data->bt_trd.tr_type = WBTTRAINER_GetBattleTrainerType( wbt_tr );
@@ -682,7 +683,7 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
   //ポケモンデータをセット
   ret = FBI_TOOL_SetBSWayPokemonParam(
       trd, tr_no, &tr_data->btpwd[0], cnt,
-      ARCID_BSW_PD, NULL, NULL, NULL, NULL ,pow_rnd ,inHeapID);
+      arc_id + WBTBTD_ARCOFS_PM_NORMAL, NULL, NULL, NULL, NULL ,pow_rnd ,inHeapID);
   GFL_HEAP_FreeMemory( trd );
   return ret;
 }
@@ -690,6 +691,7 @@ static BOOL makeRomTrainerData( BSUBWAY_PARTNER_DATA * tr_data,
 //------------------------------------------------------------------
 /**
  * @brief WBT用BATTLE_SETUP_PARAM生成
+ * @todo  DOWNLOADデータへの対応
  */
 //------------------------------------------------------------------
 BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WORK * gsys )
@@ -704,7 +706,7 @@ BATTLE_SETUP_PARAM * WBTSYS_CreateBattleSetupParam( WBTSYS * wbtsys, GAMESYS_WOR
 
   tr_data = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, sizeof(BSUBWAY_PARTNER_DATA) );
   party = WBTSYS_CreateBattleParty( wbtsys, GAMESYSTEM_GetGameData( gsys ) );
-  makeRomTrainerData( tr_data, wbt_tr, num, HEAPID_PROC );
+  makeRomTrainerData( tr_data, WBTSYS_GetWBTCup( wbtsys ), wbt_tr, num, HEAPID_PROC );
   bp = FBI_TOOL_WBT_CreateBattleParam( gsys, party, mode, tr_data, num  );
 
   /* 仮：α版用BGM設定 */
