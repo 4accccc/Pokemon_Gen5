@@ -79,7 +79,7 @@ medal_csv.each { |item|
   # ƒf[ƒ^‚ğæ“¾‚·‚é
   medal_data = MEDAL_DATA.new
   medal_data.no             = item[COL_NO]
-  medal_data.id             = "MDLID_" + item[COL_ID]
+  medal_data.id             = "MDLID_" + item[COL_ID].tr('‚-‚š‚`-‚y‚O-‚X','a-zA-Z0-9')
   medal_data.medal_name     = item[COL_NAME]
   medal_data.record_id      = item[COL_RECID].strip
   medal_data.count          = item[COL_COUNT]
