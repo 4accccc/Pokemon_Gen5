@@ -7,13 +7,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さいきん　なんだか
-うまく　ピアノが　ひけないの……▼
+たのしく　ピアノが　ひけないの……▼
 すてきな　メロディの　なきごえを
-きいて　イマジネーション　を▽
+きいて　イマジネーションを▽
 ふくらませたら　いいのかな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:28:17" />
+				Time="2011-07-26T10:37:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,10 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>最近　なんだか
+楽しく　ピアノが　弾けないの……▼
+素敵な　メロディの　鳴き声を
+聴いて　イマジネーションを▽
+ふくらませたら　いいのかな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:11" />
+				Time="2011-07-26T11:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +37,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・イベント開始</Comment>
+・イベント開始
+・続けてgirl4_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:35:07" />
+				Time="2011-07-26T10:46:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -66,53 +71,50 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナタと　いっしょの　ポケモンの
-かなでる　メロディは▼
-いまの　わたしの　きんせんには
-ヒット　しないみたい……</Text>
+			<Text>ねえ　ごぞんじ？▼
+コロボーシって　ポケモン　って
+がっきみたいな　なきごえ　ですって！▽
+いちど　きいてみたいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T06:13:02" />
+				Time="2011-07-26T10:56:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:53:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ねえ　ご存知？▼
+コロボーシって　ポケモン　って
+楽器みたいな　鳴き声ですって！▽
+一度　聴いてみたいな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:07:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:53:40" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・msg_t02r0401_girl4_01表示後に
-・はい選択
-・ISS起動</Comment>
+・コロボーシをみせるまで繰り返し
+・コロボーシがいるときは
+　続けてgirl4_03
+※ポケモンは仮</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:58:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>GIRL4
 お嬢様</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:53:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -127,14 +129,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>！！▼
-アナタと　いっしょにいる
+			<Text>あなたと　いっしょに　いる
 コロボーシの　その　なきごえ……▼
-コロコロ　もっきん　みたいで
-とっても　ステキ！！</Text>
+コロン　コロコロン♪　まるで
+もっきん　みたいで　ステキ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:35:25" />
+				Time="2011-07-26T11:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -142,10 +143,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あなたと　一緒に　いる
+コロボーシの　その　鳴き声……▼
+コロン　コロコロン♪　まるで
+木琴みたいで　ステキ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -154,11 +158,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・手持ちにひんしではない
-　No000コロボーシがいる</Comment>
+・手持ちにコロボーシがいる
+・！マーク表示後に
+　このメッセージ表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:36:30" />
+				Time="2011-07-26T11:03:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -188,14 +193,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>！！▼
-アナタと　いっしょにいる
-ムウマージの　その　なきごえ……▼
-じゅもん　みたいで　ロマンティック
-イマジネーション　わいてくるわ！</Text>
+			<Text>あとひとつ……▼
+あとひとつ　きけば
+こころ　はずんで▽
+けんばんを　おどらせられるのに！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:35:34" />
+				Time="2011-07-26T11:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -203,10 +207,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あとひとつ……▼
+あとひとつ　聴けば
+心　弾んで▽
+けん盤を　躍らせられるのに！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -215,11 +222,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・手持ちにひんしではない
-　No000ムマージがいる</Comment>
+・続けてgirl4_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:36:43" />
+				Time="2011-07-26T11:00:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -249,46 +255,58 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>！！▼
-アナタと　いっしょにいる
-リーシャンの　その　なきごえ……▼
-リンリン　すず　みたいで
-かろやかな　メロディで　ステキ！</Text>
+			<Text>ゴニョニョって　ポケモンの　なきごえは
+とっても　ちいさいんですって！▼
+そんな　なきごえを　しれば
+せんさいな　ピアノタッチ　できるかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:35:40" />
+				Time="2011-07-26T11:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:17" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ゴニョニョって　ポケモンの　鳴き声は
+とっても　小さいんですって！▼
+そんな　鳴き声を　知れば
+繊細な　ピアノタッチ　できるかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:09:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・手持ちにひんしではない
-　No000リーシャンがいる</Comment>
+・コロボーシをみせたあと
+　ゴニョニョをみせるまで繰り返し
+・ゴニョニョがいるときは
+　続けてgirl4_06
+※ポケモンは仮</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:36:47" />
+				Time="2011-07-26T11:04:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>GIRL4
 お嬢様</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:17" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -303,25 +321,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>！！▼
-アナタと　いっしょにいる
-ぺラップの　その　なきごえ▼
-ひとが　しゃべっているのを
-マネ　しているのね　たのしい！</Text>
+			<Text>あなたと　いっしょに　いる
+ゴニョニョの　その　なきごえ……▼
+すごーく　ピアニッシモ　ね！
+あまい　ささやきみたいで　とろける！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:35:47" />
+				Time="2011-07-26T11:11:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:23" />
+				Time="2011-07-13T12:30:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あなたと　一緒に　いる
+ゴニョニョの　その鳴き声……▼
+すごーく　ピアニッシモ　ね！
+甘い　ささやきみたいで　とろける！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:11:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -330,11 +350,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・手持ちにひんしではない
-　No000ぺラップがいる</Comment>
+・手持ちにコロボーシがいる
+・！マーク表示後に
+　このメッセージ表示
+・続けてgirl4_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:36:51" />
+				Time="2011-07-26T11:04:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -357,25 +379,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>！！▼
-アナタと　いっしょにいる
-ゴニョニョの　その　なきごえ▼
-とっても　ピアニッシモ　ね！
-ささやきみたいで　かわいい！</Text>
+			<Text>あなたと　ポケモンの　おかげで
+あたくしの　あたまの　なかに▽
+メロディが　あふれてくる……！！▼
+わたし　また　ピアノひける！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:35:55" />
+				Time="2011-07-26T11:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:30" />
+				Time="2011-07-13T12:30:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あなたと　ポケモンの　おかげで
+あたくしの　頭の　中に▽
+メロディが　あふれてくる……！！▼
+わたし　また　ピアノ弾ける！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:11:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -384,11 +408,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・手持ちにひんしではない
-　No000ゴニョニョがいる</Comment>
+・ピアノの周りを一周してから
+　このメッセージ表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:37:05" />
+				Time="2011-07-26T11:04:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -411,24 +435,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナタと　ポケモンの　おかげで
-あたまの　なかに　メロディが▽
-あふれてくる……！！▼
-わたし　また　ピアノひける！！</Text>
+			<Text>これは　あたくしの
+スランプを　なおしてくれた▽
+おれい！！　ありがと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:44" />
+				Time="2011-07-26T11:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:44" />
+				Time="2011-07-13T12:30:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>これは　あたくしの
+スランプを　治してくれた▽
+お礼！！　ありがと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:10:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -437,10 +462,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・イベント後、続けてISS開始</Comment>
+・アイテム入手処理
+　No000「」
+・続けてgirl4_09</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:37:37" />
+				Time="2011-07-26T11:05:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -463,21 +490,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えんそうに　むちゅうだ！！</Text>
+			<Text>あたくしの　すきな　きょく
+ひいて　あげましょうか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:52" />
+				Time="2011-07-26T11:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:52" />
+				Time="2011-07-13T12:30:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>あたくしの　好きな　曲
+弾いて　あげましょうか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:31:15" />
+				Time="2011-07-26T11:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -486,10 +515,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：ピアノ演奏
-・弾いているとき</Comment>
+・はい/いいえの選択肢表示
+　はい　→girl4_10
+　いいえ→girl4_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-13T12:30:57" />
+				Time="2011-07-26T11:05:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -498,6 +529,158 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-13T12:31:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0401_girl4_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ウフフ……
+では　きいてくださいね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:30:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ウフフ……
+では　聴いてくださいね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:31:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：ピアノ演奏
+・はい選択時
+・メッセージ表示後、ISS開始</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-13T12:31:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0401_girl4_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あら　ざんねん　ですわ……
+ききたくなったら　おっしゃってね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:34:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あら　残念ですわ……
+聴きたくなったら　おっしゃってね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:34:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：ピアノ演奏
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:34:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02r0401_girl4_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えんそうに　むちゅうだ！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:34:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>演奏に　夢中だ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:34:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：ピアノ演奏
+・弾いているとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T11:02:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4
+お嬢様</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:34:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
