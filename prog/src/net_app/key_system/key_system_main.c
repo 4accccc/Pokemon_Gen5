@@ -1184,7 +1184,7 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   KEYSYS_TEXT_WriteWindowFrame( p_wk->p_text, KEYSYS_CGR_TEXT_M, KEYSYS_PLT_BG_FRAME_M );
 
   //上画面タイトル作成
-  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, 12, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
+  p_wk->p_title = KEYSYS_TEXT_Init( KEYSYS_BG_FRAME_TEXT_M, 0, 1, 14, 2, KEYSYS_PLT_BG_FONT_M, p_wk->p_font, heapID );
   KEYSYS_TEXT_SetColor( p_wk->p_title, PRINTSYS_LSB_Make( 1, 2, 0 ) );
   KEYSYS_TEXT_SetPos( p_wk->p_title, 0, 0, KEYSYS_TEXT_POS_WH_CENTER );
 
@@ -1509,7 +1509,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
       menu_param.wnd_data[i].w  = 26;
       menu_param.wnd_data[i].h  = 2;
       menu_param.wnd_data[i].x  = 3;
-      menu_param.wnd_data[i].y  = 4 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
+      menu_param.wnd_data[i].y  = 5 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_62;
     menu_param.wnd_data[1].strID = KEYSYS_STR_63;

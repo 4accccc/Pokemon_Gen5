@@ -594,6 +594,10 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     {
       KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayWifi );
     }
+    else
+    {
+      KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayNetMenu );
+    }
     (*p_seq)++;
     break;
   case SEQ_OPEN_PROC_TO_WIFI_LOGIN:
@@ -1276,7 +1280,7 @@ static void DataConv_Display_CreateNetMenu( void *p_wk_adrs, HEAPID heapID )
       menu_param.wnd_data[i].w  = 26;
       menu_param.wnd_data[i].h  = 2;
       menu_param.wnd_data[i].x  = 3;
-      menu_param.wnd_data[i].y  = 4 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
+      menu_param.wnd_data[i].y  = 5 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_69;
     menu_param.wnd_data[1].strID = KEYSYS_STR_70;

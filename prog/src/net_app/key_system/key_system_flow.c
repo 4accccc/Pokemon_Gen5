@@ -1760,7 +1760,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
       menu_param.wnd_data[i].w  = 26;
       menu_param.wnd_data[i].h  = 2;
       menu_param.wnd_data[i].x  = 3;
-      menu_param.wnd_data[i].y  = 4 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
+      menu_param.wnd_data[i].y  = 5 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_01;
     menu_param.wnd_data[1].strID = KEYSYS_STR_02;
@@ -2029,7 +2029,7 @@ static void KeySys_Display_CreateLockList( void *p_wk_adrs, HEAPID heapID )
       menu_param.wnd_data[i].w  = 26;
       menu_param.wnd_data[i].h  = 2;
       menu_param.wnd_data[i].x  = 3;
-      menu_param.wnd_data[i].y  = 4 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
+      menu_param.wnd_data[i].y  = 5 + (i*(menu_param.wnd_data[i].h+2+1)); //+2はフレーム分+1は間隔分
     }
     menu_param.wnd_data[0].strID = KEYSYS_STR_04;
     menu_param.wnd_data[1].strID = KEYSYS_STR_05;
@@ -2614,7 +2614,7 @@ static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE t
       menu_param.wnd_data[i].w      = 15;
       menu_param.wnd_data[i].h      = 2;
       menu_param.wnd_data[i].x      = 16;
-      menu_param.wnd_data[i].y      = 2+(i*(menu_param.wnd_data[0].h+2));
+      menu_param.wnd_data[i].y      = 3+(i*(menu_param.wnd_data[0].h+2));
 
       if( KEYSYS_CLWK_LOCK_00+i <= KEYSYS_CLWK_LOCK_02 )
       {
