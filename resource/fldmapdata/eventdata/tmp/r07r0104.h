@@ -12,6 +12,7 @@
 
 #define FLD_ITEM_108                       0
 #define FLD_ITEM_109                       1
+#define R07R0104_MAID_01                   2
 
 #endif //ZONE_R07R0104_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07r0104.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

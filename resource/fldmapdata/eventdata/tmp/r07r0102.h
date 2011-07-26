@@ -12,6 +12,7 @@
 
 #define FLD_ITEM_105                       0
 #define FLD_ITEM_106                       1
+#define R07R0102_WOMAN3_01                 2
 
 #endif //ZONE_R07R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

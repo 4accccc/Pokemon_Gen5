@@ -9,6 +9,9 @@
 #ifndef ZONE_C14R0301_EVC_H
 #define ZONE_C14R0301_EVC_H
 
+#define C14R0301_MAN3_01                   0
+#define C14R0301_GIRL4_01                  1
+#define C14R0301_BOY4_01                   2
 
 #endif //ZONE_C14R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

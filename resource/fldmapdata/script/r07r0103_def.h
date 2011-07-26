@@ -5,5 +5,7 @@
 #define _R07R0103_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_INIT_R07R0103 (1)
+#define SCRID_R07R0103_OL_01 (2)
 
 #endif //_R07R0103_DEF_H_

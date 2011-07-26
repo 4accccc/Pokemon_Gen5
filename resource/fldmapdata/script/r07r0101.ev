@@ -21,7 +21,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_init_r07r0101
 _EVENT_DATA   ev_r07r0101_hakase2_01
+_EVENT_DATA   ev_r07r0101_waitress_01
 _EVENT_DATA_END
 
 //主人公の座標、方向取得変数
@@ -31,14 +33,18 @@ DEFINE_LOCAL  LCW_POSZ
 
 
 /************************************************************/
-/*  ZONE_CHANGE_SCRIPT                                      */
-/************************************************************/
-
-
-/************************************************************/
 /*  FIELD_INIT_SCRIPT                                       */
 /************************************************************/
+INIT_EVENT_START  ev_init_r07r0101
 
+  //ウェイトレスに勝利していた場合、ユニットを再配置
+  IF $WK_SCENE_C14R0301_BOY4_01 >= 2 && FLAG_OFF( FV_R07R0101_WAITRESS_01 ) THEN
+
+    _OBJ_POS_CHANGE( R07R0101_WAITRESS_01, 15, 0, 24, DIR_DOWN )
+
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /* アララギ博士01                                             */
@@ -127,6 +133,75 @@ EVENT_START   ev_r07r0101_hakase2_01
   ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*  ウェイトレス：話しかけ（カップルの鐘イベント）            */
+/**************************************************************/
+EVENT_START   ev_r07r0101_waitress_01
+
+  _TALK_OBJ_START()
+
+  //バトル前
+  IF $WK_SCENE_C14R0301_BOY4_01 == 1 THEN
+
+    //ウェイトレス：あなた！　セイガイハで　カップルに
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_waitress_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_WAITRESS_05, 0 )
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //ウェイトレス：まけても　かっても……
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_waitress_02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //イベント進行
+    $WK_SCENE_C14R0301_BOY4_01 = 2
+    //========================================//
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    //アニメ：ウェイトレス移動
+    IF $LCW_POSX == 15 && $LCW_POSZ == 24 THEN
+      _OBJ_ANIME_AUTO( R07R0101_WAITRESS_01, 15, 26, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( R07R0101_WAITRESS_01, anm_staystep_u )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME_AUTO( R07R0101_WAITRESS_01, 15, 24, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( R07R0101_WAITRESS_01, anm_staystep_d )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+  //バトル後
+  ELSIF $WK_SCENE_C14R0301_BOY4_01 >= 2 THEN
+
+    //ウェイトレス：まけても　かっても……
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_waitress_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
 
 
 //--------------------------------------------------------------------

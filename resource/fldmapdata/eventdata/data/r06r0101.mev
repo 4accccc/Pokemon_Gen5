@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/16 16:53:16
+#save date:2011/07/22 19:11:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r06r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r06r0101.wms
 #hold event type:
 1
 #hold event number:
-1
+10
 #event number: 0
 #type
 1
@@ -41,6 +41,285 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -152 0 168
+#event number: 1
+#type
+1
+#ID name
+R06R0101_ASSISTANTM_01
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_ASSISTANTM_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 152
+#event number: 2
+#type
+1
+#ID name
+R06R0101_ASSISTANTM_03
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_ASSISTANTM_03
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 200
+#event number: 3
+#type
+1
+#ID name
+R06R0101_ASSISTANTM_02
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_ASSISTANTM_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 152
+#event number: 4
+#type
+1
+#ID name
+R06R0101_ASSISTANTW_01
+#OBJ CODE Number
+ASSISTANTW
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_ASSISTANTW_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 200
+#event number: 5
+#type
+1
+#ID name
+R06R0101_POKE26_01
+#OBJ CODE Number
+POKE26
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R06R0101_POKE_SUMMER_01
+#Event Script Name
+SCRID_R06R0101_POKE26_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 152
+#event number: 6
+#type
+1
+#ID name
+R06R0101_POKE28_01
+#OBJ CODE Number
+POKE28
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R06R0101_POKE_WINTER_01
+#Event Script Name
+SCRID_R06R0101_POKE28_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-184 0 200
+#event number: 7
+#type
+1
+#ID name
+R06R0101_POKE25_01
+#OBJ CODE Number
+POKE25
+#MOVE CODE Number
+MV_RTRD         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R06R0101_POKE_SPRING_01
+#Event Script Name
+SCRID_R06R0101_POKE25_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 136
+#event number: 8
+#type
+1
+#ID name
+R06R0101_POKE27_01
+#OBJ CODE Number
+POKE27
+#MOVE CODE Number
+MV_RTLU         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_R06R0101_POKE_AUTUMN_01
+#Event Script Name
+SCRID_R06R0101_POKE27_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 120
+#event number: 9
+#type
+1
+#ID name
+R06R0101_AMBRELLA_01
+#OBJ CODE Number
+AMBRELLA
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_R06R0101_AMBRELLA_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-216 0 216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

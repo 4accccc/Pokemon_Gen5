@@ -152,8 +152,12 @@ init_flags:
   //R06：でんきいし前事情通老人
   _FLAG_SET( FV_R06_OLDMAN1_01 )
   
-  //R06R0101：季節研究所チェレン
-  _FLAG_SET( FV_R06R0101_SWLEADER1_01 )
+  //R06R0101：季節研究所
+  _FLAG_SET( FV_R06R0101_SWLEADER1_01 )   //チェレン
+  _FLAG_SET( FV_R06R0101_POKE_SPRING_01 ) //シキジカ（春）
+  _FLAG_SET( FV_R06R0101_POKE_SUMMER_01 ) //シキジカ（夏）
+  _FLAG_SET( FV_R06R0101_POKE_AUTUMN_01 ) //シキジカ（秋）
+  _FLAG_SET( FV_R06R0101_POKE_WINTER_01 ) //シキジカ（冬）
 
   //T03R0201：カゴメ民家のアララギ娘とベル 
   //_FLAG_SET( FV_T03R0201_HAKASE2_01 )
@@ -186,6 +190,17 @@ init_flags:
 
   //C03R0601
   _FLAG_SET( FV_C03R0601_SWBELL_01 )  //ヒウンシティ・ゲート：ベル
+
+  //C14R0301
+  _FLAG_SET( FV_C14R0301_GIRL4_01 )   //セイガイハシティ民家：お嬢様
+  _FLAG_SET( FV_C14R0301_BOY4_01 )    //セイガイハシティ民家：お坊ちゃま
+
+  //R07タワーオブヘブン
+  _FLAG_SET( FV_R07R0101_WAITRESS_01 )  //タワーオブヘブン：ウェイトレス
+  _FLAG_SET( FV_R07R0102_WOMAN3_01 )    //タワーオブヘブン：保育士
+  _FLAG_SET( FV_R07R0103_OL_01 )        //タワーオブヘブン：OL
+  _FLAG_SET( FV_R07R0104_MAID_01 )      //タワーオブヘブン：メイド
+
 
 }
 _RET

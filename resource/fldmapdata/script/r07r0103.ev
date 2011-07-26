@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r07r0103.h"
-  //.include  "r07r0103.h"
+  .include  "r07r0103.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,117 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_init_r07r0103
+_EVENT_DATA   ev_r07r0103_ol_01
 _EVENT_DATA_END
+
+//主人公の座標、方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/************************************************************/
+/*  FIELD_INIT_SCRIPT                                       */
+/************************************************************/
+INIT_EVENT_START  ev_init_r07r0103
+
+  //OLに勝利していた場合、ユニットを再配置
+  IF $WK_SCENE_C14R0301_BOY4_01 >= 4 && FLAG_OFF( FV_R07R0103_OL_01 ) THEN
+
+    _OBJ_POS_CHANGE( R07R0103_OL_01, 17, 0, 23, DIR_UP )
+
+  ENDIF
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  OL：話しかけ（カップルの鐘イベント）                      */
+/**************************************************************/
+EVENT_START   ev_r07r0103_ol_01
+
+  _TALK_OBJ_START()
+
+  //バトル前
+  IF $WK_SCENE_C14R0301_BOY4_01 == 3 THEN
+
+    //OL:かねの　ねいろが　きこえなければ
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0103_ol__01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_OL_08, 0 )
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //OL:あいを　あたえない　にんげんが
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0103_ol__02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //イベント進行
+    $WK_SCENE_C14R0301_BOY4_01 = 4
+    //========================================//
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    //アニメ：OL移動
+    IF $LCW_POSX == 17 && $LCW_POSZ == 23 THEN
+      _OBJ_ANIME_AUTO( R07R0103_OL_01, 17, 21, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( R07R0103_OL_01, anm_staystep_d )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME_AUTO( R07R0103_OL_01, 17, 23, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME( R07R0103_OL_01, anm_staystep_u )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+  //バトル後
+  ELSIF $WK_SCENE_C14R0301_BOY4_01 >= 4 THEN
+
+    //OL:あいを　あたえない　にんげんが
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0103_ol__02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

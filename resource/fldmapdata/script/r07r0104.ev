@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r07r0104.h"
-  //.include  "r07r0104.h"
+  .include  "r07r0104.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,119 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_init_r07r0104
+_EVENT_DATA   ev_r07r0104_maid_01
 _EVENT_DATA_END
+
+//主人公の座標、方向取得変数
+DEFINE_LOCAL  LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+
+
+/************************************************************/
+/*  FIELD_INIT_SCRIPT                                       */
+/************************************************************/
+INIT_EVENT_START  ev_init_r07r0104
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*  メイド：話しかけ（カップルの鐘イベント）                  */
+/**************************************************************/
+EVENT_START   ev_r07r0104_maid_01
+
+  _TALK_OBJ_START()
+
+  //バトル前
+  IF $WK_SCENE_C14R0301_BOY4_01 == 4 THEN
+
+    //メイド：まさか　したの　３にんが
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0104_maid_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_MAID_03, 0 )
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //メイド：そっか……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0104_maid_02 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    //========================================//
+    //イベント進行
+    $WK_SCENE_C14R0301_BOY4_01 = 5
+    //トレーナー非表示（タワーオブヘブン）
+    _FLAG_SET( FV_R07R0101_WAITRESS_01 )
+    _FLAG_SET( FV_R07R0102_WOMAN3_01 )
+    _FLAG_SET( FV_R07R0103_OL_01 )
+    _FLAG_SET( FV_R07R0104_MAID_01 )
+    //========================================//
+
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    //アニメ：メイド移動
+    IF $LCW_POSX == 12 && $LCW_POSZ == 10 THEN
+      _OBJ_ANIME_AUTO( R07R0104_MAID_01, 11, 16, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+    ELSE
+      _OBJ_ANIME_AUTO( R07R0104_MAID_01, 12, 10, FORCE_TYPE_NPC, 8, DIR_LR )
+      _OBJ_ANIME_WAIT()
+      _OBJ_ANIME_AUTO( R07R0104_MAID_01, 11, 16, FORCE_TYPE_NPC, 8, DIR_UD )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+
+    _OBJ_ANIME_AUTO( R07R0104_MAID_01, 11, 19, FORCE_TYPE_NPC, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+
+    //メイド退場
+    _OBJ_DEL( R07R0104_MAID_01 )
+
+  //バトル後
+  ELSIF $WK_SCENE_C14R0301_BOY4_01 >= 5 THEN
+
+    //メイド：そっか……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0104_maid_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
+ev_battle_check:
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+

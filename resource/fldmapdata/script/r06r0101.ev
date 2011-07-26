@@ -12,7 +12,7 @@
   .include  "../../message/dst/script/msg_r06r0101.h"
   .include  "r06r0101.h"
 
-  //@author fujimura_souichirou（なみのり入手追加）
+  //@author fujimura_souichirou（なみのり入手、シジキカイベント移植）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,11 +25,61 @@ _EVENT_DATA   ev_bg_r06r0101_case_01
 _EVENT_DATA   ev_bg_r06r0101_case_02
 _EVENT_DATA   ev_reserve_r06r0101_swleader1_01
 _EVENT_DATA   ev_r06r0101_swleader1_01
+_EVENT_DATA   ev_init_r06r0101
+_EVENT_DATA   ev_r06r0101_assistantm_01
+_EVENT_DATA   ev_r06r0101_assistantm_02
+_EVENT_DATA   ev_r06r0101_assistantm_03
+_EVENT_DATA   ev_r06r0101_assistantw_01
+_EVENT_DATA   ev_r06r0101_poke25_01
+_EVENT_DATA   ev_r06r0101_poke26_01
+_EVENT_DATA   ev_r06r0101_poke27_01
+_EVENT_DATA   ev_r06r0101_poke28_01
+_EVENT_DATA   ev_r06r0101_ambrella_01
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//シキジカ                                                          //
+//  LOCALWORK0～2 まで使用しました。同マップ内の使用を禁止します。  //
+//                                                                  //
+//  LOCALWORK0  マップに入ってからの初回会話かどうか判定            //
+//  LOCALWORK1  シキジカを研究員に見せた状態を保存してメッセージ分岐//
+//  LOCALWORK2  見せたシキジカの季節を保存して会話を分岐            //
+//                                                                  //
+//温度計                                                            //
+//  LOCALWORK3  まで使用しました。同マップ内の使用を禁止します。    //
+//                                                                  //
+//  LOCALWORK3  温度計の気温を保存して、同マップ内で使用する        //
+//                                                                  //
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*  FIELD_INIT_LABEL                                        */
+/************************************************************/
+INIT_EVENT_START  ev_init_r06r0101
+{
+  DEFINE_LOCAL LWK_KISETU
+  _GET_SEASON_ID( LWK_KISETU )
+
+  //温度計の温度をランダムで決定して保存
+  IF $LWK_KISETU == 0 THEN
+    _GET_RND( LOCALWORK3, 9 )
+    $LOCALWORK3 += 11
+  ELSIF $LWK_KISETU == 1 THEN
+    _GET_RND( LOCALWORK3, 16 )
+    $LOCALWORK3 += 19
+  ELSIF $LWK_KISETU == 2 THEN
+    _GET_RND( LOCALWORK3, 9 )
+    $LOCALWORK3 += 11
+  ELSE
+    _GET_RND( LOCALWORK3, 9 )
+    $LOCALWORK3+= 1
+  ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
-/*  reserve：異常気象説明イベント*/
+/*  reserve：異常気象説明イベント                             */
 /**************************************************************/
 EVENT_START   ev_reserve_r06r0101_swleader1_01
 
@@ -57,58 +107,845 @@ EVENT_START   ev_reserve_r06r0101_swleader1_01
 EVENT_END
 
 /**************************************************************/
-/*  話しかけ：チェレン*/
+/*  チェレン：話しかけ                                        */
 /**************************************************************/
 EVENT_START   ev_r06r0101_swleader1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_swleader1_05 )
 EVENT_END
 
 /**************************************************************/
-/*  R06 栽培ケース/
+/*  R06 栽培ケース                                            */
 /**************************************************************/
 EVENT_START  ev_bg_r06r0101_case_01
-	_TALK_START_SE_PLAY()
-	{
-	DEFINE_LOCAL LWK_KISETU
-	_GET_SEASON_ID( LWK_KISETU )
-	
-	IF$LWK_KISETU == 0 THEN
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_01)
-	ELSIF$LWK_KISETU == 1 THEN
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_02)
-	ELSIF$LWK_KISETU == 2 THEN
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_03)
-	ELSE
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_04)
-	ENDIF
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	}
+{
+  _TALK_START_SE_PLAY()
+
+  DEFINE_LOCAL LWK_KISETU
+  _GET_SEASON_ID( LWK_KISETU )
+
+  IF$LWK_KISETU == 0 THEN
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_planter_01 )
+  ELSIF$LWK_KISETU == 1 THEN
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_planter_02 )
+  ELSIF$LWK_KISETU == 2 THEN
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_planter_03 )
+  ELSE
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_planter_04 )
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+}
 EVENT_END
+
 /**************************************************************/
-/*  R06 温度計*/
+/*  R06 温度計                                                */
 /**************************************************************/
 EVENT_START  ev_bg_r06r0101_case_02	
-	_TALK_START_SE_PLAY()
-	{
-	DEFINE_LOCAL LWK_KISETU
-	DEFINE_LOCAL LWK_NUM
-	_GET_SEASON_ID( LWK_KISETU )
+{
+  _TALK_START_SE_PLAY()
 
-	IF$LWK_KISETU == 0 THEN
-		_NUMBER( 0, LOCALWORK3, 2 )
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_01)
-	ELSIF$LWK_KISETU == 1 THEN
-		_NUMBER( 0, LOCALWORK3, 2 )
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_02)
-	ELSIF$LWK_KISETU == 2 THEN
-		_NUMBER( 0, LOCALWORK3, 2 )
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_03)
-	ELSE
-		_NUMBER( 0, LOCALWORK3, 2 )
-		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_04)
-	ENDIF
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	}
+  DEFINE_LOCAL LWK_KISETU
+  DEFINE_LOCAL LWK_NUM
+  _GET_SEASON_ID( LWK_KISETU )
+
+  IF$LWK_KISETU == 0 THEN
+    _NUMBER( 0, LOCALWORK3, 2 )
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_heatgauge_01 )
+  ELSIF$LWK_KISETU == 1 THEN
+    _NUMBER( 0, LOCALWORK3, 2 )
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_heatgauge_02 )
+  ELSIF$LWK_KISETU == 2 THEN
+    _NUMBER( 0, LOCALWORK3, 2 )
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_heatgauge_03 )
+  ELSE
+    _NUMBER( 0, LOCALWORK3, 2 )
+    _PLAINWIN_MSG_DOWN( msg_r06r0101_heatgauge_04 )
+  ENDIF
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+}
 EVENT_END
+
+/**************************************************************/
+/*  助手♂01：話しかけ                                        */
+/**************************************************************/
+EVENT_START  ev_r06r0101_assistantm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  助手♂02：話しかけ                                        */
+/**************************************************************/
+EVENT_START  ev_r06r0101_assistantm_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  助手♂03：話しかけ（シキジカイベント）                    */
+/**************************************************************/
+EVENT_START  ev_r06r0101_assistantm_03
+
+  //シキジカイベント用変数
+  DEFINE_LOCAL LWK_MONSNUM
+  DEFINE_LOCAL LWK_POKE_SELECT_CHK
+  DEFINE_LOCAL LWK_POKE_SELECT
+  DEFINE_LOCAL LWK_POKE_FORMNO
+  DEFINE_LOCAL LWK_TALK_NUM
+  DEFINE_LOCAL LWK_EGG_CHK
+
+  _TALK_OBJ_START()
+
+  //ポケモン名（シキジカ）取得
+  _MONS_NAME( 0, MONSNO_511 )
+
+  //イベントクリアのご褒美を貰った？
+  IF FLAG_OFF( FE_R06R0101_ITEMGET_01 ) THEN
+    //イベントをクリアした？
+    IF FLAG_OFF( FV_R06R0101_POKE_SPRING_01 ) && FLAG_OFF( FV_R06R0101_POKE_SUMMER_01 ) && FLAG_OFF( FV_R06R0101_POKE_AUTUMN_01 ) && FLAG_OFF( FV_R06R0101_POKE_WINTER_01 ) && $LOCALWORK1 == 0 THEN
+      //助手♂03：お！　あなたは！　おかげさまで
+      _BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_09)
+      _MSGWIN_CLOSE()
+
+      //アイテム「リーフの石」入手
+      _ITEM_EVENT_NOWAIT( ITEM_RIIHUNOISI, 1 )
+
+      //========================================//
+      //アイテム入手フラグをON
+      _FLAG_SET( FE_R06R0101_ITEMGET_01 )
+      //========================================//
+
+    ELSE
+      //依頼に「はい」と答え、イベントを引き受けている？
+      IF FLAG_OFF( FE_R06R0101_EVENT_ON_01 ) THEN
+        IF $LOCALWORK2 == 0 THEN
+          //2回目以降の話しかけはこの処理を飛ばす
+          IF $LOCALWORK0  == 0 THEN
+
+            //助手♂03：われわれは　きせつによる　しぜんの　さまざまな
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_01 )
+            _AB_KEYWAIT_MARK()
+
+            //助手♂03：……と▼　ここまでは　よいのですけれども
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_01a )
+
+          ENDIF
+
+          //シキジカを選択したかの判定へ
+          _CALL ev_shikijika_event
+
+          //========================================//
+          //イベントスタートフラグON
+          _FLAG_SET( FE_R06R0101_EVENT_ON_01 )
+          //一度話しかけたことを保存
+          $LOCALWORK0 = 1
+          //========================================//
+
+        ELSIF $LOCALWORK2 == 1 THEN
+          //助手♂03：《シキジカ》の　はるの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_03 )
+        ELSIF $LOCALWORK2 == 2 THEN
+          //助手♂03：《シキジカ》の　なつの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_04 )
+        ELSIF $LOCALWORK2 == 3 THEN
+          //助手♂03：《シキジカ》の　あきの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_05 )
+        ELSIF $LOCALWORK2 == 4 THEN
+          //助手♂03：《シキジカ》の　ふゆの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_06 )
+        ENDIF
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ELSE
+        //シキジカを選択したかの判定へ
+        IF $LOCALWORK2 == 0 THEN
+          _CALL ev_shikijika_event
+
+        ELSIF $LOCALWORK2 == 1 THEN
+          //助手♂03：《シキジカ》の　はるの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_03 )
+        ELSIF $LOCALWORK2 == 2 THEN
+          //助手♂03：《シキジカ》の　なつの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_04 )
+        ELSIF $LOCALWORK2 == 3 THEN
+          //助手♂03：《シキジカ》の　あきの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_05 )
+        ELSIF $LOCALWORK2 == 4 THEN
+          //助手♂03：《シキジカ》の　ふゆの　すがた！▼
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_06 )
+        ENDIF
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+
+      ENDIF
+    ENDIF
+  ELSE
+
+    //助手♂03：４つの　きせつの　《シキジカ》の
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_10 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+
+EVENT_END
+
+
+ev_shikijika_event:
+
+  //助手♂03：いかがでしょうか？▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_02 )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+  _MSGWIN_CLOSE()
+
+    //手持ちポケモンを選択する
+    _SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK, LWK_POKE_SELECT, 0 )
+
+    //選んだポケモンのナンバーを取得する
+    _GET_PARTY_POKE_MONSNO( LWK_MONSNUM, LWK_POKE_SELECT )
+    //タマゴを選んでいないかチェック
+    _CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_POKE_SELECT )
+
+    IF $LWK_POKE_SELECT_CHK == TRUE THEN
+      IF $LWK_EGG_CHK == FALSE THEN
+        IF $LWK_MONSNUM== MONSNO_511 THEN
+
+          //選んだポケモンのフォルムナンバーを取得
+          _GET_PARTY_POKE_FORMNO( LWK_POKE_FORMNO, LWK_POKE_SELECT )
+
+          //春のフォルムのシキジカを見せた
+          IF $LWK_POKE_FORMNO == FORMNO_511_SPRING && FLAG_ON( FV_R06R0101_POKE_SPRING_01 ) THEN
+            //助手♂03：《シキジカ》の　はるの　すがた！▼
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_03 )
+
+            //========================================//
+            _FLAG_RESET( FV_R06R0101_POKE_SPRING_01 )
+            $LOCALWORK2 = 1
+            //========================================//
+
+          //夏のフォルムのシキジカを見せた
+          ELSIF $LWK_POKE_FORMNO == FORMNO_511_SUMMER && FLAG_ON( FV_R06R0101_POKE_SUMMER_01 ) THEN
+            //助手♂03：《シキジカ》の　なつの　すがた！▼
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_04 )
+
+            //========================================//
+            _FLAG_RESET( FV_R06R0101_POKE_SUMMER_01 )
+            $LOCALWORK2 = 2
+            //========================================//
+
+          //秋のフォルムのシキジカを見せた
+          ELSIF $LWK_POKE_FORMNO == FORMNO_511_AUTUMN && FLAG_ON( FV_R06R0101_POKE_AUTUMN_01 ) THEN
+            //助手♂03：《シキジカ》の　あきの　すがた！▼
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_05 )
+
+            //========================================//
+            _FLAG_RESET( FV_R06R0101_POKE_AUTUMN_01 )
+            $LOCALWORK2 = 3
+            //========================================//
+
+          //冬のフォルムのシキジカを見せた
+          ELSIF $LWK_POKE_FORMNO == FORMNO_511_WINTER && FLAG_ON( FV_R06R0101_POKE_WINTER_01 ) THEN
+            //助手♂03：《シキジカ》の　ふゆの　すがた！▼
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_06 )
+
+            //========================================//
+            _FLAG_RESET( FV_R06R0101_POKE_WINTER_01 )
+            $LOCALWORK2 = 4
+            //========================================//
+
+          //すでに見せた季節のシキジカを見せた
+          ELSE
+            //助手♂03：すでに　つかまえてますよ
+            _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_07 )
+          ENDIF
+
+          //========================================//
+          $LOCALWORK1 = 1
+          //========================================//
+
+        ELSE
+          _MONS_NAME( 0, MONSNO_511 )
+          //助手♂03：もうしあげにくいのですが……
+          _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_11 )
+
+        ENDIF
+
+      ELSE
+        _MONS_NAME( 0, MONSNO_511 )
+        //助手♂03：もうしあげにくいのですが……
+        _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_11 )
+
+      ENDIF
+
+    ELSE
+      //助手♂03：そうですか……▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_08 )
+    ENDIF
+
+  ELSE
+    //助手♂03：そうですか……▼
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantm3_08 )
+  ENDIF
+
+_RET
+
+
+/**************************************************************/
+/*  助手♀01：話しかけ                                        */
+/**************************************************************/
+EVENT_START  ev_r06r0101_assistantw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_assistantw1_01 )
+EVENT_END
+
+/**************************************************************/
+/*  シキジカ（春）：話しかけ                                  */
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke25_01
+  _EASY_TALK_POKEVOICE( MONSNO_511, msg_r06r0101_poke01_01 )
+EVENT_END
+
+/**************************************************************/
+/*  シキジカ（夏）：話しかけ                                  */
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke26_01
+  _EASY_TALK_POKEVOICE( MONSNO_511, msg_r06r0101_poke02_01 )
+EVENT_END
+
+/**************************************************************/
+/*  シキジカ（秋）：話しかけ                                  */
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke27_01
+  _EASY_TALK_POKEVOICE( MONSNO_511, msg_r06r0101_poke03_01 )
+EVENT_END
+
+/**************************************************************/
+/*  シキジカ（冬）：話しかけ                                  */
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke28_01
+  _EASY_TALK_POKEVOICE( MONSNO_511, msg_r06r0101_poke04_01 )
+EVENT_END
+
+/**************************************************************/
+/*  パラソル：話しかけ（天候説明イベント）                    */
+/**************************************************************/
+EVENT_START  ev_r06r0101_ambrella_01
+
+  //日付取得変数一覧
+  DEFINE_LOCAL LWK_BIRTHMONTH //設定された誕生日の月
+  DEFINE_LOCAL LWK_BIRTHDAY   //設定された誕生日の日
+  DEFINE_LOCAL LWK_MONTH      //月
+  DEFINE_LOCAL LWK_DAY        //日
+
+  //ポケモンチェック変数一覧
+  DEFINE_LOCAL LWK_PARTY_NUM      //手持ちポケモンの数
+  DEFINE_LOCAL LWK_COUNT_POKE_NUM //WHILE文01のカウンタ（手持ちポケモンの数）
+
+  DEFINE_LOCAL LWK_WAZA_NUM       //ポケモンの技個数
+  DEFINE_LOCAL LWK_COUNT_WAZA_NUM //WHILE文02のカウンタ（技の数）
+
+  DEFINE_LOCAL LWK_POKE_TOKUSEI //ポケモンの特性
+  DEFINE_LOCAL LWK_POKE_WAZA    //ポケモンの技
+
+  DEFINE_LOCAL LWK_POKE_TOKUSEI_CLEAR //条件の特性を持つポケモン
+  DEFINE_LOCAL LWK_POKE_WAZA_CLEAR    //条件の技を持つポケモン
+
+  DEFINE_LOCAL LWK_TENKI        //天気
+  DEFINE_LOCAL LWK_CLEAR_HARE   //晴れ系
+  DEFINE_LOCAL LWK_CLEAR_AME    //雨系
+  DEFINE_LOCAL LWK_CLEAR_ARARE  //霰系
+  DEFINE_LOCAL LWK_CLEAR_SUNA   //砂嵐系
+  DEFINE_LOCAL LWK_CLEAR_NOOTEN //天候打消し系
+
+
+  _TALK_OBJ_START()
+
+  //誕生日と日付取得
+  _GET_BIRTHDAY( LWK_BIRTHMONTH, LWK_BIRTHDAY )
+  _GET_DATE( LWK_MONTH, LWK_DAY )
+
+  //DSに設定してある誕生日か？
+  IF $LWK_MONTH == $LWK_BIRTHMONTH && $LWK_DAY == $LWK_BIRTHDAY THEN
+
+    //パラソル：はれやかで　あることを　ねがいますわ……
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_06 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //12/31のダイヤモンドダストの日？
+  ELSIF $LWK_MONTH == 12 && $LWK_DAY == 31 THEN
+
+    //パラソル：みてみたい　ですわ！　うふふ！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_07 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //それ以外の日
+  ELSE
+
+    //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+    //手持ちのポケモンの中に条件を満たしたポケモンがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_POKE_NUM
+
+      //指定POSのポケモンの特性を取得
+      _GET_PARTY_POKE_PARAM( LWK_POKE_TOKUSEI, LWK_COUNT_POKE_NUM, SCR_POKEPARA_TOKUSEI )
+
+      //指定POSのポケモンの特性は「ひでり」か
+      IF $LWK_POKE_TOKUSEI == TOKUSYU_HIDERI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+        //条件を満たしていたら、晴れ状態の説明へ
+        $LWK_TENKI = LWK_CLEAR_HARE
+        //指定POSのポケモンの名前取得
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        //特性「ひでり」タグセット
+        _TOKUSEI_NAME( 2, LWK_POKE_TOKUSEI )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+
+      //指定POSのポケモンの特性は「あめふらし」か
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_AMEHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+        //条件を満たしていたら、雨状態の説明へ
+        $LWK_TENKI = LWK_CLEAR_AME
+        //指定POSのポケモンの名前取得
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        //特性「あめふらし」タグセット
+        _TOKUSEI_NAME( 2, LWK_POKE_TOKUSEI )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+
+      //指定POSのポケモンの特性は「ゆきふらし」か
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_YUKIHURASI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+        //条件を満たしていたら、霰状態の説明へ
+        $LWK_TENKI = LWK_CLEAR_AME
+        //指定POSのポケモンの名前取得
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        //特性「ゆきふらし」タグセット
+        _TOKUSEI_NAME( 2, LWK_POKE_TOKUSEI )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+
+      //指定POSのポケモンの特性は「すなおこし」か
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_SUNAOKOSI && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+        //条件を満たしていたら、砂嵐状態の説明へ
+        $LWK_TENKI = LWK_CLEAR_SUNA
+        //指定POSのポケモンの名前取得
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        //特性「すなおこし」タグセット
+        _TOKUSEI_NAME( 2, LWK_POKE_TOKUSEI )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+
+      //指定POSのポケモンの特性は「ノーてんき」「エアロック」か
+      ELSIF $LWK_POKE_TOKUSEI == TOKUSYU_NOOTENKI || $LWK_POKE_TOKUSEI == TOKUSYU_EAROKKU && $LWK_POKE_TOKUSEI_CLEAR == 0 THEN
+        //条件を満たしていたら、天候打消しの説明へ
+        $LWK_TENKI = LWK_CLEAR_NOOTEN
+        //指定POSのポケモンの名前取得
+        _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+        //特性「ノーてんき」「エアロック」タグセット
+        _TOKUSEI_NAME( 2, LWK_POKE_TOKUSEI )
+        //条件を満たしたポケモンがいた（値セット）
+        $LWK_POKE_TOKUSEI_CLEAR = 1
+
+      ENDIF
+
+      //指定POSのポケモンは条件の特性を持ったポケモンであるか
+      IF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+        //「ひでり」
+        IF $LWK_TENKI == LWK_CLEAR_HARE THEN
+          _CALL ev_r06r0101_hare_01
+
+        //「あめふらし」
+        ELSIF $LWK_TENKI == LWK_CLEAR_AME THEN
+          _CALL ev_r06r0101_ame_01
+
+        //「ゆきふらし」
+        ELSIF $LWK_TENKI == LWK_CLEAR_ARARE THEN
+          _CALL ev_r06r0101_arare_01
+
+        //「すなおこし」
+        ELSIF $LWK_TENKI == LWK_CLEAR_SUNA THEN
+          _CALL ev_r06r0101_suna_01
+
+        //「ノーてんき」「エアロック」
+        ELSIF $LWK_TENKI == LWK_CLEAR_NOOTEN THEN
+          _CALL ev_r06r0101_nooten_01
+
+        ENDIF
+
+      //条件の特性を持っていない
+      ELSE
+
+        //数値リセット
+        $LWK_COUNT_WAZA_NUM = 0
+
+        //指定POSのポケモンの技数取得
+        _GET_TEMOTI_WAZA_NUM( LWK_WAZA_NUM, LWK_COUNT_POKE_NUM )
+
+        //指定POSポケモンの中に条件を満たした技があるか確認（繰り返し処理）
+        WHILE $LWK_WAZA_NUM > $LWK_COUNT_WAZA_NUM
+
+          //指定POSのポケモンの技番号取得
+          _GET_TEMOTI_WAZA_ID( LWK_POKE_WAZA, LWK_COUNT_POKE_NUM, LWK_COUNT_WAZA_NUM )
+
+          //「にほんばれ」を覚えている
+          IF $LWK_POKE_WAZA == WAZANO_NIHONBARE && $LWK_POKE_WAZA_CLEAR == 0 THEN
+
+            //条件を満たしていたら、晴れ状態の説明へ
+            $LWK_TENKI = LWK_CLEAR_HARE
+            //「にほんばれ」を覚えているポケモンの名前取得
+            _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+            //「にほんばれ」タグセット
+            _WAZA_NAME( 1, 241 )
+            //条件を満たしたポケモンがいた（値セット）
+            $LWK_POKE_WAZA_CLEAR = 1
+
+          //「あまごい」を覚えている
+          ELSIF $LWK_POKE_WAZA == WAZANO_AMAGOI && $LWK_POKE_WAZA_CLEAR == 0 THEN
+
+            //条件を満たしていたら、雨状態の説明へ
+            $LWK_TENKI = LWK_CLEAR_AME
+            //「あまごい」を覚えているポケモンの名前取得
+            _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+            //「あまごい」タグセット
+            _WAZA_NAME( 1, 240 )
+            //条件を満たしたポケモンがいた（値セット）
+            $LWK_POKE_WAZA_CLEAR = 1
+
+          //「あられ」を覚えている
+          ELSIF $LWK_POKE_WAZA == WAZANO_ARARE && $LWK_POKE_WAZA_CLEAR == 0 THEN
+
+            //条件を満たしていたら、霰状態の説明へ
+            $LWK_TENKI = LWK_CLEAR_ARARE
+            //「あられ」を覚えているポケモンの名前取得
+            _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+            //「あられ」タグセット
+            _WAZA_NAME( 1, 258 )
+            //条件を満たしたポケモンがいた（値セット）
+            $LWK_POKE_WAZA_CLEAR = 1
+
+          //「すなあらし」を覚えている
+          ELSIF $LWK_POKE_WAZA == WAZANO_SUNAARASI && $LWK_POKE_WAZA_CLEAR == 0 THEN
+
+            //条件を満たしていたら、砂嵐状態の説明へ
+            $LWK_TENKI = LWK_CLEAR_SUNA
+            //「すなあらし」を覚えているポケモンの名前取得
+            _TEMOTI_MONS_NAME( 0, LWK_COUNT_POKE_NUM )
+            //「すなあらし」タグセット
+            _WAZA_NAME( 1, 201 )
+            //条件を満たしたポケモンがいた（値セット）
+            $LWK_POKE_WAZA_CLEAR = 1
+
+          ENDIF
+
+          //指定POSのポケモンは条件の技を持っていたか
+          IF $LWK_POKE_WAZA_CLEAR == 1 THEN
+
+            //「にほんばれ」
+            IF $LWK_TENKI == LWK_CLEAR_HARE THEN
+              _CALL ev_r06r0101_hare_01
+
+            //「あまごい」
+            ELSIF $LWK_TENKI == LWK_CLEAR_AME THEN
+              _CALL ev_r06r0101_ame_01
+
+            //「あられ」
+            ELSIF $LWK_TENKI == LWK_CLEAR_ARARE THEN
+              _CALL ev_r06r0101_arare_01
+
+            //「すなあらし」
+            ELSIF $LWK_TENKI == LWK_CLEAR_SUNA THEN
+              _CALL ev_r06r0101_suna_01
+
+            ENDIF
+
+          ENDIF
+
+          //カウント
+          $LWK_COUNT_WAZA_NUM += 1
+
+        ENDWHILE
+
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_POKE_NUM += 1
+
+    ENDWHILE
+
+    //条件の特性も技も持っていなかった
+    IF $LWK_POKE_TOKUSEI_CLEAR == 1 && $LWK_POKE_WAZA_CLEAR == 1 THEN
+
+      //パラソル：あらあら　あなたの　ポケモン
+      _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ENDIF
+
+EVENT_END
+
+
+//「晴れ」の説明
+ev_r06r0101_hare_01:
+
+  //「にほんばれ」を覚えたポケモン
+  IF $LWK_POKE_WAZA_CLEAR == 1 THEN
+
+    //パラソル：あらあら　あなたの　《ポケモン》
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_01 )
+    _AB_KEYWAIT_MARK()
+
+  //特性「ひでり」のポケモン
+  ELSIF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+    //パラソル：あらあら　めずらしい！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_02 )
+    _AB_KEYWAIT_MARK()
+
+  ENDIF
+
+  //パラソル：ひざしが　つよくなるでしょう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_01 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：ひざしが　つよい　ときは
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_02 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：ひざしが　つよい　ため
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_03 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そらが　すみますので
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_04 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：つづいて　ちゅういほうです！▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_05 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：なお　ようりょくそ　しゅうかく
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_06 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そんな　はれの　ひの
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_hare_07 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：わたくしの　ポケモン　てんきよほう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //繰り返し処理（手持ちポケモンチェック）終了
+  $LWK_COUNT_POKE_NUM = 6
+
+  //繰り返し処理（ポケモンの技）終了
+  $LWK_COUNT_WAZA_NUM = 4
+
+_RET
+
+
+//「雨」の説明
+ev_r06r0101_ame_01:
+
+  //「あまごい」を覚えてたポケモン
+  IF $LWK_POKE_WAZA_CLEAR == 1 THEN
+
+    //パラソル：あらあら　あなたの　《ポケモン》
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_01 )
+    _AB_KEYWAIT_MARK()
+
+  //特性「あめふらし」のポケモン
+  ELSIF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+    //パラソル：あらあら　めずらしい！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_02 )
+    _AB_KEYWAIT_MARK()
+
+  ENDIF
+
+  //パラソル：あめが　ふりはじめるでしょう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_01 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：あめが　ふりつづいている　ときは
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_02 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：なお　ポワルンという　ポケモンは
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_03 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そらが　よどみますので
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_04 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：つづいて　ちゅういほうです！▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_05 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：なお　すいすい　あめうけざら
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_06 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そんな　あめの　ひの
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_ame_07 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：わたくしの　ポケモン　てんきよほう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //繰り返し処理（手持ちポケモンチェック）終了
+  $LWK_COUNT_POKE_NUM = 6
+
+  //繰り返し処理（ポケモンの技）終了
+  $LWK_COUNT_WAZA_NUM = 4
+
+_RET
+
+
+//「霰」の説明
+ev_r06r0101_arare_01:
+
+  //「あられ」を覚えてたポケモン
+  IF $LWK_POKE_WAZA_CLEAR == 1 THEN
+
+    //パラソル：あらあら　あなたの　《ポケモン》
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_01 )
+    _AB_KEYWAIT_MARK()
+
+  //特性「ゆきふらし」のポケモン
+  ELSIF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+    //パラソル：あらあら　めずらしい！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_02 )
+    _AB_KEYWAIT_MARK()
+
+  ENDIF
+
+  //パラソル：あられが　ふりはじめるでしょう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_01 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：あられが　ふりつづいている　ときは
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_02 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：なお　ポワルンという　ポケモンは
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_03 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そらが　よどみますので
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_04 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：つづいて　ちゅういほうです！▼
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_05 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：なお　アイスボディ　ゆきがくれ
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_06 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そんな　あられの　ひの
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_07 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：わたくしの　ポケモン　てんきよほう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //繰り返し処理（手持ちポケモンチェック）終了
+  $LWK_COUNT_POKE_NUM = 6
+
+  //繰り返し処理（ポケモンの技）終了
+  $LWK_COUNT_WAZA_NUM = 4
+
+_RET
+
+
+//「砂嵐」の説明
+ev_r06r0101_suna_01:
+
+  //「すなあらし」を覚えてたポケモン
+  IF $LWK_POKE_WAZA_CLEAR == 1 THEN
+
+    //パラソル：あらあら　あなたの　《ポケモン》
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_01 )
+    _AB_KEYWAIT_MARK()
+
+  //特性「すなおこし」のポケモン
+  ELSIF $LWK_POKE_TOKUSEI_CLEAR == 1 THEN
+
+    //パラソル：あらあら　めずらしい！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_02 )
+    _AB_KEYWAIT_MARK()
+
+  ENDIF
+
+  //パラソル：すなあらしが　ふきはじめるでしょう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_suna_01 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：すなあらしが　ふいている　ときは
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_suna_02 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：すなあらしの　とき
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_suna_03 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そらが　よどみますので
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_suna_04 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：つづいて　ちゅういほうです！▼（注意報無し）
+  //_BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_arare_05 )
+  //_AB_KEYWAIT_MARK()
+
+  //パラソル：なお　すなかき　すながくれ
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_suna_06 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：そんな　すなあらしの　ひの
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_suna_07 )
+  _AB_KEYWAIT_MARK()
+
+  //パラソル：わたくしの　ポケモン　てんきよほう
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //繰り返し処理（手持ちポケモンチェック）終了
+  $LWK_COUNT_POKE_NUM = 6
+
+  //繰り返し処理（ポケモンの技）終了
+  $LWK_COUNT_WAZA_NUM = 4
+
+_RET
+
+
+//「天候打消し」の説明
+ev_r06r0101_nooten_01:
+
+  //パラソル：おてあげ　ですわ！　うふふ！
+  _BALLOONWIN_TALKOBJ_MSG( msg_r06r0101_ambrella_05 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+  //繰り返し処理終了
+  $LWK_COUNT_POKE_NUM = 6
+
+_RET
+
+

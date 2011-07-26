@@ -10,6 +10,15 @@
 #define ZONE_R06R0101_EVC_H
 
 #define R06R0101_SWLEADER1_01              0
+#define R06R0101_ASSISTANTM_01             1
+#define R06R0101_ASSISTANTM_03             2
+#define R06R0101_ASSISTANTM_02             3
+#define R06R0101_ASSISTANTW_01             4
+#define R06R0101_POKE26_01                 5
+#define R06R0101_POKE28_01                 6
+#define R06R0101_POKE25_01                 7
+#define R06R0101_POKE27_01                 8
+#define R06R0101_AMBRELLA_01               9
 
 #endif //ZONE_R06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
