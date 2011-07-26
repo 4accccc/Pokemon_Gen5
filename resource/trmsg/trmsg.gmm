@@ -19634,6 +19634,102 @@ può accadere ancora di tutto!</language>
 通りたがるんだけど　なんでだ？</language>
 	</row>
 
+	<row id="TRID_LEADER1A_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">コーン『まさか！　この　コーンが
+まけてしまうだなんて……！▼
+ポッド『かー！　まいったぜ！
+おまえら　ナイス　コンビネーション！</language>
+		<language name="JPN_KANJI" width="216">コーン『まさか！　この　コーンが
+負けてしまうだなんて……！▼
+ポッド『かー！　まいったぜ！
+おまえら　ナイス　コンビネーション！</language>
+	</row>
+
+	<row id="TRID_LEADER1B_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">デント『……なんだか
+タイミングが　ずれちゃって▼
+コーン『ながれるような　こうげきを
+おみせできずに　かなしい　きもちです</language>
+		<language name="JPN_KANJI" width="216">デント『……なんだか
+タイミングが　ずれちゃって▼
+コーン『流れるような　攻撃を
+おみせできずに　悲しい　気持ちです</language>
+	</row>
+
+	<row id="TRID_LEADER1C_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ポッド『あっちゃー！　コーンの
+ポケモンに　きをつけてたのに！▼
+デント『かちたい　きもちばかりで
+うまく　たすけあえませんでしたね……</language>
+		<language name="JPN_KANJI" width="216">ポッド『あっちゃー！　コーンの
+ポケモンに　気をつけてたのに！▼
+デント『勝ちたい　気持ちばかりで
+うまく　助け合えませんでしたね……</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なるほどね！　いやー　なるほど！
+それにしても……　なるほどだね！</language>
+		<language name="JPN_KANJI" width="216">なるほどね！　いやー　なるほど！
+それにしても……　なるほどだね！</language>
+	</row>
+
+	<row id="TRID_BUSINESS1_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">なるほど！　ポケモンの　つよさは
+トレーナーに　よるところが　おおきいね</language>
+		<language name="JPN_KANJI" width="216">なるほど！　ポケモンの　強さは
+トレーナーに　因るところが　大きいね</language>
+	</row>
+
+	<row id="TRID_SCHOOLB_14_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ぼくの　ながい　じんせいを　かけた
+けんきゅうが　つうじなかった！？</language>
+		<language name="JPN_KANJI" width="216">ぼくの　長い　人生を　かけた
+研究が　通じなかった！？</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_31_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうご
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘後
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_SWSAGE3_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">いのち　ながければ
+はじ　おおし</language>
+		<language name="JPN_KANJI" width="216">命長ければ　恥多し</language>
+	</row>
+
+	<row id="TRID_SWSAGE3_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">いかなる　ひとも
+ゆめを　みているかぎり▽
+それが　ゆめであることに　きづかない</language>
+		<language name="JPN_KANJI" width="216">いかなる人も　夢を　みているかぎり
+それが　夢であることに　気づかない</language>
+	</row>
+
+	<row id="TRID_NINJA_01_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あたえられた　ポケモンが　なこうとも
+わたしたちに　いたみは　ない</language>
+		<language name="JPN_KANJI" width="216">与えられた　ポケモンが　泣こうとも
+わたしたちに　痛みは　ない</language>
+	</row>
+
+	<row id="TRID_NINJA_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ポケモンが　かっても　まけても
+わたしたちに　いたみは　ない</language>
+		<language name="JPN_KANJI" width="216">ポケモンが　かっても　まけても
+わたしたちに　痛みは　ない</language>
+	</row>
+
+	<row id="TRID_NINJA_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まければ　つぎの　ポケモンを　つかう
+わたしたちに　いたみは　ない</language>
+		<language name="JPN_KANJI" width="216">負ければ　次の　ポケモンを　使う
+わたしたちに　痛みは　ない</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
