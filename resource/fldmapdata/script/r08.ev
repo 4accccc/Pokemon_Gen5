@@ -25,7 +25,6 @@ _EVENT_DATA   ev_bg_r08_sign1_01
 _EVENT_DATA   ev_bg_r08_sign2_01
 _EVENT_DATA   ev_bg_r08_sign3_01
 _EVENT_DATA   ev_r08_ambrella_02
-_EVENT_DATA   ev_r08_ambrella_01
 _EVENT_DATA   ev_r08_fising_01
 _EVENT_DATA_END
 
@@ -104,14 +103,6 @@ EVENT_START   ev_r08_ambrella_02
     _MSGWIN_CLOSE()
   ENDIF
 
-EVENT_END
-
-/**************************************************************/
-/*  パラソルおねえさん（アイテム入手処理）                    */
-/**************************************************************/
-EVENT_START   ev_r08_ambrella_01
-  //アイテム：わざマシン「からげんき」入手
-  _EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN42, 1, FE_R08_ITEMGET_01, msg_r08_ambrella_01, msg_r08_ambrella_02, msg_r08_ambrella_02 )
 EVENT_END
 
 /**************************************************************/

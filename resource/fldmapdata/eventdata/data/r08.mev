@@ -1,5 +1,5 @@
 #event data
-#save date:2011/07/14 16:09:55
+#save date:2011/07/26 10:56:15
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r08.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r08.wms
 #hold event type:
 1
 #hold event number:
-7
+6
 #event number: 0
 #type
 1
@@ -76,37 +76,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-R08_AMBRELLA_01
-#OBJ CODE Number
-AMBRELLA
-#MOVE CODE Number
-MV_UP
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_R08_AMBRELLA_01
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-264 0 120
-#event number: 3
-#type
-1
-#ID name
 FLD_ITEM_220
 #OBJ CODE Number
 MONSTERBALL
@@ -134,7 +103,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -200 0 120
-#event number: 4
+#event number: 3
 #type
 1
 #ID name
@@ -165,7 +134,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 328 0 -184
-#event number: 5
+#event number: 4
 #type
 1
 #ID name
@@ -196,7 +165,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -24 0 120
-#event number: 6
+#event number: 5
 #type
 1
 #ID name

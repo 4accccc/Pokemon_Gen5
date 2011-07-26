@@ -12,11 +12,10 @@
 
 #define R08_AMBRELLA_02                    0
 #define R08_FISING_01                      1
-#define R08_AMBRELLA_01                    2
-#define FLD_ITEM_220                       3
-#define FLD_ITEM_221                       4
-#define FLD_ITEM_222                       5
-#define FLD_ITEM_223                       6
+#define FLD_ITEM_220                       2
+#define FLD_ITEM_221                       3
+#define FLD_ITEM_222                       4
+#define FLD_ITEM_223                       5
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
