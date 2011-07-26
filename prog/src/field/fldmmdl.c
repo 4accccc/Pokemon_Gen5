@@ -3843,6 +3843,11 @@ BOOL MMDL_CheckMoveBitNonCreateMoveEffect( const MMDL *mmdl )
 //-----------------------------------------------------------------------------
 void MMDL_SetLightAttr( MMDL *mmdl, BOOL flag )
 {
+  if( MMDL_CheckStatusLightAttrOFF( mmdl ) )
+  {
+    // 無効にする
+    flag = FALSE;
+  }
   mmdl->lightAttributeEnable  = flag;
 }
 //----------------------------------------------------------------------------
@@ -3856,7 +3861,45 @@ void MMDL_SetLightAttr( MMDL *mmdl, BOOL flag )
 //-----------------------------------------------------------------------------
 BOOL MMDL_GetLightAttr( const MMDL *mmdl )
 {
+  if( MMDL_CheckStatusLightAttrOFF( mmdl ) )
+  {
+    // 無効を返す
+    return FALSE;
+  }
   return mmdl->lightAttributeEnable;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュートのライトを無効
+ *
+ *	@param	MMDL * mmdl
+ *	@param	flag  TRUE:無効
+ */
+//-----------------------------------------------------------------------------
+void MMDL_SetStatusLightAttrOFF( MMDL * mmdl, BOOL flag )
+{
+  if( flag == TRUE ){
+    MMDL_OnStatusBit( mmdl, MMDL_STABIT_LIGHT_ATTR_OFF );
+  }else{
+    MMDL_OffStatusBit( mmdl, MMDL_STABIT_LIGHT_ATTR_OFF );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アトリビュートのライトを無効  チェック
+ *
+ *	@param	const MMDL * mmdl 
+ *
+ *	@return BOOL TRUE:無効
+ */
+//-----------------------------------------------------------------------------
+BOOL MMDL_CheckStatusLightAttrOFF( const MMDL * mmdl )
+{
+  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_LIGHT_ATTR_OFF) ){
+    return( TRUE );
+  }
+  return( FALSE );
 }
 
 //======================================================================

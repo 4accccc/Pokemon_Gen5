@@ -210,6 +210,7 @@ typedef enum
 	MMDL_STABIT_RAIL_MOVE = (1<<13),///<レール動作
   MMDL_STABIT_REFLECT_OFF=(1<<14),///<映り込みを描画しない
 	MMDL_STABIT_PLAYER_HIT_NON=(1<<15),///<プレイヤーOBJとの当たり判定無効
+	MMDL_STABIT_LIGHT_ATTR_OFF=(1<<16),///<アトリビュートのライト無効
 }MMDL_STABIT;
 
 //MMDL_STABIT_HEIGHT_EXPAND=(1<<13),///<拡張高さに反応する
@@ -954,6 +955,8 @@ extern void MMDL_SetMoveBitNonCreateMoveEffect( MMDL *mmdl, BOOL flag );
 extern BOOL MMDL_CheckMoveBitNonCreateMoveEffect( const MMDL *mmdl );
 extern void MMDL_SetLightAttr( MMDL *mmdl, BOOL flag );
 extern BOOL MMDL_GetLightAttr( const MMDL *mmdl );
+extern void MMDL_SetStatusLightAttrOFF( MMDL * mmdl, BOOL flag );
+extern BOOL MMDL_CheckStatusLightAttrOFF( const MMDL * mmdl );
 
 extern BOOL MMDLSYS_SearchUseMMdl(
 	const MMDLSYS *fos, MMDL **mmdl, u32 *no );
