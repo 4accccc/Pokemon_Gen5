@@ -38,11 +38,12 @@
 ・はい/いいえの選択肢表示
 　はい　→middleman1_02
 　はい、だけど所持金不足→middleman1_11
-　いいえ→
+　はい、だけどバッグ一杯→middleman1_12
+　いいえ→middleman1_10
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T12:12:18" />
+				Time="2011-07-26T03:47:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -496,11 +497,12 @@
 ・はい/いいえの選択肢表示
 　はい　→middleman1_02
 　はい、だけど所持金不足→middleman1_11
+　はい、だけどバッグ一杯→middleman1_12
 　いいえ→middleman1_10
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-21T12:12:23" />
+				Time="2011-07-26T03:46:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -624,6 +626,61 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-21T11:56:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h01_middleman1_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あ　あなた……　これいじょう
+おいしいみずを　もてないよ！▼
+なんだ！　おいしいみずマニア　かあ！
+じゃあ　また　こんど　よろしくね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T03:46:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T03:45:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あ　あなた……　これ以上
+おいしいみずを　持てないよ！▼
+なんだ！　おいしいみずマニア　かあ！
+じゃあ　また　今度　よろしくね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T03:46:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T03:45:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい、だけどバッグ一杯
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T03:45:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLWMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T03:45:15" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
