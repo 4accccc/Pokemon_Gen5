@@ -2488,6 +2488,218 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c04_railman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっ！　カナワタウンで
+ポケモンを　さがしている▽
+トレーナーさんが　いるって！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:09:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっ！　カナワタウンで
+ポケモンを　さがしている▽
+トレーナーさんが　いるって！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・msg_t05_girl3_01表示後に出現
+・続けてrailman_02
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:08:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04_railman_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おまえさん
+ずいぶん　とおくから　きたんだなあ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:10:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:10:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おまえさん
+ずいぶん　とおくから　きたんだなあ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヤナップと向き合って
+・続けてrailman_03
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:10:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04_railman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わかった！　ぼくが　カナワタウンに
+このコを　おくっていくよ▼
+おしえてくれて　かんしゃ　です！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わかった！　ぼくが　カナワタウンに
+このコを　おくっていくよ▼
+おしえてくれて　かんしゃ　です！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:11:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、ヤナップを連れて
+　ギアステーションの方に移動
+・画面外に消えると主人公操作可能に
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:12:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RAILMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:10:27" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04_poke33_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うきゃ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:09:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:09:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うきゃ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:09:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:09:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・msg_t05_girl3_01表示後に出現
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:10:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE33
+ポケモン・ヤナップ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:09:59" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04_footballm_01"
 		Style="Large">
 		<LanguageCell

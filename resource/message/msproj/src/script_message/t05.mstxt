@@ -52,107 +52,346 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t05_sign1_01"
+		Label="msg_t05_girl3_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここは　カナワタウン
-カナワとは　こうさする　てつのわっか</Text>
+			<Text>ヤナップ……
+どこに　いるのかな……？▼
+あのね　ゆうえんちに　いったり
+ミュージカルを　みて　あそんでたの！▼
+でも　かえるとき
+ヤナップったら　まちがって▽
+べつの　でんしゃに　のっちゃったの▼
+いま　どこに　いるのかな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:05:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:31:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここは　カナワタウン
-カナワとは　交差する　鉄の輪</Text>
+			<Text>ヤナップ……
+どこに　いるのかな……？▼
+あのね　遊園地に　行ったり
+ミュージカルを　観て　遊んでたの！▼
+でも　帰るとき
+ヤナップったら　間違って▽
+別の　電車に　乗っちゃったの▼
+いま　どこに　いるのかな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:05:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:45:54" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>看板分類：タウンマップ</Comment>
+			<Comment>♀
+・イベント解決前
+・c04に駅員とヤナップ登場
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:42:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>看板：街</Text>
+			<Text>GIRL3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:30:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t05_sign2_01"
+		Label="msg_t05_girl3_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュちほうの　ろせんずだ▼</Text>
+			<Text>あっ！　トレーナーさん！▼
+あたしの　ヤナップ
+さがして　くれたんだってね！▼
+ほんと　ありがとう！
+これ　ちょっとしたもの　ですけど</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:13:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:31:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ地方の　路線図がある▼</Text>
+			<Text>あっ！　トレーナーさん！▼
+あたしの　ヤナップ
+探して　くれたんだってね！▼
+ほんと　ありがとう！
+これ　ちょっとしたもの　ですけど</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:41:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>看板分類：路線図</Comment>
+			<Comment>♀
+・イベント解決後
+・アイテム入手処理
+　No213「ひかりのこな」（仮）
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:19:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>看板：路線図</Text>
+			<Text>GIRL3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:30:43" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_girl3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ヤナップ　ったら　でんしゃの
+しゃしょうさんに　なるのが▽
+ゆめ　なんですって！▼
+じぶんは　ポケモンと　はなせるって
+ひとが　おしえてくれたわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:15:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:12:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ヤナップ　ったら　電車の
+車掌さんに　なるのが▽
+夢なんですって！▼
+自分は　ポケモンと　話せるって
+人が　教えてくれたわ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:16:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:12:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント解決後＋
+　アイテム入手後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:13:54" />
+		</CommentCell>
 		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
+			Name="Character">
+			<Text>GIRL3</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:12:30" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_poke33_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うきゃ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:02:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うきゃ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:02:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:02:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・イベント解決後に出現
+・あわせて鳴き声再生
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:01:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE33
+ポケモン・ヤナップ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:02:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_middlewoman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん～　ここからの　でんしゃ　なら
+ライモンシティに　いくけれど……▼
+まいごの　ポケモン　きっと
+トレーナーを　さがしてるわね……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:03:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:50:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん～　ここからの　電車なら
+ライモンシティに　行くけれど……▼
+迷子の　ポケモン　きっと
+トレーナーを　探してるわね……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:03:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:50:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント解決前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:47:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEWOMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:47:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_middlewoman1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>このコ　ライモンシティの
+ミュージカルホールの　まえに▽
+いたんだって　ね！▼
+みつかって　よかったよー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:06:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:06:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このコ　ライモンシティの
+ミュージカルホールの　前に▽
+いたんだって　ね！▼
+みつかって　よかったよー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:06:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:06:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・イベント解決後
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T10:06:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEWOMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:47:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t05_railfan_01"
@@ -184,11 +423,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-話しかけスタート
-はい／いいえ選択表示</Comment>
+・話しかけスタート
+・はい/いいえの選択肢表示
+　はい　→
+　いいえ→</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -235,11 +476,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-話しかけスタート
-車両無しのとき</Comment>
+・話しかけスタート
+　車両無しのとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -261,11 +502,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは　あの　でんしゃが
-みえるかい？</Text>
+			<Text>きみは　あの
+でんしゃが　みえるかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:42:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -273,11 +514,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは　あの　電車が
-みえるかい？</Text>
+			<Text>きみは　あの
+電車が　みえるかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:42:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -286,12 +527,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-話しかけスタート
-車両無しのとき
+・話しかけスタート
+　車両無しのとき
 ・車両解説を１度でも聞いているなら</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -338,10 +579,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-「はい」を選択</Comment>
+・はい選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -388,11 +629,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-「はい」を選択
-車両無しのとき</Comment>
+・はい選択時
+　車両無しのとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -437,10 +678,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-「いいえ」を選択</Comment>
+・いいえ選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -487,11 +728,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-「いいえ」を選択
-車両無しのとき</Comment>
+・いいえ選択時
+　車両無しのとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -530,10 +771,10 @@
 			<Text>きょうの　車両は
 モーソートレイン！▽
 ロケットよりも　速く！▽
-エアコンよりも　しずかに　動く！</Text>
+エアコンよりも　静かに　動く！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:16:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -542,11 +783,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-車両無しのとき</Comment>
+・カメラ切り替え１（左→右）
+　車両無しのとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -602,11 +843,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-シングル</Comment>
+・カメラ切り替え１（左→右）
+　シングル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -662,11 +903,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-Sシングル</Comment>
+・カメラ切り替え１（左→右）
+　Sシングル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:14:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -708,12 +949,12 @@ Sシングル</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　車両は　ダブルトレイン！
+			<Text>この車両は　ダブルトレイン！
 ひと昔　前の▽
 量産車両なのです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:16:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -722,11 +963,11 @@ Sシングル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-ダブル</Comment>
+・カメラ切り替え１（左→右）
+　ダブル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -782,11 +1023,11 @@ Sシングル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-Sダブル</Comment>
+・カメラ切り替え１（左→右）
+　Sダブル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -842,11 +1083,11 @@ Sダブル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-マルチ</Comment>
+・カメラ切り替え１（左→右）
+　マルチ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -888,12 +1129,12 @@ Sダブル</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　車両は
+			<Text>この車両は
 スーパーマルチトレイン！▽
 最新型の　車両なのです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -902,11 +1143,11 @@ Sダブル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-Sマルチ</Comment>
+・カメラ切り替え１（左→右）
+　Sマルチ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -948,12 +1189,12 @@ Sマルチ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　車両は　Ｗｉ－Ｆｉトレイン！
+			<Text>この車両は　Ｗｉ－Ｆｉトレイン！
 バトルサブウェイで　最速の▽
 長距離　高速鉄道です！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -962,11 +1203,11 @@ Sマルチ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-Wi-Fi</Comment>
+・カメラ切り替え１（左→右）
+　Wi-Fi</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1022,11 +1263,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-カナワ行き</Comment>
+・カメラ切り替え１（左→右）
+　カナワ行き</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1067,11 +1308,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　車両は
+			<Text>この車両は
 ずっと昔に　走っていたものだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-01T04:59:02" />
+				Time="2011-07-26T09:16:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1080,11 +1321,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-レトロトレイン</Comment>
+・カメラ切り替え１（左→右）
+　レトロトレイン</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1125,11 +1366,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　車両は
-未来を走る　ニュートレイン！</Text>
+			<Text>この車両は
+未来を　走る　ニュートレイン！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:16:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1138,11 +1379,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え１（左→右）
-ニュートレイン</Comment>
+・カメラ切り替え１（左→右）
+　ニュートレイン</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1202,11 +1443,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-車両無しのとき</Comment>
+・カメラ切り替え２（前→後）
+　車両無しのとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1260,11 +1501,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-シングル</Comment>
+・カメラ切り替え２（前→後）
+　シングル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1307,11 +1548,11 @@ Wi-Fi</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すべての　パーツを　見直して
-消費電力を　大幅に　下げているんだ▽
+消費電力を　大幅に　さげているんだ▽
 環境に　やさしい　エコトレインだね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1320,11 +1561,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-Sシングル</Comment>
+・カメラ切り替え２（前→後）
+　Sシングル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1380,11 +1621,11 @@ Sシングル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-ダブル</Comment>
+・カメラ切り替え２（前→後）
+　ダブル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1440,11 +1681,11 @@ Sシングル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-Sダブル</Comment>
+・カメラ切り替え２（前→後）
+　Sダブル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:15:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1502,11 +1743,11 @@ Sダブル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-マルチ</Comment>
+・カメラ切り替え２（前→後）
+　マルチ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1562,11 +1803,11 @@ Sダブル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-Sマルチ</Comment>
+・カメラ切り替え２（前→後）
+　Sマルチ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1622,11 +1863,11 @@ Sマルチ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-Wi-Fi</Comment>
+・カメラ切り替え２（前→後）
+　Wi-Fi</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1682,11 +1923,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-カナワ行き</Comment>
+・カメラ切り替え２（前→後）
+　カナワ行き</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1742,11 +1983,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-レトロトレイン</Comment>
+・カメラ切り替え２（前→後）
+　レトロトレイン</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1802,11 +2043,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-カメラ切り替え２（前→後）
-ニュートレイン</Comment>
+・カメラ切り替え２（前→後）
+　ニュートレイン</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1870,11 +2111,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-車両無しのとき</Comment>
+・終了メッセージ
+　車両無しのとき</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1932,11 +2173,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-シングル</Comment>
+・終了メッセージ
+　シングル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1996,11 +2237,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-Sシングル</Comment>
+・終了メッセージ
+　Sシングル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2064,11 +2305,11 @@ Sシングル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-ダブル</Comment>
+・終了メッセージ
+　ダブル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2130,11 +2371,11 @@ Sシングル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-Sダブル</Comment>
+・終了メッセージ
+　Sダブル</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2195,11 +2436,11 @@ Sダブル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-マルチ</Comment>
+・終了メッセージ
+　マルチ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:17:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2262,11 +2503,11 @@ Sダブル</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-Sマルチ</Comment>
+・終了メッセージ
+　Sマルチ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2324,11 +2565,11 @@ Sマルチ</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-Wi-Fi</Comment>
+・終了メッセージ
+　Wi-Fi</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2389,11 +2630,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-カナワ行き</Comment>
+・終了メッセージ
+　カナワ行き</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2463,11 +2704,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-レトロトレイン</Comment>
+・終了メッセージ
+　レトロトレイン</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2537,11 +2778,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-終了メッセージ
-レトロトレイン</Comment>
+・終了メッセージ
+　レトロトレイン</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2597,11 +2838,13 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-会話スタート
-はい／いいえ表示</Comment>
+・会話スタート
+・はい/いいえの選択肢表示
+　はい　→recept_02
+　いいえ→recept_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2648,12 +2891,12 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-はい
-続いて主人公
-電車の前に移動しマップ遷移</Comment>
+・はい選択時
+・続いて主人公
+　電車の前に移動しマップ遷移</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2702,10 +2945,10 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-いいえ</Comment>
+・いいえ選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:18:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2819,15 +3062,16 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-会話スタート（初回）
+			<Comment>♂：ボロ市
+・会話スタート（初回）
 ※マップ切り替えでリセット
-はい／いいえ表示
-
-あなぬけのひも→げんきのかけら</Comment>
+・はい/いいえの選択肢表示
+　はい　→backpackerm_03
+　いいえ→backpackerm_04
+・あなぬけのひも→げんきのかけら</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:19:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2883,12 +3127,14 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂　ボロ市
-会話スタート（２回目以降）
+・会話スタート（２回目以降）
 ※マップ切り替えでリセット
-はい／いいえ表示</Comment>
+・はい/いいえの選択肢表示
+　はい　→backpackerm_03
+　いいえ→backpackerm_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:19:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2939,11 +3185,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂ ボロ市
-はい</Comment>
+			<Comment>♂：ボロ市
+・はい選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2994,11 +3240,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂ ボロ市
-いいえ</Comment>
+			<Comment>♂：ボロ市
+・いいえ選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3051,11 +3297,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-交換後メッセージ</Comment>
+			<Comment>♂：ボロ市
+・交換後メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3108,11 +3354,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-アイテム不足で交換不成立</Comment>
+			<Comment>♂：ボロ市
+・アイテム不足で交換不成立</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3165,11 +3411,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-アイテムMAXで交換不成立</Comment>
+			<Comment>♂：ボロ市
+・アイテムMAXで交換不成立</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3232,16 +3478,16 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
+			<Comment>♂：ボロ市
 会話スタート（初回）
 ※マップ切り替えでリセット
-はい／いいえ表示
-
-
-ほしのかけら→ピーピーエイド</Comment>
+・はい/いいえの選択肢表示
+　はい　→businessman_02
+　いいえ→businessman_03
+・ほしのかけら→ピーピーエイド</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:26:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3296,13 +3542,13 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
+			<Comment>♂：ボロ市
 会話スタート（２回目以降）
 ※マップ切り替えでリセット
-はい／いいえ表示</Comment>
+・はい/いいえの選択肢表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3353,11 +3599,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂ ボロ市
-はい</Comment>
+			<Comment>♂：ボロ市
+・はい選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3410,11 +3656,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂ ボロ市
-いいえ</Comment>
+			<Comment>♂：ボロ市
+・いいえ選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3471,11 +3717,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-交換後メッセージ</Comment>
+			<Comment>♂：ボロ市
+・交換後メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3528,11 +3774,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-アイテム不足で交換不成立</Comment>
+			<Comment>♂：ボロ市
+・アイテム不足で交換不成立</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3585,11 +3831,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-アイテムMAXで交換不成立</Comment>
+			<Comment>♂：ボロ市
+・アイテムMAXで交換不成立</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3650,15 +3896,16 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
+			<Comment>♀：ボロ市
 会話スタート（初回）
 ※マップ切り替えでリセット
-はい／いいえ表示
-
-モンスターボール→かいふくのくすり</Comment>
+・はい/いいえの選択肢表示
+　はい　→trainerw_02
+　いいえ→trainerw_03
+・モンスターボール→かいふくのくすり</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:26:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3713,13 +3960,13 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
+			<Comment>♀：ボロ市
 会話スタート（２回目以降）
 ※マップ切り替えでリセット
-はい／いいえ表示</Comment>
+・はい/いいえの選択肢表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3772,11 +4019,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂ ボロ市
-はい</Comment>
+			<Comment>♀：ボロ市
+・はい選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3829,11 +4076,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂ ボロ市
-いいえ</Comment>
+			<Comment>♀：ボロ市
+・いいえ選択時</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3890,11 +4137,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂　ボロ市
-交換後メッセージ</Comment>
+			<Comment>♀：ボロ市
+・交換後メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:25:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3947,11 +4194,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀　ボロ市
-アイテム不足で交換不成立</Comment>
+			<Comment>♀：ボロ市
+・アイテム不足で交換不成立</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4004,11 +4251,11 @@ Wi-Fi</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀　ボロ市
-アイテムMAXで交換不成立</Comment>
+			<Comment>♀：ボロ市
+・アイテムMAXで交換不成立</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:24:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4064,11 +4311,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-見物人
-週末のみ表示</Comment>
+・見物人
+　週末のみ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4115,11 +4362,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-見物人
-週末のみ表示</Comment>
+・見物人
+　週末のみ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4164,11 +4411,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-見物人
-週末のみ表示</Comment>
+・見物人
+　週末のみ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4215,11 +4462,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-見物人
-週末のみ表示</Comment>
+・見物人
+　週末のみ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4278,11 +4525,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-見物人
-週末のみ表示</Comment>
+・見物人
+　週末のみ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4331,11 +4578,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-見物人
-週末のみ表示</Comment>
+・見物人
+　週末のみ表示</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4383,11 +4630,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-住人
-平日</Comment>
+・住人
+　平日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:21:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4441,11 +4688,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-住人
-週末：車両アリ</Comment>
+・住人
+　週末：車両アリ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:21:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4499,11 +4746,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-住人
-週末：車両ナシ</Comment>
+・住人
+　週末：車両ナシ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:21:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4557,11 +4804,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-住人
-平日</Comment>
+・住人
+　平日</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:21:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4615,11 +4862,11 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-住人
-週末</Comment>
+・住人
+　週末</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:21:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4673,12 +4920,12 @@ Wi-Fi</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-住人
-車両ナシの時
+・住人
+　車両ナシの時
 ※平日／週末関係なくこのメッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:20:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -4755,5 +5002,101 @@ Wi-Fi</Comment>
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_sign1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　カナワタウン
+カナワとは　こうさする　てつのわっか</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　カナワタウン
+カナワとは　交差する　鉄の輪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>看板分類：タウンマップ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：街</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_sign2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュちほうの　ろせんずだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュ地方の　路線図がある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>看板分類：路線図</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：路線図</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-26T09:13:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
