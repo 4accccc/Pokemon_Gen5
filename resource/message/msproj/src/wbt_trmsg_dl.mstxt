@@ -2542,10 +2542,10 @@
 			<Text>こんなに　沢山　戦えて
 幸せな　一日だったな！▼
 最後の　勝負は　派手にいくか！
-とりゃあああッ！▼</Text>
+とりゃあああッ！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T09:51:08" />
+				Time="2011-07-26T02:17:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3012,12 +3012,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>この　しょうぶに　かてば
-ぼくも　ゆうめいトレーナーの▽
+いよいよ　ゆうめいトレーナーの▽
 なかまいりかな！？▼
 うん！　もりあがってきたよっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:44:09" />
+				Time="2011-07-26T02:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3026,12 +3026,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この勝負に　勝てば
-ぼくも　有名トレーナーの▽
+いよいよ　有名トレーナーの▽
 仲間入りかな！？▼
 うん！　盛り上がってきたよっ！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:44:03" />
+				Time="2011-07-26T02:06:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3135,11 +3135,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よーし！　このまま
-スターかいどう　つっぱしっちゃうよ！▼</Text>
+			<Text>みんなー！　みたみた！？
+ぼくの　かれいな　たたかいを！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:53:05" />
+				Time="2011-07-26T02:06:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3147,11 +3147,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よーし！　このまま
-スター街道　突っ走っちゃうよ！▼</Text>
+			<Text>みんなー！　見た見た！？
+ぼくの　華麗な　戦いを！！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T10:53:16" />
+				Time="2011-07-26T02:06:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3195,10 +3195,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ</Text>
+			<Text>こんな　たくさんの　ひとのまえで
+たたかえただけでも　よしとするよ……▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-25T11:03:15" />
+				Time="2011-07-26T02:13:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3206,10 +3207,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>こんな　沢山の　人の前で
+戦えただけでも　よしとするよ……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:11:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-26T02:13:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3253,10 +3255,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ</Text>
+			<Text>よーし！　このまま
+スターかいどう　つっぱしっちゃうよ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:11:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-26T02:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3264,10 +3267,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>よーし！　このまま
+スター街道　突っ走っちゃうよ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:11:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-26T02:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3311,10 +3315,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ</Text>
+			<Text>めだちたがりやの　このオトコォォ！
+なを　はせるために　ぶたいに　たつ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:11:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-26T02:15:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3322,10 +3327,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>目立ちたがり屋の　このオトコォォ！
+名を　はせるために　舞台に　立つ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:11:42" />
+				User="swan_scenario:W00293"
+				Time="2011-07-26T02:15:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
