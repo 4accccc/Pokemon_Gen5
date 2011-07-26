@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-07-25T18:57:55" source="d25_obj01_b.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-07-26T16:34:03" source="d25_obj01_b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-07-25T18:57:55" source="d25_obj01_b.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-07-26T16:34:03" source="d25_obj01_b.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-1.365723 0.255615 -2.602295" whd="2.474121 1.377930 5.204346"/>
+<box_test pos_scale="3" xyz="-1.111328 0.255615 -2.602295" whd="2.219727 1.525391 5.204346"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="h_kage"
@@ -46,27 +46,27 @@
 	<tex_image index="1" name="in66_sofa01"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
-		color0_mode="transparency"
+		color0_mode="color"
 		palette_name="in66_sofa01_pl"
 		path="C:/home/swan_data3d/build_model/indoor/d25_obj01_b/tex/in66_sofa01.tga"
 	>
 		<bitmap size="128">
-			2154 5354 4533 5421 2154 5354 4535 5421
-			2154 5554 4555 5421 2154 5554 4555 5421
-			2154 5354 4535 5421 2154 3354 4535 5421
-			2154 5354 4533 5421 2154 5354 4535 5421
-			2154 5554 4555 5421 2154 5554 4555 5421
-			2154 5354 4535 5421 2154 3354 4535 5421
-			2154 5354 4533 5421 2154 5354 4535 5421
-			2154 5554 4555 5421 2154 5554 4555 5421
-			2154 5354 4535 5421 2154 3354 4535 5421
-			2154 5354 4533 5421 2154 5354 4535 5421
-			2154 5554 4555 5421 2154 5554 4555 5421
-			2154 5354 4535 5421 2154 3354 4535 5421
-			2154 5354 4533 5421 2154 5354 4535 5421
-			2154 5554 4555 5421 2154 5554 4555 5421
-			2154 5354 4535 5421 2154 3354 4535 5421
-			6666 6666 6666 6666 4444 4444 4444 4444
+			4502 0102 2011 0245 4502 0102 2010 0245
+			4502 0002 2000 0245 4502 0002 2000 0245
+			4502 0102 2010 0245 4502 1102 2010 0245
+			4502 0102 2011 0245 4502 0102 2010 0245
+			4502 0002 2000 0245 4502 0002 2000 0245
+			4502 0102 2010 0245 4502 1102 2010 0245
+			4502 0102 2011 0245 4502 0102 2010 0245
+			4502 0002 2000 0245 4502 0002 2000 0245
+			4502 0102 2010 0245 4502 1102 2010 0245
+			4502 0102 2011 0245 4502 0102 2010 0245
+			4502 0002 2000 0245 4502 0002 2000 0245
+			4502 0102 2010 0245 4502 1102 2010 0245
+			4502 0102 2011 0245 4502 0102 2010 0245
+			4502 0002 2000 0245 4502 0002 2000 0245
+			4502 0102 2010 0245 4502 1102 2010 0245
+			3333 3333 3333 3333 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -76,7 +76,7 @@
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="in66_sofa01_pl" color_size="8">
-		7fff 6bbe 5b3c 25d3 2218 1971 363b 7fff
+		256e 2dd0 3214 4257 5f3a 6f9d 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -691,7 +691,7 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 9.375000"
+		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
