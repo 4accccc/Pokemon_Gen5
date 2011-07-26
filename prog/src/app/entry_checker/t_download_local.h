@@ -17,7 +17,22 @@
  *								定数定義
  */
 //=============================================================================
+//---------
+// モード
+// (途中で切り替わることもある)
+//---------
+enum{
+	T_DOWNLOAD_MODE_SAVE = 0,						// セーブ画面
+	T_DOWNLOAD_MODE_SELECT,							// 選択画面
+	T_DOWNLOAD_MODE_JOIN,							// 参加画面
+	T_DOWNLOAD_MODE_INFO,							// 詳細画面
+	//
+	T_DOWNLOAD_MODE_MAX,
+};
+
+//--------
 // 最大値
+//--------
 enum{
 	T_DOWNLOAD_CANVAS_MAXNUM 	= 9,				// canvas
 	T_DOWNLOAD_BMPOAM_MAXNUM	= 4,				// bmpoam
@@ -36,7 +51,9 @@ enum{
 	T_DOWNLOAD_DISP_PANEL_MAX	= 6,				// パネル最大
 };
 
+//-----------------------------
 // OBJのリソースのインデックス
+//-----------------------------
 enum{
 	// common
 	T_DOWNLOAD_RESID_CMN_OBJ_PLT = 0,				// パレット
@@ -50,8 +67,10 @@ enum{
 	T_DOWNLOAD_RESID_OBJ_MAX,
 };
 
+//-------------------------
 // タッチペンエリア
 // (excelのテーブルと対応)
+//-------------------------
 enum{
 	T_DOWNLOAD_AREA_TD_TP_LEFT = 0,					// 左矢印
 	T_DOWNLOAD_AREA_TD_TP_RIGHT,					// 右矢印
@@ -73,13 +92,17 @@ enum{
 	T_DOWNLOAD_AREA_TD_TP_MAX,
 };
 
+//----------
 // clwork
+//----------
 enum{
 	T_DOWNLOAD_CLWKMODE_NORMAL = 0,					// 通常(down)
 	T_DOWNLOAD_CLWKMODE_CMN,						// 共通(down)
 };
 
+//--------------
 // CLWK(下画面)
+//--------------
 enum
 {
 	T_DOWNLOAD_CLWKID_BAR = 0,						// スクロールバー
@@ -93,7 +116,9 @@ enum
 	T_DOWNLOAD_CLWKID_MAX,
 };
 
+//------------------
 // CLWK(下画面共通)
+//------------------
 enum{
 	T_DOWNLOAD_CLWKID_CMN_LEFT = 0,					// 左
 	T_DOWNLOAD_CLWKID_CMN_RIGHT,					// 右
@@ -103,11 +128,43 @@ enum{
 	T_DOWNLOAD_CLWKID_CMN_MAX,
 };
 
+//---------------
 // CmnFlag(共通)
+//---------------
 enum{
 	T_DOWNLOAD_FLG_UPDATE		= (1<<0),			// 更新
 	T_DOWNLOAD_FLG_PALCHG		= (1<<1),			// パレットチェンジ
 	T_DOWNLOAD_FLG_INFOUPDATE 	= (1<<2),			// (Info)更新
+};
+
+//--------------
+// 文字列情報
+//--------------
+// win情報
+enum{
+	T_DOWNLOAD_WIN_JOIN_00 = 0,						// 参加する
+	T_DOWNLOAD_WIN_JOIN_01,							// 参加しますか
+	T_DOWNLOAD_WIN_WHAT_00,							// どうしますか
+	T_DOWNLOAD_WIN_DEL_00,							// 削除しますか
+	T_DOWNLOAD_WIN_DEL_01,							// 本当に削除しますか
+};
+
+// 3択情報
+enum{
+	T_DOWNLOAD_YESNO_JOIN = 0,						// 参加する
+	T_DOWNLOAD_YESNO_SAVE,							// セーブする
+	T_DOWNLOAD_YESNO_YESNO,							// yes/no
+};
+
+//--------------
+// リスト情報
+//--------------
+enum{
+	T_DOWNLOAD_LIST_CURRENT = 0,					// カレント
+	T_DOWNLOAD_LIST_SAVE,							// セーブ
+	T_DOWNLOAD_LIST_SELECT,							// 選択
+	//
+	T_DOWNLOAD_LIST_MAX,
 };
 
 //=============================================================================
@@ -172,13 +229,9 @@ typedef struct
 	s32						Mode;							// モード
 	u32						Flag;							// フラグ
 	u32						CmnFlag;						// 共通フラグ
-	s32						CurPos;							// カーソル位置(view)
-	s32						TopNum;							// 先頭番号(select)
-	s32						SubNum;							// カーソル位置(select)
+	s32						RetMode;						// 戻りモード
 	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
-	s32						ScrollOffy;
-	s32						SaveBuffer[T_DOWNLOAD_SAVE_BUFFER_MAX];	// セーブ領域
-	T_DOWNLOAD_ITEM			ItemBuffer[T_DOWNLOAD_ITEM_BUFFER_MAX];	// アイテム領域
+	s32						ScrollOffy;						// BG3のスクロールoffset
 	//
 	// パレットチェンジ用
 	s32						PCount;							///< カウンタ
@@ -190,9 +243,9 @@ typedef struct
 	FRAMELIST_WORK			*frame_list_work;				// リスト
 	//
 	s32						DispMaxNum;						// 表示最大数
-	s32						AllCurPos;						// 通し番号
-	s32						ListCurPos;						// 画面上の位置
-	s32						ListScrollPos;					// スクロールの位置
+	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		// 通し番号
+	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	// 画面上の位置
+	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	// スクロールの位置
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)

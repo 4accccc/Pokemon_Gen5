@@ -34,13 +34,11 @@ extern BOOL TdCmn_is_anime_end( T_DOWNLOAD_MAIN_WORK *wk, const s32 wmode, const
 extern s16  TdCmn_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num );
 
 // yes/no win
-extern void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 extern void TdCmn_exit_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
 extern s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid );
 extern BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk );
-extern void TdCmn_init_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
-extern void TdCmn_disp_centermes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid );
 extern void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id );
 extern void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk );
 
@@ -54,7 +52,7 @@ extern void TdCmn_main_bg_scroll( T_DOWNLOAD_MAIN_WORK * wk );
 extern void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
 
 //
-extern void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk );
+extern void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
 extern u32  TdCmn_main_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 extern s32  TdCmn_is_main_framelist( T_DOWNLOAD_MAIN_WORK * wk, const u32 mode );
 extern void TdCmn_exit_framelist( T_DOWNLOAD_MAIN_WORK * wk );
@@ -63,8 +61,12 @@ extern void TdCmn_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk );
 extern void TdCmn_disp_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num );
 //
 extern void TdCmn_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdCmn_set_chgpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg );
+
 //
 extern void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
+//
+extern void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk );
 
 
 

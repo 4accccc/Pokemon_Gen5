@@ -126,6 +126,7 @@ enum{
 // シーケンス(通常)
 //------------------
 enum{
+	OBJ_CUR_SEQ			= 2,			// カーソル
 	OBJ_BTN00_OFF_SEQ	= 4,			// (00)off
 	OBJ_BTN00_ON_SEQ	= 5,			// (00)on
 	OBJ_BTN01_OFF_SEQ	= 6,			// (01)off
@@ -368,13 +369,48 @@ static const s16 td_mes_u000_tbl[] = {
 //------------------
 // メッセージ(下画面)
 //------------------
-// 本体(参加するトーナメント)
+//-----------------
+// windowメッセージ
+// (T_DOWNLOAD_WIN_*と対応)
+//-----------------
 static const s16 td_mes_d00_tbl[] = {
 	wbt_dl_list_msg_02,			// 「さんかするトーナメントを..」
 	wbt_dl_list_msg_03,			// 「○○トーナメントにさんかしますか」
+	wbt_dl_list_msg_01,			// 「○○トーナメントをどうしますか」
+	wbt_dl_ev_msg_11,			// 「○○トーナメントをさくじょしますか」
+	wbt_dl_ev_msg_12,			// 「○○トーナメントをほんとうにさくじょしますか」
+};
+
+//-----------------
+// 選択肢
+// (T_DOWNLOAD_YESNO_*と対応)
+//-----------------
+// 3択メッセージ(join)
+static const s16 td_mes_yesno_00_tbl[] = {
 	wbt_dl_list_msg_03_01,		// 「さんかする」
 	wbt_dl_list_msg_03_02,		// 「くわしくみる」
 	wbt_dl_list_msg_03_03,		// 「やめる」
+	-1,							// end
+};
+// 3択メッセージ(select)
+static const s16 td_mes_yesno_01_tbl[] = {
+	wbt_dl_cap_007,				// 「ほぞんする」(仮)
+	wbt_dl_list_msg_03_02,		// 「くわしくみる」
+	wbt_dl_list_msg_03_03,		// 「やめる」
+	-1,							// end
+};
+// 2択メッセージ(はい/いいえ)
+static const s16 td_mes_yesno_02_tbl[] = {
+	wbt_dl_ev_msg_03_yes,		// 「はい」
+	wbt_dl_ev_msg_03_yes,		// 「いいえ」
+	-1,							// end
+	-1,							// end
+};
+// 選択肢メッセージまとめ
+static const s16 *td_yesno_mes_tbl[] = {
+	td_mes_yesno_00_tbl,		// 参加
+	td_mes_yesno_01_tbl,		// 保存
+	td_mes_yesno_02_tbl,		// はい/いいえ
 };
 
 //----------------
@@ -493,8 +529,7 @@ static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 // yes/no win
 static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
 //
-//static void td_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk );
-//
+static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void td_listcallback_move( void *work, u32 pos, BOOL flag );
 static void td_listcallback_scroll( void *work, s8 mv );
@@ -1165,17 +1200,31 @@ s16 TdCmn_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num )
  *  @brief   はい/いいえウインドウ 開始
  *
  *  @param  T_DOWNLOAD_MAIN_WORK *wk
+ *  @param  const s32			(番号)
  *
  *  @retval none
  */
 //-----------------------------------------------------------------------------
-void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
+void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 {
 	APP_TASKMENU_INITWORK appinit;
 	s32		i;
+	s32		j;
+	const s16 *adr = td_yesno_mes_tbl[mode];
+	
+	// 個数を求める
+	j=0;
+	for(i=0;i<3;i++){
+		if(adr[i] == -1){
+			break;
+		}
+		j++;
+	}
+//	OS_Printf("mes num :%d\n",j);
 	
 	appinit.heapId		= wk->heapID;
-	appinit.itemNum		= 3;					// アイテム数
+//	appinit.itemNum		= 3;					// アイテム数
+	appinit.itemNum		= j;					// アイテム数
 	appinit.itemWork	= &wk->appitem[0];		// 情報セットのバッファ
 	//
 	appinit.posType		= ATPT_RIGHT_DOWN;
@@ -1184,9 +1233,10 @@ void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk )
 	appinit.w			= APP_TASKMENU_PLATE_WIDTH;
 	appinit.h			= APP_TASKMENU_PLATE_HEIGHT;
 	//
-	for(i=0;i<3;i++){
+//	for(i=0;i<3;i++){
+	for(i=0;i<j;i++){
 		wk->appitem[i].str = GFL_STR_CreateBuffer(100, wk->heapID);
-		GFL_MSG_GetString( wk->msg[0], td_mes_d00_tbl[2+i], wk->appitem[i].str);
+		GFL_MSG_GetString( wk->msg[0], adr[i], wk->appitem[i].str);
 		wk->appitem[i].msgColor	= PRINTSYS_LSB_Make( 0xe, 0xf, 0 );
 		if(i == 2){
 			wk->appitem[i].type		= APP_TASKMENU_WIN_TYPE_RETURN;
@@ -1320,34 +1370,6 @@ BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  会話ウインドウ完全初期化
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *	@param	const s32				canvasの番号
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void TdCmn_init_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
-{
-	//-----------------------------------------------------------------------
-	// キャラデータのウインドウをまるごと消去(frmのクリア)する必要があるため
-	// 完全初期化の部分を切り出しておく
-	//-----------------------------------------------------------------------
-	// 会話ウィンドウセット(キャラデータを転送)
-	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, PLTID_SYSWIN_BASE, MENU_TYPE_SYSTEM, wk->heapID);
-	// 会話ウインドウ表示
-	BmpWinFrame_Write( wk->PrintUtil[mode].win, WINDOW_TRANS_ON, 1, PLTID_SYSWIN_BASE );
-	// 文字スクリーン作成
-	GFL_BMPWIN_MakeScreen( wk->PrintUtil[mode].win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[mode].win) );
-	// クリア
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), MES_SYSWIN_CLEAR_COLOR );
-	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  会話ウインドウ全クリア(frmのクリア)
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
@@ -1402,35 +1424,11 @@ static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  会話ウインドウ全クリア(frmのクリア)
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *	@param	const s32				(canvasの番号)
- *	@param	const s32				(メッセージID)
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-void TdCmn_disp_centermes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid )
-{
-	STRBUF		*strbuf;
-	
-	// 中央の文字表示
-	TdCmn_init_meswin( wk, mode );
-	//
-	// メッセージ表示
-	strbuf = GFL_MSG_CreateString( wk->msg[0], mesid );
-	TdCmn_disp_string( wk, mode, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
-	GFL_STR_DeleteBuffer( strbuf );
-}
-
-//-----------------------------------------------------------------------------
-/**
  *	@brief  winにメッセージ表示
  *
  *	@param	T_DOWNLOAD_MAIN_WORK* wk
  *	@param	const s32				(canvasの番号)
- *	@param	const s32				(メッセージ番号)(0:選択してください、1:さんかしますか?)
+ *	@param	const s32				番号
  *
  *	@retval
  */
@@ -1440,7 +1438,21 @@ void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id )
 	STRBUF		*strbuf;
 	
 	// 中央の文字表示
-	TdCmn_init_meswin( wk, mode );
+//	TdCmn_init_meswin( wk, mode );
+	//-----------------------------------------------------------------------
+	// キャラデータのウインドウをまるごと消去(frmのクリア)する必要があるため
+	// 完全初期化の部分を切り出しておく
+	//-----------------------------------------------------------------------
+	// 会話ウィンドウセット(キャラデータを転送)
+	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_M, 1, PLTID_SYSWIN_BASE, MENU_TYPE_SYSTEM, wk->heapID);
+	// 会話ウインドウ表示
+	BmpWinFrame_Write( wk->PrintUtil[mode].win, WINDOW_TRANS_ON, 1, PLTID_SYSWIN_BASE );
+	// 文字スクリーン作成
+	GFL_BMPWIN_MakeScreen( wk->PrintUtil[mode].win );
+	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[mode].win) );
+	// クリア
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), MES_SYSWIN_CLEAR_COLOR );
+	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 	//
 	// メッセージ表示
 	strbuf = GFL_MSG_CreateString( wk->msg[0], td_mes_d00_tbl[id] );
@@ -1552,11 +1564,13 @@ void TdCmn_disp_upmes( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk )
+void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 {
 	FRAMELIST_HEADER  header = td_frame_list_header;
 	ARCHANDLE * arc_handle;
 	s32		i;
+	s32		flg=0;
+	BOOL	bflg;
 	//
 	header.cbWork = wk;
 	//
@@ -1578,12 +1592,11 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk )
 	// パラメータ設定
 	header.cbFunc  		= &td_list_callback;
 	header.itemMax 		= wk->DispMaxNum;			// 重要
-	header.initPos		= 0;
-	header.initScroll	= 0;
+	header.initPos		= wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT];
+	header.initScroll	= wk->ListScrollPos[T_DOWNLOAD_LIST_CURRENT];
 	if(wk->DispMaxNum <= T_DOWNLOAD_DISP_PANEL_MAX){
 		header.touch = td_list_tp2_tbl;
 	}
-	
 	// 生成
 	wk->frame_list_work = FRAMELIST_Create( &header, wk->heapID );
 	
@@ -1597,11 +1610,37 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk )
 	//
 	// 項目追加(タイトル文字をセット)
 	for(i=0;i<header.itemMax;i++){
-//		FRAMELIST_AddItem( wk->frame_list_work, 0, TdCmn_tmt_gmm_tbl[wk->DispBuffer[i]] );
-		FRAMELIST_AddItem( wk->frame_list_work, i%2, i );		// test
+		flg = 0;
+		bflg = td_chk_framelist( wk, mode, i );
+		if(bflg == TRUE){
+			flg = 1;
+		}
+		// 項目を表示
+		FRAMELIST_AddItem( wk->frame_list_work, flg, i );
 	}
 	// 初期化
 	FRAMELIST_Init( wk->frame_list_work );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	フレームの判定(正式な判定が必要)
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num )
+{
+	BOOL	bflg=FALSE;
+	//
+	// 選択済み
+	if((mode == T_DOWNLOAD_MODE_SAVE)||(mode == T_DOWNLOAD_MODE_JOIN)){
+		bflg = TRUE;
+	}
+	// 結果
+	return( bflg );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1731,9 +1770,9 @@ void TdCmn_calc_framelist( T_DOWNLOAD_MAIN_WORK * wk )
 {
 	// 初期化
 	if(wk->frame_list_work){
-		wk->AllCurPos      = FRAMELIST_GetListPos(  wk->frame_list_work );		// 通しカーソル位置
-		wk->ListCurPos     = FRAMELIST_GetCursorPos(wk->frame_list_work );		// 画面上の位置
-		wk->ListScrollPos  = FRAMELIST_GetScrollCount(wk->frame_list_work );	// スクロール位置
+		wk->AllCurPos[T_DOWNLOAD_LIST_CURRENT]      = FRAMELIST_GetListPos(  wk->frame_list_work );		// 通しカーソル位置
+		wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT]     = FRAMELIST_GetCursorPos(wk->frame_list_work );		// 画面上の位置
+		wk->ListScrollPos[T_DOWNLOAD_LIST_CURRENT]  = FRAMELIST_GetScrollCount(wk->frame_list_work );	// スクロール位置
 	}
 }
 
@@ -1844,6 +1883,8 @@ void TdCmn_disp_framelist_cursor( T_DOWNLOAD_MAIN_WORK * wk, const s32 num )
 	pos.x = TdCmn_get_empty( wk, (EMPTY_CURPOS+num)*2 );
 	pos.y = TdCmn_get_empty( wk, (EMPTY_CURPOS+num)*2+1 );
 	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+	// 戻し
+	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, OBJ_CUR_SEQ );
 }
 
 //----------------------------------------------------------------------------------
@@ -1935,7 +1976,7 @@ void TdCmn_main_chgpal( T_DOWNLOAD_MAIN_WORK* wk )
  * @retval
  */
 //----------------------------------------------------------------------------------
-static void td_set_chgpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
+void TdCmn_set_chgpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
 {
 	// フラグのon/off
 	if(bflg == TRUE){
@@ -1969,4 +2010,31 @@ void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 	TdCmn_chg_objseq( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_ICON_00+mode, td_info_btn_tbl[2*mode+1] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	スクロールバー処理
+ *
+ * @param	T_DOWNLOAD_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk )
+{
+	// 表示
+	GFL_CLACTPOS cp_pos;
+	
+	// 座標の取得
+	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
+	cp_pos.y = FRAMELIST_GetScrollBarPY2( wk->frame_list_work, cp_pos.y );
+//	cp_pos.x = 240;		// test
+	//
+	// RAILの領域の(+-8補正:アイコンの半分の大きさ補正)
+	if( cp_pos.y < 40 ){
+		cp_pos.y = 40;
+	}else if( cp_pos.y > 152 ){
+		cp_pos.y = 152;
+	}
+	GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
+}
 
