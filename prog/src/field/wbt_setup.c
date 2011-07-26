@@ -402,7 +402,8 @@ void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM * wr_pa
 //------------------------------------------------------------------
 ///  TDOWNLOAD用パラメータOBJECT生成
 //------------------------------------------------------------------
-T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work )
+T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create(
+    HEAPID heapID, GAMESYS_WORK * gsys, T_DOWNLOAD_STATUS status, u16 * res_work, u16 * curpos )
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	T_DOWNLOAD_PARAM 	*td_param;
@@ -410,9 +411,11 @@ T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, 
 	td_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(T_DOWNLOAD_PARAM) );
 	td_param->gamesys	= gsys;
 	// 初期化
-	td_param->status	  = T_DOWNLOAD_STATUS_SELECT;
-	// 戻り値を返す先のポインタ
+	td_param->status	  = status;
+	// 戻り値を返す先のポインタ：Xボタン抜け
   td_param->result_work = res_work;
+  // 戻り値を返す先のポインタ：選択位置
+  td_param->curpos = curpos;
 	return td_param;
 }
 

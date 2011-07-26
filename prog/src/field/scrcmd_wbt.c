@@ -804,11 +804,9 @@ VMCMD_RESULT EvCmdWBTSelectDLData( VMHANDLE * core, void * wk )
   GMEVENT * new_event;
 	T_DOWNLOAD_PARAM * td_param;
 
-  //u16 app_id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 app_id = T_DOWNLOAD_STATUS_SELECT;
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, ret_wk );
+  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, T_DOWNLOAD_STATUS_JOIN, NULL, ret_wk );
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
   TAMADA_Printf("EvCmdWBTSelectDLData\n");
@@ -860,7 +858,7 @@ VMCMD_RESULT EvCmdWBTECheckerDownLoad( VMHANDLE * core, void * wk )
   u16 app_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
 
-  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, ret_wk );
+  td_param = T_DOWNLOAD_PARAM_Create( heap_id, gsys, T_DOWNLOAD_STATUS_SELECT, ret_wk, NULL );
 	new_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_wbt), T_DOWNLOAD_EVENT_Show, (void *)td_param );
   //åãâ ÇéÛÇØéÊÇÈÉèÅ[ÉNÇê›íËÇ∑ÇÈ

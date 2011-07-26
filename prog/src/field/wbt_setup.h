@@ -51,7 +51,8 @@ extern void WIN_RECORD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, WIN_RECORD_PARAM 
 //------------------------------------------------------------------
 //
 //------------------------------------------------------------------
-extern T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u16 * res_work );
+extern T_DOWNLOAD_PARAM * T_DOWNLOAD_PARAM_Create(
+    HEAPID heapID, GAMESYS_WORK * gsys, T_DOWNLOAD_STATUS status, u16 * res_work, u16 * curpos );
 extern void T_DOWNLOAD_PARAM_Delete( T_DOWNLOAD_PARAM * td_param );
 #ifdef PM_DEBUG
 extern void T_DOWNLOAD_PARAM_Setup_Debug( GAMESYS_WORK * gsys, T_DOWNLOAD_PARAM * td_param );
