@@ -34,11 +34,11 @@ enum{
 // 最大値
 //--------
 enum{
-	T_DOWNLOAD_CANVAS_MAXNUM 	= 9,				// canvas
+	T_DOWNLOAD_CANVAS_MAXNUM 	= 14,				// canvas
 	T_DOWNLOAD_BMPOAM_MAXNUM	= 4,				// bmpoam
 	T_DOWNLOAD_EMPTY_MAXNUM		= 27*2,				// empty
 	//
-	T_DOWNLOAD_CMN_OBJ_MAXNUM	= 4,				// common(obj)
+	T_DOWNLOAD_CMN_OBJ_MAXNUM	= 6,				// common(obj)
 	T_DOWNLOAD_OBJ_MAXNUM		= 6,				// obj
 	//
 	T_DOWNLOAD_BGNUM_MAXNUM		= 8,				// bg
@@ -124,6 +124,8 @@ enum{
 	T_DOWNLOAD_CLWKID_CMN_RIGHT,					// 右
 	T_DOWNLOAD_CLWKID_CMN_CROSS,					// ×
 	T_DOWNLOAD_CLWKID_CMN_RETURN,					// 戻る
+	T_DOWNLOAD_CLWKID_CMN_DOWN,						// 下
+	T_DOWNLOAD_CLWKID_CMN_UP,						// 上
 	//
 	T_DOWNLOAD_CLWKID_CMN_MAX,
 };
@@ -135,6 +137,28 @@ enum{
 	T_DOWNLOAD_FLG_UPDATE		= (1<<0),			// 更新
 	T_DOWNLOAD_FLG_PALCHG		= (1<<1),			// パレットチェンジ
 	T_DOWNLOAD_FLG_INFOUPDATE 	= (1<<2),			// (Info)更新
+};
+
+//--------------
+// Canvas
+//--------------
+enum{
+	T_DOWNLOAD_MSG_UP_TNAME		= 0,				// トーナメント名
+	T_DOWNLOAD_MSG_UP_RULE_00,						// ルール(左)
+	T_DOWNLOAD_MSG_UP_RULE_01,						// ルール(右)
+	T_DOWNLOAD_MSG_UP_EXP_00,						// ルール説明
+	T_DOWNLOAD_MSG_UP_INFO,							// 内容
+	T_DOWNLOAD_MSG_UP_EXP_01,						// 内容説明
+	//
+	T_DOWNLOAD_MSG_DOWN_TITLE,						// タイトル
+	T_DOWNLOAD_MSG_DOWN_MESWIN_00,					// win00
+	T_DOWNLOAD_MSG_DOWN_MESWIN_01,					// win01
+	//
+	T_DOWNLOAD_MSG_DOWN_INFO_00,					// 詳細パネル00
+	T_DOWNLOAD_MSG_DOWN_INFO_01,
+	T_DOWNLOAD_MSG_DOWN_INFO_02,
+	T_DOWNLOAD_MSG_DOWN_INFO_03,
+	T_DOWNLOAD_MSG_DOWN_INFO_04,
 };
 
 //--------------
@@ -167,6 +191,14 @@ enum{
 	T_DOWNLOAD_LIST_MAX,
 };
 
+enum{
+	T_DOWNLOAD_INFO_POKE = 0,
+	T_DOWNLOAD_INFO_ITEM,
+	T_DOWNLOAD_INFO_SKILL,
+	//
+	T_DOWNLOAD_INFO_MAX,
+};
+
 //=============================================================================
 /**
  *								構造体定義
@@ -184,6 +216,7 @@ typedef struct
 	GFL_CLWK	*clwk[T_DOWNLOAD_OBJ_MAXNUM];			// CLWK
 } T_DOWNLOAD_OBJ_WORK;
 
+#if 0
 //-------------------------------------
 /// アイテム情報
 //-------------------------------------
@@ -191,6 +224,7 @@ typedef struct{
 	u8				Num;			// 番号(0xffなし)
 	s8				Mode;			// 状態
 } T_DOWNLOAD_ITEM;
+#endif
 
 //--------------------------------------------------------------
 ///	メインワーク
@@ -246,6 +280,10 @@ typedef struct
 	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		// 通し番号
 	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	// 画面上の位置
 	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	// スクロールの位置
+	//
+	s32						ItemNum[T_DOWNLOAD_INFO_MAX];		// 項目数
+	s32						PageMaxNum[T_DOWNLOAD_INFO_MAX];	// ページ最大数
+	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; // カレントページ数
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
 	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)

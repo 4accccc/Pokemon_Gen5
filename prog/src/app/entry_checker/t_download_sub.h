@@ -24,6 +24,8 @@ extern void TdCmn_disp_string( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s
 							   const STRBUF* strbuf, const u32 pmode, const PRINTSYS_LSB col );
 extern void TdCmn_disp_string_number( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const s32 num, const s32 lnum, const u32 pmode );
 extern void TdCmn_clear_canvas( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
+extern void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk );
+extern void TdCmn_exit_string2( T_DOWNLOAD_MAIN_WORK* wk );
 
 // obj
 extern void TdCmn_chg_objseq( T_DOWNLOAD_MAIN_WORK *wk, const s32 wmode, const s32 wnum, const s32 seq );
@@ -37,8 +39,8 @@ extern s16  TdCmn_get_empty( T_DOWNLOAD_MAIN_WORK *wk, const s32 num );
 extern void TdCmn_init_yesnowin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 extern void TdCmn_exit_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
 extern s32  TdCmn_chk_yesnowin( T_DOWNLOAD_MAIN_WORK* wk );
-extern void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid );
-extern BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk );
+//extern void TdCmn_set_meswin( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 mesid );
+//extern BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk );
 extern void TdCmn_disp_winmes( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 id );
 extern void TdCmn_clear_frame( T_DOWNLOAD_MAIN_WORK* wk );
 
@@ -67,6 +69,10 @@ extern void TdCmn_set_chgpal( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg );
 extern void TdCmn_chg_info_curpos( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 //
 extern void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk );
-
+//
+extern void TdCmn_disp_info_mode( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode );
+extern void TdCmn_init_info_mode( T_DOWNLOAD_MAIN_WORK * wk );
+extern s32  TdCmn_calc_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
+extern void TdCmn_set_scrollbar_info( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num );
 
 

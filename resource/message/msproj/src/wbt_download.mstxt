@@ -1796,4 +1796,133 @@
 				Time="2011-07-21T11:51:57" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_000">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:09:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:09:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:10:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:10:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細のポケモン名</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:10:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Item Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:10:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:10:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Item Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細のどうぐ名</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:10:55" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細の技名</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:11:36" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="wbt_dl_list_msg_01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほぞんする</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:13:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:13:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほぞんする</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:13:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:13:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬトーナメント　保存リストの選択肢
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-26T11:13:47" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

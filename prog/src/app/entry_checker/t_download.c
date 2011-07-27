@@ -92,17 +92,6 @@ enum{
 };
 
 #if 0
-// モード(途中で切り替わることもある)
-enum{
-	MODE_SAVE = 0,						// セーブ画面
-	MODE_SELECT,						// 選択画面
-	MODE_JOIN,							// 参加画面
-	MODE_INFO,							// 詳細画面
-	//
-	MODE_MAX,
-};
-#endif
-
 // canvas
 enum{
 	// 上側
@@ -122,19 +111,13 @@ enum{
 	//
 	CVS_MAIN_MES_MAX,					// 下側メッセージ最大
 };
+#endif
 
 // いろいろ
 enum{
 	TD_ACTIVE_RATE		= 0,			// アクティブの割合(戻し)
 	TD_PASSIVE_RATE 	= -8,			// パッシブの割合
 };
-
-// スクロール
-//enum{
-//	SCRL_TOP_Y			= 32,			// レール上部のY座標
-//	SCRL_DOWN_Y			= 160,			// レール下部のY座標
-//	SCRL_BAR_SIZE		= 16,			// バーのサイズ
-//};
 
 //-------------------
 // フラグ
@@ -146,20 +129,12 @@ enum{
 	FLG_MW_ANM_CROSS	= (1<<2),		// ×アニメ
 	FLG_MW_ANM_RETURN	= (1<<3),		// 戻るアニメ
 	//
-	FLG_MW_UPDATE		= (1<<5),		// 更新
-	FLG_MW_NOITEM		= (1<<6),		// パネルなし(全削除状態)
-	//
-	FLG_MW_CROSS_HIDE	= (1<<10),		// ×
-	FLG_MW_RETURN_HIDE	= (1<<11),		// RETURN
+	FLG_MW_ANM_DOWN		= (1<<4),		// 下矢印アニメ
+	FLG_MW_ANM_UP		= (1<<5),		// 上矢印アニメ
 	//
 	FLG_MW_RET_END		= (1<<12),		// RETURNで終了
 	FLG_MW_CROSS_END	= (1<<13),		// ×で終了
-	FLG_MW_BAR_UPDATE	= (1<<14),		// バー更新
-	//
-	FLG_MW_END			= (1<<20),		// 終了
-	//
-	// アニメまとめ
-	FLG_MW_ANM_ALL		= (FLG_MW_ANM_LEFT|FLG_MW_ANM_RIGHT|FLG_MW_ANM_CROSS|FLG_MW_ANM_RETURN),
+	FLG_MW_JOIN_END		= (1<<14),		// 参加で終了
 };
 
 //=============================================================================
@@ -197,21 +172,10 @@ static void td_sub_init( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_main_print( T_DOWNLOAD_MAIN_WORK *wk );
 //
 // 情報表示
-static void td_disp_downinfo( T_DOWNLOAD_MAIN_WORK* wk );
+//static void td_disp_downinfo( T_DOWNLOAD_MAIN_WORK* wk );
 static BOOL td_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode );
 static void td_init_param( T_DOWNLOAD_MAIN_WORK* wk );
 static BOOL td_chk_my_tp( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode, const s32 num );
-
-//
-// バッファ
-//static s32  td_calc_savebuffer( T_DOWNLOAD_MAIN_WORK* wk );
-//static BOOL td_chk_savebuffer( T_DOWNLOAD_MAIN_WORK* wk, const s32 num );
-//static s32  td_del_savebuffer( T_DOWNLOAD_MAIN_WORK* wk, const s32 wnum );
-//static void td_chk_delete( T_DOWNLOAD_MAIN_WORK* wk );
-// item
-//static void td_set_item( T_DOWNLOAD_MAIN_WORK* wk, const s32 wnum, const s32 num, const s32 mode );
-//static s32  td_calc_itembuffer( T_DOWNLOAD_MAIN_WORK* wk );
-//static BOOL td_chk_add_item( T_DOWNLOAD_MAIN_WORK* wk );
 //
 // 輝度変更
 static void td_chg_brightness( T_DOWNLOAD_MAIN_WORK* wk, const s32 rate );
@@ -513,9 +477,6 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	wk->Mode		= wk->Param->status;	// 分岐
 	wk->Flag		= 0;
 	wk->CmnFlag		= 0;
-//	wk->CurPos		= 0;
-//	wk->TopNum		= 0;
-//	wk->SubNum		= 0;
 	wk->ScrollOffy  = 0;
 	wk->DispMaxNum	= 0;
 	//
@@ -524,30 +485,20 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 		wk->ListCurPos[i]		= 0;
 		wk->ListScrollPos[i] 	= 0;
 	}
+	for(i=0;i<3;i++){
+		wk->ItemNum[i] 			= 0;
+		wk->PageMaxNum[i] 		= 0;
+		wk->CurrentPageNum[i] 	= 0;
+	}
 	wk->PCount		= 0;
 	wk->InfoCurPos	= 0;
 	wk->RetMode		= -1;
 	//
-//	for(i=0;i<T_DOWNLOAD_SAVE_BUFFER_MAX;i++){
-//		wk->SaveBuffer[i] = -1;
-//	}
+	for(i=0;i<T_DOWNLOAD_CANVAS_MAXNUM;i++){
+		wk->PrintUtil[i].win = 0;
+	}
 	wk->frame_list_work = 0;
 	//
-	// test
-//	wk->SaveBuffer[0] = 0;
-//	wk->SaveBuffer[1] = 2;
-//	wk->SaveBuffer[2] = 3;
-	
-#if 0
-	for(i=0;i<T_DOWNLOAD_ITEM_BUFFER_MAX;i++){
-		td_set_item( wk, i, 0xff, 0 );
-	}
-	// test
-	for(i=0;i<10;i++){
-		td_set_item( wk, i, i, 0 );
-	}
-#endif
-
 	// empty用バッファ取得(必ず破棄すること)
 	wk->EmptyBuffer = GFL_ARC_LoadDataAlloc( ARCID_T_DOWNLOAD_GRA, NARC_t_download_gra_t_download_pos_tblbin, wk->heapID );
 	// パラメータ用のバッファ取得(必ず破棄すること)
@@ -569,19 +520,6 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	//---------------
 	td_init_param( wk );
 	//
-	wk->Flag |= FLG_MW_UPDATE;
-#if 0
-	// 表示モードの場合
-	if((wk->Mode == MODE_SAVE)||(wk->Mode == MODE_JOIN)||(wk->Mode == MODE_INFO)){
-//		wk->Flag |= (FLG_MW_LEFT_HIDE|FLG_MW_RIGHT_HIDE);
-	}
-	// 通常モードの場合
-	else{
-		wk->SaveBuffer[0] = -1;
-		wk->SaveBuffer[1] = -1;
-		wk->SaveBuffer[2] = -1;
-	}
-#endif
 	//--------------
 	// meswin
 	//--------------
@@ -648,6 +586,27 @@ static void td_exit( T_DOWNLOAD_MAIN_WORK* wk )
 	}else{
 		OS_Printf("result : null(debug)\n");
 	}
+	//
+	//-------------------
+	// カーソル位置(参加)
+	//-------------------
+	if(wk->Flag & FLG_MW_JOIN_END){
+		if(wk->Param->curpos != NULL){
+			*wk->Param->curpos = T_DOWNLOAD_CURPOS_OFFSET;	// test
+		}
+	}
+	else{
+		if(wk->Param->curpos != NULL){
+			*wk->Param->curpos = 0;
+		}
+	}
+	// 結果
+	if(wk->Param->curpos != NULL){
+		OS_Printf("curpos : %d\n",*wk->Param->curpos);
+	}else{
+		OS_Printf("curpos : null(debug)\n");
+	}
+	
 	// リスト破棄
 	TdCmn_exit_framelist( wk );
 	
@@ -723,13 +682,16 @@ static void td_main_print( T_DOWNLOAD_MAIN_WORK *wk )
 	PRINTSYS_QUE_Main( wk->print_que );
 	//
 	for(i=0;i<T_DOWNLOAD_CANVAS_MAXNUM;i++){
-		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+		if(wk->PrintUtil[i].win){
+			PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+		}
 	}
 }
 
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
+#if 0
 //-----------------------------------------------------------------------------
 /**
  *	@brief  下画面表示まとめ(仮)(現在、タイトル文字のみ)
@@ -760,6 +722,7 @@ static void td_disp_downinfo( T_DOWNLOAD_MAIN_WORK* wk )
 	// タイトル
 	TdCmn_disp_string_number( wk, CVS_MAIN_TITLE, 0, 0, 1000, 8, PRINTTOOL_MODE_LEFT );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -798,6 +761,17 @@ static BOOL td_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 		wnum = T_DOWNLOAD_CLWKID_CMN_RETURN;
 		flg = 1;
 	}
+	// 下アニメ再生中
+	else if(wk->Flag & FLG_MW_ANM_DOWN){
+		wnum = T_DOWNLOAD_CLWKID_CMN_DOWN;
+		flg = 1;
+	}
+	// 上アニメ再生中
+	else if(wk->Flag & FLG_MW_ANM_UP){
+		wnum = T_DOWNLOAD_CLWKID_CMN_UP;
+		flg = 1;
+	}
+
 	// アニメ終了判定を行う
 	if(flg == 1){
 		bflg = TdCmn_is_anime_end( wk, T_DOWNLOAD_CLWKMODE_CMN, wnum );
@@ -812,8 +786,6 @@ static BOOL td_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 			if(mode == 0){
 				// 戻るボタン(飛び先変更はある)
 				if((wnum == T_DOWNLOAD_CLWKID_CMN_CROSS)||(wnum == T_DOWNLOAD_CLWKID_CMN_RETURN)){
-					wk->Flag |= FLG_MW_END;
-					//
 					// ×ボタン終了
 					if(wnum == T_DOWNLOAD_CLWKID_CMN_CROSS){
 						wk->Flag |= FLG_MW_CROSS_END;
@@ -830,8 +802,6 @@ static BOOL td_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 			else if(mode == 1){
 				if((wnum == T_DOWNLOAD_CLWKID_CMN_CROSS)||(wnum == T_DOWNLOAD_CLWKID_CMN_RETURN)){
 //					wk->Step = STEP_LV1;
-					wk->Flag |= FLG_MW_UPDATE;
-//					wk->Flag &= ~(FLG_MW_RIGHT_HIDE|FLG_MW_LEFT_HIDE);
 				}
 			}
 			rflg = TRUE;
@@ -1001,12 +971,10 @@ static void td_init_join( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
 	//
 	// 判定の後に表示
-	TdCmn_disp_winmes( wk, CVS_MAIN_CENTER_WIN, T_DOWNLOAD_WIN_JOIN_00 );
+	TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_JOIN_00 );
 	// 輝度変更
 	td_chg_brightness( wk, TD_PASSIVE_RATE );
 	//
-	// カーソル位置更新
-//	wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 	// カーソル移動
 	TdCmn_disp_framelist_cursor( wk, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	//
@@ -1037,7 +1005,8 @@ static void td_chk_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	if(listflg == 2){
 		// ウインドウ
-		TdCmn_disp_winmes( wk, CVS_MAIN_MESWIN, T_DOWNLOAD_WIN_JOIN_01 );
+//		TdCmn_disp_winmes( wk, CVS_MAIN_MESWIN, T_DOWNLOAD_WIN_JOIN_01 );
+		TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_00, T_DOWNLOAD_WIN_JOIN_01 );
 		// 3拓ウインドウ(参加する)
 		TdCmn_init_yesnowin( wk, T_DOWNLOAD_YESNO_JOIN );
 		// 輝度変更
@@ -1047,7 +1016,7 @@ static void td_chk_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// 左右キー
 	else if(listflg == 3){
-			wk->Step = STEP_LV1+20;
+		wk->Step = STEP_LV1+20;
 	}
 	//
 	// 判定
@@ -1235,7 +1204,12 @@ static void td_key_join( T_DOWNLOAD_MAIN_WORK* wk )
 				TdCmn_clear_frame( wk );
 				// 輝度戻し
 				td_chg_brightness( wk, TD_ACTIVE_RATE );
-				if(tmp == 1){
+				// 参加する
+				if(tmp == 0){
+					wk->Step = STEP_END;
+					wk->Flag |= FLG_MW_JOIN_END;
+				}
+				else if(tmp == 1){
 					// 詳細へ移行
 					wk->Step = STEP_LV3;
 					// カーソル表示(ちらつくので消しておく)
@@ -1321,15 +1295,30 @@ static void td_init_info( T_DOWNLOAD_MAIN_WORK* wk )
 	// バー非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, TRUE );
 	
+	// 左右矢印非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_LEFT,  FALSE );
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_RIGHT, FALSE );
+	// 上下矢印非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_UP,   TRUE );
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_DOWN, TRUE );
+	
 	// BGの表示
 	TdCmn_init_bg_info( wk );
 	//
 	// パレットチェンジon
 	TdCmn_set_chgpal( wk, TRUE );
-	
+	//
+	// 文字列初期化
+	TdCmn_init_string2( wk );
+	//
 	// 初期カーソル位置
 	wk->InfoCurPos = 0;
 	wk->CmnFlag |= T_DOWNLOAD_FLG_INFOUPDATE;
+	
+	// パラメータ初期化
+	TdCmn_init_info_mode( wk );
+	// 情報表示
+	TdCmn_disp_info_mode( wk, wk->InfoCurPos );
 }
 
 //-----------------------------------------------------------------------------
@@ -1359,6 +1348,9 @@ static void td_chk_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	//
 	// 更新
 	if(wk->CmnFlag & T_DOWNLOAD_FLG_INFOUPDATE){
+		// 情報表示
+		TdCmn_disp_info_mode( wk, wk->InfoCurPos );
+		// カーソル位置
 		TdCmn_chg_info_curpos( wk, wk->InfoCurPos );
 		// カーソル移動
 		wk->CmnFlag &= ~T_DOWNLOAD_FLG_INFOUPDATE;
@@ -1376,8 +1368,21 @@ static void td_chk_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 //-----------------------------------------------------------------------------
 static BOOL td_chk_tp_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 {
+	s32		num;
 	BOOL	bflg=FALSE;
+	s32		oldpos = wk->CurrentPageNum[wk->InfoCurPos];
 	
+	// カーソル位置
+	num = TdCmn_calc_scrollbar_info( wk, wk->InfoCurPos );
+	if(num != -1){
+		// 更新があったときのみ
+		if(num != oldpos){
+			// スクロールバー位置更新
+			wk->CurrentPageNum[wk->InfoCurPos] = num;
+			TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, num );
+			wk->CmnFlag |= T_DOWNLOAD_FLG_INFOUPDATE;
+		}
+	}
 	return( bflg );
 }
 
@@ -1410,21 +1415,49 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
 		wk->InfoCurPos--;
 		if(wk->InfoCurPos < 0){
-			wk->InfoCurPos = 2;
+			wk->InfoCurPos = T_DOWNLOAD_INFO_MAX-1;
 		}
 		sflg = 1;
 	}
 	// 右
 	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
 		wk->InfoCurPos++;
-		if(wk->InfoCurPos > 2){
+		if(wk->InfoCurPos >= T_DOWNLOAD_INFO_MAX){
 			wk->InfoCurPos = 0;
 		}
 		sflg = 1;
 	}
+	// 下
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+		// リミットチェック
+		if(wk->CurrentPageNum[wk->InfoCurPos] != (wk->PageMaxNum[wk->InfoCurPos]-1)){
+			wk->CurrentPageNum[wk->InfoCurPos]++;
+			if(wk->CurrentPageNum[wk->InfoCurPos] >= wk->PageMaxNum[wk->InfoCurPos]){
+				wk->CurrentPageNum[wk->InfoCurPos] = (wk->PageMaxNum[wk->InfoCurPos]-1);
+			}
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_DOWN );
+			flg = 2;
+			sflg = 1;
+		}
+	}
+	// 上
+	else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+		// リミットチェック
+		if(wk->CurrentPageNum[wk->InfoCurPos] != 0){
+			wk->CurrentPageNum[wk->InfoCurPos]--;
+			if(wk->CurrentPageNum[wk->InfoCurPos] < 0){
+				wk->CurrentPageNum[wk->InfoCurPos] = 0;
+			}
+			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_UP );
+			flg = 2;
+			sflg = 1;
+		}
+	}
 	//
 	// カーソル切り替え
 	if(sflg != 0){
+		// スクロールバー更新
+		TdCmn_set_scrollbar_info( wk, wk->InfoCurPos, wk->CurrentPageNum[wk->InfoCurPos] );
 		wk->CmnFlag |= T_DOWNLOAD_FLG_INFOUPDATE;
 	}
 	// 更新
@@ -1480,7 +1513,7 @@ static void td_key_info( T_DOWNLOAD_MAIN_WORK* wk )
 			}
 			break;
 		//
-		// 左右アニメ待ち
+		// 上下アニメ待ち
 		case STEP_LV1+20:
 			bflg = td_chk_anim( wk, 1 );
 			if(bflg == TRUE){
@@ -1527,14 +1560,23 @@ static void td_exit_info( T_DOWNLOAD_MAIN_WORK* wk )
 	
 	// パレットチェンジoff
 	TdCmn_set_chgpal( wk, FALSE );
-	
-	// BG面クリア
-	GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
 	//
 	// アイコン非表示
 	for(i=0;i<3;i++){
 		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_ICON_00+i, FALSE );
 	}
+	// 文字列破棄
+	TdCmn_exit_string2( wk );
+	//
+	// BG面クリア
+	GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
+	//
+	// 左右矢印非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_LEFT,  TRUE );
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_RIGHT, TRUE );
+	// 上下矢印非表示
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_UP,   FALSE );
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_CMN, T_DOWNLOAD_CLWKID_CMN_DOWN, FALSE );
 }
 
 //---------------------------------------------------------------------------------------------------------------
@@ -1567,8 +1609,6 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
 	// バー非表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, TRUE );
-	// カーソル位置更新
-//	wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 	// カーソル移動
 	TdCmn_disp_framelist_cursor( wk, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	// 通常
@@ -1599,8 +1639,8 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	if(listflg == 2){
 		// ウインドウ
-		TdCmn_disp_winmes( wk, CVS_MAIN_MESWIN, T_DOWNLOAD_WIN_WHAT_00 );
-		// 3拓ウインドウ(セーブする)
+		TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_00, T_DOWNLOAD_WIN_WHAT_00 );
+		// 3択ウインドウ(セーブする)
 		TdCmn_init_yesnowin( wk, T_DOWNLOAD_YESNO_SAVE );
 		// 輝度変更
 		td_chg_brightness( wk, TD_PASSIVE_RATE );
@@ -1855,8 +1895,6 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_BAR, FALSE );
 	// カーソル表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
-	// カーソル位置更新
-//	wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 	// カーソル移動
 	TdCmn_disp_framelist_cursor( wk, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	// 判定の後に表示

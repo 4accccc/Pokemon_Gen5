@@ -45,20 +45,24 @@ extern const GFL_PROC_DATA TDownloadProcData;
 //-------------------------------------
 /// 状態
 //-------------------------------------
+enum{
+	T_DOWNLOAD_CURPOS_OFFSET = 1,	// オフセット
+};
+	
 typedef enum {
 	T_DOWNLOAD_STATUS_SAVE = 0,		///<セーブ
 	T_DOWNLOAD_STATUS_SELECT,		///<選択
 	T_DOWNLOAD_STATUS_JOIN,			///<参加
 	T_DOWNLOAD_STATUS_INFO,			///<詳細
 }T_DOWNLOAD_STATUS;
-
+//
 // トーナメントダウンロード
 typedef struct{
 	GAMESYS_WORK		*gamesys;
 	//
 	T_DOWNLOAD_STATUS	status;
 	u16 *				result_work;	///<結果 (1:フリー移動に戻る、0:パソコン画面に戻る)
-	u16 *				curpos;			///<カーソル位置
+	u16 *				curpos;			///<カーソル位置(0:なし、値：T_DOWNLOAD_CURPOS_OFFSETはじまり)
 }T_DOWNLOAD_PARAM;
 
 
