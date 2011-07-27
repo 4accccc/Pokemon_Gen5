@@ -912,7 +912,11 @@
 #define	TRID_BCHAMP2_1_01   ( 899 ) 
 #define	TRID_BCHAMP_2_01   ( 900 ) 
 #define	TRID_BCHAMP2_2_01   ( 901 ) 
-#define TRID_MAX  ( 902 )
+#define	TRID_WORKER2_37   ( 902 ) 
+#define	TRID_WORKER2_38   ( 903 ) 
+#define	TRID_RANGERM_22   ( 904 ) 
+#define	TRID_RANGERW_22   ( 905 ) 
+#define TRID_MAX  ( 906 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
