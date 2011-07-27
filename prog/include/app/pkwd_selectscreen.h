@@ -14,6 +14,8 @@
 
 //system
 #include "gamesystem/gamesystem.h"
+#include "savedata/save_control.h"
+#include "savedata/pokewood_savedata.h"
 
 //=============================================================================
 /**
@@ -44,6 +46,7 @@ extern const GFL_PROC_DATA PkwdSelectScreenProcData;
 //=====================================
 typedef struct
 {	
-	GAMESYS_WORK				*gamesys;	//[in]ゲームシステム
-  s16                 *result;
+  SAVE_CONTROL_WORK *sv;          // 外部セーブデータにアクセスするために必要
+  s16               *result;      // 選択結果を返す。(POKEWOOD_SAVEDATA_MAXだったらキャンセル)
+  POKEWOOD_SAVEDATA *pokewood_sv; // ポケウッド関連セーブデータ（内部）
 }PKWD_SELECT_SCREEN_PARAM;

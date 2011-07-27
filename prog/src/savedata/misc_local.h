@@ -20,7 +20,6 @@
 #define GYM_MAX     (8)
 #define EVT_ROCK_MAX     (8)
 
-#define POKEWOOD_ARRAY_NUM (( POKEWOOD_SENARIO_MAX/32 )+1)
 
 //=============================================================================
 /**
@@ -82,7 +81,5 @@ struct _MISC
   
   u8 player_trainer_data[10];  ///< プレイヤー自身のトレーナーデータ(使用方未定)
 
-  u32 pokewood_flag[POKEWOOD_ARRAY_NUM];         ///< ポケウッド解放フラグ
-  u32 pokewood_played_flag[POKEWOOD_ARRAY_NUM];  ///< ポケウッド撮影済みフラグ
 };
 

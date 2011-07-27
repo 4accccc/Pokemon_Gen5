@@ -33,7 +33,7 @@
 #include "tr_tool/trtype_def.h"
 
 #include "savedata/save_tbl.h"
-#include "savedata/misc.h"
+#include "savedata/pokewood_savedata.h"
 
 #include "fieldmap.h"
 
@@ -469,8 +469,8 @@ static GMEVENT_RESULT pokewoodSaveEvent( GMEVENT * event, int * seq, void * work
   case 0:
     // 指定シナリオのプレイ済みフラグを立てる
     {
-      MISC *misc = GAMEDATA_GetMiscWork(psew->gamedata);
-      MISC_SetPokewoodPlayedFlag( misc, psew->bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
+      POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(psew->gamedata);
+      POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, psew->bsp->pokewoodSenario);  // シナリオ撮影済みフラグを立てる
     }
 
     /**
@@ -1154,7 +1154,7 @@ static GMEVENT_RESULT eventPkwdSelectScreen( GMEVENT *p_event, int *p_seq, void 
 
   case SEQ_EXIT:
     OS_Printf( "p_wk = %08x\n", p_wk );
-    if ( p_wk->param.result != NULL && *(p_wk->param.result) == -1 )
+    if ( p_wk->param.result != NULL && *(p_wk->param.result) == POKEWOOD_SAVEDATA_MAX )
     {
       *(p_wk->param.result) = POKEWOOD_SAVEDATA_MAX;
     }else{

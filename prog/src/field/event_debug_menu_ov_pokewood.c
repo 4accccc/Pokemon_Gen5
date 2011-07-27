@@ -16,7 +16,7 @@
 #include "arc_def.h"
 #include "system/main.h" //for HEAPID_FIELDMAP
 //#include "system/bmp_winframe.h"
-#include "savedata/misc.h"
+#include "savedata/pokewood_savedata.h"
 #include "font/font.naix"
 #include "sound/pm_sndsys.h"
 
@@ -375,43 +375,43 @@ static BOOL debugMenuCallProc_PokewoodBook( POKEWOOD_FUNC_WORK * wk )
   {
     int i,count=0,newcount=0;
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
-    MISC *misc = GAMEDATA_GetMiscWork(gamedata);
+    POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
     
     for(i=0;i<POKEWOOD_SENARIO_MAX;i++){
-      if(MISC_GetPokewoodOpenFlag(misc,i)){
+      if(POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(ps,i)){
         count ++;
       }
-      if(MISC_GetPokewoodOpenFlag(misc,i)){
+      if(POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(ps,i)){
       }
     }
     OS_Printf(" pokewood senario open num = %d\n ", count);
 /*
-    MISC_SetPokewoodOpenFlag(misc,4);
-    MISC_SetPokewoodOpenFlag(misc,5);
-    MISC_SetPokewoodOpenFlag(misc,6);
-    MISC_SetPokewoodOpenFlag(misc,7);
-    MISC_SetPokewoodOpenFlag(misc,8);
-    MISC_SetPokewoodOpenFlag(misc,9);
-    MISC_SetPokewoodOpenFlag(misc,11);
-    MISC_SetPokewoodOpenFlag(misc,12);
-    MISC_SetPokewoodOpenFlag(misc,13);
-    MISC_SetPokewoodOpenFlag(misc,14);
-    MISC_SetPokewoodOpenFlag(misc,15);
-    MISC_SetPokewoodOpenFlag(misc,16);
-    MISC_SetPokewoodOpenFlag(misc,11);
-    MISC_SetPokewoodOpenFlag(misc,17);
-    MISC_SetPokewoodOpenFlag(misc,18);
-    MISC_SetPokewoodOpenFlag(misc,19);
-    MISC_SetPokewoodOpenFlag(misc,20);
-    MISC_SetPokewoodOpenFlag(misc,31);
-    MISC_SetPokewoodOpenFlag(misc,32);
-    MISC_SetPokewoodOpenFlag(misc,33);
-    MISC_SetPokewoodOpenFlag(misc,34);
-    MISC_SetPokewoodOpenFlag(misc,35);
-    MISC_SetPokewoodOpenFlag(misc,40);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,4);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,5);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,6);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,7);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,8);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,9);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,11);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,12);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,13);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,14);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,15);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,16);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,11);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,17);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,18);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,19);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,20);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,31);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,32);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,33);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,34);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,35);
+    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(ps,40);
 */
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
-      newcount = MISC_GetPokewoodPlayedFlag(misc,50);
+      newcount = POKEWOOD_SAVEDATA_GetPokewoodPlayedFlag(ps,50);
     }
   }
   

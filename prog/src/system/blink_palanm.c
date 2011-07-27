@@ -34,6 +34,8 @@ struct _BLINK_PALANM_WORK {
 #define ANM_CNT_VALUE		( 0x400 )			// アニメカウント
 #define ANM_CNT_MAX			( 0x10000 )		// アニメカウント最大値
 
+#define BLINK_DECIDE_MAX  ( 20 )     // 点滅アニメ最大値
+
 #define	COL_R(a)	( ( a >> GX_RGB_R_SHIFT ) & 0x1f )	// 指定カラーから赤を抜き出す
 #define	COL_G(a)	( ( a >> GX_RGB_G_SHIFT ) & 0x1f )	// 指定カラーから緑を抜き出す
 #define	COL_B(a)	( ( a >> GX_RGB_B_SHIFT ) & 0x1f )	// 指定カラーから青を抜き出す
@@ -171,23 +173,37 @@ void BLINKPALANM_Main( BLINKPALANM_WORK * wk )
 	fx32	cos;
 	u32	i;
 	u8	r, g, b;
+  const decide_tbl[]={ 0,1,0,1,0,1 };
 
-	if( ( wk->cnt + ANM_CNT_VALUE ) >= ANM_CNT_MAX ){
-		wk->cnt = wk->cnt + ANM_CNT_VALUE - ANM_CNT_MAX;
-	}else{
-		wk->cnt += ANM_CNT_VALUE;
-	}
-
-	cos = ( FX_CosIdx(wk->cnt) + FX16_ONE ) / 2;
-
-	for( i=0; i<wk->size; i++ ){
-		r = COL_R(wk->startPal[i]) + (((COL_R(wk->endPal[i])-COL_R(wk->startPal[i]))*cos)>>FX16_SHIFT);
-		g = COL_G(wk->startPal[i]) + (((COL_G(wk->endPal[i])-COL_G(wk->startPal[i]))*cos)>>FX16_SHIFT);
-		b = COL_B(wk->startPal[i]) + (((COL_B(wk->endPal[i])-COL_B(wk->startPal[i]))*cos)>>FX16_SHIFT);
-
-		wk->transPal[i] = GX_RGB( r, g, b );
-	}
-
+  switch(wk->seq){
+  case BLINKPALANM_NORMAL:
+  	if( ( wk->cnt + ANM_CNT_VALUE ) >= ANM_CNT_MAX ){
+  		wk->cnt = wk->cnt + ANM_CNT_VALUE - ANM_CNT_MAX;
+  	}else{
+  		wk->cnt += ANM_CNT_VALUE;
+  	}
+  
+  	cos = ( FX_CosIdx(wk->cnt) + FX16_ONE ) / 2;
+  
+  	for( i=0; i<wk->size; i++ ){
+  		r = COL_R(wk->startPal[i]) + (((COL_R(wk->endPal[i])-COL_R(wk->startPal[i]))*cos)>>FX16_SHIFT);
+  		g = COL_G(wk->startPal[i]) + (((COL_G(wk->endPal[i])-COL_G(wk->startPal[i]))*cos)>>FX16_SHIFT);
+  		b = COL_B(wk->startPal[i]) + (((COL_B(wk->endPal[i])-COL_B(wk->startPal[i]))*cos)>>FX16_SHIFT);
+  
+  		wk->transPal[i] = GX_RGB( r, g, b );
+  	}
+    break;
+  case BLINKPALANM_DECIDE:
+    if( decide_tbl[wk->cnt / 5]){
+      GFL_STD_MemCopy( wk->startPal, wk->transPal, sizeof(u16)*wk->size );
+    }else{
+      GFL_STD_MemCopy( wk->endPal, wk->transPal, sizeof(u16)*wk->size );
+    }
+    if(wk->cnt<BLINK_DECIDE_MAX){
+      wk->cnt++;
+    }
+    break;
+  }
 	NNS_GfdRegisterNewVramTransferTask( wk->type, wk->offs * 2, wk->transPal, wk->size * 2 );
 }
 
@@ -203,4 +219,37 @@ void BLINKPALANM_Main( BLINKPALANM_WORK * wk )
 void BLINKPALANM_InitAnimeCount( BLINKPALANM_WORK * wk )
 {
 	wk->cnt = ANM_CNT_MAX;
+  wk->seq = BLINKPALANM_NORMAL;
+}
+
+//=============================================================================================
+/**
+ * @brief	決定時の点滅アニメを開始
+ *
+ * @param   wk		
+ */
+//=============================================================================================
+void BLINKPALANM_SetDecideAnime( BLINKPALANM_WORK * wk )
+{
+  wk->cnt=0;
+  wk->seq = BLINKPALANM_DECIDE;
+}
+
+//=============================================================================================
+/**
+ * @brief	決定時アニメが終了したかチェック
+ *
+ * @param   wk		
+ */
+//=============================================================================================
+BOOL BLINKPALANM_CheckDecideAnime( BLINKPALANM_WORK * wk )
+{
+  
+  if(wk->seq>=BLINKPALANM_DECIDE){
+    if(wk->cnt==BLINK_DECIDE_MAX){
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
 }

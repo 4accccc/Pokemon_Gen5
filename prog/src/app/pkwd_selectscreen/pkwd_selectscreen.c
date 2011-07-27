@@ -73,12 +73,23 @@
 //外部公開
 #include "app/pkwd_selectscreen.h"
 
+//パレット点滅処理
+#include "system/blink_palanm.h"
+
+//メッセージデータ
+#include "msg/msg_pw_movietitle.h"
+
+//wipe
+#include "system/wipe.h"
 
 //@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 #include "pkwd_announce_gra.naix"	// アーカイブ
-#include "msg/msg_mictest.h"  // GMM
 #include "townmap_gra.naix"		// タッチバーカスタムボタン用サンプルにタウンマップリソース
+
+#include "savedata/battle_rec.h"
+#include "savedata/pokewood_rec.h"
+
 
 //=============================================================================
 // 下記defineをコメントアウトすると、機能を取り除けます
@@ -96,7 +107,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  PKWD_SELECT_SCREEN_HEAP_SIZE = 0x30000,  ///< ヒープサイズ
+  PKWD_SELECT_SCREEN_HEAP_SIZE = 0x50000,  ///< ヒープサイズ
 };
 
 
@@ -105,6 +116,7 @@ enum
 //=====================================
 enum
 {	
+	BG_FRAME_TALK_M  = GFL_BG_FRAME0_M,
 	BG_FRAME_BAR_M   = GFL_BG_FRAME1_M,
 	BG_FRAME_POKE_M  = GFL_BG_FRAME2_M,
 	BG_FRAME_BACK_M  = GFL_BG_FRAME3_M,
@@ -138,6 +150,12 @@ enum
 	PLTID_OBJ_TOWNMAP_M	= 14,		
 	//サブOBJ
   PLTID_OBJ_PMS_DRAW = 0, // 5本使用
+
+  PKWD_TITLE_STR_MAX = 26*2,  // タイトル文字列の文字数ＭＡＸ
+
+  PKWD_SELECT_SCREEN_BMPWIN_MAX = 6,
+
+  PKWD_TITLE_LIST_NUM = 4,  // 映画タイトルを一度に表示できる最大数
 };
 
 //=============================================================================
@@ -154,7 +172,7 @@ typedef struct
 } PKWD_SELECT_SCREEN_BG_WORK;
 
 
-
+#define PKWD_SELECT_SCREEN_PRINT_TOOL
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -163,6 +181,8 @@ typedef struct
   HEAPID heapID;
 
 	PKWD_SELECT_SCREEN_BG_WORK				wk_bg;
+
+  STRBUF *strbuf;
 
 	//描画設定
 	PKWD_SELECT_SCREEN_GRAPHIC_WORK	*graphic;
@@ -184,6 +204,9 @@ typedef struct
 	PRINT_QUE									*print_que;
 	GFL_MSGDATA								*msg;
 
+  // サブシーケンス管理
+  int seq;
+
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//タスクメニュー
 	APP_TASKMENU_RES					*menu_res;
@@ -203,10 +226,19 @@ typedef struct
 
 #ifdef	PKWD_SELECT_SCREEN_PRINT_TOOL
 	//プリントユーティリティ
-	PRINT_UTIL								print_util;
-	u32												seq;
+	PRINT_UTIL								print_util[PKWD_SELECT_SCREEN_BMPWIN_MAX];
+	u32												subseq;
 #endif	//PKWD_SELECT_SCREEN_PRINT_TOOL
 
+  // カーソル処理
+  int nowpos;
+  int isTouch;
+  BLINKPALANM_WORK *blinkWork[4];
+  
+
+  // セーブデータ確認
+  LOAD_RESULT load_result[POKEWOOD_SAVEDATA_MAX];
+  int         scenario_no[POKEWOOD_SAVEDATA_MAX];
 
 } PKWD_SELECT_SCREEN_MAIN_WORK;
 
@@ -239,12 +271,9 @@ static void PkwdSelectScreen_BG_LoadResource( PKWD_SELECT_SCREEN_BG_WORK* wk, HE
 //-------------------------------------
 ///	タッチバー
 //=====================================
-static TOUCHBAR_WORK * PkwdSelectScreen_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID );
-static void PkwdSelectScreen_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar );
-static void PkwdSelectScreen_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
-//以下カスタムボタン使用サンプル用
 static TOUCHBAR_WORK * PkwdSelectScreen_TOUCHBAR_InitEx( PKWD_SELECT_SCREEN_MAIN_WORK *wk, GFL_CLUNIT *clunit, HEAPID heapID );
 static void PkwdSelectScreen_TOUCHBAR_ExitEx( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static void PkwdSelectScreen_TOUCHBAR_Main( TOUCHBAR_WORK	*touchbar );
 #endif //PKWD_SELECT_SCREEN_TOUCHBAR
 
 
@@ -272,6 +301,16 @@ static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk
 #endif //PKWD_SELECT_SCREEN_POKE2D
 
 
+static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
+static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SELECT_SCREEN_PARAM *param );
+static  int _touch_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static  int _key_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+static void _draw_titlelist( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
+
+static void PrintTool_AddBmpWin( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
+static void PrintTool_DelBmpWin( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
+static void PrintTool_ScreenTrans( PKWD_SELECT_SCREEN_MAIN_WORK * wk, int index );
+static void PrintTool_PrintHP( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
 
 
 //=============================================================================
@@ -312,6 +351,7 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 	
 	//引数取得
 	param	= pwk;
+//  *param->result = POKEWOOD_SAVEDATA_MAX;
 
 	//ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PKWD_SELSCR, PKWD_SELECT_SCREEN_HEAP_SIZE );
@@ -330,7 +370,8 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 
 	//メッセージ
 	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
-			NARC_message_mictest_dat, wk->heapID );
+			NARC_message_pw_movietitle_dat, wk->heapID );
+  wk->strbuf = GFL_STR_CreateBuffer( PKWD_TITLE_STR_MAX, HEAPID_PKWD_SELSCR );
 
 	//PRINT_QUE作成
 	wk->print_que		= PRINTSYS_QUE_Create( wk->heapID );
@@ -344,14 +385,14 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 	{	
 		GFL_CLUNIT	*clunit	= PKWD_SELECT_SCREEN_GRAPHIC_GetClunit( wk->graphic );
 		wk->touchbar	= PkwdSelectScreen_TOUCHBAR_InitEx( wk, clunit, wk->heapID );
+    TOUCHBAR_SetBGPriorityAll( wk->touchbar, 1 );
 	}
 #endif //PKWD_SELECT_SCREEN_TOUCHBAR
 
 
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//TASKMENUリソース読み込み＆初期化
-	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_BAR_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
-	wk->menu			= PkwdSelectScreen_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
+	wk->menu_res	= APP_TASKMENU_RES_Create( BG_FRAME_TALK_M, PLTID_BG_TASKMENU_M, wk->font, wk->print_que, wk->heapID );
 #endif //PKWD_SELECT_SCREEN_TASKMENU
 
 
@@ -365,9 +406,42 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 	}
 #endif //PKWD_SELECT_SCREEN_POKE2D
 
+  // 外部セーブデータ確認・読み込み
+  _load_pokewood_rec_data( wk, param );
+
+  PrintTool_AddBmpWin( wk );			// BMPWIN作成
+
+  // 文字列描画
+  _draw_titlelist( wk );
+
+
+  // 点滅処理初期化
+  {
+    int i;
+    for(i=0;i<4;i++){
+      wk->blinkWork[i] = BLINKPALANM_Create( i*16, 16, BG_FRAME_BACK_M, HEAPID_PKWD_SELSCR );
+      BLINKPALANM_SetPalBufferArc( wk->blinkWork[i], ARCID_PKWD_ANNOUNCE, 
+                                   NARC_pkwd_announce_gra_pkwd_title_select_d_NCLR, 
+                                   16*i, (5+i)*16 );
+    }
+  }
+  wk->nowpos = 0;
+
+  // タッチorキー検出
+  if(GFL_UI_CheckTouchOrKey()==GFL_APP_END_TOUCH){
+    wk->nowpos  = -1;
+    wk->isTouch = TRUE;
+  }else{
+    wk->isTouch = FALSE;
+  }
+
+  // ワーク初期化
+  wk->seq = 0;
+
 	//@todo	フェードシーケンスがないので
-	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(0);
+//	GX_SetMasterBrightness(0);
+//	GXS_SetMasterBrightness(0);
+  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 0, 8, 1, HEAPID_PKWD_SELSCR);
 
   GFL_NET_ReloadIconTopOrBottom( FALSE, HEAPID_PKWD_SELSCR);
   
@@ -388,8 +462,15 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
 	PKWD_SELECT_SCREEN_MAIN_WORK* wk = mywk;
+  int i;
 
+  // BMP解放
+  PrintTool_DelBmpWin( wk );
 
+  for(i=0;i<4;i++){
+    BLINKPALANM_Exit( wk->blinkWork[i] );
+  }
+  
 #ifdef PKWD_SELECT_SCREEN_POKE2D
 	PkwdSelectScreen_POKE2D_DeleteCLWK( wk );
 	PkwdSelectScreen_POKE2D_UnLoadResourceOBJ( wk );
@@ -399,7 +480,6 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
 
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//TASKMENUシステム＆リソース破棄
-	PkwdSelectScreen_TASKMENU_Exit( wk->menu );
 	APP_TASKMENU_RES_Delete( wk->menu_res );	
 #endif //PKWD_SELECT_SCREEN_TASKMENU
 
@@ -410,7 +490,7 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
 #endif //PKWD_SELECT_SCREEN_TOUCHBAR
 
 
-
+  GFL_STR_DeleteBuffer( wk->strbuf );
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
 
@@ -435,6 +515,16 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Exit( GFL_PROC *proc, int *seq, void
 
   return GFL_PROC_RES_FINISH;
 }
+
+
+enum{
+  MENU_FADEIN_WAIT=0,
+  MENU_START,
+  MENU_MAIN,
+  MENU_DECIDE_WAIT,
+  MENU_YESNO,
+  MENU_FADEOUT_WAIT,
+};
 //-----------------------------------------------------------------------------
 /**
  *	@brief  PROC 主処理
@@ -451,12 +541,59 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Main( GFL_PROC *proc, int *seq, void
 { 
 	PKWD_SELECT_SCREEN_MAIN_WORK* wk = mywk;
 
+  // メインフロー
+  switch(wk->seq){
+  case MENU_FADEIN_WAIT:
+    if(WIPE_SYS_EndCheck()){
+      wk->seq = MENU_START;
+    }
+  case MENU_START:
+    wk->seq = MENU_MAIN;
+    break;
+  case MENU_MAIN:
+    // 入力
+    {
+      int result;
+      if((result=_touch_input(wk))==GFL_UI_TP_HIT_NONE){
+        result = _key_input(wk);
+      }
+      if(result!=GFL_UI_TP_HIT_NONE){
+        BLINKPALANM_SetDecideAnime( wk->blinkWork[wk->nowpos] );
+        wk->seq = MENU_DECIDE_WAIT;
+      }
+    }
+    break;
+  case MENU_DECIDE_WAIT:
+    if(BLINKPALANM_CheckDecideAnime( wk->blinkWork[wk->nowpos] )){
+      wk->menu= PkwdSelectScreen_TASKMENU_Init( wk->menu_res, wk->msg, wk->heapID );
+      wk->seq = MENU_YESNO;
+    }
+    break;
+  case MENU_YESNO:
+    if(APP_TASKMENU_IsFinish(wk->menu)){
+      if(APP_TASKMENU_GetCursorPos( wk->menu )==0){
+        wk->seq = MENU_FADEOUT_WAIT;
+      }else{
+        wk->seq = MENU_START;
+      }
+      PkwdSelectScreen_TASKMENU_Exit( wk->menu );
+      wk->menu = NULL;
+    }
+    break;
+  case MENU_FADEOUT_WAIT:
+    break;
+  }
+  
+  // 各種機能
+//  MenuFunc( wk );
+
   // デバッグボタンでアプリ終了
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
   {
     return GFL_PROC_RES_FINISH;
   }
 
+//  PrintTool_MainFunc( wk );
 #ifdef PKWD_SELECT_SCREEN_TOUCHBAR
 	//タッチバーメイン処理
 	PkwdSelectScreen_TOUCHBAR_Main( wk->touchbar );
@@ -465,16 +602,25 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Main( GFL_PROC *proc, int *seq, void
 
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//タスクメニューメイン処理
-	PkwdSelectScreen_TASKMENU_Main( wk->menu );
+  if(wk->menu!=NULL){
+    PkwdSelectScreen_TASKMENU_Main( wk->menu );
+  }
 #endif //PKWD_SELECT_SCREEN_TASKMENU
 
 	//PRINT_QUE
 	PRINTSYS_QUE_Main( wk->print_que );
 
+  PrintTool_MainFunc( wk );
 
+  // パレット点滅メイン
+  if(wk->nowpos>=0){
+    BLINKPALANM_Main( wk->blinkWork[wk->nowpos] );
+  }
+  
 	//2D描画
 	PKWD_SELECT_SCREEN_GRAPHIC_2D_Draw( wk->graphic );
 
+  
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -555,62 +701,6 @@ static void PkwdSelectScreen_BG_LoadResource( PKWD_SELECT_SCREEN_BG_WORK* wk, HE
  *	TOUCHBAR
  */
 //=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化
- *
- *	@param	GFL_CLUNIT *clunit	CLUNIT
- *	@param	heapID							ヒープID
- *
- *	@return	TOUCHBAR_WORK
- */
-//-----------------------------------------------------------------------------
-static TOUCHBAR_WORK * PkwdSelectScreen_TOUCHBAR_Init( GFL_CLUNIT *clunit, HEAPID heapID )
-{	
-	//アイコンの設定
-	//数分作る
-	TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-	{	
-		{	
-			TOUCHBAR_ICON_RETURN,
-			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK },
-		},
-	};
-
-	//設定構造体
-	//さきほどの窓情報＋リソース情報をいれる
-	TOUCHBAR_SETUP	touchbar_setup;
-	GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-	touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-	touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-	touchbar_setup.p_unit		= clunit;										//OBJ読み込みのためのCLUNIT
-	touchbar_setup.bar_frm	= BG_FRAME_BAR_M;						//BG読み込みのためのBG面
-	touchbar_setup.bg_plt		= PLTID_BG_TOUCHBAR_M;			//BGﾊﾟﾚｯﾄ
-	touchbar_setup.obj_plt	= PLTID_OBJ_TOUCHBAR_M;			//OBJﾊﾟﾚｯﾄ
-	touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-
-	return TOUCHBAR_Init( &touchbar_setup, heapID );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR破棄
- *
- *	@param	TOUCHBAR_WORK	*touchbar タッチバー
- */
-//-----------------------------------------------------------------------------
-static void PkwdSelectScreen_TOUCHBAR_Exit( TOUCHBAR_WORK	*touchbar )
-{	
-	TOUCHBAR_Exit( touchbar );
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -656,29 +746,7 @@ static TOUCHBAR_WORK * PkwdSelectScreen_TOUCHBAR_InitEx( PKWD_SELECT_SCREEN_MAIN
 			TOUCHBAR_ICON_RETURN,
 			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
 		},
-		{	
-			TOUCHBAR_ICON_CLOSE,
-			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
-		},
-		{	
-			TOUCHBAR_ICON_CHECK,
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y_CHECK }
-		},
-		{	
-			TOUCHBAR_ICON_CUTSOM1,	//カスタムボタン１を拡大縮小アイコンに,
-			{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
-		},
 	};
-
-	//以下カスタムボタンならば入れなくてはいけない情報
-	touchbar_icon_tbl[3].cg_idx	=  wk->ncg_btn;				//キャラリソース
-	touchbar_icon_tbl[3].plt_idx	= wk->ncl_btn;				//パレットリソース
-	touchbar_icon_tbl[3].cell_idx	=	wk->nce_btn;				//セルリソース
-	touchbar_icon_tbl[3].active_anmseq	=	8;						//アクティブのときのアニメ
-	touchbar_icon_tbl[3].noactive_anmseq	=		12;						//ノンアクティブのときのアニメ
-	touchbar_icon_tbl[3].push_anmseq	=		10;						//押したときのアニメ（STOPになっていること）
-	touchbar_icon_tbl[3].key	=		PAD_BUTTON_START;		//キーで押したときに動作させたいならば、ボタン番号
-	touchbar_icon_tbl[3].se	=		0;									//押したときにSEならしたいならば、SEの番号
 
 	//設定構造体
 	//さきほどの窓情報＋リソース情報をいれる
@@ -742,13 +810,13 @@ static APP_TASKMENU_WORK * PkwdSelectScreen_TASKMENU_Init( APP_TASKMENU_RES *men
 {	
 	int i;
 	APP_TASKMENU_INITWORK	init;
-	APP_TASKMENU_ITEMWORK	item[3];
+	APP_TASKMENU_ITEMWORK	item[2];
 	APP_TASKMENU_WORK			*menu;	
 
 	//窓の設定
 	for( i = 0; i < NELEMS(item); i++ )
 	{	
-		item[i].str	= GFL_MSG_CreateString( msg, 0 );	//文字列
+		item[i].str	      = GFL_MSG_CreateString( msg, pw_select_yes+i );	//文字列
 		item[i].msgColor	= APP_TASKMENU_ITEM_MSGCOLOR;	//文字色
 		item[i].type			= APP_TASKMENU_WIN_TYPE_NORMAL;	//窓の種類
 	}
@@ -759,8 +827,8 @@ static APP_TASKMENU_WORK * PkwdSelectScreen_TASKMENU_Init( APP_TASKMENU_RES *men
 	init.itemWork = item;
 	init.posType	= ATPT_RIGHT_DOWN;
 	init.charPosX	= 32;
-	init.charPosY = 21;
-	init.w				= APP_TASKMENU_PLATE_WIDTH;
+	init.charPosY = 23;
+	init.w				= APP_TASKMENU_PLATE_WIDTH_YN_WIN;
 	init.h				= APP_TASKMENU_PLATE_HEIGHT;
 
 	menu	= APP_TASKMENU_OpenMenu( &init, menu_res );
@@ -941,83 +1009,217 @@ static void PkwdSelectScreen_POKE2D_DeleteCLWK( PKWD_SELECT_SCREEN_MAIN_WORK *wk
 		・サンプルメインが FALSE を返すと終了です
 */
 
+
 // サンプルメイン
 static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 {
-	switch( wk->seq ){
-	case 0:
-		PrintTool_AddBmpWin( wk );			// BMPWIN作成
-		PrintTool_PrintHP( wk );				// ＨＰ表示
-		PrintTool_ScreenTrans( wk );		// スクリーン転送
-		wk->seq = 1;
-		break;
-
-	case 1:
-		// プリント終了待ち
-		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
-			wk->seq = 2;
-		}
-		break;
-
-	case 2:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			PrintTool_DelBmpWin( wk );		// BMPWIN削除
-			return FALSE;
-		}
-	}
-
-	PRINT_UTIL_Trans( &wk->print_util, wk->que );
+  {
+    int i;
+    for(i=0;i<PKWD_SELECT_SCREEN_BMPWIN_MAX;i++){
+      PRINT_UTIL_Trans( &wk->print_util[i], wk->print_que );
+    }
+  }
 	return TRUE;
 }
+
+
+#define TITLE_WIN_W ( 26 )
+#define TITLE_WIN_H (  5 )
+#define SUBTITLE_WIN1_W  ( 26 )
+#define SUBTITLE_WIN1_H  (  2 )
+#define SUBTITLE_WIN2_W  ( 26 )
+#define SUBTITLE_WIN2_H  (  4 )
+#define TITLE_PAL   ( 15 )
+
+typedef struct {
+  u16 frame;
+  u16 pal;
+  u8  x, y;
+  u8  w, h;
+}BMPWIN_DAT;
+
+
+static const BMPWIN_DAT bmpdat[]={
+  {
+    GFL_BG_FRAME0_M, TITLE_PAL, 5, 0, TITLE_WIN_W, TITLE_WIN_H,
+  },
+  {
+    GFL_BG_FRAME0_M, TITLE_PAL, 5, 5, TITLE_WIN_W, TITLE_WIN_H,
+  },
+  {
+    GFL_BG_FRAME0_M, TITLE_PAL, 5, 10, TITLE_WIN_W, TITLE_WIN_H,
+  },
+  {
+    GFL_BG_FRAME0_M, TITLE_PAL, 5, 15, TITLE_WIN_W, TITLE_WIN_H,
+  },
+  {
+    GFL_BG_FRAME0_S, TITLE_PAL, 3,  0, SUBTITLE_WIN1_W, SUBTITLE_WIN1_H,
+  },
+  {
+    GFL_BG_FRAME0_S, TITLE_PAL, 3, 15, SUBTITLE_WIN2_W, SUBTITLE_WIN2_H,
+  },
+};
 
 // BMPWIN作成
 static void PrintTool_AddBmpWin( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 {
-	wk->print_util.win = GFL_BMPWIN_Create(
-													GFL_BG_FRAME0_M,					// ＢＧフレーム
-													1, 1,											// 表示座標
-													20, 2,										// 表示サイズ
-													15,												// パレット
-													GFL_BMP_CHRAREA_GET_B );	// キャラ取得方向
+  int i;
+  
+  for(i=0;i<PKWD_SELECT_SCREEN_BMPWIN_MAX;i++){
+    const BMPWIN_DAT *bmp = &bmpdat[i];
+    wk->print_util[i].win = GFL_BMPWIN_Create(
+                              bmp->frame,     // ＢＧフレーム
+                              bmp->x, bmp->y, // 表示座標
+                              bmp->w, bmp->h, // 表示サイズ
+                              bmp->pal,       // パレット
+                              GFL_BMP_CHRAREA_GET_B );// キャラ取得方向
+    OS_Printf("add bmpwin %d\n", i);
+  }
 }
 
 // BMPWIN削除
 static void PrintTool_DelBmpWin( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 {
-		GFL_BMPWIN_Delete( wk->print_util.win );
+  int i;
+  
+  for(i=0;i<PKWD_SELECT_SCREEN_BMPWIN_MAX;i++){
+    GFL_BMPWIN_Delete( wk->print_util[i].win );
+  }
 }
 
 // BMPWINスクリーン転送
-static void PrintTool_ScreenTrans( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
+static void PrintTool_ScreenTrans( PKWD_SELECT_SCREEN_MAIN_WORK * wk, int index )
 {
-	GFL_BMPWIN_MakeScreen( wk->print_util.win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util.win) );
+  GFL_BMPWIN_MakeScreen( wk->print_util[index].win );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->print_util[index].win) );
 }
 
 // ＨＰ表示
 static void PrintTool_PrintHP( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 {
-	STRBUF * strbuf;
+//  GFL_MSG_GetString(wk->msg, mes_mictest_title, wk->strbuf );
 
 	// BMPWIN内の座標(32,0)を基準に右詰めで「ＨＰ」と表示
-	PRINTTOOL_Print(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				32, 0,									// 表示基準座標
-				strbuf,									// 文字列（すでに「ＨＰ」が展開されているものとする）
-				wk->font,								// フォント
-				PRINTTOOL_MODE_RIGHT );	// 右詰
+  PRINT_UTIL_Print( &wk->print_util[0], wk->print_que, 32,0, wk->strbuf, wk->font );
 
-	// BMPWIN内の座標(100,0)を「／」の中心にしてＨＰを表示 ( hp / mhp )
-	PRINTTOOL_PrintFraction(
-				&wk->print_util,				// プリントユーティル ( BMPWIN )
-				wk->que,								// プリントキュー
-				wk->font,								// フォント
-				100, 0,									// 表示基準座標
-				618,										// hp
-				999,										// mhp
-				wk->heapID );						// ヒープＩＤ
 }
 #endif	//PKWD_SELECT_SCREEN_PRINT_TOOL
 
 
+#define LOAD_SAVEDATA_MAX ( 4 )
+//----------------------------------------------------------------------------------
+/**
+ * @brief	外部セーブデータ確認・読み込み
+ *
+ * @param   wk    
+ * @param   param 
+ */
+//----------------------------------------------------------------------------------
+static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SELECT_SCREEN_PARAM *param )
+{
+  int i;
+
+  BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
+  
+  // ポケウッド録画データアクセス初期化
+  POKEWOOD_REC_Init( HEAPID_PKWD_SELSCR );
+
+  for(i=0;i<LOAD_SAVEDATA_MAX;i++){
+    wk->load_result[i] = POKEWOOD_REC_Load( param->sv, HEAPID_PKWD_SELSCR, i );
+    OS_Printf("%d:load result=%d\n", i , wk->load_result[i]);
+
+    // 読み込んで各種情報を取得したい場合はココで確保
+    if(wk->load_result[i]==RECLOAD_RESULT_OK){
+      wk->scenario_no[i] = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL);
+      OS_Printf("%d: senario_no=%d\n", i , wk->scenario_no[i]);
+    }
+  }
+
+  // ポケウッド録画データアクセス処理終了
+  POKEWOOD_REC_Exit();
+
+  BattleRec_UnloadToolModule();
+}
+
+// タッチ入力判定用定義
+static const GFL_UI_TP_HITTBL tp_data[] ={
+	{ 0, 40, 0, 255 },
+	{ 0, 80, 0, 255 },
+	{ 0,120, 0, 255 },
+	{ 0,160, 0, 255 },
+  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+};
+//----------------------------------------------------------------------------------
+/**
+ * @brief	タッチパネル判定
+ *
+ * @param   wk		PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  int		選択できる上映番号
+ */
+//----------------------------------------------------------------------------------
+static int _touch_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+  int result = GFL_UI_TP_HitTrg( tp_data );
+  if( result!=GFL_UI_TP_HIT_NONE ){
+    if(wk->load_result[result]){
+      wk->isTouch = TRUE;
+      wk->nowpos = result;
+      return result;
+    }
+  }
+
+  return GFL_UI_TP_HIT_NONE;
+}
+
+
+static int _key_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+  if(wk->isTouch==TRUE && GFL_UI_KEY_GetTrg()){
+    wk->isTouch = FALSE;
+    wk->nowpos = 0;
+  }else{
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      BLINKPALANM_SetDecideAnime( wk->blinkWork[wk->nowpos] );
+    }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+      if(BLINKPALANM_CheckDecideAnime( wk->blinkWork[wk->nowpos] )){
+        BLINKPALANM_InitAnimeCount( wk->blinkWork[wk->nowpos] );
+      }
+    }
+    
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+      if(wk->nowpos!=0){
+        wk->nowpos--;
+      }
+    }else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+      if(wk->nowpos<3){
+        wk->nowpos++;
+      }
+    }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+      return wk->nowpos;
+    }
+
+  }
+  return GFL_UI_TP_HIT_NONE;
+}
+
+
+static void _draw_titlelist( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+  int i;
+  STRBUF *strbuf = GFL_STR_CreateBuffer( PKWD_TITLE_STR_MAX, GetHeapLowID( HEAPID_PKWD_SELSCR ));
+
+  for(i=0;i<PKWD_TITLE_LIST_NUM;i++){
+    if(wk->load_result[i]){
+      GFL_MSG_GetString( wk->msg, pw_screen_01+i, strbuf );
+      PRINT_UTIL_PrintColor( &wk->print_util[i], wk->print_que, 0, 4, strbuf, wk->font, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+      GFL_MSG_GetString( wk->msg, pw_title_00+wk->scenario_no[i], strbuf );
+      PRINT_UTIL_PrintColor( &wk->print_util[i], wk->print_que, 0, 4+16, strbuf, wk->font, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+      PrintTool_ScreenTrans( wk, i );		// スクリーン転送
+
+    }
+  }
+
+  GFL_STR_DeleteBuffer(strbuf);
+}

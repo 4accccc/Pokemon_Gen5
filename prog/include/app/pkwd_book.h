@@ -23,6 +23,7 @@
 #include "gamesystem/gamesystem.h"
 #include "savedata/wbt_save.h"
 #include "savedata/mystatus.h"
+#include "savedata/pokewood_savedata.h"
 
 //=============================================================================
 /**
@@ -54,10 +55,8 @@ enum{
 
 // PKWD_BOOK
 typedef struct{
-//	GAMESYS_WORK*	gamesys;	///< MyStatus参照用
-	MYSTATUS*		mystatus;	///< ポケモン情報参照用
-	MISC*			misc;		///< フラグチェック用
-	//
-    s16 *			result;		///< 結果(-1:戻る、挑戦するシナリオ番号)
+	MYSTATUS          * mystatus;    ///< ポケモン情報参照用
+	POKEWOOD_SAVEDATA * pokewood_sv; ///< フラグチェック用
+  s16               * result;      ///< 結果(-1:戻る、挑戦するシナリオ番号)
 }PKWD_BOOK_PARAM;
 

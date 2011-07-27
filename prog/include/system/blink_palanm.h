@@ -23,7 +23,11 @@ typedef struct _BLINK_PALANM_WORK	BLINKPALANM_WORK;		// 点滅パレットアニメワーク
 #define	BLINKPALANM_MODE_MAIN_OBJ		( 0xfffe )	// メインＯＢＪパレット定義
 #define	BLINKPALANM_MODE_SUB_OBJ		( 0xffff )	// サブＯＢＪパレット定義
 
-
+// 点滅アニメのモード指定
+enum{
+  BLINKPALANM_NORMAL=0,        // 通常時（ゆっくり明滅し続けます）
+  BLINKPALANM_DECIDE,          // 決定時（すばやくチカチカ）
+};
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
@@ -107,3 +111,21 @@ extern void BLINKPALANM_Main( BLINKPALANM_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void BLINKPALANM_InitAnimeCount( BLINKPALANM_WORK * wk );
+
+//=============================================================================================
+/**
+ * @brief	決定時の点滅アニメを開始
+ *
+ * @param   wk		BLINKPALANM_WORK
+ */
+//=============================================================================================
+extern void BLINKPALANM_SetDecideAnime( BLINKPALANM_WORK * wk );
+
+//=============================================================================================
+/**
+ * @brief	決定時アニメが終了したかチェック
+ *
+ * @param   wk		BLINKPALANM_WORK
+ */
+//=============================================================================================
+extern BOOL BLINKPALANM_CheckDecideAnime( BLINKPALANM_WORK * wk );

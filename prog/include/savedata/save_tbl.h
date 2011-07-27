@@ -153,7 +153,7 @@ enum{
   GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
   GMDATA_ID_SITUATION,        // フィールド状況データ
   GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
-  GMDATA_ID_WIFILIST,         // ともだちコード
+  GMDATA_ID_WIFILIST,         // ともだちコード 30
   GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
   GMDATA_ID_CGEAR,            // C-GEAR
   GMDATA_ID_TRCARD,           // トレーナーカード(サイン
@@ -162,8 +162,8 @@ enum{
   GMDATA_ID_PERAPVOICE,       // ぺラップヴォイス
   GMDATA_ID_SYSTEM_DATA,      // システムデータ
   GMDATA_ID_RECORD,           // レコード(スコア
-  GMDATA_ID_PMS,              // 簡易文
-  GMDATA_ID_MAILDATA,         // メールデータ
+  GMDATA_ID_PMS,              // 簡易文 
+  GMDATA_ID_MAILDATA,         // メールデータ 40
   GMDATA_ID_MMDL,             // 動作モデル
   GMDATA_ID_MUSICAL,          // ミュージカル
   GMDATA_ID_RANDOMMAP,        // ランダム生成マップ
@@ -172,8 +172,8 @@ enum{
   GMDATA_ID_WORLDTRADEDATA,   // GTS
   GMDATA_ID_REGULATION_DATA,  // レギュレーション
   GMDATA_ID_GIMMICK_WORK,     // ギミック
-  GMDATA_ID_BATTLE_BOX,       // バトルボックス
-  GMDATA_ID_SODATEYA_WORK,    // 育て屋ワーク
+  GMDATA_ID_BATTLE_BOX,       // バトルボックス 
+  GMDATA_ID_SODATEYA_WORK,    // 育て屋ワーク 50
   GMDATA_ID_ROCKPOS,          // かいりき岩
   GMDATA_ID_MISC,             // 未分類(小さいデータの集まり）
   GMDATA_ID_INTRUDE,          // 侵入
@@ -183,7 +183,7 @@ enum{
   GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
   GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
   GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
-  GMDATA_ID_BATTLEMATCH,      // バトル大会
+  GMDATA_ID_BATTLEMATCH,      // バトル大会 60
   GMDATA_ID_SYMBOL,           // シンボルエンカウント
   GMDATA_ID_MYPMS,            // 主人公の挨拶文データ
   GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
@@ -193,9 +193,10 @@ enum{
   GMDATA_ID_TRPOKE_AFTER,     // 交換ポケモンのその後
   GMDATA_ID_ETC,              // 未分類ワークその２
   GMDATA_ID_RESORT,           // レゾナンスリゾート
-  GMDATA_ID_MEDALBOX,         // メダルボックス
+  GMDATA_ID_MEDALBOX,         // メダルボックス 70
   GMDATA_ID_INFINITYDUNGEON,  // 無限ダンジョン
   GMDATA_ID_FMISSION_SAVE,    // フェスミッション
+  GMDATA_ID_POKEWOOD,         // ポケウッド
   GMDATA_ID_MAX,
 };
 

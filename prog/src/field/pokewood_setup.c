@@ -68,15 +68,15 @@ PKWD_BOOK_PARAM * PKWD_BOOK_PARAM_Create( HEAPID heapID, GAMESYS_WORK * gsys, u1
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
-	MISC * misc         = GAMEDATA_GetMiscWork( gamedata );
+	POKEWOOD_SAVEDATA * pokewood_sv = GAMEDATA_GetPokewoodSavedata( gamedata );
 	PKWD_BOOK_PARAM 	*pkwd_param;
 	
 	pkwd_param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_BOOK_PARAM) );
 	// ‰Šú‰»
 //  pkwd_param->gamesys = gsys;
-  pkwd_param->mystatus = mystatus;
-  pkwd_param->misc     = misc;
-  pkwd_param->result = (s16*)res_work;
+  pkwd_param->mystatus    = mystatus;
+  pkwd_param->pokewood_sv = pokewood_sv;
+  pkwd_param->result      = (s16*)res_work;
 	//
 	return pkwd_param;
 }
@@ -103,16 +103,17 @@ PKWD_SELECT_SCREEN_PARAM * PKWD_SELECT_SCREEN_PARAM_Create( HEAPID heapID, GAMES
 {
 	GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
-	MISC * misc         = GAMEDATA_GetMiscWork( gamedata );
+	POKEWOOD_SAVEDATA * pokewood_sv = GAMEDATA_GetPokewoodSavedata( gamedata );
 	PKWD_SELECT_SCREEN_PARAM 	*param;
+  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gamedata );
 	
 	param 			= GFL_HEAP_AllocClearMemory( heapID, sizeof(PKWD_SELECT_SCREEN_PARAM) );
 	// ‰Šú‰»
-  param->gamesys = gsys;
+  param->sv          = sv;
+  param->result      = (s16*)res_work;
+  param->pokewood_sv = pokewood_sv;
 //  param->mystatus = mystatus;
-//  param->misc     = misc;
-  param->result = (s16*)res_work;
-	//
+
 	return param;
 }
 

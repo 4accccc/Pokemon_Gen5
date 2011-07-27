@@ -26,8 +26,6 @@
 
 #include "system/wipe.h"
 
-#include "savedata/misc.h"
-
 //FONT
 #include "print/gf_font.h"
 #include "font/font.naix"
@@ -4173,7 +4171,7 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 	// openチェック
 	j=0;
 	for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
-		bflg = MISC_GetPokewoodOpenFlag(wk->Param->misc, i);
+		bflg = POKEWOOD_SAVEDATA_GetPokewoodOpenFlag(wk->Param->pokewood_sv, i);
 #if 0	// test
 		// debug
 		if(i < 20){
@@ -4184,7 +4182,7 @@ static void pwb_chk_flag( PKWD_BOOK_MAIN_WORK *wk )
 			wk->FlagBuffer[j].openid = i;
 			//
 			// newチェック
-			bflg = MISC_GetPokewoodPlayedFlag(wk->Param->misc, i);
+			bflg = POKEWOOD_SAVEDATA_GetPokewoodPlayedFlag(wk->Param->pokewood_sv, i);
 			if(bflg == FALSE){
 				wk->FlagBuffer[j].newflag = 1;
 			}
@@ -4382,6 +4380,15 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 	// (NARC_b_scenario_gra_pkwd_list_col_NCLR)の0番パレット(16色)と1番パレット(16色)間を補間してくれる
 	// 補間後のパレットはFRAMELIST_HEADERのselPalの指定で可能
 	FRAMELIST_LoadBlinkPalette(   wk->frame_list_work, arc_handle, NARC_b_scenario_gra_pkwd_list_col_NCLR, 0, 1 );
+
+/*  
+  // BGWINFRMの内部パレットを変更する
+  FRAMELIST_SetFrameCol( wk->frame_list_work, 0, 0 );
+  FRAMELIST_SetFrameCol( wk->frame_list_work, 1, 1 );
+  FRAMELIST_SetFrameCol( wk->frame_list_work, 2, 2 );
+  FRAMELIST_SetFrameCol( wk->frame_list_work, 3, 3 );
+*/
+
 	//
 	GFL_ARC_CloseDataHandle( arc_handle );
 	//
@@ -5023,14 +5030,14 @@ static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 	// X:全オープン
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
 		for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
-			MISC_SetPokewoodOpenFlag(wk->Param->misc, i);
+			POKEWOOD_SAVEDATA_SetPokewoodOpenFlag(wk->Param->pokewood_sv, i);
 		}
 		OS_Printf("*** all open ***\n");
 	}
 	// Y:NEW
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
 		tmp = wk->FlagBuffer[wk->ScenarioCurPos].openid;
-		MISC_SetPokewoodPlayedFlag(wk->Param->misc, tmp );
+		POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag(wk->Param->pokewood_sv, tmp );
 		//
 		OS_Printf("*** scenario [%d] played ***\n",tmp);
 	}
