@@ -104,3 +104,6 @@ extern const u16 MUSICAL_SAVE_GetSumPoint( MUSICAL_SAVE *musSave );
 
 extern const BOOL MUSICAL_SAVE_IsLookDemo( MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetLookDemo( MUSICAL_SAVE *musSave , const BOOL flg );
+
+extern const BOOL MUSICAL_SAVE_IsConvertItem( const MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_SetConvertItem( MUSICAL_SAVE *musSave , const BOOL flg );

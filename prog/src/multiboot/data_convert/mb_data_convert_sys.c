@@ -652,9 +652,9 @@ static void Mb_DataConv_Bg_Load( MB_DATA_CONVERT_WORK *p_wk, HEAPID heapID )
     //----îwåi----
     //PLT
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_key_system_gra_back00_NCLR,
-        PALTYPE_MAIN_BG, 0*0x20, 0x20, heapID );
+        PALTYPE_MAIN_BG, 0*0x20, 0x20*3, heapID );
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_key_system_gra_back00_NCLR,
-        PALTYPE_SUB_BG, 0*0x20, 0x20, heapID );
+        PALTYPE_SUB_BG, 0*0x20, 0x20*3, heapID );
     //CHR
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_key_system_gra_back00_NCGR, 
         MB_DATACONV_BG_BACK_M, 0, 0, FALSE, heapID );
@@ -669,6 +669,13 @@ static void Mb_DataConv_Bg_Load( MB_DATA_CONVERT_WORK *p_wk, HEAPID heapID )
         MB_DATACONV_BG_BACK_S, 0, 0, FALSE, heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_key_system_gra_back01_NSCR,
         MB_DATACONV_BG_WND_M, 0, 0, FALSE, heapID );
+
+    GFL_BG_ChangeScreenPalette( MB_DATACONV_BG_BACK_M, 0, 0, 32, 32, 2);
+    GFL_BG_ChangeScreenPalette( MB_DATACONV_BG_BACK_S, 0, 0, 32, 32, 2);
+    GFL_BG_ChangeScreenPalette( MB_DATACONV_BG_WND_M, 0, 0, 32, 32,  2);
+    GFL_BG_LoadScreenReq( MB_DATACONV_BG_BACK_M );
+    GFL_BG_LoadScreenReq( MB_DATACONV_BG_BACK_S );
+    GFL_BG_LoadScreenReq( MB_DATACONV_BG_WND_M );
 
     GFL_ARC_CloseDataHandle( p_handle );
   }

@@ -321,6 +321,7 @@ typedef struct
 
   BOOL                    is_parent;
   BOOL                    is_wifi_start;
+  BOOL                    is_convert;
   STRBUF                  *p_gamesync_id_code;
 
   void                    *p_proc_param;

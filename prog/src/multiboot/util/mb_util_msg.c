@@ -835,6 +835,8 @@ void MB_MSG_TitleDeleteWindow( MB_MSG_WORK *msgWork )
 void MB_MSG_TitleDisp( MB_MSG_WORK *work , const u16 msgId )
 {
   STRBUF *msgStr = GFL_MSG_CreateString( work->msgHandle , msgId );
-  PRINT_UTIL_Print( &work->printUtil, work->printQue, 0, 0, msgStr, work->fontHandle );
+
+  s32 x = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->titleWin) )/2 - PRINTSYS_GetStrWidth( msgStr, work->fontHandle, 0 )/2;
+  PRINT_UTIL_Print( &work->printUtil, work->printQue, x, 0, msgStr, work->fontHandle );
   GFL_STR_DeleteBuffer( msgStr );
 }

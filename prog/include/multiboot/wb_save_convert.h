@@ -46,6 +46,7 @@ typedef enum
 //=====================================
 typedef enum
 {
+  WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE,
   WB_SAVE_CONV_WORK_N_BATTLE_RAIMON,
   WB_SAVE_CONV_WORK_MAX
 } WB_SAVE_CONV_WORK;

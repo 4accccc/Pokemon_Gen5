@@ -47,7 +47,8 @@ struct _MUSICAL_SAVE {
   u8 enableDistData;
   //デモを見たか？
   u8 isLookDemo;
-  u8 padding[1];
+  //道具コンバートしたか
+  u8 isConvertItem;
 };
 
 #endif //MUSICAL_SAVE_LOCAL_H__

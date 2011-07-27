@@ -222,6 +222,7 @@ static void Wb_Save_Conv_ConvertData( const void *cp_data_adrs, WB_SAVE_CONV_DAT
         u32 dst_work;
       } sc_convert_work_tbl[] =
       {
+        { WK_SYS_FIRST_POKETYPE, WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE },
         { WK_SCENE_C04P01, WB_SAVE_CONV_WORK_N_BATTLE_RAIMON },
       };
 

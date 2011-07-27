@@ -407,13 +407,16 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     break;
   case SEQ_CONVERT_CHECK:
-    if( DATA_CONVERT_SAVE_IsSameOwner( p_wk->p_data_sv, &p_wk->p_recv_data->owner ) )
     {
-      *p_seq = SEQ_CONVERT_MAIN;
-    }
-    else
-    {
-      *p_seq = SEQ_CONVERT_YESNO_MSG;
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+      if( DATA_CONVERT_SAVE_IsSameOwner( p_wk->p_data_sv, p_wk->p_recv_data, p_sv ) )
+      {
+        *p_seq = SEQ_CONVERT_MAIN;
+      }
+      else
+      {
+        *p_seq = SEQ_CONVERT_YESNO_MSG;
+      }
     }
     break;
   case SEQ_CONVERT_YESNO_MSG:
@@ -466,7 +469,10 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     break;
   case SEQ_CONVERT_MAIN:
-    DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data );
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+      p_wk->is_convert = DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data, p_sv );
+    }
     (*p_seq)++;
     break;
  case SEQ_SAVE:
@@ -475,7 +481,14 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_COMPLETE_MSG_START:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    if( p_wk->is_convert )
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_14, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    }
+    else
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    }
     *p_seq = SEQ_COMPLETE_MSG_WAIT;
     break;
     
@@ -592,6 +605,7 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_CREATE_DISPLAY_TO_WIFI_LOGIN:
     if( p_wk->is_wifi_start )
     {
+      p_wk->is_convert =  FALSE;
       KEYSYS_SEQ_Call( p_seqwk, DataConv_Seq_CreateDisplayWifi );
     }
     else
@@ -676,13 +690,16 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
   case SEQ_CHECK_OWNER:
-    if( DATA_CONVERT_SAVE_IsSameOwner( p_wk->p_data_sv, &p_wk->p_recv_data->owner ) )
     {
-      *p_seq = SEQ_CONVERT_MAIN;
-    }
-    else
-    {
-      *p_seq = SEQ_CONVERT_YESNO_MSG;
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+      if( DATA_CONVERT_SAVE_IsSameOwner( p_wk->p_data_sv, p_wk->p_recv_data, p_sv ) )
+      {
+        *p_seq = SEQ_CONVERT_MAIN;
+      }
+      else
+      {
+        *p_seq = SEQ_CONVERT_YESNO_MSG;
+      }
     }
     break;
   case SEQ_CONVERT_YESNO_MSG:
@@ -735,7 +752,10 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
   case SEQ_CONVERT_MAIN:
-    DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data );
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+      p_wk->is_convert = DATA_CONVERT_SAVE_Convert( p_wk->p_data_sv, p_wk->p_recv_data, p_sv );
+    }
     (*p_seq)++;
     break;
 
@@ -745,7 +765,14 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_COMPLETE_MSG_START:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    if( p_wk->is_convert )
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_14, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    }
+    else
+    {
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_06, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    }
     *p_seq = SEQ_MSG_END_WAIT;
     break;
 

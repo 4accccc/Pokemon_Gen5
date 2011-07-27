@@ -2030,7 +2030,8 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
   }
   if( cp_wk->extend_type > RESORT_EXTEND_TYPE_MAX )
   {
-    RESORT_VALID_ASSERT( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
+    //TODO 拡張の数減らしたので一時的に不正ビーコンが漂っている
+    //RESORT_VALID_ASSERT( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
     return FALSE;
   }
   else if( cp_wk->extend_type < RESORT_EXTEND_TYPE_MAX )

@@ -54,7 +54,7 @@
 
 
 #define MB_MSG_TITLEWIN_TOP    (1)
-#define MB_MSG_TITLEWIN_LEFT   (1)
+#define MB_MSG_TITLEWIN_LEFT   (0)
 #define MB_MSG_TITLEWIN_WIDTH (14)
 #define MB_MSG_TITLEWIN_HEIGHT  (2)
 

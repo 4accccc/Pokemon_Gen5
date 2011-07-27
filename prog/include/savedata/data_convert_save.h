@@ -9,7 +9,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
-
+#include "savedata/save_control.h"
 #include "multiboot/wb_save_convert.h"
 //=============================================================================
 /**
@@ -34,8 +34,19 @@ typedef enum
   DATA_CONVERT_GET_ID_MAX
 } DATA_CONVERT_GET_ID;
 
+//-------------------------------------
+///	コンバート元ユーザー
+//=====================================
+typedef enum
+{
+  DATA_CONVERT_OWNER_SYS,     //フラグ、ワーク類
+  DATA_CONVERT_OWNER_MUSICAL, //ミュージカル
+  DATA_CONVERT_OWNER_DENDOU,  //でんどういり
+  DATA_CONVERT_OWNER_MAX
+} DATA_CONVERT_OWNER;
+
 //サイズ
-#define DATA_CONVERT_SAVE_WORK_SIZE (424)
+#define DATA_CONVERT_SAVE_WORK_SIZE (476)
 
 //=============================================================================
 /**
@@ -55,16 +66,14 @@ typedef struct _DATA_CONVERT_SAVE DATA_CONVERT_SAVE;
 extern u32  DATA_CONVERT_SAVE_GetWorkSize( void );
 extern void DATA_CONVERT_SAVE_Init( DATA_CONVERT_SAVE *p_wk );
 
-extern void DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data );
+extern BOOL DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv );
 
-extern BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAVE_CONV_OWNER *cp_owner );
+extern BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv );
 
 extern u32 DATA_CONVERT_SAVE_GetData( const DATA_CONVERT_SAVE *cp_wk, DATA_CONVERT_GET_ID id, void *p_data_adrs );
 extern BOOL DATA_CONVERT_SAVE_GetFlag( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_FLAG flag );
 extern u16 DATA_CONVERT_SAVE_GetWork( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_WORK wk );
 
-#ifdef PM_DEBUG
 extern void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id, u32 data );
 extern void DATA_CONVERT_SAVE_SetFlag( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_FLAG flag, BOOL on_off );
 extern void DATA_CONVERT_SAVE_SetWork( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_WORK wk, u16 value );
-#endif

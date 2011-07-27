@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "savedata/data_convert_save.h"
+#include "savedata/musical_save.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -27,17 +28,19 @@
 //=====================================
 struct _DATA_CONVERT_SAVE
 {
-  WB_SAVE_CONV_OWNER  owner;
+  WB_SAVE_CONV_OWNER  owner[DATA_CONVERT_OWNER_MAX];
   WB_SAVE_CONV_DATA   data;
 };
 
-SDK_COMPILER_ASSERT( DATA_CONVERT_SAVE_WORK_SIZE == sizeof(DATA_CONVERT_SAVE) );
+//SDK_COMPILER_ASSERT( DATA_CONVERT_SAVE_WORK_SIZE == sizeof(DATA_CONVERT_SAVE) );
 
 //=============================================================================
 /**
  *					プロトタイプ宣言
 */
 //=============================================================================
+static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv, BOOL data_in );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ワークサイズ取得
@@ -67,12 +70,14 @@ void DATA_CONVERT_SAVE_Init( DATA_CONVERT_SAVE *p_wk )
  *
  *	@param	DATA_CONVERT_SAVE *p_wk ワーク
  *	@param	void *cp_data_adrs      コンバート元データ
+ *	@param  cp_sv                   セーブコントロールワーク
+ *
+ *	@retval TRUE一箇所でもコンバートした  FALSEコンバートしてない
  */
 //-----------------------------------------------------------------------------
-void DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data )
+BOOL DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv )
 {
-  p_wk->owner   = cp_all_data->owner;
-  p_wk->data    = cp_all_data->data;
+  return Data_Convert_Save_ConvertCore( p_wk, cp_all_data, cp_sv, TRUE ) != 0;
 }
 
 //----------------------------------------------------------------------------
@@ -86,11 +91,143 @@ void DATA_CONVERT_SAVE_Convert( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_
  *	@return TRUE同じ人  FALSE違う人
  */
 //-----------------------------------------------------------------------------
-BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAVE_CONV_OWNER *cp_owner )
+BOOL DATA_CONVERT_SAVE_IsSameOwner( const DATA_CONVERT_SAVE *cp_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv )
 {
-  return GFL_STD_CODED_CheckSum(&cp_wk->owner, sizeof(WB_SAVE_CONV_OWNER)) == 0
-      || GFL_STD_MemComp( &cp_wk->owner, cp_owner, sizeof(WB_SAVE_CONV_OWNER) ) == 0;
+  int bit = Data_Convert_Save_ConvertCore( (DATA_CONVERT_SAVE *)cp_wk, cp_all_data, cp_sv, FALSE );
+  int i;
+  BOOL same_owner = TRUE;
+
+  for( i = 0; i < DATA_CONVERT_OWNER_MAX; i++ )
+  {
+    if( bit & (1<<i) )
+    {
+      if( GFL_STD_MemComp( &cp_wk->owner[i], &cp_all_data->owner, sizeof(WB_SAVE_CONV_OWNER) ) != 0 )
+      {
+        same_owner = FALSE;
+        break;
+      }
+    }
+  }
+
+  return same_owner;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンバート
+ *
+ *	@param	DATA_CONVERT_SAVE *p_wk ワーク
+ *	@param	void *cp_data_adrs      コンバート元データ
+ *	@param  cp_sv                   セーブコントロールワーク
+ *	@param  data_in                 データをセーブにいれるかどうか
+ *
+ *	@retval bit 1<<DATA_CONVERT_OWNERの順番で変更された場合立っているビット
+ */
+//-----------------------------------------------------------------------------
+static int Data_Convert_Save_ConvertCore( DATA_CONVERT_SAVE *p_wk, const WB_SAVE_CONV_ALL_DATA *cp_all_data, const SAVE_CONTROL_WORK *cp_sv, BOOL data_in )
+{
+  int i;
+  const WB_SAVE_CONV_OWNER  *cp_src_owner = &cp_all_data->owner;
+  const WB_SAVE_CONV_DATA   *cp_src_data  = &cp_all_data->data;
+  WB_SAVE_CONV_DATA         *p_dst_data   = &p_wk->data;
+
+  BOOL is_convert[DATA_CONVERT_OWNER_MAX]  = { FALSE, FALSE, FALSE };
+
+  //フラグの更新
+  for( i = 0; i < WB_SAVE_CONV_FLAG_MAX; i++ )
+  {
+    BOOL flag = (cp_src_data->flag[ i/8 ] & (1<<(i%8)) ) != 0;
+    if( flag )
+    {
+      if( data_in )
+      {
+        DATA_CONVERT_SAVE_SetFlag( p_wk, i, TRUE );
+      }
+      is_convert[DATA_CONVERT_OWNER_SYS] = TRUE;
+    }
+  }
+
+  //ワークの更新
+  for( i = 0; i < WB_SAVE_CONV_WORK_MAX; i++ )
+  {
+    BOOL flag = TRUE;
+    switch( i )
+    {
+    case WB_SAVE_CONV_WORK_SYS_FIRST_POKETYPE:
+      /*  なし  */
+      break;
+    case WB_SAVE_CONV_WORK_N_BATTLE_RAIMON:
+      flag = cp_src_data->work[i] != 0;
+      break;
+    default:
+      GF_ASSERT(0);
+    }
+
+
+    if( flag && cp_src_data->work[i] != p_dst_data->work[i] )
+    {
+      if( data_in )
+      {
+        DATA_CONVERT_SAVE_SetWork( p_wk, i, cp_src_data->work[i] );
+      }
+      is_convert[DATA_CONVERT_OWNER_SYS] = TRUE;
+    }
+  }
+
+  //ミュージカルデータ
+  if( cp_src_data->musical_entry_num > 0 )
+  {
+    const MUSICAL_SAVE* cp_musical = MUSICAL_SAVE_GetMusicalSave( (SAVE_CONTROL_WORK *)cp_sv );
+    if( MUSICAL_SAVE_IsConvertItem( cp_musical ) == FALSE )
+    {
+      if( cp_src_data->musical_sum_point != p_dst_data->musical_sum_point
+        || cp_src_data->musical_entry_num != p_dst_data->musical_entry_num
+        || GFL_STD_MemComp( cp_src_data->musical_item, p_dst_data->musical_item, WB_SAVE_CONV_MUSICAL_ITEM_BIT ) != 0 )
+      {
+        if( data_in )
+        {
+          p_dst_data->musical_sum_point = cp_src_data->musical_sum_point;
+          p_dst_data->musical_entry_num = cp_src_data->musical_entry_num;
+          GFL_STD_MemCopy( cp_src_data->musical_item, p_dst_data->musical_item, WB_SAVE_CONV_MUSICAL_ITEM_BIT );
+        }
+        is_convert[DATA_CONVERT_OWNER_MUSICAL] = TRUE;
+      }
+    }
+  }
+
+  //でんどうデータ
+  {
+    BOOL is_clear = (cp_src_data->flag[ WB_SAVE_CONV_FLAG_GAME_CLEAR/8 ] & (1<<(WB_SAVE_CONV_FLAG_GAME_CLEAR%8)) ) != 0;
+    if( is_clear )
+    {
+      if( GFL_STD_MemComp( cp_src_data->pokemon, p_dst_data->pokemon, sizeof(WB_SAVE_CONV_DENDOU_POKEMON_DATA)*TEMOTI_POKEMAX ) != 0 )
+      {
+        if( data_in )
+        {
+          GFL_STD_MemCopy( cp_src_data->pokemon, p_dst_data->pokemon, sizeof(WB_SAVE_CONV_DENDOU_POKEMON_DATA)*TEMOTI_POKEMAX );
+        }
+        is_convert[DATA_CONVERT_OWNER_DENDOU] = TRUE;
+      }
+    }
+  }
+
+  //変更があった箇所のオーナーをセーブ
+  if( data_in )
+  {
+    for( i = 0; i < DATA_CONVERT_OWNER_MAX; i++ )
+    {
+      if( is_convert[i] )
+      {
+        p_wk->owner[i]  = *cp_src_owner;
+      }
+    }
+  }
+
+  return (is_convert[DATA_CONVERT_OWNER_SYS]<<DATA_CONVERT_OWNER_SYS)
+    | (is_convert[DATA_CONVERT_OWNER_MUSICAL]<<DATA_CONVERT_OWNER_MUSICAL)
+    | (is_convert[DATA_CONVERT_OWNER_DENDOU]<<DATA_CONVERT_OWNER_DENDOU);
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -171,7 +308,6 @@ u16 DATA_CONVERT_SAVE_GetWork( const DATA_CONVERT_SAVE *cp_wk, WB_SAVE_CONV_WORK
   return cp_wk->data.work[ wk ];
 }
 
-#ifdef PM_DEBUG
 void DATA_CONVERT_SAVE_SetData( DATA_CONVERT_SAVE *p_wk, DATA_CONVERT_GET_ID id, u32 data )
 {
   switch( id )
@@ -226,4 +362,3 @@ void DATA_CONVERT_SAVE_SetWork( DATA_CONVERT_SAVE *p_wk, WB_SAVE_CONV_WORK wk, u
   GF_ASSERT( wk < WB_SAVE_CONV_WORK_MAX );
   p_wk->data.work[ wk ]  = value;
 }
-#endif

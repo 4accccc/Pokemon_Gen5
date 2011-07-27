@@ -336,3 +336,12 @@ void MUSICAL_SAVE_SetLookDemo( MUSICAL_SAVE *musSave , const BOOL flg )
 {
   musSave->isLookDemo = flg;
 }
+const BOOL MUSICAL_SAVE_IsConvertItem( const MUSICAL_SAVE *musSave )
+{
+  return musSave->isConvertItem;
+}
+
+void MUSICAL_SAVE_SetConvertItem( MUSICAL_SAVE *musSave , const BOOL flg )
+{
+  musSave->isConvertItem = flg;
+}
