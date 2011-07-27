@@ -186,3 +186,4 @@
 "nsbmdfiles/d25_obj03_b.nsbmd"
 "nsbmdfiles/d25_obj04.nsbmd"
 "nsbmdfiles/d25_obj05.nsbmd"
+"nsbmdfiles/p_gun01.nsbmd"

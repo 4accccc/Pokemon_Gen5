@@ -187,4 +187,5 @@ DEP_INDOOR	=	\
 	$(RESDIR)/d25_obj03_b.nsbmd \
 	$(RESDIR)/d25_obj04.nsbmd \
 	$(RESDIR)/d25_obj05.nsbmd \
+	$(RESDIR)/p_gun01.nsbmd \
 
