@@ -46,6 +46,8 @@ struct _INFINITYDUNGEON_SAVE{
   u8  dungeon_status_b; // 黒バージョン用セーブデータ
 
   u8  padding[3];       // あまり
+
+  u8  key_system_area[KEY_SYSTEM_SAVE_WORK_SIZE];
 };
 
 //=============================================================================
@@ -80,6 +82,11 @@ int INFINITYDUNGEON_SAVE_GetWorkSize(void)
 void INFINITYDUNGEON_SAVE_Init(INFINITYDUNGEON_SAVE *p_save)
 {
   GFL_STD_MemFill(p_save, 0, sizeof(INFINITYDUNGEON_SAVE));
+
+  {
+    KEY_SYSTEM_SAVE *p_key = INFINITYDUNGEON_SAVE_GetKeySystem( p_save );
+    KEY_SYSTEM_SAVE_Init( p_key );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -489,3 +496,16 @@ void INFINITYDUNGEON_SAVE_SetRecoverFlag( INFINITYDUNGEON_SAVE *p_save ,int reco
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キーシステムセーブを取得
+ *
+ *	@param	INFINITYDUNGEON_SAVE *p_save  セーブ
+ *
+ *	@return キーシステムセーブ
+ */
+//-----------------------------------------------------------------------------
+KEY_SYSTEM_SAVE * INFINITYDUNGEON_SAVE_GetKeySystem( INFINITYDUNGEON_SAVE *p_save )
+{
+  return (KEY_SYSTEM_SAVE*)p_save->key_system_area;
+}

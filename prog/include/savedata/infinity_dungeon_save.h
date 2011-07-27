@@ -10,6 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "field/field_wfbc_data.h"
+#include "savedata/key_system_save.h"
+
 //=============================================================================
 //
 //					íËêîêÈåæ
@@ -57,4 +60,4 @@ extern void INFINITYDUNGEON_SAVE_SetMapStatus( INFINITYDUNGEON_SAVE *p_save ,u8 
 extern void INFINITYDUNGEON_SAVE_SetFloorID( INFINITYDUNGEON_SAVE *p_save ,u8 floor_id);
 extern void INFINITYDUNGEON_SAVE_SetRoomID( INFINITYDUNGEON_SAVE *p_save ,u8 room_id);
 
-
+extern KEY_SYSTEM_SAVE * INFINITYDUNGEON_SAVE_GetKeySystem( INFINITYDUNGEON_SAVE *p_save );

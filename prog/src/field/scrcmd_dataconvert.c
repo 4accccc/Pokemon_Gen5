@@ -60,8 +60,7 @@ VMCMD_RESULT EvCmdDataConv_GetFlag( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_scrcmd );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-  OUTSIDE_PERMANENT *p_per = SaveControl_GetOutsidePermanent( p_sv );
-  DATA_CONVERT_SAVE *p_dataconv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
+  DATA_CONVERT_SAVE *p_dataconv = SaveControl_GetDataConvert( p_sv );
   u16 flag    = SCRCMD_GetVMWorkValue( p_core, p_wk_adrs );
   u16 *p_ret  = SCRCMD_GetVMWork( p_core, p_scrcmd );
   *p_ret      = DATA_CONVERT_SAVE_GetFlag( p_dataconv, flag );
@@ -85,8 +84,7 @@ VMCMD_RESULT EvCmdDataConv_GetWork( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_scrcmd );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-  OUTSIDE_PERMANENT *p_per = SaveControl_GetOutsidePermanent( p_sv );
-  DATA_CONVERT_SAVE *p_dataconv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
+  DATA_CONVERT_SAVE *p_dataconv = SaveControl_GetDataConvert( p_sv );
   u16 wk    = SCRCMD_GetVMWorkValue( p_core, p_wk_adrs );
   u16 *p_ret  = SCRCMD_GetVMWork( p_core, p_scrcmd );
   *p_ret      = DATA_CONVERT_SAVE_GetWork( p_dataconv, wk );

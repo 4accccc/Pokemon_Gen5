@@ -19,6 +19,8 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "savedata/key_system_save.h"
+
+#include "savedata/infinity_dungeon_save.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -108,6 +110,34 @@ void KEY_SYSTEM_SAVE_Init( KEY_SYSTEM_SAVE *p_wk )
 {
   GFL_STD_MemClear( p_wk, sizeof(KEY_SYSTEM_SAVE) );
   p_wk->seed = GFUser_GetPublicRand(0xFFFFFFFF);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キーシステムコピー
+ *
+ *	@param	KEY_SYSTEM_SAVE *p_dst  コピー先
+ *	@param	KEY_SYSTEM_SAVE *cp_src コピー元
+ */
+//-----------------------------------------------------------------------------
+void KEY_SYSTEM_SAVE_Copy( KEY_SYSTEM_SAVE *p_dst, const KEY_SYSTEM_SAVE *cp_src )
+{
+  *p_dst = *cp_src;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  内部セーブのキーシステム取得
+ *
+ *	@param	SAVE_CONTROL_WORK *p_sv セーブワーク
+ *
+ *	@return 内部セーブのキーシステム
+ */
+//-----------------------------------------------------------------------------
+KEY_SYSTEM_SAVE * SAVE_CONTROL_GetKeySystem( SAVE_CONTROL_WORK *p_sv )
+{
+  INFINITYDUNGEON_SAVE* p_infi = SaveData_GetINFINITYDUNGEON( p_sv );
+  return INFINITYDUNGEON_SAVE_GetKeySystem( p_infi );
 }
 
 //----------------------------------------------------------------------------

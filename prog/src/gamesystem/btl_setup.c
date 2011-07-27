@@ -952,10 +952,8 @@ void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
 //-----------------------------------------------------------------------------
 void BTL_SETUP_SetDifficulty( BATTLE_SETUP_PARAM* bsp, GAMEDATA* gameData, u16 zoneID )
 {
-
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(gameData);
-  OUTSIDE_PERMANENT *p_outside = SaveControl_GetOutsidePermanent( p_sv );
-  KEY_SYSTEM_SAVE *p_key = OUTSIDE_PERMANENT_GetKeySystem( p_outside );
+  KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( p_sv );
   KEY_SYSTEM_DIFFICULT difficulty = KEY_SYSTEM_SAVE_GetDifficult( p_key );
   s16 difficulty_lv = ZONEDATA_GetDifficulty(zoneID);
 

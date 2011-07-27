@@ -58,7 +58,10 @@
 #include "field/location.h"
 
 #include "savedata/resonance_resort_sv.h"
+#include "savedata/save_outside.h"
+#include "savedata/outside_permanent.h"
 
+FS_EXTERN_OVERLAY( outside_save );
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
@@ -468,9 +471,21 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
 	wk->cgear    = CGEAR_SV_GetCGearSaveData( wk->savedata );
 	wk->evwk     = SaveData_GetEventWork( wk->savedata );
 
+
+  if( SaveData_GetExistFlag( wk->savedata ) )
   {
-    OUTSIDE_PERMANENT *p_out =  SaveControl_GetOutsidePermanent( wk->savedata );
-    wk->keysys = OUTSIDE_PERMANENT_GetKeySystem( p_out );
+    wk->keysys = SAVE_CONTROL_GetKeySystem( wk->savedata );
+  }
+  else
+  {
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+    {
+      OUTSIDE_SAVE_CONTROL *p_outside_sv = OutsideSave_SystemLoad( HEAPID_STARTMENU );
+      OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr( p_outside_sv );
+      wk->keysys = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+      OutsideSave_SystemUnload( p_outside_sv );
+    }
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
   }
 
   return GFL_PROC_RES_FINISH;

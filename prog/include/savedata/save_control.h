@@ -113,7 +113,7 @@ extern void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl);
 extern void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *total_size);
 extern BOOL SaveControl_PageFlashLoad(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdataid, BOOL side_a_or_b, void *dst, u32 load_size);
 
-extern void * SaveControl_GetOutsidePermanent( SAVE_CONTROL_WORK *ctrl );
+extern void * SaveControl_GetDataConvert( SAVE_CONTROL_WORK *ctrl );
 extern BOOL SaveData_GetOutsidePermanentExistFlag( const SAVE_CONTROL_WORK * sv );
 extern void SaveData_SetOutsidePermanentExistFlag( SAVE_CONTROL_WORK * sv, BOOL is_exist );
 extern BOOL SaveData_GetOutsidePermanentBreakFlag( const SAVE_CONTROL_WORK * sv );

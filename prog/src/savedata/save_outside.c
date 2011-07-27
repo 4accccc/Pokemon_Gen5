@@ -466,25 +466,6 @@ OUTSIDE_PERMANENT * OutsideSave_GetPermanentPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl
 {
   return (OUTSIDE_PERMANENT *)&outsv_ctrl->permanent_save.permanent;
 }
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  管理外セーブから永続情報をAllocしたメモリにコピーし取得
- *	        なので、管理外セーブ自体を終了させても問題なし
- *
- *	@param	*outsv_ctrl 管理外セーブ
- *
- *	@return 永続情報
- */
-//-----------------------------------------------------------------------------
-OUTSIDE_PERMANENT * OutsideSave_AllocCopyPermanent(OUTSIDE_SAVE_CONTROL *outsv_ctrl, HEAPID heapID )
-{
-  OUTSIDE_PERMANENT *p_dst = GFL_HEAP_AllocClearMemory( heapID, OUTSIDE_PERMANENT_WORK_SIZE );
-  const OUTSIDE_PERMANENT *cp_src = OutsideSave_GetPermanentPtr(outsv_ctrl);
-
-  GFL_STD_MemCopy( cp_src, p_dst, OUTSIDE_PERMANENT_WORK_SIZE );
-  return p_dst;
-}
 //==============================================================================
 //  デバッグ用
 //==============================================================================

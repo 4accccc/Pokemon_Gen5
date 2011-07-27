@@ -6,9 +6,17 @@
  *	@author	Toru=Nagihashi
  *	@date		2011.05.19
  *
+ *	@note   キーシステムは管理外セーブと内部セーブの両方にデータをもつので
+ *	        扱いに注意。
+ *	        内部セーブデータ生成前は管理外領域を使い、内部セーブデータが
+ *	        生成された瞬間に管理外領域から内部にデータがコピーされます。
+ *	        生成後内部セーブの方の領域を使います。
+ *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
+
+#include "savedata/save_control.h"
 
 //=============================================================================
 /**
@@ -74,9 +82,13 @@ typedef struct _KEY_SYSTEM_SAVE KEY_SYSTEM_SAVE;
 //=============================================================================
 extern u32 KEY_SYSTEM_SAVE_GetWorkSize( void );
 extern void KEY_SYSTEM_SAVE_Init( KEY_SYSTEM_SAVE *p_wk );
+extern void KEY_SYSTEM_SAVE_Copy( KEY_SYSTEM_SAVE *p_dst, const KEY_SYSTEM_SAVE *cp_src );
 
-//extern KEY_SYSTEM_SAVE * SAVE_CONTROL_GetKeySystem( SAVE_CONTROL_WORK *p_sv );
-//outside_permanent.hから取得できます
+//内部のキーシステム取得
+extern KEY_SYSTEM_SAVE * SAVE_CONTROL_GetKeySystem( SAVE_CONTROL_WORK *p_sv );
+
+//管理外のキーシステム取得
+//save_outside.hにてシステム作成→OUTSIDE_PERMANENTを取得して→OUTSIDE_PERMANENT_GetKeySystem
 
 //所持キー設定
 extern void KEY_SYSTEM_SAVE_SetHave( KEY_SYSTEM_SAVE *p_wk, KEY_SYSTEM_TYPE type );

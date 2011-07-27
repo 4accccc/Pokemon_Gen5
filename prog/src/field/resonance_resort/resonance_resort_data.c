@@ -66,7 +66,10 @@ static BOOL s_debug_permission = FALSE;
 #define RESORT_EXT_CHECK( x, y )  /* */
 #endif
 
-#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
+
+//TODO 拡張の数減らしたので一時的に不正ビーコンが漂っている
+//#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
+#define RESORT_VALID_ASSERT(...) OS_TPrintf( __VA_ARGS__ )
 
 static inline RESORT_GET_TrainerView( u8 view, u8 sex ) 
 {
@@ -2030,8 +2033,7 @@ BOOL RESORT_BEACON_DATA_IsValid( const RESORT_BEACON_DATA *cp_wk )
   }
   if( cp_wk->extend_type > RESORT_EXTEND_TYPE_MAX )
   {
-    //TODO 拡張の数減らしたので一時的に不正ビーコンが漂っている
-    //RESORT_VALID_ASSERT( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
+    RESORT_VALID_ASSERT( "ビーコン情報の拡張番号が不正です=%d\n", cp_wk->extend_type );
     return FALSE;
   }
   else if( cp_wk->extend_type < RESORT_EXTEND_TYPE_MAX )

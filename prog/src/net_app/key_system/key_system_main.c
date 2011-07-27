@@ -1148,8 +1148,17 @@ void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
   p_wk->p_outside_sv = OutsideSave_SystemLoad( heapID );
   {
     OUTSIDE_PERMANENT *p_per = OutsideSave_GetPermanentPtr( p_wk->p_outside_sv );
-    p_wk->p_key_sv = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
     p_wk->p_data_sv = OUTSIDE_PERMANENT_GetDataConvert( p_per );
+
+    if( SaveData_GetExistFlag( p_sv ) )
+    {
+      p_wk->p_key_sv = SAVE_CONTROL_GetKeySystem( p_sv );
+    }
+    else
+    {
+      p_wk->p_key_sv = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+    }
   }
   //グラフィック初期化
   p_wk->p_graphic = KEY_SYSTEM_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, heapID );

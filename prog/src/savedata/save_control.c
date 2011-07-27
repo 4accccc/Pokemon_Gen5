@@ -39,7 +39,7 @@ struct _SAVE_CONTROL_WORK{
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
 	GFL_SAVEDATA *sv_extra[SAVE_EXTRA_ID_MAX];
-  OUTSIDE_PERMANENT *p_outside; ///<管理外領域の読み込み部分
+  DATA_CONVERT_SAVE *p_dataconv; ///<管理外領域の読み込み部分
 };
 
 //==============================================================================
@@ -76,6 +76,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   BOOL outside_permanent_exists = FALSE;
   BOOL outside_permanent_break = FALSE;
   OUTSIDE_PERMANENT *p_outside; ///<管理外領域の読み込み部分
+  DATA_CONVERT_SAVE *p_dataconv = GFL_HEAP_AllocClearMemory( heap_id, DATA_CONVERT_SAVE_WORK_SIZE );
 
   //内部セーブでヒープを使用しきる前に管理外セーブの存在チェックを行う
   {
@@ -88,7 +89,8 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     outside_break = OutsideSave_GetBreakFlag(outsv);
     outside_permanent_exists = OutsideSave_GetPermanentExistFlag(outsv);
     outside_permanent_break = OutsideSave_GetPermanentBreakFlag(outsv);
-    p_outside = OutsideSave_AllocCopyPermanent(outsv,heap_id);
+    p_outside = OutsideSave_GetPermanentPtr(outsv);
+    GFL_STD_MemCopy( OUTSIDE_PERMANENT_GetDataConvert( p_outside ), p_dataconv, DATA_CONVERT_SAVE_WORK_SIZE );
 
     OutsideSave_SystemUnload(outsv);
     
@@ -105,7 +107,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   ctrl->outside_permanent_exists = outside_permanent_exists;
   ctrl->outside_permanent_break = outside_permanent_break;
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
-  ctrl->p_outside = p_outside;
+  ctrl->p_dataconv = p_dataconv;
 
 #if DEBUG_ONLY_FOR_ohno
   {  //各データのサイズを得る
@@ -210,7 +212,7 @@ void SaveControl_SystemExit(void)
 {
   if(SaveControlWork != NULL){
     GFL_SAVEDATA_Delete(SaveControlWork->sv_normal);
-    GFL_HEAP_FreeMemory(SaveControlWork->p_outside);
+    GFL_HEAP_FreeMemory(SaveControlWork->p_dataconv);
     GFL_HEAP_FreeMemory(SaveControlWork);
     SaveControlWork = NULL;
   }
@@ -580,9 +582,9 @@ BOOL SaveControl_PageFlashLoad(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdataid, BO
  *	@return 管理外永続データ
  */
 //-----------------------------------------------------------------------------
-void * SaveControl_GetOutsidePermanent( SAVE_CONTROL_WORK *ctrl )
+void * SaveControl_GetDataConvert( SAVE_CONTROL_WORK *ctrl )
 {
-  return ctrl->p_outside;
+  return ctrl->p_dataconv;
 }
 //----------------------------------------------------------------------------
 /**

@@ -84,8 +84,7 @@ VMCMD_RESULT EvCmdKeySys_GetDifficulty( VMHANDLE *p_core, void *p_wk_adrs )
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_scrcmd );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( p_gamesys );
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
-  OUTSIDE_PERMANENT *p_per = SaveControl_GetOutsidePermanent( p_sv );
-  KEY_SYSTEM_SAVE *p_key = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+  KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( p_sv );
   u16 *p_ret = SCRCMD_GetVMWork( p_core, p_scrcmd );
   *p_ret = KEY_SYSTEM_SAVE_GetDifficult( p_key );
 

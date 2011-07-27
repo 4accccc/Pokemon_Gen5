@@ -48,7 +48,6 @@ extern void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outs
 extern BOOL OutsideSave_GetPermanentExistFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern BOOL OutsideSave_GetPermanentBreakFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern OUTSIDE_PERMANENT * OutsideSave_GetPermanentPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
-extern OUTSIDE_PERMANENT * OutsideSave_AllocCopyPermanent(OUTSIDE_SAVE_CONTROL *outsv_ctrl, HEAPID heapID );
 
 //--------------------------------------------------------------
 //  デバッグ用

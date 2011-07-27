@@ -65,8 +65,7 @@
 //-----------------------------------------------------------------------------
 void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, SAVE_CONTROL_WORK *p_sv, HEAPID tmp_heapID )
 {
-  OUTSIDE_PERMANENT *p_per =  SaveControl_GetOutsidePermanent( p_sv );
-  KEY_SYSTEM_SAVE *p_key = OUTSIDE_PERMANENT_GetKeySystem( p_per );
+  KEY_SYSTEM_SAVE *p_key = SAVE_CONTROL_GetKeySystem( p_sv );
   KEY_SYSTEM_WFBC wfbc_type = KEY_SYSTEM_SAVE_GetWfbc( p_key );
 
   GF_ASSERT( p_wk );
