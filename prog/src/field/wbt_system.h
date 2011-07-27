@@ -100,6 +100,7 @@ extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
 extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
 extern u16 WBTTRAINER_GetBattleTrainerType( const WBTTRAINER * wbt_tr );
 extern WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr );
+extern void WBTTRAINER_CopyName( const WBTTRAINER * wbt_tr, STRBUF * buf );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );

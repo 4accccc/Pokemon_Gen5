@@ -801,7 +801,7 @@ static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos
 		}
 	}else{
 		// トレーナー名を取得
-		WBTTOOL_SetRomTrainerName( wk->heapID, tr_id, strbuf );
+		WBTTOOL_GetRomTrainerName( wk->heapID, tr_id, strbuf );
 	}
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), xpos, ypos, strbuf, wk->fontHandle );
 	//

@@ -704,7 +704,7 @@ VMCMD_RESULT EvCmdWBTSetTournamentName( VMHANDLE * core, void * wk )
 
   {
     STRBUF * strbuf = SCRIPT_GetMsgTempBuffer( sc );
-    WBTTOOL_SetTournamentName( wbtcup, strbuf );
+    WBTTOOL_GetTournamentName( wbtcup, strbuf );
     WORDSET_RegisterWord( wordset, idx, strbuf, PM_NEUTRAL, TRUE, PM_LANG );
   }
   TAMADA_Printf("EvCmdWBTSetTournamentName(%d,%d)\n", idx, wbtcup);

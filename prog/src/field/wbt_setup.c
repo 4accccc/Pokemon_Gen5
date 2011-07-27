@@ -137,8 +137,8 @@ void WBTLIST_PARAM_Setup( GAMESYS_WORK * gsys, WBTSYS * wbtsys, WBTLIST_PARAM * 
     wbtlist_param->stage = WBTLIST_STAGE_2ND;
     break;
   }
-  WBTTOOL_SetTournamentName( WBTSYS_GetWBTCup(wbtsys), wbtlist_param->tournament_name );
-  WBTTOOL_SetRuleName( WBTSYS_GetRule(wbtsys), wbtlist_param->tournament_rule );
+  WBTTOOL_GetTournamentName( WBTSYS_GetWBTCup(wbtsys), wbtlist_param->tournament_name );
+  WBTTOOL_GetRuleName( WBTSYS_GetRule(wbtsys), wbtlist_param->tournament_rule );
 }
 
 
@@ -177,7 +177,7 @@ void WBTLIST_PARAM_Setup_Debug(
 //------------------------------------------------------------------
 /// WBTTRAINER@-->@WBTLIST_TRAINER‚Ö‚Ì•ÏŠ·ˆ—
 //------------------------------------------------------------------
-static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
+static void setupWBTLISTtrainer( HEAPID temp_heapID, GAMEDATA * gamedata,
     WBTLIST_TRAINER * wbtlist_tr, const WBTTRAINER * wbt_tr )
 {
   WBT_TRDATA tr_rom_data;
@@ -200,9 +200,7 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
     wbtlist_tr->priority = tr_rom_data.priority;
     wbtlist_tr->poketype = tr_rom_data.type;
     wbtlist_tr->sex      = tr_rom_data.sex;
-    {
-      WBTTOOL_SetRomTrainerName( heapID, wbt_tr->tr_id, wbtlist_tr->name );
-    }
+    WBTTRAINER_CopyName( wbt_tr, wbtlist_tr->name );
     mmdl_id = tr_rom_data.mmdl_id;
     break;
   case WBT_TRTYPE_PLAYER:
@@ -210,15 +208,12 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
     wbtlist_tr->priority = wbt_tr->pri;
     wbtlist_tr->poketype = wbt_tr->poketype;
     wbtlist_tr->sex = wbt_tr->sex;
-    {
-      const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
-      MyStatus_CopyNameString( mystat, wbtlist_tr->name );
-    }
+    WBTTRAINER_CopyName( wbt_tr, wbtlist_tr->name );
     mmdl_id = wbt_tr->mmdl_id;
     break;
   }
 
-  handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
+  handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, temp_heapID );
   getMMdlObjCodeParam( handle, mmdl_id, &wbtlist_tr->pattern_no, &wbtlist_tr->mmdl_id );
   GFL_ARC_CloseDataHandle( handle );
 }

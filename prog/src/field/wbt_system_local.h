@@ -62,6 +62,7 @@ struct _WBTTRAINER{
   u8 tr_id;         ///<トレーナーID（wbt_tr_typeにより意味が変わる）
   u16 mmdl_id;      ///<動作モデルコード
   u16 btl_tr_type;  ///<トレーナータイプ（tr_tool/trtype_def.h)
+  STRBUF * name;    ///<名前
 };
 
 //------------------------------------------------------------------

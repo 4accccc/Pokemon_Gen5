@@ -84,12 +84,13 @@ typedef struct {
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern void WBTTOOL_SetTournamentName( WBTCUP wbtcup, STRBUF * strbuf );
-extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
-extern void WBTTOOL_SetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf );
+extern void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf );
+extern void WBTTOOL_GetRuleName( WBTRULE rule, STRBUF * strbuf );
+extern void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf );
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
 extern void WBTTOOL_GetTrRomData( u8 tr_id, WBT_TRDATA * tr_data );
 extern u16 WBTTOOL_GetBWRomTrainerID( u8 sex );
+extern u16 WBTTOOL_GetRivalTrainerID( void );
 
 extern void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list );
 extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );

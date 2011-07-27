@@ -218,13 +218,30 @@ u16 WBTTOOL_GetBWRomTrainerID( u8 sex )
   GF_ASSERT( 0 );
   return 0; //仮
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief
+ */
+//------------------------------------------------------------------
+u16 WBTTOOL_GetRivalTrainerID( void )
+{
+  int i;
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  {
+    if ( WBTTrainerData[i].mmdl_id == SWRIVAL ) return i;
+  }
+  GF_ASSERT( 0 );
+  return 0;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief トーナメント名文字列をセット
  * @todo  ダウンロードデータへの対応（引数がWBTSYSになる）
  */
 //------------------------------------------------------------------
-void WBTTOOL_SetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
+void WBTTOOL_GetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
 {
   HEAPID heapID = HEAPID_FIELDMAP;
   GFL_MSGDATA     *man;
@@ -259,7 +276,7 @@ void WBTTOOL_SetTournamentName( WBTCUP wbtcup, STRBUF * strbuf )
  * @brief ルール名文字列をセット
  */
 //------------------------------------------------------------------
-void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf )
+void WBTTOOL_GetRuleName( WBTRULE rule, STRBUF * strbuf )
 {
   HEAPID heapID = HEAPID_FIELDMAP;
   GFL_MSGDATA     *man;
@@ -295,7 +312,7 @@ void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf )
  * @brief WBTロムトレーナー名を取得
  */
 //------------------------------------------------------------------
-void WBTTOOL_SetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
+void WBTTOOL_GetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf )
 {
   GFL_MSGDATA     *man;
   u16 msg_id = tr_id;
