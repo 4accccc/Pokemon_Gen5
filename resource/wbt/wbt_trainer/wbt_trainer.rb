@@ -19,6 +19,8 @@ PROJECT_ROOT = ENV["PROJECT_ROOT"]
   #require File.dirname(__FILE__) + '/../hash/item_hash.rb'
   #require File.dirname(__FILE__) + '/../hash/tokusei_hash.rb'
 
+require "#{ENV["PROJECT_ROOT"]}tools/headerdata.rb"
+
 #----------------------------------------------------------------------------
 #データテーブル
   $type_table = {
@@ -60,22 +62,8 @@ PROJECT_ROOT = ENV["PROJECT_ROOT"]
     "×" => "FALSE",
   }
 
-  $bgm_table = {
-    "SWジムリーダー戦" => "SEQ_BGM_VS_GYMLEADER",
-    "戦闘！チェレン・ベル" => "SEQ_BGM_VS_RIVAL",
-    "BWジムリーダー戦" => "SEQ_BGM_VS_GYMLEADER",
-    "RGチャンピオン戦" => "SEQ_BGM_VS_CHAMP",
-    "GSチャンピオン戦" => "SEQ_BGM_VS_CHAMP",
-    "RSチャンピオン戦" => "SEQ_BGM_VS_CHAMP",
-    "BWチャンピオン戦" => "SEQ_BGM_VS_CHAMP",
-    "Eチャンピオン戦" => "SEQ_BGM_VS_CHAMP",
-    "RGジムリーダー戦" => "SEQ_BGM_VS_GYMLEADER",
-    "GSジムリーダー戦" => "SEQ_BGM_VS_GYMLEADER",
-    "RSジムリーダー戦" => "SEQ_BGM_VS_GYMLEADER",
-    "DPジムリーダー戦" => "SEQ_BGM_VS_GYMLEADER",
-    "戦闘！シロナ" => "SEQ_BGM_VS_SHIRONA",
-    "汎用トーナメント" => "SEQ_BGM_VS_GYMLEADER",
-  }
+  $headerArray = HeaderDataArray.new();
+  $headerArray.load(ENV["PROJECT_RSCDIR"] + "sound/swan_sound_data.sadl")
 
   $sex_table = {
     "男" => "PM_MALE",
@@ -91,6 +79,7 @@ PROJECT_ROOT = ENV["PROJECT_ROOT"]
     "ホウエン" => "WBTCUP_HOUEN",
     "シンオウ" => "WBTCUP_SINOU",
     "チャンピオン" => "WBTCUP_CHAMPION",
+    "WCS" => "WBTCUP_WCS",
   }
 #----------------------------------------------------------------------------
 # エクセルデータの各欄の定義
@@ -111,7 +100,8 @@ class COL
     TYPE_ENTRY
     PRIORITY
     AI
-    BGM
+    BTL_BGM
+    WIN_BGM
     JOBNAME
     ACE_POKE
     MSG_1ST_START
@@ -146,7 +136,8 @@ class WBT_TRDATA
     @type_entry = column[COL::TYPE_ENTRY]
     @priority = column[COL::PRIORITY].to_i
     @ai = column[COL::AI]
-    @bgm = column[COL::BGM]
+    @btl_bgm = column[COL::BTL_BGM]
+    @win_bgm = column[COL::WIN_BGM]
     @jobname = column[COL::JOBNAME]
     @ace_poke = column[COL::ACE_POKE]
     @msg_1st_start = 0 #column[COL::MSG_1ST_START]
@@ -157,8 +148,10 @@ class WBT_TRDATA
     @msg_fight_lose = 0 #column[COL::MSG_FIGHT_LOSE]
     @msg_fight_announce = 0 #column[COL::MSG_ANNOUNCE]
 
+    $headerArray.search( @btl_bgm, @btl_bgm )
+    $headerArray.search( @win_bgm, @win_bgm )
+
     if @mmdl_id == "可変" then @mmdl_id = "WKOBJCODE00" end
-    raise Exception, "BGM\"#{@bgm}\"に対応する定義がありません" unless $bgm_table.has_key? @bgm
     raise Exception, "異常なデータです！" if @name == nil
     @ace_poke_no = if $monsno_hash.has_key?(@ace_poke) then
                      $monsno_hash[@ace_poke]
@@ -206,7 +199,8 @@ class WBT_TRDATA
     str += sprintf("\t\t%2s, //タイプトーナメント種別\n", type_def(@type_entry) )
     str += sprintf("\t\t%2d, //優先度\n", @priority )
     str += sprintf("\t\t%2d, //AI\n", @ai.to_i )
-    str += sprintf("\t\t%-40s, // BGM\n", $bgm_table[@bgm] )
+    str += sprintf("\t\t%-40s, // BTL_BGM\n", @btl_bgm )
+    str += sprintf("\t\t%-40s, // WIN_BGM\n", @win_bgm )
     str += sprintf("\t\t%s, //切り札ポケモン\n", @ace_poke_no )
     str += sprintf("\t\t%-40s, //一回戦用対戦前メッセージ\n", @msg_1st_start )
     str += sprintf("\t\t%-40s, //二回戦用対戦前メッセージ\n", @msg_2nd_start )

@@ -11,7 +11,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -33,7 +34,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -55,7 +57,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MUSHI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		542, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -77,7 +80,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		523, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -99,7 +103,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_JIMEN, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		530, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -121,7 +126,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HIKOU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		581, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -143,7 +149,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DRAGON, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		612, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -165,7 +172,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -187,7 +195,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_RIVAL                        , // BGM
+		SEQ_BGM_VS_RIVAL                        , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		518, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -209,7 +218,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HONOO, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		514, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -231,7 +241,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		516, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -253,7 +264,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KUSA, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		512, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -275,7 +287,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		505, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -297,7 +310,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KOORI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		615, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -319,7 +333,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_CHAMP                        , // BGM
+		SEQ_BGM_VS_RG_CHAMP                     , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		59, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -341,7 +356,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_CHAMP                        , // BGM
+		SEQ_BGM_VS_GS_CHAMP                     , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		149, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -363,7 +379,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_CHAMP                        , // BGM
+		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		376, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -385,7 +402,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_CHAMP                        , // BGM
+		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		350, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -407,7 +425,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_SHIRONA                      , // BGM
+		SEQ_BGM_VS_DP_CHAMP                     , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		445, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -429,7 +448,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_CHAMP                        , // BGM
+		SEQ_BGM_VS_CHAMP                        , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		637, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -451,7 +471,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_IWA, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		76, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -473,7 +494,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		121, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -495,7 +517,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		26, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -517,7 +540,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KUSA, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		465, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -539,7 +563,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		65, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -561,7 +586,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HONOO, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		78, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -583,7 +609,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_JIMEN, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		34, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -605,7 +632,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HIKOU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		18, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -627,7 +655,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MUSHI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		212, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -649,7 +678,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		241, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -671,7 +701,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_GHOST, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		94, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -693,7 +724,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KAKUTOU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		62, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -715,7 +747,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HAGANE, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		208, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -737,7 +770,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KOORI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		87, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -759,7 +793,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DRAGON, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		230, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -781,7 +816,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		168, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -803,7 +839,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_IWA, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		476, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -825,7 +862,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KAKUTOU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		297, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -847,7 +885,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		310, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -869,7 +908,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HONOO, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		219, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -891,7 +931,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_NORMAL, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		289, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -913,7 +954,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HIKOU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		334, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -935,7 +977,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		337, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -957,7 +1000,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		338, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -979,7 +1023,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_RS_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		342, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1001,7 +1046,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_IWA, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		409, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1023,7 +1069,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KUSA, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		407, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1045,7 +1092,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_GHOST, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		429, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1067,7 +1115,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KAKUTOU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		448, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1089,7 +1138,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MIZU, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		419, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1111,7 +1161,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HAGANE, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		411, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1133,7 +1184,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_KOORI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		478, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1155,7 +1207,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DENKI, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_DP_LEADER                    , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		466, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1177,7 +1230,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1199,7 +1253,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_JIMEN, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1221,7 +1276,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_ESPER, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1243,7 +1299,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MUSHI, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1265,7 +1322,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_GHOST, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1287,7 +1345,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_DRAGON, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1309,7 +1368,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_HAGANE, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1331,7 +1391,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_AKU, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1353,7 +1414,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_AKU, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1375,7 +1437,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_AKU, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1397,7 +1460,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1419,7 +1483,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1441,7 +1506,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1463,7 +1529,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1485,7 +1552,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 5, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1503,11 +1571,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 5, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1525,11 +1594,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1547,11 +1617,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1569,11 +1640,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 3, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1595,7 +1667,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1617,7 +1690,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1639,7 +1713,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1661,7 +1736,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1683,7 +1759,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1705,7 +1782,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1727,7 +1805,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1749,7 +1828,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1771,7 +1851,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1793,7 +1874,8 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 2, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1811,11 +1893,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1833,11 +1916,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1855,11 +1939,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1877,11 +1962,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1899,11 +1985,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1921,11 +2008,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1943,11 +2031,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1965,11 +2054,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -1987,11 +2077,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2009,11 +2100,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2031,11 +2123,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2053,11 +2146,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2075,11 +2169,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2097,11 +2192,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2119,11 +2215,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2141,11 +2238,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2163,11 +2261,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2185,11 +2284,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2207,11 +2307,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2229,11 +2330,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2251,11 +2353,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2273,11 +2376,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2295,11 +2399,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2317,11 +2422,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2339,11 +2445,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2361,11 +2468,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2383,11 +2491,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2405,11 +2514,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2427,11 +2537,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2449,11 +2560,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2471,11 +2583,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2493,11 +2606,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2515,11 +2629,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2537,11 +2652,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2559,11 +2675,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2581,11 +2698,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2603,11 +2721,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2625,11 +2744,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2647,11 +2767,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2669,11 +2790,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2691,11 +2813,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2713,11 +2836,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2735,11 +2859,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2757,11 +2882,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2779,11 +2905,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2801,11 +2928,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2823,11 +2951,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2845,11 +2974,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2867,11 +2997,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ
@@ -2889,11 +3020,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //ホドモエイベント参加
 		TRUE , //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
-		WBTCUP_NULL, //限定トーナメント種別
+		WBTCUP_WCS, //限定トーナメント種別
 		POKETYPE_MAX, //タイプトーナメント種別
 		 1, //優先度
 		 0, //AI
-		SEQ_BGM_VS_GYMLEADER                    , // BGM
+		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 		0                                       , //一回戦用対戦前メッセージ
 		0                                       , //二回戦用対戦前メッセージ

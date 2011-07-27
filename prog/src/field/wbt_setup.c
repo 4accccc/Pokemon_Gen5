@@ -187,7 +187,7 @@ static void setupWBTLISTtrainer( HEAPID heapID, GAMEDATA * gamedata,
   GF_ASSERT( wbt_tr );
   GF_ASSERT( wbtlist_tr );
 
-  WBTTOOL_GetTrRomData( heapID, wbt_tr->tr_id, &tr_rom_data );
+  WBTTOOL_GetTrRomData( wbt_tr->tr_id, &tr_rom_data );
 
   switch ( wbt_tr->wbt_tr_type )
   {

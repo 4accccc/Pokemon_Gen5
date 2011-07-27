@@ -23,17 +23,6 @@
 enum {
   WBT_TRCODE_PLAYER = 0xffff,
   WBT_TRCODE_WBHERO = 0xfffe,
-
-  WBT_TRCODE_NUM = 115,
-  WBT_TRCODE_NUM_CHAMP = 6,
-  WBT_TRCODE_BATTLE_MOB_NUM = 10,
-
-  WBT_TRCODE_CHAMP_START = 14,
-  WBT_TRCODE_OTHER_LEADER_START = WBT_TRCODE_CHAMP_START + WBT_TRCODE_NUM_CHAMP,
-  WBT_TRCODE_MOB_START = 53,
-  WBT_TRCODE_WBHERO_START = 63,
-
-  WBT_TRCODE_MOB_LAST = 114,
 };
 
 //------------------------------------------------------------------
@@ -44,6 +33,8 @@ typedef enum {
   WBTREG_POKETYPE,
   WBTREG_WCS,
   WBTREG_DOWNLOAD,
+
+  WBTREG_MAX,
 }WBTREG_ID;
 
 //------------------------------------------------------------------
@@ -97,7 +88,8 @@ extern void WBTTOOL_SetTournamentName( WBTCUP wbtcup, STRBUF * strbuf );
 extern void WBTTOOL_SetRuleName( WBTRULE rule, STRBUF * strbuf );
 extern void WBTTOOL_SetRomTrainerName( HEAPID heapID, u8 tr_id, STRBUF * strbuf );
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
-extern void WBTTOOL_GetTrRomData( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data );
+extern void WBTTOOL_GetTrRomData( u8 tr_id, WBT_TRDATA * tr_data );
+extern u16 WBTTOOL_GetBWRomTrainerID( u8 sex );
 
 extern void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list );
 extern void WBTTOOL_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );

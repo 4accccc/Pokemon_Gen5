@@ -190,11 +190,34 @@ enum {
  * @todo  メモリ圧迫に備えて、バイナリから読み込むように修正
  */
 //------------------------------------------------------------------
-void WBTTOOL_GetTrRomData( HEAPID heapID, u8 tr_id, WBT_TRDATA * tr_data )
+void WBTTOOL_GetTrRomData( u8 tr_id, WBT_TRDATA * tr_data )
 {
+  GF_ASSERT( tr_id < WBT_ROM_TRAINER_NUM );
   *tr_data = WBTTrainerData[ tr_id ];
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief 前作主人公のWBTロムデータのIDを取得する
+ * @param   sex
+ * @return  u16
+ */
+//------------------------------------------------------------------
+u16 WBTTOOL_GetBWRomTrainerID( u8 sex )
+{
+  int i;
+  u16 search_id = HERO;
+  if (sex == PM_FEMALE)
+  {
+    search_id = HEROINE;
+  }
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
+  {
+    if ( WBTTrainerData[i].mmdl_id == search_id ) return i;
+  }
+  GF_ASSERT( 0 );
+  return 0; //仮
+}
 //------------------------------------------------------------------
 /**
  * @brief トーナメント名文字列をセット
@@ -406,7 +429,7 @@ static u32 countEntry( const u8 * entry_table, ENTRY_CODE entryCode )
 {
   u32 count = 0;
   int i;
-  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     if ( entry_table[i] == entryCode ) count ++;
   }
@@ -419,7 +442,7 @@ static u32 countEntryWithPri( const u8 * entry_table, ENTRY_CODE entryCode, u8 p
 {
   u32 candidate_count = 0;
   int i;
-  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     if (entry_table[i] == entryCode)
     {
@@ -444,7 +467,7 @@ static u32 selectCandidateByPri( const u8 * entry_table, u8 pri, u8 step )
   u32 pos_count = step;
   u32 i = 0;
   GF_ASSERT( step > 0 )
-  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     if ( entry_table[i] == ENTRY_CANDIDATE )
     {
@@ -458,7 +481,7 @@ static u32 selectCandidateByPri( const u8 * entry_table, u8 pri, u8 step )
       }
     }
   }
-  GF_ASSERT( i < WBT_TRCODE_NUM );
+  GF_ASSERT( i < WBT_ROM_TRAINER_NUM );
   return i;
 }
 
@@ -504,7 +527,7 @@ static u32 selectCharacters( u8 * entry_table, GFL_STD_RandContext * rand_contex
 
 
   //選から漏れた候補者を消す
-  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     if ( entry_table[i] == ENTRY_CANDIDATE )
     {
@@ -527,11 +550,13 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
 {
   switch ( cond->wbtcup )
   {
+  default:
   case WBTCUP_NULL:
-  case WBTCUP_WCS:
   case WBTCUP_DOWNLOAD:
     GF_ASSERT( 0 );
+    break;
 
+  case WBTCUP_WCS:
   case WBTCUP_ISSYU:
   case WBTCUP_KANTO:
   case WBTCUP_JOUTO:
@@ -557,8 +582,8 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
 static void makeEntryTable( const WBT_MATCH_CONDITION * cond, u8 * entry_table )
 {
   int i;
-  GFL_STD_MemFill( entry_table, ENTRY_NON, WBT_TRCODE_NUM );
-  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  GFL_STD_MemFill( entry_table, ENTRY_NON, WBT_ROM_TRAINER_NUM );
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     const WBT_TRDATA * rom_data = &WBTTrainerData[ i ];
     if ( checkEnableEntryRomTrainer( cond, rom_data ) == TRUE )
@@ -575,7 +600,7 @@ static void setEntries( u16 * tr_list, const u8 * entry_table )
   u32 tr_pos = 0;
   u32 i;
   tr_list[tr_pos ++ ] = WBT_TRCODE_PLAYER;  //プレイヤーは登録する
-  for ( i = 0; i < WBT_TRCODE_NUM; i ++ )
+  for ( i = 0; i < WBT_ROM_TRAINER_NUM; i ++ )
   {
     if ( entry_table[i] == ENTRY_DECIDE )
     {
@@ -627,15 +652,15 @@ static void entryChampTournament(const WBT_MATCH_CONDITION * cond, u16 * tr_list
 //-----------------------------------------------------------------------------
 static void entryWorldTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  u8 entry_table[WBT_TRCODE_NUM];
+  u8 entry_table[WBT_ROM_TRAINER_NUM];
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
 
   makeEntryTable( cond, entry_table );
   //チャンピオン一人だけ参戦
-  selectCharacters( entry_table, &rand_context, WBT_TRPRI_CHAMP, 1 );
-  selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 6 );
+  //selectCharacters( entry_table, &rand_context, WBT_TRPRI_CHAMP, 1 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 7 );
 
   //選択された結果を戻り値テーブルに反映する
   setEntries( tr_list, entry_table );
@@ -647,7 +672,7 @@ static void entryWorldTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_lis
 //-----------------------------------------------------------------------------
 static void entryRegionTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  u8 entry_table[WBT_TRCODE_NUM];
+  u8 entry_table[WBT_ROM_TRAINER_NUM];
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
@@ -658,6 +683,29 @@ static void entryRegionTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_li
   //選択された結果を戻り値テーブルに反映する
   setEntries( tr_list, entry_table );
 }
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 参戦トレーナー選別：WCSトーナメント
+ */
+//-----------------------------------------------------------------------------
+static void entryWCSTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+{
+  u8 entry_table[WBT_ROM_TRAINER_NUM];
+
+  GFL_STD_RandContext rand_context;
+  GFL_STD_RandInit( &rand_context, cond->seed64 );
+
+  makeEntryTable( cond, entry_table );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_SPECIAL, 1 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_CHAMP, 1 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 2 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_WEAK_MOB, 3 );
+
+  //選択された結果を戻り値テーブルに反映する
+  setEntries( tr_list, entry_table );
+}
+
 //-----------------------------------------------------------------------------
 /**
  * @brief 参戦トレーナー選別：ホドモエトーナメント
@@ -665,14 +713,15 @@ static void entryRegionTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_li
 //-----------------------------------------------------------------------------
 static void entryHodomoeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  u8 entry_table[WBT_TRCODE_NUM];
+  u8 entry_table[WBT_ROM_TRAINER_NUM];
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
 
   makeEntryTable( cond, entry_table );
-  selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 5 );
-  selectCharacters( entry_table, &rand_context, WBT_TRPRI_NULL, 2 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 2 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_MOB, 1 );
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_WEAK_MOB, 4 );
 
   //選択された結果を戻り値テーブルに反映する
   setEntries( tr_list, entry_table );
@@ -685,7 +734,7 @@ static void entryHodomoeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_l
 //-----------------------------------------------------------------------------
 static void entryHodomoeEventTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
-  u8 entry_table[WBT_TRCODE_NUM];
+  u8 entry_table[WBT_ROM_TRAINER_NUM];
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
@@ -694,7 +743,7 @@ static void entryHodomoeEventTournament( const WBT_MATCH_CONDITION * cond, u16 *
   selectCharacters( entry_table, &rand_context, WBT_TRPRI_SPECIAL, 1 ); //アクロマ
   selectCharacters( entry_table, &rand_context, WBT_TRPRI_CHAMP, 1 );   //チェレン
   selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 1 );  //ライバル
-  selectCharacters( entry_table, &rand_context, WBT_TRPRI_NULL, 4 );    //モブ
+  selectCharacters( entry_table, &rand_context, WBT_TRPRI_WEAK_MOB, 4 );    //モブ
 
   //選択された結果を戻り値テーブルに反映する
   setEntries( tr_list, entry_table );
@@ -708,7 +757,7 @@ static void entryHodomoeEventTournament( const WBT_MATCH_CONDITION * cond, u16 *
 static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
   int i;
-  u8 entry_table[WBT_TRCODE_NUM];
+  u8 entry_table[WBT_ROM_TRAINER_NUM];
   int candidate_count = 0;
   int decide_count = 0;
   int rest;
@@ -737,16 +786,15 @@ static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list
   setEntries( tr_list, entry_table );
 }
 
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
 {
   switch (cond->wbtcup)
   {
+  default:
   case WBTCUP_NULL:
   case WBTCUP_DOWNLOAD:
-  case WBTCUP_WCS:
     GF_ASSERT_MSG( 0, "仮：まだできていません！\n");
     /* FALL THROUGH */
 
@@ -762,11 +810,15 @@ void WBTTOOL_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list )
   case WBTCUP_ISSYU:
   case WBTCUP_KANTO:
   case WBTCUP_JOUTO:
+  case WBTCUP_HOUEN:
   case WBTCUP_SINOU:
     entryRegionTournament( cond, tr_list );
     break;
   case WBTCUP_WORLD:
     entryWorldTournament( cond, tr_list );
+    break;
+  case WBTCUP_WCS:
+    entryWCSTournament( cond, tr_list );
     break;
   case WBTCUP_HODOMOE_EVENT:
     entryHodomoeEventTournament( cond, tr_list );

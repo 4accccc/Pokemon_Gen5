@@ -31,7 +31,8 @@ typedef struct {
   u8  type_tournament_id; ///<タイプトーナメント種別
   u8  priority; ///<優先度
   u8  ai_type; ///<AI
-  u16 bgm_id;             ///< BGM
+  u16 btl_bgm_id;         ///<戦闘BGM
+  u16 win_bgm_id;         ///<勝利時BGM
   u16 ace_poke_id;        ///<切り札ポケモン
   u16 msg_1st_start;      ///<一回戦用対戦前メッセージ
   u16 msg_2nd_start;      ///<二回戦用対戦前メッセージ

@@ -105,6 +105,7 @@ extern WBT_TRTYPE WBTTRAINER_GetWBTTrainerType( const WBTTRAINER * wbt_tr );
 extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
+extern void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
 
 //============================================================================================
 //============================================================================================
