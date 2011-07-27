@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d27r0201.h"
-  //.include  "d27r0201.h"
+  .include  "d27r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,109 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d27r0201
+_EVENT_DATA    ev_pos_d27r0201_barrier_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d27r0201:
-//  _END
+/************************************************************/
+/*					【仮】バリア演出				*/
+/************************************************************/
+EVENT_START ev_pos_d27r0201_barrier_01
+  
+  //アニメ：「！」
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_barrier_01 )
+  _OBJ_ANIME_WAIT()
+  
+  //ビリビリSE再生
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_08 )
+  
+  //アニメ：下方向に移動
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_barrier_02 )
+  _OBJ_ANIME_WAIT()
+  
+  _SE_WAIT()
+  
+  
+EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d27r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//--------------------------------------------------------------------
+//	主人公：上を向いて「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_barrier_01
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	主人公：バリアーに弾かれる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_barrier_02
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_STAY_WALK_U_4F,2
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
