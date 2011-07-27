@@ -39,10 +39,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくしゅう</Text>
+			<Text>あくしゅう　か…▼
+この　とくせいの　ポケモンは
+わざで　ダメージを　あたえた　ときに▽
+あいてを　ひるませることが　あるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+やせいの　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-25T12:54:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52,8 +59,8 @@
 			Language="JPN_KANJI">
 			<Text>あくしゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:42:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -79,10 +86,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あめふらし</Text>
+			<Text>あめふらし　か…▼
+この　とくせいの　ポケモンは
+バトルに　でる　だけで▽
+てんきを　あめに　してしまえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92,8 +102,8 @@
 			Language="JPN_KANJI">
 			<Text>あめふらし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -103,8 +113,8 @@
 			Language="JPN">
 			<Comment>あめふらし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:34:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -119,10 +129,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かそく</Text>
+			<Text>かそく　か…▼
+この　とくせいの　ポケモンは
+バトルに　でて　いると　まいターン▽
+すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:52:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -132,8 +145,8 @@
 			Language="JPN_KANJI">
 			<Text>かそく</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -159,10 +172,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カブトアーマー</Text>
+			<Text>カブトアーマー　か…▼
+この　とくせいの　ポケモンは
+あいての　こうげきが▽
+きゅうしょに　あたらなく　なるんだ▼
+かならず　きゅうしょに　あたる
+わざ　なんかも　あったりするけど▽
+この　とくせいには　こうかがないよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -172,8 +191,8 @@
 			Language="JPN_KANJI">
 			<Text>カブトアーマー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:42:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -199,10 +218,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>がんじょう</Text>
+			<Text>がんじょう　か…▼
+この　とくせいの　ポケモンは
+いちげきで　ひんしにされる　わざの▽
+こうかを　うけないんだ▼
+さらに！▼
+たいりょくが　まんたんだと
+ひんしになる　ダメージを　うけても▽
+たいりょくが　ギリギリで　のこるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:56:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -212,8 +238,8 @@
 			Language="JPN_KANJI">
 			<Text>がんじょう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:42:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -239,10 +265,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しめりけ</Text>
+			<Text>しめりけ　か…▼
+この　とくせいの　ポケモンが
+バトルしている　さいちゅうは▽
+じばくや　だいばくはつの　わざを▽
+つかうことが　できなく　なるんだ▼
+それと…▼
+ゆうばくの　とくせいも
+こうかが　はつどう　しなくなるから▽
+おぼえて　おくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -252,8 +286,8 @@
 			Language="JPN_KANJI">
 			<Text>しめりけ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:44:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -279,10 +313,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゅうなん</Text>
+			<Text>じゅうなん　か…▼
+この　とくせいの　ポケモンは
+バトルで　マヒに　ならないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -292,8 +328,8 @@
 			Language="JPN_KANJI">
 			<Text>じゅうなん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:44:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -319,10 +355,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すながくれ</Text>
+			<Text>すながくれ　か…▼
+この　とくせいの　ポケモンは
+てんきが　すなあらしの　ばあい▽
+かいひりつが　ばいに　なるんだ▼
+それに　タイプに　かんけいなく
+すなあらしの　こうかで▽
+ダメージを　うけなく　なるんだよ▼
+あと…▼
+てもちの　せんとうに　いると
+てんきが　すなあらしの　ときは▽
+やせいの　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T05:29:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -332,8 +379,8 @@
 			Language="JPN_KANJI">
 			<Text>すながくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:44:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -359,10 +406,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいでんき</Text>
+			<Text>せいでんき　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてを▽
+マヒ　させることが　あるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+でんきタイプの　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -372,8 +427,8 @@
 			Language="JPN_KANJI">
 			<Text>せいでんき</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -399,10 +454,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちくでん</Text>
+			<Text>ちくでん　か…▼
+この　とくせいの　ポケモンは
+でんきタイプの　わざの　ダメージを▽
+むこうに　してしまえるんだ▼
+くわえて　たいりょくも
+すこし　かいふく　してくれるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:03:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -412,8 +472,8 @@
 			Language="JPN_KANJI">
 			<Text>ちくでん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -439,10 +499,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょすい</Text>
+			<Text>ちょすい　か…▼
+この　とくせいの　ポケモンは
+みずタイプの　わざの　ダメージを▽
+むこうに　してしまえるんだ▼
+くわえて　たいりょくも
+すこし　かいふく　してくれるよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:03:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -452,8 +517,8 @@
 			Language="JPN_KANJI">
 			<Text>ちょすい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -479,10 +544,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どんかん</Text>
+			<Text>どんかん　か…▼
+この　とくせいの　ポケモンは
+バトルで　メロメロに　ならないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:05:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -492,8 +559,8 @@
 			Language="JPN_KANJI">
 			<Text>どんかん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -519,10 +586,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーてんき</Text>
+			<Text>ノーてんき　か…▼
+この　とくせいの　ポケモンが
+バトル　している　さいちゅうは▽
+てんきの　こうかが　なくなるんだ▼
+かんちがい　されやすいけど…▼
+こうかが　なくなるだけで
+てんきを　けしさる　わけではないので▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -532,8 +606,8 @@
 			Language="JPN_KANJI">
 			<Text>ノーてんき</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -559,10 +633,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふくがん</Text>
+			<Text>ふくがん　か…▼
+この　とくせいの　ポケモンは
+わざの　めいちゅうりつが　あがるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+もちものを　もった　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:07:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -572,8 +652,8 @@
 			Language="JPN_KANJI">
 			<Text>ふくがん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -599,10 +679,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふみん</Text>
+			<Text>ふみん　か…▼
+この　とくせいの　ポケモンは
+バトルで　ねむりに　ならないんだ▼
+じぶんでも　ねむれなくなるから
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -612,8 +696,8 @@
 			Language="JPN_KANJI">
 			<Text>ふみん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -639,10 +723,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>へんしょく</Text>
+			<Text>へんしょく　か…▼
+この　とくせいの　ポケモンは
+あいてから　わざを　うけると▽
+じぶんの　タイプが▽
+うけた　わざの　タイプと▽
+おなじに　へんか　するんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:09:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -652,8 +741,8 @@
 			Language="JPN_KANJI">
 			<Text>へんしょく</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:46:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -679,10 +768,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めんえき</Text>
+			<Text>めんえき　か…▼
+この　とくせいの　ポケモンは
+バトルで　どくに　ならないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:10:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -719,10 +810,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もらいび</Text>
+			<Text>もらいび　か…▼
+この　とくせいの　ポケモンは
+ほのおタイプの　わざを　うけても▽
+むこうに　してしまえるんだ▼
+くわえて　じぶんが　つかう
+ほのおタイプの　わざの　いりょくを▽
+あげる　こうかも　あるんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -759,10 +856,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>りんぷん</Text>
+			<Text>りんぷん　か…▼
+この　とくせいの　ポケモンは
+あいての　わざによる▽
+ついかこうかを　うけないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -799,10 +899,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マイペース</Text>
+			<Text>マイペース　か…▼
+この　とくせいの　ポケモンは
+バトルで　こんらん　しないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:11:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -839,10 +941,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きゅうばん</Text>
+			<Text>きゅうばん　か…▼
+この　とくせいの　ポケモンは
+あいてを　ふきとばす　わざを▽
+むこうに　することが　できるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+つりざおで　ポケモンを▽
+つりあげやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-22T10:16:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -879,10 +988,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかく</Text>
+			<Text>いかく　か…▼
+この　とくせいの　ポケモンは
+バトルに　でたときに▽
+あいての　ポケモンの▽
+こうげきの　のうりょくを　さげるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+レベルの　ひくい　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:15:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -919,10 +1036,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かげふみ</Text>
+			<Text>かげふみ　か…▼
+この　とくせいの　ポケモンは
+あいての　ポケモンを▽
+にげられなく　してしまうんだ▼
+いれかえも　できなく　なるんだけど…▼
+わざの　こうかでの　いれかえは
+できるので　おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -960,14 +1083,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さめはだ　か…▼
-この　とくせいは
-ちょくせつ　こうげき　された　ときに▽
-あいてにも　ダメージを　あたえるんだ▼
-だげきわざの　とくいな　あいてなら
-ガンガン　つかっていくと　いいよ▼</Text>
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてにも▽
+ダメージを　あたえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -975,15 +1097,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さめはだ　か…▼
-この　とくせいは
-直接攻撃　された　時に▽
-相手にも　ダメージを　与えるんだ▼
-打撃技の　得意な　相手なら
-ガンガン　使っていくと　いいよ▼</Text>
+			<Text>さめはだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:46:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1009,10 +1126,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎなまもり</Text>
+			<Text>ふしぎなまもり　か…▼
+この　とくせいの　ポケモンは
+こうかばつぐん　になる▽
+タイプの　わざ　いがい　では▽
+ダメージを　うけることが　ないんだ▼
+きょうりょくな　とくせいだけど…▼
+じょうたいいじょうや　てんきによる
+ダメージは　うけて　しまうので▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:27:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1049,10 +1174,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふゆう</Text>
+			<Text>ふゆう　か…▼
+この　とくせいの　ポケモンは
+じめんタイプの　わざを　うけないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1090,15 +1217,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほうし　か…▼
-この　とくせいは
-ちょくせつ　こうげき　されたときに▽
-あいてを　どく　まひ　ねむりの▽
-どれかに　してしまうんだ▼
-だげきわざの　とくいな　あいてなら
-ガンガン　つかっていくと　いいよ▼</Text>
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてを▽
+どく　マヒ　ねむりの▽
+どれかに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:28:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1106,16 +1232,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほうし　か…▼
-この　とくせいは
-直接　攻撃　された時に▽
-相手を　どく　まひ　ねむりの▽
-どれかに　してしまうんだ▼
-打撃技の　得意な　相手なら
-ガンガン　使っていくと　いいよ▼</Text>
+			<Text>ほうし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1142,15 +1262,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>シンクロ　か…▼
-この　とくせいは
-どく　まひ　やけどに　されると▽
+この　とくせいの　ポケモンは
+どく　マヒ　やけどに　されると▽
 あいても　おなじに　してしまうんだ▼
-また　てもちの　せんとうに　いると
+あと…▼
+てもちの　せんとうに　いると
 おなじ　せいかくの　ポケモンと▽
-であいやすくなる　こうかもあるよ▼</Text>
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1158,16 +1279,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シンクロ　か…▼
-この　とくせいは
-どく　まひ　やけどに　されると▽
-相手も　同じに　してしまうんだ▼
-また　手持ちの　先頭に　いると
-同じ　性格の　ポケモンと▽
-出会いやすくなる　効果もあるよ▼</Text>
+			<Text>シンクロ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1193,10 +1308,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>クリアボディ</Text>
+			<Text>クリアボディ　か…▼
+この　とくせいの　ポケモンは
+あいての　わざや　とくせいでは▽
+のうりょくが　さがらないんだ▼
+ただし！▼
+やけどの　こうげき　はんげんや
+マヒの　すばやさ　はんげんは▽
+こうかの　たいしょうでは　ないので▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:51:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1233,10 +1356,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぜんかいふく</Text>
+			<Text>しぜんかいふく　か…▼
+この　とくせいの　ポケモンは
+バトルから　ひっこむと▽
+じょうたいいじょうが　なおるんだ▼
+バトルが　おわった　ときも
+じょうたいいじょうが　なおるから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-22T12:11:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1273,10 +1402,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひらいしん</Text>
+			<Text>ひらいしん　か…▼
+この　とくせいの　ポケモンは
+でんきタイプの　わざを　うけても▽
+むこうに　できるんだ▼
+しかも！▼
+でんきタイプの　わざを　うけると
+じぶんの　とくこうの　のうりょくを▽
+あげる　こうかも　あるんだよ▼
+さらに　もうひとつ！▼
+この　とくせいは
+でんきタイプの　わざを▽
+ひきつける　こうかも　もっているんだ▼
+シングルバトルでは　いみがないけど
+ダブルや　トリプルの　バトルでは▽
+やくに　たつと　おもうよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:55:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1313,10 +1456,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんのめぐみ</Text>
+			<Text>てんのめぐみ　か…▼
+この　とくせいの　ポケモンは
+こうげきわざの　ついかこうかが▽
+でやすく　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1353,10 +1499,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すいすい</Text>
+			<Text>すいすい　か…▼
+この　とくせいの　ポケモンは
+てんきが　あめの　ばあい▽
+すばやさが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1393,10 +1542,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようりょくそ</Text>
+			<Text>ようりょくそ　か…▼
+この　とくせいの　ポケモンは
+てんきが　ひざしがつよいの　ばあい▽
+すばやさが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:57:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1433,10 +1585,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はっこう</Text>
+			<Text>はっこう　か…▼
+この　とくせいの　ポケモンは
+てもちの　せんとうに　いると▽
+やせいの　ポケモンと▽
+であいやすくなる　なるんだ▼
+えっ？▼
+バトルでの　こうかは　なにかって？▼
+……　……　……▼
+ざんねんながら
+まだ　はんめいして　ないんだよね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:03:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1473,10 +1634,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレース</Text>
+			<Text>トレース　か…▼
+この　とくせいの　ポケモンは
+バトルに　でたときに　とくせいが▽
+あいてと　おなじに　へんか　するんだ▼
+とくせいが　へんか　することで　
+あいての　とくせいが　わかるのも▽
+じゅうような　ようそ　だから▽
+おぼえて　おくこと▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1513,10 +1681,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちからもち</Text>
+			<Text>ちからもち　か…▼
+この　とくせいの　ポケモンは
+こうげきが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1553,10 +1723,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくのトゲ</Text>
+			<Text>どくのトゲ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてを▽
+どくに　してしまうことが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:10:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1593,10 +1767,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいしんりょく</Text>
+			<Text>せいしんりょく　か…▼
+この　とくせいの　ポケモンは
+ひるむ　ことが　ないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:10:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1633,10 +1809,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マグマのよろい</Text>
+			<Text>マグマのよろい　か…▼
+この　とくせいの　ポケモンは
+こおりに　なることが　ないんだ▼
+あと…▼
+てもちに　いると　タマゴが
+かえりやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:12:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1673,10 +1854,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みずのベール</Text>
+			<Text>みずのベール　か…▼
+この　とくせいの　ポケモンは
+やけどに　なることが　ないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:12:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1713,10 +1896,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じりょく</Text>
+			<Text>じりょく　か…▼
+この　とくせいの　ポケモンは
+はがねタイプの　ポケモンを▽
+にげられなく　してしまうんだ▼
+いれかえも　できなく　なるんだけど…▼
+わざの　こうかでの　いれかえは
+できるので　おぼえておくといいよ▼
+あと…▼
+てもちの　せんとうに　いると
+はがねタイプの　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-25T05:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1753,10 +1946,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうおん</Text>
+			<Text>ぼうおん　か…▼
+この　とくせいの　ポケモンは
+おとで　こうげきする　わざを▽
+むこうに　してしまえるんだ▼
+みかた　からの　わざも
+むこうに　してしまうから▽
+ダブルや　トリプルの　バトルでは▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:16:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1793,10 +1993,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あめうけざら</Text>
+			<Text>あめうけざら　か…▼
+この　とくせいの　ポケモンは
+てんきが　あめの　ばあい▽
+まいターン　すこしずつ▽
+たいりょくが　かいふく　していくんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:16:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1833,10 +2037,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなおこし</Text>
+			<Text>すなおこし　か…▼
+この　とくせいの　ポケモンは
+バトルに　でるだけで　てんきを▽
+すなあらしに　してしまえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1846,8 +2053,8 @@
 			Language="JPN_KANJI">
 			<Text>すなおこし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:46:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1873,10 +2080,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プレッシャー</Text>
+			<Text>プレッシャー　か…▼
+この　とくせいの　ポケモンは
+あいてが　つかった　わざの▽
+パワーポイントを▽
+おおく　へらすことが　できるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+レベルの　たかい　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:18:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1913,10 +2128,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あついしぼう</Text>
+			<Text>あついしぼう　か…▼
+この　とくせいの　ポケモンは
+ほのおと　こおりタイプの▽
+わざの　いりょくを▽
+はんぶんに　してしまえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:18:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1953,10 +2172,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はやおき</Text>
+			<Text>はやおき　か…▼
+この　とくせいの　ポケモンは
+ねむってしまった　ときに▽
+ふつうよりも　はやく▽
+おきる　ことが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:19:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1993,10 +2216,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほのおのからだ</Text>
+			<Text>ほのおのからだ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてを▽
+やけど　させることが　あるんだ▼
+あと…▼
+てもちに　いると　タマゴが
+かえりやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2039,10 +2269,10 @@
 かならず　にげられるんだ▼
 あいてを　にげられないようにする
 わざや　とくせいの　こうかも▽
-むしして　にげることが　できるよ▼</Text>
+むしして　にげる　ことが　できるよ▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-25T09:34:52" />
+				Time="2011-07-27T09:23:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2050,16 +2280,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にげあし　か…▼
-この　とくせいの　ポケモンは
-野生の　ポケモンとの　バトルから▽
-必ず　逃げられるんだ▼
-相手を　逃げられないようにする
-わざや　とくせいの　効果も▽
-無視して　逃げる事が　出来るよ▼</Text>
+			<Text>にげあし</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-25T09:36:39" />
+				Time="2011-07-27T07:46:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2088,14 +2312,14 @@
 			<Text>するどいめ　か…▼
 この　とくせいの　ポケモンは
 バトルで　めいちゅうりつを▽
-さげられることが　ないんだ▼
-バトルいがいの　ときでも
-てもちの　せんとうに　いれば▽
-レベルの　ひくい　ポケモンが
-あらわれにくく　なるんだよ▼</Text>
+さげられる　ことが　ないんだ▼
+あと…▼
+てもちの　せんとうに　いると
+レベルの　ひくい　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-25T09:49:38" />
+				Time="2011-07-27T09:24:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2103,17 +2327,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>するどいめ　か…▼
-この　とくせいの　ポケモンは
-バトルで　命中率を▽
-下げられる事が　ないんだ▼
-バトル以外の　時でも
-手持ちの　先頭に　いれば▽
-レベルの　低い　ポケモンが
-現れにくく　なるんだよ▼</Text>
+			<Text>するどいめ</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-25T09:49:59" />
+				Time="2011-07-27T07:46:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2139,10 +2356,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいりきバサミ</Text>
+			<Text>かいりきバサミ　か…▼
+この　とくせいの　ポケモンは
+バトルで　こうげきを▽
+さげられる　ことが　ないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:24:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2179,10 +2399,26 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ものひろい</Text>
+			<Text>ものひろい　か…▼
+この　とくせいの　ポケモンは
+あいてが　つかった　きのみを▽
+そのターンの　おわりに　ひろってきて▽
+じぶんの　もちものに　できるんだ▼
+あと…▼
+バトルに　さんか　していなくても
+どこからか　どうぐを▽
+ひろってくる　ことも　あるんだよ▼
+ちなみに…▼
+ポケモンの　レベルが　たかいほど
+いいものを　ひろってくるから▽
+おぼえておくと　いいよ▼
+まぁ…▼
+どちらの　ばあいも
+もちものを　もっていない　ことが▽
+じょうけん　なんだけどね▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-27T09:55:44" />
+				Time="2011-07-27T10:38:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2192,8 +2428,8 @@
 			Language="JPN_KANJI">
 			<Text>ものひろい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2219,10 +2455,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なまけ</Text>
+			<Text>なまけ　か…▼
+この　とくせいの　ポケモンは
+２ターンに　１かいしか▽
+こうどう　することが　できないんだ▼
+いちげきに　かけろ！▼
+それが　この　とくせいで
+しょうりする　ポイント　だろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:42:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2243,8 +2485,8 @@
 			Language="JPN">
 			<Comment>なまけ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:43:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2259,10 +2501,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はりきり</Text>
+			<Text>はりきり　か…▼
+この　とくせいの　ポケモンは
+こうげきが　あがる　かわりに▽
+めいちゅうりつが　さがるんだ▼
+かならず　めいちゅうする　わざには
+めいちゅうりつが　かんけい　ないから▽
+いりょくだけが　あがったり　するんだ▽
+おぼえておくと　いいよ▼
+あと…▼
+てもちの　せんとうに　いると
+レベルのたかい　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:52:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2299,10 +2552,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メロメロボディ</Text>
+			<Text>メロメロボディ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてを▽
+メロメロに　してしまうことがあるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+べつの　せいべつの　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:29:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2339,10 +2600,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラス</Text>
+			<Text>プラス　か…▼
+この　とくせいの　ポケモンは
+プラスか　マイナスの▽
+とくせいを　もった　ポケモンと▽
+いっしょに　バトルへ　さんかさせると▽
+とくこうが　あがるんだ▼
+シングルバトルでは　いみがないけど
+ダブルや　トリプルの　バトルでは▽
+おたがいの　とくこうを　あげあうから▽
+すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2379,10 +2649,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マイナス</Text>
+			<Text>マイナス　か…▼
+この　とくせいの　ポケモンは
+マイナスか　プラスの▽
+とくせいを　もった　ポケモンと▽
+いっしょに　バトルへ　さんかさせると▽
+とくこうが　あがるんだ▼
+シングルバトルでは　いみがないけど
+ダブルや　トリプルの　バトルでは▽
+おたがいの　とくこうを　あげあうから▽
+すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2419,10 +2698,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんきや</Text>
+			<Text>てんきや　か…▼
+この　とくせいの　ポワルンは
+てんきで　タイプが　へんかするんだ▼
+ひざしがつよいと　ほのおタイプ
+あめだと　みずタイプ▽
+あられなら　こおりタイプ▽
+…って　かんじにね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2459,10 +2744,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねんちゃく</Text>
+			<Text>ねんちゃく　か…▼
+この　とくせいの　ポケモンは
+もっている　どうぐを▽
+うばわれる　ことが　ないんだ▼
+あと…▼
+てもちの　せんとうに　いると
+つりざおで　ポケモンを▽
+つりあげやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:47:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2499,10 +2791,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だっぴ</Text>
+			<Text>だっぴ　か…▼
+この　とくせいの　ポケモンは
+バトルちゅうに　じょうたいいじょうを▽
+かいふく　することが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2539,10 +2834,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんじょう</Text>
+			<Text>こんじょう　か…▼
+この　とくせいの　ポケモンは
+じょうたいいじょうに　なると▽
+こうげきが　あがるんだ▼
+しかも！▼
+この　こうかの　おかげで
+やけどに　なっても▽
+こうげき　はんげんの　こうかが▽
+はつどう　しなく　なるんだ▼
+ただ…▼
+まいターンの　ダメージは　うけるから
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:51:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2579,10 +2885,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎなうろこ</Text>
+			<Text>ふしぎなうろこ　か…▼
+この　とくせいの　ポケモンは
+じょうたいいじょうに　なると▽
+ぼうぎょが　あがるんだ▼
+こんらんや　メロメロでは
+こうかは　はつどう　しないから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:56:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2619,10 +2931,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘドロえき</Text>
+			<Text>ヘドロえき　か…▼
+この　とくせいの　ポケモンは
+ダメージを　あたえた　あいてから▽
+たいりょくを　すいとる　わざで▽
+ダメージを　うけた　ばあいに▽
+たいりょくを　かいふく　させず▽
+ぎゃくに　ダメージを　あたえるんだ▼
+でも…▼
+こうげきの　ダメージは　うけるので
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2659,10 +2980,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんりょく</Text>
+			<Text>しんりょく　か…▼
+この　とくせいの　ポケモンは
+たいりょくが　へって　ピンチになると▽
+くさタイプの　わざのいりょくが▽
+あがるんだ▼
+ピンチでも　あきらめたら　ダメだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-22T09:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2672,8 +2998,8 @@
 			Language="JPN_KANJI">
 			<Text>しんりょく</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2699,10 +3025,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もうか</Text>
+			<Text>もうか　か…▼
+この　とくせいの　ポケモンは
+たいりょくが　へって　ピンチになると▽
+ほのおタイプの　わざのいりょくが▽
+あがるんだ▼
+ピンチでも　あきらめたら　ダメだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-22T09:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2712,8 +3043,8 @@
 			Language="JPN_KANJI">
 			<Text>もうか</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2740,13 +3071,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>げきりゅう　か…▼
-この　とくせいは
+この　とくせいの　ポケモンは
 たいりょくが　へって　ピンチになると▽
-みずタイプの　いりょくが　あがるんだ▼
+みずタイプの　わざのいりょくが▽
+あがるんだ▼
 ピンチでも　あきらめたら　ダメだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-22T09:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2754,14 +3086,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げきりゅう　か…▼
-この　とくせいは
-体力が　減って　ピンチになると▽
-みずタイプの　威力が　上がるんだ▼
-ピンチでも　あきらめたら　ダメだよ▼</Text>
+			<Text>げきりゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2787,10 +3115,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むしのしらせ</Text>
+			<Text>むしのしらせ　か…▼
+この　とくせいの　ポケモンは
+たいりょくが　へって　ピンチになると▽
+むしタイプの　わざのいりょくが▽
+あがるんだ▼
+ピンチでも　あきらめたら　ダメだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-22T09:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2800,8 +3133,8 @@
 			Language="JPN_KANJI">
 			<Text>むしのしらせ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2827,10 +3160,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いしあたま</Text>
+			<Text>いしあたま　か…▼
+この　とくせいの　ポケモンは
+はんどうを　うける　わざを　だしても▽
+はんどうを　うけないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2867,10 +3203,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひでり</Text>
+			<Text>ひでり　か…▼
+この　とくせいの　ポケモンは
+バトルに　でるだけで▽
+てんきを　ひざしがつよいに▽
+してしまえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:01:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2880,8 +3220,8 @@
 			Language="JPN_KANJI">
 			<Text>ひでり</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2907,10 +3247,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありじごく</Text>
+			<Text>ありじごく　か…▼
+この　とくせいの　ポケモンは
+ひこうタイプや　とくせいが　ふゆうの▽
+ポケモン　いがいを▽
+にげられなく　してしまうんだ▼
+いれかえも　できなく　なるんだけど…▼
+わざの　こうかでの　いれかえは
+できるので　おぼえておくといいよ▼
+あと…▼
+てもちの　せんとうに　いると
+やせいの　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-25T12:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2950,13 +3301,13 @@
 			<Text>やるき　か…▼
 この　とくせいの　ポケモンは
 バトルで　ねむりに　ならないんだ▼
-バトルで　ねむらないのは
-かなり　ゆうりだと　おもうけれど…▼
-じぶんでも　ねむれなくなるから
-ちゅういが　ひつようだね▼</Text>
+あと…▼
+てもちの　せんとうに　いると
+レベルの　たかい　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-25T10:30:44" />
+				Time="2011-07-27T10:56:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2964,16 +3315,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やるき　か…▼
-この　とくせいの　ポケモンは
-バトルで　ねむりに　ならないんだ▼
-バトルで　眠らないのは
-かなり　有利だと　思うけれど…▼
-自分でも　眠れなくなるから
-注意が　必要だね▼</Text>
+			<Text>やるき</Text>
 			<TextModifiedBy
 				User="nishino:W00221"
-				Time="2011-05-25T10:29:35" />
+				Time="2011-07-27T07:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2999,10 +3344,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろいけむり</Text>
+			<Text>しろいけむり　か…▼
+この　とくせいの　ポケモンは
+あいての　わざや　とくせいでは▽
+のうりょくが　さがらないんだ▼
+ただし！▼
+やけどの　こうげき　はんげんや
+マヒの　すばやさ　はんげんは▽
+こうかの　たいしょうでは　ないので▽
+ちゅうい　すること▼
+あと…▼
+てもちの　せんとうに　いると
+やせいの　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:53:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3039,10 +3396,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヨガパワー</Text>
+			<Text>ヨガパワー　か…▼
+この　とくせいの　ポケモンは
+こうげきが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T09:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3079,10 +3438,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シェルアーマー</Text>
+			<Text>シェルアーマー　か…▼
+この　とくせいの　ポケモンは
+あいての　こうげきが▽
+きゅうしょに　あたらなく　なるんだ▼
+かならず　きゅうしょに　あたる
+わざ　なんかも　あったりするけど▽
+この　とくせいには　こうかがないよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3092,8 +3457,8 @@
 			Language="JPN_KANJI">
 			<Text>シェルアーマー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:47:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3119,10 +3484,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エアロック</Text>
+			<Text>エアロック　か…▼
+この　とくせいの　ポケモンが
+バトル　している　さいちゅうは▽
+てんきの　こうかが　なくなるんだ▼
+かんちがい　されやすいけど…▼
+こうかが　なくなるだけで
+てんきを　けしさる　わけではないので▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3159,10 +3531,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちどりあし</Text>
+			<Text>ちどりあし　か…▼
+この　とくせいの　ポケモンは
+こんらん　すると▽
+かいひりつが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3183,8 +3558,8 @@
 			Language="JPN">
 			<Comment>ちどりあし</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:40:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3199,10 +3574,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんきエンジン</Text>
+			<Text>でんきエンジン　か…▼
+この　とくせいの　ポケモンは
+でんきタイプの　わざを　うけると▽
+すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:04:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3239,10 +3617,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とうそうしん</Text>
+			<Text>とうそうしん　か…▼
+この　とくせいの　ポケモンは
+せいべつが　おなじ　あいてには▽
+わざの　いりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T03:56:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3279,10 +3660,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふくつのこころ</Text>
+			<Text>ふくつのこころ　か…▼
+この　とくせいの　ポケモンは
+ひるまされると▽
+すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:05:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3319,10 +3703,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆきがくれ</Text>
+			<Text>ゆきがくれ　か…▼
+この　とくせいの　ポケモンは
+てんきが　あられの　とき▽
+かいひりつが　あがるんだ▼
+あと…▼
+てもちの　せんとうに　いると
+てんきが　あられの　ときは▽
+やせいの　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:55:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3359,10 +3751,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くいしんぼう</Text>
+			<Text>くいしんぼう　か…▼
+この　とくせいの　ポケモンは
+たいりょくの　へりが　すくなくても▽
+たいりょく　かいふくの　きのみを▽
+つかって　くれるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:06:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3399,10 +3795,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかりのつぼ</Text>
+			<Text>いかりのつぼ　か…▼
+この　とくせいの　ポケモンは
+こうげきを　きゅうしょに　あてられると▽
+こうげきの　のうりょくが▽
+さいだいまで　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3439,10 +3839,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かるわざ</Text>
+			<Text>かるわざ　か…▼
+この　とくせいの　ポケモンは
+もっていた　どうぐが　なくなると▽
+すばやさが　ばいに　なるんだ▼
+はじめから　もって　いないと
+こうかは　はつどう　しないから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T06:53:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3479,10 +3885,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいねつ</Text>
+			<Text>たいねつ　か…▼
+この　とくせいの　ポケモンは
+ほのおタイプの　わざで▽
+うける　ダメージを▽
+はんぶんに　することが　できるんだ▼
+やけどの　ダメージも
+はんぶんに　なるから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3519,10 +3932,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たんじゅん</Text>
+			<Text>たんじゅん　か…▼
+この　とくせいの　ポケモンは
+のうりょくへんかの　こうかが▽
+ばいに　なるんだ▼
+あがるのも　さがるのも
+ばいに　なって　しまうから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:09:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3559,10 +3978,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんそうはだ</Text>
+			<Text>かんそうはだ　か…▼
+この　とくせいの　ポケモンは
+みずタイプの　わざを　うけたときや▽
+てんきが　あめの　ばあい▽
+たいりょくが　かいふくするんだけど…▼
+ほのおタイプの　わざを　うけたときや
+てんきが　ひざしがつよいの　ばあいは▽
+たいりょくが　へって　しまうから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T07:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3599,10 +4026,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダウンロード</Text>
+			<Text>ダウンロード　か…▼
+この　とくせいの　ポケモンは
+バトルに　でた　ときに　あいての▽
+ぼうぎょと　とくぼうを　くらべて▽
+ぼうぎょが　ひくければ　こうげきの▽
+とくぼうが　ひくければ　とくこうの▽
+どちらかの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:11:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3639,10 +4072,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てつのこぶし</Text>
+			<Text>てつのこぶし　か…▼
+この　とくせいの　ポケモンが
+パンチで　こうげきした　ばあい▽
+わざの　いりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T07:24:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3679,10 +4115,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポイズンヒール</Text>
+			<Text>ポイズンヒール　か…▼
+この　とくせいの　ポケモンは
+どくを　うけると▽
+まいターン　すこしずつ▽
+たいりょくが　かいふく　していくんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T10:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3719,10 +4159,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てきおうりょく</Text>
+			<Text>てきおうりょく　か…▼
+この　とくせいの　ポケモンは
+じぶんと　おなじ　タイプのわざを▽
+だした　ときの　あがる　ダメージが▽
+さらに　たかくなるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T07:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3759,10 +4203,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スキルリンク</Text>
+			<Text>スキルリンク　か…▼
+この　とくせいの　ポケモンが
+れんぞくわざを　くりだすと▽
+わざの　でる　かいすうが▽
+かならず　さいだいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T07:39:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3799,10 +4247,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うるおいボディ</Text>
+			<Text>うるおいボディ　か…▼
+この　とくせいの　ポケモンは
+てんきが　あめの　ばあい▽
+まいターン　じょうたいいじょうが▽
+かいふく　するんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T07:44:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3839,10 +4291,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンパワー</Text>
+			<Text>サンパワー　か…▼
+この　とくせいの　ポケモンは
+てんきが　ひざしがつよいの　ばあい▽
+とくこうが　あがるんだけど…▼
+かわりに　まいターン
+たいりょくが　へるように　なるから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T07:47:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3879,10 +4337,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はやあし</Text>
+			<Text>はやあし　か…▼
+この　とくせいの　ポケモンは
+じょうたいいじょうに　なると▽
+すばやさが　あがるんだ▼
+マヒの　すばやさ　はんげんも
+むこうに　なるんだよ▼
+あと…▼
+てもちの　せんとうに　いると
+やせいの　ポケモンと▽
+であいにくくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:51:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3919,10 +4386,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーマルスキン</Text>
+			<Text>ノーマルスキン　か…▼
+この　とくせいの　ポケモンは
+だす　わざの　すべてが▽
+ノーマルタイプに　へんか　するんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:05:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3959,10 +4429,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スナイパー</Text>
+			<Text>スナイパー　か…▼
+この　とくせいの　ポケモンは
+こうげきを　きゅうしょに▽
+あてたときの　ダメージが▽
+ふつうよりも　おおく　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3999,10 +4473,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マジックガード</Text>
+			<Text>マジックガード　か…▼
+この　とくせいの　ポケモンは
+あいての　こうげき　いがいでは▽
+ダメージを　うけないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:09:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4039,10 +4516,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ノーガード</Text>
+			<Text>ノーガード　か…▼
+この　とくせいの　ポケモンが
+バトルに　でている　ばあい▽
+おたがいの　こうげきが▽
+かならず　めいちゅう　するんだ▼
+あと…▼
+てもちの　せんとうに　いると
+やせいの　ポケモンと▽
+であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:49:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4079,10 +4564,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あとだし</Text>
+			<Text>あとだし　か…▼
+この　とくせいの　ポケモンは
+すばやさに　かんけいなく▽
+かならず　こうこうに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4119,10 +4607,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テクニシャン</Text>
+			<Text>テクニシャン　か…▼
+この　とくせいの　ポケモンは
+よわい　わざの　いりょくを▽
+あげる　ことが　できるんだ▼
+ほかの　こうかで
+わざの　いりょくが　あがっていると▽
+こうかが　はつどう　しなくなるから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4159,10 +4654,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リーフガード</Text>
+			<Text>リーフガード　か…▼
+この　とくせいの　ポケモンは
+てんきが　ひざしがつよいの　ばあい▽
+じょうたいいじょうに　ならないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4199,10 +4697,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぶきよう</Text>
+			<Text>ぶきよう　か…▼
+この　とくせいの　ポケモンが
+もっている　どうぐは▽
+こうかを　はつどう　しなくなるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4239,10 +4740,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かたやぶり</Text>
+			<Text>かたやぶり　か…▼
+この　とくせいの　ポケモンは
+あいての　とくせいを　むこうにして▽
+こうげき　することが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:37:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4263,8 +4767,8 @@
 			Language="JPN">
 			<Comment>かたやぶり</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:37:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -4279,10 +4783,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょううん</Text>
+			<Text>きょううん　か…▼
+この　とくせいの　ポケモンは
+わざが　きゅうしょに▽
+あたりやすく　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4319,10 +4826,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆうばく</Text>
+			<Text>ゆうばく　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+ひんしに　なると▽
+あいてにも　ダメージを　あたえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T08:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4359,10 +4870,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きけんよち</Text>
+			<Text>きけんよち　か…▼
+この　とくせいの　ポケモンは
+あいてが　じぶんに　たいして▽
+こうかばつぐんの　わざを▽
+もっている　ばあい▽
+みぶるいして　おしえて　くれるんだ▼
+いちげきで　あいてを
+ひんしにする　こうかの　わざや▽
+じばく　だいばくはつを▽
+おぼえている　ばあいも▽
+おしえて　くれるから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:15:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4399,10 +4921,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よちむ</Text>
+			<Text>よちむ　か…▼
+この　とくせいの　ポケモンは
+バトルに　さんか　したときに▽
+あいてが　おぼえている　わざを▽
+１つ　おしえて　くれるんだ▼
+ちなみに…▼
+いりょくの　たかい　わざを
+ゆうせんして　おしえて　くれるから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T09:17:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4439,10 +4969,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんねん</Text>
+			<Text>てんねん　か…▼
+この　とくせいの　ポケモンは
+のうりょくへんかを　むし　して▽
+たたかう　ことが　できるんだ▼
+ただし！▼
+すばやさの　へんか　だけは
+むし　することが　できないので▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T09:24:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4479,10 +5016,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろめがね</Text>
+			<Text>いろめがね　か…▼
+この　とくせいの　ポケモンは
+こうかはいまひとつの　ときに▽
+あたえる　ダメージが　ばいになるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T09:30:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4519,10 +5059,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フィルター</Text>
+			<Text>フィルター　か…▼
+この　とくせいの　ポケモンは
+あいてから　うける
+こうかばつぐんの　ダメージを▽
+へらす　ことが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T09:35:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4559,10 +5103,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スロースタート</Text>
+			<Text>スロースタート　か…▼
+この　とくせいの　ポケモンは
+バトルに　でて　５ターンの　あいだ▽
+こうげきと　すばやさが
+はんぶんまで　さがって　しまうんだ▼
+いかに　５ターン　たえるか！▼
+それが　この　とくせいで
+しょうりする　ポイント　だろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T09:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4599,10 +5150,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きもったま</Text>
+			<Text>きもったま　か…▼
+この　とくせいの　ポケモンは
+ゴーストタイプの　ポケモンに▽
+ノーマルタイプの　わざを▽
+あてることが　できるように　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T09:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4639,10 +5194,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よびみず</Text>
+			<Text>よびみず　か…▼
+この　とくせいの　ポケモンは
+みずタイプの　わざを　うけても▽
+むこうに　できるんだ▼
+しかも！▼
+みずタイプの　わざを　うけると
+じぶんの　とくこうの　のうりょくを▽
+あげる　こうかも　あるんだよ▼
+さらに　もうひとつ！▼
+この　とくせいは
+みずタイプの　わざを▽
+ひきつける　こうかも　もっているんだ▼
+シングルバトルでは　いみがないけど
+ダブルや　トリプルの　バトルでは▽
+やくに　たつと　おもうよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:56:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4679,10 +5248,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイスボディ</Text>
+			<Text>アイスボディ　か…▼
+この　とくせいの　ポケモンは
+てんきが　あられの　ばあい▽
+まいターン　すこしずつ▽
+たいりょくが　かいふく　していくんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:17:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4719,10 +5292,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハードロック</Text>
+			<Text>ハードロック　か…▼
+この　とくせいの　ポケモンは
+あいてから　うける
+こうかばつぐんの　ダメージを▽
+へらす　ことが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T10:18:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4759,10 +5336,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆきふらし</Text>
+			<Text>ゆきふらし　か…▼
+この　とくせいの　ポケモンは
+バトルに　でるだけで▽
+てんきを　あられに　してしまえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T10:18:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4772,8 +5352,8 @@
 			Language="JPN_KANJI">
 			<Text>ゆきふらし</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:48:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4799,10 +5379,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みつあつめ</Text>
+			<Text>みつあつめ　か…▼
+この　とくせいの　ポケモンは
+バトルが　おわった　ときに▽
+たまに　あまいミツを▽
+ひろってくる　ことがあるんだ▼
+ポケモンの　レベルが　たかいほど
+ひろいやすく　なって　いくから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:19:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4839,10 +5426,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみとおし</Text>
+			<Text>おみとおし　か…▼
+この　とくせいの　ポケモンは
+あいてが　どうぐを　もっていると▽
+なにを　もっているかを▽
+おしえて　くれるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T10:35:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4879,10 +5470,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すてみ</Text>
+			<Text>すてみ　か…▼
+この　とくせいの　ポケモンが
+はんどうを　うける　わざで▽
+こうげきした　ばあい▽
+わざの　いりょくが　あがるんだ▼
+はずすと　ダメージをうける　わざでも
+こうかが　はつどう　するから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:20:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4919,10 +5517,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マルチタイプ</Text>
+			<Text>マルチタイプ　か…▼
+この　とくせいの　アルセウスは
+なまえに　プレートと　ついている▽
+どうぐを　もって　いると▽
+それぞれの　プレートに　たいおうした▽
+タイプに　へんか　するんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:20:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4959,10 +5562,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フラワーギフト</Text>
+			<Text>フラワーギフト　か…▼
+この　とくせいの　チェリムは
+てんきが　ひざしがつよいの　ばあい▽
+すがたが　へんかして▽
+こうげきと　とくぼうの　のうりょくが▽
+あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:21:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4999,10 +5607,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ナイトメア</Text>
+			<Text>ナイトメア　か…▼
+この　とくせいの　ポケモンは
+まいターン　ねむっている▽
+あいての　たいりょくを　へらすんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T11:40:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5039,10 +5650,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わるいてぐせ</Text>
+			<Text>わるいてぐせ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　した　ときに▽
+あいての　どうぐを　うばうんだ▼
+まぁ…▼
+もちものを　もっていない　ことが
+じょうけん　なんだけどね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:24:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5080,14 +5697,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ちからずく　か…▼
-この　とくせいは
+この　とくせいの　ポケモンは
 わざの　いりょくが　あがる　かわりに▽
-ついかこうかが　でなく　なるんだ▼
-くりだす　わざに　よっては
-かなりの　はかいりょくが　えられるよ▼</Text>
+ついかこうかが　でなく　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T11:40:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5095,15 +5710,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちからずく　か…▼
-この　とくせいは
-技の　威力が　上がる　代わりに▽
-追加効果が　出なく　なるんだ▼
-繰り出す　技に　よっては
-かなりの　破壊力が　得られるよ▼</Text>
+			<Text>ちからずく</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5129,10 +5739,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あまのじゃく</Text>
+			<Text>あまのじゃく　か…▼
+この　とくせいの　ポケモンは
+のうりょくへんかが　さかさまで▽
+あがったら　さがって▽
+さがったら　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T12:32:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5169,10 +5783,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きんちょうかん</Text>
+			<Text>きんちょうかん　か…▼
+この　とくせいの　ポケモンは
+バトルちゅうに　あいてが▽
+きのみを　つかえなく　してしまうんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T12:41:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5209,10 +5826,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけんき</Text>
+			<Text>まけんき　か…▼
+この　とくせいの　ポケモンは
+あいてに　のうりょくを　さげられると▽
+こうげきの　のうりょくが▽
+ぐーんと　あがるんだ▼
+じぶんで　のうりょくを　さげても
+こうかは　はつどう　しないから▽
+ちゅうい　すること▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5249,10 +5873,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よわき</Text>
+			<Text>よわき　か…▼
+この　とくせいの　ポケモンは
+たいりょくが　はんぶんいかに　なると▽
+こうげきと　とくこうが　さがるんだ▼
+いかに　たいりょくを　へらさないか！▼
+それが　この　とくせいで
+しょうりする　ポイント　だろうね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-26T12:52:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5289,10 +5919,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>のろわれボディ</Text>
+			<Text>のろわれボディ　か…▼
+この　とくせいの　ポケモンは
+あいてから　こうげきを　うけると▽
+こうげき　してきた　わざを▽
+かなしばり　じょうたいに▽
+してしまう　ことが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5329,10 +5964,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いやしのこころ</Text>
+			<Text>いやしのこころ　か…▼
+この　とくせいの　ポケモンは
+バトルに　さんか　している▽
+みかたの　じょうたいいじょうを▽
+なおす　ことが　あるんだ▼
+じぶんは　かうふく　できないから
+シングルバトルでは　いみがないけど▽
+ダブルや　トリプルの　バトルでは▽
+こころづよい　とくせいだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T02:37:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5369,10 +6012,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フレンドガード</Text>
+			<Text>フレンドガード　か…▼
+この　とくせいの　ポケモンは
+バトルに　さんか　している▽
+みかたへの　ダメージを▽
+へらして　くれるんだ▼
+じぶんへの　ダメージは　へらないから
+シングルバトルでは　いみがないけど▽
+ダブルや　トリプルの　バトルでは▽
+こころづよい　とくせいだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T02:48:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5409,10 +6060,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くだけるよろい</Text>
+			<Text>くだけるよろい　か…▼
+この　とくせいの　ポケモンは
+ぶつりこうげきを　うけると▽
+ぼうぎょの　のうりょくが　さがって▽
+すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T02:52:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5449,10 +6104,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘヴィメタル</Text>
+			<Text>ヘヴィメタル　か…▼
+この　とくせいの　ポケモンは
+じぶんの　おもさが▽
+ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T02:57:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5489,10 +6147,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライトメタル</Text>
+			<Text>ライトメタル　か…▼
+この　とくせいの　ポケモンは
+じぶんの　おもさが▽
+はんぶんに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T02:57:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5529,10 +6190,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マルチスケイル</Text>
+			<Text>マルチスケイル　か…▼
+この　とくせいの　ポケモンは
+たいりょくが　まんたんの　ばあい▽
+うける　ダメージが　へるんだ▼
+たいりょくが　まんたんなら
+なんどでも　はつどうするから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:29:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5569,10 +6236,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくぼうそう</Text>
+			<Text>どくぼうそう　か…▼
+この　とくせいの　ポケモンは
+どくに　なると▽
+こうげきが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:22:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5609,10 +6279,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねつぼうそう</Text>
+			<Text>ねつぼうそう　か…▼
+この　とくせいの　ポケモンは
+やけどに　なると▽
+とくこうが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5649,10 +6322,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅうかく</Text>
+			<Text>しゅうかく　か…▼
+この　とくせいの　ポケモンは
+じぶんが　つかった　きのみを▽
+ふっかつ　させることが　あるんだ▼
+てんきが　ひざしがつよいの　ばあいは
+かならず　ふっかつ　するから▽
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5690,15 +6369,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>テレパシー　か…▼
-この　とくせいは
+この　とくせいの　ポケモンは
 みかたの　こうどうを　よみとって▽
 どうしうちを　おこらなく　させるんだ▼
 シングルバトルでは　いみがないけど
 ダブルや　トリプルの　バトルでは▽
 じゅうような　とくせいだね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-05-31T07:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5706,16 +6385,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テレパシー　か…▼
-この　とくせいは
-味方の　行動を　読み取って▽
-同士討ちを　起こらなく　させるんだ▼
-シングルバトルでは　意味が無いけど
-ダブルや　トリプルの　バトルでは▽
-重要な　とくせいだね。▼</Text>
+			<Text>テレパシー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5741,10 +6414,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ムラっけ</Text>
+			<Text>ムラっけ　か…▼
+この　とくせいの　ポケモンは
+ターンの　おわりに▽
+のうりょくの　１つが　ぐーんとあがり▽
+のうりょくの　１つが　さがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:33:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5781,10 +6458,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうじん</Text>
+			<Text>ぼうじん　か…▼
+この　とくせいの　ポケモンは
+てんきの　ダメージを　うけないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:49:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5821,10 +6500,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どくしゅ</Text>
+			<Text>どくしゅ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　した　ときに▽
+あいてを　どくにすることが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:55:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5861,10 +6543,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さいせいりょく</Text>
+			<Text>さいせいりょく　か…▼
+この　とくせいの　ポケモンは
+バトルから　ひっこむと▽
+すこし　だけど　たいりょくが▽
+かいふく　するんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T03:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5901,10 +6587,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はとむね</Text>
+			<Text>はとむね　か…▼
+この　とくせいの　ポケモンは
+あいてから　ぼうぎょの　のうりょくを▽
+さげられる　ことが　ないんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T04:06:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5941,10 +6630,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなかき</Text>
+			<Text>すなかき　か…▼
+この　とくせいの　ポケモンは
+てんきが　すなあらしの　ばあい▽
+すばやさが　ばいに　なるんだ▼
+それに　タイプに　かんけいなく
+すなあらしの　こうかで▽
+ダメージを　うけなく　なるんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T05:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5981,10 +6676,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミラクルスキン</Text>
+			<Text>ミラクルスキン　か…▼
+この　とくせいの　ポケモンは
+へんかわざに　たいして　のみ▽
+かいひりつが　ばいに　なるんだ▼
+じぶんで　じぶんに　つかう
+へんかわざには　こうかが　ないから▽
+おぼえておくｊと　いいよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:30:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6021,10 +6722,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アナライズ</Text>
+			<Text>アナライズ　か…▼
+この　とくせいの　ポケモンは
+いちばん　さいごに　こうげき　すると▽
+わざの　いりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T05:38:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6061,10 +6765,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イリュージョン</Text>
+			<Text>イリュージョン　か…▼
+この　とくせいの　ポケモンは
+てもちで　いちばん　さいごの▽
+ポケモンの　すがたに　ばけて▽
+バトルに　でて　くるんだ▼
+こうげきを　うけると
+もとの　すがたに　もどるので▽
+ちゅうい　するｊこと▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T10:31:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6101,10 +6812,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かわりもの</Text>
+			<Text>かわりもの　か…▼
+この　とくせいの　ポケモンは
+バトルに　でた　ときに▽
+あいての　ポケモンと▽
+おなじ　すがたに　へんしん　するんだ▼
+すがた　だけでは　なく
+おぼえている　わざや▽
+いちぶの　のうりょく　なんかも▽
+おなじに　なるんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T05:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6141,10 +6860,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すりぬけ</Text>
+			<Text>すりぬけ　か…▼
+この　とくせいの　ポケモンは
+あいてが　だした　カベの　こうかを▽
+むし　して　こうげきを　だせるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:00:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6181,10 +6903,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミイラ</Text>
+			<Text>ミイラ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげきを　された　ときに▽
+あいての　とくせいを▽
+ミイラに　かえて　しまうんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:02:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6221,10 +6947,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じしんかじょう</Text>
+			<Text>じしんかじょう　か…▼
+この　とくせいの　ポケモンは
+あいてを　たおした　ときに▽
+こうげきの　のうりょくが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6261,10 +6990,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいぎのこころ</Text>
+			<Text>せいぎのこころ　か…▼
+この　とくせいの　ポケモンは
+あくタイプの　こうげきを　うけると▽
+こうげきの　のうりょくが　あるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:07:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6301,10 +7033,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>びびり</Text>
+			<Text>びびり　か…▼
+この　とくせいの　ポケモンは
+ゴーストタイプや　むしタイプ▽
+あくタイプの　こうげきを　うけると▽
+すばやさの　のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6341,10 +7077,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マジックミラー</Text>
+			<Text>マジックミラー　か…▼
+この　とくせいの　ポケモンは
+あいての　つかった　へんかわざを▽
+あいてへ　そのまま　はねかえすんだ▼
+しかも！▼
+あいてが　つかった　へんかわざは
+むこうに　なるんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:32:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6381,10 +7123,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうしょく</Text>
+			<Text>そうしょく　か…▼
+この　とくせいの　ポケモンは
+くさタイプの　わざを　うけると▽
+こうげきの　のうりょくが　あがるんだ▼
+さらに！▼
+わざの　こうかや　ダメージも
+むこうに　してしまうんだよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6421,10 +7169,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたずらごころ</Text>
+			<Text>いたずらごころ　か…▼
+この　とくせいの　ポケモンは
+へんかわざを　せんせい　して▽
+だすことが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:43:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6461,10 +7212,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すなのちから</Text>
+			<Text>すなのちから　か…▼
+この　とくせいの　ポケモンは
+てんきが　すなあらしの　ばあい▽
+じめんタイプや　いわタイプ▽
+はがねタイプの　わざの▽
+いりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6501,10 +7257,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てつのトゲ</Text>
+			<Text>てつのトゲ　か…▼
+この　とくせいの　ポケモンは
+ちょくせつこうげき　された　ときに▽
+こうげき　してきた　あいてにも▽
+ダメージを　あたえるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T08:17:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6541,10 +7301,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダルマモード</Text>
+			<Text>ダルマモード　か…▼
+この　とくせいの　ヒヒダルマは
+たいりょくが　はんぶんいかに　なると▽
+ダルマモードに　へんか　するんだ▼
+ダルマモードに　なると
+もとの　ほのおタイプに　くわえ▽
+エスパータイプが　ついか　されるんだ▼
+さらに！▼
+こうげきと　すばやさの
+のうりょくが　へる　かわりに▽
+ぼうぎょ　とくこう　とくぼうの▽
+のうりょくが　あがるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T11:18:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6581,10 +7352,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうりのほし</Text>
+			<Text>しょうりのほし　か…▼
+この　とくせいの　ポケモンは
+じぶんと　みかたの　ポケモンの▽
+わざの　めいちゅうりつを　あげるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T07:29:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6621,10 +7395,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ターボブレイズ</Text>
+			<Text>ターボブレイズ　か…▼
+この　とくせいの　ポケモンは
+あいての　とくせいを　むこうにして▽
+こうげき　することが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6661,10 +7438,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テラボルテージ</Text>
+			<Text>テラボルテージ　か…▼
+この　とくせいの　ポケモンは
+あいての　とくせいを　むこうにして▽
+こうげき　することが　できるんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nishino:W00221"
+				Time="2011-07-27T06:33:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
