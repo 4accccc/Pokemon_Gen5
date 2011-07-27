@@ -45,9 +45,6 @@ enum{
 	//
 	T_DOWNLOAD_MSG_MAX			= 2,				// message
 	//
-	T_DOWNLOAD_SAVE_BUFFER_MAX	= 3,				// セーブ個数最大
-	T_DOWNLOAD_ITEM_BUFFER_MAX	= 30,				// バッファ最大数
-	//
 	T_DOWNLOAD_DISP_PANEL_MAX	= 6,				// パネル最大
 };
 
@@ -69,27 +66,16 @@ enum{
 
 //-------------------------
 // タッチペンエリア
-// (excelのテーブルと対応)
 //-------------------------
 enum{
-	T_DOWNLOAD_AREA_TD_TP_LEFT = 0,					// 左矢印
-	T_DOWNLOAD_AREA_TD_TP_RIGHT,					// 右矢印
-	T_DOWNLOAD_AREA_TD_TP_CROSS,					// ×
+	T_DOWNLOAD_AREA_TD_TP_CROSS = 0,				// ×
 	T_DOWNLOAD_AREA_TD_TP_RETURN,					// RETURN
+	T_DOWNLOAD_AREA_TD_TP_DOWN,						// 下矢印
+	T_DOWNLOAD_AREA_TD_TP_UP,						// 上矢印
+	T_DOWNLOAD_AREA_TD_TP_ICON_00,					// アイコン
+	T_DOWNLOAD_AREA_TD_TP_ICON_01,					// アイコン
+	T_DOWNLOAD_AREA_TD_TP_ICON_02,					// アイコン
 	T_DOWNLOAD_AREA_TD_TP_SCROLL,					// スクロール領域
-	//
-	T_DOWNLOAD_AREA_TD_TP_CMN_MAX,					// ここまではデータにセット
-	//
-	T_DOWNLOAD_AREA_TD_TP_PANEL3_0 = T_DOWNLOAD_AREA_TD_TP_CMN_MAX, // パネル3行
-	T_DOWNLOAD_AREA_TD_TP_PANEL3_1,
-	T_DOWNLOAD_AREA_TD_TP_PANEL3_2,
-	//
-	T_DOWNLOAD_AREA_TD_TP_PANEL4_0,					// パネル4行
-	T_DOWNLOAD_AREA_TD_TP_PANEL4_1,
-	T_DOWNLOAD_AREA_TD_TP_PANEL4_2,
-	T_DOWNLOAD_AREA_TD_TP_PANEL4_3,
-	//
-	T_DOWNLOAD_AREA_TD_TP_MAX,
 };
 
 //----------
@@ -137,6 +123,7 @@ enum{
 	T_DOWNLOAD_FLG_UPDATE		= (1<<0),			// 更新
 	T_DOWNLOAD_FLG_PALCHG		= (1<<1),			// パレットチェンジ
 	T_DOWNLOAD_FLG_INFOUPDATE 	= (1<<2),			// (Info)更新
+	T_DOWNLOAD_FLG_CUR_ANIM		= (1<<3),			// カーソルアニメ中
 };
 
 //--------------
@@ -216,16 +203,6 @@ typedef struct
 	GFL_CLWK	*clwk[T_DOWNLOAD_OBJ_MAXNUM];			// CLWK
 } T_DOWNLOAD_OBJ_WORK;
 
-#if 0
-//-------------------------------------
-/// アイテム情報
-//-------------------------------------
-typedef struct{
-	u8				Num;			// 番号(0xffなし)
-	s8				Mode;			// 状態
-} T_DOWNLOAD_ITEM;
-#endif
-
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
@@ -255,9 +232,9 @@ typedef struct
 	APP_TASKMENU_ITEMWORK	appitem[3];
 	APP_TASKMENU_RES		*pAppTaskRes;
 	//
-	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
-	GFL_BMP_DATA			*BmpData[T_DOWNLOAD_BMPOAM_MAXNUM];		// Bmp
-	BMPOAM_ACT_PTR			BmpOamWork[T_DOWNLOAD_BMPOAM_MAXNUM];	// BMPOAM用Work
+//	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
+//	GFL_BMP_DATA			*BmpData[T_DOWNLOAD_BMPOAM_MAXNUM];		// Bmp
+//	BMPOAM_ACT_PTR			BmpOamWork[T_DOWNLOAD_BMPOAM_MAXNUM];	// BMPOAM用Work
 	//
 	s32						Step;							// ステップ
 	s32						Mode;							// モード
@@ -276,18 +253,15 @@ typedef struct
 	// list
 	FRAMELIST_WORK			*frame_list_work;				// リスト
 	//
-	s32						DispMaxNum;						// 表示最大数
+	s32						DispMaxNum;							// 表示最大数
 	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		// 通し番号
 	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	// 画面上の位置
 	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	// スクロールの位置
-	//
+	// 詳細画面用
 	s32						ItemNum[T_DOWNLOAD_INFO_MAX];		// 項目数
 	s32						PageMaxNum[T_DOWNLOAD_INFO_MAX];	// ページ最大数
 	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; // カレントページ数
 	//
 	s16						*EmptyBuffer;					// 座標用のバッファ(必ず破棄すること)
-	s16						*ParamBuffer;					// パラメータのバッファ(必ず破棄すること)
-	//
-	GFL_UI_TP_HITTBL		HitBuffer[T_DOWNLOAD_AREA_TD_TP_MAX+1];	// タッチペン用(+1は終了コードを入れるため)
 } T_DOWNLOAD_MAIN_WORK;
 
