@@ -11595,11 +11595,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みがきぬかれた　わざの　かずかずで
-トーナメントを　とっぱする！▼</Text>
+			<Text>けいけんのさと　いうものを
+おもいしらせてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:33:39" />
+				Time="2011-07-27T10:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -11607,11 +11607,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みがきぬかれた　技の数々で
-トーナメントを　突破する！▼</Text>
+			<Text>経験の差と　いうものを
+思い知らせてやる！▼</Text>
 			<TextModifiedBy
 				User="swan_scenario:W00293"
-				Time="2011-07-26T02:33:39" />
+				Time="2011-07-27T11:00:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -11655,10 +11655,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ</Text>
+			<Text>いままで　まなんできた
+トレーナーの　けいけん　すべてを▽
+このしょうぶに　かける！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:39:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-27T10:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -11666,10 +11668,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>いままで　学んできた
+トレーナーの経験　全てを▽
+この勝負に　かける！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:39:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-27T11:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -11713,10 +11717,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ</Text>
+			<Text>この　おおいちばん！
+さいごに　ものを　いうのは▽
+けいけんなのだ！▼
+ひよっこよ　それを　おもいしれ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:39:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-27T11:05:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -11724,10 +11731,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>この　大一番！
+最後に　ものを　いうのは▽
+経験なのだ！▼
+ひよっこよ　それを　思い知れ！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-20T07:39:31" />
+				User="swan_scenario:W00293"
+				Time="2011-07-27T11:04:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
