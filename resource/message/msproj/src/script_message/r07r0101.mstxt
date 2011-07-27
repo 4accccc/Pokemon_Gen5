@@ -7,15 +7,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『はーい!
-フウロちゃんは　どうだった？▽
-あら？　まだ　かててないのね▼
+フウロちゃんは　どうだった？▼
+あら？　まだ　
+ジムバッジを　もらってないのね▼
 だとしたら　ひこうきが　とぶまで
 ばっちり　フィールドワークね！▼
 そうだ！　きみ
 これを　つかってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T09:37:35" />
+				Time="2011-07-27T02:06:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24,15 +25,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『はーい!
-フウロちゃんは　どうだった？▽
-あら？　まだ　かててないのね▼
-だとしたら　ひこうきが　とぶまで
+フウロちゃんは　どうだった？▼
+あら？　まだ　
+ジムバッジを　もらってないのね▼
+だとしたら　飛行機が　飛ぶまで
 ばっちり　フィールドワークね！▼
 そうだ！　きみ
-これを　つかってよ▼</Text>
+これを　使ってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:13:18" />
+				Time="2011-07-27T02:06:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -146,15 +148,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『タワーオブヘブン……
-おおきな　ぼひょう……▼
+大きな　墓標……▼
 もともと　ゴーストタイプや
-エスパータイプが　おおいところに▽
-この　たてものが　つくられたのか▼
-それとも　たてられたからこそ
-そうした　ポケモンが　つどうのかしら</Text>
+エスパータイプが　多いところに▽
+この建物が　造られたのか▼
+それとも　建てられたからこそ
+そうした　ポケモンが　集うのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:03" />
+				Time="2011-07-27T02:07:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -207,15 +209,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『タワーオブヘブン……
-おおきな　ぼひょう……▼
+大きな　墓標……▼
 もともと　ゴーストタイプや
-エスパータイプが　おおいところに▽
-この　たてものが　つくられたのか▼
-それとも　たてられたからこそ
-そうした　ポケモンが　つどうのかしら</Text>
+エスパータイプが　多いところに▽
+この建物が　造られたのか▼
+それとも　建てられたからこそ
+そうした　ポケモンが　集うのかしら</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:43" />
+				Time="2011-07-27T02:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -273,13 +275,13 @@
 			<Text>アララギ『はーい!
 フウロちゃんは　どうだった？▼
 あら！　ジェットバッジ　じゃない！
-それじゃ　ひこうきが　とぶのね▼
-よびに　きてくれて　ありがとう！
-これは　おれい！▽
-きみ　つかってみてよ▼</Text>
+それじゃ　飛行機が　飛ぶのね▼
+呼びに　来てくれて　ありがとう！
+これは　お礼！▽
+きみ　使ってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-07-27T02:07:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -386,10 +388,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃ　フキヨセで　まってるわね！▼</Text>
+			<Text>じゃ　フキヨセで　待ってるわね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-07-27T02:07:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

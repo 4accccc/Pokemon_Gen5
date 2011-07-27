@@ -668,11 +668,18 @@
 		<AttributeCell
 			Name="Character">
 			<Text>POKE47
-ポケモン・プルンゲル♂</Text>
+ポケモン・ブルンゲル♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T12:14:52" />
+				Time="2011-07-27T03:18:00" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04_poke48_01"
@@ -713,11 +720,18 @@
 		<AttributeCell
 			Name="Character">
 			<Text>POKE48
-ポケモン・プルンゲル♀</Text>
+ポケモン・ブルンゲル♀</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T12:14:55" />
+				Time="2011-07-27T03:18:01" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04_sign1_01"

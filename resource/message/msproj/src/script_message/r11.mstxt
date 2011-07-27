@@ -60,11 +60,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンは　どうろの　さきへ
+			<Text>ビリジオンは　どうろの　さきへ
 はしりさって　しまった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T03:30:13" />
+				Time="2011-07-27T05:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,11 +72,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　道路の　先へ
+			<Text>ビリジオンは　道路の　先へ
 走り去ってしまった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T03:30:13" />
+				Time="2011-07-27T05:02:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -87,10 +87,10 @@
 			<Comment>ポケモン
 ・戦闘後
 ・倒した場合のメッセージ
-・復帰処理の仕様は保留</Comment>
+・殿堂入り後に再配置</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T03:30:18" />
+				Time="2011-07-27T03:22:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

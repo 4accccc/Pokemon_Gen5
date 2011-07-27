@@ -2,13 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy">
+		Label="msg_d24r1001_poke485_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>かざんのおきいしが
+はんのう　している……▽
+ここに　おいてみますか？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-31T12:51:37" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:53:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -16,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>かざんのおきいしが
+反応している……▽
+ここに　置いてみますか？</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-31T12:51:37" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -27,17 +32,120 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>ポケモン
+・ver
+・No「かざんのおきいし」所有時
+・はい/いいえの選択肢表示
+　はい　→poke485_02
+　いいえ→終了</Comment>
 			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-05-31T12:51:37" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T04:00:17" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TPOKE
+ポケモン・ヒードラン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:59:40" />
+		</AttributeCell>
 		<AttributeCell
 			Name="キャラ指定">
 			<Text>？？？</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
 				Time="2011-05-31T12:51:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r1001_poke485_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごごぼっ　ごぼぼぼ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:58:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:54:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ごごぼっ　ごぼぼぼ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:58:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:58:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・はい選択時
+　ヒードラン登場して待機
+・その後話しかけるとメッセージ表示
+　あわせて鳴き声再生
+　その後戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T05:00:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TPOKE
+ポケモン・ヒードラン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:59:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r1001_poke485_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒードランは　かざんの　おくに
+すがたを　けしていった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:58:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:58:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒードランは　火山の　奥に
+姿を　消していった……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:59:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:59:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:53:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TPOKE
+ポケモン・ヒードラン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T03:59:41" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
