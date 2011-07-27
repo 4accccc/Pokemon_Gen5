@@ -141,7 +141,6 @@ VMCMD_RESULT EvCmdFourKings_SetSoundSystem( VMHANDLE *core, void *wk )
 //-----------------------------------------------------------------------------
 static void FOURKINGS_RailOff( FIELDMAP_WORK *p_fieldmap, u32 fourkings_no )
 {
-  int i;
   FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( p_fieldmap );
 
   GF_ASSERT( fourkings_no < FIELD_EVENT_FOURKINGS_MAX );
@@ -149,6 +148,12 @@ static void FOURKINGS_RailOff( FIELDMAP_WORK *p_fieldmap, u32 fourkings_no )
   // 頂上のレールにはPOSを置いているのでOFFにしない
   FLDNOGRID_MAPPER_SetLineActive( p_mapper, div_1_RE_LINE_0, FALSE );
   FLDNOGRID_MAPPER_SetLineActive( p_mapper, div_2_RE_LINE_0, FALSE );
+
+  // シキミの部屋のみレールのラインが1つ多い
+  if( fourkings_no == 0 )
+  {
+    FLDNOGRID_MAPPER_SetLineActive( p_mapper, RE_LINE_3, FALSE );
+  }
 }
 
 //----------------------------------------------------------------------------
