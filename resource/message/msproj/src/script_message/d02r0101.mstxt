@@ -10,10 +10,10 @@
 ヤグルマのもりの　なかで
 プラズマだんを　みかけた……▼
 そんな　じょうほうが　あってね
-さがすのを　てつだってくれるかな？▼</Text>
+さがすのを　てつだってくれるかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:02:53" />
+				Time="2011-07-27T01:43:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25,10 +25,10 @@
 ヤグルマの森の　中で
 プラズマ団を　みかけた……▼
 そんな　情報が　あってね
-探すのを　手伝ってくれるかな？▼</Text>
+探すのを　手伝ってくれるかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:02:32" />
+				Time="2011-07-27T01:43:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,10 +72,10 @@
 べつべつに　こうどう　するのは▽
 あまり　とくさく　とは　いえないよね▼
 わかった！　きみの　じゅんびが
-ととのうまで　ここで　まっているよ！▼</Text>
+ととのうまで　ここで　まっているよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:11:34" />
+				Time="2011-07-27T01:43:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -87,10 +87,10 @@
 別々に　行動するのは▽
 あまり　得策とは　いえないよね▼
 わかった！　きみの　準備が
-整うまで　ここで　待っているよ！▼</Text>
+整うまで　ここで　待っているよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:11:55" />
+				Time="2011-07-27T01:43:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -100,12 +100,10 @@
 			Language="JPN">
 			<Comment>♂
 ・いいえ選択
-
-
 ・アニメ（足踏み：未発注）の可能性検討</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T07:39:17" />
+				Time="2011-07-27T01:43:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -192,10 +190,11 @@
 このまま　すすむと
 ヤグルマのもり　から　でてしまう▼
 ぼくたちの　もくてきは
-プラズマだんを　さがすことだよ▼</Text>
+プラズマだんを　さがすことだけど▽
+いちど　そとに　でるのかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T07:59:16" />
+				Time="2011-07-27T01:38:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -207,10 +206,11 @@
 このまま　進むと
 ヤグルマの森から　でてしまう▼
 ぼくたちの　目的は
-プラズマ団を　探すことだよ▼</Text>
+プラズマ団を　探すことだけど▽
+一度　外に　でるのかい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:15:04" />
+				Time="2011-07-27T01:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -224,11 +224,12 @@
 　GRIDX＝71～76、GRIDZ＝61
 ・シッポウ側
 　GRIDX＝80、GRIDZ＝73～78
-・一歩戻される
-</Comment>
+・はい/いいえの選択肢表示
+　はい　→swchampion_03
+　いいえ→swchampion_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:31:53" />
+				Time="2011-07-27T01:51:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -237,6 +238,65 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-25T10:04:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d02r0101_swleader1_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『ヤグルマのもりの　なかで
+プラズマだんを　みかけた……▼
+ってのは　しっているよね
+さがすのを　てつだってくれるかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:43:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:43:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『ヤグルマの森の　中で
+プラズマ団を　みかけた……▼
+ってのは　知ってるよね
+探すのを　手伝ってくれるかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:52:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:43:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント（一度離脱後）
+・連れ歩き確認
+・はい/いいえの選択肢表示
+　はい　→swchampion_03
+　いいえ→swchampion_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:42:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:40:05" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
