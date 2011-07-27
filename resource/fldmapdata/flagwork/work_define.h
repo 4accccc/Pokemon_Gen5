@@ -285,6 +285,7 @@
 #define WK_OTHER_FISHING_MONSNUM         16698 /* 0x413a ビレッジブリッジ：日替わり指定ポケモン格納用ワーク */
 #define WK_OTHER_C05R0301_WAZA           16699 /* 0x413b 日替わり指定わざ見せ用ワーク */
 #define WK_OTHER_R9R0201_ITEMBUY         16700 /* 0x413c アールナイン：１日１回買い物お願いお嬢様イベント制御用ワーク */
+#define WK_OTHER_H03_BOUON_MONSNUM       16701 /* 0x413d シリンダーブリッジ：特性「ぼうおん」のポケモンを見せた後、そのポケモン名を固定する */
 
 #define WK_AREA_END                      16702 /* 0x413e  */
 

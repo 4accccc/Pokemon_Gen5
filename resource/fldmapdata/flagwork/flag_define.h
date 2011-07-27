@@ -355,11 +355,11 @@
 #define FE_R06R0101_ITEMGET_01             339 /* 0x0153 季節研究所：シキジカイベント終了フラグ */
 #define FE_R06R0101_EVENT_ON_01            340 /* 0x0154 季節研究所：シキジカイベント開始フラグ */
 #define FE_R07R0102_GIRL3_01               341 /* 0x0155 タワーオブヘブン：戦闘チェックフラグ */
-		/* not used   342(0x0156) */
-		/* not used   343(0x0157) */
-		/* not used   344(0x0158) */
-		/* not used   345(0x0159) */
-		/* not used   346(0x015a) */
+#define FE_C14R0401_ITEMGET_01             342 /* 0x0156 セイガイハシティ民家：アイテム入手フラグ */
+#define FE_C14R0601_ITEMGET_01             343 /* 0x0157 セイガイハシティ民家：アイテム入手フラグ */
+#define FE_H03_POKE_BOUON_01               344 /* 0x0158 シリンダーブリッジ：とくせい「ぼうおん」イベント終了フラグ */
+#define FE_H03_ITEMGET_01                  345 /* 0x0159 シリンダーブリッジ：アイテム入手フラグ */
+#define FE_R08R0201_ITEMGET_01             346 /* 0x015a ８番道路ゲート：アイテム入手フラグ */
 		/* not used   347(0x015b) */
 		/* not used   348(0x015c) */
 		/* not used   349(0x015d) */
