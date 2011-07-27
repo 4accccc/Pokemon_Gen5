@@ -643,6 +643,7 @@
 #define FV_R07R0103_OL_01                  725 /* 0x02d5 タワーオブヘブン：死亡遊戯 */
 #define FV_R07R0104_MAID_01                726 /* 0x02d6 タワーオブヘブン：死亡遊戯 */
 #define FV_R07R0102_GIRL3_01               727 /* 0x02d7 タワーオブヘブン：ヒトモシガール */
+#define FV_C06PC0101_GIRL3_01              728 /* 0x02d8 フキヨセシティPC：ヒトモシガール */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 
