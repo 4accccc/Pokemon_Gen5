@@ -429,6 +429,23 @@ void OutsideSave_FlashAllErase(HEAPID heap_id)
 }
 //----------------------------------------------------------------------------
 /**
+ * パーマネントをクリアする
+ *
+ * @param   heap_id		
+ */
+//-----------------------------------------------------------------------------
+void OutsideSave_FlashPermanentErase(HEAPID heap_id)
+{
+  u32 erase_size = SAVESIZE_OUTSIDE_PERMANENT;  //永続データ
+  u8 *erase_buffer = GFL_HEAP_AllocMemory(heap_id, erase_size);
+  
+  GFL_STD_MemFill32(erase_buffer, 0xffffffff, erase_size);
+  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_PERMANENT, erase_buffer, erase_size);
+  
+  GFL_HEAP_FreeMemory(erase_buffer);
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  管理外セーブから永続情報存在フラグを取得
  *
  *	@param	OUTSIDE_SAVE_CONTROL *outsv_ctrl管理外セーブ
@@ -465,6 +482,23 @@ BOOL OutsideSave_GetPermanentBreakFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 OUTSIDE_PERMANENT * OutsideSave_GetPermanentPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 {
   return (OUTSIDE_PERMANENT *)&outsv_ctrl->permanent_save.permanent;
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  管理外セーブのデータを通常セーブ領域にコピーする
+ *
+ *	@param	*outsv_ctrl   管理外セーブ
+ *	@param	*normal_ctrl  内部セーブ
+ */
+//-----------------------------------------------------------------------------
+void OutsideSave_KeySystem_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl, SAVE_CONTROL_WORK *normal_ctrl)
+{
+  OUTSIDE_PERMANENT *permanent = OutsideSave_GetPermanentPtr(outsv_ctrl);
+  KEY_SYSTEM_SAVE   *keysys_out = OUTSIDE_PERMANENT_GetKeySystem(permanent);
+  KEY_SYSTEM_SAVE   *keysys_in  = SAVE_CONTROL_GetKeySystem(normal_ctrl);
+
+  KEY_SYSTEM_SAVE_Copy( keysys_in, keysys_out );
+  OS_TPrintf( "キーシステム管理外から内部へ\n" );
 }
 //==============================================================================
 //  デバッグ用

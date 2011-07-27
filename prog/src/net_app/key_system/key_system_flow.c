@@ -67,6 +67,8 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
 static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_App_SendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //画面構築シーケンス
 static void KeySys_Seq_CreateDisplayMainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Seq_CreateDisplayIrc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -289,11 +291,7 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_FADEIN,
     SEQ_DEMO_START,
     SEQ_DEMO_WAIT,
-    SEQ_SAVE_MSG,
-    SEQ_SAVE_START,
-    SEQ_SAVE_END,
-    SEQ_COMPLETE_MSG_START,
-    SEQ_COMPLETE_MSG_WAIT,
+    SEQ_SET,
     SEQ_FADEOUT,
     SEQ_DISPLAY_DELETE,
     SEQ_END,
@@ -373,40 +371,10 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       (*p_seq)++;
     }
     break;
- case SEQ_SAVE_MSG:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+  case SEQ_SET:
+    KEY_SYSTEM_SAVE_SetHave( p_wk->p_key_sv, p_wk->p_param->get_key );
+    KEY_SYSTEM_SAVE_SetUse( p_wk->p_key_sv, p_wk->p_param->get_key );
     (*p_seq)++;
-    break;
-  case SEQ_SAVE_START:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
-    {
-      KEY_SYSTEM_SAVE_SetHave( p_wk->p_key_sv, p_wk->p_param->get_key );
-      KEY_SYSTEM_SAVE_SetUse( p_wk->p_key_sv, p_wk->p_param->get_key );
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      p_wk->cnt = 0;
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_SAVE_END: 
-    p_wk->cnt++;
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
-    {
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_COMPLETE_MSG_START:
-    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
-    {
-      p_wk->cnt = 0;
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
-    (*p_seq)++;
-    }
-    break;
-  case SEQ_COMPLETE_MSG_WAIT:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
-    {
-      (*p_seq)++;
-    }
     break;
   case SEQ_FADEOUT:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutBlack );
@@ -542,9 +510,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     SEQ_CALL_DEMO2,
     SEQ_NET_EXIT,
     SEQ_NET_EXIT_WAIT,
-    SEQ_SAVE_MSG,
-    SEQ_SAVE_START,
-    SEQ_SAVE_END,
+    SEQ_SAVE,
     SEQ_COMPLETE_MSG_START,
     SEQ_COMPLETE_MSG_WAIT,
     SEQ_END,
@@ -758,42 +724,19 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       (*p_seq)++;
     }
     break;
-  case SEQ_SAVE_MSG:
+  case SEQ_SAVE:
     //受信していたらセーブ、していなかったら終わり
     if( KeySys_KeyData_IsGet( &p_wk->key_data[KEYSYS_DATA_SELF], &p_wk->key_data[KEYSYS_DATA_OTHER], TRUE ) )
     {
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
-      (*p_seq)++;
-    }
-    else
-    {
-      *p_seq = SEQ_COMPLETE_MSG_START;
-    }
-    break;
-  case SEQ_SAVE_START:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
-    {
       KeySys_KeyData_Merge( &p_wk->key_data[KEYSYS_DATA_SELF], &p_wk->key_data[KEYSYS_DATA_OTHER] );
       KeySys_KeyData_SetSave( &p_wk->key_data[KEYSYS_DATA_SELF], p_wk->p_key_sv );
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      p_wk->cnt = 0;
-      (*p_seq)++;
+      KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
     }
-    break;
-  case SEQ_SAVE_END: 
-    p_wk->cnt++;
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
-    {
-      (*p_seq)++;
-    }
+    *p_seq = SEQ_COMPLETE_MSG_START;
     break;
   case SEQ_COMPLETE_MSG_START:
-    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
-    {
-      p_wk->cnt = 0;
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_46, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_46, KEYSYS_TEXT_TYPE_STREAM_FIX );
     (*p_seq)++;
-    }
     break;
   case SEQ_COMPLETE_MSG_WAIT:
     if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
@@ -911,10 +854,7 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
     SEQ_DISPLAY_CREATE,
     SEQ_MAIN,
 
-    SEQ_SAVE_MSG,
-    SEQ_SAVE_START,
-    SEQ_SAVE_MAIN,
-    SEQ_SAVE_END_MSG,
+    SEQ_SAVE,
     SEQ_RET_START,
     SEQ_RET_WAIT,
 
@@ -944,7 +884,7 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
       }
       else
       {
-        (*p_seq) = SEQ_SAVE_MSG;
+        (*p_seq) = SEQ_SAVE;
       }
     }
     else if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_UNSELECT )
@@ -953,31 +893,9 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
     }
     break;
 
-  case SEQ_SAVE_MSG:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+  case SEQ_SAVE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
     (*p_seq)++;
-    break;
-  case SEQ_SAVE_START:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
-    {
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      p_wk->cnt = 0;
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_SAVE_MAIN:
-    p_wk->cnt++;
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
-    {
-      (*p_seq)++;
-    }
-    break;
-
-  case SEQ_SAVE_END_MSG:
-    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
-    {
-      (*p_seq)++;
-    }
     break;
   case SEQ_RET_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetDifficultInfoMessage(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_QUE );
@@ -1041,10 +959,7 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_DISPLAY_CREATE,
     SEQ_MAIN,
 
-    SEQ_SAVE_MSG,
-    SEQ_SAVE_START,
-    SEQ_SAVE_MAIN,
-    SEQ_SAVE_END_MSG,
+    SEQ_SAVE,
     SEQ_RET_START,
     SEQ_RET_WAIT,
 
@@ -1074,7 +989,7 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
       else
       {
-        (*p_seq) = SEQ_SAVE_MSG;
+        (*p_seq) = SEQ_SAVE;
       }
     }
     else if( KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_UNSELECT || KeySys_SelMenu_GetUnSelected( &p_wk->selmenu ) == KEYSYS_SELECT_MENU_RET_SP_UNSELECT )
@@ -1083,32 +998,9 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
 
-  case SEQ_SAVE_MSG:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+  case SEQ_SAVE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
     (*p_seq)++;
-    break;
-  case SEQ_SAVE_START:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
-    {
-      OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
-      p_wk->cnt = 0;
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_SAVE_MAIN:
-    p_wk->cnt++;
-    if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
-    {
-      (*p_seq)++;
-    }
-    break;
-
-  case SEQ_SAVE_END_MSG:
-    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
-    {
-      p_wk->cnt = 0;
-      (*p_seq)++;
-    }
     break;
   case SEQ_RET_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetWfbcInfoMessage(p_wk->p_key_sv ), KEYSYS_TEXT_TYPE_QUE );
@@ -1413,6 +1305,94 @@ static void KeySys_Seq_App_SendDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void 
   case SEQ_DISPLAY_DELETE:
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
     (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブシーケンス
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_SAVE_MSG,
+    SEQ_SAVE_START,
+    SEQ_SAVE_END,
+    SEQ_COMPLETE_MSG_START,
+    SEQ_COMPLETE_MSG_WAIT,
+    SEQ_END,
+  };
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_SAVE_MSG:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_30, KEYSYS_TEXT_TYPE_WAIT );
+    (*p_seq)++;
+    break;
+  case SEQ_SAVE_START:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+      if( SaveData_GetExistFlag( p_sv ) )
+      {
+        OS_TPrintf( "内部あるから通常セーブ\n" );
+        GAMEDATA_SaveAsyncStart( p_wk->p_param->p_gamedata );
+      }
+      else
+      {
+        OS_TPrintf( "内部ないから管理外セーブ\n" );
+        OutsideSave_SaveAsyncInit( p_wk->p_outside_sv );
+      }
+      p_wk->cnt = 0;
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_SAVE_END: 
+    p_wk->cnt++;
+    {
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
+      if( SaveData_GetExistFlag( p_sv ) )
+      {
+        if( GAMEDATA_SaveAsyncMain( p_wk->p_param->p_gamedata ) == SAVE_RESULT_OK )
+        {
+          (*p_seq)++;
+        }
+      }
+      else
+      {
+        if( OutsideSave_SaveAsyncMain( p_wk->p_outside_sv ) )
+        {
+          (*p_seq)++;
+        }
+      }
+    }
+    break;
+  case SEQ_COMPLETE_MSG_START:
+    if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
+    {
+      p_wk->cnt = 0;
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
+    (*p_seq)++;
+    }
+    break;
+  case SEQ_COMPLETE_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
     break;
   case SEQ_END:
     KEYSYS_SEQ_Return( p_seqwk );

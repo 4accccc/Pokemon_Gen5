@@ -34,6 +34,7 @@ extern void OutsideSave_SystemUnload(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern void OutsideSave_SaveAsyncInit(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern BOOL OutsideSave_SaveAsyncMain(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern void OutsideSave_FlashAllErase(HEAPID heap_id);
+extern void OutsideSave_FlashPermanentErase(HEAPID heap_id);
 
 //--------------------------------------------------------------
 //  ツール
@@ -48,6 +49,7 @@ extern void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outs
 extern BOOL OutsideSave_GetPermanentExistFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern BOOL OutsideSave_GetPermanentBreakFlag(const OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern OUTSIDE_PERMANENT * OutsideSave_GetPermanentPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
+extern void OutsideSave_KeySystem_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl, SAVE_CONTROL_WORK *normal_ctrl);
 
 //--------------------------------------------------------------
 //  デバッグ用

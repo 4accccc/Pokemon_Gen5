@@ -82,10 +82,12 @@ static GFL_PROC_RESULT Key_System_Proc_Main
 //=====================================
 //メインシーケンス
 static void KeySys_Seq_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Seq_BreakSave( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //サブシーケンス
 static void KeySys_Seq_MainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //画面構築シーケンス
 static void KeySys_Seq_CreateDisplayMainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Seq_CreateDisplayText( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// 画面作成・破棄
@@ -94,6 +96,10 @@ static void KeySys_Seq_CreateDisplayMainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_s
 static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID );
 static BOOL KeySys_Display_IsEndCreateMainMenu( void *p_wk_adrs );
 static void KeySys_Display_DeleteMainMenu( void *p_wk_adrs );
+//テキストのみ
+static void KeySys_Display_CreateText( void *p_wk_adrs, HEAPID heapID );
+static BOOL KeySys_Display_IsEndCreateText( void *p_wk_adrs );
+static void KeySys_Display_DeleteText( void *p_wk_adrs );
 
 //=============================================================================
 /**
@@ -163,7 +169,6 @@ static GFL_PROC_RESULT Key_System_Proc_Init
   //シーケンス
   p_wk->p_seq = KEYSYS_SEQ_Init( 8, p_wk, NULL, HEAPID_KEY_SYSTEM );
 
-
   {
     //初回シーケンス
     static const KEYSYS_SEQ_FUNCTION sc_init_seq[KEY_SYSTEM_MODE_MAX]  =
@@ -171,8 +176,18 @@ static GFL_PROC_RESULT Key_System_Proc_Init
       KEYSYS_KEYFLOW_SEQ_GetKey,//KEY_SYSTEM_MODE_GET
       KeySys_Seq_Main,//KEY_SYSTEM_MODE_APP
     };
+
+    KEYSYS_SEQ_FUNCTION init_seq  = sc_init_seq[p_wk->p_param->mode];
     GF_ASSERT( p_wk->p_param->mode < KEY_SYSTEM_MODE_MAX );
-    KEYSYS_SEQ_Next( p_wk->p_seq, sc_init_seq[p_wk->p_param->mode] );
+
+    //内部セーブが壊れた場合、このアプリを使わせない
+    //
+    if( SaveControl_GetLoadResult(GAMEDATA_GetSaveControlWork(p_wk->p_param->p_gamedata)) & FST_NORMAL_BREAK_BIT )
+    {
+      init_seq = KeySys_Seq_BreakSave;
+    }
+
+    KEYSYS_SEQ_Next( p_wk->p_seq, init_seq );
   }
 
   //一時モジュールの作成
@@ -1335,6 +1350,65 @@ static void KeySys_Seq_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  セーブ破壊していたときのシーケンス
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Seq_BreakSave( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE,
+    SEQ_FADEIN,
+    SEQ_PRINT_START,
+    SEQ_PRINT_END,
+    SEQ_FADEOUT,
+    SEQ_DISPLAY_DELETE,
+    SEQ_END,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayText );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEIN:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeInBlack );
+    (*p_seq)++;
+    break;
+  case SEQ_PRINT_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_ERROR_00, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)++;
+    break;
+  case SEQ_PRINT_END:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEOUT:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_FadeOutWhite );
+    (*p_seq)++;
+    break;
+  case SEQ_DISPLAY_DELETE:
+    KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DeleteDisplay );
+    (*p_seq)++;
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_End( p_seqwk );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  メインメニュー作成
  *
  *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
@@ -1471,6 +1545,57 @@ static void KeySys_Seq_CreateDisplayMainMenu( KEYSYS_SEQ_WORK *p_seqwk, int *p_s
     GF_ASSERT(0);
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキストのみの画面作成
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Seq_CreateDisplayText( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_DISPLAY_CREATE_START,
+    SEQ_DISPLAY_CREATE_WAIT,
+    SEQ_END,
+  };
+
+  static const KEYSYS_DISPLAY_FUNCTION sc_display_tbl =
+  {
+    KeySys_Display_CreateText,
+    KeySys_Display_IsEndCreateText,
+    KeySys_Display_DeleteText,
+    NULL,
+  };
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_DISPLAY_CREATE_START:
+    //最初はメインメニュー作成
+    KEYSYS_DISPLAY_Create( p_wk->p_display, &sc_display_tbl, HEAPID_KEY_SYSTEM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_DISPLAY_CREATE_WAIT:
+    if( KEYSYS_DISPLAY_IsComplete(p_wk->p_display) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+		break;
+
+  default:
+    GF_ASSERT(0);
+  }
+}
 
 //=============================================================================
 /**
@@ -1546,11 +1671,11 @@ static BOOL KeySys_Display_IsEndCreateMainMenu( void *p_wk_adrs )
 {
   KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
 
-  //BOOL is_end_title  = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
+  BOOL is_end_title  = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
   BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
   BOOL is_end_menu = KEYSYS_MENU_IsDrawEnd( p_wk->p_menu );
 
-  if( is_end_text && is_end_menu )
+  if( is_end_text && is_end_menu && is_end_title )
   {
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
     GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
@@ -1575,4 +1700,60 @@ static void KeySys_Display_DeleteMainMenu( void *p_wk_adrs )
   
   GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキストのみの作成
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ *	@param	heapID          ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Display_CreateText( void *p_wk_adrs, HEAPID heapID )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  //メッセージ
+  KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_000, KEYSYS_TEXT_TYPE_QUE );
+
+  //タイトル
+  KEYSYS_TEXT_Print( p_wk->p_title, p_wk->p_msg, KEYSYS_STR_76, KEYSYS_TEXT_TYPE_QUE );
+
+  KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキストのみの画面作成完了待ち
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static BOOL KeySys_Display_IsEndCreateText( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  BOOL is_end_title  = KEYSYS_TEXT_IsMsgEnd( p_wk->p_title );
+  BOOL is_end_text = KEYSYS_TEXT_IsMsgEnd( p_wk->p_text );
+
+  if( is_end_text && is_end_title)
+  {
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_WND_M );
+    GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキストのみの画面破棄
+ *
+ *	@param	void *p_wk_adrs ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Display_DeleteText( void *p_wk_adrs )
+{
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+  
+  GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
 }

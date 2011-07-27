@@ -472,6 +472,7 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
 	wk->evwk     = SaveData_GetEventWork( wk->savedata );
 
 
+  //セーブの存在によってどちらのキーシステムをみるかが違う
   if( SaveData_GetExistFlag( wk->savedata ) )
   {
     wk->keysys = SAVE_CONTROL_GetKeySystem( wk->savedata );
@@ -485,6 +486,7 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
       wk->keysys = OUTSIDE_PERMANENT_GetKeySystem( p_per );
       OutsideSave_SystemUnload( p_outside_sv );
     }
+
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
   }
 

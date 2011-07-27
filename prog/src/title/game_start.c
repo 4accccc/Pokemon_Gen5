@@ -70,6 +70,8 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcMain( GFL_PROC * proc, int *
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex );
 
+static void OutSideSave_ErasePermanent( SAVE_CONTROL_WORK *sv_ctrl );
+static void OutSideSave_ConvertNormal( SAVE_CONTROL_WORK *sv_ctrl );
 
 //==============================================================================
 //  データ
@@ -246,6 +248,10 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   //既存セーブの有無を調べる為、セーブデータのワークエリアの処理化をするよりも先に実行
   work->intr_save = IntrSave_Init( GFL_HEAPID_APP, sv_ctrl );
 #endif
+
+  //もしセーブ破壊されていた場合、
+  //管理外セーブを消す
+  OutSideSave_ErasePermanent( sv_ctrl );
 
   // セーブデータ:ワークエリアのの初期化
   SaveControl_ClearData( sv_ctrl );
@@ -428,19 +434,7 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_PROC_LOCAL_Exit( work->procsys_up );
 
   //管理外セーブにデータが存在していれば通常セーブ領域へ移す
-  if(SaveData_GetOutsideExistFlag(sv_ctrl) == TRUE){
-    OUTSIDE_SAVE_CONTROL *outsv;
-
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
-
-    outsv = OutsideSave_SystemLoad(GFL_HEAPID_APP);
-    if(OutsideSave_GetExistFlag(outsv) == TRUE){  //一応使用箇所直前でもチェック
-      OutsideSave_MysteryData_Outside_to_Normal(outsv, sv_ctrl);
-    }
-    OutsideSave_SystemUnload(outsv);
-
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
-  }
+  OutSideSave_ConvertNormal( sv_ctrl );
 
   init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
@@ -563,6 +557,11 @@ extern BOOL DebugScanOnly;
 //--------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_DebugProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
+  //もしセーブ破壊されていた場合、
+  //管理外セーブを消す
+  OutSideSave_ErasePermanent( sv_ctrl );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -672,6 +671,9 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(sv_ctrl),TRUE);
   }
+
+  //初回ならば、管理外セーブにデータが存在していれば通常セーブ領域へ移す
+  OutSideSave_ConvertNormal( sv_ctrl );
   
   init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_C12, &pos, 0 );
   GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
@@ -789,4 +791,65 @@ static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex )
                            MyStatus_GetMySex(my)*MYSTATUS_UNIONVIEW_MAX );
   OS_Printf("TrainerView = %d\n", MyStatus_GetTrainerView( my ));
   
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブが壊れていたら管理外を消しに行く
+ *
+ *	@param	SAVE_CONTROL_WORK *sv_ctrl 内部セーブ
+ */
+//-----------------------------------------------------------------------------
+static void OutSideSave_ErasePermanent( SAVE_CONTROL_WORK *sv_ctrl )
+{
+  //もしセーブ破壊されていた場合、
+  //管理外セーブを消す
+  if( SaveControl_GetLoadResult(sv_ctrl) & FST_NORMAL_BREAK_BIT )
+  {
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+    {
+      OUTSIDE_SAVE_CONTROL * outsv = OutsideSave_SystemLoad(GFL_HEAPID_APP);
+      if( OutsideSave_GetPermanentExistFlag(outsv) )
+      {
+        OS_TPrintf( "通常セーブが壊れていたので、パーマネント消します\n" );
+        OutsideSave_FlashPermanentErase(GFL_HEAPID_APP);
+      }
+      OutsideSave_SystemUnload(outsv);
+    }
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  管理外セーブを内部セーブに移す（内部で移す移さないの判定つき）
+ *
+ *	@param	SAVE_CONTROL_WORK *sv_ctrl 内部セーブ
+ */
+//-----------------------------------------------------------------------------
+static void OutSideSave_ConvertNormal( SAVE_CONTROL_WORK *sv_ctrl )
+{
+  //管理外セーブにデータが存在していれば通常セーブ領域へ移す
+  //
+  //移す条件：さいしょからを選んだ時かつすでセーブが書かれていないとき
+	if(SaveControl_NewDataFlagGet(sv_ctrl) == TRUE
+      && SaveData_GetExistFlag(sv_ctrl) == FALSE ) 
+  {
+    OUTSIDE_SAVE_CONTROL *outsv;
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+
+    outsv = OutsideSave_SystemLoad(GFL_HEAPID_APP);
+
+    if(OutsideSave_GetExistFlag(outsv))
+    {
+      OutsideSave_MysteryData_Outside_to_Normal(outsv, sv_ctrl);
+    }
+    if( OutsideSave_GetPermanentExistFlag(outsv) )
+    {
+      OutsideSave_KeySystem_Outside_to_Normal(outsv, sv_ctrl);
+    }
+
+    OutsideSave_SystemUnload(outsv);
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+  }
 }

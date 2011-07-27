@@ -71,43 +71,14 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	SAVE_CONTROL_WORK *ctrl;
 	LOAD_RESULT load_ret;
   SAVE_EXTRA_ID extra_id;
-  BOOL outside_exists = FALSE;
-  BOOL outside_break = FALSE;
-  BOOL outside_permanent_exists = FALSE;
-  BOOL outside_permanent_break = FALSE;
-  OUTSIDE_PERMANENT *p_outside; ///<管理外領域の読み込み部分
-  DATA_CONVERT_SAVE *p_dataconv = GFL_HEAP_AllocClearMemory( heap_id, DATA_CONVERT_SAVE_WORK_SIZE );
-
-  //内部セーブでヒープを使用しきる前に管理外セーブの存在チェックを行う
-  {
-    OUTSIDE_SAVE_CONTROL *outsv;
-    
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
-    
-    outsv = OutsideSave_SystemLoad( GFL_HEAP_LOWID(heap_id));
-    outside_exists = OutsideSave_GetExistFlag(outsv);
-    outside_break = OutsideSave_GetBreakFlag(outsv);
-    outside_permanent_exists = OutsideSave_GetPermanentExistFlag(outsv);
-    outside_permanent_break = OutsideSave_GetPermanentBreakFlag(outsv);
-    p_outside = OutsideSave_GetPermanentPtr(outsv);
-    GFL_STD_MemCopy( OUTSIDE_PERMANENT_GetDataConvert( p_outside ), p_dataconv, DATA_CONVERT_SAVE_WORK_SIZE );
-
-    OutsideSave_SystemUnload(outsv);
-    
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
-  }
   
 	ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(SAVE_CONTROL_WORK));
 	SaveControlWork = ctrl;
 	ctrl->new_data_flag = TRUE;			//新規データ
 	ctrl->total_save_flag = TRUE;		//全体セーブ
 	ctrl->data_exists = FALSE;			//データは存在しない
-	ctrl->outside_data_exists = outside_exists;
-	ctrl->outside_data_break = outside_break;
-  ctrl->outside_permanent_exists = outside_permanent_exists;
-  ctrl->outside_permanent_break = outside_permanent_break;
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
-  ctrl->p_dataconv = p_dataconv;
+  ctrl->p_dataconv = GFL_HEAP_AllocClearMemory( heap_id, DATA_CONVERT_SAVE_WORK_SIZE );
 
 #if DEBUG_ONLY_FOR_ohno
   {  //各データのサイズを得る
@@ -125,6 +96,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   //セーブ領域は4Mbit
   GF_ASSERT_MSG( ALL_SAVE_END < 0x80000, "save size over !! %d < %d\n", ALL_SAVE_END, 0x80000 );
 
+
   //---------------- 内部セーブ＆外部セーブ ----------------
 	//データ存在チェックを行っている
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);
@@ -136,12 +108,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     }
   }
 	ctrl->first_status = 0;
-	if(outside_break == TRUE){
-    ctrl->first_status |= FST_OUTSIDE_MYSTERY_BREAK_BIT;
-  }
-  if(outside_permanent_break == TRUE ){
-    ctrl->first_status |= FST_OUTSIDE_PERMANENT_BREAK_BIT;
-  }
+
 	switch(load_ret){
 	case LOAD_RESULT_OK:				///<データ正常読み込み
 		ctrl->total_save_flag = FALSE;	//全体セーブの必要はない
@@ -199,6 +166,33 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 		GF_ASSERT_HEAVY(0); //LOAD:例外エラー！
 		break;
 	}
+
+  //---------------- 管理外セーブ ----------------
+  {
+    OUTSIDE_SAVE_CONTROL *outsv;
+    OUTSIDE_PERMANENT *p_outside; ///<管理外領域の読み込み部分
+    
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+    
+    outsv = OutsideSave_SystemLoad( GFL_HEAP_LOWID(HEAPID_SAVE_TEMP));
+    ctrl->outside_data_exists = OutsideSave_GetExistFlag(outsv);
+    ctrl->outside_data_break = OutsideSave_GetBreakFlag(outsv);
+    ctrl->outside_permanent_exists = OutsideSave_GetPermanentExistFlag(outsv);
+    ctrl->outside_permanent_break = OutsideSave_GetPermanentBreakFlag(outsv);
+    p_outside = OutsideSave_GetPermanentPtr(outsv);
+    GFL_STD_MemCopy( OUTSIDE_PERMANENT_GetDataConvert( p_outside ), ctrl->p_dataconv, DATA_CONVERT_SAVE_WORK_SIZE );
+
+    OutsideSave_SystemUnload(outsv);
+    
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+
+    if(ctrl->outside_data_break == TRUE){
+      ctrl->first_status |= FST_OUTSIDE_MYSTERY_BREAK_BIT;
+    }
+    if(ctrl->outside_permanent_break == TRUE ){
+      ctrl->first_status |= FST_OUTSIDE_PERMANENT_BREAK_BIT;
+    }
+  }
 
 	return ctrl;
 }
