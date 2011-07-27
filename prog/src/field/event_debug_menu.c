@@ -547,7 +547,7 @@ static void GetJumpEndCursorPosGet( u32 strID ,u32 *cursor_pos ,u32 *list_pos )
   u32 list_center = D_MENU_LINE_NUM/2;
   *cursor_pos   = list_center;
   *list_pos     = idx-list_center;
-  if( list_move < list_center )
+  if( list_move <= list_center )
   {
     *list_pos = (NELEMS(DATA_DebugMenuList)-D_MENU_LINE_NUM); // ˆê”Ôã‚É
     *cursor_pos = D_MENU_LINE_NUM - list_move;
