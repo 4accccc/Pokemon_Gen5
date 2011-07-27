@@ -2,14 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_c08r0202_babyboy1_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ひとの　ものまねって　たのしいよね▼
+このなかで　ぼくの　まねをする
+ともだちを　さがしてみる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:05:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ひとの　ものまねって　たのしいよね▼
+このなかで　ぼくの　まねをする
+ともだちを　さがしてみる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +32,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>・トレーナー配置</Comment>
+			<Comment>♂
+・はい/いいえの選択肢表示
+　はい　→babyboy1_02
+　いいえ→babyboy1_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>BABGYBOY
+・出題</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:10:06" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -46,6 +54,1181 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そっか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そっか……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:07:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:06:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃ　いくよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:09:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃ　いくよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続いてサブウインで
+　sub_01～sub_04をランダムで抽出し表示
+・続けてＮＰＣに
+　正解と対応したセリフをサブウインで表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:28:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:10:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_sub_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ギギアル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:13:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:13:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ギギアル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:13:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:13:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出題その１
+・サブウインで
+　正解とギアル、ギギギアルを表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:20:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_sub_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ココロモリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ココロモリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:15:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出題その２
+・サブウインで
+　正解とコロモリ、ハハコモリを表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:20:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_sub_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マリルリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:25:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:19:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マリルリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:25:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:20:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出題その３
+・サブウインで
+　正解とルリリ、マリルを表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:20:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_sub_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シビルドン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:20:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:16:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シビルドン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:20:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:20:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出題その２
+・サブウインで
+　正解とシビシラス、シビビールを表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:20:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくの　まねをした　ひとは　だれ?
+その　ともだちに　はなしかけてみて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:09:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:21:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくの　まねをした　ひとは　だれ?
+その　ともだちに　はなしかけてみて</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・出題後、直接話しかけた</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:16:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:10:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　ともだちが
+ぼくの　ものまねを　したの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:11:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:21:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　ともだちが
+ぼくの　ものまねを　したの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・NPCに話しかけたとき
+　はい/いいえの選択肢表示
+　はい＋正解→babyboy1_06
+　はい＋不正解→babyboy1_07
+　いいえ→babyboy1_08</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:16:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:10:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかい　でした！▼
+トレーナーさん　すごいね！
+また　ちょうせんする？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:09:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:22:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかい　でした！▼
+トレーナーさん　すごいね！
+また　ちょうせんする？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+・はい/いいえの選択肢表示
+　はい　→babyboy1_02
+　いいえ→babyboy1_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:10:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:10:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うーん……　ざんねん　でした
+また　ちょうせん　する？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:14:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うーん……　ざんねん　でした
+また　ちょうせん　する？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択→不正解
+・はい/いいえの選択肢表示
+　はい　→babyboy1_02
+　いいえ→babyboy1_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:14:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy1_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃあ　ぼくの　まねをした
+ともだちは　だあれ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:22:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃあ　ぼくの　まねをした
+ともだちは　だあれ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:15:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY
+・出題</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:10:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ギアル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ギアル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題１－１
+・下記の
+　BABGYBOY、BABGYGIRL×２に表示</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:21:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ギギギアル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ギギギアル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題１－２</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コロモリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コロモリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題２－１</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハハコモリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:24:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハハコモリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題２－２</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ルリリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:25:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:25:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ルリリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題３－１</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マリル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:25:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:25:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マリル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題３－２</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シビシラス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シビシラス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題４－１</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_sub_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シビビール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シビビール</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:30:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>出題４－２</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:31:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>サブウイン選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:59:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babyboy2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マネッコは　ボクじゃないよ
+でも　マネッコは　おもしろいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:24:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マネッコは　ボクじゃないよ
+でも　マネッコは　おもしろいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:24:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クイズをしていないとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:36:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYBOY</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:41:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babygirl1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしね　じぶんの
+おりじなりてぃを　だいじにしたいの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:37:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:37:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしね　じぶんの
+おりじなりてぃを　だいじにしたいの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クイズをしていないとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:36:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYGIRL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:41:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_babygirl2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だれかの　まねを　するよりも
+まねを　されるほうが　ステキ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:27:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だれかの　まねを　するよりも
+まねを　されるほうが　ステキ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:27:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クイズをしていないとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:36:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BABGYGIRL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:41:37" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_breederm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいてが　さいごに　つかった
+わざを　せんとうの　あいだ▼
+じぶんの　わざに　できる
+それが　ものまね！　そして▼
+ものまねの　わざを　おぼえなくても
+おれの　デンチュラは　チャーミング！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:06:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:46:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>相手が　最後に　使った
+技を　戦闘の　あいだ▼
+自分の　技に　できる
+それが　ものまね！　そして▼
+ものまねの　技を　覚えなくても
+おれの　デンチュラは　チャーミング！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T08:07:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:57:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BREEDERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T07:58:02" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08r0202_poke41_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ばちち　ち……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:38:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:38:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ばちち　ち……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:38:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:38:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生
+・クイズには関係ないですよ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:38:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE41
+ポケモン・デンチュラ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T06:38:51" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

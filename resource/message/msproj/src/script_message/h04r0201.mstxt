@@ -7,12 +7,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あら？
-はじめての　おきゃくさんね▼
+はじめてましてさん　ね▼
 じゃ　なにもいわずに　しょうぶよ！
 じゅんびは　いいかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T07:40:18" />
+				Time="2011-07-27T09:39:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -21,12 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あら？
-はじめての　おきゃくさんね▼
+はじめてましてさん　ね▼
 じゃ　なにもいわずに　しょうぶよ！
 じゅんびは　いいかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T07:41:41" />
+				Time="2011-07-27T09:39:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -40,12 +40,11 @@
 　はい　→baker_02
 　いいえ→baker_03
 ・まず戦闘
-・クリア後に特性みつあつめのポケモンをみせる
-・最後、サブウインドウの遊び
+・クリア後に特性みつあつめのポケモンをみせる遊び
 ※swanで追加</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T07:41:15" />
+				Time="2011-07-27T09:30:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -223,6 +222,289 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_h04r0201_baker_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まあ　なんて　トレーナー！▼
+じぶんの　ポケモンを　りかいし
+しんじているからの　つよさ　ね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:39:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:38:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まあ　なんて　トレーナー！▼
+じぶんの　ポケモンを　りかいし
+しんじているからの　つよさ　ね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・トレーナー戦闘後、自動で表示
+・クリアしている場合は続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:38:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:36:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_baker_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そんな　すてきな
+あなたに　おねがい！▼
+あまいミツを　ふんだんに　つかった
+パンを　つくろうと　してるんだ！▼
+でね　とくせい「みつあつめ」の
+ポケモンを　みせてくれない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:47:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:46:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そんな　すてきな
+あなたに　おねがい！▼
+あまいミツを　ふんだんに　つかった
+パンを　つくろうと　してるんだ！▼
+でね　とくせい「みつあつめ」の
+ポケモンを　みせてくれない？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・
+・持っている場合は続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:47:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:36:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_baker_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　[Name:PokemonName ]が
+みつあつめを　してくれるのね！▼
+ありがとう！
+これは　かんしゃの　きもち！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:50:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:49:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　[Name:PokemonName ]が
+みつあつめを　してくれるのね！▼
+ありがとう！
+これは　かんしゃの　きもち！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・baker_06から
+　アイテム入手前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:36:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_baker_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　[Name:PokemonName ]が
+みつあつめを　してくれるのね！▼
+ありがとう！
+これは　かんしゃの　きもち！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　[Name:PokemonName ]が
+みつあつめを　してくれるのね！▼
+ありがとう！
+これは　かんしゃの　きもち！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・手持ちに特性みつあつめのポケモンがいる
+・アイテム入手処理
+　No000「ラムのみ」×３
+・0＝ポケモン種族名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:36:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_baker_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あまいミツを　ふんだんに　まぜた
+そのなも　あまいミツパン！！▼
+はやく　つくりたいのに
+ビレッジサンドづくりで　ていっぱいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:59:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あまいミツを　ふんだんに　まぜた
+そのなも　あまいミツパン！！▼
+はやく　つくりたいのに
+ビレッジサンドづくりで　ていっぱいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:53:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BAKER
+パン屋</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:36:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h04r0201_man3_01"
 		Style="Large">
 		<LanguageCell
@@ -273,6 +555,218 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_h04r0201_woman1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンが　ほおばっている　すがた
+なんて　あいくるしいのかしら！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:34:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:34:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンが　ほおばっている　すがた
+なんて　あいくるしいのかしら！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:34:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:34:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:34:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:31:36" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_girl2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンと　いっしょに　
+たべられるなんて　しあわせだよー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンと　一緒に　
+食べられるなんて　幸せだよー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:34:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:31:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_poke19_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みゅぅみゅぃーん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みゅぅみゅぃーん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE19
+ポケモン・チラーミィ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:32:32" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_poke17_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼふんっぼふうー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボフンッボフウー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE17
+ポケモン・ミネズミ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:32:26" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0201_poke2001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃあごぉおおお</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃあごぉおおお</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・あわせて鳴き声再生</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:33:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE20
+ポケモン・ワルビル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T09:32:18" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h04r0201_man3_02"
 		Style="Large">
 		<LanguageCell
@@ -320,7 +814,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
