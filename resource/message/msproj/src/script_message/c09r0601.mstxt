@@ -6,15 +6,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『……ここが
-でんどういりの　へや▼
-まことの　つよさ
-こころからの　やさしさを　もつ▽
-トレーナーと　ポケモンを▽
-れきしに　のこすための　ばしょ▼</Text>
+			<Text>アイリス『ここはね
+でんどういりの　へや　なの！▼
+ポケモンのことを　かんがえ
+ポケモンのために　こころを　つくす▼
+そんな　あふれる　やさしさを　もつ
+たくえつした　ポケモントレーナーと！▼
+トレーナーを　こころより　しんじ
+トレーナーのため　ぜんりょくを　だす▼
+そんな　つきない　つよさを　もつ
+すばらしい　ポケモンを！▼
+えいえんに　わすれないよう
+なまえを　きざむ　ばしょ　なの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T12:48:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +28,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『……ここが
-殿堂入りの　部屋▼
-真の　強さ
-心からの　優しさを　もつ▽
-トレーナーと　ポケモンを▽
-歴史に　残すための　場所▼</Text>
+			<Text>アイリス『ここはね
+殿堂入りの　部屋なの！▼
+ポケモンのことを　考え
+ポケモンのために　心を　尽くす▼
+そんな　あふれる　優しさを　持つ
+たくえつした　ポケモントレーナーと！▼
+トレーナーを　心より　信じ
+トレーナーのため　全力を　だす▼
+そんな　尽きない　強さを　持つ
+すばらしい　ポケモンを！▼
+永遠に　忘れないよう
+名前を　刻む　場所なの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T12:48:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -41,13 +53,12 @@
 			<Comment>♀
 ・初回
 ・続けて、主人公のほうを向いて
-　主人公♂→champion_02
-　主人公♀→champion_03
-
-※swanでメッセージ修正予定</Comment>
+　主人公♂→swchampion_02
+　主人公♀→swchampion_03
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:23:58" />
+				Time="2011-07-27T12:42:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -70,12 +81,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アデク『……なんど　きても
-きざまれた　なまえの　かずかずに▽
-みが　ひきしまるな▼</Text>
+			<Text>アイリス『また　これたね▼
+ポケモンのことを　かんがえ
+ポケモンのために　こころを　つくす▼
+そんな　あふれる　やさしさを　もつ
+たくえつした　ポケモントレーナーと！▼
+トレーナーを　こころより　しんじ
+トレーナーのため　ぜんりょくを　だす▼
+そんな　つきない　つよさを　もつ
+すばらしい　ポケモンを！▼
+えいえんに　わすれないよう
+なまえを　きざむ　ばしょ　なの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T12:48:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,12 +102,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アデク『……何度　来ても
-刻まれた　名前の数々に▽
-身が　引き締まるな▼</Text>
+			<Text>アイリス『また　来れたね▼
+ポケモンのことを　考え
+ポケモンのために　心を　尽くす▼
+そんな　あふれる　優しさを　持つ
+たくえつした　ポケモントレーナーと！▼
+トレーナーを　心より　信じ
+トレーナーのため　全力を　だす▼
+そんな　尽きない　強さを　持つ
+すばらしい　ポケモンを！▼
+永遠に　忘れないよう
+名前を　刻む　場所なの！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T12:48:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99,13 +126,13 @@
 			<Comment>♀
 ・2回目以降
 ・続けて、主人公のほうを向いて
-　主人公♂→champion_02
-　主人公♀→champion_03
+　主人公♂→swchampion_02
+　主人公♀→swchampion_03
 
 ※swanでメッセージ修正予定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:24:00" />
+				Time="2011-07-27T12:42:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -155,12 +182,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてchampion_05
+・続けてswchampion_05
 ・0＝主人公名
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T12:36:45" />
+				Time="2011-07-27T12:42:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -210,13 +237,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてchampion_05
+・続けてswchampion_05
 ・0＝主人公名
-
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:24:07" />
+				Time="2011-07-27T12:42:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -239,20 +265,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　でんどういりの　へやに
-きみたちの　なまえを　きざもう！▼
-なまえと　ともに　のこす
-たびの　おもいで▽
-たたかいの　れきし！▼
-すべてが　これからの　きみを　より
-つよくする　ささえと　なるように！▼
-では　きみと！▼
-ともに　たたかった
-パートナーの　ポケモンを！▽
-この　マシンに　きろく　する！▼</Text>
+			<Text>ここに　いる　トレーナー！
+ともに　いる　ポケモン！▼
+かれらが　たたかいを　つうじて
+つちかった　うつくしい　けっそく！▼
+それらを
+えいえんの　たからと　するため▽
+この　マシンに　きろく　します！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T12:50:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -260,20 +282,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　殿堂入りの　部屋に
-君たちの　名前を　刻もう！▼
-名前と　共に　残す
-旅の　思い出▽
-戦いの　歴史！▼
-すべてが　これからの　君を　より
-強くする　支えと　なるように！▼
-では　君と！▼
-共に　戦った
-パートナーの　ポケモンを！▽
-この　マシンに　記録する！▼</Text>
+			<Text>ここに　いる　トレーナー！
+ともに　いる　ポケモン！▼
+彼らが　戦いを　通じて
+培った　美しい　結束！▼
+それらを
+永遠の　宝と　するため▽
+この　マシンに　記録します！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-27T12:50:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -284,11 +302,10 @@
 			<Comment>♀
 ・メッセージ後、殿堂入りの演出
 ・そしてスタッフロールへ
-
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:24:09" />
+				Time="2011-07-27T12:42:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
