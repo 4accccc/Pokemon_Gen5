@@ -16,6 +16,10 @@
 #define FLD_ITEM_165                       1
 #define FLD_ITEM_166                       2
 #define FLD_ITEM_167                       3
+#define TR_RANGERM_20                      4
+#define TR_BATTLEG_16                      5
+#define TR_RANGERW_20                      6
+#define TR_KARATE_17                       7
 
 #endif //ZONE_D32R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d32r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
