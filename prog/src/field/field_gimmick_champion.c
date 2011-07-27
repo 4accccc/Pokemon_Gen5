@@ -398,12 +398,18 @@ static void INIT_FieldRecover( CHAMPION_TMP *p_wk )
     {
       // 無効化解除
       FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, TRUE );
-      // フレーム設定(1進めた状態にする)
-      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, FX32_ONE );
+      // フレーム設定(0進めた状態にする)
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 0, FX32_ONE );
     }
 
     // 光差し込み状態に
     ANM_LIGHT_SetLastFrame( p_wk );
+
+    // デフォルトカメラも頂上用に変更
+    {
+      FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+      FIELD_CAMERA_SetCameraType( p_camera, TOP_CAMERA_ID );
+    }
   }
 }
 
@@ -753,12 +759,6 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
       // 切り替え後になったことを保存
       SAVE_SetExchangeFlag( p_wk->p_sv_wk, TRUE );
 
-      // デフォルトカメラ変更
-      {
-        FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
-        FIELD_CAMERA_SetCameraType( p_camera, TOP_CAMERA_ID );
-      }
-
       *seq = SEQ_END;
     }
     break;
@@ -818,7 +818,7 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
     // 戦闘後アニメを再生
     {
       // レリーフのアニメ
-      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 1, 1, FALSE );
+      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 1, 0, FALSE );
 
       // マップのアニメ
       ANM_Play( p_wk->exp_obj, OBJ_ROOM_2, 0, 0, FALSE );
