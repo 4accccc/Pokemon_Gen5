@@ -429,4 +429,10 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/wbtgate_01.nsbmd \
 	$(RESDIR)/icepc_01.nsbmd \
 	$(RESDIR)/jagate_01.nsbmd \
+	$(RESDIR)/c15_theater_01.nsbmd \
+	$(RESDIR)/c15_studio_01.nsbmd \
+	$(RESDIR)/c15_sign_01.nsbmd \
+	$(RESDIR)/c15_fountain_01.nsbmd \
+	$(RESDIR)/c15_gate_01.nsbmd \
+	$(RESDIR)/c15_wood_01.nsbmd \
 

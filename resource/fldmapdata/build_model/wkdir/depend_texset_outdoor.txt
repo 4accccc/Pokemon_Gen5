@@ -2530,7 +2530,13 @@ DEP_TEXSET_IMD_OUTDOOR061 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/c15_theater_01.imd \
+	$(SRCDIR)/c15_studio_01.imd \
+	$(SRCDIR)/c15_sign_01.imd \
+	$(SRCDIR)/c15_fountain_01.imd \
+	$(SRCDIR)/c15_gate_01.imd \
+	$(SRCDIR)/c15_wood_01.imd
 
 texset/outdoor061.imd: $(DEP_TEXSET_IMD_OUTDOOR061) texset/tmp/outdoor061.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor061.list
