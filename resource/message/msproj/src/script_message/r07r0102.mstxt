@@ -115,11 +115,11 @@ childcare_08</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけて　ガックリ……
-なぜだか　けだるいわ……</Text>
+			<Text>ヒトモシちゃんの　あかりに　たよれば
+わたしの　しょうりが　みえてきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T01:31:49" />
+				Time="2011-07-27T02:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,15 +127,59 @@ childcare_08</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>負けて　ガックリ……
-なぜだか　気だるいわ……</Text>
+			<Text>ヒトモシちゃんの　灯りに　頼れば
+わたしの　勝利が　みえてきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T01:31:55" />
+				Time="2011-07-27T02:01:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-27T01:31:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・戦闘前メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:59:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>
+ID：schoolg_12</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:30:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_girl3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけて　ガックリ……
+なぜだか　けだるいわ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:59:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:59:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けて　ガックリ……
+なぜだか　気だるいわ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:59:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:59:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -146,7 +190,7 @@ childcare_08</Text>
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T01:34:02" />
+				Time="2011-07-27T01:59:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -154,7 +198,7 @@ childcare_08</Text>
 ID：schoolg_12</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T01:30:15" />
+				Time="2011-07-27T01:59:15" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
