@@ -232,6 +232,7 @@
 #define WK_SCENE_D26R0101_GATE_09        16620 /* 0x40ec バッジチェックゲート：POS制御ワーク */
 #define WK_SCENE_C03R0601_SWBELL_01      16621 /* 0x40ed ヒウンシティゲート：ベルイベントPOS制御ワーク */
 #define WK_SCENE_C14R0301_BOY4_01        16622 /* 0x40ee セイガイハシティ：セイガイハシティのお坊ちゃま（死亡遊戯）制御ワーク */
+#define WK_SCENE_R07R0102_GIRL3_01       16623 /* 0x40ef タワーオブヘブン：ヒトモシガール戦闘POS制御ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
