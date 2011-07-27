@@ -204,7 +204,9 @@ u8 INFINITYDUNGEON_SAVE_GetMapStatus( const INFINITYDUNGEON_SAVE *p_save )
 //-----------------------------------------------------------------------------
 u8 INFINITYDUNGEON_SAVE_GetFloorID( const INFINITYDUNGEON_SAVE *p_save )
 {
-  return (p_save->floor_id % INFINITYDUNGEON_FLOOR_MAX); // エリア内のフロアに変換
+  u8 area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
+  s32 start_floor = INFINITYDUNGEON_SAVE_GetAreaStartFloor( area_id );
+  return (p_save->floor_id - start_floor); // エリア内のフロアに変換
 }
 
 //----------------------------------------------------------------------------
@@ -334,27 +336,6 @@ void INFINITYDUNGEON_SAVE_SetFloorID( INFINITYDUNGEON_SAVE *p_save ,u8 floor_id)
 void INFINITYDUNGEON_SAVE_SetRoomID( INFINITYDUNGEON_SAVE *p_save ,u8 room_id)
 {
   p_save->room_id = room_id;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  現在のエリアIDを取得する
- *
- *	@param	*p_save 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save )
-{
-  if( p_save->floor_id == 0 )
-  {
-    return INFINITY_DUNGEON_AREA_ID_1;
-  }
-  else
-  {
-    return p_save->floor_id/INFINITYDUNGEON_FLOOR_MAX;
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -494,6 +475,87 @@ void INFINITYDUNGEON_SAVE_SetRecoverFlag( INFINITYDUNGEON_SAVE *p_save ,int reco
     bit_mask = bit_mask << recover_flg_pos;
     p_save->recover_flag = p_save->recover_flag | bit_mask;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のエリアIDを取得する
+ *
+ *	@param	*p_save 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 INFINITYDUNGEON_SAVE_GetDungeonAreaID( const INFINITYDUNGEON_SAVE *p_save )
+{
+  u8 area_id;
+
+  // エリア2のスタートエリアから、それより下の階にあるかを調べていく
+  for( area_id  = INFINITY_DUNGEON_AREA_ID_1 + 1; area_id < INFINITY_DUNGEON_AREA_ID_MAX; area_id++ )
+  {
+    s32 start_floor = INFINITYDUNGEON_SAVE_GetAreaStartFloor( area_id );
+    if( start_floor > p_save->floor_id )
+    {
+      // Ex:エリア2以下の場合は、エリア１
+      return area_id - 1;
+    }
+  }
+
+  // エリア9より上の階の場合は、エリア10
+  return INFINITY_DUNGEON_AREA_ID_10;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エリアごとのスタートフロアを取得
+ *
+ *	@param	area_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 INFINITYDUNGEON_SAVE_GetAreaStartFloor( u8 area_id )
+{
+  s32 i;
+  s32 start_floor = 0;
+
+  // 指定の階数まで加算
+  for( i = 0; i <= area_id; i++ )
+  {
+    start_floor += INFINITYDUNGEON_SAVE_GetFloorNum(i);
+  }
+
+  // ゼロオリジン
+  return start_floor - 1;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定フロアが何回あるかを返す
+ *
+ *	@param	now_area 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 INFINITYDUNGEON_SAVE_GetFloorNum( u8 area_id )
+{
+  // フロアごとのスタート回数
+  const u8 floor_num_table[ INFINITY_DUNGEON_AREA_ID_MAX ] =
+  {
+    INFINITYDUNGEON_FLOOR_AREA1_MAX,
+    INFINITYDUNGEON_FLOOR_AREA2_MAX,
+    INFINITYDUNGEON_FLOOR_AREA3_MAX,
+    INFINITYDUNGEON_FLOOR_AREA4_MAX,
+    INFINITYDUNGEON_FLOOR_AREA5_MAX,
+    INFINITYDUNGEON_FLOOR_AREA6_MAX,
+    INFINITYDUNGEON_FLOOR_AREA7_MAX,
+    INFINITYDUNGEON_FLOOR_AREA8_MAX,
+    INFINITYDUNGEON_FLOOR_AREA9_MAX,
+    INFINITYDUNGEON_FLOOR_AREA10_MAX,
+  };
+
+  return floor_num_table[ area_id ];
 }
 
 //----------------------------------------------------------------------------

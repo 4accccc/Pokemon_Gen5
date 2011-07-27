@@ -13917,6 +13917,28 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _INFINITY_DUNGEON_GET_PARAM
+ * @brief 無限ダンジョン:ダンジョンのパラメータを返す
+ * @param param_id パラメータID
+ *        SCR_INFDUNGEON_PARAM_START_FLOOR  (0) // 現在のダンジョンの開始階
+ *        SCR_INFDUNGEON_PARAM_FLOOR_NUM    (1) // 現在のダンジョンの開始階数
+ * @param area_id  エリアID
+ * @param ret_wk   パラメータ格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_PARAM( param_id ,area_id ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_PARAM param_id ,area_id ,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_PARAM param_id, area_id, ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_PARAM
+    .short  \param_id
+    .short  \area_id
+    .short  \ret_wk
+    .endm
+
+
+//--------------------------------------------------------------
+/**
  * @def _WARP_ANIMAL_TRAIL
  * @brief 獣道マップに移動
  * @param animal_trail_id   獣道ID

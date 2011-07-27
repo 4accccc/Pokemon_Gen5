@@ -748,3 +748,11 @@
 ///最大シナリオナンバー
 #define   SCR_PKWD_SCENARIO_MAX     (40)
 
+//--------------------------------------------------------------
+//  scrcmd_infinity_dungeon.c
+//  無限ダンジョン関連定義
+//--------------------------------------------------------------
+
+#define SCR_INFDUNGEON_PARAM_START_FLOOR  (0) ///<無限ダンジョン：ダンジョン内のスタートFLOOR
+#define SCR_INFDUNGEON_PARAM_FLOOR_NUM    (1) ///<無限ダンジョン：ダンジョン内の階数
+

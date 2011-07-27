@@ -636,7 +636,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     // プレイヤー+AI(パートナー) vs AI（トレーナー）初期化
     else
     {
-      GF_ASSERT("プレイヤー+AI(パートナー) vs AI（トレーナー）は未実装");
+      GF_ASSERT_MSG(0,"プレイヤー+AI(パートナー) vs AI（トレーナー）は未実装");
     }
   }
   

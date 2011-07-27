@@ -20,6 +20,7 @@
 #include "arc/fieldmap/fldmmdl_objcode.h"  //for OBJCODE
 #include "infinity_dungeon_gimmick.h"
 #include "fld_btl_inst_tool.h"
+#include "script_def.h"   // for SCR_INFDUNGEON_*
 
 // グローバル変数
 #ifdef PM_DEBUG
@@ -148,6 +149,8 @@ VMCMD_RESULT EvCmdInfinityDungeonFloorMove( VMHANDLE *core, void *wk )
   SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
   INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+
+  ONOUE_Printf("%d階に移動\n",floor_no);
 
   // 次のマップへワープ
   INFINITY_DUNGEON_WarpNextFloor( p_scr_wk ,p_gsys ,p_dungeon_data ,floor_no );
@@ -795,6 +798,52 @@ VMCMD_RESULT EvCmdInfinityDungeonGetVersion( VMHANDLE *p_core, void *p_wk_adrs )
   
   // バージョンを設定する
   *p_ret_wk = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダンジョンデータを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK   *p_wk     = p_wk_adrs;
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+
+  u16 param_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 area_id  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  switch( param_id )
+  {
+  // 開始フロアを返す
+  case SCR_INFDUNGEON_PARAM_START_FLOOR:
+    {
+      *p_ret_wk = INFINITYDUNGEON_SAVE_GetAreaStartFloor( area_id );
+    }
+    break;
+  // 開始フロアを返す
+  case SCR_INFDUNGEON_PARAM_FLOOR_NUM:
+    {
+      *p_ret_wk = INFINITYDUNGEON_SAVE_GetFloorNum( area_id );
+    }
+    break;
+  default:
+    {
+      GF_ASSERT(0);
+    }
+    break;
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }

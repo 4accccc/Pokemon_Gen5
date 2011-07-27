@@ -497,6 +497,7 @@ static u8 GetMemberNum( u8 pos_type );
 static u8 GetRoomType( u8 pos_type );
 static u8 GetRoomVersion( u8 pos_type );
 static int GetSetTrainerIDTable( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context);
+static u8 GetDungeonFloorFromArea( u8 now_floor ,u8 now_area );
 
 // ゾーン依存
 static void SetNextZoneData( MAP_CHAGE_EVENT_WORK *p_wk);
@@ -678,12 +679,21 @@ extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WOR
   GAMEDATA              *p_gdata;
   INFINITYDUNGEON_SAVE  *p_save;
 
+  // セーブデータ取得
+  p_gdata       = GAMESYSTEM_GetGameData( p_gsys );
+  p_save_data   = GAMEDATA_GetSaveControlWork( p_gdata );
+  p_save        = SaveData_GetINFINITYDUNGEON( p_save_data );
+  
+  // フロアIDを保存（これを行わないと、エリア番号を取得できない）
+  INFINITYDUNGEON_SAVE_SetFloorID( p_save , floor_no );
+
   // イベント呼び出し
   {
+    u8 area_id = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
     p_event = GMEVENT_Create( p_gsys, NULL,	MapWarpEvent, sizeof(MAP_CHAGE_EVENT_WORK));
     SCRIPT_CallEvent( p_scr_work, p_event );
     p_wk = GMEVENT_GetEventWork( p_event );
-    p_wk->next_floor = floor_no%INFINITYDUNGEON_FLOOR_MAX;
+    p_wk->next_floor = GetDungeonFloorFromArea( floor_no ,area_id );
     p_wk->map_change_type = MAP_CHAGE_TYPE_FOOR;
     p_wk->p_dungeon_data = p_dungeon_data;
     p_wk->warp_dir = WARP_DIR_DOWN;
@@ -691,16 +701,29 @@ extern void INFINITY_DUNGEON_WarpNextFloor( SCRIPT_WORK *p_scr_work, GAMESYS_WOR
   
   // データを生成するためにフロアを設定する
   {
-    p_gdata       = GAMESYSTEM_GetGameData( p_gsys );
-    p_save_data         = GAMEDATA_GetSaveControlWork( p_gdata );
-    p_save        = SaveData_GetINFINITYDUNGEON( p_save_data );
-    INFINITYDUNGEON_SAVE_SetFloorID( p_save , floor_no );
-  
     // 再計算
     INF_ReCalcDungeonData(p_dungeon_data,p_save); 
   }
 
-  //OS_TFPrintf(1,"p_wk->next_floor:%u\n",p_wk->next_floor);
+  //OS_TFPrintf(1,"p_wk->next_floor:%u\n",p_wk->next_floor)
+  
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  階数からエリア内の階数を取得する
+ *
+ *	@param	now_floor 
+ *	@param	now_area 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u8 GetDungeonFloorFromArea( u8 now_floor ,u8 now_area )
+{
+  u8 start_floor = INFINITYDUNGEON_SAVE_GetAreaStartFloor( now_area );
+
+  return now_floor - start_floor;
 }
 
 //----------------------------------------------------------------------------
@@ -1901,7 +1924,8 @@ static void SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 s
     ROOM_DATA *p_rd;
     ROOM_DATA *p_room_data;
     int floor_no;
-    floor_no = GFL_STD_Rand( &rand_context ,INFINITYDUNGEON_FLOOR_MAX);
+    u8 top_floor = INFINITYDUNGEON_SAVE_GetFloorNum( area_no );
+    floor_no = GFL_STD_Rand( &rand_context ,top_floor);
     p_room_data = p_dungeon_data->room_data[floor_no];
     boss_pos.x = GFL_STD_Rand( &rand_context ,fs_x);
     boss_pos.y = GFL_STD_Rand( &rand_context ,fs_y-1); // 一番下の部屋には置けない
