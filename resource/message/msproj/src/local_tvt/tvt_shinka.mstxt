@@ -48,10 +48,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なつきが高い</Text>
+			<Text>このこは　よく　なついていると
+レベルアップの　ときに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,10 +90,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なつきが高く朝</Text>
+			<Text>このこは　よく　なついていると
+レベルアップした　ときに▽
+じかんたいに　よって▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -128,10 +133,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なつきが高く夜</Text>
+			<Text>このこは　よく　なついていると
+レベルアップした　ときに▽
+じかんたいに　よって▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -210,10 +218,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>通信</Text>
+			<Text>このこは　つうしんこうかんで
+やってきた　ときに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -290,10 +300,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>通信融合</Text>
+			<Text>このこは　つうしんこうかんで
+ある　ポケモンと　こうかんすると▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -370,10 +382,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　力</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+３しゅるいの　ポケモンに
+しんか　するんだけど▼
+どれに　しんかするかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -410,10 +428,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　力＝防</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+３しゅるいの　ポケモンに
+しんか　するんだけど▼
+どれに　しんかするかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -450,10 +474,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　防</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+３しゅるいの　ポケモンに
+しんか　するんだけど▼
+どれに　しんかするかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -490,10 +520,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　個体乱数偶</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+２しゅるいの　ポケモンに
+しんか　するんだけど▼
+どちらに　しんかするかは
+しんか　してみないと▽
+わからないのよね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -530,10 +566,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　個体乱数奇</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+２しゅるいの　ポケモンに
+しんか　するんだけど▼
+どちらに　しんかするかは
+しんか　してみないと▽
+わからないのよね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -570,10 +612,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　レベルアップ</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -610,10 +653,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　ヌケニン</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+このとき　てもちに
+よゆうが　あると▽
+ちがった　ポケモンが▽
+みつかることが　あるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -650,10 +698,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特殊　うつくしさ</Text>
+			<Text>このこは　うつくしさが　たかいと
+レベルアップの　ときに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -690,10 +740,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>道具　オスめざめいし</Text>
+			<Text>このこが　♂なら
+めざめいしを　つかうと▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -730,10 +782,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>道具　メスめざめいし</Text>
+			<Text>このこが　♀なら
+めざめいしを　つかうと▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -770,10 +824,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>装備　朝まんまるいし</Text>
+			<Text>このこに　まんまるいしを
+もたせていると▽
+レベルアップした　ときに▽
+じかんたいに　よって▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -890,10 +948,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモン　テッポウオ</Text>
+			<Text>このこは　レベルアップの　ときに
+てもちに　テッポウオが　いると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -930,10 +990,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オス</Text>
+			<Text>このこが　♂なら
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -970,10 +1032,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メス</Text>
+			<Text>このこが　♀なら
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1010,10 +1074,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>場所　テンガン山</Text>
+			<Text>このこは　とくしゅな
+じりょくの　ある　ばしょで▽
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1050,10 +1117,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>場所　苔</Text>
+			<Text>このこは　コケに　おおわれた
+みどりの　おおい　ばしょで▽
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1090,10 +1160,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>場所　氷</Text>
+			<Text>このこは　こおりで　おおわれた
+つめたい　ばしょで▽
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1130,10 +1203,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>場所　電気</Text>
+			<Text>このこは　とくしゅな
+じりょくの　ある　ばしょで▽
+レベルアップした　ときに▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1170,10 +1246,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　アップグレード</Text>
+			<Text>このこに　アップグレードを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1210,10 +1288,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　王者のしるし</Text>
+			<Text>このこに　おうじゃのしるしを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1250,10 +1330,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　しんかいのウロコ</Text>
+			<Text>このこに　しんかいのウロコを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1290,10 +1372,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　しんかいのキバ</Text>
+			<Text>このこに　しんかいのキバを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1330,10 +1414,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　メタルコート</Text>
+			<Text>このこに　メタルコートを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1370,10 +1456,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　りゅうのうろこ</Text>
+			<Text>このこに　りゅうのウロコを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1410,10 +1498,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　プロテクター</Text>
+			<Text>このこに　プロテクターを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1443,10 +1533,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　テレきブースター</Text>
+			<Text>このこに　エレキブースターを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1476,10 +1568,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　マグマブースター</Text>
+			<Text>このこに　マグマブースターを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1509,10 +1603,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　あやしいパッチ</Text>
+			<Text>このこに　あやしいパッチを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1542,10 +1638,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　通信　れいかいのぬの</Text>
+			<Text>このこに　れいかいのぬのを
+もたせて　つうしんこうかん　すると▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1575,10 +1673,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　装備夜　鋭い牙</Text>
+			<Text>このこに　するどいキバを
+もたせていると▽
+レベルアップした　ときに▽
+じかんたいに　よって▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1608,10 +1710,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　装備夜　鋭い爪</Text>
+			<Text>このこに　するどいツメを
+もたせていると▽
+レベルアップした　ときに▽
+じかんたいに　よって▽
+しんかすることが　あるわね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1641,10 +1747,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　かみなりのいし</Text>
+			<Text>このこに　かみなりのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1674,10 +1781,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　たいようのいし</Text>
+			<Text>このこに　たいようのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1714,10 +1822,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　つきのいし</Text>
+			<Text>このこに　つきのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1754,10 +1863,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　ほのおのいし</Text>
+			<Text>このこに　ほのおのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1794,10 +1904,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　みずのいし</Text>
+			<Text>このこに　みずのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1834,10 +1945,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　リーフのいし</Text>
+			<Text>このこに　リーフのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1874,10 +1986,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　ひかりのいし</Text>
+			<Text>このこに　ひかりのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1914,10 +2027,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　道具　やみのいし</Text>
+			<Text>このこに　やみのいしを　つかうと
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-22T08:24:12" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1954,10 +2068,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　技　ものまね</Text>
+			<Text>このこは　ものまねを
+おぼえていると▽
+レベルアップの　ときに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1994,10 +2111,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　技　ダブルアタック</Text>
+			<Text>このこは　ダブルアタックを
+おぼえていると▽
+レベルアップの　ときに▽
+しんか　するわよ▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2034,10 +2155,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　技　ころがる</Text>
+			<Text>このこは　ころがるを
+おぼえていると▽
+レベルアップの　ときに▽
+しんか　するわよ▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2074,10 +2199,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　技　げんしのちから</Text>
+			<Text>このこは　げんしのちからを
+おぼえていると▽
+レベルアップの　ときに▽
+しんか　するわよ▼
+</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2114,10 +2243,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　クサイハナ</Text>
+			<Text>このこに　リーフのいしか
+たいようのいしを　つかうと▽
+それぞれ　ちがう　ポケモンに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2154,10 +2286,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　ニョロゾ</Text>
+			<Text>このこに　みずのいしを　つかうと
+しんか　するわ▼
+あと　おうじゃのしるしを
+もたせて　つうしんこうかん　すると▽
+ちがう　ポケモンに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2194,10 +2331,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　ヤドン</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわ▼
+あと　おうじゃのしるしを
+もたせて　つうしんこうかん　すると▽
+ちがう　ポケモンに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2234,10 +2376,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　イーブイ</Text>
+			<Text>このこには　いろいろな
+しんかの　ほうほうが　あるわね▼
+みずのいし　かみなりのいし
+ほのおのいし　を　つかうと▼
+それぞれ　ちがうポケモンに
+しんか　するし▼
+よく　なついている　ときに
+レベルアップすると▽
+じかんたいに　よって▽
+ちがうポケモンに　しんか　するの▼
+あと　コケに　おおわれた　ばしょや
+こおりで　おおわれた　ばしょで▽
+レベルアップした　ときも▽
+ちがうポケモンに　しんか　するわ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2274,10 +2429,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　バルキー</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+３しゅるいの　ポケモンに
+しんか　するんだけど▼
+どれに　しんかするかは
+こうげきと　ぼうぎょの▽
+バランスで　きまるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2314,10 +2475,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　ケムッソ</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+２しゅるいの　ポケモンに
+しんか　するんだけど▼
+どちらに　しんかするかは
+しんか　してみないと▽
+わからないのよね……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2354,10 +2521,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　キルリア</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+でも　♂なら
+めざめいしを　つかうと▽
+ちがう　ポケモンに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2394,10 +2566,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　ツチニン</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+このとき　てもちに
+よゆうが　あると▽
+ちがった　ポケモンが▽
+みつかることが　あるようね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2434,10 +2611,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　ユキワラシ</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+でも　♀なら
+めざめいしを　つかうと▽
+ちがう　ポケモンに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2474,10 +2656,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　パールル</Text>
+			<Text>このこは　どうぐを　もたせて
+つうしんこうかん　すると▽
+しんかすることが　あるわね▼
+もたせる　どうぐが
+しんかいのキバか▽
+しんかいのウロコかで▽
+ちがった　ポケモンに▽
+しんか　するわよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2514,10 +2703,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>分岐　ミノムッチ</Text>
+			<Text>このこは　レベルアップの　ときに
+しんかすることが　あるわね▼
+♂と♀で　ちがう　ポケモンに
+しんか　するわよ▼
+♀なら　しんかする　まえの
+すがたによって▽
+しんかした　あとの▽
+すがたも　ちがうのよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2554,10 +2750,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴ</Text>
+			<Text>うーん……
+タマゴは　とりあえず▽
+ふか　させてから▽
+みせてくれるかな？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-07-22T09:39:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
