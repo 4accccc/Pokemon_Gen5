@@ -34,13 +34,14 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・ver
-・No「かざんのおきいし」所有時
+・No「かざんのおきいし」所有時で
+　pos（GRIDX＝9～11、GRIDZ＝16）
 ・はい/いいえの選択肢表示
 　はい　→poke485_02
 　いいえ→終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T04:00:17" />
+				Time="2011-07-27T12:07:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

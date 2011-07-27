@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅわーん！</Text>
+			<Text>しゅわん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:28:09" />
+				Time="2011-07-27T11:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しゅわーん！</Text>
+			<Text>しゅわん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:28:48" />
+				Time="2011-07-27T11:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29,12 +29,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・遭遇１～４回目
 ・所定POSを踏むと近づいてくる
-・あわせて鳴き声再生
-・続けて戦闘に</Comment>
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:30:53" />
+				Time="2011-07-27T11:39:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -44,16 +44,75 @@
 				User="matsumiya:W00224"
 				Time="2011-07-12T02:27:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d01r0101_poke1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しゅわーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しゅわーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・遭遇５回目
+・所定POSを踏むと近づいてくる
+・あわせて鳴き声再生
+・続けて戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:39:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ラティオス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d01r0101_poke2_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひゅああーん！</Text>
+			<Text>ひゅああん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:28:16" />
+				Time="2011-07-27T11:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -61,10 +120,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひゅああーん！</Text>
+			<Text>ひゅああん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:28:48" />
+				Time="2011-07-27T11:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -73,12 +132,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・遭遇１～４回目
 ・所定POSを踏むと近づいてくる
-・あわせて鳴き声再生
-・続けて戦闘に</Comment>
+・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:30:55" />
+				Time="2011-07-27T11:39:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -88,6 +147,65 @@
 				User="matsumiya:W00224"
 				Time="2011-07-12T02:31:08" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d01r0101_poke2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひゅああーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひゅああーん！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・遭遇５回目
+・所定POSを踏むと近づいてくる
+・あわせて鳴き声再生
+・続けて戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:39:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE
+ポケモン・ラティアス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T11:38:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d01r0101_girl_01"

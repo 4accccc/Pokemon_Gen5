@@ -32,13 +32,13 @@
 			Language="JPN">
 			<Comment>イベント
 ・No000「みかづきのはね」を持っている状態で
-　pos（GRIDX＝、GRIDZ＝）を踏んだとき
+　pos（GRIDX＝128、GRIDZ＝31～36）を踏んだとき
 ・はい/いいえの選択肢表示
 　はい　→poke1_02
 　いいえ→終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T05:30:20" />
+				Time="2011-07-27T12:05:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
