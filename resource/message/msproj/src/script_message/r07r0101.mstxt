@@ -556,10 +556,11 @@
 			<Comment>♀
 ・セイガイハ新婚イベントで
 　はいを選択すると出現
-・表示後、トレーナー戦闘へ</Comment>
+・表示後、トレーナー戦闘へ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:00:19" />
+				Time="2011-07-27T01:34:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -605,10 +606,11 @@ waitress_05</Text>
 			Language="JPN">
 			<Comment>♀
 ・セイガイハ新婚イベント
-・メッセージ表示後、階段前から移動</Comment>
+・メッセージ表示後、階段前から移動
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T05:59:58" />
+				Time="2011-07-27T01:34:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -33,10 +33,11 @@
 			<Comment>♀
 ・セイガイハ新婚イベントで
 　はいを選択すると出現
-・表示後、トレーナー戦闘へ</Comment>
+・表示後、トレーナー戦闘へ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:00:22" />
+				Time="2011-07-27T01:34:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -94,10 +95,11 @@ childcare_08</Text>
 			Language="JPN">
 			<Comment>♀
 ・セイガイハ新婚イベント
-・メッセージ表示後、階段前から移動</Comment>
+・メッセージ表示後、階段前から移動
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:00:22" />
+				Time="2011-07-27T01:34:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -106,6 +108,53 @@ childcare_08</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-17T04:18:00" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0101_girl3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけて　ガックリ……
+なぜだか　けだるいわ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:31:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:31:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けて　ガックリ……
+なぜだか　気だるいわ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:31:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:31:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・戦闘後メッセージ
+・自動でメッセージ表示
+・c06pc0101に出現
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:34:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>
+ID：schoolg_12</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-27T01:30:15" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

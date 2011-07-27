@@ -43,10 +43,11 @@
 			<Comment>♀
 ・セイガイハ新婚イベントで
 　はいを選択すると出現
-・表示後、トレーナー戦闘へ</Comment>
+・表示後、トレーナー戦闘へ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:00:28" />
+				Time="2011-07-27T01:34:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -106,10 +107,13 @@ maid_03</Text>
 			Language="JPN">
 			<Comment>♀
 ・セイガイハ新婚イベント
-・メッセージ表示後、階段前から移動</Comment>
+・メッセージ表示後、階段前から移動
+・マップチェンジでイベント関連の
+　動作モデルをすべて削除
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:00:28" />
+				Time="2011-07-27T01:35:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
