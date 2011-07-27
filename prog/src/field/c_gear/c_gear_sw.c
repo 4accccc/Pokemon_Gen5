@@ -20,8 +20,8 @@
 #include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 
-#include "c_gear.naix"
-#include "c_gear_obj_NANR_LBLDEFS.h"
+#include "c_gear_sw.naix"
+//#include "c_gear_obj_NANR_LBLDEFS.h"
 
 #include "net/wih_dwc.h"
 
@@ -62,11 +62,11 @@
 #define OAM_USE_PLTT_NUM (14)
 
 static const u16 _BLACK_COLOR[] = {
-  0x0441,
-  0x0423,
-  0x0441,
+  0x0441, //男性用
+  0x0423, //女性用
 };
 
+#if 0
 static const u32 _bgpal[]=
 {
   NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR,
@@ -84,7 +84,7 @@ static const u32 _cellpal[]=
 {
   NARC_c_gear_c_gear_m_obj_NCLR,NARC_c_gear_c_gear_f_obj_NCLR,NARC_c_gear_c_gear_m_obj_NCLR,
 };
-
+#endif
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
@@ -93,8 +93,6 @@ static const u32 _cellpal[]=
 #define GEAR_SE_DECIDE_ (SEQ_SE_DECIDE3)
 #define GEAR_SE_CANCEL_ (SEQ_SE_SYS_70)
 
-#define MSG_COUNTDOWN_FRAMENUM (30*3)
-
 // CGEAR キャラクタデータ
 #define GEAR_CGX_SIZE_MAX ( 32*20*32 )
 #define GEAR_BASE_CGX_SIZE  ( 32*8 )  //256char
@@ -102,29 +100,6 @@ static const u32 _cellpal[]=
 //--------------------------------------------
 // 画面構成定義
 //--------------------------------------------
-#define _WINDOW_MAXNUM (4)   //ウインドウのパターン数
-
-#define _MESSAGE_BUF_NUM	( 100*2 )
-
-#define _BUTTON_WIN_CENTERX (16)   // 真ん中
-#define _BUTTON_WIN_CENTERY (13)   //
-#define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
-#define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
-#define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (13)  // メッセージフォント
-
-#define	_BUTTON_WIN_CGX_SIZE   ( 18+12 )
-#define	_BUTTON_WIN_CGX	( 2 )
-
-
-#define	_BUTTON_FRAME_CGX		( _BUTTON_WIN_CGX + ( 23 * 16 ) )	// 通信システムウィンドウ転送先
-
-#define	FBMP_COL_WHITE		(15)
-
-
-#define POS_SCANRADAR_X  (34)
-#define POS_SCANRADAR_Y  (170)
-
 #define POS_CROSS_X ( 72 )
 #define POS_CROSS_X_CENTER ( POS_CROSS_X+32 )
 #define POS_CROSS_Y ( 178 )
@@ -138,7 +113,8 @@ static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
   17,18,19,
 };
 
-#define CROSS_COLOR_TRANS_POS_START ( (6*16) )
+#define CROSS_COLOR_SRC_POS_START   (( 9*16 ))
+#define CROSS_COLOR_TRANS_POS_START (( 5*16 )+1 )
 
 
 //-------------------------
@@ -171,8 +147,16 @@ typedef enum {
 typedef enum{
   _CLACT_PLT,
   _CLACT_CHR,
+  _CLACT_CHR_PANEL,
   _CLACT_ANM,
-} _CGEAR_CLACT_TYPE;
+  _CLACT_ANM_PANEL,
+  _CLACT_RES_MAX,
+} _CLACT_RES_TYPE;
+
+typedef enum{
+  _CLACT_RES_COMMON,
+  _CLACT_RES_PANEL,
+}_CLACT_RES_IDX;
 
 
 typedef enum{
@@ -217,7 +201,8 @@ enum{
 static const u8 _CGEAR_NET_CHANGEPAL_POSX[ _CGEAR_NET_CHANGEPAL_MAX ] = {
   0xf, 0x7, 0xb, 
 };
-#define _CGEAR_NET_CHANGEPAL_POSY (1)
+#define _CGEAR_NET_CHANGEPAL_NO  (2)
+#define _CGEAR_NET_CHANGEPAL_OFS (0x0d)
 
 enum{
   _CGEAR_NET_CHANGEPAL_ANM_TYPE_FIRST = 0,
@@ -473,48 +458,36 @@ enum{
 #define ACT_COMMON_MAX  ( ACT_POWER )
 
 enum{
- ACTANM_AMPM,
- ACTANM_N2,
  ACTANM_N10,
+ ACTANM_AMPM,
  ACTANM_N_COLON,
- ACTANM_N6,
- ACTANM_N10B,
- ACTANM_BATT2,
- ACTANM_BATT3,
- ACTANM_P_IR,
- ACTANM_P_WIRELESS,
- ACTANM_P_WIFI,
- ACTANM_RING_R,
- ACTANM_RING_Y,
- ACTANM_RING_B,
- ACTANM_CUSTOM,
- ACTANM_SURE01,
- ACTANM_S_RADAR,
- ACTANM_LOGO_ALL,
- ACTANM_LOGO1,
- ACTANM_LOGO2,
- ACTANM_LOGO3,
- ACTANM_LOGO4,
- ACTANM_LOGO_G,
- ACTANM_LOGO_E,
- ACTANM_LOGO_A,
- ACTANM_LOGO_R,
- ACTANM_LOGO_G2,
- ACTANM_LOGO_E2,
- ACTANM_LOGO_A2,
- ACTANM_LOGO_R2,
- ACTANM_LOGO_MINI1,
- ACTANM_LOGO_MINI2,
- ACTANM_LOGO_MINI3,
- ACTANM_LOGO_MINI4,
- ACTANM_LOGO_MINI5,
- ACTANM_LOGO_MINI6,
- ACTANM_LOGO_MINI7,
- ACTANM_HELP,
- ACTANM_POWER,
- ACTANM_SURETIGAI_W,
  ACTANM_BEACON,
- ACTANM_SURETIGAI_S,
+ ACTANM_POWER,
+ ACTANM_HELP,
+ ACTANM_CUSTOM,
+ ACTANM_S_RADAR,
+ ACTANM_BATT3,
+ ACTANM_BATT2,
+ ACTANM_CONNECT,
+ ACTANM_FMISSION,
+ ACTANM_RIPPLE,
+ ACTANM_WIN,
+ ACTANM_LOGO_ALL,
+ ACTANM_S_IR,
+ ACTANM_S_WIRELESS,
+ ACTANM_S_WIFI,
+};
+
+enum{
+ ACTANM_IR,
+ ACTANM_WIRELESS,
+ ACTANM_WIFI,
+ ACTANM_R_IR,
+ ACTANM_R_WIRELSS,
+ ACTANM_R_WIFI,
+ ACTANM_E_IR,
+ ACTANM_E_WIRELSS,
+ ACTANM_E_WIFI,
 };
 
 #if 0
@@ -542,41 +515,41 @@ enum{
 };
 
 
-#define POS_AMPM_BASE_X   (64)
+#define POS_AMPM_BASE_X   (8*6)
 #define POS_AMPM_BASE_Y   (22)
 #define POS_AMPM_X        (POS_AMPM_BASE_X-8)
-#define POS_AMPM_Y        (POS_AMPM_BASE_Y-8)
-#define POS_T_NUM_X       (POS_AMPM_X-12)
-#define POS_T_NUM_Y       (POS_AMPM_Y+16)
-#define POS_T_NUM_OX      (8)
+#define POS_AMPM_Y        (POS_AMPM_BASE_Y-12)
+#define POS_T_NUM_X       (POS_AMPM_X-9)
+#define POS_T_NUM_Y       (POS_AMPM_Y+9)
+#define POS_T_NUM_OX      (6)
 
-#define POS_BATTERY_BASE_X (200)
-#define POS_BATTERY_BASE_Y (22)
+#define POS_BATTERY_BASE_X  (26*8)
+#define POS_BATTERY_BASE_Y  (POS_AMPM_BASE_Y)
+#define POS_COMM_ICON_X     (POS_BATTERY_BASE_X-8)
+#define POS_COMM_ICON_Y     (POS_BATTERY_BASE_Y-12)
 #define POS_BATTERY_X       (POS_BATTERY_BASE_X-8)
-#define POS_BATTERY_Y       (POS_BATTERY_BASE_Y+8)
-#define POS_COMM_ICON_X    (POS_BATTERY_BASE_X)
-#define POS_COMM_ICON_Y    (POS_BATTERY_BASE_Y-8)
+#define POS_BATTERY_Y       (POS_COMM_ICON_Y+16+1)
 
 #define POS_LOGO_X     ( 16*8 )
-#define POS_LOGO_Y     ( 3*8  )
+#define POS_LOGO_Y     ( 1*8+2  )
 #define POS_POWER_X    ( 25*8 )
-#define POS_POWER_Y    ( 22*8 )
-#define POS_HELP_X     ( 27*8 )
-#define POS_HELP_Y     ( 20*8 )
-#define POS_CUSTOM_X   ( 29*8 )
+#define POS_POWER_Y    ( 22*8+4 )
+#define POS_HELP_X     ( 27*8-1 )
+#define POS_HELP_Y     ( 20*8+3 )
+#define POS_CUSTOM_X   ( 29*8-4 )
 #define POS_CUSTOM_Y   ( 18*8 )
 
 #define POS_BEACON_X        ( 128 )
 #define POS_BEACON_Y        ( 12*8 )
-#define POS_S_RADAR_X       ( 4*4 )
+#define POS_S_RADAR_X       ( 8*4+3 )
 #define POS_S_RADAR_Y       ( 20*8 )
 
-#define POS_IR_DEF_X        ( 7*8 )
-#define POS_IR_DEF_Y        ( 6*8 )
-#define POS_WIRELESS_DEF_X  ( 24*8 )
-#define POS_WIRELESS_DEF_Y  ( 6*8 )
-#define POS_WIFI_DEF_X      ( 16*8 )
-#define POS_WIFI_DEF_Y      ( 22*8 )
+#define POS_IR_DEF_X        ( 72 )
+#define POS_IR_DEF_Y        ( 32 )
+#define POS_WIRELESS_DEF_X  ( 128 )
+#define POS_WIRELESS_DEF_Y  ( 164 )
+#define POS_WIFI_DEF_X      ( 184 )
+#define POS_WIFI_DEF_Y      ( 32 )
 
 //すれ違いよう
 #define _CLACT_CROSS_MAX  (10)
@@ -708,7 +681,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   { (POS_CUSTOM_Y-8), (POS_CUSTOM_Y+8), (POS_CUSTOM_X-8), (POS_CUSTOM_X+8) },        //こうさく
   { (POS_HELP_Y-8), (POS_HELP_Y+8), (POS_HELP_X-8), (POS_HELP_X+8) },   //HELP
   { (POS_CROSS_Y_CENTER-8), (POS_CROSS_Y_CENTER+8), POS_CROSS_X_CENTER-40, POS_CROSS_X_CENTER+40 },                //SURECHIGAI
-  { (POS_SCANRADAR_Y-8), (POS_SCANRADAR_Y+8), (POS_SCANRADAR_X-8), (POS_SCANRADAR_X+8) }, //RADAR
+  { (POS_S_RADAR_Y-8), (POS_S_RADAR_Y+8), (POS_S_RADAR_X-8), (POS_S_RADAR_X+8) }, //RADAR
   { 22-8, (22+8), 128-32, 128+32 },    //CGEARLOGO
   { (POS_POWER_Y-8), (POS_POWER_Y+8), (POS_POWER_X-8), (POS_POWER_X+8) },        //電源
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
@@ -862,7 +835,7 @@ struct _C_GEAR_WORK {
   GAMESYS_WORK* pGameSys;
   CGEAR_SAVEDATA* pCGSV;
   ARCHANDLE* handle;  // アーカイブハンドル
-  u32 objRes[3];  //CLACTリソース
+  u32 objRes[_CLACT_RES_MAX];  //CLACTリソース
 
   GFL_CLUNIT *cellUnit;
   GFL_CLSYS_REND* userRend;
@@ -876,8 +849,7 @@ struct _C_GEAR_WORK {
   GFL_CLWK  *cellRadar;
 #endif
   GFL_CLWK  *cellStartUp[STARTUP_ANIME_OBJ_MAX];
-  u32 crossColor[CROSS_COLOR_MAX]; //すれ違いカラー
-
+  u16 crossColor[CROSS_COLOR_MAX]; //すれ違いカラー
 
   STARTUP_ENDCALLBACK* pCall;
   void* pWork;
@@ -892,8 +864,8 @@ struct _C_GEAR_WORK {
 
   BUTTON_PAL_FADE button_palfade;
 
-  u16 palBase[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
-  u16 palTrans[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
+  u16 palBase[_CGEAR_NET_CHANGEPAL_MAX];
+  u16 palTrans[_CGEAR_NET_CHANGEPAL_MAX];
   u16 palChangeType[ _CGEAR_NET_CHANGEPAL_MAX ];
   u16 palChangeCol[_CGEAR_NET_PALTYPE_MAX][_CGEAR_NET_CHANGEPAL_NUM];
   u16 tpx;
@@ -1109,7 +1081,7 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
 //スリープチェック
 static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction );
 
-static void CGEAR_SW_PATTERN_SetUp( CGEAR_SAVEDATA* pCGSV, ARCHANDLE* handle, u32 pattern, HEAPID heapID );
+//static void CGEAR_SW_PATTERN_SetUp( CGEAR_SAVEDATA* pCGSV, ARCHANDLE* handle, u32 pattern, HEAPID heapID );
 
 
 #ifdef _NET_DEBUG
@@ -1214,7 +1186,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   _gearXY2PanelScreen(x, y, &scrx, &scry);
   cellInitData.pos_x = scrx * 8+16;
   cellInitData.pos_y = scry * 8+16;
-  cellInitData.anmseq = NANR_c_gear_obj_CellAnime01 + (pWork->select_type - CGEAR_PANELTYPE_IR);
+  cellInitData.anmseq = ACTANM_E_IR;// + (pWork->select_type - CGEAR_PANELTYPE_IR);
   cellInitData.softpri = 0;
   cellInitData.bgpri = CGEAR_CLACT_BG_PRI;
   i = x + y * C_GEAR_PANEL_WIDTH;
@@ -1230,9 +1202,9 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   }else{
   
     sel_select_wk->cellSelect = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                pWork->objRes[_CLACT_CHR],
+                                                pWork->objRes[_CLACT_CHR_PANEL],
                                                 pWork->objRes[_CLACT_PLT],
-                                                pWork->objRes[_CLACT_ANM],
+                                                pWork->objRes[_CLACT_ANM_PANEL],
                                                 &cellInitData ,
                                                 CGEAR_REND_SUB,
                                                 pWork->heapID );
@@ -1979,24 +1951,20 @@ static void _PanelPaletteChangeOff(C_GEAR_WORK* pWork, int change_panel, const P
 
 static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int mod, int mod_max )
 {
-  int pal;
+  int add,rgb,base;
+  int shift;
 
-  for(pal = 0; pal < _CGEAR_NET_CHANGEPAL_NUM; pal++)
-  {
-
-    int add,rgb,base;
-    int shift;
-    pWork->palTrans[change_panel][pal] = 0;
-    for(rgb = 0; rgb < 3; rgb++){
-      shift = rgb * 5;
-      base = (pWork->palBase[change_panel][pal] >> shift) & 0x1f;
-      add = ((pWork->palChangeCol[ pWork->palChangeType[change_panel] ][pal] >> shift) & 0x1f) - base;
-      pWork->palTrans[change_panel][pal] |= ((((add * mod) / mod_max) + base) & 0x1f)<<(shift);
-    }
-
-    // BGPalette
-    PaletteWorkSet( pWork->pfade_ptr, &pWork->palTrans[change_panel][pal], FADE_SUB_BG, (16*(pal+_CGEAR_NET_CHANGEPAL_POSY) + _CGEAR_NET_CHANGEPAL_POSX[change_panel]), 2 );
+  pWork->palTrans[change_panel] = 0;
+  for(rgb = 0; rgb < 3; rgb++){
+    shift = rgb * 5;
+    base = (pWork->palBase[change_panel] >> shift) & 0x1f;
+    add = ((pWork->palChangeCol[ pWork->palChangeType[change_panel] ][0] >> shift) & 0x1f) - base;
+    pWork->palTrans[change_panel] |= ((((add * mod) / mod_max) + base) & 0x1f)<<(shift);
   }
+
+  // BGPalette
+  PaletteWorkSet( pWork->pfade_ptr, &pWork->palTrans[change_panel],
+      FADE_SUB_OBJ, 16*(change_panel+_CGEAR_NET_CHANGEPAL_NO) + _CGEAR_NET_CHANGEPAL_OFS, 2 );
 }
 
 
@@ -2005,10 +1973,10 @@ static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int m
 
 static void _PaletteMake(C_GEAR_WORK* pWork,const u16* pltt,int type)
 {
-  int x=type,y;
+  int col;
 
-  for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_NUM; y++){
-    pWork->palChangeCol[x][y]= pltt[ (x*16) + 0xb+y ];
+  for( col = 0 ; col < _CGEAR_NET_CHANGEPAL_NUM; col++){
+    pWork->palChangeCol[type][col]= pltt[ (type*16) + col ];
   }
 }
 
@@ -2711,7 +2679,7 @@ static BOOL _gearBootMain(C_GEAR_WORK* pWork)
 
 
   // パネルアニメのシステムメイン
-  _PanelMarkAnimeSysMain( pWork );
+//  _PanelMarkAnimeSysMain( pWork );
 
   return FALSE;
 }
@@ -2748,7 +2716,7 @@ static BOOL _gearStartUpMain(C_GEAR_WORK* pWork)
 
 
   // パネルアニメのシステムメイン
-  _PanelMarkAnimeSysMain( pWork );
+//  _PanelMarkAnimeSysMain( pWork );
 
   return FALSE;
 }
@@ -2905,37 +2873,29 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-
-
-//static u32 _objpal[]={NARC_c_gear_c_gear_obj_NCLR,NARC_c_gear_c_gear2_obj_NCLR,NARC_c_gear_c_gear_obj_NCLR};
-//static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,NARC_c_gear_c_gear_obj_NCGR};
-
 static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans)
 {
   u32 scrno=0;
 
   if( pal_trans ){
-    int x,y, i;
+    int pal, i;
     void* buff;
     NNSG2dPaletteData* pltt;
     u16* pltt_data;
 
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, _bgpal[ sex ], &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_m_nclr+sex, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
 
     // 転送
 		DC_FlushRange( pltt->pRawData, pltt->szByte );
     GXS_LoadBGPltt( pltt->pRawData, 0, pltt->szByte );
 
     pltt_data = pltt->pRawData;
-    for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_NUM; y++){
-      for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_MAX; x++){
-        pWork->palBase[x][y] = pltt_data[(16*(_CGEAR_NET_CHANGEPAL_POSY+y)) + _CGEAR_NET_CHANGEPAL_POSX[x] ];
-      }
+    for( pal = 0 ; pal < _CGEAR_NET_CHANGEPAL_MAX; pal++){
+      pWork->palBase[pal] = pltt_data[(16*(_CGEAR_NET_CHANGEPAL_NO+pal)) + _CGEAR_NET_CHANGEPAL_NO ];
     }
     GFL_HEAP_FreeMemory( buff );
 
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_c_gear_obj_ani_NCLR, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_obj_ani_nclr, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
 
     for( i=0; i<_CGEAR_NET_PALTYPE_MAX; i++ ){
       _PaletteMake(pWork,pltt->pRawData,i);
@@ -2946,15 +2906,15 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
 
   //キャラ転送
   GFL_ARCHDL_UTIL_TransVramBgCharacter(
-    pWork->handle, NARC_c_gear_c_gear_NCGR, GEAR_MAIN_FRAME, 0, 
+    pWork->handle, NARC_c_gear_sw_c_gear_ncgr, GEAR_MAIN_FRAME, 0, 
     0, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
   
   //スクリーン転送
   GFL_ARCHDL_UTIL_TransVramScreen(
-    pWork->handle, NARC_c_gear_c_gear01_NSCR, GEAR_MAIN_FRAME, 0, 
+    pWork->handle, NARC_c_gear_sw_c_gear01_nscr, GEAR_MAIN_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
   GFL_ARCHDL_UTIL_TransVramScreen(
-    pWork->handle, NARC_c_gear_c_gear01_NSCR, GEAR_BUTTON_FRAME, 0, 
+    pWork->handle, NARC_c_gear_sw_c_gear02_nscr, GEAR_BUTTON_FRAME, 0, 
     0x800, FALSE, GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN ) );
 
 #if 0
@@ -2983,40 +2943,39 @@ static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex)
 {
   u32 scrno=0;
 
-
-
   pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( pWork->handle,
-                                                       _cellpal[sex],
-                                                       CLSYS_DRAW_SUB , 0 , HEAPID_FIELD_SUBSCREEN );
+                                                       NARC_c_gear_sw_c_gear_m_obj_nclr+pWork->sex,
+                                                       CLSYS_DRAW_SUB , 0 , pWork->heapID );
+
   pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( pWork->handle,
-                                                      NARC_c_gear_c_gear_obj_NCGR ,
-                                                      FALSE , CLSYS_DRAW_SUB , HEAPID_FIELD_SUBSCREEN );
+                                                      NARC_c_gear_sw_c_gear_obj_ncgr ,
+                                                      FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+  pWork->objRes[_CLACT_CHR_PANEL] = GFL_CLGRP_CGR_Register( pWork->handle,
+                                                      NARC_c_gear_sw_c_gear_btn_m1_ncgr ,
+                                                      FALSE , CLSYS_DRAW_SUB , pWork->heapID );
 
   pWork->objRes[_CLACT_ANM] = GFL_CLGRP_CELLANIM_Register( pWork->handle,
-                                                           NARC_c_gear_c_gear_obj_NCER ,
-                                                           NARC_c_gear_c_gear_obj_NANR ,
+                                                           NARC_c_gear_sw_c_gear_obj_ncer ,
+                                                           NARC_c_gear_sw_c_gear_obj_nanr ,
                                                            pWork->heapID );
-
+  pWork->objRes[_CLACT_ANM_PANEL] = GFL_CLGRP_CELLANIM_Register( pWork->handle,
+                                                           NARC_c_gear_sw_c_gear_btn_m1_ncer ,
+                                                           NARC_c_gear_sw_c_gear_btn_m1_nanr ,
+                                                           pWork->heapID );
 
   // ＣｒｏｓｓＯｂｊカラー取得
   {
     void * p_buff;
     NNSG2dPaletteData* p_pltt;
-    int i;
-    u32* p_pltdata;
-
-    p_buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_c_gear_obj_favorit_NCLR, &p_pltt, pWork->heapID );
-
+    u16* pltt_data;
+    p_buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_obj_ani_nclr, &p_pltt, pWork->heapID );
 
     // 色を保存
-    p_pltdata = (u32*)p_pltt->pRawData;
-    for( i=0; i<CROSS_COLOR_MAX; i++ ){
-      pWork->crossColor[i] = p_pltdata[ sc_CROSS_COLOR_RES_IDX[i] ];
-    }
+    pltt_data = (u16*)p_pltt->pRawData;
+    MI_CpuCopy16( &pltt_data[CROSS_COLOR_SRC_POS_START], pWork->crossColor, sizeof(u16)*CROSS_COLOR_MAX);
 
     GFL_HEAP_FreeMemory( p_buff );
   }
-
 
   GFL_NET_SetIconForcePosition( POS_COMM_ICON_X, POS_COMM_ICON_Y );
   GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
@@ -3310,9 +3269,9 @@ static GFL_CLWK* _gearObjAdd(C_GEAR_WORK* pWork, s16 x, s16 y, u8 anm, u8 bg_pri
   cellInitData.bgpri = bg_pri;
   
   obj = GFL_CLACT_WK_Create(  pWork->cellUnit ,
-                              pWork->objRes[_CLACT_CHR],
+                              pWork->objRes[_CLACT_CHR+res_idx],
                               pWork->objRes[_CLACT_PLT],
-                              pWork->objRes[_CLACT_ANM],
+                              pWork->objRes[_CLACT_ANM+res_idx],
                               &cellInitData ,
                               CGEAR_REND_SUB,
                               pWork->heapID );
@@ -3337,7 +3296,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
   for( i = 0; i < ACT_TIME_MAX; i++ )
   {
     pWork->cellCursor[ACT_T_HOUR1+i] = 
-      _gearObjAdd( pWork, POS_T_NUM_X+(POS_T_NUM_OX*i), POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, 0, 0 );
+      _gearObjAdd( pWork, POS_T_NUM_X+(POS_T_NUM_OX*i), POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, 0, _CLACT_RES_COMMON );
   }
   GFL_CLACT_WK_SetAnmSeq( pWork->cellCursor[ ACT_T_COLON ], ACTANM_N_COLON );
 
@@ -3351,24 +3310,24 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       u8  res_idx:4;
     }prm[]=
     {
-      { ACTANM_S_RADAR,   POS_AMPM_BASE_X, POS_AMPM_BASE_Y, ACT_SPRI_BASE, 0 },
-      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y, ACT_SPRI_PARTS, 0 },
-      { ACTANM_S_RADAR,   POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, ACT_SPRI_BASE, 0 },
-      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, ACT_SPRI_PARTS, 0 },
-      { ACTANM_LOGO_ALL,  POS_LOGO_X, POS_LOGO_Y, ACT_SPRI_PARTS, 0 },
-      { ACTANM_POWER,     POS_POWER_X, POS_POWER_Y, ACT_SPRI_PARTS, 0 },
+      { ACTANM_WIN,       POS_AMPM_BASE_X, POS_AMPM_BASE_Y, ACT_SPRI_BASE, _CLACT_RES_COMMON },
+      { ACTANM_AMPM,      POS_AMPM_X, POS_AMPM_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_WIN,       POS_BATTERY_BASE_X, POS_BATTERY_BASE_Y, ACT_SPRI_BASE, _CLACT_RES_COMMON },
+      { ACTANM_BATT2,     POS_BATTERY_X, POS_BATTERY_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_LOGO_ALL,  POS_LOGO_X, POS_LOGO_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_POWER,     POS_POWER_X, POS_POWER_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       
-      { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, ACT_SPRI_PARTS, 0 },
-      { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, ACT_SPRI_PARTS, 0 },
-      { ACTANM_BEACON,    POS_BEACON_X, POS_BEACON_Y, ACT_SPRI_PARTS, 0 },
-      { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, ACT_SPRI_PARTS, 0 },
+      { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_BEACON,    POS_BEACON_X, POS_BEACON_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+      { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       
-      { ACTANM_S_RADAR,   POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_BASE, 0 },
-      { ACTANM_P_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL, 0 },
-      { ACTANM_S_RADAR,   POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_BASE, 0 },
-      { ACTANM_P_WIRELESS,POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL, 0 },
-      { ACTANM_S_RADAR,   POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_BASE, 0 },
-      { ACTANM_P_WIFI,    POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL, 0 },
+      { ACTANM_IR,        POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_S_IR,      POS_IR_DEF_X, POS_IR_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_WIRELESS,  POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_S_WIRELESS,POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
+      { ACTANM_WIFI,      POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
+      { ACTANM_S_WIFI,    POS_WIFI_DEF_X, POS_WIFI_DEF_Y, ACT_SPRI_PANEL, _CLACT_RES_COMMON },
     };
 
     //セルの生成
@@ -3376,7 +3335,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     if(anm==ACTANM_BATT2 && OS_IsRunOnTwl() ){  //DSIなら
       anm = ACTANM_BATT3;
     }
-    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, anm, CGEAR_CLACT_BG_PRI, prm[i].s_pri, 0 );
+    pWork->cellCursor[ACT_AMPM_BASE+i] = _gearObjAdd( pWork, prm[i].x, prm[i].y, anm, CGEAR_CLACT_BG_PRI, prm[i].s_pri, prm[i].res_idx );
     IWASAWA_Printf("objCreate %d\n",i);
   }
 #if 0
@@ -3504,7 +3463,7 @@ static void _gearStartStartUpObjAnime(C_GEAR_WORK* pWork)
     //セルの生成
     cellInitData.pos_x = STARTUP_ANIME_POS_X;
     cellInitData.pos_y = STARTUP_ANIME_POS_Y;
-    cellInitData.anmseq = STARTUP_ANIME_INDEX_START + i;
+    cellInitData.anmseq = STARTUP_ANIME_INDEX_START;// + i;
     cellInitData.softpri = 0;
     cellInitData.bgpri = CGEAR_CLACT_BG_PRI;
     //↑矢印
@@ -3681,17 +3640,15 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
     
     if( log_count < 0 ){
       // 何もなしの色を設定
-      PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ 16 ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + (sc_CROSS_COLOR_RES_IDX[ put_count ]*2), 4 );
-
+      PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ 16 ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + put_count, 2 );
       put_count ++;
-      
     }else{
     
       beacon_info = GAMEBEACON_Get_BeaconLog(log_count);
       if(beacon_info != NULL){
         col = GAMEBEACON_Get_FavoriteColorIndex(beacon_info);
         // colの色を設定
-        PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ col ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + (sc_CROSS_COLOR_RES_IDX[ put_count ]*2), 4 );
+        PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ col ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + put_count, 2 );
 
         put_count ++;
       }
@@ -3738,7 +3695,7 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 {
   MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 
-  pWork->sex = MyStatus_GetMySex(pMy);
+  pWork->sex = MyStatus_GetMySex(pMy) % 2;  //PM_NEUTRALは男性扱い
   pWork->bgno = CGEAR_SV_GetCGearType(pWork->pCGSV);
 
   //セル系システムの作成
@@ -3803,7 +3760,9 @@ static void _arcGearRelease(C_GEAR_WORK* pWork)
   }
 
 
+  GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM_PANEL] );
   GFL_CLGRP_CELLANIM_Release( pWork->objRes[_CLACT_ANM] );
+  GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR_PANEL] );
   GFL_CLGRP_CGR_Release( pWork->objRes[_CLACT_CHR] );
   GFL_CLGRP_PLTT_Release( pWork->objRes[_CLACT_PLT] );
 
@@ -4090,7 +4049,12 @@ static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 {
+  if( _modeSelectWaitSubFadeEnd( pWork ) == TRUE ){
+    _gearAllObjDrawEnable( pWork, TRUE );
+    _CHANGE_STATE(pWork, _modeSelectMenuWait2);
+  }
 
+#if 0
   switch(pWork->state_seq){
   case STARTUP_SEQ_ANIME_START:
 
@@ -4225,7 +4189,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
   default:
     break;
   }
-  
+#endif 
 }
 
 //------------------------------------------------------------------------------
@@ -4372,7 +4336,7 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   pWork->createEvent = FIELD_SUBSCREEN_ACTION_NONE;
   pWork->doEvent = FIELD_SUBSCREEN_ACTION_NONE;
 
-  pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELD_SUBSCREEN );
+  pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR_SW, HEAPID_FIELD_SUBSCREEN );
 
   pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(4) );
   pWork->pfade_tcbsys = GFL_TCB_Init( 4, pWork->pfade_tcbsys_wk );
@@ -4553,11 +4517,11 @@ C_GEAR_WORK* CGEAR_SW_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSu
     pWork->pWork=NULL;
   }
 
-
+#if 0
   // 初期配置情報を設定
   CGEAR_SW_PATTERN_SetUp( pCGSV, pWork->handle, GFUser_GetPublicRand(CGEAR_PATTERN_MAX), 
       HEAPID_FIELD_SUBSCREEN );
-
+#endif
   // タイプの表示をリセット
 //  _typeAnimation(pWork);
 
@@ -4830,8 +4794,7 @@ void CGEAR_SW_SetStopTVTRingTone( C_GEAR_WORK* pWork )
   }
 }
 
-
-
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  パネルタイプを設定  （設定した場所をICONの場所にする。）
@@ -4875,7 +4838,7 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
 }
 
 
-
+#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -5205,7 +5168,7 @@ static void _BUTTONPAL_Init( C_GEAR_WORK* pWork, BUTTON_PAL_FADE* p_fwk )
 
     cellInitData.pos_x = 0;
     cellInitData.pos_y = 0;
-    cellInitData.anmseq = NANR_c_gear_obj_CellAnime_help;
+    cellInitData.anmseq = ACTANM_HELP;
     cellInitData.softpri = 0;
     cellInitData.bgpri = CGEAR_CLACT_BG_PRI;
 
@@ -5526,6 +5489,7 @@ static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction )
   }
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  patternの状態に変更
@@ -5541,4 +5505,4 @@ static void CGEAR_SW_PATTERN_SetUp( CGEAR_SAVEDATA* pCGSV, ARCHANDLE* handle, u3
 
   GFL_ARC_LoadDataByHandle( handle, pattern+NARC_c_gear_pattern01_bin, CGEAR_SV_GetPanelTypeBuff( pCGSV ) );
 }
-
+#endif
