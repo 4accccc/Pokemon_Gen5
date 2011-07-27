@@ -42,31 +42,27 @@
 // 光アニメの最終フレームと仮定するフレーム
 #define LIGHT_LAST_FRAME  ( 75 * FX32_ONE )
 
+#define TOP_CAMERA_ID     ( 43 )      // 頂上のカメラID camera_dataのエクセルのカメラ指定値
+
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+// セーブワーク
+typedef struct {
+  BOOL      exchange_flag;     // 点灯後に切り替えているか
+} CHAMPION_SV_WORK;
+
 //-------------------------------------
 ///	ギミック内部中の一時ワーク
 //=====================================
 typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
+  CHAMPION_SV_WORK    *p_sv_wk;       // セーブワーク
 
 } CHAMPION_TMP;
-
-#if 0
-//-------------------------------------
-///	照明点灯イベント用ワーク
-//=====================================
-typedef struct {
-  FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
-  FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
-
-} LIGHTING_EVENT_WORK;
-#endif
-
 
 //=============================================================================
 /**
@@ -77,9 +73,11 @@ typedef struct {
 enum{
   RESID_ROOM_00_MDL,        // 照明点灯前マップモデル
   RESID_ROOM_01_MDL,        // 照明点灯後マップモデル
+  RESID_ROOM_01_ANM_ICA,    // 照明点灯後マップアニメ
   RESID_RELIEF_00_MDL,      // 照明点灯前レリーフモデル
   RESID_RELIEF_01_MDL,      // 照明点灯後レリーフ
   RESID_RELIEF_01_ANM_ICA,  // 通常時レリーフ回転アニメ
+  RESID_RELIEF_02_ANM_ICA,  // 通常時レリーフ回転アニメ
   RESID_LIGHT_MDL,          // 差し込む光モデル
   RESID_LIGHT_ANM_ICA,      // 差し込む光アニメ
 };
@@ -98,17 +96,26 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
 {
   { ARCID_CHAMPION, NARC_champion_m_champ00_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_m_champ01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_CHAMPION, NARC_champion_m_champ01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief00_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_relief_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_CHAMPION, NARC_champion_c_relief_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbca, GFL_G3D_UTIL_RESARC },
 };
 
 // ANIME
+static const GFL_G3D_UTIL_ANM anm_room[] =
+{
+  { RESID_ROOM_01_ANM_ICA, 0 },
+};
+#define ANM_ROOM_NUM  ( NELEMS(anm_room) )
+
 static const GFL_G3D_UTIL_ANM anm_relief[] =
 {
   { RESID_RELIEF_01_ANM_ICA, 0 },
+  { RESID_RELIEF_02_ANM_ICA, 0 },
 };
 #define ANM_RELIEF_NUM  ( NELEMS(anm_relief) )
 
@@ -134,8 +141,8 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     RESID_ROOM_01_MDL,      // モデルリソースID
     0,                      // モデルデータID(リソース内部INDEX)
     RESID_ROOM_01_MDL,      // テクスチャリソースID
-    NULL,                   // アニメテーブル(複数指定のため)
-    0,                      // アニメリソース数
+    anm_room,               // アニメテーブル(複数指定のため)
+    ANM_ROOM_NUM,           // アニメリソース数
   },
   // OBJ_RELIEF_1
   {
@@ -177,6 +184,9 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 */
 //=============================================================================
 
+// INIT
+static void INIT_FieldRecover( CHAMPION_TMP *p_wk );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( CHAMPION_TMP *p_wk );
 static void EXPOBJ_ObjDell( CHAMPION_TMP *p_wk );
@@ -191,6 +201,7 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
 // LIGHT
 static void ANM_LIGHT_Play( CHAMPION_TMP *p_wk );
 static BOOL ANM_LIGHT_CheckEnd( CHAMPION_TMP *p_wk );
+static void ANM_LIGHT_SetLastFrame( CHAMPION_TMP *p_wk );
 
 // 照明が点灯するイベント
 static GMEVENT * LIGHTING_CreateEvent( GAMESYS_WORK* gsys );
@@ -199,6 +210,12 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk );
 // 殿堂入り部屋出現イベント
 static GMEVENT * HALL_ROOM_CreateEvent( GAMESYS_WORK* gsys );
 static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk );
+
+//-------------------------------------
+///	セーブ情報
+//=====================================
+static void SAVE_SetExchangeFlag( CHAMPION_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetExchangeFlag( const CHAMPION_SV_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -214,15 +231,21 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk );
 //--------------------------------------------------------------
 void CHAMPION_Setup( FIELDMAP_WORK *p_fieldmap )
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+
   // 汎用ワーク確保
   CHAMPION_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(p_fieldmap), sizeof(CHAMPION_TMP) );
 
-  p_wk->exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
-  p_wk->p_fieldmap = p_fieldmap;
+  p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  p_wk->p_fieldmap  = p_fieldmap;
+  p_wk->p_sv_wk     = GIMMICKWORK_Get( GAMEDATA_GetGimmickWork( p_gdata ), FLD_GIMMICK_C09R0501 );
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
+  // 初期化
+  INIT_FieldRecover( p_wk );
 }
 
 //--------------------------------------------------------------
@@ -350,6 +373,40 @@ GMEVENT* CHAMPION_HallRoom( GAMESYS_WORK *gsys )
  *					static関数
 */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ状態による初期化
+ *
+ *	@param	CHAMPION_TMP *p_wk ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void INIT_FieldRecover( CHAMPION_TMP *p_wk )
+{
+  const BOOL exchange_flag = SAVE_GetExchangeFlag( p_wk->p_sv_wk );
+
+  // 切り替え後ならモデルを点灯後にする
+  // アニメは初期化
+  if( exchange_flag == TRUE )
+  {
+    // ルーム表示切り替え
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_2, FALSE );
+
+    // レリーフ表示切り替え
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, TRUE );
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, FALSE );
+    {
+      // 無効化解除
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, TRUE );
+      // フレーム設定(1進めた状態にする)
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, FX32_ONE );
+    }
+
+    // 光差し込み状態に
+    ANM_LIGHT_SetLastFrame( p_wk );
+  }
+}
+
 //=============================================================================
 /**
  *          EXPOBJ
@@ -372,7 +429,7 @@ static void EXPOBJ_ObjSet( CHAMPION_TMP *p_wk )
   //=====================================
   // マップ
   EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_ROOM_1, 0, FALSE );
-  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_ROOM_2, 0, TRUE );
+  EXPOBJ_ObjSetOne( p_wk->exp_obj, OBJ_ROOM_2, ANM_ROOM_NUM, TRUE );
 
   //=====================================
   // レリーフ
@@ -558,6 +615,31 @@ static BOOL ANM_LIGHT_CheckEnd( CHAMPION_TMP *p_wk )
 
   return FALSE;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  差し込む光アニメラストフレーム状態に設定
+ *
+ *	@param	CHAMPION_TMP *p_wk  ギミックワーク
+ */
+//----------------------------------------------------------------------------
+static void ANM_LIGHT_SetLastFrame( CHAMPION_TMP *p_wk )
+{
+  fx32 last_frame;
+  u16 obj_idx = OBJ_LIGHT;
+  u16 anm_idx = 0;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx );
+
+  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, TRUE );
+  // 最終フレーム取得
+  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, FALSE );
+
+  // ラストフレームにする
+  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, last_frame );
+}
 
 //=============================================================================
 /**
@@ -603,7 +685,7 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
     SEQ_START,          // イベント開始
     SEQ_LIGHT_ANIME,    // 光アニメ
     SEQ_LIGHT_WAIT,     // 光アニメ待ち
-    SEQ_EXCHANGER,      // ルームモデル切り替え
+    SEQ_EXCHANGE,      // ルームモデル切り替え
     SEQ_END,            // イベント終了
   };
 
@@ -622,12 +704,12 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_LIGHT_WAIT:
     if( ANM_LIGHT_CheckEnd( p_wk ) == TRUE )
     {
-      *seq = SEQ_EXCHANGER;
+      *seq = SEQ_EXCHANGE;
     }
     break;
 
   // ルームモデル切り替え
-  case SEQ_EXCHANGER:
+  case SEQ_EXCHANGE:
     {
       // ルーム表示切り替え
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, TRUE );
@@ -638,24 +720,19 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
       FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, FALSE );
       // アニメはフレーム経過を引き継ぐ
       {
-        int i;
+        int   anm_idx = 0;    // レリーフ回転ica
+        fx32  tmp_frame;
+        EXP_OBJ_ANM_CNT_PTR exp_anm;
+        exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, anm_idx );
 
-        for( i=0; i<ANM_RELIEF_NUM; i++ )
-        {
-          fx32  tmp_frame;
-          EXP_OBJ_ANM_CNT_PTR exp_anm;
-          exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, i );
+        // 点灯前の経過フレーム取得
+        tmp_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, anm_idx );
 
-          // 点灯前の経過フレーム取得
-          tmp_frame = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, i );
+        // 点灯後再生
+        ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, anm_idx, tmp_frame, TRUE );
 
-          // 点灯後再生
-          ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, i, tmp_frame, TRUE );
-          
-          // 点灯前停止
-          ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, i );
-
-        }
+        // 点灯前停止
+        ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, anm_idx );
       }
 
       // ビル影を無効にする
@@ -671,6 +748,15 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
 
         // アトリビュートライト無効
         MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
+      }
+
+      // 切り替え後になったことを保存
+      SAVE_SetExchangeFlag( p_wk->p_sv_wk, TRUE );
+
+      // デフォルトカメラ変更
+      {
+        FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+        FIELD_CAMERA_SetCameraType( p_camera, TOP_CAMERA_ID );
       }
 
       *seq = SEQ_END;
@@ -719,16 +805,24 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
 {
   GAMESYS_WORK  *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-  CHAMPION_TMP  *p_gmk_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
+  CHAMPION_TMP  *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
 
   // 処理シーケンス
   enum{
-    SEQ_START,          // イベント開始
+    SEQ_ANM_START,      // イベント開始
     SEQ_END,            // イベント終了
   };
 
   switch( *seq ){
-  case SEQ_START:
+  case SEQ_ANM_START:
+    // 戦闘後アニメを再生
+    {
+      // レリーフのアニメ
+      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 1, 1, FALSE );
+
+      // マップのアニメ
+      ANM_Play( p_wk->exp_obj, OBJ_ROOM_2, 0, 0, FALSE );
+    }
     *seq = SEQ_END;
     break;
 
@@ -748,5 +842,36 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
   }
 
   return GMEVENT_RES_CONTINUE;
+}
+
+//=============================================================================
+/**
+ *          セーブ情報
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル切り替え後フラグを設定
+ *
+ *	@param	CHAMPION_SV_WORK *p_wk  セーブワーク
+ *	@param	flag  TRUEで切り替え後
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetExchangeFlag( CHAMPION_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->exchange_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル切り替え後フラグを取得
+ *
+ *	@param	CHAMPION_SV_WORK *p_wk  セーブワーク
+ *
+ *	@return	flag  TRUEで切り替え後
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetExchangeFlag( const CHAMPION_SV_WORK *p_wk )
+{
+  return p_wk->exchange_flag;
 }
 

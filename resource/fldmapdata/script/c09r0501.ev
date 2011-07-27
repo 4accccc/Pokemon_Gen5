@@ -35,6 +35,13 @@ EVENT_START ev_pos_c09r0501_lighting_01
   // 照明が点灯
   _CHAMPION_LIGHTING()
 
+  // アイリスとバトル
+  // 
+  _TIME_WAIT( 10 )
+
+  // 殿堂入り部屋出現
+  _CHAMPION_HALL_ROOM()
+
   //=====================================
   //このPOSの起動をさせなくする
   $LOCALWORK0 = 1
