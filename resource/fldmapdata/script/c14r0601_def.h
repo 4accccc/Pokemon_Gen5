@@ -5,6 +5,8 @@
 #define _C14R0601_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C14R0601 (1)
+#define SCRID_C14R0601_INFORMATIONW_01 (1)
+#define SCRID_C14R0601_OLDMAN_01 (2)
+#define SCRID_C14R0601_AMBRELLA_01 (3)
 
 #endif //_C14R0601_DEF_H_

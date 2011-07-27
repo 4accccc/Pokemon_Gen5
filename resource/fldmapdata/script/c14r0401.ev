@@ -10,7 +10,9 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c14r0401.h"
-  //.include  "c14r0401.h"
+  .include  "c14r0401.h"
+
+  //@author fujimura_souichirou
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +21,125 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c14r0401
+_EVENT_DATA    ev_c14r0401_nurse_01
+_EVENT_DATA    ev_c14r0401_doctor_01
+_EVENT_DATA    ev_c14r0401_poke45_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  ナース：話しかけ                                          */
 /**************************************************************/
-//ev_zone_c14r0401:
-//  _END
+EVENT_START   ev_c14r0401_nurse_01
+
+//手持ちにラブカスが要るか用変数定義
+DEFINE_LOCAL LWK_PARTY_NUM    //手持ちポケモンの数
+DEFINE_LOCAL LWK_COUNT_NUM    //WHILE文のカウンタ
+DEFINE_LOCAL LWK_RET_MONSNO   //ナンバーチェックの帰り値
+DEFINE_LOCAL LWK_CLEAR_POKE   //条件を満たしたポケモンの有無（ラブカス）
+DEFINE_LOCAL LWK_BAG_CHK      //バッグの空きチェック
+
+  _TALK_OBJ_START()
+
+  //ゲームクリア前の場合
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+    //ナース：マッギョの　たいらな　ところって
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //ゲームクリア後、アイテム入手前の場合
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( FE_C14R0401_ITEMGET_01 ) THEN
+
+    //ナース：みずポケモン　しらないかな？
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_02 )
+    _AB_KEYWAIT_MARK()
+
+    //手持ちのポケモンの数を確認（タマゴのポケモンは除外）
+    _GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_NOT_EGG )
+
+    //手持ちのポケモンの中にラブカスがいるか確認（繰り返し処理）
+    WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+      //指定POSのポケモンのNOを取得
+      _GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+
+      //チェックしたポケモンはラブカスか
+      IF $LWK_RET_MONSNO == 370 THEN
+        //条件を満たしていたら「１」
+        $LWK_CLEAR_POKE = 1
+      ENDIF
+
+      //カウント
+      $LWK_COUNT_NUM += 1
+
+    ENDWHILE
+
+    //バッグ空きチェック
+    _ADD_ITEM_CHK( ITEM_HAATONOUROKO, 5, LWK_BAG_CHK )
+
+    //手持ちにラブカスがいて、バッグに空きがある
+    IF $LWK_CLEAR_POKE == 1 && $LWK_BAG_CHK == TRUE THEN
+
+      //ナース：その　ハートがたの　ポケモン！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_03 )
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+
+      //アイテム（ハートのうろこ×５）入手
+      _ITEM_EVENT_NOWAIT( ITEM_HAATONOUROKO, 5 )
+
+      //========================================//
+      //アイテム入手フラグON
+      _FLAG_SET( FE_C14R0401_ITEMGET_01 )
+      //========================================//
+
+    //手持ちにラブカスがいたが、バッグがいっぱい
+    ELSIF $LWK_CLEAR_POKE == 1 && $LWK_BAG_CHK == FALSE THEN
+
+      //ナース：その　ハートがたの　ポケモン！▼
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_03 )
+      _AB_KEYWAIT_MARK()
+
+      //ナース：あれ？　バッグいっぱいに
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_04 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ELSE
+
+      //ナース：たしか　「ラ」で　はじまる　なまえで
+      _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_06 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  //ゲームクリア後、アイテム入手後の場合
+  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_ON( FE_C14R0401_ITEMGET_01 ) THEN
+
+    //ナース：マッギョも　ラブカスも
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_nurse_05 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*  ドクター：話しかけ                                        */
 /**************************************************************/
-ev_c14r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_c14r0401_doctor_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14r0401_doctor_01 )
+EVENT_END
+
+/**************************************************************/
+/*  マッギョ：話しかけ                                        */
+/**************************************************************/
+EVENT_START   ev_c14r0401_poke45_01
+  _EASY_TALK_POKEVOICE( MONSNO_589, msg_c14r0401_poke45_01 )
+EVENT_END
+
 

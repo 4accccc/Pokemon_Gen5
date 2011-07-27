@@ -9,6 +9,9 @@
 #ifndef ZONE_C14R0401_EVC_H
 #define ZONE_C14R0401_EVC_H
 
+#define C14R0401_NURSE_01                  0
+#define C14R0401_DOCTOR_01                 1
+#define C14R0401_POKE45_01                 2
 
 #endif //ZONE_C14R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

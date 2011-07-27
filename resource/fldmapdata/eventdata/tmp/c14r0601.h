@@ -9,6 +9,9 @@
 #ifndef ZONE_C14R0601_EVC_H
 #define ZONE_C14R0601_EVC_H
 
+#define C14R0601_INFORMATIONW_01           0
+#define C14R0601_OLDMAN_01                 1
+#define C14R0601_AMBRELLA_01               2
 
 #endif //ZONE_C14R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

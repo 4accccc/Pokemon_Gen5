@@ -10,6 +10,10 @@
 #ifndef ZONE_H01_EVC_H
 #define ZONE_H01_EVC_H
 
+#define H01_MIDDLEMAN1_01                  0
+#define H01_GIRL2_01                       1
+#define H01_BACKPACKERW_01                 2
+#define H01_TRAINERM_01                    3
 
 #endif //ZONE_H01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

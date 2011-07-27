@@ -5,5 +5,9 @@
 #define _H01_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_H01_MIDDLEMAN1_01 (1)
+#define SCRID_H01_GIRL2_01 (2)
+#define SCRID_H01_TRAINERM_01 (3)
+#define SCRID_H01_BACKPACKERW_01 (4)
 
 #endif //_H01_DEF_H_

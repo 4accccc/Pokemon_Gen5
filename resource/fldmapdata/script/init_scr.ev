@@ -201,6 +201,9 @@ init_flags:
   _FLAG_SET( FV_R07R0103_OL_01 )        //タワーオブヘブン：OL
   _FLAG_SET( FV_R07R0104_MAID_01 )      //タワーオブヘブン：メイド
 
+  //C06PC0101
+  _FLAG_SET( FV_C06PC0101_GIRL3_01 )      //フキヨセシティ：女の子
+
 
 }
 _RET

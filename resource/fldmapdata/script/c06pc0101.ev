@@ -21,10 +21,11 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c06pc0101_shop
-_EVENT_DATA    ev_c06pc0101_fix_shop
-_EVENT_DATA    ev_c06pc0101_pilot_01
-_EVENT_DATA    ev_c06pc0101_poke41_01
+_EVENT_DATA   ev_c06pc0101_shop
+_EVENT_DATA   ev_c06pc0101_fix_shop
+_EVENT_DATA   ev_c06pc0101_pilot_01
+_EVENT_DATA   ev_c06pc0101_poke41_01
+_EVENT_DATA   ev_c06pc0101_girl3_01
 _EVENT_DATA_END
 
 
@@ -39,23 +40,30 @@ EVENT_END
 //=============================================================
 //ショップカウンター 固定ショップ
 //=============================================================
-EVENT_START ev_c06pc0101_fix_shop
+EVENT_START   ev_c06pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL_GREETING_WAZA( C06_FS )
 EVENT_END
 
 /**************************************************************/
-/*  PILOT:話しかけ                                            */
+/*  パイロット：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c06pc0101_pilot_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06pc0101_pilot_01 )
 EVENT_END
 
 /**************************************************************/
-/*  POKE41：話しかけ（コアルヒー）                            */
+/*  コアルヒー：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c06pc0101_poke41_01
   _EASY_TALK_POKEVOICE( MONSNO_609, msg_c06pc0101_poke41_01 )
+EVENT_END
+
+/**************************************************************/
+/*  女の子：話しかけ（バトルタワーで勝利した後に出現）        */
+/**************************************************************/
+EVENT_START   ev_c06pc0101_girl3_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06pc0101_girl3_01 )
 EVENT_END
 
 

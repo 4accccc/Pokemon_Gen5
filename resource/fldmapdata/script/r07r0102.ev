@@ -23,6 +23,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_init_r07r0102
 _EVENT_DATA   ev_r07r0102_woman3_01
+_EVENT_DATA   ev_r07r0102_girl3_01
+_EVENT_DATA   ev_pos_r07r0102_girl3_01
 _EVENT_DATA_END
 
 //主人公の座標、方向取得変数
@@ -103,6 +105,63 @@ EVENT_START   ev_r07r0102_woman3_01
 
 EVENT_END
 
+
+/********************************************************************/
+/*  女の子：話しかけ（バトル勝利後にいなくなる）                    */
+/********************************************************************/
+EVENT_START   ev_r07r0102_girl3_01
+
+  _TALK_OBJ_START()
+
+  //既に戦ったかチェック
+  _TRAINER_FLAG_CHECK( TRID_SCHOOLG_12, SCWK_ANSWER )
+
+  //まだ勝利していない
+  IF $SCWK_ANSWER == FALSE THEN
+
+    //トレーナー曲再生
+    _TRAINER_BGM_SET( TRID_SCHOOLG_12 )
+
+    //女の子：ヒトモシちゃんの　あかりに　たよれば
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_girl3_01 )
+    _AB_KEYWAIT_MARK()
+    _BALLOONWIN_CLOSE()
+
+    //トレーナー戦呼び出し
+    _TRAINER_BTL_SET( TRID_SCHOOLG_12, 0 )
+
+    //結果チェック
+    _CALL ev_battle_check
+
+    //========================================/
+    //イベント進行
+    $WK_SCENE_R07R0102_GIRL3_01 = 1
+    //イベント用フラグON
+    _FLAG_SET( FE_R07R0102_GIRL3_01 )
+    //バニッシュフラグ操作（ここから消えてポケセンへ）
+    _FLAG_SET( FV_R07R0102_GIRL3_01 )
+    _FLAG_RESET( FV_C06PC0101_GIRL3_01 )
+    //トレーナーフラグセット
+    _TRAINER_FLAG_SET( TRID_SCHOOLG_12 )
+    //========================================/
+
+    //女の子：まけて　ガックリ……
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_girl3_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //既に勝利している
+  ELSE
+
+    //女の子：まけて　ガックリ……
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_girl3_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
+
 ev_battle_check:
   //敗戦チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -113,6 +172,60 @@ ev_battle_check:
     _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 _RET
+
+/********************************************************************/
+/*  POS:女の子接近（トレーナー風）                                  */
+/********************************************************************/
+EVENT_START   ev_pos_r07r0102_girl3_01
+
+  //トレーナー曲再生
+  _TRAINER_BGM_SET( TRID_SCHOOLG_12 )
+
+  //アニメ：女の子「！」
+  _OBJ_ANIME( R07R0102_GIRL3_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //主人公座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+
+  //アニメ：女の子接近
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( R07R0102_GIRL3_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：主人公振り向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  //女の子：ヒトモシちゃんの　あかりに　たよれば
+  _BALLOONWIN_OBJMSG( msg_r07r0101_girl3_01, R07R0102_GIRL3_01 )
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SCHOOLG_12, 0 )
+
+  //結果チェック
+  _CALL ev_battle_check
+
+  //========================================/
+  //イベント進行
+  $WK_SCENE_R07R0102_GIRL3_01 = 1
+  //イベント用フラグON
+  _FLAG_SET( FE_R07R0102_GIRL3_01 )
+  //バニッシュフラグ操作（ここから消えてポケセンへ）
+  _FLAG_SET( FV_R07R0102_GIRL3_01 )
+  _FLAG_RESET( FV_C06PC0101_GIRL3_01 )
+  //トレーナーフラグセット
+  _TRAINER_FLAG_SET( TRID_SCHOOLG_12 )
+  //========================================/
+
+  //女の子：まけて　ガッカリ……
+  _BALLOONWIN_OBJMSG( msg_r07r0101_girl3_02, R07R0102_GIRL3_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+
+EVENT_END
 
 
 //--------------------------------------------------------------------
@@ -132,6 +245,13 @@ _ANIME_LABEL  anm_staystep_l
 
 _ANIME_LABEL  anm_staystep_r
   _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_common_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
 
