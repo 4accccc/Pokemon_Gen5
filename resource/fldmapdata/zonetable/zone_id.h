@@ -531,7 +531,7 @@
 #define ZONE_ID_C16R1401         (527)
 #define ZONE_ID_C16R1501         (528)
 #define ZONE_ID_C16R1601         (529)
-#define ZONE_ID_D07R601          (530)
+#define ZONE_ID_D07R0601         (530)
 #define ZONE_ID_D25R0201         (531)
 #define ZONE_ID_D25R0301         (532)
 #define ZONE_ID_D25R0401         (533)
