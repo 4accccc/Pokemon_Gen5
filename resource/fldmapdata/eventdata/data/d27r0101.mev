@@ -1,5 +1,5 @@
 #event data
-#save date:2011/06/30 16:29:14
+#save date:2011/07/27 14:06:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0101.wms
 #SECTION START:OBJ_EVENT
@@ -39,7 +39,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0101.wms
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
 #Door Event Label
 DOOR_ID_D27R0101_D27R0201_EXIT01
@@ -106,6 +106,23 @@ EXIT_TYPE_DOOR
 EVENTDATA_POSTYPE_GRID
 #position
 40 0 -536
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_D27R0101_D27R1201_EXIT01
+#Next Zone ID Name
+ZONE_ID_D27R1201
+#Next Door ID Name
+DOOR_ID_D27R1201_D27R0101_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_DOOR
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+40 0 24
 #size
 1 1
 #Map Event List Data End

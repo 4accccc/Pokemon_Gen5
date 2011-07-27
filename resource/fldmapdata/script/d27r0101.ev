@@ -23,7 +23,8 @@ _EVENT_DATA    ev_init_d27r0101
 _EVENT_DATA    ev_recover_d27r0101
 _EVENT_DATA_END
 
-
+//ÉoÅ[ÉWÉáÉìéÊìæ
+DEFINE_LOCAL LCWK_VERSION
 /************************************************************/
 /*					FIELD_INIT_LABEL  						*/
 /************************************************************/
@@ -54,9 +55,11 @@ sub_exit_change:
   // B2
   IF $version == VERSION_B2 THEN
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D27R0701_EXIT02, 0, 0, 0 ) 
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D27R1201_EXIT01, 1, 0, 5 )
   // W2
   ELSE
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D27R0701_EXIT01, 0, 0, 0 ) 
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R0101_D27R0201_EXIT01, 1, 0, 5 )
   ENDIF
 }
 _RET
