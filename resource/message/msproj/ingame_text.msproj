@@ -945,9 +945,9 @@
 				<ContentItem
 					Name="d07r0501.mstxt" />
 				<ContentItem
-					Name="d07r0701.mstxt" />
+					Name="d07r0601.mstxt" />
 				<ContentItem
-					Name="d07r601.mstxt" />
+					Name="d07r0701.mstxt" />
 				<ContentItem
 					Name="d08.mstxt" />
 				<ContentItem
@@ -1706,6 +1706,8 @@
 					Name="wbt_hall.mstxt" />
 				<ContentItem
 					Name="wbt_lobby.mstxt" />
+				<ContentItem
+					Name="wbt_subevent.mstxt" />
 				<ContentItem
 					Name="wc10.mstxt" />
 				<ContentItem

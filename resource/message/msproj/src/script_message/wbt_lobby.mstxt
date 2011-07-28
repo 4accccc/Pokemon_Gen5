@@ -3029,11 +3029,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ざんねん　でしたね
-またの　さんかを　おまちしております</Text>
+			<Text>……ざんねん　でしたね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="tamada:W00253"
+				Time="2011-07-28T10:09:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3041,11 +3040,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……残念でしたね
-またの　参加を　お待ちしております</Text>
+			<Text>……残念でしたね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="tamada:W00253"
+				Time="2011-07-28T10:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3086,11 +3084,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あと　いっぽで　けっしょうせん……
-またの　さんかを　おまちしております</Text>
+			<Text>あと　いっぽで　けっしょうせん……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="tamada:W00253"
+				Time="2011-07-28T10:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3098,11 +3095,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あと　一歩で　決勝戦……
-またの　参加を　お待ちしております</Text>
+			<Text>あと　一歩で　決勝戦……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="tamada:W00253"
+				Time="2011-07-28T10:09:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3143,10 +3139,10 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮　けっしょうせんで負けた場合</Text>
+			<Text>仮　けっしょうせんで負けた場合▼</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-07-22T07:13:27" />
+				Time="2011-07-28T10:08:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3154,10 +3150,10 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮　けっしょうせんで負けた場合</Text>
+			<Text>仮　けっしょうせんで負けた場合▼</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-07-22T07:13:30" />
+				Time="2011-07-28T10:08:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
