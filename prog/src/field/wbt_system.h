@@ -30,6 +30,8 @@ typedef struct _WBTTRAINER WBTTRAINER;
 //------------------------------------------------------------------
 typedef struct _WBTRESULT WBTRESULT;
 
+typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -88,11 +90,9 @@ extern void WBTSYS_DEBUG_dumpTrainer( const WBTSYS * wbtsys );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
-extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list );
 
 extern const WBTTRAINER * WBTSYS_GetTrainer( const WBTSYS * wbtsys, u32 pos );
-extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
 
 extern const WBTTRAINER * WBTSYS_GetOpponentTrainer( const WBTSYS * wbtsys );
 
@@ -107,6 +107,18 @@ extern void WBTSYS_GetOpponentName( WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTSYS_GetOpponentSex( WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( WBTSYS * wbtsys );
 extern void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm );
+
+//------------------------------------------------------------------
+//  in wbt_calc_result.c
+//------------------------------------------------------------------
+extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
+extern u32 WBTSYS_GetOpponentPos( const WBTSYS * wbtsys );
+
+//------------------------------------------------------------------
+//  in wbt_makematch.c
+//------------------------------------------------------------------
+extern void WBTSYS_MakeEntryList( const WBT_MATCH_CONDITION * cond, u16 * tr_list );
+extern void WBTSYS_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 
 //============================================================================================
 //============================================================================================

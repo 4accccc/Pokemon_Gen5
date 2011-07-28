@@ -996,6 +996,7 @@ SRCS_OVERLAY_SCRCMD_WBT  =  field/scrcmd_wbt.c \
                             field/wbt_system.c \
                             field/wbt_calc_result.c \
                             field/wbt_tool.c \
+                            field/wbt_makematch.c \
                             field/wbt_setup.c
 
 # スクリプトコマンド並列化　レゾナンスリゾート

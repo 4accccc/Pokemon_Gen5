@@ -429,7 +429,7 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   cond.poketype = wbtsys->poketype;
   cond.seed64 = wbtsys->seed64;
 
-  WBTTOOL_MakeEntryList( &cond, tr_list );
+  WBTSYS_MakeEntryList( &cond, tr_list );
 
   WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
 #ifdef  PM_DEBUG
@@ -437,7 +437,7 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   TAMADA_Printf("\n");
 #endif
 
-  WBTTOOL_SortTrainer( wbtsys->wbt_trainer , wbtsys->seed64, wbtsys->heapID );
+  WBTSYS_SortTrainer( wbtsys->wbt_trainer, wbtsys->seed64, wbtsys->heapID );
 #ifdef  PM_DEBUG
   WBTSYS_DEBUG_dumpTrainer( wbtsys );
 #endif
