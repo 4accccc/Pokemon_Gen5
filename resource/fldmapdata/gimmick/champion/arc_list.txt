@@ -7,4 +7,5 @@
 "c_relief_02.nsbca"
 "c_light.nsbmd"
 "c_light.nsbca"
+"c_light.nsbma"
 

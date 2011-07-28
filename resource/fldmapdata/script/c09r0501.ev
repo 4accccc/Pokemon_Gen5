@@ -37,10 +37,11 @@ EVENT_START ev_pos_c09r0501_lighting_01
 
   // アイリスとバトル
   // 
-  _TIME_WAIT( 10 )
+  //_TIME_WAIT( 10 )
 
   // 殿堂入り部屋出現
-  _CHAMPION_HALL_ROOM()
+  // 確認のためにコメントアウトしている
+  //_CHAMPION_HALL_ROOM()
 
   //=====================================
   //このPOSの起動をさせなくする

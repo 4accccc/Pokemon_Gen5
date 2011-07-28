@@ -81,6 +81,7 @@ enum{
   RESID_RELIEF_02_ANM_ICA,  // 通常時レリーフ回転アニメ
   RESID_LIGHT_MDL,          // 差し込む光モデル
   RESID_LIGHT_ANM_ICA,      // 差し込む光アニメ
+  RESID_LIGHT_ANM_IMA,      // 差し込む光アニメ
 };
 
 // OBJインデックス
@@ -104,6 +105,7 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_CHAMPION, NARC_champion_c_relief_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_CHAMPION, NARC_champion_c_light_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_CHAMPION, NARC_champion_c_light_nsbma, GFL_G3D_UTIL_RESARC },
 };
 
 // ANIME
@@ -123,6 +125,7 @@ static const GFL_G3D_UTIL_ANM anm_relief[] =
 static const GFL_G3D_UTIL_ANM anm_light[] =
 {
   { RESID_LIGHT_ANM_ICA, 0 },
+  { RESID_LIGHT_ANM_IMA, 0 },
 };
 #define ANM_LIGHT_NUM  ( NELEMS(anm_light) )
 
@@ -596,12 +599,16 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx )
 //-----------------------------------------------------------------------------
 static void ANM_LIGHT_Play( CHAMPION_TMP *p_wk )
 {
+  int i;
   u16 obj_idx = OBJ_LIGHT;
 
   // 表示
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, FALSE );
 
-  ANM_Play( p_wk->exp_obj, obj_idx, 0, 0, FALSE );
+  for( i=0; i<ANM_LIGHT_NUM; i++ )
+  {
+    ANM_Play( p_wk->exp_obj, obj_idx, i, 0, FALSE );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -636,21 +643,26 @@ static BOOL ANM_LIGHT_CheckEnd( CHAMPION_TMP *p_wk )
 //----------------------------------------------------------------------------
 static void ANM_LIGHT_SetLastFrame( CHAMPION_TMP *p_wk )
 {
+  int i;
   fx32 last_frame;
   u16 obj_idx = OBJ_LIGHT;
   u16 anm_idx = 0;
   EXP_OBJ_ANM_CNT_PTR exp_anm;
-  exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx );
-
-  FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, TRUE );
-  // 最終フレーム取得
-  last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
 
   // 表示
   FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, FALSE );
 
-  // ラストフレームにする
-  FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, anm_idx, last_frame );
+  for( i=0; i<ANM_LIGHT_NUM; i++ )
+  {
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, i );
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, i, TRUE );
+
+    // 最終フレーム取得
+    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+    // ラストフレームにする
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, obj_idx, i, last_frame );
+  }
 }
 
 //=============================================================================
@@ -770,6 +782,12 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
 
       // 切り替え後になったことを保存
       SAVE_SetExchangeFlag( p_wk->p_sv_wk, TRUE );
+
+      // デフォルトカメラも頂上用に変更
+      {
+        FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( p_fieldmap );
+        FIELD_CAMERA_SetCameraType( p_camera, TOP_CAMERA_ID );
+      }
 
       *seq = SEQ_END;
     }
