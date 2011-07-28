@@ -276,15 +276,59 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r1201_pass_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　パスワードは
+まちがって　います</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:44:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:44:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　パスワードは
+間違って　います</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:44:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:44:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント：船首楼
+・White2ver
+・カードキーを持っている
+・入力ワードが不正解</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:44:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>入力端末</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:44:04" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r1201_switch_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべての　バリアが　かいじょ　され
-さきに　すすめるように　なった！</Text>
+			<Text>バリアが　かいじょ　された！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:01:23" />
+				Time="2011-07-28T12:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -292,11 +336,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべての　バリアが　解除され
-先に　進めるように　なった！</Text>
+			<Text>バリアが　解除された！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:01:23" />
+				Time="2011-07-28T12:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -305,11 +348,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>イベント：船首楼
-・White2ver
-・すべてのバリアーが解除されたとき</Comment>
+・White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T07:01:31" />
+				Time="2011-07-28T12:43:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -325,5 +367,49 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1201_switch_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すべての　バリアが　かいじょ　され
+さきに　すすめるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:43:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:43:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すべての　バリアが　解除され
+先に　進めるように　なった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:43:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:43:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イベント：船首楼
+・White2ver
+・すべてのバリアーが解除されたとき</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:43:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>装置</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T12:43:47" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
