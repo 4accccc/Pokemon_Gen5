@@ -1458,4 +1458,100 @@
 				Time="2011-07-19T06:12:38" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_020">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:20:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:20:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:20:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:20:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>主人公名</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:20:40" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_021">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうゆうしょうかいすう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:21:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:21:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうゆうしょうかいすう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:21:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:21:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>総優勝回数</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:21:34" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_wincount_022">
+		<LanguageCell
+			Language="JPN">
+			<Text>なまえ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:22:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:22:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なまえ</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:22:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:22:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>主人公名</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T10:22:19" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

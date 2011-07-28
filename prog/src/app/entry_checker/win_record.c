@@ -92,7 +92,7 @@ enum{
 };
 
 // パレット
-// 上：BG  (0-2:BG)
+// 上：BG  (0-2:BG、8:font)
 // 上：OBJ (0:キャラ、14:通信アイコン)
 //
 // 下：BG  (0,1:BG、2:パネル、8:FONT)
@@ -102,6 +102,7 @@ enum{
 	PLTID_BG_FONT				= 8,		// font
 	PLTID_BG_BASE				= 4,		// 通常bg
 	//
+	PLTID_SUB_BG_FONT			= 8,		// font
 	//
 	// (obj)
 	PLTID_OBJ_CMN				= 11,		// cmnのpalのoffset
@@ -113,7 +114,7 @@ enum{
 
 // 最大値
 enum{
-	WIN_RECORD_CANVAS_MAXNUM 	= 1,		// canvas
+	WIN_RECORD_CANVAS_MAXNUM 	= 5,		// canvas
 	WIN_RECORD_BMPOAM_MAXNUM	= 8,		// bmpoam
 	WIN_RECORD_EMPTY_MAXNUM		= 15*2,		// empty
 	//
@@ -256,6 +257,18 @@ enum{
 	SCRL_TOP_Y			= 32,				// レール上部のY座標
 	SCRL_DOWN_Y			= 160,				// レール下部のY座標
 	SCRL_BAR_SIZE		= 16,				// バーのサイズ
+};
+
+//-------------------
+// canvas
+//-------------------
+enum{
+	WIN_RECORD_CVS_CAPTION = 0,				// キャプション
+	//
+	WIN_RECORD_CVS_NAME_00,					// 名前(fix)
+	WIN_RECORD_CVS_NAME_01,					// 名前
+	WIN_RECORD_CVS_NUM_00,					// 回数(fix)
+	WIN_RECORD_CVS_NUM_01,					// 回数
 };
 
 //-------------------
@@ -517,7 +530,12 @@ static const WIN_RECORD_OBJ_DATA wr_obj_up_tbl[] = {
 //---------------
 // (printutilと対応)
 static const WIN_RECORD_CANVAS_DATA wr_canvas_tbl[] = {
-	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	8,},		// 上名前
+	{ GFL_BG_FRAME0_M,	1,	1,	30,	2,	8,},		// 下、上名前
+	//
+	{ GFL_BG_FRAME0_S,	2,	7,	16,	2,	8,},		// 上、なまえ(項目)
+	{ GFL_BG_FRAME0_S,	4,	9,	16,	2,	8,},		// 上、なまえ
+	{ GFL_BG_FRAME0_S,	2, 12,	20,	2,	8,},		// 上、そうゆうしょうかいすう(項目)
+	{ GFL_BG_FRAME0_S,	4, 14,	16,	2,	8,},		// 上、かいすう
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -526,11 +544,14 @@ static const WIN_RECORD_CANVAS_DATA wr_canvas_tbl[] = {
 // メッセージ関連
 //------------------
 // その他メッセージ
-static const u8 wr_gmm_tbl[] = {
+static const s16 wr_gmm_tbl[] = {
 	msg_wbt_wincount_01,			// 「プレイヤ名」の
 	msg_wbt_wincount_02,			// ゆうしょうかいすう
 	msg_wbt_wincount_03,			// ○○かい
-	0xff,
+	//
+	msg_wbt_wincount_022,			// なまえ(fix)
+	msg_wbt_wincount_021,			// そうゆうしょうかいすう(fix)
+	msg_wbt_wincount_020,			// ○○(なまえ)
 };
 
 // トーナメント名
@@ -745,10 +766,12 @@ static BOOL wr_is_anime_end( WIN_RECORD_MAIN_WORK *wk, const s32 wmode, const s3
 //
 // 文字列関連
 static void wr_init_string( WIN_RECORD_MAIN_WORK* wk );
-static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode );
+static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode,
+								const PRINTSYS_LSB col);
 static void wr_exit_string( WIN_RECORD_MAIN_WORK* wk );
 static void wr_clear_canvas( WIN_RECORD_MAIN_WORK* wk, const s32 mode );
 static void wr_disp_string_id( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 mesid, const s32 xpos, const s32 ypos, const u32 dispmode );
+static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk );
 //
 // パラメータ関連
 static void wr_init_param( WIN_RECORD_MAIN_WORK* wk );
@@ -1738,13 +1761,17 @@ static void wr_init_string( WIN_RECORD_MAIN_WORK* wk )
 	// fontパレットの転送
 	{
 		ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, wk->heapID );
-		//上画面フォントパレット
+		// 上画面フォントパレット
+		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_SUB_BG, PLTID_SUB_BG_FONT*0x20, 0x20, wk->heapID );
+		// 下画面フォントパレット
 		GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_font_talkwin_nclr, PALTYPE_MAIN_BG, PLTID_BG_FONT*0x20, 0x20, wk->heapID );
 		GFL_ARC_CloseDataHandle( p_handle );
 	}
 	//
 	// ゆうしょう回数
 	wr_disp_string_id( wk, 0, wr_gmm_tbl[1], 0, 0, PRINTTOOL_MODE_LEFT );
+	//
+	wr_disp_up_string( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -1761,7 +1788,8 @@ static void wr_init_string( WIN_RECORD_MAIN_WORK* wk )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode )
+static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 dispmode, 
+							const PRINTSYS_LSB col )
 {
 	// 表示
 	PRINTTOOL_PrintColor(
@@ -1770,7 +1798,8 @@ static void wr_disp_string( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s32 
 				x, y,							// 表示基準座標
 				strbuf,							// 文字列
 				wk->font,						// フォント
-				PRINTSYS_LSB_Make(15,2,0),		// カラー
+//				PRINTSYS_LSB_Make(15,2,0),		// カラー
+				col,							// カラー
 				dispmode );						// 位置
 }
 
@@ -1828,9 +1857,59 @@ static void wr_disp_string_id( WIN_RECORD_MAIN_WORK* wk, const s32 mode, const s
 	STRBUF		*strbuf;
 	//
 	strbuf = GFL_MSG_CreateString( wk->msg[0], mesid );
-	wr_disp_string( wk, mode, xpos, ypos, strbuf, dispmode );
+	wr_disp_string( wk, mode, xpos, ypos, strbuf, dispmode, PRINTSYS_LSB_Make(15,2,0) );
 	// 破棄
 	GFL_STR_DeleteBuffer( strbuf );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  文字列表示(上画面まとめ)
+ *
+ *	@param	WIN_RECORD_MAIN_WORK* wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wr_disp_up_string( WIN_RECORD_MAIN_WORK* wk )
+{
+	STRBUF		*strbuf;
+	STRBUF		*strbuf2;
+	STRBUF		*expbuf;
+	//
+	// なまえ(fix)
+	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[3] );
+	wr_disp_string( wk, WIN_RECORD_CVS_NAME_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+	// なまえ
+	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+	MyStatus_CopyNameString( wk->Param->my_status, strbuf2 );
+	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+	// 最終出力バッファ
+	expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
+	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[5] );
+	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf );
+	wr_disp_string( wk, WIN_RECORD_CVS_NAME_01, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+	GFL_STR_DeleteBuffer( strbuf2 );
+	GFL_STR_DeleteBuffer( expbuf );
+	// 回数(fix)
+	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[4] );
+	wr_disp_string( wk, WIN_RECORD_CVS_NUM_00, 0, 0, strbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+	//
+	// 回数
+	strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
+	STRTOOL_SetNumber( strbuf2, 1234, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
+	// 最終出力バッファ
+	expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
+	strbuf = GFL_MSG_CreateString( wk->msg[0], wr_gmm_tbl[2] );
+	WORDSET_ExpandStr( wk->Wordset, expbuf, strbuf );
+	wr_disp_string( wk, WIN_RECORD_CVS_NUM_01, 0, 0, expbuf, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(1,2,0) );
+	GFL_STR_DeleteBuffer( strbuf );
+	GFL_STR_DeleteBuffer( strbuf2 );
+	GFL_STR_DeleteBuffer( expbuf );
 }
 
 //-----------------------------------------------------------------------------------------------------------------
