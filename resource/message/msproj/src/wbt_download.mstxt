@@ -412,6 +412,46 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="wbt_dl_cap_013">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-28T10:31:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-28T10:31:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-28T10:32:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-28T10:32:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬ詳細画面見出し
+</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-28T10:32:18" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-07-28T10:32:36" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="wbt_dl_ev_msg_01">
 		<LanguageCell
 			Language="JPN">
