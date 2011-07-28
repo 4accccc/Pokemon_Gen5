@@ -1,9 +1,9 @@
 static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_BC10 = 0
-		RSC_GRID_RANDOM_MAP,
+		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_OUT19,
-		MATRIX_ID_BC,
+		MATRIX_ID_SWBC,
 		NARC_script_seq_bc10_bin,
 		NARC_script_seq_sp_bc10_bin,	//NARC_script_seq_sp_bc10_bin,
 		NARC_script_message_bc10_dat,
@@ -27,7 +27,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_BC, // camera_area
+		MATRIX_ID_SWBC, // camera_area
 		15,   // padding > placeicon
     0,
 		43,
@@ -14840,10 +14840,10 @@ static const ZONEDATA ZoneData[] = {
 		744,
 	},
 	{//ZONE_ID_WC10 = 424
-		RSC_GRID_RANDOM_MAP,
+		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_OUT48,
-		MATRIX_ID_WF,
+		MATRIX_ID_SWWF,
 		NARC_script_seq_wc10_bin,
 		NARC_script_seq_sp_wc10_bin,	//NARC_script_seq_sp_wc10_bin,
 		NARC_script_message_wc10_dat,
@@ -14867,7 +14867,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_WF, // camera_area
+		MATRIX_ID_SWWF, // camera_area
 		15,   // padding > placeicon
     0,
 		43,
@@ -20058,7 +20058,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_OUT19,
-		MATRIX_ID_SWBC,
+		MATRIX_ID_BC,
 		NARC_script_seq_c00r0101_bin,
 		NARC_script_seq_sp_c00r0101_bin,	//NARC_script_seq_sp_c00r0101_bin,
 		NARC_script_message_c00r0101_dat,
@@ -20082,7 +20082,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_SWBC, // camera_area
+		MATRIX_ID_BC, // camera_area
 		15,   // padding > placeicon
     0,
 		5,
@@ -20093,7 +20093,7 @@ static const ZONEDATA ZoneData[] = {
 		RSC_GRID_NOSCROLL,
 		MMLID_NOENTRY,
 		AREA_ID_OUT48,
-		MATRIX_ID_SWWF,
+		MATRIX_ID_WF,
 		NARC_script_seq_c00r0201_bin,
 		NARC_script_seq_sp_c00r0201_bin,	//NARC_script_seq_sp_c00r0201_bin,
 		NARC_script_message_c00r0201_dat,
@@ -20117,7 +20117,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
     TRUE,
     TRUE,
-		MATRIX_ID_SWWF, // camera_area
+		MATRIX_ID_WF, // camera_area
 		15,   // padding > placeicon
     0,
 		5,
