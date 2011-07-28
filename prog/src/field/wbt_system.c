@@ -1098,6 +1098,16 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
   case BTL_RESULT_DRAW:
     break;
   }
+  if ( result == BTL_RESULT_WIN )
+  {
+    //í‚Á‚½‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚ğ”½‰f
+    const WBTTRAINER * wbt_tr = WBTSYS_GetOpponentTrainer( wbtsys );
+    if ( wbt_tr->tr_id < WBTSAVE_FLAG_MAX )
+    {
+      WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
+      WBTSAVE_SetFlag( wbtsave, wbt_tr->tr_id );
+    }
+  }
   *ret_wk = result;
 }
 

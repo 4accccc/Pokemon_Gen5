@@ -590,6 +590,8 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
     return rom_data->entry_hodomoe;
   case WBTCUP_HODOMOE_EVENT:
     return rom_data->entry_hodomoe_event;
+  case WBTCUP_WORLD:
+    return rom_data->entry_world;
   }
   return FALSE;
 }
@@ -675,8 +677,6 @@ static void entryWorldTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_lis
   GFL_STD_RandInit( &rand_context, cond->seed64 );
 
   makeEntryTable( cond, entry_table );
-  //チャンピオン一人だけ参戦
-  //selectCharacters( entry_table, &rand_context, WBT_TRPRI_CHAMP, 1 );
   selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, 7 );
 
   //選択された結果を戻り値テーブルに反映する
