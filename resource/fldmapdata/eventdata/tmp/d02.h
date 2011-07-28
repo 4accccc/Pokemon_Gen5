@@ -20,5 +20,9 @@
 #ifndef ZONE_D02_EVB_H
 #define ZONE_D02_EVB_H
 
+#define BG_D02_ROCK_01                    0
+#define BG_D02_ROCK_02                    1
+#define BG_D02_ROCK_03                    2
+#define BG_D02_ROCK_04                    3
 
 #endif //ZONE_D02_EVB_H
