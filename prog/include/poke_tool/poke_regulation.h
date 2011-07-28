@@ -36,10 +36,10 @@ extern BOOL PokeRegulationCheckLegend(u16 monsno);
 // ポケモンがレギュレーションに適合しているかどうか調べる(return POKEFAILEDBIT)
 extern const int PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp);
 // ポケパーティがレギュレーションに完全適合しているかどうか調べる バトル最終チェック用
-extern int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel);
+extern POKE_REG_RETURN_ENUM PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel);
 // ポケパーティ中にレギュレーションに適合している
 //  パーティーが組めるかどうか調べる 適応外のポケモンがいても大丈夫  受け付け用
-extern int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party);
+extern POKE_REG_RETURN_ENUM PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party);
 
 
 // regulation.narcにあるデータを読み込む
@@ -61,9 +61,9 @@ extern void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg);
 
 
 // ポケモンがレギュレーションに適合しているかどうか調べる  何処が悪かったかBITで返します
-extern BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit);
+//extern BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit);
 // ポケパーティがレギュレーションに適合しているかどうか調べる 何処が悪かったかBITで返します
-extern int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit);
+extern POKE_REG_RETURN_ENUM PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit);
 
 //ポケパーティをレギュレーションにそったレベル補正をかける
 extern void PokeRegulation_ModifyLevelPokeParty( const REGULATION* pReg, POKEPARTY *party );

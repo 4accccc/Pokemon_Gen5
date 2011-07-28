@@ -2564,7 +2564,7 @@ static void PLIST_SelectPokeTerm_Use( PLIST_WORK *work )
 static void PLIST_SelectPokeTerm_BattleDecide( PLIST_WORK *work )
 {
   REGULATION *reg = (REGULATION*)work->plData->reg;
-  int regRet;
+  POKE_REG_RETURN_ENUM regRet;
   if( work->pokeCursor != PL_SEL_POS_ENTER )
   {
     //アクティブだったところを戻す

@@ -26,7 +26,7 @@
 
 #define _POKENO_NONE  (0)          // É|ÉPÉÇÉìî‘çÜÇ≈Ç»Ç¢î‘çÜ
 
-static const int PokeRegulationCheckPokeParty_Func2( const REGULATION* reg , POKEPARTY *party , const u8 *checkArr ,  u8 *retArr , int *errBit );
+static const BOOL PokeRegulationCheckPokeParty_Func2( const REGULATION* reg , POKEPARTY *party , const u8 *checkArr ,  u8 *retArr , int *errBit );
 
 //------------------------------------------------------------------
 /**
@@ -123,7 +123,7 @@ const int PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
  */
 //------------------------------------------------------------------
 
-int PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel)
+POKE_REG_RETURN_ENUM PokeRegulationMatchFullPokeParty(const REGULATION* pReg, POKEPARTY * party, u8* sel)
 {
   if(pReg==NULL)
   {
@@ -230,7 +230,7 @@ static BOOL _totalLevelCheck(u16* pMonsTbl,u16* pLevelTbl,u16* pMarkTbl,
  */
 //------------------------------------------------------------------
 
-int PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party)
+POKE_REG_RETURN_ENUM PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party)
 {
   POKEMON_PARAM* pp;
   int ans,cnt,j,i,level = 0;
@@ -375,7 +375,7 @@ BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp
  */
 //------------------------------------------------------------------
 
-int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit)
+POKE_REG_RETURN_ENUM PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party, u32* FailedBit)
 {
   POKEMON_PARAM* pp;
   int ans,cnt = 0,j,i,level = 0,form=0;
@@ -865,7 +865,7 @@ const BOOL PokeRegulationCheckPokeParty_Func( const REGULATION* reg , POKEPARTY 
   return FALSE;
 }
 
-static const int PokeRegulationCheckPokeParty_Func2( const REGULATION* reg , POKEPARTY *party , const u8 *checkArr , u8 *retArr , int *errBit )
+static const BOOL PokeRegulationCheckPokeParty_Func2( const REGULATION* reg , POKEPARTY *party , const u8 *checkArr , u8 *retArr , int *errBit )
 {
   u8 i,j;
   u8 okNum = 0;

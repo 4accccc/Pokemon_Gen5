@@ -1201,7 +1201,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     
     {
       int type;
-      u32 ret = 0;
+      POKE_REG_RETURN_ENUM ret = POKE_REG_OK;
       REGULATION *regu;
       POKEPARTY *check_party = NULL, *btl_party = NULL, *my_party = NULL;
       u32 use_bbox = (u32)BSUBWAY_PLAYDATA_GetData(
