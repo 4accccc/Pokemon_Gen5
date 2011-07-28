@@ -508,6 +508,7 @@ static u32 selectCandidateByPri( const u8 * entry_table, u8 pri, u8 step )
  * @param rand_context  使用する乱数コンテキスト
  * @param pri           選択する候補者の優先度（WBT_TRPRI_NULLのとき、無条件）
  * @param num           選択する人数
+ * @return  u32         選択人数に足りなかった数
  */
 //-----------------------------------------------------------------------------
 static u32 selectCharacters( u8 * entry_table, GFL_STD_RandContext * rand_context, u8 pri, u8 num )
@@ -610,6 +611,7 @@ static void makeEntryTable( const WBT_MATCH_CONDITION * cond, u8 * entry_table )
       entry_table[ i ] = ENTRY_CANDIDATE;
     }
   }
+  TAMADA_Printf("CANDIDATES:%d\n", countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -779,7 +781,7 @@ static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list
   int decide_count = 0;
   int rest;
   u32 leader_num;
-  u32 mob_num;
+  u32 mob_num, weak_mob_num;
 
   GFL_STD_RandContext rand_context;
   GFL_STD_RandInit( &rand_context, cond->seed64 );
@@ -789,12 +791,18 @@ static void entryTypeTournament( const WBT_MATCH_CONDITION * cond, u16 * tr_list
   //リーダークラスの参加者を抽選する
   leader_num = countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_LEADER );
   rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_LEADER, leader_num );
-  TAMADA_Printf("SELECT LEADER:%d,rest=%d\n",leader_num, rest );
+  TAMADA_Printf("SELECT LEADER:%d,rest=%d\n", leader_num, rest );
+  TAMADA_Printf(" REST CANDIDATE:%d\n", countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
 
   //他の参加者を抽選する
-  mob_num = WBT_TRAINER_NUM - 1 - leader_num;
-  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_NULL, mob_num );
-  TAMADA_Printf("SELECT MOB:%d,rest=%d\n",mob_num, rest );
+  mob_num = countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_MOB );
+  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_MOB, mob_num );
+  TAMADA_Printf("SELECT MOB:%d,rest=%d\n", mob_num, rest );
+  TAMADA_Printf(" REST CANDIDATE:%d\n", countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
+  weak_mob_num = WBT_TRAINER_NUM - 1 - leader_num - mob_num;
+  rest = selectCharacters( entry_table, &rand_context, WBT_TRPRI_WEAK_MOB, weak_mob_num );
+  TAMADA_Printf("SELECT WEAK MOB:%d,rest=%d\n", weak_mob_num, rest );
+  TAMADA_Printf(" REST CANDIDATE:%d\n", countEntryWithPri( entry_table, ENTRY_CANDIDATE, WBT_TRPRI_NULL ) );
 
   candidate_count = countEntry( entry_table, ENTRY_CANDIDATE );
   GF_ASSERT( candidate_count == 0 );
