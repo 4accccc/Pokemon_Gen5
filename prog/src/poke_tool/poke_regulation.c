@@ -66,9 +66,9 @@ BOOL PokeRegulationCheckLegend(u16 monsno)
 //------------------------------------------------------------------
 /**
  * @brief  ポケモンがレギュレーションに適合しているかどうか調べる
- * @param   REGULATION     レギュレーション構造体ポインタ
- * @param   POKEMON_PARAM  ポケパラ
- * @return  合致したらTRUE
+ * @param   pReg      レギュレーション構造体ポインタ
+ * @param   pp        ポケパラ
+ * @return  POKEFAILEDBIT_～を参照
  */
 //------------------------------------------------------------------
 
@@ -109,6 +109,46 @@ const int PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp)
   //持ち込み不可アイテムかどうか
   if(Regulation_CheckParamBit(pReg, REGULATION_VETO_ITEM, item)){
     return POKEFAILEDBIT_VETO_ITEM;
+  }
+  return POKEFAILEDBIT_NONE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケモンのレギュレーション適合チェック（拡張版）
+ * @param   pReg      レギュレーション構造体ポインタ
+ * @param   pRegEx    レギュレーション拡張構造体ポインタ（NULLのとき、チェックしない）
+ * @param   pp        ポケパラ
+ * @return  POKEFAILEDBIT_～を参照
+ */
+//------------------------------------------------------------------
+const int PokeRegulationCheckPokeParaEx(
+    const REGULATION* pReg, const REGULATIONEX * pRegEx, POKEMON_PARAM* pp)
+{
+  int regRet = PokeRegulationCheckPokePara( pReg, pp );
+  //通常レギュレーションチェックに引っかかったら返す
+  if (regRet != POKEFAILEDBIT_NONE ) return regRet;
+
+  //拡張レギュレーションが存在したらチェック
+  if ( pRegEx != NULL )
+  {
+    int i;
+    if ( pRegEx->waza_no != 0 )
+    {
+      for ( i = 0; i < PTL_WAZA_MAX; i ++ )
+      {
+        if (PP_Get( pp, ID_PARA_waza1 + i, NULL ) == pRegEx->waza_no )
+        {
+          return POKEFAILEDBIT_VETO_WAZA;
+        }
+      }
+    }
+    if ( pRegEx->poketype != POKETYPE_NULL
+        && pRegEx->poketype != PP_Get( pp, ID_PARA_type1, NULL)
+        && pRegEx->poketype != PP_Get( pp, ID_PARA_type2, NULL) )
+    {
+      return POKEFAILEDBIT_MUST_TYPE;
+    }
   }
   return POKEFAILEDBIT_NONE;
 }
@@ -318,7 +358,7 @@ POKE_REG_RETURN_ENUM PokeRegulationMatchPartialPokeParty(const REGULATION* pReg,
  */
 //------------------------------------------------------------------
 
-BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit)
+static BOOL PokeRegulationCheckPokeParaLookAt(const REGULATION* pReg, POKEMON_PARAM* pp,u32* FailedBit)
 {
   u16 mons = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
   u16 item = (u16)PP_Get( pp, ID_PARA_item, NULL );

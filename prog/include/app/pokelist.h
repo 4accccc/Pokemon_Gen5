@@ -168,6 +168,7 @@ typedef struct
   CONFIG * cfg;     // コンフィグデータ
   void * rnd_map;   // ランダムマップセーブ(キュレム合体相手のPOKEMON_PARAM領域がある)
   void * reg;       // レギュレーションデータ
+  void * regEx;     ///< 拡張レギュレーションデータ
   void * zkn;       // 図鑑セーブ(フォルムチェンジ時登録処理
   void * shortcut;  // ショートカット登録セーブ(キュレムフォルムチェンジ時処理
 

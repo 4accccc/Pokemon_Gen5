@@ -50,14 +50,14 @@ typedef struct {
 //------------------------------------------------------------------
 static const WBT_TOURNAMENT_DATA WBTTournamentData[ WBTCUP_MAX - 1 ] = {
   { //WBTCUP_CHAMPION, //チャンピオントーナメント
-    msg_wbtsys_title_02,
+    msg_wbtsys_title_03,
     WBTWIN_COUNT_CHAMPION,
     WBTRECEPT_2, WBTREG_SUBWAY,
     WBTBTDATA_3,
     { 0, 0, 0, 0 },
   },
   { //WBTCUP_POKETYPE, //タイプトーナメント
-    msg_wbtsys_title_03,
+    msg_wbtsys_title_02,
     POKETYPE_NORMAL,   //ダミー
     WBTRECEPT_2, WBTREG_POKETYPE,
     WBTBTDATA_3,

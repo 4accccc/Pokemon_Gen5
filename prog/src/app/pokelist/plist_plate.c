@@ -1397,7 +1397,7 @@ static void PLIST_PLATE_CheckBattleOrder( PLIST_WORK *work , PLIST_PLATE_WORK *p
   //参加条件のチェック
   //レギュレーションもチェック
   //持ち物の被りは下でチェック
-  if( PokeRegulationCheckPokePara( work->plData->reg , plateWork->pp ) == POKEFAILEDBIT_NONE )
+  if( PokeRegulationCheckPokeParaEx( work->plData->reg, work->plData->regEx, plateWork->pp ) == POKEFAILEDBIT_NONE )
   {
     plateWork->btlOrder = PPBO_JOIN_OK;
   }

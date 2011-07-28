@@ -49,6 +49,7 @@ enum {
 typedef struct _WBT_REGLATION {
   ///•W€‚ÌƒŒƒMƒ…ƒŒ[ƒVƒ‡ƒ“‚ğ“à•ï‚·‚é
   REGULATION base_reg;
+  REGULATIONEX ex_reg;
 }WBTREG;
 
 //------------------------------------------------------------------

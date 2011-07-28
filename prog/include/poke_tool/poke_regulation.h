@@ -17,17 +17,22 @@
 #include "print/wordset.h"
 
 
-// PokeRegulationMatchPartialPokePartyとPokeRegulationMatchFullPokeParty の戻り値
+//swan拡張用のレギュレーション
+#include "poke_tool/poke_regulation_ex.h"
+
+//------------------------------------------------------------------
+/// PokeRegulationMatchPartialPokePartyとPokeRegulationMatchFullPokeParty の戻り値
+//------------------------------------------------------------------
 typedef enum{
-    POKE_REG_OK,               // 正常
-    POKE_REG_TOTAL_LV_FAILED,  // トータルのLVがオーバーしている
-    POKE_REG_BOTH_POKE,        // 同じポケモンがいる
-    POKE_REG_BOTH_ITEM,        // 同じアイテムがある
+    POKE_REG_OK,                ///< 正常
+    POKE_REG_TOTAL_LV_FAILED,   ///< トータルのLVがオーバーしている
+    POKE_REG_BOTH_POKE,         ///< 同じポケモンがいる
+    POKE_REG_BOTH_ITEM,         ///< 同じアイテムがある
 //--------------------------------------------------------
-    POKE_REG_NUM_FAILED,       // 必要なポケモンの人数が満たされていない
-    POKE_REG_ILLEGAL_POKE,     // 条件に合わないポケモンがいた
-    POKE_REG_NUM_FAILED2,       // 必要なポケモンの人数が満たされていない2
-    POKE_REG_NO_MASTPOKE,
+    POKE_REG_NUM_FAILED,        ///< 必要なポケモンの人数が満たされていない
+    POKE_REG_ILLEGAL_POKE,      ///< 条件に合わないポケモンがいた
+    POKE_REG_NUM_FAILED2,       ///< 必要なポケモンの人数が満たされていない2
+    POKE_REG_NO_MASTPOKE,       ///< 必要なポケモンがいない
 } POKE_REG_RETURN_ENUM;
 
 //伝説ポケモンかどうか
@@ -41,6 +46,9 @@ extern POKE_REG_RETURN_ENUM PokeRegulationMatchFullPokeParty(const REGULATION* p
 //  パーティーが組めるかどうか調べる 適応外のポケモンがいても大丈夫  受け付け用
 extern POKE_REG_RETURN_ENUM PokeRegulationMatchPartialPokeParty(const REGULATION* pReg, POKEPARTY * party);
 
+//  PokeRegulationCheckPokeParaの拡張指定版
+extern const int PokeRegulationCheckPokeParaEx(
+    const REGULATION* pReg, const REGULATIONEX * pRegEx, POKEMON_PARAM* pp);
 
 // regulation.narcにあるデータを読み込む
 extern const REGULATION* PokeRegulation_LoadDataAlloc(int regulation_data_no, HEAPID heapid);
@@ -48,16 +56,20 @@ extern void PokeRegulation_LoadData(int regulation_data_no, REGULATION *reg);
 
 
 //禁止フラグのビット
-#define POKEFAILEDBIT_NONE        (0x00)     ///< エラー無し
-#define POKEFAILEDBIT_NUM         (0x01)     ///< 数が足りてない
-#define POKEFAILEDBIT_LEVEL       (0x02)     ///< レベル違反のポケモンがいる
-#define POKEFAILEDBIT_VETO_POKE     (0x04)   ///< 禁止ポケモン
-#define POKEFAILEDBIT_BOTHPOKE    (0x08)    ///< 同じポケモン
-#define POKEFAILEDBIT_BOTHITEM    (0x10)    ///< 同じアイテム
-#define POKEFAILEDBIT_EGG         (0x20)    ///< たまご
-#define POKEFAILEDBIT_VETO_ITEM         (0x40)   ///< 禁止アイテム
-#define POKEFAILEDBIT_MAST_POKE (0x80)   ///< 必要ポケモンがいない
+#define POKEFAILEDBIT_NONE      (0x000)   ///< エラー無し
+#define POKEFAILEDBIT_NUM       (0x001)   ///< 数が足りてない
+#define POKEFAILEDBIT_LEVEL     (0x002)   ///< レベル違反のポケモンがいる
+#define POKEFAILEDBIT_VETO_POKE (0x004)   ///< 禁止ポケモン
+#define POKEFAILEDBIT_BOTHPOKE  (0x008)   ///< 同じポケモン
+#define POKEFAILEDBIT_BOTHITEM  (0x010)   ///< 同じアイテム
+#define POKEFAILEDBIT_EGG       (0x020)   ///< たまご
+#define POKEFAILEDBIT_VETO_ITEM (0x040)   ///< 禁止アイテム
+#define POKEFAILEDBIT_MAST_POKE (0x080)   ///< 必要ポケモンがいない
 #define POKEFAILEDBIT_SUM_LEVEL (0x100)   ///< 合計レベル
+
+//以下はswan拡張用
+#define POKEFAILEDBIT_VETO_WAZA (0x200)   ///< 禁止わざ
+#define POKEFAILEDBIT_MUST_TYPE (0x400)   ///< 必要タイプがない
 
 
 // ポケモンがレギュレーションに適合しているかどうか調べる  何処が悪かったかBITで返します

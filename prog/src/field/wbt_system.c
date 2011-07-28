@@ -522,6 +522,9 @@ void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief レギュレーションの取得
+ */
 //------------------------------------------------------------------
 const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
 {
@@ -568,6 +571,23 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
   }
   PokeRegulation_LoadData( reg_type, &wbtsys->wbtreg.base_reg );
   return &wbtsys->wbtreg.base_reg;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 拡張レギュレーションの取得
+ */
+//------------------------------------------------------------------
+const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
+{
+  u8 poketype = POKETYPE_NULL;
+  u16 waza_no = 0;
+  if ( wbtsys->wbtcup == WBTCUP_POKETYPE )
+  { //タイプトーナメントの場合はタイプ指定
+    poketype = wbtsys->poketype;
+  }
+  REGULATIONEX_Init( &wbtsys->wbtreg.ex_reg, poketype, waza_no );
+  return &wbtsys->wbtreg.ex_reg;
 }
 
 //============================================================================================
@@ -625,7 +645,7 @@ static POKEPARTY * getUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
 //------------------------------------------------------------------
 void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA * plist_data )
 {
-  int type;
+  PL_LIST_TYPE list_type;
 
   PLIST_DATA_Init( plist_data, gamedata, PL_MODE_BATTLE_SUBWAY, getUsePokeParty( wbtsys, gamedata ) );
 
@@ -636,20 +656,21 @@ void WBTSYS_SetupPokeListData( WBTSYS * wbtsys, GAMEDATA * gamedata, PLIST_DATA 
     /* FALL THROUGH */
 
   case WBTRULE_SINGLE:
-    type = PL_TYPE_SINGLE;
+    list_type = PL_TYPE_SINGLE;
     break;
   case WBTRULE_DOUBLE:
-    type = PL_TYPE_DOUBLE;
+    list_type = PL_TYPE_DOUBLE;
     break;
   case WBTRULE_TRIPLE:
-    type = PL_TYPE_TRIPLE;
+    list_type = PL_TYPE_TRIPLE;
     break;
   case WBTRULE_ROTATION:
-    type = PL_TYPE_ROTATION;
+    list_type = PL_TYPE_ROTATION;
     break;
   }
   plist_data->reg = (void *)WBTSYS_GetRegulation( wbtsys );
-  plist_data->type = type;
+  plist_data->regEx = (void *)WBTSYS_GetRegulationEx( wbtsys );
+  plist_data->type = list_type;
 }
 
 //------------------------------------------------------------------
