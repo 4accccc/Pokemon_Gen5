@@ -42,10 +42,10 @@
 #define CLAW_Z     (256 << FX32_SHIFT )
 
 // 炎座標
-#define FIRE1_X    (552 << FX32_SHIFT )   // 炎(手前右)
+#define FIRE1_X    (536 << FX32_SHIFT )   // 炎(手前右)
 #define FIRE1_Y    (224 << FX32_SHIFT )   // 炎(手前右)
 #define FIRE1_Z    (416 << FX32_SHIFT )   // 炎(手前右)
-#define FIRE2_X    (456 << FX32_SHIFT )   // 炎(手前左)
+#define FIRE2_X    (472 << FX32_SHIFT )   // 炎(手前左)
 #define FIRE2_Y    (224 << FX32_SHIFT )   // 炎(手前左)
 #define FIRE2_Z    (416 << FX32_SHIFT )   // 炎(手前左)
 #define FIRE3_X    (568 << FX32_SHIFT )   // 炎(奥右)
