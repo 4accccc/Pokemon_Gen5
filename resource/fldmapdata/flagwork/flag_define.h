@@ -360,15 +360,15 @@
 #define FE_H03_POKE_BOUON_01               344 /* 0x0158 シリンダーブリッジ：とくせい「ぼうおん」イベント終了フラグ */
 #define FE_H03_ITEMGET_01                  345 /* 0x0159 シリンダーブリッジ：アイテム入手フラグ */
 #define FE_R08R0201_ITEMGET_01             346 /* 0x015a ８番道路ゲート：アイテム入手フラグ */
-		/* not used   347(0x015b) */
-		/* not used   348(0x015c) */
-		/* not used   349(0x015d) */
-		/* not used   350(0x015e) */
-		/* not used   351(0x015f) */
-		/* not used   352(0x0160) */
-		/* not used   353(0x0161) */
-		/* not used   354(0x0162) */
-		/* not used   355(0x0163) */
+#define FE_D27R0701_SWPLASMAM_01           347 /* 0x015b プラズマフリゲート船内一階層：初回会話フラグ */
+#define FE_D27_HINT_01                     348 /* 0x015c プラズマフリゲート：戦闘チェックフラグ */
+#define FE_D27_HINT_02                     349 /* 0x015d プラズマフリゲート：戦闘チェックフラグ */
+#define FE_D27_HINT_03                     350 /* 0x015e プラズマフリゲート：戦闘チェックフラグ */
+#define FE_D27_HINT_04                     351 /* 0x015f プラズマフリゲート：戦闘チェックフラグ */
+#define FE_D27_HINT_05                     352 /* 0x0160 プラズマフリゲート：戦闘チェックフラグ */
+#define FE_D27_HINT_06                     353 /* 0x0161 プラズマフリゲート：戦闘チェックフラグ */
+#define FE_D27_HINT_07                     354 /* 0x0162 プラズマフリゲート：戦闘チェックフラグ */
+#define FE_C01R0501_QUIZ2_01               355 /* 0x0163 サンヨウシティ：クイズ終了フラグ */
 		/* not used   356(0x0164) */
 		/* not used   357(0x0165) */
 		/* not used   358(0x0166) */
@@ -644,6 +644,27 @@
 #define FV_R07R0104_MAID_01                726 /* 0x02d6 タワーオブヘブン：死亡遊戯 */
 #define FV_R07R0102_GIRL3_01               727 /* 0x02d7 タワーオブヘブン：ヒトモシガール */
 #define FV_C06PC0101_GIRL3_01              728 /* 0x02d8 フキヨセシティPC：ヒトモシガール */
+#define FV_D27R0101_SWLEADER1_01           729 /* 0x02d9 プラズマフリゲート甲板：チェレン */
+#define FV_D27R0101_SWRIVAL_01             730 /* 0x02da プラズマフリゲート甲板：ライバル */
+#define FV_D27R0101_SWPLASMA_01            731 /* 0x02db プラズマフリゲート甲板：プラズマ団員（一回目） */
+#define FV_D27R0101_SWPLASMA_02            732 /* 0x02dc プラズマフリゲート甲板：プラズマ団員（二回目） */
+#define FV_D27R0101_SWSAGE7_01             733 /* 0x02dd プラズマフリゲート甲板：ヴィオ */
+#define FV_D27R0101_NINJA_01               734 /* 0x02de プラズマフリゲート甲板：ダークトリニティ */
+#define FV_D27R0201_SWRIVAL_01             735 /* 0x02df プラズマフリゲート船首楼B：ライバル */
+#define FV_D27R1201_SWRIVAL_01             736 /* 0x02e0 プラズマフリゲート船首楼W：ライバル */
+#define FV_D27R0701_SWPLASMAM_01           737 /* 0x02e1 プラズマフリゲート船内一階層：元プラズマ団員 */
+#define FV_D27R0501_SWSAGE7_01             738 /* 0x02e2 プラズマフリゲート船主砲：ヴィオ */
+#define FV_D27R0501_NINJA_01               739 /* 0x02e3 プラズマフリゲート船主砲：ダークトリニティ */
+#define FV_D27R1001_STOPPER_01             740 /* 0x02e4 プラズマフリゲート船内二階層B：ストッパー */
+#define FV_D27R1301_STOPPER_01             741 /* 0x02e5 プラズマフリゲート船内二階層W：ストッパー */
+#define FV_D27R1001_SAGE7_01               742 /* 0x02e6 プラズマフリゲート船内二階層B：ヴィオ */
+#define FV_D27R1301_SAGE7_01               743 /* 0x02e7 プラズマフリゲート船内二階層W：ヴィオ */
+#define FV_D27R1001_SWPLASMAM_01           744 /* 0x02e8 プラズマフリゲート船内二階層B：元プラズマ団員 */
+#define FV_D27R1301_SWPLASMAM_01           745 /* 0x02e9 プラズマフリゲート船内二階層W：元プラズマ団員 */
+#define FV_D27R0401_SWBOSS_01              746 /* 0x02ea プラズマフリゲート操舵室：アクロマ */
+#define FV_D27R0601_SWSAGE1_01             747 /* 0x02eb プラズマフリゲート隠し部屋：ゲーチス */
+#define FV_D27R0601_NINJA_01               748 /* 0x02ec プラズマフリゲート隠し部屋：ダークトリニティ */
+#define FV_R18_DPLEADER5_01                749 /* 0x02ed 18番道路：マキシ */
 
 #define FV_AREA_END                        899 /* 0x0383  */
 

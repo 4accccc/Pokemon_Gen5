@@ -233,6 +233,16 @@
 #define WK_SCENE_C03R0601_SWBELL_01      16621 /* 0x40ed ヒウンシティゲート：ベルイベントPOS制御ワーク */
 #define WK_SCENE_C14R0301_BOY4_01        16622 /* 0x40ee セイガイハシティ：セイガイハシティのお坊ちゃま（死亡遊戯）制御ワーク */
 #define WK_SCENE_R07R0102_GIRL3_01       16623 /* 0x40ef タワーオブヘブン：ヒトモシガール戦闘POS制御ワーク */
+#define WK_SCENE_D27R0101_FIRST_01       16624 /* 0x40f0 プラズマフリゲート甲板：搭乗一回目イベント制御ワーク */
+#define WK_SCENE_D27R0101_SECONDW_01     16625 /* 0x40f1 プラズマフリゲート甲板：搭乗二回目イベント制御ワーク（ホワイト） */
+#define WK_SCENE_D27R0101_SECONDB_01     16626 /* 0x40f2 プラズマフリゲート甲板：搭乗二回目イベント制御ワーク（ブラック） */
+#define WK_SCENE_D27R0401_SWBOSS_01      16627 /* 0x40f3 プラズマフリゲート操舵室：POS制御ワーク */
+#define WK_SCENE_D27R0601_SWSAGE1_01     16628 /* 0x40f4 プラズマフリゲート隠し部屋：SCENE_CHANGE制御ワーク */
+#define WK_SCENE_D27_SWITCH_01           16629 /* 0x40f5 プラズマフリゲート：スイッチ・バリアー制御POS */
+#define WK_SCENE_D27_SWITCH_02           16630 /* 0x40f6 プラズマフリゲート：スイッチ・バリアー制御POS */
+#define WK_SCENE_D27_SWITCH_03           16631 /* 0x40f7 プラズマフリゲート：スイッチ・バリアー制御POS */
+#define WK_SCENE_D27_SWITCH_04           16632 /* 0x40f8 プラズマフリゲート：スイッチ・バリアー制御POS */
+#define WK_SCENE_C01R0501_QUIZ1_01       16633 /* 0x40f9 サンヨウシティ：トレーナーズスクールのふわふわボーイクイズ制御 */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
