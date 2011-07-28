@@ -1925,4 +1925,39 @@
 				Time="2011-07-26T11:13:47" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="wbt_dl_ev_msg_000">
+		<LanguageCell
+			Language="JPN">
+			<Text>トーナメントダウンロードを
+しゅうりょう　しますか？</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T07:03:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T07:03:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トーナメントダウンロードを
+しゅうりょう　しますか？</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T07:04:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T07:04:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＤＬからぬける時
+</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-07-28T07:04:25" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

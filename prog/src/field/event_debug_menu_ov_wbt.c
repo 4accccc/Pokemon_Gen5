@@ -186,10 +186,8 @@ static const DEBUG_MENU_LIST WBTMenuList[] =
   { DEBUG_STR_WBT_09, (void*)DEBUG_STR_WBT_09, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:2
   { DEBUG_STR_WBT_10, (void*)DEBUG_STR_WBT_10, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:3
   //
-  { DEBUG_STR_WBT_11, (void*)DEBUG_STR_WBT_11, GFL_OVERLAY_BLANK_ID },   // ダウンロード：1
   { DEBUG_STR_WBT_12, (void*)DEBUG_STR_WBT_12, GFL_OVERLAY_BLANK_ID },   // ダウンロード：2
   { DEBUG_STR_WBT_13, (void*)DEBUG_STR_WBT_13, GFL_OVERLAY_BLANK_ID },   // ダウンロード：3
-  { DEBUG_STR_WBT_14, (void*)DEBUG_STR_WBT_14, GFL_OVERLAY_BLANK_ID },   // ダウンロード：4
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuWBTImitializer = {
@@ -381,12 +379,6 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 		(*seq)++;
 		break;
 	//
-	case DEBUG_STR_WBT_11:		// ダウンロード：1(セーブ)
-		work->call_func = debugMenuCallProc_TDownload;
-		work->t_status = T_DOWNLOAD_STATUS_SAVE;
-		(*seq)++;
-		break;
-	//
 	case DEBUG_STR_WBT_12:		// ダウンロード：2(選択)
 		work->call_func = debugMenuCallProc_TDownload;
 		work->t_status = T_DOWNLOAD_STATUS_SELECT;
@@ -396,11 +388,6 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
 	case DEBUG_STR_WBT_13:		// ダウンロード：3(参加)
 		work->call_func = debugMenuCallProc_TDownload;
 		work->t_status = T_DOWNLOAD_STATUS_JOIN;
-		(*seq)++;
-		break;
-	case DEBUG_STR_WBT_14:		// ダウンロード：4(詳細)
-		work->call_func = debugMenuCallProc_TDownload;
-		work->t_status = T_DOWNLOAD_STATUS_INFO;
 		(*seq)++;
 		break;
 	//

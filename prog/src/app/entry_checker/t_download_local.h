@@ -122,8 +122,7 @@ enum{
 enum{
 	T_DOWNLOAD_FLG_UPDATE		= (1<<0),			// 更新
 	T_DOWNLOAD_FLG_PALCHG		= (1<<1),			// パレットチェンジ
-	T_DOWNLOAD_FLG_INFOUPDATE 	= (1<<2),			// (Info)更新
-	T_DOWNLOAD_FLG_CUR_ANIM		= (1<<3),			// カーソルアニメ中
+	T_DOWNLOAD_FLG_CUR_ANIM		= (1<<2),			// カーソルアニメ中
 };
 
 //--------------
@@ -138,8 +137,8 @@ enum{
 	T_DOWNLOAD_MSG_UP_EXP_01,						// 内容説明
 	//
 	T_DOWNLOAD_MSG_DOWN_TITLE,						// タイトル
-	T_DOWNLOAD_MSG_DOWN_MESWIN_00,					// win00
-	T_DOWNLOAD_MSG_DOWN_MESWIN_01,					// win01
+	T_DOWNLOAD_MSG_DOWN_MESWIN_00,					// win00(中央)
+	T_DOWNLOAD_MSG_DOWN_MESWIN_01,					// win01(下側)
 	//
 	T_DOWNLOAD_MSG_DOWN_INFO_00,					// 詳細パネル00
 	T_DOWNLOAD_MSG_DOWN_INFO_01,
@@ -158,6 +157,14 @@ enum{
 	T_DOWNLOAD_WIN_WHAT_00,							// どうしますか
 	T_DOWNLOAD_WIN_DEL_00,							// 削除しますか
 	T_DOWNLOAD_WIN_DEL_01,							// 本当に削除しますか
+	T_DOWNLOAD_WIN_SEL_DATA,						// 保存したいのを選んでください
+	T_DOWNLOAD_WIN_SAVED,							// すでにセーブすみ
+	T_DOWNLOAD_WIN_FINISH,							// 終了しますか
+	T_DOWNLOAD_WIN_DEL_STOP,						// 消すのをやめますか
+	T_DOWNLOAD_WIN_DATA_FULL,						// データがいっぱいです
+	T_DOWNLOAD_WIN_DEL_DONE,						// 削除しました
+	T_DOWNLOAD_WIN_NOW_SAVING,						// 保存しています
+	T_DOWNLOAD_WIN_SAVE_DONE,						// セーブしました
 };
 
 // 3択情報
@@ -178,10 +185,13 @@ enum{
 	T_DOWNLOAD_LIST_MAX,
 };
 
+//--------------
+// アイコン情報
+//--------------
 enum{
-	T_DOWNLOAD_INFO_POKE = 0,
-	T_DOWNLOAD_INFO_ITEM,
-	T_DOWNLOAD_INFO_SKILL,
+	T_DOWNLOAD_INFO_POKE = 0,						// ポケモン
+	T_DOWNLOAD_INFO_ITEM,							// 道具
+	T_DOWNLOAD_INFO_SKILL,							// 技
 	//
 	T_DOWNLOAD_INFO_MAX,
 };
@@ -224,17 +234,13 @@ typedef struct
 	PRINT_STREAM			*PrintStream;					// 文字表示用(PrintStream)
 	GFL_TCBLSYS				*MsgTcblSys;					// メッセージ用タスク
 	STRBUF					*MsgBuffer;						// メッセージ用バッファ
-//	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
+	APP_KEYCURSOR_WORK		*MsgCursorWork;					// ページ送りマーク用ワーク
 	APP_PRINTSYS_COMMON_WORK PrintSysWork;					// 汎用PrintStream管理ワーク
 	WORDSET					*Wordset;						// wordset
 	//
 	APP_TASKMENU_WORK		*pAppTask;
 	APP_TASKMENU_ITEMWORK	appitem[3];
 	APP_TASKMENU_RES		*pAppTaskRes;
-	//
-//	BMPOAM_SYS_PTR			BmpOamSys;								// BMPOAM
-//	GFL_BMP_DATA			*BmpData[T_DOWNLOAD_BMPOAM_MAXNUM];		// Bmp
-//	BMPOAM_ACT_PTR			BmpOamWork[T_DOWNLOAD_BMPOAM_MAXNUM];	// BMPOAM用Work
 	//
 	s32						Step;							// ステップ
 	s32						Mode;							// モード
@@ -243,6 +249,7 @@ typedef struct
 	s32						RetMode;						// 戻りモード
 	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
 	s32						ScrollOffy;						// BG3のスクロールoffset
+	u32						PFlag;							// Canvas用フラグ
 	//
 	// パレットチェンジ用
 	s32						PCount;							///< カウンタ
@@ -251,13 +258,12 @@ typedef struct
 	u16						PBufNow[0x10];					///< 現在
 	//
 	// list
-	FRAMELIST_WORK			*frame_list_work;				// リスト
-	//
+	FRAMELIST_WORK			*frame_list_work;					// リスト
 	s32						DispMaxNum;							// 表示最大数
 	s32						AllCurPos[T_DOWNLOAD_LIST_MAX];		// 通し番号
 	s32						ListCurPos[T_DOWNLOAD_LIST_MAX];	// 画面上の位置
 	s32						ListScrollPos[T_DOWNLOAD_LIST_MAX];	// スクロールの位置
-	// 詳細画面用
+	// 詳細画面用(3アイコン用)
 	s32						ItemNum[T_DOWNLOAD_INFO_MAX];		// 項目数
 	s32						PageMaxNum[T_DOWNLOAD_INFO_MAX];	// ページ最大数
 	s32						CurrentPageNum[T_DOWNLOAD_INFO_MAX]; // カレントページ数

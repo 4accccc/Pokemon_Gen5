@@ -28,6 +28,7 @@
 #include "app/app_menu_common.h"
 #include "app/app_taskmenu.h"
 #include "app/app_printsys_common.h"
+#include "app/app_keycursor.h"
 #include "gamesystem/msgspeed.h"
 //
 #include "system/bmp_oam.h"
@@ -400,11 +401,19 @@ static const s16 td_mes_title_tbl[] = {
 // (T_DOWNLOAD_WIN_*と対応)
 //-----------------
 static const s16 td_mes_d00_tbl[] = {
-	wbt_dl_list_msg_02,			// 「さんかするトーナメントを..」
+	wbt_dl_list_msg_02,			// 「さんかするトーナメントを選んでください」
 	wbt_dl_list_msg_03,			// 「○○トーナメントにさんかしますか」
 	wbt_dl_list_msg_01,			// 「○○トーナメントをどうしますか」
 	wbt_dl_ev_msg_11,			// 「○○トーナメントをさくじょしますか」
 	wbt_dl_ev_msg_12,			// 「○○トーナメントをほんとうにさくじょしますか」
+	wbt_dl_ev_msg_02,			// 「保存したいトーナメントを選んでください」
+	wbt_dl_ev_msg_05,			// 「このトーナメントはすでに保存しています」
+	wbt_dl_ev_msg_000,			// 「トーナメントダウンロードを終了しますか」
+	wbt_dl_ev_msg_10,			// 「トーナメントデータをけすのをやめますか」
+	wbt_dl_ev_msg_09,			// 「トーナメントデータがいっぱいです、上書きしてください」
+	wbt_dl_ev_msg_13,			// 「トーナメントデータをさくじょしました」
+	wbt_dl_ev_msg_07,			// 「保存しています」
+	wbt_dl_ev_msg_08,			// 「トーナメントデータをほぞんしました」
 };
 
 //-----------------
@@ -428,7 +437,7 @@ static const s16 td_mes_yesno_01_tbl[] = {
 // 2択メッセージ(はい/いいえ)
 static const s16 td_mes_yesno_02_tbl[] = {
 	wbt_dl_ev_msg_03_yes,		// 「はい」
-	wbt_dl_ev_msg_03_yes,		// 「いいえ」
+	wbt_dl_ev_msg_03_no,		// 「いいえ」
 	-1,							// end
 	-1,							// end
 };
@@ -614,14 +623,11 @@ static void td_init_obj_res_cmn( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype );
 static void td_init_obj( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 //
-// yes/no win
-//static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
-//
+// リスト処理
 static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void td_listcallback_move( void *work, u32 pos, BOOL flag );
 static void td_listcallback_scroll( void *work, s8 mv );
-//
 static void td_liststr_print( T_DOWNLOAD_MAIN_WORK *wk, int pos, PRINT_UTIL *print_util, GFL_MSGDATA *msg );
 static void td_PrintStrBuf( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int strIdx, PRINTSYS_LSB col, int y, int pos );
 static void td_strbuf_print( T_DOWNLOAD_MAIN_WORK *wk, PRINT_UTIL *print_util, PRINT_QUE *que, GFL_MSGDATA *msg, int param, int pos );
@@ -818,6 +824,8 @@ static void td_init_string( T_DOWNLOAD_MAIN_WORK* wk )
 		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
 		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
 		adr++;
+		//
+		wk->PFlag &= ~(1<<i);
 	}
 	//
 	//-----------------
@@ -887,8 +895,6 @@ static void td_exit_string( T_DOWNLOAD_MAIN_WORK* wk )
 	if(wk->PrintStream){
 		PRINTSYS_PrintStreamDelete( wk->PrintStream );
 	}
-	// 文字送り用
-//	APP_KEYCURSOR_Delete( wk->MsgCursorWork );
 }
 
 //-----------------------------------------------------------------------------
@@ -934,6 +940,8 @@ void TdCmn_init_string2( T_DOWNLOAD_MAIN_WORK* wk )
 		GFL_BMPWIN_MakeScreen( wk->PrintUtil[CANVAS_INFO_OFFSET+i].win );
 		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[CANVAS_INFO_OFFSET+i].win) );
 		adr++;
+		//
+		wk->PFlag &= ~(1<<(CANVAS_INFO_OFFSET+i));
 	}
 }
 
@@ -2382,6 +2390,8 @@ void TdCmn_disp_title_info( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32
 	//
 	// クリア
 	TdCmn_clear_canvas( wk, T_DOWNLOAD_MSG_DOWN_TITLE );
+	// ここは即転送が必要らしい
+//	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 	//
 	// スクリーンを作る必要があるようだ
 	GFL_BMPWIN_MakeScreen( wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_TITLE].win );
@@ -2441,5 +2451,22 @@ void TdCmn_set_passive( T_DOWNLOAD_MAIN_WORK* wk, const BOOL bflg )
 		rate = TD_PASSIVE_RATE;
 	}
 	G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  輝度の変更(要検討)
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk
+ *	@param	const BOOL			(TRUE:暗い、FALSE:戻し)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void TdCmn_main_keycursor( T_DOWNLOAD_MAIN_WORK* wk )
+{
+	if( wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win ){
+		APP_KEYCURSOR_MainNotStream( wk->MsgCursorWork, wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_MESWIN_01].win );
+	}
 }
 
