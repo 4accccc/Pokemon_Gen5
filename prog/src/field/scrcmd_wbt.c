@@ -46,6 +46,7 @@
 #include "scrcmd_menuwin.h" //EvCmdBalloonWin_Write
 #include "arc/message.naix" //NARC_message_wbt_trmsg_dat
 
+#include "msg/script/msg_wbt_lobby.h" //msg_wbt_info_ng_
 
 //============================================================================================
 //============================================================================================
@@ -345,6 +346,60 @@ VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：現在のレギュレーションIDを取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetRegulationID( VMHANDLE * core, void *wk )
+{
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  *ret_wk = WBTSYS_GetRegulationID( wbtsys );
+  TAMADA_Printf("EvCmdWBTGetRegulationID = %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：現在のレギュレーションでのNGメッセージIDを取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTGetNGMessageID( VMHANDLE * core, void * wk )
+{
+  static const u16 reg_msg_tbl[] = {
+    REG_WBT_SINGLE,             msg_wbt_info_ng_all_single,
+    REG_WBT_DOUBLE,             msg_wbt_info_ng_all_double,
+    REG_WBT_TRIPLE,             msg_wbt_info_ng_all_triple,
+    REG_WBT_ROTATION,           msg_wbt_info_ng_all_rotation,
+    REG_WBT_SUBWAY_SINGLE,      msg_wbt_info_ng_subway_single,
+    REG_WBT_SUBWAY_DOUBLE,      msg_wbt_info_ng_subway_double,
+    REG_WBT_SUBWAY_TRIPLE,      msg_wbt_info_ng_subway_triple,
+    REG_WBT_SUBWAY_ROTATION,    msg_wbt_info_ng_subway_rotation,
+  };
+
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+  WBTSYS * wbtsys = getWBTSys( wk );
+  u32 reg_id = WBTSYS_GetRegulationID( wbtsys );
+  int i;
+  u32 msg_id = msg_wbt_info_ng_all_single;
+
+  for ( i = 0; i < NELEMS(reg_msg_tbl); i += 2 )
+  {
+    if ( reg_msg_tbl[i+0] == reg_id )
+    {
+      msg_id = reg_msg_tbl[i+1];
+      break;
+    }
+  }
+  if ( WBTSYS_GetWBTCup(wbtsys) == WBTCUP_POKETYPE )
+  {
+    msg_id += 4;
+  }
+  *ret_wk = msg_id;
+  TAMADA_Printf("EvCmdWBTGetNGMessageID = %d\n", *ret_wk );
+  return VMCMD_RESULT_CONTINUE;
+}
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：WBTトーナメントのルールセット

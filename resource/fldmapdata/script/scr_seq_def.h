@@ -8902,6 +8902,19 @@
 #define _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )  \
     _ASM_BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL  regulation
 
+//--------------------------------------------------------------
+/**
+ * @def _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL
+ * @brief 簡易イベントコマンド：
+ *        対戦系受付　パーティがレギュレーションに非適合だった時の一連のメッセージ表示
+ *  禁止ポケモンについての説明のみを行う
+ *
+ * @param regulation  poke_tool/regulation_def.hに定義されたコード
+ */
+//--------------------------------------------------------------
+#define _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL2( regulation )  \
+    _ASM_BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL2  regulation
+
 //======================================================================
 //    連れ歩き関連
 //======================================================================
@@ -12558,6 +12571,34 @@
 
     .macro _ASM_WBT_CHECK_BATTLE_RULE ret_wk  
     .short  EV_SEQ_WBT_CHECK_BATTLE_RULE
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：レギュレーションIDの取得
+ * @param[out]  ret_wk  ※regulation_def.hを参照
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_REGULATION_ID( ret_wk )   \
+    _ASM_WBT_GET_REGULATION_ID ret_wk   
+
+    .macro _ASM_WBT_GET_REGULATION_ID ret_wk   
+    .short  EV_SEQ_WBT_GET_REGULATION_ID
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief WBT：レギュレーション違反時のNGメッセージIDの取得
+ * @param[out]  ret_wk  ※wbt_lobby.mstxtのmsg_wbt_info_ng_～を参照
+ */
+//--------------------------------------------------------------
+#define _WBT_GET_NG_MSG_ID( ret_wk )   \
+    _ASM_WBT_GET_NG_MSG_ID ret_wk   
+
+    .macro _ASM_WBT_GET_NG_MSG_ID ret_wk   
+    .short  EV_SEQ_WBT_GET_NG_MSG_ID
     .short  \ret_wk
     .endm
 

@@ -19,6 +19,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_btl_util_party_regulation_ng_msg_call
+_EVENT_DATA    ev_btl_util_party_regulation_ng_msg_call2
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -67,3 +68,25 @@ _CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
 _END
 
 } //SCR_BTL_END
+
+ev_btl_util_party_regulation_ng_msg_call2:
+{
+  DEFINE_LOCAL  i_regu
+  DEFINE_LOCAL  i_num
+  DEFINE_LOCAL  i_msg
+
+  $i_regu = $SCWK_PARAM0
+  //なお　タマゴ　○○は参加できません
+  _SET_REGULATION_OUT_POKE_NAME( i_regu, i_num )
+  $i_msg = msg_btl_util_party_ng_common00
+//  _DEBUG_PRINT_WK( i_msg )
+  $i_msg += $i_num
+//  _DEBUG_PRINT_WK( i_msg )
+  _SYSWIN_MSG( i_msg , POS_DOWN )
+
+  _SYSWIN_CLOSE()
+}
+_CHG_LOCAL_SCR                          //ローカルスクリプトに切り替え
+_END
+
+

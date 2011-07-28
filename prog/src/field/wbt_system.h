@@ -75,7 +75,9 @@ extern WBTSTAGE WBTSYS_GetStage( const WBTSYS * wbtsys );
 extern u64 WBTSYS_GetRandomSeed( const WBTSYS * wbtsys );
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+extern u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys );
 extern const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys );
+
 extern void WBTSYS_SetSelectDLData( WBTSYS * wbtsys, u8 no );
 extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 

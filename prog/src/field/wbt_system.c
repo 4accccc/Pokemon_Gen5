@@ -523,10 +523,10 @@ void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 
 //------------------------------------------------------------------
 /**
- * @brief レギュレーションの取得
+ * @brief レギュレーション指定IDの取得
  */
 //------------------------------------------------------------------
-const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
+u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
 {
   static const u8 regAllTable[] = {
     REG_WBT_SINGLE, REG_WBT_DOUBLE, REG_WBT_TRIPLE, REG_WBT_ROTATION,
@@ -539,7 +539,6 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
   };
 
   const u8 * tbl;
-  int reg_type;
 
   switch ( WBTTOOL_GetRegulationID( wbtsys->wbtcup ) )
   {
@@ -558,7 +557,17 @@ const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
     break;
   }
   GF_ASSERT( wbtsys->rule != WBTRULE_NULL && wbtsys->rule <= WBTRULE_MAX );
-  reg_type = tbl[ wbtsys->rule - 1 ];
+  return tbl[ wbtsys->rule - 1 ];
+}
+//------------------------------------------------------------------
+/**
+ * @brief レギュレーションの取得
+ */
+//------------------------------------------------------------------
+const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
+{
+  u32 reg_type;
+  reg_type = WBTSYS_GetRegulationID( wbtsys );
 
   PokeRegulation_LoadData( reg_type, &wbtsys->wbtreg.base_reg );
   return &wbtsys->wbtreg.base_reg;

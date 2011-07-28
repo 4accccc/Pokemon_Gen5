@@ -20,6 +20,8 @@ extern VMCMD_RESULT EvCmdWBTSystemEntry( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTCheckCupEnable( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTCheckCupUnlock( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTGetRegulationID( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdWBTGetNGMessageID( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetBattleRule( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetBattleRule( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetWBTCup( VMHANDLE * core, void * wk );
