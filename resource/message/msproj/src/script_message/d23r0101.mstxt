@@ -6,10 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おう！　ポケモントレーナー
+げんきそうな　ポケモンを　つれてるな！▼
+そうだ！
+ちょいと　たのまれてくれ！▼
+この　コンビナートで　はたらく
+れんちゅうに　かつを　いれるだけだ！▽
+どうだろう？　ひきうけてくれるかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T02:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おう！　ポケモントレーナー
+元気そうな　ポケモンを　つれてるな！▼
+そうだ！
+ちょいと　頼まれてくれ！▼
+この　コンビナートで　働く
+連中に　活を　いれるだけだ！▽
+どうだろう？　引き受けてくれるかい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T02:39:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,10 +70,15 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おう！
+たのもしい　へんじだな！▼
+この　コンビナートで　はたらく
+しんじんの　さぎょういんが　いる▼
+そいつら　３にんに
+かつを　いれてきてくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:09:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -69,10 +86,15 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おう！
+頼もしい　返事だな！▼
+この　コンビナートで　働く
+新人の　作業員が　いる▼
+そいつら　３人に
+活を　いれてきてくれ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:39:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -100,10 +122,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>なんとまあ……！
+みんな　ガッツが　たりないぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:03:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,10 +134,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>なんとまあ……！
+みんな　ガッツが　たりないぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,10 +166,12 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おう！　たのんだぜ！▼
+しんじん　さぎょういん　３にんは
+コンビナートの　あちこちに　いるぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:13:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -153,10 +179,12 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おう！　頼んだぜ！▼
+新人作業員　３人は
+コンビナートの　あちこちに　いるぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:39:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -185,10 +213,12 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おお！　やってくれたな！▼
+コンビナートぜんたいが
+かっきで　あふれているよな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:11:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -196,10 +226,12 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おお！　やってくれたな！▼
+コンビナート全体が
+活気で　あふれているよな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:40:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -228,10 +260,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>コンビナートで　はたらくのが
+ぼくの　ゆめ　だった……▼
+それが　かなったから
+もう　まんぞく　なんだよお……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:45:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -239,10 +274,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>コンビナートで　働くのが
+ぼくの　夢だった……▼
+それが　かなったから
+もう　満足なんだよお……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:07:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -278,10 +316,15 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>コンビナートで　はたらくのが
+ぼくの　ゆめ　だった……▼
+それが　かなったから
+もう　まんぞく　なんだよお……▼
+え？　げんばかんとく？
+しょうぶすれば　いいんでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:06:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -289,10 +332,15 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>コンビナートで　働くのが
+ぼくの　夢だった……▼
+それが　かなったから
+もう　満足なんだよお……▼
+え？　現場監督？
+勝負すれば　いいんでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:07:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -328,10 +376,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ポケモンが　かつやく　できるように
+コンビナートに　きてるんだった！▼
+ということは　トレーナーの　おれが
+がむしゃらに　しごと　しないとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:06:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -339,10 +390,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ポケモンが　活躍できるように
+コンビナートに　来てるんだった！▼
+ということは　トレーナーの　おれが
+がむしゃらに　仕事しないとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:07:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -377,10 +431,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>だいすきな　ポケモンと　いっしょなら
+それだけで　ハッピー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:08:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -388,10 +443,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>大好きな　ポケモンと　一緒なら
+それだけで　ハッピー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:08:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -420,10 +476,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>だいすきな　ポケモンと　いっしょなら
+それだけで　ハッピー！▼
+うん？　しょうぶ　なの？
+そうだね……　ちょっと　あそぶかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -431,10 +490,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>大好きな　ポケモンと　一緒なら
+それだけで　ハッピー！▼
+うん？　勝負なの？
+そうだね……　ちょっと　遊ぶかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -463,10 +525,12 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>おれが　がんがん　はたらかないと
+ポケモンも　でばんが　ないこと▽
+すっかり　わすれていたぞ！　うおー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:57:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -474,10 +538,12 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>おれが　がんがん　働かないと
+ポケモンも　出番が　ないこと▽
+すっかり　忘れていたぞ！　うおー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:08:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -505,10 +571,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>きのうも　おんなじ……
+あしたも　おんなじ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -516,10 +583,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>昨日も　おんなじ……
+明日も　おんなじ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -555,10 +623,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>きのうも　おんなじ……
+あしたも　おんなじ……▼
+へんかが　ないと　たいくつだよ
+だから　しょうぶ　しても　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T02:49:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -566,10 +637,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>昨日も　おんなじ……
+明日も　おんなじ……▼
+変化が　ないと　退屈だよ
+だから　勝負しても　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:09:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -605,10 +679,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>コンビナートの　しごとは
+まいにち　おんなじで　いいんだ▼
+まいにち　たのしく　できない
+おれが　あまえて　いたんだな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:09:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -616,10 +693,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>コンビナートの　仕事は
+毎日　おんなじで　いいんだ▼
+毎日　楽しく　できない
+おれが　甘えて　いたんだな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:41" />
+				Time="2011-07-28T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -654,11 +734,16 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょうりゅうきについて
-・かりメッセージ</Text>
+			<Text>げんゆに　あつりょくを　かけて
+いろんな　せいぶんに▽
+ぶんり　していく……▽
+それが　この　じょうりゅうとう！▼
+トッパーや　トッピングそうち　とも
+いうけど　ぼくは　わかりやすく▽
+じょうりゅうとう　と　よびたいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:55:15" />
+				Time="2011-07-28T02:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -666,11 +751,16 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>蒸留器について
-・仮メッセージ</Text>
+			<Text>原油に　圧力を　かけて
+いろんな　成分に▽
+分離していく……▽
+それが　この蒸留塔！▼
+トッパーや　トッピング装置　とも
+いうけど　ぼくは　わかりやすく▽
+蒸留塔と　呼びたいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:55:23" />
+				Time="2011-07-28T02:50:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -701,10 +791,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>はっ！　きかれてしまった
+ぼくの　あふれる　ちしきを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:43" />
+				Time="2011-07-28T02:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -712,10 +803,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>はっ！　きかれてしまった
+ぼくの　あふれる　知識を！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:43" />
+				Time="2011-07-28T02:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -744,11 +836,17 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えんとつについて
-・かりメッセージ</Text>
+			<Text>そらに　むかって
+そびえる　コンビナートの　えんとつ▼
+この　ちからづよい　シルエット……
+みりょくてき　だよね▼
+ちなみに　もやしているのは
+あまった　ガス　なんだけど▼
+いまは　そういう　あまりの　ガスにも
+いろんな　つかいみちが　あるんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:55:06" />
+				Time="2011-07-28T02:53:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -756,11 +854,17 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>煙突について
-・仮メッセージ</Text>
+			<Text>そらに　むかって
+そびえる　コンビナートの　煙突▼
+この　力強い　シルエット……
+魅力的だよね▼
+ちなみに　燃やしているのは
+余った　ガス　なんだけど▼
+最近は　そういう　余りの　ガスにも
+いろんな　使い道が　あるんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:55:06" />
+				Time="2011-07-28T02:53:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -790,10 +894,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>はっ！　きかれてしまった
+ぼくの　あふれる　ウンチクを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:44" />
+				Time="2011-07-28T02:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -801,10 +906,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>はっ！　きかれてしまった
+ぼくの　あふれる　ウンチクを！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:44" />
+				Time="2011-07-28T02:18:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -833,11 +939,17 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガスホルダーについて
-・かりメッセージ</Text>
+			<Text>この　ガスホルダーの　まるさは
+ちょうわを　あらわしているようだね！▼
+もちろん　この　かたちには
+りゆうが　あってね▼
+たかい　あつりょくに　たえるには
+きゅうたい　が　いちばん　なんだね▼
+ここの　ガスホルダーも
+ポケモンの　えを　かけば　いいのにな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:55:06" />
+				Time="2011-07-28T02:26:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -845,11 +957,17 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガスホルダーについて
-・仮メッセージ</Text>
+			<Text>この　ガスホルダーの　丸さは
+調和を　表しているようだね！▼
+もちろん　この　形状には
+理由が　あってね▼
+高い　圧力に　耐えるには
+球体が　一番なんだね▼
+ここの　ガスホルダーも
+ポケモンの　絵を　描けば　いいのにな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:55:06" />
+				Time="2011-07-28T02:52:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -879,10 +997,17 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>はっ！　きかれてしまった
+ぼくの　あふれる　はくがくを！▼
+というか　きみ……　ぼくの
+はなしに　きょうみ　あるよね？▼
+ということは
+コンビナートなかま　なのか！▼
+うれしいな
+じゃあさ　これを　もっていきなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:44" />
+				Time="2011-07-28T02:51:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -890,10 +1015,17 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>はっ！　きかれてしまった
+ぼくの　あふれる　博学を！▼
+というか　きみ……　ぼくの
+話に　興味あるよね？▼
+ということは
+コンビナート仲間　なのか！▼
+うれしいな
+じゃあさ　これを　持っていきなよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:54:44" />
+				Time="2011-07-28T02:51:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -923,10 +1055,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>ぼくね　コンビナートに　くわしいだろ▼
+なもんで　げんばかんとく　さんに
+スカウトされたけど　みているのが▽
+いちばん　シアワセ　なんだなあ……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:56:42" />
+				Time="2011-07-28T02:51:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -934,10 +1069,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ぼくね　コンビナートに　詳しいだろ▼
+なもんで　現場監督さんに
+スカウトされたけど　みているのが▽
+一番　シアワセ　なんだなあ……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-30T06:56:42" />
+				Time="2011-07-28T02:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
