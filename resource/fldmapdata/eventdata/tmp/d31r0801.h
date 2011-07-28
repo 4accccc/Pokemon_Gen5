@@ -8,6 +8,10 @@
 #ifndef ZONE_D31R0801_EVC_H
 #define ZONE_D31R0801_EVC_H
 
+#define D31R0801_ROOCK_01                  0
+#define D31R0801_ROOCK_02                  1
+#define D31R0801_ROOCK_03                  2
+#define D31R0801_ROOCK_04                  3
 
 #endif //ZONE_D31R0801_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d31r0801.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

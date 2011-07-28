@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/29 21:13:22
+#save date:2011/07/28 19:15:43
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\bc10.wms
 #SECTION START:OBJ_EVENT
@@ -19,20 +19,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\bc10.wms
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Bg Event Label
-BG_BC10_BOARD_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_UPDOWN
-#Bg Script Name
-SCRID_BG_BC10_BOARD_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-520 0 -312
+0
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -52,8 +39,25 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-7
+6
 #event number: 0
+#Door Event Label
+DOOR_ID_BC10_R14R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_R14R0101
+#Next Door ID Name
+DOOR_ID_R14R0101_BC10_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+568 0 104
+#size
+3 1
+#event number: 1
 #Door Event Label
 DOOR_ID_BC10_R15R0101_EXIT01
 #Next Zone ID Name
@@ -69,8 +73,8 @@ EVENTDATA_POSTYPE_GRID
 #position
 -104 0 -552
 #size
-1 4
-#event number: 1
+1 3
+#event number: 2
 #Door Event Label
 DOOR_ID_BC10_BC10PCR0101_EXIT01
 #Next Zone ID Name
@@ -80,30 +84,13 @@ DOOR_ID_BC10PCR0101_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_SP29
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-440 0 -328
+440 0 -344
 #size
 1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_BC10_R14R0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_R14R0101
-#Next Door ID Name
-DOOR_ID_R14R0101_BC10_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-552 0 104
-#size
-3 1
 #event number: 3
 #Door Event Label
 DOOR_ID_BC10_BC10R0101_EXIT01
@@ -114,11 +101,11 @@ DOOR_ID_BC10R0101_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_SP29
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -344
+440 0 -488
 #size
 1 1
 #event number: 4
@@ -131,45 +118,28 @@ DOOR_ID_BC10R0401_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_SP29
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 -360
+184 0 -424
 #size
 1 1
 #event number: 5
 #Door Event Label
-DOOR_ID_BC10_BC10R0201_EXIT01
+DOOR_ID_BC10_D31R0201_EXIT01
 #Next Zone ID Name
-ZONE_ID_BC10R0201
+ZONE_ID_D31R0201
 #Next Door ID Name
-DOOR_ID_BC10R0201_BC10_EXIT01
+DOOR_ID_D31R0201_BC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_SP29
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 0 -472
-#size
-1 1
-#event number: 6
-#Door Event Label
-DOOR_ID_BC10_BC10R0301_EXIT01
-#Next Zone ID Name
-ZONE_ID_BC10R0301
-#Next Door ID Name
-DOOR_ID_BC10R0301_BC10_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_SP29
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-312 0 -472
+184 0 -24
 #size
 1 1
 #Map Event List Data End

@@ -8,6 +8,10 @@
 #ifndef ZONE_D31R1001_EVC_H
 #define ZONE_D31R1001_EVC_H
 
+#define D31R1001_TREE_01                   0
+#define D31R1001_TREE_02                   1
+#define D31R1001_TREE_03                   2
+#define D31R1001_TREE_04                   3
 
 #endif //ZONE_D31R1001_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d31r1001.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
