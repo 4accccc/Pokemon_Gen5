@@ -3,9 +3,9 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-15T15:58:55" source="warp04.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-07-28T14:50:31" source="warp04.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
@@ -33,34 +33,34 @@
 </tex_rotate_data>
 
 <tex_translate_data size="22">
-	0.000000 0.000000 0.054443 0.115967 0.181396 0.248047 0.312500 0.372070 0.423584 0.464111
-	0.490479 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000
+	0.000000 0.000000 0.060059 0.120117 0.179932 0.239990 0.300049 0.360107 0.419922 0.479980
+	0.540039 0.600098 0.600098 0.600098 0.600098 0.600098 0.600098 0.600098 0.600098 0.600098
+	0.600098 0.600098
 </tex_translate_data>
 
 <tex_srt_anm_array size="4">
-	<tex_srt_anm index="0" material_name="warp">
+	<tex_srt_anm index="0" material_name="warp04_g_11">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="21" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="m2">
+	<tex_srt_anm index="1" material_name="warp04_g_10">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="21" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="m3">
+	<tex_srt_anm index="2" material_name="warp04_g_9">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="21" data_head="1"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="3" material_name="m4">
+	<tex_srt_anm index="3" material_name="warp04_g_12">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
