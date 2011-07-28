@@ -1585,7 +1585,7 @@ BOOL ZONEDATA_DEBUG_IsDisableLeakCheck( u16 zone_id )
   {
     return TRUE;
   }
-  if( ZONEDATA_IsResonanceResortRoom(zone_id) == TRUE ) //レゾナンスリゾート室内
+  if( ZONEDATA_IsResonanceResort(zone_id) == TRUE ) //レゾナンスリゾート室内
   {
     return TRUE;
   }

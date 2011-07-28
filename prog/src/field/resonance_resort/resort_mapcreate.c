@@ -131,10 +131,6 @@ int RESORT_MAPCREATE_SetUpBlock( RESORT_MAPCREATE *p_wk, NormalVtxFormat* p_attr
   {
     return Resort_Mapcreate_SetUpBlockField( p_wk, p_attr, p_bm, g3Dmap, build_count, map_index, heapID );
   }
-  else if( ZONEDATA_IsResonanceResortRoom( p_wk->zoneID ) )
-  {
-    return Resort_Mapcreate_SetUpBlockRoom( p_wk, p_attr, p_bm, g3Dmap, build_count, map_index, heapID );
-  }
   else
   {
     return build_count;

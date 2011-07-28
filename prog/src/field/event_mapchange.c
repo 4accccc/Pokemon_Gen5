@@ -3001,33 +3001,8 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpResort( GAMEDATA * gamedata, u16 zone_id )
 { 
-  //室内のテクスチャ読み替え処理
-  if( ZONEDATA_IsResonanceResortRoom( zone_id ) )
-  {
-    RESONANCE_RESORT_SV *p_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
-
-    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_sv );
-    RESORT_PLACEID placeID = RESORT_MAP_ZoneIDToPlaceID( zone_id );
-
-    if( RESORT_PLACEID_INSTITUTION_00 <= placeID && placeID <= RESORT_PLACEID_INSTITUTION_07 )
-    {
-
-      RESORT_RESIDENT_DATA *p_resident = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, placeID - RESORT_PLACEID_INSTITUTION_00 );
-      if( !RESORT_RESIDENT_DATA_IsEmpty( p_resident ) )
-      {
-        RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_resident );
-        RESORT_BINARY_SHOP *p_shop = RESORT_BINARY_SHOP_Init( GFL_HEAP_LOWID(GFL_HEAPID_APP) );
-        const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData( p_shop, p_resident );
-
-        GAMEDATA_SetAreaOfs( gamedata, RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_IN_TEX) );
-
-        RESORT_BINARY_SHOP_Exit( p_shop );
-      }
-    }
-  }
-
   //迎賓館のみ存在する拡張バッファをつくって登録
-  if( zone_id == ZONE_ID_C16R1601 )
+  if( ZONEDATA_IsResonanceResort( zone_id ) )
   {
     //迎賓館にいったらバッファ作成
     void **pp_buff = GAMEDATA_GetResortBuffer( gamedata );
