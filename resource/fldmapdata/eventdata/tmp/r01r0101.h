@@ -10,6 +10,9 @@
 #ifndef ZONE_R01R0101_EVC_H
 #define ZONE_R01R0101_EVC_H
 
+#define R01R0101_INFORMATIONW_01           0
+#define R01R0101_BACKPACKERM_01            1
+#define R01R0101_TRAINERW_01               2
 
 #endif //ZONE_R01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
