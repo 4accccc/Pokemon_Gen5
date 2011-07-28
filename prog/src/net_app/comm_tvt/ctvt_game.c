@@ -37,6 +37,9 @@
 #include "ctvt_game_balloon_tbl.cdat"
 #include "ctvt_game_cam.h"
 
+// レコード
+#include "savedata/record.h"
+
 //debug
 #include "debug/debug_str_conv.h"
 
@@ -281,6 +284,7 @@ struct _CTVT_GAME_WORK
   HEAPID          heapId;
   CTVT_GAME_ID    game_id;        // ゲーム種類
 
+  RECORD          *record;        // レコード追加用
 
   CTVT_GAME_STATE state;
   
@@ -592,14 +596,13 @@ CTVT_GAME_WORK* CTVT_GAME_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 {
   CTVT_GAME_WORK* gameWork = GFL_HEAP_AllocClearMemory( heapId , sizeof(CTVT_GAME_WORK) );
   gameWork->heapId = heapId;
+  
+  // レコードポインタ
+  {
+    const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+    gameWork->record = GAMEDATA_GetRecordPtr( initWork->gameData );
+  }
 
-  //バージョンで白黒を変える
-  if( GET_VERSION() == VERSION_B2 )
-  {
-  }
-  else
-  {
-  }
   return gameWork;
 }
 
@@ -1332,6 +1335,9 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // SE再生
       PMSND_PlaySystemSE( SEQ_SE_LCG_05 );
+
+      // 風船割った数レコード追加
+      RECORD_Inc( p_wk->record, RECID_CTVT_BALLOON );
     }
   }
   // ポイント減算
@@ -1355,6 +1361,9 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // SE再生
       PMSND_PlaySystemSE( SEQ_SE_LCG_02 );
+
+      // 風船割った数レコード追加
+      RECORD_Inc( p_wk->record, RECID_CTVT_BALLOON );
     }
   }
 
@@ -1510,6 +1519,10 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
         if( ret == TRUE )
         {
           PMSND_PlaySystemSE( SEQ_SE_LCG_01 );    // 割れたSE
+
+          // 風船割った数レコード追加
+          RECORD_Inc( p_wk->record, RECID_CTVT_BALLOON );
+
         }
         else
         {
@@ -1928,6 +1941,11 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
           GFL_CLACT_WK_ResetAnm( gameWork->clwkPenAnm );
           break;
         };
+      }
+      // レコード追加
+      {
+        // ライブキャスターミニゲームプレイ回数インクリメント
+        RECORD_Inc( gameWork->record, RECID_CTVT_GAME_PLAY );
       }
     }
     break;
