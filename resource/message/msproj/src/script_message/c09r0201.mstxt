@@ -6,17 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やれやれ……
-きょうは　どういう　ひ　かな？▼
-つづけざまに　ちょうせんしゃが
-やってくるとは……▼
-まあいいさ
-してんのう　ギーマ▼
-その　やくわりに　したがい
+			<Text>ここで　きめるのは
+どちらが　あいての▽
+ひかりを　えて　かがやくのか……▼
+では　きめるのは　だれか？
+それは　この　してんのう　ギーマ▼
+やくわりに　したがい
 おあいて　するまで▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:24:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,17 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やれやれ……
-きょうは　どういう　日かな？▼
-続けざまに　挑戦者が
-やってくるとは……▼
-まあいいさ
-四天王　ギーマ▼
-その　役割に　従い
-お相手　するまで▼</Text>
+			<Text>ここで　決めるのは
+どちらが　相手の▽
+光を　得て　輝くのか……▼
+では　決めるのは　だれか？
+それは　この　四天王　ギーマ▼
+役割に　従い
+お相手するまで▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:24:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44,10 +42,11 @@
 			Language="JPN">
 			<Comment>♂：クリア前
 ・戦闘前：フィールド
-　メッセージ表示後、トレーナー戦闘に</Comment>
+　メッセージ表示後、トレーナー戦闘に
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:11:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -146,15 +145,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そう　いまの　わたしは
-ぶざまな　はいぼくしゃ……▽
-それいじょうでも　いかでもない▼
+ひかりを　うしなった▽
+ぶざまな　はいぼくしゃ……▼
+だが　それは　つぎ
+さらに　かがやくため……▽
+そう　かんがえれば　わるくない▼
 さて……
 きみの　その　つよさ……▼
 ほかの　してんのう　あいてに
-ためすが　いい</Text>
+つうじるか　ためすが　いい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -163,15 +165,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そう　今の　わたしは
-無様な　敗北者……▽
-それ以上でも　以下でもない▼
+光を　失った▽
+無様な　敗北者……▼
+だが　それは　次
+さらに　輝くため……▽
+そう　考えれば　悪くない▼
 さて……
 きみの　その　強さ……▼
 他の　四天王　相手に
-試すが　いい</Text>
+通じるか　試すが　いい</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:29:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -180,10 +185,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア前
-・bigfour2_02表示後に再度会話</Comment>
+・bigfour2_02表示後に再度会話
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:21:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -216,19 +222,14 @@
 			<Text>……すごいね▼
 きみは　ポケモンリーグ　すべての
 してんのうに　しょうりした▼
-だが　まだ　おわりではない！▼
+だが　まだ　おわり　ではない！▼
 きみの　その　つよさを　しめすべき
 あいてが　もうひとり　いる▼
-ポケモンリーグ　さいきょうの
-チャンピオン　アデク……▼
-もしくは……
-Ｎという　おとこ▼
-どちらが　あいてか　わからぬが
-ちゅうおうひろばの　ぞうを　しらべ▽
-さいごの　へやに　すすむが　いい</Text>
+ちゅうおうひろばの　ぞうを　しらべ
+さいごの　へやに　すすみなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:01:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -242,16 +243,11 @@
 だが　まだ　終わりではない！▼
 きみの　その　強さを　示すべき
 相手が　もう１人　いる▼
-ポケモンリーグ　最強の
-チャンピオン　アデク……▼
-もしくは……
-Ｎという　男▼
-どちらが　相手か　わからぬが
-中央広場の　像を　調べ▽
-最後の　部屋に　進むが　いい</Text>
+中央広場の　像を　調べ
+最後の　部屋に　進みなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:02:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,10 +258,11 @@
 			<Comment>♂：クリア前
 ・条件（＝四天王全員に勝利）を満たしていれば
 　戦闘後フィールド復帰時に自動で表示
-・チャンピオン部屋に行くまで繰り返し</Comment>
+・チャンピオン部屋に行くまで繰り返し
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:02:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -428,17 +425,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみごと……！▼
-ポケモンしょうぶの　いいところは
-まけた　ものにも▽
-なにかを　おしえてくれること　かな？▼
+			<Text>まけたもの　には
+なにも　のこらない▼
+……そんなことは　ないか
+どんなことに　だって　いみはある▼
+まけた　くやしさを　バネに
+つよくなれば　いい▼
 さて……
 きみの　その　つよさ……▼
 ほかの　してんのう　あいてにも
 つうじるか　ためすが　いい！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:36:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -446,17 +445,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おみごと……！▼
-ポケモン勝負の　いいところは
-敗れた　トレーナーにも▽
-なにかを　教えてくれること　かな？▼
+			<Text>敗北者には
+なにも　残らない……▼
+……そんなことは　ないか
+どんなことに　だって　意味はある▽
+負けを　糧に　強くなれば　いい▼
 さて……
 きみの　その　強さ……▼
 他の　四天王　相手にも
 通じるか　試すが　いい！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:36:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -465,10 +465,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・bigfour2_06表示後に再度会話</Comment>
+・bigfour2_06表示後に再度会話
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:37:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -494,14 +495,14 @@
 			<Text>……すごいね▼
 きみは　ポケモンリーグ　すべての
 してんのうに　しょうりした▼
-だが　まだ　おわりではない！▼
+だが　まだ　おわり　ではない！▼
 きみの　その　つよさを　しめすべき
 あいてが　もうひとり　いる▼
 ちゅうおうひろばの　ぞうを　しらべ
-さいごの　へやに　すすむが　いいさ</Text>
+さいごの　へやに　すすみなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -514,12 +515,12 @@
 四天王に　勝利した▼
 だが　まだ　終わりではない！▼
 きみの　その　強さを　示すべき
-相手が　もう一人　いる▼
+相手が　もう１人　いる▼
 中央広場の　像を　調べ
-最後の部屋に　進むが　いいさ</Text>
+最後の　部屋に　進みなよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -530,10 +531,11 @@
 			<Comment>♂：クリア後
 ・条件（＝四天王全員に勝利）を満たしていれば
 　戦闘後フィールド復帰時に自動で表示
-・チャンピオン部屋に行くまで繰り返し</Comment>
+・チャンピオン部屋に行くまで繰り返し
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T08:37:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

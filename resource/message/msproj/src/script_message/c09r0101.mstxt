@@ -2,26 +2,24 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c09r0101_bigfour1_01"
+		Label="msg_c09r0101_bigfour1_01b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『その　おとこ
-　ひとみに　くらき　ほのおを　たたえ▼
-　ただひとつの　せいぎを　なすため
-　じぶんいがいの　すべてを　こばむ』▼
-……いま　よんだのは
+			<Text>『りそうを　おいもとめ
+　くろき　ドランポケモンと　ともに▽
+　せかいを　めぐる　もの　あり……』▼
+……いま　よんだのは　かきかけの
 アタシの　しょうせつ　なんです▼
-……さきほどの　ちょうせんしゃを
-だいざいに　してみたのですが▽
-なんだか　かなしく　なっちゃいました▼
-ごめんなさい
-ちょうせんしゃの　かた　ですよね▼
-ゴーストポケモンつかいの　してんのう
-シキミ　おあいて　いたします！▼</Text>
+あの　ひの　できごとを
+きおくに　とどめたくて……▽
+って　かんけいない　はなし　でしたね▼
+ちょうせんしゃの　かた！
+ゴーストポケモンつかいの　してんのう▽
+シキミ　おあいて　いたします！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:27:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -29,22 +27,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『その　男
-　ひとみに　暗き　炎を　たたえ▼
-　ただひとつの　正義を　なすため
-　自分以外の　すべてを　拒む』▼
-……いま　読んだのは
-アタシの　小説　なんです▼
-……さきほどの　挑戦者を
-題材に　してみたのですが▽
-なんだか　悲しく　なっちゃいました▼
-ごめんなさい
-挑戦者の　方ですよね▼
+			<Text>『理想を　追い求め
+　黒き　ドランポケモンと　共に▽
+　世界を　めぐる　もの　あり……』▼
+……今　読んだのは　かきかけの
+アタシの　小説なんです▼
+あの　日の　できごとを
+記憶に　留めたくて……▽
+って　関係ない　話でしたね▼
+挑戦者の　方！
 ゴーストポケモン使いの　四天王
-シキミ　お相手　いたします！▼</Text>
+シキミ　お相手　いたします！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:31:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -53,13 +49,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア前
+・Black2ver
 ・戦闘前：フィールド
-　メッセージ表示後、トレーナー戦闘に
-
-※SWANでメッセージ変更予定</Comment>
+　メッセージ表示後、トレーナー戦闘に</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:31:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -85,22 +80,88 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c09r0101_bigfour1_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>『しんじつを　おいもとめ
+　しろき　ドランポケモンと　ともに▽
+　せかいを　めぐる　もの　あり……』▼
+……いま　よんだのは　かきかけの
+アタシの　しょうせつ　なんです▼
+あの　ひの　できごとを
+きおくに　とどめたくて……▽
+って　かんけいない　はなし　でしたね▼
+ちょうせんしゃの　かた！
+ゴーストポケモンつかいの　してんのう▽
+シキミ　おあいて　いたします！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:28:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:04:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>『真実を　追い求め
+　白き　ドランポケモンと　共に▽
+　世界を　めぐる　もの　あり……』▼
+……今　読んだのは　かきかけの
+アタシの　小説なんです▼
+あの　日の　できごとを
+記憶に　留めたくて……▽
+って　関係ない　話でしたね▼
+挑戦者の　方！
+ゴーストポケモン使いの　四天王
+シキミ　お相手　いたします！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:30:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:04:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀：クリア前
+・White2ver
+・戦闘前：フィールド
+　メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:31:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>四天王：ゴースト
+シキミ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:04:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c09r0101_bigfour1_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごごごめんなさい！
-まず　ポケモンに　あやまらないと……▼
-アタシの　せいで
-つらい　おもいを　させちゃって▽
-ほんとうに　ごめんね！▼
-ああ！　アナタは　わるくないです
-こうなるのは　しょうぶの　つね▽
-それを　ふまえて▽
-アタシも　してんのう　してますから！</Text>
+			<Text>アタシの　ポケモン
+そして　ちょうせんしゃの　ポケモン▼
+みんな　きずつきながらも
+たたかってくれて……　ありがとうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:34:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -108,18 +169,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごごごめんなさい！
-まず　ポケモンに　謝らないと……▼
-アタシの　せいで
-つらい　おもいを　させちゃって▽
-本当に　ごめんね！▼
-ああ！　アナタは　悪くないです
-こうなるのは　勝負の　常▽
-それを　ふまえて▽
-アタシも　四天王　してますから！</Text>
+			<Text>アタシの　ポケモン
+そして　挑戦者の　ポケモン▼
+みんな　傷つきながらも
+戦ってくれて……　ありがとうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -161,17 +217,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとには　ひとの
-ポケモンには　ポケモンの▽
-ものがたりが　あるんです！▼
-そして　ひとだけ……
-ポケモンだけの　おはなし　よりも▼
-ひとと　ポケモンが　たすけあう
-おはなしの　ほうが▽
-ぜったいに　おもしろいんです！</Text>
+			<Text>たたかう！　って
+かくごが　ひつよう　ですよね▽
+あいても　じぶんも　きずつきますから▼
+でも　その　いたみを　わかってないと
+ただ　けっかだけを　もとめ▽
+ポケモンとの　むすびつきを　わすれる▼
+だから　ハートや　ソウルの　ぶぶんを
+しょうせつに　かいていきたいんです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:40:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -179,17 +235,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人には　人の
-ポケモンには　ポケモンの▽
-物語が　あるんです！▼
-そして　人だけ……
-ポケモンだけの　お話　よりも▼
-人と　ポケモンが　助け合う
-お話の　ほうが▽
-絶対に　おもしろいんです！</Text>
+			<Text>戦う！　って
+覚悟が　必要ですよね▽
+相手も　自分も　傷つきますから▼
+でも　その　痛みを　わかってないと
+ただ　結果だけを　求め▽
+ポケモンとの　結びつきを　忘れる▼
+だから　ハートや　ソウルの　部分を
+物語に　書いていきたいんです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T09:40:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -305,21 +361,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『トレーナーと　ポケモンの
-　おもいが　あわさり　くりだされた▽
-　アクアリングの　きらめき……』▼
+			<Text>『ゆけい　ウルガモス！
+　ここは　ねっぷう　だ！！▼
+　さいしょの　パートナーの
+　おもかげを　のこす　ポケモンに▽
+　おごそかに　そう　めいじた……』▼
 いま　よんだのは
 アタシが　かいた　しょうせつの▽
 いちぶ　なんです▼
-ここに　ちょうせん　しにきた
-トレーナーと　ポケモンの▽
-こころの　ふれあいを▽
+いままでに　きそいあった
+トレーナーと　ポケモンの▼
+こころの　ふれあいを
 ものがたりに　するのが　だいすきで！▼
 というわけで　アナタたちの　こと
-しゅざい　させてくださいね！▼</Text>
+しゅざい　させてくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:39:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -327,21 +385,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『トレーナーと　ポケモンの
-　想いが　重なり　繰りだされた▽
-　アクアリングの　きらめき……』▼
+			<Text>『ゆけい　ウルガモス！
+　ここは　ねっぷう　だ！！▼
+　最初の　パートナーの
+　面影を　残す　ポケモンに▽
+　おごそかに　そう　命じた……』▼
 いま　読んだのは
 アタシが　書いた　小説の▽
 一部なんです▼
 ここに　挑戦しに　来た
-トレーナーと　ポケモンの▽
-心の　ふれあいを▽
+トレーナーと　ポケモンの▼
+心の　ふれあいを
 物語に　するのが　大好きで！▼
 というわけで　アナタたちの　こと
-取材させて　くださいね！▼</Text>
+取材させて　くださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:39:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -353,10 +413,11 @@
 ・戦闘前：フィールド
 　メッセージ表示後、トレーナー戦闘に
 ※bigfour1_05aから
-　bigfour1_05eまではランダム</Comment>
+　bigfour1_05eまではランダム
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:39:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -387,15 +448,15 @@
 いま　よんだのは
 アタシが　かいた　しょうせつの▽
 いちぶ　なんです▼
-ここに　ちょうせん　しにきた
-トレーナーと　ポケモンの▽
-こころの　ふれあいを▽
+いままでに　きそいあった
+トレーナーと　ポケモンの▼
+こころの　ふれあいを
 ものがたりに　するのが　だいすきで！▼
 というわけで　アナタたちの　こと
-しゅざい　させてくださいね！▼</Text>
+しゅざい　させてくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -412,14 +473,14 @@
 アタシが　書いた　小説の▽
 一部なんです▼
 ここに　挑戦しに　来た
-トレーナーと　ポケモンの▽
-心の　ふれあいを▽
+トレーナーと　ポケモンの▼
+心の　ふれあいを
 物語に　するのが　大好きで！▼
 というわけで　アナタたちの　こと
-取材させて　くださいね！▼</Text>
+取材させて　くださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:40:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -429,10 +490,11 @@
 			Language="JPN">
 			<Comment>♀：クリア後
 ・戦闘前：フィールド
-　メッセージ表示後、トレーナー戦闘に</Comment>
+　メッセージ表示後、トレーナー戦闘に
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -455,24 +517,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『ちいさくも　たくましい　ポケモンは
-　じんせいで　いちばんの　あいてと▽
-　むきあい　こころに　おびえの▽
-　めが　いぶいた　トレーナーをみつめ▼
-　ちいさく……
-　そして　やさしく　ほえた』▼
+			<Text>『なあ　あんた
+　オーバーヒート　つかいなよ▼
+　アフロブレイクを　くりだせそうな
+　かみがたの　ほのおポケモンつかいは▽
+　それだけ　のこして　さっていった』▼
 いま　よんだのは
 アタシが　かいた　しょうせつの▽
 いちぶ　なんです▼
-ここに　ちょうせん　しにきた
-トレーナーと　ポケモンの▽
-こころの　ふれあいを▽
+いままでに　きそいあった
+トレーナーと　ポケモンの▼
+こころの　ふれあいを
 ものがたりに　するのが　だいすきで！▼
 というわけで　アナタたちの　こと
-しゅざい　させてくださいね！▼</Text>
+しゅざい　させてくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:40:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -480,24 +541,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『小さくも　たくましい　ポケモンは
-　人生で　一番の　難敵と▽
-　向き合い　心に　おびえの▽
-　芽が　息吹いた　トレーナーをみつめ▼
-　ちいさく……
-　そして　やさしく　ほえた』▼
+			<Text>『なあ　あんた
+　オーバーヒート　使いなよ▼
+　アフロブレイクを　くりだせそうな
+　髪型の　ほのおポケモン使いは▽
+　それだけ　残して　去っていった』▼
 いま　読んだのは
 アタシが　書いた　小説の▽
 一部なんです▼
 ここに　挑戦しに　来た
-トレーナーと　ポケモンの▽
-心の　ふれあいを▽
+トレーナーと　ポケモンの▼
+心の　ふれあいを
 物語に　するのが　大好きで！▼
 というわけで　アナタたちの　こと
-取材させて　くださいね！▼</Text>
+取材させて　くださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:41:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -507,10 +567,11 @@
 			Language="JPN">
 			<Comment>♀：クリア後
 ・戦闘前：フィールド
-　メッセージ表示後、トレーナー戦闘に</Comment>
+　メッセージ表示後、トレーナー戦闘に
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -533,22 +594,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『この　せかいは
-　きみの　ためだけに▽
-　そんざい　していない▽
-　なぜならば……』▼
+			<Text>『ゴーストタイプを　つかう　じょせい
+　じめんタイプを　つかう　じょせい▼
+　ふたりの　なまえ　みためが
+　にている　りゆうは　きけなかった▼
 いま　よんだのは
 アタシが　かいた　しょうせつの▽
 いちぶ　なんです▼
-ここに　ちょうせん　しにきた
-トレーナーと　ポケモンの▽
-こころの　ふれあいを▽
+いままでに　きそいあった
+トレーナーと　ポケモンの▼
+こころの　ふれあいを
 ものがたりに　するのが　だいすきで！▼
 というわけで　アナタたちの　こと
-しゅざい　させてくださいね！▼</Text>
+しゅざい　させてくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:55:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -556,22 +617,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『この世界は
-　君の　ためだけに▽
-　存在していない▽
-　なぜならば……』▼
+			<Text>『ゴーストタイプを　使う　女性
+　じめんタイプを　使う　女性▼
+　二人の　名前　容姿が
+　似ている　理由は　きけなかった▼
 いま　読んだのは
 アタシが　書いた　小説の▽
 一部なんです▼
 ここに　挑戦しに　来た
-トレーナーと　ポケモンの▽
-心の　ふれあいを▽
+トレーナーと　ポケモンの▼
+心の　ふれあいを
 物語に　するのが　大好きで！▼
 というわけで　アナタたちの　こと
-取材させて　くださいね！▼</Text>
+取材させて　くださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -581,10 +642,11 @@
 			Language="JPN">
 			<Comment>♀：クリア後
 ・戦闘前：フィールド
-　メッセージ表示後、トレーナー戦闘に</Comment>
+　メッセージ表示後、トレーナー戦闘に
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -607,21 +669,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>『きょうが　なんにちで　あるか
-　わたしには　わからないが▽
-　いっしょう　わすれないだろう』▼
+			<Text>『そう！　コードネームは　ハンサム！▼
+　ひょうひょうと　かたる　かれの
+　パートナー　グレッグルの▽
+　せんぽうは　トリッキーで　あった』▼
 いま　よんだのは
 アタシが　かいた　しょうせつの▽
 いちぶ　なんです▼
-ここに　ちょうせん　しにきた
-トレーナーと　ポケモンの▽
-こころの　ふれあいを▽
+いままでに　きそいあった
+トレーナーと　ポケモンの▼
+こころの　ふれあいを
 ものがたりに　するのが　だいすきで！▼
 というわけで　アナタたちの　こと
-しゅざい　させてくださいね！▼</Text>
+しゅざい　させてくださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:41:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -629,21 +692,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『今日が　何日で　あるか
-　わたしには　わからないが▽
-　一生　忘れないだろう』▼
+			<Text>『そう！　コードネームは　ハンサム！▼
+　ひょうひょうと　語る　彼の
+　パートナー　グレッグルの▽
+　戦法は　トリッキーで　あった』▼
 いま　読んだのは
 アタシが　書いた　小説の▽
 一部なんです▼
 ここに　挑戦しに　来た
-トレーナーと　ポケモンの▽
-心の　ふれあいを▽
+トレーナーと　ポケモンの▼
+心の　ふれあいを
 物語に　するのが　大好きで！▼
 というわけで　アナタたちの　こと
-取材させて　くださいね！▼</Text>
+取材させて　くださいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:41:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -653,10 +717,11 @@
 			Language="JPN">
 			<Comment>♀：クリア後
 ・戦闘前：フィールド
-　メッセージ表示後、トレーナー戦闘に</Comment>
+　メッセージ表示後、トレーナー戦闘に
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -679,18 +744,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごごごめんなさい！
-まず　ポケモンに　あやまらないと……▼
-アタシの　せいで
-つらい　おもいを　させちゃって▽
-ほんとうに　ゴメンね！▼
-ああ！　アナタは　わるくないです
-こうなるのは　しょうぶの　つね▽
-それを　ふまえて▽
-アタシも　してんのう　してますから！</Text>
+			<Text>アタシの　ポケモン
+そして　ちょうせんしゃの　ポケモン▼
+みんな　きずつきながらも
+たたかってくれて……　ありがとうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -698,18 +758,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごごごめんなさい！
-まず　ポケモンに　謝らないと……▼
-アタシの　せいで
-つらい　おもいを　させちゃって▽
-本当に　ごめんね！▼
-ああ！　アナタは　悪くないです
-こうなるのは　勝負の　常▽
-それを　ふまえて▽
-アタシも　四天王　してますから！</Text>
+			<Text>アタシの　ポケモン
+そして　挑戦者の　ポケモン▼
+みんな　傷つきながらも
+戦ってくれて……　ありがとうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -718,10 +773,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
-・戦闘後：フィールド</Comment>
+・戦闘後：フィールド
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -744,17 +800,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとには　ひとの
-ポケモンには　ポケモンの▽
-ものがたりが　あるんです！▼
-そして　ひとだけ……
-ポケモンだけ　よりも▼
-ひとと　ポケモンが　たすけあう
-おはなしの　ほうが▽
-ぜったいに　おもしろいんです！</Text>
+			<Text>たたかう！　って
+かくごが　ひつよう　ですよね▽
+あいても　じぶんも　きずつきますから▼
+でも　その　いたみを　わかってないと
+ただ　けっかだけを　もとめ▽
+ポケモンとの　むすびつきを　わすれる▼
+だから　ハートや　ソウルの　ぶぶんを
+しょうせつに　かいていきたいんです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,17 +818,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人には　人の
-ポケモンには　ポケモンの▽
-物語が　あるんです！▼
-そして　人だけ……
-ポケモンだけの　お話　よりも▼
-人と　ポケモンが　助け合う
-お話の　ほうが▽
-絶対に　おもしろいんです！</Text>
+			<Text>戦う！　って
+覚悟が　必要ですよね▽
+相手も　自分も　傷つきますから▼
+でも　その　痛みを　わかってないと
+ただ　結果だけを　求め▽
+ポケモンとの　結びつきを　忘れる▼
+だから　ハートや　ソウルの　部分を
+物語に　書いていきたいんです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -781,10 +837,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
-・bigfour1_06表示後に再度会話</Comment>
+・bigfour1_06表示後に再度会話
+※swanでメッセージ調整</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-07-28T10:38:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
