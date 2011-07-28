@@ -5,12 +5,12 @@
 #define _HIDE_SHIP_HINT_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D27_HINT_01 (1)
-#define SCRID_D27_HINT_02 (2)
-#define SCRID_D27_HINT_03 (3)
-#define SCRID_D27_HINT_04 (4)
-#define SCRID_D27_HINT_05 (5)
-#define SCRID_D27_HINT_06 (6)
-#define SCRID_D27_HINT_07 (7)
+#define SCRID_D27_HINT_01 (10835)
+#define SCRID_D27_HINT_02 (10836)
+#define SCRID_D27_HINT_03 (10837)
+#define SCRID_D27_HINT_04 (10838)
+#define SCRID_D27_HINT_05 (10839)
+#define SCRID_D27_HINT_06 (10840)
+#define SCRID_D27_HINT_07 (10841)
 
 #endif //_HIDE_SHIP_HINT_SCR_DEF_H_
