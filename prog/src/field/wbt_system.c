@@ -528,47 +528,38 @@ void WBTSYS_GetOpponentBGM( WBTSYS * wbtsys, u16 *btl_bgm, u16 *win_bgm )
 //------------------------------------------------------------------
 const REGULATION * WBTSYS_GetRegulation( WBTSYS * wbtsys )
 {
-  const REGULATION * reg;
-  int reg_type;
-  static const u8 regSubwayTable[] = {
-    REG_WBT_SINGLE, REG_WBT_DOUBLE, REG_WBT_TRIPLE, REG_WBT_ROTATION,
-  };
   static const u8 regAllTable[] = {
     REG_WBT_SINGLE, REG_WBT_DOUBLE, REG_WBT_TRIPLE, REG_WBT_ROTATION,
   };
-  static const u8 regWCSTable[] = {
-    REG_WBT_SINGLE, REG_WBT_DOUBLE, REG_WBT_TRIPLE, REG_WBT_ROTATION,
+  static const u8 regSubwayTable[] = {
+    REG_WBT_SUBWAY_SINGLE, REG_WBT_SUBWAY_DOUBLE, REG_WBT_SUBWAY_TRIPLE, REG_WBT_SUBWAY_ROTATION,
   };
+  static const u8 regWCSTable[] = {
+    REG_WBT_WCS_SINGLE, REG_WBT_WCS_DOUBLE, REG_WBT_WCS_TRIPLE, REG_WBT_WCS_ROTATION,
+  };
+
+  const u8 * tbl;
+  int reg_type;
 
   switch ( WBTTOOL_GetRegulationID( wbtsys->wbtcup ) )
   {
+  default:
+  case WBTREG_DOWNLOAD:
+    GF_ASSERT( 0 ); //‰¼F–¢‘Î‰
   case WBTREG_ALL:
+    tbl = regAllTable;
+    break;
   case WBTREG_SUBWAY:
   case WBTREG_POKETYPE:
+    tbl = regSubwayTable;
+    break;
   case WBTREG_WCS:
+    tbl = regWCSTable;
     break;
-  case WBTREG_DOWNLOAD:
-  default:
-    GF_ASSERT( 0 ); //‰¼F–¢‘Î‰
   }
+  GF_ASSERT( wbtsys->rule != WBTRULE_NULL && wbtsys->rule <= WBTRULE_MAX );
+  reg_type = tbl[ wbtsys->rule - 1 ];
 
-  switch ( wbtsys->rule )
-  {
-  case WBTRULE_SINGLE:
-    reg_type = REG_WBT_SINGLE;
-    break;
-  case WBTRULE_DOUBLE:
-    reg_type = REG_WBT_DOUBLE;
-    break;
-  case WBTRULE_TRIPLE:
-    reg_type = REG_WBT_TRIPLE;
-    break;
-  case WBTRULE_ROTATION:
-    reg_type = REG_WBT_ROTATION;
-    break;
-  default:
-    GF_ASSERT( 0 );
-  }
   PokeRegulation_LoadData( reg_type, &wbtsys->wbtreg.base_reg );
   return &wbtsys->wbtreg.base_reg;
 }
