@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>まってたよー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:15:29" />
+				Time="2011-07-28T06:00:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>待ってたよー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:15:32" />
+				Time="2011-07-28T06:36:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29,12 +29,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・初回
-　メッセージ表示後、戦闘へ
+・posイベント（GRIDX＝、GRIDZ＝）
+　椅子から降りて待機、その語の話しかけは
+　初回→swchampion_02
+　2回目以降→swchampion_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:18:42" />
+				Time="2011-07-28T06:25:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -50,10 +52,89 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>あたしね　つよい　トレーナーとの
+しんけんしょうぶが　たのしみ　なの！▼
+だって　そうでしょ！▼
+くるのは　こころの　そこから
+しょうりを　もとめている　トレーナー▼
+ともに　たたかうのは　あまたの
+しょうぶを　くぐりぬけた　ポケモン▼
+そんな　あいてと　きそいあえたら
+あたしも！　あたしの　ポケモンも▼
+もっともっと　つよくなれるし
+おたがい　わかりあえるもの！▼
+じゃあ　いくよ▼
+ポケモンリーグ　チャンピオン
+アイリス！　あなたに　かちます！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:18:34" />
+				Time="2011-07-28T06:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T05:59:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしね　強い　トレーナーとの
+真剣勝負が　楽しみ　なの！▼
+だって　そうでしょ！▼
+来るのは　心の　底から
+勝利を　求めている　トレーナー▼
+共に　戦うのは　数多の
+激戦を　くぐりぬけた　ポケモン▼
+そんな　相手と　競い合えたら
+あたしも！　あたしの　ポケモンも▼
+もっともっと　強くなれるし
+お互い　わかりあえるもの！▼
+じゃあ　いくよ▼
+ポケモンリーグ　チャンピオン
+アイリス！　あなたに　勝ちます！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T06:38:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T05:59:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・初回
+　メッセージ表示後、戦闘へ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T06:00:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWCHAMPION
+チャンピオン・アイリス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T05:59:24" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c09r0501_swchampion_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここにくるのは　こころの　そこから
+しょうりを　もとめている　トレーナー▼
+ともに　たたかうのは　あまたの
+しょうぶを　くぐりぬけた　ポケモン▼
+そんな　あいてと　きそいあえたら
+あたしも！　あたしの　ポケモンも▼
+もっともっと　つよくなれるし
+おたがい　わかりあえるもの！▼
+では！　ポケモンリーグ　チャンピオン
+アイリス！　あなたに　かちます！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-28T06:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -61,10 +142,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>ここに　来るのは　心の　底から
+勝利を　求めている　トレーナー▼
+共に　戦うのは　数多の
+激戦を　くぐりぬけた　ポケモン▼
+そんな　相手と　競い合えたら
+あたしも！　あたしの　ポケモンも▼
+もっともっと　強くなれるし
+お互い　わかりあえるもの！▼
+では！　ポケモンリーグ　チャンピオン
+アイリス！　あなたに　勝ちます！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:18:34" />
+				Time="2011-07-28T06:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -90,14 +180,24 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c09r0501_swchampion_03"
+		Label="msg_c09r0501_swchampion_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>アイリス『かてなくて　くやしいよ！▼
+でもね
+でも　きいて▽
+それいじょうに　うれしいの！▼
+だって　そうでしょ！
+しんけんしょうぶを　することで▼
+あなたと　あなたの　ポケモン
+そして　あたしたち……▼
+いままでいじょうに　わかりあえたよ！▼
+うん！
+じゃあ　ついてきて！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:18:34" />
+				Time="2011-07-28T06:43:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -105,10 +205,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>アイリス『勝てなくて　くやしいよ！▼
+でもね
+でも　きいて▽
+それ以上に　うれしいの！▼
+だって　そうでしょ！
+真剣勝負を　することで▼
+あなたと　あなたの　ポケモン
+そして　あたしたち……▼
+いままで以上に　わかりあえたよ！▼
+うん！
+じゃあ　ついてきて！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:18:34" />
+				Time="2011-07-28T06:43:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -119,10 +229,11 @@
 			<Comment>♀
 ・戦闘後メッセージ
 　フィールドに復帰すると自動で表示
+・続けてc09r0601へ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T10:18:54" />
+				Time="2011-07-28T06:43:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
